@@ -98,7 +98,7 @@ class EditTaintsModal extends Component {
               </GridItem>
               <GridItem span={7} />
               <GridItem span={12}>
-                <FieldArray name="taints" component={ReduxFormTaints} />
+                <FieldArray name="taints" component={ReduxFormTaints} isEditing />
               </GridItem>
             </Grid>
           </Form>

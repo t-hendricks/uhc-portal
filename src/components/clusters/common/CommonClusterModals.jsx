@@ -12,6 +12,7 @@ import EditDisplayNameDialog from './EditDisplayNameDialog';
 import EditConsoleURLDialog from './EditConsoleURLDialog';
 import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
 import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
+import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
 import DeleteClusterDialog from './DeleteClusterDialog';
 import UpgradeWizard from './Upgrades/UpgradeWizard';
 import EditCCSCredentialsDialog from './EditCCSCredentialsDialog';
@@ -39,6 +40,10 @@ function CommonClusterModals({ onClose, onClusterDeleted }) {
       />
       <ConnectedModal
         ModalComponent={EditCCSCredentialsDialog}
+        onClose={onClose}
+      />
+      <ConnectedModal
+        ModalComponent={UpgradeTrialClusterDialog}
         onClose={onClose}
       />
       <ConnectedModal ModalComponent={UpgradeWizard} />

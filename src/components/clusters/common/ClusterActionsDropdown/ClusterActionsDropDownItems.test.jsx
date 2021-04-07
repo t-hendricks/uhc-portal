@@ -59,6 +59,22 @@ describe('Cluster Actions Dropdown Items', () => {
       expect(editDisabled).toBeFalsy();
       expect(deleteDisabled).toBeFalsy();
     });
+
+    describe('and product osdtrial', () => {
+      beforeAll(() => {
+        wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.managedReadyOsdTrialProps} />);
+      });
+
+      it('should render', () => {
+        expect(wrapper).toMatchSnapshot();
+      });
+
+      it('should not find hibernate action', () => {
+        wrapper.find(DropdownItem).forEach((item) => {
+          expect(item.props().title).not.toEqual('Hibernate cluster');
+        });
+      });
+    });
   });
 
   describe('cluster with state uninstalling', () => {

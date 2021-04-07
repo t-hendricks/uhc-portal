@@ -101,47 +101,6 @@ insights-proxy-setup: run/insights-proxy
 	sudo bash -x run/insights-proxy/scripts/patch-etc-hosts.sh
 	run/podman-or-docker.sh pull quay.io/redhat-sd-devel/insights-proxy:pull-33
 
-.PHONY: run/verification-tests
-run/verification-tests:
-	[ -e $@ ] || git clone --origin=xueli181114 https://github.com/xueli181114/verification-tests $@
-	(cd $@; git remote | grep --quiet xueli181114 || git remote add xueli181114 https://github.com/xueli181114/verification-tests)
-	(cd $@; git remote | grep --quiet openshift || git remote add openshift https://github.com/openshift/verification-tests)
-	(cd $@; git fetch --all)
-	# Use https://github.com/openshift/verification-tests/pull/807.
-	# No need to merge newer upstream commits as tests cases now come from run/our-tests/.
-	(cd $@; git fetch openshift pull/807/head && git checkout -B pr-807 FETCH_HEAD)
-	# Symlink for running tests without container to match mount made with container.
-	[ -L run/verification-tests/private ] || ln --symbolic --no-target-directory ../private run/verification-tests/private
-	[ -L run/verification-tests/our-tests ] || ln --symbolic --no-target-directory ../our-tests run/verification-tests/our-tests
-
-.PHONY: run/cucushift
-run/cucushift:
-	# Private repo, https://github.com/orgs/openshift/teams/team-red-hat needed to clone.
-	[ -e $@ ] || git clone ssh://git@github.com/xueli181114/cucushift.git --depth=1 $@
-	(cd $@; git remote | grep --quiet xueli181114 || git remote add xueli181114 ssh://git@github.com/xueli181114/cucushift.git)
-	(cd $@; git remote | grep --quiet openshift || git remote add openshift ssh://git@github.com/openshift/cucushift.git)
-	(cd $@; git fetch --all; git checkout xueli181114/new-cases)
-
-# This is optional.
-# If you don't build the image locally, will pull it from Quay on first use.
-.PHONY: selenium-tests-image
-selenium-tests-image: run/verification-tests
-	. run/selenium-tests.version.sh && run/podman-or-docker.sh build --tag=$$SELENIUM_TESTS_IMAGE --file=run/Dockerfile.selenium-tests run/
-
-# Force download.  Usually not needed as we don't want images to change, at least after
-# that version got merged; further changes should increment the tag.
-.PHONY: selenium-tests-pull
-selenium-tests-pull:
-	. run/selenium-tests.version.sh && run/podman-or-docker.sh pull $$SELENIUM_TESTS_IMAGE
-
-# If you upgrade verification-tests or change Dockerfile.selenium-tests,
-# increment the tag in run/selenium-tests.version.sh then run this.
-.PHONY: selenium-tests-push
-selenium-tests-push: selenium-tests-image
-	# You have to be member of https://quay.io/organization/redhat-sd-devel
-	# and have done `podman login` / `docker login`.
-	. run/selenium-tests.version.sh && run/podman-or-docker.sh push $$SELENIUM_TESTS_IMAGE
-
 .PHONY: clean
 clean:
 	rm -rf \

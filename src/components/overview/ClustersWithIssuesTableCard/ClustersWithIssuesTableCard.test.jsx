@@ -9,7 +9,8 @@ const unhealthyClusters = {
   pending: false,
   fulfilled: true,
   valid: false,
-  clusters: clustersWithIssues,
+  clusters: [],
+  subscriptions: clustersWithIssues,
 };
 
 const baseViewOptions = {

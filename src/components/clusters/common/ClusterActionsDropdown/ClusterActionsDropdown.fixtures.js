@@ -18,6 +18,16 @@ const cluster = {
   },
 };
 
+const osdTrialCluster = {
+  product: {
+    kind: 'ProductLink',
+    // value after normalization
+    id: 'OSDTrial',
+    href: '/api/clusters_mgmt/v1/products/osdtrial',
+  },
+  ...cluster,
+};
+
 const props = {
   showConsoleButton: true,
   canSubscribeOCP: false,
@@ -30,6 +40,11 @@ const props = {
 
 const managedReadyProps = {
   cluster: { ...cluster },
+  ...props,
+};
+
+const managedReadyOsdTrialProps = {
+  cluster: { ...osdTrialCluster },
   ...props,
 };
 
@@ -103,11 +118,13 @@ const organizationClusterProps = {
 
 export {
   managedReadyProps,
+  managedReadyOsdTrialProps,
   deleteModalData,
   clusterUninstallingProps,
   clusterNotReadyProps,
   selfManagedProps,
   cluster,
+  osdTrialCluster,
   organizationClusterProps,
   hibernateClusterModalData,
 };

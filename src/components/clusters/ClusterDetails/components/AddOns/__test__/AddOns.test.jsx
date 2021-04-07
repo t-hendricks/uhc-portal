@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import AddOns from '../AddOns';
-import { mockAddOns, mockClusterAddOns, mockQuota } from './AddOns.fixtures';
+import { mockAddOns, mockClusterAddOns } from './AddOns.fixtures';
+import { addonsQuota } from '../../../../common/__test__/quota.fixtures';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
 describe('<AddOns />', () => {
@@ -25,7 +26,8 @@ describe('<AddOns />', () => {
       organization={organization}
       addOns={mockAddOns}
       clusterAddOns={mockClusterAddOns}
-      quota={mockQuota}
+      clusterMachinePools={{}}
+      quota={addonsQuota}
       getAddOns={getAddOns}
       getOrganizationAndQuota={getOrganizationAndQuota}
       getClusterAddOns={getClusterAddOns}

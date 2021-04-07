@@ -18,11 +18,7 @@ class AvailabilityZoneSelection extends React.Component {
   onSelect = (_, selection) => {
     const { input } = this.props;
     this.setState({ isOpen: false });
-    if (selection === PLACEHOLDER_VALUE) {
-      input.onChange('');
-    } else {
-      input.onChange(selection);
-    }
+    input.onChange(selection);
   }
 
   render() {

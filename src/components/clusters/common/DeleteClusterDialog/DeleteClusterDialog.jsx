@@ -83,6 +83,7 @@ class DeleteClusterDialog extends React.Component {
         isPrimaryDisabled={!isValid || isPending}
         isPending={isPending}
         primaryVariant="danger"
+        data-test-id="delete-cluster-dialog"
       >
         <>
           {errorContainer}

@@ -6,7 +6,7 @@ import { Field } from 'redux-form';
 import { LevelUpAltIcon } from '@patternfly/react-icons';
 import Modal from '../../../../../common/Modal/Modal';
 import { hasParameters } from '../AddOnsHelper';
-import { ReduxCheckbox, ReduxVerticalFormGroup } from '../../../../../common/ReduxFormComponents';
+import { ReduxCheckbox, ReduxVerticalFormGroup, ReduxFormDropdown } from '../../../../../common/ReduxFormComponents';
 import { required, validateNumericInput } from '../../../../../../common/validators';
 import ErrorBox from '../../../../../common/ErrorBox';
 
@@ -79,6 +79,13 @@ class AddOnsParametersModal extends Component {
   };
 
   getFieldProps = (param) => {
+    if (param.options !== undefined && param.options.length > 0) {
+      return ({
+        component: ReduxFormDropdown,
+        options: param.options,
+        type: 'text',
+      });
+    }
     switch (param.value_type) {
       case 'number':
         return ({
@@ -101,6 +108,7 @@ class AddOnsParametersModal extends Component {
     <Field
       {...this.getFieldProps(param)}
       key={param.id}
+      id={`field-addon-${param.id}`}
       name={`parameters.${param.id}`}
       label={param.name}
       placeholder={this.getParamDefault(param)}
@@ -141,7 +149,7 @@ class AddOnsParametersModal extends Component {
           <ErrorBox message="Error adding add-ons" response={submitClusterAddOnResponse} />
         )}
 
-        <Form>
+        <Form id={`form-addon-${addOn.id}`}>
           {hasParameters(addOn) && addOn.parameters.items.map(param => (
             <FormGroup
               key={param.id}
@@ -153,6 +161,7 @@ class AddOnsParametersModal extends Component {
                 && (
                   <Button
                     onClick={() => this.setDefaultParamValue(param)}
+                    id={`reset-addon-${param.id}`}
                     variant="link"
                     icon={<LevelUpAltIcon />}
                     iconPosition="right"

@@ -10,7 +10,7 @@ const masterResizeThresholds = {
 };
 const masterResizeAlertThresholdSelector = (state) => {
   const { data } = state.modal;
-  const currentNodes = get(data, 'cluster.nodes.compute', 0);
+  const currentNodes = get(data, 'cluster.nodes.compute', 0) || get(data, 'cluster.nodes.autoscale_compute.min_replicas');
   const values = getFormValues('EditNodeCount')(state);
   const requestedNodes = parseInt(get(values, 'nodes_compute', 0), 10);
 

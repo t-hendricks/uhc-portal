@@ -164,7 +164,7 @@
             "id": "aws",
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
-          "enabled": false,
+          "enabled": true,
           "supports_multi_az": true
         },
         {

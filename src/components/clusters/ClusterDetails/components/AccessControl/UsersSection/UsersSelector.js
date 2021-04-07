@@ -1,12 +1,13 @@
 import get from 'lodash/get';
 
 import clusterStates from '../../../../common/clusterStates';
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 const canAllowAdminSelector = (state) => {
-  const product = get(state, 'clusters.details.cluster.product.id', 'osd');
+  const product = get(state, 'clusters.details.cluster.subscription.plan.id', normalizedProducts.OSD);
   const clusterState = get(state, 'clusters.details.cluster.state');
 
-  if (product === 'rhmi' || clusterState !== clusterStates.READY) {
+  if (product === normalizedProducts.RHMI || clusterState !== clusterStates.READY) {
     return false;
   }
 

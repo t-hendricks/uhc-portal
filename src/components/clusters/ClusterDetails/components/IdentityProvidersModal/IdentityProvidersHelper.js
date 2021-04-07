@@ -147,8 +147,8 @@ const GitlabDocLink = 'https://docs.openshift.com/container-platform/latest/auth
 
 const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({
-    client_id: formData.client_id,
-    client_secret: formData.client_secret,
+    client_id: formData.client_id.trim(),
+    client_secret: formData.client_secret.trim(),
     organizations: formData.github_auth_mode === 'organizations' ? multiInputToCleanArray(formData, 'organizations') : undefined,
     teams: formData.github_auth_mode === 'teams' ? multiInputToCleanArray(formData, 'teams') : undefined,
     hostname: formData.hostname,
@@ -156,8 +156,8 @@ const getCreateIDPRequestData = (formData) => {
   });
 
   const googleData = () => ({
-    client_id: formData.client_id,
-    client_secret: formData.client_secret,
+    client_id: formData.client_id.trim(),
+    client_secret: formData.client_secret.trim(),
     hosted_domain: formData.hosted_domain,
   });
 
@@ -176,8 +176,8 @@ const getCreateIDPRequestData = (formData) => {
   });
 
   const gitlabData = () => ({
-    client_id: formData.client_id,
-    client_secret: formData.client_secret,
+    client_id: formData.client_id.trim(),
+    client_secret: formData.client_secret.trim(),
     url: formData.gitlab_url,
     ca: formData.gitlab_ca ? formData.gitlab_ca.trim() : formData.gitlab_ca,
   });
@@ -189,8 +189,8 @@ const getCreateIDPRequestData = (formData) => {
       name: multiInputToCleanArray(formData, 'openid_name'),
       preferred_username: multiInputToCleanArray(formData, 'openid_preferred_username'),
     },
-    client_id: formData.client_id,
-    client_secret: formData.client_secret,
+    client_id: formData.client_id.trim(),
+    client_secret: formData.client_secret.trim(),
     extra_scopes: strToCleanArray(formData.openid_extra_scopes),
     issuer: formData.issuer,
   });

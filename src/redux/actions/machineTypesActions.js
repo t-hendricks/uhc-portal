@@ -15,6 +15,9 @@ const getResourceName = (machineType) => {
     case 'memory_optimized':
       category = 'mem';
       break;
+    case 'accelerated_computing':
+      category = 'gpu';
+      break;
     default:
       break;
   }

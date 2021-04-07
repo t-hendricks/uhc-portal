@@ -29,7 +29,6 @@ import skeletonRows from '../../../common/SkeletonRows';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
 
-
 function ClusterListTable(props) {
   const {
     viewOptions, setSorting, clusters, openModal, isPending, setClusterDetails,
@@ -56,7 +55,7 @@ function ClusterListTable(props) {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
 
     const clusterName = (
-      <Link to={`/details/s/${cluster.subscription.id}`} onClick={() => setClusterDetails(cluster)}>
+      <Link to={`/details/s/${cluster.subscription.id}`} onClick={() => { if (!cluster.partialCS) { setClusterDetails(cluster); } }}>
         {getClusterName(cluster)}
       </Link>
     );

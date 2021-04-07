@@ -60,6 +60,7 @@ class IdentityProvidersModal extends React.Component {
       isPending={isPending}
       onPrimaryClick={handleSubmit}
       onSecondaryClick={() => this.onClose()}
+      data-test-id="add-idp-osd-dialog"
     >
       <IDPForm
         selectedIDP={selectedIDP}

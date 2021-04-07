@@ -30,13 +30,14 @@ import {
   Skeleton,
 } from '@redhat-cloud-services/frontend-components';
 
+import AddMachinePoolModal from './components/AddMachinePoolModal';
+import EditTaintsModal from './components/EditTaintsModal';
+import EditLabelsModal from './components/EditLabelsModal';
+import './MachinePools.scss';
+import { actionResolver } from './machinePoolsHelper';
+
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
-
-import AddMachinePoolModal from './components/AddMachinePoolModal';
-import EditLabelsAndTaintsModal from './components/EditTaintsModal';
-import './MachinePools.scss';
-import actionResolver from './machinePoolsHelper';
 
 import { noQuotaTooltip } from '../../../../../common/helpers';
 import { isHibernating } from '../../../common/clusterStates';
@@ -116,7 +117,8 @@ class MachinePools extends React.Component {
       machinePoolsList,
       openModal,
       isAddMachinePoolModalOpen,
-      isEditLabelsAndTaintsModalOpen,
+      isEditTaintsModalOpen,
+      isEditLabelsModalOpen,
       deleteMachinePool,
       defaultMachinePool,
       deleteMachinePoolResponse,
@@ -297,6 +299,10 @@ class MachinePools extends React.Component {
       machinePool: rowData.machinePool,
     });
 
+    const onClickEditLaeblsAction = (_, __, rowData) => openModal(modals.EDIT_LABELS, {
+      machinePool: rowData.machinePool,
+    });
+
     const showSkeleton = !hasMachinePools && machinePoolsList.pending;
     const skeletonRow = {
       cells: [
@@ -381,7 +387,8 @@ class MachinePools extends React.Component {
                   rowData => actionResolver(rowData,
                     onClickDeleteAction,
                     onClickScaleAction,
-                    onClickEditTaintsAction)
+                    onClickEditTaintsAction,
+                    onClickEditLaeblsAction)
                 }
                 areActionsDisabled={() => !cluster.canEdit || clusterHibernating}
               >
@@ -392,7 +399,8 @@ class MachinePools extends React.Component {
           </Card>
         )}
         {isAddMachinePoolModalOpen && <AddMachinePoolModal cluster={cluster} />}
-        {isEditLabelsAndTaintsModalOpen && <EditLabelsAndTaintsModal clusterId={cluster.id} />}
+        {isEditTaintsModalOpen && <EditTaintsModal clusterId={cluster.id} />}
+        {isEditLabelsModalOpen && <EditLabelsModal clusterId={cluster.id} />}
       </>
     );
   }
@@ -411,7 +419,8 @@ MachinePools.propTypes = {
   openModal: PropTypes.func.isRequired,
   hasMachinePoolsQuota: PropTypes.bool.isRequired,
   isAddMachinePoolModalOpen: PropTypes.bool.isRequired,
-  isEditLabelsAndTaintsModalOpen: PropTypes.bool.isRequired,
+  isEditTaintsModalOpen: PropTypes.bool.isRequired,
+  isEditLabelsModalOpen: PropTypes.bool.isRequired,
   deleteMachinePoolResponse: PropTypes.object.isRequired,
   addMachinePoolResponse: PropTypes.object.isRequired,
   scaleMachinePoolResponse: PropTypes.object.isRequired,

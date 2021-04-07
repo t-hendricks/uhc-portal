@@ -9349,10 +9349,10 @@ opener@^1.5.1:
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
   integrity sha512-goYSy5c2UXE4Ra1xixabeVh1guIX/ZV/YokJksb6q2lubWu6UbvPQ20p542/sFIll1nl8JnCyK9oBaOcCWXwvA==
 
-openshift-assisted-ui-lib@^1.5.12:
-  version "1.5.12"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-1.5.12.tgz#40788ace31ee2c662aad15d1e9d73b5c7b4e15b4"
-  integrity sha512-aa56qthULEk37BLd/XvQBoKiy0miUBl6JiyPAWdtMVpojUVOL6oTb/OlbwMChAZ28jZfdsAbfwZQfQplkbE2Mw==
+openshift-assisted-ui-lib@^1.5.13:
+  version "1.5.13"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-1.5.13.tgz#52ce63ad70dc60fc41edb0f0d0370ead568c948f"
+  integrity sha512-efBbTkYY0wKGKcN4CD8nfObLtD2yq9j+Eiod7+zo/gkxqvrw3tsbM0x4UtM+G2TcQTUcMk/uRWO6gIwhCABtPw==
   dependencies:
     axios-case-converter "^0.6.0"
     filesize.js "^2.0.0"
@@ -10461,6 +10461,11 @@ react-router@5.2.0, react-router@^5.2.0:
     react-is "^16.6.0"
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
+
+react-tagsinput@^3.19.0:
+  version "3.19.0"
+  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/react-tagsinput/-/react-tagsinput-3.19.0.tgz#6e3b45595f2d295d4657bf194491988f948caabf"
+  integrity sha512-ni+/qnZrYrvLg83LtTFHErKy1KQHL0fi0Y6C5jgC1dNUePE9cS/OlQ4XH6JRSjv9GGoeVE0R/ujSBaS1uzCRYQ==
 
 react-test-renderer@^16.0.0-0:
   version "16.13.1"

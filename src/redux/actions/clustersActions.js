@@ -121,6 +121,14 @@ const clearClusterArchiveResponse = () => dispatch => dispatch({
   type: clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE,
 });
 
+const upgradeTrialCluster = (id, params) => dispatch => dispatch({
+  type: clustersConstants.UPGRADE_TRIAL_CLUSTER,
+  payload: clusterService.upgradeTrialCluster(id, params),
+});
+
+const clearUpgradeTrialClusterResponse = () => dispatch => dispatch({
+  type: clustersConstants.CLEAR_UPGRADE_TRIAL_CLUSTER_RESPONSE,
+});
 
 const hibernateCluster = id => dispatch => dispatch({
   type: clustersConstants.HIBERNATE_CLUSTER,
@@ -182,18 +190,20 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
   subscriptionMap.forEach((value) => {
     let cluster;
     if (value.subscription.managed
-      && value.subscription.status !== subscriptionStatuses.DEPROVISIONED) {
-      if (!value?.cluster || isEmpty(value?.cluster)) {
-        // skip OSD cluster without data
-        console.warn(`Skipped OSD cluster with no data in CS - subscription ID ${value.subscription.id}`);
-        return;
-      }
+      && value.subscription.status !== subscriptionStatuses.DEPROVISIONED
+      && !!value?.cluster && !isEmpty(value?.cluster)) {
+      // managed cluster, with data from Clusters Service
       cluster = normalizeCluster(value.cluster);
     } else {
+      // either not managed by Clusters Service, or Clusters Service is down
       cluster = fakeClusterFromSubscription(value.subscription);
     }
-    cluster.canEdit = (canEdit['*'] || !!canEdit[cluster.id]) && value.subscription.status !== subscriptionStatuses.DEPROVISIONED;
-    cluster.canDelete = canDelete['*'] || !!canDelete[cluster.id];
+
+    // mark this as a clusters service cluster with partial data (happens when CS is down)
+    cluster.partialCS = cluster.managed && (!value?.cluster || isEmpty(value?.cluster));
+
+    cluster.canEdit = !cluster.partialCS && ((canEdit['*'] || !!canEdit[cluster.id]) && value.subscription.status !== subscriptionStatuses.DEPROVISIONED);
+    cluster.canDelete = !cluster.partialCS && (canDelete['*'] || !!canDelete[cluster.id]);
     cluster.subscription = value.subscription;
     result.push(cluster);
   });
@@ -263,9 +273,23 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
               page: subscriptions.data.page,
               total: subscriptions.data.total || 0,
               queryParams: { ...clusterRequestParams },
+              meta: {
+                clustersServiceError: false,
+              },
             },
           };
-        });
+        }).catch(e => ({
+          // When clusters service is down, return AMS data only
+          data: {
+            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
+            page: subscriptions.data.page,
+            total: subscriptions.data.total || 0,
+            queryParams: { ...clusterRequestParams },
+            meta: {
+              clustersServiceError: e,
+            },
+          },
+        }));
     });
 };
 
@@ -370,4 +394,6 @@ export {
   clearClusterUnarchiveResponse,
   editClusterConsoleURL,
   getClusterStatus,
+  upgradeTrialCluster,
+  clearUpgradeTrialClusterResponse,
 };

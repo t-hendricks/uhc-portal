@@ -62,6 +62,12 @@ describe('machineTypesActions', () => {
       const resourceName = machineTypesActions.getResourceName(machineType);
       expect(resourceName).toEqual('mem.large');
     });
+
+    it('determines that the machine is gpu.large', () => {
+      const machineType = { category: 'accelerated_computing', size: 'large' };
+      const resourceName = machineTypesActions.getResourceName(machineType);
+      expect(resourceName).toEqual('gpu.large');
+    });
   });
 
   describe('groupByCloudProvider', () => {

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { dashboardsConstants } from '../constants';
-import { accountManager, accountsService, clusterService } from '../../services';
+import { accountManager, accountsService } from '../../services';
 
 const getDashboard = () => accountsService.getCurrentAccount()
   .then(organizationResponse => organizationResponse.data?.organization?.id)
@@ -43,7 +43,7 @@ const getSummaryDashboard = () => dispatch => dispatch({
 
 const getUnhealthyClusters = params => dispatch => dispatch({
   type: dashboardsConstants.GET_UNHEALTHY_CLUSTERS,
-  payload: clusterService.getUnhealthyClusters(params),
+  payload: accountsService.getUnhealthyClusters(params),
 });
 
 export {

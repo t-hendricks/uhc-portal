@@ -2,6 +2,8 @@
 
 exports[`<PersistentStorageDropdown /> when persistent storage list needs to be fetched renders correctly 1`] = `
 <PersistentStorageDropdown
+  billingModel="standard"
+  cloudProviderID="aws"
   disabled={false}
   getPersistentStorage={
     [MockFunction] {
@@ -21,22 +23,34 @@ exports[`<PersistentStorageDropdown /> when persistent storage list needs to be 
       "onChange": [MockFunction],
     }
   }
-  organization={
-    Object {
-      "fulfilled": true,
-      "pending": false,
-    }
-  }
+  isBYOC={false}
+  isMultiAZ={false}
   persistentStorageValues={
     Object {
       "error": false,
       "errorMessage": "",
       "fulfilled": false,
       "pending": false,
-      "values": Array [],
     }
   }
-  storageQuota={0}
+  product="OSD"
+  quotaList={
+    Object {
+      "storageQuota": Object {
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "rhInfra": Object {
+                "singleAZ": Object {
+                  "gp2": 27000,
+                },
+              },
+            },
+          },
+        },
+      },
+    }
+  }
 >
   <div
     className="spinner-fit-container"
@@ -64,6 +78,8 @@ exports[`<PersistentStorageDropdown /> when persistent storage list needs to be 
 
 exports[`<PersistentStorageDropdown /> when the request is pending renders correctly 1`] = `
 <PersistentStorageDropdown
+  billingModel="standard"
+  cloudProviderID="aws"
   disabled={false}
   getPersistentStorage={[MockFunction]}
   input={
@@ -71,12 +87,8 @@ exports[`<PersistentStorageDropdown /> when the request is pending renders corre
       "onChange": [MockFunction],
     }
   }
-  organization={
-    Object {
-      "fulfilled": true,
-      "pending": false,
-    }
-  }
+  isBYOC={false}
+  isMultiAZ={false}
   persistentStorageValues={
     Object {
       "error": false,
@@ -86,7 +98,24 @@ exports[`<PersistentStorageDropdown /> when the request is pending renders corre
       "values": Array [],
     }
   }
-  storageQuota={0}
+  product="OSD"
+  quotaList={
+    Object {
+      "storageQuota": Object {
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "rhInfra": Object {
+                "singleAZ": Object {
+                  "gp2": 27000,
+                },
+              },
+            },
+          },
+        },
+      },
+    }
+  }
 >
   <div
     className="spinner-fit-container"
@@ -114,6 +143,8 @@ exports[`<PersistentStorageDropdown /> when the request is pending renders corre
 
 exports[`<PersistentStorageDropdown /> when the storage list is available renders correctly 1`] = `
 <PersistentStorageDropdown
+  billingModel="standard"
+  cloudProviderID="aws"
   disabled={false}
   getPersistentStorage={[MockFunction]}
   input={
@@ -121,12 +152,8 @@ exports[`<PersistentStorageDropdown /> when the storage list is available render
       "onChange": [MockFunction],
     }
   }
-  organization={
-    Object {
-      "fulfilled": true,
-      "pending": false,
-    }
-  }
+  isBYOC={false}
+  isMultiAZ={false}
   persistentStorageValues={
     Object {
       "error": false,
@@ -149,7 +176,24 @@ exports[`<PersistentStorageDropdown /> when the storage list is available render
       ],
     }
   }
-  storageQuota={600}
+  product="OSD"
+  quotaList={
+    Object {
+      "storageQuota": Object {
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "rhInfra": Object {
+                "singleAZ": Object {
+                  "gp2": 27000,
+                },
+              },
+            },
+          },
+        },
+      },
+    }
+  }
 >
   <FormSelect
     aria-label="Persistent Storage"
@@ -203,6 +247,19 @@ exports[`<PersistentStorageDropdown /> when the storage list is available render
           600 GiB
         </option>
       </FormSelectOption>
+      <FormSelectOption
+        key="1181116006400"
+        label="1100 GiB"
+        value="1181116006400"
+      >
+        <option
+          className=""
+          disabled={false}
+          value="1181116006400"
+        >
+          1100 GiB
+        </option>
+      </FormSelectOption>
     </select>
   </FormSelect>
 </PersistentStorageDropdown>
@@ -210,6 +267,8 @@ exports[`<PersistentStorageDropdown /> when the storage list is available render
 
 exports[`<PersistentStorageDropdown /> when there was an error renders correctly 1`] = `
 <PersistentStorageDropdown
+  billingModel="standard"
+  cloudProviderID="aws"
   disabled={false}
   getPersistentStorage={[MockFunction]}
   input={
@@ -217,22 +276,34 @@ exports[`<PersistentStorageDropdown /> when there was an error renders correctly
       "onChange": [MockFunction],
     }
   }
-  organization={
-    Object {
-      "fulfilled": true,
-      "pending": false,
-    }
-  }
+  isBYOC={false}
+  isMultiAZ={false}
   persistentStorageValues={
     Object {
       "error": true,
       "errorMessage": "This is an error message",
       "fulfilled": false,
       "pending": false,
-      "values": Array [],
     }
   }
-  storageQuota={0}
+  product="OSD"
+  quotaList={
+    Object {
+      "storageQuota": Object {
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "rhInfra": Object {
+                "singleAZ": Object {
+                  "gp2": 27000,
+                },
+              },
+            },
+          },
+        },
+      },
+    }
+  }
 >
   <ErrorBox
     message="Error loading persistent storage list"
@@ -242,7 +313,6 @@ exports[`<PersistentStorageDropdown /> when there was an error renders correctly
         "errorMessage": "This is an error message",
         "fulfilled": false,
         "pending": false,
-        "values": Array [],
       }
     }
   >

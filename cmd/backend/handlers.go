@@ -134,6 +134,8 @@ func (h *ProxyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	r.URL.Path = strings.Replace(r.URL.Path, "/openshift_api", "", 1)
+
 	// Replace the scheme and host with the ones of the real gateway:
 	r.URL.Scheme = h.target.Scheme
 	r.URL.Host = h.target.Host

@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ReduxFormTagsInput /> should render with error 1`] = `
+<Fragment>
+  <TagsInput
+    addKeys={
+      Array [
+        9,
+        13,
+      ]
+    }
+    addOnBlur={false}
+    addOnPaste={false}
+    className="react-tagsinput"
+    disabled={false}
+    focusedClassName="react-tagsinput--focused"
+    inputProps={
+      Object {
+        "placeholder": "Add a tag",
+      }
+    }
+    maxTags={-1}
+    onChange={[MockFunction]}
+    onlyUnique={false}
+    pasteSplit={[Function]}
+    preventSubmit={true}
+    removeKeys={
+      Array [
+        8,
+      ]
+    }
+    renderInput={[Function]}
+    renderLayout={[Function]}
+    renderTag={[Function]}
+    tagDisplayProp={null}
+    tagProps={
+      Object {
+        "className": "react-tagsinput-tag",
+        "classNameRemove": "react-tagsinput-remove",
+      }
+    }
+    validationRegex={/\\.\\*/}
+    value={Array []}
+  />
+  <div
+    className="pf-c-form__helper-text pf-m-error"
+  >
+    Error message
+  </div>
+</Fragment>
+`;
+
+exports[`<ReduxFormTagsInput /> should render with tags 1`] = `
+<Fragment>
+  <TagsInput
+    addKeys={
+      Array [
+        9,
+        13,
+      ]
+    }
+    addOnBlur={false}
+    addOnPaste={false}
+    className="react-tagsinput"
+    disabled={false}
+    focusedClassName="react-tagsinput--focused"
+    inputProps={
+      Object {
+        "placeholder": "Add a tag",
+      }
+    }
+    maxTags={-1}
+    onChange={[MockFunction]}
+    onlyUnique={false}
+    pasteSplit={[Function]}
+    preventSubmit={true}
+    removeKeys={
+      Array [
+        8,
+      ]
+    }
+    renderInput={[Function]}
+    renderLayout={[Function]}
+    renderTag={[Function]}
+    tagDisplayProp={null}
+    tagProps={
+      Object {
+        "className": "react-tagsinput-tag",
+        "classNameRemove": "react-tagsinput-remove",
+      }
+    }
+    validationRegex={/\\.\\*/}
+    value={
+      Array [
+        "hello=world",
+        "foo=bar",
+      ]
+    }
+  />
+</Fragment>
+`;
+
+exports[`<ReduxFormTagsInput /> should render without tags 1`] = `
+<Fragment>
+  <TagsInput
+    addKeys={
+      Array [
+        9,
+        13,
+      ]
+    }
+    addOnBlur={false}
+    addOnPaste={false}
+    className="react-tagsinput"
+    disabled={false}
+    focusedClassName="react-tagsinput--focused"
+    inputProps={
+      Object {
+        "placeholder": "Add a tag",
+      }
+    }
+    maxTags={-1}
+    onChange={[MockFunction]}
+    onlyUnique={false}
+    pasteSplit={[Function]}
+    preventSubmit={true}
+    removeKeys={
+      Array [
+        8,
+      ]
+    }
+    renderInput={[Function]}
+    renderLayout={[Function]}
+    renderTag={[Function]}
+    tagDisplayProp={null}
+    tagProps={
+      Object {
+        "className": "react-tagsinput-tag",
+        "classNameRemove": "react-tagsinput-remove",
+      }
+    }
+    validationRegex={/\\.\\*/}
+    value={Array []}
+  />
+</Fragment>
+`;

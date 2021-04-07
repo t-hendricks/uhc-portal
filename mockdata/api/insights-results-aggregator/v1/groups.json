@@ -1,0 +1,25 @@
+{
+  "groups": [
+    {
+      "title": "Fault Tolerance",
+      "description": "Fault Tolerance description",
+      "tags": ["tag1"]
+    },
+    {
+      "title": "Service Availability",
+      "description": "Service Availability description",
+      "tags": ["tag2"]
+    },
+    {
+      "title": "Performance",
+      "description": "Performance description",
+      "tags": ["tag3"]
+    },
+    {
+      "title": "Security",
+      "description": "Security description",
+      "tags": ["tag1", "tag4"]
+    }
+  ],
+  "status": "ok"
+}

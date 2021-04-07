@@ -5,7 +5,7 @@ import {
   FormGroup, Title,
 } from '@patternfly/react-core';
 
-import { billingModels } from '../../../../../../common/subscriptionTypes';
+import { billingModels, normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import FlatRadioButton from '../../../../../common/FlatRadioButton';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import { billingModelConstants } from '../../CreateOSDFormConstants';
@@ -15,14 +15,17 @@ import './BillingModelRadioButtons.scss';
 function BillingModelRadioButtons({
   hasBYOCquota,
   hasStandardQuota,
+  hasStandardOSDQuota,
   hasMarketplaceBYOCQuota,
   hasMarketplaceRhInfraQuota,
   input: { onChange },
   byocSelected,
+  showOSDTrial,
   showMarketplace,
   pending,
   toggleSubscriptionBilling,
   billingModel,
+  product,
 }) {
   const {
     standard,
@@ -30,13 +33,20 @@ function BillingModelRadioButtons({
     customerCloudSubscription,
     customerCloudSubscriptionText,
   } = billingModelConstants;
+  const { STANDARD } = billingModels;
+
+
+  const showSubscriptionType = showOSDTrial || showMarketplace;
+  let defaultBillingModel = !billingModel ? STANDARD : billingModel;
+  if (product === normalizedProducts.OSDTrial) {
+    defaultBillingModel = 'standard-trial';
+  }
 
   const hasMarketplaceSubscription = hasMarketplaceBYOCQuota || hasMarketplaceRhInfraQuota;
-  const hasStandardSubscription = hasBYOCquota || hasStandardQuota;
 
   let isStandardQuotaDisabled;
   let isBYOCQuotaDisabled;
-  if (billingModel === billingModels.STANDARD) {
+  if (defaultBillingModel.split('-')[0] === STANDARD) {
     isStandardQuotaDisabled = !hasStandardQuota;
     isBYOCQuotaDisabled = !hasBYOCquota;
   } else {
@@ -46,13 +56,26 @@ function BillingModelRadioButtons({
 
   const subscriptionOptions = [
     {
-      disabled: !hasStandardSubscription,
+      disabled: !hasStandardOSDQuota,
       value: 'standard',
       ariaLabel: 'Standard',
-      label: 'Red Hat subscriptions (pre-paid)',
+      label: 'Annual: Fixed capacity subscription from Red Hat',
       description: 'Use the quota pre-purchased by your organization',
     },
   ];
+
+  if (showOSDTrial) {
+    subscriptionOptions.push(
+      {
+        value: 'standard-trial',
+        ariaLabel: 'OSD Trial',
+        label: 'Free trial (upgradeable)',
+        // 60 days may be updated later based on an account capability
+        // https://issues.redhat.com/browse/SDB-1846
+        description: 'Try OpenShift Dedicated for free for 60 days. Upgrade anytime',
+      },
+    );
+  }
 
   if (showMarketplace) {
     subscriptionOptions.push(
@@ -60,7 +83,7 @@ function BillingModelRadioButtons({
         disabled: !hasMarketplaceSubscription,
         value: 'marketplace',
         ariaLabel: 'Marketplace',
-        label: 'Consumption billing via the Red Hat Marketplace',
+        label: 'Pay-as-you-go: Flexible usage billed through the Red Hat Marketplace',
         description: 'Use Red Hat Marketplace to subscribe and pay based on the services you use',
       },
     );
@@ -68,7 +91,7 @@ function BillingModelRadioButtons({
 
   return (
     <>
-      {showMarketplace && (
+      {showSubscriptionType && (
         <>
           <Title headingLevel="h3">Subscription type:</Title>
           <FormGroup
@@ -83,7 +106,7 @@ function BillingModelRadioButtons({
               disabled={pending}
               onChange={toggleSubscriptionBilling}
               options={subscriptionOptions}
-              defaultValue={billingModel}
+              defaultValue={defaultBillingModel}
             />
           </FormGroup>
           <Title headingLevel="h3">Infrastructure type:</Title>
@@ -123,14 +146,17 @@ BillingModelRadioButtons.defaultProps = {
 BillingModelRadioButtons.propTypes = {
   hasBYOCquota: PropTypes.bool.isRequired,
   hasStandardQuota: PropTypes.bool.isRequired,
+  hasStandardOSDQuota: PropTypes.bool.isRequired,
   hasMarketplaceBYOCQuota: PropTypes.bool.isRequired,
   hasMarketplaceRhInfraQuota: PropTypes.bool.isRequired,
   input: PropTypes.shape({ onChange: PropTypes.func.isRequired }).isRequired,
   byocSelected: PropTypes.bool,
+  showOSDTrial: PropTypes.bool,
   showMarketplace: PropTypes.bool,
   pending: PropTypes.bool,
   toggleSubscriptionBilling: PropTypes.func.isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
+  product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
 };
 
 export default BillingModelRadioButtons;
