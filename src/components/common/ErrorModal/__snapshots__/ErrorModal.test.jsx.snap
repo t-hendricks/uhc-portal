@@ -20,7 +20,7 @@ exports[`<ErrorModal /> should render 1`] = `
   onPrimaryClick={[Function]}
   primaryText="Close"
   showClose={false}
-  showSecondary={false}
+  showSecondery={false}
 >
   <p>
     Error Message

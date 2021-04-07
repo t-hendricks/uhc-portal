@@ -30,7 +30,7 @@ function ErrorModal({
       onPrimaryClick={close}
       onClose={close}
       showClose={false}
-      showSecondary={false}
+      showSecondery={false}
     >
       <p>
         {errorResponse.errorMessage}

@@ -11,22 +11,16 @@ function Modal({
   onClose = noop,
   showPrimary = true,
   primaryText = 'Confirm',
-  showSecondary = true,
+  showSecondery = true,
   secondaryText = 'Cancel',
-  showTertiary = false,
-  tertiaryText,
   onPrimaryClick = noop,
   onSecondaryClick = noop,
-  onTertiaryClick = noop,
   isSmall = true,
   modalSize,
   isPrimaryDisabled = false,
-  isSecondaryDisabled = false,
   isPending = false,
   children = null,
   primaryVariant = 'primary',
-  primaryLink,
-  secondaryLink,
   ...extraProps
 }) {
   return (
@@ -39,7 +33,7 @@ function Modal({
       isOpen
       onClose={onClose}
       actions={isPending ? [] : [
-        showPrimary && !primaryLink && (
+        showPrimary && (
           <Button
             key="confirm"
             variant={primaryVariant}
@@ -50,38 +44,9 @@ function Modal({
             {primaryText}
           </Button>
         ),
-        showPrimary && primaryLink && (
-          <Button
-            key="confirm"
-            variant={primaryVariant}
-            component="a"
-            target="_blank"
-            href={primaryLink}
-            isDisabled={isPrimaryDisabled}
-          >
-            {primaryText}
-          </Button>
-        ),
-        showSecondary && !secondaryLink && (
-          <Button key="secondary" variant="secondary" onClick={onSecondaryClick}>
+        showSecondery && (
+          <Button key="cancel" variant="secondary" onClick={onSecondaryClick}>
             {secondaryText}
-          </Button>
-        ),
-        showSecondary && secondaryLink && (
-          <Button
-            key="secondary"
-            variant="secondary"
-            component="a"
-            target="_blank"
-            href={secondaryLink}
-            isDisabled={isSecondaryDisabled}
-          >
-            {secondaryText}
-          </Button>
-        ),
-        showTertiary && (
-          <Button key="tertiary" variant="secondary" onClick={onTertiaryClick}>
-            {tertiaryText}
           </Button>
         ),
       ]}
@@ -97,21 +62,14 @@ Modal.propTypes = {
   modalSize: PropTypes.string,
   title: PropTypes.string,
   onClose: PropTypes.func,
-  primaryLink: PropTypes.string,
-  secondaryLink: PropTypes.string,
   primaryText: PropTypes.string,
   secondaryText: PropTypes.string,
-  tertiaryText: PropTypes.string,
   onPrimaryClick: PropTypes.func,
   onSecondaryClick: PropTypes.func,
-  onTertiaryClick: PropTypes.func,
   isPrimaryDisabled: PropTypes.bool,
-  isSecondaryDisabled: PropTypes.bool,
-  isTertiaryDisabled: PropTypes.bool,
   children: PropTypes.node,
   showPrimary: PropTypes.bool,
-  showSecondary: PropTypes.bool,
-  showTertiary: PropTypes.bool,
+  showSecondery: PropTypes.bool,
   isPending: PropTypes.bool,
   primaryVariant: PropTypes.string,
 };
