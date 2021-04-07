@@ -42,6 +42,10 @@ class UpgradeTrialClusterDialog extends Component {
     } = this.props;
     const { OSD } = normalizedProducts;
     const { STANDARD, MARKETPLACE } = billingModels;
+    const quota = {
+      STANDARD: false,
+      MARKETPLACE: false,
+    };
 
     // OSD Trial is always CCS
     const isBYOC = true;
@@ -50,8 +54,11 @@ class UpgradeTrialClusterDialog extends Component {
 
     // convert machine type instance size to resource name for quota cost
     const machineTypeID = get(cluster, 'nodes.compute_machine_type.id');
-    const resourceName = getResourceName(machineTypesByID[machineTypeID]);
+    if (!machineTypeID) {
+      return quota;
+    }
 
+    const resourceName = getResourceName(machineTypesByID[machineTypeID]);
     const cloudProviderID = get(cluster, 'cloud_provider.id');
 
     const quotaParams = {
@@ -65,21 +72,16 @@ class UpgradeTrialClusterDialog extends Component {
 
     const standardClusters = availableClustersFromQuota(quotaList, quotaParams);
     const standardNodes = availableNodesFromQuota(quotaList, quotaParams);
+    quota.STANDARD = standardNodes > nodeMinimum && standardClusters > 0;
 
     quotaParams.billingModel = MARKETPLACE;
     const marketClusters = availableClustersFromQuota(quotaList, quotaParams);
     const marketNodes = availableNodesFromQuota(quotaList, quotaParams);
-
-    const standard = standardNodes > nodeMinimum && standardClusters > 0;
-    let marketplace = false;
     if (marketplaceQuotaFeature) {
-      marketplace = marketNodes > nodeMinimum && marketClusters > 0;
+      quota.MARKETPLACE = marketNodes > nodeMinimum && marketClusters > 0;
     }
 
-    return {
-      STANDARD: standard,
-      MARKETPLACE: marketplace,
-    };
+    return quota;
   }
 
   primaryButton(availableQuota) {
