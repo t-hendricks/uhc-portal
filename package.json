@@ -38,7 +38,7 @@
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "netmask": "^1.0.6",
-    "openshift-assisted-ui-lib": "^1.5.12",
+    "openshift-assisted-ui-lib": "^1.5.13",
     "prism-react-renderer": "^1.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
@@ -52,6 +52,7 @@
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.0.0",
+    "react-tagsinput": "^3.19.0",
     "redux": "^4.0.5",
     "redux-form": "^8.3.6",
     "redux-promise-middleware": "^6.1.2",
@@ -142,16 +143,15 @@
       "APP_DEVMODE": false,
       "APP_BETA": false,
       "APP_DEV_SERVER": false,
-      "APP_API_ENV": "production",
-      "OCM_SHOW_OLD_METRICS": false
+      "APP_API_ENV": false
     }
   },
   "scripts": {
     "build": "webpack $(run/progress-flag-if-tty.sh)",
     "start": "make setup && concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server' './backend' 'yarn insights-proxy'",
-    "startmock": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server-for-mock' 'mockdata/mockserver.py' 'yarn insights-proxy'",
+    "startmock": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server --api-env=mockserver' 'mockdata/mockserver.py' 'yarn insights-proxy'",
     "dev-server": "webpack-dev-server $(run/progress-flag-if-tty.sh) --hot",
-    "dev-server-for-mock": "OCM_SHOW_OLD_METRICS=true webpack-dev-server $(run/progress-flag-if-tty.sh) --hot",
+    "dev-server-for-mock": "webpack-dev-server $(run/progress-flag-if-tty.sh) --hot --api-env=mockserver",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
     "lint": "eslint src --ext js,jsx",
@@ -161,7 +161,7 @@
     "e2e-test": "make binaries node_modules run/verification-tests && yarn build && yarn e2e-test-run",
     "e2e-test-run": "concurrently --kill-others --success=first --prefix=name --names=SERVER,INSIGHTS,BROWSER,TEST --prefix-colors=cyan,green,magenta,red --handle-input --default-input-target=TEST 'env WEBPACK_WATCH=false webpack-dev-server --api-env=staging' 'run/insights-proxy.sh' 'yarn selenium-browser' 'yarn selenium-test'",
     "selenium-viewer": "wait-on tcp:5900 && vinagre --file=run/selenium.vnc",
-    "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh rm --force browser; run/podman-or-docker.sh rm --force selenium-test; pkill --full 'concurrently.*SERVER(prevent self match){0},INSIGHTS'; true"
+    "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh rm --force browser; pkill --full 'concurrently.*SERVER(prevent self match){0},INSIGHTS'; true"
   },
   "insights": {
     "appname": "openshift"

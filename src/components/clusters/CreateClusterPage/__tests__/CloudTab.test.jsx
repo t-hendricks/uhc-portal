@@ -9,7 +9,7 @@ describe('<CloudTab />', () => {
     const wrapper = shallow(
       <CloudTab
         hasOSDQuota
-        hasOSDTrialQuota={false}
+        trialEnabled={false}
         osdTrialFeature
       />,
     );
@@ -22,8 +22,7 @@ describe('<CloudTab />', () => {
     const wrapper = shallow(
       <CloudTab
         hasOSDQuota={false}
-        hasOSDTrialQuota
-        osdTrialFeature={false}
+        trialEnabled={false}
       />,
     );
 
@@ -35,8 +34,7 @@ describe('<CloudTab />', () => {
     const wrapper = shallow(
       <CloudTab
         hasOSDQuota={false}
-        hasOSDTrialQuota
-        osdTrialFeature
+        trialEnabled
       />,
     );
     expect(wrapper).toMatchSnapshot();

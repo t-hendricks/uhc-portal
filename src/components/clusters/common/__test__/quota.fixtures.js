@@ -2,25 +2,61 @@ import { userActions } from '../../../../redux/actions/userActions';
 
 import * as quotaCostFixtures from './quota_cost.fixtures';
 
+// This is the quota we use in mockdata mode, pretty much everything is allowed.
+import * as mockQuotaCost from '../../../../../mockdata/api/accounts_mgmt/v1/organizations/1HAXGgCYqHpednsRDiwWsZBmDlA/quota_cost.json';
+
 // Fragments of processed quotaList state
 
-const crcWorkspacesAddonQuota = userActions.processQuota({
+export const mockQuotaList = userActions.processQuota({ data: mockQuotaCost });
+
+export const emptyQuotaList = userActions.processQuota({ data: { items: [] } });
+
+export const ROSAQuotaList = userActions.processQuota(
+  { data: { items: quotaCostFixtures.unlimitedROSA } },
+);
+export const CCSQuotaList = userActions.processQuota({
+  data: { items: quotaCostFixtures.dedicatedCCS },
+});
+export const CCSOneNodeRemainingQuotaList = userActions.processQuota({
+  data: { items: quotaCostFixtures.dedicatedCCSOneNodeRemaining },
+});
+export const TrialQuotaList = userActions.processQuota({
+  data: { items: quotaCostFixtures.dedicatedTrial },
+});
+export const ROSACCSQuotaList = userActions.processQuota({
+  data: { items: [...quotaCostFixtures.unlimitedROSA, ...quotaCostFixtures.dedicatedCCS] },
+});
+export const CCSROSAQuotaList = userActions.processQuota({
+  data: { items: [...quotaCostFixtures.dedicatedCCS, ...quotaCostFixtures.unlimitedROSA] },
+});
+export const TrialCCSQuotaList = userActions.processQuota({
+  data: { items: [...quotaCostFixtures.dedicatedTrial, ...quotaCostFixtures.dedicatedCCS] },
+});
+export const CCSTrialQuotaList = userActions.processQuota({
+  data: { items: [...quotaCostFixtures.dedicatedCCS, ...quotaCostFixtures.dedicatedTrial] },
+});
+
+export const rhQuotaList = userActions.processQuota({
+  data: { items: quotaCostFixtures.dedicatedRhInfra },
+});
+
+export const crcWorkspacesAddonQuota = userActions.processQuota({
   data: { items: quotaCostFixtures.crcWorkspacesAddon },
 });
 
-const loggingAddonQuota = userActions.processQuota({
+export const loggingAddonQuota = userActions.processQuota({
   data: { items: quotaCostFixtures.loggingAddon },
 });
 
-const dbaAddonQuota = userActions.processQuota({
+export const dbaAddonQuota = userActions.processQuota({
   data: { items: quotaCostFixtures.dbaAddon },
 });
 
-const serviceMeshAddonQuota = userActions.processQuota({
+export const serviceMeshAddonQuota = userActions.processQuota({
   data: { items: quotaCostFixtures.serviceMeshAddon },
 });
 
-const addonsQuota = userActions.processQuota({
+export const addonsQuota = userActions.processQuota({
   data: {
     items: [].concat(
       quotaCostFixtures.crcWorkspacesAddon,
@@ -31,104 +67,10 @@ const addonsQuota = userActions.processQuota({
   },
 });
 
-const rhInfraClusterQuota = {
-  clustersQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          rhInfra: {
-            multiAz: {
-              'mem.small': 5,
-            },
-            singleAz: {
-              'mem.small': 0,
-            },
-          },
-        },
-      },
-    },
-  },
-};
-
-const awsCCSClustersWithNodesQuota = {
-  clustersQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          rhInfra: {
-            singleAz: { available: 0 },
-            multiAz: { available: 0 },
-            totalAvailable: 0,
-          },
-          byoc: {
-            singleAz: { available: 0 },
-            multiAz: {
-              'mem.small': 5,
-              available: 5,
-            },
-            totalAvailable: 5,
-          },
-        },
-      },
-    },
-  },
-  nodesQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          byoc: {
-            'mem.small': {
-              available: 12,
-              cost: 4,
-            },
-          },
-        },
-      },
-    },
-  },
-};
-
-const awsCCSClustersWithSingleNodeQuota = {
-  clustersQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          rhInfra: {
-            singleAz: { available: 0 },
-            multiAz: { available: 0 },
-            totalAvailable: 0,
-          },
-          byoc: {
-            singleAz: { available: 0 },
-            multiAz: {
-              'mem.small': 5,
-              available: 5,
-            },
-            totalAvailable: 5,
-          },
-        },
-      },
-    },
-  },
-  nodesQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          byoc: {
-            'mem.small': {
-              available: 4,
-              cost: 4,
-            },
-          },
-        },
-      },
-    },
-  },
-};
-
 // Values for `clustersQuota` prop passed down by CreateOSDPage.
 
-const awsByocRhInfraGcpRhInfraClustersQuota = {
+export const awsByocRhInfraGcpRhInfraClustersQuota = {
+  hasStandardOSDQuota: true,
   hasProductQuota: true,
   hasAwsQuota: true,
   hasGcpQuota: true,
@@ -154,7 +96,8 @@ const awsByocRhInfraGcpRhInfraClustersQuota = {
   hasMarketplaceProductQuota: false,
 };
 
-const awsRhInfraGcpRhInfraClustersQuota = {
+export const awsRhInfraGcpRhInfraClustersQuota = {
+  hasStandardOSDQuota: true,
   hasProductQuota: true,
   hasAwsQuota: true,
   hasGcpQuota: true,
@@ -181,17 +124,4 @@ const awsRhInfraGcpRhInfraClustersQuota = {
     },
   },
   hasMarketplaceProductQuota: false,
-};
-
-export {
-  rhInfraClusterQuota,
-  awsCCSClustersWithNodesQuota,
-  awsCCSClustersWithSingleNodeQuota,
-  awsByocRhInfraGcpRhInfraClustersQuota,
-  awsRhInfraGcpRhInfraClustersQuota,
-  crcWorkspacesAddonQuota,
-  loggingAddonQuota,
-  dbaAddonQuota,
-  serviceMeshAddonQuota,
-  addonsQuota,
 };

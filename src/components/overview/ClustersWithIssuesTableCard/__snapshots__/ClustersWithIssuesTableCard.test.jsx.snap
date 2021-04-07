@@ -50,8 +50,7 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
             "cells": Array [
               Object {
                 "title": <Link
-                  onClick={[Function]}
-                  to="/details/s/foo"
+                  to="/details/s/1IztzhAGrbjtKkMbiPewJanhTXk"
                 >
                   test-liza
                 </Link>,
@@ -62,7 +61,7 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
                 </span>,
               },
             ],
-            "cluster": Object {
+            "subscription": Object {
               "api": Object {
                 "url": "https://api.test-liza.sdev.devshift.net:6443",
               },

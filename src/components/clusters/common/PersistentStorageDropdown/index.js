@@ -1,12 +1,11 @@
-import get from 'lodash/get';
 import { connect } from 'react-redux';
 
 import getPersistentStorage from '../../../../redux/actions/persistentStorageActions';
 import PersistentStorageDropdown from './PersistentStorageDropdown';
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   persistentStorageValues: state.persistentStorageValues,
-  storageQuota: get(state, `userProfile.organization.quotaList.storageQuota.${ownProps.cloudProviderID}.available`, 0),
+  quotaList: state.userProfile.organization.quotaList,
 });
 
 const mapDispatchToProps = { getPersistentStorage };

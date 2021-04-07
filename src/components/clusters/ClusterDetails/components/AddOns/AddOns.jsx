@@ -12,7 +12,9 @@ import {
 import { IntegrationIcon } from '@patternfly/react-icons';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../../common/ErrorBox';
-import { availableAddOns, getInstalled, hasQuota } from './AddOnsHelper';
+import {
+  availableAddOns, getInstalled, hasQuota, validateAddOnRequirements,
+} from './AddOnsHelper';
 import AddOnsCard from './AddOnsCard';
 import AddOnsParametersModal from './AddOnsParametersModal';
 import AddOnsDeleteModal from './AddOnsDeleteModal';
@@ -58,6 +60,7 @@ class AddOns extends React.Component {
       addOns,
       cluster,
       clusterAddOns,
+      clusterMachinePools,
       addClusterAddOnResponse,
       organization,
       quota,
@@ -111,6 +114,9 @@ class AddOns extends React.Component {
                 key={addOn.id}
                 addOn={addOn}
                 installedAddOn={getInstalled(addOn, clusterAddOns)}
+                requirements={
+                  validateAddOnRequirements(addOn, cluster, clusterAddOns, clusterMachinePools)
+                }
                 hasQuota={hasQuota(addOn, cluster, organization, quota)}
               />
             </GalleryItem>
@@ -130,6 +136,7 @@ AddOns.propTypes = {
   cluster: PropTypes.object.isRequired,
   addOns: PropTypes.object.isRequired,
   clusterAddOns: PropTypes.object.isRequired,
+  clusterMachinePools: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   quota: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,

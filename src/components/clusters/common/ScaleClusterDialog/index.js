@@ -22,7 +22,6 @@ const reduxFormEditCluster = reduxForm(reduxFormConfig)(ScaleClusterDialog);
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;
-
   return ({
     editClusterResponse: state.clusters.editedCluster,
     min: minValueSelector(modalData.multi_az, modalData.byoc),
@@ -33,6 +32,10 @@ const mapStateToProps = (state) => {
     loadBalancerValues: state.loadBalancerValues,
     organization: state.userProfile.organization,
     isByoc: modalData.byoc,
+    // eslint-disable-next-line camelcase
+    billingModel: modalData.subscription?.cluster_billing_model,
+    product: modalData.subscription?.plan.id,
+    isMultiAZ: modalData.multi_az,
     cloudProviderID: get(modalData, 'cloud_provider.id', ''),
     initialValues: {
       id: modalData.id,

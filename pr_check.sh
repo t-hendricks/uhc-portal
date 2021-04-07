@@ -47,11 +47,6 @@ function finish() {
 }
 trap finish EXIT
 
-make run/verification-tests
-# Re-pulling allows iterating on a new version of the image (OK to keep pushing the new tag until merged).
-# But when Quay is down and we have a cached image, use it.
-make selenium-tests-pull || true
-
 # Comes from Vault, see
 # https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/resources/jenkins/uhc/secrets.yaml
 export UHC_TOKEN=$TEST_SELENIUM_NOANYQUOTA_OFFLINE_TOKEN

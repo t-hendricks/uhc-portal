@@ -17,4 +17,14 @@ describe('<ErroBox />', () => {
     const wrapper = shallow(<ErrorBox message="some error message" response={{ ...baseResponse, operationID: 'hello' }} />);
     expect(wrapper).toMatchSnapshot();
   });
+
+  it('should render with warning variant', () => {
+    const wrapper = shallow(<ErrorBox message="some error description" response={baseResponse} variant="warning" />);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should render expandable', () => {
+    const wrapper = shallow(<ErrorBox message="some error description" response={baseResponse} isExpandable />);
+    expect(wrapper).toMatchSnapshot();
+  });
 });

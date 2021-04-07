@@ -27,6 +27,7 @@ import {
   GET_REPORT_DETAILS,
   SET_REPORT_DETAILS,
   SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS,
+  GET_ORGANIZATION_INSIGHTS,
 } from './InsightsConstants';
 
 const initialState = {
@@ -48,6 +49,12 @@ const initialState = {
     pending: false,
     fulfilled: false,
   },
+  overview: {
+    overview: null,
+    rejected: false,
+    pending: false,
+    fulfilled: false,
+  },
 };
 
 function insightsReducer(state = initialState, action) {
@@ -56,14 +63,17 @@ function insightsReducer(state = initialState, action) {
     switch (action.type) {
       // GET_CLUSTER_INSIGHTS
       case FULFILLED_ACTION(GET_CLUSTER_INSIGHTS):
-        draft.insightsData[action.payload.clusterId] = {
+        draft.insightsData[action.meta.clusterId] = {
           ...action.payload.insightsData,
           status: action.payload.status,
         };
         break;
       case REJECTED_ACTION(GET_CLUSTER_INSIGHTS):
-        draft.insightsData[action.payload.clusterId] = { status: action.payload.status };
+        draft.insightsData[action.meta.clusterId] = {
+          status: action.payload.response.status,
+        };
         break;
+      // GET_GROUPS_INSIGHTS
       case FULFILLED_ACTION(GET_GROUPS_INSIGHTS):
         draft.groups.groups = action.payload.data.groups;
         draft.groups.fulfilled = true;
@@ -76,6 +86,7 @@ function insightsReducer(state = initialState, action) {
         draft.groups.rejected = true;
         draft.groups.pending = false;
         break;
+      // GET_REPORT_DETAILS
       case FULFILLED_ACTION(GET_REPORT_DETAILS):
         draft.reportDetails.report = action.payload.data.report;
         draft.reportDetails.fulfilled = true;
@@ -88,6 +99,7 @@ function insightsReducer(state = initialState, action) {
         draft.reportDetails.rejected = true;
         draft.reportDetails.pending = false;
         break;
+      // SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS
       case FULFILLED_ACTION(SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS):
         draft.sendFeedbackOnRuleDisable.rejected = false;
         draft.sendFeedbackOnRuleDisable.pending = false;
@@ -103,6 +115,20 @@ function insightsReducer(state = initialState, action) {
         draft.sendFeedbackOnRuleDisable.pending = false;
         draft.sendFeedbackOnRuleDisable.fulfilled = false;
         break;
+      // GET_ORGANIZATION_INSIGHTS
+      case FULFILLED_ACTION(GET_ORGANIZATION_INSIGHTS):
+        draft.overview.overview = action.payload.data.overview;
+        draft.overview.fulfilled = true;
+        draft.overview.pending = false;
+        break;
+      case PENDING_ACTION(GET_ORGANIZATION_INSIGHTS):
+        draft.overview.pending = true;
+        break;
+      case REJECTED_ACTION(GET_ORGANIZATION_INSIGHTS):
+        draft.overview.rejected = true;
+        draft.overview.pending = false;
+        break;
+      // SET_REPORT_DETAILS
       case SET_REPORT_DETAILS:
         draft.reportDetails.report = action.payload.data.report;
         draft.reportDetails.fulfilled = true;

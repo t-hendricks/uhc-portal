@@ -11,7 +11,7 @@ import { getRandomID } from '../../../../common/helpers';
 
 import '../ReduxFormKeyValueList/ReduxFormKeyValueList.scss';
 
-const ReduxFormTaints = ({ fields, meta: { error, submitFailed } }) => (
+const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = false }) => (
   <div className="reduxFormKeyValueList">
     <div className="pf-c-form__label reduxFormKeyValueList-colTitles">
       <div className="reduxFormKeyValueList-title pf-c-form__label-text">Key</div>
@@ -19,7 +19,7 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed } }) => (
       <div className="reduxFormKeyValueList-title reduxFormKeyValueList-title-value pf-c-form__label-text">Effect</div>
     </div>
     {fields.map((label, index) => {
-      const isRemoveDisabled = index === 0 && fields.length === 1;
+      const isRemoveDisabled = !isEditing && index === 0 && fields.length === 1;
 
       return (
         <div className="space-bottom-md" key={`${fields.get(index).id}`}>
@@ -75,6 +75,7 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed } }) => (
 
 ReduxFormTaints.propTypes = {
   fields: PropTypes.object.isRequired,
+  isEditing: PropTypes.bool,
   meta: PropTypes.shape({
     error: PropTypes.string,
     submitFailed: PropTypes.bool,

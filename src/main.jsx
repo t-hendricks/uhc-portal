@@ -87,10 +87,31 @@ const renderDevEnvError = () => {
   );
 };
 
+const renderUnsupportedEnvError = () => {
+  insights.chrome.init();
+  insights.chrome.identifyApp('openshift');
+  ReactDOM.render(
+    <div style={{ margin: '25px' }}>
+      <h1>Unsupported environment</h1>
+      <h2>OCM does not support this environment</h2>
+      <p>
+        Please use one of our supported environments.
+      </p>
+      <p>
+        OCM is only being deployed to this environment to ensure navigation keeps working.
+      </p>
+    </div>,
+    document.getElementById('root'),
+  );
+};
+
 if (!window.insights && process.env.NODE_ENV === 'development') {
   // we don't want this info to ever be complied to the prod build,
   // so I made sure it's only ever called in development mode
   renderDevEnvError();
+} else if (APP_API_ENV === 'disabled') {
+  // This is a build for an environment we don't support. render an error.
+  renderUnsupportedEnvError();
 } else {
   insights.chrome.init();
   insights.chrome.identifyApp('openshift');

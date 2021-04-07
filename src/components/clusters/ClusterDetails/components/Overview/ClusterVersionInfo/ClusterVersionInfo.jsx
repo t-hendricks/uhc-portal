@@ -31,6 +31,11 @@ class ClusterVersionInfo extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { clearSchedulesResponse } = this.props;
+    clearSchedulesResponse();
+  }
+
   render() {
     const {
       cluster, openModal, schedules,
@@ -144,6 +149,7 @@ ClusterVersionInfo.propTypes = {
   }).isRequired,
   openModal: PropTypes.func.isRequired,
   getSchedules: PropTypes.func.isRequired,
+  clearSchedulesResponse: PropTypes.func.isRequired,
 };
 
 export default ClusterVersionInfo;

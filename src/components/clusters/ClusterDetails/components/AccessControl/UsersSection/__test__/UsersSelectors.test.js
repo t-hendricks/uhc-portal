@@ -12,6 +12,7 @@ describe('canAllowAdminSelector', () => {
             state: clusterStates.READY,
             product: { id: normalizedProducts.OSD },
             subscription: {
+              plan: { id: normalizedProducts.OSD },
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
                 { name: 'capability.cluster.manage_cluster_admin', value: 'false', inherited: false },
@@ -54,6 +55,7 @@ describe('canAllowAdminSelector', () => {
             state: clusterStates.READY,
             product: { id: normalizedProducts.RHMI },
             subscription: {
+              plan: { id: normalizedProducts.RHMI },
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
                 { name: 'capability.cluster.manage_cluster_admin', value: 'false', inherited: false },
@@ -77,6 +79,7 @@ describe('canAllowAdminSelector', () => {
             state: clusterStates.READY,
             product: { id: normalizedProducts.OSD },
             subscription: {
+              plan: { id: normalizedProducts.OSD },
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
                 { name: 'capability.cluster.manage_cluster_admin', value: 'true', inherited: false },
@@ -101,6 +104,7 @@ describe('canAllowAdminSelector', () => {
             ccs: { enabled: true },
             product: { id: normalizedProducts.OSD },
             subscription: {
+              plan: { id: normalizedProducts.OSD },
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
                 { name: 'capability.cluster.manage_cluster_admin', value: 'true', inherited: false },

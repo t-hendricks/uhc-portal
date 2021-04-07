@@ -5,6 +5,7 @@ import { Button, Modal } from '@patternfly/react-core';
 import { find } from 'lodash';
 import { ReduxFormRadioGroup } from '../../../../../common/ReduxFormComponents';
 import ErrorTriangle from '../../../../common/ErrorTriangle';
+import './ClusterLogsDownload.scss';
 
 class ClusterLogsDownload extends React.Component {
   options = [
@@ -88,6 +89,7 @@ class ClusterLogsDownload extends React.Component {
       [
         (
           <Button
+            id="cluster-logs-download-button"
             key="download"
             variant="primary"
             component="a"

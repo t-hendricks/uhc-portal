@@ -207,13 +207,3 @@ export const mockClusterAddOnsParams = {
     },
   ],
 };
-
-export const mockQuota = {
-  addOnsQuota: {
-    'managed-integration': 1,
-    'service-mesh': 0,
-    dbaOperatorAddon: 1,
-    RHMI: 0,
-    'addon-prow-operator': 1,
-  },
-};

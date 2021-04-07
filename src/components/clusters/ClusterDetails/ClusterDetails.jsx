@@ -398,9 +398,21 @@ class ClusterDetails extends Component {
     const displayMachinePoolsTab = cluster.managed
       && (cluster.state === clusterStates.READY || clusterHibernating);
     const clusterName = getClusterName(cluster);
-    const displaySupportTab = cluster.state === clusterStates.READY
-        || cluster.state === clusterStates.UPDATING
-        || clusterHibernating;
+    const hideSupportTab = (
+      cluster.managed
+      && (
+        // The (managed) cluster has not yet reported its cluster ID to AMS
+        // eslint-disable-next-line camelcase
+        cluster.subscription?.external_cluster_id !== undefined
+        // The (managed) cluster has been deprovisioned
+        || cluster.subscription?.status === subscriptionStatuses.DEPROVISIONED
+      )
+    ) || (
+      !cluster.managed
+      // The (unmanaged) cluster has been archived
+      && (cluster.subscription?.status === subscriptionStatuses.ARCHIVED)
+    );
+    const displaySupportTab = !hideSupportTab;
     const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit;
     const displayAddBareMetalHosts = assistedInstallerEnabled && canAddBareMetalHost({ cluster });
 
@@ -570,6 +582,7 @@ class ClusterDetails extends Component {
             id="machinePoolsContent"
             ref={this.machinePoolsTabRef}
             aria-label="Machine pools"
+            hidden
           >
             <ErrorBoundary>
               <MachinePools cluster={cluster} />
@@ -582,6 +595,7 @@ class ClusterDetails extends Component {
             id="upgradeSettingsContent"
             ref={this.upgradeSettingsTabRef}
             aria-label="Upgrade settings"
+            hidden
           >
             <ErrorBoundary>
               <UpgradeSettingsTab />

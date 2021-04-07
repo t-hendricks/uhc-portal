@@ -19,6 +19,7 @@ import { constants } from '../../CreateOSDFormConstants';
 
 import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
+import ExternalLink from '../../../../../common/ExternalLink';
 
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
 
@@ -124,9 +125,13 @@ function ScaleSection({
               isByoc={isBYOC}
               machineType={machineType}
               isDisabled={pending}
-              extendedHelpText={isBYOC
-                ? constants.computeNodeCountHintCCS
-                : constants.computeNodeCountHint}
+              extendedHelpText={(
+                <>
+                  {constants.computeNodeCountHint}
+                  {' '}
+                  <ExternalLink href="https://www.openshift.com/products/dedicated/service-definition#compute-instances">Learn more about worker node count</ExternalLink>
+                </>
+              )}
               cloudProviderID={cloudProviderID}
               product={product}
               minNodes={minNodes}
@@ -155,6 +160,10 @@ function ScaleSection({
                 disabled={pending}
                 currentValue={null}
                 cloudProviderID={cloudProviderID}
+                billingModel={billingModel}
+                product={product}
+                isBYOC={isBYOC}
+                isMultiAZ={isMultiAz}
               />
             </FormGroup>
           </GridItem>
@@ -172,6 +181,10 @@ function ScaleSection({
                 disabled={pending}
                 currentValue={null}
                 cloudProviderID={cloudProviderID}
+                billingModel={billingModel}
+                product={product}
+                isBYOC={isBYOC}
+                isMultiAZ={isMultiAz}
               />
             </FormGroup>
           </GridItem>

@@ -43,24 +43,22 @@ const getColumns = () => ([
   },
 ]);
 
-const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, trialEnabled = false) => {
+const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = false) => {
   let contents = (
     <Button component="a" href={links.OSD_LEARN_MORE} variant="secondary" rel="noopener noreferrer" target="_blank">
       Learn more
     </Button>
   );
-  if (!hasQuota && trialEnabled) {
-    contents = (
-      <Link id="create-cluster" to="/create/osdtrial">
-        <Button>
-          Create cluster
-        </Button>
-      </Link>
-    );
-  } else if (hasQuota) {
+
+  let buttonWidth = '';
+
+  if (hasQuota) {
+    if (hasTrial) {
+      buttonWidth = 'create-cluster';
+    }
     contents = (
       <Link id="create-cluster" to="/create/osd">
-        <Button>
+        <Button className={buttonWidth}>
           Create cluster
         </Button>
       </Link>
@@ -125,9 +123,53 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, trialEnable
   return [offeringRow];
 };
 
-const activeSubscriptionsTable = () => {
+const osdTrialRow = () => {
+  const contents = (
+    <Link id="create-trial-cluster" to="/create/osdtrial">
+      <Button className="create-trial-cluster">
+        Create trial cluster
+      </Button>
+    </Link>
+  );
+
+  const offeringRow = {
+    cells: [
+      {
+        title: (
+          <>
+            <img className="partner-logo" src={RedHatLogo} alt="OSD" />
+          </>
+        ),
+      },
+      (
+        <>
+          <a href={links.OSD_LEARN_MORE} rel="noopener noreferrer" target="_blank">
+            Red Hat OpenShift Dedicated Trial
+          </a>
+        </>
+      ),
+      'Red Hat',
+      'Available on AWS and GCP',
+      (
+        <>
+          {contents}
+        </>
+      ),
+    ],
+  };
+  return offeringRow;
+};
+
+const activeSubscriptionsTable = (hasOSDQuota, osdTrialEnabled) => {
   const columns = getColumns();
-  const rows = osdRow(false);
+  let rows = [];
+
+  if (hasOSDQuota) {
+    rows = osdRow(false, true, true, osdTrialEnabled);
+  }
+  if (osdTrialEnabled) {
+    rows.unshift(osdTrialRow(false));
+  }
 
   return (
     <Table
@@ -142,7 +184,7 @@ const activeSubscriptionsTable = () => {
   );
 };
 
-const managedServices = (hasQuota, hasTrialQuota, osdTrialFeature) => {
+const managedServices = (hasQuota, trialEnabled) => {
   const [openRows, setOpenRows] = useState([]);
   const onCollapse = (e, rowKey, open) => {
     if (open) {
@@ -152,7 +194,7 @@ const managedServices = (hasQuota, hasTrialQuota, osdTrialFeature) => {
     }
   };
 
-  const rowKeys = hasQuota
+  const rowKeys = (hasQuota || trialEnabled)
     ? {
       azure: 0,
       ibm: 2,
@@ -320,10 +362,9 @@ const managedServices = (hasQuota, hasTrialQuota, osdTrialFeature) => {
   },
   ];
 
-  const enableTrial = osdTrialFeature && hasTrialQuota;
-  const rows = hasQuota
+  const rows = (hasQuota || trialEnabled)
     ? defaultRows
-    : osdRow(true, openRows.includes(rowKeys.osd), hasQuota, enableTrial).concat(defaultRows);
+    : osdRow(true, openRows.includes(rowKeys.osd), hasQuota).concat(defaultRows);
 
   return (
     <Table
@@ -371,10 +412,10 @@ const runItYourself = () => {
   );
 };
 
-const CloudTab = ({ hasOSDQuota, hasOSDTrialQuota, osdTrialFeature }) => (
+const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
   <>
     {
-    hasOSDQuota && (
+    (hasOSDQuota || trialEnabled) && (
       <PageSection variant="light">
         <Stack hasGutter>
           <StackItem>
@@ -383,7 +424,7 @@ const CloudTab = ({ hasOSDQuota, hasOSDTrialQuota, osdTrialFeature }) => (
             </Title>
           </StackItem>
           <StackItem>
-            {activeSubscriptionsTable()}
+            {activeSubscriptionsTable(hasOSDQuota, trialEnabled)}
             <Link to="/subscriptions">
               <Button id="subscriptions" variant="link">
                 View your available quota
@@ -405,7 +446,7 @@ const CloudTab = ({ hasOSDQuota, hasOSDTrialQuota, osdTrialFeature }) => (
         </StackItem>
         <StackItem>
           Create clusters in the cloud using a managed service.
-          {managedServices(hasOSDQuota, hasOSDTrialQuota, osdTrialFeature)}
+          {managedServices(hasOSDQuota, trialEnabled)}
         </StackItem>
       </Stack>
     </PageSection>
@@ -429,6 +470,5 @@ export default CloudTab;
 
 CloudTab.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
-  hasOSDTrialQuota: PropTypes.bool.isRequired,
-  osdTrialFeature: PropTypes.bool.isRequired,
+  trialEnabled: PropTypes.bool.isRequired,
 };
