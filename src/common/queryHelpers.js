@@ -55,8 +55,8 @@ const createViewQueryObject = (viewOptions, queryObj) => {
 
     // If we got a search string from the user, format it as a LIKE query.
     if (viewOptions.filter) {
-      const likePattern = `%${viewOptions.filter}%`;
-      clauses.push(`display_name ILIKE ${sqlString(likePattern)} OR external_cluster_id ILIKE ${sqlString(likePattern)}`);
+      const likePattern = sqlString(`%${viewOptions.filter}%`);
+      clauses.push(`display_name ILIKE ${likePattern} OR external_cluster_id ILIKE ${likePattern}`);
     }
 
     if (!isEmpty(viewOptions.flags.subscriptionFilter)) {
@@ -101,8 +101,8 @@ const createServiceLogQueryObject = (viewOptions, queryObj) => {
     if (viewOptions.filter) {
       const { description } = viewOptions.filter;
       if (description !== '') {
-        const likePattern = `%${description}%`;
-        clauses.push(`(description ILIKE ${sqlString(likePattern)} OR summary ILIKE ${sqlString(likePattern)})`);
+        const likePattern = sqlString(`%${description}%`);
+        clauses.push(`(description ILIKE ${likePattern} OR summary ILIKE ${likePattern})`);
       }
     }
 
