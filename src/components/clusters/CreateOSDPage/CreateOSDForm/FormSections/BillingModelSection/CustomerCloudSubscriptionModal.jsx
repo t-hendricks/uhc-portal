@@ -107,7 +107,7 @@ function CustomerCloudSubscriptionModal({ closeModal, cloudProviderID }) {
       onClose={closeModal}
       primaryText="Close"
       onPrimaryClick={closeModal}
-      showSecondary={false}
+      showSecondery={false}
     >
       {contentByCloudProvider(cloudProviderID)}
     </Modal>
