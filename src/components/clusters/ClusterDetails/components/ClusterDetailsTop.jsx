@@ -126,6 +126,7 @@ function ClusterDetailsTop(props) {
       || organization.pending
       || clusterIdentityProviders.pending;
 
+  const trialEndDate = get(cluster, 'subscription.trial_end_date');
 
   return (
     <div id="cl-details-top" className="top-row">
@@ -177,6 +178,13 @@ function ClusterDetailsTop(props) {
       && (
       <ExpirationAlert
         expirationTimestamp={cluster.expiration_timestamp}
+      />
+      )}
+      {trialEndDate
+      && (
+      <ExpirationAlert
+        expirationTimestamp={trialEndDate}
+        trialExpiration
       />
       )}
       <SubscriptionCompliancy
