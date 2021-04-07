@@ -3,22 +3,22 @@ import config from '../config';
 
 const insightsAPIRequest = params => apiRequest({
   ...params,
-  baseURL: config.configData.insightsGateway,
+  baseURL: `${config.configData.insightsGateway}/insights-results-aggregator/v1`,
 });
 
-const putLikeOnRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
+const putLikeOnRuleInsights = (clusterId, ruleId) => insightsAPIRequest({
   method: 'put',
-  url: `/clusters/${clusterID}/rules/${ruleID}/like`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/like`,
 });
 
-const putDislikeOnRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
+const putDislikeOnRuleInsights = (clusterId, ruleId) => insightsAPIRequest({
   method: 'put',
-  url: `/clusters/${clusterID}/rules/${ruleID}/dislike`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/dislike`,
 });
 
-const resetVoteOnRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
+const resetVoteOnRuleInsights = (clusterId, ruleId) => insightsAPIRequest({
   method: 'put',
-  url: `/clusters/${clusterID}/rules/${ruleID}/reset_vote`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/reset_vote`,
 });
 
 const getClusterInsights = (clusterId, isOSD) => insightsAPIRequest({
@@ -26,24 +26,24 @@ const getClusterInsights = (clusterId, isOSD) => insightsAPIRequest({
   url: `/clusters/${clusterId}/report?osd_eligible=${isOSD}`,
 });
 
-const disableRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
+const disableRuleInsights = (clusterId, ruleId) => insightsAPIRequest({
   method: 'put',
-  url: `/clusters/${clusterID}/rules/${ruleID}/disable`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/disable`,
 });
 
-const getReportDetails = (clusterID, ruleID, errorKey, isOSD) => insightsAPIRequest({
+const getReportDetails = (clusterId, ruleId, errorKey, isOSD) => insightsAPIRequest({
   method: 'get',
-  url: `/clusters/${clusterID}/rules/${ruleID.replace('.', '%2E')}|${errorKey}/report?osd_eligible=${isOSD}`,
+  url: `/clusters/${clusterId}/rules/${ruleId.replace('.', '%2E')}|${errorKey}/report?osd_eligible=${isOSD}`,
 });
 
-const enableRuleInsights = (clusterID, ruleID) => insightsAPIRequest({
+const enableRuleInsights = (clusterId, ruleId) => insightsAPIRequest({
   method: 'put',
-  url: `/clusters/${clusterID}/rules/${ruleID}/enable`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/enable`,
 });
 
-const sendFeedbackOnRuleDisableInsights = (clusterID, ruleID, message) => insightsAPIRequest({
+const sendFeedbackOnRuleDisableInsights = (clusterId, ruleId, message) => insightsAPIRequest({
   method: 'post',
-  url: `/clusters/${clusterID}/rules/${ruleID}/disable_feedback`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/disable_feedback`,
   data: { message },
 });
 
@@ -52,6 +52,10 @@ const getGroupsInsights = () => insightsAPIRequest({
   url: '/groups',
 });
 
+const getOrganizationInsights = () => insightsAPIRequest({
+  method: 'get',
+  url: '/org_overview',
+});
 
 const insigthsService = {
   getClusterInsights,
@@ -63,6 +67,7 @@ const insigthsService = {
   sendFeedbackOnRuleDisableInsights,
   getGroupsInsights,
   getReportDetails,
+  getOrganizationInsights,
 };
 
 export default insigthsService;

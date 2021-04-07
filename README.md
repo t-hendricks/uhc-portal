@@ -210,64 +210,7 @@ Once the server is running you can access your UI on
 
 # Automated Selenium tests
 
-## Old style tests
-
-QA have been developing end-to-end UI tests in 2 repos, forked from
-Openshift’s test repos:
-
-  - <https://github.com/xueli181114/cucushift>, `ocm/` directory — these
-    contain the actual OCM test cases in a [pseudo-English
-    DSL](https://en.wikipedia.org/wiki/Cucumber_\(software\)#Gherkin_language).  
-    This repo is private but should be accessible to all in Red Hat;
-    make sure your ssh key is [known to
-    GitHub](https://github.com/settings/keys).
-
-  - <https://github.com/xueli181114/verification-tests/> — ruby
-    framework and definitons of "steps" above test cases use. Our OCM
-    test cases mostly use `When I perform the ... web action`; this has
-    a generic ruby implementation, with the actual steps used for each
-    action described in `lib/rules/web/ocm_console/*.xyaml` files in
-    another [pseudo-YAML
-    DSL](https://github.com/xueli181114/verification-tests/blob/master/doc/webauto.adoc).
-
 ### Running old-style selenium Tests
-
-Short version: Don’t need anything running, just `yarn test-e2e` will
-start all services, run test & kill all services.
-
-If a test fails, it’ll stop & dump you into "pry" prompt, which is
-pretty useless but gives you chance to open VNC and play with the
-browser. Type `quit` or simply kbd:\[Ctrl + C\] to continue to next
-test.
-
-You can set UNATTENDED=1 env var to skip interactive prompts.
-
-Long version: to run test(s) locally, in addition to all the above
-(backend + insights proxy + dev server), you’ll need:
-
-1.  `make run/verification-tests` — clones repo under
-    `run/verification-tests`. Note you need this whether you build local
-    image or pull Quay in next step, Ruby code from that dir is mounted
-    into the container.
-
-2.  Optional: `make selenium-tests-image` , re-builds container image
-    with Ruby depedencies. Otherwise, the image will be pulled from Quay
-    on first use. If you update verification-tests of the Dockerfile,
-    increment the tag in `run/selenium-tests.version.sh` and run `make
-    selenium-tests-push` so that CI and rest of the team can use it.
-
-3.  Optional: `export BROWSER=firefox` (or `chrome` or `safari`) to
-    choose which browser.
-
-4.  Start `yarn selenium-browser` — runs a browser under Xvnc in a
-    container.
-
-5.  `yarn selenium-test` — waits for dependencies, then executes tests
-    in a container.
-
-6.  Optional: to observe/debug the test, connect a VNC viewer to
-    `localhost`, password is `secret`. If you have Vinagre, simply run
-    `yarn selenium-viewer`.
 
 ## New style tests (webdriver.io)
 
@@ -277,13 +220,19 @@ wdio tests are stored in the `selenium-js/` directory. We use the "page objects"
 
 Test cases are in `selenium-js/specs`.
 
-To run these tests, assuming `yarn start` (or equivalent dev-env) is already running, run the following:
+Short version: Don’t need anything running, just `yarn test-e2e` will start all services, run test & kill all services.  However when devoloping, the below procedure allows much faster iterations.
+
+Long version: To run these tests, assuming `yarn start` (or equivalent dev-env) is already running, run the following:
 
 1. `yarn selenium-browser` - this starts the browser container for the test. You can use VNC to connect to it to watch it in action, `localhost` with the password `secret`.
 
-3. Export the credentials in environment variables - `TEST_SELENIUM_NOANYQUOTA_PASSWORD` and `TEST_SELENIUM_NOANYQUOTA_USERNAME`
+2. Export the credentials in environment variables - `TEST_SELENIUM_NOANYQUOTA_PASSWORD` and `TEST_SELENIUM_NOANYQUOTA_USERNAME`
 
-2. `yarn run wdio` or `yarn selenium-test` - runs the test.
+3. `yarn run wdio` or `yarn selenium-test` - runs the test.
+
+4.  Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`.
+    If you have Vinagre, simply run `yarn selenium-viewer`.
+
 
 # Deploying
 

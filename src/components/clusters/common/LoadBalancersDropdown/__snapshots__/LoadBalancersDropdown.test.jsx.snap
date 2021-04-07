@@ -2,6 +2,8 @@
 
 exports[`<LoadBalancersDropdown /> when load balancer list needs to be fetched renders correctly 1`] = `
 <LoadBalancersDropdown
+  billingModel="standard"
+  cloudProviderID="aws"
   disabled={false}
   getLoadBalancers={
     [MockFunction] {
@@ -21,6 +23,8 @@ exports[`<LoadBalancersDropdown /> when load balancer list needs to be fetched r
       "onChange": [MockFunction],
     }
   }
+  isBYOC={false}
+  isMultiAZ={false}
   loadBalancerValues={
     Object {
       "error": false,
@@ -30,13 +34,24 @@ exports[`<LoadBalancersDropdown /> when load balancer list needs to be fetched r
       "values": Array [],
     }
   }
-  organization={
+  product="OSD"
+  quotaList={
     Object {
-      "fulfilled": true,
-      "pending": false,
+      "loadBalancerQuota": Object {
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "rhInfra": Object {
+                "singleAZ": Object {
+                  "network": 40,
+                },
+              },
+            },
+          },
+        },
+      },
     }
   }
-  quota={0}
 >
   <div
     className="spinner-fit-container"
@@ -64,6 +79,8 @@ exports[`<LoadBalancersDropdown /> when load balancer list needs to be fetched r
 
 exports[`<LoadBalancersDropdown /> when the load balancer list is available renders correctly 1`] = `
 <LoadBalancersDropdown
+  billingModel="standard"
+  cloudProviderID="aws"
   disabled={false}
   getLoadBalancers={[MockFunction]}
   input={
@@ -71,6 +88,8 @@ exports[`<LoadBalancersDropdown /> when the load balancer list is available rend
       "onChange": [MockFunction],
     }
   }
+  isBYOC={false}
+  isMultiAZ={false}
   loadBalancerValues={
     Object {
       "error": false,
@@ -84,13 +103,24 @@ exports[`<LoadBalancersDropdown /> when the load balancer list is available rend
       ],
     }
   }
-  organization={
+  product="OSD"
+  quotaList={
     Object {
-      "fulfilled": true,
-      "pending": false,
+      "loadBalancerQuota": Object {
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "rhInfra": Object {
+                "singleAZ": Object {
+                  "network": 40,
+                },
+              },
+            },
+          },
+        },
+      },
     }
   }
-  quota={4}
 >
   <FormSelect
     aria-label="Load Balancers"
@@ -144,6 +174,19 @@ exports[`<LoadBalancersDropdown /> when the load balancer list is available rend
           4
         </option>
       </FormSelectOption>
+      <FormSelectOption
+        key="8"
+        label="8"
+        value="8"
+      >
+        <option
+          className=""
+          disabled={false}
+          value="8"
+        >
+          8
+        </option>
+      </FormSelectOption>
     </select>
   </FormSelect>
 </LoadBalancersDropdown>
@@ -151,6 +194,8 @@ exports[`<LoadBalancersDropdown /> when the load balancer list is available rend
 
 exports[`<LoadBalancersDropdown /> when the request is pending renders correctly 1`] = `
 <LoadBalancersDropdown
+  billingModel="standard"
+  cloudProviderID="aws"
   disabled={false}
   getLoadBalancers={[MockFunction]}
   input={
@@ -158,6 +203,8 @@ exports[`<LoadBalancersDropdown /> when the request is pending renders correctly
       "onChange": [MockFunction],
     }
   }
+  isBYOC={false}
+  isMultiAZ={false}
   loadBalancerValues={
     Object {
       "error": false,
@@ -167,13 +214,24 @@ exports[`<LoadBalancersDropdown /> when the request is pending renders correctly
       "values": Array [],
     }
   }
-  organization={
+  product="OSD"
+  quotaList={
     Object {
-      "fulfilled": true,
-      "pending": false,
+      "loadBalancerQuota": Object {
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "rhInfra": Object {
+                "singleAZ": Object {
+                  "network": 40,
+                },
+              },
+            },
+          },
+        },
+      },
     }
   }
-  quota={0}
 >
   <div
     className="spinner-fit-container"
@@ -201,6 +259,8 @@ exports[`<LoadBalancersDropdown /> when the request is pending renders correctly
 
 exports[`<LoadBalancersDropdown /> when there was an error renders correctly 1`] = `
 <LoadBalancersDropdown
+  billingModel="standard"
+  cloudProviderID="aws"
   disabled={false}
   getLoadBalancers={[MockFunction]}
   input={
@@ -208,6 +268,8 @@ exports[`<LoadBalancersDropdown /> when there was an error renders correctly 1`]
       "onChange": [MockFunction],
     }
   }
+  isBYOC={false}
+  isMultiAZ={false}
   loadBalancerValues={
     Object {
       "error": true,
@@ -217,13 +279,24 @@ exports[`<LoadBalancersDropdown /> when there was an error renders correctly 1`]
       "values": Array [],
     }
   }
-  organization={
+  product="OSD"
+  quotaList={
     Object {
-      "fulfilled": true,
-      "pending": false,
+      "loadBalancerQuota": Object {
+        "standard": Object {
+          "OSD": Object {
+            "aws": Object {
+              "rhInfra": Object {
+                "singleAZ": Object {
+                  "network": 40,
+                },
+              },
+            },
+          },
+        },
+      },
     }
   }
-  quota={0}
 >
   <ErrorBox
     message="Error loading load balancers list"

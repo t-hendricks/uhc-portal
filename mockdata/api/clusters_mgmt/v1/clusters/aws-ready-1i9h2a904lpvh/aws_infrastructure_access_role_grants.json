@@ -1,0 +1,8 @@
+{
+  "kind": "AWSInfrastructureAccessRoleGrantList",
+  "href": "/api/clusters_mgmt/v1/clusters/aws-ready-1i9h2a904lpvh/aws_infrastructure_access_role_grants",
+  "page": 1,
+  "size": 0,
+  "total": 0,
+  "items": []
+}

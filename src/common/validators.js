@@ -35,7 +35,7 @@ const CONSOLE_URL_REGEXP = /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 15;
 
-const MAX_MACHINE_POOL_NAME_LENGTH = 15;
+const MAX_MACHINE_POOL_NAME_LENGTH = 30;
 
 // Maximum length of a cluster display name
 const MAX_CLUSTER_DISPLAY_NAME_LENGTH = 63;
@@ -54,8 +54,8 @@ const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}$/;
 
 const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 
-// Function to validate that a field is mandatory:
-const required = value => (value ? undefined : 'Field is required');
+// Function to validate that a field is mandatory, i.e. must be a non whitespace string
+const required = value => (value && value.trim() ? undefined : 'Field is required');
 
 // Function to validate that the identity provider name field doesn't include whitespaces:
 const checkIdentityProviderName = (value) => {
@@ -814,6 +814,7 @@ const validateUniqueAZ = (value, allValues, _, name) => {
   return undefined;
 };
 
+const validateValueNotPlaceholder = placeholder => value => (value !== placeholder ? undefined : 'Field is required');
 
 const validateGCPSubnet = (value) => {
   if (!value) {
@@ -926,6 +927,7 @@ export {
   checkMachinePoolLabels,
   checkLabels,
   validateUniqueAZ,
+  validateValueNotPlaceholder,
   validateGCPSubnet,
   validateGCPEncryptionKeys,
   validateGCPKMSServiceAccount,

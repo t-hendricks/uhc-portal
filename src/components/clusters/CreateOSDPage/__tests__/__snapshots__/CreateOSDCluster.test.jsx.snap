@@ -119,6 +119,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
                   "hasGcpQuota": true,
                   "hasMarketplaceProductQuota": false,
                   "hasProductQuota": true,
+                  "hasStandardOSDQuota": true,
                 }
               }
               getMarketplaceQuota={[Function]}

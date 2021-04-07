@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import get from 'lodash/get';
 import {
   GET_CLUSTER_INSIGHTS,
@@ -23,6 +24,7 @@ import {
   GET_GROUPS_INSIGHTS,
   GET_REPORT_DETAILS,
   SET_REPORT_DETAILS,
+  GET_ORGANIZATION_INSIGHTS,
 } from './InsightsConstants';
 import { insightsService } from '../../../../../services';
 
@@ -31,25 +33,20 @@ export const setReportDetails = report => ({
   payload: report,
 });
 
-const fetchSingleClusterInsights = async (clusterId, isOSD) => {
-  try {
-    const insightsResponse = await insightsService.getClusterInsights(clusterId, isOSD);
-    return {
-      insightsData: get(insightsResponse, 'data.report', {}),
-      clusterId,
-      status: insightsResponse.status,
-    };
-  } catch (e) {
-    const error = Error('Insights for cluster not found');
-    error.status = e.response.status;
-    error.clusterId = clusterId;
-    throw error;
-  }
-};
+const fetchSingleClusterInsights = (clusterId, isOSD) => insightsService
+  .getClusterInsights(clusterId, isOSD)
+  .then(response => ({
+    insightsData: get(response, 'data.report', {}),
+    clusterId,
+    status: response.status,
+  }));
 
-export const fetchClusterInsights = (clusterID, isOSD) => dispatch => dispatch({
+export const fetchClusterInsights = (clusterId, isOSD) => dispatch => dispatch({
   type: GET_CLUSTER_INSIGHTS,
-  payload: fetchSingleClusterInsights(clusterID, isOSD),
+  payload: fetchSingleClusterInsights(clusterId, isOSD),
+  meta: {
+    clusterId,
+  },
 });
 
 // clusterId is id of the cluster
@@ -147,4 +144,9 @@ export const fetchGroups = () => dispatch => dispatch({
 export const fetchReportDetails = (clusterId, ruleId, errorKey, isOSD) => dispatch => dispatch({
   type: GET_REPORT_DETAILS,
   payload: insightsService.getReportDetails(clusterId, ruleId, errorKey, isOSD),
+});
+
+export const fetchOrganizationInsights = () => dispatch => dispatch({
+  type: GET_ORGANIZATION_INSIGHTS,
+  payload: insightsService.getOrganizationInsights(),
 });

@@ -55,6 +55,7 @@ describe('clustersActions', () => {
         availability_zone_type: 'single',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
@@ -74,6 +75,7 @@ describe('clustersActions', () => {
           availability_zone_type: 'single',
           resource_name: 'gp.small',
           product: OSD,
+          billing_model: STANDARD,
           cost: 1,
         },
         {
@@ -83,6 +85,7 @@ describe('clustersActions', () => {
           byoc: 'byoc',
           availability_zone_type: 'single',
           product: OSD,
+          billing_model: STANDARD,
           cost: 1,
         },
       ];
@@ -105,6 +108,7 @@ describe('clustersActions', () => {
           byoc: 'byoc',
           availability_zone_type: 'any',
           product: 'OSDTrial',
+          billing_model: STANDARD,
           cost: 1,
         },
       ];
@@ -130,6 +134,7 @@ describe('clustersActions', () => {
           byoc: 'byoc',
           availability_zone_type: 'single',
           product: normalizedProducts.ANY,
+          billing_model: STANDARD,
           cost: 1,
         },
       ];
@@ -152,6 +157,7 @@ describe('clustersActions', () => {
         availability_zone_type: 'single',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
@@ -173,6 +179,7 @@ describe('clustersActions', () => {
         availability_zone_type: 'single',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
@@ -194,6 +201,7 @@ describe('clustersActions', () => {
         availability_zone_type: 'any',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
@@ -233,6 +241,7 @@ describe('clustersActions', () => {
         byoc: 'rhinfra',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processNodeQuota(nodesQuota, item, resources);
@@ -247,6 +256,7 @@ describe('clustersActions', () => {
           byoc: 'rhinfra',
           resource_name: 'gp.small',
           product: OSD,
+          billing_model: STANDARD,
           cost: 1,
         },
         {
@@ -256,6 +266,7 @@ describe('clustersActions', () => {
           byoc: 'byoc',
           availability_zone_type: 'any',
           product: OSD,
+          billing_model: STANDARD,
           cost: 1,
         },
       ];
@@ -271,6 +282,7 @@ describe('clustersActions', () => {
         byoc: 'rhinfra',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processNodeQuota(nodesQuota, item, resources);
@@ -285,6 +297,7 @@ describe('clustersActions', () => {
         byoc: 'any',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processNodeQuota(nodesQuota, item, resources);
@@ -298,6 +311,7 @@ describe('clustersActions', () => {
         byoc: 'rhinfra',
         resource_name: 'gp.small',
         product: normalizedProducts.ANY,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processNodeQuota(nodesQuota, item, resources);
@@ -309,56 +323,44 @@ describe('clustersActions', () => {
   describe('processStorageQuota', () => {
     let storageQuota;
     beforeEach(() => {
-      storageQuota = {
-        aws: { available: 0 },
-        gcp: { available: 0 },
-      };
+      storageQuota = userActions.emptyQuota().storageQuota;
     });
 
     it('should process quota on AWS', () => {
       const resources = [{
+        resource_type: 'pv.storage',
         cloud_provider: 'aws',
+        byoc: 'rhinfra',
+        resource_name: 'gp2',
+        availability_zone_type: 'any',
+        product: OSD,
+        cost: 1,
       }];
-      userActions.processStorageQuota(storageQuota, item, resources);
-      expect(storageQuota.aws.available).toEqual(1);
-      expect(storageQuota.gcp.available).toEqual(0);
-    });
-
-    it('should process quota for any cloud provider', () => {
-      const resources = [{
-        cloud_provider: 'any',
-      }];
-      userActions.processStorageQuota(storageQuota, item, resources);
-      expect(storageQuota.aws.available).toEqual(1);
-      expect(storageQuota.gcp.available).toEqual(1);
+      userActions.processStorageQuota(storageQuota, { allowed: 2700, consumed: 0 }, resources);
+      expect(storageQuota[STANDARD][OSD].aws.rhInfra.singleAZ.gp2).toEqual(2700);
     });
   });
 
   describe('processLoadBalancerQuota', () => {
     let loadBalancerQuota;
     beforeEach(() => {
-      loadBalancerQuota = {
-        aws: { available: 0 },
-        gcp: { available: 0 },
-      };
+      loadBalancerQuota = userActions.emptyQuota().loadBalancerQuota;
     });
 
     it('should process quota on AWS', () => {
       const resources = [{
+        resource_type: 'network.loadbalancer',
         cloud_provider: 'aws',
+        byoc: 'rhinfra',
+        resource_name: 'network',
+        availability_zone_type: 'any',
+        product: OSD,
+        billing_model: 'standard',
+        cost: 1,
       }];
-      userActions.processLoadBalancerQuota(loadBalancerQuota, item, resources);
-      expect(loadBalancerQuota.aws.available).toEqual(1);
-      expect(loadBalancerQuota.gcp.available).toEqual(0);
-    });
-
-    it('should process quota for any cloud provider', () => {
-      const resources = [{
-        cloud_provider: 'any',
-      }];
-      userActions.processLoadBalancerQuota(loadBalancerQuota, item, resources);
-      expect(loadBalancerQuota.aws.available).toEqual(1);
-      expect(loadBalancerQuota.gcp.available).toEqual(1);
+      userActions.processLoadBalancerQuota(loadBalancerQuota,
+        { allowed: 40, consumed: 0 }, resources);
+      expect(loadBalancerQuota[STANDARD][OSD].aws.rhInfra.singleAZ.network).toEqual(40);
     });
   });
 
@@ -385,6 +387,7 @@ describe('clustersActions', () => {
         availability_zone_type: 'any',
         resource_name: name,
         product: 'ANY',
+        billing_model: STANDARD,
         cost: 0,
       }];
       userActions.processAddOnQuota(addOnsQuota, { allowed: 0, consumed: 0 }, resources);
@@ -404,6 +407,7 @@ describe('clustersActions', () => {
         availability_zone_type: 'any',
         resource_name: name,
         product: 'OSD',
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processAddOnQuota(addOnsQuota, { allowed: 2, consumed: 2 }, resources);
@@ -422,6 +426,7 @@ describe('clustersActions', () => {
         availability_zone_type: 'any',
         resource_name: name,
         product: 'OSD',
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processAddOnQuota(addOnsQuota, { allowed: 15, consumed: 0 }, resources);

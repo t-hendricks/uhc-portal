@@ -13,11 +13,13 @@ import BillingModelRadioButtons from './BillingModelRadioButtons';
 function BillingModelSection({
   hasBYOCquota,
   hasStandardQuota,
+  hasStandardOSDQuota,
   hasMarketplaceBYOCQuota,
   hasMarketplaceRhInfraQuota,
   openModal,
   toggleBYOCFields,
   byocSelected = false,
+  showOSDTrial,
   pending,
   toggleSubscriptionBilling,
   product,
@@ -35,11 +37,13 @@ function BillingModelSection({
           name="byoc"
           hasBYOCquota={hasBYOCquota}
           hasStandardQuota={hasStandardQuota}
+          hasStandardOSDQuota={hasStandardOSDQuota}
           hasMarketplaceBYOCQuota={hasMarketplaceBYOCQuota}
           hasMarketplaceRhInfraQuota={hasMarketplaceRhInfraQuota}
           byocSelected={byocSelected}
           openModal={openModal}
           onChange={toggleBYOCFields}
+          showOSDTrial={showOSDTrial}
           pending={pending}
           toggleSubscriptionBilling={toggleSubscriptionBilling}
           product={product}
@@ -54,12 +58,14 @@ function BillingModelSection({
 BillingModelSection.propTypes = {
   hasBYOCquota: PropTypes.bool.isRequired,
   hasStandardQuota: PropTypes.bool.isRequired,
+  hasStandardOSDQuota: PropTypes.bool.isRequired,
   hasMarketplaceQuota: PropTypes.bool,
   hasMarketplaceBYOCQuota: PropTypes.bool,
   hasMarketplaceRhInfraQuota: PropTypes.bool,
   openModal: PropTypes.func.isRequired,
   toggleBYOCFields: PropTypes.func.isRequired,
   byocSelected: PropTypes.bool,
+  showOSDTrial: PropTypes.bool,
   pending: PropTypes.bool,
   toggleSubscriptionBilling: PropTypes.func.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,

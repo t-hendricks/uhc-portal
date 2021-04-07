@@ -1,4 +1,4 @@
 {
-  "apiGateway": "https://prod.foo.redhat.com:1337",
-  "insightsGateway": "https://prod.foo.redhat.com:1337/api/aggregator/v1"
+  "apiGateway": "https://$SELF_PATH$/openshift_api",
+  "insightsGateway": "https://$SELF_PATH$/api"
 }

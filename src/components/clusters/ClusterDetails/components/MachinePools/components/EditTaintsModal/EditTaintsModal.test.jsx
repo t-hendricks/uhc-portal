@@ -60,8 +60,8 @@ describe('<EditTaintsModal />', () => {
 
   it('should update taints fields when changing machine pool', () => {
     const mpField = EditTaintsModalWithLabelswrapper.find('Field[name="machinePoolId"]');
-    const mockEvent = { target: { value: 'mp-withot-taints' } };
-    mpField.simulate('change', mockEvent);
-    expect(change).toHaveBeenCalledWith('taints', [{ effect: 'NoSchedule' }]);
+    const mockEvent = { target: { value: mockData.data[0].id } };
+    mpField.props().onChange(mockEvent, mockEvent.target.value);
+    expect(change).toHaveBeenCalledWith('taints', mockData.data[0].taints);
   });
 });

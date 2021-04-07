@@ -45,8 +45,10 @@ This cluster is hibernating;
     ? { isDisabled: true, tooltip: uninstallingMessage } : {};
   const getKey = item => `${cluster.id}.menu.${item}`;
   const clusterName = getClusterName(cluster);
+  const isProductOSDTrial = cluster.product
+                         && cluster.product.id === normalizedProducts.OSDTrial;
 
-  const getAdminConosleProps = () => {
+  const getAdminConsoleProps = () => {
     const consoleURL = cluster.console ? cluster.console.url : false;
     const adminConsoleEnabled = {
       component: 'a',
@@ -280,7 +282,7 @@ This cluster is hibernating;
     return transferClusterOwnershipProps;
   };
 
-  const adminConsoleItemProps = getAdminConosleProps();
+  const adminConsoleItemProps = getAdminConsoleProps();
   const scaleClusterItemProps = getScaleClusterProps();
   const editNodeCountItemProps = getEditNodeCountProps();
   const editDisplayNameItemProps = getEditDisplayNameProps();
@@ -295,7 +297,8 @@ This cluster is hibernating;
 
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
-  const showHibernateCluster = cluster.canEdit && cluster.managed && canHibernateCluster;
+  const showHibernateCluster = cluster.canEdit && cluster.managed && canHibernateCluster
+    && !isProductOSDTrial;
   const showEditNodeCount = cluster.canEdit && cluster.managed;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription
@@ -303,7 +306,7 @@ This cluster is hibernating;
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && isArchived;
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
-  const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && canSubscribeOCP;
+  const showEditSubscriptionSettings = get(cluster, 'subscription.plan.id', '') === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
   const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(get(cluster, 'subscription.plan.id', ''));
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership
     && isAllowedProducts

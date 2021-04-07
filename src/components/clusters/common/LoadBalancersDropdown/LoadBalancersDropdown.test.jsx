@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import LoadBalancersDropdown from './LoadBalancersDropdown';
+import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 const baseState = {
   error: false,
@@ -11,9 +12,20 @@ const baseState = {
   values: [],
 };
 
-const organizationState = {
-  fulfilled: true,
-  pending: false,
+const quotaList = {
+  loadBalancerQuota: {
+    standard: {
+      OSD: {
+        aws: {
+          rhInfra: {
+            singleAZ: {
+              network: 40,
+            },
+          },
+        },
+      },
+    },
+  },
 };
 
 describe('<LoadBalancersDropdown />', () => {
@@ -29,8 +41,12 @@ describe('<LoadBalancersDropdown />', () => {
           loadBalancerValues={baseState}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quota={0}
-          organization={organizationState}
+          quotaList={quotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
         />,
       );
@@ -63,8 +79,12 @@ describe('<LoadBalancersDropdown />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quota={0}
-          organization={organizationState}
+          quotaList={quotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
         />,
       );
@@ -94,8 +114,12 @@ describe('<LoadBalancersDropdown />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quota={0}
-          organization={organizationState}
+          quotaList={quotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
         />,
       );
@@ -125,8 +149,6 @@ describe('<LoadBalancersDropdown />', () => {
         values: [0, 4, 8],
       };
 
-      const quota = 4;
-
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
@@ -134,8 +156,12 @@ describe('<LoadBalancersDropdown />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quota={quota}
-          organization={organizationState}
+          quotaList={quotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
         />,
       );

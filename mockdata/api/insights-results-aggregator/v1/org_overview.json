@@ -1,0 +1,16 @@
+{
+  "overview": {
+    "clusters_hit": 1,
+    "hit_by_risk": {
+      "1": 1,
+      "2": 3
+    },
+    "hit_by_tag": {
+      "tag1": 3,
+      "tag2": 2,
+      "tag3": 1,
+      "tag4": 5
+    }
+  },
+  "status": "ok"
+}

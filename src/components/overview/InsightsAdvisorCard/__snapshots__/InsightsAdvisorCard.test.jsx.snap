@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InsightsAdvisorCard /> When no Advisor recommendations (no rule hits) renders empty state 1`] = `
+<Card
+  className="ocm-insights--advisor-card"
+>
+  <CardBody
+    className="ocm-insights--advisor-card__body"
+  >
+    <AdvisorEmptyState />
+  </CardBody>
+</Card>
+`;
+
+exports[`<InsightsAdvisorCard /> When recommendations are available (rule hits) renders two charts 1`] = `
+<Card
+  className="ocm-insights--advisor-card"
+>
+  <CardBody
+    className="ocm-insights--advisor-card__body"
+  >
+    <ChartByRisks
+      riskHits={
+        Object {
+          "1": 1,
+          "2": 2,
+        }
+      }
+    />
+    <ChartByGroups
+      groups={
+        Array [
+          Object {
+            "description": "title1 desc",
+            "tags": Array [
+              "tag1",
+            ],
+            "title": "title1",
+          },
+          Object {
+            "description": "title2 desc",
+            "tags": Array [
+              "tag2",
+            ],
+            "title": "title2",
+          },
+        ]
+      }
+      tagHits={
+        Object {
+          "tag1": 3,
+          "tag2": 2,
+          "tag3": 2,
+        }
+      }
+    />
+    <div
+      className="ocm-insights--advisor-notice"
+    >
+      <QuestionCircleIcon
+        className="ocm-insights--advisor-notice__icon"
+        color="#6a6e73"
+        noVerticalAlign={false}
+        size="sm"
+      />
+       
+      Advisor information applies for OCP clusters only
+    </div>
+  </CardBody>
+</Card>
+`;

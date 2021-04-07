@@ -70,7 +70,6 @@ module.exports = (env, argv) => {
         template: 'src/index.html',
       }),
       new webpack.DefinePlugin({
-        OCM_SHOW_OLD_METRICS: process.env.OCM_SHOW_OLD_METRICS === 'true',
         APP_BETA: betaMode,
         APP_DEVMODE: devMode,
         APP_DEV_SERVER: isDevServer,

@@ -28,17 +28,6 @@ const getClusterStatus = clusterID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/status`,
 });
 
-const getUnhealthyClusters = params => apiRequest({
-  method: 'get',
-  url: '/api/clusters_mgmt/v1/dashboards/summary/unhealthy_clusters',
-  params: {
-    page: params.page,
-    size: params.page_size,
-    order: params.order,
-    search: params.filter,
-  },
-});
-
 const editCluster = (id, data) => apiRequest({
   method: 'patch',
   url: `/api/clusters_mgmt/v1/clusters/${id}`,
@@ -301,7 +290,6 @@ const deleteMachinePool = (clusterID, machinePoolID) => apiRequest({
 
 const clusterService = {
   getClusters,
-  getUnhealthyClusters,
   postNewCluster,
   getClusterDetails,
   editCluster,

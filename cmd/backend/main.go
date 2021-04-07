@@ -165,6 +165,8 @@ func run(cmd *cobra.Command, argv []string) {
 			glog.Errorf("Can't create proxy handler: %v", err)
 			os.Exit(1)
 		}
+		glog.Infof("Also adding alias: %s", fmt.Sprintf("/openshift_api%s", proxyCfg.Prefix()))
+		mainMux.Handle(fmt.Sprintf("/openshift_api%s", proxyCfg.Prefix()), proxyHandler)
 		mainMux.Handle(proxyCfg.Prefix(), proxyHandler)
 	}
 

@@ -97,14 +97,23 @@ class CreateOSDForm extends React.Component {
 
   toggleSubscriptionBilling = (_, value) => {
     const { change, openModal } = this.props;
+    let { product, billingModel } = this.props;
     const { byocSelected } = this.state;
+    billingModel = !value ? billingModel : value.split('-')[0];
 
     // marketplace quota is currently CCS only
-    if (value === billingModels.MARKETPLACE && !byocSelected) {
+    if ((billingModel === billingModels.MARKETPLACE || value === 'standard-trial') && !byocSelected) {
       openModal('customer-cloud-subscription');
     }
-    change('billing_model', value);
-    this.setState({ billingModel: value });
+
+    if (value === 'standard-trial') {
+      product = normalizedProducts.OSDTrial;
+    } else {
+      product = normalizedProducts.OSD;
+    }
+    change('product', product);
+    change('billing_model', billingModel);
+    this.setState({ billingModel });
   };
 
   isByocForm = () => {
@@ -149,16 +158,17 @@ class CreateOSDForm extends React.Component {
       autoscalingEnabled,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
-      billingModel,
       marketplaceQuotaFeature,
       getMarketplaceQuota,
       customerManagedEncryptionSelected,
+      osdTrialFeature,
     } = this.props;
 
     const {
       isMultiAz,
       machineType,
       mode,
+      billingModel,
     } = this.state;
 
     const isAws = cloudProviderID === 'aws';
@@ -169,9 +179,11 @@ class CreateOSDForm extends React.Component {
     const hasMarketplaceProductQuota = marketplaceQuotaFeature && !!get(clustersQuota, 'hasMarketplaceProductQuota');
     const hasMarketplaceBYOCQuota = getMarketplaceQuota('byoc', cloudProviderID);
     const hasMarketplaceRhInfraQuota = getMarketplaceQuota('rhInfra', cloudProviderID);
+    const hasStandardOSDQuota = !!get(clustersQuota, 'hasStandardOSDQuota');
 
     const isBYOCForm = this.isByocForm();
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
+    const showOSDTrial = osdTrialFeature && clustersQuota.hasOSDTrialQuota;
 
 
     let basicFieldsQuota = clustersQuota[cloudProviderID][infraType];
@@ -191,10 +203,12 @@ class CreateOSDForm extends React.Component {
           toggleSubscriptionBilling={this.toggleSubscriptionBilling}
           hasBYOCquota={hasBYOCQuota}
           hasStandardQuota={hasRhInfraQuota}
+          hasStandardOSDQuota={hasStandardOSDQuota}
           hasMarketplaceQuota={hasMarketplaceProductQuota}
           hasMarketplaceRhInfraQuota={hasMarketplaceRhInfraQuota}
           hasMarketplaceBYOCQuota={hasMarketplaceBYOCQuota}
           byocSelected={isBYOCForm}
+          showOSDTrial={showOSDTrial}
           pending={pending}
           product={product}
           billingModel={billingModel}
@@ -383,6 +397,7 @@ CreateOSDForm.propTypes = {
   clustersQuota: PropTypes.shape({
     hasProductQuota: PropTypes.bool.isRequired,
     hasMarketplaceProductQuota: PropTypes.bool,
+    hasOSDTrialQuota: PropTypes.bool,
     aws: PropTypes.shape({
       byoc: PropTypes.shape({
         singleAz: PropTypes.object.isRequired,
@@ -418,6 +433,7 @@ CreateOSDForm.propTypes = {
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
   marketplaceQuotaFeature: PropTypes.bool,
+  osdTrialFeature: PropTypes.bool,
   getMarketplaceQuota: PropTypes.func.isRequired,
 };
 

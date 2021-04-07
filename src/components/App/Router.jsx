@@ -88,6 +88,7 @@ function Router({ history }) {
             <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
             <Redirect from="/install/crc/installer-provisioned" to="/create/local" />
             <Redirect from="/token/moa" to="/token/rosa" />
+            <Redirect from="/insights" to="/overview" />
             <TermsGuardedRoute path="/token/rosa" component={TokensROSA} history={history} />
             <Route path="/token" component={Tokens} />
             <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />

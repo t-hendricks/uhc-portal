@@ -1,0 +1,70 @@
+$widget-min-height: 372px;
+$groups-chart-max-width: 500px;
+
+.ocm-insights {
+  &--advisor-card {
+    min-height: $widget-min-height;
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+
+      .ocm-insights--advisor-empty-state {
+        flex-grow: 1;
+      }
+
+      .ocm-insights--risk-chart {
+        &__title {
+          display: inline-block;
+          margin-right: 9px;
+        }
+
+        &__popover-icon {
+          &:hover {
+            cursor: pointer;
+            fill: var(--pf-global--Color--100);
+            transition: ease 0.3s;
+          }
+        }
+
+        .ocm-insights--risk-item {
+          &__label {
+            color: var(--pf-global--Color--200);
+          }
+        }
+
+        &__items {
+          padding-left: 1rem;
+        }
+      }
+
+      .ocm-insights--advisor-notice {
+        color: var(--pf-global--Color--200);
+
+        &__icon {
+          margin-right: 0.3rem;
+        }
+      }
+    }
+  }
+
+  &--advisor-notice {
+    margin-top: 0.6rem;
+  }
+
+  &--groups-chart {
+    max-width: $groups-chart-max-width;
+  }
+
+  &--advisor-empty-state {
+    .pf-c-empty-state__body {
+      max-width: 550px;
+    }
+  }
+}
+
+.ocm-insights--info-popover {
+  p:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}

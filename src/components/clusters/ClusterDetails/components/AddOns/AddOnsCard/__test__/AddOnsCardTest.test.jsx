@@ -46,6 +46,7 @@ describe('<AddOnsCard />', () => {
           pending: false,
           error: false,
         }}
+        requirements={{ fulfilled: true, errorMsgs: [] }}
       />,
     );
   });

@@ -113,4 +113,30 @@ describe('<AddOnsParametersModal />', () => {
       expect(wrapper.find(Field).props().isDisabled).toBeTruthy();
     });
   });
+
+  it('expect addon field to populate options', () => {
+    const addOn = {
+      description: 'Dummy Desc',
+      enabled: true,
+      editable: true,
+      id: 'Dummy ID',
+      name: 'Dummy Name',
+      parameters: {
+        items: [{
+          id: 'dummy item',
+          options: [
+            {
+              name: 'option1',
+              value: 'option1',
+            },
+          ],
+          enabled: true,
+          editable: false,
+        }],
+      },
+    };
+    wrapper.setProps({ addOn }, () => {
+      expect(wrapper.find(Field).props().options).toEqual([{ name: 'option1', value: 'option1' }]);
+    });
+  });
 });

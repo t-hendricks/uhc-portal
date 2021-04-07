@@ -1,5 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<ErroBox /> should render expandable 1`] = `
+<Alert
+  className="error-box"
+  isInline={true}
+  title="some error description"
+  variant="danger"
+>
+  <ExpandableSection
+    className=""
+    isActive={false}
+    onToggle={[Function]}
+    toggleText="Error details"
+    toggleTextCollapsed=""
+    toggleTextExpanded=""
+  >
+    <span>
+      this is some error message
+    </span>
+    <br />
+    <span>
+      Operation ID: N/A
+    </span>
+  </ExpandableSection>
+</Alert>
+`;
+
 exports[`<ErroBox /> should render with Operation ID 1`] = `
 <Alert
   className="error-box"
@@ -13,6 +39,23 @@ exports[`<ErroBox /> should render with Operation ID 1`] = `
   <br />
   <span>
     Operation ID: hello
+  </span>
+</Alert>
+`;
+
+exports[`<ErroBox /> should render with warning variant 1`] = `
+<Alert
+  className="error-box"
+  isInline={true}
+  title="some error description"
+  variant="warning"
+>
+  <span>
+    this is some error message
+  </span>
+  <br />
+  <span>
+    Operation ID: N/A
   </span>
 </Alert>
 `;

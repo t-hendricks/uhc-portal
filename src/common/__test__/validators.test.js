@@ -26,6 +26,7 @@ import fixtures from './validators.fixtures';
 
 test('Field is required', () => {
   expect(required()).toBe('Field is required');
+  expect(required('        ')).toBe('Field is required');
   expect(required('foo')).toBe(undefined);
 });
 
