@@ -121,6 +121,14 @@ const clearClusterArchiveResponse = () => dispatch => dispatch({
   type: clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE,
 });
 
+const upgradeTrialCluster = (id, params) => dispatch => dispatch({
+  type: clustersConstants.UPGRADE_TRIAL_CLUSTER,
+  payload: clusterService.upgradeTrialCluster(id, params),
+});
+
+const clearUpgradeTrialClusterResponse = () => dispatch => dispatch({
+  type: clustersConstants.CLEAR_UPGRADE_TRIAL_CLUSTER_RESPONSE,
+});
 
 const hibernateCluster = id => dispatch => dispatch({
   type: clustersConstants.HIBERNATE_CLUSTER,
@@ -386,4 +394,6 @@ export {
   clearClusterUnarchiveResponse,
   editClusterConsoleURL,
   getClusterStatus,
+  upgradeTrialCluster,
+  clearUpgradeTrialClusterResponse,
 };
