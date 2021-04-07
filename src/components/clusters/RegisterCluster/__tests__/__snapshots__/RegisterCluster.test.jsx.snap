@@ -26,7 +26,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
       <CardBody>
         <Grid>
           <GridItem
-            lg={5}
+            lg={8}
             md={8}
             sm={12}
           >
@@ -36,12 +36,11 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
               <Text
                 component="p"
               >
-                Use this form to register clusters that are not connected to OpenShift Cluster Manager. To edit subscription settings for clusters that are already connected to OpenShift Cluster Manager, the cluster owner or organization administrator should choose the "Edit subscription settings" action for that cluster.
+                Register clusters that are not connected to OpenShift Cluster Manager. Existing cluster owners or admins can edit existing cluster subscriptions from the cluster details page.
               </Text>
             </TextContent>
             <Form
               className="subscription-settings form"
-              onSubmit={[MockFunction]}
             >
               <Field
                 component={[Function]}
@@ -82,16 +81,16 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
                   Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
                 </Text>
               </TextContent>
-              <EditSubscriptionSettingsDialog
-                hideSubscriptionSettings={false}
-                isDialog={false}
-                onChangeNumericInputCallback={[Function]}
-                onChangeSupportLevelCallback={[Function]}
-                subscription={
+              <EditSubscriptionSettingsFields
+                canSubscribeMarketplaceOCP={false}
+                canSubscribeStandardOCP={true}
+                initialSettings={
                   Object {
+                    "isValid": true,
                     "support_level": "Eval",
                   }
                 }
+                onSettingsChange={[Function]}
               />
             </Form>
           </GridItem>
@@ -100,7 +99,6 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
       <CardFooter>
         <Button
           isDisabled={false}
-          onClick={[MockFunction]}
           type="submit"
           variant="primary"
         >
@@ -148,7 +146,7 @@ exports[`<RegisterCluster /> renders correctly when user can't subscribe ocp 1`]
       <CardBody>
         <Grid>
           <GridItem
-            lg={5}
+            lg={8}
             md={8}
             sm={12}
           >
@@ -158,12 +156,11 @@ exports[`<RegisterCluster /> renders correctly when user can't subscribe ocp 1`]
               <Text
                 component="p"
               >
-                Use this form to register clusters that are not connected to OpenShift Cluster Manager. To edit subscription settings for clusters that are already connected to OpenShift Cluster Manager, the cluster owner or organization administrator should choose the "Edit subscription settings" action for that cluster.
+                Register clusters that are not connected to OpenShift Cluster Manager. Existing cluster owners or admins can edit existing cluster subscriptions from the cluster details page.
               </Text>
             </TextContent>
             <Form
               className="subscription-settings form"
-              onSubmit={[MockFunction]}
             >
               <Field
                 component={[Function]}
@@ -204,17 +201,24 @@ exports[`<RegisterCluster /> renders correctly when user can't subscribe ocp 1`]
                   Editing the subscription settings will help ensure that you receive the level of support that you expect, and that your cluster is consuming the correct type of subscription.
                 </Text>
               </TextContent>
-              <EditSubscriptionSettingsDialog
-                hideSubscriptionSettings={true}
-                isDialog={false}
-                onChangeNumericInputCallback={[Function]}
-                onChangeSupportLevelCallback={[Function]}
-                subscription={
-                  Object {
-                    "support_level": "Eval",
-                  }
-                }
-              />
+              <Tooltip
+                content="You cannot edit subscription settings because your organization does not have any OpenShift subscriptions. Contact sales to purchase OpenShift."
+                position="auto"
+              >
+                <div>
+                  <EditSubscriptionSettingsFields
+                    canSubscribeMarketplaceOCP={false}
+                    canSubscribeStandardOCP={false}
+                    initialSettings={
+                      Object {
+                        "isValid": true,
+                        "support_level": "Eval",
+                      }
+                    }
+                    onSettingsChange={[Function]}
+                  />
+                </div>
+              </Tooltip>
             </Form>
           </GridItem>
         </Grid>
@@ -222,7 +226,6 @@ exports[`<RegisterCluster /> renders correctly when user can't subscribe ocp 1`]
       <CardFooter>
         <Button
           isDisabled={false}
-          onClick={[MockFunction]}
           type="submit"
           variant="primary"
         >

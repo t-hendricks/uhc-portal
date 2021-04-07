@@ -3,11 +3,12 @@ import React from 'react';
 import { Popover } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 
-const PopoverHint = ({ hint, iconClassName }) => (
+const PopoverHint = ({ hint, iconClassName, ...popoverProps }) => (
   <>
     <Popover
       bodyContent={hint}
       aria-label="help"
+      {...popoverProps}
     >
       <span className={iconClassName}>
         <OutlinedQuestionCircleIcon />

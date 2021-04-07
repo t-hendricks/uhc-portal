@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import {
+  Alert,
   Button,
   Card,
   CardBody,
@@ -22,11 +23,15 @@ import {
 
 import {
   subscriptionSupportLevels,
+  subscriptionServiceLevels,
   subscriptionSystemUnits,
   subscriptionStatuses,
   subscriptionSettings,
   normalizedProducts,
+  billingModels,
 } from '../../../../../../common/subscriptionTypes';
+
+import ExternalLink from '../../../../../common/ExternalLink';
 
 function SubscriptionSettings({
   subscription, openModal,
@@ -63,16 +68,32 @@ function SubscriptionSettings({
   }
 
   // the rest
+  const billingModel = get(subscription, subscriptionSettings.CLUSTER_BILLING_MODEL);
+  let billingModelStr = 'Not set';
+  if (billingModel === billingModels.STANDARD) {
+    billingModelStr = 'Annual: Fixed capacity subscription from Red Hat';
+  } else if (billingModel === billingModels.MARKETPLACE) {
+    billingModelStr = 'Pay-as-you-go (Hourly)';
+  }
   const usageStr = get(subscription, subscriptionSettings.USAGE, 'Not set');
-  const serviceLevelStr = get(subscription, subscriptionSettings.SERVICE_LEVEL, 'Not set');
-  const systemUnitsStr = get(subscription, subscriptionSettings.SYSTEM_UNITS,
+  const serviceLevel = get(subscription, subscriptionSettings.SERVICE_LEVEL);
+  let serviceLevelStr = 'Not set';
+  if (serviceLevel === subscriptionServiceLevels.L1_L3) {
+    serviceLevelStr = 'Red Hat support (L1-L3)';
+  } else if (serviceLevel === subscriptionServiceLevels.L3_ONLY) {
+    serviceLevelStr = 'Partner support (L3)';
+  }
+  const systemUnits = get(subscription, subscriptionSettings.SYSTEM_UNITS,
     subscriptionSystemUnits.CORES_VCPU);
-  const productBundleStr = get(subscription, subscriptionSettings.PRODUCT_BUNDLE, 'Not set');
+  const systemUnitsStr = systemUnits === subscriptionSystemUnits.SOCKETS
+    ? 'Sockets' : 'Cores/vCPUs ';
   const cpuTotal = get(subscription, subscriptionSettings.CPU_TOTAL, 0);
   const cpuTotalStr = `${cpuTotal} core${cpuTotal === 1 ? '' : 's'}`;
   const socketTotal = get(subscription, subscriptionSettings.SOCKET_TOTAL, 0);
   const socketTotalStr = `${socketTotal} socket${socketTotal === 1 ? '' : 's'}`;
-  const obligationStr = systemUnitsStr === subscriptionSystemUnits.SOCKETS
+  const obligationLabel = systemUnits === subscriptionSystemUnits.SOCKETS
+    ? 'Number of compute sockets' : 'Number of compute cores';
+  const obligationStr = systemUnits === subscriptionSystemUnits.SOCKETS
     ? socketTotalStr : cpuTotalStr;
 
   const salesURL = 'https://www.redhat.com/en/contact';
@@ -85,31 +106,38 @@ function SubscriptionSettings({
           {titleIcon}
         </Title>
       </CardTitle>
+      {!canSubscribeOCP && (
+        <CardBody>
+          <Alert
+            id="subscription-settings-contact-sales-alert"
+            variant="info"
+            isInline
+            title="Your organization doesn't have an active subscription. Purchase an OpenShift subscription by contacting sales."
+          >
+            <ExternalLink href={salesURL}>
+              Contact sales
+            </ExternalLink>
+          </Alert>
+        </CardBody>
+      )}
       <CardBody className="ocm-c-overview-subscription-settings__card--body">
         <Grid>
           <GridItem md={6}>
             <DescriptionList>
               <DescriptionListGroup>
-                <DescriptionListTerm>SLA</DescriptionListTerm>
+                <DescriptionListTerm>Subscription type</DescriptionListTerm>
+                <DescriptionListDescription>{billingModelStr}</DescriptionListDescription>
+              </DescriptionListGroup>
+              <DescriptionListGroup>
+                <DescriptionListTerm>Service level agreement (SLA)</DescriptionListTerm>
                 <DescriptionListDescription>{supportLevelStr}</DescriptionListDescription>
               </DescriptionListGroup>
               <DescriptionListGroup>
-                <DescriptionListTerm>Production status</DescriptionListTerm>
-                <DescriptionListDescription>{usageStr}</DescriptionListDescription>
-              </DescriptionListGroup>
-              <DescriptionListGroup>
-                <DescriptionListTerm>Service level</DescriptionListTerm>
+                <DescriptionListTerm>Support type</DescriptionListTerm>
                 <DescriptionListDescription>{serviceLevelStr}</DescriptionListDescription>
                 {isEditViewable && (
                   <DescriptionListDescription>
-                    {canSubscribeOCP ? (
-                      <Button variant="link" isInline onClick={handleEditSettings}>Edit subscription settings</Button>
-                    ) : (
-                      <>
-                        <a href={salesURL} target="_blank" rel="noreferrer noopener">Contact sales</a>
-                        {' to purchase an OpenShift subscription.'}
-                      </>
-                    )}
+                    <Button variant="link" isDisabled={!canSubscribeOCP} isInline onClick={handleEditSettings}>Edit subscription settings</Button>
                   </DescriptionListDescription>
                 )}
               </DescriptionListGroup>
@@ -118,19 +146,15 @@ function SubscriptionSettings({
           <GridItem md={6}>
             <DescriptionList>
               <DescriptionListGroup>
+                <DescriptionListTerm>Cluster usage</DescriptionListTerm>
+                <DescriptionListDescription>{usageStr}</DescriptionListDescription>
+              </DescriptionListGroup>
+              <DescriptionListGroup>
                 <DescriptionListTerm>Subscription units</DescriptionListTerm>
                 <DescriptionListDescription>{systemUnitsStr}</DescriptionListDescription>
               </DescriptionListGroup>
-              {false && ( // TODO: either add back or remove PRODUCT_BUNDLE
-                <>
-                  <DescriptionListGroup>
-                    <DescriptionListTerm>Subscription product</DescriptionListTerm>
-                    <DescriptionListDescription>{productBundleStr}</DescriptionListDescription>
-                  </DescriptionListGroup>
-                </>
-              )}
               <DescriptionListGroup>
-                <DescriptionListTerm>Subscription obligation</DescriptionListTerm>
+                <DescriptionListTerm>{obligationLabel}</DescriptionListTerm>
                 <DescriptionListDescription>{obligationStr}</DescriptionListDescription>
               </DescriptionListGroup>
             </DescriptionList>

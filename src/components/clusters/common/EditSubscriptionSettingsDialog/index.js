@@ -7,7 +7,6 @@ import {
 import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
 
-
 const mapStateToProps = state => ({
   subscription: state.modal.data,
   requestState: state.subscriptionSettings.requestState,

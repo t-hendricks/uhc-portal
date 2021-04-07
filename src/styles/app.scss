@@ -634,32 +634,28 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .subscription-settings {
   &.form {
     margin-top: var(--pf-c-modal-box--c-title--body--MarginTop);
-    counter-reset: settings;
   }
   &.radio-group {
-    position: relative;
-    padding-left: 25px;
+    .pf-c-form__group-control {
+      position: relative;
+      padding-left: 10px;
+      // change to inline display, so the fields do not take the whole line.
+      // the tooltip can be nicely displayed side by side. 
+      display: inline-block;
+      .pf-c-radio:not(:last-child) {
+        margin-bottom: var(--pf-global--spacer--sm);
+      }
+      &.pf-m-inline {
+        display: inline-flex;
+        .pf-c-radio:not(:last-child) {
+          margin-bottom: 0;
+        }
+      }
+    }
 
     .pf-c-form__label-text {
-      font-weight: var(--pf-global--FontWeight--normal);
-      font-size: var(--pf-global--FontSize--md)
-    }
-    .pf-c-form__label-text::before {
-      counter-increment: settings;
-      content: counter(settings) ".";
-      position: absolute;
-      margin-left: -20px;
-    }
-
-    .units-numeric-input .pf-c-form__label-text::before {
-      counter-increment: none;
-      content: none;
-    }
-    .units-numeric-input{
-      margin-left: 23px;
-    }
-    #compute-cores-input {
-      margin-bottom: 12px;
+      font-weight: var(--pf-global--FontWeight--bold);
+      font-size: var(--pf-global--FontSize--sm)
     }
   }
   &.expired-eval-option {
@@ -676,6 +672,15 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   &.danger-title-icon{
     margin-left: 10px;
     fill: var(--pf-global--danger-color--100);
+  }
+  .subscription-settings-label-tooltip-icon {
+    margin-left: 5px;
+  }
+
+  // slightly reduce the alert margin to hide the scroll
+  #subscription-settings-cluster-billing-model-alert {
+    margin-top: calc(var(--pf-global--spacer--md) - var(--pf-c-form--GridGap));
+    margin-bottom: calc(var(--pf-global--spacer--md) - var(--pf-c-form--GridGap));
   }
 }
 

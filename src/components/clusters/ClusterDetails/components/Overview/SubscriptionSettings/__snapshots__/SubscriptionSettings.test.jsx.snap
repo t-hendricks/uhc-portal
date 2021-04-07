@@ -24,7 +24,15 @@ exports[`<SubscriptionSettings /> should render for OCP 1`] = `
         <DescriptionList>
           <DescriptionListGroup>
             <DescriptionListTerm>
-              SLA
+              Subscription type
+            </DescriptionListTerm>
+            <DescriptionListDescription>
+              Not set
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+          <DescriptionListGroup>
+            <DescriptionListTerm>
+              Service level agreement (SLA)
             </DescriptionListTerm>
             <DescriptionListDescription>
               Premium
@@ -32,21 +40,14 @@ exports[`<SubscriptionSettings /> should render for OCP 1`] = `
           </DescriptionListGroup>
           <DescriptionListGroup>
             <DescriptionListTerm>
-              Production status
+              Support type
             </DescriptionListTerm>
             <DescriptionListDescription>
-              Production
-            </DescriptionListDescription>
-          </DescriptionListGroup>
-          <DescriptionListGroup>
-            <DescriptionListTerm>
-              Service level
-            </DescriptionListTerm>
-            <DescriptionListDescription>
-              L1-L3
+              Red Hat support (L1-L3)
             </DescriptionListDescription>
             <DescriptionListDescription>
               <Button
+                isDisabled={false}
                 isInline={true}
                 onClick={[Function]}
                 variant="link"
@@ -63,15 +64,23 @@ exports[`<SubscriptionSettings /> should render for OCP 1`] = `
         <DescriptionList>
           <DescriptionListGroup>
             <DescriptionListTerm>
-              Subscription units
+              Cluster usage
             </DescriptionListTerm>
             <DescriptionListDescription>
-              Cores/vCPU
+              Production
             </DescriptionListDescription>
           </DescriptionListGroup>
           <DescriptionListGroup>
             <DescriptionListTerm>
-              Subscription obligation
+              Subscription units
+            </DescriptionListTerm>
+            <DescriptionListDescription>
+              Cores/vCPUs 
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+          <DescriptionListGroup>
+            <DescriptionListTerm>
+              Number of compute cores
             </DescriptionListTerm>
             <DescriptionListDescription>
               16 cores

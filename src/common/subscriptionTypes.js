@@ -10,6 +10,7 @@ const subscriptionSettings = {
   SYSTEM_UNITS: 'system_units',
   CPU_TOTAL: 'cpu_total',
   SOCKET_TOTAL: 'socket_total',
+  CLUSTER_BILLING_MODEL: 'cluster_billing_model',
 };
 
 /**

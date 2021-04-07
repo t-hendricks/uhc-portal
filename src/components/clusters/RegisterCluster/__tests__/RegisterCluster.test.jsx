@@ -8,7 +8,7 @@ describe('<RegisterCluster />', () => {
   const resetResponse = jest.fn();
   const resetForm = jest.fn();
   const getOrganizationAndQuota = jest.fn();
-  const change = jest.fn();
+  const onSubmit = jest.fn();
   const registerClusterResponse = {
     error: false,
     errorMessage: '',
@@ -21,7 +21,7 @@ describe('<RegisterCluster />', () => {
     handleSubmit,
     resetForm,
     getOrganizationAndQuota,
-    change,
+    onSubmit,
     registerClusterResponse,
     quotaResponse: { fulfilled: true },
   };
