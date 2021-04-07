@@ -16,7 +16,8 @@ import modals from '../../../common/Modal/modals';
  */
 function actionResolver(
   cluster, showConsoleButton, openModal, canSubscribeOCP,
-  canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased, refreshFunc,
+  canTransferClusterOwnership, canHibernateCluster,
+  toggleSubscriptionReleased, refreshFunc,
 ) {
   const baseProps = {
     component: 'button',
@@ -282,6 +283,22 @@ This cluster is hibernating;
     return transferClusterOwnershipProps;
   };
 
+  const getUpgradeTrialClusterProps = () => {
+    const upgradeTrialClusterData = {
+      clusterID: cluster.id,
+      cluster,
+    };
+    const upgradeTrialClusterProps = {
+      ...baseProps,
+      title: 'Upgrade cluster from Trial',
+      key: getKey('upgradetrialcluster'),
+    };
+    return {
+      ...upgradeTrialClusterProps,
+      onClick: () => openModal(modals.UPGRADE_TRIAL_CLUSTER, upgradeTrialClusterData),
+    };
+  };
+
   const adminConsoleItemProps = getAdminConsoleProps();
   const scaleClusterItemProps = getScaleClusterProps();
   const editNodeCountItemProps = getEditNodeCountProps();
@@ -292,6 +309,7 @@ This cluster is hibernating;
   const unarchiveClusterItemProps = getUnarchiveClusterProps();
   const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
   const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
+  const upgradeTrialClusterProps = getUpgradeTrialClusterProps();
   const editccscredentialsProps = getEditCCSCredentialsProps();
   const hibernateClusterProps = getHibernateClusterProps();
 
@@ -314,6 +332,7 @@ This cluster is hibernating;
   // eslint-disable-next-line max-len
   // const showccscredentials = cluster.ccs?.enabled && cluster.cloud_provider && cluster.cloud_provider.id !== 'gcp';
   const showccscredentials = false; // Temporary until backend is fixed
+  const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [
     showConsoleButton && adminConsoleItemProps,
@@ -322,6 +341,7 @@ This cluster is hibernating;
     showScale && scaleClusterItemProps,
     showEditNodeCount && editNodeCountItemProps,
     showHibernateCluster && hibernateClusterProps,
+    showUpgradeTrialCluster && upgradeTrialClusterProps,
     showDelete && deleteClusterItemProps,
     showArchive && archiveClusterItemProps,
     showUnarchive && unarchiveClusterItemProps,
@@ -333,11 +353,13 @@ This cluster is hibernating;
 
 function dropDownItems({
   cluster, showConsoleButton, openModal, canSubscribeOCP,
-  canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased, refreshFunc,
+  canTransferClusterOwnership, canHibernateCluster,
+  toggleSubscriptionReleased, refreshFunc,
 }) {
   const actions = actionResolver(
     cluster, showConsoleButton, openModal, canSubscribeOCP,
-    canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased, refreshFunc,
+    canTransferClusterOwnership, canHibernateCluster,
+    toggleSubscriptionReleased, refreshFunc,
   );
   const menuItems = actions.map(
     action => (<DropdownItem {...action}>{action.title}</DropdownItem>),

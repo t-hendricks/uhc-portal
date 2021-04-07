@@ -14,6 +14,7 @@ const modals = {
   DELETE_CLUSTER: 'delete-cluster',
   UPGRADE_WIZARD: 'upgrade-wizard',
   TRANSFER_CLUSTER_OWNERSHIP: 'transfer-cluster-ownership',
+  UPGRADE_TRIAL_CLUSTER: 'upgrade-trial-cluster',
   EDIT_SUBSCRIPTION_SETTINGS: 'edit-subscription-settings',
   HIBERNATE_CLUSTER: 'hibernate-cluster',
   RESUME_CLUSTER: 'resume-cluster',
