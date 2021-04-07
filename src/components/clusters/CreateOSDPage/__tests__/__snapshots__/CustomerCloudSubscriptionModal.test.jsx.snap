@@ -6,7 +6,7 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
   onClose={[MockFunction]}
   onPrimaryClick={[MockFunction]}
   primaryText="Close"
-  showSecondary={false}
+  showSecondery={false}
   title="Customer cloud subscription"
 >
   <TextContent>
@@ -74,7 +74,7 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
   onClose={[MockFunction]}
   onPrimaryClick={[MockFunction]}
   primaryText="Close"
-  showSecondary={false}
+  showSecondery={false}
   title="Customer cloud subscription"
 >
   <TextContent>

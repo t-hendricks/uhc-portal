@@ -48,15 +48,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
           >
             Save settings
           </Button>,
-          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          undefined,
-          false,
         ]
       }
       appendTo={[Function]}
@@ -551,15 +548,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
               >
                 Save settings
               </Button>,
-              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              undefined,
-              false,
             ]
           }
           aria-describedby=""
@@ -1450,7 +1444,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                             </button>
                           </Button>
                           <Button
-                            key="secondary"
+                            key="cancel"
                             onClick={[Function]}
                             variant="secondary"
                           >
@@ -1581,15 +1575,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
           >
             Save settings
           </Button>,
-          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          undefined,
-          false,
         ]
       }
       appendTo={[Function]}
@@ -2130,15 +2121,12 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
               >
                 Save settings
               </Button>,
-              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              undefined,
-              false,
             ]
           }
           aria-describedby=""
@@ -3107,7 +3095,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                             </button>
                           </Button>
                           <Button
-                            key="secondary"
+                            key="cancel"
                             onClick={[Function]}
                             variant="secondary"
                           >
