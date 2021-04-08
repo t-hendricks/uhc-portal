@@ -1,0 +1,37 @@
+{
+  "report": {
+    "rule_id": "ccx_rules_ocp.external.rules.samples_op_failed_image_import_check.report",
+    "created_at": "2020-02-07T14:19:00Z",
+    "description": "Pods could fail to start if openshift-samples is degraded due to FailedImageImport which is caused by a hiccup while talking to the Red Hat registry",
+    "details": "The `openshift-samples` cluster-operator is degraded due to `FailedImageImport` because of a hiccup while talking to the Red Hat registry.\n\n[Knowledgebase Article](https://access.redhat.com/solutions/4563171)\n",
+    "reason": "Due to a temporary hiccup talking to the Red Hat registry the openshift-samples failed to import some of the imagestreams.\n\n\nSource of the issue:\n\n**Cluster-operator:**  **{{=pydata.info[\"name\"]}}**\n- *Condition:* {{=pydata.info[\"condition\"]}}\n- *Reason:* {{=pydata.info[\"reason\"]}}\n- *Message:* {{=pydata.info[\"message\"]}}\n- *Last* Transition: {{=pydata.info[\"lastTransitionTime\"]}}\n",
+    "resolution": "Red Hat recommends that you to follow these steps:\n\n1. Fix 1, Try running:\n~~~\n# oc import-image \u003cfor the ImageStream(s) in question\u003e\n~~~\n\n1. Fix 2, Try running:\n~~~\n# oc delete configs.samples cluster\n~~~",
+    "total_risk": 2,
+    "risk_of_change": 0,
+    "disabled": false,
+    "disable_feedback": "",
+    "disabled_at": "",
+    "internal": false,
+    "user_vote": 0,
+    "extra_data": {
+      "error_key": "SAMPLES_FAILED_IMAGE_IMPORT_ERR",
+      "info": {
+        "condition": "Degraded",
+        "lastTransitionTime": "2019-12-06T15:58:09Z",
+        "message": "Samples installed at , with image import failures for these imagestreams:",
+        "name": "openshift-samples",
+        "reason": "FailedImageImports"
+      },
+      "type": "rule"
+    },
+    "tags": [
+      "openshift",
+      "incident",
+      "networking",
+      "registry",
+      "service_availability",
+      "pssa"
+    ]
+  },
+  "status": "ok"
+}
