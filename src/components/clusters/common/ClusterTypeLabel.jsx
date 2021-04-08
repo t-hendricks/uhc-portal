@@ -16,6 +16,10 @@ function ClusterTypeLabel({ cluster }) {
       name: 'OSD',
       tooltip: 'OpenShift Dedicated (OSD) cluster managed by Red Hat',
     },
+    [normalizedProducts.OSDTrial]: {
+      name: 'OSD Trial',
+      tooltip: 'OpenShift Dedicated (OSD) cluster trial managed by Red Hat',
+    },
     [normalizedProducts.RHMI]: {
       name: 'RHMI',
       tooltip: 'Red Hat Managed Integration',
