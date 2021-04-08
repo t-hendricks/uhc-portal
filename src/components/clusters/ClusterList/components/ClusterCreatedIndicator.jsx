@@ -24,9 +24,9 @@ function ClusterCreatedIndicator({ cluster }) {
           <strong>Trial Cluster</strong>
         </h1>
         <p>
-          Your free trial cluster will automatically be deleted in
+          Your free trial cluster will automatically be deleted in&nbsp;
           {trialExpiresStr}
-          on
+          &nbsp;on&nbsp;
           <strong>{trialEndDate}</strong>
         </p>
       </>
