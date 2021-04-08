@@ -93,7 +93,7 @@ function DetailsRight({
                 Load balancers
               </DescriptionListTerm>
               <DescriptionListDescription>
-                {cluster.load_balancer_quota}
+                {cluster.load_balancer_quota || 'N/A'}
               </DescriptionListDescription>
             </DescriptionListGroup>
             <DescriptionListGroup>
@@ -101,9 +101,9 @@ function DetailsRight({
                 Persistent storage
               </DescriptionListTerm>
               <DescriptionListDescription>
-                {humanizedPersistentStorage.value}
-                {' '}
-                {humanizedPersistentStorage.unit}
+                {humanizedPersistentStorage
+                  ? `${humanizedPersistentStorage.value}  ${humanizedPersistentStorage.unit}`
+                  : 'N/A'}
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>

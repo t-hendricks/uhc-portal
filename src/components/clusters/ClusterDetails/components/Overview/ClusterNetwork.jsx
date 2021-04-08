@@ -9,7 +9,7 @@ import {
 
 function ClusterNetwork({ cluster }) {
   return (
-    cluster.managed && cluster.network && (
+    (cluster.managed && cluster.network && (
       <>
         <DescriptionListGroup>
           <DescriptionListTerm>
@@ -50,7 +50,7 @@ function ClusterNetwork({ cluster }) {
         </DescriptionListGroup>
       </>
     )
-  );
+    ) || null);
 }
 
 ClusterNetwork.propTypes = {
