@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<KMSKeyLocationComboBox /> when region list needs to be fetched renders correctly 1`] = `
+exports[`<KMSKeyLocationComboBox /> when location needs to be fetched renders correctly 1`] = `
 <KMSKeyLocationComboBox
   input={
     Object {
