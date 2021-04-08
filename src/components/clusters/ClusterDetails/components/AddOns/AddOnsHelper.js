@@ -10,7 +10,7 @@ const quotaLookup = (cluster, quota) => {
   const billingModel = get(cluster, 'billing_model', billingModels.STANDARD);
   const product = cluster.subscription.plan.id; // TODO plan.type
   const cloudProviderID = get(cluster, 'cloud_provider.id', 'any');
-  const infra = cluster.ccs.enabled ? 'byoc' : 'rhInfra';
+  const infra = cluster.ccs?.enabled ? 'byoc' : 'rhInfra';
   const zoneType = cluster.multi_az ? 'multiAz' : 'singleAz';
 
   return get(quota.addOnsQuota, [billingModel, product, cloudProviderID, infra, zoneType], {});
