@@ -6,3 +6,9 @@
 .upgrade-trial-no-quota {
   margin-top: var(--pf-global--spacer--lg);
 }
+
+.upgrade-trial-cluster-dialog {
+  a:hover {
+    margin: auto;
+  }
+}
