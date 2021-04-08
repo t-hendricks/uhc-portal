@@ -334,6 +334,10 @@ p.notfound {
 
 #cl-details-top .pf-c-breadcrumb {
   padding-bottom: 15px;
+
+  li {
+    white-space: normal;
+  }
 }
 
 #clusterdetails-content .container-fluid {
