@@ -37,15 +37,18 @@ class AddOns extends React.Component {
       getClusterAddOns,
       clusterAddOns,
       addClusterAddOnResponse,
+      updateClusterAddOnResponse,
       getOrganizationAndQuota,
       deleteClusterAddOnResponse,
     } = this.props;
     if (((addClusterAddOnResponse.fulfilled && prevProps.addClusterAddOnResponse.pending)
-    || (deleteClusterAddOnResponse.fulfilled && prevProps.deleteClusterAddOnResponse.pending))
-        && !clusterAddOns.pending) {
-      // Fetch cluster add-ons again if we just added or deleted a cluster add-on
-      getClusterAddOns(clusterID);
-      // Refresh quota after installing or deleting add-ons
+      || (updateClusterAddOnResponse.fulfilled && prevProps.updateClusterAddOnResponse.pending)
+      || (deleteClusterAddOnResponse.fulfilled && prevProps.deleteClusterAddOnResponse.pending))) {
+      // Fetch cluster add-ons again if we just added, updated or deleted a cluster add-on
+      if (!clusterAddOns.pending) {
+        getClusterAddOns(clusterID);
+      }
+      // Refresh quota after installing, updating or deleting add-ons
       getOrganizationAndQuota();
     }
   }
@@ -118,6 +121,7 @@ class AddOns extends React.Component {
                   validateAddOnRequirements(addOn, cluster, clusterAddOns, clusterMachinePools)
                 }
                 hasQuota={hasQuota(addOn, cluster, organization, quota)}
+                quota={quota}
               />
             </GalleryItem>
           ))}
@@ -142,6 +146,7 @@ AddOns.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getClusterAddOns: PropTypes.func.isRequired,
   addClusterAddOnResponse: PropTypes.object.isRequired,
+  updateClusterAddOnResponse: PropTypes.object.isRequired,
   deleteClusterAddOnResponse: PropTypes.object.isRequired,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,
 };

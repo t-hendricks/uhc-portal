@@ -4,6 +4,7 @@ import { Button } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import AddOnsParametersModal from '../AddOnsParametersModal';
+import fixtures from '../../../../__test__/ClusterDetails.fixtures';
 
 const dummyValue = 'dummy value';
 
@@ -14,9 +15,12 @@ describe('<AddOnsParametersModal />', () => {
   let resetForm;
   let change;
   let handleSubmit;
+  let quota;
+  const { clusterDetails } = fixtures;
   beforeAll(() => {
     closeModal = jest.fn();
     clearClusterAddOnsResponses = jest.fn();
+    quota = {};
     resetForm = jest.fn();
     change = jest.fn();
     handleSubmit = jest.fn();
@@ -54,6 +58,8 @@ describe('<AddOnsParametersModal />', () => {
         pristine
         change={change}
         handleSubmit={handleSubmit}
+        quota={quota}
+        cluster={clusterDetails.cluster}
       />,
     );
   });

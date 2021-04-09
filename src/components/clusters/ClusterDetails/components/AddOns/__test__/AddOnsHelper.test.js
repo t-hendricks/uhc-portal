@@ -220,6 +220,56 @@ describe('parameterValuesForEditing', () => {
     const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
     expect(param).toEqual({ parameters: { 'my-bool': false } });
   });
+  it('should return option value for param with options and no installation param value', () => {
+    const mockAddOnsParams = {
+      parameters: {
+        items: [
+          {
+            id: 'my-string',
+            value_type: 'string',
+            options: [{
+              name: 'option 1',
+              value: 'options 1',
+            }],
+          },
+        ],
+      },
+    };
+    const mockAddOnsInstallParams = {};
+    const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
+    expect(param).toEqual({ parameters: { 'my-string': 'options 1' } });
+  });
+  it('should return current param value for param with options and installation param value', () => {
+    const mockAddOnsParams = {
+      parameters: {
+        items: [
+          {
+            id: 'my-string',
+            value_type: 'string',
+            options: [{
+              name: 'option 1',
+              value: 'options 1',
+            }, {
+              name: 'option 2',
+              value: 'options 2',
+            }],
+          },
+        ],
+      },
+    };
+    const mockAddOnsInstallParams = {
+      parameters: {
+        items: [
+          {
+            id: 'my-string',
+            value: 'options 2',
+          },
+        ],
+      },
+    };
+    const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
+    expect(param).toEqual({ parameters: { 'my-string': 'options 2' } });
+  });
 });
 
 describe('validateAddOnRequirements', () => {

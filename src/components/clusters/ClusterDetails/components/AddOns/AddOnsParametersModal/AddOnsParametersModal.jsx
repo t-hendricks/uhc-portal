@@ -5,8 +5,12 @@ import { Button, Form, FormGroup } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import { LevelUpAltIcon } from '@patternfly/react-icons';
 import Modal from '../../../../../common/Modal/Modal';
-import { hasParameters } from '../AddOnsHelper';
-import { ReduxCheckbox, ReduxVerticalFormGroup, ReduxFormDropdown } from '../../../../../common/ReduxFormComponents';
+import { getParameterValue, hasParameters, quotaCostOptions } from '../AddOnsHelper';
+import {
+  ReduxCheckbox,
+  ReduxFormDropdown,
+  ReduxVerticalFormGroup,
+} from '../../../../../common/ReduxFormComponents';
 import { required, validateNumericInput } from '../../../../../../common/validators';
 import ErrorBox from '../../../../../common/ErrorBox';
 
@@ -79,10 +83,22 @@ class AddOnsParametersModal extends Component {
   };
 
   getFieldProps = (param) => {
+    const {
+      cluster,
+      quota,
+      addOnInstallation,
+    } = this.props;
     if (param.options !== undefined && param.options.length > 0) {
+      let paramOptions;
+      if (param.value_type === 'resource') {
+        const currentValue = Number(getParameterValue(addOnInstallation, param.id));
+        paramOptions = quotaCostOptions(param.id, cluster, quota, param.options, currentValue);
+      } else {
+        paramOptions = param.options;
+      }
       return ({
         component: ReduxFormDropdown,
-        options: param.options,
+        options: paramOptions,
         type: 'text',
       });
     }
@@ -190,6 +206,8 @@ AddOnsParametersModal.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   addOn: PropTypes.object,
   addOnInstallation: PropTypes.object,
+  cluster: PropTypes.object.isRequired,
+  quota: PropTypes.object.isRequired,
   isUpdateForm: PropTypes.bool,
   submitClusterAddOnResponse: PropTypes.object,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,
