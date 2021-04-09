@@ -119,7 +119,7 @@ describe('createViewQueryObject()', () => {
     const expected = {
       ...baseResult,
       has_filters: !!viewOptions.filter,
-      filter: `(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (display_name ILIKE '%${escaped}%' OR external_cluster_id ILIKE '%${escaped}%')`,
+      filter: `(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (display_name ILIKE '%${escaped}%' OR external_cluster_id ILIKE '%${escaped}%' OR cluster_id ILIKE '%${escaped}%')`,
     };
     expect(createViewQueryObject(viewOptions)).toEqual(expected);
   });
