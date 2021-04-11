@@ -175,6 +175,7 @@ class UpgradeTrialClusterDialog extends Component {
         data-test-id="upgrade-trial-cluster-dialog"
         modalSize={modalSize}
         {...primaryButton}
+        className="upgrade-trial-cluster-dialog"
         {...secondaryButton}
         {...tertiaryButton}
         isPending={upgradeTrialClusterResponse.pending}
