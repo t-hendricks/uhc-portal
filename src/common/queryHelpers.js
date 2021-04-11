@@ -56,7 +56,7 @@ const createViewQueryObject = (viewOptions, queryObj) => {
     // If we got a search string from the user, format it as a LIKE query.
     if (viewOptions.filter) {
       const likePattern = sqlString(`%${viewOptions.filter}%`);
-      clauses.push(`display_name ILIKE ${likePattern} OR external_cluster_id ILIKE ${likePattern}`);
+      clauses.push(`display_name ILIKE ${likePattern} OR external_cluster_id ILIKE ${likePattern} OR cluster_id ILIKE ${likePattern}`);
     }
 
     if (!isEmpty(viewOptions.flags.subscriptionFilter)) {
