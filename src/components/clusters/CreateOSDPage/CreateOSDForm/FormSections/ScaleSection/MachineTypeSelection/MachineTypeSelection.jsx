@@ -162,8 +162,6 @@ class MachineTypeSelection extends React.Component {
           key={machineType.id}
           id={`machineTypeRadio.${machineType.id}`}
           value={machineType.id}
-          isDisabled={!hasQuota}
-          tooltip={!hasQuota && !isMachinePool && !isBYOC && 'You do not have quota for this node type. Contact sales to purchase additional quota.'}
           isSelected={hasQuota && input.value === machineType.id}
           titleText={labelTitle}
           secondaryText={name}
@@ -173,10 +171,13 @@ class MachineTypeSelection extends React.Component {
       );
     };
 
-    let displayedMachineTypes = sortedMachineTypes;
+    const quotaMachineTypes = sortedMachineTypes.filter(type => (
+      this.hasQuotaForType(type.id)
+    ));
+    let displayedMachineTypes = quotaMachineTypes;
     if (machineTypes.fulfilled && organization.fulfilled) {
       if (!isBYOC) {
-        displayedMachineTypes = sortedMachineTypes.filter(type => !type.ccs_only);
+        displayedMachineTypes = quotaMachineTypes.filter(type => (!type.ccs_only));
       }
       if (displayedMachineTypes.length === 0) {
         return <div>No supported machine types</div>;
