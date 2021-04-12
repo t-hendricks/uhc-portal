@@ -12,6 +12,7 @@ describe('<Overview />', () => {
       history: {},
       displayClusterLogs: false,
       openModal: jest.fn(),
+      insightsData: {},
     };
     const wrapper = shallow(
       <Overview {...props} />,
@@ -29,6 +30,7 @@ describe('<Overview />', () => {
       history: {},
       displayClusterLogs: true,
       openModal: jest.fn(),
+      insightsData: fixtures.insightsData,
     };
     const wrapper = shallow(
       <Overview {...props} />,
@@ -45,6 +47,7 @@ describe('<Overview />', () => {
       history: {},
       displayClusterLogs: true,
       openModal: jest.fn(),
+      insightsData: {},
     };
     const wrapper = shallow(
       <Overview {...props} />,

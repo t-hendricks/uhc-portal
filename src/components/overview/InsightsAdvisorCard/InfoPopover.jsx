@@ -31,7 +31,7 @@ const InfoPopover = () => (
       </>
               )}
   >
-    <HelpIcon className="ocm-insights--risk-chart__popover-icon" color={global_Color_dark_200.value} />
+    <HelpIcon className="ocm-insights--info-popover__icon" color={global_Color_dark_200.value} />
   </Popover>
 );
 

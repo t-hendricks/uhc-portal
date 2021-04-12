@@ -95,5 +95,5 @@ const config = {
   },
 };
 
-export { ENV_OVERRIDE_LOCALSTORAGE_KEY };
+export { ENV_OVERRIDE_LOCALSTORAGE_KEY, isDevOrStaging };
 export default config;

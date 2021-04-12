@@ -19,14 +19,6 @@ $groups-chart-max-width: 500px;
           margin-right: 9px;
         }
 
-        &__popover-icon {
-          &:hover {
-            cursor: pointer;
-            fill: var(--pf-global--Color--100);
-            transition: ease 0.3s;
-          }
-        }
-
         .ocm-insights--risk-item {
           &__label {
             color: var(--pf-global--Color--200);
@@ -64,6 +56,14 @@ $groups-chart-max-width: 500px;
 }
 
 .ocm-insights--info-popover {
+  &__icon {
+    &:hover {
+      cursor: pointer;
+      fill: var(--pf-global--Color--100);
+      transition: ease 0.3s;
+    }
+  }
+
   p:not(:last-child) {
     margin-bottom: 1rem;
   }
