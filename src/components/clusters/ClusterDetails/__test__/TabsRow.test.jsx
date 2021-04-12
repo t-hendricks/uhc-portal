@@ -19,7 +19,7 @@ describe('<TabsRow />', () => {
       networkingTabRef: mockRef,
       supportTabRef: mockRef,
       upgradeSettingsTabRef: mockRef,
-      addBareMetalTabRef: mockRef,
+      addAssistedTabRef: mockRef,
       hasIssues: false,
       hasIssuesInsights: false,
       setOpenedTab: jest.fn(),

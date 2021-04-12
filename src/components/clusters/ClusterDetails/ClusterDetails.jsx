@@ -19,7 +19,7 @@ import has from 'lodash/has';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-import { BareMetalHostsClusterDetailTab, canAddBareMetalHost } from 'openshift-assisted-ui-lib';
+import { HostsClusterDetailTab, canAddHost } from 'openshift-assisted-ui-lib';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
@@ -70,7 +70,7 @@ class ClusterDetails extends Component {
     this.machinePoolsTabRef = React.createRef();
     this.upgradeSettingsTabRef = React.createRef();
 
-    this.addBareMetalTabRef = React.createRef();
+    this.addAssistedTabRef = React.createRef();
   }
 
   componentDidMount() {
@@ -416,7 +416,7 @@ class ClusterDetails extends Component {
     );
     const displaySupportTab = !hideSupportTab;
     const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit;
-    const displayAddBareMetalHosts = assistedInstallerEnabled && canAddBareMetalHost({ cluster });
+    const displayAddAssistedHosts = assistedInstallerEnabled && canAddHost({ cluster });
 
     return (
       <PageSection id="clusterdetails-content">
@@ -445,7 +445,7 @@ class ClusterDetails extends Component {
             displaySupportTab={displaySupportTab}
             displayMachinePoolsTab={displayMachinePoolsTab}
             displayUpgradeSettingsTab={displayUpgradeSettingsTab}
-            displayAddBareMetalHosts={displayAddBareMetalHosts}
+            displayAddAssistedHosts={displayAddAssistedHosts}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
@@ -455,7 +455,7 @@ class ClusterDetails extends Component {
             supportTabRef={this.supportTabRef}
             machinePoolsTabRef={this.machinePoolsTabRef}
             upgradeSettingsTabRef={this.upgradeSettingsTabRef}
-            addBareMetalTabRef={this.addBareMetalTabRef}
+            addAssistedTabRef={this.addAssistedTabRef}
             hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
             hasIssuesInsights={hasIssuesInsights}
             initTabOpen={initTabOpen}
@@ -604,18 +604,18 @@ class ClusterDetails extends Component {
             </ErrorBoundary>
           </TabContent>
         )}
-        {displayAddBareMetalHosts && (
+        {displayAddAssistedHosts && (
           <TabContent
             eventKey={9}
-            id="addBareMetalHostsContent"
-            ref={this.addBareMetalTabRef}
-            aria-label="Add Bare Metal Hosts"
+            id="addHostsContent"
+            ref={this.addAssistedTabRef}
+            aria-label="Add Hosts"
             hidden
           >
             <ErrorBoundary>
-              <BareMetalHostsClusterDetailTab
+              <HostsClusterDetailTab
                 cluster={cluster}
-                isVisible={selectedTab === 'addBareMetalHosts'}
+                isVisible={selectedTab === 'addAssistedHosts'}
               />
             </ErrorBoundary>
           </TabContent>
