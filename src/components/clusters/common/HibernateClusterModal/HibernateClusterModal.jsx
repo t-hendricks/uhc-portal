@@ -144,7 +144,7 @@ cluster to Hibernating state will block any
       hibernateForm = upgradeScheduledForm(scheduledUpgrades[0]);
     } else {
       hibernateForm = defaultForm;
-      primaryText = 'Hibernate Cluster';
+      primaryText = 'Hibernate cluster';
       secondaryText = 'Cancel';
       onPrimaryClick = handleSubmit;
       onSecondaryClick = cancelHibernateCluster;
@@ -153,7 +153,7 @@ cluster to Hibernating state will block any
     return (
       <Modal
         data-test-id="hibernate-cluster-modal"
-        title="Hibernate Cluster"
+        title="Hibernate cluster"
         onClose={cancelHibernateCluster}
         primaryText={primaryText}
         secondaryText={secondaryText}
