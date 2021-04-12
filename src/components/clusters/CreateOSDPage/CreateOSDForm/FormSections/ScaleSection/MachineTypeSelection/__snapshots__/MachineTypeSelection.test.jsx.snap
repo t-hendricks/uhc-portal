@@ -1256,6 +1256,48 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           },
         },
       },
+      "items": Array [
+        Object {
+          "allowed": 20,
+          "consumed": 0,
+          "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+          "kind": "QuotaCost",
+          "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+          "quota_id": "cluster|byoc|osd",
+          "related_resources": Array [
+            Object {
+              "availability_zone_type": "multi",
+              "billing_model": "standard",
+              "byoc": "byoc",
+              "cloud_provider": "any",
+              "cost": 1,
+              "product": "OSD",
+              "resource_name": "gp.small",
+              "resource_type": "cluster",
+            },
+          ],
+        },
+        Object {
+          "allowed": 520,
+          "consumed": 516,
+          "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+          "kind": "QuotaCost",
+          "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+          "quota_id": "compute.node|cpu|byoc|osd",
+          "related_resources": Array [
+            Object {
+              "availability_zone_type": "any",
+              "billing_model": "standard",
+              "byoc": "byoc",
+              "cloud_provider": "any",
+              "cost": 4,
+              "product": "OSD",
+              "resource_name": "gp.small",
+              "resource_type": "compute.node",
+            },
+          ],
+        },
+      ],
       "loadBalancerQuota": Object {
         "marketplace": Object {
           "ARO": Object {
@@ -3773,6 +3815,48 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           },
         },
       },
+      "items": Array [
+        Object {
+          "allowed": 20,
+          "consumed": 0,
+          "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+          "kind": "QuotaCost",
+          "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+          "quota_id": "cluster|byoc|osd",
+          "related_resources": Array [
+            Object {
+              "availability_zone_type": "multi",
+              "billing_model": "standard",
+              "byoc": "byoc",
+              "cloud_provider": "any",
+              "cost": 1,
+              "product": "OSD",
+              "resource_name": "gp.small",
+              "resource_type": "cluster",
+            },
+          ],
+        },
+        Object {
+          "allowed": 520,
+          "consumed": 0,
+          "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+          "kind": "QuotaCost",
+          "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+          "quota_id": "compute.node|cpu|byoc|osd",
+          "related_resources": Array [
+            Object {
+              "availability_zone_type": "any",
+              "billing_model": "standard",
+              "byoc": "byoc",
+              "cloud_provider": "any",
+              "cost": 4,
+              "product": "OSD",
+              "resource_name": "gp.small",
+              "resource_type": "compute.node",
+            },
+          ],
+        },
+      ],
       "loadBalancerQuota": Object {
         "marketplace": Object {
           "ARO": Object {
@@ -6409,6 +6493,48 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           },
         },
       },
+      "items": Array [
+        Object {
+          "allowed": 17,
+          "consumed": 0,
+          "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+          "kind": "QuotaCost",
+          "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+          "quota_id": "cluster|gp.small|multi|rhinfra|osd|any",
+          "related_resources": Array [
+            Object {
+              "availability_zone_type": "multi",
+              "billing_model": "standard",
+              "byoc": "rhinfra",
+              "cloud_provider": "any",
+              "cost": 1,
+              "product": "OSD",
+              "resource_name": "gp.small",
+              "resource_type": "cluster",
+            },
+          ],
+        },
+        Object {
+          "allowed": 27,
+          "consumed": 4,
+          "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+          "kind": "QuotaCost",
+          "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+          "quota_id": "compute.node|gp.small|any|rhinfra|osd|any",
+          "related_resources": Array [
+            Object {
+              "availability_zone_type": "any",
+              "billing_model": "standard",
+              "byoc": "rhinfra",
+              "cloud_provider": "any",
+              "cost": 1,
+              "product": "OSD",
+              "resource_name": "gp.small",
+              "resource_type": "compute.node",
+            },
+          ],
+        },
+      ],
       "loadBalancerQuota": Object {
         "marketplace": Object {
           "ARO": Object {
