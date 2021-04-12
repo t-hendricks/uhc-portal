@@ -6,9 +6,9 @@ exports[`<HibernateClusterModal /> renders correctly 1`] = `
   onClose={[Function]}
   onPrimaryClick={[Function]}
   onSecondaryClick={[Function]}
-  primaryText="Hibernate Cluster"
+  primaryText="Hibernate cluster"
   secondaryText="Cancel"
-  title="Hibernate Cluster"
+  title="Hibernate cluster"
 >
   <Form
     onSubmit={[Function]}
@@ -40,9 +40,9 @@ exports[`<HibernateClusterModal /> renders correctly when an error occurs 1`] = 
   onClose={[Function]}
   onPrimaryClick={[Function]}
   onSecondaryClick={[Function]}
-  primaryText="Hibernate Cluster"
+  primaryText="Hibernate cluster"
   secondaryText="Cancel"
-  title="Hibernate Cluster"
+  title="Hibernate cluster"
 >
   <Form
     onSubmit={[Function]}
@@ -84,9 +84,9 @@ exports[`<HibernateClusterModal /> renders correctly when pending 1`] = `
   onClose={[Function]}
   onPrimaryClick={[Function]}
   onSecondaryClick={[Function]}
-  primaryText="Hibernate Cluster"
+  primaryText="Hibernate cluster"
   secondaryText="Cancel"
-  title="Hibernate Cluster"
+  title="Hibernate cluster"
 >
   <Form
     onSubmit={[Function]}

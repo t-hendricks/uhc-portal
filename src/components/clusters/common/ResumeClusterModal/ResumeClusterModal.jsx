@@ -46,7 +46,7 @@ class ResumeClusterModal extends Component {
         data-test-id="resume-cluster-modal"
         title="Resume from Hibernation"
         onClose={cancelResumeCluster}
-        primaryText="Resume Cluster"
+        primaryText="Resume cluster"
         secondaryText="Cancel"
         onPrimaryClick={handleSubmit}
         isPending={resumeClusterResponse.pending}
