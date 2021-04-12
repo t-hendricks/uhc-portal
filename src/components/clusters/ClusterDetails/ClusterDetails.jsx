@@ -403,7 +403,7 @@ class ClusterDetails extends Component {
       && (
         // The (managed) cluster has not yet reported its cluster ID to AMS
         // eslint-disable-next-line camelcase
-        cluster.subscription?.external_cluster_id !== undefined
+        cluster.subscription?.external_cluster_id === undefined
         // The (managed) cluster has been deprovisioned
         || cluster.subscription?.status === subscriptionStatuses.DEPROVISIONED
       )
