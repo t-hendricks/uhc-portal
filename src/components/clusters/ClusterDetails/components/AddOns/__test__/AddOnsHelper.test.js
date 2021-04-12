@@ -22,6 +22,7 @@ import {
   isAvailable,
   isInstalled,
   hasQuota,
+  quotaCostOptions,
   availableAddOns,
   hasParameters,
   getParameter,
@@ -269,6 +270,65 @@ describe('parameterValuesForEditing', () => {
     };
     const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
     expect(param).toEqual({ parameters: { 'my-string': 'options 2' } });
+  });
+});
+
+describe('quotaCostOptions', () => {
+  it('returns all options when allowed quota greater than all values', () => {
+    const allOptions = [{ name: 'Option 1', value: '1' }, { name: 'Option 2', value: '15' }];
+    // crcWorkspacesAddonQuota allowed: 15, consumed: 0
+    const quotaOptions = quotaCostOptions(
+      'addon-crw-operator', OSDCluster, crcWorkspacesAddonQuota,
+      allOptions, 0,
+    );
+    expect(quotaOptions).toEqual(allOptions);
+  });
+  it('removes options that are greater than allowed quota', () => {
+    const allOptions = [{ name: 'Option 1', value: '15' }, { name: 'Option 2', value: '16' }];
+    // crcWorkspacesAddonQuota allowed: 15, consumed: 0
+    const quotaOptions = quotaCostOptions(
+      'addon-crw-operator', OSDCluster, crcWorkspacesAddonQuota,
+      allOptions, 0,
+    );
+    expect(quotaOptions).toEqual([{ name: 'Option 1', value: '15' }]);
+  });
+  it('returns empty options list when no quota', () => {
+    const allOptions = [
+      { name: 'Option 1', value: '1' },
+      { name: 'Option 2', value: '2' },
+      { name: 'Option 3', value: '5' },
+    ];
+    // loggingAddonQuota allowed: 5, consumed: 5
+    const quotaOptions = quotaCostOptions(
+      'addon-cluster-logging-operator', OSDCluster, loggingAddonQuota,
+      allOptions, 0,
+    );
+    expect(quotaOptions).toEqual([]);
+  });
+  it('returns options that are included in the current value', () => {
+    const allOptions = [
+      { name: 'Option 1', value: '1' },
+      { name: 'Option 2', value: '2' },
+      { name: 'Option 3', value: '5' },
+    ];
+    // loggingAddonQuota allowed: 5, consumed: 5
+    const quotaOptions = quotaCostOptions(
+      'addon-cluster-logging-operator', OSDCluster, loggingAddonQuota,
+      allOptions, 2,
+    );
+    expect(quotaOptions).toEqual([
+      { name: 'Option 1', value: '1' },
+      { name: 'Option 2', value: '2' },
+    ]);
+  });
+  it('returns all options when unknown resource name', () => {
+    const allOptions = [{ name: 'Option 1', value: '1' }, { name: 'Option 2', value: '15' }];
+    // crcWorkspacesAddonQuota allowed: 15, consumed: 0
+    const quotaOptions = quotaCostOptions(
+      'not-a-valid-resource-name', OSDCluster, crcWorkspacesAddonQuota,
+      allOptions, 0,
+    );
+    expect(quotaOptions).toEqual(allOptions);
   });
 });
 
