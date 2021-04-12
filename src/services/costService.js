@@ -4,7 +4,7 @@ import config from '../config';
 
 // Note: API expects params to be formatted as
 // ?filter[cluster]=a94ea9bc&filter[cluster]=d37fd94b&group_by[cluster]=*
-const getReport = (params) => {
+const getReport = (params = {}) => {
   const query = {
     ...params,
     filter: {
@@ -30,7 +30,7 @@ const getReport = (params) => {
   });
 };
 
-const getSources = params => apiRequest({
+const getSources = (params = {}) => apiRequest({
   baseURL: config.configData.insightsGateway,
   headers: {
     Accept: 'application/json',
@@ -42,7 +42,7 @@ const getSources = params => apiRequest({
   },
 });
 
-const getUserAccess = params => apiRequest({
+const getUserAccess = (params = {}) => apiRequest({
   baseURL: config.configData.insightsGateway,
   headers: {
     Accept: 'application/json',

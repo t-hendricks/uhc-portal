@@ -21,17 +21,11 @@ class CostCard extends Component {
 
   refresh = () => {
     const {
-      clusterIds,
       getReport,
       getSources,
     } = this.props;
 
-    // Example: clusterIds = ['a94ea9bc-9e4f-4b91-89c2-c7099ec08427']
-    getReport({
-      filter: {
-        cluster: clusterIds,
-      },
-    });
+    getReport();
     getSources({ type: 'OCP' });
   };
 
@@ -66,7 +60,6 @@ class CostCard extends Component {
 }
 
 CostCard.propTypes = {
-  clusterIds: PropTypes.array,
   getReport: PropTypes.func.isRequired,
   getSources: PropTypes.func.isRequired,
   report: PropTypes.shape({
