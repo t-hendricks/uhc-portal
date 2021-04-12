@@ -1,6 +1,4 @@
-import get from 'lodash/get';
-import { getFormValues } from 'redux-form';
-import nodesSectionDataSelector from '../../ClusterDetails/components/Overview/DetailsRight/DetailsRightSelectors';
+import totalNodesDataSelector from '../totalNodesDataSelector';
 
 // Determine whether a master instance resize alert should be shown.
 // Since the threshold is depenent on the current nodes, we return it
@@ -9,11 +7,30 @@ const masterResizeThresholds = {
   medium: 25,
   large: 100,
 };
-const masterResizeAlertThresholdSelector = (state) => {
-  const currentNodes = nodesSectionDataSelector(state).totalMinNodesCount;
-  const values = getFormValues('EditNodeCount')(state);
-  const requestedNodes = parseInt(get(values, 'nodes_compute', 0), 10);
-  const totalRequestedNodes = currentNodes + requestedNodes;
+
+// Determine the master machine type size according to the
+// current nodes and the requested nodes.
+const masterResizeAlertThresholdSelector = (selectedMachinePoolID,
+  requestedNodes, cluster, machinePools) => {
+  const nodes = totalNodesDataSelector(cluster, machinePools);
+  const currentNodes = nodes.totalMaxNodesCount;
+  let totalRequestedNodes;
+  if (selectedMachinePoolID === 'Default') {
+    totalRequestedNodes = nodes.totalMaxNodesCount + (requestedNodes - nodes.totalDefaultMaxNodes);
+  } else {
+    const selectedMachinePool = machinePools.find(
+      machinePool => machinePool.id === selectedMachinePoolID,
+    );
+    if (selectedMachinePool) {
+      if (selectedMachinePool.autoscaling) {
+        totalRequestedNodes = nodes.totalMaxNodesCount
+        + (requestedNodes - selectedMachinePool.autoscaling.max_replicas);
+      } else {
+        totalRequestedNodes = nodes.totalMaxNodesCount
+        + (requestedNodes - selectedMachinePool.replicas);
+      }
+    }
+  }
 
   if (requestedNodes && currentNodes) {
     if (currentNodes <= masterResizeThresholds.large

@@ -1,6 +1,8 @@
 import masterResizeAlertThresholdSelector, { masterResizeThresholds } from '../EditNodeCountModalSelectors';
 import fixtures from '../../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
+const DEFAULT_MACHINE_POOL_ID = 'Default';
+
 describe('masterResizeAlertThreshold Selector', () => {
   const modalState = { data: { cluster: { ...fixtures.clusterDetails.cluster } } };
 
@@ -24,7 +26,13 @@ describe('masterResizeAlertThreshold Selector', () => {
       form: { EditNodeCount: { values: { nodes_compute: '27' } } },
     };
 
-    const result = masterResizeAlertThresholdSelector(state);
+    const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
+    const result = masterResizeAlertThresholdSelector(
+      DEFAULT_MACHINE_POOL_ID,
+      requestedNodes,
+      state.clusters.details.cluster,
+      state.machinePools.getMachinePools.data,
+    );
 
     expect(result).toEqual(masterResizeThresholds.medium);
   });
@@ -53,7 +61,13 @@ describe('masterResizeAlertThreshold Selector', () => {
       form: { EditNodeCount: { values: { nodes_compute: '101' } } },
     };
 
-    const result = masterResizeAlertThresholdSelector(state);
+    const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
+    const result = masterResizeAlertThresholdSelector(
+      DEFAULT_MACHINE_POOL_ID,
+      requestedNodes,
+      state.clusters.details.cluster,
+      state.machinePools.getMachinePools.data,
+    );
 
     expect(result).toEqual(masterResizeThresholds.large);
   });
@@ -74,7 +88,7 @@ describe('masterResizeAlertThreshold Selector', () => {
           data: [{
             availability_zones: ['us-east-1a'],
             href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
-            id: 'mp-with-label',
+            id: 'mp-with-label0',
             instance_type: 'm5.xlarge',
             kind: 'MachinePool',
             replicas: 7,
@@ -82,7 +96,7 @@ describe('masterResizeAlertThreshold Selector', () => {
           {
             availability_zones: ['us-east-1a'],
             href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
-            id: 'mp-with-label',
+            id: 'mp-with-label1',
             instance_type: 'm5.xlarge',
             kind: 'MachinePool',
             replicas: 10,
@@ -93,7 +107,13 @@ describe('masterResizeAlertThreshold Selector', () => {
       form: { EditNodeCount: { values: { nodes_compute: '9' } } },
     };
 
-    const result = masterResizeAlertThresholdSelector(state);
+    const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
+    const result = masterResizeAlertThresholdSelector(
+      DEFAULT_MACHINE_POOL_ID,
+      requestedNodes,
+      state.clusters.details.cluster,
+      state.machinePools.getMachinePools.data,
+    );
 
     expect(result).toEqual(masterResizeThresholds.medium);
   });
@@ -106,7 +126,7 @@ describe('masterResizeAlertThreshold Selector', () => {
             nodes: {
               autoscale_compute: {
                 min_replicas: 7,
-                max_replicas: 9,
+                max_replicas: 10,
               },
             },
           },
@@ -122,17 +142,23 @@ describe('masterResizeAlertThreshold Selector', () => {
             kind: 'MachinePool',
             autoscaling: {
               min_replicas: 10,
-              max_replicas: 20,
+              max_replicas: 14,
             },
           }],
         },
       },
       // This cluster is scaled from 17 to 26 > medium threshold.
-      // The threshold logic takes into account the *min replicas* to calculate
-      form: { EditNodeCount: { values: { nodes_compute: '9' } } },
+      // The threshold logic takes into account the *max replicas* to calculate
+      form: { EditNodeCount: { values: { nodes_compute: '16' } } },
     };
 
-    const result = masterResizeAlertThresholdSelector(state);
+    const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
+    const result = masterResizeAlertThresholdSelector(
+      'mp-with-label',
+      requestedNodes,
+      state.clusters.details.cluster,
+      state.machinePools.getMachinePools.data,
+    );
 
     expect(result).toEqual(masterResizeThresholds.medium);
   });
@@ -153,7 +179,7 @@ describe('masterResizeAlertThreshold Selector', () => {
           data: [{
             availability_zones: ['us-east-1a'],
             href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
-            id: 'mp-with-label',
+            id: 'mp-with-label0',
             instance_type: 'm5.xlarge',
             kind: 'MachinePool',
             autoscaling: {
@@ -164,31 +190,45 @@ describe('masterResizeAlertThreshold Selector', () => {
           {
             availability_zones: ['us-east-1a'],
             href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
-            id: 'mp-with-label',
+            id: 'mp-with-label1',
             instance_type: 'm5.xlarge',
             kind: 'MachinePool',
             autoscaling: {
               min_replicas: 10,
-              max_replicas: 20,
+              max_replicas: 15,
             },
           }],
         },
       },
-      // This cluster is scaled from 17 to 26 > medium threshold.
+      // This cluster is scaled from 19 to 26 > medium threshold.
       // The threshold logic takes into account the *min replicas* to calculate
       form: { EditNodeCount: { values: { nodes_compute: '9' } } },
     };
 
-    const result = masterResizeAlertThresholdSelector(state);
+    const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
+    const result = masterResizeAlertThresholdSelector(
+      'mp-with-label0',
+      requestedNodes,
+      state.clusters.details.cluster,
+      state.machinePools.getMachinePools.data,
+    );
 
     expect(result).toEqual(masterResizeThresholds.medium);
   });
-
 
   it('When scaling a cluster to less then 25 nodes, return 0', () => {
     const state = {
       modal: modalState,
       form: { EditNodeCount: { values: { nodes_compute: '6' } } },
+      clusters: {
+        details: {
+          cluster: {
+            nodes: {
+              compute: 10,
+            },
+          },
+        },
+      },
       machinePools: {
         getMachinePools: {
           data: [],
@@ -196,7 +236,13 @@ describe('masterResizeAlertThreshold Selector', () => {
       },
     };
 
-    const result = masterResizeAlertThresholdSelector(state);
+    const requestedNodes = parseInt(state.form.EditNodeCount.values.nodes_compute, 10);
+    const result = masterResizeAlertThresholdSelector(
+      DEFAULT_MACHINE_POOL_ID,
+      requestedNodes,
+      state.clusters.details.cluster,
+      state.machinePools.getMachinePools.data,
+    );
 
     expect(result).toEqual(0);
   });

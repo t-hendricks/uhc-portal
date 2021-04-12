@@ -39,6 +39,13 @@ const mapStateToProps = (state) => {
 
   const isMultiAz = get(cluster, 'multi_az', false);
 
+  let requestedNodes = 0;
+  if (valueSelector(state, 'autoscalingEnabled')) {
+    requestedNodes = valueSelector(state, 'max_replicas');
+  } else {
+    requestedNodes = valueSelector(state, 'nodes_compute');
+  }
+
   const commonProps = {
     clusterID: get(cluster, 'id', ''),
     machinePoolsList: {
@@ -59,7 +66,12 @@ const mapStateToProps = (state) => {
       ],
     },
     isMultiAz,
-    masterResizeAlertThreshold: masterResizeAlertThresholdSelector(state),
+    masterResizeAlertThreshold: masterResizeAlertThresholdSelector(
+      selectedMachinePool,
+      requestedNodes,
+      cluster,
+      state.machinePools.getMachinePools.data,
+    ),
     organization: state.userProfile.organization,
     machineTypes: state.machineTypes,
     cloudProviderID,
