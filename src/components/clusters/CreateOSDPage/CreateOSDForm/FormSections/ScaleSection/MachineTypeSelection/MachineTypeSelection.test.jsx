@@ -277,7 +277,7 @@ describe('<MachineTypeSelection />', () => {
         expect(onChange).toBeCalledWith('m5.xlarge');
       });
 
-      it('does not display ccs_only machine types', () => {
+      it('does not display ccs_only machine types, only machines with quota', () => {
         const types = wrapper.find('FlatRadioButton').getElements().map(e => e.key);
         expect(types).not.toContain('m5.12xlarge');
         expect(types).not.toContain('g4dn.2xlarge');
@@ -321,10 +321,9 @@ describe('<MachineTypeSelection />', () => {
         expect(onChange).toBeCalledWith('m5.xlarge');
       });
 
-      it('displays ccs_only machine types', () => {
+      it('displays only machine types with quota', () => {
         const types = wrapper.find('FlatRadioButton').getElements().map(e => e.key);
-        expect(types).toContain('m5.12xlarge');
-        expect(types).toContain('g4dn.2xlarge');
+        expect(types).toContain('m5.xlarge');
       });
     });
 
