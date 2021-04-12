@@ -17,7 +17,7 @@ describe('OSD cluster tests', async () => {
     expect(await ClusterListPage.createClusterBtn).toExist();
   });
 
-  const clusterName = 'test-fake-aws';
+  const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
 
   describe('Create OSD cluster on AWS flow', async () => {
     it('navigates to create OSD cluster', async () => {
