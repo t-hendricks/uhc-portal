@@ -51,6 +51,7 @@ exports[`<InsightsTable /> should render 1`] = `
           "count": 1,
           "last_checked_at": "2020-01-23T16:15:59.478901889Z",
         },
+        "status": 200,
       }
     }
   />

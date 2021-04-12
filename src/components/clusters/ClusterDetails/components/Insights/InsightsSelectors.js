@@ -5,7 +5,9 @@ const groupRulesByRisk = data => data.reduce(
     ...acc,
     [totalRisk]: acc[totalRisk] ? acc[totalRisk] + 1 : 1,
   }),
-  {},
+  {
+    1: 0, 2: 0, 3: 0, 4: 0,
+  },
 );
 
 const issuesCountSelector = (state, externalId) => {
@@ -20,5 +22,7 @@ const issuesCountSelector = (state, externalId) => {
 
   return groupRulesByRisk(filteredData);
 };
+
+export { groupRulesByRisk };
 
 export default issuesCountSelector;

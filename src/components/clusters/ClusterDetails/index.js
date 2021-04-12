@@ -84,7 +84,7 @@ const mapStateToProps = (state, { location }) => {
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
     // check whether there are Critical (4) or Important (3) issues
-    hasIssuesInsights: insightsIssuesCount[4] || insightsIssuesCount[3],
+    hasIssuesInsights: !!(insightsIssuesCount[4] || insightsIssuesCount[3]),
     initTabOpen: location.hash.replace('#', ''),
     notificationContacts,
     supportCases,

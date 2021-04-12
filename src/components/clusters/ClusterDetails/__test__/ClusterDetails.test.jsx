@@ -85,8 +85,13 @@ describe('<ClusterDetails />', () => {
 
   describe('OCP cluster', () => {
     const functions = funcs();
-    const props = { ...fixtures, ...functions, clusterDetails: { ...fixtures.OCPClusterDetails } };
-    shallow(<ClusterDetails {...props} />);
+    const props = {
+      ...fixtures,
+      ...functions,
+      clusterDetails: { ...fixtures.OCPClusterDetails },
+      hasIssuesInsights: true,
+    };
+    const wrapper = shallow(<ClusterDetails {...props} />);
 
     it('should get alerts', () => {
       expect(functions.getAlerts)
@@ -101,6 +106,10 @@ describe('<ClusterDetails />', () => {
     it('should get cluster operators', () => {
       expect(functions.getClusterOperators)
         .toBeCalledWith(fixtures.OCPClusterDetails.cluster.id);
+    });
+
+    it('should show Insights Advisor tab', () => {
+      expect(wrapper.find('TabsRow').props().displayInsightsTab).toBe(true);
     });
   });
 

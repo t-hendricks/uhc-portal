@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InsightsAdvisor /> should render the chart 1`] = `
+<ChartDonut
+  colorScale={
+    Array [
+      "#a30000",
+      "#ec7a08",
+      "#f0ab00",
+      "#e7f1fa",
+    ]
+  }
+  constrainToVisibleArea={true}
+  data={
+    Array [
+      Object {
+        "label": "Low 0",
+        "x": "1",
+        "y": 0,
+      },
+      Object {
+        "label": "Moderate 1",
+        "x": "2",
+        "y": 1,
+      },
+      Object {
+        "label": "Important 0",
+        "x": "3",
+        "y": 0,
+      },
+      Object {
+        "label": "Critical 2",
+        "x": "4",
+        "y": 2,
+      },
+    ]
+  }
+  height={180}
+  legendComponent={
+    <ChartLegend
+      data={
+        Array [
+          Object {
+            "id": "1",
+            "labels": Object {
+              "fill": "gray",
+            },
+            "name": "0 Low",
+          },
+          Object {
+            "id": "2",
+            "labels": Object {
+              "fill": "black",
+            },
+            "name": "1 Moderate",
+          },
+          Object {
+            "id": "3",
+            "labels": Object {
+              "fill": "gray",
+            },
+            "name": "0 Important",
+          },
+          Object {
+            "id": "4",
+            "labels": Object {
+              "fill": "black",
+            },
+            "name": "2 Critical",
+          },
+        ]
+      }
+      dataComponent={<LegendComponent />}
+      x={210}
+    />
+  }
+  legendData={
+    Array [
+      Object {
+        "name": "0 Low",
+      },
+      Object {
+        "name": "1 Moderate",
+      },
+      Object {
+        "name": "0 Important",
+      },
+      Object {
+        "name": "2 Critical",
+      },
+    ]
+  }
+  legendOrientation="vertical"
+  legendPosition="right"
+  padding={
+    Object {
+      "bottom": 0,
+      "left": 20,
+      "right": 150,
+      "top": 20,
+    }
+  }
+  subTitle="Total issues"
+  title="3"
+  width={350}
+/>
+`;
+
+exports[`<InsightsAdvisor /> should render the widget 1`] = `
+<Flex>
+  <FlexItem>
+    <Title
+      className="ocm-c-overview-advisor--title"
+      headingLevel="h2"
+      size="lg"
+    >
+      Advisor recommendations
+    </Title>
+    <InfoPopover />
+  </FlexItem>
+  <FlexItem>
+    <Chart
+      entries={
+        Array [
+          Array [
+            "4",
+            0,
+          ],
+          Array [
+            "3",
+            1,
+          ],
+          Array [
+            "2",
+            0,
+          ],
+          Array [
+            "1",
+            0,
+          ],
+        ]
+      }
+      issueCount={1}
+    />
+  </FlexItem>
+</Flex>
+`;

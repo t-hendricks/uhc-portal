@@ -476,6 +476,7 @@ class ClusterDetails extends Component {
               displayClusterLogs={displayClusterLogs}
               refresh={this.refresh}
               openModal={openModal}
+              insightsData={insightsData[cluster.external_id]}
             />
           </ErrorBoundary>
         </TabContent>
