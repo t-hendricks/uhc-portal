@@ -21,6 +21,7 @@ import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChar
 import OverviewEmptyState from './OverviewEmptyState';
 import ExpiredTrialsCard from './ExpiredTrialsCard';
 import ClustersWithIssuesTableCard from './ClustersWithIssuesTableCard';
+import CostCard from './CostCard';
 import EditSubscriptionSettingsDialog from '../clusters/common/EditSubscriptionSettingsDialog';
 import ArchiveClusterDialog from '../clusters/common/ArchiveClusterDialog';
 import TopOverviewSection from './TopOverviewSection/TopOverviewSection';
@@ -35,6 +36,7 @@ class Overview extends Component {
       getSummaryDashboard,
       unhealthyClusters,
       getUnhealthyClusters,
+      getUserAccess,
       viewOptions,
       fetchInsightsGroups,
       insightsGroups,
@@ -58,6 +60,7 @@ class Overview extends Component {
     if (!insightsOverview.pending && !insightsOverview.fulfilled) {
       fetchOrganizationInsights();
     }
+    getUserAccess({ type: 'OCP' });
   }
 
   render() {
@@ -77,6 +80,7 @@ class Overview extends Component {
       upgradeAvailable,
       insightsGroups,
       insightsOverview,
+      userAccess,
     } = this.props;
 
     const isError = (summaryDashboard.error || unhealthyClusters.error);
@@ -179,6 +183,11 @@ class Overview extends Component {
                 </CardBody>
               </Card>
             </GridItem>
+            {userAccess.fulfilled && userAccess.data !== undefined && userAccess.data === true && (
+              <GridItem md={6} sm={12}>
+                <CostCard />
+              </GridItem>
+            )}
             <GridItem md={6} sm={12}>
               <Card className="clusters-overview-card">
                 <CardTitle>
@@ -223,6 +232,7 @@ class Overview extends Component {
 
 Overview.propTypes = {
   getSummaryDashboard: PropTypes.func.isRequired,
+  getUserAccess: PropTypes.func.isRequired,
   invalidateSubscriptions: PropTypes.func.isRequired,
   summaryDashboard: PropTypes.object.isRequired,
   getUnhealthyClusters: PropTypes.func.isRequired,
@@ -251,6 +261,11 @@ Overview.propTypes = {
   fetchOrganizationInsights: PropTypes.func.isRequired,
   insightsGroups: PropTypes.object.isRequired,
   insightsOverview: PropTypes.object.isRequired,
+  userAccess: PropTypes.shape({
+    data: PropTypes.bool,
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+  }).isRequired,
 };
 
 export default Overview;
