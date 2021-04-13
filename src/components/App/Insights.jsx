@@ -25,6 +25,31 @@ class Insights extends Component {
     delete insights.ocm;
   }
 
+  highlightNavItem = (location) => {
+    let params = {
+      id: '',
+    };
+    switch (location.pathname.split('/')[1]) {
+      case 'subscriptions': // old menu compatibility
+        params.id = 'subscriptions';
+        break;
+      case 'quota': // new menu
+        params = {
+          id: 'openshift-quota',
+          parentId: 'subscriptions',
+          secondaryNav: true,
+        };
+        break;
+      case 'overview':
+        params.id = 'overview';
+        break;
+      default:
+        params.id = '';
+    }
+    insights.chrome.appNavClick(params);
+  };
+
+
   navigateToApp = (event) => {
     const { history } = this.props;
     const { location } = history;
