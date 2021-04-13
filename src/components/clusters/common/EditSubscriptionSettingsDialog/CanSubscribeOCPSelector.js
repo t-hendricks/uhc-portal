@@ -1,11 +1,14 @@
 import get from 'lodash/get';
 
+import { hasCapability, subscriptionCapabilities } from '../../../../common/subscriptionCapabilities';
+
+
+const { SUBSCRIBED_OCP, SUBSCRIBED_OCP_MARKETPLACE } = subscriptionCapabilities;
 
 const canSubscribeOCPSelector = (state) => {
-  const capabilites = get(state, 'clusters.details.cluster.subscription.capabilities', []);
-  const subscribeOCP = capabilites.find(capability => capability.name === 'capability.cluster.subscribed_ocp');
+  const sub = get(state, 'clusters.details.cluster.subscription', null);
 
-  return !!(subscribeOCP && subscribeOCP.value === 'true');
+  return hasCapability(sub, SUBSCRIBED_OCP) || hasCapability(sub, SUBSCRIBED_OCP_MARKETPLACE);
 };
 
 export default canSubscribeOCPSelector;

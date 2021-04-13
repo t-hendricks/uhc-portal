@@ -16,6 +16,8 @@ import {
   Text,
   TextVariants,
   Title,
+  Tooltip,
+  TooltipPosition,
 } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTitle, Spinner } from '@redhat-cloud-services/frontend-components';
 import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -28,13 +30,23 @@ import {
 } from '../../../common/validators';
 import constants from './RegisterClusterHelper';
 
-import EditSubscriptionFields from '../common/EditSubscriptionSettingsDialog/EditSubscriptionSettingsDialog';
+import EditSubscriptionFields from '../common/EditSubscriptionSettingsDialog/EditSubscriptionSettingsFields';
 import Unavailable from '../../common/Unavailable';
+import {
+  knownProducts,
+  subscriptionStatuses,
+  subscriptionSupportLevels,
+} from '../../../common/subscriptionTypes';
+import validateSubscriptionSettings from './validateSubscriptionSettings';
+
+const {
+  EVAL,
+} = subscriptionSupportLevels;
 
 class RegisterCluster extends React.Component {
-  state = {
-    supportLevel: 'Eval',
-  }
+  state = { settings: { } }
+
+  initialSettings = { support_level: EVAL, isValid: true }
 
   componentDidMount() {
     const { getOrganizationAndQuota } = this.props;
@@ -53,13 +65,27 @@ class RegisterCluster extends React.Component {
     this.reset();
   }
 
-  onChangeUnitsNumericInput = (unitsFieldName, newValue) => {
-    const { change } = this.props;
-    change(unitsFieldName, newValue);
+  handleSettingsChange = (newSettings) => {
+    this.setState({ settings: newSettings });
   }
 
-  onChangeSupportLevel = (newValue) => {
-    this.setState({ supportLevel: newValue });
+  handleSubmit = (values) => {
+    const { onSubmit } = this.props;
+    const { settings } = this.state;
+    const {
+      request,
+      isValid,
+    } = validateSubscriptionSettings(settings);
+    if (isValid) {
+      const registrationRequest = {
+        cluster_uuid: values.cluster_id,
+        plan_id: knownProducts.OCP,
+        status: subscriptionStatuses.DISCONNECTED,
+        display_name: values.display_name,
+        console_url: values.web_console_url,
+      };
+      onSubmit(registrationRequest, request);
+    }
   }
 
   reset() {
@@ -78,8 +104,6 @@ class RegisterCluster extends React.Component {
       quotaResponse,
     } = this.props;
 
-    const { supportLevel } = this.state;
-
     if (registerClusterResponse.fulfilled) {
       return (
         // TODO 'cluster' here is actually subscription, should be renamed
@@ -95,7 +119,7 @@ class RegisterCluster extends React.Component {
       />
     );
 
-    const topText = 'Use this form to register clusters that are not connected to OpenShift Cluster Manager. To edit subscription settings for clusters that are already connected to OpenShift Cluster Manager, the cluster owner or organization administrator should choose the "Edit subscription settings" action for that cluster.';
+    const topText = 'Register clusters that are not connected to OpenShift Cluster Manager. Existing cluster owners or admins can edit existing cluster subscriptions from the cluster details page.';
 
     if (quotaResponse.error) {
       return (
@@ -107,6 +131,17 @@ class RegisterCluster extends React.Component {
         </PageSection>
       );
     }
+
+    const { settings } = this.state;
+    const { isValid } = validateSubscriptionSettings(settings);
+    const editSubscriptionSettings = (
+      <EditSubscriptionFields
+        initialSettings={this.initialSettings}
+        onSettingsChange={this.handleSettingsChange}
+        canSubscribeStandardOCP={canSubscribeOCP}
+        canSubscribeMarketplaceOCP={false}
+      />
+    );
 
     return (
       <>
@@ -123,13 +158,13 @@ class RegisterCluster extends React.Component {
           <Card id="register-cluster">
             <CardBody>
               <Grid>
-                <GridItem sm={12} md={8} lg={5}>
+                <GridItem sm={12} md={8} lg={8}>
                   <TextContent id="register-cluster-top-text">
                     <Text component={TextVariants.p}>{topText}</Text>
                   </TextContent>
                   { quotaResponse.fulfilled
                     ? (
-                      <Form onSubmit={handleSubmit} className="subscription-settings form">
+                      <Form onSubmit={handleSubmit(this.handleSubmit)} className="subscription-settings form">
                         <Field
                           component={ReduxVerticalFormGroup}
                           name="cluster_id"
@@ -164,13 +199,14 @@ class RegisterCluster extends React.Component {
                         your cluster is consuming the correct type of subscription.
                           </Text>
                         </TextContent>
-                        <EditSubscriptionFields
-                          isDialog={false}
-                          subscription={{ support_level: supportLevel }}
-                          onChangeNumericInputCallback={this.onChangeUnitsNumericInput}
-                          onChangeSupportLevelCallback={this.onChangeSupportLevel}
-                          hideSubscriptionSettings={!canSubscribeOCP}
-                        />
+                        {canSubscribeOCP ? editSubscriptionSettings : (
+                          <Tooltip
+                            content="You cannot edit subscription settings because your organization does not have any OpenShift subscriptions. Contact sales to purchase OpenShift."
+                            position={TooltipPosition.auto}
+                          >
+                            <div>{editSubscriptionSettings}</div>
+                          </Tooltip>
+                        )}
                       </Form>
                     )
                     : <Spinner />}
@@ -178,7 +214,7 @@ class RegisterCluster extends React.Component {
               </Grid>
             </CardBody>
             <CardFooter>
-              <Button variant="primary" type="submit" onClick={handleSubmit} isDisabled={registerClusterResponse.pending}>Register cluster</Button>
+              <Button variant="primary" type="submit" onClick={handleSubmit(this.handleSubmit)} isDisabled={registerClusterResponse.pending || !isValid}>Register cluster</Button>
               <Link to="/">
                 <Button variant="secondary" isDisabled={registerClusterResponse.pending}>Cancel</Button>
               </Link>
@@ -197,7 +233,7 @@ RegisterCluster.propTypes = {
   resetResponse: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
   resetForm: PropTypes.func.isRequired,
-  change: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
   quotaResponse: PropTypes.object.isRequired,
