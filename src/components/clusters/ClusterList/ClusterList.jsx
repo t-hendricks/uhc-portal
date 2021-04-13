@@ -251,6 +251,11 @@ class ClusterList extends Component {
                     </Link>
                   </ToolbarItem>
                   <ToolbarItem>
+                    <Button component="a" href="/register" variant="secondary" rel="noopener noreferrer" data-testid="register-cluster-item">
+                      Register
+                    </Button>
+                  </ToolbarItem>
+                  <ToolbarItem>
                     <ClusterListExtraActions />
                   </ToolbarItem>
                   <ToolbarItem>
