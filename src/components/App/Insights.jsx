@@ -1,17 +1,12 @@
 import { Component } from 'react';
 import { matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import delay from 'lodash/delay';
 
 class Insights extends Component {
   componentDidMount() {
     const { history } = this.props;
     this.cleanupInsightsListener = insights.chrome.on('APP_NAVIGATION', this.navigateToApp);
     this.cleanupRouteListener = history.listen(this.highlightNavItem);
-    const { location } = history;
-    // the Insights side nav menu could load slower than our app.
-    // the initial highlight should be triggered at different delayed time.
-    [0, 500, 1500, 2000].forEach(delayed => delay(() => this.highlightNavItem(location), delayed));
     this.ocmListeners = { APP_REFRESH: [] };
     insights.ocm = {
       on: (event, callback) => {
@@ -41,21 +36,6 @@ class Insights extends Component {
         history.push(`/${event.navId}`);
       }
     }
-  };
-
-  highlightNavItem = (location) => {
-    let appId;
-    switch (location.pathname.split('/')[1]) {
-      case 'subscriptions':
-        appId = 'subscriptions';
-        break;
-      case 'overview':
-        appId = 'overview';
-        break;
-      default:
-        appId = '';
-    }
-    insights.chrome.appNavClick({ id: appId });
   };
 
   addOcmListener = (event, callback) => {
