@@ -53,7 +53,10 @@ describe('OSD cluster tests', async () => {
       await (await CreateOSDFormPage.clusterNameInput).setValue(clusterName);
       expect(CreateOSDFormPage.clusterNameInputError).not.toExist();
       await (await CreateOSDFormPage.submitButton).click();
-      expect(ClusterDetailsPage.isClusterDetailsPage()).toBeTruthy();
+      await browser.waitUntil(
+        async () => ClusterDetailsPage.isClusterDetailsPage(),
+        { timeout: 60000 }, // 1 minute
+      );
       expect(ClusterDetailsPage.clusterNameTitle).toHaveText(clusterName);
     });
   });
