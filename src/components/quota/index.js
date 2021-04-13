@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { subscriptionsActions } from '../../redux/actions/subscriptionsActions';
 import { clustersActions } from '../../redux/actions/clustersActions';
-import Subscriptions from './Subscriptions';
+import Quota from './Quota';
 
 const mapDispatchToProps = {
   fetchAccount: () => subscriptionsActions.fetchAccount(),
@@ -15,4 +15,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Subscriptions);
+export default connect(mapStateToProps, mapDispatchToProps)(Quota);
