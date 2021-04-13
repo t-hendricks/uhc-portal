@@ -6,58 +6,11 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
 >
   <GridItem
     sm={12}
-    xl2={12}
+    xl2={9}
   >
     <Grid
       hasGutter={true}
     >
-      <Card
-        className="ocm-c-overview-resource-usage__card"
-      >
-        <CardTitle
-          className="ocm-c-overview-resource-usage__card--header"
-        >
-          <Title
-            className="card-title"
-            headingLevel="h2"
-          >
-            Resource usage
-          </Title>
-        </CardTitle>
-        <CardBody
-          className="ocm-c-overview-resource-usage__card--body"
-        >
-          <ResourceUsage
-            cpu={
-              Object {
-                "total": Object {
-                  "unit": "",
-                  "value": 16,
-                },
-                "used": Object {
-                  "unit": "",
-                  "value": 3.995410922987096,
-                },
-              }
-            }
-            memory={
-              Object {
-                "total": Object {
-                  "unit": "B",
-                  "value": 82293346304,
-                },
-                "used": Object {
-                  "unit": "B",
-                  "value": 16546058240,
-                },
-              }
-            }
-            metricsAvailable={false}
-            metricsStatusMessage="The cluster currently does not have any metrics data. Try again later."
-            type="threshold"
-          />
-        </CardBody>
-      </Card>
       <Card
         className="ocm-c-overview-details__card"
       >
@@ -564,6 +517,75 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
         </CardBody>
       </Card>
       <Connect(SubscriptionSettings) />
+    </Grid>
+  </GridItem>
+  <GridItem
+    sm={12}
+    xl2={3}
+  >
+    <Grid
+      hasGutter={true}
+    >
+      <GridItem
+        sm={6}
+        xl2={12}
+      >
+        <Card
+          className="ocm-c-overview-resource-usage__card"
+        >
+          <CardTitle
+            className="ocm-c-overview-resource-usage__card--header"
+          >
+            <Title
+              className="card-title"
+              headingLevel="h2"
+            >
+              Resource usage
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-overview-resource-usage__card--body"
+          >
+            <ResourceUsage
+              cpu={
+                Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 16,
+                  },
+                  "used": Object {
+                    "unit": "",
+                    "value": 3.995410922987096,
+                  },
+                }
+              }
+              memory={
+                Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 82293346304,
+                  },
+                  "used": Object {
+                    "unit": "B",
+                    "value": 16546058240,
+                  },
+                }
+              }
+              metricsAvailable={false}
+              metricsStatusMessage="The cluster currently does not have any metrics data. Try again later."
+              type="threshold"
+            />
+          </CardBody>
+        </Card>
+      </GridItem>
+      <GridItem
+        sm={6}
+        xl2={12}
+      >
+        <Connect(CostBreakdownCard)
+          clusterId="1IztzhAGrbjtKkMbiPewHjImARo"
+        />
+      </GridItem>
     </Grid>
   </GridItem>
   <GridItem
@@ -1216,6 +1238,14 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
           </CardBody>
         </Card>
       </GridItem>
+      <GridItem
+        sm={6}
+        xl2={12}
+      >
+        <Connect(CostBreakdownCard)
+          clusterId="1IztzhAGrbjtKkMbiPewJanhTXk"
+        />
+      </GridItem>
     </Grid>
   </GridItem>
   <GridItem
@@ -1235,58 +1265,11 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
 >
   <GridItem
     sm={12}
-    xl2={12}
+    xl2={9}
   >
     <Grid
       hasGutter={true}
     >
-      <Card
-        className="ocm-c-overview-resource-usage__card"
-      >
-        <CardTitle
-          className="ocm-c-overview-resource-usage__card--header"
-        >
-          <Title
-            className="card-title"
-            headingLevel="h2"
-          >
-            Resource usage
-          </Title>
-        </CardTitle>
-        <CardBody
-          className="ocm-c-overview-resource-usage__card--body"
-        >
-          <ResourceUsage
-            cpu={
-              Object {
-                "total": Object {
-                  "unit": "",
-                  "value": 36,
-                },
-                "used": Object {
-                  "unit": "",
-                  "value": 3.8904761904758463,
-                },
-              }
-            }
-            memory={
-              Object {
-                "total": Object {
-                  "unit": "B",
-                  "value": 147469647872,
-                },
-                "used": Object {
-                  "unit": "B",
-                  "value": 28802600960,
-                },
-              }
-            }
-            metricsAvailable={false}
-            metricsStatusMessage="The cluster currently does not have any metrics data. Try again later."
-            type="threshold"
-          />
-        </CardBody>
-      </Card>
       <Card
         className="ocm-c-overview-details__card"
       >
@@ -2227,6 +2210,75 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
         </CardBody>
       </Card>
       <Connect(SubscriptionSettings) />
+    </Grid>
+  </GridItem>
+  <GridItem
+    sm={12}
+    xl2={3}
+  >
+    <Grid
+      hasGutter={true}
+    >
+      <GridItem
+        sm={6}
+        xl2={12}
+      >
+        <Card
+          className="ocm-c-overview-resource-usage__card"
+        >
+          <CardTitle
+            className="ocm-c-overview-resource-usage__card--header"
+          >
+            <Title
+              className="card-title"
+              headingLevel="h2"
+            >
+              Resource usage
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-overview-resource-usage__card--body"
+          >
+            <ResourceUsage
+              cpu={
+                Object {
+                  "total": Object {
+                    "unit": "",
+                    "value": 36,
+                  },
+                  "used": Object {
+                    "unit": "",
+                    "value": 3.8904761904758463,
+                  },
+                }
+              }
+              memory={
+                Object {
+                  "total": Object {
+                    "unit": "B",
+                    "value": 147469647872,
+                  },
+                  "used": Object {
+                    "unit": "B",
+                    "value": 28802600960,
+                  },
+                }
+              }
+              metricsAvailable={false}
+              metricsStatusMessage="The cluster currently does not have any metrics data. Try again later."
+              type="threshold"
+            />
+          </CardBody>
+        </Card>
+      </GridItem>
+      <GridItem
+        sm={6}
+        xl2={12}
+      >
+        <Connect(CostBreakdownCard)
+          clusterId="1i4counta3holamvo1g5tp6n8p3a03bq"
+        />
+      </GridItem>
     </Grid>
   </GridItem>
 </Grid>

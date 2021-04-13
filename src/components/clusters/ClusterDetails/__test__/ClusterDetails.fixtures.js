@@ -45,6 +45,7 @@ const funcs = () => ({
   getNotificationContacts: jest.fn(),
   getSupportCases: jest.fn(),
   getSchedules: jest.fn(),
+  getUserAccess: jest.fn(),
 });
 
 const clusterDetails = {
@@ -979,6 +980,12 @@ const clusterRouters = {
   },
 };
 
+const userAccess = {
+  data: true,
+  fulfilled: true,
+  pending: false,
+};
+
 const fixtures = {
   match,
   clusterDetails,
@@ -1004,6 +1011,7 @@ const fixtures = {
   canSubscribeOCP: false,
   hasIssues: false,
   hasIssuesInsights: false,
+  userAccess,
 };
 
 export { funcs };

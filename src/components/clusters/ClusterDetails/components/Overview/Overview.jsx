@@ -22,6 +22,7 @@ import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import InstallProgress from '../../../common/InstallProgress/InstallProgress';
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
+import CostBreakdownCard from './CostBreakdownCard';
 
 import './Overview.scss';
 
@@ -47,7 +48,14 @@ class Overview extends React.Component {
 
   render() {
     const {
-      cluster, cloudProviders, history, displayClusterLogs, refresh, openModal, insightsData,
+      cluster,
+      cloudProviders,
+      history,
+      displayClusterLogs,
+      refresh,
+      openModal,
+      insightsData,
+      userAccess,
     } = this.props;
     let topCard;
     const { showInstallSuccessAlert } = this.state;
@@ -69,7 +77,9 @@ class Overview extends React.Component {
                               && insightsData?.data;
     const showResourceUsage = !isHibernating(cluster.state)
       && !shouldShowLogs(cluster) && !isDeprovisioned;
-    const showSidePanel = showInsightsAdvisor;
+    const showCostBreakdown = userAccess.fulfilled && userAccess.data !== undefined
+      && userAccess.data === true;
+    const showSidePanel = showInsightsAdvisor || showCostBreakdown;
 
     if (isHibernating(cluster.state)) {
       topCard = (
@@ -162,6 +172,11 @@ class Overview extends React.Component {
                 </Card>
               </GridItem>
               )}
+              {showCostBreakdown && (
+                <GridItem sm={6} xl2={12}>
+                  <CostBreakdownCard clusterId={cluster.id} />
+                </GridItem>
+              )}
             </Grid>
           </GridItem>
         )}
@@ -183,6 +198,11 @@ Overview.propTypes = {
   refresh: PropTypes.func,
   openModal: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
+  userAccess: PropTypes.shape({
+    data: PropTypes.bool,
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+  }).isRequired,
 };
 
 export default Overview;
