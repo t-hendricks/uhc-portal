@@ -27,7 +27,7 @@ exports[`<UpgradeTrialClusterDialog /> renders correctly 1`] = `
         variant="warning"
       >
         <Link
-          to="/subscriptions"
+          to="/quota"
         >
           <Button
             id="subscriptions"
@@ -79,7 +79,7 @@ exports[`<UpgradeTrialClusterDialog /> renders correctly when an erorr occurs 1`
         variant="warning"
       >
         <Link
-          to="/subscriptions"
+          to="/quota"
         >
           <Button
             id="subscriptions"

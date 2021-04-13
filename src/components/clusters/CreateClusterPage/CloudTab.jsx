@@ -425,7 +425,7 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
           </StackItem>
           <StackItem>
             {activeSubscriptionsTable(hasOSDQuota, trialEnabled)}
-            <Link to="/subscriptions">
+            <Link to="/quota">
               <Button id="subscriptions" variant="link">
                 View your available quota
                 {' '}

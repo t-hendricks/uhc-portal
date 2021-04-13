@@ -195,7 +195,7 @@ class UpgradeTrialClusterDialog extends Component {
                 title="Your organization doesn't have enough quota to upgrade this cluster."
                 className="upgrade-trial-no-quota"
               >
-                <Link to="/subscriptions">
+                <Link to="/quota">
                   <Button id="subscriptions" variant="link">
                     View your available quota
                   </Button>

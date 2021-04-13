@@ -2,16 +2,16 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Button } from '@patternfly/react-core';
 
-import * as Fixtures from './Subscriptions.fixtures';
-import Subscriptions from '../Subscriptions';
+import * as Fixtures from './Quota.fixtures';
+import Quota from '../Quota';
 import OCPSubscriptionCard from '../OCPSubscriptionCard/OCPSubscriptionCard';
 import OSDSubscriptionCard from '../OSDSubscriptionCard/OSDSubscriptionCard';
 import OSDSubscriptionTable from '../OSDSubscriptionCard/OSDSubscriptionTable';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 
-describe('<Subscriptions />', () => {
-  describe('Subscriptions', () => {
-    const wrapper = shallow(<Subscriptions {...Fixtures} />);
+describe('<Quota />', () => {
+  describe('Quota', () => {
+    const wrapper = shallow(<Quota {...Fixtures} />);
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();

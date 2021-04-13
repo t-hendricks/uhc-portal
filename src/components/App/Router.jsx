@@ -59,7 +59,7 @@ import InstallPower from '../clusters/install/InstallPower';
 import Tokens from '../tokens/Tokens';
 import TokensROSA from '../tokens/TokensROSA';
 import NotFoundError from './NotFoundError';
-import Subscriptions from '../subscriptions';
+import Quota from '../quota';
 import Insights from './Insights';
 import CloudProviderSelection from '../clusters/CreateOSDPage/CloudProviderSelection';
 import withFeatureGate from '../features/with-feature-gate';
@@ -89,6 +89,8 @@ function Router({ history }) {
             <Redirect from="/install/crc/installer-provisioned" to="/create/local" />
             <Redirect from="/token/moa" to="/token/rosa" />
             <Redirect from="/insights" to="/overview" />
+            <Redirect from="/subscriptions" to="/quota" />
+
             <TermsGuardedRoute path="/token/rosa" component={TokensROSA} history={history} />
             <Route path="/token" component={Tokens} />
             <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
@@ -140,7 +142,7 @@ function Router({ history }) {
             <Route path="/details/s/:id" component={ClusterDetails} />
             <Route path="/details/:id" component={ClusterDetailsRedirector} />
             <Route path="/register" component={RegisterCluster} />
-            <Route path="/subscriptions" component={Subscriptions} />
+            <Route path="/quota" component={Quota} />
             <Route path="/archived" component={ArchivedClusterList} />
             <Route path="/overview" exact component={Overview} />
             <Route path="/assisted-installer" component={GatedAssistedUiRouter} />

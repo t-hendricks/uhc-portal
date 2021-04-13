@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
+exports[`<Quota /> OCPSubscriptionCard should render 1`] = `
 <Card>
   <CardTitle>
     OpenShift Container Platform now uses Subscription Watch to manage subscriptions.
@@ -47,7 +47,7 @@ exports[`<Subscriptions /> OCPSubscriptionCard should render 1`] = `
 </Card>
 `;
 
-exports[`<Subscriptions /> OSDSubscriptionCard Empty should render empty OSD quota summary 1`] = `
+exports[`<Quota /> OSDSubscriptionCard Empty should render empty OSD quota summary 1`] = `
 <PageSection
   className="subscriptions-empty-state"
 >
@@ -75,7 +75,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard Empty should render empty OSD quo
 </PageSection>
 `;
 
-exports[`<Subscriptions /> OSDSubscriptionCard Error should render error OSD quota summary 1`] = `
+exports[`<Quota /> OSDSubscriptionCard Error should render error OSD quota summary 1`] = `
 <PageSection
   className="subscriptions-empty-state"
 >
@@ -104,7 +104,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard Error should render error OSD quo
 </PageSection>
 `;
 
-exports[`<Subscriptions /> OSDSubscriptionCard Loading should render loading OSD quota summary 1`] = `
+exports[`<Quota /> OSDSubscriptionCard Loading should render loading OSD quota summary 1`] = `
 <PageSection>
   <Spinner
     centered={true}
@@ -112,7 +112,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard Loading should render loading OSD
 </PageSection>
 `;
 
-exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
+exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
 <Card>
   <CardTitle>
     OpenShift Dedicated
@@ -212,7 +212,7 @@ exports[`<Subscriptions /> OSDSubscriptionCard should render 1`] = `
 </Card>
 `;
 
-exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
+exports[`<Quota /> OSDSubscriptionTable should render 1`] = `
 <Fragment>
   <Table
     aria-label="Quota Table"
@@ -260,7 +260,7 @@ exports[`<Subscriptions /> OSDSubscriptionTable should render 1`] = `
 </Fragment>
 `;
 
-exports[`<Subscriptions /> Subscriptions should render 1`] = `
+exports[`<Quota /> Quota should render 1`] = `
 <Fragment>
   <PageHeader>
     <PageHeaderTitle
