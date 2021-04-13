@@ -11,7 +11,7 @@ describe('machinePoolsSelector', () => {
           capabilities: [
             { name: 'capability.account.create_moa_clusters', value: 'true', inherited: false },
             { name: 'capability.account.allow_etcd_encryption', value: 'false', inherited: false },
-            { name: 'capability.organization.autoscale_clusters', value: 'false', inherited: false },
+            { name: 'capability.cluster.autoscale_clusters', value: 'false', inherited: false },
             { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: false },
           ],
         },
@@ -26,7 +26,7 @@ describe('machinePoolsSelector', () => {
           capabilities: [
             { name: 'capability.account.create_moa_clusters', value: 'true', inherited: false },
             { name: 'capability.account.allow_etcd_encryption', value: 'false', inherited: false },
-            { name: 'capability.organization.autoscale_clusters', value: 'true', inherited: false },
+            { name: 'capability.cluster.autoscale_clusters', value: 'true', inherited: false },
             { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: false },
           ],
         },
