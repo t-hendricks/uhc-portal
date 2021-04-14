@@ -36,6 +36,10 @@ class UpgradeTrialClusterDialog extends Component {
     }
   }
 
+  buttonLinkClick = (link) => {
+    window.open(link, '_blank');
+  }
+
   upgradeModalQuota() {
     const {
       cluster, machineTypesByID, organization: { quotaList }, marketplaceQuotaFeature,
@@ -90,7 +94,7 @@ class UpgradeTrialClusterDialog extends Component {
     const marketplaceQuotaEnabled = availableQuota.MARKETPLACE && marketplaceQuotaFeature;
     const button = {
       primaryText: 'Contact sales',
-      primaryLink: 'https://www.openshift.com/products/dedicated/contact/',
+      onPrimaryClick: () => this.buttonLinkClick('https://www.openshift.com/products/dedicated/contact/'),
     };
 
     if (availableQuota.STANDARD && !availableQuota.MARKETPLACE) {
@@ -120,11 +124,10 @@ class UpgradeTrialClusterDialog extends Component {
     if (marketplaceQuotaFeature) {
       button.secondaryText = 'Enable Marketplace billing';
       button.showSecondary = true;
-      button.secondaryLink = 'https://marketplace.redhat.com/';
+      button.onSecondaryClick = () => this.buttonLinkClick('https://marketplace.redhat.com/');
     }
 
     if (availableQuota.MARKETPLACE && availableQuota.STANDARD) {
-      button.secondaryLink = null;
       button.secondaryText = 'Upgrade using quota';
       button.onSecondaryClick = () => submit(clusterID, STANDARD);
     }
