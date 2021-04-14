@@ -54,6 +54,11 @@ function BillingModelRadioButtons({
     isBYOCQuotaDisabled = !hasMarketplaceBYOCQuota;
   }
 
+  // Select marketplace billing if user only has marketplace quota
+  if (showMarketplace && !hasStandardOSDQuota && hasMarketplaceSubscription) {
+    defaultBillingModel = 'marketplace';
+  }
+
   const subscriptionOptions = [
     {
       disabled: !hasStandardOSDQuota,
