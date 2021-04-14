@@ -96,11 +96,11 @@ exports[`<CostCard /> When cost report is available renders cluster costs 1`] = 
     />
   </CardBody>
   <CardFooter>
-    <Link
-      to="/cost-management"
+    <a
+      href="//cost-management"
     >
       View more in Cost management
-    </Link>
+    </a>
   </CardFooter>
 </Card>
 `;
