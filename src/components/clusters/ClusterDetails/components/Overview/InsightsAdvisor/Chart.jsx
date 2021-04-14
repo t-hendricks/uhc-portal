@@ -3,7 +3,7 @@ import { ChartDonut, ChartLegend } from '@patternfly/react-charts';
 import PropTypes from 'prop-types';
 
 import {
-  riskLabels, chartColorScale, LegendComponent,
+  riskLabels, chartColorScale, InsightsLegendIconComponent, InsightsTitleComponent,
 } from './InsightsAdvisorHelpers';
 
 const Chart = ({ entries, issueCount }) => (
@@ -27,9 +27,10 @@ const Chart = ({ entries, issueCount }) => (
         data={entries.map(([k, v]) => ({
           name: `${v} ${riskLabels[k]}`,
           id: k,
-          labels: { fill: v === 0 ? 'gray' : 'black' },
+          value: v,
         }))}
-        dataComponent={<LegendComponent />}
+        labelComponent={<InsightsTitleComponent />}
+        dataComponent={<InsightsLegendIconComponent />}
         x={210}
       />
     )}

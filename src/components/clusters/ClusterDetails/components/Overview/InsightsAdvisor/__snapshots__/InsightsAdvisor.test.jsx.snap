@@ -42,35 +42,28 @@ exports[`<InsightsAdvisor /> should render the chart 1`] = `
         Array [
           Object {
             "id": "1",
-            "labels": Object {
-              "fill": "gray",
-            },
             "name": "0 Low",
+            "value": 0,
           },
           Object {
             "id": "2",
-            "labels": Object {
-              "fill": "black",
-            },
             "name": "1 Moderate",
+            "value": 1,
           },
           Object {
             "id": "3",
-            "labels": Object {
-              "fill": "gray",
-            },
             "name": "0 Important",
+            "value": 0,
           },
           Object {
             "id": "4",
-            "labels": Object {
-              "fill": "black",
-            },
             "name": "2 Critical",
+            "value": 2,
           },
         ]
       }
-      dataComponent={<LegendComponent />}
+      dataComponent={<InsightsLegendIconComponent />}
+      labelComponent={<InsightsTitleComponent />}
       x={210}
     />
   }
@@ -110,7 +103,7 @@ exports[`<InsightsAdvisor /> should render the widget 1`] = `
 <Flex>
   <FlexItem>
     <Title
-      className="ocm-c-overview-advisor--title"
+      className="ocm-c-overview-advisor--card__title"
       headingLevel="h2"
       size="lg"
     >
