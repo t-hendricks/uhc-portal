@@ -101,22 +101,6 @@ class CostBreakdownSummary extends Component {
     );
   };
 
-  getResizeListener = () => {
-    this.handleResize();
-    window.addEventListener('resize', this.handleResize);
-    const resizeListener = () => window.removeEventListener('resize', this.handleResize);
-    const navToggleListener = insights.chrome.on('NAVIGATION_TOGGLE', setTimeout(this.handleResize, 500));
-
-    return () => {
-      if (resizeListener) {
-        resizeListener();
-      }
-      if (navToggleListener) {
-        navToggleListener();
-      }
-    };
-  };
-
   getTotal = () => {
     const { report } = this.props;
 
