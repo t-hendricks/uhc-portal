@@ -360,7 +360,7 @@ class InsightsTable extends React.Component {
                 const { rule_id: ruleId, disabled } = shownDataForRow;
 
                 return [{
-                  title: `${disabled ? 'Enable' : 'Disable'} health check`,
+                  title: `${disabled ? 'Enable' : 'Disable'} recommendation`,
                   onClick: () => {
                     if (disabled) {
                       enableRule(ruleId);
@@ -371,16 +371,16 @@ class InsightsTable extends React.Component {
                   },
                 }];
               }}
-              emptyStateTitle="No health checks"
+              emptyStateTitle="No recommendations"
               emptyStateDescription={(
                 <>
-                  <p>Your cluster is not affected by enabled health checks.</p>
+                  <p>Your cluster is not affected by enabled recommendations.</p>
                   <Button
                     className="include-disabled-rules-link"
                     variant="link"
                     onClick={() => { this.setFilter('ruleStatusFilter', 'all'); }}
                   >
-                    Include disabled health checks
+                    Include disabled recommendations
                   </Button>
                 </>
               )}

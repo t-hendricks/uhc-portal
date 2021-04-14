@@ -254,24 +254,24 @@ class InsightsRuleDetails extends Component {
                   <CardTitle className="disabled-health-check-title">Heath check is disabled</CardTitle>
                   <CardBody>
                     <div className="disabled-heath-check-message">
-                      This health check is disabled for the following reason:
+                      This recommendation is disabled for the following reason:
                       <i>{ ruleDisableFeedback && ruleDisableFeedback.length ? ruleDisableFeedback : 'None' }</i>
                       <span>{moment(ruleDisabledAtDate).format('DD MMM YYYY')}</span>
                     </div>
                   </CardBody>
                   <CardFooter>
                     <Button variant="link" isInline onClick={() => enableRule(currentRuleId)}>
-                      Enable health check
+                      Enable recommendation
                     </Button>
                   </CardFooter>
                 </Card>
                 <EmptyState>
                   <EmptyStateIcon icon={EyeSlashIcon} />
                   <Title size="lg" headingLevel="h4">
-                    Health check is disabled
+                    Recommendation is disabled
                   </Title>
                   <EmptyStateBody>
-                    This health check has been disabled and has no results.
+                    This recommendation has been disabled and has no results.
                   </EmptyStateBody>
                 </EmptyState>
               </div>
