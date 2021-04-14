@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import ClusterDetails from '../ClusterDetails';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
+import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 
 describe('<ClusterDetails />', () => {
   describe('Cluster Details - OSD', () => {
@@ -82,11 +83,103 @@ describe('<ClusterDetails />', () => {
     });
   });
 
+  describe('OSD cluster support tab', () => {
+    const functions = funcs();
+
+    it('should present', () => {
+      const wrapper = shallow(<ClusterDetails {...fixtures} {...functions} />);
+      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(true);
+    });
+
+    it('should be hidden when the (managed) cluster has not yet reported its cluster ID to AMS', () => {
+      const props = {
+        ...fixtures,
+        ...functions,
+        clusterDetails: {
+          ...fixtures.clusterDetails,
+          cluster: {
+            ...fixtures.clusterDetails.cluster,
+            managed: true,
+            subscription: {
+              ...fixtures.clusterDetails.cluster.subscription,
+              external_cluster_id: undefined,
+            },
+          },
+        },
+      };
+      const wrapper = shallow(<ClusterDetails {...props} />);
+      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(false);
+    });
+
+    it('should be hidden when the (managed) cluster has been deprovisioned', () => {
+      const props = {
+        ...fixtures,
+        ...functions,
+        clusterDetails: {
+          ...fixtures.clusterDetails,
+          cluster: {
+            ...fixtures.clusterDetails.cluster,
+            subscription: {
+              ...fixtures.clusterDetails.cluster.subscription,
+              status: subscriptionStatuses.DEPROVISIONED,
+            },
+          },
+        },
+      };
+      const wrapper = shallow(<ClusterDetails {...props} />);
+      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(false);
+    });
+
+    it('should be hidden when the (unmanaged) cluster has been archived', () => {
+      const props = {
+        ...fixtures,
+        ...functions,
+        clusterDetails: {
+          ...fixtures.clusterDetails,
+          cluster: {
+            ...fixtures.clusterDetails.cluster,
+            managed: false,
+            subscription: {
+              ...fixtures.clusterDetails.cluster.subscription,
+              status: subscriptionStatuses.ARCHIVED,
+            },
+          },
+        },
+      };
+      const wrapper = shallow(<ClusterDetails {...props} />);
+      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(false);
+    });
+
+    it('should be shown when the (unmanaged) cluster has been deprovisioned', () => {
+      const props = {
+        ...fixtures,
+        ...functions,
+        clusterDetails: {
+          ...fixtures.clusterDetails,
+          cluster: {
+            ...fixtures.clusterDetails.cluster,
+            managed: false,
+            subscription: {
+              ...fixtures.clusterDetails.cluster.subscription,
+              status: subscriptionStatuses.DEPROVISIONED,
+            },
+          },
+        },
+      };
+      const wrapper = shallow(<ClusterDetails {...props} />);
+      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(true);
+    });
+  });
 
   describe('OCP cluster', () => {
     const functions = funcs();
-    const props = { ...fixtures, ...functions, clusterDetails: { ...fixtures.OCPClusterDetails } };
-    shallow(<ClusterDetails {...props} />);
+    const props = {
+      ...fixtures,
+      ...functions,
+      clusterDetails: { ...fixtures.OCPClusterDetails },
+      hasIssuesInsights: true,
+    };
+    const wrapper = shallow(<ClusterDetails {...props} />);
 
     it('should get alerts', () => {
       expect(functions.getAlerts)
@@ -101,6 +194,10 @@ describe('<ClusterDetails />', () => {
     it('should get cluster operators', () => {
       expect(functions.getClusterOperators)
         .toBeCalledWith(fixtures.OCPClusterDetails.cluster.id);
+    });
+
+    it('should show Insights Advisor tab', () => {
+      expect(wrapper.find('TabsRow').props().displayInsightsTab).toBe(true);
     });
   });
 

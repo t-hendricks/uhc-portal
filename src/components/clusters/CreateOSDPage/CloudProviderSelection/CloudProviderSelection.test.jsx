@@ -40,7 +40,8 @@ describe('<CloudProviderSelection />', () => {
         />);
         const redirect = wrapper.find('Redirect');
         expect(redirect.length).toBe(1);
-        expect(redirect.props().to).toEqual('/create');
+        // parameter is important for pendo
+        expect(redirect.props().to).toEqual('/create?trial=expired');
       });
     });
   });

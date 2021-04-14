@@ -114,7 +114,7 @@ class TabsRow extends React.Component {
   <>
     <TabTitleText>Insights Advisor</TabTitleText>
     {hasIssuesInsights
-    && <TabTitleIcon id="insights-issues-icon"><ExclamationCircleIcon className="danger" /></TabTitleIcon>}
+      ? <TabTitleIcon id="insights-issues-icon"><ExclamationCircleIcon className="danger" /></TabTitleIcon> : ''}
   </>,
         contentId: 'insightsTabContent',
         id: 'insights',

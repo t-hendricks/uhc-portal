@@ -1471,7 +1471,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         Load balancers
       </DescriptionListTerm>
       <DescriptionListDescription>
-        0
+        N/A
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1479,9 +1479,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         Persistent storage
       </DescriptionListTerm>
       <DescriptionListDescription>
-        100
-         
-        GiB
+        100  GiB
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1794,7 +1792,7 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
         Load balancers
       </DescriptionListTerm>
       <DescriptionListDescription>
-        0
+        N/A
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1802,9 +1800,7 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
         Persistent storage
       </DescriptionListTerm>
       <DescriptionListDescription>
-        100
-         
-        GiB
+        100  GiB
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -2264,7 +2260,7 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
         Load balancers
       </DescriptionListTerm>
       <DescriptionListDescription>
-        0
+        N/A
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -2272,9 +2268,7 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
         Persistent storage
       </DescriptionListTerm>
       <DescriptionListDescription>
-        100
-         
-        GiB
+        100  GiB
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>

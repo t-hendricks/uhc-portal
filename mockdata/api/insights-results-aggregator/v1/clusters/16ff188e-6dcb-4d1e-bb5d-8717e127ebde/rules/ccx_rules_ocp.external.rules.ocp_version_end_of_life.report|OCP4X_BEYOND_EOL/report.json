@@ -1,0 +1,31 @@
+{
+  "report": {
+    "rule_id": "ccx_rules_ocp.external.rules.ocp_version_end_of_life.report",
+    "created_at": "2020-06-17T15:00:00Z",
+    "description": "The running OpenShift version has reached its End of Life",
+    "details": "The running OpenShift version has reached its End of Life. It is no longer eligible to receive maintenance updates. Technical support is limited only to aid upgrades to in-support versions of OpenShift 4. \n",
+    "reason": "",
+    "resolution": "Red Hat recommends that you upgrade the OpenShift cluster to a more recent version. \n\nFor more information, see the *Updating a cluster between minor versions* section of the documentation of the desired OpenShift version:\n\n* [OpenShift {{=pydata.minor_plus[1]['version']}}](https://docs.openshift.com/container-platform/{{=pydata.minor_plus[1]['version']}}/updating/updating-cluster-between-minor.html)\n* [OpenShift {{=pydata.minor_plus[2]['version']}}](https://docs.openshift.com/container-platform/{{=pydata.minor_plus[2]['version']}}/updating/updating-cluster-between-minor.html){{?pydata.beyond_eol}}\n* [OpenShift {{=pydata.minor_plus[3]['version']}}](https://docs.openshift.com/container-platform/{{=pydata.minor_plus[3]['version']}}/updating/updating-cluster-between-minor.html){{?}}\n",
+    "total_risk": 2,
+    "risk_of_change": 0,
+    "disabled": false,
+    "disable_feedback": "",
+    "disabled_at": "",
+    "internal": false,
+    "user_vote": 0,
+    "extra_data": {
+      "beyond_eol": true,
+      "current_version": "4.3.11",
+      "error_key": "OCP4X_BEYOND_EOL",
+      "minor_plus": [
+        { "ga": "2020-01-23T00:00:00Z", "version": "4.3" },
+        { "ga": "2020-05-05T00:00:00Z", "version": "4.4" },
+        { "ga": "2020-07-13T00:00:00Z", "version": "4.5" },
+        { "ga": "2020-10-27T00:00:00Z", "version": "4.6" }
+      ],
+      "type": "rule"
+    },
+    "tags": ["openshift", "service_availability", "pssa"]
+  },
+  "status": "ok"
+}

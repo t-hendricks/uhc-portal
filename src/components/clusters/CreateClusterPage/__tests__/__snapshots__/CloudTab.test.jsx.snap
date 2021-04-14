@@ -112,7 +112,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           <Component />
         </Table>
         <Link
-          to="/subscriptions"
+          to="/quota"
         >
           <Button
             id="subscriptions"
@@ -606,7 +606,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           <Component />
         </Table>
         <Link
-          to="/subscriptions"
+          to="/quota"
         >
           <Button
             id="subscriptions"

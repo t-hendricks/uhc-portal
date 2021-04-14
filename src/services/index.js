@@ -1,4 +1,5 @@
 import clusterService from './clusterService';
+import costService from './costService';
 import accountManager from './accountManager';
 import authorizationsService from './authorizationsService';
 import accountsService from './accountsService';
@@ -7,6 +8,7 @@ import insightsService from './insightsService';
 
 const services = {
   clusterService,
+  costService,
   accountsService,
   accountManager,
   authorizationsService,
@@ -16,6 +18,7 @@ const services = {
 
 export {
   clusterService,
+  costService,
   accountManager,
   authorizationsService,
   accountsService,

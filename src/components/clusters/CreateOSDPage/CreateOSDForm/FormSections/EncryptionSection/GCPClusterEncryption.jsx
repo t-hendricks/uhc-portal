@@ -10,7 +10,12 @@ import { validateGCPEncryptionKeys, validateGCPKMSServiceAccount } from '../../.
 import { constants } from '../../CreateOSDFormConstants';
 import './GCPClusterEncryption.scss';
 
-function CustomerManagedEncryptionKeys({ customerManagedEncryptionSelected }) {
+import PopoverHint from '../../../../../common/PopoverHint';
+import KMSKeyLocationComboBox from './KMSKeyLocationComboBox';
+
+function CustomerManagedEncryptionKeys({
+  customerManagedEncryptionSelected, selectedRegion,
+}) {
   return (
     <>
       <FormGroup
@@ -50,20 +55,17 @@ function CustomerManagedEncryptionKeys({ customerManagedEncryptionSelected }) {
               />
             </GridItem>
             <GridItem span={4} className="gcp-encryption-fields">
-              <Field
-                component={ReduxVerticalFormGroup}
-                name="key_location"
-                type="text"
+              <FormGroup
                 label="Key ring location"
-                placeholder="Key ring location"
-                validate={validateGCPEncryptionKeys}
-                helpText="The Regional location the keyring covers."
-                extendedHelpText={(
-                  <>
-                    {constants.keylocation}
-                  </>
-                  )}
-              />
+                fieldId="key_location"
+                labelIcon={<PopoverHint hint={constants.regionHint} />}
+              >
+                <Field
+                  component={KMSKeyLocationComboBox}
+                  name="key_location"
+                  selectedRegion={selectedRegion}
+                />
+              </FormGroup>
             </GridItem>
             <GridItem span={4} className="gcp-encryption-fields">
               <Field
@@ -106,6 +108,7 @@ function CustomerManagedEncryptionKeys({ customerManagedEncryptionSelected }) {
 
 CustomerManagedEncryptionKeys.propTypes = {
   customerManagedEncryptionSelected: PropTypes.bool,
+  selectedRegion: PropTypes.string,
 };
 
 export default CustomerManagedEncryptionKeys;

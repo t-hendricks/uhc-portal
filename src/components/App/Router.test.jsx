@@ -53,7 +53,7 @@ const routes = [
   '/create/osd',
   '/create',
   '/register',
-  '/subscriptions',
+  '/quota',
   '/archived',
 ];
 

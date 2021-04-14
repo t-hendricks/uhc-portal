@@ -6,7 +6,7 @@
   "metrics": [
     {
       "name": "clusters_total",
-      "vector": [{ "time": "2021-02-25T09:40:36.145891763Z", "value": 8 }]
+      "vector": [{ "time": "2021-02-25T09:40:36.145891763Z", "value": 12 }]
     }
   ]
 }

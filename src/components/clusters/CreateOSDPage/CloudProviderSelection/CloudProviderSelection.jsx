@@ -40,8 +40,9 @@ class CloudProviderSelection extends Component {
     if (!organization.pending && (organization.fulfilled || organization.error)) {
       const noTrialQuota = (selectedOSDTrial && (!hasProductQuota || !osdTrialFeature));
       if (noTrialQuota) {
+        // parameter is important for pendo
         return (
-          <Redirect to="/create" />
+          <Redirect to="/create?trial=expired" />
         );
       }
     }

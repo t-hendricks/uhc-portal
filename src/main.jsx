@@ -87,9 +87,21 @@ const renderDevEnvError = () => {
   );
 };
 
-const renderUnsupportedEnvError = () => {
+const chromeBootstrap = () => {
   insights.chrome.init();
-  insights.chrome.identifyApp('openshift');
+  insights.chrome.identifyApp('').then(() => {
+    if (window.location.pathname.includes('/quota')) {
+      if (!window.location.pathname.includes('/quota/resource-limits')) {
+        insights.chrome.appNavClick({ id: 'openshift-quota', parentId: 'subscriptions', secondaryNav: true });
+      } else {
+        insights.chrome.appNavClick({ id: 'resource-limits', parentId: 'subscriptions', secondaryNav: true });
+      }
+    }
+  });
+};
+
+const renderUnsupportedEnvError = () => {
+  chromeBootstrap();
   ReactDOM.render(
     <div style={{ margin: '25px' }}>
       <h1>Unsupported environment</h1>
@@ -113,8 +125,7 @@ if (!window.insights && process.env.NODE_ENV === 'development') {
   // This is a build for an environment we don't support. render an error.
   renderUnsupportedEnvError();
 } else {
-  insights.chrome.init();
-  insights.chrome.identifyApp('openshift');
+  chromeBootstrap();
   insights.chrome.auth.getUser()
     .then((data) => {
       store.dispatch(userInfoResponse(data.identity.user));

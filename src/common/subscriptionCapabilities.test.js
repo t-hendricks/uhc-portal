@@ -1,0 +1,185 @@
+import forOwn from 'lodash/forOwn';
+import times from 'lodash/times';
+
+import {
+  subscriptionCapabilities,
+  hasCapability,
+  haveCapabilities,
+} from './subscriptionCapabilities';
+
+import { subscriptionStatuses } from './subscriptionTypes';
+
+import { getRandomID } from './helpers';
+
+const {
+  SUBSCRIBED_OCP_MARKETPLACE,
+} = subscriptionCapabilities;
+
+const {
+  ACTIVE,
+  DISCONNECTED,
+} = subscriptionStatuses;
+
+const newOCPCluster = () => {
+  const clusterID = getRandomID();
+  const subID = getRandomID();
+  const cluster = {
+    kind: 'Cluster',
+    id: clusterID,
+    subscription: {
+      id: subID,
+      kind: 'Subscription',
+      status: ACTIVE,
+      cluster_id: clusterID,
+      capabilities: [],
+    },
+  };
+
+  return cluster;
+};
+
+const newDisconnectedCluster = () => {
+  const cluster = newOCPCluster();
+  cluster.subscription.status = DISCONNECTED;
+  return cluster;
+};
+
+const newNonExistsOCPCluster = () => {
+  const cluster = newOCPCluster();
+  cluster.id = '';
+  cluster.subscription.id = '';
+  return cluster;
+};
+
+const withCapabilites = (cluster) => {
+  forOwn(subscriptionCapabilities, (cap) => {
+    cluster.subscription.capabilities.push({
+      name: cap,
+      value: 'true',
+    });
+  });
+  return cluster;
+};
+
+const withFalsyCapabilites = (cluster) => {
+  forOwn(subscriptionCapabilities, (cap) => {
+    cluster.subscription.capabilities.push({
+      name: cap,
+      value: 'false',
+    }, {
+      name: cap,
+      value: '',
+    }, {
+      name: cap,
+      value: null,
+    }, {
+      name: cap,
+      value: undefined,
+    }, {
+      name: 'foobar',
+      value: 'true',
+    });
+  });
+
+  return cluster;
+};
+
+const expectHasCapabilityToBeTruthy = (cluster) => {
+  forOwn(subscriptionCapabilities, (cap) => {
+    expect(hasCapability(cluster.subscription, cap)).toBeTruthy();
+  });
+};
+
+const expectHasCapabilityToBeFalsy = (cluster) => {
+  forOwn(subscriptionCapabilities, (cap) => {
+    if (cap === subscriptionCapabilities.RELEASE_OCP_CLUSTERS) {
+      // for now, this is overridden always being true
+      expect(hasCapability(cluster.subscription, cap)).toBeTruthy();
+    } else {
+      expect(hasCapability(cluster.subscription, cap)).toBeFalsy();
+    }
+  });
+};
+
+describe('hasCapability', () => {
+  it('it should have capability', () => {
+    const cluster = withCapabilites(newOCPCluster());
+    expectHasCapabilityToBeTruthy(cluster);
+  });
+
+  it('it should have no capability of empty list', () => {
+    const cluster = newOCPCluster();
+    expectHasCapabilityToBeFalsy(cluster);
+  });
+
+  it('it should have no capability of invalid values', () => {
+    const cluster = withFalsyCapabilites(newOCPCluster());
+    expectHasCapabilityToBeFalsy(cluster);
+  });
+
+  it('it should never have subscribed_ocp_marketplace for disconnected cluster', () => {
+    const cluster = withCapabilites(newDisconnectedCluster());
+    expect(hasCapability(cluster.subscription, SUBSCRIBED_OCP_MARKETPLACE)).toBeFalsy();
+  });
+
+  it('it should never have subscribed_ocp_marketplace for cluster not already exists', () => {
+    const cluster = withCapabilites(newNonExistsOCPCluster());
+    expect(hasCapability(cluster.subscription, SUBSCRIBED_OCP_MARKETPLACE)).toBeFalsy();
+  });
+});
+
+const expectHaveCapabilitiesToBeTruthy = (clusters) => {
+  forOwn(subscriptionCapabilities, (cap) => {
+    const results = haveCapabilities(clusters, cap);
+    forOwn(results, (res) => {
+      expect(res).toBeTruthy();
+    });
+  });
+};
+
+const expectHaveCapabilitiesToBeFalsy = (clusters) => {
+  forOwn(subscriptionCapabilities, (cap) => {
+    const results = haveCapabilities(clusters, cap);
+    forOwn(results, (res) => {
+      if (cap === subscriptionCapabilities.RELEASE_OCP_CLUSTERS) {
+        // it alwasy has this cap
+        expect(res).toBeTruthy();
+      } else {
+        expect(res).toBeFalsy();
+      }
+    });
+  });
+};
+
+describe('haveCapabilities', () => {
+  it('it should have capabilities', () => {
+    const clusters = times(3, () => withCapabilites(newOCPCluster()));
+    expectHaveCapabilitiesToBeTruthy(clusters);
+  });
+
+  it('it should have no capabilities of empty list', () => {
+    const clusters = times(3, newOCPCluster);
+    expectHaveCapabilitiesToBeFalsy(clusters);
+  });
+
+  it('it should have no capabilities of invalid values', () => {
+    const clusters = times(3, () => withFalsyCapabilites(newOCPCluster()));
+    expectHaveCapabilitiesToBeFalsy(clusters);
+  });
+
+  it('it should never have subscribed_ocp_marketplace for disconnected cluster', () => {
+    const clusters = times(3, () => withCapabilites(newDisconnectedCluster()));
+    const results = haveCapabilities(clusters, SUBSCRIBED_OCP_MARKETPLACE);
+    forOwn(results, (res) => {
+      expect(res).toBeFalsy();
+    });
+  });
+
+  it('it should never have subscribed_ocp_marketplace for cluster not already exists', () => {
+    const clusters = times(3, () => withCapabilites(newNonExistsOCPCluster()));
+    const results = haveCapabilities(clusters, SUBSCRIBED_OCP_MARKETPLACE);
+    forOwn(results, (res) => {
+      expect(res).toBeFalsy();
+    });
+  });
+});

@@ -13,7 +13,7 @@ import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../../common/ErrorTriangle';
 import getClusterName from '../../../../common/getClusterName';
-import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import ExpirationAlert from './ExpirationAlert';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
@@ -39,6 +39,7 @@ function ClusterDetailsTop(props) {
     toggleSubscriptionReleased,
   } = props;
 
+  const isProductOSDTrial = get(cluster, 'subscription.plan.id', '') === normalizedProducts.OSDTrial;
   const clusterName = getClusterName(cluster);
   const consoleURL = cluster.console ? cluster.console.url : false;
 
@@ -126,6 +127,7 @@ function ClusterDetailsTop(props) {
       || organization.pending
       || clusterIdentityProviders.pending;
 
+  const trialEndDate = isProductOSDTrial && get(cluster, 'subscription.trial_end_date');
 
   return (
     <div id="cl-details-top" className="top-row">
@@ -177,6 +179,13 @@ function ClusterDetailsTop(props) {
       && (
       <ExpirationAlert
         expirationTimestamp={cluster.expiration_timestamp}
+      />
+      )}
+      {trialEndDate
+      && (
+      <ExpirationAlert
+        expirationTimestamp={trialEndDate}
+        trialExpiration
       />
       )}
       <SubscriptionCompliancy

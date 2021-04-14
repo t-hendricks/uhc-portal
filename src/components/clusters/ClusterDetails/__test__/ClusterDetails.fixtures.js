@@ -470,6 +470,7 @@ const insightsData = {
       tags: ['tag1'],
     },
   ],
+  status: 200,
 };
 
 const OCPClusterDetails = {
@@ -592,7 +593,7 @@ const OCPClusterDetails = {
     canEdit: true,
     canDelete: true,
     subscription: {
-      id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
+      id: '1msoogsgTLQ4PePjrTOt3UqvMzX',
       kind: 'Subscription',
       href: '/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8',
       plan: {

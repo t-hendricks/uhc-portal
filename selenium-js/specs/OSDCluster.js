@@ -17,7 +17,7 @@ describe('OSD cluster tests', async () => {
     expect(await ClusterListPage.createClusterBtn).toExist();
   });
 
-  const clusterName = 'test-fake-aws';
+  const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
 
   describe('Create OSD cluster on AWS flow', async () => {
     it('navigates to create OSD cluster', async () => {
@@ -53,7 +53,10 @@ describe('OSD cluster tests', async () => {
       await (await CreateOSDFormPage.clusterNameInput).setValue(clusterName);
       expect(CreateOSDFormPage.clusterNameInputError).not.toExist();
       await (await CreateOSDFormPage.submitButton).click();
-      expect(ClusterDetailsPage.isClusterDetailsPage()).toBeTruthy();
+      await browser.waitUntil(
+        async () => ClusterDetailsPage.isClusterDetailsPage(),
+        { timeout: 60000 }, // 1 minute
+      );
       expect(ClusterDetailsPage.clusterNameTitle).toHaveText(clusterName);
     });
   });
