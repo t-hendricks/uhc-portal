@@ -143,6 +143,7 @@ function Router({ history }) {
             <Route path="/details/:id" component={ClusterDetailsRedirector} />
             <Route path="/register" component={RegisterCluster} />
             <Route path="/quota" component={Quota} />
+            <Route path="/quota/resource-limits" component={Quota} />
             <Route path="/archived" component={ArchivedClusterList} />
             <Route path="/overview" exact component={Overview} />
             <Route path="/assisted-installer" component={GatedAssistedUiRouter} />

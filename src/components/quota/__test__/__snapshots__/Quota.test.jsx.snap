@@ -1,52 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Quota /> OCPSubscriptionCard should render 1`] = `
-<Card>
-  <CardTitle>
-    OpenShift Container Platform now uses Subscription Watch to manage subscriptions.
-  </CardTitle>
-  <CardBody>
-    <Stack
-      hasGutter={true}
-    >
-      <StackItem>
-        To get started, cluster owners or organization administrators should:
-      </StackItem>
-      <StackItem>
-        <List
-          className="osp-list"
-          component="ol"
-          type="1"
-        >
-          <ListItem>
-            View a cluster in OpenShift Cluster Manager.
-          </ListItem>
-          <ListItem>
-            Choose “Edit subscription settings” from either the actions menu in the upper right, or in the Subscriptions settings section of the Overview.
-          </ListItem>
-          <ListItem>
-            Select the options that apply to your cluster in the dialog and save.
-          </ListItem>
-          <ListItem>
-            Subscription Watch should handle the rest. There’s no more attaching subscriptions to clusters.
-          </ListItem>
-        </List>
-      </StackItem>
-      <StackItem>
-        <Button
-          component="a"
-          href="https://cloud.redhat.com/subscriptions/openshift-sw"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Open Subscription Watch
-        </Button>
-      </StackItem>
-    </Stack>
-  </CardBody>
-</Card>
-`;
-
 exports[`<Quota /> OSDSubscriptionCard Empty should render empty OSD quota summary 1`] = `
 <PageSection
   className="subscriptions-empty-state"
@@ -274,13 +227,6 @@ exports[`<Quota /> Quota should render 1`] = `
     <Stack
       hasGutter={true}
     >
-      <StackItem
-        className="ocm-l-ocp-subscription__section"
-      >
-        <OCPSubscriptionCard
-          organizationID="org-1"
-        />
-      </StackItem>
       <StackItem
         className="ocm-l-osd-subscription__section"
       >
