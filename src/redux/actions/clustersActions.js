@@ -244,8 +244,7 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
   return Promise.all(promises)
     .then(() => {
       const items = subscriptions?.data?.items.filter(
-        item => item.plan.id !== normalizedProducts.OCP_Assisted_Install
-          || (item.plan.id === normalizedProducts.OCP_Assisted_Install && aiMergeListsFeatureFlag)
+        item => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item)
       );
 
       if (!items) {
