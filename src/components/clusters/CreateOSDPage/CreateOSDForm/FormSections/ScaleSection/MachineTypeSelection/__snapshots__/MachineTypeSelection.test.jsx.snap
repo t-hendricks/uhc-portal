@@ -276,6 +276,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -499,6 +543,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAz": Object {
@@ -810,6 +898,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -1033,6 +1165,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAz": Object {
@@ -1380,6 +1556,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -1583,6 +1799,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAZ": Object {
@@ -1822,6 +2078,24 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -1915,6 +2189,24 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "available": 0,
@@ -2096,6 +2388,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -2299,6 +2631,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAZ": Object {
@@ -2835,6 +3207,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -3058,6 +3474,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAz": Object {
@@ -3369,6 +3829,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -3592,6 +4096,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAz": Object {
@@ -3939,6 +4487,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -4142,6 +4730,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAZ": Object {
@@ -4381,6 +5009,24 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -4474,6 +5120,24 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "available": 0,
@@ -4655,6 +5319,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -4858,6 +5562,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAZ": Object {
@@ -5513,6 +6257,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -5736,6 +6524,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAz": Object {
@@ -6047,6 +6879,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -6270,6 +7146,50 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAz": Object {
+                  "available": 0,
+                },
+                "singleAz": Object {
+                  "available": 0,
+                },
+                "totalAvailable": 0,
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAz": Object {
@@ -6617,6 +7537,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -6820,6 +7780,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAZ": Object {
@@ -7059,6 +8059,24 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -7152,6 +8170,24 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "available": 0,
+              },
+              "rhInfra": Object {
+                "available": 0,
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "available": 0,
@@ -7333,6 +8369,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               },
             },
           },
+          "OCP_Assisted_Install": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
           "OSD": Object {
             "aws": Object {
               "byoc": Object {
@@ -7536,6 +8612,46 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
             },
           },
           "OCP": Object {
+            "aws": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+            "gcp": Object {
+              "byoc": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+              "isAvailable": false,
+              "rhInfra": Object {
+                "multiAZ": Object {
+                  "available": 0,
+                },
+                "singleAZ": Object {
+                  "available": 0,
+                },
+              },
+            },
+          },
+          "OCP_Assisted_Install": Object {
             "aws": Object {
               "byoc": Object {
                 "multiAZ": Object {

@@ -66,7 +66,10 @@ describe('clustersActions', () => {
 
   describe('fetchClusters', () => {
     it('dispatches successfully', () => {
-      clustersActions.fetchClusters({})(mockDispatch);
+      const mockGetState = jest.fn().mockImplementation(() => ({
+        features: {},
+      }));
+      clustersActions.fetchClusters({})(mockDispatch, mockGetState);
       expect(mockDispatch).toBeCalledWith({
         payload: expect.anything(),
         type: clustersConstants.GET_CLUSTERS,
