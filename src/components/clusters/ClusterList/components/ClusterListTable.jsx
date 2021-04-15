@@ -31,12 +31,6 @@ import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
 import isAssistedInstallSubscription from '../../../../common/isAssistedInstallerCluster';
 
-const aiStatuses = {
-  PENDING: 'pending-for-input',
-  INSUFFICIENT: 'insufficient',
-  READY: 'ready',
-};
-
 function ClusterListTable(props) {
   const {
     viewOptions, setSorting, clusters, openModal, isPending, setClusterDetails,
@@ -62,17 +56,9 @@ function ClusterListTable(props) {
   const clusterRow = (cluster) => {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
 
-    const clusterDetailsPath = isAssistedInstallSubscription(cluster.subscription) && [
-      aiStatuses.PENDING,
-      aiStatuses.INSUFFICIENT,
-      aiStatuses.READY,
-    ].includes(cluster.state)
-      ? `/assisted-installer/clusters/${cluster.id}`
-      : `/details/s/${cluster.subscription.id}`;
-
     const clusterName = (
       <Link
-        to={clusterDetailsPath}
+        to={`/details/s/${cluster.subscription.id}`}
         onClick={() => {
           if (!cluster.partialCS) {
             setClusterDetails(cluster);

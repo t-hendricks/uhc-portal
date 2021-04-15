@@ -23,7 +23,7 @@ function DetailsRight({
   cluster, totalDesiredComputeNodes, autoscaleEnabled, totalMinNodesCount, totalMaxNodesCount,
 }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
-    cluster.metrics.memory.total.value, cluster.metrics.memory.total.unit,
+    get(cluster, 'metrics.memory.total.value', 0), get(cluster, 'metrics.memory.total.unit', 'B'),
   );
 
   const isDisconnected = get(cluster, 'subscription.status', '') === subscriptionStatuses.DISCONNECTED;

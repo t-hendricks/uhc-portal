@@ -6,7 +6,7 @@ import {
   Grid, GridItem, Card, CardBody, Title, Alert, CardTitle,
 } from '@patternfly/react-core';
 
-import { ClusterInstallationProgressCard } from 'openshift-assisted-ui-lib';
+import { AssistedInstallerDetailCard } from 'openshift-assisted-ui-lib';
 import clusterStates, { getClusterStateAndDescription, isHibernating } from '../../../common/clusterStates';
 
 import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
@@ -135,7 +135,7 @@ class Overview extends React.Component {
           <Grid hasGutter>
             { topCard }
             {cluster.aiCluster && isAssistedInstallSubscription(cluster.subscription) && (
-            <ClusterInstallationProgressCard clusterStringObj={JSON.stringify(cluster.aiCluster)} />
+            <AssistedInstallerDetailCard aiClusterId={cluster.aiCluster.id} />
             )}
             { (showResourceUsage && !showSidePanel) && resourceUsage}
             <Card className="ocm-c-overview-details__card">

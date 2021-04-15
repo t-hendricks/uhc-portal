@@ -237,6 +237,10 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
     ).then((response) => { canEdit = buildPermissionDict(response); }),
   ];
 
+  /* TODO(mlibra): Optimize:
+      - short-term: Avoid reading all clusters at once, issue multiple smaller and selctive requests
+      - long-term (requires BE changes): query all needed AI clusters at once, filter by subscription ID
+  */
   if (aiMergeListsFeatureFlag) {
     promises.push(assistedService.getAIClusters().then((res) => { aiClusters = res?.data; }));
   }
