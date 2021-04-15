@@ -33,17 +33,17 @@ export const setReportDetails = report => ({
   payload: report,
 });
 
-const fetchSingleClusterInsights = (clusterId, isOSD) => insightsService
-  .getClusterInsights(clusterId, isOSD)
+const fetchSingleClusterInsights = (clusterId, isOSD, getDisabledRules) => insightsService
+  .getClusterInsights(clusterId, isOSD, getDisabledRules)
   .then(response => ({
     insightsData: get(response, 'data.report', {}),
     clusterId,
     status: response.status,
   }));
 
-export const fetchClusterInsights = (clusterId, isOSD) => dispatch => dispatch({
+export const fetchClusterInsights = (clusterId, isOSD, getDisabledRules) => dispatch => dispatch({
   type: GET_CLUSTER_INSIGHTS,
-  payload: fetchSingleClusterInsights(clusterId, isOSD),
+  payload: fetchSingleClusterInsights(clusterId, isOSD, getDisabledRules),
   meta: {
     clusterId,
   },

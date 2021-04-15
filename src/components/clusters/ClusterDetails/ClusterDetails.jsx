@@ -211,7 +211,7 @@ class ClusterDetails extends Component {
       organization,
       getMachinePools,
       getSchedules,
-      fetchInsightsData,
+      fetchClusterInsights,
     } = this.props;
     const clusterID = get(clusterDetails, 'cluster.id');
     const isManaged = get(clusterDetails, 'cluster.managed', false);
@@ -221,7 +221,7 @@ class ClusterDetails extends Component {
     }
     const externalClusterID = get(clusterDetails, 'cluster.external_id');
     if (externalClusterID) {
-      fetchInsightsData(externalClusterID, isManaged);
+      fetchClusterInsights(externalClusterID, isManaged, true);
       this.fetchSupportData();
     }
 
@@ -645,7 +645,7 @@ ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
-  fetchInsightsData: PropTypes.func.isRequired,
+  fetchClusterInsights: PropTypes.func.isRequired,
   fetchGroups: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
