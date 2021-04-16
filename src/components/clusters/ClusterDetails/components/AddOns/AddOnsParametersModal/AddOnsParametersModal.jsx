@@ -82,6 +82,16 @@ class AddOnsParametersModal extends Component {
     change(`parameters.${param.id}`, paramValue);
   };
 
+  getDefaultValueText = (param) => {
+    if (param.options !== undefined && param.options.length > 0) {
+      const defaultOption = param.options.find(o => o.value === param.default_value);
+      if (defaultOption !== undefined) {
+        return defaultOption.name;
+      }
+    }
+    return param.default_value;
+  };
+
   getFieldProps = (param) => {
     const {
       cluster,
@@ -183,9 +193,9 @@ class AddOnsParametersModal extends Component {
                     iconPosition="right"
                     className="addon-parameter-default-button"
                   >
-                    Use default
+                    Use default:
                     {' '}
-                    {param.default_value}
+                    {this.getDefaultValueText(param)}
                   </Button>
                 )
               }

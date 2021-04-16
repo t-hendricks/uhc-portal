@@ -145,4 +145,33 @@ describe('<AddOnsParametersModal />', () => {
       expect(wrapper.find(Field).props().options).toEqual([{ name: 'option1', value: 'option1' }]);
     });
   });
+
+  it('expect default value text to be populated by option name', () => {
+    const addOn = {
+      description: 'Dummy Desc',
+      enabled: true,
+      editable: true,
+      id: 'Dummy ID',
+      name: 'Dummy Name',
+      parameters: {
+        items: [{
+          id: 'dummy item',
+          options: [
+            {
+              name: 'Option 1',
+              value: 'option1',
+            },
+          ],
+          default_value: 'option1',
+          enabled: true,
+          editable: true,
+        }],
+      },
+    };
+    wrapper.setProps({ addOn }, () => {
+      expect(wrapper.find(Field).props().options).toEqual([{ name: 'Option 1', value: 'option1' }]);
+      expect(wrapper.find(Button).exists()).toBeTruthy();
+      expect(wrapper.find(Button).props().children[2]).toEqual('Option 1');
+    });
+  });
 });
