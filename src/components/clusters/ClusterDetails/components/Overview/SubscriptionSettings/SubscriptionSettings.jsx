@@ -83,14 +83,19 @@ function SubscriptionSettings({
   } else if (serviceLevel === subscriptionServiceLevels.L3_ONLY) {
     serviceLevelStr = 'Partner support (L3)';
   }
-  const systemUnits = get(subscription, subscriptionSettings.SYSTEM_UNITS,
-    subscriptionSystemUnits.CORES_VCPU);
-  const systemUnitsStr = systemUnits === subscriptionSystemUnits.SOCKETS
-    ? 'Sockets' : 'Cores/vCPUs ';
   const cpuTotal = get(subscription, subscriptionSettings.CPU_TOTAL, 0);
   const cpuTotalStr = `${cpuTotal} core${cpuTotal === 1 ? '' : 's'}`;
   const socketTotal = get(subscription, subscriptionSettings.SOCKET_TOTAL, 0);
   const socketTotalStr = `${socketTotal} socket${socketTotal === 1 ? '' : 's'}`;
+  const systemUnits = get(subscription, subscriptionSettings.SYSTEM_UNITS,
+    subscriptionSystemUnits.CORES_VCPU);
+  let systemUnitsStr = 'Not set';
+  if (systemUnits === subscriptionSystemUnits.SOCKETS && socketTotal !== 0) {
+    systemUnitsStr = 'Sockets';
+  } else if (systemUnits === subscriptionSystemUnits.CORES_VCPU && cpuTotal !== 0) {
+    systemUnitsStr = 'Cores/vCPUs ';
+  }
+  const displayObligation = cpuTotal !== 0 && socketTotal !== 0;
   const obligationLabel = systemUnits === subscriptionSystemUnits.SOCKETS
     ? 'Number of compute sockets' : 'Number of compute cores';
   const obligationStr = systemUnits === subscriptionSystemUnits.SOCKETS
@@ -153,10 +158,14 @@ function SubscriptionSettings({
                 <DescriptionListTerm>Subscription units</DescriptionListTerm>
                 <DescriptionListDescription>{systemUnitsStr}</DescriptionListDescription>
               </DescriptionListGroup>
-              <DescriptionListGroup>
-                <DescriptionListTerm>{obligationLabel}</DescriptionListTerm>
-                <DescriptionListDescription>{obligationStr}</DescriptionListDescription>
-              </DescriptionListGroup>
+              {
+                displayObligation && (
+                  <DescriptionListGroup>
+                    <DescriptionListTerm>{obligationLabel}</DescriptionListTerm>
+                    <DescriptionListDescription>{obligationStr}</DescriptionListDescription>
+                  </DescriptionListGroup>
+                )
+              }
             </DescriptionList>
           </GridItem>
         </Grid>
