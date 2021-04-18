@@ -83,19 +83,19 @@ function SubscriptionSettings({
   } else if (serviceLevel === subscriptionServiceLevels.L3_ONLY) {
     serviceLevelStr = 'Partner support (L3)';
   }
-  const cpuTotal = get(subscription, subscriptionSettings.CPU_TOTAL, 0);
+  const cpuTotal = get(subscription, subscriptionSettings.CPU_TOTAL, undefined);
   const cpuTotalStr = `${cpuTotal} core${cpuTotal === 1 ? '' : 's'}`;
-  const socketTotal = get(subscription, subscriptionSettings.SOCKET_TOTAL, 0);
+  const socketTotal = get(subscription, subscriptionSettings.SOCKET_TOTAL, undefined);
   const socketTotalStr = `${socketTotal} socket${socketTotal === 1 ? '' : 's'}`;
   const systemUnits = get(subscription, subscriptionSettings.SYSTEM_UNITS,
     subscriptionSystemUnits.CORES_VCPU);
   let systemUnitsStr = 'Not set';
-  if (systemUnits === subscriptionSystemUnits.SOCKETS && socketTotal !== 0) {
+  if (systemUnits === subscriptionSystemUnits.SOCKETS && socketTotal !== undefined) {
     systemUnitsStr = 'Sockets';
-  } else if (systemUnits === subscriptionSystemUnits.CORES_VCPU && cpuTotal !== 0) {
+  } else if (systemUnits === subscriptionSystemUnits.CORES_VCPU && cpuTotal !== undefined) {
     systemUnitsStr = 'Cores/vCPUs ';
   }
-  const displayObligation = cpuTotal !== 0 && socketTotal !== 0;
+  const displayObligation = cpuTotal !== undefined && socketTotal !== undefined;
   const obligationLabel = systemUnits === subscriptionSystemUnits.SOCKETS
     ? 'Number of compute sockets' : 'Number of compute cores';
   const obligationStr = systemUnits === subscriptionSystemUnits.SOCKETS
