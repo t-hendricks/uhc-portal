@@ -236,19 +236,13 @@ class EditSubscriptionSettingsFields extends Component {
     if (!Number.isInteger(value)) {
       return {
         isValid: false,
-        errorMsg: `${systemUnits} value can only be a positive integer.`,
+        errorMsg: `${systemUnits} value can only be an integer number.`,
       };
     }
-    if (value < MIN_VAL) {
+    if (value < MIN_VAL || value > MAX_VAL) {
       return {
         isValid: false,
-        errorMsg: `${systemUnits} cannot be smaller than ${MIN_VAL}.`,
-      };
-    }
-    if (value > MAX_VAL) {
-      return {
-        isValid: false,
-        errorMsg: `${systemUnits} cannot be larger than ${MAX_VAL}.`,
+        errorMsg: `${systemUnits} value must be a number between ${MIN_VAL}-${MAX_VAL}.`,
       };
     }
 
@@ -554,6 +548,7 @@ class EditSubscriptionSettingsFields extends Component {
             && !isDisabledByBillingModel
             && !isDisabledBySupportLevel
             && isDisconnectedSub}
+          helperText={`${systemUnits} value can be any integer number between ${MIN_VAL}-${MAX_VAL}`}
           helperTextInvalid={systemUnitsNumericErrorMsg}
           validated={systemUnitsNumericIsValid ? 'default' : 'error'}
         >
