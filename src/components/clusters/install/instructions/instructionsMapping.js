@@ -145,18 +145,25 @@ const instructionsMapping = {
   vmware: {
     cloudProvider: 'VMWare vSphere',
     customizations: links.INSTALL_VSPHERE_CUSTOMIZATIONS,
-    title: 'Install OpenShift on vSphere with user-provisioned infrastructure',
-    docURL: links.INSTALL_VSPHERE_GETTING_STARTED,
-    rhcosLearnMoreURL: links.INSTALL_VSPHERE_RHCOS_LEARN_MORE,
-    channel: channels.STABLE,
-    rhcosDownloads:
-    [
-      {
-        buttonText: 'Download RHCOS OVA',
-        name: 'OCP-Download-RHCOS-OVA',
-        url: links.RHCOS_VSPHERE_OVA_X86,
-      },
-    ],
+    upi: {
+      title: 'Install OpenShift on vSphere with user-provisioned infrastructure',
+      docURL: links.INSTALL_VSPHEREUPI_GETTING_STARTED,
+      rhcosLearnMoreURL: links.INSTALL_VSPHERE_RHCOS_LEARN_MORE,
+      channel: channels.STABLE,
+      rhcosDownloads:
+      [
+        {
+          buttonText: 'Download RHCOS OVA',
+          name: 'OCP-Download-RHCOS-OVA',
+          url: links.RHCOS_VSPHERE_OVA_X86,
+        },
+      ],
+    },
+    ipi: {
+      title: 'Install OpenShift on vSphere with installer-provisioned infrastructure',
+      docURL: links.INSTALL_VSPHEREIPI_GETTING_STARTED,
+      channel: channels.STABLE,
+    },
   },
   power: {
     cloudProvider: 'Power',
