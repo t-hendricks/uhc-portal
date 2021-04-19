@@ -48,8 +48,15 @@ const fetchSubscriptionByExternalId = clusterExternalID => apiRequest({
   },
 });
 
-const getUnhealthyClusters = (params) => {
-  const filter = params.filter && params.filter !== '' ? `metrics.health_state = 'unhealthy' and ${params.filter}` : 'metrics.health_state = \'unhealthy\'';
+const getUnhealthyClusters = (orgId, params) => {
+  let search = `
+    organization_id = '${orgId}'
+    and status NOT IN ('Deprovisioned', 'Archived')
+    and metrics.health_state = 'unhealthy'
+  `;
+  if (params.filter && params.filter !== '') {
+    search += ` and ${params.filter}`;
+  }
   return apiRequest({
     method: 'get',
     url: '/api/accounts_mgmt/v1/subscriptions',
@@ -57,7 +64,7 @@ const getUnhealthyClusters = (params) => {
       page: params.page,
       size: params.page_size,
       order: params.order,
-      search: filter,
+      search,
     },
   });
 };

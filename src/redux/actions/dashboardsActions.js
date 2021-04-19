@@ -40,10 +40,18 @@ const getSummaryDashboard = () => dispatch => dispatch({
   payload: getDashboard(),
 });
 
+const getUnhealthy = params => accountsService.getCurrentAccount()
+  .then(organizationResponse => organizationResponse.data?.organization?.id)
+  .then((orgId) => {
+    if (orgId) {
+      return accountsService.getUnhealthyClusters(orgId, params);
+    }
+    return Promise.reject(new Error('No logged in user'));
+  });
 
 const getUnhealthyClusters = params => dispatch => dispatch({
   type: dashboardsConstants.GET_UNHEALTHY_CLUSTERS,
-  payload: accountsService.getUnhealthyClusters(params),
+  payload: getUnhealthy(params),
 });
 
 export {
