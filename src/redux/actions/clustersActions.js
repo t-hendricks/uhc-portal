@@ -20,7 +20,7 @@ import {
   accountsService, assistedService, authorizationsService, clusterService,
 } from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
-import { subscriptionStatuses, normalizedProducts } from '../../common/subscriptionTypes';
+import { subscriptionStatuses } from '../../common/subscriptionTypes';
 import {
   normalizeCluster,
   fakeClusterFromSubscription,
@@ -193,12 +193,8 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
   subscriptionMap.forEach((entry) => {
     let cluster;
     if (entry.subscription.managed
-      && entry.subscription.status !== subscriptionStatuses.DEPROVISIONED) {
-      if (!entry?.cluster || isEmpty(entry?.cluster)) {
-        // skip OSD cluster without data
-        console.warn(`Skipped OSD cluster with no data in CS - subscription ID ${entry.subscription.id}`);
-        return;
-      }
+      && entry.subscription.status !== subscriptionStatuses.DEPROVISIONED
+      && !!entry?.cluster && !isEmpty(entry?.cluster)) {
       // managed cluster, with data from Clusters Service
       cluster = normalizeCluster(entry.cluster);
       cluster.metrics = normalizeMetrics(entry.subscription.metrics);
@@ -238,8 +234,8 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
   ];
 
   /* TODO(mlibra): Optimize:
-      - short-term: Avoid reading all clusters at once, issue multiple smaller and selctive requests
-      - long-term (requires BE changes): query all needed AI clusters at once, filter by subscription ID
+      - short-term: Avoid reading all clusters at once, issue multiple smaller and selective requests
+      - long-term (requires BE changes): query all just-needed AI clusters at once, filter by subscription ID
   */
   if (aiMergeListsFeatureFlag) {
     promises.push(assistedService.getAIClusters().then((res) => { aiClusters = res?.data; }));
