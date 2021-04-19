@@ -154,13 +154,6 @@ ${SUBJECT}
   popd
 }
 
-# Configure the cert required to connect to Nexus (yarn respects npm configs too).
-# The file is placed there by
-# https://gitlab.cee.redhat.com/app-sre/infra/blob/master/ansible/playbooks/roles/baseline/tasks/main.yml
-export npm_config_cafile=/etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
-ls -l /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
-yarn config list
-
 # Install dependencies:
 echo "Installing dependencies"
 rm -rf node_modules
