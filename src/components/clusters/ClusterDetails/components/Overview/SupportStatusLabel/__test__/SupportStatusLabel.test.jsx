@@ -38,20 +38,6 @@ describe('<SupportStatusLabel />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should show blue label when status is still supported', () => {
-    wrapper.setProps({ supportStatus: supportStatuses });
-    const labelProps = wrapper.find('Label').props();
-    expect(labelProps).toMatchObject({ color: 'blue', variant: 'outline' });
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('should show red label when status is not supported', () => {
-    wrapper.setProps({ clusterVersion: '4.2' });
-    const labelProps = wrapper.find('Label').props();
-    expect(labelProps).toMatchObject({ color: 'red' });
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('should show N/A for a pre-release version', () => {
     wrapper.setProps({ clusterVersion: '4.5.0-0.nightly-2020-07-14-052310' });
     expect(wrapper).toMatchSnapshot();
