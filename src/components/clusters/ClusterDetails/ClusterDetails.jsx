@@ -221,7 +221,7 @@ class ClusterDetails extends Component {
     }
     const externalClusterID = get(clusterDetails, 'cluster.external_id');
     if (externalClusterID) {
-      fetchClusterInsights(externalClusterID, isManaged, true);
+      fetchClusterInsights(externalClusterID, isManaged);
       this.fetchSupportData();
     }
 
