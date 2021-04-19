@@ -142,8 +142,9 @@ function Router({ history }) {
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
             <Route path="/create" component={CreateClusterPage} />
-            <Route path="/details/:clusterId/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
+            <Route path="/details/s/:subscriptionID/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
             <Route path="/details/s/:id" component={ClusterDetails} />
+            <Route path="/details/:id/insights/:reportId/:errorKey" render={props => <ClusterDetailsRedirector isInsightsRuleDetails {...props} />} />
             <Route path="/details/:id" component={ClusterDetailsRedirector} />
             <Route path="/register" component={RegisterCluster} />
             <Route path="/quota" component={Quota} />
