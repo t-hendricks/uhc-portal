@@ -253,8 +253,8 @@ function NetworkingSection({
                       <>
                         Private
                         <div className="radio-helptext">
-                          Control plane API endpoint and application routes are restricted to direct,
-                          private connectivity.
+                          Control plane API endpoint and application routes are restricted to
+                          direct, private connectivity.
                         </div>
                       </>
                     ),

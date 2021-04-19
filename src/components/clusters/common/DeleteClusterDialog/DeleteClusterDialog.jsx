@@ -88,7 +88,8 @@ class DeleteClusterDialog extends React.Component {
         <>
           {errorContainer}
           <p>
-            This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
+            This action cannot be undone.
+            It will uninstall the cluster, and all data will be deleted.
           </p>
         </>
         <Form onSubmit={submitForm}>

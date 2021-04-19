@@ -50,8 +50,8 @@ function UpgradeSettingsFields({
                   {' '}
                   Note that if your cluster version falls more than 1 minor version behind
                   {' '}
-                  the latest available, it will have SRE alerting disabled and will be unsupported until
-                  it's upgraded. See the
+                  the latest available, it will have SRE alerting disabled and will be
+                  unsupported until it's upgraded. See the
                   {' '}
                   <ExternalLink href="https://access.redhat.com/support/policy/updates/openshift/dedicated">version support information</ExternalLink>
                   .

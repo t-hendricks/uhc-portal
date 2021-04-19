@@ -88,12 +88,14 @@ const mapLog = (log, index) => {
       source={description}
       linkTarget="_blank"
       renderers={{
-        linkReference: (reference) => {
-          if (!reference.href) {
-            return `[${reference.children[0].props.value}]`;
+        // eslint-disable-next-line react/prop-types
+        linkReference: ({ href, $ref, children }) => {
+          if (!href) {
+            // eslint-disable-next-line react/prop-types
+            return `[${children[0].props.value}]`;
           }
 
-          return <a href={reference.$ref}>{reference.children}</a>;
+          return <a href={$ref}>{children}</a>;
         },
       }}
     />

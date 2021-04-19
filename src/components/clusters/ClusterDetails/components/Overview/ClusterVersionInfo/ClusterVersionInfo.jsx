@@ -130,6 +130,7 @@ ClusterVersionInfo.propTypes = {
     managed: PropTypes.bool,
     version: PropTypes.shape({
       channel_group: PropTypes.string,
+      available_upgrades: PropTypes.arrayOf(PropTypes.string),
     }),
     canEdit: PropTypes.bool,
   }),
