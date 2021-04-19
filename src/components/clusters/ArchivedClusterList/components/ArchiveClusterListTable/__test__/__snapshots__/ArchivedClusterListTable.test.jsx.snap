@@ -42,6 +42,7 @@ exports[`<ArchivedClusterListTable /> ArchivedClusterListTable should render 1`]
   expandId="expandable-toggle"
   gridBreakPoint="grid-md"
   isStickyHeader={false}
+  isTreeTable={false}
   onSort={[Function]}
   ouiaSafe={true}
   role="grid"

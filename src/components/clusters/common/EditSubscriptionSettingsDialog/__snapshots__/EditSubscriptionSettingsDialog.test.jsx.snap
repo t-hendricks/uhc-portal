@@ -980,6 +980,8 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                     data-ouia-component-type="PF4/Alert"
                                     data-ouia-safe={true}
                                     id="subscription-settings-cluster-billing-model-alert"
+                                    onMouseEnter={[Function]}
+                                    onMouseLeave={[Function]}
                                   >
                                     <Component
                                       variant="info"
@@ -3726,6 +3728,8 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                   data-ouia-component-id="OUIA-Generated-Alert-danger-1"
                                   data-ouia-component-type="PF4/Alert"
                                   data-ouia-safe={true}
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
                                 >
                                   <Component
                                     variant="danger"
@@ -3844,6 +3848,8 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                     data-ouia-component-type="PF4/Alert"
                                     data-ouia-safe={true}
                                     id="subscription-settings-cluster-billing-model-alert"
+                                    onMouseEnter={[Function]}
+                                    onMouseLeave={[Function]}
                                   >
                                     <Component
                                       variant="info"
@@ -6830,6 +6836,8 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                     data-ouia-component-type="PF4/Alert"
                                     data-ouia-safe={true}
                                     id="subscription-settings-cluster-billing-model-alert"
+                                    onMouseEnter={[Function]}
+                                    onMouseLeave={[Function]}
                                   >
                                     <Component
                                       variant="info"
@@ -9642,6 +9650,8 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                     data-ouia-component-type="PF4/Alert"
                                     data-ouia-safe={true}
                                     id="subscription-settings-cluster-billing-model-alert"
+                                    onMouseEnter={[Function]}
+                                    onMouseLeave={[Function]}
                                   >
                                     <Component
                                       variant="info"
