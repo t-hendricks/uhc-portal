@@ -41,6 +41,7 @@ function actionResolver(
   const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
   const isClusterReady = cluster.state === clusterStates.READY;
   const isClusterErrorInAccountClaimPhase = cluster.state === clusterStates.ERROR
+  // eslint-disable-next-line camelcase
   && !cluster.status?.dns_ready;
   const hasAccountId = cluster.managed && cluster.aws && cluster.aws.account_id;
   const isUninstallingProps = isClusterUninstalling
