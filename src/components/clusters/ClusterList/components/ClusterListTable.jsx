@@ -161,7 +161,6 @@ function ClusterListTable(props) {
     { title: 'Created', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Version', columnTransforms: [hiddenOnMdOrSmaller] },
     { title: 'Provider (Location)', columnTransforms: [hiddenOnMdOrSmaller] },
-    '',
   ];
 
   const rows = isPending ? skeletonRows() : clusters.map(cluster => clusterRow(cluster));
