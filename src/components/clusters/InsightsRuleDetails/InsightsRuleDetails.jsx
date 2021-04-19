@@ -251,9 +251,9 @@ class InsightsRuleDetails extends Component {
             ? (
               <div>
                 <Card>
-                  <CardTitle className="disabled-health-check-title">Heath check is disabled</CardTitle>
+                  <CardTitle className="disabled-recommendation-title">Recommendation is disabled</CardTitle>
                   <CardBody>
-                    <div className="disabled-heath-check-message">
+                    <div className="disabled-recommendation-message">
                       This recommendation is disabled for the following reason:
                       <i>{ ruleDisableFeedback && ruleDisableFeedback.length ? ruleDisableFeedback : 'None' }</i>
                       <span>{moment(ruleDisabledAtDate).format('DD MMM YYYY')}</span>
