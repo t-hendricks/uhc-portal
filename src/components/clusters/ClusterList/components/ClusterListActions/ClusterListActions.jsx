@@ -74,15 +74,17 @@ const toolbarCreateCluster = (
 );
 const toolbarRegisterCluster = (
   <ToolbarItem key="registercluster">
-    <Button
-      component="a"
-      href="/register"
-      variant="secondary"
+    <Link
+      to="/register"
       rel="noopener noreferrer"
-      data-testid="register-cluster-item"
     >
-      Register cluster
-    </Button>
+      <Button
+        variant="secondary"
+        data-testid="register-cluster-item"
+      >
+        Register cluster
+      </Button>
+    </Link>
   </ToolbarItem>
 );
 
