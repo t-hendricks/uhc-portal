@@ -219,7 +219,6 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
   let subscriptions;
   let canEdit;
   let canDelete;
-  let aiClusters = [];
 
   const promises = [
     accountsService.getSubscriptions(clusterRequestParams).then((response) => {
@@ -232,14 +231,6 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
       { action: 'update', resource_type: 'Cluster' },
     ).then((response) => { canEdit = buildPermissionDict(response); }),
   ];
-
-  /* TODO(mlibra): Optimize:
-      - short-term: Avoid reading all clusters at once, issue multiple smaller and selective requests
-      - long-term (requires BE changes): query all just-needed AI clusters at once, filter by subscription ID
-  */
-  if (aiMergeListsFeatureFlag) {
-    promises.push(assistedService.getAIClusters().then((res) => { aiClusters = res?.data; }));
-  }
 
   return Promise.all(promises)
     .then(() => {
@@ -258,65 +249,76 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
         subscription: item,
       }));
 
-      aiClusters.forEach((aiCluster) => {
-        const entry = subscriptionMap.get(aiCluster.id);
-        if (entry !== undefined) {
-          entry.cluster = aiCluster;
-          subscriptionMap.set(aiCluster.id, entry);
-        }
-      });
-
-      // clusters-service only needed for managed clusters.
-      const managedSubsriptions = items.filter(s => s.managed
-        && s.status !== subscriptionStatuses.DEPROVISIONED);
-      if (managedSubsriptions.length === 0) {
-        return {
-          data: {
-            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-            page: subscriptions.data.page,
-            total: subscriptions.data.total || 0,
-            queryParams: { ...clusterRequestParams },
-          },
-        };
-      }
-
-
-      // fetch managed clusters by subscription
-      const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
-      return clusterService.getClusters(clustersQuery)
-        .then((response) => {
-          const clusters = response?.data?.items;
-          clusters.forEach((cluster) => {
-            const entry = subscriptionMap.get(cluster.id);
-            if (entry !== undefined) {
-              // store cluster into subscription map
-              entry.cluster = cluster;
-              subscriptionMap.set(cluster.id, entry);
-            }
-          });
+      const enrichForClusterService = () => {
+        // clusters-service only needed for managed clusters.
+        const managedSubsriptions = items.filter(s => s.managed
+          && s.status !== subscriptionStatuses.DEPROVISIONED);
+        if (managedSubsriptions.length === 0) {
           return {
             data: {
               items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
               page: subscriptions.data.page,
               total: subscriptions.data.total || 0,
               queryParams: { ...clusterRequestParams },
-              meta: {
-                clustersServiceError: false,
-              },
             },
           };
-        }).catch(e => ({
-          // When clusters service is down, return AMS data only
-          data: {
-            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-            page: subscriptions.data.page,
-            total: subscriptions.data.total || 0,
-            queryParams: { ...clusterRequestParams },
-            meta: {
-              clustersServiceError: e,
+        }
+
+        // fetch managed clusters by subscription
+        const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
+        return clusterService.getClusters(clustersQuery)
+          .then((response) => {
+            const clusters = response?.data?.items;
+            clusters.forEach((cluster) => {
+              const entry = subscriptionMap.get(cluster.id);
+              if (entry !== undefined) {
+                // store cluster into subscription map
+                entry.cluster = cluster;
+                subscriptionMap.set(cluster.id, entry);
+              }
+            });
+            return {
+              data: {
+                items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
+                page: subscriptions.data.page,
+                total: subscriptions.data.total || 0,
+                queryParams: { ...clusterRequestParams },
+                meta: {
+                  clustersServiceError: false,
+                },
+              },
+            };
+          }).catch(e => ({
+            // When clusters service is down, return AMS data only
+            data: {
+              items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
+              page: subscriptions.data.page,
+              total: subscriptions.data.total || 0,
+              queryParams: { ...clusterRequestParams },
+              meta: {
+                clustersServiceError: e,
+              },
             },
-          },
-        }));
+          }));
+      };
+
+      const aiPromises = [];
+      if (aiMergeListsFeatureFlag) {
+        subscriptionMap.forEach((value, clusterId) => {
+          if (isAssistedInstallSubscription(value.subscription)) {
+            /* TODO(mlibra): query all just-needed AI clusters at once, filter by subscription ID
+                Requires: https://issues.redhat.com/browse/MGMT-5259)
+            */
+            aiPromises.push(assistedService.getAICluster(clusterId).then((res) => {
+              const entry = subscriptionMap.get(clusterId);
+              entry.cluster = res?.data; // The AI cluster
+              subscriptionMap.set(clusterId, entry);
+            }));
+          }
+        });
+      }
+
+      return Promise.allSettled(aiPromises).then(enrichForClusterService);
     });
 };
 
