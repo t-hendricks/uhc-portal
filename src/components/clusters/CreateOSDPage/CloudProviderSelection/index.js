@@ -30,5 +30,4 @@ const mapDispatchToProps = {
   getOrganizationAndQuota,
 };
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(CloudProviderSelection);

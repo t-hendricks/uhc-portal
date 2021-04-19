@@ -59,7 +59,7 @@ class EditSubscriptionSettingsDialog extends Component {
         <Form onSubmit={(e) => { this.handleSubmit(); e.preventDefault(); }} className="subscription-settings form">
           <TextContent>
             <Text component={TextVariants.p}>
-            Edit your subscription settings to receive the correct level of cluster support.
+              Edit your subscription settings to receive the correct level of cluster support.
             </Text>
           </TextContent>
           <EditSubscriptionSettingsFields

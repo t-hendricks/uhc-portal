@@ -1,7 +1,6 @@
 import { TOGGLE_SUBSCRIPTION_RELEASED, CLEAR_TOGGLE_SUBSCRIPTION_RELEASED_RESPONSE } from './subscriptionReleasedConstants';
 import { accountsService } from '../../../../services';
 
-
 function toggleSubscriptionReleased(subscriptionID, released) {
   // show notfication when it's cancel
   const meta = released ? null : {

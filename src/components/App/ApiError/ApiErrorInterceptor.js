@@ -17,5 +17,4 @@ const apiErrorInterceptor = (apiRequest, showApiError) => {
   };
 };
 
-
 export default apiErrorInterceptor;

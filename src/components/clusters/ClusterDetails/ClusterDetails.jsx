@@ -50,7 +50,6 @@ import AddNotificationContactDialog
   from './components/Support/components/AddNotificationContactDialog';
 import UpgradeSettingsTab from './components/UpgradeSettings';
 
-
 class ClusterDetails extends Component {
   state = {
     selectedTab: '',
@@ -568,19 +567,17 @@ class ClusterDetails extends Component {
             </ErrorBoundary>
           </TabContent>
         )}
-        {
-          <TabContent
-            eventKey={7}
-            id="supportTabContent"
-            ref={this.supportTabRef}
-            aria-label="Support"
-            hidden
-          >
-            <ErrorBoundary>
-              <Support />
-            </ErrorBoundary>
-          </TabContent>
-        }
+        <TabContent
+          eventKey={7}
+          id="supportTabContent"
+          ref={this.supportTabRef}
+          aria-label="Support"
+          hidden
+        >
+          <ErrorBoundary>
+            <Support />
+          </ErrorBoundary>
+        </TabContent>
         {displayMachinePoolsTab && (
           <TabContent
             eventKey={6}

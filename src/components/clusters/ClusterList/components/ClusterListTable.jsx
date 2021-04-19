@@ -171,7 +171,6 @@ function ClusterListTable(props) {
       canHibernateClusterList[get(rowData, 'cluster.id')] || false,
       toggleSubscriptionReleased, refreshFunc);
 
-
   return (
     <Table
       aria-label="Cluster List"

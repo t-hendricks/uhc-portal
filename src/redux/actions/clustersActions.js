@@ -55,7 +55,8 @@ const createCluster = (params, upgradeSettings) => dispatch => dispatch({
 });
 
 const registerClusterAndUpdateSubscription = async (
-  registrationRequest, subscriptionRequest, dispatch) => {
+  registrationRequest, subscriptionRequest, dispatch,
+) => {
   const registerClusterResponse = await accountsService.registerDisconnected(registrationRequest);
 
   if (subscriptionRequest && registerClusterResponse.status === 201) {
@@ -73,7 +74,6 @@ const registerDisconnectedCluster = (registrationRequest, subscriptionRequest) =
     ),
   })
 );
-
 
 const clearClusterResponse = () => dispatch => dispatch({
   type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
@@ -149,7 +149,6 @@ const clearResumeClusterResponse = () => dispatch => dispatch({
   type: clustersConstants.CLEAR_RESUME_CLUSTER_RESPONSE,
 });
 
-
 const unarchiveCluster = (id, name) => dispatch => dispatch({
   type: clustersConstants.UNARCHIVE_CLUSTER,
   payload: clusterService.unarchiveCluster(id),
@@ -159,7 +158,6 @@ const unarchiveCluster = (id, name) => dispatch => dispatch({
 const clearClusterUnarchiveResponse = () => dispatch => dispatch({
   type: clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE,
 });
-
 
 const editClusterConsoleURL = (id, subscriptionID, consoleURL) => dispatch => dispatch({
   type: clustersConstants.EDIT_CLUSTER,

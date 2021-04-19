@@ -1,4 +1,3 @@
-
 import { connect } from 'react-redux';
 import { onListFlagsSet } from '../../../../../redux/actions/viewOptionsActions';
 import ClusterListFilterDropdown from './ClusterListFilterDropdown';

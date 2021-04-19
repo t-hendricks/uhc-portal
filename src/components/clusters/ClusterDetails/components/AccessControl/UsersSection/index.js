@@ -6,7 +6,6 @@ import canAllowAdminSelector from './UsersSelector';
 import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../../../../common/Modal/ModalActions';
 
-
 const mapStateToProps = (state) => {
   const { groupUsers, addUserResponse, deleteUserResponse } = state.clusterUsers;
   const canAddClusterAdmin = canAllowAdminSelector(state);
@@ -20,7 +19,6 @@ const mapStateToProps = (state) => {
     canAddClusterAdmin,
   });
 };
-
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   openModal: modalId => dispatch(openModal(modalId)),

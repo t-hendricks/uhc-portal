@@ -8,7 +8,6 @@ import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
 import { checkClusterConsoleURL } from '../../../../common/validators';
 
-
 class EditConsoleURLDialog extends Component {
   state = {
     beenSet: false,

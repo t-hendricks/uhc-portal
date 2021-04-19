@@ -51,7 +51,6 @@ class IDPForm extends React.Component {
     }
   }
 
-
   componentDidUpdate(prevProps) {
     const {
       selectedIDP, change, IDPList, isEditForm,
@@ -137,15 +136,14 @@ class IDPForm extends React.Component {
     const SelectedProivderRequiredFields = providersRequiredFields[selectedIDP];
     const SelectedProviderAdvancedOptions = providersAdvancedOptions[selectedIDP];
 
-
     return (
       <Form>
         <Grid hasGutter>
           <GridItem span={8}>
             {submissionError}
             <p>
-        Identity providers determine how users log into the cluster.
-        Add an identity provider by selecting a type from the dropdown below.
+              Identity providers determine how users log into the cluster.
+              Add an identity provider by selecting a type from the dropdown below.
             </p>
             <p>
               <a target="_blank" rel="noreferrer noopener" href={providerDocumentationLink[selectedIDP]}>Learn more about identity providers in the OpenShift documentation.</a>

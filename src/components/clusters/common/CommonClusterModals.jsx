@@ -18,7 +18,6 @@ import UpgradeWizard from './Upgrades/UpgradeWizard';
 import EditCCSCredentialsDialog from './EditCCSCredentialsDialog';
 import ConnectedModal from '../../common/Modal/ConnectedModal';
 
-
 function CommonClusterModals({ onClose, onClusterDeleted }) {
   return (
     <>

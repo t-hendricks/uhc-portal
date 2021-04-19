@@ -4,7 +4,6 @@ import ErrorBox from '../../../common/ErrorBox';
 
 import ScaleClusterDialog from './ScaleClusterDialog';
 
-
 describe('<ScaleClusterDialog />', () => {
   let wrapper;
   let closeModal;

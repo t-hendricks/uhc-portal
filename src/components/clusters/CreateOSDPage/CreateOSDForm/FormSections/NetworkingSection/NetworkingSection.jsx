@@ -112,8 +112,8 @@ function NetworkingSection({
               <>
                 Advanced
                 <div className="radio-helptext">
-                Choose this option if you will ever need direct,
-                private network connectivity to your cluster, e.g. VPN or VPC peering.
+                  Choose this option if you will ever need direct,
+                  private network connectivity to your cluster, e.g. VPN or VPC peering.
                 </div>
               </>
             ),
@@ -141,15 +141,15 @@ function NetworkingSection({
                 variant="info"
                 title="CIDR ranges may not be changed once the cluster has been created."
               >
-                 The machine, service and pod ranges may not overlap. The addresses must specify a
-                 range, and correspond to the first IP address in their subnet.
+                The machine, service and pod ranges may not overlap. The addresses must specify a
+                range, and correspond to the first IP address in their subnet.
                 { cloudProviderID === 'gcp'
                  && (
                    <>
                      <br />
                      <span>
-                      All addresses must be private IPv4 addresses, and belong to one of the
-                      following ranges:
+                       All addresses must be private IPv4 addresses, and belong to one of the
+                       following ranges:
                        <ul>
                          <li>10.0.0.0 – 10.255.255.255</li>
                          <li>172.16.0.0 – 172.31.255.255</li>
@@ -227,9 +227,9 @@ function NetworkingSection({
                 <Title headingLevel="h4" size="xl" className="privacy-heading">Cluster privacy</Title>
                 <GridItem span={8}>
                   <p>
-                  Clusters may be created initially with control plane API endpoint
-                  and application routes being all public or all private.
-                  More options are available after the initial installation.
+                    Clusters may be created initially with control plane API endpoint
+                    and application routes being all public or all private.
+                    More options are available after the initial installation.
                   </p>
                 </GridItem>
                 <Field
@@ -242,7 +242,7 @@ function NetworkingSection({
                     ariaLabel: 'Public',
                     label: (
                       <>
-                  Public (recommended)
+                        Public (recommended)
                         <div className="radio-helptext">Control plane API endpoint and application routes are accessible from the internet.</div>
                       </>),
                   },
@@ -251,10 +251,10 @@ function NetworkingSection({
                     ariaLabel: 'Private',
                     label: (
                       <>
-                      Private
+                        Private
                         <div className="radio-helptext">
-                        Control plane API endpoint and application routes are restricted to direct,
-                        private connectivity.
+                          Control plane API endpoint and application routes are restricted to direct,
+                          private connectivity.
                         </div>
                       </>
                     ),
@@ -266,11 +266,11 @@ function NetworkingSection({
                   {cloudProviderID === 'aws'
                     && (
                     <span>
-                    Follow the
+                      Follow the
                       {' '}
                       <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-understanding-aws.html">documentation</a>
                       {' '}
-                    for how to do that.
+                      for how to do that.
                     </span>
                     )}
                 </Alert>

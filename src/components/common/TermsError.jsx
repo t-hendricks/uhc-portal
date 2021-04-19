@@ -16,7 +16,6 @@ import { global_danger_color_100 } from '@patternfly/react-tokens';
 
 import getTermsAppLink from '../../common/getTermsAppLink';
 
-
 function TermsError({ error, restore }) {
   const tncBaseURL = get(error, 'data.details[0].legal_terms_url');
   const currentHref = window.location.href;

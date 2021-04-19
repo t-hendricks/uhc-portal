@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import { parseValueWithUnit } from '../../../../common/units';
 
-
 function ResourceUsage({
   cpu, memory, metricsStatusMessage, metricsAvailable, type,
 }) {

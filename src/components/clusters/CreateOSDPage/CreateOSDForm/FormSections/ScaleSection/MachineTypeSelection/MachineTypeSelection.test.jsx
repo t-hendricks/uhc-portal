@@ -124,7 +124,6 @@ const sortedMachineTypes = [
   machineTypesByID['g4dn.2xlarge'],
 ];
 
-
 describe('<MachineTypeSelection />', () => {
   describe('when machine type list needs to be fetched', () => {
     let onChange;

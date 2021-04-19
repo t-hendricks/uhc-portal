@@ -587,5 +587,4 @@ EditSubscriptionSettingsFields.defaultProps = {
   initialSettings: { [SUPPORT_LEVEL]: EVAL },
 };
 
-
 export default EditSubscriptionSettingsFields;

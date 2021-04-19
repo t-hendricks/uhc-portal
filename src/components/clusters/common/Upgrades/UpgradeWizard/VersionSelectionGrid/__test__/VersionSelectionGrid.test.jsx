@@ -6,7 +6,6 @@ import {
 import VersionSelectionGrid from '../VersionSelectionGrid';
 import VersionCard from '../VersionCard';
 
-
 describe('<VersionSelectionGrid />', () => {
   let wrapper;
   let getVersion;
@@ -70,7 +69,6 @@ describe('<VersionSelectionGrid />', () => {
       />,
     );
   });
-
 
   it('should have recommended card for the latest version only and nothing more', () => {
     wrapper.setProps({

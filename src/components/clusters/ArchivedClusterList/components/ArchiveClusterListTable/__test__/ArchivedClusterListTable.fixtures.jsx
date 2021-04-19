@@ -36,7 +36,6 @@ const clusters = [
   },
 ];
 
-
 export {
   clusters,
   setSorting,

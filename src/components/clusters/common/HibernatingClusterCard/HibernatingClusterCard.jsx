@@ -76,7 +76,6 @@ function HibernatingClusterCard({ cluster, openModal }) {
   );
 }
 
-
 HibernatingClusterCard.propTypes = {
   cluster: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,

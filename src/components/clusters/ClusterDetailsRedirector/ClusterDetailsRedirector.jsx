@@ -32,7 +32,7 @@ class ClusterDetailsRedirector extends React.Component {
             {' '}
             <b>{match.params.id}</b>
             {' '}
-              was not found, it might have been deleted or you don&apos;t have permission to see it.
+            was not found, it might have been deleted or you don&apos;t have permission to see it.
           </>
         ), 'clusterDetails', subscriptionIDResponse.errorMessage);
         return (<Redirect to="/" />);

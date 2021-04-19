@@ -73,7 +73,6 @@ function UsersReducer(state = initialState, action) {
         };
         break;
 
-
       // DELETE USER
       case PENDING_ACTION(UsersConstants.DELETE_USER):
         draft.deleteUserResponse.pending = true;

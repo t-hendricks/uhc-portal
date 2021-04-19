@@ -23,7 +23,6 @@ const baseViewOptions = {
   },
 };
 
-
 describe('<ClustersWithIssuesTableCard />', () => {
   let setClusterDetails;
   let getUnhealthyClusters;

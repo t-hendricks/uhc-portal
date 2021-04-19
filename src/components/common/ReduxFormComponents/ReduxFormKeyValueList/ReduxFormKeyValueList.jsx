@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
@@ -91,7 +90,6 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
     {submitFailed && error && <span>{error}</span>}
   </div>
 );
-
 
 ReduxFormKeyValueList.propTypes = {
   fields: PropTypes.object.isRequired,

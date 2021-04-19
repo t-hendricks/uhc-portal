@@ -83,7 +83,7 @@ class UsersSection extends React.Component {
       {
         title: (
           <>
-          User ID
+            User ID
             <Popover
               position={PopoverPosition.top}
               aria-label="User IDs"
@@ -103,7 +103,7 @@ class UsersSection extends React.Component {
       {
         title: (
           <>
-          Group
+            Group
             <Popover
               position={PopoverPosition.top}
               aria-label="Groups"
@@ -163,7 +163,6 @@ class UsersSection extends React.Component {
         },
       ],
     };
-
 
     if (hasUsers
       && (clusterGroupUsers.pending

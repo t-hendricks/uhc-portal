@@ -30,8 +30,8 @@ function CustomerManagedEncryptionKeys({
           />
         </GridItem>
         <div className="ocm-c--reduxcheckbox-description">
-       Managed via Google Cloud Key Management Service.
-       Used to store and generate encryption keys and encrypt your data.
+          Managed via Google Cloud Key Management Service.
+          Used to store and generate encryption keys and encrypt your data.
         </div>
       </FormGroup>
 

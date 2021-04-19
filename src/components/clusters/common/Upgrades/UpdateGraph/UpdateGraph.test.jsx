@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 
 import UpdateGraph from './UpdateGraph';
 
-
 describe('<UpdateGraph />', () => {
   it('should render', () => {
     const wrapper = shallow(<UpdateGraph

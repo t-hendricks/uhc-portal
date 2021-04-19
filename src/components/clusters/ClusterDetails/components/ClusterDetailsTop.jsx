@@ -54,7 +54,6 @@ function ClusterDetailsTop(props) {
 
   const isDeprovisioned = get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
 
-
   const openIDPModal = () => {
     openModal('create-identity-provider');
   };
@@ -74,7 +73,6 @@ function ClusterDetailsTop(props) {
     </Alert>
   );
 
-
   let launchConsole;
   const disableConsoleOnStates = [
     clusterStates.UNINSTALLING,
@@ -91,7 +89,7 @@ function ClusterDetailsTop(props) {
   } else if (cluster.managed) {
     launchConsole = (
       <Button variant="primary" isDisabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
-      Open console
+        Open console
       </Button>
     );
   } else if (cluster.canEdit) {

@@ -212,7 +212,6 @@ class AutoScaleSection extends React.Component {
   }
 }
 
-
 AutoScaleSection.propTypes = {
   autoscalingEnabled: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,

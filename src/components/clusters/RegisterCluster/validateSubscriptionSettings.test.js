@@ -55,7 +55,6 @@ const expectedSocketTotal = settings => (
 
 const getRandInt = () => Math.floor(Math.random() * 1000) + 1;
 
-
 describe('validateSubscriptionSettings()', () => {
   it('it should be valid without configuring settings', () => {
     const settings = {

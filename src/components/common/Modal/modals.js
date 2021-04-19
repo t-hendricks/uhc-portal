@@ -1,4 +1,3 @@
-
 /**
  * Modal names, to be passed to openModal and shouldShowModal.
  * @enum {String}

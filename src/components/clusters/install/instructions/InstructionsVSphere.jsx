@@ -8,7 +8,7 @@ const InstructionsVSphere = () => (
   <Card>
     <div className="pf-c-content ocm-page">
       <Title headingLevel="h3" size="2xl">
-      VMWare vSphere: Select an installation type
+        VMWare vSphere: Select an installation type
       </Title>
       <div className="flex-container">
         <Link to="/install/vsphere/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">

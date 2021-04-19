@@ -35,7 +35,7 @@ function InstallToVPC({
                     iconClassName="pf-u-ml-sm"
                     hint={(
                       <>
-                        {'Your VPC must have public and private subnets. Public subnets are associated with appropriate Ingress rules. Private subnets need appropriate routes and tables.'}
+                        Your VPC must have public and private subnets. Public subnets are associated with appropriate Ingress rules. Private subnets need appropriate routes and tables.
                         {' '}
                         <ExternalLink href="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-vpc.html">Learn more about installing into an existing VPC</ExternalLink>
                       </>

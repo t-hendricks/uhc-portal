@@ -60,8 +60,8 @@ class ResumeClusterModal extends Component {
                 {clusterName}
               </b>
               {' '}
-cluster will move out of Hibernating state
-             and all cluster operations will be resumed.
+              cluster will move out of Hibernating state
+              and all cluster operations will be resumed.
             </p>
           </Form>
         </>
@@ -69,7 +69,6 @@ cluster will move out of Hibernating state
     );
   }
 }
-
 
 ResumeClusterModal.propTypes = {
   clusterID: PropTypes.string.isRequired,
@@ -84,7 +83,6 @@ ResumeClusterModal.propTypes = {
   submit: PropTypes.func,
   onClose: PropTypes.func,
 };
-
 
 ResumeClusterModal.defaultProps = {
   resumeClusterResponse: {},

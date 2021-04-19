@@ -1,6 +1,5 @@
 import nodesSectionDataSelector from './DetailsRightSelectors';
 
-
 const defaultMachinePoolAutoscalingState = {
   details: {
     cluster: {
@@ -36,7 +35,6 @@ const notAtutoScalingAdditionalMachinePool = {
   kind: 'MachinePool',
   replicas: 2,
 };
-
 
 it('should find if autoscaling enabled when the default machine pool has autoscaling enabled', () => {
   const state = {
@@ -81,7 +79,6 @@ it('should count total max and total min compute nodes', () => {
   expect(result).toHaveProperty('totalMinNodesCount', 9);
   expect(result).toHaveProperty('totalMaxNodesCount', 12);
 });
-
 
 it('should count total desired compute nodes', () => {
   const state = {

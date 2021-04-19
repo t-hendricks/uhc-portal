@@ -38,5 +38,4 @@ const nodesSectionDataSelector = (state) => {
   });
 };
 
-
 export default nodesSectionDataSelector;

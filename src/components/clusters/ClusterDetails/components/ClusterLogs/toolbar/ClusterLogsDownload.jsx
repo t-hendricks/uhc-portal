@@ -99,7 +99,7 @@ class ClusterLogsDownload extends React.Component {
             onClick={() => this.closeModal()}
             isDisabled={!data}
           >
-        Download
+            Download
           </Button>
         ),
         (
@@ -108,7 +108,7 @@ class ClusterLogsDownload extends React.Component {
             variant="link"
             onClick={() => this.closeModal()}
           >
-        Cancel
+            Cancel
           </Button>
         ),
       ]

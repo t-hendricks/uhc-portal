@@ -3,7 +3,6 @@ import mergeWith from 'lodash/mergeWith';
 
 import { haveCapabilities, subscriptionCapabilities } from '../../../../common/subscriptionCapabilities';
 
-
 const { SUBSCRIBED_OCP, SUBSCRIBED_OCP_MARKETPLACE } = subscriptionCapabilities;
 
 const canSubscribeOCPListSelector = (state) => {

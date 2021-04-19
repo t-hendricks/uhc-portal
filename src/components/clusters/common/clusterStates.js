@@ -53,7 +53,6 @@ function getClusterStateAndDescription(cluster) {
     state = clusterStates.STALE;
   }
 
-
   return {
     state,
     // Capitalize the first letter and replace any underscore with space.

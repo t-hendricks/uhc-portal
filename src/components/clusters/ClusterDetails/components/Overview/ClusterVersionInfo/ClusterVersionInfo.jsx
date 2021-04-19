@@ -90,7 +90,7 @@ class ClusterVersionInfo extends React.Component {
                     )}
                   >
                     <Button variant="link">
-                    View details
+                      View details
                       {' '}
                       <OutlinedQuestionCircleIcon />
                     </Button>

@@ -2,7 +2,6 @@ import get from 'lodash/get';
 
 import { subscriptionCapabilities, hasCapability } from '../../../../common/subscriptionCapabilities';
 
-
 const canTransferClusterOwnershipSelector = (state) => {
   const subscription = get(state, 'clusters.details.cluster.subscription', {});
   return hasCapability(subscription, subscriptionCapabilities.RELEASE_OCP_CLUSTERS);

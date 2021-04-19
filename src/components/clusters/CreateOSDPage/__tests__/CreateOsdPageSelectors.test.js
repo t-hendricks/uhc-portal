@@ -1,6 +1,5 @@
 import canEnableEtcdSelector from '../CreateOsdPageSelectors';
 
-
 describe('canEnableEtcdSelector', () => {
   it('should return false when user has no capability to enable etcd encryption', () => {
     const stateWithNoCapability = {

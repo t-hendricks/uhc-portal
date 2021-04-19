@@ -46,7 +46,6 @@ import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 import { viewPropsChanged, createViewQueryObject } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
 
-
 class ArchivedClusterList extends Component {
   constructor(props) {
     super(props);

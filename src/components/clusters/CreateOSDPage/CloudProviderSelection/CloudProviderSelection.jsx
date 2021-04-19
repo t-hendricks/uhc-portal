@@ -105,7 +105,7 @@ class CloudProviderSelection extends Component {
             <Card>
               <div className="pf-c-content ocm-page">
                 <Title headingLevel="h3" size="2xl">
-                Select an infrastructure provider
+                  Select an infrastructure provider
                 </Title>
                 <div className="flex-container">
                   {awsCard}

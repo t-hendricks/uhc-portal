@@ -50,7 +50,6 @@ const omitEmptyFields = (obj) => {
   return objToClean;
 };
 
-
 const scrollToTop = () => {
   const overrideMessage = document.getElementById('env-override-message');
   const pageTop = document.querySelector('section.pf-c-page__main-section');
@@ -88,7 +87,6 @@ const helpers = {
   scrollToTop,
   nestedIsEmpty,
 };
-
 
 const trackPendo = (event, cloudProviderID) => {
   if (window.pendo && window.pendo.isReady && window.pendo.isReady() && window.pendo.track) {
@@ -138,7 +136,6 @@ function scrollToFirstError(errors) {
   setTimeout(() => firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }), 0);
 }
 
-
 /**
  * Converts redux form structure to the structure expected by ocm api
  * [{ key: "foo", value: "bar" },{ key: "hello", value: "world" }]
@@ -162,7 +159,6 @@ const parseReduxFormTaints = taintsFormData => taintsFormData.map(
   taint => ((taint.key && taint.value && taint.effect)
    && { key: taint.key, value: taint.value, effect: taint.effect }),
 ).filter(Boolean);
-
 
 export {
   noop,

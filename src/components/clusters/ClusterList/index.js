@@ -25,7 +25,6 @@ const mapDispatchToProps = {
   toggleSubscriptionReleased,
 };
 
-
 const mapStateToProps = state => ({
   ...state.clusters.clusters,
   viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],

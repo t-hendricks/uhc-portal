@@ -19,7 +19,6 @@ const mapStateToProps = state => ({
   roles: state.networkSelfService.roles,
 });
 
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
   openAddGrantModal: () => dispatch(openModal('grant-modal')),
   closeModal: () => dispatch(closeModal()),

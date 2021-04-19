@@ -158,7 +158,7 @@ class NetworkSelfServiceSection extends React.Component {
       {
         title: (
           <>
-          ARN
+            ARN
             <Popover
               position={PopoverPosition.top}
               aria-label="ARNs"
@@ -261,8 +261,8 @@ class NetworkSelfServiceSection extends React.Component {
             )}
             <Title size="lg" className="card-title" headingLevel="h3">AWS infrastructure access</Title>
             <p>
-            Grant permission to view or manage the AWS infrastructure of the cluster to
-            IAM users defined in your AWS account.
+              Grant permission to view or manage the AWS infrastructure of the cluster to
+              IAM users defined in your AWS account.
               {' '}
               {loginAWSLink}
               <ExternalLinkAltIcon color="#0066cc" size="sm" />

@@ -249,7 +249,6 @@ const patchUpgradeSchedule = (clusterID, policyID, schedule) => apiRequest({
   data: schedule,
 });
 
-
 const getUpgradeSchedules = clusterID => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies`,
@@ -292,7 +291,6 @@ const upgradeTrialCluster = (clusterID, params) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}`,
   data: params,
 });
-
 
 const clusterService = {
   getClusters,

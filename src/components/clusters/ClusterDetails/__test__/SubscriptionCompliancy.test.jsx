@@ -9,7 +9,6 @@ import {
   subscriptionSupportLevels,
 } from '../../../../common/subscriptionTypes';
 
-
 const { SUPPORT_LEVEL } = subscriptionSettings;
 const { EVAL, STANDARD, NONE } = subscriptionSupportLevels;
 

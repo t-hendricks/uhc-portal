@@ -161,13 +161,13 @@ class Overview extends Component {
             <GridItem md={6} sm={12}>
               <Card className="clusters-overview-card">
                 <CardTitle>
-                    Telemetry
+                  Telemetry
                 </CardTitle>
                 <CardBody>
                   {!totalConnectedClusters && !totalClusters ? (
                     <EmptyState>
                       <EmptyStateBody>
-                          No data available
+                        No data available
                       </EmptyStateBody>
                     </EmptyState>
                   ) : (
@@ -191,7 +191,7 @@ class Overview extends Component {
             <GridItem md={6} sm={12}>
               <Card className="clusters-overview-card">
                 <CardTitle>
-                    Update status
+                  Update status
                 </CardTitle>
                 <CardBody>
                   {!upgradeAvailable.value && !upToDate.value
