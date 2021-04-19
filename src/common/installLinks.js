@@ -1,6 +1,6 @@
-const MIRROR_CLIENTS_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/';
-const MIRROR_CLIENTS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/latest/';
-const MIRROR_CLIENTS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/latest/';
+const MIRROR_CLIENTS_STABLE = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/';
+const MIRROR_CLIENTS_STABLE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
+const MIRROR_CLIENTS_STABLE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
 const MIRROR_CLIENTS_LATEST_PRE = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
 const MIROR_RHCOS_LATEST_S390X = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
@@ -17,36 +17,36 @@ const links = {
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
   DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/administering_a_cluster/dedicated-admin-role.html`,
 
-  INSTALLER_LINUX: `${MIRROR_CLIENTS_LATEST}openshift-install-linux.tar.gz`,
+  INSTALLER_LINUX: `${MIRROR_CLIENTS_STABLE}openshift-install-linux.tar.gz`,
   INSTALLER_LINUX_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-install-linux.tar.gz`,
-  INSTALLER_LINUX_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-install-linux.tar.gz`,
-  INSTALLER_LINUX_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-install-linux.tar.gz`,
+  INSTALLER_LINUX_IBMZ: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-linux.tar.gz`,
+  INSTALLER_LINUX_PPC: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux.tar.gz`,
 
-  INSTALLER_MAC: `${MIRROR_CLIENTS_LATEST}openshift-install-mac.tar.gz`,
+  INSTALLER_MAC: `${MIRROR_CLIENTS_STABLE}openshift-install-mac.tar.gz`,
   INSTALLER_MAC_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-install-mac.tar.gz`,
-  INSTALLER_MAC_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-install-mac.tar.gz`,
-  INSTALLER_MAC_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-install-mac.tar.gz`,
+  INSTALLER_MAC_IBMZ: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-mac.tar.gz`,
+  INSTALLER_MAC_PPC: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-mac.tar.gz`,
 
-  CLI_TOOLS_LINUX: `${MIRROR_CLIENTS_LATEST}openshift-client-linux.tar.gz`,
+  CLI_TOOLS_LINUX: `${MIRROR_CLIENTS_STABLE}openshift-client-linux.tar.gz`,
   CLI_TOOLS_LINUX_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-linux.tar.gz`,
-  CLI_TOOLS_LINUX_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-client-linux.tar.gz`,
-  CLI_TOOLS_LINUX_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-client-linux.tar.gz`,
+  CLI_TOOLS_LINUX_IBMZ: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-client-linux.tar.gz`,
+  CLI_TOOLS_LINUX_PPC: `${MIRROR_CLIENTS_STABLE_PPC}openshift-client-linux.tar.gz`,
 
-  CLI_TOOLS_MAC: `${MIRROR_CLIENTS_LATEST}openshift-client-mac.tar.gz`,
+  CLI_TOOLS_MAC: `${MIRROR_CLIENTS_STABLE}openshift-client-mac.tar.gz`,
   CLI_TOOLS_MAC_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-mac.tar.gz`,
-  CLI_TOOLS_MAC_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-client-mac.tar.gz`,
-  CLI_TOOLS_MAC_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-client-mac.tar.gz`,
+  CLI_TOOLS_MAC_IBMZ: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-client-mac.tar.gz`,
+  CLI_TOOLS_MAC_PPC: `${MIRROR_CLIENTS_STABLE_PPC}openshift-client-mac.tar.gz`,
 
-  CLI_TOOLS_WINDOWS: `${MIRROR_CLIENTS_LATEST}openshift-client-windows.zip`,
+  CLI_TOOLS_WINDOWS: `${MIRROR_CLIENTS_STABLE}openshift-client-windows.zip`,
   CLI_TOOLS_WINDOWS_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-windows.zip`,
-  CLI_TOOLS_WINDOWS_IBMZ: `${MIRROR_CLIENTS_LATEST_IBMZ}openshift-client-windows.zip`,
-  CLI_TOOLS_WINDOWS_PPC: `${MIRROR_CLIENTS_LATEST_PPC}openshift-client-windows.zip`,
+  CLI_TOOLS_WINDOWS_IBMZ: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-client-windows.zip`,
+  CLI_TOOLS_WINDOWS_PPC: `${MIRROR_CLIENTS_STABLE_PPC}openshift-client-windows.zip`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
   INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
 
-  INSTALL_AWSUPI_INSTALLER_LATEST: MIRROR_CLIENTS_LATEST,
-  INSTALL_AWSUPI_CLI_LATEST: MIRROR_CLIENTS_LATEST,
+  INSTALL_AWSUPI_INSTALLER_LATEST: MIRROR_CLIENTS_STABLE,
+  INSTALL_AWSUPI_CLI_LATEST: MIRROR_CLIENTS_STABLE,
   INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_aws/installing-aws-user-infra.html`,
 
   INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html`,
