@@ -124,20 +124,18 @@ const ClusterListActions = ({
   return (
     <>
       {toolbarItems}
-      {
-        <ToolbarItem>
-          <Dropdown
-            data-testid="cluster-list-extra-actions-dropdown"
-            onSelect={() => onToggle(!isOpen)}
-            toggle={<KebabToggle onToggle={onToggle} />}
-            isOpen={isOpen}
-            isPlain
-            dropdownItems={dropdownItems}
-            className={className}
-            position={DropdownPosition.right}
-          />
-        </ToolbarItem>
-      }
+      <ToolbarItem>
+        <Dropdown
+          data-testid="cluster-list-extra-actions-dropdown"
+          onSelect={() => onToggle(!isOpen)}
+          toggle={<KebabToggle onToggle={onToggle} />}
+          isOpen={isOpen}
+          isPlain
+          dropdownItems={dropdownItems}
+          className={className}
+          position={DropdownPosition.right}
+        />
+      </ToolbarItem>
     </>
   );
 };

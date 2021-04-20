@@ -173,9 +173,7 @@ class ClusterList extends Component {
     const showSkeleton = isPendingNoData || (pending && loadingChangedView);
 
     const pageHeader = (
-      <PageHeader
-        style={{ display: 'flex' }}
-      >
+      <PageHeader id="cluster-list-header">
         <PageHeaderTitle title="Clusters" className="page-title" />
         <PageHeaderTools>
           {showSpinner && <Spinner size="lg" className="cluster-list-spinner" />}

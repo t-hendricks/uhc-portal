@@ -220,13 +220,13 @@ wdio tests are stored in the `selenium-js/` directory. We use the "page objects"
 
 Test cases are in `selenium-js/specs`.
 
-Short version: Don’t need anything running, just `yarn test-e2e` will start all services, run test & kill all services.  However when devoloping, the below procedure allows much faster iterations.
+Short version: Don’t need anything running, just `yarn test-e2e` will start all services, run test & kill all services.  However when developing, the below procedure allows much faster iterations.
 
 Long version: To run these tests, assuming `yarn start` (or equivalent dev-env) is already running, run the following:
 
 1. `yarn selenium-browser` - this starts the browser container for the test. You can use VNC to connect to it to watch it in action, `localhost` with the password `secret`.
 
-2. Export the credentials in environment variables - `TEST_SELENIUM_NOANYQUOTA_PASSWORD` and `TEST_SELENIUM_NOANYQUOTA_USERNAME`
+2. Export the credentials in environment variables - `TEST_SELENIUM_WITHQUOTA_PASSWORD` and `TEST_SELENIUM_WITHQUOTA_USER`
 
 3. `yarn run wdio` or `yarn selenium-test` - runs the test.
 
