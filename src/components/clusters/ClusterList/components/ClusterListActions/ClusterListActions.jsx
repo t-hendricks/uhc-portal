@@ -26,16 +26,21 @@ import {
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const useViewport = () => {
-  const [width, setWidth] = React.useState(window.innerWidth);
+const useMediaQuery = (query) => {
+  if (typeof window === 'undefined' || typeof window.matchMedia === 'undefined') {
+    return false;
+  }
+
+  const mediaQuery = window.matchMedia(query);
+  const [match, setMatch] = React.useState(!!mediaQuery.matches);
 
   React.useEffect(() => {
-    const handleWindowResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleWindowResize);
-    return () => window.removeEventListener('resize', handleWindowResize);
+    const handler = () => setMatch(!!mediaQuery.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
-  return { width };
+  return match;
 };
 
 const dropdownRegisterCluster = (
@@ -89,13 +94,13 @@ const toolbarRegisterCluster = (
 );
 
 const useItems = (aiEnabled) => {
-  const { width } = useViewport();
+  const wide = useMediaQuery('(min-width: 900px)');
 
   const toolbarItems = [];
   const dropdownItems = [];
 
   toolbarItems.push(toolbarCreateCluster);
-  if (width > 900) {
+  if (wide) {
     toolbarItems.push(toolbarRegisterCluster);
   } else {
     dropdownItems.push(dropdownRegisterCluster);
