@@ -125,7 +125,7 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = 
 
 const osdTrialRow = () => {
   const contents = (
-    <Link id="create-trial-cluster" to="/create/osdtrial">
+    <Link id="create-trial-cluster" to="/create/osdtrial?trial=osd">
       <Button className="create-trial-cluster">
         Create trial cluster
       </Button>
