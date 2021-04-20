@@ -153,7 +153,7 @@ describe('<CostBreakdownCard />', () => {
       expect(getSources).toBeCalled();
     });
     it('calls getReport on mount', () => {
-      expect(getSources).toBeCalled();
+      expect(getReport).toBeCalled();
     });
   });
 });
