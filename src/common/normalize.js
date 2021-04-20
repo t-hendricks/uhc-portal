@@ -28,6 +28,64 @@ const normalizeProductID = (id) => {
   return map[id.toUpperCase()] || normalizedProducts.UNKNOWN;
 };
 
+const emptyMetrics = {
+  memory: {
+    used: {
+      value: 0,
+      unit: 'B',
+    },
+    total: {
+      value: 0,
+      unit: 'B',
+    },
+  },
+  cpu: {
+    used: {
+      value: 0,
+      unit: '',
+    },
+    total: {
+      value: 0,
+      unit: '',
+    },
+  },
+  storage: {
+    used: {
+      value: 0,
+      unit: 'B',
+    },
+    total: {
+      value: 0,
+      unit: 'B',
+    },
+  },
+  nodes: {
+    total: 0,
+    master: 0,
+    compute: 0,
+  },
+  state: 'N/A',
+  upgrade: {
+    available: false,
+  },
+};
+
+const normalizeMetrics = (metrics) => {
+  const ret = metrics ? { ...emptyMetrics, ...metrics } : { ...emptyMetrics };
+  const subFields = ['memory', 'storage', 'cpu', 'nodes'];
+  const consumptionFields = ['memory', 'storage']; // fields with total+used
+  subFields.forEach((field) => {
+    ret[field] = { ...emptyMetrics[field], ...ret[field] };
+    if (consumptionFields.includes(field)) {
+      const recievedTotal = ret[field]?.total || {};
+      const recievedUsed = ret[field]?.used || {};
+      ret[field].total = { ...emptyMetrics[field].total, ...recievedTotal };
+      ret[field].used = { ...emptyMetrics[field].used, ...recievedUsed };
+    }
+  });
+  return ret;
+};
+
 const normalizeCluster = (cluster) => {
   const result = { ...cluster };
 
@@ -55,48 +113,7 @@ const normalizeCluster = (cluster) => {
 
 // Normalize data from AMS for an unmanaged cluster.
 const fakeClusterFromSubscription = (subscription) => {
-  const emptyMetrics = {
-    memory: {
-      used: {
-        value: 0,
-        unit: 'B',
-      },
-      total: {
-        value: 0,
-        unit: 'B',
-      },
-    },
-    cpu: {
-      used: {
-        value: 0,
-        unit: '',
-      },
-      total: {
-        value: 0,
-        unit: '',
-      },
-    },
-    storage: {
-      used: {
-        value: 0,
-        unit: 'B',
-      },
-      total: {
-        value: 0,
-        unit: 'B',
-      },
-    },
-    nodes: {
-      total: 0,
-      master: 0,
-      compute: 0,
-    },
-    state: 'N/A',
-    upgrade: {
-      available: false,
-    },
-  };
-  const metrics = subscription.metrics?.[0] || emptyMetrics;
+  const metrics = normalizeMetrics(subscription.metrics?.[0]);
 
   // Omitting some fields that real data from clusters-service does have, but we won't use.
   const cluster = {
@@ -178,4 +195,5 @@ export {
   normalizeSubscription,
   normalizeQuotaCost,
   mapListResponse,
+  normalizeMetrics,
 };

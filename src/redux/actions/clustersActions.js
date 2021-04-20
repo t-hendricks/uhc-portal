@@ -24,6 +24,7 @@ import {
   fakeClusterFromSubscription,
   normalizeSubscription,
   mapListResponse,
+  normalizeMetrics,
 } from '../../common/normalize';
 import {
   postSchedule,
@@ -194,6 +195,7 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
       && !!value?.cluster && !isEmpty(value?.cluster)) {
       // managed cluster, with data from Clusters Service
       cluster = normalizeCluster(value.cluster);
+      cluster.metrics = normalizeMetrics(value.subscription.metrics);
     } else {
       // either not managed by Clusters Service, or Clusters Service is down
       cluster = fakeClusterFromSubscription(value.subscription);
@@ -323,6 +325,7 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
     if (subscription.data.metrics !== undefined) {
       [cluster.data.metrics] = subscription.data.metrics; // take metrics from AMS (even for OSD)
     }
+    cluster.data.metrics = normalizeMetrics(cluster.data.metrics);
 
     // TODO later, refactor, this should return subscription as the base resource
     cluster.data.subscription = subscription.data;
