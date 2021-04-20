@@ -77,8 +77,8 @@ class Overview extends React.Component {
                               && insightsData?.data;
     const showResourceUsage = !isHibernating(cluster.state)
       && !shouldShowLogs(cluster) && !isDeprovisioned;
-    const showCostBreakdown = userAccess.fulfilled && userAccess.data !== undefined
-      && userAccess.data === true;
+    const showCostBreakdown = !cluster.managed && userAccess.fulfilled
+      && userAccess.data !== undefined && userAccess.data === true;
     const showSidePanel = showInsightsAdvisor || showCostBreakdown;
 
     if (isHibernating(cluster.state)) {
