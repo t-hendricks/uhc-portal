@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import {
@@ -64,6 +65,7 @@ class AddMachinePoolModal extends Component {
     } = this.props;
 
     const { machineType } = this.state;
+    const billingModel = get(cluster, 'billing_model');
 
     const hasError = addMachinePoolResponse.error && (
       <ErrorBox message="Error adding machine pool" response={addMachinePoolResponse} />
@@ -116,6 +118,7 @@ class AddMachinePoolModal extends Component {
                 change={change}
                 autoScaleMinNodesValue={autoScaleMinNodesValue}
                 autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+                billingModel={billingModel}
               />
             </Grid>
           </Form>
