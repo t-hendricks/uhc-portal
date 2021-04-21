@@ -2600,7 +2600,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
   }
 >
   <div>
-    No supported machine types
+    You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.
   </div>
 </MachineTypeSelection>
 `;
