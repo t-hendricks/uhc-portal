@@ -155,7 +155,7 @@ class Overview extends React.Component {
               )}
               {showInsightsAdvisor && (
               <GridItem sm={6} xl2={12}>
-                <Card className="ocm-c-overview-insights-advisor__card">
+                <Card className="ocm-c-overview-advisor--card">
                   <CardBody>
                     <InsightsAdvisor insightsData={insightsData} />
                   </CardBody>

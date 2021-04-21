@@ -92,7 +92,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   <React.Fragment>
                     <Link
                       id="create-trial-cluster"
-                      to="/create/osdtrial"
+                      to="/create/osdtrial?trial=osd"
                     >
                       <Button
                         className="create-trial-cluster"

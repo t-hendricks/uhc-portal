@@ -26,7 +26,7 @@ function BillingModelLabel({ cluster }) {
 
   // OSD CCS marketplace
   if (planId === OSD && billingModel === MARKETPLACE && CCS) {
-    return 'Pay-as-you-go (hourly)';
+    return 'On-demand (hourly)';
   }
 
   return 'Standard';

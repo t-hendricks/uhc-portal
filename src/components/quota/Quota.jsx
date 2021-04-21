@@ -19,7 +19,6 @@ import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-com
 import { PageSection, Stack, StackItem } from '@patternfly/react-core';
 import get from 'lodash/get';
 
-import OCPSubscriptionCard from './OCPSubscriptionCard';
 import OSDSubscriptionCard from './OSDSubscriptionCard';
 import SubscriptionNotFulfilled from './SubscriptionNotFulfilled';
 import './Quota.scss';
@@ -59,9 +58,6 @@ class Subscriptions extends Component {
           </PageHeader>
           <PageSection className="ocm-p-subscriptions">
             <Stack hasGutter>
-              <StackItem className="ocm-l-ocp-subscription__section">
-                <OCPSubscriptionCard organizationID={organizationID} />
-              </StackItem>
               <StackItem className="ocm-l-osd-subscription__section">
                 <OSDSubscriptionCard organizationID={organizationID} />
               </StackItem>

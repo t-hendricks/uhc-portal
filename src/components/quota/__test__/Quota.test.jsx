@@ -4,7 +4,6 @@ import { Button } from '@patternfly/react-core';
 
 import * as Fixtures from './Quota.fixtures';
 import Quota from '../Quota';
-import OCPSubscriptionCard from '../OCPSubscriptionCard/OCPSubscriptionCard';
 import OSDSubscriptionCard from '../OSDSubscriptionCard/OSDSubscriptionCard';
 import OSDSubscriptionTable from '../OSDSubscriptionCard/OSDSubscriptionTable';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
@@ -21,16 +20,7 @@ describe('<Quota />', () => {
     });
     it('should have Header, OCP and OSD cards', () => {
       expect(wrapper.find('PageHeader').length).toEqual(1);
-      expect(wrapper.find('OCPSubscriptionCard').length).toEqual(1);
       expect(wrapper.find('Connect(OSDSubscriptionCard)').length).toEqual(1);
-    });
-  });
-
-  describe('OCPSubscriptionCard', () => {
-    const wrapper = shallow(<OCPSubscriptionCard {...Fixtures} />);
-
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
     });
   });
 

@@ -1162,7 +1162,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
         xl2={12}
       >
         <Card
-          className="ocm-c-overview-insights-advisor__card"
+          className="ocm-c-overview-advisor--card"
         >
           <CardBody>
             <InsightsAdvisor

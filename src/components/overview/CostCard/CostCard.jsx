@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Card,
@@ -18,6 +17,19 @@ class CostCard extends Component {
   componentDidMount() {
     this.refresh();
   }
+
+  getBaseName = () => {
+    let release = '/';
+    const pathName = window.location.pathname.split('/');
+
+    pathName.shift();
+
+    if (pathName[0] === 'beta') {
+      pathName.shift();
+      release = '/beta/';
+    }
+    return `${release}${pathName[0]}`;
+  };
 
   refresh = () => {
     const {
@@ -49,9 +61,9 @@ class CostCard extends Component {
         </CardBody>
         { hasSources && report.fulfilled && (
           <CardFooter>
-            <Link to="/cost-management">
+            <a href={`${this.getBaseName()}/cost-management`}>
               View more in Cost management
-            </Link>
+            </a>
           </CardFooter>
         )}
       </Card>

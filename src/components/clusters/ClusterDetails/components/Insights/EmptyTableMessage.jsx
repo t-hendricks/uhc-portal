@@ -93,7 +93,7 @@ EmptyTableMessage.propTypes = {
 export const NoRulesMessage = () => (
   <EmptyTableMessage
     icon={InfoCircleIcon}
-    header="No health checks to display"
+    header="No recommendations to display"
     iconClassName="info-color"
     body={
       (
@@ -133,7 +133,7 @@ export const NoIssuesMessage = ({ lastChecked }) => {
       <EmptyTableMessage
         icon={CheckCircleIcon}
         iconClassName="success-color"
-        header="Your cluster passed all health checks"
+        header="Your cluster passed all recommendations"
         body={body}
         showPopover
       />

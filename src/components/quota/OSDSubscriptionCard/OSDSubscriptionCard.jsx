@@ -83,9 +83,15 @@ class OSDSubscriptionCard extends Component {
           }
         }
 
+        // CCS compute.node resource name should show as vCPU
+        let resourceName = get(relatedResources[0], 'resource_name');
+        if (get(relatedResources[0], 'resource_type') === 'compute.node' && get(relatedResources[0], 'byoc') === 'byoc') {
+          resourceName = 'vCPU';
+        }
+
         return [[
           get(relatedResources[0], 'resource_type'),
-          get(relatedResources[0], 'resource_name'),
+          resourceName,
           { title: this.getZoneType(get(relatedResources[0], 'availability_zone_type')) },
           this.getPlanType(get(relatedResources[0], 'byoc')),
           startCase(get(relatedResources[0], 'product')),

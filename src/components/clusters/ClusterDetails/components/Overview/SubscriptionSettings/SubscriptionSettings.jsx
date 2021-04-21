@@ -73,7 +73,7 @@ function SubscriptionSettings({
   if (billingModel === billingModels.STANDARD) {
     billingModelStr = 'Annual: Fixed capacity subscription from Red Hat';
   } else if (billingModel === billingModels.MARKETPLACE) {
-    billingModelStr = 'Pay-as-you-go (Hourly)';
+    billingModelStr = 'On-demand (Hourly)';
   }
   const usageStr = get(subscription, subscriptionSettings.USAGE, 'Not set');
   const serviceLevel = get(subscription, subscriptionSettings.SERVICE_LEVEL);
@@ -83,14 +83,19 @@ function SubscriptionSettings({
   } else if (serviceLevel === subscriptionServiceLevels.L3_ONLY) {
     serviceLevelStr = 'Partner support (L3)';
   }
+  const cpuTotal = get(subscription, subscriptionSettings.CPU_TOTAL, undefined);
+  const cpuTotalStr = `${cpuTotal} core${cpuTotal === 1 ? '' : 's'}`;
+  const socketTotal = get(subscription, subscriptionSettings.SOCKET_TOTAL, undefined);
+  const socketTotalStr = `${socketTotal} socket${socketTotal === 1 ? '' : 's'}`;
   const systemUnits = get(subscription, subscriptionSettings.SYSTEM_UNITS,
     subscriptionSystemUnits.CORES_VCPU);
-  const systemUnitsStr = systemUnits === subscriptionSystemUnits.SOCKETS
-    ? 'Sockets' : 'Cores/vCPUs ';
-  const cpuTotal = get(subscription, subscriptionSettings.CPU_TOTAL, 0);
-  const cpuTotalStr = `${cpuTotal} core${cpuTotal === 1 ? '' : 's'}`;
-  const socketTotal = get(subscription, subscriptionSettings.SOCKET_TOTAL, 0);
-  const socketTotalStr = `${socketTotal} socket${socketTotal === 1 ? '' : 's'}`;
+  let systemUnitsStr = 'Not set';
+  if (systemUnits === subscriptionSystemUnits.SOCKETS && socketTotal !== undefined) {
+    systemUnitsStr = 'Sockets';
+  } else if (systemUnits === subscriptionSystemUnits.CORES_VCPU && cpuTotal !== undefined) {
+    systemUnitsStr = 'Cores/vCPUs ';
+  }
+  const displayObligation = cpuTotal !== undefined && socketTotal !== undefined;
   const obligationLabel = systemUnits === subscriptionSystemUnits.SOCKETS
     ? 'Number of compute sockets' : 'Number of compute cores';
   const obligationStr = systemUnits === subscriptionSystemUnits.SOCKETS
@@ -153,10 +158,14 @@ function SubscriptionSettings({
                 <DescriptionListTerm>Subscription units</DescriptionListTerm>
                 <DescriptionListDescription>{systemUnitsStr}</DescriptionListDescription>
               </DescriptionListGroup>
-              <DescriptionListGroup>
-                <DescriptionListTerm>{obligationLabel}</DescriptionListTerm>
-                <DescriptionListDescription>{obligationStr}</DescriptionListDescription>
-              </DescriptionListGroup>
+              {
+                displayObligation && (
+                  <DescriptionListGroup>
+                    <DescriptionListTerm>{obligationLabel}</DescriptionListTerm>
+                    <DescriptionListDescription>{obligationStr}</DescriptionListDescription>
+                  </DescriptionListGroup>
+                )
+              }
             </DescriptionList>
           </GridItem>
         </Grid>

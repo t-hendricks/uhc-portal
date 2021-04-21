@@ -52,14 +52,14 @@ const GroupsCard = ({ insightsData, groups, groupClicked }) => {
         <Stack>
           <StackItem>
             <Title className="group-card-title" headingLevel="h2" size="xl">
-              Health checks by category
+              Recommendations by category
             </Title>
             <Popover
               position="right"
               maxWidth="22rem"
               bodyContent={(
                 <p>
-                  Insights Health Checks grouped by the type of recommendation
+                  Insights recommendations grouped by the category
                 </p>
               )}
               aria-label="What is Grouping?"
@@ -113,9 +113,9 @@ const GroupsCard = ({ insightsData, groups, groupClicked }) => {
                 />
               )}
               padding={{
-                bottom: 0,
-                left: -40,
-                right: 140, // Adjusted to accommodate legend
+                bottom: 25,
+                left: -20,
+                right: 200, // Adjusted to accommodate legend
                 top: 25,
               }}
               width={350}

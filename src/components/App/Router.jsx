@@ -50,6 +50,8 @@ import InstallOSPUPI from '../clusters/install/InstallOSPUPI';
 import InstallRHV from '../clusters/install/InstallRHV';
 import InstallRHVIPI from '../clusters/install/InstallRHVIPI';
 import InstallRHVUPI from '../clusters/install/InstallRHVUPI';
+import InstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
+import InstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallPullSecret from '../clusters/install/InstallPullSecret';
@@ -67,6 +69,7 @@ import { ASSISTED_INSTALLER_FEATURE } from '../../redux/constants/featureConstan
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
+import Releases from '../releases/index';
 
 const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
@@ -111,7 +114,9 @@ function Router({ history }) {
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
-            <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
+            <Route path="/install/vsphere" exact component={InstallVSphere} />
+            <Route path="/install/vsphere/user-provisioned" component={InstallVSphereUPI} />
+            <Route path="/install/vsphere/installer-provisioned" component={InstallVSphereIPI} />
             <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
             <Route path="/install/power/user-provisioned" component={InstallPower} />
             <Route path="/install/pre-release" component={InstallPreRelease} />
@@ -138,13 +143,16 @@ function Router({ history }) {
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
             <Route path="/create" component={CreateClusterPage} />
-            <Route path="/details/:clusterId/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
+            <Route path="/details/s/:subscriptionID/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
             <Route path="/details/s/:id" component={ClusterDetails} />
+            <Route path="/details/:id/insights/:reportId/:errorKey" render={props => <ClusterDetailsRedirector isInsightsRuleDetails {...props} />} />
             <Route path="/details/:id" component={ClusterDetailsRedirector} />
             <Route path="/register" component={RegisterCluster} />
             <Route path="/quota" component={Quota} />
+            <Route path="/quota/resource-limits" component={Quota} />
             <Route path="/archived" component={ArchivedClusterList} />
             <Route path="/overview" exact component={Overview} />
+            <Route path="/releases" exact component={Releases} />
             <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
             <Route path="/" exact component={ClustersList} />
             <Route component={NotFoundError} />

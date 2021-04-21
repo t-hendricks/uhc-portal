@@ -41,7 +41,7 @@ function InsightsRuleDetailsTop(props) {
     <Breadcrumbs path={
       [
         { label: 'Clusters' },
-        { label: clusterName, path: `/details/${cluster.id}#insights` },
+        { label: clusterName, path: `/details/s/${cluster.subscription.id}#insights` },
         { label: rule.description },
       ]
     }
