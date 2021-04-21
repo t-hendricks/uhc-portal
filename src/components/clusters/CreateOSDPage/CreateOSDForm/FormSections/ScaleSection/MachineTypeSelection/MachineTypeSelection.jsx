@@ -10,6 +10,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import FlatRadioButton from '../../../../../../common/FlatRadioButton';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
+import { noMachineTypes } from '../../../../../../../common/helpers';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../../../../../common/quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../../../../common/subscriptionTypes';
 
@@ -180,7 +181,11 @@ class MachineTypeSelection extends React.Component {
         displayedMachineTypes = quotaMachineTypes.filter(type => (!type.ccs_only));
       }
       if (displayedMachineTypes.length === 0) {
-        return <div>No supported machine types</div>;
+        return (
+          <div>
+            {noMachineTypes}
+          </div>
+        );
       }
       return (
         <>
