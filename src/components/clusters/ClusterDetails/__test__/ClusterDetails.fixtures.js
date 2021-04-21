@@ -10,7 +10,7 @@ const funcs = () => ({
     hash: '',
   },
   fetchDetails: jest.fn(),
-  fetchInsightsData: jest.fn(),
+  fetchClusterInsights: jest.fn(),
   setOpenedTab: jest.fn(),
   fetchGroups: jest.fn(),
   getCloudProviders: jest.fn(),

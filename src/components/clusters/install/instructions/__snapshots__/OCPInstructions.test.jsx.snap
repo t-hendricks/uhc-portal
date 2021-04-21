@@ -1251,7 +1251,96 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
+exports[`Every OCP instruction page should render:  VMWare vSphere-ipi 1`] = `
+<Fragment>
+  <Card
+    className="ocm-ocp-instructions__card"
+  >
+    <Stack>
+      <StackItem>
+        <Split>
+          <SplitItem
+            className="step-number"
+          >
+            <Title
+              headingLevel="h1"
+            >
+              1
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <DownloadsAndPullSecretSection
+              channel="stable"
+              cloudProviderID="VMWare vSphere"
+              isBMIPI={false}
+              pendoID="/"
+              token={Object {}}
+            />
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider />
+      <StackItem>
+        <Split>
+          <SplitItem
+            className="step-number"
+          >
+            <Title
+              headingLevel="h1"
+            >
+              2
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <TextContent>
+              <Text
+                component="h2"
+              >
+                Follow the instructions to configure your environment and install your cluster
+              </Text>
+              <GetStarted
+                cloudProviderID="VMWare vSphere"
+                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
+                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned.html"
+                isBMIPI={false}
+                pendoID="/"
+              />
+            </TextContent>
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider />
+      <StackItem>
+        <Split>
+          <SplitItem
+            className="step-number"
+          >
+            <Title
+              headingLevel="h1"
+            >
+              3
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <SubscriptionAndSupport />
+          </SplitItem>
+        </Split>
+      </StackItem>
+    </Stack>
+  </Card>
+</Fragment>
+`;
+
+exports[`Every OCP instruction page should render:  VMWare vSphere-upi 1`] = `
 <Fragment>
   <Card
     className="ocm-ocp-instructions__card"

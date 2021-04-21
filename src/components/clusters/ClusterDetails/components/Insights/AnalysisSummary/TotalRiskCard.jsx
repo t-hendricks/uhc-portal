@@ -7,7 +7,8 @@ import {
   Split,
   SplitItem,
   Stack,
-  StackItem, Text,
+  StackItem,
+  Text,
   Title,
 } from '@patternfly/react-core';
 
@@ -22,7 +23,10 @@ import {
 } from '@patternfly/react-tokens';
 import get from 'lodash/get';
 import {
-  Chart, ChartBar, ChartAxis, ChartStack, ChartTooltip, ChartLegend,
+  ChartBar,
+  ChartStack,
+  ChartLegend,
+  createContainer,
 } from '@patternfly/react-charts';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import { severity } from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
@@ -35,7 +39,10 @@ const groupRulesByRisk = data => data.reduce(
     ...acc,
     [totalRisk]: acc[totalRisk] ? acc[totalRisk] + 1 : 1,
   }),
-  {},
+  {
+    1: 0, 2: 0, 3: 0, 4: 0,
+  },
+
 );
 
 const colorScale = [
@@ -54,7 +61,6 @@ const legendColorScale = [
 
 const mouseOverClickMutation = props => ({
   style: {
-
     ...props.style,
     fill: global_primary_color_200.value,
     textDecoration: 'underline',
@@ -70,6 +76,8 @@ const TotalRiskCard = ({ insightsData, batteryClicked }) => {
   const issueCount = filteredData.length;
   const lastChecked = get(insightsData, 'meta.last_checked_at', 0);
 
+  const CursorVoronoiContainer = createContainer('voronoi');
+
   return (
     <Card className="insights-analysis-card">
       <CardBody>
@@ -77,8 +85,13 @@ const TotalRiskCard = ({ insightsData, batteryClicked }) => {
           <StackItem>
             <Split>
               <SplitItem isFilled>
-                <Title headingLevel="h2" size="xl">
-                  {`${issueCount} potential issue${issueCount > 1 ? 's' : ''} identified`}
+                <Title
+                  headingLevel="h2"
+                  size="xl"
+                >
+                  {`${issueCount} potential issue${
+                    issueCount > 1 ? 's' : ''
+                  } identified`}
                 </Title>
               </SplitItem>
               <SplitItem className="cluster-insights-description">
@@ -90,55 +103,43 @@ const TotalRiskCard = ({ insightsData, batteryClicked }) => {
             </Split>
           </StackItem>
           <StackItem>
-            <Chart
+            <ChartStack
               ariaDesc="Total risk chart"
               ariaTitle="Total risk chart"
-              domainPadding={{ x: 0 }}
+              containerComponent={(
+                <CursorVoronoiContainer
+                  mouseFollowTooltips
+                  labels={({ datum }) => `${datum.name}: ${datum.y}`}
+                />
+              )}
               height={40}
+              width={550}
               padding={{
                 bottom: 0,
                 left: 0,
                 right: 0,
-                top: 0,
+                top: 20,
               }}
-              width={550}
+              horizontal
             >
-              <ChartAxis axisComponent={<></>} />
-              <ChartStack horizontal>
-                {
-                  Object.entries(groupedRules).reverse()
-                    .map(([risk, count]) => (
-                      <ChartBar
-                        key={risk}
-                        style={{ data: { fill: colorScale[risk - 1] } }}
-                        name={`bar-${risk}`}
-                        barWidth={20}
-                        data={[
-                          {
-                            name: severity[severityMapping[risk - 1]],
-                            x: 'Total risk',
-                            y: count,
-                            label: `${severity[severityMapping[risk - 1]]} ${count}`,
-                          },
-                        ]}
-                        labelComponent={(
-                          <ChartTooltip
-                            style={
-                              {
-                                fontSize: '12px',
-                                marginLeft: '-10px',
-                                padding: '10',
-                              }
-                            }
-                            orientation="top"
-                            dx={-(count / 4)}
-                          />
-                        )}
-                      />
-                    ))
-                }
-              </ChartStack>
-            </Chart>
+              {Object.entries(groupedRules)
+                .reverse()
+                .map(([risk, count]) => (
+                  <ChartBar
+                    key={risk}
+                    name={`bar-${risk}`}
+                    barWidth={20}
+                    data={[
+                      {
+                        name: severity[severityMapping[risk - 1]],
+                        x: 1,
+                        y: count,
+                      },
+                    ]}
+                    style={{ data: { fill: colorScale[risk - 1] } }}
+                  />
+                ))}
+            </ChartStack>
           </StackItem>
           <StackItem isFilled>
             <ChartLegend

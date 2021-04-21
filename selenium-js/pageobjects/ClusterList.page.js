@@ -17,7 +17,7 @@ class ClusterList extends Page {
   }
 
   get registerClusterItem() {
-    return $("button[data-testid='register-cluster-item'");
+    return $("button[data-testid='register-cluster-item']");
   }
 
   async isClusterListPage() {

@@ -26,6 +26,11 @@
 		margin: 5px 0;
 	}
 
+	.cl-details-page-title {
+		top: 0;
+		transform: none;
+	}
+
 	.ins-c-critical-icon {
 		width: 1em;
 		height: 1em;
@@ -42,11 +47,11 @@
 		color: var(--pf-global--disabled-color--100);
 	}
 
-	.disabled-heath-check-message > * {
+	.disabled-recommendation-message > * {
 		padding-left: var(--pf-global--spacer--xs);
 	}
 
-	.disabled-health-check-title {
+	.disabled-recommendation-title {
 		font-size: var(--pf-global--FontSize--lg);
 	}
 }

@@ -40,7 +40,9 @@ const routes = [
   '/install/metal',
   '/install/metal/user-provisioned',
   '/install/metal/installer-provisioned',
+  '/install/vsphere',
   '/install/vsphere/user-provisioned',
+  '/install/vsphere/installer-provisioned',
   '/install/ibmz/user-provisioned',
   '/install/power/user-provisioned',
   '/install/pre-release',
@@ -55,6 +57,7 @@ const routes = [
   '/register',
   '/quota',
   '/archived',
+  '/releases',
 ];
 
 describe('Every route should render: ', () => test.each(routes)('%s', (route) => {

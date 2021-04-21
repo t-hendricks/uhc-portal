@@ -697,7 +697,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                               </button>
                             </div>
                           </div>
-                          
+                          <div
+                            aria-live="polite"
+                            class="pf-c-form__helper-text"
+                            id="undefined-helper"
+                          >
+                            Cores/vCPU value can be any integer number between 1-999
+                          </div>
                         </div>
                       </div>
                     </form>
@@ -2496,6 +2502,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                   </FormGroup>
                                 </ReduxFormRadioGroup>
                                 <FormGroup
+                                  helperText="Cores/vCPU value can be any integer number between 1-999"
                                   helperTextInvalid=""
                                   isRequired={false}
                                   label="Number of compute cores (excluding control plane nodes)"
@@ -2658,6 +2665,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                           </div>
                                         </div>
                                       </NumberInput>
+                                      <div
+                                        aria-live="polite"
+                                        className="pf-c-form__helper-text"
+                                        id="undefined-helper"
+                                      >
+                                        Cores/vCPU value can be any integer number between 1-999
+                                      </div>
                                     </div>
                                   </div>
                                 </FormGroup>
@@ -3469,7 +3483,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                               </button>
                             </div>
                           </div>
-                          
+                          <div
+                            aria-live="polite"
+                            class="pf-c-form__helper-text"
+                            id="undefined-helper"
+                          >
+                            Cores/vCPU value can be any integer number between 1-999
+                          </div>
                         </div>
                       </div>
                     </form>
@@ -5346,6 +5366,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                   </FormGroup>
                                 </ReduxFormRadioGroup>
                                 <FormGroup
+                                  helperText="Cores/vCPU value can be any integer number between 1-999"
                                   helperTextInvalid=""
                                   isRequired={false}
                                   label="Number of compute cores (excluding control plane nodes)"
@@ -5508,6 +5529,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                           </div>
                                         </div>
                                       </NumberInput>
+                                      <div
+                                        aria-live="polite"
+                                        className="pf-c-form__helper-text"
+                                        id="undefined-helper"
+                                      >
+                                        Cores/vCPU value can be any integer number between 1-999
+                                      </div>
                                     </div>
                                   </div>
                                 </FormGroup>
@@ -5806,7 +5834,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                               class="pf-c-radio__label"
                               for="cluster_billing_model:marketplace"
                             >
-                              Pay-as-you-go (Hourly): Flexible usage billed through the Red Hat Marketplace
+                              On-demand (Hourly): Flexible usage billed through the Red Hat Marketplace
                             </label>
                           </div>
                           
@@ -6380,7 +6408,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                               </button>
                             </div>
                           </div>
-                          
+                          <div
+                            aria-live="polite"
+                            class="pf-c-form__helper-text"
+                            id="undefined-helper"
+                          >
+                            Cores/vCPU value can be any integer number between 1-999
+                          </div>
                         </div>
                       </div>
                     </form>
@@ -6662,7 +6696,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                         "value": "standard",
                                       },
                                       Object {
-                                        "label": "Pay-as-you-go (Hourly): Flexible usage billed through the Red Hat Marketplace",
+                                        "label": "On-demand (Hourly): Flexible usage billed through the Red Hat Marketplace",
                                         "value": "marketplace",
                                       },
                                     ]
@@ -6749,7 +6783,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                           isDisabled={false}
                                           isValid={true}
                                           key="cluster_billing_model:marketplace"
-                                          label="Pay-as-you-go (Hourly): Flexible usage billed through the Red Hat Marketplace"
+                                          label="On-demand (Hourly): Flexible usage billed through the Red Hat Marketplace"
                                           name="cluster_billing_model:marketplace"
                                           onChange={[Function]}
                                           value="marketplace"
@@ -6775,7 +6809,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                               className="pf-c-radio__label"
                                               htmlFor="cluster_billing_model:marketplace"
                                             >
-                                              Pay-as-you-go (Hourly): Flexible usage billed through the Red Hat Marketplace
+                                              On-demand (Hourly): Flexible usage billed through the Red Hat Marketplace
                                             </label>
                                           </div>
                                         </Radio>
@@ -8359,6 +8393,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                   </FormGroup>
                                 </ReduxFormRadioGroup>
                                 <FormGroup
+                                  helperText="Cores/vCPU value can be any integer number between 1-999"
                                   helperTextInvalid=""
                                   isRequired={false}
                                   label="Number of compute cores (excluding control plane nodes)"
@@ -8521,6 +8556,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                           </div>
                                         </div>
                                       </NumberInput>
+                                      <div
+                                        aria-live="polite"
+                                        className="pf-c-form__helper-text"
+                                        id="undefined-helper"
+                                      >
+                                        Cores/vCPU value can be any integer number between 1-999
+                                      </div>
                                     </div>
                                   </div>
                                 </FormGroup>
@@ -9316,7 +9358,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                               </button>
                             </div>
                           </div>
-                          
+                          <div
+                            aria-live="polite"
+                            class="pf-c-form__helper-text"
+                            id="undefined-helper"
+                          >
+                            Sockets value can be any integer number between 1-999
+                          </div>
                         </div>
                       </div>
                     </form>
@@ -11157,6 +11205,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                   </FormGroup>
                                 </ReduxFormRadioGroup>
                                 <FormGroup
+                                  helperText="Sockets value can be any integer number between 1-999"
                                   helperTextInvalid=""
                                   isRequired={false}
                                   label="Number of sockets"
@@ -11319,6 +11368,13 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                           </div>
                                         </div>
                                       </NumberInput>
+                                      <div
+                                        aria-live="polite"
+                                        className="pf-c-form__helper-text"
+                                        id="undefined-helper"
+                                      >
+                                        Sockets value can be any integer number between 1-999
+                                      </div>
                                     </div>
                                   </div>
                                 </FormGroup>

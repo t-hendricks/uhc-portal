@@ -23,7 +23,7 @@ const osdTrialCluster = {
     kind: 'ProductLink',
     // value after normalization
     id: 'OSDTrial',
-    href: '/api/clusters_mgmt/v1/products/osdtrial',
+    href: '/api/clusters_mgmt/v1/products/osdtrial?trial=osd',
   },
   ...cluster,
 };

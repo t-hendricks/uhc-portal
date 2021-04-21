@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SupportStatus /> should render for every possible support status renders for End of Life 1`] = `
+<Popover
+  aria-label="End of life"
+  bodyContent="This minor version of OpenShift has reached the end of life and is no longer supported. Upgrade to a newer version so that this cluster is supportable."
+  className="support-status-popover"
+  footerContent={
+    <React.Fragment>
+      See
+       
+      <ExternalLink
+        href="https://access.redhat.com/support/policy/updates/openshift"
+        noIcon={true}
+      >
+        this resource
+      </ExternalLink>
+       
+      to learn more about the support lifecycle.
+    </React.Fragment>
+  }
+  id="end-of-life"
+>
+  <Label
+    className="support-status-label support-status-label--clickable"
+    color="red"
+    variant="outline"
+  >
+    End of life
+  </Label>
+</Popover>
+`;
+
+exports[`<SupportStatus /> should render for every possible support status renders for Extended Update Support 1`] = `
+<Popover
+  aria-label="Extended update support"
+  bodyContent="This minor version of OpenShift has reached the extended update support phase. Critical and selected high priority fixes will continue to be delivered in patch (z-stream) releases."
+  className="support-status-popover"
+  footerContent={
+    <React.Fragment>
+      See
+       
+      <ExternalLink
+        href="https://access.redhat.com/support/policy/updates/openshift"
+        noIcon={true}
+      >
+        this resource
+      </ExternalLink>
+       
+      to learn more about the support lifecycle.
+    </React.Fragment>
+  }
+  id="extended-update-support"
+>
+  <Label
+    className="support-status-label support-status-label--clickable"
+    color="blue"
+    variant="outline"
+  >
+    Extended update support
+  </Label>
+</Popover>
+`;
+
+exports[`<SupportStatus /> should render for every possible support status renders for Full Support 1`] = `
+<Popover
+  aria-label="Full support"
+  bodyContent="This minor version of OpenShift is fully supported. In order to receive security and bug fixes, continue to install patch (z-stream) updates to your cluster or upgrade to the latest minor version when available."
+  className="support-status-popover"
+  footerContent={
+    <React.Fragment>
+      See
+       
+      <ExternalLink
+        href="https://access.redhat.com/support/policy/updates/openshift"
+        noIcon={true}
+      >
+        this resource
+      </ExternalLink>
+       
+      to learn more about the support lifecycle.
+    </React.Fragment>
+  }
+  id="full-support"
+>
+  <Label
+    className="support-status-label support-status-label--clickable"
+    color="blue"
+    variant="outline"
+  >
+    Full support
+  </Label>
+</Popover>
+`;
+
+exports[`<SupportStatus /> should render for every possible support status renders for Maintenance Support 1`] = `
+<Popover
+  aria-label="Maintenance support"
+  bodyContent="This minor version of OpenShift has reached the maintenance support phase. Critical and selected high priority fixes will continue to be delivered in patch (z-stream) releases."
+  className="support-status-popover"
+  footerContent={
+    <React.Fragment>
+      See
+       
+      <ExternalLink
+        href="https://access.redhat.com/support/policy/updates/openshift"
+        noIcon={true}
+      >
+        this resource
+      </ExternalLink>
+       
+      to learn more about the support lifecycle.
+    </React.Fragment>
+  }
+  id="maintenance-support"
+>
+  <Label
+    className="support-status-label support-status-label--clickable"
+    color="blue"
+    variant="outline"
+  >
+    Maintenance support
+  </Label>
+</Popover>
+`;
+
+exports[`<SupportStatus /> should render for every possible support status renders for an unrecognized status 1`] = `
+<Label
+  className="support-status-label"
+  color="blue"
+  variant="outline"
+>
+  some other status
+</Label>
+`;

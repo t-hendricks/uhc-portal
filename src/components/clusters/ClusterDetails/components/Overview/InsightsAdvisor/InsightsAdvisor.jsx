@@ -17,7 +17,7 @@ const InsightsAdvisor = ({ insightsData }) => {
   return (
     <Flex>
       <FlexItem>
-        <Title className="ocm-c-overview-advisor--title" size="lg" headingLevel="h2">
+        <Title className="ocm-c-overview-advisor--card__title" size="lg" headingLevel="h2">
           Advisor recommendations
         </Title>
         <InfoPopover />

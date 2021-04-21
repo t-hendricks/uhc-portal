@@ -94,7 +94,7 @@ const mapStateToProps = (state, { location }) => {
 
 const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   fetchDetails: clusterId => fetchClusterDetails(clusterId),
-  fetchInsightsData: (clusterId, isOSD) => fetchClusterInsights(clusterId, isOSD),
+  fetchClusterInsights,
   fetchGroups,
   voteOnRule: (clusterId, ruleId, vote) => voteOnRuleInsights(clusterId, ruleId, vote),
   disableRule: (clusterId, ruleId) => disableRuleInsights(clusterId, ruleId),
