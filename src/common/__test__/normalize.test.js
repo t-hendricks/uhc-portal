@@ -363,7 +363,6 @@ describe('normalizeMetrics()', () => {
     expect(ret).toMatchObject(emptyMetrics);
   });
 
-
   it('fills in missing fields when partial metrics are recieved', () => {
     const ret = normalizeMetrics({
       memory: {
