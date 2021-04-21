@@ -66,7 +66,7 @@ class Overview extends React.Component {
                              || cluster.state === clusterStates.UNINSTALLING;
 
     const showInsightsAdvisor = isDevOrStaging && insightsData?.status === 200
-                              && insightsData?.data;
+                              && insightsData?.data && !cluster.managed;
     const showResourceUsage = !isHibernating(cluster.state)
       && !shouldShowLogs(cluster) && !isDeprovisioned;
     const showSidePanel = showInsightsAdvisor;
