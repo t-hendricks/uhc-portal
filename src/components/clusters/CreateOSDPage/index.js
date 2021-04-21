@@ -17,7 +17,7 @@ import { scrollToFirstError, parseReduxFormKeyValueList } from '../../../common/
 import { billingModels, normalizedProducts } from '../../../common/subscriptionTypes';
 
 import { canAutoScaleSelector } from '../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
-import { OSD_TRIAL_FEATURE, MARKETPLACE_QUOTA_FEATURE } from '../../../redux/constants/featureConstants';
+import { OSD_TRIAL_FEATURE } from '../../../redux/constants/featureConstants';
 
 import {
   hasManagedQuotaSelector,
@@ -106,7 +106,6 @@ const mapStateToProps = (state, ownProps) => {
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     osdTrialFeature: state.features[OSD_TRIAL_FEATURE],
-    marketplaceQuotaFeature: state.features[MARKETPLACE_QUOTA_FEATURE],
     billingModel: valueSelector(state, 'billing_model'),
 
     initialValues: {
