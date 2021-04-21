@@ -84,6 +84,7 @@ class ClusterDetails extends Component {
       addOns,
       getAddOns,
       clearGlobalError,
+      getUserAccess,
     } = this.props;
 
     clearGlobalError('clusterDetails');
@@ -96,6 +97,7 @@ class ClusterDetails extends Component {
     if (!addOns.pending && !addOns.error && !addOns.fulfilled) {
       getAddOns();
     }
+    getUserAccess({ type: 'OCP' });
   }
 
   componentDidUpdate(prevProps) {
@@ -326,6 +328,7 @@ class ClusterDetails extends Component {
       setOpenedTab,
       initTabOpen,
       assistedInstallerEnabled,
+      userAccess,
     } = this.props;
     const { selectedTab } = this.state;
 
@@ -477,6 +480,7 @@ class ClusterDetails extends Component {
               refresh={this.refresh}
               openModal={openModal}
               insightsData={insightsData[cluster.external_id]}
+              userAccess={userAccess}
             />
           </ErrorBoundary>
         </TabContent>
@@ -713,6 +717,12 @@ ClusterDetails.propTypes = {
   supportCases: PropTypes.object.isRequired,
   assistedInstallerEnabled: PropTypes.bool,
   getSchedules: PropTypes.func,
+  getUserAccess: PropTypes.func.isRequired,
+  userAccess: PropTypes.shape({
+    data: PropTypes.bool,
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+  }).isRequired,
 };
 
 ClusterDetails.defaultProps = {

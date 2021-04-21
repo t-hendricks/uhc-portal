@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CostCard from './CostCard';
+import CostBreakdownCard from './CostBreakdownCard';
 
 const initialState = {
   report: {
@@ -30,57 +30,57 @@ const availableState = {
                 clusters: [
                   'OCP-OnPrem01',
                 ],
-                cost: {
+                infrastructure: {
+                  raw: {
+                    value: 0,
+                    units: 'USD',
+                  },
+                  markup: {
+                    value: 0,
+                    units: 'USD',
+                  },
+                  usage: {
+                    value: 39787.5631884,
+                    units: 'USD',
+                  },
                   total: {
-                    value: 27664.774872,
+                    value: 39787.5631884,
                     units: 'USD',
                   },
                 },
-              },
-            ],
-          },
-          {
-            values: [
-              {
-                cluster: 'd37fd94b-f44c-4da7-b6d1-9d8344f7977c',
-                clusters: [
-                  'DemoCluster4.6-Go',
-                ],
-                cost: {
-                  total: {
-                    value: 2378.2362022992506,
+                supplementary: {
+                  raw: {
+                    value: 0,
                     units: 'USD',
                   },
-                },
-              },
-            ],
-          },
-          {
-            values: [
-              {
-                cluster: '8a3e59b7-23a8-4ed1-b1cf-afd5afea54b9',
-                clusters: [
-                  'OpenShift on AWS',
-                ],
-                cost: {
-                  total: {
-                    value: 537.552548636,
+                  markup: {
+                    value: 0,
                     units: 'USD',
                   },
-                },
-              },
-            ],
-          },
-          {
-            values: [
-              {
-                cluster: 'eb93b259-1369-4f90-88ce-e68c6ba879a9',
-                clusters: [
-                  'OpenShift on Azure',
-                ],
-                cost: {
+                  usage: {
+                    value: 0,
+                    units: 'USD',
+                  },
                   total: {
                     value: 0,
+                    units: 'USD',
+                  },
+                },
+                cost: {
+                  raw: {
+                    value: 0,
+                    units: 'USD',
+                  },
+                  markup: {
+                    value: 0,
+                    units: 'USD',
+                  },
+                  usage: {
+                    value: 39787.5631884,
+                    units: 'USD',
+                  },
+                  total: {
+                    value: 39787.5631884,
                     units: 'USD',
                   },
                 },
@@ -103,7 +103,7 @@ const availableState = {
   },
 };
 
-describe('<CostCard />', () => {
+describe('<CostBreakdownCard />', () => {
   let wrapper;
   let getReport;
   let getSources;
@@ -112,7 +112,7 @@ describe('<CostCard />', () => {
       getReport = jest.fn();
       getSources = jest.fn();
       wrapper = shallow(
-        <CostCard
+        <CostBreakdownCard
           getReport={getReport}
           getSources={getSources}
           sources={initialState.sources}
@@ -137,7 +137,7 @@ describe('<CostCard />', () => {
       getReport = jest.fn();
       getSources = jest.fn();
       wrapper = shallow(
-        <CostCard
+        <CostBreakdownCard
           getReport={getReport}
           getSources={getSources}
           sources={availableState.sources}
@@ -157,3 +157,8 @@ describe('<CostCard />', () => {
     });
   });
 });
+
+/**
+
+
+ */
