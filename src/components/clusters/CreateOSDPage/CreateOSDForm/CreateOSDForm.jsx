@@ -158,7 +158,6 @@ class CreateOSDForm extends React.Component {
       autoscalingEnabled,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
-      marketplaceQuotaFeature,
       getMarketplaceQuota,
       customerManagedEncryptionSelected,
       osdTrialFeature,
@@ -177,7 +176,7 @@ class CreateOSDForm extends React.Component {
 
     const hasBYOCQuota = !!get(clustersQuota, `${cloudProviderID}.byoc.totalAvailable`);
     const hasRhInfraQuota = !!get(clustersQuota, `${cloudProviderID}.rhInfra.totalAvailable`);
-    const hasMarketplaceProductQuota = marketplaceQuotaFeature && !!get(clustersQuota, 'hasMarketplaceProductQuota');
+    const hasMarketplaceProductQuota = !!get(clustersQuota, 'hasMarketplaceProductQuota');
     const hasMarketplaceBYOCQuota = getMarketplaceQuota('byoc', cloudProviderID);
     const hasMarketplaceRhInfraQuota = getMarketplaceQuota('rhInfra', cloudProviderID);
     const hasStandardOSDQuota = !!get(clustersQuota, 'hasStandardOSDQuota');
@@ -387,7 +386,6 @@ CreateOSDForm.defaultProps = {
   isBYOCModalOpen: false,
   autoScaleMinNodesValue: '0',
   autoScaleMaxNodesValue: '0',
-  marketplaceQuotaFeature: false,
   billingModel: billingModels.STANDARD,
 };
 
@@ -435,7 +433,6 @@ CreateOSDForm.propTypes = {
   autoscalingEnabled: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
-  marketplaceQuotaFeature: PropTypes.bool,
   osdTrialFeature: PropTypes.bool,
   getMarketplaceQuota: PropTypes.func.isRequired,
   kmsRegionsArray: PropTypes.object,
