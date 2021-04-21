@@ -12,9 +12,4 @@ const mapStateToProps = state => ({
   sources: state.cost.sources,
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   getReport: params => dispatch(getReport(params)),
-//   getSources: params => dispatch(getSources(params)),
-// });
-
 export default connect(mapStateToProps, mapDispatchToProps)(CostBreakdownCard);
