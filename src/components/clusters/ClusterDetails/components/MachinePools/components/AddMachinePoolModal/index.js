@@ -26,7 +26,9 @@ const mapStateToProps = (state, ownProps) => {
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
-    canAutoScale: canAutoScaleSelector(state, ownProps.cluster.subscription.plan.id),
+    canAutoScale: canAutoScaleSelector(state,
+      ownProps.cluster.subscription.plan.id,
+      ownProps.cluster.billing_model),
     initialValues: {
       name: '',
       nodes_compute: '0',
