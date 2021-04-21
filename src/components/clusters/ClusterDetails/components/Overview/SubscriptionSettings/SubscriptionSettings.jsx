@@ -73,7 +73,7 @@ function SubscriptionSettings({
   if (billingModel === billingModels.STANDARD) {
     billingModelStr = 'Annual: Fixed capacity subscription from Red Hat';
   } else if (billingModel === billingModels.MARKETPLACE) {
-    billingModelStr = 'Pay-as-you-go (Hourly)';
+    billingModelStr = 'On-demand (Hourly)';
   }
   const usageStr = get(subscription, subscriptionSettings.USAGE, 'Not set');
   const serviceLevel = get(subscription, subscriptionSettings.SERVICE_LEVEL);

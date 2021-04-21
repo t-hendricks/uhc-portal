@@ -88,7 +88,7 @@ function BillingModelRadioButtons({
         disabled: !hasMarketplaceSubscription,
         value: 'marketplace',
         ariaLabel: 'Marketplace',
-        label: 'Pay-as-you-go: Flexible usage billed through the Red Hat Marketplace',
+        label: 'On-demand: Flexible usage billed through the Red Hat Marketplace',
         description: 'Use Red Hat Marketplace to subscribe and pay based on the services you use',
       },
     );
