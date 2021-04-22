@@ -11,7 +11,7 @@ import {
 } from '@patternfly/react-core';
 import { overrideErrorMessage, BANNED_USER_CODE } from '../../common/errors';
 
-function SubscriptionNotFulfilled({ data, refresh }) {
+function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
   const getEmptyState = (title, text, button) => (
     <PageSection className="subscriptions-empty-state">
       <EmptyState>
@@ -74,8 +74,37 @@ function SubscriptionNotFulfilled({ data, refresh }) {
         </p>
       ),
     },
+    osdmarketplace: {
+      emptyTitle: 'Marketplace on-demand subscriptions not detected',
+      errorTitle: 'Unable to retrieve quota information',
+      text: (
+        <p>
+          <p>
+            No marketplace subscriptions for OpenShift Dedicated or add-ons
+            were found in your account
+          </p>
+          <br />
+          <p>
+            <Button component="a" href="https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated" variant="primary" rel="noopener noreferrer" target="_blank">
+              Enable in Marketplace
+            </Button>
+          </p>
+          <br />
+          <a
+            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html/managing_clusters/assembly-cluster-subscriptions"
+            rel="noreferrer noopener"
+            target="_blank"
+          >
+            Learn more
+          </a>
+        </p>
+      ),
+    },
   };
-  const configType = config[data.type];
+  let configType = config[data.type];
+  if (marketplace) {
+    configType = config[`${data.type}marketplace`];
+  }
 
   let content = null;
   if (data.error) {
@@ -93,6 +122,7 @@ function SubscriptionNotFulfilled({ data, refresh }) {
 SubscriptionNotFulfilled.propTypes = {
   data: PropTypes.object.isRequired,
   refresh: PropTypes.func.isRequired,
+  marketplace: PropTypes.bool,
 };
 
 export default SubscriptionNotFulfilled;
