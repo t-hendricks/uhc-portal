@@ -42,7 +42,7 @@ class UpgradeTrialClusterDialog extends Component {
 
   upgradeModalQuota() {
     const {
-      cluster, machineTypesByID, organization: { quotaList }, marketplaceQuotaFeature,
+      cluster, machineTypesByID, organization: { quotaList },
     } = this.props;
     const { OSD } = normalizedProducts;
     const { STANDARD, MARKETPLACE } = billingModels;
@@ -81,17 +81,15 @@ class UpgradeTrialClusterDialog extends Component {
     quotaParams.billingModel = MARKETPLACE;
     const marketClusters = availableClustersFromQuota(quotaList, quotaParams);
     const marketNodes = availableNodesFromQuota(quotaList, quotaParams);
-    if (marketplaceQuotaFeature) {
-      quota.MARKETPLACE = marketNodes > nodeMinimum && marketClusters > 0;
-    }
+    quota.MARKETPLACE = marketNodes > nodeMinimum && marketClusters > 0;
 
     return quota;
   }
 
   primaryButton(availableQuota) {
-    const { submit, clusterID, marketplaceQuotaFeature } = this.props;
+    const { submit, clusterID } = this.props;
     const { STANDARD, MARKETPLACE } = billingModels;
-    const marketplaceQuotaEnabled = availableQuota.MARKETPLACE && marketplaceQuotaFeature;
+    const marketplaceQuotaEnabled = availableQuota.MARKETPLACE;
     const button = {
       primaryText: 'Contact sales',
       onPrimaryClick: () => this.buttonLinkClick('https://www.openshift.com/products/dedicated/contact/'),
@@ -115,17 +113,15 @@ class UpgradeTrialClusterDialog extends Component {
   }
 
   secondaryButton(availableQuota) {
-    const { submit, clusterID, marketplaceQuotaFeature } = this.props;
+    const { submit, clusterID } = this.props;
     const { STANDARD } = billingModels;
     const button = {
       showSecondary: false,
     };
 
-    if (marketplaceQuotaFeature) {
-      button.secondaryText = 'Enable Marketplace billing';
-      button.showSecondary = true;
-      button.onSecondaryClick = () => this.buttonLinkClick('https://marketplace.redhat.com/');
-    }
+    button.secondaryText = 'Enable Marketplace billing';
+    button.showSecondary = true;
+    button.onSecondaryClick = () => this.buttonLinkClick('https://marketplace.redhat.com/');
 
     if (availableQuota.MARKETPLACE && availableQuota.STANDARD) {
       button.secondaryText = 'Upgrade using quota';
@@ -223,7 +219,6 @@ UpgradeTrialClusterDialog.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   upgradeTrialClusterResponse: PropTypes.object,
   machineTypesByID: PropTypes.object,
-  marketplaceQuotaFeature: PropTypes.bool,
 };
 
 UpgradeTrialClusterDialog.defaultProps = {

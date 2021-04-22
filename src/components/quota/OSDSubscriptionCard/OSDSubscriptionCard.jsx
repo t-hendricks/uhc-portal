@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import get from 'lodash/get';
 import startCase from 'lodash/startCase';
 import {
@@ -17,9 +18,11 @@ import {
   OutlinedCircleIcon,
 } from '@patternfly/react-icons';
 
+import { billingModels } from '../../../common/subscriptionTypes';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 import OSDSubscriptionTable from './OSDSubscriptionTable';
-import { billingModels } from '../../../common/subscriptionTypes';
+
+const { MARKETPLACE, STANDARD } = billingModels;
 
 class OSDSubscriptionCard extends Component {
   componentDidMount() {
@@ -59,9 +62,24 @@ class OSDSubscriptionCard extends Component {
   }
 
   render() {
-    const { quotaCost, marketplaceQuotaFeature } = this.props;
+    // quota resource limits displays on demand marketplace quota
+    const marketplace = window.location.pathname.includes('/quota/resource-limits');
+    const { quotaCost } = this.props;
     let content;
     let rows = [];
+
+    let subscriptionsDescription = 'The summary of all subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat.';
+    let subscriptionLink;
+    if (marketplace) {
+      // add link
+      subscriptionLink = (
+        <Link to="/quota">
+          Dedicated (On-Demand)
+        </Link>
+      );
+      subscriptionsDescription = 'Active subscriptions allow your organization to use up to a certain number of OpenShift Dedicated clusters. Overall OSD subscription capacity and usage can be viewed in';
+    }
+
     if (quotaCost.fulfilled) {
       rows = quotaCost.items.flatMap((quotaItem) => {
         // filter out quota you neither have nor consume
@@ -75,12 +93,13 @@ class OSDSubscriptionCard extends Component {
           return [];
         }
 
-        // filter out marketplace quota unless feature flagged
-        if (!marketplaceQuotaFeature) {
-          const billingModel = get(relatedResources[0], 'billing_model', billingModels.STANDARD);
-          if (billingModel === billingModels.MARKETPLACE) {
-            return [];
-          }
+        // filter out non-marketplace quota when on the marketplace subscriptions page
+        const billingModel = get(relatedResources[0], 'billing_model');
+        if (marketplace && billingModel === STANDARD) {
+          return [];
+        }
+        if (!marketplace && billingModel === MARKETPLACE) {
+          return [];
         }
 
         // CCS compute.node resource name should show as vCPU
@@ -120,7 +139,13 @@ class OSDSubscriptionCard extends Component {
         type: 'osd',
         empty: true,
       };
-      content = <SubscriptionNotFulfilled data={data} refresh={this.refresh} />;
+      content = (
+        <SubscriptionNotFulfilled
+          data={data}
+          refresh={this.refresh}
+          marketplace={marketplace}
+        />
+      );
     }
 
     return (
@@ -129,8 +154,11 @@ class OSDSubscriptionCard extends Component {
         <CardBody>
           <Stack hasGutter>
             <StackItem>
-              The summary of all subscriptions for OpenShift Dedicated purchased
-              by your organization or granted by Red Hat.
+              {subscriptionsDescription}
+              {marketplace && ' '}
+              {marketplace && (
+                subscriptionLink
+              )}
             </StackItem>
             {content}
           </Stack>
@@ -140,15 +168,10 @@ class OSDSubscriptionCard extends Component {
   }
 }
 
-OSDSubscriptionCard.defaultProps = {
-  marketplaceQuotaFeature: false,
-};
-
 OSDSubscriptionCard.propTypes = {
   organizationID: PropTypes.string.isRequired,
   fetchQuotaCost: PropTypes.func.isRequired,
   quotaCost: PropTypes.object.isRequired,
-  marketplaceQuotaFeature: PropTypes.bool,
 };
 
 export default OSDSubscriptionCard;

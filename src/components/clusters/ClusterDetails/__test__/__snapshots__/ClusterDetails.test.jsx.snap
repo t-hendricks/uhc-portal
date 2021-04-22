@@ -1025,6 +1025,13 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
         }
         openModal={[MockFunction]}
         refresh={[Function]}
+        userAccess={
+          Object {
+            "data": true,
+            "fulfilled": true,
+            "pending": false,
+          }
+        }
       />
     </ErrorBoundary>
   </ForwardRef>

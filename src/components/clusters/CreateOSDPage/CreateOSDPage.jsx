@@ -167,7 +167,6 @@ class CreateOSDPage extends React.Component {
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
       billingModel,
-      marketplaceQuotaFeature,
       customerManagedEncryptionSelected,
     } = this.props;
 
@@ -323,7 +322,6 @@ class CreateOSDPage extends React.Component {
                     autoScaleMinNodesValue={autoScaleMinNodesValue}
                     autoScaleMaxNodesValue={autoScaleMaxNodesValue}
                     billingModel={billingModel}
-                    marketplaceQuotaFeature={marketplaceQuotaFeature}
                     getMarketplaceQuota={this.getMarketplaceQuota}
                     osdTrialFeature={osdTrialFeature}
                   />
@@ -424,7 +422,6 @@ CreateOSDPage.propTypes = {
   autoScaleMaxNodesValue: PropTypes.string,
   osdTrialFeature: PropTypes.bool,
   customerManagedEncryptionSelected: PropTypes.bool,
-  marketplaceQuotaFeature: PropTypes.bool,
 };
 
 CreateOSDPage.defaultProps = {

@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CostBreakdownCard /> When cost report is available renders cluster costs 1`] = `
+<Card
+  className="ocm--cost-breakdown-card"
+>
+  <CardTitle>
+    <Title
+      headingLevel="h2"
+      size="lg"
+    >
+      Cost breakdown
+    </Title>
+  </CardTitle>
+  <CardBody
+    className="ocm--cost-breakdown-card__body"
+  >
+    <CostBreakdownSummary
+      report={
+        Object {
+          "data": Array [
+            Object {
+              "clusters": Array [
+                Object {
+                  "values": Array [
+                    Object {
+                      "cluster": "a94ea9bc-9e4f-4b91-89c2-c7099ec08427",
+                      "clusters": Array [
+                        "OCP-OnPrem01",
+                      ],
+                      "cost": Object {
+                        "markup": Object {
+                          "units": "USD",
+                          "value": 0,
+                        },
+                        "raw": Object {
+                          "units": "USD",
+                          "value": 0,
+                        },
+                        "total": Object {
+                          "units": "USD",
+                          "value": 39787.5631884,
+                        },
+                        "usage": Object {
+                          "units": "USD",
+                          "value": 39787.5631884,
+                        },
+                      },
+                      "infrastructure": Object {
+                        "markup": Object {
+                          "units": "USD",
+                          "value": 0,
+                        },
+                        "raw": Object {
+                          "units": "USD",
+                          "value": 0,
+                        },
+                        "total": Object {
+                          "units": "USD",
+                          "value": 39787.5631884,
+                        },
+                        "usage": Object {
+                          "units": "USD",
+                          "value": 39787.5631884,
+                        },
+                      },
+                      "supplementary": Object {
+                        "markup": Object {
+                          "units": "USD",
+                          "value": 0,
+                        },
+                        "raw": Object {
+                          "units": "USD",
+                          "value": 0,
+                        },
+                        "total": Object {
+                          "units": "USD",
+                          "value": 0,
+                        },
+                        "usage": Object {
+                          "units": "USD",
+                          "value": 0,
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          "fulfilled": true,
+          "meta": Object {},
+          "pending": false,
+        }
+      }
+    />
+  </CardBody>
+</Card>
+`;
+
+exports[`<CostBreakdownCard /> When no source providers are available renders empty state 1`] = `
+<Card
+  className="ocm--cost-breakdown-card"
+>
+  <CardTitle>
+    <Title
+      headingLevel="h2"
+      size="lg"
+    >
+      Cost breakdown
+    </Title>
+  </CardTitle>
+  <CardBody
+    className="ocm--cost-breakdown-card__body"
+  >
+    <CostEmptyState />
+  </CardBody>
+</Card>
+`;

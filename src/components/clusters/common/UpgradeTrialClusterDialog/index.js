@@ -5,7 +5,6 @@ import {
   upgradeTrialCluster,
 } from '../../../../redux/actions/clustersActions';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
-import { MARKETPLACE_QUOTA_FEATURE } from '../../../../redux/constants/featureConstants';
 import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
 
@@ -18,7 +17,6 @@ const mapStateToProps = (state) => {
     cluster: modalData.cluster ? modalData.cluster : '',
     name: modalData.name ? modalData.name : '',
     machineTypesByID: state.machineTypes.typesByID,
-    marketplaceQuotaFeature: state.features[MARKETPLACE_QUOTA_FEATURE],
   });
 };
 

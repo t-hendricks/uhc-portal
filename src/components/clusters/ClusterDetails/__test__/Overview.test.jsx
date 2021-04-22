@@ -13,6 +13,7 @@ describe('<Overview />', () => {
       displayClusterLogs: false,
       openModal: jest.fn(),
       insightsData: {},
+      userAccess: fixtures.userAccess,
     };
     const wrapper = shallow(
       <Overview {...props} />,
@@ -31,6 +32,7 @@ describe('<Overview />', () => {
       displayClusterLogs: true,
       openModal: jest.fn(),
       insightsData: fixtures.insightsData,
+      userAccess: fixtures.userAccess,
     };
     const wrapper = shallow(
       <Overview {...props} />,
@@ -48,6 +50,7 @@ describe('<Overview />', () => {
       displayClusterLogs: true,
       openModal: jest.fn(),
       insightsData: {},
+      userAccess: fixtures.userAccess,
     };
     const wrapper = shallow(
       <Overview {...props} />,

@@ -44,6 +44,7 @@ import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDi
 import getBaseName from '../../../common/getBaseName';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 import supportActions from './components/Support/SupportActions';
+import { getUserAccess } from '../../../redux/actions/costActions';
 
 const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
@@ -89,6 +90,7 @@ const mapStateToProps = (state, { location }) => {
     notificationContacts,
     supportCases,
     assistedInstallerEnabled: state.features[ASSISTED_INSTALLER_FEATURE],
+    userAccess: state.cost.userAccess,
   });
 };
 
@@ -127,6 +129,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   getNotificationContacts: supportActions.getNotificationContacts,
   getSupportCases: supportActions.getSupportCases,
   getSchedules,
+  getUserAccess,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
