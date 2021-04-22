@@ -22,7 +22,7 @@ import { billingModels } from '../../../common/subscriptionTypes';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 import OSDSubscriptionTable from './OSDSubscriptionTable';
 
-const { MARKETPLACE, STANDARD } = billingModels;
+const { MARKETPLACE } = billingModels;
 
 class OSDSubscriptionCard extends Component {
   componentDidMount() {
@@ -93,17 +93,21 @@ class OSDSubscriptionCard extends Component {
           return [];
         }
 
+        // For summit
         // filter out non-marketplace quota when on the marketplace subscriptions page
+        // and explicitly allow addon-open-data-hub on the marketplace quota page
         const billingModel = get(relatedResources[0], 'billing_model');
-        if (marketplace && billingModel === STANDARD) {
-          return [];
+        let resourceName = get(relatedResources[0], 'resource_name');
+        if (marketplace && billingModel !== MARKETPLACE) {
+          if (resourceName !== 'addon-open-data-hub') {
+            return [];
+          }
         }
-        if (!marketplace && billingModel === MARKETPLACE) {
+        if (!marketplace && (billingModel === MARKETPLACE || resourceName === 'addon-open-data-hub')) {
           return [];
         }
 
         // CCS compute.node resource name should show as vCPU
-        let resourceName = get(relatedResources[0], 'resource_name');
         if (get(relatedResources[0], 'resource_type') === 'compute.node' && get(relatedResources[0], 'byoc') === 'byoc') {
           resourceName = 'vCPU';
         }
