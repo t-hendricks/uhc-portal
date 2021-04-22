@@ -174,7 +174,7 @@ class Overview extends React.Component {
               )}
               {showCostBreakdown && (
                 <GridItem sm={6} xl2={12}>
-                  <CostBreakdownCard clusterId={cluster.id} />
+                  <CostBreakdownCard clusterId={cluster.external_id} />
                 </GridItem>
               )}
             </Grid>

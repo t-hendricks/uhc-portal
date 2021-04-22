@@ -583,7 +583,7 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
         xl2={12}
       >
         <Connect(CostBreakdownCard)
-          clusterId="1IztzhAGrbjtKkMbiPewHjImARo"
+          clusterId="9f50940b-fba8-4c59-9c6c-d64284a2beef"
         />
       </GridItem>
     </Grid>
@@ -1243,7 +1243,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
         xl2={12}
       >
         <Connect(CostBreakdownCard)
-          clusterId="1IztzhAGrbjtKkMbiPewJanhTXk"
+          clusterId="9f50940b-fba8-4c59-9c6c-d64284b2026d"
         />
       </GridItem>
     </Grid>
