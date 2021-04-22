@@ -133,7 +133,6 @@ const clusterDetails = {
     },
     multi_az: false,
     managed: true,
-    byoc: false,
     ccs: {
       enabled: false,
       disable_scp_checks: false,
@@ -414,7 +413,6 @@ const clusterDetails = {
 };
 
 const CCSClusterDetails = produce(clusterDetails, (draft) => {
-  draft.cluster.byoc = true;
   draft.cluster.ccs.enabled = true;
 });
 

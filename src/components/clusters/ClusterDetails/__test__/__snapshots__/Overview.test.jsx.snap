@@ -1538,7 +1538,6 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
-                    "byoc": false,
                     "ccs": Object {
                       "disable_scp_checks": false,
                       "enabled": false,
@@ -1904,7 +1903,6 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
-                    "byoc": false,
                     "ccs": Object {
                       "disable_scp_checks": false,
                       "enabled": false,

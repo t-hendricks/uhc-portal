@@ -26,7 +26,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
           "items": null,
           "kind": "AWSInfrastructureAccessRoleGrantLink",
         },
-        "byoc": false,
         "ccs": Object {
           "disable_scp_checks": false,
           "enabled": false,
@@ -673,7 +672,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               "items": null,
               "kind": "AWSInfrastructureAccessRoleGrantLink",
             },
-            "byoc": false,
             "ccs": Object {
               "disable_scp_checks": false,
               "enabled": false,
@@ -1060,7 +1058,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               "items": null,
               "kind": "AWSInfrastructureAccessRoleGrantLink",
             },
-            "byoc": false,
             "ccs": Object {
               "disable_scp_checks": false,
               "enabled": false,
@@ -1455,7 +1452,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               "items": null,
               "kind": "AWSInfrastructureAccessRoleGrantLink",
             },
-            "byoc": false,
             "ccs": Object {
               "disable_scp_checks": false,
               "enabled": false,
