@@ -31,6 +31,7 @@ import config from './config';
 import App from './components/App/App';
 import { store } from './redux/store';
 import getBaseName from './common/getBaseName';
+import getNavClickParams from './common/getNavClickParams';
 import { authInterceptor } from './services/apiRequest';
 import { detectFeatures } from './redux/actions/featureActions';
 
@@ -90,13 +91,7 @@ const renderDevEnvError = () => {
 const chromeBootstrap = () => {
   insights.chrome.init();
   insights.chrome.identifyApp('').then(() => {
-    if (window.location.pathname.includes('/quota')) {
-      if (!window.location.pathname.includes('/quota/resource-limits')) {
-        insights.chrome.appNavClick({ id: 'openshift-quota', parentId: 'subscriptions', secondaryNav: true });
-      } else {
-        insights.chrome.appNavClick({ id: 'resource-limits', parentId: 'subscriptions', secondaryNav: true });
-      }
-    }
+    insights.chrome.appNavClick(getNavClickParams(window.location.pathname));
   });
 };
 

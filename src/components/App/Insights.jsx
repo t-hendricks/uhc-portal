@@ -2,6 +2,9 @@ import { Component } from 'react';
 import { matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import getNavClickParams from '../../common/getNavClickParams';
+import { removeBaseName } from '../../common/getBaseName';
+
 class Insights extends Component {
   componentDidMount() {
     const { history } = this.props;
@@ -26,27 +29,7 @@ class Insights extends Component {
   }
 
   highlightNavItem = (location) => {
-    let params = {
-      id: '',
-    };
-    switch (location.pathname.split('/')[1]) {
-      case 'subscriptions': // old menu compatibility
-        params.id = 'subscriptions';
-        break;
-      case 'quota': // new menu
-        params = {
-          id: 'openshift-quota',
-          parentId: 'subscriptions',
-          secondaryNav: true,
-        };
-        break;
-      case 'overview':
-        params.id = 'overview';
-        break;
-      default:
-        params.id = '';
-    }
-    insights.chrome.appNavClick(params);
+    insights.chrome.appNavClick(getNavClickParams(location.pathname));
   };
 
 
@@ -54,11 +37,12 @@ class Insights extends Component {
     const { history } = this.props;
     const { location } = history;
     // update route only when it's clicked by the user and can have route change
-    if (event.domEvent) {
-      if (matchPath(location.pathname, { path: `/${event.navId}`, exact: true })) {
+    if (event.domEvent && event.domEvent?.target?.pathname) {
+      const targetPathName = removeBaseName(event.domEvent?.target?.pathname);
+      if (matchPath(location.pathname, { path: targetPathName, exact: true })) {
         this.dispatchOcmEvent('APP_REFRESH');
       } else {
-        history.push(`/${event.navId}`);
+        history.push(targetPathName);
       }
     }
   };
