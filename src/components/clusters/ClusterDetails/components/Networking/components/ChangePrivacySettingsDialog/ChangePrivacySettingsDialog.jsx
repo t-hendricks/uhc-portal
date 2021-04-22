@@ -7,7 +7,6 @@ import {
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 
-
 class ChangePrivacySettingsDialog extends React.Component {
   componentDidUpdate(prevProps) {
     const { editClusterRoutersResponse, refreshCluster } = this.props;
@@ -48,7 +47,7 @@ class ChangePrivacySettingsDialog extends React.Component {
         target="_blank"
         rel="noopener noreferrer"
       >
-      Learn more
+        Learn more
       </a>
     );
     const noRouteSelectorsWarning = 'All routers will be exposed publicly because there is no label match on the additional application router. This is a potential security risk.';

@@ -4,7 +4,6 @@ import moment from 'moment';
 import { Alert } from '@patternfly/react-core';
 import './ExpirationAlert.scss';
 
-
 function ExpirationAlert({ expirationTimestamp, trialExpiration }) {
   const now = moment.utc();
   const expirationTime = moment.utc(expirationTimestamp);
@@ -30,7 +29,7 @@ function ExpirationAlert({ expirationTimestamp, trialExpiration }) {
             ocm-feedback@redhat.com
           </a>
           {' '}
-           to let us know about this issue.
+          to let us know about this issue.
         </>
       </Alert>
     );

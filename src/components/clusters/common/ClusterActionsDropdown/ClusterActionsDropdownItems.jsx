@@ -27,8 +27,8 @@ function actionResolver(
   const notReadyMessage = <span>This cluster is not ready</span>;
   const hibernatingMessage = (
     <span>
-This cluster is hibernating;
-     awaken cluster in order to perform actions
+      This cluster is hibernating;
+      awaken cluster in order to perform actions
     </span>
   );
   const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
@@ -92,7 +92,6 @@ This cluster is hibernating;
       title: 'Resume from Hibernation',
       onClick: () => openModal(modals.RESUME_CLUSTER, clusterData),
     };
-
 
     if (isClusterHibernatingOrPoweringDown) {
       return resumeHibernatingClusterProps;

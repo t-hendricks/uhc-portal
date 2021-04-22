@@ -81,7 +81,6 @@ const registerDisconnected = data => apiRequest({
   data,
 });
 
-
 const getNotificationContacts = subscriptionID => apiRequest({
   method: 'get',
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/notification_contacts`,

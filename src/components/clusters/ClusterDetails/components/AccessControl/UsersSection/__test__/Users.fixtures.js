@@ -1,4 +1,3 @@
-
 const mockGetUsersPayload = {
   data: {
     kind: 'GroupList',

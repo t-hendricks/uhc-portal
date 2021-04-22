@@ -11,7 +11,6 @@ import {
 } from '@patternfly/react-core';
 import { overrideErrorMessage, BANNED_USER_CODE } from '../../common/errors';
 
-
 function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
   const getEmptyState = (title, text, button) => (
     <PageSection className="subscriptions-empty-state">
@@ -32,8 +31,8 @@ function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
     const text = BANNED_USER_CODE === payload.code ? overrideErrorMessage(payload) : (
       <>
         <p>
-        An error has occured!
-        Try again or contact support by including this error message:
+          An error has occured!
+          Try again or contact support by including this error message:
         </p>
         <q>
           {errorMessage}

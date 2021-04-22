@@ -194,7 +194,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       clusterRequest.properties = { fake_cluster: 'true' };
     }
 
-
     if (formData.network_configuration_toggle === 'advanced') {
       clusterRequest.network = {
         machine_cidr: formData.network_machine_cidr,

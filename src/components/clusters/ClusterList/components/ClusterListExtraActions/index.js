@@ -1,4 +1,3 @@
-
 import { connect } from 'react-redux';
 import { viewConstants, featureConstants } from '../../../../../redux/constants';
 import ClusterListExtraActions from './ClusterListExtraActions';

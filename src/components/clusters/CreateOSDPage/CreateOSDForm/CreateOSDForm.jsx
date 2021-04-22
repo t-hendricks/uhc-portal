@@ -80,7 +80,6 @@ class CreateOSDForm extends React.Component {
     }
   }
 
-
   handleMachineTypesChange = (_, value) => {
     this.setState({ machineType: value });
   };
@@ -185,7 +184,6 @@ class CreateOSDForm extends React.Component {
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
     const showOSDTrial = osdTrialFeature && clustersQuota.hasOSDTrialQuota;
 
-
     let basicFieldsQuota = clustersQuota[cloudProviderID][infraType];
     if (billingModel === billingModels.MARKETPLACE) {
       basicFieldsQuota = clustersQuota.marketplace[cloudProviderID][infraType];
@@ -252,15 +250,15 @@ class CreateOSDForm extends React.Component {
                   {' '}
                   <code>osd-ccs-admin</code>
                   {' '}
-                that meets
+                  that meets
                   {' '}
                   <ExternalLink href="https://www.openshift.com/dedicated/ccs">these requirements.</ExternalLink>
                   {' '}
-                Create a key for that service account, export to a file named
+                  Create a key for that service account, export to a file named
                   {' '}
                   <code>osServiceAccount.json</code>
                   {' '}
-                and add it here.
+                  and add it here.
                 </p>
               </GridItem>
               <GridItem span={4}>

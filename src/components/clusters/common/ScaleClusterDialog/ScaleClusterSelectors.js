@@ -14,7 +14,6 @@ const minValueSelector = (isMultiAz, isByoc) => {
   };
 };
 
-
 const shouldShowLoadBalancerAlert = (state) => {
   const { data } = state.modal;
   const modalQuota = get(data, 'load_balancer_quota', 0);
@@ -25,7 +24,6 @@ const shouldShowLoadBalancerAlert = (state) => {
   }
   return false;
 };
-
 
 const shouldShowStorageQuotaAlert = (state) => {
   const { data } = state.modal;

@@ -1,4 +1,3 @@
-
 import produce from 'immer';
 
 import { OPEN_MODAL, CLOSE_MODAL } from './ModalConstants';

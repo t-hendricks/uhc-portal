@@ -46,7 +46,6 @@ const clusters = [
   },
 ];
 
-
 const cloudProviders = {
   error: false,
   errorMessage: '',

@@ -5,7 +5,6 @@ import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
 import ErrorBox from '../../../common/ErrorBox';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 
-
 describe('<TransferClusterOwnershipDialog />', () => {
   let wrapper;
   let closeModal;

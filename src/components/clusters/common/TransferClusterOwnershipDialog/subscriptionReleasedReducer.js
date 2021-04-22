@@ -7,7 +7,6 @@ import { getErrorState } from '../../../../common/errors';
 
 import { TOGGLE_SUBSCRIPTION_RELEASED, CLEAR_TOGGLE_SUBSCRIPTION_RELEASED_RESPONSE } from './subscriptionReleasedConstants';
 
-
 const initialState = {
   requestState: baseRequestState,
   data: {},

@@ -30,14 +30,14 @@ const LocalTab = ({ token }) => (
       <Stack hasGutter className="download-instructions header">
         <StackItem>
           <Title headingLevel="h2" className="ocm-ocp-sandbox-title">
-          Red Hat CodeReady Containers
+            Red Hat CodeReady Containers
           </Title>
           <Label variant="outline">
             local sandbox
           </Label>
         </StackItem>
         <StackItem>
-        Create a minimal cluster on your desktop/laptop for local development and testing.
+          Create a minimal cluster on your desktop/laptop for local development and testing.
         </StackItem>
         <StackItem>
           <Text component="p" className="ocm-sandbox-graytext">
@@ -72,12 +72,12 @@ const LocalTab = ({ token }) => (
                 <Text component="h2">What you need to get started</Text>
                 <Text component="h3">CodeReady Containers archive</Text>
                 <Text component="p">
-                    Download and extract the CodeReady Containers archive for your
-                    operating system and place the executable in your
+                  Download and extract the CodeReady Containers archive for your
+                  operating system and place the executable in your
                   {' '}
                   <code>$PATH</code>
                   {' '}
-                    .
+                  .
                 </Text>
                 <DownloadAndOSSelection
                   token={token}
@@ -100,22 +100,22 @@ const LocalTab = ({ token }) => (
             <SplitItem className="download-instructions" isFilled>
               <TextContent>
                 <Text component="h2">
-                    Follow the documentation to install CodeReady containers
+                  Follow the documentation to install CodeReady containers
                 </Text>
                 <Text component="p">
-                    Run the
+                  Run the
                   {' '}
                   <code>crc setup</code>
                   {' '}
-                    command to set up your host operating system for the CodeReady
-                    Containers virtual machine.
+                  command to set up your host operating system for the CodeReady
+                  Containers virtual machine.
                 </Text>
                 <Text component="p">
-                    Then, the
+                  Then, the
                   {' '}
                   <code>crc start</code>
                   {' '}
-                    will create a minimal OpenShift 4 cluster on your laptop or desktop computer.
+                  will create a minimal OpenShift 4 cluster on your laptop or desktop computer.
                 </Text>
                 <Button
                   className="pf-u-mb-md"
@@ -126,7 +126,7 @@ const LocalTab = ({ token }) => (
                   variant="secondary"
                   onClick={() => trackPendo('OCP-Download-OfficialDocumentation', cloudProviderID)}
                 >
-                    Get started
+                  Get started
                 </Button>
               </TextContent>
             </SplitItem>

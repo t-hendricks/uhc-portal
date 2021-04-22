@@ -57,17 +57,17 @@ class HibernateClusterModal extends Component {
       <Form onSubmit={() => submit()}>
         {error}
         <p>
-            Moving
+          Moving
           {' '}
           <b>
             {clusterName}
           </b>
           {' '}
-cluster to Hibernating state will block any
-            operation for this cluster. While hibernating,
-             the cluster will not consume any virtual machine instance or network resources,
-            but will still count against subscription quota.
-            Note that version upgrades will not occur.
+          cluster to Hibernating state will block any
+          operation for this cluster. While hibernating,
+          the cluster will not consume any virtual machine instance or network resources,
+          but will still count against subscription quota.
+          Note that version upgrades will not occur.
         </p>
         <Alert
           variant="warning"
@@ -76,7 +76,7 @@ cluster to Hibernating state will block any
             resuming from hibernation might not be completed and will require manual intervention for the cluster to be restored.   
           `}
         />
-          This can be undone at any time.
+        This can be undone at any time.
       </Form>
     );
 
@@ -90,7 +90,7 @@ cluster to Hibernating state will block any
             {clusterName}
           </b>
           {' '}
-           cluster to Hibernating state is not possible while there is a scheduled cluster upgrade.
+          cluster to Hibernating state is not possible while there is a scheduled cluster upgrade.
         </p>
         <Alert
           variant="warning"
@@ -99,7 +99,7 @@ cluster to Hibernating state will block any
               There is a scheduled update to,
               {' '}
               <DateFormat type="exact" date={Date.parse(schedule.next_run)} />
-.
+              .
               {' '}
               The scheduled update cannot be executed if the cluster is hibernating
             </p>
@@ -113,13 +113,13 @@ cluster to Hibernating state will block any
       <Form onSubmit={() => submit()}>
         {error}
         <p>
-            Moving
+          Moving
           {' '}
           <b>
             {clusterName}
           </b>
           {' '}
-            to Hibernating state is not possible while the cluster is upgrading.
+          to Hibernating state is not possible while the cluster is upgrading.
         </p>
       </Form>
     );
@@ -169,7 +169,6 @@ cluster to Hibernating state will block any
   }
 }
 
-
 HibernateClusterModal.propTypes = {
   clusterID: PropTypes.string.isRequired,
   clusterName: PropTypes.string.isRequired,
@@ -189,7 +188,6 @@ HibernateClusterModal.propTypes = {
   submit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
-
 
 HibernateClusterModal.defaultProps = {
   hibernateClusterResponse: {},

@@ -53,7 +53,7 @@ class VersionSelectionGrid extends React.Component {
                     onKeyDown={this.onKeyDown}
                     onClick={this.onClick}
                   >
-                      The latest on your current minor version.
+                    The latest on your current minor version.
                   </VersionCard>
                 </GridItem>
               ) : null
@@ -72,7 +72,7 @@ class VersionSelectionGrid extends React.Component {
                     {' '}
                     {`${latestVersionParts.major}.${latestVersionParts.minor}`}
                     {' '}
-                      has to offer.
+                    has to offer.
                   </VersionCard>
                 </GridItem>
               ) : null

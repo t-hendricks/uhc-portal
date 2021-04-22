@@ -1,4 +1,3 @@
-
 import { connect } from 'react-redux';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/cjs/actions';
 import { getClusterStatus } from '../../../../../../redux/actions/clustersActions';

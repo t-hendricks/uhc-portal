@@ -35,7 +35,6 @@ function BillingModelRadioButtons({
   } = billingModelConstants;
   const { STANDARD } = billingModels;
 
-
   const showSubscriptionType = showOSDTrial || showMarketplace;
   let defaultBillingModel = !billingModel ? STANDARD : billingModel;
   if (product === normalizedProducts.OSDTrial) {

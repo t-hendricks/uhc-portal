@@ -1,4 +1,3 @@
-
 const getClusters = jest.fn();
 getClusters.mockResolvedValue({});
 

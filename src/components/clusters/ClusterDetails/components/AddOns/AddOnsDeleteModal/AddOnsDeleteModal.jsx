@@ -85,16 +85,16 @@ class AddOnsDeleteModal extends Component {
     >
       <p>
         {errorContainer}
-            This action will uninstall the add-on,
-            removing add-on data from cluster can not be undone.
+        This action will uninstall the add-on,
+        removing add-on data from cluster can not be undone.
       </p>
       <Form onSubmit={submitForm}>
         <p>
-              Confirm deletion by typing
+          Confirm deletion by typing
           {' '}
           <span className="addon-delete-modal-textinput">{addOnName}</span>
           {' '}
-              below:
+          below:
         </p>
         <TextInput
           type="text"

@@ -1,4 +1,3 @@
-
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 import UpgradeSettingsTab from './UpgradeSettingsTab';
@@ -17,7 +16,6 @@ const reduxFormConfig = {
 
 const reduxFormUpgradeSettingsTab = reduxForm(reduxFormConfig)(UpgradeSettingsTab);
 const valueSelector = formValueSelector('ClusterUpgradeSettings');
-
 
 const mapStateToProps = (state) => {
   const automaticUpgradePolicy = state.clusterUpgrades.schedules.items.find(policy => policy.schedule_type === 'automatic');
@@ -100,7 +98,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     onSubmit,
   });
 };
-
 
 export default connect(mapStateToProps,
   mapDispatchToProps, mergeProps)(reduxFormUpgradeSettingsTab);

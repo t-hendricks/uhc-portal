@@ -138,7 +138,6 @@ class InsightsRuleDetails extends Component {
     const requestedSubscriptionID = match.params.subscriptionID;
     const requestedReportID = match.params.reportId.replace(/\|/g, '.');
 
-
     // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
     // the redux state will have the data for the previous cluster. We want to ensure we only
     // show data for the requested cluster, so different data should be marked as pending.

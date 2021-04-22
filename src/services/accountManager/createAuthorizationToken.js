@@ -5,5 +5,4 @@ const createAuthorizationToken = () => apiRequest({
   url: '/api/accounts_mgmt/v1/access_token',
 });
 
-
 export default createAuthorizationToken;

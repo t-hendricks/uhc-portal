@@ -7,7 +7,6 @@ import UsersSection from '../UsersSection';
 
 import fixtures from '../../../../__test__/ClusterDetails.fixtures';
 
-
 describe('<Users />', () => {
   it('should render without users', () => {
     const getUsers = jest.fn();

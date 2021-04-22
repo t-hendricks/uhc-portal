@@ -138,7 +138,6 @@ const createOverviewQueryObject = (viewOptions, queryObj) => {
   return queryObject;
 };
 
-
 const buildUrlParams = params => Object.keys(params)
   .map(key => `${key}=${encodeURIComponent(params[key])}`)
   .join('&');

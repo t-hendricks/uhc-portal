@@ -46,7 +46,6 @@ const clearClusterAddOnsResponses = () => ({
   type: AddOnsConstants.CLEAR_CLUSTER_ADDON_RESPONSES,
 });
 
-
 const addOnsActions = {
   getAddOns,
   getClusterAddOns,

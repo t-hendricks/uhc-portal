@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import ResourceUsage from './ResourceUsage';
 import { metricsStatusMessages } from './ResourceUsage.consts';
 
-
 const cpu = {
   used: {
     value: 3.995410922987096,

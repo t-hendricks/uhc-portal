@@ -113,7 +113,7 @@ const RHCOSSection = (props) => {
         )}
         {' '}
         <Text component="a" href={learnMoreURL} rel="noreferrer noopener" target="_blank">
-      Learn more
+          Learn more
           {' '}
           <ExternalLinkAltIcon size="sm" />
           .

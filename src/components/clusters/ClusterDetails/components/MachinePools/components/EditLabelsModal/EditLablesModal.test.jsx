@@ -25,7 +25,6 @@ describe('<EditLabelsModal />', () => {
     ],
   };
 
-
   const props = {
     closeModal,
     handleSubmit,

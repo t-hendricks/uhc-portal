@@ -72,5 +72,4 @@ BillingModelSection.propTypes = {
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
 };
 
-
 export default BillingModelSection;

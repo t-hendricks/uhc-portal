@@ -5,7 +5,6 @@ import InstallationLogView from '../InstallationLogView';
 import fixtures from '../../../../__test__/ClusterDetails.fixtures';
 import clusterStates from '../../../../../common/clusterStates';
 
-
 jest.useFakeTimers('legacy'); // TODO 'modern'
 
 describe('<InstallationLogView />', () => {
@@ -60,7 +59,6 @@ describe('<InstallationLogView />', () => {
     expect(clearLogs).toHaveBeenCalled();
     expect(clearInterval).toHaveBeenCalled();
   });
-
 
   it('should render without logs', () => {
     wrapper = shallow(<InstallationLogView

@@ -69,8 +69,8 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
 
   const textForUsersCanNotEdit = (
     <>
-    The cluster owner or an organization administrator can
-    edit subscription settings for non-evaluation use.
+      The cluster owner or an organization administrator can
+      edit subscription settings for non-evaluation use.
     </>
   );
 

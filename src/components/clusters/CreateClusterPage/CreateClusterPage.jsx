@@ -50,7 +50,6 @@ class CreateCluster extends React.Component {
       history.push(`/create/${tabHash}`);
     };
 
-
     render() {
       const {
         hasOSDQuota,

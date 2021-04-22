@@ -61,7 +61,6 @@ function fetchQuotaCost(organizationID) {
   });
 }
 
-
 const getSubscriptionIDForCluster = (clusterID) => {
   if (isUuid(clusterID)) {
     return accountsService

@@ -7,7 +7,6 @@ import links from '../../../common/installLinks';
 import getClusterName from '../../../common/getClusterName';
 import modals from '../../common/Modal/modals';
 
-
 const ClusterUpdateLink = ({
   cluster,
   openModal,
@@ -49,7 +48,7 @@ const ClusterUpdateLink = ({
           })}
         icon={<OutlinedArrowAltCircleUpIcon />}
       >
-      Update
+        Update
       </Button>
     );
   }

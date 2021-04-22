@@ -322,7 +322,6 @@ function clustersReducer(state = initialState, action) {
         };
         break;
 
-
       // GET_CLUSTER_STATUS
       case REJECTED_ACTION(clustersConstants.GET_CLUSTER_STATUS):
         draft.clusterStatus = {
@@ -344,7 +343,6 @@ function clustersReducer(state = initialState, action) {
           status: action.payload.data,
         };
         break;
-
 
       default:
         return state;

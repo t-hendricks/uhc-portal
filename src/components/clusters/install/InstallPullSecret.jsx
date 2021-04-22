@@ -10,7 +10,6 @@ import InstructionsPullSecret from './instructions/InstructionsPullSecret';
 
 import { scrollToTop } from '../../../common/helpers';
 
-
 class InstallPullSecret extends Component {
   componentDidMount() {
     scrollToTop();

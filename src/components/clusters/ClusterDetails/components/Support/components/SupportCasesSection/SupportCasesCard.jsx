@@ -76,7 +76,7 @@ class SupportCasesCard extends React.Component {
           <Button
             variant="secondary"
           >
-             Open support case
+            Open support case
           </Button>
         </a>
         <Table
@@ -91,7 +91,7 @@ class SupportCasesCard extends React.Component {
         {!hasRows && (
           <EmptyState variant={EmptyStateVariant.small}>
             <EmptyStateBody>
-          You have no open support cases
+              You have no open support cases
             </EmptyStateBody>
           </EmptyState>
         )}

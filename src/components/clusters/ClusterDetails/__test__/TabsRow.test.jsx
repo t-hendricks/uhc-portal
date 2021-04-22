@@ -4,7 +4,6 @@ import { Tab } from '@patternfly/react-core';
 
 import TabsRow from '../components/TabsRow';
 
-
 describe('<TabsRow />', () => {
   let wrapper;
   let props;

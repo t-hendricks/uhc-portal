@@ -4,7 +4,6 @@ import { openModal } from '../../../../../common/Modal/ModalActions';
 
 import ClusterVersionInfo from './ClusterVersionInfo';
 
-
 const mapStateToProps = state => ({
   versionInfo: state.clusterUpgrades.versionInfo,
   schedules: state.clusterUpgrades.schedules,

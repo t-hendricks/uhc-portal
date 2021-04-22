@@ -1,4 +1,3 @@
-
 const actionResolver = (rowData,
   onClickDelete,
   onClickScale,
@@ -14,7 +13,6 @@ const actionResolver = (rowData,
     onClick: onClickDelete,
     className: 'hand-pointer',
   };
-
 
   const editLabelsAction = {
     title: 'Edit labels',

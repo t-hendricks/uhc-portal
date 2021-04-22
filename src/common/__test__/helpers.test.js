@@ -15,7 +15,6 @@ describe('nestedIsEmpty()', () => {
   });
 });
 
-
 describe('parseReduxFormKeyValueList', () => {
   it('returns a key value pair', () => {
     const reduxFormInput = [{ key: 'foo', value: 'bar' }, { key: 'hello', value: 'world' }];

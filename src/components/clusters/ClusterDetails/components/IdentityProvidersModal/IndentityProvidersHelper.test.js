@@ -22,7 +22,6 @@ describe('generateIDPName()', () => {
   });
 });
 
-
 describe('isEmptyArray()', () => {
   it('Returns False if atleast one claim is present', () => {
     expect(isEmptyReduxArray([{ id: 1, openid_name: 'Test' }, { id: 2, openid_name: 'Test2' }], 'openid_name')).toEqual(false);

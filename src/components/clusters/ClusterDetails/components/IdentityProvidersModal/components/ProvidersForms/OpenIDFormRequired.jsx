@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { GridItem } from '@patternfly/react-core';
 
-
 import IDPBasicFields from './IDPBasicFields';
 
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';

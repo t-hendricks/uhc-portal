@@ -5,7 +5,6 @@ import { closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 import DeleteIDPDialog from './DeleteIDPDialog';
 
-
 const mapStateToProps = state => ({
   isOpen: shouldShowModal(state, 'delete-idp'),
   modalData: state.modal.data,

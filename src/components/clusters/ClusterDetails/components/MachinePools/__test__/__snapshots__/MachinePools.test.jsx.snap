@@ -69,6 +69,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
         isStickyHeader={false}
+        isTreeTable={false}
         onCollapse={[Function]}
         ouiaSafe={true}
         role="grid"
@@ -299,6 +300,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
         isStickyHeader={false}
+        isTreeTable={false}
         onCollapse={[Function]}
         ouiaSafe={true}
         role="grid"
@@ -641,6 +643,7 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
         isStickyHeader={false}
+        isTreeTable={false}
         onCollapse={[Function]}
         ouiaSafe={true}
         role="grid"
@@ -749,6 +752,7 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
         isStickyHeader={false}
+        isTreeTable={false}
         onCollapse={[Function]}
         ouiaSafe={true}
         role="grid"

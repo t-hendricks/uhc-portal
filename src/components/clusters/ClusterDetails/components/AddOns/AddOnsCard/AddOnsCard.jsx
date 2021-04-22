@@ -130,7 +130,6 @@ class AddOnsCard extends Component {
           tooltipContent = noQuotaTooltip;
         }
 
-
         return (
           <Tooltip
             content={tooltipContent}

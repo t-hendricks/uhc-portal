@@ -143,11 +143,11 @@ class NodeCountInput extends React.Component {
         ) : formSelect}
         { isMultiAz && (
         <span>
-        × 3 zones =
+          × 3 zones =
           {' '}
           {input.value}
           {' '}
-        worker nodes
+          worker nodes
         </span>
         )}
       </FormGroup>

@@ -48,7 +48,6 @@ class LogWindow extends React.Component {
     );
   }
 
-
   componentDidUpdate(prevProps, prevState) {
     const { lines, errorCode, cluster } = this.props;
     const { isExpanded } = this.state;

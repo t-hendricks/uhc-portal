@@ -41,7 +41,6 @@ const groupTagHitsByGroups = (hits, groups) => groups
     {},
   );
 
-
 export { getIssuesCount, groupTagHitsByGroups, getSeverityName };
 
 export default getIssuesCount;

@@ -98,15 +98,15 @@ export const NoRulesMessage = () => (
     body={
       (
         <>
-        Insights identifies and prioritizes risks to security, performance, availability,
-        and stability of your clusters. This feature uses the Remote Health
-        functionality of OpenShift Container Platform. For further details about Insights,
-        see the
+          Insights identifies and prioritizes risks to security, performance, availability,
+          and stability of your clusters. This feature uses the Remote Health
+          functionality of OpenShift Container Platform. For further details about Insights,
+          see the
           {' '}
           <a href="https://docs.openshift.com/container-platform/latest/support/getting-support.html">
-          OpenShift documentation
+            OpenShift documentation
           </a>
-        .
+          .
         </>
 )
     }

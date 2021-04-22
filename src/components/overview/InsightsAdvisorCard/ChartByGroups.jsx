@@ -11,7 +11,7 @@ function ChartByGroups({ tagHits, groups }) {
     <Flex className="ocm-insights--groups-chart" direction={{ default: 'column' }}>
       <FlexItem>
         <Title size="lg" headingLevel="h2">
-              Recommendations by category
+          Recommendations by category
         </Title>
       </FlexItem>
       <FlexItem>

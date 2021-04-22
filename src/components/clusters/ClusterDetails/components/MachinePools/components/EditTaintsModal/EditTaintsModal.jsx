@@ -40,7 +40,6 @@ class EditTaintsModal extends Component {
     change('taints', selectedMachinePoolTaints || [{ effect: 'NoSchedule' }]);
   };
 
-
   cancelEdit = () => {
     const {
       resetEditTaintsResponse,
@@ -65,7 +64,6 @@ class EditTaintsModal extends Component {
     const error = editTaintsResponse.error ? (
       <ErrorBox message="Error editing taints" response={editTaintsResponse} />
     ) : null;
-
 
     const { pending } = editTaintsResponse;
 

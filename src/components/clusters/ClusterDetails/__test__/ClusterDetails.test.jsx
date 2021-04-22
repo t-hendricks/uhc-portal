@@ -231,7 +231,6 @@ describe('<ClusterDetails />', () => {
     });
   });
 
-
   describe('Loading', () => {
     const functions = funcs();
     const props = { ...fixtures, ...functions, match: { params: { id: '1234' } } };

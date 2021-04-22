@@ -20,21 +20,20 @@ import {
   global_success_color_100,
 } from '@patternfly/react-tokens';
 
-
 const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters, isError }) => {
   if (isError) {
     return (
       <Card className="clusters-overview-card">
         <CardTitle>
-            Clusters with issues
+          Clusters with issues
         </CardTitle>
         <CardBody>
           <Bullseye>
             <Title headingLevel="h2">
-            No data available
+              No data available
             </Title>
             <span className="empty-state-color">
-            There was an error fetching the data. Try refreshing the page.
+              There was an error fetching the data. Try refreshing the page.
             </span>
           </Bullseye>
         </CardBody>
@@ -87,7 +86,7 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
   return (
     <Card className="clusters-overview-card">
       <CardTitle>
-            Clusters with issues
+        Clusters with issues
       </CardTitle>
       <CardBody>
         <Bullseye>
@@ -104,6 +103,5 @@ ClustersWithIssuesCard.propTypes = {
   totalUnhealthyClusters: PropTypes.number.isRequired,
   isError: PropTypes.bool.isRequired,
 };
-
 
 export default ClustersWithIssuesCard;
