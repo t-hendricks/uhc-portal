@@ -63,6 +63,8 @@ const scrollToTop = () => {
 
 const noQuotaTooltip = 'You do not have enough quota for this option. Contact sales to purchase additional quota.';
 
+const noMachineTypes = 'You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.';
+
 /**
  * Returns true if an object is empty or if all its direct children are empty.
  *
@@ -171,6 +173,7 @@ export {
   scrollToTop,
   getRandomID,
   noQuotaTooltip,
+  noMachineTypes,
   trackPendo,
   strToCleanObject,
   shouldRefetchQuota,

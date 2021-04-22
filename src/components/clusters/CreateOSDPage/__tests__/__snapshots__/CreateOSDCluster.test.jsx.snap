@@ -124,7 +124,6 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
               }
               getMarketplaceQuota={[Function]}
               isBYOCModalOpen={false}
-              marketplaceQuotaFeature={false}
               openModal={[MockFunction]}
               pending={false}
               privateClusterSelected={false}
