@@ -21,7 +21,14 @@ exports[`<UpgradeTrialClusterDialog /> renders correctly 1`] = `
     onSubmit={[Function]}
   >
     <p>
-      Convert this trial cluster to a fully supported OpenShift Dedicated cluster
+      Convert this trial cluster to a fully supported OpenShift Dedicated cluster.
+      <br />
+      <br />
+      <ExternalLink
+        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html-single/managing_clusters/index#upgrading-osd-trial-cluster_assembly-cluster-subscriptions"
+      >
+        Learn more
+      </ExternalLink>
       <Alert
         className="upgrade-trial-no-quota"
         isInline={true}
@@ -75,7 +82,14 @@ exports[`<UpgradeTrialClusterDialog /> renders correctly when an erorr occurs 1`
     onSubmit={[Function]}
   >
     <p>
-      Convert this trial cluster to a fully supported OpenShift Dedicated cluster
+      Convert this trial cluster to a fully supported OpenShift Dedicated cluster.
+      <br />
+      <br />
+      <ExternalLink
+        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html-single/managing_clusters/index#upgrading-osd-trial-cluster_assembly-cluster-subscriptions"
+      >
+        Learn more
+      </ExternalLink>
       <Alert
         className="upgrade-trial-no-quota"
         isInline={true}

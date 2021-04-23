@@ -92,7 +92,7 @@ function Router({ history }) {
             <Redirect from="/install/crc/installer-provisioned" to="/create/local" />
             <Redirect from="/token/moa" to="/token/rosa" />
             <Redirect from="/insights" to="/overview" />
-            <Redirect from="/subscriptions" to="/quota" />
+            <Redirect exact from="/subscriptions" to="/quota" />
 
             <TermsGuardedRoute path="/token/rosa" component={TokensROSA} history={history} />
             <Route path="/token" component={Tokens} />
@@ -148,8 +148,8 @@ function Router({ history }) {
             <Route path="/details/:id/insights/:reportId/:errorKey" render={props => <ClusterDetailsRedirector isInsightsRuleDetails {...props} />} />
             <Route path="/details/:id" component={ClusterDetailsRedirector} />
             <Route path="/register" component={RegisterCluster} />
-            <Route path="/quota" component={Quota} />
-            <Route path="/quota/resource-limits" component={Quota} />
+            <Route path="/quota/resource-limits" render={props => <Quota marketplace {...props} />} />
+            <Route path="/quota" render={props => <Quota {...props} />} />
             <Route path="/archived" component={ArchivedClusterList} />
             <Route path="/overview" exact component={Overview} />
             <Route path="/releases" exact component={Releases} />
