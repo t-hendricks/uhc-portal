@@ -29,6 +29,7 @@ import {
   createContainer,
 } from '@patternfly/react-charts';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
+import { severity } from '@redhat-cloud-services/rule-components/RuleTable/constants';
 import PropTypes from 'prop-types';
 import { RemoteHealthPopover } from '../EmptyTableMessage';
 import { severityMapping } from '../helpers';

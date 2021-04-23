@@ -5,6 +5,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import {
   Split, SplitItem, Title,
 } from '@patternfly/react-core';
+import ReportDetails from '@redhat-cloud-services/rule-components/ReportDetails';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
