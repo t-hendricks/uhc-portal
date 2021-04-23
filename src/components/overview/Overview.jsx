@@ -12,9 +12,8 @@ import {
   GridItem,
 } from '@patternfly/react-core';
 
-import {
-  PageHeader, PageHeaderTitle, Spinner,
-} from '@redhat-cloud-services/frontend-components';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import ConnectedModal from '../common/Modal/ConnectedModal';
 import SmallClusterChart from '../clusters/common/ResourceUsage/SmallClusterChart';

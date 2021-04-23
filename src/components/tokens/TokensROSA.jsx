@@ -18,7 +18,6 @@ limitations under the License.
 // they can copy it and use it with the rosa command line utitility.
 
 import React from 'react';
-import { Skeleton, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
 import {
   PageSection,
   Card,
@@ -28,6 +27,8 @@ import {
   Text,
   TextContent,
 } from '@patternfly/react-core';
+import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import Tokens, { splitToken, snippetBox, tokenBox } from './Tokens';
 import links from '../../common/installLinks';
 

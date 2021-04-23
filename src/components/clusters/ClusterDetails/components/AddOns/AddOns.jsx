@@ -8,7 +8,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { IntegrationIcon } from '@patternfly/react-icons';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../common/ErrorBox';
 import { availableAddOns } from './AddOnsHelper';
 import AddOnsDrawer from './AddOnsDrawer';

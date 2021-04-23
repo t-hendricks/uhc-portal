@@ -12,9 +12,8 @@ import {
   descriptionFilter,
   totalRiskFilter,
   ruleStatusFilter,
-} from '@redhat-cloud-services/rule-components/dist/cjs/RuleFilters';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
-import { InsightsLabel } from '@redhat-cloud-services/frontend-components/components/InsightsLabel';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
+import { InsightsLabel } from '@redhat-cloud-services/frontend-components/InsightsLabel';
 import { CheckCircleIcon } from '@patternfly/react-icons';
 import AnalysisSummary from './AnalysisSummary';
 import { severityMapping, appendCrParamToDocLinks } from './helpers';

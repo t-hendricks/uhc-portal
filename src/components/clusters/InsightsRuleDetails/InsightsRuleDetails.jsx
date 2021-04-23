@@ -28,8 +28,7 @@ import {
   Title,
   EmptyStateBody,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
-import { Markdown } from '@redhat-cloud-services/rule-components/dist/cjs/index';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import moment from 'moment';
 import { EyeSlashIcon } from '@patternfly/react-icons';
 

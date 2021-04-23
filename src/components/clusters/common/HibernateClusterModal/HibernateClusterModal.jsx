@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import PropTypes from 'prop-types';
 import {
   Form,

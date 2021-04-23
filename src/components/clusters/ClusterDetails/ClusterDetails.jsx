@@ -18,7 +18,7 @@ import get from 'lodash/get';
 import has from 'lodash/has';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { HostsClusterDetailTab, canAddHost } from 'openshift-assisted-ui-lib';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';

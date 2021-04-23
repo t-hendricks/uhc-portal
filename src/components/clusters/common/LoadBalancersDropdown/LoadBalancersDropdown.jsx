@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from '@patternfly/react-core';
 
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../common/ErrorBox';
 import { filterLoadBalancerValuesByQuota, quotaLookup } from './LoadBalancersDropdownHelper';
 import { noQuotaTooltip } from '../../../../common/helpers';
