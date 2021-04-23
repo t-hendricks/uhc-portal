@@ -75,7 +75,13 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
       hasGutter={true}
     >
       <StackItem>
-        The summary of all subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat.
+        The summary of all annual subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat. For on-demand resources, see
+         
+        <Link
+          to="/quota/resource-limits"
+        >
+          Dedicated (On-Demand Limits)
+        </Link>
       </StackItem>
       <StackItem
         className="content-header"
@@ -219,7 +225,7 @@ exports[`<Quota /> Quota should render 1`] = `
   <PageHeader>
     <PageHeaderTitle
       className="page-title"
-      title="Subscriptions"
+      title="Dedicated (Annual)"
     />
   </PageHeader>
   <PageSection
