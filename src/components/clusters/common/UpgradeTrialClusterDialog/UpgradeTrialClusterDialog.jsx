@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import get from 'lodash/get';
 import MechTraining from '../../../../styles/images/RH_BRAND_7764_01_MECH_Training.svg';
 
+import ExternalLink from '../../../common/ExternalLink';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
@@ -186,7 +187,12 @@ class UpgradeTrialClusterDialog extends Component {
             {!noQuota && (
               <img className="upgrade-trial-logo" src={MechTraining} alt="Red Hat" />
             )}
-            Convert this trial cluster to a fully supported OpenShift Dedicated cluster
+            Convert this trial cluster to a fully supported OpenShift Dedicated cluster.
+            <br />
+            <br />
+            <ExternalLink href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html-single/managing_clusters/index#upgrading-osd-trial-cluster_assembly-cluster-subscriptions">
+              Learn more
+            </ExternalLink>
             {noQuota && (
               <Alert
                 variant="warning"
