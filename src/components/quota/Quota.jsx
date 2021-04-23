@@ -47,19 +47,23 @@ class Subscriptions extends Component {
   };
 
   render() {
-    const { account } = this.props;
+    const { account, marketplace } = this.props;
     let content;
+    let title = 'Dedicated (Annual)';
+    if (marketplace) {
+      title = 'Dedicated (On-Demand Limits)';
+    }
     if (account.fulfilled && account.data.organization && account.data.organization.id) {
       const organizationID = account.data.organization.id;
       content = (
         <>
           <PageHeader>
-            <PageHeaderTitle title="Subscriptions" className="page-title" />
+            <PageHeaderTitle title={title} className="page-title" />
           </PageHeader>
           <PageSection className="ocm-p-subscriptions">
             <Stack hasGutter>
               <StackItem className="ocm-l-osd-subscription__section">
-                <OSDSubscriptionCard organizationID={organizationID} />
+                <OSDSubscriptionCard organizationID={organizationID} marketplace={marketplace} />
               </StackItem>
             </Stack>
           </PageSection>
@@ -83,6 +87,7 @@ Subscriptions.propTypes = {
   fetchAccount: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
+  marketplace: PropTypes.bool,
 };
 
 export default Subscriptions;

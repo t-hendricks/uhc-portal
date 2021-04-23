@@ -17,6 +17,7 @@ import {
   ResourcesFullIcon,
   OutlinedCircleIcon,
 } from '@patternfly/react-icons';
+import ExternalLink from '../../common/ExternalLink';
 
 import { billingModels } from '../../../common/subscriptionTypes';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
@@ -63,19 +64,22 @@ class OSDSubscriptionCard extends Component {
 
   render() {
     // quota resource limits displays on demand marketplace quota
-    const marketplace = window.location.pathname.includes('/quota/resource-limits');
-    const { quotaCost } = this.props;
+    const { quotaCost, marketplace } = this.props;
     let content;
     let rows = [];
 
-    let subscriptionsDescription = 'The summary of all subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat.';
-    let subscriptionLink;
+    let subscriptionLink = (
+      <Link to="/quota/resource-limits">
+        Dedicated (On-Demand Limits)
+      </Link>
+    );
+    let subscriptionsDescription = 'The summary of all annual subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat. For on-demand resources, see';
     if (marketplace) {
       // add link
       subscriptionLink = (
-        <Link to="/quota">
+        <ExternalLink href="/openshift/subscriptions/openshift-dedicated" noIcon noTarget>
           Dedicated (On-Demand)
-        </Link>
+        </ExternalLink>
       );
       subscriptionsDescription = 'Active subscriptions allow your organization to use up to a certain number of OpenShift Dedicated clusters. Overall OSD subscription capacity and usage can be viewed in';
     }
@@ -159,10 +163,8 @@ class OSDSubscriptionCard extends Component {
           <Stack hasGutter>
             <StackItem>
               {subscriptionsDescription}
-              {marketplace && ' '}
-              {marketplace && (
-                subscriptionLink
-              )}
+              {' '}
+              {subscriptionLink}
             </StackItem>
             {content}
           </Stack>
@@ -176,6 +178,7 @@ OSDSubscriptionCard.propTypes = {
   organizationID: PropTypes.string.isRequired,
   fetchQuotaCost: PropTypes.func.isRequired,
   quotaCost: PropTypes.object.isRequired,
+  marketplace: PropTypes.bool,
 };
 
 export default OSDSubscriptionCard;
