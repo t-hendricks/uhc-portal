@@ -7,7 +7,6 @@ import {
 
 import get from 'lodash/get';
 
-import { isDevOrStaging } from '../../../../../config';
 import clusterStates, { getClusterStateAndDescription, isHibernating } from '../../../common/clusterStates';
 import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
@@ -73,7 +72,7 @@ class Overview extends React.Component {
                              || cluster.state === clusterStates.INSTALLING
                              || cluster.state === clusterStates.UNINSTALLING;
 
-    const showInsightsAdvisor = isDevOrStaging && insightsData?.status === 200
+    const showInsightsAdvisor = insightsData?.status === 200
                               && insightsData?.data && !cluster.managed;
     const showResourceUsage = !isHibernating(cluster.state)
       && !shouldShowLogs(cluster) && !isDeprovisioned;
