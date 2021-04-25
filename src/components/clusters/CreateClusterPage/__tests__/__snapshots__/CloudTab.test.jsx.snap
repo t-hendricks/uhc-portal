@@ -340,7 +340,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   </React.Fragment>,
                   <React.Fragment>
                     <a
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -352,11 +352,11 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   <React.Fragment>
                     <Button
                       component="a"
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       variant="secondary"
                     >
-                      Learn more
+                      Try it on AWS
                     </Button>
                   </React.Fragment>,
                 ],
@@ -375,7 +375,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://www.openshift.com/products/amazon-openshift"
+                          href="https://aws.amazon.com/rosa/"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -837,7 +837,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   </React.Fragment>,
                   <React.Fragment>
                     <a
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -849,11 +849,11 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   <React.Fragment>
                     <Button
                       component="a"
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       variant="secondary"
                     >
-                      Learn more
+                      Try it on AWS
                     </Button>
                   </React.Fragment>,
                 ],
@@ -872,7 +872,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://www.openshift.com/products/amazon-openshift"
+                          href="https://aws.amazon.com/rosa/"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -1273,7 +1273,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   </React.Fragment>,
                   <React.Fragment>
                     <a
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -1285,11 +1285,11 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   <React.Fragment>
                     <Button
                       component="a"
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       variant="secondary"
                     >
-                      Learn more
+                      Try it on AWS
                     </Button>
                   </React.Fragment>,
                 ],
@@ -1308,7 +1308,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://www.openshift.com/products/amazon-openshift"
+                          href="https://aws.amazon.com/rosa/"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
