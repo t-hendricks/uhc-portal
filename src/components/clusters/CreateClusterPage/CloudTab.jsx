@@ -328,7 +328,7 @@ const managedServices = (hasQuota, trialEnabled) => {
       (
         <>
           <Button component="a" href={links.AWS} rel="noopener noreferrer" variant="secondary">
-            Learn more
+            Try it on AWS
           </Button>
         </>
       ),
@@ -348,7 +348,7 @@ const managedServices = (hasQuota, trialEnabled) => {
               Hosted on AWS.
             </StackItem>
             <StackItem>
-              <a href={links.AWS} target="_blank" rel="noopener noreferrer">
+              <a href={links.AWS_LEARN_MORE} target="_blank" rel="noopener noreferrer">
                 Learn more about Red Hat OpenShift Service on AWS
                 {' '}
                 <ArrowRightIcon />
