@@ -86,7 +86,7 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        { cluster.managed && !cluster.byoc && (
+        { cluster.managed && !cluster.ccs?.enabled && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>
