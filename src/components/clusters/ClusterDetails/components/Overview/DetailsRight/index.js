@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
-import nodesSectionDataSelector from './DetailsRightSelectors';
 import DetailsRight from './DetailsRight';
+import totalNodesDataSelector from '../../../../common/totalNodesDataSelector';
 
-const mapStateToProps = (state, ownProps) => {
-  const nodesSectionData = nodesSectionDataSelector(state, ownProps.cluster);
+const mapStateToProps = (state) => {
+  const { cluster } = state.clusters.details;
+  const machinePools = state.machinePools.getMachinePools.data;
+  const nodesSectionData = totalNodesDataSelector(cluster, machinePools);
 
   const {
     hasMachinePoolWithAutoscaling, totalMinNodesCount, totalMaxNodesCount, totalDesiredComputeNodes,

@@ -1,4 +1,4 @@
-import nodesSectionDataSelector from './DetailsRightSelectors';
+import nodesSectionDataSelector from './totalNodesDataSelector';
 
 const defaultMachinePoolAutoscalingState = {
   details: {
@@ -27,7 +27,7 @@ const autoScalingAdiitionalMachinePool = {
   },
 };
 
-const notAtutoScalingAdditionalMachinePool = {
+const notAutoScalingAdditionalMachinePool = {
   availability_zones: ['us-east-1a'],
   href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake1',
   id: 'mp-with-labels-and-taints',
@@ -41,12 +41,13 @@ it('should find if autoscaling enabled when the default machine pool has autosca
     clusters: { ...defaultMachinePoolAutoscalingState },
     machinePools: {
       getMachinePools: {
-        data: [notAtutoScalingAdditionalMachinePool, notAtutoScalingAdditionalMachinePool],
+        data: [notAutoScalingAdditionalMachinePool, notAutoScalingAdditionalMachinePool],
       },
     },
   };
 
-  const result = nodesSectionDataSelector(state);
+  const result = nodesSectionDataSelector(state.clusters.details.cluster,
+    state.machinePools.getMachinePools.data);
   expect(result).toHaveProperty('hasMachinePoolWithAutoscaling', true);
 });
 
@@ -55,12 +56,13 @@ it('should find if autoscaling enabled when andditional machine pools has autosc
     clusters: { ...defaultMachinePoolNotAutoscalingState },
     machinePools: {
       getMachinePools: {
-        data: [notAtutoScalingAdditionalMachinePool, autoScalingAdiitionalMachinePool],
+        data: [notAutoScalingAdditionalMachinePool, autoScalingAdiitionalMachinePool],
       },
     },
   };
 
-  const result = nodesSectionDataSelector(state);
+  const result = nodesSectionDataSelector(state.clusters.details.cluster,
+    state.machinePools.getMachinePools.data);
   expect(result).toHaveProperty('hasMachinePoolWithAutoscaling', true);
 });
 
@@ -69,12 +71,13 @@ it('should count total max and total min compute nodes', () => {
     clusters: { ...defaultMachinePoolAutoscalingState },
     machinePools: {
       getMachinePools: {
-        data: [notAtutoScalingAdditionalMachinePool, autoScalingAdiitionalMachinePool],
+        data: [notAutoScalingAdditionalMachinePool, autoScalingAdiitionalMachinePool],
       },
     },
   };
 
-  const result = nodesSectionDataSelector(state);
+  const result = nodesSectionDataSelector(state.clusters.details.cluster,
+    state.machinePools.getMachinePools.data);
 
   expect(result).toHaveProperty('totalMinNodesCount', 9);
   expect(result).toHaveProperty('totalMaxNodesCount', 12);
@@ -85,11 +88,12 @@ it('should count total desired compute nodes', () => {
     clusters: { ...defaultMachinePoolNotAutoscalingState },
     machinePools: {
       getMachinePools: {
-        data: [notAtutoScalingAdditionalMachinePool, autoScalingAdiitionalMachinePool],
+        data: [notAutoScalingAdditionalMachinePool, autoScalingAdiitionalMachinePool],
       },
     },
   };
 
-  const result = nodesSectionDataSelector(state);
+  const result = nodesSectionDataSelector(state.clusters.details.cluster,
+    state.machinePools.getMachinePools.data);
   expect(result).toHaveProperty('totalDesiredComputeNodes', 6);
 });
