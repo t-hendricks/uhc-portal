@@ -34,7 +34,6 @@ exports[`<GetStarted /> GetStarted w/ customizations should render 1`] = `
         To quickly create a cluster with the default options, run the following command:
       </Text>
       <ClipboardCopy
-        additionalActions={null}
         clickTip="Successfully copied to clipboard!"
         entryDelay={100}
         exitDelay={1600}
@@ -112,7 +111,6 @@ exports[`<GetStarted /> GetStarted w/o customizations should render 1`] = `
         To quickly create a cluster with the default options, run the following command:
       </Text>
       <ClipboardCopy
-        additionalActions={null}
         clickTip="Successfully copied to clipboard!"
         entryDelay={100}
         exitDelay={1600}

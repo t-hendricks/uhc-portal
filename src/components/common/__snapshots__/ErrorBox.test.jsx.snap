@@ -9,9 +9,7 @@ exports[`<ErroBox /> should render expandable 1`] = `
 >
   <ExpandableSection
     className=""
-    contentId=""
     isActive={false}
-    isDetached={false}
     onToggle={[Function]}
     toggleText="Error details"
     toggleTextCollapsed=""
