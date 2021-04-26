@@ -63,7 +63,7 @@ ClusterDetailsRedirector.propTypes = {
   }).isRequired,
   location: PropTypes.shape({
     hash: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
   fetchSubscriptionIDForCluster: PropTypes.func.isRequired,
   clearSubscriptionIDForCluster: PropTypes.func.isRequired,
   setGlobalError: PropTypes.func.isRequired,
