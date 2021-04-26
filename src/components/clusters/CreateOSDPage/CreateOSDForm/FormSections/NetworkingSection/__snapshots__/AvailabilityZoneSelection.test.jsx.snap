@@ -8,6 +8,8 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
   value=""
 >
   <Select
+    aria-describedby=""
+    aria-invalid={false}
     aria-label=""
     aria-labelledby=""
     chipGroupComponent={null}
@@ -43,6 +45,7 @@ exports[`<AvailabilityZoneSelection /> should render 1`] = `
     toggleIcon={null}
     toggleId={null}
     typeAheadAriaLabel=""
+    validated="default"
     variant="single"
     width=""
   >
