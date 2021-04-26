@@ -74,7 +74,7 @@ node_modules:
 
 .PHONY: app
 app: node_modules
-	yarn build --mode=production
+	yarn build --mode=production --api-env=staging
 
 # Marking git clones .PHONY so we can git pull even if they already exist.
 
