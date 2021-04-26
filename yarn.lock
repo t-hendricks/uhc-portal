@@ -1284,15 +1284,10 @@
   resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/@patternfly/react-tokens/-/react-tokens-4.11.3.tgz#f102df85af3d248728b6b33d5c16784fa0ad3ebb"
   integrity sha512-7VbmT+aOwxk1DYzwer+wZgcbvkSsUUTKMKJDzhMvm5xi9nDeW8qI7laxQbWC9PDfsI5tiPxI2+BSuHnZpV/eRg==
 
-"@redhat-cloud-services/frontend-components-config-utilities@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-config-utilities/-/frontend-components-config-utilities-1.0.0.tgz#2c5d4f61e37c77668954ab2dfc052e10eedd4899"
-  integrity sha512-Xxb33qTG2wvskBsuWntGrmVl/tzpMooNpFtN8JkuAS+gj27f/4F1Bi6Be6r1kz23+m9SPwfw1Bf4VR3qqNxRiQ==
-
-"@redhat-cloud-services/frontend-components-notifications@^2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-notifications/-/frontend-components-notifications-2.2.4.tgz#0ac2e0afd1ff192478cf0e8496efb4609f1a6eb0"
-  integrity sha512-FmUf77Z0XP7UaOfiE+a2nn1DjWxnOlo1B6HIOjnRoToHAKSuMEtuxHxMGIv02ru2NL0Pc1GhFLr+IJ+L2BeTaQ==
+"@redhat-cloud-services/frontend-components-notifications@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-notifications/-/frontend-components-notifications-3.1.0.tgz#d0d7ec32e8d88b75a1aef0b2ebb1e12eecf93632"
+  integrity sha512-gHN424/3TJ1kPtk5Dos+aScUL+QjkmKhKhyiSDNN2o7LzhN+J+d2xA0bCx2mfEBspqHG+1nTiHpZbgQ3l0kntw==
   dependencies:
     "@redhat-cloud-services/frontend-components-utilities" "*"
 
@@ -1307,10 +1302,10 @@
     commander ">=2.20.0"
     react-content-loader ">=3.4.1"
 
-"@redhat-cloud-services/frontend-components-utilities@^2.2.8":
-  version "2.2.9"
-  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-utilities/-/frontend-components-utilities-2.2.9.tgz#ae3fd5623178d037ab55e17de24fee1fabafa673"
-  integrity sha512-+rtCdi/fi89+DE1RO8Jvq9Vh026u9qStKagGFO+wZUspvDwAxkT3CvsOksQadocwj4J4d9znm8URHSDumBYeSw==
+"@redhat-cloud-services/frontend-components-utilities@^3.1.1":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-utilities/-/frontend-components-utilities-3.1.2.tgz#965c03508336e6d68dc9cad39b38ae05acd0f4e8"
+  integrity sha512-CDnhCQTotqCWUzZUgPXEori95FDhrXGBUxodwQpR3wKTb1lBpwDHg4b3TdpzPz+KyryClT6OfNkVabmjQ2S6CA==
   dependencies:
     "@sentry/browser" "^5.4.0"
     awesome-debounce-promise "^2.1.0"
@@ -1318,30 +1313,20 @@
     commander ">=2.20.0"
     react-content-loader ">=3.4.1"
 
-"@redhat-cloud-services/frontend-components@*":
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components/-/frontend-components-3.1.7.tgz#751a69b086478e623b63312662d57afd5887e64b"
-  integrity sha512-nvu3oXpfMQP7npe0NSLIvsyuoHL6V1uxomD+0AaU/KQxzO8z4cmXvqidHcRDP9Q2fBLvwiEipRX6VTYqIw224w==
+"@redhat-cloud-services/frontend-components@>=3.0.0", "@redhat-cloud-services/frontend-components@^3.1.7":
+  version "3.1.10"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components/-/frontend-components-3.1.10.tgz#4ec13f1317cac28dfbf5378d563ee8f0c06fe2dd"
+  integrity sha512-dDtFuBASQ8oZABoyw/adO52WQrht/kbAMGW0ZOetzRdhs3ZjEmhiziGNVP9GqAE8nXbIrM0JEn7r83yODVMXrg==
   dependencies:
     "@redhat-cloud-services/frontend-components-utilities" ">=3.0.0"
     "@scalprum/core" "^0.0.11"
     "@scalprum/react-core" "^0.0.16"
     sanitize-html "^2.3.2"
 
-"@redhat-cloud-services/frontend-components@2.3.11":
-  version "2.3.11"
-  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components/-/frontend-components-2.3.11.tgz#1761687b4a46b894a47493b848abb3064ca4cb83"
-  integrity sha512-EHw+u7/1MZkfpvyqaiyIblxI4Rsh1osGfZUwPm7hiJAOMOUCnpk1jrrzSiC6QORuiAUJ0aSnCRgVAnb3RduPxw==
-  dependencies:
-    "@redhat-cloud-services/frontend-components-utilities" ">=3.0.0"
-    "@scalprum/core" "^0.0.11"
-    "@scalprum/react-core" "^0.0.16"
-    sanitize-html "^2.3.2"
-
-"@redhat-cloud-services/rule-components@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/rule-components/-/rule-components-2.2.1.tgz#0efacec52f1e247131ac6d056db67af708b6d7e7"
-  integrity sha512-mwpNYC4uQcGxq5rV0LCfhXHUm/SgFjapIcg9SJge9iIcwHklxRIW3dhI1qanyFntTC/E5pjiJ4h5ThNVjDP+iA==
+"@redhat-cloud-services/rule-components@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/rule-components/-/rule-components-3.1.1.tgz#fcdee83b054e729d5a4d8bbe6dd3149e2e54508b"
+  integrity sha512-7lMTl8yepWPKYAfI1Wtb6/jhSEmqF3Z4lCewNx0L0f6Q7jQXVQDTEVA/gAJegHQkiN4MHtwRcp6HSgmlSCD3hA==
   dependencies:
     "@patternfly/react-core" "^4.23.1"
     "@patternfly/react-icons" "^4.4.2"
@@ -4026,7 +4011,7 @@ domutils@^1.5.1, domutils@^1.7.0:
     dom-serializer "0"
     domelementtype "1"
 
-domutils@^2.0.0, domutils@^2.4.2, domutils@^2.5.2, domutils@^2.6.0:
+domutils@^2.4.2, domutils@^2.5.2, domutils@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-2.6.0.tgz#2e15c04185d43fb16ae7057cb76433c6edb938b7"
   integrity sha512-y0BezHuy4MDYxh6OvolXYsH+1EMGmFbwv5FKW7ovwMG6zTPWqNPq3WF9ayZssFq+UlKdffGLbOEaghNdaOm1WA==
@@ -5095,11 +5080,6 @@ fsevents@^2.1.2, fsevents@~2.3.1:
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
   integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
 
-fsevents@~2.1.2:
-  version "2.1.3"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/fsevents/-/fsevents-2.1.3.tgz#fb738703ae8d2f9fe900c33836ddebee8b97f23e"
-  integrity sha512-Auw9a4AxqWpa9GUfj370BMPzzyncfBABW8Mab7BGWBYDj4Isgq+cDKtx0i6u9jcX9pQDnswsaaOTgTmA5pEjuQ==
-
 function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
@@ -5521,16 +5501,6 @@ htmlparser2@^3.10.1:
     entities "^1.1.1"
     inherits "^2.0.1"
     readable-stream "^3.1.1"
-
-htmlparser2@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-4.1.0.tgz#9a4ef161f2e4625ebf7dfbe6c0a2f52d18a59e78"
-  integrity sha512-4zDq1a1zhE4gQso/c5LP1OtrhYTncXNSpvJYtWJBtXAETPlMfi3IFNjGuQbYLuVY4ZR0QMqRVvo4Pdy9KLyP8Q==
-  dependencies:
-    domelementtype "^2.0.1"
-    domhandler "^3.0.0"
-    domutils "^2.0.0"
-    entities "^2.0.0"
 
 htmlparser2@^5.0:
   version "5.0.1"
@@ -7500,7 +7470,7 @@ ms@2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   integrity sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==
 
-ms@2.1.2, ms@^2.1.1:
+ms@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
@@ -7532,11 +7502,6 @@ nanoid@3.1.20:
   version "3.1.20"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.20.tgz#badc263c6b1dcf14b71efaa85f6ab4c1d6cfc788"
   integrity sha512-a1cQNyczgKbLX9jwbS/+d7W8fX/RfgYR7lVWwWOGIPNgK2m0MWvrGF6/m4kk6U3QcFMnZf3RIhL0v2Jgh/0Uxw==
-
-nanoid@^3.1.22:
-  version "3.1.22"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.22.tgz#b35f8fb7d151990a8aebd5aa5015c03cf726f844"
-  integrity sha512-/2ZUaJX2ANuLtTvqTlgqBQNJoQO398KyJgZloL0PZkC0dpysjncRUPsFe3DUPzz/y3h+u7C46np8RMuvF3jsSQ==
 
 nanoid@^3.1.22:
   version "3.1.22"
@@ -8368,15 +8333,6 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
-postcss@^8.0.2:
-  version "8.2.10"
-  resolved "https://repository.engineering.redhat.com/nexus/repository/registry.npmjs.org/postcss/-/postcss-8.2.10.tgz#ca7a042aa8aff494b334d0ff3e9e77079f6f702b"
-  integrity sha512-b/h7CPV7QEdrqIxtAf2j31U5ef05uBDuvoXv6L51Q4rcS1jdlXAVKJv+atCFdUXYl9dyTHGyoMzIepwowRJjFw==
-  dependencies:
-    colorette "^1.2.2"
-    nanoid "^3.1.22"
-    source-map "^0.6.1"
-
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -8645,7 +8601,8 @@ react-dom@^16.13.1:
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-    scheduler "^0.20.2"
+    prop-types "^15.6.2"
+    scheduler "^0.19.1"
 
 react-dropzone@9.0.0:
   version "9.0.0"
@@ -9303,16 +9260,6 @@ sane@^4.0.3:
     micromatch "^3.1.4"
     minimist "^1.1.1"
     walker "~1.0.5"
-
-sanitize-html@^1.20.1, sanitize-html@^1.25.0:
-  version "1.27.5"
-  resolved "https://registry.yarnpkg.com/sanitize-html/-/sanitize-html-1.27.5.tgz#6c8149462adb23e360e1bb71cc0bae7f08c823c7"
-  integrity sha512-M4M5iXDAUEcZKLXkmk90zSYWEtk5NH3JmojQxKxV371fnMh+x9t1rqdmXaGoyEHw3z/X/8vnFhKjGL5xFGOJ3A==
-  dependencies:
-    htmlparser2 "^4.1.0"
-    lodash "^4.17.15"
-    parse-srcset "^1.0.2"
-    postcss "^7.0.27"
 
 sanitize-html@^2.3.2:
   version "2.3.3"
