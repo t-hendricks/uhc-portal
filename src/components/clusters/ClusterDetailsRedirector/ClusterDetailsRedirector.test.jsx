@@ -7,6 +7,7 @@ describe('<ClusterDetailsRedirector />', () => {
   let wrapper;
   const clearSubscriptionIDForCluster = jest.fn();
   const setGlobalError = jest.fn();
+
   describe('when pending or not yet fulfilled', () => {
     const fetchSubscriptionIDForCluster = jest.fn();
     beforeAll(() => {
@@ -16,6 +17,7 @@ describe('<ClusterDetailsRedirector />', () => {
           setGlobalError={setGlobalError}
           clearSubscriptionIDForCluster={clearSubscriptionIDForCluster}
           match={{ params: { id: 'foo' } }}
+          location={{ hash: '#bar' }}
           subscriptionIDResponse={{
             fulfilled: false,
           }}
@@ -87,7 +89,7 @@ describe('<ClusterDetailsRedirector />', () => {
       expect(wrapper).toMatchSnapshot();
       const redirect = wrapper.find('Redirect');
       expect(redirect.length).toBe(1);
-      expect(redirect.props().to).toEqual('/details/s/foobar');
+      expect(redirect.props().to).toEqual('/details/s/foobar#bar');
     });
   });
   it('should clear response on unmount', () => {
