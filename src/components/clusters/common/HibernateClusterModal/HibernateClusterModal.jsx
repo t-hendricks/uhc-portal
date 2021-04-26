@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-
 import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
 import PropTypes from 'prop-types';
-
 import {
   Form,
   Alert,
 } from '@patternfly/react-core';
-
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
@@ -34,9 +31,8 @@ class HibernateClusterModal extends Component {
   render() {
     const {
       closeModal, submit, hibernateClusterResponse, resetResponses,
-      clusterID, clusterName, clusterUpgrades,
+      clusterID, clusterName, clusterUpgrades, history, subscriptionID,
     } = this.props;
-
     const upgradesInState = state => clusterUpgrades.items
       .filter(schedule => schedule.state?.value === state);
 
@@ -139,7 +135,17 @@ class HibernateClusterModal extends Component {
     } else if (scheduledUpgrades.length > 0) {
       primaryText = 'Cancel';
       secondaryText = 'Change cluster upgrade policy';
-      onSecondaryClick = cancelHibernateCluster;
+      onSecondaryClick = () => {
+        cancelHibernateCluster();
+        if (history.location.pathname.startsWith('/details/s/')) {
+          window.location.hash = '#updateSettings';
+        } else {
+          history.push({
+            pathname: `/details/s/${subscriptionID}`,
+            hash: '#updateSettings',
+          });
+        }
+      };
       onPrimaryClick = cancelHibernateCluster;
       hibernateForm = upgradeScheduledForm(scheduledUpgrades[0]);
     } else {
@@ -171,6 +177,7 @@ class HibernateClusterModal extends Component {
 
 HibernateClusterModal.propTypes = {
   clusterID: PropTypes.string.isRequired,
+  subscriptionID: PropTypes.string.isRequired,
   clusterName: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
   resetResponses: PropTypes.func.isRequired,
@@ -187,6 +194,12 @@ HibernateClusterModal.propTypes = {
   }),
   submit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
 HibernateClusterModal.defaultProps = {
