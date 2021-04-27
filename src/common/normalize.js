@@ -119,7 +119,6 @@ const normalizeCluster = (cluster) => {
   return result;
 };
 
-
 // Normalize data from AMS for an unmanaged cluster.
 const fakeClusterFromSubscription = (subscription) => {
   const metrics = normalizeMetrics(subscription.metrics?.[0]);

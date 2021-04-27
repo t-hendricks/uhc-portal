@@ -10,7 +10,6 @@ const getAICluster = clusterID => apiRequest({
   url: `/api/assisted-install/v1/clusters/${clusterID}`,
 });
 
-
 const assistedService = {
   getAIClusters,
   getAICluster,

@@ -235,7 +235,7 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
   return Promise.all(promises)
     .then(() => {
       const items = subscriptions?.data?.items.filter(
-        item => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item)
+        item => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
       );
 
       if (!items) {
