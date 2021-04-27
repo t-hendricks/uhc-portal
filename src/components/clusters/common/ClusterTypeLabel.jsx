@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Tooltip } from '@patternfly/react-core';
 
 import get from 'lodash/get';
+import { isAssistedInstallCluster } from '../../../common/isAssistedInstallerCluster';
 
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 
@@ -38,7 +39,10 @@ function ClusterTypeLabel({ cluster }) {
     },
   };
 
-  const typeId = get(cluster, 'subscription.plan.id', normalizedProducts.UNKNOWN);
+  const typeId = isAssistedInstallCluster(cluster)
+    ? normalizedProducts.OCP
+    : get(cluster, 'subscription.plan.id', normalizedProducts.UNKNOWN);
+
   const type = clusterTypes[typeId] || clusterTypes[normalizedProducts.UNKNOWN];
   return (
     <Tooltip
@@ -54,7 +58,7 @@ function ClusterTypeLabel({ cluster }) {
 ClusterTypeLabel.propTypes = {
   cluster: PropTypes.shape({
     product: PropTypes.shape({
-      id: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+      id: PropTypes.oneOf(Object.values(normalizedProducts)).isRequired,
     }),
   }),
 };

@@ -1,5 +1,7 @@
 import get from 'lodash/get';
+import { Config as AIConfig } from 'openshift-assisted-ui-lib';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
 
 const clusterStates = {
   PENDING: 'pending',
@@ -20,7 +22,9 @@ const clusterStates = {
 function getClusterStateAndDescription(cluster) {
   let state;
 
-  if ((cluster.state === clusterStates.INSTALLING
+  if (isAssistedInstallSubscription(cluster.subscription)) {
+    state = AIConfig.CLUSTER_STATUS_LABELS[cluster.status];
+  } else if ((cluster.state === clusterStates.INSTALLING
       || cluster.state === clusterStates.PENDING)) {
     state = clusterStates.INSTALLING;
   } else if (get(cluster, 'metrics.upgrade.state') === 'running' && !cluster.managed) {

@@ -16,12 +16,15 @@ limitations under the License.
 import isEmpty from 'lodash/isEmpty';
 
 import { clustersConstants } from '../constants';
-import { accountsService, authorizationsService, clusterService } from '../../services';
+import {
+  accountsService, assistedService, authorizationsService, clusterService,
+} from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
 import { subscriptionStatuses } from '../../common/subscriptionTypes';
 import {
   normalizeCluster,
   fakeClusterFromSubscription,
+  fakeAIClusterFromSubscription,
   normalizeSubscription,
   mapListResponse,
   normalizeMetrics,
@@ -29,8 +32,9 @@ import {
 import {
   postSchedule,
 } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
-
 import { editSubscriptionSettings } from './subscriptionSettingsActions';
+import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
+import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
 
 const invalidateClusters = () => dispatch => dispatch({
   type: INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
@@ -186,31 +190,32 @@ const buildSearchQuery = (items, field) => {
 
 const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => {
   const result = [];
-  subscriptionMap.forEach((value) => {
+  subscriptionMap.forEach((entry) => {
     let cluster;
-    if (value.subscription.managed
-      && value.subscription.status !== subscriptionStatuses.DEPROVISIONED
-      && !!value?.cluster && !isEmpty(value?.cluster)) {
+    if (entry.subscription.managed
+      && entry.subscription.status !== subscriptionStatuses.DEPROVISIONED
+      && !!entry?.cluster && !isEmpty(entry?.cluster)) {
       // managed cluster, with data from Clusters Service
-      cluster = normalizeCluster(value.cluster);
-      cluster.metrics = normalizeMetrics(value.subscription.metrics);
+      cluster = normalizeCluster(entry.cluster);
+      cluster.metrics = normalizeMetrics(entry.subscription.metrics);
     } else {
-      // either not managed by Clusters Service, or Clusters Service is down
-      cluster = fakeClusterFromSubscription(value.subscription);
+      cluster = isAssistedInstallSubscription(entry.subscription)
+        ? fakeAIClusterFromSubscription(entry.subscription, entry.cluster)
+        : fakeClusterFromSubscription(entry.subscription);
     }
 
     // mark this as a clusters service cluster with partial data (happens when CS is down)
-    cluster.partialCS = cluster.managed && (!value?.cluster || isEmpty(value?.cluster));
+    cluster.partialCS = cluster.managed && (!entry?.cluster || isEmpty(entry?.cluster));
 
-    cluster.canEdit = !cluster.partialCS && ((canEdit['*'] || !!canEdit[cluster.id]) && value.subscription.status !== subscriptionStatuses.DEPROVISIONED);
+    cluster.canEdit = !cluster.partialCS && ((canEdit['*'] || !!canEdit[cluster.id]) && entry.subscription.status !== subscriptionStatuses.DEPROVISIONED);
     cluster.canDelete = !cluster.partialCS && (canDelete['*'] || !!canDelete[cluster.id]);
-    cluster.subscription = value.subscription;
+    cluster.subscription = entry.subscription;
     result.push(cluster);
   });
   return result;
 };
 
-const fetchClustersAndPermissions = (clusterRequestParams) => {
+const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFlag) => {
   let subscriptions;
   let canEdit;
   let canDelete;
@@ -226,9 +231,13 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
       { action: 'update', resource_type: 'Cluster' },
     ).then((response) => { canEdit = buildPermissionDict(response); }),
   ];
+
   return Promise.all(promises)
     .then(() => {
-      const items = subscriptions?.data?.items;
+      const items = subscriptions?.data?.items.filter(
+        item => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
+      );
+
       if (!items) {
         return subscriptions;
       }
@@ -240,62 +249,85 @@ const fetchClustersAndPermissions = (clusterRequestParams) => {
         subscription: item,
       }));
 
-      // clusters-service only needed for managed clusters.
-      const managedSubsriptions = items.filter(s => s.managed
-        && s.status !== subscriptionStatuses.DEPROVISIONED);
-      if (managedSubsriptions.length === 0) {
-        return {
-          data: {
-            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-            page: subscriptions.data.page,
-            total: subscriptions.data.total || 0,
-            queryParams: { ...clusterRequestParams },
-          },
-        };
-      }
-
-      // fetch managed clusters by subscription
-      const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
-      return clusterService.getClusters(clustersQuery)
-        .then((response) => {
-          const clusters = response?.data?.items;
-          clusters.forEach((cluster) => {
-            const entry = subscriptionMap.get(cluster.id);
-            if (entry !== undefined) {
-              // store cluster into subscription map
-              entry.cluster = cluster;
-              subscriptionMap.set(cluster.id, entry);
-            }
-          });
+      const enrichForClusterService = () => {
+        // clusters-service only needed for managed clusters.
+        const managedSubsriptions = items.filter(s => s.managed
+          && s.status !== subscriptionStatuses.DEPROVISIONED);
+        if (managedSubsriptions.length === 0) {
           return {
             data: {
               items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
               page: subscriptions.data.page,
               total: subscriptions.data.total || 0,
               queryParams: { ...clusterRequestParams },
-              meta: {
-                clustersServiceError: false,
-              },
             },
           };
-        }).catch(e => ({
-          // When clusters service is down, return AMS data only
-          data: {
-            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-            page: subscriptions.data.page,
-            total: subscriptions.data.total || 0,
-            queryParams: { ...clusterRequestParams },
-            meta: {
-              clustersServiceError: e,
+        }
+
+        // fetch managed clusters by subscription
+        const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
+        return clusterService.getClusters(clustersQuery)
+          .then((response) => {
+            const clusters = response?.data?.items;
+            clusters.forEach((cluster) => {
+              const entry = subscriptionMap.get(cluster.id);
+              if (entry !== undefined) {
+                // store cluster into subscription map
+                entry.cluster = cluster;
+                subscriptionMap.set(cluster.id, entry);
+              }
+            });
+            return {
+              data: {
+                items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
+                page: subscriptions.data.page,
+                total: subscriptions.data.total || 0,
+                queryParams: { ...clusterRequestParams },
+                meta: {
+                  clustersServiceError: false,
+                },
+              },
+            };
+          }).catch(e => ({
+            // When clusters service is down, return AMS data only
+            data: {
+              items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
+              page: subscriptions.data.page,
+              total: subscriptions.data.total || 0,
+              queryParams: { ...clusterRequestParams },
+              meta: {
+                clustersServiceError: e,
+              },
             },
-          },
-        }));
+          }));
+      };
+
+      const aiPromises = [];
+      if (aiMergeListsFeatureFlag) {
+        subscriptionMap.forEach((value, clusterId) => {
+          if (isAssistedInstallSubscription(value.subscription)) {
+            /* TODO(mlibra): query all just-needed AI clusters at once, filter by subscription ID
+                Requires: https://issues.redhat.com/browse/MGMT-5259)
+            */
+            aiPromises.push(assistedService.getAICluster(clusterId).then((res) => {
+              const entry = subscriptionMap.get(clusterId);
+              entry.cluster = res?.data; // The AI cluster
+              subscriptionMap.set(clusterId, entry);
+            }));
+          }
+        });
+      }
+
+      return Promise.allSettled(aiPromises).then(enrichForClusterService);
     });
 };
 
-const fetchClusters = params => dispatch => dispatch({
+const fetchClusters = params => (dispatch, getState) => dispatch({
   type: clustersConstants.GET_CLUSTERS,
-  payload: fetchClustersAndPermissions(params),
+  payload: fetchClustersAndPermissions(
+    params,
+    getState().features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE],
+  ),
 });
 
 const fetchSingleClusterAndPermissions = async (subscriptionID) => {
@@ -313,7 +345,6 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
     && subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
     const cluster = await clusterService.getClusterDetails(subscription.data.cluster_id);
     cluster.data = normalizeCluster(cluster.data);
-
     const canDeleteAccessReviewResponse = await authorizationsService.selfAccessReview(
       { action: 'delete', resource_type: 'Cluster', cluster_id: subscription.data.cluster_id },
     );
@@ -331,7 +362,14 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   }
 
   const cluster = {};
-  cluster.data = fakeClusterFromSubscription(subscription.data); // TODO remove fake cluster
+  if (isAssistedInstallSubscription(subscription.data)) {
+    const aiCluster = await assistedService.getAICluster(subscription.data.cluster_id);
+    cluster.data = fakeAIClusterFromSubscription(subscription.data, aiCluster?.data || null);
+    cluster.data.aiCluster = aiCluster.data;
+  } else {
+    cluster.data = fakeClusterFromSubscription(subscription.data); // TODO remove fake cluster
+  }
+
   cluster.data.canEdit = canEdit;
   cluster.data.canDelete = false; // OCP clusters can't be deleted
   cluster.data.subscription = subscription.data;

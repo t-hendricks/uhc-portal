@@ -18,6 +18,7 @@ import {
 } from '@patternfly/react-table';
 
 import { Link } from 'react-router-dom';
+import { ClusterStatus as AIClusterStatus } from 'openshift-assisted-ui-lib';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
 import clusterStates, { getClusterStateAndDescription } from '../../common/clusterStates';
@@ -28,6 +29,7 @@ import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActio
 import skeletonRows from '../../../common/SkeletonRows';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
+import isAssistedInstallSubscription from '../../../../common/isAssistedInstallerCluster';
 
 function ClusterListTable(props) {
   const {
@@ -55,7 +57,14 @@ function ClusterListTable(props) {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
 
     const clusterName = (
-      <Link to={`/details/s/${cluster.subscription.id}`} onClick={() => { if (!cluster.partialCS) { setClusterDetails(cluster); } }}>
+      <Link
+        to={`/details/s/${cluster.subscription.id}`}
+        onClick={() => {
+          if (!cluster.partialCS) {
+            setClusterDetails(cluster);
+          }
+        }}
+      >
         {getClusterName(cluster)}
       </Link>
     );
@@ -64,6 +73,9 @@ function ClusterListTable(props) {
     const icon = <ClusterStateIcon clusterState={clusterState.state || ''} animated={false} />;
     const clusterStatus = (clusterStateAndDescription) => {
       const { state, description } = clusterStateAndDescription;
+      if (isAssistedInstallSubscription(cluster.subscription)) {
+        return <AIClusterStatus status={cluster.state} />;
+      }
       if (state === clusterStates.ERROR) {
         return (
           <span>

@@ -53,6 +53,7 @@ import { productFilterOptions } from '../../../common/subscriptionTypes';
 
 import { viewPropsChanged, createViewQueryObject, getQueryParam } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
+import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../../../redux/constants/featureConstants';
 
 class ClusterList extends Component {
   state = {
@@ -94,10 +95,15 @@ class ClusterList extends Component {
   componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
     const {
-      viewOptions, valid, pending,
+      viewOptions, valid, pending, features,
     } = this.props;
+    // List only selected features here to avoid request-flooding.
+    const isFeatureChange = features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE]
+      !== prevProps.features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE];
+
     if ((!valid && !pending)
-        || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
+      || isFeatureChange
+      || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ loadingChangedView: true });
       this.refresh();
@@ -339,6 +345,7 @@ ClusterList.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   anyModalOpen: PropTypes.bool,
+  features: PropTypes.object.isRequired,
   queryParams: PropTypes.shape({
     has_filters: PropTypes.bool,
   }),

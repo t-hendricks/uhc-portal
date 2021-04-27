@@ -31,6 +31,7 @@ const mapStateToProps = state => ({
   cloudProviders: state.cloudProviders,
   organization: state.userProfile.organization,
   anyModalOpen: !!state.modal.modalName,
+  features: state.features,
   canSubscribeOCPList: canSubscribeOCPListSelector(state),
   canHibernateClusterList: canHibernateClusterListSelector(state),
   canTransferClusterOwnershipList: canTransferClusterOwnershipListSelector(state),
