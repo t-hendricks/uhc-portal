@@ -1251,7 +1251,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  VMWare vSphere-ipi 1`] = `
+exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
 <Fragment>
   <Card
     className="ocm-ocp-instructions__card"
@@ -1274,7 +1274,7 @@ exports[`Every OCP instruction page should render:  VMWare vSphere-ipi 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="stable"
-              cloudProviderID="VMWare vSphere"
+              cloudProviderID="VMware vSphere"
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
@@ -1305,7 +1305,7 @@ exports[`Every OCP instruction page should render:  VMWare vSphere-ipi 1`] = `
                 Follow the instructions to configure your environment and install your cluster
               </Text>
               <GetStarted
-                cloudProviderID="VMWare vSphere"
+                cloudProviderID="VMware vSphere"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned.html"
                 isBMIPI={false}
@@ -1340,7 +1340,7 @@ exports[`Every OCP instruction page should render:  VMWare vSphere-ipi 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  VMWare vSphere-upi 1`] = `
+exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
 <Fragment>
   <Card
     className="ocm-ocp-instructions__card"
@@ -1363,7 +1363,7 @@ exports[`Every OCP instruction page should render:  VMWare vSphere-upi 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="stable"
-              cloudProviderID="VMWare vSphere"
+              cloudProviderID="VMware vSphere"
               isBMIPI={false}
               pendoID="/"
               rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere"
@@ -1395,7 +1395,7 @@ exports[`Every OCP instruction page should render:  VMWare vSphere-upi 1`] = `
                 Follow the instructions to configure your environment and install your cluster
               </Text>
               <GetStarted
-                cloudProviderID="VMWare vSphere"
+                cloudProviderID="VMware vSphere"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html"
                 isBMIPI={false}
