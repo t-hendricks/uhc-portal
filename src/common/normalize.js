@@ -140,6 +140,9 @@ const fakeClusterFromSubscription = (subscription) => {
       id: normalizeProductID(subscription.plan.id),
     },
     managed: clustersServiceProducts.includes(normalizeProductID(subscription.plan.id)),
+    ccs: {
+      enabled: false,
+    },
     metrics,
   };
   const cloudProvider = subscription.cloud_provider_id;
