@@ -46,7 +46,7 @@ class PullSecretSection extends React.Component {
     return (
       <>
         <Text component="p">
-          { text || 'Download or copy your pull secret. The install program will prompt you for your pull secret during installation.'}
+          { text || 'Download or copy your pull secret. You\'ll be prompted for this information during installation.'}
         </Text>
         <div>
           {isDisabled ? downloadButton : (
