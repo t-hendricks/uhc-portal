@@ -81,7 +81,7 @@ const emptyMetrics = {
 const normalizeMetrics = (metrics) => {
   const ret = metrics ? { ...emptyMetrics, ...metrics } : { ...emptyMetrics };
   const subFields = ['memory', 'storage', 'cpu', 'nodes'];
-  const consumptionFields = ['memory', 'storage']; // fields with total+used
+  const consumptionFields = ['memory', 'storage', 'cpu']; // fields with total+used
   subFields.forEach((field) => {
     ret[field] = { ...emptyMetrics[field], ...ret[field] };
     if (consumptionFields.includes(field)) {
