@@ -55,7 +55,6 @@ function BillingModelSection({
     </p>
   );
 
-  const showSubscriptionType = showOSDTrial || hasMarketplaceQuota;
   let defaultBillingModel = !billingModel ? STANDARD : billingModel;
   if (product === normalizedProducts.OSDTrial) {
     defaultBillingModel = 'standard-trial';
@@ -75,13 +74,13 @@ function BillingModelSection({
 
   // Select marketplace billing if user only has marketplace quota
   if (hasMarketplaceQuota && !hasStandardOSDQuota && hasMarketplaceSubscription) {
-    defaultBillingModel = 'marketplace';
+    defaultBillingModel = billingModels.MARKETPLACE;
   }
 
   const subscriptionOptions = [
     {
       disabled: !hasStandardOSDQuota,
-      value: 'standard',
+      value: billingModels.STANDARD,
       ariaLabel: 'Standard',
       label: 'Annual: Fixed capacity subscription from Red Hat',
       description: 'Use the quota pre-purchased by your organization',
@@ -105,13 +104,15 @@ function BillingModelSection({
     subscriptionOptions.push(
       {
         disabled: !hasMarketplaceSubscription,
-        value: 'marketplace',
+        value: billingModels.MARKETPLACE,
         ariaLabel: 'Marketplace',
         label: 'On-demand: Flexible usage billed through the Red Hat Marketplace',
         description: marketplaceQuotaDescription,
       },
     );
   }
+
+  const showSubscriptionType = subscriptionOptions.length > 1;
 
   return (
     <GridItem span={12}>
