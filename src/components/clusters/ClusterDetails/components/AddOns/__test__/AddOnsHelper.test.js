@@ -22,6 +22,7 @@ import {
   isAvailable,
   isInstalled,
   hasQuota,
+  quotaCostOptions,
   availableAddOns,
   hasParameters,
   getParameter,
@@ -219,6 +220,115 @@ describe('parameterValuesForEditing', () => {
     const mockAddOnsInstallParams = { parameters: { items: [{ id: 'my-bool', value: 'false' }] } };
     const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
     expect(param).toEqual({ parameters: { 'my-bool': false } });
+  });
+  it('should return option value for param with options and no installation param value', () => {
+    const mockAddOnsParams = {
+      parameters: {
+        items: [
+          {
+            id: 'my-string',
+            value_type: 'string',
+            options: [{
+              name: 'option 1',
+              value: 'options 1',
+            }],
+          },
+        ],
+      },
+    };
+    const mockAddOnsInstallParams = {};
+    const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
+    expect(param).toEqual({ parameters: { 'my-string': 'options 1' } });
+  });
+  it('should return current param value for param with options and installation param value', () => {
+    const mockAddOnsParams = {
+      parameters: {
+        items: [
+          {
+            id: 'my-string',
+            value_type: 'string',
+            options: [{
+              name: 'option 1',
+              value: 'options 1',
+            }, {
+              name: 'option 2',
+              value: 'options 2',
+            }],
+          },
+        ],
+      },
+    };
+    const mockAddOnsInstallParams = {
+      parameters: {
+        items: [
+          {
+            id: 'my-string',
+            value: 'options 2',
+          },
+        ],
+      },
+    };
+    const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
+    expect(param).toEqual({ parameters: { 'my-string': 'options 2' } });
+  });
+});
+
+describe('quotaCostOptions', () => {
+  it('returns all options when allowed quota greater than all values', () => {
+    const allOptions = [{ name: 'Option 1', value: '1' }, { name: 'Option 2', value: '15' }];
+    // crcWorkspacesAddonQuota allowed: 15, consumed: 0
+    const quotaOptions = quotaCostOptions(
+      'addon-crw-operator', OSDCluster, crcWorkspacesAddonQuota,
+      allOptions, 0,
+    );
+    expect(quotaOptions).toEqual(allOptions);
+  });
+  it('removes options that are greater than allowed quota', () => {
+    const allOptions = [{ name: 'Option 1', value: '15' }, { name: 'Option 2', value: '16' }];
+    // crcWorkspacesAddonQuota allowed: 15, consumed: 0
+    const quotaOptions = quotaCostOptions(
+      'addon-crw-operator', OSDCluster, crcWorkspacesAddonQuota,
+      allOptions, 0,
+    );
+    expect(quotaOptions).toEqual([{ name: 'Option 1', value: '15' }]);
+  });
+  it('returns empty options list when no quota', () => {
+    const allOptions = [
+      { name: 'Option 1', value: '1' },
+      { name: 'Option 2', value: '2' },
+      { name: 'Option 3', value: '5' },
+    ];
+    // loggingAddonQuota allowed: 5, consumed: 5
+    const quotaOptions = quotaCostOptions(
+      'addon-cluster-logging-operator', OSDCluster, loggingAddonQuota,
+      allOptions, 0,
+    );
+    expect(quotaOptions).toEqual([]);
+  });
+  it('returns options that are included in the current value', () => {
+    const allOptions = [
+      { name: 'Option 1', value: '1' },
+      { name: 'Option 2', value: '2' },
+      { name: 'Option 3', value: '5' },
+    ];
+    // loggingAddonQuota allowed: 5, consumed: 5
+    const quotaOptions = quotaCostOptions(
+      'addon-cluster-logging-operator', OSDCluster, loggingAddonQuota,
+      allOptions, 2,
+    );
+    expect(quotaOptions).toEqual([
+      { name: 'Option 1', value: '1' },
+      { name: 'Option 2', value: '2' },
+    ]);
+  });
+  it('returns all options when unknown resource name', () => {
+    const allOptions = [{ name: 'Option 1', value: '1' }, { name: 'Option 2', value: '15' }];
+    // crcWorkspacesAddonQuota allowed: 15, consumed: 0
+    const quotaOptions = quotaCostOptions(
+      'not-a-valid-resource-name', OSDCluster, crcWorkspacesAddonQuota,
+      allOptions, 0,
+    );
+    expect(quotaOptions).toEqual(allOptions);
   });
 });
 
