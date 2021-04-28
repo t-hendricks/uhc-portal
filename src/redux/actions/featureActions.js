@@ -27,19 +27,13 @@ export const features = [
   getSimpleUnleashFeature('assisted-installer-sno', ASSISTED_INSTALLER_SNO_FEATURE),
   getSimpleUnleashFeature('assisted-installer-ocs', ASSISTED_INSTALLER_OCS_FEATURE),
   getSimpleUnleashFeature('assisted-installer-cnv', ASSISTED_INSTALLER_CNV_FEATURE),
+  getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: organizationID => Promise.all([
       authorizationsService.selfAccessReview({ action: 'create', resource_type: 'BareMetalCluster' }),
       accountsService.getFeature('assisted-installer', organizationID),
     ]).then(([resource, unleash]) => resource.data.allowed && unleash.data.enabled),
-  },
-  {
-    name: ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
-    action: organizationID => (organizationID
-      ? accountsService.getFeature('assisted-installer-merge-lists', organizationID)
-        .then(unleash => unleash.data.enabled)
-      : Promise.reject(Error('No organization'))),
   },
 ];
 
