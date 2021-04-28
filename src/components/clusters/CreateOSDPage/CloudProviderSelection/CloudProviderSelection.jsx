@@ -31,7 +31,12 @@ class CloudProviderSelection extends Component {
 
   render() {
     const {
-      hasProductQuota, hasGcpQuota, hasAwsQuota, organization, osdTrialFeature, product,
+      hasProductQuota,
+      hasGcpQuota,
+      hasAwsQuota,
+      organization,
+      osdTrialFeature,
+      product,
     } = this.props;
 
     const selectedOSDTrial = product === normalizedProducts.OSDTrial;
@@ -39,10 +44,9 @@ class CloudProviderSelection extends Component {
 
     if (!organization.pending && (organization.fulfilled || organization.error)) {
       const noTrialQuota = (selectedOSDTrial && (!hasProductQuota || !osdTrialFeature));
-      if (noTrialQuota) {
-        // parameter is important for pendo
+      if (noTrialQuota || (!hasGcpQuota && !hasAwsQuota)) {
         return (
-          <Redirect to="/create?trial=expired" />
+          <Redirect to={`/create${noTrialQuota ? '?trial=expired' : ''}`} />
         );
       }
     }
