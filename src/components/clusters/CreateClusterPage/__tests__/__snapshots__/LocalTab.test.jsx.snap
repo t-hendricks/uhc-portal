@@ -58,23 +58,12 @@ exports[`<LocalTab /> renders correctly 1`] = `
               <Text
                 component="h2"
               >
-                What you need to get started
+                Download what you need to get started
               </Text>
               <Text
                 component="h3"
               >
-                CodeReady Containers archive
-              </Text>
-              <Text
-                component="p"
-              >
-                Download and extract the CodeReady Containers archive for your operating system and place the executable in your
-                 
-                <code>
-                  $PATH
-                </code>
-                 
-                .
+                CodeReady Containers
               </Text>
               <DownloadAndOSSelection
                 channel="CRC"
@@ -120,37 +109,41 @@ exports[`<LocalTab /> renders correctly 1`] = `
               <Text
                 component="p"
               >
-                Run the
+                Run
                  
                 <code>
                   crc setup
                 </code>
                  
-                command to set up your host operating system for the CodeReady Containers virtual machine.
+                to set up your host operating system for the CodeReady Containers virtual machine.
               </Text>
               <Text
                 component="p"
               >
-                Then, the
+                Then, run
                  
                 <code>
                   crc start
                 </code>
                  
-                will create a minimal OpenShift 4 cluster on your laptop or desktop computer.
+                to create a minimal OpenShift 4 cluster on your computer.
               </Text>
-              <Button
-                className="pf-u-mb-md"
-                component="a"
-                href="https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/"
-                onClick={[Function]}
-                rel="noreferrer noopener"
-                target="_blank"
-                variant="secondary"
-              >
-                Get started
-              </Button>
             </TextContent>
+            <a
+              href="https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/"
+              onClick={[Function]}
+              rel="noreferrer noopener"
+              target="_blank"
+              variant="link"
+            >
+              View the CodeReady Containers Getting started guide
+               
+              <ExternalLinkAltIcon
+                color="#0066cc"
+                noVerticalAlign={false}
+                size="sm"
+              />
+            </a>
           </SplitItem>
         </Split>
       </StackItem>
