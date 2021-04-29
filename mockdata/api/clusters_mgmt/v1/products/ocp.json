@@ -1,0 +1,6 @@
+{
+  "kind": "Product",
+  "id": "ocp",
+  "href": "/api/clusters_mgmt/v1/products/ocp",
+  "name": "OpenShift Container Platform"
+}

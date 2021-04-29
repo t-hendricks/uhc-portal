@@ -1,0 +1,10 @@
+{
+  "id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+  "kind": "Organization",
+  "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x",
+  "name": "Red Hat : Service Delivery : SDA/B",
+  "external_id": "12541229",
+  "ebs_account_id": "6266656",
+  "created_at": "2019-06-07T15:24:29.126505Z",
+  "updated_at": "2021-03-21T19:17:09.381647Z"
+}
