@@ -491,3 +491,36 @@ export const serviceMeshAddon = [
     ],
   },
 ];
+
+export const storage = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+    organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+    quota_id: 'pv.storage|gp2',
+    allowed: 27000,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'gp2',
+        resource_type: 'pv.storage',
+        byoc: 'rhinfra',
+        availability_zone_type: 'any',
+        product: 'any',
+        billing_model: 'standard',
+        cost: 1,
+      },
+      {
+        cloud_provider: 'any',
+        resource_name: 'gp2',
+        resource_type: 'pv.storage',
+        byoc: 'byoc',
+        availability_zone_type: 'any',
+        product: 'any',
+        billing_model: 'standard',
+        cost: 0,
+      },
+    ],
+  },
+];
