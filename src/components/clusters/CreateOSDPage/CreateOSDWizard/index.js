@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { reduxForm, reset, formValueSelector } from 'redux-form';
+import { reduxForm, isValid, reset, formValueSelector } from 'redux-form';
 import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
@@ -34,7 +34,7 @@ const reduxFormConfig = {
   onSubmitFail: scrollToFirstError,
 };
 
-const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDWizard);
+// const reduxFormCreateOSDPage = reduxForm(reduxFormConfig)(CreateOSDWizard);
 
 const mapStateToProps = (state, ownProps) => {
   const { organization } = state.userProfile;
@@ -62,6 +62,8 @@ const mapStateToProps = (state, ownProps) => {
                            || hasGcpQuotaSelector(state, OSD, STANDARD);
 
   return ({
+    isValid: isValid('CreateCluster')(state),
+
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
     organization,
@@ -141,4 +143,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   getLoadBalancers: () => dispatch(getLoadBalancerValues()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxFormCreateOSDPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateOSDWizard);
