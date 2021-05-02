@@ -1,35 +1,16 @@
-import { monitoringConstants } from './MonitoringConstants';
-import { clusterService } from '../../../../../services';
+import monitoringConstants from './MonitoringConstants';
+import { accountsService } from '../../../../../services';
 
-const getAlerts = clusterID => dispatch => dispatch({
-  type: monitoringConstants.GET_ALERTS,
-  payload: clusterService.getAlerts(clusterID),
-});
-
-const getNodes = clusterID => dispatch => dispatch({
-  type: monitoringConstants.GET_NODES,
-  payload: clusterService.getNodes(clusterID),
-});
-
-const getClusterOperators = clusterID => dispatch => dispatch({
-  type: monitoringConstants.GET_OPERATORS,
-  payload: clusterService.getClusterOperators(clusterID),
+const getOnDemandMetrics = subscriptionID => dispatch => dispatch({
+  type: monitoringConstants.GET_ONDEMAND_METRICS,
+  payload: accountsService.getOnDemandMetrics(subscriptionID),
 });
 
 const clearMonitoringState = () => dispatch => dispatch({
   type: monitoringConstants.CLEAR_MONITORING_STATE,
 });
 
-const MoniotoringActions = {
-  getAlerts,
-  getNodes,
-  clearMonitoringState,
-};
-
 export {
-  MoniotoringActions,
-  getAlerts,
-  getNodes,
-  getClusterOperators,
+  getOnDemandMetrics,
   clearMonitoringState,
 };

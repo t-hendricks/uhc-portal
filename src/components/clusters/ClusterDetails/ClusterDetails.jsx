@@ -200,9 +200,7 @@ class ClusterDetails extends Component {
     const {
       clusterDetails,
       getUsers,
-      getAlerts,
-      getNodes,
-      getClusterOperators,
+      getOnDemandMetrics,
       getClusterAddOns,
       getOrganizationAndQuota,
       getGrants,
@@ -244,9 +242,8 @@ class ClusterDetails extends Component {
         getGrants(clusterID);
       }
     } else {
-      getAlerts(clusterID);
-      getNodes(clusterID);
-      getClusterOperators(clusterID);
+      const subscriptionID = clusterDetails.cluster?.subscription?.id;
+      getOnDemandMetrics(subscriptionID);
     }
   }
 
@@ -650,9 +647,7 @@ ClusterDetails.propTypes = {
   fetchGroups: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
-  getAlerts: PropTypes.func.isRequired,
-  getNodes: PropTypes.func.isRequired,
-  getClusterOperators: PropTypes.func.isRequired,
+  getOnDemandMetrics: PropTypes.func.isRequired,
   getAddOns: PropTypes.func.isRequired,
   getClusterAddOns: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,

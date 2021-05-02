@@ -1,8 +1,8 @@
 {
   "kind": "SubscriptionList",
   "page": 1,
-  "size": 12,
-  "total": 12,
+  "size": 13,
+  "total": 13,
   "items": [
     {
       "id": "1KgB0WcVBZBdRGAreuve29yoxUB",
@@ -31,6 +31,162 @@
       "status": "Disconnected",
       "last_reconcile_date": "2019-12-22T09:45:57.158566Z",
       "consumer_uuid": "290a2d7b-fb92-4ccf-a3c3-1e6001c60524"
+    },
+    {
+      "id": "1kZocg1yV75YxwMX9cwGWGrIwdW",
+      "kind": "Subscription",
+      "href": "/api/accounts_mgmt/v1/subscriptions/1kZocg1yV75YxwMX9cwGWGrIwdW",
+      "plan": {
+        "id": "OCP",
+        "kind": "Plan",
+        "href": "/api/accounts_mgmt/v1/plans/OCP",
+        "type": "OCP"
+      },
+      "cluster_id": "1h30qsvgdl512pu905vf04tfrglaj3k2",
+      "external_cluster_id": "fcbd6131-3f14-42b7-b7e8-b430e15ea99b",
+      "organization_id": "1Uw3D5Uyn40MqE4fnsp0T7J6jVu",
+      "last_telemetry_date": "2021-04-29T09:58:51.80003Z",
+      "created_at": "2020-11-21T00:12:35.576671Z",
+      "updated_at": "2021-04-29T09:58:51.800059Z",
+      "support_level": "Standard",
+      "service_level": "L1-L3",
+      "usage": "Development/Test",
+      "system_units": "Cores/vCPU",
+      "cpu_total": 64,
+      "socket_total": 8,
+      "display_name": "OCP 4.x AWS LZ NP2",
+      "creator": {
+        "id": "1Uw3D0y5CARYYKyRH7vj6Ce3xAV",
+        "kind": "Account",
+        "href": "/api/accounts_mgmt/v1/accounts/1Uw3D0y5CARYYKyRH7vj6Ce3xAV",
+        "name": "Aleksey Usov",
+        "username": "ausov",
+        "email": "***REMOVED***"
+      },
+      "managed": false,
+      "status": "Active",
+      "provenance": "Telemetry",
+      "last_reconcile_date": "2021-04-29T08:43:31.127227Z",
+      "consumer_uuid": "fcbd6131-3f14-42b7-b7e8-b430e15ea99b",
+      "console_url": "https://console-openshift-console.apps.lz-np2.ent-ocp4-useast1.aws.internal.das",
+      "capabilities": [
+        {
+          "name": "capability.cluster.subscribed_ocp",
+          "value": "true",
+          "inherited": true
+        }
+      ],
+      "last_released_at": "0001-01-01T00:00:00Z",
+      "metrics": [
+        {
+          "health_state": "unhealthy",
+          "memory": {
+            "updated_timestamp": "2021-04-29T10:20:24.14Z",
+            "used": {
+              "value": 148598087680,
+              "unit": "B"
+            },
+            "total": {
+              "value": 843893919744,
+              "unit": "B"
+            }
+          },
+          "cpu": {
+            "updated_timestamp": "2021-04-29T10:20:11.976Z",
+            "used": {
+              "value": 22.826992303217125,
+              "unit": ""
+            },
+            "total": {
+              "value": 200,
+              "unit": ""
+            }
+          },
+          "sockets": {
+            "updated_timestamp": "0001-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 0,
+              "unit": ""
+            }
+          },
+          "compute_nodes_memory": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": "B"
+            },
+            "total": {
+              "value": 742726840320,
+              "unit": "B"
+            }
+          },
+          "compute_nodes_cpu": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 176,
+              "unit": ""
+            }
+          },
+          "compute_nodes_sockets": {
+            "updated_timestamp": "0001-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": ""
+            },
+            "total": {
+              "value": 0,
+              "unit": ""
+            }
+          },
+          "storage": {
+            "updated_timestamp": "1970-01-01T00:00:00Z",
+            "used": {
+              "value": 0,
+              "unit": "B"
+            },
+            "total": {
+              "value": 0,
+              "unit": "B"
+            }
+          },
+          "nodes": {
+            "total": 14,
+            "master": 3,
+            "compute": 11
+          },
+          "operating_system": "",
+          "upgrade": {
+            "updated_timestamp": "2021-04-29T10:20:19.76Z",
+            "available": true,
+            "state": "failed",
+            "version": "4.6.4"
+          },
+          "state": "ready",
+          "state_description": "",
+          "openshift_version": "4.6.4",
+          "cloud_provider": "aws",
+          "region": "us-east-1",
+          "console_url": "https://console-openshift-console.apps.lz-np2.ent-ocp4-useast1.aws.internal.das",
+          "critical_alerts_firing": 3,
+          "operators_condition_failing": 1,
+          "subscription_cpu_total": 64,
+          "subscription_socket_total": 8,
+          "subscription_obligation_exists": 3,
+          "cluster_type": ""
+        }
+      ],
+      "cloud_provider_id": "aws",
+      "region_id": "us-east-1",
+      "cluster_billing_model": "standard",
+      "trial_end_date": "0001-01-01T00:00:00Z"
     },
     {
       "id": "1mbpBkP1bZSqhiMeIhSdnQbj9sB",

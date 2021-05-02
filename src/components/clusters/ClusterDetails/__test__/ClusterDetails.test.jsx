@@ -54,16 +54,8 @@ describe('<ClusterDetails />', () => {
           .toBeCalledWith(fixtures.clusterDetails.cluster.id);
       });
 
-      it('should not get alerts', () => {
-        expect(functions.getAlerts).toHaveBeenCalledTimes(0);
-      });
-
-      it('should not get nodes', () => {
-        expect(functions.getNodes).toHaveBeenCalledTimes(0);
-      });
-
-      it('should not get cluster operators', () => {
-        expect(functions.getClusterOperators).toHaveBeenCalledTimes(0);
+      it('should not get on-demand metrics', () => {
+        expect(functions.getOnDemandMetrics).toHaveBeenCalledTimes(0);
       });
     });
 
@@ -181,19 +173,9 @@ describe('<ClusterDetails />', () => {
     };
     const wrapper = shallow(<ClusterDetails {...props} />);
 
-    it('should get alerts', () => {
-      expect(functions.getAlerts)
-        .toBeCalledWith(fixtures.OCPClusterDetails.cluster.id);
-    });
-
-    it('should get nodes', () => {
-      expect(functions.getNodes)
-        .toBeCalledWith(fixtures.OCPClusterDetails.cluster.id);
-    });
-
-    it('should get cluster operators', () => {
-      expect(functions.getClusterOperators)
-        .toBeCalledWith(fixtures.OCPClusterDetails.cluster.id);
+    it('should get on-demand metrics', () => {
+      expect(functions.getOnDemandMetrics)
+        .toBeCalledWith(fixtures.OCPClusterDetails.cluster.subscription.id);
     });
 
     it('should show Insights Advisor tab', () => {
@@ -210,19 +192,9 @@ describe('<ClusterDetails />', () => {
     };
     const wrapper = shallow(<ClusterDetails {...props} />);
 
-    it('should get alerts', () => {
-      expect(functions.getAlerts)
-        .toBeCalledWith(fixtures.AROClusterDetails.cluster.id);
-    });
-
-    it('should get nodes', () => {
-      expect(functions.getNodes)
-        .toBeCalledWith(fixtures.AROClusterDetails.cluster.id);
-    });
-
-    it('should get cluster operators', () => {
-      expect(functions.getClusterOperators)
-        .toBeCalledWith(fixtures.AROClusterDetails.cluster.id);
+    it('should get on-demand metrics', () => {
+      expect(functions.getOnDemandMetrics)
+        .toBeCalledWith(fixtures.AROClusterDetails.cluster.subscription.id);
     });
 
     it('it should hide 2 tabs', () => {
