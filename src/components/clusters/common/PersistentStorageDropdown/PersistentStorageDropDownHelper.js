@@ -1,18 +1,6 @@
-import get from 'lodash/get';
 import { parseValueWithUnit } from '../../../../common/units';
 
 const baseClusterQuota = 107374182400; // The base cluster storage quota is 100 GiB (in bytes).
-
-/**
- * Returns last level storage quota object indexed by the resource_name 'gp2'.
- */
-const quotaLookup = (quotaList, billingModel, product, cloudProviderID, isBYOC, isMultiAZ) => {
-  const resourceName = 'gp2';
-  const infra = isBYOC ? 'byoc' : 'rhInfra';
-  const zoneType = isMultiAZ ? 'multiAZ' : 'singleAZ';
-  return get(quotaList.storageQuota,
-    [billingModel, product, cloudProviderID, infra, zoneType, resourceName], {});
-};
 
 const filterPersistentStorageValuesByQuota = (currentValue,
   persistentStorageValues, remainingQuota) => {
@@ -32,6 +20,6 @@ const filterPersistentStorageValuesByQuota = (currentValue,
 };
 
 export {
-  quotaLookup,
+  // eslint-disable-next-line import/prefer-default-export
   filterPersistentStorageValuesByQuota,
 };
