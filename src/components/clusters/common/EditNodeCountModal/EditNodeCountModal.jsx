@@ -136,7 +136,6 @@ class EditNodeCountModal extends Component {
         </div>
       </Alert>
     );
-
     const pending = editNodeCountResponse.pending
       || organization.pending
       || machinePoolsList.pending;

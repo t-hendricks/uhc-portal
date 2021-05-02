@@ -1,5 +1,6 @@
 import React from 'react';
 import get from 'lodash/get';
+import { clustersConstants } from '../redux/constants';
 
 const BANNED_USER_CODE = 'ACCT-MGMT-22';
 const TERMS_REQUIRED_CODE = 'CLUSTERS-MGMT-451';
@@ -12,15 +13,17 @@ function overrideErrorMessage(payload, actionType = undefined) {
   let message = '';
 
   // override error by its kind
-  const errorKind = get(payload, 'details[0].kind', '');
-
+  const errorKind = get(payload, 'details[0].kind', '') || get(payload, 'errorDetails[0].kind', '');
   switch (errorKind) {
     case 'ExcessResources': {
       let resource = 'cluster';
       if (actionType !== undefined && /CLUSTER_ADDON/.test(actionType)) {
         resource = 'cluster add-on';
       }
-      message = `You are not authorized to create the ${resource} because your request exceeds available quota.
+      const verb = resource === 'cluster'
+      && actionType !== undefined
+      && actionType.includes(clustersConstants.EDIT_CLUSTER) ? 'edit' : 'create';
+      message = `You are not authorized to ${verb} the ${resource} because your request exceeds available quota.
               In order to fulfill this request, you will need quota/subscriptions for:`;
       break;
     }
