@@ -35,7 +35,6 @@ class CloudProviderSelection extends Component {
       hasGcpQuota,
       hasAwsQuota,
       organization,
-      osdTrialFeature,
       product,
     } = this.props;
 
@@ -43,7 +42,7 @@ class CloudProviderSelection extends Component {
     const productSlug = product.toLowerCase();
 
     if (!organization.pending && (organization.fulfilled || organization.error)) {
-      const noTrialQuota = (selectedOSDTrial && (!hasProductQuota || !osdTrialFeature));
+      const noTrialQuota = (selectedOSDTrial && !hasProductQuota);
       if (noTrialQuota || (!hasGcpQuota && !hasAwsQuota)) {
         return (
           <Redirect to={`/create${noTrialQuota ? '?trial=expired' : ''}`} />
@@ -153,12 +152,7 @@ CloudProviderSelection.propTypes = {
   hasGcpQuota: PropTypes.bool.isRequired,
   hasAwsQuota: PropTypes.bool.isRequired,
   hasProductQuota: PropTypes.bool.isRequired,
-  osdTrialFeature: PropTypes.bool,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
-};
-
-CloudProviderSelection.defaultProps = {
-  osdTrialFeature: false,
 };
 
 export default CloudProviderSelection;
