@@ -63,7 +63,13 @@ class ClusterList extends Component {
   componentDidMount() {
     document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
     const {
-      getCloudProviders, cloudProviders, setListFlag, getOrganizationAndQuota, organization,
+      getCloudProviders,
+      cloudProviders,
+      setListFlag,
+      getOrganizationAndQuota,
+      organization,
+      getMachineTypes,
+      machineTypes,
     } = this.props;
 
     scrollToTop();
@@ -85,6 +91,10 @@ class ClusterList extends Component {
 
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
+    }
+
+    if (!machineTypes.fulfilled && !machineTypes.pending) {
+      getMachineTypes();
     }
 
     if (!organization.fulfilled && !organization.pending) {
@@ -334,9 +344,11 @@ ClusterList.propTypes = {
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
+  getMachineTypes: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  machineTypes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
