@@ -205,6 +205,65 @@ const processLoadBalancerQuota = (loadBalancerQuota, item, resources) => {
   });
 };
 
+const processAddOnQuota = (addOnsQuota, item, resources) => {
+  const quota = addOnsQuota;
+
+  resources.forEach((resource) => {
+    const available = availableByCost(item, resource);
+    // quota_cost data may include addons you never had quota for (which we won't even show),
+    // and addons with allowed > 0 but all already used up (these we'll show disabled).
+    if (item.allowed === 0 && resource.cost > 0) {
+      return;
+    }
+
+    const {
+      availability_zone_type: availabilityZoneType,
+      cloud_provider: cloudProvider,
+      resource_name: resourceName,
+      product: quotaProduct,
+      billing_model: quotaBilling,
+    } = resource;
+    const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
+
+    /* eslint-disable no-param-reassign */
+    Object.entries(quota).forEach(([billing, billingQuota]) => {
+      if (quotaBilling === billing || quotaBilling === 'any') {
+        Object.entries(billingQuota).forEach(([product, productQuota]) => {
+          if (quotaProduct === product || quotaProduct === normalizedProducts.ANY) {
+            Object.entries(productQuota).forEach(([provider, providerQuota]) => {
+              if (cloudProvider === provider || cloudProvider === 'any') {
+                Object.entries(providerQuota).forEach(([category, categoryQuota]) => {
+                  if (infraCategory === category || infraCategory === 'any') {
+                    Object.entries(categoryQuota).forEach(([zoneType, zoneQuota]) => {
+                      if (`${availabilityZoneType}Az` === zoneType) {
+                        zoneQuota[resourceName] = available;
+                        zoneQuota.available += available;
+                        categoryQuota.totalAvailable += available;
+                      }
+                      // When calculating for any AZ, skip the totalAvailable property
+                      if (availabilityZoneType === 'any' && zoneType !== 'totalAvailable') {
+                        zoneQuota[resourceName] = available;
+                        zoneQuota.available += available;
+                        // To avoid double-counting, we calculate only half for each of the two AZ's
+                        categoryQuota.totalAvailable += available / 2;
+                      }
+
+                      if (categoryQuota.totalAvailable > 0) {
+                        providerQuota.isAvailable = true;
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+    /* eslint-enable no-param-reassign */
+  });
+};
+
 /**
  * Constructs a blank quota data structure (extracted for tests).
  */
@@ -333,12 +392,42 @@ const emptyQuota = () => {
     return result;
   };
 
+  const addOnsQuotaByAz = () => ({
+    singleAz: { available: 0 },
+    multiAz: { available: 0 },
+    totalAvailable: 0,
+  });
+  const addOnsQuotaByInfraAz = () => ({
+    byoc: addOnsQuotaByAz(),
+    rhInfra: addOnsQuotaByAz(),
+    isAvailable: false,
+  });
+  const addOnsQuotaByProviderInfraAz = () => ({
+    aws: addOnsQuotaByInfraAz(),
+    gcp: addOnsQuotaByInfraAz(),
+  });
+  const addOnsQuotaByProductProviderInfraAz = () => {
+    const result = {};
+    Object.keys(knownProducts).forEach((p) => {
+      result[p] = addOnsQuotaByProviderInfraAz();
+    });
+    return result;
+  };
+  const addOnsQuotaByBillingProductProviderInfraAz = () => {
+    const result = {};
+    Object.values(billingModels).forEach((model) => {
+      result[model] = addOnsQuotaByProductProviderInfraAz();
+    });
+    return result;
+  };
+
   return {
     items: [],
     clustersQuota: clustersQuotaByBillingProductProviderInfraAz(),
     nodesQuota: nodesQuotaByBillingProductProviderInfra(),
     storageQuota: storageQuotaByBillingProductProviderInfraAZ(),
     loadBalancerQuota: loadBalancerBillingProductProviderInfraAZ(),
+    addOnsQuota: addOnsQuotaByBillingProductProviderInfraAz(),
   };
 };
 
@@ -378,6 +467,11 @@ const processQuota = (response) => {
       case 'network.loadbalancer':
         // load balancer quota: "how much load balancer quota can I set on the cluster?"
         processLoadBalancerQuota(allQuotas.loadBalancerQuota, item, resources);
+        break;
+
+      case 'add-on':
+        // add-on quota: "how many of each add-on can I add on top of the base cluster?"
+        processAddOnQuota(allQuotas.addOnsQuota, item, resources);
         break;
 
       default:
@@ -427,6 +521,7 @@ const userActions = {
   processNodeQuota,
   processStorageQuota,
   processLoadBalancerQuota,
+  processAddOnQuota,
   emptyQuota,
   processQuota,
   selfTermsReview,

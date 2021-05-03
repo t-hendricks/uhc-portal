@@ -2,17 +2,6 @@ import get from 'lodash/get';
 
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 
-/**
- * Known quota resourceType values.
- */
-const quotaTypes = {
-  ADD_ON: 'add-on',
-  CLUSTER: 'cluster',
-  NODE: 'compute.node',
-  LOAD_BALANCER: 'network.loadbalancer',
-  STORAGE: 'pv.storage',
-};
-
 // Used for matching any in various fields of quota cost related resources
 const any = 'any';
 
@@ -99,7 +88,7 @@ const availableQuota = (
 /**
  * Returns true if org has matching quota with cost 0 or allowed > 0, even if it's all consumed!
  * This is useful to show a specific resource (possibly greyed out) vs not show it at all.
- * resourceType is required; other query fields may be omitted, default to 'any'.
+ * resourceType is required; othre query fields may be omitted, default to 'any'.
  */
 const hasPotentialQuota = (
   quotaList,
@@ -275,8 +264,6 @@ const availableNodesFromQuota = (
 };
 
 export {
-  quotaTypes,
-  any,
   availableQuota,
   hasPotentialQuota,
   queryFromCluster,

@@ -1,12 +1,24 @@
 import get from 'lodash/get';
+import has from 'lodash/has';
 
-import {
-  availableQuota, hasPotentialQuota, queryFromCluster, quotaTypes,
-} from '../../../common/quotaSelectors';
+import { billingModels } from '../../../../../common/subscriptionTypes';
+
+/**
+ * Returns last level indexed by resource_name e.g. {'addon-foo': 2, 'addon-bar': Infinity}.
+ */
+const quotaLookup = (cluster, quota) => {
+  const billingModel = get(cluster, 'billing_model', billingModels.STANDARD);
+  const product = cluster.subscription.plan.id; // TODO plan.type
+  const cloudProviderID = get(cluster, 'cloud_provider.id', 'any');
+  const infra = cluster.ccs?.enabled ? 'byoc' : 'rhInfra';
+  const zoneType = cluster.multi_az ? 'multiAz' : 'singleAz';
+
+  return get(quota.addOnsQuota, [billingModel, product, cloudProviderID, infra, zoneType], {});
+};
 
 // An add-on is only visible if it has an entry in the quota summary
 // regardless of whether the org has quota or not
-const isAvailable = (addOn, cluster, organization, quotaList) => {
+const isAvailable = (addOn, cluster, organization, quota) => {
   // We get quota together with organization.
   // TODO: have action/reducer set quota.fullfilled, drop organization arg.
   if (!addOn.enabled || !organization.fulfilled) {
@@ -14,11 +26,7 @@ const isAvailable = (addOn, cluster, organization, quotaList) => {
   }
 
   // If the add-on is not in the quota cost, it should not be available
-  return hasPotentialQuota(quotaList, {
-    ...queryFromCluster(cluster),
-    resourceType: quotaTypes.ADD_ON,
-    resourceName: addOn.resource_name,
-  }) >= 1;
+  return has(quotaLookup(cluster, quota), addOn.resource_name);
 };
 
 const isInstalled = (addOn, clusterAddOns) => {
@@ -34,36 +42,26 @@ const getInstalled = (addOn, clusterAddOns) => clusterAddOns.items.find(
 );
 
 // An add-on can only be installed if the org has quota for this particular add-on
-const hasQuota = (addOn, cluster, organization, quotaList) => {
-  if (!isAvailable(addOn, cluster, organization, quotaList)) {
+const hasQuota = (addOn, cluster, organization, quota) => {
+  if (!isAvailable(addOn, cluster, organization, quota)) {
     return false;
   }
 
-  return availableQuota(quotaList, {
-    ...queryFromCluster(cluster),
-    resourceType: quotaTypes.ADD_ON,
-    resourceName: addOn.resource_name,
-  }) >= 1;
+  return get(quotaLookup(cluster, quota), addOn.resource_name, 0) >= 1;
 };
 
-const quotaCostOptions = (resourceName, cluster, quotaList, allOptions, currentValue = 0) => {
+const quotaCostOptions = (resourceName, cluster, quota, allOptions, currentValue = 0) => {
   // Note: This is only currently looking for addon resource types
   // eslint-disable-next-line no-param-reassign
   currentValue = Number.isNaN(currentValue) ? 0 : currentValue;
-  const query = {
-    ...queryFromCluster(cluster),
-    resourceType: quotaTypes.ADD_ON,
-    resourceName,
-  };
-
-  if (!hasPotentialQuota(quotaList, query)) {
+  const availableQuota = get(quotaLookup(cluster, quota), resourceName, -1);
+  if (availableQuota === -1) {
     // If the resource name was not found in quota, it might not be an addon resource name,
     // but still valid. For now we will just return all options in this case to allow all resource
     // names to work and avoid an empty options list.
     return allOptions;
   }
-  const available = availableQuota(quotaList, query);
-  return allOptions.filter(option => (available + currentValue) >= option.value);
+  return allOptions.filter(option => (availableQuota + currentValue) >= option.value);
 };
 
 const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) => {
