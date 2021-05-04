@@ -38,6 +38,7 @@ const Support = ({
   addNotificationToaster,
   supportCases,
   getSupportCases,
+  isDisabled = false,
 }) => (
   <>
     <Card className="ocm-c-support-notification-contacts__card">
@@ -52,10 +53,11 @@ const Support = ({
         <AddNotificationContactSection
           canEdit={canEdit}
           openModal={openModal}
+          isDisabled={isDisabled}
         />
         <NotificationContactsCard
           subscriptionID={subscriptionID}
-          canEdit={canEdit}
+          isDisabled={!canEdit || isDisabled}
           notificationContacts={notificationContacts}
           deleteContactResponse={deleteContactResponse}
           addContactResponse={addContactResponse}
@@ -77,6 +79,7 @@ const Support = ({
           subscriptionID={subscriptionID}
           supportCases={supportCases}
           getSupportCases={getSupportCases}
+          isDisabled={isDisabled}
         />
       </CardBody>
     </Card>
@@ -99,6 +102,7 @@ Support.propTypes = {
   openModal: PropTypes.func.isRequired,
   supportCases: PropTypes.object.isRequired,
   getSupportCases: PropTypes.func.isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 export default Support;

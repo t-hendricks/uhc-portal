@@ -102,65 +102,6 @@ describe('<ClusterDetails />', () => {
       const wrapper = shallow(<ClusterDetails {...props} />);
       expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(false);
     });
-
-    it('should be hidden when the (managed) cluster has been deprovisioned', () => {
-      const props = {
-        ...fixtures,
-        ...functions,
-        clusterDetails: {
-          ...fixtures.clusterDetails,
-          cluster: {
-            ...fixtures.clusterDetails.cluster,
-            subscription: {
-              ...fixtures.clusterDetails.cluster.subscription,
-              status: subscriptionStatuses.DEPROVISIONED,
-            },
-          },
-        },
-      };
-      const wrapper = shallow(<ClusterDetails {...props} />);
-      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(false);
-    });
-
-    it('should be hidden when the (unmanaged) cluster has been archived', () => {
-      const props = {
-        ...fixtures,
-        ...functions,
-        clusterDetails: {
-          ...fixtures.clusterDetails,
-          cluster: {
-            ...fixtures.clusterDetails.cluster,
-            managed: false,
-            subscription: {
-              ...fixtures.clusterDetails.cluster.subscription,
-              status: subscriptionStatuses.ARCHIVED,
-            },
-          },
-        },
-      };
-      const wrapper = shallow(<ClusterDetails {...props} />);
-      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(false);
-    });
-
-    it('should be shown when the (unmanaged) cluster has been deprovisioned', () => {
-      const props = {
-        ...fixtures,
-        ...functions,
-        clusterDetails: {
-          ...fixtures.clusterDetails,
-          cluster: {
-            ...fixtures.clusterDetails.cluster,
-            managed: false,
-            subscription: {
-              ...fixtures.clusterDetails.cluster.subscription,
-              status: subscriptionStatuses.DEPROVISIONED,
-            },
-          },
-        },
-      };
-      const wrapper = shallow(<ClusterDetails {...props} />);
-      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(true);
-    });
   });
 
   describe('OCP cluster', () => {
@@ -273,6 +214,110 @@ describe('<ClusterDetails />', () => {
 
     it('should not call get grants for gcp cluster', () => {
       expect(functions.getGrants).not.toBeCalled();
+    });
+  });
+
+  describe('tabs for OSDTrial clusters', () => {
+    const functions = funcs();
+    const props = {
+      ...fixtures,
+      ...functions,
+      clusterDetails: {
+        ...fixtures.clusterDetails,
+        cluster: {
+          ...fixtures.clusterDetails.cluster,
+          canEdit: true,
+          subscription: {
+            ...fixtures.clusterDetails.cluster.subscription,
+            status: subscriptionStatuses.ACTIVE,
+            plan: {
+              id: 'OSDTrial',
+              kind: 'Plan',
+              href: '/api/accounts_mgmt/v1/plans/OSD',
+            },
+          },
+        },
+      },
+    };
+    // hide support tab for OSDTrial clusters regardless Deprovisioned/Archived or not
+    const wrapper = shallow(<ClusterDetails {...props} />);
+    it('should hide the support tab for OSDTrial cluster', () => {
+      expect(wrapper.find('TabsRow').props().displaySupportTab).toBe(false);
+    });
+  });
+
+  describe('tabs for Deprovisioned/Archived clusters', () => {
+    const functions = funcs();
+    const osdProps = {
+      ...fixtures,
+      ...functions,
+      clusterDetails: {
+        ...fixtures.clusterDetails,
+        cluster: {
+          ...fixtures.clusterDetails.cluster,
+          canEdit: true,
+          subscription: {
+            ...fixtures.clusterDetails.cluster.subscription,
+            status: subscriptionStatuses.DEPROVISIONED,
+          },
+        },
+      },
+    };
+    const osdWrapper = shallow(<ClusterDetails {...osdProps} />);
+    it('should show support tab for Deprovisioned clusters', () => {
+      // show support tab with disabled buttons (refer to Support/Support.text.jsx)
+      expect(osdWrapper.find('TabsRow').props().displaySupportTab).toBe(true);
+      expect(osdWrapper.find('Connect(Support)').props().isDisabled).toBe(true);
+    });
+    it('should hide tabs for Deprovisioned clusters', () => {
+      expect(osdWrapper.find('TabsRow').props().displayMonitoringTab).toBe(false);
+      expect(osdWrapper.find('TabsRow').props().displayAccessControlTab).toBe(false);
+      expect(osdWrapper.find('TabsRow').props().displayAddOnsTab).toBe(false);
+      expect(osdWrapper.find('TabsRow').props().displayNetworkingTab).toBe(false);
+      expect(osdWrapper.find('TabsRow').props().displayInsightsTab).toBe(false);
+      expect(osdWrapper.find('TabsRow').props().displayMachinePoolsTab).toBe(false);
+      expect(osdWrapper.find('TabsRow').props().displayUpgradeSettingsTab).toBe(false);
+      expect(osdWrapper.find('TabsRow').props().displayAddAssistedHosts).toBe(false);
+    });
+
+    const ocpProps = {
+      ...fixtures,
+      ...functions,
+      assistedInstallerEnabled: true,
+      clusterDetails: {
+        ...fixtures.OCPClusterDetails,
+        cluster: {
+          ...fixtures.OCPClusterDetails.cluster,
+          canEdit: true,
+          subscription: {
+            ...fixtures.OCPClusterDetails.cluster.subscription,
+            status: subscriptionStatuses.ARCHIVED,
+          },
+          // together with assistedInstallerEnabled: true,
+          // this set displayAddAssistedHosts to true if not Archived
+          cloud_provider: {
+            kind: 'CloudProvider',
+            id: 'baremetal',
+            href: '/api/clusters_mgmt/v1/cloud_providers/baremetal',
+          },
+        },
+      },
+    };
+    const ocpWrapper = shallow(<ClusterDetails {...ocpProps} />);
+    it('should show support tab for Archived clusters', () => {
+      // show support tab with disabled buttons (refer to Support/Support.text.jsx)
+      expect(ocpWrapper.find('TabsRow').props().displaySupportTab).toBe(true);
+      expect(ocpWrapper.find('Connect(Support)').props().isDisabled).toBe(true);
+    });
+    it('should hide tabs for Archived clusters', () => {
+      expect(ocpWrapper.find('TabsRow').props().displayMonitoringTab).toBe(false);
+      expect(ocpWrapper.find('TabsRow').props().displayAccessControlTab).toBe(false);
+      expect(ocpWrapper.find('TabsRow').props().displayAddOnsTab).toBe(false);
+      expect(ocpWrapper.find('TabsRow').props().displayNetworkingTab).toBe(false);
+      expect(ocpWrapper.find('TabsRow').props().displayInsightsTab).toBe(false);
+      expect(ocpWrapper.find('TabsRow').props().displayMachinePoolsTab).toBe(false);
+      expect(ocpWrapper.find('TabsRow').props().displayUpgradeSettingsTab).toBe(false);
+      expect(ocpWrapper.find('TabsRow').props().displayAddAssistedHosts).toBe(false);
     });
   });
 });

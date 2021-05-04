@@ -1437,7 +1437,9 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
     id="supportTabContent"
   >
     <ErrorBoundary>
-      <Connect(Support) />
+      <Connect(Support)
+        isDisabled={false}
+      />
     </ErrorBoundary>
   </ForwardRef>
   <ForwardRef

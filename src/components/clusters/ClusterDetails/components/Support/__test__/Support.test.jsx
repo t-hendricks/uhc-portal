@@ -2,40 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Support from '../Support';
-
-import { notificationContactsWithContacts, clusterCreator } from './Support.fixtures';
+import NotificationContactsCard from '../components/NotificationContactsSection/NotificationContactsCard';
+import SupportCasesCard from '../components/SupportCasesSection/SupportCasesCard';
+import { notificationContactsWithContacts, baseProps } from './Support.fixtures';
 
 describe('<Support /> should render', () => {
-  const baseProps = {
-    subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
-    canEdit: true,
-    notificationContacts: {
-      contacts: [],
-      pending: false,
-      subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
-    },
-    supportCases: {
-      cases: [],
-      pending: false,
-      subscriptionID: '1iGW3xYbKZAEdZLi207rcA1l0ob',
-    },
-    deleteContactResponse: {},
-    addContactResponse: {},
-    getNotificationContacts: jest.fn(),
-    hasContacts: false,
-    deleteNotificationContact: jest.fn(),
-    clearDeleteNotificationContacts: jest.fn(),
-    clearNotificationContacts: jest.fn(),
-    addNotificationToaster: jest.fn(),
-    isAddNotificationContactModalOpen: false,
-    openModal: jest.fn(),
-    closeModal: jest.fn(),
-    clearAddNotificationContacts: jest.fn(),
-    addNotificationContact: jest.fn(),
-    getSupportCases: jest.fn(),
-    clusterCreator,
-  };
-
   it('without notification contacts', () => {
     const wrapper = shallow(<Support
       {...baseProps}
@@ -51,5 +22,40 @@ describe('<Support /> should render', () => {
     />);
 
     expect(wrapper).toMatchSnapshot();
+  });
+});
+
+describe('<Support isDisabled/>', () => {
+  it('should have the components disabled', () => {
+    const wrapper = shallow(<Support
+      {...baseProps}
+      isDisabled
+    />);
+    expect(wrapper.find('AddNotificationContactButton').props().isDisabled).toBe(true);
+    expect(wrapper.find('Connect(NotificationContactsCard)').props().isDisabled).toBe(true);
+    expect(wrapper.find('Connect(SupportCasesCard)').props().isDisabled).toBe(true);
+  });
+});
+
+describe('<NotificationContactsCard isDisabled/>', () => {
+  it('should have the components disabled', () => {
+    const wrapper = shallow(<NotificationContactsCard
+      {...baseProps}
+      hasContacts
+      isDisabled
+    />);
+    expect(wrapper.find('Table').props().areActionsDisabled()).toBe(true);
+  });
+});
+
+describe('<SupportCasesCard isDisabled/>', () => {
+  it('should have the components disabled', () => {
+    const wrapper = shallow(<SupportCasesCard
+      {...baseProps}
+      clusterUUID="1"
+      product="OSD"
+      isDisabled
+    />);
+    expect(wrapper.find('Button').props().isDisabled).toBe(true);
   });
 });
