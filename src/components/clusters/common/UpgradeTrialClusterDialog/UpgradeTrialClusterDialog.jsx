@@ -122,7 +122,7 @@ class UpgradeTrialClusterDialog extends Component {
 
     button.secondaryText = 'Enable Marketplace billing';
     button.showSecondary = true;
-    button.onSecondaryClick = () => this.buttonLinkClick('https://marketplace.redhat.com/');
+    button.onSecondaryClick = () => this.buttonLinkClick('https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated');
 
     if (availableQuota.MARKETPLACE && availableQuota.STANDARD) {
       button.secondaryText = 'Upgrade using quota';
