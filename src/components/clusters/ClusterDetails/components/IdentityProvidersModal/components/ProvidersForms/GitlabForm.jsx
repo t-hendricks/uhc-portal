@@ -45,7 +45,6 @@ function GitlabFormRequired({
   );
 }
 
-
 GitlabFormRequired.propTypes = {
   isPending: PropTypes.bool,
   isEditForm: PropTypes.bool,

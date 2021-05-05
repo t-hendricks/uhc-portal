@@ -7,7 +7,6 @@ import { viewConstants } from '../../../redux/constants';
 import { viewActions } from '../../../redux/actions/viewOptionsActions';
 import { modalActions } from '../../common/Modal/ModalActions';
 
-
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),
   fetchClusters: queryObj => clustersActions.fetchClusters(queryObj),
@@ -18,7 +17,6 @@ const mapDispatchToProps = {
   openModal: modalActions.openModal,
   closeModal: modalActions.closeModal,
 };
-
 
 const mapStateToProps = state => ({
 

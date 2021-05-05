@@ -104,21 +104,6 @@ const getMachineTypes = () => apiRequest({
   url: '/api/clusters_mgmt/v1/machine_types',
 });
 
-const getAlerts = clusterID => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/alerts`,
-});
-
-const getNodes = clusterID => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/nodes`,
-});
-
-const getClusterOperators = clusterID => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/cluster_operators`,
-});
-
 const getStorageQuotaValues = () => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/storage_quota_values',
@@ -249,7 +234,6 @@ const patchUpgradeSchedule = (clusterID, policyID, schedule) => apiRequest({
   data: schedule,
 });
 
-
 const getUpgradeSchedules = clusterID => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies`,
@@ -293,7 +277,6 @@ const upgradeTrialCluster = (clusterID, params) => apiRequest({
   data: params,
 });
 
-
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -309,9 +292,6 @@ const clusterService = {
   deleteClusterGroupUser,
   deleteIdentityProvider,
   getMachineTypes,
-  getNodes,
-  getAlerts,
-  getClusterOperators,
   archiveCluster,
   hibernateCluster,
   resumeCluster,

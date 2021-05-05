@@ -107,7 +107,7 @@ const checkObjectName = (value, objectName, maxLen) => {
     return `${objectName} name '${value}' isn't valid, must consist of lower-case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character. For example, 'my-name', or 'abc-123'.`;
   }
   if (value.length > maxLen) {
-    return `${objectName} names may not exceed ${MAX_CLUSTER_NAME_LENGTH} characters.`;
+    return `${objectName} names may not exceed ${maxLen} characters.`;
   }
   return undefined;
 };
@@ -115,7 +115,6 @@ const checkObjectName = (value, objectName, maxLen) => {
 const checkClusterName = value => checkObjectName(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
 
 const checkMachinePoolName = value => checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
-
 
 // Function to validate that the github team is formatted: <org/team>
 const checkGithubTeams = (value) => {
@@ -147,7 +146,6 @@ const checkGithubTeams = (value) => {
 
   return undefined;
 };
-
 
 const checkLabels = (input) => {
   const labels = input.split(',');
@@ -203,7 +201,6 @@ const checkLabels = (input) => {
   return undefined;
 };
 
-
 const checkRouteSelectors = (input) => {
   if (!input) {
     return undefined;
@@ -211,7 +208,6 @@ const checkRouteSelectors = (input) => {
 
   return checkLabels(input);
 };
-
 
 const checkMachinePoolLabels = (input) => {
   if (!input) {
@@ -248,7 +244,6 @@ const checkMachinePoolLabels = (input) => {
 
   return undefined;
 };
-
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value) => {
@@ -844,7 +839,6 @@ const validateGCPEncryptionKeys = (value) => {
   }
   return undefined;
 };
-
 
 const validateGCPKMSServiceAccount = (value) => {
   if (!value) {

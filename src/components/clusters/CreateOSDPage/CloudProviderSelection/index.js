@@ -10,8 +10,7 @@ const mapStateToProps = (state, ownProps) => {
   const { product } = ownProps;
   const { STANDARD, MARKETPLACE } = billingModels;
 
-  const hasProductQuota = hasManagedQuotaSelector(state, product, STANDARD)
-                       || hasManagedQuotaSelector(state, product, MARKETPLACE);
+  const hasProductQuota = hasManagedQuotaSelector(state, product);
   const hasAwsQuota = hasAwsQuotaSelector(state, product, STANDARD)
                    || hasAwsQuotaSelector(state, product, MARKETPLACE);
   const hasGcpQuota = hasGcpQuotaSelector(state, product, STANDARD)
@@ -29,6 +28,5 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = {
   getOrganizationAndQuota,
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(CloudProviderSelection);

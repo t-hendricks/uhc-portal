@@ -12,7 +12,6 @@ import PersistentStorageDropdown from '../PersistentStorageDropdown';
 import LoadBalancersDropdown from '../LoadBalancersDropdown';
 import modals from '../../../common/Modal/modals';
 
-
 class ScaleClusterDialog extends Component {
   componentDidMount() {
     const {

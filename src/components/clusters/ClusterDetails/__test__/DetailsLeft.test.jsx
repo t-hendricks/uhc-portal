@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import DetailsLeft from '../components/Overview/DetailsLeft';
 import fixtures from './ClusterDetails.fixtures';
 
-
 describe('<DetailsLeft />', () => {
   const wrapper = shallow(
     <DetailsLeft

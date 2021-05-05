@@ -1,4 +1,3 @@
-
 import produce from 'immer';
 import sortBy from 'lodash/sortBy';
 
@@ -59,7 +58,6 @@ function NetworkSelfServiceReducer(state = initialState, action) {
         };
         break;
 
-
       // GET_GRANTS
       case PENDING_ACTION(GET_GRANTS):
         draft.grants.pending = true;
@@ -79,7 +77,6 @@ function NetworkSelfServiceReducer(state = initialState, action) {
           ...getErrorState(action),
         };
         break;
-
 
       // ADD GRANT
       case PENDING_ACTION(ADD_GRANT):
@@ -104,7 +101,6 @@ function NetworkSelfServiceReducer(state = initialState, action) {
       case CLEAR_ADD_GRANT_RESPONSE:
         draft.addGrantResponse = { ...initialState.addGrantResponse };
         break;
-
 
       // DELETE GRANT
       case PENDING_ACTION(DELETE_GRANT):

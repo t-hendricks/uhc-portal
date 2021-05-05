@@ -4,7 +4,6 @@ import { closeModal } from '../../../../../common/Modal/ModalActions';
 import AddOnsDeleteModal from './AddOnsDeleteModal';
 import { addOnsActions, clearClusterAddOnsResponses } from '../AddOnsActions';
 
-
 const mapStateToProps = state => ({
   isOpen: shouldShowModal(state, 'add-ons-delete-modal'),
   modalData: state.modal.data,

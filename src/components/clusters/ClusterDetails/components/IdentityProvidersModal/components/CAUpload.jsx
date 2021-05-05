@@ -30,7 +30,6 @@ class CAUpload extends React.Component {
     }
   }
 
-
   fileUpload = (event) => {
     const { input } = this.props;
     const file = event.target.files[0];
@@ -78,7 +77,6 @@ class CAUpload extends React.Component {
     const {
       errorMessage, fileName, certValue, showCAText,
     } = this.state;
-
 
     const baseButtonClass = 'pf-c-button pf-m-tertiary co-btn-file';
     const buttonClass = isDisabled ? `${baseButtonClass} pf-m-disabled` : baseButtonClass;

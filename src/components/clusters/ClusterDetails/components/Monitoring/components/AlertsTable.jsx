@@ -25,7 +25,6 @@ import {
   monitoringItemTypes,
 } from '../monitoringHelper';
 
-
 function AlertsTable({ alerts = [], clusterConsole }) {
   const errorIcon = (
     <>

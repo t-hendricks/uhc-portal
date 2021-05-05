@@ -32,7 +32,6 @@ class Insights extends Component {
     insights.chrome.appNavClick(getNavClickParams(location.pathname));
   };
 
-
   navigateToApp = (event) => {
     const { history } = this.props;
     const { location } = history;

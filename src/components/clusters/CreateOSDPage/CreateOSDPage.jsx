@@ -194,7 +194,7 @@ class CreateOSDPage extends React.Component {
       const noTrialQuota = selectedOSDTrial && (!clustersQuota.hasProductQuota || !osdTrialFeature);
       if (noTrialQuota) {
         return (
-          <Redirect to="/create" />
+          <Redirect to="/create?trial=expired" />
         );
       }
     }

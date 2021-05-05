@@ -165,7 +165,7 @@ class UpgradeSettingsTab extends React.Component {
                 </FlexItem>
                 <FlexItem>
                   <Button onClick={reset} variant="link" isDisabled={actionsDisabled}>
-                  Cancel
+                    Cancel
                   </Button>
                 </FlexItem>
               </Flex>

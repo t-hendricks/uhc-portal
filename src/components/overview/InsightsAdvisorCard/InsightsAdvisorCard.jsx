@@ -26,7 +26,7 @@ const InsightsAdvisorCard = ({ overview, groups }) => (
               color={global_Color_dark_200.value}
             />
             {' '}
-              Advisor information applies for OCP clusters only
+            Advisor information applies for OCP clusters only
           </div>
         </>
       )}

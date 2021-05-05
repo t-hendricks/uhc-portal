@@ -21,7 +21,6 @@ const baseViewOptions = {
   filter: expiredTrialsFilter,
 };
 
-
 describe('<ExpiredTrialsCard />', () => {
   let getSubscriptions;
   let wrapper;

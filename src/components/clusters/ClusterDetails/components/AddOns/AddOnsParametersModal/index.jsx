@@ -24,6 +24,8 @@ const mapStateToProps = state => ({
   initialValues: parameterValuesForEditing(
     state.modal.data.addOnInstallation, state.modal.data.addOn,
   ),
+  cluster: state.clusters.details.cluster,
+  quota: state.userProfile.organization.quotaList,
 });
 
 const mapDispatchToProps = dispatch => ({

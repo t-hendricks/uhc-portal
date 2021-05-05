@@ -12,8 +12,8 @@ const ReleaseChannel = ({ channel }) => {
     const fetchChannelData = async () => {
       const result = await getOCPReleaseChannel(channel);
       const sortedVersions = result?.data?.nodes?.sort(
-        ({ version: left }, { version: right }) => semver.rcompare(left, right)
-       );
+        ({ version: left }, { version: right }) => semver.rcompare(left, right),
+      );
       setLatestVersion(sortedVersions[0]?.version);
     };
 

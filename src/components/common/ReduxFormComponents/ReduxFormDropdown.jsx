@@ -47,7 +47,6 @@ class DropDownSelect extends React.Component {
       </FormSelect>
     );
 
-
     return isFormGroup ? (
       <FormGroup
         fieldId={input.name}

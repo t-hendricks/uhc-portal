@@ -90,7 +90,7 @@ class ClusterVersionInfo extends React.Component {
                     )}
                   >
                     <Button variant="link">
-                    View details
+                      View details
                       {' '}
                       <OutlinedQuestionCircleIcon />
                     </Button>
@@ -130,6 +130,7 @@ ClusterVersionInfo.propTypes = {
     managed: PropTypes.bool,
     version: PropTypes.shape({
       channel_group: PropTypes.string,
+      available_upgrades: PropTypes.arrayOf(PropTypes.string),
     }),
     canEdit: PropTypes.bool,
   }),

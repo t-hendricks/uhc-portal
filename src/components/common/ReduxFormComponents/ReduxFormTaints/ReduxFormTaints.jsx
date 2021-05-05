@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
@@ -71,7 +70,6 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = fa
     {submitFailed && error && <span>{error}</span>}
   </div>
 );
-
 
 ReduxFormTaints.propTypes = {
   fields: PropTypes.object.isRequired,

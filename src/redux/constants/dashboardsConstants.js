@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 const GET_SUMMARY_DASHBOARD = 'GET_SUMMARY_DASHBOARD';
 const GET_UNHEALTHY_CLUSTERS = 'GET_UNHEALTHY_CLUSTERS';
 const SUMMARY_DASHBOARD = 'summary';

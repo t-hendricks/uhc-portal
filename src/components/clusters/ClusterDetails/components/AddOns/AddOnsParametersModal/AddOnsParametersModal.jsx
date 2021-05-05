@@ -5,8 +5,12 @@ import { Button, Form, FormGroup } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import { LevelUpAltIcon } from '@patternfly/react-icons';
 import Modal from '../../../../../common/Modal/Modal';
-import { hasParameters } from '../AddOnsHelper';
-import { ReduxCheckbox, ReduxVerticalFormGroup, ReduxFormDropdown } from '../../../../../common/ReduxFormComponents';
+import { getParameterValue, hasParameters, quotaCostOptions } from '../AddOnsHelper';
+import {
+  ReduxCheckbox,
+  ReduxFormDropdown,
+  ReduxVerticalFormGroup,
+} from '../../../../../common/ReduxFormComponents';
 import { required, validateNumericInput } from '../../../../../../common/validators';
 import ErrorBox from '../../../../../common/ErrorBox';
 
@@ -78,11 +82,33 @@ class AddOnsParametersModal extends Component {
     change(`parameters.${param.id}`, paramValue);
   };
 
-  getFieldProps = (param) => {
+  getDefaultValueText = (param) => {
     if (param.options !== undefined && param.options.length > 0) {
+      const defaultOption = param.options.find(o => o.value === param.default_value);
+      if (defaultOption !== undefined) {
+        return defaultOption.name;
+      }
+    }
+    return param.default_value;
+  };
+
+  getFieldProps = (param) => {
+    const {
+      cluster,
+      quota,
+      addOnInstallation,
+    } = this.props;
+    if (param.options !== undefined && param.options.length > 0) {
+      let paramOptions;
+      if (param.value_type === 'resource') {
+        const currentValue = Number(getParameterValue(addOnInstallation, param.id));
+        paramOptions = quotaCostOptions(param.id, cluster, quota, param.options, currentValue);
+      } else {
+        paramOptions = param.options;
+      }
       return ({
         component: ReduxFormDropdown,
-        options: param.options,
+        options: paramOptions,
         type: 'text',
       });
     }
@@ -167,9 +193,9 @@ class AddOnsParametersModal extends Component {
                     iconPosition="right"
                     className="addon-parameter-default-button"
                   >
-                    Use default
+                    Use default:
                     {' '}
-                    {param.default_value}
+                    {this.getDefaultValueText(param)}
                   </Button>
                 )
               }
@@ -190,6 +216,8 @@ AddOnsParametersModal.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   addOn: PropTypes.object,
   addOnInstallation: PropTypes.object,
+  cluster: PropTypes.object.isRequired,
+  quota: PropTypes.object.isRequired,
   isUpdateForm: PropTypes.bool,
   submitClusterAddOnResponse: PropTypes.object,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,

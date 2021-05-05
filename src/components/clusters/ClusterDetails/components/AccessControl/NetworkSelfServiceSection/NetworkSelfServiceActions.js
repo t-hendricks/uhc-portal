@@ -3,7 +3,6 @@ import {
 } from './NetworkSelfServiceConstants';
 import { clusterService } from '../../../../../../services';
 
-
 const getRoles = () => dispatch => dispatch({
   type: GET_ROLES,
   payload: clusterService.getRoles(),
@@ -23,7 +22,6 @@ const deleteGrant = (clusterID, grantId) => dispatch => dispatch({
   type: DELETE_GRANT,
   payload: clusterService.deleteGrant(clusterID, grantId),
 });
-
 
 const clearAddGrantResponse = () => dispatch => dispatch({
   type: CLEAR_ADD_GRANT_RESPONSE,

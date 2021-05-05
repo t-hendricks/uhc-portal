@@ -50,7 +50,6 @@ const mapStateToProps = (state) => {
   });
 };
 
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
   openModal: (modalId, data) => dispatch(openModal(modalId, data)),
   closeModal: () => dispatch(closeModal()),

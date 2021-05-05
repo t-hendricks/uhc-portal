@@ -15,7 +15,6 @@ import {
 } from '../../../../common/subscriptionTypes';
 import { subscriptionCapabilities } from '../../../../common/subscriptionCapabilities';
 
-
 // TODO: either add back or remove PRODUCT_BUNDLE
 const {
   SUPPORT_LEVEL,

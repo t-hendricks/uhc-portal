@@ -16,12 +16,12 @@ const InfoPopover = () => (
     bodyContent={(
       <>
         <p>
-            Insights identifies and prioritizes risks to security, performance,
-            availability, and stability of your clusters.
+          Insights identifies and prioritizes risks to security, performance,
+          availability, and stability of your clusters.
         </p>
         <p>
-            This feature uses the Remote Health functionality of OpenShift Container Platform.
-            For further details about Insights, see the
+          This feature uses the Remote Health functionality of OpenShift Container Platform.
+          For further details about Insights, see the
           {' '}
           <ExternalLink href="https://docs.openshift.com/container-platform/latest/support/remote_health_monitoring/using-insights-to-identify-issues-with-your-cluster.html">
             OpenShift documentation

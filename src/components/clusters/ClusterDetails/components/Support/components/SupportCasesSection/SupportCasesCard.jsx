@@ -7,6 +7,7 @@ import {
 import {
   Table, TableBody, TableHeader, TableVariant,
 } from '@patternfly/react-table';
+import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 
 class SupportCasesCard extends React.Component {
   componentDidMount() {
@@ -24,6 +25,7 @@ class SupportCasesCard extends React.Component {
     const {
       supportCases,
       clusterUUID,
+      product,
     } = this.props;
 
     const columns = [
@@ -69,16 +71,19 @@ class SupportCasesCard extends React.Component {
 
     const rows = supportCases.cases.map(supportCaseRow);
     const hasRows = rows.length > 0;
+    const showOpenSupportCaseButton = product !== normalizedProducts.OSDTrial;
 
     return (
       <>
-        <a href={url} target="_blank" rel="noopener noreferrer">
-          <Button
-            variant="secondary"
-          >
-             Open support case
-          </Button>
-        </a>
+        {showOpenSupportCaseButton && (
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            <Button
+              variant="secondary"
+            >
+              Open support case
+            </Button>
+          </a>
+        )}
         <Table
           aria-label="Support Cases"
           variant={TableVariant.compact}
@@ -91,7 +96,7 @@ class SupportCasesCard extends React.Component {
         {!hasRows && (
           <EmptyState variant={EmptyStateVariant.small}>
             <EmptyStateBody>
-          You have no open support cases
+              You have no open support cases
             </EmptyStateBody>
           </EmptyState>
         )}
@@ -103,6 +108,7 @@ class SupportCasesCard extends React.Component {
 SupportCasesCard.propTypes = {
   subscriptionID: PropTypes.string.isRequired,
   clusterUUID: PropTypes.string.isRequired,
+  product: PropTypes.string.isRequired,
   supportCases: PropTypes.object.isRequired,
   getSupportCases: PropTypes.func.isRequired,
 };

@@ -1,8 +1,6 @@
-
 import React from 'react';
 import { shallow } from 'enzyme';
 import TopOverviewSection from './TopOverviewSection';
-
 
 describe('<TopOverviewSection />', () => {
   const totalClusters = 10;

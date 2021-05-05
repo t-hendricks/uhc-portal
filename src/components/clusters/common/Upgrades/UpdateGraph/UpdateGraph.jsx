@@ -17,7 +17,6 @@ const GraphLine = ({ children }) => (
   </li>
 );
 
-
 const GraphPath = ({ children }) => (
   <ul className="ocm-upgrade-graph-path">
     {children}
@@ -31,7 +30,6 @@ const VersionLabel = ({ children }) => (
     {children}
   </span>
 );
-
 
 const VersionDot = ({ current }) => (
   <div

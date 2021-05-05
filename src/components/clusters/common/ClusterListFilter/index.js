@@ -1,4 +1,3 @@
-
 import { connect } from 'react-redux';
 import { onListFilterSet } from '../../../../redux/actions/viewOptionsActions';
 import ClusterListFilter from './ClusterListFilter';

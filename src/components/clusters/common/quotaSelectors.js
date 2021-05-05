@@ -132,8 +132,8 @@ const queryFromCluster = cluster => (
     product: cluster.subscription.plan.id, // TODO plan.type,
     billingModel: get(cluster, 'billing_model', billingModels.STANDARD),
     cloudProviderID: get(cluster, 'cloud_provider.id', 'any'),
-    isBYOC: cluster.ccs.enabled,
-    isMultiAz: cluster.multi_az,
+    isBYOC: get(cluster, 'ccs.enabled', false),
+    isMultiAz: get(cluster, 'multi_az', false),
   }
 );
 

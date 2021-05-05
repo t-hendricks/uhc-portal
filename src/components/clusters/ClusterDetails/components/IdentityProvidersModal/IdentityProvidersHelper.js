@@ -144,7 +144,6 @@ const GoogleDocLink = `${IDPDocBase}/configuring-google-identity-provider.html`;
 const OpenIDDocLink = `${IDPDocBase}/configuring-oidc-identity-provider.html`;
 const GitlabDocLink = 'https://docs.openshift.com/container-platform/latest/authentication/identity_providers/configuring-gitlab-identity-provider.html';
 
-
 const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({
     client_id: formData.client_id.trim(),
@@ -326,7 +325,6 @@ const getldapAttributes = (attributes, type) => {
   return ldapAttributesData;
 };
 
-
 const getGitHubTeamsAndOrgsData = (type) => {
   const data = [];
 
@@ -360,7 +358,6 @@ const getGitHubTeamsAndOrgsData = (type) => {
 
 const isEmptyReduxArray = (arr, key) => (arr ? arr.map(currentValue => isEmpty(currentValue[key]))
   .every(item => item) : false);
-
 
 export {
   getCreateIDPRequestData,

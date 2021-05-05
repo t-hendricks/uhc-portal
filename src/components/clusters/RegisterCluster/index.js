@@ -11,7 +11,6 @@ import {
   subscriptionSystemUnits,
 } from '../../../common/subscriptionTypes';
 
-
 const reduxFormConfig = {
   form: 'RegisterCluster',
 };
@@ -50,6 +49,5 @@ const mapDispatchToProps = dispatch => ({
   resetForm: () => dispatch(reset('RegisterCluster')),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormRegisterCluster);

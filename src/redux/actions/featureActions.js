@@ -5,6 +5,7 @@ import {
   ASSISTED_INSTALLER_OCS_FEATURE,
   ASSISTED_INSTALLER_CNV_FEATURE,
   OSD_TRIAL_FEATURE,
+  ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 import accountsService from '../../services/accountsService';
@@ -26,6 +27,7 @@ export const features = [
   getSimpleUnleashFeature('assisted-installer-sno', ASSISTED_INSTALLER_SNO_FEATURE),
   getSimpleUnleashFeature('assisted-installer-ocs', ASSISTED_INSTALLER_OCS_FEATURE),
   getSimpleUnleashFeature('assisted-installer-cnv', ASSISTED_INSTALLER_CNV_FEATURE),
+  getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: organizationID => Promise.all([

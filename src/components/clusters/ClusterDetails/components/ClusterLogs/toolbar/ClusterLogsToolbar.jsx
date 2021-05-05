@@ -8,7 +8,6 @@ import ClusterLogsDownload from './ClusterLogsDownload';
 import ClusterLogsConditionalFilter from './ClusterLogsConditionalFilter';
 import ViewPaginationRow from '../../../../common/ViewPaginationRow/viewPaginationRow';
 
-
 class ClusterLogsToolbar extends React.PureComponent {
   render() {
     const {

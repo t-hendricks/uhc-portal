@@ -486,7 +486,6 @@ test('Check machine pool labels', () => {
   expect(checkMachinePoolLabels(blacklist[3])).toBe(`${blacklist[3]} is not a valid label`);
 });
 
-
 test('awsNumericAccountID', () => {
   const errStr = 'AWS account ID must be a 12 digits positive number.';
   expect(awsNumericAccountID()).toBe('AWS account ID is required.');
@@ -537,7 +536,6 @@ test('GCP Subnet', () => {
   expect(validateGCPSubnet('Subet$$')).toBe('Name should contain only lowercase letters, numbers and hyphens.');
   expect(validateGCPSubnet(value)).toBe('Name may not exceed 63 characters.');
 });
-
 
 test('GCP KMSService Account', () => {
   const inValidValueTest1 = '9%%#$#$-compute@developer.gserviceaccount.com';

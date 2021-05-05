@@ -4,7 +4,6 @@ import { Tab } from '@patternfly/react-core';
 
 import TabsRow from '../components/TabsRow';
 
-
 describe('<TabsRow />', () => {
   let wrapper;
   let props;
@@ -20,7 +19,7 @@ describe('<TabsRow />', () => {
       networkingTabRef: mockRef,
       supportTabRef: mockRef,
       upgradeSettingsTabRef: mockRef,
-      addBareMetalTabRef: mockRef,
+      addAssistedTabRef: mockRef,
       hasIssues: false,
       hasIssuesInsights: false,
       setOpenedTab: jest.fn(),

@@ -95,7 +95,7 @@ function UpgradeStatus({
           openModal('cancel-upgrade', { clusterID, schedule: scheduledUpgrade });
         }}
       >
-         Cancel this update
+        Cancel this update
       </Button>
     )
   }

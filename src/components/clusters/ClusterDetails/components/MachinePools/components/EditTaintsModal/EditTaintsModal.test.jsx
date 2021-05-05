@@ -57,7 +57,6 @@ describe('<EditTaintsModal />', () => {
     expect(EditTaintsModalWithLabelswrapper).toMatchSnapshot();
   });
 
-
   it('should update taints fields when changing machine pool', () => {
     const mpField = EditTaintsModalWithLabelswrapper.find('Field[name="machinePoolId"]');
     const mockEvent = { target: { value: mockData.data[0].id } };

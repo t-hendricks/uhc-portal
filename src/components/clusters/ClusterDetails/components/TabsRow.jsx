@@ -56,7 +56,7 @@ class TabsRow extends React.Component {
       displaySupportTab,
       displayMachinePoolsTab,
       displayUpgradeSettingsTab,
-      displayAddBareMetalHosts,
+      displayAddAssistedHosts,
       overviewTabRef,
       monitoringTabRef,
       accessControlTabRef,
@@ -66,7 +66,7 @@ class TabsRow extends React.Component {
       insightsTabRef,
       machinePoolsTabRef,
       upgradeSettingsTabRef,
-      addBareMetalTabRef,
+      addAssistedTabRef,
       hasIssues,
       hasIssuesInsights,
     } = this.props;
@@ -156,10 +156,10 @@ class TabsRow extends React.Component {
       {
         key: 9,
         title: 'Add Hosts',
-        contentId: 'addBareMetalHostsContent',
-        id: 'addBareMetalHosts',
-        show: displayAddBareMetalHosts,
-        ref: addBareMetalTabRef,
+        contentId: 'addHostsContent',
+        id: 'addAssistedHosts',
+        show: displayAddAssistedHosts,
+        ref: addAssistedTabRef,
       },
     ];
   }
@@ -230,7 +230,7 @@ TabsRow.propTypes = {
   displaySupportTab: PropTypes.bool,
   displayMachinePoolsTab: PropTypes.bool,
   displayUpgradeSettingsTab: PropTypes.bool,
-  displayAddBareMetalHosts: PropTypes.bool,
+  displayAddAssistedHosts: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
@@ -240,7 +240,7 @@ TabsRow.propTypes = {
   networkingTabRef: PropTypes.object.isRequired,
   supportTabRef: PropTypes.object.isRequired,
   upgradeSettingsTabRef: PropTypes.object.isRequired,
-  addBareMetalTabRef: PropTypes.object.isRequired,
+  addAssistedTabRef: PropTypes.object.isRequired,
   hasIssues: PropTypes.bool.isRequired,
   hasIssuesInsights: PropTypes.bool.isRequired,
   initTabOpen: PropTypes.string,
@@ -255,7 +255,7 @@ TabsRow.defaultProps = {
   displayAddOnsTab: false,
   displayNetworkingTab: false,
   displayMachinePoolsTab: false,
-  displayAddBareMetalHosts: false,
+  displayAddAssistedHosts: false,
   initTabOpen: '',
 };
 

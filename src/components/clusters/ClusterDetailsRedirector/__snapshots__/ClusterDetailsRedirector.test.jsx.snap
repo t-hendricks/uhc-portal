@@ -22,7 +22,7 @@ exports[`<ClusterDetailsRedirector /> on error 500 error should render an Unavai
 
 exports[`<ClusterDetailsRedirector /> on fulfilled should render a redirect 1`] = `
 <Redirect
-  to="/details/s/foobar"
+  to="/details/s/foobar#bar"
 />
 `;
 

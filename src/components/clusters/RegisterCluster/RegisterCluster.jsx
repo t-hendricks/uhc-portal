@@ -194,9 +194,9 @@ class RegisterCluster extends React.Component {
                         <Title headingLevel="h4" size="xl">Subscription settings</Title>
                         <TextContent>
                           <Text component={TextVariants.p}>
-                        Editing the subscription settings will help ensure that
-                        you receive the level of support that you expect, and that
-                        your cluster is consuming the correct type of subscription.
+                            Editing the subscription settings will help ensure that
+                            you receive the level of support that you expect, and that
+                            your cluster is consuming the correct type of subscription.
                           </Text>
                         </TextContent>
                         {canSubscribeOCP ? editSubscriptionSettings : (

@@ -13,7 +13,6 @@ describe('Modal Redcuer', () => {
     });
   });
 
-
   it('should handle open modal action', () => {
     const action = { type: OPEN_MODAL, payload: { name: 'test-modal' } };
     const result = reducer(initialState, action);

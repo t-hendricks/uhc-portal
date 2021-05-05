@@ -43,8 +43,8 @@ class Monitoring extends React.Component {
             Monitoring data is not available if a cluster goes more than
             three hours without sending metrics.
             <br />
-        Check the cluster&apos;s web console if you think that this cluster should
-        be sending metrics.
+            Check the cluster&apos;s web console if you think that this cluster should
+            be sending metrics.
           </p>
         </MonitoringEmptyState>
       );

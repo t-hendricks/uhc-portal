@@ -5,6 +5,7 @@ import authorizationsService from './authorizationsService';
 import accountsService from './accountsService';
 import serviceLogService from './serviceLogService';
 import insightsService from './insightsService';
+import assistedService from './assistedService';
 
 const services = {
   clusterService,
@@ -14,6 +15,7 @@ const services = {
   authorizationsService,
   serviceLogService,
   insightsService,
+  assistedService,
 };
 
 export {
@@ -24,6 +26,7 @@ export {
   accountsService,
   serviceLogService,
   insightsService,
+  assistedService,
 };
 
 export default services;

@@ -43,7 +43,6 @@ function roundValueWithUnit(value, unit) {
   };
 }
 
-
 /**
  * Converts bytes to GiB and returns a pair {value: valueInGiB, unit: 'GiB'}.
  * Example:

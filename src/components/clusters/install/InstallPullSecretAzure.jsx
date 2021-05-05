@@ -14,7 +14,6 @@ import { tollboothActions } from '../../../redux/actions';
 import { scrollToTop } from '../../../common/helpers';
 import ExternalLink from '../../common/ExternalLink';
 
-
 class InstallPullSecretAzure extends Component {
   componentDidMount() {
     scrollToTop();
@@ -34,7 +33,7 @@ class InstallPullSecretAzure extends Component {
         <PageSection className="ocp-instructions">
           <>
             <Title headingLevel="h3" size="2xl">
-          Red Hat content access
+              Red Hat content access
             </Title>
             <Card>
               <div className="pf-l-grid pf-m-gutter ocm-page">

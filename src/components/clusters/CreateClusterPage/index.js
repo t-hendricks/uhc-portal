@@ -22,5 +22,4 @@ const mapDispatchToProps = () => dispatch => ({
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
 });
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(CreateClusterPage);
