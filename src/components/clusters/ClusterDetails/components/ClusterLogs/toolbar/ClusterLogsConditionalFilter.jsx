@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import { SEVERITY_TYPES } from '../clusterLogConstants';
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
 
-
 class ClusterLogsConditionalFilter extends Component {
   constructor(props) {
     super(props);

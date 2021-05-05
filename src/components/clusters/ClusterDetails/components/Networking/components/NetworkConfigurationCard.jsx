@@ -17,7 +17,7 @@ function NetworkConfigurationCard({ network }) {
   return (
     <Card className="ocm-c-networking-network-configuration__card">
       <CardTitle>
-          Network configuration
+        Network configuration
       </CardTitle>
       <CardBody className="ocm-c-networking-network-configuration__card--body">
         <>

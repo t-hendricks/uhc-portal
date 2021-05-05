@@ -24,14 +24,14 @@ const mapStateToProps = (state) => {
   const modalData = state.modal.data;
   return ({
     editClusterResponse: state.clusters.editedCluster,
-    min: minValueSelector(modalData.multi_az, modalData.byoc),
+    min: minValueSelector(modalData.multi_az, modalData.ccs?.enabled),
     consoleURL: get(modalData, 'console.url', null),
     showLoadBalancerAlert: shouldShowLoadBalancerAlert(state),
     showPersistentStorageAlert: shouldShowStorageQuotaAlert(state),
     persistentStorageValues: state.persistentStorageValues,
     loadBalancerValues: state.loadBalancerValues,
     organization: state.userProfile.organization,
-    isByoc: modalData.byoc,
+    isByoc: modalData.ccs?.enabled,
     // eslint-disable-next-line camelcase
     billingModel: modalData.subscription?.cluster_billing_model,
     product: modalData.subscription?.plan.id,

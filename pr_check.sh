@@ -18,13 +18,6 @@
 # This script is executed by a Jenkins job for each change request. If it
 # doesn't succeed the change won't be merged.
 
-# The cert required to connect to Nexus is already in system CA store per:
-# https://gitlab.cee.redhat.com/app-sre/infra/blob/master/ansible/playbooks/roles/baseline/tasks/main.yml
-# but not sufficient for unknown reason?
-export npm_config_cafile=/etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
-ls -l /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
-yarn config list
-
 # Run the checks:
 
 mockdata/regenerate-clusters.json.sh # first because really fast

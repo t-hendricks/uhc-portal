@@ -95,50 +95,33 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
           rows={
             Array [
               Array [
-                "compute.node",
-                "cpu.large",
+                "cluster",
+                "gp.small",
                 Object {
-                  "title": "N/A",
+                  "title": "multizone",
                 },
                 "Standard",
                 "OSD",
-                "10 of 15",
-                Object {
-                  "title": <ResourcesAlmostFullIcon
-                    color="currentColor"
-                    noVerticalAlign={false}
-                    size="sm"
-                  />,
-                },
-              ],
-              Array [
-                "compute.node",
-                "cpu.large",
-                Object {
-                  "title": "N/A",
-                },
-                "Standard",
-                "OSD",
-                "15 of 15",
-                Object {
-                  "title": <ResourcesFullIcon
-                    color="currentColor"
-                    noVerticalAlign={false}
-                    size="sm"
-                  />,
-                },
-              ],
-              Array [
-                "compute.node",
-                "cpu.large",
-                Object {
-                  "title": "N/A",
-                },
-                "Standard",
-                "OSD",
-                "0 of 4",
+                "0 of 17",
                 Object {
                   "title": <OutlinedCircleIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                  />,
+                },
+              ],
+              Array [
+                "compute.node",
+                "gp.small",
+                Object {
+                  "title": "N/A",
+                },
+                "Standard",
+                "OSD",
+                "4 of 27",
+                Object {
+                  "title": <ResourcesAlmostEmptyIcon
                     color="currentColor"
                     noVerticalAlign={false}
                     size="sm"
@@ -153,7 +136,7 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
                 },
                 "Any",
                 "ANY",
-                "0 of 5",
+                "0 of 15",
                 Object {
                   "title": <OutlinedCircleIcon
                     color="currentColor"
@@ -206,6 +189,7 @@ exports[`<Quota /> OSDSubscriptionTable should render 1`] = `
     expandId="expandable-toggle"
     gridBreakPoint="grid-md"
     isStickyHeader={false}
+    isTreeTable={false}
     ouiaSafe={true}
     role="grid"
     rowLabeledBy="simple-node"

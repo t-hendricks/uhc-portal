@@ -82,9 +82,8 @@ const mapStateToProps = (state, ownProps) => {
       hasStandardOSDQuota,
       hasProductQuota: hasManagedQuotaSelector(state, product),
       hasOSDTrialQuota: hasManagedQuotaSelector(state, OSDTrial),
-      hasMarketplaceProductQuota: hasManagedQuotaSelector(
-        state, product, MARKETPLACE,
-      ),
+      hasMarketplaceProductQuota: hasAwsQuotaSelector(state, product, MARKETPLACE)
+                               || hasGcpQuotaSelector(state, product, MARKETPLACE),
       hasAwsQuota,
       hasGcpQuota,
       aws: awsQuotaSelector(state, product, STANDARD),
@@ -193,7 +192,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     if (config.fakeOSD) {
       clusterRequest.properties = { fake_cluster: 'true' };
     }
-
 
     if (formData.network_configuration_toggle === 'advanced') {
       clusterRequest.network = {

@@ -100,10 +100,8 @@ exports[`<DetailsRight /> CCS clusters should not render storage quota 1`] = `
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": true,
           "ccs": Object {
-            "disable_scp_checks": false,
-            "enabled": false,
+            "enabled": true,
           },
           "cloud_provider": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
@@ -540,7 +538,6 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,
@@ -946,7 +943,6 @@ exports[`<DetailsRight /> Self Managed cluster should not render vcpu and memory
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,
@@ -1225,7 +1221,6 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,
@@ -1546,7 +1541,6 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,
@@ -1867,7 +1861,6 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,
@@ -2364,7 +2357,6 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,

@@ -345,7 +345,7 @@ class InsightsTable extends React.Component {
                       to={`/details/s/${cluster.subscription.id}/insights/${details.rule_id.replace(/\./g, '|')}/${details.extra_data.error_key}`}
                       onClick={() => setReportDetails(details)}
                     >
-                    View details and remediation steps
+                      View details and remediation steps
                     </Link>
                   </StackItem>
                 </Stack>

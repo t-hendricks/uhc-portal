@@ -2,7 +2,6 @@ import canAllowAdminSelector from '../UsersSelector';
 import clusterStates from '../../../../../common/clusterStates';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 
-
 describe('canAllowAdminSelector', () => {
   it('should return false when user has no capability to allow cluster admins', () => {
     const stateWithNoCapability = {
@@ -10,6 +9,8 @@ describe('canAllowAdminSelector', () => {
         details: {
           cluster: {
             state: clusterStates.READY,
+            managed: true,
+            ccs: { enabled: false },
             product: { id: normalizedProducts.OSD },
             subscription: {
               plan: { id: normalizedProducts.OSD },
@@ -34,6 +35,8 @@ describe('canAllowAdminSelector', () => {
         details: {
           cluster: {
             state: clusterStates.INSTALLING,
+            managed: true,
+            ccs: { enabled: false },
             subscription: {
               capabilities: [],
             },
@@ -53,6 +56,8 @@ describe('canAllowAdminSelector', () => {
         details: {
           cluster: {
             state: clusterStates.READY,
+            managed: true,
+            ccs: { enabled: false },
             product: { id: normalizedProducts.RHMI },
             subscription: {
               plan: { id: normalizedProducts.RHMI },
@@ -77,6 +82,8 @@ describe('canAllowAdminSelector', () => {
         details: {
           cluster: {
             state: clusterStates.READY,
+            managed: true,
+            ccs: { enabled: false },
             product: { id: normalizedProducts.OSD },
             subscription: {
               plan: { id: normalizedProducts.OSD },
@@ -101,6 +108,7 @@ describe('canAllowAdminSelector', () => {
         details: {
           cluster: {
             state: clusterStates.READY,
+            managed: true,
             ccs: { enabled: true },
             product: { id: normalizedProducts.OSD },
             subscription: {

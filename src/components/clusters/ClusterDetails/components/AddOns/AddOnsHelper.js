@@ -50,6 +50,20 @@ const hasQuota = (addOn, cluster, organization, quota) => {
   return get(quotaLookup(cluster, quota), addOn.resource_name, 0) >= 1;
 };
 
+const quotaCostOptions = (resourceName, cluster, quota, allOptions, currentValue = 0) => {
+  // Note: This is only currently looking for addon resource types
+  // eslint-disable-next-line no-param-reassign
+  currentValue = Number.isNaN(currentValue) ? 0 : currentValue;
+  const availableQuota = get(quotaLookup(cluster, quota), resourceName, -1);
+  if (availableQuota === -1) {
+    // If the resource name was not found in quota, it might not be an addon resource name,
+    // but still valid. For now we will just return all options in this case to allow all resource
+    // names to work and avoid an empty options list.
+    return allOptions;
+  }
+  return allOptions.filter(option => (availableQuota + currentValue) >= option.value);
+};
+
 const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) => {
   if (!get(addOns, 'items.length', false)) {
     return [];
@@ -86,6 +100,10 @@ const parameterValuesForEditing = (addOnInstallation, addOn) => {
       if (curr.value_type === 'boolean') {
         // Ensure existing boolean value is returned as a boolean, and always return false otherwise
         paramValue = (paramValue || '').toLowerCase() === 'true';
+      }
+      if (curr.options !== undefined && curr.options.length > 0) {
+        // Ensure if options exist that one is always selected
+        paramValue = paramValue || curr.options[0].value;
       }
       if (paramValue !== undefined) {
         // eslint-disable-next-line no-param-reassign
@@ -201,10 +219,12 @@ export {
   isInstalled,
   getInstalled,
   hasQuota,
+  quotaCostOptions,
   availableAddOns,
   hasParameters,
   hasRequirements,
   getParameter,
+  getParameterValue,
   parameterValuesForEditing,
   validateAddOnRequirements,
 };

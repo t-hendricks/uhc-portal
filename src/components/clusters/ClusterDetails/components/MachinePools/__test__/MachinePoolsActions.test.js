@@ -16,7 +16,6 @@ import {
 } from '../MachinePoolsActions';
 import { clusterService } from '../../../../../../services';
 
-
 jest.mock('../../../../../../services/clusterService.js');
 
 describe('MachinePools actions', () => {
@@ -107,7 +106,6 @@ describe('MachinePools actions', () => {
       });
     });
   });
-
 
   describe('clearScaleMachinePoolResponse', () => {
     it('dispatches successfully', () => {

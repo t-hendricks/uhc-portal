@@ -46,19 +46,19 @@ function UpgradeSettingsFields({
               label: 'Manual',
               description: (
                 <>
-        You are responsible for updating your cluster.
+                  You are responsible for updating your cluster.
                   {' '}
-        Note that if your cluster version falls more than 1 minor version behind
+                  Note that if your cluster version falls more than 1 minor version behind
                   {' '}
-        the latest available, it will have SRE alerting disabled and will be unsupported until
-        it's upgraded. See the
+                  the latest available, it will have SRE alerting disabled and will be
+                  unsupported until it's upgraded. See the
                   {' '}
                   <ExternalLink href="https://access.redhat.com/support/policy/updates/openshift/dedicated">version support information</ExternalLink>
-        .
+                  .
                   <p>
-        Note: High and Critical security concerns (CVEs) will be automatically
+                    Note: High and Critical security concerns (CVEs) will be automatically
                     {' '}
-        updated to the latest z-stream version not impacted by the CVE.
+                    updated to the latest z-stream version not impacted by the CVE.
                   </p>
                 </>
               ),
@@ -70,13 +70,13 @@ function UpgradeSettingsFields({
       {showDivider && <Divider />}
       <GridItem span={12}>
         <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">Node draining</Title>
-      You may set a grace period for how long Pod Disruption Budget-protected workloads will
+        You may set a grace period for how long Pod Disruption Budget-protected workloads will
         {' '}
-      be respected during updates. After this grace period, any workloads protected by
+        be respected during updates. After this grace period, any workloads protected by
         {' '}
-      Pod Disruption Budgets that have not been successfully drained from a node will be
+        Pod Disruption Budgets that have not been successfully drained from a node will be
         {' '}
-      forcibly evicted.
+        forcibly evicted.
         <Field
           name="node_drain_grace_period"
           component={PodDistruptionBudgetGraceSelect}

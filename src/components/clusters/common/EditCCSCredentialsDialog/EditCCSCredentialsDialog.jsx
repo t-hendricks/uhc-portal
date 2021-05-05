@@ -80,8 +80,8 @@ class EditCCSCredentialsDialog extends Component {
             <Form onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
               <p>
 
-            You can update your AWS credentials used for this cluster.
-            The updated credentials must be associated with the same AWS account ID.
+                You can update your AWS credentials used for this cluster.
+                The updated credentials must be associated with the same AWS account ID.
               </p>
 
               <FormGroup

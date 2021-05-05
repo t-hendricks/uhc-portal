@@ -19,7 +19,6 @@ import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
 import AWSLogo from '../../../styles/images/AWS.png';
 import links from './CreateClusterConsts';
 
-
 const getColumns = () => ([
   {
     title: null,
@@ -98,9 +97,9 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = 
         title: (
           <Stack hasGutter>
             <StackItem>
-            A complete OpenShift cluster provided as a fully-managed cloud service
-            dedicated to a single customer. Reduce operational complexity and focus
-            on building and scaling applications that add more value to your business.
+              A complete OpenShift cluster provided as a fully-managed cloud service
+              dedicated to a single customer. Reduce operational complexity and focus
+              on building and scaling applications that add more value to your business.
               <br />
               Hosted on Amazon Web Services (AWS) and Google Cloud.
             </StackItem>
@@ -227,7 +226,7 @@ const managedServices = (hasQuota, trialEnabled) => {
       (
         <>
           <Button component="a" href={links.AZURE} variant="secondary" target="_blank" rel="noopener noreferrer">
-          Try it on Azure
+            Try it on Azure
           </Button>
         </>
       ),
@@ -241,8 +240,8 @@ const managedServices = (hasQuota, trialEnabled) => {
         title: (
           <Stack hasGutter>
             <StackItem>
-            A flexible, self-service deployment of OpenShift clusters provided as a fully-managed
-             cloud service by Microsoft and Red Hat.
+              A flexible, self-service deployment of OpenShift clusters provided as a fully-managed
+              cloud service by Microsoft and Red Hat.
               <br />
               Hosted on Microsoft Azure.
             </StackItem>
@@ -269,7 +268,7 @@ const managedServices = (hasQuota, trialEnabled) => {
       (
         <>
           <a href={links.IBM_CLOUD_LEARN_MORE} target="_blank" rel="noopener noreferrer">
-          Red Hat OpenShift on IBM Cloud
+            Red Hat OpenShift on IBM Cloud
           </a>
         </>
       ),
@@ -278,7 +277,7 @@ const managedServices = (hasQuota, trialEnabled) => {
       (
         <>
           <Button component="a" href={links.IBM_CLOUD} variant="secondary" target="_blank" rel="noopener noreferrer">
-          Try it on IBM
+            Try it on IBM
           </Button>
         </>
       ),
@@ -329,7 +328,7 @@ const managedServices = (hasQuota, trialEnabled) => {
       (
         <>
           <Button component="a" href={links.AWS} rel="noopener noreferrer" variant="secondary">
-            Learn more
+            Try it on AWS
           </Button>
         </>
       ),
@@ -343,13 +342,13 @@ const managedServices = (hasQuota, trialEnabled) => {
         title: (
           <Stack hasGutter>
             <StackItem>
-            Build, deploy, and manage Kubernetes applications with Red Hat OpenShift
-             running natively on AWS.
+              Build, deploy, and manage Kubernetes applications with Red Hat OpenShift
+              running natively on AWS.
               <br />
               Hosted on AWS.
             </StackItem>
             <StackItem>
-              <a href={links.AWS} target="_blank" rel="noopener noreferrer">
+              <a href={links.AWS_LEARN_MORE} target="_blank" rel="noopener noreferrer">
                 Learn more about Red Hat OpenShift Service on AWS
                 {' '}
                 <ArrowRightIcon />
@@ -420,7 +419,7 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
         <Stack hasGutter>
           <StackItem>
             <Title headingLevel="h2">
-        Active subscriptions
+              Active subscriptions
             </Title>
           </StackItem>
           <StackItem>
@@ -441,7 +440,7 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
       <Stack hasGutter>
         <StackItem>
           <Title headingLevel="h2">
-          Managed services
+            Managed services
           </Title>
         </StackItem>
         <StackItem>
@@ -454,7 +453,7 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
       <Stack hasGutter>
         <StackItem>
           <Title headingLevel="h2" className="font-weight-light">
-          Run it yourself
+            Run it yourself
           </Title>
         </StackItem>
         <StackItem>

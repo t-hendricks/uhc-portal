@@ -1,6 +1,13 @@
 import produce from 'immer';
 import get from 'lodash/get';
 
+import {
+  getClustervCPUCount as getAICluterCPUCount,
+  getClusterMemoryAmount as getAIMemoryAmount,
+  getMasterCount as getAICMasterCount,
+  getWorkerCount as getAICWorkerCount,
+} from 'openshift-assisted-ui-lib';
+
 import { versionComparator } from './versionComparator';
 import { normalizedProducts, clustersServiceProducts } from './subscriptionTypes';
 
@@ -20,12 +27,13 @@ const normalizeProductID = (id) => {
     MOA: normalizedProducts.ROSA,
     ROSA: normalizedProducts.ROSA,
     ARO: normalizedProducts.ARO,
+    OCP_ASSISTEDINSTALL: normalizedProducts.OCP_Assisted_Install,
     ANY: normalizedProducts.ANY, // used by account-manager in quota_cost
   };
   if (typeof id !== 'string') {
     return normalizedProducts.UNKNOWN;
   }
-  return map[id.toUpperCase()] || normalizedProducts.UNKNOWN;
+  return map[id.toUpperCase().replace('-', '_')] || normalizedProducts.UNKNOWN;
 };
 
 const emptyMetrics = {
@@ -73,7 +81,7 @@ const emptyMetrics = {
 const normalizeMetrics = (metrics) => {
   const ret = metrics ? { ...emptyMetrics, ...metrics } : { ...emptyMetrics };
   const subFields = ['memory', 'storage', 'cpu', 'nodes'];
-  const consumptionFields = ['memory', 'storage']; // fields with total+used
+  const consumptionFields = ['memory', 'storage', 'cpu']; // fields with total+used
   subFields.forEach((field) => {
     ret[field] = { ...emptyMetrics[field], ...ret[field] };
     if (consumptionFields.includes(field)) {
@@ -132,6 +140,9 @@ const fakeClusterFromSubscription = (subscription) => {
       id: normalizeProductID(subscription.plan.id),
     },
     managed: clustersServiceProducts.includes(normalizeProductID(subscription.plan.id)),
+    ccs: {
+      enabled: false,
+    },
     metrics,
   };
   const cloudProvider = subscription.cloud_provider_id;
@@ -150,15 +161,32 @@ const fakeClusterFromSubscription = (subscription) => {
   return cluster;
 };
 
-const normalizeSubscription = subscription => (
-  {
-    ...subscription,
-    plan: {
-      // Omit other properties like "href", we only use the id anyway.
-      id: normalizeProductID(subscription.plan.id),
-    },
-  }
-);
+const fakeAIClusterFromSubscription = (subscription, aiCluster) => {
+  const clusterWorkers = aiCluster ? getAICWorkerCount(aiCluster.hosts) : 0;
+  const clusterMasters = aiCluster ? getAICMasterCount(aiCluster.hosts) : 0;
+
+  const cluster = fakeClusterFromSubscription(subscription);
+  cluster.metrics.memory.total.value = aiCluster ? getAIMemoryAmount(aiCluster) : 0;
+  cluster.metrics.cpu.total.value = aiCluster ? getAICluterCPUCount(aiCluster) : 0;
+  cluster.metrics.nodes.total = clusterWorkers + clusterMasters;
+  cluster.metrics.nodes.master = clusterMasters;
+  cluster.metrics.nodes.compute = clusterWorkers;
+  cluster.metrics.openshift_version = aiCluster ? aiCluster.openshift_version : 'N/A';
+  cluster.metrics.state = aiCluster?.status || 'N/A';
+
+  cluster.state = cluster.metrics.state;
+  cluster.openshift_version = cluster.metrics.openshift_version;
+
+  return cluster;
+};
+
+const normalizeSubscription = subscription => ({
+  ...subscription,
+  plan: {
+    // Omit other properties like "href", we only use the id anyway.
+    id: normalizeProductID(subscription.plan.id),
+  },
+});
 
 /**
  * Normalize a single element of QuotaCostList (which may contain multiple related_resources).
@@ -192,6 +220,7 @@ export {
   normalizeProductID,
   normalizeCluster,
   fakeClusterFromSubscription,
+  fakeAIClusterFromSubscription,
   normalizeSubscription,
   normalizeQuotaCost,
   mapListResponse,

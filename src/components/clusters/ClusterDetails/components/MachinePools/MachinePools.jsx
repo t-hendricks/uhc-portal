@@ -339,7 +339,6 @@ class MachinePools extends React.Component {
       tooltipContent = noQuotaTooltip;
     }
 
-
     const addMachinePoolBtn = (
       <Button id="add-machine-pool" onClick={() => openModal('add-machine-pool')} variant="secondary" className="space-bottom-lg" isDisabled={addMachinePoolDisabled}>
         Add machine pool

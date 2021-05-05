@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 
 import DisconnectedKMSKeyLocationComboBox from './KMSKeyLocationComboBox';
 
-
 const kmsRegionsArray = ['us-east-1', 'global'];
 
 describe('<KMSKeyLocationComboBox />', () => {

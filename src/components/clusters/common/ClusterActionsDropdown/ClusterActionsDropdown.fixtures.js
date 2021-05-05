@@ -7,6 +7,9 @@ const cluster = {
   state: clusterStates.READY,
   console: { url: 'www.testuhc.com' },
   managed: true,
+  ccs: {
+    enabled: false,
+  },
   canEdit: true,
   canDelete: true,
   status: {
@@ -63,6 +66,9 @@ const clusterUninstallingProps = {
   cluster: {
     state: clusterStates.UNINSTALLING,
     managed: true,
+    ccs: {
+      enabled: false,
+    },
     canEdit: true,
     canDelete: true,
     status: {
@@ -77,6 +83,9 @@ const clusterNotReadyProps = {
   cluster: {
     state: clusterStates.ERROR,
     managed: true,
+    ccs: {
+      enabled: false,
+    },
     canEdit: true,
     canDelete: true,
     status: {
@@ -91,6 +100,9 @@ const selfManagedProps = {
   cluster: {
     state: clusterStates.READY,
     managed: false,
+    ccs: {
+      enabled: false,
+    },
     canEdit: true,
     canDelete: true,
   },

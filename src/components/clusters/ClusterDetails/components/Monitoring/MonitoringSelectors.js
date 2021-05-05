@@ -12,7 +12,6 @@ import {
 } from './monitoringHelper';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 
-
 // returns a Date.
 const lastCheckInSelector = (state) => {
   const timestamp = get(state, 'clusters.details.cluster.activity_timestamp', '0001-01-01');
@@ -48,7 +47,6 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
 
   return monitoringStatuses.HEALTHY;
 };
-
 
 const issuesAndWarningsSelector = (state) => {
   const { alerts, nodes, operators } = state.monitoring;

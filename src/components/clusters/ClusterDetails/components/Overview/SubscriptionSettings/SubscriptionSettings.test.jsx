@@ -5,7 +5,6 @@ import SubscriptionSettings from './SubscriptionSettings';
 import * as Fixtures from './SubscriptionSettings.fixtures';
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
-
 describe('<SubscriptionSettings />', () => {
   const editButtonSelectorEnabled = '[variant="link"][isDisabled=false]';
   const editButtonSelectorDisabled = '[variant="link"][isDisabled=true]';

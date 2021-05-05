@@ -1,4 +1,3 @@
-
 const getCurrentAccount = jest.fn();
 getCurrentAccount.mockResolvedValue({
   data: {

@@ -4,7 +4,6 @@ import { openModal } from '../../../../../common/Modal/ModalActions';
 
 import IDPSection from './IDPSection';
 
-
 const mapStateToProps = state => ({
   identityProviders: state.identityProviders.clusterIdentityProviders,
 });

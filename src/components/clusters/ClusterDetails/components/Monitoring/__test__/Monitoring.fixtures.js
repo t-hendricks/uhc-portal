@@ -79,7 +79,6 @@ const mockOperators = {
   ],
 };
 
-
 const mockWatchdog = [{ name: 'Watchdog', severity: 'none' }];
 
 const resourceUsageWithIssues = {
@@ -185,7 +184,6 @@ const resourceUsageWithoutIssues = {
     compute: 4,
   },
 };
-
 
 const mockOCPDisconnectedClusterDetails = {
   kind: 'Cluster',

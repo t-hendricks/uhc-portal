@@ -88,6 +88,7 @@ const knownProducts = {
   RHMI: 'RHMI',
   ROSA: 'ROSA',
   ARO: 'ARO',
+  OCP_Assisted_Install: 'OCP-AssistedInstall',
 };
 
 /**

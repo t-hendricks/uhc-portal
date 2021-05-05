@@ -36,7 +36,7 @@ describe('<Quota />', () => {
     it('should have OSDSubscriptionTable', () => {
       const tableComponent = wrapper.find('OSDSubscriptionTable');
       expect(tableComponent.length).toEqual(1);
-      expect(tableComponent.props().rows.length).toEqual(Fixtures.quotaCost.items.length);
+      expect(tableComponent.props().rows.length).toEqual(Fixtures.expectedRowsForQuotaCost);
     });
   });
 
@@ -48,6 +48,8 @@ describe('<Quota />', () => {
     });
   });
 
+  // TODO: following tests should test OSDSubscriptionCard rather than
+  //   directly calling SubscriptionNotFulfilled.
   describe('OSDSubscriptionCard Loading', () => {
     const refreshFn = jest.fn();
     const quotaCost = { ...Fixtures.quotaCost, pending: true, type: 'osd' };
@@ -61,7 +63,7 @@ describe('<Quota />', () => {
 
   describe('OSDSubscriptionCard Empty', () => {
     const refreshFn = jest.fn();
-    const quotaCost = { ...Fixtures.quotaCost, empty: true, type: 'osd' };
+    const quotaCost = { ...Fixtures.emptyQuotaCost, empty: true, type: 'osd' };
     const wrapper = shallow(<SubscriptionNotFulfilled data={quotaCost} refresh={refreshFn} />);
 
     it('should render empty OSD quota summary', () => {

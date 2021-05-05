@@ -14,7 +14,9 @@ function ConnectedModal({ ModalComponent, isOpen, ...props }) {
 
 ConnectedModal.propTypes = {
   isOpen: PropTypes.bool,
-  modalComponent: PropTypes.elementType,
+  ModalComponent: PropTypes.shape({
+    modalName: PropTypes.string,
+  }),
 };
 
 export default ConnectedModal;

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { RedoIcon } from '@patternfly/react-icons';
 import { Tooltip, TooltipPosition, Button } from '@patternfly/react-core';
 
-
 class RefreshBtn extends React.Component {
   constructor(props) {
     super(props);

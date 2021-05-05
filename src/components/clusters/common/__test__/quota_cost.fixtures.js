@@ -1,4 +1,5 @@
 // Fragments of QuotaCostList.items.
+// (Before applying normalizeQuotaCost().)
 
 export const dedicatedRhInfra = [
   {

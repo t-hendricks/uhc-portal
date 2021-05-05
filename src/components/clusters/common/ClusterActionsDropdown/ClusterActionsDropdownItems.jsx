@@ -5,6 +5,7 @@ import clusterStates, { isHibernating } from '../clusterStates';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
 import modals from '../../../common/Modal/modals';
+import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
 
 /**
  * This function is used by PF tables to determine which dropdown items are displayed
@@ -27,8 +28,8 @@ function actionResolver(
   const notReadyMessage = <span>This cluster is not ready</span>;
   const hibernatingMessage = (
     <span>
-This cluster is hibernating;
-     awaken cluster in order to perform actions
+      This cluster is hibernating;
+      awaken cluster in order to perform actions
     </span>
   );
   const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
@@ -40,7 +41,8 @@ This cluster is hibernating;
   const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
   const isClusterReady = cluster.state === clusterStates.READY;
   const isClusterErrorInAccountClaimPhase = cluster.state === clusterStates.ERROR
-  && !cluster.status.dns_ready;
+  // eslint-disable-next-line camelcase
+  && !cluster.status?.dns_ready;
   const hasAccountId = cluster.managed && cluster.aws && cluster.aws.account_id;
   const isUninstallingProps = isClusterUninstalling
     ? { isDisabled: true, tooltip: uninstallingMessage } : {};
@@ -92,7 +94,6 @@ This cluster is hibernating;
       title: 'Resume from Hibernation',
       onClick: () => openModal(modals.RESUME_CLUSTER, clusterData),
     };
-
 
     if (isClusterHibernatingOrPoweringDown) {
       return resumeHibernatingClusterProps;
@@ -323,7 +324,8 @@ This cluster is hibernating;
     && !isArchived;
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && isArchived;
-  const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
+  const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL)
+    && !isAssistedInstallCluster(cluster);
   const showEditSubscriptionSettings = get(cluster, 'subscription.plan.id', '') === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
   const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(get(cluster, 'subscription.plan.id', ''));
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership

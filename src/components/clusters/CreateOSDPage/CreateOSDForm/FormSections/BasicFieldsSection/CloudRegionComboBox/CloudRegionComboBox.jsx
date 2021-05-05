@@ -19,7 +19,6 @@ class CloudRegionComboBox extends React.Component {
       isMultiAz, input, cloudProviderID, cloudProviders,
     } = this.props;
 
-
     const selectedRegionData = get(cloudProviders, 'providers[cloudProviderID].regions[input.value]', {});
 
     if ((isMultiAz && !prevProps.isMultiAz) && !selectedRegionData.supports_multi_az) {

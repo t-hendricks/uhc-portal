@@ -16,7 +16,6 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-
 import {
   ExclamationCircleIcon, ExclamationTriangleIcon,
 } from '@patternfly/react-icons';

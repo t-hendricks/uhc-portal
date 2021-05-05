@@ -53,6 +53,7 @@ import { productFilterOptions } from '../../../common/subscriptionTypes';
 
 import { viewPropsChanged, createViewQueryObject, getQueryParam } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
+import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../../../redux/constants/featureConstants';
 
 class ClusterList extends Component {
   state = {
@@ -62,7 +63,13 @@ class ClusterList extends Component {
   componentDidMount() {
     document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
     const {
-      getCloudProviders, cloudProviders, setListFlag, getOrganizationAndQuota, organization,
+      getCloudProviders,
+      cloudProviders,
+      setListFlag,
+      getOrganizationAndQuota,
+      organization,
+      getMachineTypes,
+      machineTypes,
     } = this.props;
 
     scrollToTop();
@@ -86,6 +93,10 @@ class ClusterList extends Component {
       getCloudProviders();
     }
 
+    if (!machineTypes.fulfilled && !machineTypes.pending) {
+      getMachineTypes();
+    }
+
     if (!organization.fulfilled && !organization.pending) {
       getOrganizationAndQuota();
     }
@@ -94,10 +105,15 @@ class ClusterList extends Component {
   componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
     const {
-      viewOptions, valid, pending,
+      viewOptions, valid, pending, features,
     } = this.props;
+    // List only selected features here to avoid request-flooding.
+    const isFeatureChange = features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE]
+      !== prevProps.features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE];
+
     if ((!valid && !pending)
-        || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
+      || isFeatureChange
+      || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ loadingChangedView: true });
       this.refresh();
@@ -328,9 +344,11 @@ ClusterList.propTypes = {
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
+  getMachineTypes: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  machineTypes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
@@ -339,6 +357,7 @@ ClusterList.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   anyModalOpen: PropTypes.bool,
+  features: PropTypes.object.isRequired,
   queryParams: PropTypes.shape({
     has_filters: PropTypes.bool,
   }),

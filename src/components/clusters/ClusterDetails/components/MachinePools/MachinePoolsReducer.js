@@ -27,7 +27,6 @@ import {
   CLEAR_SCALE_MACHINE_POOL_RESPONSE,
 } from './MachinePoolsActions';
 
-
 const initialState = {
   getMachinePools: {
     ...baseRequestState,
@@ -69,7 +68,6 @@ function MachinePoolsReducer(state = initialState, action) {
         };
         break;
 
-
       // ADD_MACHINE_POOL
       case PENDING_ACTION(ADD_MACHINE_POOL):
         draft.addMachinePoolResponse.pending = true;
@@ -89,12 +87,10 @@ function MachinePoolsReducer(state = initialState, action) {
         };
         break;
 
-
       // CLEAR_ADD_MACHINE_POOL_RESPONSE
       case CLEAR_ADD_MACHINE_POOL_RESPONSE:
         draft.addMachinePoolResponse = { ...initialState.addMachinePoolResponse };
         break;
-
 
       // SCALE_MACHINE_POOL
       case PENDING_ACTION(SCALE_MACHINE_POOL):
@@ -115,12 +111,10 @@ function MachinePoolsReducer(state = initialState, action) {
         };
         break;
 
-
       // CLEAR_SCALE_MACHINE_POOL_RESPONSE
       case CLEAR_SCALE_MACHINE_POOL_RESPONSE:
         draft.scaleMachinePoolResponse = { ...initialState.scaleMachinePoolResponse };
         break;
-
 
       // DELETE_MACHINE_POOL
       case PENDING_ACTION(DELETE_MACHINE_POOL):

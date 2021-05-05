@@ -26,7 +26,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
           "items": null,
           "kind": "AWSInfrastructureAccessRoleGrantLink",
         },
-        "byoc": false,
         "ccs": Object {
           "disable_scp_checks": false,
           "enabled": false,
@@ -405,7 +404,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
           "current": null,
         }
       }
-      addBareMetalTabRef={
+      addAssistedTabRef={
         Object {
           "current": null,
         }
@@ -416,7 +415,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
         }
       }
       displayAccessControlTab={true}
-      displayAddBareMetalHosts={false}
+      displayAddAssistedHosts={false}
       displayAddOnsTab={false}
       displayInsightsTab={false}
       displayMachinePoolsTab={true}
@@ -673,7 +672,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               "items": null,
               "kind": "AWSInfrastructureAccessRoleGrantLink",
             },
-            "byoc": false,
             "ccs": Object {
               "disable_scp_checks": false,
               "enabled": false,
@@ -1060,7 +1058,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               "items": null,
               "kind": "AWSInfrastructureAccessRoleGrantLink",
             },
-            "byoc": false,
             "ccs": Object {
               "disable_scp_checks": false,
               "enabled": false,
@@ -1455,7 +1452,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               "items": null,
               "kind": "AWSInfrastructureAccessRoleGrantLink",
             },
-            "byoc": false,
             "ccs": Object {
               "disable_scp_checks": false,
               "enabled": false,

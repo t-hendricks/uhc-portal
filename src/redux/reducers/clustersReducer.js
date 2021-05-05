@@ -28,6 +28,15 @@ const baseState = {
   valid: true,
 };
 
+// Fields here, that are *also* known to be always present from backend -> normalize.js results,
+// can be assumed always present.
+const emptyCluster = {
+  managed: false,
+  ccs: {
+    enabled: false,
+  },
+};
+
 const initialState = {
   clusters: {
     ...baseState,
@@ -42,29 +51,31 @@ const initialState = {
   },
   details: {
     ...baseState,
-    cluster: null,
+    cluster: emptyCluster,
   },
   createdCluster: {
     ...baseState,
-    cluster: null,
+    cluster: emptyCluster,
   },
   editedCluster: {
     ...baseState,
-    cluster: null,
+    cluster: emptyCluster,
   },
   archivedCluster: {
     ...baseState,
-    cluster: null,
+    cluster: emptyCluster,
   },
   unarchivedCluster: {
     ...baseState,
-    cluster: null,
+    cluster: emptyCluster,
   },
   hibernatingCluster: {
     ...baseState,
+    cluster: emptyCluster,
   },
   resumeHibernatingCluster: {
     ...baseState,
+    cluster: emptyCluster,
   },
 };
 
@@ -322,7 +333,6 @@ function clustersReducer(state = initialState, action) {
         };
         break;
 
-
       // GET_CLUSTER_STATUS
       case REJECTED_ACTION(clustersConstants.GET_CLUSTER_STATUS):
         draft.clusterStatus = {
@@ -344,7 +354,6 @@ function clustersReducer(state = initialState, action) {
           status: action.payload.data,
         };
         break;
-
 
       default:
         return state;

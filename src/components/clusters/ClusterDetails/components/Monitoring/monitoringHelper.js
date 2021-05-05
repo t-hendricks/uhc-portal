@@ -50,7 +50,6 @@ const baseURLProps = {
  */
 const hasData = obj => get(obj, 'data.length', 0) > 0;
 
-
 /**
  * Get the number of issues and warnings by some defined criteria for each of them
  * An item is considered an issue if it's value of the health criteria matches the value

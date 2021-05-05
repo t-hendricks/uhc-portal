@@ -73,8 +73,17 @@ class DownloadAndOSSelection extends React.Component {
   }
 
   render() {
-    const { mode = downloadButtonModes.INSTALLER } = this.props;
+    const { mode = downloadButtonModes.INSTALLER, channel } = this.props;
     const { OS } = this.state;
+
+    let isMacInstructions = false;
+    let isCRC = false;
+    if (OS === operatingSystems.MAC) {
+      isMacInstructions = true;
+    }
+    if (channel === 'CRC') {
+      isCRC = true;
+    }
 
     const options = [
       { value: 'Select OS', label: 'Select OS', disabled: true },
@@ -86,18 +95,36 @@ class DownloadAndOSSelection extends React.Component {
     }
 
     return (
-      <Grid hasGutter className="os-based-download">
-        <GridItem sm={12} md={6}>
-          <FormSelect value={OS} onChange={this.onChange} aria-label="select-os-dropdown">
-            {options.map(option => (
-              <FormSelectOption isDisabled={option.disabled} key={`OS.${option.value}`} value={option.value} label={option.label} />
-            ))}
-          </FormSelect>
-        </GridItem>
-        <GridItem sm={12} md={6}>
-          {this.downloadButton()}
-        </GridItem>
-      </Grid>
+      <>
+        {isCRC && (isMacInstructions ? (
+          <p>
+            Download and open the CodeReady Containers file. Opening the file will automatically
+            start a step-by-step installation guide.
+            {' '}
+          </p>
+        ) : (
+          <p>
+            Download and extract the CodeReady Containers archive for your
+            operating system and place the binary in your
+            {' '}
+            <code>$PATH</code>
+            {' '}
+            .
+          </p>
+        ))}
+        <Grid hasGutter className="os-based-download">
+          <GridItem sm={12} md={6}>
+            <FormSelect value={OS} onChange={this.onChange} aria-label="select-os-dropdown">
+              {options.map(option => (
+                <FormSelectOption isDisabled={option.disabled} key={`OS.${option.value}`} value={option.value} label={option.label} />
+              ))}
+            </FormSelect>
+          </GridItem>
+          <GridItem sm={12} md={6}>
+            {this.downloadButton()}
+          </GridItem>
+        </Grid>
+      </>
     );
   }
 }

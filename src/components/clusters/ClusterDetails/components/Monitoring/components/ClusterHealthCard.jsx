@@ -93,5 +93,4 @@ ClusterHealthCard.propTypes = {
   lastCheckIn: PropTypes.instanceOf(Date),
 };
 
-
 export default ClusterHealthCard;

@@ -38,7 +38,6 @@ class App extends React.PureComponent {
   }
 }
 
-
 App.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

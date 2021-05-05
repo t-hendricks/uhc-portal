@@ -92,7 +92,6 @@ const mapStateToProps = (state) => {
   });
 };
 
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: (formData) => {
     const createIdentityProviderRequest = getCreateIDPRequestData(formData);

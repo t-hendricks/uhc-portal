@@ -27,7 +27,6 @@ const getCloudProvidersAndRegions = () => clusterService.getCloudProviders().the
   },
 );
 
-
 const getCloudProviders = () => dispatch => dispatch({
   type: cloudProviderConstants.GET_CLOUD_PROVIDERS,
   payload: getCloudProvidersAndRegions(),

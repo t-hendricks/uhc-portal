@@ -19,6 +19,7 @@ import {
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 
+import { normalizeQuotaCost } from '../../common/normalize';
 import { subscriptionsConstants } from '../constants';
 
 const initialState = {
@@ -152,7 +153,7 @@ function subscriptionsReducer(state = initialState, action) {
           ...initialState.quotaCost,
           fulfilled: action.payload.data.items && action.payload.data.items.length > 0,
           valid: true,
-          items: action.payload.data.items,
+          items: action.payload.data.items.map(normalizeQuotaCost),
         };
     }
   });

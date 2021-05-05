@@ -130,7 +130,6 @@ class AddOnsCard extends Component {
           tooltipContent = noQuotaTooltip;
         }
 
-
         return (
           <Tooltip
             content={tooltipContent}
@@ -194,18 +193,21 @@ class AddOnsCard extends Component {
           </Button>
         );
       case AddOnsConstants.INSTALLATION_STATE.READY:
-        url = `${cluster.console.url}/k8s/ns/${addOn.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${addOn.operator_name}.v${installedAddOn.operator_version}`;
-        return (
-          <Button
-            component="a"
-            variant="secondary"
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View in Console
-          </Button>
-        );
+        if (cluster?.console.url) {
+          url = `${cluster.console.url}/k8s/ns/${addOn.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${addOn.operator_name}.v${installedAddOn.operator_version}`;
+          return (
+            <Button
+              component="a"
+              variant="secondary"
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View in Console
+            </Button>
+          );
+        }
+        return '';
       default:
         return '';
     }

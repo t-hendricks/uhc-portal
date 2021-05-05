@@ -4,7 +4,6 @@ selfResourceReview.mockResolvedValue({});
 const selfAccessReview = jest.fn();
 selfAccessReview.mockResolvedValue({});
 
-
 const authorizationsService = {
   selfResourceReview,
   selfAccessReview,

@@ -9,6 +9,9 @@ describe('<AddMachinePoolModal />', () => {
   const submit = jest.fn();
   const cluster = {
     managed: true,
+    ccs: {
+      enabled: false,
+    },
     cloud_provider: {
       id: 'aws',
     },

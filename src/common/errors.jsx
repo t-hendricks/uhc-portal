@@ -62,7 +62,6 @@ function getErrorMessage(payload) {
     return message;
   }
 
-
   // CMS uses "kind" for the error object, but AMS uses 'type'
   if (response !== undefined && (response.kind === 'Error' || response.type === 'Error')) {
     return `${response.code}:\n${response.reason}`;

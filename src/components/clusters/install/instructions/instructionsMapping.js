@@ -143,7 +143,7 @@ const instructionsMapping = {
     },
   },
   vmware: {
-    cloudProvider: 'VMWare vSphere',
+    cloudProvider: 'VMware vSphere',
     customizations: links.INSTALL_VSPHERE_CUSTOMIZATIONS,
     upi: {
       title: 'Install OpenShift on vSphere with user-provisioned infrastructure',

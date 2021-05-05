@@ -23,7 +23,6 @@ import ExternalLink from '../../../../../common/ExternalLink';
 
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
 
-
 function ScaleSection({
   pending,
   isBYOC,
@@ -45,7 +44,6 @@ function ScaleSection({
   billingModel,
 }) {
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
-
 
   const labelsAndTaintsSection = (
     <ExpandableSection

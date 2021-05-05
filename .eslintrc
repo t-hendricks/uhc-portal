@@ -48,7 +48,7 @@
       "after": "readonly"
     }
   }],
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "globals": {
     "insights": "readonly",
     "APP_BETA": "readonly",

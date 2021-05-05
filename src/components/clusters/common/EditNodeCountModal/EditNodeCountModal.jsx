@@ -45,7 +45,6 @@ class EditNodeCountModal extends Component {
       editNodeCountResponse,
     } = this.props;
 
-
     if (editNodeCountResponse.fulfilled
         && !editNodeCountResponse.pending
         && !editNodeCountResponse.error) {
@@ -59,7 +58,6 @@ class EditNodeCountModal extends Component {
     const { machinePoolsList } = this.props;
     return machinePoolsList.data.find(machinePool => machinePool.name === machinePoolId)?.nodes;
   }
-
 
   handleMachinePoolChange = (_, value) => {
     const { change } = this.props;

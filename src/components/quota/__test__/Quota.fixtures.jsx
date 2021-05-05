@@ -1,3 +1,6 @@
+import { dedicatedRhInfra, unlimitedROSA, dbaAddon } from '../../clusters/common/__test__/quota_cost.fixtures';
+import { subscriptionsReducer } from '../../../redux/reducers/subscriptionsReducer';
+
 const fetchAccount = jest.fn();
 const fetchQuotaCost = jest.fn();
 const invalidateClusters = jest.fn();
@@ -18,79 +21,18 @@ const account = {
   },
 };
 
-// TODO: move to / replace by quota_cost.fixtures?
-const quotaCost = {
-  empty: false,
-  error: false,
-  errorDetails: null,
-  errorMessage: '',
-  fulfilled: true,
-  pending: false,
-  valid: true,
-  items: [
-    {
-      allowed: 15,
-      consumed: 10,
-      related_resources: [
-        {
-          cloud_provider: 'any',
-          resource_name: 'cpu.large',
-          resource_type: 'compute.node',
-          byoc: 'rhinfra',
-          availability_zone_type: 'any',
-          product: 'OSD',
-        },
-      ],
-    },
-    {
-      allowed: 15,
-      consumed: 15,
-      related_resources: [
-        {
-          cloud_provider: 'any',
-          resource_name: 'cpu.large',
-          resource_type: 'compute.node',
-          byoc: 'rhinfra',
-          availability_zone_type: 'any',
-          product: 'OSD',
-        },
-      ],
-    },
-    {
-      allowed: 4,
-      consumed: 0,
-      related_resources: [
-        {
-          cloud_provider: 'any',
-          resource_name: 'cpu.large',
-          resource_type: 'compute.node',
-          byoc: 'rhinfra',
-          availability_zone_type: 'any',
-          product: 'OSD',
-        },
-      ],
-    },
-    {
-      allowed: 5,
-      consumed: 0,
-      quota_id: 'add-on|addon-dba-operator',
-      related_resources: [
-        {
-          cloud_provider: 'any',
-          resource_name: 'addon-dba-operator',
-          resource_type: 'add-on',
-          byoc: 'any',
-          availability_zone_type: 'any',
-          product: 'ANY',
-          billing_model: 'standard',
-        },
-      ],
-    },
-  ],
-  addOnsQuota: {
-    dbaOperatorAddon: 5,
-  },
+const buildState = (quotaCostItems) => {
+  const action = {
+    type: 'GET_QUOTA_COST_FULFILLED',
+    payload: { data: { items: quotaCostItems } },
+  };
+  return subscriptionsReducer(undefined, action).quotaCost;
 };
+
+const emptyQuotaCost = buildState([]);
+const quotaCost = buildState([].concat(dedicatedRhInfra, unlimitedROSA, dbaAddon));
+// unlimitedROSA only contains 0-cost quota so is not shown.
+const expectedRowsForQuotaCost = dedicatedRhInfra.length + 0 + dbaAddon.length;
 
 const rows = [];
 
@@ -99,7 +41,9 @@ export {
   fetchQuotaCost,
   organizationID,
   account,
+  emptyQuotaCost,
   quotaCost,
+  expectedRowsForQuotaCost,
   rows,
   invalidateClusters,
 };

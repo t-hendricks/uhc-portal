@@ -58,7 +58,6 @@ const editSchedule = (clusterID, policyID, schedule) => dispatch => dispatch({
   }),
 });
 
-
 const deleteSchedule = (clusterID, scheduleID) => dispatch => dispatch({
   type: DELETE_UPGRADE_SCHEDULE,
   payload: deleteUpgradeSchedule(clusterID, scheduleID).then((response) => {
@@ -78,7 +77,6 @@ const clearPostedUpgradeScheduleResponse = () => dispatch => dispatch({
 const clearSchedulesResponse = () => dispatch => dispatch({
   type: CLEAR_GET_UPGRADE_SCHEDULE,
 });
-
 
 export {
   POST_UPGRADE_SCHEDULE,

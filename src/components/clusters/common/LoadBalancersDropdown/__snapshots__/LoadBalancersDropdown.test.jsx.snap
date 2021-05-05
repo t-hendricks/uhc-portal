@@ -322,6 +322,8 @@ exports[`<LoadBalancersDropdown /> when there was an error renders correctly 1`]
         data-ouia-component-id="OUIA-Generated-Alert-danger-1"
         data-ouia-component-type="PF4/Alert"
         data-ouia-safe={true}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
       >
         <Component
           variant="danger"

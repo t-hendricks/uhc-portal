@@ -78,7 +78,6 @@ describe('machine pools action resolver', () => {
   });
 });
 
-
 describe('parseLabels', () => {
   it('should convert to array properly', () => {
     const labels = { foo: 'bar', hello: 'world' };

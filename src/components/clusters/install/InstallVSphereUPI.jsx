@@ -15,7 +15,7 @@ import PageTitle from '../../common/PageTitle';
 class InstallVSphereUPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | vSphere';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | vSphere User-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());

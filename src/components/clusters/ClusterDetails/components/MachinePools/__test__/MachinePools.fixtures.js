@@ -1251,5 +1251,4 @@ const stateWithQuota = {
   userProfile: { organization: { fulfilled: true, quotaList: rhQuotaList } },
 };
 
-
 export { stateWithQuota, stateWithNoQuota };

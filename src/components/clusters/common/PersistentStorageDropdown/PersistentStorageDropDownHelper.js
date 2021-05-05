@@ -1,4 +1,3 @@
-
 import get from 'lodash/get';
 import { parseValueWithUnit } from '../../../../common/units';
 
@@ -31,7 +30,6 @@ const filterPersistentStorageValuesByQuota = (currentValue,
   }
   return result;
 };
-
 
 export {
   quotaLookup,

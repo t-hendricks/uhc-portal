@@ -10,7 +10,6 @@ import get from 'lodash/get';
 import { productFilterOptions } from '../../../../../common/subscriptionTypes';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
 
-
 class ClusterListFilterDropdown extends React.Component {
   constructor(props) {
     super(props);
