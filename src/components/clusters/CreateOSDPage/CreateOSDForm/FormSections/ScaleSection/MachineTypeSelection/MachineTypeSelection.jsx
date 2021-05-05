@@ -4,76 +4,90 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import capitalize from 'lodash/capitalize';
-import { CpuIcon, MemoryIcon, ContainerNodeIcon } from '@patternfly/react-icons';
+import {
+  Select,
+  SelectGroup,
+  SelectOption,
+} from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
-import FlatRadioButton from '../../../../../../common/FlatRadioButton';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
 import { noMachineTypes } from '../../../../../../../common/helpers';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../../../../../common/quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../../../../common/subscriptionTypes';
 
-const machineTypeIcon = (machineTypeCategory) => {
-  switch (machineTypeCategory) {
-    case 'memory_optimized':
-      return <MemoryIcon size="lg" />;
-    case 'compute_optimized':
-      return <CpuIcon size="lg" />;
-    case 'general_purpose':
-      return <ContainerNodeIcon size="lg" />;
-    default:
-      return <ContainerNodeIcon size="lg" />;
+const machineCategories = {
+  GENERAL_PURPOSE: 'General Purpose',
+  MEMORY_OPTIMIZED: 'Memory Optimized',
+  COMPUTE_OPTIMIZED: 'Compute Optimized',
+};
+
+const machineTypeLabel = (machineType) => {
+  if (!machineType) {
+    return '';
   }
+  const humanizedMemory = humanizeValueWithUnit(machineType.memory.value,
+    machineType.memory.unit);
+  return `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
 };
 
 class MachineTypeSelection extends React.Component {
-  componentDidMount() {
-    const {
-      machineTypes, organization,
-    } = this.props;
+   state = {
+     isOpen: false,
+   };
 
-    if (machineTypes.fulfilled && organization.fulfilled) {
-      this.setDefaultValue();
-    }
-  }
+   componentDidMount() {
+     const {
+       machineTypes, organization,
+     } = this.props;
 
-  componentDidUpdate() {
-    const { machineTypes, input } = this.props;
-    if (machineTypes.error || machineTypes.pending) {
-      // Don't let the user submit if we couldn't get machine types.
-      this.setInvalidValue();
-    }
+     if (machineTypes.fulfilled && organization.fulfilled) {
+       this.setDefaultValue();
+     }
+   }
 
-    if (!input.value && machineTypes.fulfilled) {
-      // we got the machine types, and the user hasn't selected one yet - set to default.
-      this.setDefaultValue();
-    }
+   componentDidUpdate() {
+     const { machineTypes, input } = this.props;
+     if (machineTypes.error || machineTypes.pending) {
+       // Don't let the user submit if we couldn't get machine types.
+       this.setInvalidValue();
+     }
 
-    // if some external param changed, like MultiAz, and we no longer have quota
-    // for the selected instance type, we need to revert to default.
-    if (input.value && !this.hasQuotaForType(input.value)) {
-      this.setDefaultValue();
-    }
-  }
+     if (!input.value && machineTypes.fulfilled) {
+       // we got the machine types, and the user hasn't selected one yet - set to default.
+       this.setDefaultValue();
+     }
 
-  setDefaultValue() {
-    // Find the first sortedMachineTypes we have quota for, and set it as default
-    const { sortedMachineTypes, input } = this.props;
-    if (sortedMachineTypes.length > 0) {
-      const defaultType = sortedMachineTypes.find(type => this.hasQuotaForType(type.id));
-      if (defaultType) {
-        input.onChange(defaultType.id);
-      }
-    }
-  }
+     // if some external param changed, like MultiAz, and we no longer have quota
+     // for the selected instance type, we need to revert to default.
+     if (input.value && !this.hasQuotaForType(input.value)) {
+       this.setDefaultValue();
+     }
+   }
 
-  setInvalidValue() {
-    // Tell redux form the current value of this field is empty.
-    // This will cause it to not pass validation if it is required.
-    const { input } = this.props;
-    input.onChange('');
-  }
+   setDefaultValue() {
+     // Find the first sortedMachineTypes we have quota for, and set it as default
+     const { sortedMachineTypes, input } = this.props;
+     if (sortedMachineTypes.length > 0) {
+       const defaultType = sortedMachineTypes.find(type => this.hasQuotaForType(type.id));
+       if (defaultType) {
+         input.onChange(defaultType.id);
+       }
+     }
+   }
+
+   setInvalidValue() {
+     // Tell redux form the current value of this field is empty.
+     // This will cause it to not pass validation if it is required.
+     const { input } = this.props;
+     input.onChange('');
+   }
+
+  onToggle = (isOpen) => {
+    this.setState({
+      isOpen,
+    });
+  };
 
   // Returns false if necessary data not fulfilled yet.
   hasQuotaForType(machineTypeID) {
@@ -135,46 +149,73 @@ class MachineTypeSelection extends React.Component {
       ...extraProps
     } = this.props;
 
-    const changeHandler = (value) => {
+    const changeHandler = (_, value) => {
       input.onChange(value);
+      this.onToggle(false);
     };
 
-    const machineTypeRadio = (machineType) => {
-      const humanizedMemory = humanizeValueWithUnit(machineType.memory.value,
-        machineType.memory.unit);
-      const labelTitle = `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
+    const machineNameParts = (machineType) => {
+      const { name } = machineType;
+      return name.split(' - '); // Assuming the formatting on the backend side is "type - category". If the backend changes the formatting, this assumption will break
+    };
 
+    const machineTypeSelectItem = (machineType) => {
       const hasQuota = this.hasQuotaForType(machineType.id);
-      let { name } = machineType;
-      const nameParts = name.split(' - '); // Assuming the formatting on the backend side is "type - category". If the backend changes the formatting, this assumption will break
-      name = (
-        <>
-          <div>
-            {nameParts[0]}
-          </div>
-          <div>
-            {capitalize(nameParts[1])}
-          </div>
-        </>
-      );
+      const nameParts = machineNameParts(machineType);
       return (
-        <FlatRadioButton
+        <SelectOption
           {...extraProps}
           key={machineType.id}
-          id={`machineTypeRadio.${machineType.id}`}
+          id={`machineType.${machineType.id}`}
           value={machineType.id}
+          description={nameParts[0]}
           isSelected={hasQuota && input.value === machineType.id}
-          titleText={labelTitle}
-          secondaryText={name}
-          icon={machineTypeIcon(machineType.category)}
-          onChange={changeHandler}
-        />
+          formValue={machineType.id}
+        >
+          {machineTypeLabel(machineType)}
+        </SelectOption>
       );
+    };
+
+    const groupedMachineTypes = (machines) => {
+      const machineGroups = {};
+      Object.values(machineCategories).forEach((category) => {
+        machineGroups[category] = [];
+      });
+
+      machines.forEach((machineType) => {
+        const machineCategory = machineNameParts(machineType)[1];
+        switch (machineCategory) {
+          case machineCategories.MEMORY_OPTIMIZED:
+            machineGroups[machineCategories.MEMORY_OPTIMIZED].push(machineType);
+            return;
+          case machineCategories.COMPUTE_OPTIMIZED:
+            machineGroups[machineCategories.COMPUTE_OPTIMIZED].push(machineType);
+            return;
+          case machineCategories.GENERAL_PURPOSE:
+            machineGroups[machineCategories.GENERAL_PURPOSE].push(machineType);
+            break;
+          default:
+        }
+      });
+
+      return machineGroups;
+    };
+
+    const groupedSelectItems = (machines) => {
+      const machineGroups = groupedMachineTypes(machines);
+      const selectGroups = Object.keys(machineGroups).map(category => (
+        <SelectGroup label={category} key={category}>
+          {machineGroups[category].map(machineType => machineTypeSelectItem(machineType))}
+        </SelectGroup>
+      ));
+      return selectGroups;
     };
 
     const quotaMachineTypes = sortedMachineTypes.filter(type => (
       this.hasQuotaForType(type.id)
     ));
+
     let displayedMachineTypes = quotaMachineTypes;
     if (machineTypes.fulfilled && organization.fulfilled) {
       if (!isBYOC) {
@@ -187,12 +228,23 @@ class MachineTypeSelection extends React.Component {
           </div>
         );
       }
+      const { isOpen } = this.state;
+      const options = groupedSelectItems(displayedMachineTypes);
+      const selection = machineTypeLabel(
+        displayedMachineTypes.find(machineType => machineType.id === input.value) || null,
+      );
       return (
         <>
           {(touched && error) && (<span className="error">{error}</span>)}
-          <div className="flat-radio-buttons-flex-container">
-            {displayedMachineTypes.map(type => machineTypeRadio(type))}
-          </div>
+          <Select
+            variant="single"
+            selections={selection}
+            isOpen={isOpen}
+            onToggle={this.onToggle}
+            onSelect={changeHandler}
+          >
+            {options}
+          </Select>
         </>
       );
     }
