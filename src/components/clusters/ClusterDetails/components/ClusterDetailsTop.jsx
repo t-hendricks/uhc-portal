@@ -14,6 +14,7 @@ import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../../common/ErrorTriangle';
 import getClusterName from '../../../../common/getClusterName';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
+import { isUninstalledAICluster } from '../../../../common/isAssistedInstallerCluster';
 import ExpirationAlert from './ExpirationAlert';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
@@ -92,11 +93,11 @@ function ClusterDetailsTop(props) {
         Open console
       </Button>
     );
-  } else if (cluster.canEdit) {
+  } else if (cluster.canEdit && !isUninstalledAICluster(cluster)) {
     launchConsole = (<Button variant="primary" onClick={() => openModal(modals.EDIT_CONSOLE_URL, cluster)}>Add console URL</Button>);
   }
 
-  const actions = (
+  const actions = !isUninstalledAICluster(cluster) && (
     <ClusterActionsDropdown
       disabled={!cluster.canEdit && !cluster.canDelete}
       cluster={cluster}
@@ -162,7 +163,9 @@ function ClusterDetailsTop(props) {
                 Unarchive
               </Button>
             )}
-            { !isDeprovisioned && (<RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />)}
+            { !isDeprovisioned && !isUninstalledAICluster(cluster) && (
+              <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />
+            )}
           </span>
         </SplitItem>
       </Split>
