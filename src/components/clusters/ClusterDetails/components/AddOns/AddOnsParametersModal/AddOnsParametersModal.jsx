@@ -96,12 +96,18 @@ class AddOnsParametersModal extends Component {
     const {
       cluster,
       quota,
+      addOn,
       addOnInstallation,
+      isUpdateForm,
     } = this.props;
     if (param.options !== undefined && param.options.length > 0) {
       let paramOptions;
       if (param.value_type === 'resource') {
-        const currentValue = Number(getParameterValue(addOnInstallation, param.id));
+        let defaultValue;
+        if (isUpdateForm && param.id === addOn.resource_name) {
+          defaultValue = 1;
+        }
+        const currentValue = Number(getParameterValue(addOnInstallation, param.id, defaultValue));
         paramOptions = quotaCostOptions(param.id, cluster, quota, param.options, currentValue);
       } else {
         paramOptions = param.options;
