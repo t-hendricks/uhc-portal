@@ -84,12 +84,12 @@ const getParameter = (addOn, paramID) => {
   return undefined;
 };
 
-const getParameterValue = (addOnInstallation, paramID) => {
+const getParameterValue = (addOnInstallation, paramID, defaultValue = undefined) => {
   const param = getParameter(addOnInstallation, paramID);
   if (param) {
     return param.value;
   }
-  return undefined;
+  return defaultValue;
 };
 
 const parameterValuesForEditing = (addOnInstallation, addOn) => {
