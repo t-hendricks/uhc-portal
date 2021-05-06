@@ -1,4 +1,4 @@
-import { getErrorMessage } from '../errors';
+import { formatErrorDetails, getErrorMessage } from '../errors';
 
 describe('getErrorMessage()', () => {
   it('Properly extracts error message from the Error API object', () => {
@@ -30,5 +30,38 @@ describe('getErrorMessage()', () => {
   it('Fails gracefully when getting JS Error objects', () => {
     const err = new Error('Hello');
     expect(getErrorMessage(err)).toBe('Error: Hello');
+  });
+});
+
+describe('formatErrorDetails()', () => {
+  it('handles AddOnParameterOptionList kind', () => {
+    const errDetails = [{
+      kind: 'AddOnParameterOptionList',
+      items: [
+        {
+          name: 'Option 1',
+          value: 'option 1',
+        },
+        {
+          name: 'Option 2',
+          value: 'option 2',
+        },
+      ],
+    }];
+    expect(formatErrorDetails(errDetails)).toMatchSnapshot();
+  });
+
+  it('handles AddOnRequirementData kind', () => {
+    const errDetails = [{
+      kind: 'AddOnRequirementData',
+      items: {
+        'cloud_provider.id': 'gcp',
+        'region.id': [
+          'us-east-1',
+          'eu-west-1',
+        ],
+      },
+    }];
+    expect(formatErrorDetails(errDetails)).toMatchSnapshot();
   });
 });

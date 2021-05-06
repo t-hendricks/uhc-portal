@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`formatErrorDetails() handles AddOnParameterOptionList kind 1`] = `
+Array [
+  <pre>
+    [
+  {
+    "name": "Option 1",
+    "value": "option 1"
+  },
+  {
+    "name": "Option 2",
+    "value": "option 2"
+  }
+]
+  </pre>,
+]
+`;
+
+exports[`formatErrorDetails() handles AddOnRequirementData kind 1`] = `
+Array [
+  <pre>
+    {
+  "cloud_provider.id": "gcp",
+  "region.id": [
+    "us-east-1",
+    "eu-west-1"
+  ]
+}
+  </pre>,
+]
+`;
