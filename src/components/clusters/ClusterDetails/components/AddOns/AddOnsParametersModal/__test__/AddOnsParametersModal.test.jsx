@@ -132,7 +132,7 @@ describe('<AddOnsParametersModal />', () => {
           id: 'dummy item',
           options: [
             {
-              name: 'option1',
+              name: 'Option 1',
               value: 'option1',
             },
           ],
@@ -142,7 +142,10 @@ describe('<AddOnsParametersModal />', () => {
       },
     };
     wrapper.setProps({ addOn }, () => {
-      expect(wrapper.find(Field).props().options).toEqual([{ name: 'option1', value: 'option1' }]);
+      expect(wrapper.find(Field).props().options).toEqual([
+        { name: '-- Please Select --', value: undefined },
+        { name: 'Option 1', value: 'option1' },
+      ]);
     });
   });
 
@@ -169,7 +172,10 @@ describe('<AddOnsParametersModal />', () => {
       },
     };
     wrapper.setProps({ addOn }, () => {
-      expect(wrapper.find(Field).props().options).toEqual([{ name: 'Option 1', value: 'option1' }]);
+      expect(wrapper.find(Field).props().options).toEqual([
+        { name: '-- Please Select --', value: undefined },
+        { name: 'Option 1', value: 'option1' },
+      ]);
       expect(wrapper.find(Button).exists()).toBeTruthy();
       expect(wrapper.find(Button).props().children[2]).toEqual('Option 1');
     });
