@@ -4,7 +4,7 @@ import get from 'lodash/get';
 const BANNED_USER_CODE = 'ACCT-MGMT-22';
 const TERMS_REQUIRED_CODE = 'CLUSTERS-MGMT-451';
 
-function overrideErrorMessage(payload) {
+function overrideErrorMessage(payload, actionType = undefined) {
   if (!payload) {
     return '';
   }
@@ -15,10 +15,15 @@ function overrideErrorMessage(payload) {
   const errorKind = get(payload, 'details[0].kind', '');
 
   switch (errorKind) {
-    case 'ExcessResources':
-      message = `You are not authorized to create the cluster because your request exceeds available quota.
+    case 'ExcessResources': {
+      let resource = 'cluster';
+      if (actionType !== undefined && /CLUSTER_ADDON/.test(actionType)) {
+        resource = 'cluster add-on';
+      }
+      message = `You are not authorized to create the ${resource} because your request exceeds available quota.
               In order to fulfill this request, you will need quota/subscriptions for:`;
       break;
+    }
     default:
   }
 
@@ -48,16 +53,16 @@ function overrideErrorMessage(payload) {
   return message;
 }
 
-function getErrorMessage(payload) {
-  if (payload.response === undefined) {
+function getErrorMessage(action) {
+  if (action.payload.response === undefined) {
     // Handle edge cases in which `payload` might be an Error type
-    return String(payload);
+    return String(action.payload);
   }
 
-  const response = payload.response.data;
+  const response = action.payload.response.data;
 
   // Determine if error needs to be overridden
-  const message = overrideErrorMessage(response);
+  const message = overrideErrorMessage(response, action.type);
   if (message) {
     return message;
   }
@@ -95,7 +100,7 @@ const getErrorState = action => (
     error: action.error,
     errorCode: get(action.payload, 'response.status'),
     internalErrorCode: get(action.payload, 'response.data.code'),
-    errorMessage: getErrorMessage(action.payload),
+    errorMessage: getErrorMessage(action),
     errorDetails: get(action.payload, 'response.data.details'),
     operationID: get(action.payload, 'response.data.operation_id'),
   }
@@ -113,6 +118,7 @@ function formatErrorDetails(errorDetails) {
       case 'ExcessResources': {
         // Resource map: singular and plural
         const resourceMap = {
+          addon: ['addon', 'addons'],
           'cluster.aws': ['cluster', 'clusters'],
           'cluster.gcp': ['cluster', 'clusters'],
           'compute.node.aws': ['node', 'nodes'],
@@ -135,6 +141,13 @@ function formatErrorDetails(errorDetails) {
           customErrors.push((
             <ul>
               { details.items.map((excessResource) => {
+                if (excessResource.resource_type === 'addon') {
+                  return (
+                    <li>
+                      {`${excessResource.resource_type}: ${excessResource.resource_name}`}
+                    </li>
+                  );
+                }
                 if (resourceMap[excessResource.resource_type]) {
                   return (
                     <li>
