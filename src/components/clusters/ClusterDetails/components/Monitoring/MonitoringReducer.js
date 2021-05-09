@@ -76,7 +76,7 @@ function MonitoringReducer(state = initialState, action) {
         draft.operators = {
           ...initialState.operators,
           fulfilled: true,
-          data: action.payload.data.operators,
+          data: action.payload.data.cluster_operators,
         };
         break;
 
