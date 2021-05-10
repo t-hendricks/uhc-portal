@@ -163,7 +163,7 @@ function ClusterDetailsTop(props) {
                 Unarchive
               </Button>
             )}
-            { !isDeprovisioned && !isUninstalledAICluster(cluster) && (
+            { !isDeprovisioned && (
               <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />
             )}
           </span>
