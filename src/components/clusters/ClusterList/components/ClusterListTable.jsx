@@ -29,7 +29,7 @@ import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActio
 import skeletonRows from '../../../common/SkeletonRows';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
-import isAssistedInstallSubscription from '../../../../common/isAssistedInstallerCluster';
+import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
 
 function ClusterListTable(props) {
   const {
@@ -73,7 +73,7 @@ function ClusterListTable(props) {
     const icon = <ClusterStateIcon clusterState={clusterState.state || ''} animated={false} />;
     const clusterStatus = (clusterStateAndDescription) => {
       const { state, description } = clusterStateAndDescription;
-      if (isAssistedInstallSubscription(cluster.subscription)) {
+      if (isAISubscriptionWithoutMetrics(cluster.subscription)) {
         return <AIClusterStatus status={cluster.state} />;
       }
       if (state === clusterStates.ERROR) {
