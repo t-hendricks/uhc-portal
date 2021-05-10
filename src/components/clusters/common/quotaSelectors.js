@@ -233,46 +233,11 @@ const availableClustersFromQuota = (
  * Returns number of nodes of specific type that can be created/added, from 0 to `Infinity`.
  * Returns 0 if necessary data not fulfilled yet.
  * @param quotaList - `state.userProfile.organization.quotaList`
+ * @param query - {product, cloudProviderID, resourceName, isBYOC,isMultiAz, billingModel}
  */
-const availableNodesFromQuota = (
-  quotaList,
-  {
-    product,
-    cloudProviderID,
-    resourceName,
-    isBYOC,
-    // isMultiAz - unused here.
-    billingModel,
-  },
-) => {
-  const infra = isBYOC ? 'byoc' : 'rhInfra';
-  const data = get(
-    quotaList.nodesQuota, [billingModel, product, cloudProviderID, infra, resourceName], {},
-  );
-  let available = get(data, 'available', 0);
-  // ROSA has zero cost (as far as Red Hat is concerned, billed by Amazon).
-  // TODO don't hardcode, look up by product (https://issues.redhat.com/browse/SDA-3231).
-  let cost = (product === normalizedProducts.ROSA) ? 0
-    : get(data, 'cost', Infinity);
-
-  if (cost === 0) {
-    return Infinity;
-  }
-
-  // support 'any' resource_name for nodes
-  const resourceAnyQuota = get(
-    quotaList.nodesQuota, [billingModel, product, cloudProviderID, infra, any], {},
-  );
-  const anyAvailable = get(resourceAnyQuota, 'available', 0);
-
-  if (anyAvailable > available) {
-    available = anyAvailable;
-    cost = get(resourceAnyQuota, 'cost', Infinity);
-  }
-
-  // If you're able to create half a node, you're still in "not enough quota" situation.
-  return Math.floor(available / cost);
-};
+const availableNodesFromQuota = (quotaList, query) => (
+  availableQuota(quotaList, { ...query, resourceType: quotaTypes.NODE })
+);
 
 export {
   quotaTypes,
