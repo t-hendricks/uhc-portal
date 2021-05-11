@@ -86,10 +86,11 @@ describe('OSD cluster tests', async () => {
   after('Finally, delete the cluster created', async () => {
     await browser.waitUntil(
       async () => ((await ClusterDetailsPage.actionsDropdownToggle).isClickable()),
+      { timeout: 120000 }
     );
     await (await ClusterDetailsPage.actionsDropdownToggle).click();
     await (await ClusterDetailsPage.deleteClusterDropdownItem).click();
     await (await ClusterDetailsPage.deleteClusterDialogInput).setValue(clusterName);
     await (await ClusterDetailsPage.deleteClusterDialogConfirm).click();
-  }).timeout(300000);
+  });
 });

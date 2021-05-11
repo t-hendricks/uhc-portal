@@ -16,8 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import {
+  Route, Redirect, Switch, withRouter,
+} from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
 import { AssistedUiRouter } from 'openshift-assisted-ui-lib';
