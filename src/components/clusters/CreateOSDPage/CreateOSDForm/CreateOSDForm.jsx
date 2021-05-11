@@ -23,6 +23,7 @@ import ReduxCheckbox from '../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../common/ExternalLink';
 import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from './FormSections/NetworkingSection/AvailabilityZoneSelection';
 import GCPClusterEncryption from './FormSections/EncryptionSection/GCPClusterEncryption';
+import UserWorkloadMonitoringSection from '../../common/UserWorkloadMonitoringSection';
 
 import './CreateOSDForm.scss';
 
@@ -369,7 +370,12 @@ class CreateOSDForm extends React.Component {
         <GridItem span={12}>
           <Divider />
         </GridItem>
-        <Title headingLevel="h3">Cluster updates</Title>
+        <GridItem span={4}>
+          <Title headingLevel="h3">Cluster settings</Title>
+        </GridItem>
+
+        <UserWorkloadMonitoringSection parent="create" />
+        <Title headingLevel="h3" className="clusterupdatespace">Cluster updates</Title>
         <UpgradeSettingsFields
           isAutomatic={isAutomaticUpgrade}
           isDisabled={pending}
