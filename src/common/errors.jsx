@@ -154,6 +154,17 @@ function formatErrorDetails(errorDetails) {
         }
         break;
       }
+      case 'AddOnParameterOptionList':
+      case 'AddOnRequirementData': {
+        if (details && details.items) {
+          customErrors.push((
+            <pre>
+              {JSON.stringify(details.items, undefined, 2)}
+            </pre>
+          ));
+        }
+        break;
+      }
       default:
         break;
     }
