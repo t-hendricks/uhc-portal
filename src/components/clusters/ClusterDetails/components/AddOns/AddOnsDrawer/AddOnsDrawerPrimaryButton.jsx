@@ -1,0 +1,175 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import './AddOnsDrawer.scss';
+
+import {
+  Button,
+  Tooltip,
+} from '@patternfly/react-core';
+
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { hasParameters } from '../AddOnsHelper';
+import clusterStates, { isHibernating } from '../../../../common/clusterStates';
+import { noQuotaTooltip } from '../../../../../../common/helpers';
+
+import AddOnsConstants from '../AddOnsConstants';
+
+function AddOnsPrimaryButton(props) {
+  const {
+    activeCard,
+    activeCardRequirementsFulfilled,
+    addClusterAddOn,
+    addClusterAddOnResponse,
+    cluster,
+    hasQuota,
+    installedAddOn,
+    openModal,
+  } = props;
+
+  // install an add on or open params modal
+  const installAddOnAction = () => {
+    if (hasParameters(activeCard)) {
+      openModal('add-ons-parameters-modal', {
+        clusterID: cluster.id,
+        addOn: activeCard,
+        isUpdateForm: false,
+      });
+    } else {
+      addClusterAddOn(cluster.id, {
+        addon: {
+          id: activeCard?.id,
+        },
+      });
+    }
+  };
+
+  // open uninstall modal
+  const uninstallAddonAction = (
+    <Button
+      ouiaId={`uninstall-addon-${activeCard?.id}`}
+      variant="link"
+      isDisabled={!cluster.canEdit}
+      onClick={() => openModal('add-ons-delete-modal', {
+        addOnName: activeCard?.name,
+        addOnID: activeCard?.id,
+        clusterID: cluster.id,
+      })}
+    >
+      Uninstall
+    </Button>
+  );
+
+  // if addon not installed show install button
+  if (!installedAddOn) {
+    // if no quota, no permissions or cluster hibernating disable button with tooltip
+    const clusterHibernating = isHibernating(cluster.state);
+    if (!hasQuota || !cluster.canEdit || clusterHibernating) {
+      let tooltipContent;
+      if (clusterHibernating) {
+        tooltipContent = 'This operation is not available while cluster is hibernating';
+      } else if (!cluster.canEdit) {
+        tooltipContent = 'You do not have permission to install add ons. Only cluster owners and organization administrators can install add ons.';
+      } else {
+        tooltipContent = noQuotaTooltip;
+      }
+      return (
+        <Tooltip
+          content={tooltipContent}
+        >
+          <div className="pf-u-display-inline-block">
+            <Button isDisabled ouiaId={`install-addon-${activeCard?.id}`}>
+              Install
+            </Button>
+          </div>
+        </Tooltip>
+      );
+    }
+
+    // render install button
+    return (
+      <Button
+        variant="secondary"
+        aria-label="Install"
+        isDisabled={
+                    addClusterAddOnResponse.pending
+                    || cluster.state !== clusterStates.READY
+                    || !cluster.canEdit
+                    || !activeCardRequirementsFulfilled
+                  }
+        ouiaId={`install-addon-${activeCard?.id}`}
+        onClick={installAddOnAction}
+      >
+        Install
+      </Button>
+    );
+  }
+
+  let url;
+  // handle addon installation states after install
+  switch (installedAddOn?.state) {
+    case AddOnsConstants.INSTALLATION_STATE.PENDING:
+    case AddOnsConstants.INSTALLATION_STATE.INSTALLING:
+      return (
+        <>{uninstallAddonAction}</>
+      );
+    case undefined:
+      // undefined state implies that the user just started
+      // the installation and there is no state available yet
+      return '';
+    case AddOnsConstants.INSTALLATION_STATE.FAILED:
+      url = 'https://access.redhat.com/support/cases/#/case/new';
+      return (
+        <>
+          <Button
+            component="a"
+            variant="secondary"
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Contact support
+          </Button>
+          {' '}
+          {uninstallAddonAction}
+        </>
+      );
+    case AddOnsConstants.INSTALLATION_STATE.READY:
+      if (cluster?.console.url) {
+        url = `${cluster.console.url}/k8s/ns/${activeCard?.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${activeCard?.operator_name}.v${installedAddOn?.operator_version}`;
+        return (
+          <>
+            <Button
+              component="a"
+              variant="primary"
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open in Console
+              {' '}
+              <ExternalLinkAltIcon className="link-icon" />
+            </Button>
+            {' '}
+            {uninstallAddonAction}
+          </>
+        );
+      }
+      return '';
+    default:
+      return '';
+  }
+}
+
+AddOnsPrimaryButton.propTypes = {
+  activeCard: PropTypes.object,
+  activeCardRequirementsFulfilled: PropTypes.bool,
+  addClusterAddOn: PropTypes.func.isRequired,
+  addClusterAddOnResponse: PropTypes.object,
+  cluster: PropTypes.object,
+  hasQuota: PropTypes.bool,
+  installedAddOn: PropTypes.object,
+  openModal: PropTypes.func,
+};
+
+export default AddOnsPrimaryButton;

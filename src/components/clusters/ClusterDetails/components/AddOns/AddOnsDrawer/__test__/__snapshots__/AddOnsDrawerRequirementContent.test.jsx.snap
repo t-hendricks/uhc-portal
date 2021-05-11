@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddOnsRequirementContent /> should render 1`] = `
+<List>
+  <ListItem
+    key="first requirement"
+  >
+    first requirement
+  </ListItem>
+  <ListItem
+    key="second requirement"
+  >
+    second requirement
+  </ListItem>
+</List>
+`;

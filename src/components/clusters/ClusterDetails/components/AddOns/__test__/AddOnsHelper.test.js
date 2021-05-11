@@ -8,6 +8,7 @@ import {
   mockAddOns,
   mockClusterAddOns,
   mockClusterAddOnsParams,
+  mockAddOnsInstallParamAndValues,
 } from './AddOns.fixtures';
 import {
   crcWorkspacesAddonQuota,
@@ -27,6 +28,7 @@ import {
   hasParameters,
   getParameter,
   parameterValuesForEditing,
+  parameterAndValue,
   validateAddOnRequirements,
 } from '../AddOnsHelper';
 
@@ -479,6 +481,82 @@ describe('validateAddOnRequirements', () => {
       expect(status.errorMsgs)
         .toEqual(['This addon requires a machine_pool where replicas >= 2 and instance_type is '
         + 'm5.xlarge']);
+    });
+  });
+
+  describe('parameterAndValue', () => {
+    it('should return an empty object for addOn with no parameters', () => {
+      const param = parameterAndValue(mockClusterAddOnsParams.items[0], crcWorkspaces);
+      expect(param).toEqual({ parameters: {} });
+    });
+    it('should return an empty object for addOn with parameters but no current values', () => {
+      const param = parameterAndValue(undefined, managedIntegration);
+      expect(param).toEqual({ parameters: {} });
+    });
+    it('should return existing values', () => {
+      const param = parameterAndValue(mockClusterAddOnsParams.items[1], managedIntegration);
+      expect(param).toEqual({ parameters: { 'cidr-range': mockAddOnsInstallParamAndValues.items[0] } });
+    });
+    it('should return only existing values for current addon parameters', () => {
+      const param = parameterAndValue(mockClusterAddOnsParams.items[2], managedIntegration);
+      expect(param).toEqual({ parameters: { 'cidr-range': mockAddOnsInstallParamAndValues.items[0] } });
+    });
+    it('should return false for boolean addon param with installation param value of "false"', () => {
+      const param = parameterAndValue(mockClusterAddOnsParams.items[3], loggingOperator);
+      expect(param).toEqual({ parameters: { 'use-cloudwatch': mockAddOnsInstallParamAndValues.items[1] } });
+    });
+    it('should return false for boolean addon param with installation param value of "true"', () => {
+      const param = parameterAndValue(mockClusterAddOnsParams.items[4], loggingOperator);
+      expect(param).toEqual({ parameters: { 'use-cloudwatch': mockAddOnsInstallParamAndValues.items[2] } });
+    });
+    it('should return current param name for param with options and installation param value', () => {
+      const mockAddOnsParams = {
+        parameters: {
+          items: [
+            {
+              id: 'my-string',
+              value_type: 'string',
+              options: [{
+                name: 'option 1 name',
+                value: 'options 1 value',
+              }, {
+                name: 'option 2 name',
+                value: 'options 2 value',
+              }],
+            },
+          ],
+        },
+      };
+      const mockAddOnsInstallParams = {
+        parameters: {
+          items: [
+            {
+              id: 'my-string',
+              value: 'options 2 value',
+            },
+          ],
+        },
+      };
+      const param = parameterAndValue(mockAddOnsInstallParams, mockAddOnsParams);
+      expect(param).toEqual({
+        parameters: {
+          'my-string': {
+            id: 'my-string',
+            options: [
+              {
+                name: 'option 1 name',
+                value: 'options 1 value',
+              },
+              {
+                name: 'option 2 name',
+                value: 'options 2 value',
+              },
+            ],
+            value: 'option 2 name',
+            value_type: 'string',
+          },
+        },
+      });
     });
   });
 });

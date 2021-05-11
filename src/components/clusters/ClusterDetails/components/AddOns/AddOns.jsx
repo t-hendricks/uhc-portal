@@ -5,19 +5,13 @@ import {
   EmptyState,
   EmptyStateBody,
   EmptyStateIcon,
-  Gallery,
-  GalleryItem,
   Title,
 } from '@patternfly/react-core';
 import { IntegrationIcon } from '@patternfly/react-icons';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 import ErrorBox from '../../../../common/ErrorBox';
-import {
-  availableAddOns, getInstalled, hasQuota, validateAddOnRequirements,
-} from './AddOnsHelper';
-import AddOnsCard from './AddOnsCard';
-import AddOnsParametersModal from './AddOnsParametersModal';
-import AddOnsDeleteModal from './AddOnsDeleteModal';
+import { availableAddOns } from './AddOnsHelper';
+import AddOnsDrawer from './AddOnsDrawer';
 
 class AddOns extends React.Component {
   componentDidMount() {
@@ -110,26 +104,14 @@ class AddOns extends React.Component {
         { addClusterAddOnResponse.error && (
         <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
         )}
-        <Gallery hasGutter className="addon-gallery">
-          { addOnsList.map(addOn => (
-            <GalleryItem>
-              <AddOnsCard
-                key={addOn.id}
-                addOn={addOn}
-                installedAddOn={getInstalled(addOn, clusterAddOns)}
-                requirements={
-                  validateAddOnRequirements(addOn, cluster, clusterAddOns, clusterMachinePools)
-                }
-                hasQuota={hasQuota(addOn, cluster, organization, quota)}
-                quota={quota}
-              />
-            </GalleryItem>
-          ))}
-        </Gallery>
-        <AddOnsParametersModal
-          clusterID={cluster.id}
+        <AddOnsDrawer
+          addOnsList={addOnsList}
+          clusterAddOns={clusterAddOns}
+          cluster={cluster}
+          clusterMachinePools={clusterMachinePools}
+          organization={organization}
+          quota={quota}
         />
-        <AddOnsDeleteModal />
       </>
     );
   }
