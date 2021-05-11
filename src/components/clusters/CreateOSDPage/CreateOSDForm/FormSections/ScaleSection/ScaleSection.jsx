@@ -32,7 +32,7 @@ function ScaleSection({
   cloudProviderID,
   product,
   showStorageAndLoadBalancers = true,
-  instanceTypeGridSpan = 9,
+  instanceTypeGridSpan = 4,
   autoscaleAndNodeCountGridSpan = 4,
   minNodes,
   isMachinePool = false,
