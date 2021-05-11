@@ -77,7 +77,7 @@ class OSDSubscriptionCard extends Component {
     if (marketplace) {
       // add link
       subscriptionLink = (
-        <ExternalLink href="/openshift/subscriptions/openshift-dedicated" noIcon noTarget>
+        <ExternalLink href="/openshift/subscriptions/openshift-dedicated" noIcon>
           Dedicated (On-Demand)
         </ExternalLink>
       );
