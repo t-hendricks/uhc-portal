@@ -182,7 +182,7 @@ function ClusterDetailsTop(props) {
         expirationTimestamp={cluster.expiration_timestamp}
       />
       )}
-      {trialEndDate
+      {trialEndDate && !isDeprovisioned
       && (
       <ExpirationAlert
         expirationTimestamp={trialEndDate}
