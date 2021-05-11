@@ -1,3 +1,8 @@
+import React from 'react';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import {
+  List, ListItem, Text,
+} from '@patternfly/react-core';
 import links, { channels } from '../../../../common/installLinks';
 
 const architectures = {
@@ -43,6 +48,7 @@ const instructionsMapping = {
     upi: {
       title: 'Install OpenShift on GCP with user-provisioned infrastructure',
       docURL: links.INSTALL_GCPUPI_GETTING_STARTED,
+      displayRHCOSSection: true,
       rhcosLearnMoreURL: links.INSTALL_GCPUPI_RHCOS_LEARN_MORE,
       rhcosDownloads: [
         {
@@ -73,8 +79,37 @@ const instructionsMapping = {
   ibmz: {
     cloudProvider: 'IBM-Z',
     title: 'Install OpenShift on IBM Z with user-provisioned infrastructure',
-    rhcosLearnMoreURL: links.INSTALL_IBMZ_RHCOS_LEARN_MORE,
-    rhcosAdditionalInstructions: 'Download the initramfs, the kernel, and the OS image corresponding to your VM type.',
+    displayRHCOSSection: true,
+    rhcosAdditionalInstructions: (
+      <Text component="div">
+        <List>
+          <ListItem>
+            If you plan your installation with z/VM, download the initramfs,
+            the kernel, and the rootfs files.
+            {' '}
+            <Text component="a" href={links.INSTALL_IBMZ_LEARN_MORE_ZVM} target="_blank" rel="noreferrer noopener">
+              Learn more
+              {' '}
+              <ExternalLinkAltIcon size="sm" />
+              .
+            </Text>
+          </ListItem>
+          <ListItem>
+            If you plan your installation with RHEL KVM, depending on the installation
+            type you plan to perform, download the QCOW2 file or the initramfs,
+            the kernel, and the rootfs files.
+            {' '}
+            <Text component="a" href={links.INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM} target="_blank" rel="noreferrer noopener">
+              Learn more
+              {' '}
+              <ExternalLinkAltIcon size="sm" />
+              .
+              {' '}
+            </Text>
+          </ListItem>
+        </List>
+      </Text>
+    ),
     rhcosDownloads: [
       {
         buttonText: 'Download RHCOS initramfs',
@@ -87,18 +122,14 @@ const instructionsMapping = {
         url: links.RHCOS_IBMZ_KERNEL,
       },
       {
-        alternatives: [
-          {
-            buttonText: 'Download RAW for DASD VM',
-            name: 'OCP-Download-RHCOS-dasd',
-            url: links.RHCOS_IBMZ_DASD,
-          },
-          {
-            buttonText: 'Download RAW for FCP VM',
-            name: 'OCP-Download-RHCOS-fcp',
-            url: links.RHCOS_IBMZ_FCP,
-          },
-        ],
+        buttonText: 'Download RHCOS rootfs',
+        name: 'OCP-Download-RHCOS-rootfs',
+        url: links.RHCOS_IBMZ_ROOTFS,
+      },
+      {
+        buttonText: 'Download QCOW2 image',
+        name: 'OCP-Download-RHCOS-qcow2',
+        url: links.RHCOS_IBMZ_QCOW,
       },
     ],
     docURL: links.INSTALL_IBMZ_GETTING_STARTED,
@@ -114,6 +145,7 @@ const instructionsMapping = {
     },
     upi: {
       title: 'Install OpenShift on Bare Metal with user-provisioned infrastructure',
+      displayRHCOSSection: true,
       rhcosLearnMoreURL: links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE,
       rhcosDownloads: [
         [
@@ -148,6 +180,7 @@ const instructionsMapping = {
     upi: {
       title: 'Install OpenShift on vSphere with user-provisioned infrastructure',
       docURL: links.INSTALL_VSPHEREUPI_GETTING_STARTED,
+      displayRHCOSSection: true,
       rhcosLearnMoreURL: links.INSTALL_VSPHERE_RHCOS_LEARN_MORE,
       channel: channels.STABLE,
       rhcosDownloads:
@@ -169,6 +202,7 @@ const instructionsMapping = {
     cloudProvider: 'Power',
     title: 'Install OpenShift on Power with user-provisioned infrastructure',
     channel: channels.PPC,
+    displayRHCOSSection: true,
     rhcosLearnMoreURL: links.INSTALL_POWER_RHCOS_LEARN_MORE,
     rhcosDownloads:
     [
@@ -178,12 +212,22 @@ const instructionsMapping = {
         url: links.RHCOS_POWER_ISO_PPC,
       },
       {
-        buttonText: 'Download RHCOS RAW',
-        name: 'OCP-Download-RHCOS-RAW',
-        url: links.RHCOS_POWER_RAW_PPC,
+        buttonText: 'Download RHCOS initramfs',
+        name: 'OCP-Download-RHCOS-initramfs',
+        url: links.RHCOS_POWER_INITRAMFS,
+      },
+      {
+        buttonText: 'Download RHCOS kernel',
+        name: 'OCP-Download-RHCOS-kernel',
+        url: links.RHCOS_POWER_KERNEL,
+      },
+      {
+        buttonText: 'Download RHCOS rootfs',
+        name: 'OCP-Download-RHCOS-rootfs',
+        url: links.RHCOS_POWER_ROOTFS,
       },
     ],
-    rhcosAdditionalInstructions: 'Download the installer ISO image and the compressed metal RAW.',
+    rhcosAdditionalInstructions: 'Download either the installer ISO image or for PXE booting the initramfs, the kernel, and the rootfs files.',
     showPreReleasePageLink: false,
     docURL: links.INSTALL_POWER_GETTING_STARTED,
   },
@@ -198,6 +242,7 @@ const instructionsMapping = {
     upi: {
       title: 'Install OpenShift on Red Hat OpenStack Platform with user-provisioned infrastructure',
       docURL: links.INSTALL_OSPUPI_GETTING_STARTED,
+      displayRHCOSSection: true,
       rhcosLearnMoreURL: links.INSTALL_OSPUPI_RHCOS_LEARN_MORE,
       rhcosDownloads: [
         {
