@@ -13,55 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import './common/arrayIncludePollyfill';
-import 'core-js/modules/es.object.values';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { NotificationPortal } from '@redhat-cloud-services/frontend-components-notifications';
-import * as Sentry from '@sentry/browser';
-import { SessionTiming } from '@sentry/integrations';
-
-import { Api, Config } from 'openshift-assisted-ui-lib';
-
-import { userInfoResponse } from './redux/actions/userActions';
-import config from './config';
-import App from './components/App/App';
-import { store } from './redux/store';
-import getBaseName from './common/getBaseName';
-import getNavClickParams from './common/getNavClickParams';
-import { authInterceptor } from './services/apiRequest';
-import { detectFeatures } from './redux/actions/featureActions';
-
-import './styles/main.scss';
-
-const basename = getBaseName();
-
-/**
- * Assisted Installer configuration
- *
- * We need to pass axios auth interceptor so every request from AI has proper headers.
- *
- * We also need to set the route base path for the internal AI routing to work properly.
- */
-Api.setAuthInterceptor(authInterceptor);
-Config.setRouteBasePath('/assisted-installer');
-
-const render = () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <>
-        <NotificationPortal store={store} />
-        <BrowserRouter basename={basename}>
-          <App />
-        </BrowserRouter>
-      </>
-    </Provider>,
-    document.getElementById('root'),
-  );
-};
+import AppEntry from './chrome-main';
 
 const renderDevEnvError = () => {
   ReactDOM.render(
@@ -81,22 +35,14 @@ const renderDevEnvError = () => {
       <p>
         If you don&apos;t know what the Insights Chrome Proxy is or how to run it,
         {' '}
-        consult README.adoc and README-tldr.md
+        consult README.md and README-tldr.md
       </p>
     </div>,
     document.body,
   );
 };
 
-const chromeBootstrap = () => {
-  insights.chrome.init();
-  insights.chrome.identifyApp('').then(() => {
-    insights.chrome.appNavClick(getNavClickParams(window.location.pathname));
-  });
-};
-
 const renderUnsupportedEnvError = () => {
-  chromeBootstrap();
   ReactDOM.render(
     <div style={{ margin: '25px' }}>
       <h1>Unsupported environment</h1>
@@ -112,7 +58,7 @@ const renderUnsupportedEnvError = () => {
   );
 };
 
-if (!window.insights && process.env.NODE_ENV === 'development') {
+if (!window.insights && APP_DEV_SERVER) {
   // we don't want this info to ever be complied to the prod build,
   // so I made sure it's only ever called in development mode
   renderDevEnvError();
@@ -120,33 +66,5 @@ if (!window.insights && process.env.NODE_ENV === 'development') {
   // This is a build for an environment we don't support. render an error.
   renderUnsupportedEnvError();
 } else {
-  chromeBootstrap();
-  insights.chrome.auth.getUser()
-    .then((data) => {
-      store.dispatch(userInfoResponse(data.identity.user));
-      config.fetchConfig()
-        .then(() => {
-          store.dispatch(detectFeatures());
-          if (!config.override && config.configData.sentryDSN) {
-            Sentry.init({
-              dsn: config.configData.sentryDSN,
-              integrations: [
-                new SessionTiming(),
-                new Sentry.Integrations.GlobalHandlers({
-                  onerror: true,
-                  onunhandledrejection: false,
-                }),
-              ],
-            });
-            if (data && data.identity && data.identity.user) {
-              // add user info to Sentry
-              Sentry.configureScope((scope) => {
-                const { email, username } = data.identity.user;
-                scope.setUser({ email, username });
-              });
-            }
-          }
-          render();
-        });
-    });
+  ReactDOM.render(<AppEntry />, document.getElementById('root'));
 }
