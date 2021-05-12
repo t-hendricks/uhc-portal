@@ -142,6 +142,7 @@ describe('<AddOnsPrimaryButton />', () => {
     });
 
     const InstallButton = wrapper.find('Button');
+    expect(InstallButton.props().variant).toEqual('primary');
     expect(InstallButton.props().isDisabled).toBeFalsy();
     expect(InstallButton.props().children).toEqual('Install');
 
