@@ -16,7 +16,7 @@ limitations under the License.
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { NotificationPortal } from '@redhat-cloud-services/frontend-components-notifications';
+import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
 import { Api, Config } from 'openshift-assisted-ui-lib';
 import App from './components/App/App';
 import { store } from './redux/store';
