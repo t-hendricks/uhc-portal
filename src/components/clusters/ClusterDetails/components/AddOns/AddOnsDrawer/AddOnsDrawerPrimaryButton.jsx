@@ -89,7 +89,7 @@ function AddOnsPrimaryButton(props) {
     // render install button
     return (
       <Button
-        variant="secondary"
+        variant="primary"
         aria-label="Install"
         isDisabled={
                     addClusterAddOnResponse.pending
