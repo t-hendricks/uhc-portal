@@ -5922,6 +5922,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
     isGrouped={false}
     isOpen={false}
     isPlain={false}
+    maxHeight={600}
     menuAppendTo="inline"
     noResultsFoundText="No results found"
     onClear={[Function]}
@@ -9016,6 +9017,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     isGrouped={false}
     isOpen={false}
     isPlain={false}
+    maxHeight={600}
     menuAppendTo="inline"
     noResultsFoundText="No results found"
     onClear={[Function]}

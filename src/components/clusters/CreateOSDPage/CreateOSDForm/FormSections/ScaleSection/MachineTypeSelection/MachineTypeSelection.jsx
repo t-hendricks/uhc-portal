@@ -17,9 +17,10 @@ import { availableClustersFromQuota, availableNodesFromQuota } from '../../../..
 import { normalizedProducts, billingModels } from '../../../../../../../common/subscriptionTypes';
 
 const machineCategories = {
-  GENERAL_PURPOSE: 'General Purpose',
-  MEMORY_OPTIMIZED: 'Memory Optimized',
-  COMPUTE_OPTIMIZED: 'Compute Optimized',
+  GENERAL_PURPOSE: { name: 'general_purpose', label: 'General purpose' },
+  MEMORY_OPTIMIZED: { name: 'memory_optimized', label: 'Memory optimized' },
+  COMPUTE_OPTIMIZED: { name: 'compute_optimized', label: 'Compute optimized' },
+  ACCELERATED_COMPUTING: { name: 'accelerated_computing', label: 'Accelated computing' },
 };
 
 const machineTypeLabel = (machineType) => {
@@ -28,7 +29,14 @@ const machineTypeLabel = (machineType) => {
   }
   const humanizedMemory = humanizeValueWithUnit(machineType.memory.value,
     machineType.memory.unit);
-  return `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
+  let label = `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
+  if (machineType.category === machineCategories.ACCELERATED_COMPUTING.name) {
+    const numGPUsStr = machineType.name.match(/\d+ GPU[s]?/g);
+    if (numGPUsStr) {
+      label += ` (${numGPUsStr})`;
+    }
+  }
+  return label;
 };
 
 class MachineTypeSelection extends React.Component {
@@ -180,20 +188,22 @@ class MachineTypeSelection extends React.Component {
     const groupedMachineTypes = (machines) => {
       const machineGroups = {};
       Object.values(machineCategories).forEach((category) => {
-        machineGroups[category] = [];
+        machineGroups[category.label] = [];
       });
 
       machines.forEach((machineType) => {
-        const machineCategory = machineNameParts(machineType)[1];
-        switch (machineCategory) {
-          case machineCategories.MEMORY_OPTIMIZED:
-            machineGroups[machineCategories.MEMORY_OPTIMIZED].push(machineType);
+        switch (machineType.category) {
+          case machineCategories.MEMORY_OPTIMIZED.name:
+            machineGroups[machineCategories.MEMORY_OPTIMIZED.label].push(machineType);
             return;
-          case machineCategories.COMPUTE_OPTIMIZED:
-            machineGroups[machineCategories.COMPUTE_OPTIMIZED].push(machineType);
+          case machineCategories.COMPUTE_OPTIMIZED.name:
+            machineGroups[machineCategories.COMPUTE_OPTIMIZED.label].push(machineType);
             return;
-          case machineCategories.GENERAL_PURPOSE:
-            machineGroups[machineCategories.GENERAL_PURPOSE].push(machineType);
+          case machineCategories.GENERAL_PURPOSE.name:
+            machineGroups[machineCategories.GENERAL_PURPOSE.label].push(machineType);
+            break;
+          case machineCategories.ACCELERATED_COMPUTING.name:
+            machineGroups[machineCategories.ACCELERATED_COMPUTING.label].push(machineType);
             break;
           default:
         }
@@ -204,11 +214,16 @@ class MachineTypeSelection extends React.Component {
 
     const groupedSelectItems = (machines) => {
       const machineGroups = groupedMachineTypes(machines);
-      const selectGroups = Object.keys(machineGroups).map(category => (
-        <SelectGroup label={category} key={category}>
-          {machineGroups[category].map(machineType => machineTypeSelectItem(machineType))}
-        </SelectGroup>
-      ));
+      const selectGroups = Object.keys(machineGroups).map((categoryLabel) => {
+        if (machineGroups[categoryLabel].length > 0) {
+          return (
+            <SelectGroup label={categoryLabel} key={categoryLabel}>
+              {machineGroups[categoryLabel].map(machineType => machineTypeSelectItem(machineType))}
+            </SelectGroup>
+          );
+        }
+        return null;
+      }).filter(Boolean);
       return selectGroups;
     };
 
@@ -242,6 +257,7 @@ class MachineTypeSelection extends React.Component {
             isOpen={isOpen}
             onToggle={this.onToggle}
             onSelect={changeHandler}
+            maxHeight={600}
           >
             {options}
           </Select>
