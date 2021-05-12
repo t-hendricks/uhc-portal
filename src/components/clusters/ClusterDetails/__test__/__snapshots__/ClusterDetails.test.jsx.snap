@@ -1406,6 +1406,18 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
     </ErrorBoundary>
   </ForwardRef>
   <ForwardRef
+    aria-label="Add-ons"
+    eventKey={3}
+    hidden={true}
+    id="addOnsTabContent"
+  >
+    <ErrorBoundary>
+      <Connect(AddOns)
+        clusterID="1i4counta3holamvo1g5tp6n8p3a03bq"
+      />
+    </ErrorBoundary>
+  </ForwardRef>
+  <ForwardRef
     aria-label="Networking"
     eventKey={4}
     hidden={true}
