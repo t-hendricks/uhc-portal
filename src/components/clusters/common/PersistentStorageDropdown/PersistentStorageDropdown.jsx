@@ -13,7 +13,8 @@ import {
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../common/ErrorBox';
 import { humanizeValueWithUnitGiB } from '../../../../common/units';
-import { filterPersistentStorageValuesByQuota, quotaLookup } from './PersistentStorageDropDownHelper';
+import { availableQuota, quotaTypes } from '../quotaSelectors';
+import { filterPersistentStorageValuesByQuota } from './PersistentStorageDropDownHelper';
 import { noQuotaTooltip } from '../../../../common/helpers';
 
 class PersistentStorageDropdown extends React.Component {
@@ -53,8 +54,16 @@ class PersistentStorageDropdown extends React.Component {
     };
 
     if (persistentStorageValues.fulfilled) {
-      const storageQuota = quotaLookup(quotaList,
-        billingModel, product, cloudProviderID, isBYOC, isMultiAZ);
+      const storageQuota = availableQuota(quotaList, {
+        resourceType: quotaTypes.STORAGE,
+        billingModel,
+        product,
+        cloudProviderID,
+        isBYOC,
+        isMultiAZ,
+        resourceName: 'gp2',
+      });
+
       const filteredStorageValues = filterPersistentStorageValuesByQuota(currentValue,
         persistentStorageValues, storageQuota);
       const notEnoughQuota = filteredStorageValues.values.length <= 1;
