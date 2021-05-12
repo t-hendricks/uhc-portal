@@ -25,7 +25,6 @@ const ReplaceWebpackPlugin = require('html-replace-webpack-plugin');
 const ChunkMapperPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/chunk-mapper');
 const FederationPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/federated-modules');
 const { insights } = require('./package.json');
-
 const name = insights.appname;
 const moduleName = name.replace(/-(\w)/g, (_, match) => match.toUpperCase());
 const reactCSS = /@patternfly\/react-styles\/css/;
@@ -80,8 +79,8 @@ module.exports = (_env, argv) => {
       }),
       // For openshift-assisted-ui-lib
       new webpack.EnvironmentPlugin({
-        REACT_APP_API_ROOT: '',
-        REACT_APP_BUILD_MODE: argv.mode || 'development',
+        'REACT_APP_API_ROOT': '',
+        'REACT_APP_BUILD_MODE': argv.mode || 'development'
       }),
       new ReplaceWebpackPlugin(
         [{
@@ -102,7 +101,7 @@ module.exports = (_env, argv) => {
         moduleName,
         exposes: {
           './RootApp': path.resolve(srcDir, 'chrome-main.jsx'),
-        },
+        }
       }),
       new ChunkMapperPlugin({
         modules: [moduleName],
@@ -117,7 +116,7 @@ module.exports = (_env, argv) => {
           loader: require.resolve('@redhat-cloud-services/frontend-components-config-utilities/chrome-render-loader'),
           options: {
             appName: moduleName,
-            skipChrome2: true,
+            skipChrome2: true
           },
         },
         {
@@ -191,7 +190,7 @@ module.exports = (_env, argv) => {
       modules: [srcDir, modDir],
       // For react-markdown#unified#vfile
       fallback: {
-        path: require.resolve('path-browserify'),
+        path: require.resolve("path-browserify"),
       },
     },
 
@@ -203,7 +202,7 @@ module.exports = (_env, argv) => {
       port: 8001,
       host: 'localhost',
       firewall: false,
-      transportMode: 'sockjs',
+      transportMode: 'sockjs'
     },
   };
 };
