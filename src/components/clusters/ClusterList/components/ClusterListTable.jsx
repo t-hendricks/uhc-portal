@@ -74,7 +74,7 @@ function ClusterListTable(props) {
     const clusterStatus = (clusterStateAndDescription) => {
       const { state, description } = clusterStateAndDescription;
       if (isAISubscriptionWithoutMetrics(cluster.subscription)) {
-        return <AIClusterStatus status={cluster.state} />;
+        return <AIClusterStatus status={cluster.state} className="clusterstate" />;
       }
       if (state === clusterStates.ERROR) {
         return (

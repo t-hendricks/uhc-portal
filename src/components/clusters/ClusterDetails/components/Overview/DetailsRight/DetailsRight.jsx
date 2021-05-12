@@ -55,7 +55,7 @@ function DetailsRight({
           </DescriptionListTerm>
           <DescriptionListDescription style={cluster.state.style}>
             { isAISubscriptionWithoutMetrics(cluster.subscription)
-              ? <AIClusterStatus status={cluster.metrics.state} />
+              ? <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
               : (
                 <>
                   <ClusterStateIcon clusterState={cluster.state.state} animated />
