@@ -1304,6 +1304,11 @@
   resolved "https://registry.yarnpkg.com/@patternfly/react-tokens/-/react-tokens-4.10.9.tgz#0c55ec18651bc8ca11f7bac10a4904e435e7e98d"
   integrity sha512-qmyTPHC/bO+rxCnfLKQZLkV5xLRS2QkB/9aoAdUZvBXpcGS7eX891sSipefwSxxWv+9F2v06zfhdmAhgT7T02g==
 
+"@redhat-cloud-services/frontend-components-config-utilities@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-config-utilities/-/frontend-components-config-utilities-1.0.0.tgz#2c5d4f61e37c77668954ab2dfc052e10eedd4899"
+  integrity sha512-Xxb33qTG2wvskBsuWntGrmVl/tzpMooNpFtN8JkuAS+gj27f/4F1Bi6Be6r1kz23+m9SPwfw1Bf4VR3qqNxRiQ==
+
 "@redhat-cloud-services/frontend-components-notifications@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@redhat-cloud-services/frontend-components-notifications/-/frontend-components-notifications-3.1.0.tgz#d0d7ec32e8d88b75a1aef0b2ebb1e12eecf93632"
