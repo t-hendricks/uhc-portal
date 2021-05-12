@@ -35,7 +35,7 @@ const outDir = path.resolve(__dirname, 'build', insights.appname);
 
 module.exports = (_env, argv) => {
   const devMode = argv.mode !== 'production';
-  const betaMode = argv.beta == 'true';
+  const betaMode = argv.env.beta == 'true';
   const isDevServer = process.argv.includes('serve');
 
   // Select default API env based on argument if specified.
