@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { PageSection } from '@patternfly/react-core';
 import NotFoundError from '../App/NotFoundError';
 import { store } from '../../redux/store';

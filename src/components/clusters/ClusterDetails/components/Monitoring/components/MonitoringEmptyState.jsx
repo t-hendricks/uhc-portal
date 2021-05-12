@@ -10,7 +10,7 @@ import {
 
 import { ExclamationTriangleIcon } from '@patternfly/react-icons';
 
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
 function MonitoringEmptyState(
   {

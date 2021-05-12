@@ -20,9 +20,8 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import {
-  Spinner, PageHeader, PageHeaderTitle,
-} from '@redhat-cloud-services/frontend-components';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 import {
   Button,
   Card,

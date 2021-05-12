@@ -27,7 +27,7 @@ import {
   CheckCircleIcon,
 } from '@patternfly/react-icons';
 
-import { Skeleton } from '@redhat-cloud-services/frontend-components';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 

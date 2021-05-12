@@ -8,7 +8,7 @@ import {
   Title,
   Popover,
 } from '@patternfly/react-core';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import {
   CheckCircleIcon,
   InfoCircleIcon,
