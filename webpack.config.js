@@ -22,21 +22,26 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ReplaceWebpackPlugin = require('html-replace-webpack-plugin');
+const ChunkMapperPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/chunk-mapper');
+const FederationPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/federated-modules');
 const { insights } = require('./package.json');
+const name = insights.appname;
+const moduleName = name.replace(/-(\w)/g, (_, match) => match.toUpperCase());
+const reactCSS = /@patternfly\/react-styles\/css/;
 
 const modDir = 'node_modules';
 const srcDir = path.resolve(__dirname, 'src');
 const outDir = path.resolve(__dirname, 'build', insights.appname);
 
-module.exports = (env, argv) => {
+module.exports = (_env, argv) => {
   const devMode = argv.mode !== 'production';
   const betaMode = argv.beta == 'true';
-  const isDevServer = !!process.argv.find(v => v.includes('webpack-dev-server'));
+  const isDevServer = process.argv.includes('serve');
 
   // Select default API env based on argument if specified.
   // Otherwise, default to 'development' for backend-proxy users when running in dev server,
   // or 'production' when it's a real build.
-  const apiEnv = argv['api-env'] || (isDevServer ? 'development' : 'production');
+  const apiEnv = argv.env['api-env'] || (isDevServer ? 'development' : 'production');
 
   let bundleAnalyzer = null;
   const appDeployment = betaMode ? 'beta/apps' : 'apps';
@@ -44,11 +49,10 @@ module.exports = (env, argv) => {
     bundleAnalyzer = new BundleAnalyzerPlugin({ analyzerPort: '5000', openAnalyzer: true });
   }
   const publicPath = `/${appDeployment}/${insights.appname}/`;
+  const entry = path.resolve(srcDir, 'bootstrap.js');
   return {
     mode: argv.mode || 'development',
-    entry: {
-      main: path.resolve(srcDir, 'main.jsx'),
-    },
+    entry,
 
     output: {
       path: outDir,
@@ -59,14 +63,10 @@ module.exports = (env, argv) => {
 
     plugins: [
       new MiniCssExtractPlugin({
-        // Options similar to the same options in webpackOptions.output
-        // both options are optional
-        filename: devMode ? '[name].css' : '[name].[hash].css',
-        chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+        filename: devMode ? '[name].css' : '[name].[contenthash].css',
+        chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
       }),
       new HtmlWebpackPlugin({
-        hash: true, // cache invalidation on bundle updates
-        chunks: ['main'],
         template: 'src/index.html',
       }),
       new webpack.DefinePlugin({
@@ -74,6 +74,13 @@ module.exports = (env, argv) => {
         APP_DEVMODE: devMode,
         APP_DEV_SERVER: isDevServer,
         APP_API_ENV: JSON.stringify(apiEnv),
+        // For openshift-assisted-ui-lib
+        BASE_PATH: JSON.stringify(process.env.BASE_PATH),
+      }),
+      // For openshift-assisted-ui-lib
+      new webpack.EnvironmentPlugin({
+        'REACT_APP_API_ROOT': '',
+        'REACT_APP_BUILD_MODE': argv.mode || 'development'
       }),
       new ReplaceWebpackPlugin(
         [{
@@ -84,17 +91,37 @@ module.exports = (env, argv) => {
           replacement: `<esi:include src="/${appDeployment}/chrome/snippets/head.html" />`,
         }],
       ),
-      new CopyWebpackPlugin([
-        { from: 'public', to: outDir, toType: 'dir' },
-      ]),
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: 'public', to: outDir, toType: 'dir' },
+        ],
+      }),
+      FederationPlugin({
+        root: __dirname,
+        moduleName,
+        exposes: {
+          './RootApp': path.resolve(srcDir, 'chrome-main.jsx'),
+        }
+      }),
+      new ChunkMapperPlugin({
+        modules: [moduleName],
+      }),
       bundleAnalyzer,
     ].filter(Boolean),
 
     module: {
       rules: [
         {
+          test: new RegExp(entry),
+          loader: require.resolve('@redhat-cloud-services/frontend-components-config-utilities/chrome-render-loader'),
+          options: {
+            appName: moduleName,
+            skipChrome2: true
+          },
+        },
+        {
           test: /\.jsx?$/,
-          exclude: [/node_modules/],
+          include: srcDir,
           use: {
             loader: 'babel-loader', // babel config is in babel.config.js
             options: {
@@ -105,7 +132,7 @@ module.exports = (env, argv) => {
         {
           test: /\.scss$/,
           use: [
-            devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+            MiniCssExtractPlugin.loader,
             'css-loader',
             {
               loader: 'sass-loader',
@@ -119,7 +146,14 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.css$/,
-          use: [devMode ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader'],
+          exclude: reactCSS,
+          use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        },
+        {
+          // Since we use Insights' upstream PatternFly, we're using null-loader to save about 1MB of CSS
+          test: /\.css$/i,
+          include: reactCSS,
+          use: 'null-loader',
         },
         {
           test: /(webfont\.svg|\.(eot|ttf|woff|woff2))$/,
@@ -136,33 +170,39 @@ module.exports = (env, argv) => {
             name: 'images/[name].[hash].[ext]',
           },
         },
+        // For react-markdown#unified#vfile
+        // https://github.com/vfile/vfile/issues/38#issuecomment-683198538
         {
-          test: /\.mjs$/,
-          include: /node_modules/,
-          type: 'javascript/auto',
+          test: /node_modules\/vfile\/core\.js/,
+          use: [{
+            loader: 'imports-loader',
+            options: {
+              type: 'commonjs',
+              imports: ['single process/browser process'],
+            },
+          }],
         },
       ],
     },
 
     resolve: {
-      extensions: ['.mjs', '.js', '.jsx'],
+      extensions: ['.js', '.jsx'],
       modules: [srcDir, modDir],
+      // For react-markdown#unified#vfile
+      fallback: {
+        path: require.resolve("path-browserify"),
+      },
     },
 
     devServer: {
-      historyApiFallback: true,
-      contentBase: outDir,
-      disableHostCheck: true,
-      publicPath,
-      // Watching & hot reloading defaults on under webpack-dev-server anyway,
-      // and is hard to turn off (https://github.com/webpack/webpack-dev-server/issues/1251).
-      hot: true,
-      watchOptions: {
-      // Kludge: Effectively disable watching by polling once a day.
-        poll: (process.env.WEBPACK_WATCH === 'false') ? 24*60*60*1000 : false,
+      historyApiFallback: {
+        index: `${publicPath}index.html`,
       },
-      inline: true,
+      hot: false,
       port: 8001,
+      host: 'localhost',
+      firewall: false,
+      transportMode: 'sockjs'
     },
   };
 };

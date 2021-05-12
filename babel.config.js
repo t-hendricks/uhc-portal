@@ -101,7 +101,7 @@ module.exports = {
       'transform-imports',
       {
         '@redhat-cloud-services/frontend-components': {
-          transform: importName => `@redhat-cloud-services/frontend-components/components/cjs/${FECMapper[importName] || importName}`,
+          transform: importName => `@redhat-cloud-services/frontend-components/${FECMapper[importName] || importName}`,
           preventFullImport: false,
           skipDefaultConversion: true,
         },
@@ -112,7 +112,7 @@ module.exports = {
       'transform-imports',
       {
         '@redhat-cloud-services/frontend-components-notifications': {
-          transform: importName => `@redhat-cloud-services/frontend-components-notifications/cjs/${importName}`,
+          transform: importName => `@redhat-cloud-services/frontend-components-notifications/${importName}`,
           preventFullImport: false,
         },
       },

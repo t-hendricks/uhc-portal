@@ -1,5 +1,5 @@
 import React from 'react';
-import { PropTypes } from '@redhat-cloud-services/rule-components/dist/cjs/style-inject.es-de7bd8d6';
+import { PropTypes } from 'prop-types';
 import { Flex, FlexItem, Title } from '@patternfly/react-core';
 
 import InfoPopover from '../../../../../overview/InsightsAdvisorCard/InfoPopover';

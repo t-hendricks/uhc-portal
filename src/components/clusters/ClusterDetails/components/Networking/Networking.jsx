@@ -6,7 +6,7 @@ import {
   EmptyState,
   EmptyStateBody,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import NetworkConfigurationCard from './components/NetworkConfigurationCard';
 import EditClusterRoutersCard from './components/EditClusterRoutersCard';
 

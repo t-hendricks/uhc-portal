@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import { emptyQuotaList } from '../__test__/quota.fixtures';
 import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
 import ErrorBox from '../../../common/ErrorBox';
 
@@ -9,7 +10,7 @@ describe('<UpgradeTrialClusterDialog />', () => {
   const organizationState = {
     fulfilled: true,
     pending: false,
-    quotaList: {},
+    quotaList: emptyQuotaList,
   };
   const { cluster } = fixtures.OSDTrialClusterDetails;
   const machineTypesByID = {

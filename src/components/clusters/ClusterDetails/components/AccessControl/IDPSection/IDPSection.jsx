@@ -12,9 +12,7 @@ import {
   TableVariant,
   cellWidth,
 } from '@patternfly/react-table';
-import {
-  Skeleton,
-} from '@redhat-cloud-services/frontend-components';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
 import links from '../../../../../../common/installLinks';

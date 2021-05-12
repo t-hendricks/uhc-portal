@@ -1,6 +1,6 @@
 .idea
 .vscode
-yarn-error.log
+*.log
 /backend
 /build/
 /node_modules/

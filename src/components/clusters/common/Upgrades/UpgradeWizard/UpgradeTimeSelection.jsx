@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Radio, Title, FormGroup, Form, TextInput, Select, SelectOption,
 } from '@patternfly/react-core';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import DatePicker from 'react-datepicker';
 
 class UpgradeTimeSelection extends React.Component {

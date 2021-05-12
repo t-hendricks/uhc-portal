@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import {
   Button, Alert, Split, SplitItem, Title,
 } from '@patternfly/react-core';
@@ -14,6 +14,7 @@ import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../../common/ErrorTriangle';
 import getClusterName from '../../../../common/getClusterName';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
+import { isUninstalledAICluster } from '../../../../common/isAssistedInstallerCluster';
 import ExpirationAlert from './ExpirationAlert';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
@@ -92,11 +93,11 @@ function ClusterDetailsTop(props) {
         Open console
       </Button>
     );
-  } else if (cluster.canEdit) {
+  } else if (cluster.canEdit && !isUninstalledAICluster(cluster)) {
     launchConsole = (<Button variant="primary" onClick={() => openModal(modals.EDIT_CONSOLE_URL, cluster)}>Add console URL</Button>);
   }
 
-  const actions = (
+  const actions = !isUninstalledAICluster(cluster) && (
     <ClusterActionsDropdown
       disabled={!cluster.canEdit && !cluster.canDelete}
       cluster={cluster}
@@ -162,7 +163,9 @@ function ClusterDetailsTop(props) {
                 Unarchive
               </Button>
             )}
-            { !isDeprovisioned && (<RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />)}
+            { !isDeprovisioned && (
+              <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />
+            )}
           </span>
         </SplitItem>
       </Split>
@@ -179,7 +182,7 @@ function ClusterDetailsTop(props) {
         expirationTimestamp={cluster.expiration_timestamp}
       />
       )}
-      {trialEndDate
+      {trialEndDate && !isDeprovisioned
       && (
       <ExpirationAlert
         expirationTimestamp={trialEndDate}

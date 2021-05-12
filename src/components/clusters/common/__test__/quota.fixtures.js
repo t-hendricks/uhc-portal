@@ -125,3 +125,7 @@ export const awsRhInfraGcpRhInfraClustersQuota = {
   },
   hasMarketplaceProductQuota: false,
 };
+
+export const storageQuotaList = userActions.processQuota(
+  { data: { items: quotaCostFixtures.storage } },
+);

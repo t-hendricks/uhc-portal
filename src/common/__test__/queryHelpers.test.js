@@ -136,7 +136,7 @@ describe('createViewQueryObject()', () => {
     const expected = {
       ...baseResult,
       has_filters: false,
-      filter: "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (plan_id IN ('OCP','MOA','ROSA'))",
+      filter: "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (plan_id IN ('OCP','OCP-AssistedInstall','MOA','ROSA'))",
     };
 
     expect(createViewQueryObject(viewOptions)).toEqual(expected);

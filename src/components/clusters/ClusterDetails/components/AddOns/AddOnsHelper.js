@@ -115,6 +115,33 @@ const parameterValuesForEditing = (addOnInstallation, addOn) => {
   return vals;
 };
 
+// return a list of add-on parameters with the corresponding add-on installation parameter value
+const parameterAndValue = (addOnInstallation, addOn) => {
+  const vals = { parameters: {} };
+  if (hasParameters(addOn)) {
+    vals.parameters = Object.values(addOn.parameters.items).reduce((acc, curr) => {
+      let paramValue = getParameterValue(addOnInstallation, curr.id);
+      if (curr.value_type === 'boolean') {
+        // Ensure existing boolean value is returned as a boolean, and always return false otherwise
+        paramValue = (paramValue || '').toString().toLowerCase() === 'true';
+      }
+      if (curr.options) {
+        const optionObj = curr.options.find(obj => obj.value === paramValue);
+        if (optionObj?.name) {
+          paramValue = optionObj.name;
+        }
+      }
+      if (paramValue !== undefined) {
+        const updatedParam = { value: paramValue.toString(), ...curr };
+        // eslint-disable-next-line no-param-reassign
+        acc[curr.id] = updatedParam;
+      }
+      return acc;
+    }, {});
+  }
+  return vals;
+};
+
 const formatRequirementData = (data) => {
   const attrs = [];
   Object.entries(data)
@@ -161,7 +188,7 @@ const requirementFulfilledByResource = (myResource, requirement) => {
 };
 
 const validateAddOnRequirements = (
-  addOn, cluster, clusterAddOns, clusterMachinePools, breakOnFirstError = true,
+  addOn, cluster, clusterAddOns, clusterMachinePools, breakOnFirstError = false,
 ) => {
   const requirementStatus = {
     fulfilled: true,
@@ -226,5 +253,6 @@ export {
   getParameter,
   getParameterValue,
   parameterValuesForEditing,
+  parameterAndValue,
   validateAddOnRequirements,
 };

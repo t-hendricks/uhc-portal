@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-
 import MachineTypeSelection from './MachineTypeSelection';
 
 import {
@@ -321,7 +320,8 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('displays only machine types with quota', () => {
-        const types = wrapper.find('FlatRadioButton').getElements().map(e => e.key);
+        wrapper.find('SelectToggle').simulate('click');
+        const types = wrapper.find('SelectOption').getElements().map(e => e.key);
         expect(types).toContain('m5.xlarge');
       });
     });

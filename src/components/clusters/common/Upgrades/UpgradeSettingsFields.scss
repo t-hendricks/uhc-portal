@@ -13,6 +13,12 @@
   margin-bottom: var(--pf-global--spacer--sm);
 }
 
+.ocm-c-upgrade-node-draining-subtitle {
+  margin-bottom: var(--pf-global--spacer--sm);
+  font-size: var(--pf-global--FontSize--lg);
+  font-weight: var(--pf-global--FontWeight--Normal);
+}
+
 .ocm-c-upgrades-pdb-select .pf-c-select { 
     width: auto;
     min-width: 150px;
@@ -20,4 +26,14 @@
     max-height: 300px;
     overflow-y: auto;
   }
+}
+
+.ocm-c-upgrade-monitoring{
+  margin-top: var(--pf-global--spacer--lg);
+  grid-gap: 24px;
+}
+  
+ 
+.ocm-c-upgrade-monitoring-top{
+  margin-top: var(--pf-global--spacer--sm);
 }

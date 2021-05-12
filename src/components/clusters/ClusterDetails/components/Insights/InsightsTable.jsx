@@ -6,15 +6,15 @@ import {
 } from '@patternfly/react-core';
 import { cellWidth, RowWrapper } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
-import RuleTable from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
-import ReportDetails from '@redhat-cloud-services/rule-components/dist/cjs/ReportDetails';
+import RuleTable from '@redhat-cloud-services/rule-components/RuleTable/RuleTable';
+import ReportDetails from '@redhat-cloud-services/rule-components/ReportDetails';
 import {
   descriptionFilter,
   totalRiskFilter,
   ruleStatusFilter,
-} from '@redhat-cloud-services/rule-components/dist/cjs/RuleFilters';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
-import { InsightsLabel } from '@redhat-cloud-services/frontend-components/components/InsightsLabel';
+} from '@redhat-cloud-services/rule-components/RuleFilters';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
+import { InsightsLabel } from '@redhat-cloud-services/frontend-components/InsightsLabel';
 import { CheckCircleIcon } from '@patternfly/react-icons';
 import AnalysisSummary from './AnalysisSummary';
 import { severityMapping, appendCrParamToDocLinks } from './helpers';

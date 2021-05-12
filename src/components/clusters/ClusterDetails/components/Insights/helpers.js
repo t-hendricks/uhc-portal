@@ -1,4 +1,4 @@
-import { severity } from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
+import { severity } from '@redhat-cloud-services/rule-components/RuleTable/constants';
 
 // eslint-disable-next-line import/prefer-default-export
 export const severityMapping = Object.keys(severity);

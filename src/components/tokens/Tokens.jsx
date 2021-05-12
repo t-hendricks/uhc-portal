@@ -18,7 +18,8 @@ limitations under the License.
 // copy it and use it with command line utitilites like `curl` or OCM.
 
 import React from 'react';
-import { Skeleton, PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
+import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import {
   PageSection, Card, CardBody, CardFooter, ClipboardCopy, CardTitle, Text, TextContent,
 } from '@patternfly/react-core';

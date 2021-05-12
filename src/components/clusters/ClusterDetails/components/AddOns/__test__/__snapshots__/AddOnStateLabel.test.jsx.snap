@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddOnsStateLabel /> should render 1`] = `
+<Label
+  color="green"
+  icon={
+    <CheckCircleIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+  }
+  variant="outline"
+>
+  Installed
+</Label>
+`;

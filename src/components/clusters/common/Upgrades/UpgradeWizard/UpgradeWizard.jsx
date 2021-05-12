@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Wizard, Title } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
 import modals from '../../../../common/Modal/modals';
 import VersionSelectionGrid from './VersionSelectionGrid';

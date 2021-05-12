@@ -13,7 +13,7 @@ import {
   TableVariant,
 } from '@patternfly/react-table';
 
-import { Skeleton } from '@redhat-cloud-services/frontend-components';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import links from '../../../../../../common/installLinks';
 import ErrorBox from '../../../../../common/ErrorBox';

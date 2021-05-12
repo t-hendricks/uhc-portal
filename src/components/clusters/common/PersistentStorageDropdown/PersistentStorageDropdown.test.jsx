@@ -3,27 +3,13 @@ import { mount } from 'enzyme';
 
 import PersistentStorageDropdown from './PersistentStorageDropdown';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import { storageQuotaList } from '../__test__/quota.fixtures';
 
 const baseState = {
   error: false,
   errorMessage: '',
   pending: false,
   fulfilled: false,
-};
-const quotaList = {
-  storageQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          rhInfra: {
-            singleAZ: {
-              gp2: 27000,
-            },
-          },
-        },
-      },
-    },
-  },
 };
 
 describe('<PersistentStorageDropdown />', () => {
@@ -39,7 +25,7 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={baseState}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quotaList={quotaList}
+          quotaList={storageQuotaList}
           product={fixtures.clusterDetails.cluster.subscription.plan.id}
           cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
           billingModel="standard"
@@ -77,7 +63,7 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quotaList={quotaList}
+          quotaList={storageQuotaList}
           product={fixtures.clusterDetails.cluster.subscription.plan.id}
           cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
           billingModel="standard"
@@ -112,7 +98,7 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quotaList={quotaList}
+          quotaList={storageQuotaList}
           product={fixtures.clusterDetails.cluster.subscription.plan.id}
           cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
           billingModel="standard"
@@ -154,7 +140,7 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          quotaList={quotaList}
+          quotaList={storageQuotaList}
           product={fixtures.clusterDetails.cluster.subscription.plan.id}
           cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
           billingModel="standard"

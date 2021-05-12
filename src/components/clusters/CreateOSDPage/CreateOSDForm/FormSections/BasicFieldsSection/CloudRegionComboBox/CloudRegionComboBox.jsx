@@ -9,7 +9,7 @@ import {
 } from '@patternfly/react-core';
 import get from 'lodash/get';
 
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import './CloudRegionComboBox.scss';
 

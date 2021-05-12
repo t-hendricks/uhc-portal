@@ -8,7 +8,7 @@ import {
   EmptyState,
   EmptyStateBody,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import Modal from '../Modal/Modal';
 import Unavailable from '../Unavailable';

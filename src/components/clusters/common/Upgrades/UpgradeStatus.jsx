@@ -4,7 +4,7 @@ import {
   Button, EmptyState, EmptyStateBody, EmptyStateVariant, Title,
 } from '@patternfly/react-core';
 import { OutlinedArrowAltCircleUpIcon, CheckCircleIcon, InProgressIcon } from '@patternfly/react-icons';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import './UpgradeStatus.scss';
 import UpdateGraph from './UpdateGraph/UpdateGraph';
 
