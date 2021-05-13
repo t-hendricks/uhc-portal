@@ -119,3 +119,123 @@ exports[`CreateOSDForm; should render 1`] = `
   />
 </Fragment>
 `;
+
+exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
+<Fragment>
+  <GridItem
+    span={12}
+  >
+    <Title
+      headingLevel="h3"
+    >
+      Billing model
+    </Title>
+  </GridItem>
+  <BillingModelSection
+    byocSelected={false}
+    hasBYOCquota={false}
+    hasMarketplaceQuota={false}
+    hasStandardOSDQuota={true}
+    hasStandardQuota={true}
+    openModal={[MockFunction]}
+    pending={false}
+    product="OSDTrial"
+    toggleBYOCFields={[Function]}
+    toggleSubscriptionBilling={[Function]}
+  />
+  <GridItem
+    span={12}
+  >
+    <Title
+      headingLevel="h3"
+    >
+      Cluster details
+    </Title>
+  </GridItem>
+  <BasicFieldsSection
+    change={[MockFunction]}
+    cloudProviderID="aws"
+    handleCloudRegionChange={[Function]}
+    handleMultiAZChange={[Function]}
+    isBYOC={false}
+    isMultiAz={false}
+    pending={false}
+    quota={
+      Object {
+        "hasQuota": true,
+        "multiAz": Object {
+          "available": 1,
+        },
+        "singleAz": Object {
+          "available": 1,
+        },
+        "totalAvailable": 1,
+      }
+    }
+    showAvailability={true}
+    showDNSBaseDomain={false}
+  />
+  <GridItem
+    span={12}
+  >
+    <Title
+      headingLevel="h3"
+    >
+      Scale
+    </Title>
+    <p>
+      The number and instance type of worker nodes in your cluster. After cluster creation you will be able to change the number of worker nodes in your cluster, but you will not be able to change the worker node instance type.
+    </p>
+  </GridItem>
+  <ScaleSection
+    autoScaleMaxNodesValue="0"
+    autoScaleMinNodesValue="0"
+    autoscalingEnabled={false}
+    billingModel="standard"
+    canAutoScale={false}
+    change={[MockFunction]}
+    cloudProviderID="aws"
+    handleMachineTypesChange={[Function]}
+    isBYOC={false}
+    isMultiAz={false}
+    machineType=""
+    pending={false}
+    product="OSDTrial"
+  />
+  <NetworkingSection
+    cloudProviderID="aws"
+    isCCS={false}
+    isMultiAz={false}
+    mode="basic"
+    privateClusterSelected={false}
+    showClusterPrivacy={true}
+    toggleNetwork={[Function]}
+  />
+  <GridItem
+    span={12}
+  >
+    <Divider />
+  </GridItem>
+  <GridItem
+    span={4}
+  >
+    <Title
+      headingLevel="h3"
+    >
+      Cluster settings
+    </Title>
+  </GridItem>
+  <UserWorkloadMonitoringSection
+    parent="create"
+  />
+  <Title
+    className="clusterupdatespace"
+    headingLevel="h3"
+  >
+    Cluster updates
+  </Title>
+  <UpgradeSettingsFields
+    isDisabled={false}
+  />
+</Fragment>
+`;

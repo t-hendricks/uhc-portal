@@ -184,6 +184,8 @@ class CreateOSDForm extends React.Component {
     const isBYOCForm = this.isByocForm();
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
     const showOSDTrial = osdTrialFeature && clustersQuota.hasOSDTrialQuota;
+    const showAvailability = product === normalizedProducts.OSD
+                          || product === normalizedProducts.OSDTrial;
 
     let basicFieldsQuota = clustersQuota[cloudProviderID][infraType];
     if (billingModel === billingModels.MARKETPLACE) {
@@ -284,7 +286,7 @@ class CreateOSDForm extends React.Component {
         <BasicFieldsSection
           pending={pending}
           showDNSBaseDomain={false}
-          showAvailability={product === normalizedProducts.OSD}
+          showAvailability={showAvailability}
           change={change}
           isBYOC={isBYOCForm}
           cloudProviderID={cloudProviderID}
