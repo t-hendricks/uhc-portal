@@ -66,7 +66,7 @@ const availableFromQuotaCostItem = (quotaCostItem, query) => {
 
 /**
  * Returns remaining matching quota (integer, possibly 0 or Infinity).
- * resourceType is required; othre query fields may be omitted, default to 'any'.
+ * resourceType is required; other query fields may be omitted, default to 'any'.
  */
 const availableQuota = (
   quotaList,
@@ -170,9 +170,9 @@ const hasManagedQuotaSelector = (state, product) => {
 
   // has marketplace or standard quota for AWS or GCP
   return hasAwsQuotaSelector(state, product, STANDARD)
-      || hasGcpQuotaSelector(state, product, STANDARD)
-      || hasAwsQuotaSelector(state, product, MARKETPLACE)
-      || hasGcpQuotaSelector(state, product, MARKETPLACE);
+    || hasGcpQuotaSelector(state, product, STANDARD)
+    || hasAwsQuotaSelector(state, product, MARKETPLACE)
+    || hasGcpQuotaSelector(state, product, MARKETPLACE);
 };
 
 // TODO: special-case ROSA?
