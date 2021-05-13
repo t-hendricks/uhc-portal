@@ -17,11 +17,25 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
+
+import * as Sentry from '@sentry/browser';
+import { SessionTiming } from '@sentry/integrations';
+
 import { Api, Config } from 'openshift-assisted-ui-lib';
-import App from './components/App/App';
-import { store } from './redux/store';
+
+import config from './config';
+
+import getNavClickParams from './common/getNavClickParams';
 import getBaseName from './common/getBaseName';
+
+import { userInfoResponse } from './redux/actions/userActions';
+import { detectFeatures } from './redux/actions/featureActions';
+
+import { store } from './redux/store';
 import { authInterceptor } from './services/apiRequest';
+
+import App from './components/App/App';
+
 import './styles/main.scss';
 
 /**
@@ -35,13 +49,57 @@ Api.setAuthInterceptor(authInterceptor);
 Config.setRouteBasePath('/assisted-installer');
 
 // Chrome 2.0 renders this
-const AppEntry = () => (
-  <Provider store={store}>
-    <NotificationPortal store={store} />
-    <BrowserRouter basename={getBaseName()}>
-      <App />
-    </BrowserRouter>
-  </Provider>
-);
+class AppEntry extends React.Component {
+  state = { ready: false };
 
+  componentDidMount() {
+    insights.chrome.init();
+    insights.chrome.identifyApp('').then(() => {
+      insights.chrome.appNavClick(getNavClickParams(window.location.pathname));
+    });
+    insights.chrome.auth.getUser()
+      .then((data) => {
+        store.dispatch(userInfoResponse(data && data.identity && data.identity.user));
+        config.fetchConfig()
+          .then(() => {
+            store.dispatch(detectFeatures());
+            this.setState({ ready: true });
+            if (!config.override && config.configData.sentryDSN) {
+              Sentry.init({
+                dsn: config.configData.sentryDSN,
+                integrations: [
+                  new SessionTiming(),
+                  new Sentry.Integrations.GlobalHandlers({
+                    onerror: true,
+                    onunhandledrejection: false,
+                  }),
+                ],
+              });
+              if (data && data.identity && data.identity.user) {
+                // add user info to Sentry
+                Sentry.configureScope((scope) => {
+                  const { email, username } = data.identity.user;
+                  scope.setUser({ email, username });
+                });
+              }
+            }
+          });
+      });
+  }
+
+  render() {
+    const { ready } = this.state;
+    if (ready) {
+      return (
+        <Provider store={store}>
+          <NotificationPortal store={store} />
+          <BrowserRouter basename={getBaseName()}>
+            <App />
+          </BrowserRouter>
+        </Provider>
+      );
+    }
+    return null;
+  }
+}
 export default AppEntry;
