@@ -15,7 +15,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 import get from 'lodash/get';
-import has from 'lodash/has';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
@@ -282,8 +281,8 @@ class ClusterDetails extends Component {
       return true;
     }
 
-    // If the organization has no add-ons quota, or there are no add-ons, we should hide the tab
-    if (!has(organization.quotaList, 'addOnsQuota') || !get(addOns, 'resourceNames.length', 0)) {
+    // If there are no add-ons, we should hide the tab
+    if (!get(addOns, 'resourceNames.length', 0)) {
       return false;
     }
 
