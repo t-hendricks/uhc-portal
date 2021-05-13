@@ -8,9 +8,7 @@ import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
 describe('<AddOns />', () => {
   let wrapper;
-  const getAddOns = jest.fn();
   const getClusterAddOns = jest.fn();
-  const addClusterAddOn = jest.fn();
   const clearClusterAddOnsResponses = jest.fn();
   const addClusterAddOnResponse = {};
   const updateClusterAddOnResponse = {};
@@ -29,10 +27,8 @@ describe('<AddOns />', () => {
       clusterAddOns={mockClusterAddOns}
       clusterMachinePools={{}}
       quota={addonsQuota}
-      getAddOns={getAddOns}
       getOrganizationAndQuota={getOrganizationAndQuota}
       getClusterAddOns={getClusterAddOns}
-      addClusterAddOn={addClusterAddOn}
       addClusterAddOnResponse={addClusterAddOnResponse}
       updateClusterAddOnResponse={updateClusterAddOnResponse}
       deleteClusterAddOnResponse={deleteClusterAddOnResponse}

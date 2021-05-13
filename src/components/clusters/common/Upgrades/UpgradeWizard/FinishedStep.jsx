@@ -9,9 +9,9 @@ import {
   Title,
   Button,
 } from '@patternfly/react-core';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import { CheckCircleIcon } from '@patternfly/react-icons';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 // eslint-disable-next-line camelcase
 import { global_success_color_100 } from '@patternfly/react-tokens';
 

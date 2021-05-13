@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   EmptyState, EmptyStateBody, ExpandableSection, Title,
 } from '@patternfly/react-core';
-import { Unavailable as FcUnavailable } from '@redhat-cloud-services/frontend-components';
+import { Unavailable as FcUnavailable } from '@redhat-cloud-services/frontend-components/Unavailable';
 import * as Sentry from '@sentry/browser';
 import { formatErrorDetails } from '../../common/errors';
 import './Unavailable.scss';

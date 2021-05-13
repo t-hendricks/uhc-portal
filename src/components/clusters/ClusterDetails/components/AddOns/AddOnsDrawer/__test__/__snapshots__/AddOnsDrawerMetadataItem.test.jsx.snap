@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddOnsMetaDataItem /> renders correctly 1`] = `
+<FlexItem>
+  <b>
+    Current Version 
+  </b>
+   
+  v0.0.1
+   
+  <ExternalLink
+    href="https://example.com/veryfakedocs"
+  >
+    View Documentation
+  </ExternalLink>
+</FlexItem>
+`;

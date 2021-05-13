@@ -15,7 +15,7 @@ limitations under the License.
 */
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { PageSection, Stack, StackItem } from '@patternfly/react-core';
 import get from 'lodash/get';
 

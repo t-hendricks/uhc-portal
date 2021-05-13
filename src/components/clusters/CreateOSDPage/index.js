@@ -126,6 +126,7 @@ const mapStateToProps = (state, ownProps) => {
       node_labels: [{}],
       billing_model: 'standard',
       product: ownProps.product,
+      enable_user_workload_monitoring: true,
     },
   });
 };
@@ -154,6 +155,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       },
       etcd_encryption: formData.etcd_encryption,
       billing_model: 'standard',
+      disable_users_workload_monitoring: !formData.enable_user_workload_monitoring,
     };
 
     if (formData.billing_model) {

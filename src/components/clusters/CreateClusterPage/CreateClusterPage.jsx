@@ -8,7 +8,7 @@ import {
   PageSection,
 } from '@patternfly/react-core';
 
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
 
 import './CreateClusterPage.scss';

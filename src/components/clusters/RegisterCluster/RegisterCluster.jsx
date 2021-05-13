@@ -19,7 +19,8 @@ import {
   Tooltip,
   TooltipPosition,
 } from '@patternfly/react-core';
-import { PageHeader, PageHeaderTitle, Spinner } from '@redhat-cloud-services/frontend-components';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ErrorModal from '../../common/ErrorModal';
 import Breadcrumbs from '../common/Breadcrumbs';

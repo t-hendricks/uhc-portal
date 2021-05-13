@@ -5,16 +5,10 @@
 //PF4 Styles
 $pf-global--enable-reset: false;
 $pf-global--disable-fontawesome: true;
-$pf-global--font-path: '~@patternfly/patternfly/assets/fonts/';
+$pf-global--font-path: "~@patternfly/patternfly/assets/fonts/";
 
-@import '~@redhat-cloud-services/frontend-components/components/Skeleton.css';
-@import '~@redhat-cloud-services/frontend-components/components/Spinner.css';
-@import '~@redhat-cloud-services/frontend-components/components/PageHeader.css';
-@import '~@redhat-cloud-services/frontend-components-notifications/index.css';
-@import '~@redhat-cloud-services/frontend-components/components/TableToolbar.css';
-@import '~@redhat-cloud-services/frontend-components/components/ConditionalFilter.css';
-@import '~openshift-assisted-ui-lib/dist/index.css';
-@import '~react-datepicker/dist/react-datepicker.css';
+@import "~openshift-assisted-ui-lib/dist/index.css";
+@import "~react-datepicker/dist/react-datepicker.css";
 
 body {
   margin: 0;
@@ -26,5 +20,5 @@ body {
   height: 100%;
 }
 
-@import './app';
-@import './log-window';
+@import "./app";
+@import "./log-window";

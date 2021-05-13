@@ -28,8 +28,8 @@ import {
   ChartLegend,
   createContainer,
 } from '@patternfly/react-charts';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
-import { severity } from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
+import { severity } from '@redhat-cloud-services/rule-components/RuleTable/constants';
 import PropTypes from 'prop-types';
 import { RemoteHealthPopover } from '../EmptyTableMessage';
 import { severityMapping } from '../helpers';

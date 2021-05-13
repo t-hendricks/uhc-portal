@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { EmptyState, EmptyStateBody } from '@patternfly/react-core';
-import { InvalidObject } from '@redhat-cloud-services/frontend-components';
+import { InvalidObject } from '@redhat-cloud-services/frontend-components/InvalidObject';
 import './NotFoundError.scss';
 
 function NotFoundError() {

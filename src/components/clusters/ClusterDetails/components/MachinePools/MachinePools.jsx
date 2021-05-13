@@ -26,9 +26,7 @@ import {
   cellWidth,
   expandable,
 } from '@patternfly/react-table';
-import {
-  Skeleton,
-} from '@redhat-cloud-services/frontend-components';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import AddMachinePoolModal from './components/AddMachinePoolModal';
 import EditTaintsModal from './components/EditTaintsModal';

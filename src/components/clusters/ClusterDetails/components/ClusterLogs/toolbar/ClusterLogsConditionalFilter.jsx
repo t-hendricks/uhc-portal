@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {
-  ConditionalFilter,
-  conditionalFilterType,
-} from '@redhat-cloud-services/frontend-components';
+import ConditionalFilter from '@redhat-cloud-services/frontend-components/ConditionalFilter';
+import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter/conditionalFilterConstants';
 import PropTypes from 'prop-types';
 import { SEVERITY_TYPES } from '../clusterLogConstants';
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';

@@ -86,15 +86,23 @@ function SubscriptionSettings({
   const cpuTotalStr = `${cpuTotal} core${cpuTotal === 1 ? '' : 's'}`;
   const socketTotal = get(subscription, subscriptionSettings.SOCKET_TOTAL, undefined);
   const socketTotalStr = `${socketTotal} socket${socketTotal === 1 ? '' : 's'}`;
-  const systemUnits = get(subscription, subscriptionSettings.SYSTEM_UNITS,
-    subscriptionSystemUnits.CORES_VCPU);
+  let systemUnits = get(subscription, subscriptionSettings.SYSTEM_UNITS, undefined);
+  if (systemUnits === undefined) {
+    if (cpuTotal !== undefined) {
+      systemUnits = subscriptionSystemUnits.CORES_VCPU;
+    } else if (socketTotal !== undefined) {
+      systemUnits = subscriptionSystemUnits.SOCKETS;
+    } else {
+      systemUnits = 'Not set';
+    }
+  }
   let systemUnitsStr = 'Not set';
   if (systemUnits === subscriptionSystemUnits.SOCKETS && socketTotal !== undefined) {
     systemUnitsStr = 'Sockets';
   } else if (systemUnits === subscriptionSystemUnits.CORES_VCPU && cpuTotal !== undefined) {
     systemUnitsStr = 'Cores/vCPUs ';
   }
-  const displayObligation = cpuTotal !== undefined && socketTotal !== undefined;
+  const displayObligation = cpuTotal !== undefined || socketTotal !== undefined;
   const obligationLabel = systemUnits === subscriptionSystemUnits.SOCKETS
     ? 'Number of compute sockets' : 'Number of compute cores';
   const obligationStr = systemUnits === subscriptionSystemUnits.SOCKETS
