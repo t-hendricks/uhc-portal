@@ -38,7 +38,6 @@ import CommonClusterModals from '../common/CommonClusterModals';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
-import { hasQuota } from './components/AddOns/AddOnsHelper';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
 import clusterStates, { isHibernating } from '../common/clusterStates';
@@ -268,34 +267,6 @@ class ClusterDetails extends Component {
     }
   }
 
-  // Determine if the org has quota for existing add-ons
-  hasAddOns() {
-    const {
-      addOns,
-      clusterAddOns,
-      clusterDetails: { cluster },
-      organization,
-    } = this.props;
-
-    if (get(clusterAddOns, 'items.length', 0)) {
-      return true;
-    }
-
-    // If there are no add-ons, we should hide the tab
-    if (!get(addOns, 'resourceNames.length', 0)) {
-      return false;
-    }
-
-    // check if organization has quota for any addon matching this cluster
-    let foundQuota = false;
-    addOns.items.forEach((addOn) => {
-      if (hasQuota(addOn, cluster, organization, organization.quotaList)) {
-        foundQuota = true;
-      }
-    });
-    return foundQuota;
-  }
-
   render() {
     const {
       clusterDetails,
@@ -381,21 +352,25 @@ class ClusterDetails extends Component {
     || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
     const isAROCluster = get(cluster, 'subscription.plan.id', '') === knownProducts.ARO;
     const isManaged = cluster.managed;
-    const displayAddOnsTab = cluster.managed && this.hasAddOns();
-    const displayInsightsTab = !cluster.managed && !isArchived && !isAROCluster;
+    const isClusterPending = cluster.state === clusterStates.PENDING;
+    const isClusterInstalling = cluster.state === clusterStates.INSTALLING;
+    const isClusterReady = cluster.state === clusterStates.READY;
+    const isClusterUpdating = cluster.state === clusterStates.UPDATING;
 
+    const displayAddOnsTab = !isClusterInstalling && !isClusterPending
+     && cluster.managed && !isArchived;
+    const displayInsightsTab = !cluster.managed && !isArchived && !isAROCluster;
     const consoleURL = get(cluster, 'console.url');
     const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster;
     const displayAccessControlTab = cluster.managed && !!consoleURL
-      && (cluster.state === 'ready' || clusterHibernating);
+      && (isClusterReady || clusterHibernating);
     const cloudProvider = get(cluster, 'cloud_provider.id');
-    const displayNetworkingTab = (cluster.state === clusterStates.READY
-          || cluster.state === clusterStates.UPDATING || clusterHibernating)
+    const displayNetworkingTab = (isClusterReady || isClusterUpdating || clusterHibernating)
           && cluster.managed && !!get(cluster, 'api.url')
       && (cloudProvider === 'aws'
          || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')));
     const displayMachinePoolsTab = cluster.managed
-      && (cluster.state === clusterStates.READY || clusterHibernating);
+      && (isClusterReady || clusterHibernating);
     const clusterName = getClusterName(cluster);
     const hideSupportTab = (
       cluster.managed
@@ -666,7 +641,6 @@ ClusterDetails.propTypes = {
     rejected: PropTypes.bool,
   }),
   addOns: PropTypes.object,
-  clusterAddOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   clusterDetails: PropTypes.shape({
@@ -718,7 +692,6 @@ ClusterDetails.propTypes = {
 };
 
 ClusterDetails.defaultProps = {
-  clusterAddOns: {},
   insightsData: {},
   groups: {},
   clusterDetails: {
