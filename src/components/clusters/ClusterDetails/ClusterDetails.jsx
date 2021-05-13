@@ -381,6 +381,7 @@ class ClusterDetails extends Component {
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED
     || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
     const isAROCluster = get(cluster, 'subscription.plan.id', '') === knownProducts.ARO;
+    const isManaged = cluster.managed;
     const displayAddOnsTab = cluster.managed && this.hasAddOns();
     const displayInsightsTab = !cluster.managed && !isArchived && !isAROCluster;
 
@@ -510,7 +511,7 @@ class ClusterDetails extends Component {
             </ErrorBoundary>
           </TabContent>
         )}
-        {displayAddOnsTab && (
+        {isManaged && (
           <TabContent
             eventKey={3}
             id="addOnsTabContent"

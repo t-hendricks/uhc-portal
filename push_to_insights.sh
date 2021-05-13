@@ -169,25 +169,25 @@ if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     echo "running staging (qa-beta) push"
     echo "staging branch is available on https://qaprodauth.cloud.redhat.com/beta/openshift"
     rm -rf build
-    yarn build --mode=production --beta="true" --env api-env=staging
+    yarn build --mode=production --env api-env=staging beta="true"
     push_build "qa-beta"
 
     echo "running push to secondary environment - ci-beta (not supported)"
     rm -rf build
-    yarn build --mode=production --beta="true" --env api-env=disabled
+    yarn build --mode=production --env api-env=disabled beta="true"
     push_build "ci-beta"
 
 elif [ "$1" == "candidate" ]; then
     echo "running candidate push"
     echo "Candidate branch is available on https://cloud.redhat.com/beta/openshift"
     rm -rf build
-    yarn build --mode=production --beta="true" --env api-env=production
+    yarn build --mode=production --env api-env=production beta="true"
     push_build "prod-beta"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
     echo "stable branch is available on https://cloud.redhat.com/openshift"
     rm -rf build
-    yarn build --mode=production --beta="false" --env api-env=production
+    yarn build --mode=production --env api-env=production beta="false"
     push_build "prod-stable"
 else
     echo "mode (first param) must be one of: staging / candidate / stable"
