@@ -85,7 +85,7 @@ class Overview extends React.Component {
     const showSidePanel = showInsightsAdvisor || showCostBreakdown;
     const showAssistedInstallerDetailCard = cluster.aiCluster
       && isAssistedInstallSubscription(cluster.subscription);
-    const showDetailsCard = !isUninstalledAICluster(cluster);
+    const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
 
     if (isHibernating(cluster.state)) {
       topCard = (
