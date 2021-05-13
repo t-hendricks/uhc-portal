@@ -42,6 +42,7 @@ module.exports = (_env, argv) => {
   // Otherwise, default to 'development' for backend-proxy users when running in dev server,
   // or 'production' when it's a real build.
   const apiEnv = argv.env['api-env'] || (isDevServer ? 'development' : 'production');
+  console.log(`Building with apiEnv=${apiEnv}, beta=${betaMode}, isDevServer=${isDevServer}`);
 
   let bundleAnalyzer = null;
   const appDeployment = betaMode ? 'beta/apps' : 'apps';
