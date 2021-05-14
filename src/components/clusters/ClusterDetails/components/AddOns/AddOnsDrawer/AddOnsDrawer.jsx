@@ -24,7 +24,7 @@ import {
 } from '@patternfly/react-core';
 
 import {
-  getInstalled, hasQuota, validateAddOnRequirements,
+  getInstalled, hasQuota, minQuotaCount, validateAddOnRequirements,
 } from '../AddOnsHelper';
 
 import AddOnsCard from '../AddOnsCard';
@@ -53,7 +53,7 @@ class AddOnsDrawer extends React.Component {
 
     // active card tabs
     activeTabKey: 0,
-  }
+  };
 
   componentDidUpdate(prevProps) {
     const {
@@ -89,9 +89,9 @@ class AddOnsDrawer extends React.Component {
       organization,
       quota,
     } = this.props;
-
-    return (addOn !== null) ? hasQuota(addOn, cluster, organization, quota) : false;
-  }
+    const minCount = minQuotaCount(addOn);
+    return (addOn !== null) ? hasQuota(addOn, cluster, organization, quota, minCount) : false;
+  };
 
   // return installed addon
   getInstalledAddon = (addOn) => {
@@ -100,7 +100,7 @@ class AddOnsDrawer extends React.Component {
     } = this.props;
 
     return getInstalled(addOn, clusterAddOns);
-  }
+  };
 
   // toggle currently active tab
   handleTabClick = (event, tabIndex) => {
