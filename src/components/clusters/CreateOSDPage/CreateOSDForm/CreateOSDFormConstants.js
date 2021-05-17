@@ -31,7 +31,7 @@ const constants = {
   kmsserviceAccount: 'Compute Engine default service account',
   enableUserWorkloadMonitoringHint: 'Monitor your own projects in isolation from Red Hat Site Reliability Engineer (SRE) platform metrics',
   enableUserWorkloadMonitoringHelp: 'This feature is enabled by default and provides monitoring for user-defined projects.'
-  + 'This includes metrics provided through service endpoints in user-defined projects as well as pods runnin gin user-defined projects.',
+  + 'This includes metrics provided through service endpoints in user-defined projects as well as pods running in user-defined projects.',
 };
 
 const billingModelConstants = {
