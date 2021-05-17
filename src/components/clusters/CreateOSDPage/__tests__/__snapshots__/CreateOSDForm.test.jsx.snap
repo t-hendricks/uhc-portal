@@ -106,6 +106,7 @@ exports[`CreateOSDForm; should render 1`] = `
     </Title>
   </GridItem>
   <UserWorkloadMonitoringSection
+    disableUVM={false}
     parent="create"
   />
   <Title
@@ -226,6 +227,7 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
     </Title>
   </GridItem>
   <UserWorkloadMonitoringSection
+    disableUVM={false}
     parent="create"
   />
   <Title

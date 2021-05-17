@@ -376,7 +376,7 @@ class CreateOSDForm extends React.Component {
           <Title headingLevel="h3">Cluster settings</Title>
         </GridItem>
 
-        <UserWorkloadMonitoringSection parent="create" />
+        <UserWorkloadMonitoringSection parent="create" disableUVM={false} />
         <Title headingLevel="h3" className="clusterupdatespace">Cluster updates</Title>
         <UpgradeSettingsFields
           isAutomatic={isAutomaticUpgrade}

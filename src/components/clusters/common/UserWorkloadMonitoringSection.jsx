@@ -9,7 +9,7 @@ import { constants } from '../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants
 import ExternalLink from '../../common/ExternalLink';
 import '../CreateOSDPage/CreateOSDForm/CreateOSDForm.scss';
 
-function UserWorkloadMonitoringSection({ parent }) {
+function UserWorkloadMonitoringSection({ parent, disableUVM }) {
   return (
     <>
       {parent === 'create' ? <Text className="enableuwmcreate"> Monitoring </Text>
@@ -22,6 +22,7 @@ function UserWorkloadMonitoringSection({ parent }) {
           component={ReduxCheckbox}
           name="enable_user_workload_monitoring"
           label="Enable user workload monitoring"
+          isDisabled={disableUVM}
           extendedHelpText={(
             <>
               {constants.enableUserWorkloadMonitoringHelp}
@@ -38,6 +39,7 @@ function UserWorkloadMonitoringSection({ parent }) {
 
 UserWorkloadMonitoringSection.propTypes = {
   parent: PropTypes.string,
+  disableUVM: PropTypes.bool,
 };
 
 export default UserWorkloadMonitoringSection;
