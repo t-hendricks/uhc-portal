@@ -10,7 +10,7 @@ import {
 } from '@patternfly/react-core';
 
 import { ClusterStatus as AIClusterStatus } from 'openshift-assisted-ui-lib';
-import isAssistedInstallSubscription from '../../../../../../common/isAssistedInstallerCluster';
+import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
 import ClusterNetwork from '../ClusterNetwork';
 import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import ClusterStateIcon from '../../../../common/ClusterStateIcon/ClusterStateIcon';
@@ -54,8 +54,8 @@ function DetailsRight({
             Status
           </DescriptionListTerm>
           <DescriptionListDescription style={cluster.state.style}>
-            { isAssistedInstallSubscription(cluster.subscription)
-              ? <AIClusterStatus status={cluster.metrics.state} />
+            { isAISubscriptionWithoutMetrics(cluster.subscription)
+              ? <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
               : (
                 <>
                   <ClusterStateIcon clusterState={cluster.state.state} animated />

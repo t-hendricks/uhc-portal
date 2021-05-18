@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 
 import LoadBalancersDropdown from './LoadBalancersDropdown';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import { loadBalancerQuotaList } from '../__test__/quota.fixtures';
 
 const baseState = {
   error: false,
@@ -10,22 +11,6 @@ const baseState = {
   pending: false,
   fulfilled: false,
   values: [],
-};
-
-const quotaList = {
-  loadBalancerQuota: {
-    standard: {
-      OSD: {
-        aws: {
-          rhInfra: {
-            singleAZ: {
-              network: 40,
-            },
-          },
-        },
-      },
-    },
-  },
 };
 
 describe('<LoadBalancersDropdown />', () => {
@@ -41,7 +26,7 @@ describe('<LoadBalancersDropdown />', () => {
           loadBalancerValues={baseState}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quotaList={quotaList}
+          quotaList={loadBalancerQuotaList}
           product={fixtures.clusterDetails.cluster.subscription.plan.id}
           cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
           billingModel="standard"
@@ -79,7 +64,7 @@ describe('<LoadBalancersDropdown />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quotaList={quotaList}
+          quotaList={loadBalancerQuotaList}
           product={fixtures.clusterDetails.cluster.subscription.plan.id}
           cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
           billingModel="standard"
@@ -114,7 +99,7 @@ describe('<LoadBalancersDropdown />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quotaList={quotaList}
+          quotaList={loadBalancerQuotaList}
           product={fixtures.clusterDetails.cluster.subscription.plan.id}
           cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
           billingModel="standard"
@@ -156,7 +141,7 @@ describe('<LoadBalancersDropdown />', () => {
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quotaList={quotaList}
+          quotaList={loadBalancerQuotaList}
           product={fixtures.clusterDetails.cluster.subscription.plan.id}
           cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
           billingModel="standard"

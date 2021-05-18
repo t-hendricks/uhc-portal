@@ -129,3 +129,7 @@ export const awsRhInfraGcpRhInfraClustersQuota = {
 export const storageQuotaList = userActions.processQuota(
   { data: { items: quotaCostFixtures.storage } },
 );
+
+export const loadBalancerQuotaList = userActions.processQuota(
+  { data: { items: quotaCostFixtures.loadBalancers } },
+);

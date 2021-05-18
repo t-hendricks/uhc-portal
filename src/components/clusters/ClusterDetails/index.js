@@ -46,7 +46,7 @@ const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
   const { cloudProviders } = state;
   const { errorCode } = state.clusterLogs.requestState;
-  const { addOns, clusterAddOns } = state.addOns;
+  const { addOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
   const { insightsData, groups } = state.insightsData;
@@ -68,7 +68,6 @@ const mapStateToProps = (state, { location }) => {
     cloudProviders,
     clusterDetails: details,
     addOns,
-    clusterAddOns,
     clusterIdentityProviders,
     organization,
     displayClusterLogs: !hideClusterLogs,

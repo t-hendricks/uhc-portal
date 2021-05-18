@@ -7,7 +7,7 @@ import {
   EmptyStateIcon,
   Title,
 } from '@patternfly/react-core';
-import { IntegrationIcon } from '@patternfly/react-icons';
+import { PlusCircleIcon } from '@patternfly/react-icons';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../common/ErrorBox';
 import { availableAddOns } from './AddOnsHelper';
@@ -79,7 +79,7 @@ class AddOns extends React.Component {
     if (!hasAddOns) {
       return (
         <EmptyState>
-          <EmptyStateIcon icon={IntegrationIcon} />
+          <EmptyStateIcon icon={PlusCircleIcon} />
           {addOns.error && (
             <ErrorBox message="Error getting add-ons" response={addOns} />
           )}

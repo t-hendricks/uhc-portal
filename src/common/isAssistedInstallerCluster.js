@@ -14,4 +14,11 @@ export const isUninstalledAICluster = cluster => (
   isAssistedInstallSubscription(cluster.subscription) && cluster.state !== 'installed'
 );
 
+// The cluster has not been installed yet or is shortly after installation.
+// Telemetry has not reported its data yet.
+export const isAISubscriptionWithoutMetrics = subscription => (
+  isAssistedInstallSubscription(subscription)
+  && (!subscription?.metrics || subscription.metrics.length === 0)
+);
+
 export default isAssistedInstallSubscription;
