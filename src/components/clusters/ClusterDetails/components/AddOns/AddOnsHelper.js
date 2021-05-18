@@ -34,7 +34,7 @@ const getInstalled = (addOn, clusterAddOns) => clusterAddOns.items.find(
 );
 
 // An add-on can only be installed if the org has quota for this particular add-on
-const hasQuota = (addOn, cluster, organization, quotaList) => {
+const hasQuota = (addOn, cluster, organization, quotaList, minCount = 1) => {
   if (!isAvailable(addOn, cluster, organization, quotaList)) {
     return false;
   }
@@ -43,7 +43,7 @@ const hasQuota = (addOn, cluster, organization, quotaList) => {
     ...queryFromCluster(cluster),
     resourceType: quotaTypes.ADD_ON,
     resourceName: addOn.resource_name,
-  }) >= 1;
+  }) >= minCount;
 };
 
 const quotaCostOptions = (resourceName, cluster, quotaList, allOptions, currentValue = 0) => {
@@ -142,6 +142,22 @@ const parameterAndValue = (addOnInstallation, addOn) => {
     }, {});
   }
   return vals;
+};
+
+const minQuotaCount = (addOn) => {
+  let min = 1;
+  if (hasParameters(addOn)) {
+    addOn.parameters.items.forEach((param) => {
+      if (param.value_type === 'resource' && param.id === addOn.resource_name
+        && param.options !== undefined && param.options.length > 0) {
+        const values = param.options
+          .map(option => Number(option.value))
+          .filter(value => !Number.isNaN(value));
+        min = Math.min(...values);
+      }
+    });
+  }
+  return min;
 };
 
 const formatRequirementData = (data) => {
@@ -256,5 +272,6 @@ export {
   getParameterValue,
   parameterValuesForEditing,
   parameterAndValue,
+  minQuotaCount,
   validateAddOnRequirements,
 };
