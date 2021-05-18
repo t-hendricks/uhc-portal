@@ -62,7 +62,6 @@
     "reselect": "^4.0.0",
     "semver": "^7.3.4",
     "uuid": "^8.1.0",
-    "uuid-validate": "^0.0.3",
     "yup": "^0.28.3"
   },
   "devDependencies": {
