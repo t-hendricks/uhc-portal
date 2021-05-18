@@ -24,7 +24,7 @@ import {
 } from '@patternfly/react-core';
 
 import {
-  getInstalled, hasQuota, minQuotaCount, validateAddOnRequirements,
+  getInstalled, hasQuota, validateAddOnRequirements,
 } from '../AddOnsHelper';
 
 import AddOnsCard from '../AddOnsCard';
@@ -89,8 +89,7 @@ class AddOnsDrawer extends React.Component {
       organization,
       quota,
     } = this.props;
-    const minCount = minQuotaCount(addOn);
-    return (addOn !== null) ? hasQuota(addOn, cluster, organization, quota, minCount) : false;
+    return (addOn !== null) ? hasQuota(addOn, cluster, organization, quota) : false;
   };
 
   // return installed addon

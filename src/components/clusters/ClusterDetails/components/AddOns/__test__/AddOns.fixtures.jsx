@@ -84,6 +84,39 @@ export const dbaOperator = {
   install_mode: 'all_namespaces',
   operator_name: 'dba-operator',
 };
+export const dbaOperatorResourceParam = {
+  kind: 'AddOn',
+  href: '/api/clusters_mgmt/v1/addons/dba-operator',
+  id: 'dba-operator',
+  name: 'DBA Operator',
+  description: 'DBA Operator description',
+  label: 'api.openshift.com/addon-dba-operator',
+  icon: null,
+  enabled: true,
+  resource_name: 'addon-dba-operator',
+  resource_cost: 1,
+  target_namespace: 'addon-dba-operator',
+  install_mode: 'all_namespaces',
+  operator_name: 'dba-operator',
+  parameters: {
+    items: [
+      {
+        id: 'addon-dba-operator',
+        value_type: 'resource',
+        options: [
+          {
+            name: 'Sixteen',
+            value: '16',
+          },
+          {
+            name: 'Twenty',
+            value: '20',
+          },
+        ],
+      },
+    ],
+  },
+};
 export const integreatly = {
   kind: 'AddOn',
   href: '/api/clusters_mgmt/v1/addons/integreatly',

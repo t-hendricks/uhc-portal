@@ -4,6 +4,7 @@ import {
   managedIntegration,
   serviceMesh,
   dbaOperator,
+  dbaOperatorResourceParam,
   loggingOperator,
   mockAddOns,
   mockClusterAddOns,
@@ -124,6 +125,12 @@ describe('hasQuota', () => {
   it('should determine that the org has quota for the add-on', () => {
     const quota = hasQuota(dbaOperator, OSDCluster, org, dbaAddonQuota);
     expect(quota).toBe(true);
+  });
+
+  it('should determine that the org does not have quota for the add-on with resource param', () => {
+    // dbaOperatorResourceParam: min option = 16, dbaAddonQuota allowed = 15
+    const quota = hasQuota(dbaOperatorResourceParam, OSDCluster, org, dbaAddonQuota);
+    expect(quota).toBe(false);
   });
 
   it('should determine that the org does not need quota for the add-on on an OSD cluster', () => {

@@ -33,12 +33,30 @@ const getInstalled = (addOn, clusterAddOns) => clusterAddOns.items.find(
   item => item.addon.id === addOn.id,
 );
 
+const hasParameters = addOn => get(addOn, 'parameters.items.length', 0) > 0;
+
+const minQuotaCount = (addOn) => {
+  let min = 1;
+  if (hasParameters(addOn)) {
+    addOn.parameters.items.forEach((param) => {
+      if (param.value_type === 'resource' && param.id === addOn.resource_name
+        && param.options !== undefined && param.options.length > 0) {
+        const values = param.options
+          .map(option => Number(option.value))
+          .filter(value => !Number.isNaN(value));
+        min = Math.min(...values);
+      }
+    });
+  }
+  return min;
+};
+
 // An add-on can only be installed if the org has quota for this particular add-on
-const hasQuota = (addOn, cluster, organization, quotaList, minCount = 1) => {
+const hasQuota = (addOn, cluster, organization, quotaList) => {
   if (!isAvailable(addOn, cluster, organization, quotaList)) {
     return false;
   }
-
+  const minCount = minQuotaCount(addOn);
   return availableQuota(quotaList, {
     ...queryFromCluster(cluster),
     resourceType: quotaTypes.ADD_ON,
@@ -74,8 +92,6 @@ const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) =>
   return addOns.items.filter(addOn => isAvailable(addOn, cluster, organization, quota)
     || isInstalled(addOn, clusterAddOns));
 };
-
-const hasParameters = addOn => get(addOn, 'parameters.items.length', 0) > 0;
 
 const hasRequirements = addOn => get(addOn, 'requirements.length', 0) > 0;
 
@@ -142,22 +158,6 @@ const parameterAndValue = (addOnInstallation, addOn) => {
     }, {});
   }
   return vals;
-};
-
-const minQuotaCount = (addOn) => {
-  let min = 1;
-  if (hasParameters(addOn)) {
-    addOn.parameters.items.forEach((param) => {
-      if (param.value_type === 'resource' && param.id === addOn.resource_name
-        && param.options !== undefined && param.options.length > 0) {
-        const values = param.options
-          .map(option => Number(option.value))
-          .filter(value => !Number.isNaN(value));
-        min = Math.min(...values);
-      }
-    });
-  }
-  return min;
 };
 
 const formatRequirementData = (data) => {
