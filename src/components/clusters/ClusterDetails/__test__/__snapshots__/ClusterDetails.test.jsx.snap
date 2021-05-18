@@ -416,7 +416,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
       }
       displayAccessControlTab={true}
       displayAddAssistedHosts={false}
-      displayAddOnsTab={false}
+      displayAddOnsTab={true}
       displayInsightsTab={false}
       displayMachinePoolsTab={true}
       displayMonitoringTab={false}
