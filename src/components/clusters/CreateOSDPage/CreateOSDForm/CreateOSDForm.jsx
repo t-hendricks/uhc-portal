@@ -7,7 +7,7 @@ import { Field } from 'redux-form';
 import get from 'lodash/get';
 
 import CustomerCloudSubscriptionModal from './FormSections/BillingModelSection/CustomerCloudSubscriptionModal';
-import BillingModelSection from './FormSections/BillingModelSection/BillingModelSection';
+import BillingModelSection from './FormSections/BillingModelSection';
 import BasicFieldsSection from './FormSections/BasicFieldsSection';
 import AWSAccountDetailsSection from './FormSections/AWSAccountDetailsSection';
 import NetworkingSection from './FormSections/NetworkingSection/NetworkingSection';
@@ -158,9 +158,7 @@ class CreateOSDForm extends React.Component {
       autoscalingEnabled,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
-      getMarketplaceQuota,
       customerManagedEncryptionSelected,
-      osdTrialFeature,
       kmsRegionsArray,
     } = this.props;
 
@@ -174,16 +172,8 @@ class CreateOSDForm extends React.Component {
     const isAws = cloudProviderID === 'aws';
     const isGCP = cloudProviderID === 'gcp';
 
-    const hasBYOCQuota = !!get(clustersQuota, `${cloudProviderID}.byoc.totalAvailable`);
-    const hasRhInfraQuota = !!get(clustersQuota, `${cloudProviderID}.rhInfra.totalAvailable`);
-    const hasMarketplaceProductQuota = !!get(clustersQuota, 'hasMarketplaceProductQuota');
-    const hasMarketplaceBYOCQuota = getMarketplaceQuota('byoc', cloudProviderID);
-    const hasMarketplaceRhInfraQuota = getMarketplaceQuota('rhInfra', cloudProviderID);
-    const hasStandardOSDQuota = !!get(clustersQuota, 'hasStandardOSDQuota');
-
     const isBYOCForm = this.isByocForm();
     const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
-    const showOSDTrial = osdTrialFeature && clustersQuota.hasOSDTrialQuota;
     const showAvailability = product === normalizedProducts.OSD
                           || product === normalizedProducts.OSDTrial;
 
@@ -202,17 +192,11 @@ class CreateOSDForm extends React.Component {
           openModal={openModal}
           toggleBYOCFields={this.toggleBYOCFields}
           toggleSubscriptionBilling={this.toggleSubscriptionBilling}
-          hasBYOCquota={hasBYOCQuota}
-          hasStandardQuota={hasRhInfraQuota}
-          hasStandardOSDQuota={hasStandardOSDQuota}
-          hasMarketplaceQuota={hasMarketplaceProductQuota}
-          hasMarketplaceRhInfraQuota={hasMarketplaceRhInfraQuota}
-          hasMarketplaceBYOCQuota={hasMarketplaceBYOCQuota}
           byocSelected={isBYOCForm}
-          showOSDTrial={showOSDTrial}
           pending={pending}
           product={product}
           billingModel={billingModel}
+          cloudProviderID={cloudProviderID}
         />
 
         {/* BYOC modal */}
@@ -439,7 +423,6 @@ CreateOSDForm.propTypes = {
   autoscalingEnabled: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
-  osdTrialFeature: PropTypes.bool,
   getMarketplaceQuota: PropTypes.func.isRequired,
   kmsRegionsArray: PropTypes.object,
 };

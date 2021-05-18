@@ -9,7 +9,7 @@ import './BillingModelRadioButtons.scss';
 function BillingModelRadioButtons({
   input: { onChange },
   byocSelected,
-  isStandardQuotaDisabled,
+  isRhInfraQuotaDisabled,
   isBYOCQuotaDisabled,
 }) {
   const {
@@ -26,9 +26,9 @@ function BillingModelRadioButtons({
         isSelected={!byocSelected}
         titleText={standard}
         secondaryText={standardText}
-        isDisabled={isStandardQuotaDisabled}
+        isDisabled={isRhInfraQuotaDisabled}
         onChange={onChange}
-        tooltip={isStandardQuotaDisabled && noQuotaTooltip}
+        tooltip={isRhInfraQuotaDisabled && noQuotaTooltip}
       />
       <FlatRadioButton
         id={customerCloudSubscription.toLowerCase()}
@@ -49,7 +49,7 @@ BillingModelRadioButtons.defaultProps = {
 };
 
 BillingModelRadioButtons.propTypes = {
-  isStandardQuotaDisabled: PropTypes.bool.isRequired,
+  isRhInfraQuotaDisabled: PropTypes.bool.isRequired,
   isBYOCQuotaDisabled: PropTypes.bool.isRequired,
   input: PropTypes.shape({ onChange: PropTypes.func.isRequired }).isRequired,
   byocSelected: PropTypes.bool,
