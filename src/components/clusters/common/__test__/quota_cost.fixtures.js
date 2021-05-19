@@ -531,7 +531,7 @@ export const loadBalancers = [
     href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
     organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
     quota_id: 'network.loadbalancer|network',
-    allowed: 40,
+    allowed: 17,
     consumed: 0,
     related_resources: [
       {
