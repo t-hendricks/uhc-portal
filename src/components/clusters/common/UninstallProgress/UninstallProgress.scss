@@ -1,0 +1,18 @@
+.uninstall-progress-list {
+  &--icon-space-right {
+    margin-right: 5px;
+  }
+
+  &--icon-error {
+    margin-right: 5px;
+    color: var(--pf-global--danger-color--100);
+  }
+
+  &--description-list {
+    margin-bottom: 8px;
+  }
+
+  &--error-list {
+    margin-top: 8px;
+  }
+}

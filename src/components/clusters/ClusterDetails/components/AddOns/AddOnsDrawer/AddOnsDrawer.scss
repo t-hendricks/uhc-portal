@@ -40,3 +40,13 @@
     padding-top: 24px;
   }
 }
+
+.ocm-addons-failed {
+  &--error-box {
+    margin-top: 24px;
+  }
+
+  &--error-button {
+    font-size: 14px !important;
+  }
+}

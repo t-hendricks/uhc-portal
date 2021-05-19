@@ -21,6 +21,7 @@ import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsa
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import InstallProgress from '../../../common/InstallProgress/InstallProgress';
+import UninstallProgress from '../../../common/UninstallProgress';
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
 import CostBreakdownCard from './CostBreakdownCard';
 import isAssistedInstallSubscription, { isUninstalledAICluster } from '../../../../../common/isAssistedInstallerCluster';
@@ -91,6 +92,17 @@ class Overview extends React.Component {
       topCard = (
         <HibernatingClusterCard cluster={cluster} openModal={openModal} />
       );
+    } else if (cluster.state === clusterStates.UNINSTALLING) {
+      topCard = !isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster) && (
+      <>
+        <UninstallProgress cluster={cluster}>
+          <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
+          <InstallationLogView
+            cluster={cluster}
+          />
+        </UninstallProgress>
+      </>
+      );
     } else {
       topCard = !isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster) && (
         <>
@@ -98,7 +110,6 @@ class Overview extends React.Component {
             <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
             <InstallationLogView
               cluster={cluster}
-              isExpandable={cluster.state !== clusterStates.UNINSTALLING}
             />
           </InstallProgress>
         </>
