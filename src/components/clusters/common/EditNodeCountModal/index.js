@@ -41,7 +41,8 @@ const mapStateToProps = (state) => {
 
   let requestedNodes = 0;
   if (valueSelector(state, 'autoscalingEnabled')) {
-    requestedNodes = valueSelector(state, 'max_replicas');
+    const maxReplicas = valueSelector(state, 'max_replicas');
+    requestedNodes = isMultiAz ? maxReplicas * 3 : maxReplicas;
   } else {
     requestedNodes = valueSelector(state, 'nodes_compute');
   }

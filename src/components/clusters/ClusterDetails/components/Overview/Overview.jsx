@@ -23,7 +23,7 @@ import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import InstallProgress from '../../../common/InstallProgress/InstallProgress';
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
 import CostBreakdownCard from './CostBreakdownCard';
-import isAssistedInstallSubscription from '../../../../../common/isAssistedInstallerCluster';
+import isAssistedInstallSubscription, { isUninstalledAICluster } from '../../../../../common/isAssistedInstallerCluster';
 
 import './Overview.scss';
 
@@ -83,6 +83,9 @@ class Overview extends React.Component {
     const showCostBreakdown = !cluster.managed && userAccess.fulfilled
       && userAccess.data !== undefined && userAccess.data === true;
     const showSidePanel = showInsightsAdvisor || showCostBreakdown;
+    const showAssistedInstallerDetailCard = cluster.aiCluster
+      && isAssistedInstallSubscription(cluster.subscription);
+    const showDetailsCard = !isUninstalledAICluster(cluster);
 
     if (isHibernating(cluster.state)) {
       topCard = (
@@ -134,10 +137,11 @@ class Overview extends React.Component {
         <GridItem sm={12} xl2={showSidePanel ? 9 : 12}>
           <Grid hasGutter>
             { topCard }
-            {cluster.aiCluster && isAssistedInstallSubscription(cluster.subscription) && (
+            {showAssistedInstallerDetailCard && (
             <AssistedInstallerDetailCard aiClusterId={cluster.aiCluster.id} />
             )}
             { (showResourceUsage && !showSidePanel) && resourceUsage}
+            {showDetailsCard && (
             <Card className="ocm-c-overview-details__card">
               <CardTitle className="ocm-c-overview-details__card--header">
                 <Title headingLevel="h2" className="card-title">Details</Title>
@@ -158,6 +162,7 @@ class Overview extends React.Component {
                 </Grid>
               </CardBody>
             </Card>
+            )}
             <SubscriptionSettings />
           </Grid>
         </GridItem>

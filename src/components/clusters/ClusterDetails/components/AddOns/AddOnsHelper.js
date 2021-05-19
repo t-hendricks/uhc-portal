@@ -1,24 +1,12 @@
 import get from 'lodash/get';
-import has from 'lodash/has';
 
-import { billingModels } from '../../../../../common/subscriptionTypes';
-
-/**
- * Returns last level indexed by resource_name e.g. {'addon-foo': 2, 'addon-bar': Infinity}.
- */
-const quotaLookup = (cluster, quota) => {
-  const billingModel = get(cluster, 'billing_model', billingModels.STANDARD);
-  const product = cluster.subscription.plan.id; // TODO plan.type
-  const cloudProviderID = get(cluster, 'cloud_provider.id', 'any');
-  const infra = cluster.ccs?.enabled ? 'byoc' : 'rhInfra';
-  const zoneType = cluster.multi_az ? 'multiAz' : 'singleAz';
-
-  return get(quota.addOnsQuota, [billingModel, product, cloudProviderID, infra, zoneType], {});
-};
+import {
+  availableQuota, hasPotentialQuota, queryFromCluster, quotaTypes,
+} from '../../../common/quotaSelectors';
 
 // An add-on is only visible if it has an entry in the quota summary
 // regardless of whether the org has quota or not
-const isAvailable = (addOn, cluster, organization, quota) => {
+const isAvailable = (addOn, cluster, organization, quotaList) => {
   // We get quota together with organization.
   // TODO: have action/reducer set quota.fullfilled, drop organization arg.
   if (!addOn.enabled || !organization.fulfilled) {
@@ -26,7 +14,11 @@ const isAvailable = (addOn, cluster, organization, quota) => {
   }
 
   // If the add-on is not in the quota cost, it should not be available
-  return has(quotaLookup(cluster, quota), addOn.resource_name);
+  return hasPotentialQuota(quotaList, {
+    ...queryFromCluster(cluster),
+    resourceType: quotaTypes.ADD_ON,
+    resourceName: addOn.resource_name,
+  }) >= 1;
 };
 
 const isInstalled = (addOn, clusterAddOns) => {
@@ -41,27 +33,55 @@ const getInstalled = (addOn, clusterAddOns) => clusterAddOns.items.find(
   item => item.addon.id === addOn.id,
 );
 
-// An add-on can only be installed if the org has quota for this particular add-on
-const hasQuota = (addOn, cluster, organization, quota) => {
-  if (!isAvailable(addOn, cluster, organization, quota)) {
-    return false;
-  }
+const hasParameters = addOn => get(addOn, 'parameters.items.length', 0) > 0;
 
-  return get(quotaLookup(cluster, quota), addOn.resource_name, 0) >= 1;
+const minQuotaCount = (addOn) => {
+  let min = 1;
+  if (hasParameters(addOn)) {
+    addOn.parameters.items.forEach((param) => {
+      if (param.value_type === 'resource' && param.id === addOn.resource_name
+        && param.options !== undefined && param.options.length > 0) {
+        const values = param.options
+          .map(option => Number(option.value))
+          .filter(value => !Number.isNaN(value));
+        min = Math.min(...values);
+      }
+    });
+  }
+  return min;
 };
 
-const quotaCostOptions = (resourceName, cluster, quota, allOptions, currentValue = 0) => {
+// An add-on can only be installed if the org has quota for this particular add-on
+const hasQuota = (addOn, cluster, organization, quotaList) => {
+  if (!isAvailable(addOn, cluster, organization, quotaList)) {
+    return false;
+  }
+  const minCount = minQuotaCount(addOn);
+  return availableQuota(quotaList, {
+    ...queryFromCluster(cluster),
+    resourceType: quotaTypes.ADD_ON,
+    resourceName: addOn.resource_name,
+  }) >= minCount;
+};
+
+const quotaCostOptions = (resourceName, cluster, quotaList, allOptions, currentValue = 0) => {
   // Note: This is only currently looking for addon resource types
   // eslint-disable-next-line no-param-reassign
   currentValue = Number.isNaN(currentValue) ? 0 : currentValue;
-  const availableQuota = get(quotaLookup(cluster, quota), resourceName, -1);
-  if (availableQuota === -1) {
+  const query = {
+    ...queryFromCluster(cluster),
+    resourceType: quotaTypes.ADD_ON,
+    resourceName,
+  };
+
+  if (!hasPotentialQuota(quotaList, query)) {
     // If the resource name was not found in quota, it might not be an addon resource name,
     // but still valid. For now we will just return all options in this case to allow all resource
     // names to work and avoid an empty options list.
     return allOptions;
   }
-  return allOptions.filter(option => (availableQuota + currentValue) >= option.value);
+  const available = availableQuota(quotaList, query);
+  return allOptions.filter(option => (available + currentValue) >= option.value);
 };
 
 const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) => {
@@ -72,8 +92,6 @@ const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) =>
   return addOns.items.filter(addOn => isAvailable(addOn, cluster, organization, quota)
     || isInstalled(addOn, clusterAddOns));
 };
-
-const hasParameters = addOn => get(addOn, 'parameters.items.length', 0) > 0;
 
 const hasRequirements = addOn => get(addOn, 'requirements.length', 0) > 0;
 
@@ -254,5 +272,6 @@ export {
   getParameterValue,
   parameterValuesForEditing,
   parameterAndValue,
+  minQuotaCount,
   validateAddOnRequirements,
 };

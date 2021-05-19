@@ -4,6 +4,7 @@ import {
   managedIntegration,
   serviceMesh,
   dbaOperator,
+  dbaOperatorResourceParam,
   loggingOperator,
   mockAddOns,
   mockClusterAddOns,
@@ -30,6 +31,7 @@ import {
   parameterValuesForEditing,
   parameterAndValue,
   validateAddOnRequirements,
+  minQuotaCount,
 } from '../AddOnsHelper';
 
 const OSDCluster = fixtures.clusterDetails.cluster;
@@ -123,6 +125,12 @@ describe('hasQuota', () => {
   it('should determine that the org has quota for the add-on', () => {
     const quota = hasQuota(dbaOperator, OSDCluster, org, dbaAddonQuota);
     expect(quota).toBe(true);
+  });
+
+  it('should determine that the org does not have quota for the add-on with resource param', () => {
+    // dbaOperatorResourceParam: min option = 16, dbaAddonQuota allowed = 15
+    const quota = hasQuota(dbaOperatorResourceParam, OSDCluster, org, dbaAddonQuota);
+    expect(quota).toBe(false);
   });
 
   it('should determine that the org does not need quota for the add-on on an OSD cluster', () => {
@@ -331,6 +339,72 @@ describe('quotaCostOptions', () => {
       allOptions, 0,
     );
     expect(quotaOptions).toEqual(allOptions);
+  });
+});
+
+describe('minQuotaCount', () => {
+  it('should return 1 by default', () => {
+    const minCount = minQuotaCount({ id: 'tstAddon' });
+    expect(minCount).toEqual(1);
+  });
+  it('should return 1 when no parameters', () => {
+    const minCount = minQuotaCount({ id: 'tstAddon' });
+    expect(minCount).toEqual(1);
+  });
+  it('should return 1 no resource parameter', () => {
+    const minCount = minQuotaCount({
+      id: 'tstAddon',
+      resource_name: 'tstAddon',
+      parameters: {
+        items: [
+          {
+            id: 'tstAddon',
+            value_type: 'string',
+          },
+        ],
+      },
+    });
+    expect(minCount).toEqual(1);
+  });
+  it('should return 1 when resource parameter with no options', () => {
+    const minCount = minQuotaCount({
+      id: 'tstAddon',
+      resource_name: 'tstAddon',
+      parameters: {
+        items: [
+          {
+            id: 'tstAddon',
+            value_type: 'resource',
+          },
+        ],
+      },
+    });
+    expect(minCount).toEqual(1);
+  });
+  it('should return min value from options when resource parameter with options', () => {
+    const minCount = minQuotaCount({
+      id: 'tstAddon',
+      resource_name: 'tstAddon',
+      parameters: {
+        items: [
+          {
+            id: 'tstAddon',
+            value_type: 'resource',
+            options: [
+              {
+                name: 'Two',
+                value: '2',
+              },
+              {
+                name: 'Five',
+                value: '5',
+              },
+            ],
+          },
+        ],
+      },
+    });
+    expect(minCount).toEqual(2);
   });
 });
 

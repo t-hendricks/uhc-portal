@@ -38,7 +38,7 @@
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "netmask": "^1.0.6",
-    "openshift-assisted-ui-lib": "1.5.20",
+    "openshift-assisted-ui-lib": "1.5.21",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
@@ -62,7 +62,6 @@
     "reselect": "^4.0.0",
     "semver": "^7.3.4",
     "uuid": "^8.1.0",
-    "uuid-validate": "^0.0.3",
     "yup": "^0.28.3"
   },
   "devDependencies": {

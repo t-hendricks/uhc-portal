@@ -524,3 +524,36 @@ export const storage = [
     ],
   },
 ];
+
+export const loadBalancers = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+    organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+    quota_id: 'network.loadbalancer|network',
+    allowed: 40,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'network',
+        resource_type: 'network.loadbalancer',
+        byoc: 'rhinfra',
+        availability_zone_type: 'any',
+        product: 'any',
+        billing_model: 'standard',
+        cost: 1,
+      },
+      {
+        cloud_provider: 'any',
+        resource_name: 'network',
+        resource_type: 'network.loadbalancer',
+        byoc: 'byoc',
+        availability_zone_type: 'any',
+        product: 'any',
+        billing_model: 'standard',
+        cost: 0,
+      },
+    ],
+  },
+];

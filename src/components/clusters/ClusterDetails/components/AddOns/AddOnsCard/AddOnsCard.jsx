@@ -21,7 +21,7 @@ class AddOnsCard extends Component {
     return addOn.description.length > descriptionLength
       ? `${addOn.description.substring(0, descriptionLength - 3)}...`
       : addOn.description;
-  }
+  };
 
   render() {
     const {

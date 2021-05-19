@@ -12,6 +12,7 @@ import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
 import '../../../common/Upgrades/UpgradeSettingsFields.scss';
+import clusterStates from '../../../common/clusterStates';
 
 class UpgradeSettingsTab extends React.Component {
   state = { confirmationModalOpen: false }
@@ -93,6 +94,7 @@ class UpgradeSettingsTab extends React.Component {
         Save
       </Button>
     );
+    const disableUVM = cluster.state !== clusterStates.READY;
 
     const hibernatingClusterInfo = (
       <Alert
@@ -109,7 +111,7 @@ class UpgradeSettingsTab extends React.Component {
         <GridItem>
           <Card>
             <CardBody>
-              <UserWorkloadMonitoringSection parent="details" />
+              <UserWorkloadMonitoringSection parent="details" disableUVM={disableUVM} />
             </CardBody>
           </Card>
         </GridItem>
@@ -230,6 +232,7 @@ UpgradeSettingsTab.propTypes = {
       channel_group: PropTypes.string,
       available_upgrades: PropTypes.arrayOf(PropTypes.string),
     }),
+    state: PropTypes.string,
   }),
   getSchedules: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,

@@ -10,6 +10,7 @@ import {
 
 import { versionComparator } from './versionComparator';
 import { normalizedProducts, clustersServiceProducts } from './subscriptionTypes';
+import { isAISubscriptionWithoutMetrics } from './isAssistedInstallerCluster';
 
 /**
  * Erases the differences between clusters-service products and account-manager plans
@@ -162,20 +163,23 @@ const fakeClusterFromSubscription = (subscription) => {
 };
 
 const fakeAIClusterFromSubscription = (subscription, aiCluster) => {
-  const clusterWorkers = aiCluster ? getAICWorkerCount(aiCluster.hosts) : 0;
-  const clusterMasters = aiCluster ? getAICMasterCount(aiCluster.hosts) : 0;
-
   const cluster = fakeClusterFromSubscription(subscription);
-  cluster.metrics.memory.total.value = aiCluster ? getAIMemoryAmount(aiCluster) : 0;
-  cluster.metrics.cpu.total.value = aiCluster ? getAICluterCPUCount(aiCluster) : 0;
-  cluster.metrics.nodes.total = clusterWorkers + clusterMasters;
-  cluster.metrics.nodes.master = clusterMasters;
-  cluster.metrics.nodes.compute = clusterWorkers;
-  cluster.metrics.openshift_version = aiCluster ? aiCluster.openshift_version : 'N/A';
-  cluster.metrics.state = aiCluster?.status || 'N/A';
+  if (isAISubscriptionWithoutMetrics(subscription)) {
+    // Enrich for AI Cluster data instead.
+    const clusterWorkers = aiCluster ? getAICWorkerCount(aiCluster.hosts) : 0;
+    const clusterMasters = aiCluster ? getAICMasterCount(aiCluster.hosts) : 0;
 
-  cluster.state = cluster.metrics.state;
-  cluster.openshift_version = cluster.metrics.openshift_version;
+    cluster.metrics.memory.total.value = aiCluster ? getAIMemoryAmount(aiCluster) : 0;
+    cluster.metrics.cpu.total.value = aiCluster ? getAICluterCPUCount(aiCluster) : 0;
+    cluster.metrics.nodes.total = clusterWorkers + clusterMasters;
+    cluster.metrics.nodes.master = clusterMasters;
+    cluster.metrics.nodes.compute = clusterWorkers;
+    cluster.metrics.openshift_version = cluster.metrics.openshift_version || (aiCluster ? aiCluster.openshift_version : 'N/A');
+    cluster.metrics.state = aiCluster?.status || 'N/A';
+
+    cluster.state = cluster.metrics.state;
+    cluster.openshift_version = cluster.metrics.openshift_version;
+  }
 
   return cluster;
 };

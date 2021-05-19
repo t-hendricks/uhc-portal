@@ -12,7 +12,8 @@ import {
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../common/ErrorBox';
-import { filterLoadBalancerValuesByQuota, quotaLookup } from './LoadBalancersDropdownHelper';
+import { availableQuota, quotaTypes } from '../quotaSelectors';
+import { filterLoadBalancerValuesByQuota } from './LoadBalancersDropdownHelper';
 import { noQuotaTooltip } from '../../../../common/helpers';
 
 class LoadBalancersDropdown extends React.Component {
@@ -36,8 +37,15 @@ class LoadBalancersDropdown extends React.Component {
       <FormSelectOption key={value} value={value} label={value} />
     );
     if (loadBalancerValues.fulfilled) {
-      const quota = quotaLookup(quotaList,
-        billingModel, product, cloudProviderID, isBYOC, isMultiAZ);
+      const query = {
+        resourceType: quotaTypes.LOAD_BALANCER,
+        billingModel,
+        product,
+        cloudProviderID,
+        isBYOC,
+        isMultiAZ,
+      };
+      const quota = availableQuota(quotaList, query);
       const filteredValues = filterLoadBalancerValuesByQuota(currentValue,
         loadBalancerValues, quota);
       const notEnoughQuota = filteredValues.values.length <= 1;
