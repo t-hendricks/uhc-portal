@@ -47,6 +47,21 @@ const isValidLabel = (label) => {
   return (labelParts.length === 2 && labelParts[0] !== '' && labelParts[1] !== '');
 };
 
+const findDuplicateKey = (labels) => {
+  const keys = {};
+  let duplicateKey = null;
+  labels.forEach((tag) => {
+    const labelParts = tag.split('=');
+    const labelKey = labelParts[0];
+    if (keys[labelKey]) {
+      duplicateKey = labelKey;
+    } else {
+      keys[labelKey] = true;
+    }
+  });
+  return duplicateKey;
+};
+
 const parseLabels = labelsObj => (labelsObj ? Object.keys(labelsObj).map(labelKey => `${labelKey}=${labelsObj[labelKey]}`) : []);
 
 const parseTags = (tags) => {
@@ -65,6 +80,10 @@ const parseTags = (tags) => {
 const validateLabels = (labels) => {
   if (labels.some(label => !(isValidLabel(label)))) {
     return 'Each label should be in the form of "key=value".';
+  }
+  const duplicateKey = findDuplicateKey(labels);
+  if (duplicateKey) {
+    return `Each label should have a unique key. "${duplicateKey}" already exists.`;
   }
   return undefined;
 };

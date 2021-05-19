@@ -103,16 +103,21 @@ describe('parseTags', () => {
 });
 
 describe('validateLabels', () => {
-  const errorMessage = 'Each label should be in the form of "key=value".';
+  const invalidLabelErrorMessage = 'Each label should be in the form of "key=value".';
+  const duplicateErrorMessage = duplicateKey => `Each label should have a unique key. "${duplicateKey}" already exists.`;
+
   it('should not allow input without "=" sign', () => {
-    expect(validateLabels(['foo=bar', 'foo'])).toEqual(errorMessage);
+    expect(validateLabels(['foo=bar', 'foo'])).toEqual(invalidLabelErrorMessage);
   });
 
   it('should not allow input without a key', () => {
-    expect(validateLabels(['foo=bar', '=bar'])).toEqual(errorMessage);
+    expect(validateLabels(['foo=bar', '=bar'])).toEqual(invalidLabelErrorMessage);
   });
   it('should not allow input without a value', () => {
-    expect(validateLabels(['foo=bar', 'foo='])).toEqual(errorMessage);
+    expect(validateLabels(['foo=bar', 'foo='])).toEqual(invalidLabelErrorMessage);
+  });
+  it('should not allow input duplicate keys', () => {
+    expect(validateLabels(['t1=t2', 't1=t3'])).toEqual(duplicateErrorMessage('t1'));
   });
   it('should not find error', () => {
     expect(validateLabels(['foo=bar', 'hello=world'])).toEqual(undefined);
