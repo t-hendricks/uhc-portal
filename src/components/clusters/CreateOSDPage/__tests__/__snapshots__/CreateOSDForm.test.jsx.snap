@@ -11,12 +11,9 @@ exports[`CreateOSDForm; should render 1`] = `
       Billing model
     </Title>
   </GridItem>
-  <BillingModelSection
+  <Connect(BillingModelSection)
     byocSelected={false}
-    hasBYOCquota={false}
-    hasMarketplaceQuota={false}
-    hasStandardOSDQuota={true}
-    hasStandardQuota={true}
+    cloudProviderID="aws"
     openModal={[MockFunction]}
     pending={false}
     product="OSD"
@@ -132,12 +129,9 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
       Billing model
     </Title>
   </GridItem>
-  <BillingModelSection
+  <Connect(BillingModelSection)
     byocSelected={false}
-    hasBYOCquota={false}
-    hasMarketplaceQuota={false}
-    hasStandardOSDQuota={true}
-    hasStandardQuota={true}
+    cloudProviderID="aws"
     openModal={[MockFunction]}
     pending={false}
     product="OSDTrial"
