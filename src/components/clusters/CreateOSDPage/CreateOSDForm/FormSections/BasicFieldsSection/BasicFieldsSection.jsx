@@ -17,15 +17,14 @@ function BasicFieldsSection({
   pending,
   showDNSBaseDomain,
   showAvailability,
-  quota,
   cloudProviderID,
+  isBYOC,
+  isMultiAz,
+  hasSingleAzQuota,
+  hasMultiAzQuota,
   handleMultiAZChange,
   handleCloudRegionChange,
-  isMultiAz,
-  isBYOC,
 }) {
-  const hasSingleAzQuota = quota.singleAz.available > 0;
-  const hasMultiAzQuota = quota.multiAz.available > 0;
   const multiAzTooltip = !hasMultiAzQuota && noQuotaTooltip;
   const singleAzTooltip = !hasSingleAzQuota && noQuotaTooltip;
 
@@ -136,11 +135,8 @@ BasicFieldsSection.propTypes = {
   handleCloudRegionChange: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   isBYOC: PropTypes.bool.isRequired,
-  quota: PropTypes.shape({
-    singleAz: PropTypes.shape({ available: PropTypes.number.isRequired }),
-    multiAz: PropTypes.shape({ available: PropTypes.number.isRequired }),
-    totalAvailable: PropTypes.number.isRequired,
-  }).isRequired,
+  hasSingleAzQuota: PropTypes.bool.isRequired,
+  hasMultiAzQuota: PropTypes.bool.isRequired,
 };
 
 export default BasicFieldsSection;
