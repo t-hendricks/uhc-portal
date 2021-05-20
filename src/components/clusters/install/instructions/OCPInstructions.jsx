@@ -22,7 +22,7 @@ const OCPInstructions = (props) => {
   const {
     token,
     cloudProviderID,
-    rhcosLearnMoreURL,
+    displayRHCOSSection,
     channel,
     docURL,
     customizations = '',
@@ -66,7 +66,7 @@ const OCPInstructions = (props) => {
                   token={token}
                   pendoID={pendoID}
                   cloudProviderID={cloudProviderID}
-                  rhcosLearnMoreURL={rhcosLearnMoreURL}
+                  displayRHCOSSection={displayRHCOSSection}
                   channel={channel}
                   isBMIPI={isBMIPI}
                 />
@@ -113,7 +113,7 @@ const OCPInstructions = (props) => {
 OCPInstructions.propTypes = {
   token: PropTypes.object.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
-  rhcosLearnMoreURL: PropTypes.string,
+  displayRHCOSSection: PropTypes.bool,
   channel: PropTypes.string.isRequired,
   docURL: PropTypes.string.isRequired,
   showPreReleaseDocs: PropTypes.bool,
