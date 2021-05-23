@@ -47,6 +47,7 @@ import Support from './components/Support';
 import AddNotificationContactDialog
   from './components/Support/components/AddNotificationContactDialog';
 import UpgradeSettingsTab from './components/UpgradeSettings';
+import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 
 class ClusterDetails extends Component {
   state = {
@@ -359,9 +360,11 @@ class ClusterDetails extends Component {
 
     const displayAddOnsTab = !isClusterInstalling && !isClusterPending
      && cluster.managed && !isArchived;
-    const displayInsightsTab = !cluster.managed && !isArchived && !isAROCluster;
+    const displayInsightsTab = !cluster.managed && !isArchived && !isAROCluster
+      && !isUninstalledAICluster(cluster);
     const consoleURL = get(cluster, 'console.url');
-    const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster;
+    const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster
+      && !isUninstalledAICluster(cluster);
     const displayAccessControlTab = cluster.managed && !!consoleURL
       && (isClusterReady || clusterHibernating);
     const cloudProvider = get(cluster, 'cloud_provider.id');
