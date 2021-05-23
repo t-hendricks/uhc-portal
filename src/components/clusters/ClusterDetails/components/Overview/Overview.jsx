@@ -83,7 +83,7 @@ class Overview extends React.Component {
     const showCostBreakdown = !cluster.managed && userAccess.fulfilled
       && userAccess.data !== undefined && userAccess.data === true;
     const showSidePanel = showInsightsAdvisor || showCostBreakdown;
-    const showAssistedInstallerDetailCard = cluster.aiCluster
+    const showAssistedInstallerDetailCard = cluster.aiCluster && !isArchived
       && isAssistedInstallSubscription(cluster.subscription);
     const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
 
