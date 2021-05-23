@@ -61,8 +61,11 @@ const mapStateToProps = (state, ownProps) => {
   const hasStandardOSDQuota = hasAwsQuotaSelector(state, OSD, STANDARD)
                            || hasGcpQuotaSelector(state, OSD, STANDARD);
 
+  const isByoc = valueSelector(state, 'byoc');
+
   return ({
     isValid: isValid('CreateCluster')(state),
+    isByoc,
 
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
@@ -71,7 +74,6 @@ const mapStateToProps = (state, ownProps) => {
     selectedRegion: valueSelector(state, 'region'),
     installToVPCSelected: valueSelector(state, 'install_to_vpc'),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
-    isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
     isAutomaticUpgrade: valueSelector(state, 'upgrade_policy') === 'automatic',
 
     cloudProviders: state.cloudProviders,

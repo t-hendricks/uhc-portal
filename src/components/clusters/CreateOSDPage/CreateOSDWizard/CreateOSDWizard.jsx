@@ -22,7 +22,7 @@ import Breadcrumbs from '../../common/Breadcrumbs';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { shouldRefetchQuota } from '../../../../common/helpers';
 
-import BillingModelSection from '../CreateOSDForm/FormSections/BillingModelSection/BillingModelSection';
+import BillingModelSection from '../CreateOSDForm/FormSections/BillingModelSection';
 import BasicFieldsSection from '../CreateOSDForm/FormSections/BasicFieldsSection/BasicFieldsSection';
 
 import wizardConnector from './WizardConnector';
@@ -70,10 +70,25 @@ class CreateOSDWizard extends React.Component {
   }
 
   render() {
-    const { isValid } = this.props;
+    const { isValid, isByoc } = this.props;
     const steps = [
       { name: 'Billing model', component: <Grid><WizardBillingModelSection isWizard /></Grid>, enableNext: isValid },
-      { name: 'Cluster settings', component: <p>Step 2 content</p> },
+      {
+        name: 'Cluster settings',
+        component: isByoc ? undefined : <Grid><WizardBasicFieldsSection isWizard /></Grid>,
+        steps: isByoc ? [
+          {
+            name: 'Cloud provider',
+            component: <p>TBD Cloud provider selection</p>,
+            enableNext: isValid,
+          },
+          {
+            name: 'Cluster details',
+            component: <Grid><WizardBasicFieldsSection isWizard /></Grid>,
+            enableNext: isValid,
+          },
+        ] : undefined,
+      },
       { name: 'Networking', component: <p>Step 3 content</p> },
       { name: 'Default machine pool', component: <p>Step 4 content</p> },
       { name: 'Review and create', component: <p>Review step content</p>, nextButtonText: 'Finish' },
