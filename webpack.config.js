@@ -117,6 +117,7 @@ module.exports = (_env, argv) => {
           loader: require.resolve('@redhat-cloud-services/frontend-components-config-utilities/chrome-render-loader'),
           options: {
             appName: moduleName,
+            skipChrome2: true
           },
         },
         {
