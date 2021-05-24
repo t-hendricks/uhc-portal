@@ -9,7 +9,7 @@ import {
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 
 import CreateOSDCluster from '../CreateOSDPage';
-import CreateOSDForm from '../CreateOSDForm/CreateOSDForm';
+import CreateOSDForm from '../CreateOSDForm';
 
 describe('CreateOSDCluster', () => {
   let resetResponse;

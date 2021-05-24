@@ -217,3 +217,139 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
   />
 </Fragment>
 `;
+
+exports[`CreateOSDForm; should render with BYOC quota 1`] = `
+<Fragment>
+  <GridItem
+    span={12}
+  >
+    <Title
+      headingLevel="h3"
+    >
+      Billing model
+    </Title>
+  </GridItem>
+  <Connect(BillingModelSection)
+    billingModel="standard"
+    byocSelected={true}
+    cloudProviderID="aws"
+    openModal={[MockFunction]}
+    pending={false}
+    product="OSD"
+    toggleBYOCFields={[Function]}
+    toggleSubscriptionBilling={[Function]}
+  />
+  <GridItem
+    span={12}
+  >
+    <Title
+      headingLevel="h3"
+    >
+      AWS account details
+    </Title>
+  </GridItem>
+  <GridItem
+    span={4}
+  >
+    Before creating the cluster, review all the prerequisites in
+     
+    <ExternalLink
+      href="https://www.openshift.com/dedicated/ccs"
+    >
+      the documentation.
+    </ExternalLink>
+     
+  </GridItem>
+  <GridItem
+    span={8}
+  />
+  <AWSAccountDetailsSection
+    pending={false}
+  />
+  <GridItem
+    span={12}
+  >
+    <Title
+      headingLevel="h3"
+    >
+      Cluster details
+    </Title>
+  </GridItem>
+  <Connect(BasicFieldsSection)
+    billingModel="standard"
+    change={[MockFunction]}
+    cloudProviderID="aws"
+    handleCloudRegionChange={[Function]}
+    handleMultiAZChange={[Function]}
+    isBYOC={true}
+    isMultiAz={false}
+    pending={false}
+    product="OSD"
+    showAvailability={true}
+    showDNSBaseDomain={false}
+  />
+  <GridItem
+    span={12}
+  >
+    <Title
+      headingLevel="h3"
+    >
+      Scale
+    </Title>
+    <p>
+      The number and instance type of worker nodes in your cluster. After cluster creation you will be able to change the number of worker nodes in your cluster, but you will not be able to change the worker node instance type.
+    </p>
+  </GridItem>
+  <ScaleSection
+    autoScaleMaxNodesValue="0"
+    autoScaleMinNodesValue="0"
+    autoscalingEnabled={false}
+    billingModel="standard"
+    canAutoScale={false}
+    change={[MockFunction]}
+    cloudProviderID="aws"
+    handleMachineTypesChange={[Function]}
+    isBYOC={true}
+    isMultiAz={false}
+    machineType=""
+    pending={false}
+    product="OSD"
+  />
+  <NetworkingSection
+    cloudProviderID="aws"
+    isCCS={true}
+    isMultiAz={false}
+    mode="basic"
+    privateClusterSelected={false}
+    showClusterPrivacy={true}
+    toggleNetwork={[Function]}
+  />
+  <GridItem
+    span={12}
+  >
+    <Divider />
+  </GridItem>
+  <GridItem
+    span={4}
+  >
+    <Title
+      headingLevel="h3"
+    >
+      Cluster settings
+    </Title>
+  </GridItem>
+  <UserWorkloadMonitoringSection
+    disableUVM={false}
+    parent="create"
+  />
+  <Title
+    className="clusterupdatespace"
+    headingLevel="h3"
+  >
+    Cluster updates
+  </Title>
+  <UpgradeSettingsFields
+    isDisabled={false}
+  />
+</Fragment>
+`;
