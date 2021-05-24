@@ -10,6 +10,7 @@ exports[`<EditTaintsModal /> renders correctl 1`] = `
   primaryText="Save"
   title="Edit taints"
 >
+  <EditMachinePoolAlert />
   <Form
     onSubmit={[MockFunction]}
   >
