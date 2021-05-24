@@ -9,7 +9,6 @@ const getAddOns = () => dispatch => dispatch({
     return ({
       items,
       resourceNames: items.map(addOn => addOn.resource_name),
-      freeAddOns: items.filter(addOn => addOn.resource_cost === 0),
     });
   }),
 });
@@ -46,7 +45,6 @@ const deleteClusterAddOn = (clusterID, addOnData) => dispatch => dispatch({
 const clearClusterAddOnsResponses = () => ({
   type: AddOnsConstants.CLEAR_CLUSTER_ADDON_RESPONSES,
 });
-
 
 const addOnsActions = {
   getAddOns,

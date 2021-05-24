@@ -23,7 +23,7 @@ const ocpTableRows = [
     'Full stack automation and pre-existing infrastructure'],
   [(<><Link to="/install/rhv">Red Hat Virtualization</Link></>),
     'Full stack automation and pre-existing infrastructure'],
-  [(<><Link to="/install/vsphere/user-provisioned">vSphere</Link></>),
+  [(<><Link to="/install/vsphere">vSphere</Link></>),
     'Full stack automation and pre-existing infrastructure'],
   [(<><Link to="/install/metal">Platform agnostic</Link></>),
     'Full stack automation and pre-existing infrastructure'],
@@ -36,19 +36,19 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
         <Stack hasGutter>
           <StackItem>
             <Title headingLevel="h2" className="ocm-ocp-datacenter-title">
-            Assisted Installer
+              Assisted Installer
             </Title>
-            <Label color="orange">
-            Developer preview
+            <Label color="orange" variant="outline">
+              Technology preview
             </Label>
           </StackItem>
           <StackItem>
-          Create a cluster on bare metal following a guided installation
-           process to connect your hardware.
+            Create a cluster on bare metal following a guided installation
+            process to connect your hardware.
           </StackItem>
           <StackItem>
             <Button component={Link} to="/assisted-installer/clusters/~new">
-          Create cluster
+              Create cluster
             </Button>
           </StackItem>
         </Stack>
@@ -62,8 +62,8 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
           </Title>
         </StackItem>
         <StackItem>
-        Create clusters on supported infrastructure using our extensive documentation
-         and installer program.
+          Create clusters on supported infrastructure using our extensive documentation
+          and installer program.
         </StackItem>
         <StackItem>
           <Table

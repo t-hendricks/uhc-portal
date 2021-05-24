@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from '@patternfly/react-core';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
 import Modal from '../../../../common/Modal/Modal';
 import ErrorBox from '../../../../common/ErrorBox';

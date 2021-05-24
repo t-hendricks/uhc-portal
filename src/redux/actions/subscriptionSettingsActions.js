@@ -16,7 +16,6 @@ limitations under the License.
 import { subscriptionSettingsConstants } from '../constants';
 import { accountsService } from '../../services';
 
-
 function editSubscriptionSettings(subscriptionID, data) {
   return dispatch => dispatch({
     type: subscriptionSettingsConstants.EDIT_SUBSCRIPTION_SETTINGS,

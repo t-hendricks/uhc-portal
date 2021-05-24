@@ -1,6 +1,0 @@
-{
-  "kind": "Log",
-  "id": "hive",
-  "href": "/api/clusters_mgmt/v1/clusters/1H1l4oRVxoh6qSTf4fSmvtaGaWy/logs/hive",
-  "content": "...FAKE HIVE LOGS...\n\ntime=Stardate 123456.7 Configuring warp engine... 27%\ntime=Stardate 123456.8 Shields up...  73%\ntime=Stardate 123456.9 Yellow Alert!  80%\ntime=Stardate 123457.0 Remodulating deflector array...  87%\ntime=Stardate 123457.1 Transporting containers to cargo hold... 96%\ntime=Stardate 123457.2 Cancel Yellow Alert.  100%\n\ninstalled."
-}

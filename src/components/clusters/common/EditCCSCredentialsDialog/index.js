@@ -5,7 +5,6 @@ import EditCCSCredentialsDialog from './EditCCSCredentialsDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import { clearClusterResponse, editCluster } from '../../../../redux/actions/clustersActions';
 
-
 const mapStateToProps = (state) => {
   const cluster = state.modal.data;
   return ({

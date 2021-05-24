@@ -5,6 +5,7 @@ import clusterStates, { isHibernating } from '../clusterStates';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
 import modals from '../../../common/Modal/modals';
+import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
 
 /**
  * This function is used by PF tables to determine which dropdown items are displayed
@@ -16,7 +17,8 @@ import modals from '../../../common/Modal/modals';
  */
 function actionResolver(
   cluster, showConsoleButton, openModal, canSubscribeOCP,
-  canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased,
+  canTransferClusterOwnership, canHibernateCluster,
+  toggleSubscriptionReleased, refreshFunc,
 ) {
   const baseProps = {
     component: 'button',
@@ -26,8 +28,8 @@ function actionResolver(
   const notReadyMessage = <span>This cluster is not ready</span>;
   const hibernatingMessage = (
     <span>
-This cluster is hibernating;
-     awaken cluster in order to perform actions
+      This cluster is hibernating;
+      awaken cluster in order to perform actions
     </span>
   );
   const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
@@ -39,14 +41,17 @@ This cluster is hibernating;
   const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
   const isClusterReady = cluster.state === clusterStates.READY;
   const isClusterErrorInAccountClaimPhase = cluster.state === clusterStates.ERROR
-  && !cluster.status.dns_ready;
+  // eslint-disable-next-line camelcase
+  && !cluster.status?.dns_ready;
   const hasAccountId = cluster.managed && cluster.aws && cluster.aws.account_id;
   const isUninstallingProps = isClusterUninstalling
     ? { isDisabled: true, tooltip: uninstallingMessage } : {};
   const getKey = item => `${cluster.id}.menu.${item}`;
   const clusterName = getClusterName(cluster);
+  const isProductOSDTrial = cluster.product
+                         && cluster.product.id === normalizedProducts.OSDTrial;
 
-  const getAdminConosleProps = () => {
+  const getAdminConsoleProps = () => {
     const consoleURL = cluster.console ? cluster.console.url : false;
     const adminConsoleEnabled = {
       component: 'a',
@@ -89,7 +94,6 @@ This cluster is hibernating;
       title: 'Resume from Hibernation',
       onClick: () => openModal(modals.RESUME_CLUSTER, clusterData),
     };
-
 
     if (isClusterHibernatingOrPoweringDown) {
       return resumeHibernatingClusterProps;
@@ -271,6 +275,7 @@ This cluster is hibernating;
       onClick: () => {
         if (isReleased) {
           toggleSubscriptionReleased(get(cluster, 'subscription.id'), false);
+          refreshFunc();
         } else {
           openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, cluster.subscription);
         }
@@ -279,7 +284,23 @@ This cluster is hibernating;
     return transferClusterOwnershipProps;
   };
 
-  const adminConsoleItemProps = getAdminConosleProps();
+  const getUpgradeTrialClusterProps = () => {
+    const upgradeTrialClusterData = {
+      clusterID: cluster.id,
+      cluster,
+    };
+    const upgradeTrialClusterProps = {
+      ...baseProps,
+      title: 'Upgrade cluster from Trial',
+      key: getKey('upgradetrialcluster'),
+    };
+    return {
+      ...upgradeTrialClusterProps,
+      onClick: () => openModal(modals.UPGRADE_TRIAL_CLUSTER, upgradeTrialClusterData),
+    };
+  };
+
+  const adminConsoleItemProps = getAdminConsoleProps();
   const scaleClusterItemProps = getScaleClusterProps();
   const editNodeCountItemProps = getEditNodeCountProps();
   const editDisplayNameItemProps = getEditDisplayNameProps();
@@ -289,26 +310,31 @@ This cluster is hibernating;
   const unarchiveClusterItemProps = getUnarchiveClusterProps();
   const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
   const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
+  const upgradeTrialClusterProps = getUpgradeTrialClusterProps();
   const editccscredentialsProps = getEditCCSCredentialsProps();
   const hibernateClusterProps = getHibernateClusterProps();
 
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
-  const showHibernateCluster = cluster.canEdit && cluster.managed && canHibernateCluster;
+  const showHibernateCluster = cluster.canEdit && cluster.managed && canHibernateCluster
+    && !isProductOSDTrial;
   const showEditNodeCount = cluster.canEdit && cluster.managed;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && !isArchived;
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && isArchived;
-  const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL);
-  const showEditSubscriptionSettings = !cluster.managed && cluster.canEdit && canSubscribeOCP;
+  const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL)
+    && !isAssistedInstallCluster(cluster);
+  const showEditSubscriptionSettings = get(cluster, 'subscription.plan.id', '') === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
+  const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(get(cluster, 'subscription.plan.id', ''));
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership
-    && get(cluster, 'subscription.plan.id', '') === normalizedProducts.OCP
+    && isAllowedProducts
     && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   // eslint-disable-next-line max-len
   // const showccscredentials = cluster.ccs?.enabled && cluster.cloud_provider && cluster.cloud_provider.id !== 'gcp';
   const showccscredentials = false; // Temporary until backend is fixed
+  const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [
     showConsoleButton && adminConsoleItemProps,
@@ -317,6 +343,7 @@ This cluster is hibernating;
     showScale && scaleClusterItemProps,
     showEditNodeCount && editNodeCountItemProps,
     showHibernateCluster && hibernateClusterProps,
+    showUpgradeTrialCluster && upgradeTrialClusterProps,
     showDelete && deleteClusterItemProps,
     showArchive && archiveClusterItemProps,
     showUnarchive && unarchiveClusterItemProps,
@@ -328,11 +355,13 @@ This cluster is hibernating;
 
 function dropDownItems({
   cluster, showConsoleButton, openModal, canSubscribeOCP,
-  canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased,
+  canTransferClusterOwnership, canHibernateCluster,
+  toggleSubscriptionReleased, refreshFunc,
 }) {
   const actions = actionResolver(
     cluster, showConsoleButton, openModal, canSubscribeOCP,
-    canTransferClusterOwnership, canHibernateCluster, toggleSubscriptionReleased,
+    canTransferClusterOwnership, canHibernateCluster,
+    toggleSubscriptionReleased, refreshFunc,
   );
   const menuItems = actions.map(
     action => (<DropdownItem {...action}>{action.title}</DropdownItem>),

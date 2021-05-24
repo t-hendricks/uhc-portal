@@ -1,0 +1,12 @@
+{
+  "id": "summary",
+  "kind": "Dashboard",
+  "href": "/api/accounts_mgmt/v1/organizations/1J2uwYFOMUSdl4K36KOb7puzgZx/summary_dashboard",
+  "name": "summary",
+  "metrics": [
+    {
+      "name": "clusters_total",
+      "vector": [{ "time": "2021-02-25T09:40:36.145891763Z", "value": 12 }]
+    }
+  ]
+}

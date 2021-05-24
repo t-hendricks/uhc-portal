@@ -8,7 +8,6 @@ import ErrorBox from '../../../common/ErrorBox';
 import modals from '../../../common/Modal/modals';
 import { checkClusterDisplayName } from '../../../../common/validators';
 
-
 class EditDisplayNameDialog extends Component {
   state = {
     currentValue: '',

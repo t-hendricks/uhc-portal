@@ -7,9 +7,7 @@ This is NOT a React component, because it returns an array of rows, so it's not 
 
 import React from 'react';
 
-import {
-  Skeleton,
-} from '@redhat-cloud-services/frontend-components';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 function skeletonRows(
   count = 10,

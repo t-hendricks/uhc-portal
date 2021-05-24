@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import {
-  ConditionalFilter,
-  conditionalFilterType,
-} from '@redhat-cloud-services/frontend-components';
+import ConditionalFilter from '@redhat-cloud-services/frontend-components/ConditionalFilter';
+import { conditionalFilterType } from '@redhat-cloud-services/frontend-components/ConditionalFilter/conditionalFilterConstants';
 import PropTypes from 'prop-types';
 import { SEVERITY_TYPES } from '../clusterLogConstants';
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
-
 
 class ClusterLogsConditionalFilter extends Component {
   constructor(props) {
@@ -88,6 +85,7 @@ class ClusterLogsConditionalFilter extends Component {
       value: 'Description',
       label: 'Description',
       filterValues: {
+        'aria-label': 'Description Filter Input',
         onChange: (event, value) => this.updateCurrentValue(value, 'description'),
         value: description,
       },

@@ -2,16 +2,16 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import AddOns from '../AddOns';
-import { mockAddOns, mockClusterAddOns, mockQuota } from './AddOns.fixtures';
+import { mockAddOns, mockClusterAddOns } from './AddOns.fixtures';
+import { addonsQuota } from '../../../../common/__test__/quota.fixtures';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
 describe('<AddOns />', () => {
   let wrapper;
-  const getAddOns = jest.fn();
   const getClusterAddOns = jest.fn();
-  const addClusterAddOn = jest.fn();
   const clearClusterAddOnsResponses = jest.fn();
   const addClusterAddOnResponse = {};
+  const updateClusterAddOnResponse = {};
   const deleteClusterAddOnResponse = {};
   const getOrganizationAndQuota = jest.fn();
   const openModal = jest.fn();
@@ -25,12 +25,12 @@ describe('<AddOns />', () => {
       organization={organization}
       addOns={mockAddOns}
       clusterAddOns={mockClusterAddOns}
-      quota={mockQuota}
-      getAddOns={getAddOns}
+      clusterMachinePools={{}}
+      quota={addonsQuota}
       getOrganizationAndQuota={getOrganizationAndQuota}
       getClusterAddOns={getClusterAddOns}
-      addClusterAddOn={addClusterAddOn}
       addClusterAddOnResponse={addClusterAddOnResponse}
+      updateClusterAddOnResponse={updateClusterAddOnResponse}
       deleteClusterAddOnResponse={deleteClusterAddOnResponse}
       clearClusterAddOnsResponses={clearClusterAddOnsResponses}
       openModal={openModal}

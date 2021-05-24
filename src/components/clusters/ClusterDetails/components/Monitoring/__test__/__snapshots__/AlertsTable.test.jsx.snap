@@ -19,6 +19,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
   aria-label="alerts"
   borders={false}
   canSelectAll={true}
+  canSortFavorites={true}
   cells={
     Array [
       Object {
@@ -36,6 +37,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
   expandId="expandable-toggle"
   gridBreakPoint="grid-md"
   isStickyHeader={false}
+  isTreeTable={false}
   ouiaSafe={true}
   role="grid"
   rowLabeledBy="simple-node"
@@ -176,6 +178,7 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
   aria-label="alerts"
   borders={false}
   canSelectAll={true}
+  canSortFavorites={true}
   cells={
     Array [
       Object {
@@ -193,6 +196,7 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
   expandId="expandable-toggle"
   gridBreakPoint="grid-md"
   isStickyHeader={false}
+  isTreeTable={false}
   ouiaSafe={true}
   role="grid"
   rowLabeledBy="simple-node"

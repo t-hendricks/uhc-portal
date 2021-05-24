@@ -17,8 +17,9 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
         </Title>
         <Label
           color="orange"
+          variant="outline"
         >
-          Developer preview
+          Technology preview
         </Label>
       </StackItem>
       <StackItem>
@@ -67,6 +68,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
           aria-label="Installation options table"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               "Infrastructure provider",
@@ -80,6 +82,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
           isStickyHeader={false}
+          isTreeTable={false}
           ouiaSafe={true}
           role="grid"
           rowLabeledBy="simple-node"
@@ -138,7 +141,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/vsphere/user-provisioned"
+                    to="/install/vsphere"
                   >
                     vSphere
                   </Link>
@@ -191,6 +194,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
           aria-label="Installation options table"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               "Infrastructure provider",
@@ -204,6 +208,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
           isStickyHeader={false}
+          isTreeTable={false}
           ouiaSafe={true}
           role="grid"
           rowLabeledBy="simple-node"
@@ -262,7 +267,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/vsphere/user-provisioned"
+                    to="/install/vsphere"
                   >
                     vSphere
                   </Link>

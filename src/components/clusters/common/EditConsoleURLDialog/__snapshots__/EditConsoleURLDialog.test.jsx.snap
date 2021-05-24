@@ -19,7 +19,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
       label="Web console URL"
       validated="default"
     >
-      <ForwardRef
+      <TextInput
         aria-label="Web console URL"
         id="edit-console-url-input"
         onChange={[Function]}
@@ -61,7 +61,7 @@ exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
       label="Web console URL"
       validated="default"
     >
-      <ForwardRef
+      <TextInput
         aria-label="Web console URL"
         id="edit-console-url-input"
         onChange={[Function]}

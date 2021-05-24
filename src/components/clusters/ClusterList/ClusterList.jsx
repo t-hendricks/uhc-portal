@@ -18,14 +18,12 @@ import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
+import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 import {
-  Spinner, PageHeader, PageHeaderTitle,
-} from '@redhat-cloud-services/frontend-components';
-import {
-  Button,
   Card,
+  PageHeaderTools,
   PageSection,
   Toolbar,
   ToolbarItem,
@@ -33,7 +31,7 @@ import {
 } from '@patternfly/react-core';
 
 import ClusterListFilter from '../common/ClusterListFilter';
-import ClusterListExtraActions from './components/ClusterListExtraActions';
+import ClusterListActions from './components/ClusterListActions';
 import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
 import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup';
 
@@ -41,6 +39,7 @@ import ClusterListEmptyState from './components/ClusterListEmptyState';
 import ClusterListTable from './components/ClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
+import ErrorBox from '../../common/ErrorBox';
 import GlobalErrorBox from '../common/GlobalErrorBox';
 import Unavailable from '../../common/Unavailable';
 import CommonClusterModals from '../common/CommonClusterModals';
@@ -52,6 +51,9 @@ import { productFilterOptions } from '../../../common/subscriptionTypes';
 
 import { viewPropsChanged, createViewQueryObject, getQueryParam } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
+import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../../../redux/constants/featureConstants';
+
+import './ClusterList.scss';
 
 class ClusterList extends Component {
   state = {
@@ -61,7 +63,13 @@ class ClusterList extends Component {
   componentDidMount() {
     document.title = 'Clusters | Red Hat OpenShift Cluster Manager';
     const {
-      getCloudProviders, cloudProviders, setListFlag,
+      getCloudProviders,
+      cloudProviders,
+      setListFlag,
+      getOrganizationAndQuota,
+      organization,
+      getMachineTypes,
+      machineTypes,
     } = this.props;
 
     scrollToTop();
@@ -84,15 +92,28 @@ class ClusterList extends Component {
     if (!cloudProviders.fulfilled && !cloudProviders.pending) {
       getCloudProviders();
     }
+
+    if (!machineTypes.fulfilled && !machineTypes.pending) {
+      getMachineTypes();
+    }
+
+    if (!organization.fulfilled && !organization.pending) {
+      getOrganizationAndQuota();
+    }
   }
 
   componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
     const {
-      viewOptions, valid, pending,
+      viewOptions, valid, pending, features,
     } = this.props;
+    // List only selected features here to avoid request-flooding.
+    const isFeatureChange = features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE]
+      !== prevProps.features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE];
+
     if ((!valid && !pending)
-        || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
+      || isFeatureChange
+      || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ loadingChangedView: true });
       this.refresh();
@@ -133,14 +154,37 @@ class ClusterList extends Component {
       queryParams,
       canSubscribeOCPList,
       canTransferClusterOwnershipList,
+      canHibernateClusterList,
       toggleSubscriptionReleased,
+      meta: { clustersServiceError },
     } = this.props;
 
     const { loadingChangedView } = this.state;
 
+    const hasNoFilters = !queryParams.has_filters
+      && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter);
+
+    /* isPendingNoData - we're waiting for the cluster list response,
+      and we have no valid data to show. In this case we probably want to show a "Skeleton".
+    */
+    const isPendingNoData = !size(clusters) && pending && (hasNoFilters || !valid);
+
+    const showSpinner = !isPendingNoData && pending && !loadingChangedView;
+    const showSkeleton = isPendingNoData || (pending && loadingChangedView);
+
     const pageHeader = (
-      <PageHeader>
+      <PageHeader id="cluster-list-header">
         <PageHeaderTitle title="Clusters" className="page-title" />
+        <PageHeaderTools>
+          {showSpinner && <Spinner size="lg" className="cluster-list-spinner" />}
+          {error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />}
+        </PageHeaderTools>
+        <RefreshBtn
+          autoRefresh={!anyModalOpen}
+          isDisabled={isPendingNoData}
+          refreshFunc={this.refresh}
+          classOptions="cluster-list-top"
+        />
       </PageHeader>
     );
 
@@ -164,17 +208,6 @@ class ClusterList extends Component {
         </>
       );
     }
-
-    const hasNoFilters = !queryParams.has_filters
-    && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter);
-
-    /* isPendingNoData - we're waiting for the cluster list response,
-      and we have no valid data to show. In this case we probably want to show a "Skeleton".
-    */
-    const isPendingNoData = !size(clusters) && pending && (hasNoFilters || !valid);
-
-    const showSpinner = !isPendingNoData && pending && !loadingChangedView;
-    const showSkeleton = isPendingNoData || (pending && loadingChangedView);
 
     // This signals to end-to-end tests that page has completed loading.
     // For now deliberately ignoring in-place reloads with a spinner;
@@ -200,6 +233,14 @@ class ClusterList extends Component {
           <Card>
             <div className="cluster-list" data-ready={dataReady}>
               <GlobalErrorBox />
+              { clustersServiceError && (
+                <ErrorBox
+                  variant="warning"
+                  message="Some operations are unavailable, try again later"
+                  response={clustersServiceError}
+                  isExpandable
+                />
+              ) }
               <Toolbar id="cluster-list-toolbar">
                 <ToolbarContent>
                   <ToolbarItem>
@@ -215,23 +256,12 @@ class ClusterList extends Component {
                       history={history}
                     />
                   </ToolbarItem>
-                  <ToolbarItem>
-                    <Link to="/create">
-                      <Button>Create cluster</Button>
-                    </Link>
-                  </ToolbarItem>
-                  <ToolbarItem>
-                    <ClusterListExtraActions />
-                  </ToolbarItem>
-                  <ToolbarItem>
-                    { showSpinner && (
-                    <Spinner className="cluster-list-spinner" />
-                    ) }
-                    { error && (
-                    <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
-                    ) }
-                  </ToolbarItem>
-                  <ToolbarItem alignment={{ default: 'alignRight' }} variant="pagination">
+                  <ClusterListActions />
+                  <ToolbarItem
+                    alignment={{ default: 'alignRight' }}
+                    variant="pagination"
+                    className="pf-m-hidden visible-on-lgplus"
+                  >
                     <ViewPaginationRow
                       viewType={viewConstants.CLUSTERS_VIEW}
                       currentPage={viewOptions.currentPage}
@@ -240,14 +270,6 @@ class ClusterList extends Component {
                       totalPages={viewOptions.totalPages}
                       variant="top"
                       isDisabled={isPendingNoData}
-                    />
-                  </ToolbarItem>
-                  <ToolbarItem>
-                    <RefreshBtn
-                      autoRefresh={!anyModalOpen}
-                      isDisabled={isPendingNoData}
-                      refreshFunc={this.refresh}
-                      classOptions="cluster-list-top"
                     />
                   </ToolbarItem>
                 </ToolbarContent>
@@ -261,8 +283,10 @@ class ClusterList extends Component {
                 isPending={showSkeleton}
                 setClusterDetails={setClusterDetails}
                 canSubscribeOCPList={canSubscribeOCPList}
+                canHibernateClusterList={canHibernateClusterList}
                 canTransferClusterOwnershipList={canTransferClusterOwnershipList}
                 toggleSubscriptionReleased={toggleSubscriptionReleased}
+                refreshFunc={this.refresh}
               />
               <ViewPaginationRow
                 viewType={viewConstants.CLUSTERS_VIEW}
@@ -294,13 +318,28 @@ ClusterList.propTypes = {
     PropTypes.node,
     PropTypes.element,
   ]).isRequired,
+  meta: PropTypes.shape({
+    clustersServiceError: PropTypes.shape({
+      errorMessage: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
+        PropTypes.element,
+      ]).isRequired,
+      errorDetails: PropTypes.array,
+      errorCode: PropTypes.number,
+    }),
+  }).isRequired,
   errorDetails: PropTypes.array,
   errorCode: PropTypes.number,
   pending: PropTypes.bool.isRequired,
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
+  getMachineTypes: PropTypes.func.isRequired,
+  getOrganizationAndQuota: PropTypes.func.isRequired,
+  organization: PropTypes.object.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  machineTypes: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
@@ -309,9 +348,11 @@ ClusterList.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   anyModalOpen: PropTypes.bool,
+  features: PropTypes.object.isRequired,
   queryParams: PropTypes.shape({
     has_filters: PropTypes.bool,
   }),
+  canHibernateClusterList: PropTypes.objectOf(PropTypes.bool),
   canSubscribeOCPList: PropTypes.objectOf(PropTypes.bool),
   canTransferClusterOwnershipList: PropTypes.objectOf(PropTypes.bool),
   toggleSubscriptionReleased: PropTypes.func.isRequired,

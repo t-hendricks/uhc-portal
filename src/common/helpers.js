@@ -50,7 +50,6 @@ const omitEmptyFields = (obj) => {
   return objToClean;
 };
 
-
 const scrollToTop = () => {
   const overrideMessage = document.getElementById('env-override-message');
   const pageTop = document.querySelector('section.pf-c-page__main-section');
@@ -62,6 +61,8 @@ const scrollToTop = () => {
 };
 
 const noQuotaTooltip = 'You do not have enough quota for this option. Contact sales to purchase additional quota.';
+
+const noMachineTypes = 'You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.';
 
 /**
  * Returns true if an object is empty or if all its direct children are empty.
@@ -86,7 +87,6 @@ const helpers = {
   scrollToTop,
   nestedIsEmpty,
 };
-
 
 const trackPendo = (event, cloudProviderID) => {
   if (window.pendo && window.pendo.isReady && window.pendo.isReady() && window.pendo.track) {
@@ -136,7 +136,6 @@ function scrollToFirstError(errors) {
   setTimeout(() => firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }), 0);
 }
 
-
 /**
  * Converts redux form structure to the structure expected by ocm api
  * [{ key: "foo", value: "bar" },{ key: "hello", value: "world" }]
@@ -152,7 +151,7 @@ const parseReduxFormKeyValueList = labelsFormData => Object.assign(
 /**
  * only return non-empty taints (temporary untill proper fields validation will be implemented)
  * and remove the 'id' property
- * @param {Array} labelsFormData Array of taints. Example:
+ * @param {Array} taintsFormData Array of taints. Example:
  * [{ key: 'foo', value: 'bar', effect: 'NoSchedule'},
  * { id: '1a2b3c', key: 'foo1', value: 'bar1', effect: 'NoExecute'},]
  */
@@ -170,6 +169,7 @@ export {
   scrollToTop,
   getRandomID,
   noQuotaTooltip,
+  noMachineTypes,
   trackPendo,
   strToCleanObject,
   shouldRefetchQuota,

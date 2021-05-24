@@ -9,9 +9,10 @@ import {
   Flex,
 } from '@patternfly/react-core';
 
+import { ClusterStatus as AIClusterStatus } from 'openshift-assisted-ui-lib';
+import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
 import ClusterNetwork from '../ClusterNetwork';
 import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
-
 import ClusterStateIcon from '../../../../common/ClusterStateIcon/ClusterStateIcon';
 import { humanizeValueWithUnit, humanizeValueWithUnitGiB } from '../../../../../../common/units';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
@@ -22,7 +23,7 @@ function DetailsRight({
   cluster, totalDesiredComputeNodes, autoscaleEnabled, totalMinNodesCount, totalMaxNodesCount,
 }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
-    cluster.metrics.memory.total.value, cluster.metrics.memory.total.unit,
+    get(cluster, 'metrics.memory.total.value', 0), get(cluster, 'metrics.memory.total.unit', 'B'),
   );
 
   const isDisconnected = get(cluster, 'subscription.status', '') === subscriptionStatuses.DISCONNECTED;
@@ -53,9 +54,15 @@ function DetailsRight({
             Status
           </DescriptionListTerm>
           <DescriptionListDescription style={cluster.state.style}>
-            <ClusterStateIcon clusterState={cluster.state.state} animated />
-            {' '}
-            {cluster.state.description}
+            { isAISubscriptionWithoutMetrics(cluster.subscription)
+              ? <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
+              : (
+                <>
+                  <ClusterStateIcon clusterState={cluster.state.state} animated />
+                  {' '}
+                  {cluster.state.description}
+                </>
+              )}
           </DescriptionListDescription>
         </DescriptionListGroup>
         {showVCPU && (
@@ -86,14 +93,14 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        { cluster.managed && !cluster.byoc && (
+        { cluster.managed && !cluster.ccs?.enabled && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>
                 Load balancers
               </DescriptionListTerm>
               <DescriptionListDescription>
-                {cluster.load_balancer_quota}
+                {cluster.load_balancer_quota || 'N/A'}
               </DescriptionListDescription>
             </DescriptionListGroup>
             <DescriptionListGroup>
@@ -101,9 +108,9 @@ function DetailsRight({
                 Persistent storage
               </DescriptionListTerm>
               <DescriptionListDescription>
-                {humanizedPersistentStorage.value}
-                {' '}
-                {humanizedPersistentStorage.unit}
+                {humanizedPersistentStorage
+                  ? `${humanizedPersistentStorage.value}  ${humanizedPersistentStorage.unit}`
+                  : 'N/A'}
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>
@@ -235,7 +242,7 @@ function DetailsRight({
                   {' '}
                   {totalMinNodesCount}
                   <span className="space-left-lg autoscale-data-t">
-                  Max:
+                    Max:
                     {' '}
                   </span>
                   {totalMaxNodesCount}

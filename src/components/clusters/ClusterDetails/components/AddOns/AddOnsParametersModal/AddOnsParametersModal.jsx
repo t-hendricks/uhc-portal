@@ -5,8 +5,12 @@ import { Button, Form, FormGroup } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import { LevelUpAltIcon } from '@patternfly/react-icons';
 import Modal from '../../../../../common/Modal/Modal';
-import { hasParameters } from '../AddOnsHelper';
-import { ReduxCheckbox, ReduxVerticalFormGroup } from '../../../../../common/ReduxFormComponents';
+import { getParameterValue, hasParameters, quotaCostOptions } from '../AddOnsHelper';
+import {
+  ReduxCheckbox,
+  ReduxFormDropdown,
+  ReduxVerticalFormGroup,
+} from '../../../../../common/ReduxFormComponents';
 import { required, validateNumericInput } from '../../../../../../common/validators';
 import ErrorBox from '../../../../../common/ErrorBox';
 
@@ -78,7 +82,42 @@ class AddOnsParametersModal extends Component {
     change(`parameters.${param.id}`, paramValue);
   };
 
+  getDefaultValueText = (param) => {
+    if (param.options !== undefined && param.options.length > 0) {
+      const defaultOption = param.options.find(o => o.value === param.default_value);
+      if (defaultOption !== undefined) {
+        return defaultOption.name;
+      }
+    }
+    return param.default_value;
+  };
+
   getFieldProps = (param) => {
+    const {
+      cluster,
+      quota,
+      addOn,
+      addOnInstallation,
+      isUpdateForm,
+    } = this.props;
+    if (param.options !== undefined && param.options.length > 0) {
+      let paramOptions;
+      if (param.value_type === 'resource') {
+        let defaultValue;
+        if (isUpdateForm && param.id === addOn.resource_name) {
+          defaultValue = 1;
+        }
+        const currentValue = Number(getParameterValue(addOnInstallation, param.id, defaultValue));
+        paramOptions = quotaCostOptions(param.id, cluster, quota, param.options, currentValue);
+      } else {
+        paramOptions = param.options;
+      }
+      return ({
+        component: ReduxFormDropdown,
+        options: [{ name: '-- Please Select --', value: undefined }, ...paramOptions],
+        type: 'text',
+      });
+    }
     switch (param.value_type) {
       case 'number':
         return ({
@@ -101,6 +140,7 @@ class AddOnsParametersModal extends Component {
     <Field
       {...this.getFieldProps(param)}
       key={param.id}
+      id={`field-addon-${param.id}`}
       name={`parameters.${param.id}`}
       label={param.name}
       placeholder={this.getParamDefault(param)}
@@ -141,7 +181,7 @@ class AddOnsParametersModal extends Component {
           <ErrorBox message="Error adding add-ons" response={submitClusterAddOnResponse} />
         )}
 
-        <Form>
+        <Form id={`form-addon-${addOn.id}`}>
           {hasParameters(addOn) && addOn.parameters.items.map(param => (
             <FormGroup
               key={param.id}
@@ -153,14 +193,15 @@ class AddOnsParametersModal extends Component {
                 && (
                   <Button
                     onClick={() => this.setDefaultParamValue(param)}
+                    id={`reset-addon-${param.id}`}
                     variant="link"
                     icon={<LevelUpAltIcon />}
                     iconPosition="right"
                     className="addon-parameter-default-button"
                   >
-                    Use default
+                    Use default:
                     {' '}
-                    {param.default_value}
+                    {this.getDefaultValueText(param)}
                   </Button>
                 )
               }
@@ -181,6 +222,8 @@ AddOnsParametersModal.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   addOn: PropTypes.object,
   addOnInstallation: PropTypes.object,
+  cluster: PropTypes.object.isRequired,
+  quota: PropTypes.object.isRequired,
   isUpdateForm: PropTypes.bool,
   submitClusterAddOnResponse: PropTypes.object,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,

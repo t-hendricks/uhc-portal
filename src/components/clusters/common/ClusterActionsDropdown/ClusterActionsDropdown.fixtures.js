@@ -7,6 +7,9 @@ const cluster = {
   state: clusterStates.READY,
   console: { url: 'www.testuhc.com' },
   managed: true,
+  ccs: {
+    enabled: false,
+  },
   canEdit: true,
   canDelete: true,
   status: {
@@ -18,6 +21,16 @@ const cluster = {
   },
 };
 
+const osdTrialCluster = {
+  product: {
+    kind: 'ProductLink',
+    // value after normalization
+    id: 'OSDTrial',
+    href: '/api/clusters_mgmt/v1/products/osdtrial?trial=osd',
+  },
+  ...cluster,
+};
+
 const props = {
   showConsoleButton: true,
   canSubscribeOCP: false,
@@ -25,10 +38,16 @@ const props = {
   canTransferClusterOwnership: false,
   openModal: jest.fn(),
   toggleSubscriptionReleased: jest.fn(),
+  refreshFunc: jest.fn(),
 };
 
 const managedReadyProps = {
   cluster: { ...cluster },
+  ...props,
+};
+
+const managedReadyOsdTrialProps = {
+  cluster: { ...osdTrialCluster },
   ...props,
 };
 
@@ -47,6 +66,9 @@ const clusterUninstallingProps = {
   cluster: {
     state: clusterStates.UNINSTALLING,
     managed: true,
+    ccs: {
+      enabled: false,
+    },
     canEdit: true,
     canDelete: true,
     status: {
@@ -61,6 +83,9 @@ const clusterNotReadyProps = {
   cluster: {
     state: clusterStates.ERROR,
     managed: true,
+    ccs: {
+      enabled: false,
+    },
     canEdit: true,
     canDelete: true,
     status: {
@@ -75,6 +100,9 @@ const selfManagedProps = {
   cluster: {
     state: clusterStates.READY,
     managed: false,
+    ccs: {
+      enabled: false,
+    },
     canEdit: true,
     canDelete: true,
   },
@@ -102,11 +130,13 @@ const organizationClusterProps = {
 
 export {
   managedReadyProps,
+  managedReadyOsdTrialProps,
   deleteModalData,
   clusterUninstallingProps,
   clusterNotReadyProps,
   selfManagedProps,
   cluster,
+  osdTrialCluster,
   organizationClusterProps,
   hibernateClusterModalData,
 };

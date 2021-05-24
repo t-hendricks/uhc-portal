@@ -13,7 +13,6 @@ import getBaseName from '../../../../common/getBaseName';
 import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import ExternalLink from '../../../common/ExternalLink';
 
-
 class TransferClusterOwnershipDialog extends Component {
   componentDidUpdate() {
     const { requestState, onClose } = this.props;
@@ -47,7 +46,7 @@ class TransferClusterOwnershipDialog extends Component {
           <TextListItem>Initiate transfer</TextListItem>
           <TextListItem>
             <ExternalLink href={`${getBaseName()}/register`}>
-            Register the cluster
+              Register the cluster
             </ExternalLink>
             {' '}
             within 5 days
@@ -60,15 +59,15 @@ class TransferClusterOwnershipDialog extends Component {
           <TextListItem>Initiate transfer</TextListItem>
           <TextListItem>
             <ExternalLink href={changePullSecretUrl}>
-            Change the cluster&apos;s pull secret
+              Change the cluster&apos;s pull secret
             </ExternalLink>
             {' '}
             within 5 days
           </TextListItem>
         </TextList>
         <Text component={TextVariants.p}>
-        The transfer is complete when OpenShift Cluster Manager receives
-        telemetry data from the cluster with the new pull secret.
+          The transfer is complete when OpenShift Cluster Manager receives
+          telemetry data from the cluster with the new pull secret.
         </Text>
       </>
     );

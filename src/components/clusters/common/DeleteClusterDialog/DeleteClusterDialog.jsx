@@ -83,20 +83,22 @@ class DeleteClusterDialog extends React.Component {
         isPrimaryDisabled={!isValid || isPending}
         isPending={isPending}
         primaryVariant="danger"
+        data-test-id="delete-cluster-dialog"
       >
         <>
           {errorContainer}
           <p>
-          This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
+            This action cannot be undone.
+            It will uninstall the cluster, and all data will be deleted.
           </p>
         </>
         <Form onSubmit={submitForm}>
           <p>
-          Confirm deletion by typing
+            Confirm deletion by typing
             {' '}
             <span style={{ fontWeight: 'bold' }}>{clusterName}</span>
             {' '}
-          below:
+            below:
           </p>
           <TextInput
             type="text"

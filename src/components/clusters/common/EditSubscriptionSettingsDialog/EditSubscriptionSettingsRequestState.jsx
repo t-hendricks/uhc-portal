@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import ErrorBox from '../../../common/ErrorBox';
 
-
 class EditSubscriptionSettingsRequestState extends Component {
   componentDidUpdate() {
     const { requestState, onFulfilled } = this.props;

@@ -23,21 +23,14 @@ import EnvOverrideMessage from './EnvOverrideMessage';
 
 import config from '../../config';
 
-class App extends React.PureComponent {
-  render() {
-    const { children } = this.props;
-
-    return (
-      <>
-        {config.override && <EnvOverrideMessage env={config.override} />}
-        <ErrorBoundary>
-          {children || <Router />}
-        </ErrorBoundary>
-      </>
-    );
-  }
-}
-
+const App = ({ children }) => (
+  <>
+    {config.override && <EnvOverrideMessage env={config.override} />}
+    <ErrorBoundary>
+      {children || <Router />}
+    </ErrorBoundary>
+  </>
+);
 
 App.propTypes = {
   children: PropTypes.oneOfType([

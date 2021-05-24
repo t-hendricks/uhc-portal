@@ -6,7 +6,6 @@ import { GridItem } from '@patternfly/react-core';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { required } from '../../../../../../../common/validators';
 
-
 function IDPBasicFields({ isPending }) {
   return (
     <>

@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import FlatRadioButton from '../../../../../common/FlatRadioButton';
-import { billingModelConstants } from '../../CreateOSDFormConstants';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
+import { billingModelConstants } from '../../CreateOSDFormConstants';
+
 import './BillingModelRadioButtons.scss';
 
 function BillingModelRadioButtons({
-  hasBYOCquota, hasStandardQuota, input: { onChange }, byocSelected,
+  input: { onChange },
+  byocSelected,
+  isRhInfraQuotaDisabled,
+  isBYOCQuotaDisabled,
 }) {
   const {
     standard,
@@ -15,32 +18,29 @@ function BillingModelRadioButtons({
     customerCloudSubscription,
     customerCloudSubscriptionText,
   } = billingModelConstants;
-
   return (
-    <>
-      <div id="billing-model" className="flat-radio-buttons-flex-container">
-        <FlatRadioButton
-          id={standard.toLowerCase()}
-          value="false"
-          isSelected={!byocSelected}
-          titleText={standard}
-          secondaryText={standardText}
-          isDisabled={!hasStandardQuota}
-          onChange={onChange}
-          tooltip={!hasStandardQuota && noQuotaTooltip}
-        />
-        <FlatRadioButton
-          id={customerCloudSubscription.toLowerCase()}
-          value="true"
-          isSelected={hasBYOCquota && byocSelected}
-          titleText={customerCloudSubscription}
-          secondaryText={customerCloudSubscriptionText}
-          onChange={onChange}
-          isDisabled={!hasBYOCquota}
-          tooltip={!hasBYOCquota && noQuotaTooltip}
-        />
-      </div>
-    </>
+    <div id="byoc" className="flat-radio-buttons-flex-container">
+      <FlatRadioButton
+        id={standard.toLowerCase()}
+        value="false"
+        isSelected={!byocSelected}
+        titleText={standard}
+        secondaryText={standardText}
+        isDisabled={isRhInfraQuotaDisabled}
+        onChange={onChange}
+        tooltip={isRhInfraQuotaDisabled && noQuotaTooltip}
+      />
+      <FlatRadioButton
+        id={customerCloudSubscription.toLowerCase()}
+        value="true"
+        isSelected={!isBYOCQuotaDisabled && byocSelected}
+        titleText={customerCloudSubscription}
+        secondaryText={customerCloudSubscriptionText}
+        onChange={onChange}
+        isDisabled={isBYOCQuotaDisabled}
+        tooltip={isBYOCQuotaDisabled && noQuotaTooltip}
+      />
+    </div>
   );
 }
 
@@ -49,8 +49,8 @@ BillingModelRadioButtons.defaultProps = {
 };
 
 BillingModelRadioButtons.propTypes = {
-  hasBYOCquota: PropTypes.bool.isRequired,
-  hasStandardQuota: PropTypes.bool.isRequired,
+  isRhInfraQuotaDisabled: PropTypes.bool.isRequired,
+  isBYOCQuotaDisabled: PropTypes.bool.isRequired,
   input: PropTypes.shape({ onChange: PropTypes.func.isRequired }).isRequired,
   byocSelected: PropTypes.bool,
 };

@@ -1,6 +1,6 @@
-
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
+import isEmpty from 'lodash/isEmpty';
 import UpgradeSettingsTab from './UpgradeSettingsTab';
 import {
   getSchedules, postSchedule, editSchedule, deleteSchedule, replaceSchedule,
@@ -18,7 +18,6 @@ const reduxFormConfig = {
 const reduxFormUpgradeSettingsTab = reduxForm(reduxFormConfig)(UpgradeSettingsTab);
 const valueSelector = formValueSelector('ClusterUpgradeSettings');
 
-
 const mapStateToProps = (state) => {
   const automaticUpgradePolicy = state.clusterUpgrades.schedules.items.find(policy => policy.schedule_type === 'automatic');
   const { cluster } = state.clusters.details;
@@ -34,6 +33,7 @@ const mapStateToProps = (state) => {
       upgrade_policy: automaticUpgradePolicy ? 'automatic' : 'manual',
       automatic_upgrade_schedule: automaticUpgradePolicy?.schedule || '0 0 * * 0',
       node_drain_grace_period: cluster.node_drain_grace_period?.value,
+      enable_user_workload_monitoring: !cluster.disable_user_workload_monitoring,
     },
   };
 };
@@ -45,7 +45,8 @@ const mapDispatchToProps = dispatch => ({
   },
   openModal: (modal, data) => dispatch(openModal(modal, data)),
   getSchedules: clusterID => dispatch(getSchedules(clusterID)),
-  onSubmit: (formData, clusterID, existingSchedules, existingGracePeriod) => {
+  onSubmit: (formData, clusterID, existingSchedules, existingGracePeriod,
+    enableUserWorkloadMonitoring) => {
     const currentAutomaticUpgradePolicy = existingSchedules.items.find(policy => policy.schedule_type === 'automatic');
     const currentManualUpgradePolicy = existingSchedules.items.find(policy => policy.schedule_type === 'manual');
 
@@ -73,13 +74,18 @@ const mapDispatchToProps = dispatch => ({
       // delete
       dispatch(deleteSchedule(clusterID, currentAutomaticUpgradePolicy.id));
     }
+    const clusterBody = {};
     if (existingGracePeriod !== formData.node_drain_grace_period) {
       // update grace period on the cluster
-      dispatch(editCluster(clusterID, {
-        node_drain_grace_period: {
-          value: formData.node_drain_grace_period,
-        },
-      }));
+      clusterBody.node_drain_grace_period = {
+        value: formData.node_drain_grace_period,
+      };
+    }
+    if (enableUserWorkloadMonitoring !== formData.enable_user_workload_monitoring) {
+      clusterBody.disable_user_workload_monitoring = !formData.enable_user_workload_monitoring;
+    }
+    if (!isEmpty(clusterBody)) {
+      dispatch(editCluster(clusterID, clusterBody));
     }
   },
 });
@@ -91,6 +97,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
       stateProps.cluster.id,
       stateProps.schedules,
       stateProps.cluster.node_drain_grace_period?.value,
+      !stateProps.cluster.disable_user_workload_monitoring,
     );
   };
   return ({
@@ -100,7 +107,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     onSubmit,
   });
 };
-
 
 export default connect(mapStateToProps,
   mapDispatchToProps, mergeProps)(reduxFormUpgradeSettingsTab);

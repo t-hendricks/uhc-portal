@@ -11,6 +11,7 @@ import {
   BanIcon,
   FolderOpenIcon,
   AsleepIcon,
+  NotStartedIcon,
 } from '@patternfly/react-icons';
 // need to disable eslint for the react tokens because it's silly - it warns about these names
 // eslint-disable-next-line camelcase
@@ -32,7 +33,7 @@ function ClusterStateIcon(props) {
     case clusterStates.INSTALLING:
     case clusterStates.UPDATING:
     case clusterStates.POWERING_DOWN:
-    case clusterStates.POWERING_UP:
+    case clusterStates.RESUMING:
       if (animated) {
         return <Spinner {...iconProps} />;
       }
@@ -54,6 +55,8 @@ function ClusterStateIcon(props) {
       return <FolderOpenIcon {...iconProps} />;
     case clusterStates.HIBERNATING:
       return <AsleepIcon {...iconProps} />;
+    case clusterStates.STALE:
+      return <NotStartedIcon {...iconProps} />;
     default:
       return <UnknownIcon {...iconProps} />;
   }

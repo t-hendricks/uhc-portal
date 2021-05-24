@@ -37,13 +37,11 @@ function ArchivedClusterListTable(props) {
     '',
   ];
 
-
   const sortColumns = {
     Name: 'display_name',
     Type: 'plan.id',
     Status: 'status',
   };
-
 
   const sortBy = {
     index: viewOptions.sorting.sortIndex,
@@ -100,7 +98,6 @@ function ArchivedClusterListTable(props) {
       },
     ];
   };
-
 
   return (
     <Table

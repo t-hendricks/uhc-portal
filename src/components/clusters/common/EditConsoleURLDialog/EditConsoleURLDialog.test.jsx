@@ -40,7 +40,7 @@ describe('<EditConsoleURLDialog />', () => {
   });
 
   it('submits correctly', () => {
-    const input = wrapper.find('ForwardRef[type="text"]');
+    const input = wrapper.find('TextInput');
     input.prop('onChange')('http://www.example.com');
     wrapper.find('Modal').at(0).prop('onPrimaryClick')();
     expect(submit).toBeCalledWith('some-id', 'some-sub-id', 'http://www.example.com');

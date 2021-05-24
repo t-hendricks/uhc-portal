@@ -18,7 +18,6 @@ import {
   TableVariant,
 } from '@patternfly/react-table';
 
-
 import ViewPaginationRow from '../../clusters/common/ViewPaginationRow/viewPaginationRow';
 import { viewConstants } from '../../../redux/constants';
 import { viewPropsChanged, createOverviewQueryObject } from '../../../common/queryHelpers';
@@ -26,7 +25,6 @@ import modals from '../../common/Modal/modals';
 
 import skeletonRows from '../../common/SkeletonRows';
 import { expiredTrialsFilter } from './expiredTrialsHelpers';
-
 
 class ExpiredTrialsCard extends React.Component {
   componentDidMount() {
@@ -56,10 +54,10 @@ class ExpiredTrialsCard extends React.Component {
           <CardBody>
             <EmptyState>
               <Title headingLevel="h2">
-              No data available
+                No data available
               </Title>
               <EmptyStateBody>
-              There was an error fetching the data. Try refreshing the page.
+                There was an error fetching the data. Try refreshing the page.
               </EmptyStateBody>
             </EmptyState>
           </CardBody>
@@ -156,6 +154,5 @@ ExpiredTrialsCard.propTypes = {
   viewOptions: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,
 };
-
 
 export default ExpiredTrialsCard;

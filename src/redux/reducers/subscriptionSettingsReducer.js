@@ -22,7 +22,6 @@ import { getErrorState } from '../../common/errors';
 
 import { subscriptionSettingsConstants } from '../constants';
 
-
 const initialState = {
   requestState: baseRequestState,
   data: {},

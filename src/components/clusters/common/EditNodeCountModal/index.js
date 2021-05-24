@@ -30,6 +30,7 @@ const valueSelector = formValueSelector('EditNodeCount');
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;
   const cluster = modalData?.cluster;
+
   const selectedMachinePool = valueSelector(state, 'machine_pool')
   || modalData.machinePool?.id
   || (modalData.isDefaultMachinePool && 'Default');
@@ -37,6 +38,14 @@ const mapStateToProps = (state) => {
   const cloudProviderID = get(cluster, 'cloud_provider.id', '');
 
   const isMultiAz = get(cluster, 'multi_az', false);
+
+  let requestedNodes = 0;
+  if (valueSelector(state, 'autoscalingEnabled')) {
+    const maxReplicas = valueSelector(state, 'max_replicas');
+    requestedNodes = isMultiAz ? maxReplicas * 3 : maxReplicas;
+  } else {
+    requestedNodes = valueSelector(state, 'nodes_compute');
+  }
 
   const commonProps = {
     clusterID: get(cluster, 'id', ''),
@@ -58,16 +67,22 @@ const mapStateToProps = (state) => {
       ],
     },
     isMultiAz,
-    masterResizeAlertThreshold: masterResizeAlertThresholdSelector(state),
+    masterResizeAlertThreshold: masterResizeAlertThresholdSelector(
+      selectedMachinePool,
+      requestedNodes,
+      cluster,
+      state.machinePools.getMachinePools.data,
+    ),
     organization: state.userProfile.organization,
     machineTypes: state.machineTypes,
     cloudProviderID,
     isByoc: cluster?.ccs?.enabled,
     product: get(cluster, 'subscription.plan.id', ''),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
-    canAutoScale: canAutoScaleSelector(state, get(cluster, 'product.id', '')),
+    canAutoScale: canAutoScaleSelector(state, get(cluster, 'subscription.plan.id', ''), get(cluster, 'billing_model')),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
+    billingModel: get(cluster, 'billing_model', ''),
   };
 
   let machinePoolWithAutoscale = false;
@@ -93,7 +108,7 @@ const mapStateToProps = (state) => {
       machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
       machinePoolId: 'Default',
       initialValues: {
-        nodes_compute: get(cluster, 'nodes.compute', null) || (isMultiAz ? '9' : '4'),
+        nodes_compute: get(cluster, 'nodes.compute', null) || (isMultiAz ? 9 : 4),
         machine_pool: 'Default',
         autoscalingEnabled: machinePoolWithAutoscale,
         ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(cluster.nodes.autoscale_compute)),
@@ -112,7 +127,7 @@ const mapStateToProps = (state) => {
     machineType: get(selectedMachinePoolData, 'instance_type', ''),
     machinePoolId: selectedMachinePool,
     initialValues: {
-      nodes_compute: get(selectedMachinePoolData, 'replicas', null) || '0',
+      nodes_compute: get(selectedMachinePoolData, 'replicas', null) || 0,
       machine_pool: selectedMachinePool,
       autoscalingEnabled: machinePoolWithAutoscale,
       ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(selectedMachinePoolData.autoscaling)),

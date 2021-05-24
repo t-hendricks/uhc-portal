@@ -9,7 +9,8 @@ const unhealthyClusters = {
   pending: false,
   fulfilled: true,
   valid: false,
-  clusters: clustersWithIssues,
+  clusters: [],
+  subscriptions: clustersWithIssues,
 };
 
 const baseViewOptions = {
@@ -21,7 +22,6 @@ const baseViewOptions = {
     healthState: 'unhealthy',
   },
 };
-
 
 describe('<ClustersWithIssuesTableCard />', () => {
   let setClusterDetails;

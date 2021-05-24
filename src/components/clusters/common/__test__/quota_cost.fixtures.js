@@ -1,6 +1,7 @@
 // Fragments of QuotaCostList.items.
+// (Before applying normalizeQuotaCost().)
 
-const dedicatedRhInfra = [
+export const dedicatedRhInfra = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
@@ -16,6 +17,7 @@ const dedicatedRhInfra = [
         byoc: 'rhinfra',
         availability_zone_type: 'multi',
         product: 'OSD',
+        billing_model: 'standard',
         cost: 1,
       },
     ],
@@ -35,13 +37,14 @@ const dedicatedRhInfra = [
         byoc: 'rhinfra',
         availability_zone_type: 'any',
         product: 'OSD',
+        billing_model: 'standard',
         cost: 1,
       },
     ],
   },
 ];
 
-const dedicatedCCS = [
+export const dedicatedCCS = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
@@ -57,6 +60,7 @@ const dedicatedCCS = [
         byoc: 'byoc',
         availability_zone_type: 'multi',
         product: 'OSD',
+        billing_model: 'standard',
         cost: 1,
       },
     ],
@@ -76,13 +80,57 @@ const dedicatedCCS = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSD',
+        billing_model: 'standard',
         cost: 4,
       },
     ],
   },
 ];
 
-const dedicatedTrial = [
+export const dedicatedCCSOneNodeRemaining = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+    organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+    quota_id: 'cluster|byoc|osd',
+    allowed: 20,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'gp.small',
+        resource_type: 'cluster',
+        byoc: 'byoc',
+        availability_zone_type: 'multi',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 1,
+      },
+    ],
+  },
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+    organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+    quota_id: 'compute.node|cpu|byoc|osd',
+    allowed: 520,
+    consumed: 516,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'gp.small',
+        resource_type: 'compute.node',
+        byoc: 'byoc',
+        availability_zone_type: 'any',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 4,
+      },
+    ],
+  },
+];
+
+export const dedicatedTrial = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost',
@@ -98,6 +146,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 16,
       },
       {
@@ -107,6 +156,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 8,
       },
       {
@@ -116,6 +166,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 16,
       },
       {
@@ -125,6 +176,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 8,
       },
       {
@@ -134,6 +186,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 4,
       },
       {
@@ -143,6 +196,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 16,
       },
       {
@@ -152,6 +206,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 8,
       },
       {
@@ -161,6 +216,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 4,
       },
     ],
@@ -180,6 +236,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -189,6 +246,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -198,6 +256,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -207,6 +266,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -216,6 +276,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -225,6 +286,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -234,6 +296,7 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -243,13 +306,14 @@ const dedicatedTrial = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'OSDTrial',
+        billing_model: 'standard',
         cost: 1,
       },
     ],
   },
 ];
 
-const unlimitedROSA = [
+export const unlimitedROSA = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1H1PQMDtwzAUsjPxgoWRjhSpNGD/quota_cost',
@@ -265,6 +329,7 @@ const unlimitedROSA = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'MOA',
+        billing_model: 'standard',
         cost: 0,
       },
     ],
@@ -284,13 +349,14 @@ const unlimitedROSA = [
         byoc: 'byoc',
         availability_zone_type: 'any',
         product: 'MOA',
+        billing_model: 'standard',
         cost: 0,
       },
     ],
   },
 ];
 
-const rhmiAddon = [
+export const rhmiAddon = [
   {
     kind: 'QuotaCost',
     href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
@@ -306,6 +372,7 @@ const rhmiAddon = [
         byoc: 'any',
         availability_zone_type: 'any',
         product: 'OSD',
+        billing_model: 'standard',
         cost: 1,
       },
       {
@@ -315,16 +382,178 @@ const rhmiAddon = [
         byoc: 'any',
         availability_zone_type: 'any',
         product: 'RHMI',
+        billing_model: 'standard',
         cost: 0,
       },
     ],
   },
 ];
 
-export {
-  dedicatedRhInfra,
-  dedicatedCCS,
-  dedicatedTrial,
-  unlimitedROSA,
-  rhmiAddon,
-};
+export const crcWorkspacesAddon = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+    organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+    quota_id: 'add-on|addon-crw-operator',
+    allowed: 15,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-crw-operator',
+        resource_type: 'add-on',
+        byoc: 'any',
+        availability_zone_type: 'any',
+        product: 'any',
+        billing_model: 'standard',
+        cost: 1,
+      },
+    ],
+  },
+];
+
+// Test an addon that's used up on rhInfra (but unlimited on CCS)
+export const loggingAddon = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost',
+    organization_id: '1MKVU4otCIuogoLtgtyU6wajxjW',
+    quota_id: 'add-on|addon-cluster-logging-operator',
+    allowed: 5,
+    consumed: 5,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-cluster-logging-operator',
+        resource_type: 'add-on',
+        byoc: 'byoc',
+        availability_zone_type: 'any',
+        product: 'ANY',
+        billing_model: 'standard',
+        cost: 0,
+      },
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-cluster-logging-operator',
+        resource_type: 'add-on',
+        byoc: 'rhinfra',
+        availability_zone_type: 'any',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 1,
+      },
+    ],
+  },
+];
+
+export const dbaAddon = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost',
+    organization_id: '1MKVU4otCIuogoLtgtyU6wajxjW',
+    quota_id: 'add-on|addon-dba-operator',
+    allowed: 15,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-dba-operator',
+        resource_type: 'add-on',
+        byoc: 'any',
+        availability_zone_type: 'any',
+        product: 'ANY',
+        billing_model: 'standard',
+        cost: 1,
+      },
+    ],
+  },
+];
+
+export const serviceMeshAddon = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MKVU4otCIuogoLtgtyU6wajxjW/quota_cost',
+    organization_id: '1MKVU4otCIuogoLtgtyU6wajxjW',
+    quota_id: 'add-on|addon-service-mesh',
+    allowed: 15,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'addon-service-mesh',
+        resource_type: 'add-on',
+        byoc: 'any',
+        availability_zone_type: 'any',
+        product: 'ANY',
+        billing_model: 'standard',
+        cost: 1,
+      },
+    ],
+  },
+];
+
+export const storage = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+    organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+    quota_id: 'pv.storage|gp2',
+    allowed: 27000,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'gp2',
+        resource_type: 'pv.storage',
+        byoc: 'rhinfra',
+        availability_zone_type: 'any',
+        product: 'any',
+        billing_model: 'standard',
+        cost: 1,
+      },
+      {
+        cloud_provider: 'any',
+        resource_name: 'gp2',
+        resource_type: 'pv.storage',
+        byoc: 'byoc',
+        availability_zone_type: 'any',
+        product: 'any',
+        billing_model: 'standard',
+        cost: 0,
+      },
+    ],
+  },
+];
+
+export const loadBalancers = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost',
+    organization_id: '1MK6ieFXd0eu1hERdENAPvpbi7x',
+    quota_id: 'network.loadbalancer|network',
+    allowed: 17,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'network',
+        resource_type: 'network.loadbalancer',
+        byoc: 'rhinfra',
+        availability_zone_type: 'any',
+        product: 'any',
+        billing_model: 'standard',
+        cost: 1,
+      },
+      {
+        cloud_provider: 'any',
+        resource_name: 'network',
+        resource_type: 'network.loadbalancer',
+        byoc: 'byoc',
+        availability_zone_type: 'any',
+        product: 'any',
+        billing_model: 'standard',
+        cost: 0,
+      },
+    ],
+  },
+];

@@ -6,12 +6,45 @@ import { Popover, PopoverPosition, Button } from '@patternfly/react-core';
 import { ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
-import { subscriptionSupportLevels } from '../../../../common/subscriptionTypes';
+import { subscriptionSupportLevels, normalizedProducts } from '../../../../common/subscriptionTypes';
 import getClusterEvaluationExpiresInDays from '../../../../common/getClusterEvaluationExpiresInDays';
+import { getTrialExpiresInDays, getTrialEndDate } from '../../../../common/getTrialExpiresDates';
 
 function ClusterCreatedIndicator({ cluster }) {
+  const osdtrial = get(cluster, 'product.id') === normalizedProducts.OSDTrial;
   const managed = get(cluster, 'managed');
   const supportLevel = get(cluster, 'subscription.support_level');
+
+  if (osdtrial) {
+    const trialExpiresStr = getTrialExpiresInDays(cluster);
+    const trialEndDate = getTrialEndDate(cluster);
+    const bodyContent = (
+      <>
+        <h1>
+          <strong>Trial Cluster</strong>
+        </h1>
+        <p>
+          Your free trial cluster will automatically be deleted in&nbsp;
+          {trialExpiresStr}
+          &nbsp;on&nbsp;
+          <strong>{trialEndDate}</strong>
+        </p>
+      </>
+    );
+    return (
+      <Popover
+        position={PopoverPosition.top}
+        aria-label="Sixty Day Trial"
+        bodyContent={bodyContent}
+      >
+        <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
+          {trialExpiresStr}
+          &nbsp;
+          left
+        </Button>
+      </Popover>
+    );
+  }
 
   if (managed || (
     supportLevel !== subscriptionSupportLevels.EVAL

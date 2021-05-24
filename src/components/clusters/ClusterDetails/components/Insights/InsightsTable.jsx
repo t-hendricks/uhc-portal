@@ -2,19 +2,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Card, CardBody, EmptyStateIcon,
+  Button, Card, CardBody, EmptyStateIcon, Stack, StackItem,
 } from '@patternfly/react-core';
 import { cellWidth, RowWrapper } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
-import RuleTable from '@redhat-cloud-services/rule-components/dist/cjs/RuleTable';
-import ReportDetails from '@redhat-cloud-services/rule-components/dist/cjs/ReportDetails';
+import RuleTable from '@redhat-cloud-services/rule-components/RuleTable/RuleTable';
+import ReportDetails from '@redhat-cloud-services/rule-components/ReportDetails';
 import {
   descriptionFilter,
   totalRiskFilter,
   ruleStatusFilter,
-} from '@redhat-cloud-services/rule-components/dist/cjs/RuleFilters';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
-import { InsightsLabel } from '@redhat-cloud-services/frontend-components/components/InsightsLabel';
+} from '@redhat-cloud-services/rule-components/RuleFilters';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
+import { InsightsLabel } from '@redhat-cloud-services/frontend-components/InsightsLabel';
 import { CheckCircleIcon } from '@patternfly/react-icons';
 import AnalysisSummary from './AnalysisSummary';
 import { severityMapping, appendCrParamToDocLinks } from './helpers';
@@ -231,7 +231,6 @@ class InsightsTable extends React.Component {
   render() {
     const {
       insightsData,
-      voteOnRule,
       disableRule,
       enableRule,
       groups,
@@ -297,7 +296,7 @@ class InsightsTable extends React.Component {
                     <>
                       {report.disabled ? <DisabledTooltip /> : null}
                       <Link
-                        to={`/details/${cluster.id}/insights/${report.rule_id.replace(/\./g, '|')}/${report.extra_data.error_key}`}
+                        to={`/details/s/${cluster.subscription.id}/insights/${report.rule_id.replace(/\./g, '|')}/${report.extra_data.error_key}`}
                         onClick={() => setReportDetails(report)}
                       >
                         {report.description}
@@ -323,23 +322,33 @@ class InsightsTable extends React.Component {
                 },
               ]}
               detail={details => (
-                <ReportDetails
-                  details={appendCrParamToDocLinks(details.details)}
-                  ruleId={details.rule_id}
-                  totalRisk={details.total_risk}
-                  riskOfChange={details.risk_of_change}
-                  showRiskDescription={false}
-                  definitions={details.extra_data}
-                  userVote={details.user_vote}
-                  remediating={
+                <Stack className="report-details-unfolded">
+                  <StackItem>
+                    <ReportDetails
+                      details={appendCrParamToDocLinks(details.details)}
+                      ruleId={details.rule_id}
+                      totalRisk={details.total_risk}
+                      riskOfChange={details.risk_of_change}
+                      showRiskDescription={false}
+                      definitions={details.extra_data}
+                      remediating={
                     (details.reason || details.resolution)
                     && {
                       reason: details.reason,
                       resolution: details.resolution,
                     }
                   }
-                  onFeedbackChanged={voteOnRule}
-                />
+                    />
+                  </StackItem>
+                  <StackItem className="report-details-unfolded__link">
+                    <Link
+                      to={`/details/s/${cluster.subscription.id}/insights/${details.rule_id.replace(/\./g, '|')}/${details.extra_data.error_key}`}
+                      onClick={() => setReportDetails(details)}
+                    >
+                      View details and remediation steps
+                    </Link>
+                  </StackItem>
+                </Stack>
               )}
               actionResolver={(rowData, { rowIndex }) => {
                 const shownDataForRow = getShownDataForRow(rowIndex);
@@ -351,7 +360,7 @@ class InsightsTable extends React.Component {
                 const { rule_id: ruleId, disabled } = shownDataForRow;
 
                 return [{
-                  title: `${disabled ? 'Enable' : 'Disable'} health check`,
+                  title: `${disabled ? 'Enable' : 'Disable'} recommendation`,
                   onClick: () => {
                     if (disabled) {
                       enableRule(ruleId);
@@ -362,16 +371,16 @@ class InsightsTable extends React.Component {
                   },
                 }];
               }}
-              emptyStateTitle="No health checks"
+              emptyStateTitle="No recommendations"
               emptyStateDescription={(
                 <>
-                  <p>Your cluster is not affected by enabled health checks.</p>
+                  <p>Your cluster is not affected by enabled recommendations.</p>
                   <Button
                     className="include-disabled-rules-link"
                     variant="link"
                     onClick={() => { this.setFilter('ruleStatusFilter', 'all'); }}
                   >
-                    Include disabled health checks
+                    Include disabled recommendations
                   </Button>
                 </>
               )}
@@ -389,7 +398,6 @@ InsightsTable.propTypes = {
   cluster: PropTypes.object.isRequired,
   insightsData: PropTypes.object.isRequired,
   groups: PropTypes.array.isRequired,
-  voteOnRule: PropTypes.func.isRequired,
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,

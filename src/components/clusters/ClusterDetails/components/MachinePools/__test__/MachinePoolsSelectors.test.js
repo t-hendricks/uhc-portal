@@ -11,7 +11,7 @@ describe('machinePoolsSelector', () => {
           capabilities: [
             { name: 'capability.account.create_moa_clusters', value: 'true', inherited: false },
             { name: 'capability.account.allow_etcd_encryption', value: 'false', inherited: false },
-            { name: 'capability.organization.autoscale_clusters', value: 'false', inherited: false },
+            { name: 'capability.cluster.autoscale_clusters', value: 'false', inherited: false },
             { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: false },
           ],
         },
@@ -26,7 +26,7 @@ describe('machinePoolsSelector', () => {
           capabilities: [
             { name: 'capability.account.create_moa_clusters', value: 'true', inherited: false },
             { name: 'capability.account.allow_etcd_encryption', value: 'false', inherited: false },
-            { name: 'capability.organization.autoscale_clusters', value: 'true', inherited: false },
+            { name: 'capability.cluster.autoscale_clusters', value: 'true', inherited: false },
             { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: false },
           ],
         },
@@ -75,6 +75,11 @@ describe('machinePoolsSelector', () => {
 
   it('should not allow autoscaling', () => {
     const result = canAutoScaleSelector(stateWithoutAutoscaleCapability, normalizedProducts.OCP);
+    expect(result).toBe(false);
+  });
+
+  it('should not allow autoscaling for ARO clusters', () => {
+    const result = canAutoScaleSelector(stateWithoutAutoscaleCapability, normalizedProducts.ARO);
     expect(result).toBe(false);
   });
 });

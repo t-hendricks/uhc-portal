@@ -12,9 +12,7 @@ import {
   TableVariant,
   cellWidth,
 } from '@patternfly/react-table';
-import {
-  Skeleton,
-} from '@redhat-cloud-services/frontend-components';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
 import links from '../../../../../../common/installLinks';
@@ -32,11 +30,11 @@ function IDPSection({
   const actions = [
     {
       title: 'Edit',
-      onClick: (_, __, rowData) => openModal('create-identity-provider', {
+      onClick: (_, rowId, rowData) => openModal('create-identity-provider', {
         clusterID,
         idpID: rowData.idpID,
         isEditForm: true,
-        rowId: rowData.id,
+        rowId,
       }),
       className: 'hand-pointer',
     },

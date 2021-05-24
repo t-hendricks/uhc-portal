@@ -8,7 +8,6 @@ const CLEAR_GET_MACHINE_POOLS_RESPONSE = 'CLEAR_GET_MACHINE_POOLS_RESPONSE';
 const CLEAR_ADD_MACHINE_POOL_RESPONSE = 'CLEAR_ADD_MACHINE_POOL_RESPONSE';
 const CLEAR_SCALE_MACHINE_POOL_RESPONSE = 'CLEAR_SCALE_MACHINE_POOL_RESPONSE';
 
-
 const getMachinePools = clusterID => dispatch => dispatch({
   type: GET_MACHINE_POOLS,
   payload: clusterService.getMachinePools(clusterID),
@@ -40,7 +39,6 @@ const clearGetMachinePoolsResponse = () => dispatch => dispatch({
 const clearScaleMachinePoolResponse = () => dispatch => dispatch({
   type: CLEAR_SCALE_MACHINE_POOL_RESPONSE,
 });
-
 
 export {
   GET_MACHINE_POOLS,

@@ -48,6 +48,26 @@ const fetchSubscriptionByExternalId = clusterExternalID => apiRequest({
   },
 });
 
+const getUnhealthyClusters = (orgId, params) => {
+  let search = `
+    organization_id = '${orgId}'
+    and status NOT IN ('Deprovisioned', 'Archived')
+    and metrics.health_state = 'unhealthy'
+  `;
+  if (params.filter && params.filter !== '') {
+    search += ` and ${params.filter}`;
+  }
+  return apiRequest({
+    method: 'get',
+    url: '/api/accounts_mgmt/v1/subscriptions',
+    params: {
+      page: params.page,
+      size: params.page_size,
+      order: params.order,
+      search,
+    },
+  });
+};
 
 const editSubscription = (subscriptionID, data) => apiRequest({
   method: 'patch',
@@ -61,6 +81,10 @@ const registerDisconnected = data => apiRequest({
   data,
 });
 
+const getOnDemandMetrics = subscriptionID => apiRequest({
+  method: 'get',
+  url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/ondemand_metrics`,
+});
 
 const getNotificationContacts = subscriptionID => apiRequest({
   method: 'get',
@@ -115,12 +139,14 @@ const accountsService = {
   getOrganization,
   getSubscription,
   getSubscriptions,
+  getUnhealthyClusters,
   getNotificationContacts,
   addNotificationContact,
   deleteNotificationContact,
   getOrganizationQuota,
   editSubscription,
   registerDisconnected,
+  getOnDemandMetrics,
   getRequest,
   getFeature,
   getSupportCases,

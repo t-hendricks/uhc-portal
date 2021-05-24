@@ -22,7 +22,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -35,7 +37,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -48,7 +52,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -61,7 +67,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -74,7 +82,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -87,7 +97,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -100,7 +112,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -113,7 +127,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -126,7 +142,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -139,7 +157,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -152,7 +172,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -164,8 +186,10 @@
             "id": "aws",
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
-          "enabled": false,
-          "supports_multi_az": true
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -178,7 +202,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -191,7 +217,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -204,7 +232,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -217,7 +247,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": false,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -230,7 +262,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         }
       ]
     },
@@ -252,7 +286,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -265,7 +301,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -278,7 +316,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -291,7 +331,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -304,7 +346,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -317,7 +361,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -330,7 +376,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -343,7 +391,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -356,7 +406,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -369,7 +421,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -382,7 +436,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -395,7 +451,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -408,7 +466,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -421,7 +481,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -434,7 +496,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -447,7 +511,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -460,7 +526,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -473,7 +541,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -486,7 +556,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -499,7 +571,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -512,7 +586,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -525,7 +601,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -538,7 +616,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -551,7 +631,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -564,7 +646,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -577,7 +661,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -590,7 +676,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -603,7 +691,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -616,7 +706,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -629,7 +721,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -642,7 +736,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -655,7 +751,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -668,7 +766,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -681,7 +781,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         },
         {
           "kind": "CloudRegion",
@@ -694,7 +796,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/azure"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         }
       ]
     },
@@ -716,7 +820,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/baremetal"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": ""
         }
       ]
     },
@@ -738,7 +844,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Global,Asia",
+          "kms_location_id": "global,asia"
         },
         {
           "kind": "CloudRegion",
@@ -751,7 +859,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Global,Asia",
+          "kms_location_id": "global,asia"
         },
         {
           "kind": "CloudRegion",
@@ -764,7 +874,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Global,asia1 (Tokyo, Osaka, and Seoul),Asia",
+          "kms_location_id": "global,asia1,asia"
         },
         {
           "kind": "CloudRegion",
@@ -777,20 +889,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": false,
-          "supports_multi_az": true
-        },
-        {
-          "kind": "CloudRegion",
-          "id": "asia-northeast3",
-          "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/asia-northeast3",
-          "display_name": "Seoul, Korea",
-          "cloud_provider": {
-            "kind": "CloudProviderLink",
-            "id": "gcp",
-            "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
-          },
-          "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Asia,Global,asia1 (Tokyo, Osaka, and Seoul)",
+          "kms_location_id": "asia,global,asia1"
         },
         {
           "kind": "CloudRegion",
@@ -803,7 +904,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Asia,Global",
+          "kms_location_id": "asia,global"
         },
         {
           "kind": "CloudRegion",
@@ -816,20 +919,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
-        },
-        {
-          "kind": "CloudRegion",
-          "id": "asia-southeast2",
-          "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/asia-southeast2",
-          "display_name": "Jakarta, Indonesia",
-          "cloud_provider": {
-            "kind": "CloudProviderLink",
-            "id": "gcp",
-            "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
-          },
-          "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Asia,Global",
+          "kms_location_id": "asia,global"
         },
         {
           "kind": "CloudRegion",
@@ -841,8 +933,10 @@
             "id": "gcp",
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
-          "enabled": false,
-          "supports_multi_az": true
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "Global",
+          "kms_location_id": "global"
         },
         {
           "kind": "CloudRegion",
@@ -855,7 +949,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "eur4 (Finland, Netherlands, and Belgium),europe,Global",
+          "kms_location_id": "eur4,europe,global"
         },
         {
           "kind": "CloudRegion",
@@ -868,7 +964,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "europe,Global",
+          "kms_location_id": "europe,global"
         },
         {
           "kind": "CloudRegion",
@@ -881,7 +979,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Global,eur5 (London, Netherlands, and Belgium),europe",
+          "kms_location_id": "global,eur5,europe"
         },
         {
           "kind": "CloudRegion",
@@ -894,7 +994,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Global,europe",
+          "kms_location_id": "global,europe"
         },
         {
           "kind": "CloudRegion",
@@ -907,7 +1009,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "eur5 (London, Netherlands, and Belgium),Global,eur4 (Finland, Netherlands, and Belgium),europe",
+          "kms_location_id": "eur5,global,eur4,europe"
         },
         {
           "kind": "CloudRegion",
@@ -920,7 +1024,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Global,europe",
+          "kms_location_id": "global,europe"
         },
         {
           "kind": "CloudRegion",
@@ -932,8 +1038,10 @@
             "id": "gcp",
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
-          "enabled": false,
-          "supports_multi_az": true
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "Global",
+          "kms_location_id": "global"
         },
         {
           "kind": "CloudRegion",
@@ -945,8 +1053,10 @@
             "id": "gcp",
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
-          "enabled": false,
-          "supports_multi_az": true
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "Global",
+          "kms_location_id": "global"
         },
         {
           "kind": "CloudRegion",
@@ -959,7 +1069,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "US,Global,nam4 (Iowa, South Carolina, and Oklahoma)",
+          "kms_location_id": "us,global,nam4"
         },
         {
           "kind": "CloudRegion",
@@ -972,7 +1084,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "US,Global,nam4 (Iowa, South Carolina, and Oklahoma)",
+          "kms_location_id": "us,global,nam4"
         },
         {
           "kind": "CloudRegion",
@@ -985,7 +1099,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Global,US",
+          "kms_location_id": "global,us"
         },
         {
           "kind": "CloudRegion",
@@ -998,7 +1114,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Global,US",
+          "kms_location_id": "global,us"
         },
         {
           "kind": "CloudRegion",
@@ -1011,33 +1129,9 @@
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
           "enabled": true,
-          "supports_multi_az": true
-        },
-        {
-          "kind": "CloudRegion",
-          "id": "us-west3",
-          "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/us-west3",
-          "display_name": "Salt Lake City, Utah, USA",
-          "cloud_provider": {
-            "kind": "CloudProviderLink",
-            "id": "gcp",
-            "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
-          },
-          "enabled": false,
-          "supports_multi_az": true
-        },
-        {
-          "kind": "CloudRegion",
-          "id": "us-west4",
-          "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/us-west4",
-          "display_name": "Las Vegas, Nevada, USA",
-          "cloud_provider": {
-            "kind": "CloudProviderLink",
-            "id": "gcp",
-            "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
-          },
-          "enabled": false,
-          "supports_multi_az": true
+          "supports_multi_az": true,
+          "kms_location_name": "Global,US",
+          "kms_location_id": "global,us"
         }
       ]
     },

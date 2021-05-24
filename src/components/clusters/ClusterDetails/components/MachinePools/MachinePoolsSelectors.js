@@ -2,7 +2,7 @@ import get from 'lodash/get';
 
 import sortMachineTypes from '../../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection/sortMachineTypes';
 import { availableNodesFromQuota } from '../../../common/quotaSelectors';
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../../common/subscriptionTypes';
 
 const hasMachinePoolsQuotaSelector = (state) => {
   const { organization } = state.userProfile;
@@ -13,6 +13,7 @@ const hasMachinePoolsQuotaSelector = (state) => {
 
   const { cluster } = state.clusters.details;
   const cloudProviderID = cluster.cloud_provider?.id;
+  const billingModel = get(cluster, 'billing_model', billingModels.STANDARD);
 
   const hasNodesQuotaForType = (machineTypeID) => {
     const machineTypesByID = state.machineTypes.typesByID;
@@ -31,6 +32,7 @@ const hasMachinePoolsQuotaSelector = (state) => {
       isBYOC: !!cluster?.ccs?.enabled,
       isMultiAz: cluster.multi_az,
       resourceName,
+      billingModel,
     };
 
     const nodesAvailable = availableNodesFromQuota(organization?.quotaList, quotaParams);
@@ -45,12 +47,13 @@ const hasMachinePoolsQuotaSelector = (state) => {
 
 const hasOrgLevelAutoscaleCapability = (state) => {
   const capabilites = get(state, 'userProfile.organization.details.capabilities', []);
-  const autoScaleClusters = capabilites.find(capability => capability.name === 'capability.organization.autoscale_clusters');
+  const autoScaleClusters = capabilites.find(capability => capability.name === 'capability.cluster.autoscale_clusters');
 
   return !!(autoScaleClusters && autoScaleClusters.value === 'true');
 };
 
-const canAutoScaleSelector = (state, product) => product === normalizedProducts.ROSA
+const canAutoScaleSelector = (state, product, billingModel) => product === normalizedProducts.ROSA
+  || (product === normalizedProducts.OSD && billingModel === billingModels.MARKETPLACE)
   || (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
 
 export { hasMachinePoolsQuotaSelector, canAutoScaleSelector, hasOrgLevelAutoscaleCapability };

@@ -27,11 +27,13 @@ import {
   CheckCircleIcon,
 } from '@patternfly/react-icons';
 
-import { Skeleton } from '@redhat-cloud-services/frontend-components';
+import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
 class NetworkSelfServiceSection extends React.Component {
+  state = { deletedRowIndex: undefined };
+
   componentDidMount() {
     const { getRoles, getGrants } = this.props;
     getRoles();
@@ -42,6 +44,8 @@ class NetworkSelfServiceSection extends React.Component {
     const {
       deleteGrantResponse, addGrantResponse, getGrants, grants, addNotification,
     } = this.props;
+    const { deletedRowIndex } = this.state;
+
     // fetch grants again after deleting or adding a grant
     if (((deleteGrantResponse.fulfilled && prevProps.deleteGrantResponse.pending)
       || (addGrantResponse.fulfilled && prevProps.addGrantResponse.pending))
@@ -75,6 +79,10 @@ class NetworkSelfServiceSection extends React.Component {
         }
       });
     }
+    if (deletedRowIndex !== undefined && grants.fulfilled && prevProps.grants.pending) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ deletedRowIndex: undefined });
+    }
   }
 
   render() {
@@ -86,6 +94,7 @@ class NetworkSelfServiceSection extends React.Component {
       canEdit,
       clusterHibernating,
     } = this.props;
+    const { deletedRowIndex } = this.state;
 
     const grantStatus = (status, description) => {
       let icon;
@@ -149,7 +158,7 @@ class NetworkSelfServiceSection extends React.Component {
       {
         title: (
           <>
-          ARN
+            ARN
             <Popover
               position={PopoverPosition.top}
               aria-label="ARNs"
@@ -180,16 +189,19 @@ class NetworkSelfServiceSection extends React.Component {
     const actions = [
       {
         title: 'Delete',
-        onClick: (_, rowId, rowData) => deleteGrant(rowData.grantId),
+        onClick: (_, rowId, rowData) => {
+          this.setState({ deletedRowIndex: rowId });
+          deleteGrant(rowData.grantId);
+        },
         className: 'hand-pointer',
       },
     ];
 
-    const grantRow = grant => ({
+    const grantRow = (grant, index) => ({
       cells: [
         grant.user_arn,
         grant.roleName,
-        { title: grantStatus(grant.state, grant.state_description) },
+        { title: grantStatus(deletedRowIndex === index ? 'deleting' : grant.state, grant.state_description) },
         {
           title: (
             <>
@@ -249,8 +261,8 @@ class NetworkSelfServiceSection extends React.Component {
             )}
             <Title size="lg" className="card-title" headingLevel="h3">AWS infrastructure access</Title>
             <p>
-            Grant permission to view or manage the AWS infrastructure of the cluster to
-            IAM users defined in your AWS account.
+              Grant permission to view or manage the AWS infrastructure of the cluster to
+              IAM users defined in your AWS account.
               {' '}
               {loginAWSLink}
               <ExternalLinkAltIcon color="#0066cc" size="sm" />

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import Unavailable from '../../common/Unavailable';
 
 class ClusterDetailsRedirector extends React.Component {
@@ -16,7 +16,14 @@ class ClusterDetailsRedirector extends React.Component {
   }
 
   render() {
-    const { subscriptionIDResponse, setGlobalError, match } = this.props;
+    const {
+      subscriptionIDResponse,
+      setGlobalError,
+      match,
+      location,
+      isInsightsRuleDetails,
+    } = this.props;
+
     if (subscriptionIDResponse.error) {
       if (subscriptionIDResponse.errorCode === 404 || subscriptionIDResponse.errorCode === 403) {
         // Cluster not found / no permission to see it - redirect to cluster list with error on top
@@ -26,7 +33,7 @@ class ClusterDetailsRedirector extends React.Component {
             {' '}
             <b>{match.params.id}</b>
             {' '}
-              was not found, it might have been deleted or you don&apos;t have permission to see it.
+            was not found, it might have been deleted or you don&apos;t have permission to see it.
           </>
         ), 'clusterDetails', subscriptionIDResponse.errorMessage);
         return (<Redirect to="/" />);
@@ -35,7 +42,11 @@ class ClusterDetailsRedirector extends React.Component {
       return (<Unavailable message="Error retrieving cluster details" response={subscriptionIDResponse} />);
     }
     if (subscriptionIDResponse.fulfilled) {
-      return <Redirect to={`/details/s/${subscriptionIDResponse.id}`} />;
+      if (isInsightsRuleDetails) {
+        const { reportId, errorKey } = match.params;
+        return <Redirect to={`/details/s/${subscriptionIDResponse.id}/insights/${reportId}/${errorKey}${location.hash}`} />;
+      }
+      return <Redirect to={`/details/s/${subscriptionIDResponse.id}${location.hash}`} />;
     }
 
     return (<Spinner centered />);
@@ -46,11 +57,17 @@ ClusterDetailsRedirector.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
+      reportId: PropTypes.string, // insights only
+      errorKey: PropTypes.string, // insights only
     }).isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    hash: PropTypes.string.isRequired,
   }).isRequired,
   fetchSubscriptionIDForCluster: PropTypes.func.isRequired,
   clearSubscriptionIDForCluster: PropTypes.func.isRequired,
   setGlobalError: PropTypes.func.isRequired,
+  isInsightsRuleDetails: PropTypes.bool,
   subscriptionIDResponse: PropTypes.shape({
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,

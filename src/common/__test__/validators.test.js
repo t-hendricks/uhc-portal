@@ -19,11 +19,14 @@ import validators, {
   validateServiceAccountObject,
   validateUniqueAZ,
   validateNumericInput,
+  validateGCPSubnet,
+  validateGCPKMSServiceAccount,
 } from '../validators';
 import fixtures from './validators.fixtures';
 
 test('Field is required', () => {
   expect(required()).toBe('Field is required');
+  expect(required('        ')).toBe('Field is required');
   expect(required('foo')).toBe(undefined);
 });
 
@@ -483,7 +486,6 @@ test('Check machine pool labels', () => {
   expect(checkMachinePoolLabels(blacklist[3])).toBe(`${blacklist[3]} is not a valid label`);
 });
 
-
 test('awsNumericAccountID', () => {
   const errStr = 'AWS account ID must be a 12 digits positive number.';
   expect(awsNumericAccountID()).toBe('AWS account ID is required.');
@@ -525,4 +527,30 @@ test('Unique AZs', () => {
   expect(validateUniqueAZ(value, AllValues, null, name)).toBe(undefined);
   value = 'd';
   expect(validateUniqueAZ(value, AllValues, null, name)).toBe('Each subnet should be in a different AZ.');
+});
+
+test('GCP Subnet', () => {
+  const value = 'testnameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+  expect(validateGCPSubnet()).toBe('Field is required.');
+  expect(validateGCPSubnet('Subnet Name')).toBe('Name must not contain whitespaces.');
+  expect(validateGCPSubnet('Subet$$')).toBe('Name should contain only lowercase letters, numbers and hyphens.');
+  expect(validateGCPSubnet(value)).toBe('Name may not exceed 63 characters.');
+});
+
+test('GCP KMSService Account', () => {
+  const inValidValueTest1 = '9%%#$#$-compute@developer.gserviceaccount.com';
+  const inValidValueTest2 = '100000000000-compute@developer.gserviceaccount.commmm';
+
+  const validValueTest1 = '100000000000-compute@developer.gserviceaccount.com';
+  const validValueTest2 = 'myserviceaccount@exampleproj-3.iam.gserviceaccount.com';
+
+  const expectedMsg = 'Field start with lowercase letter and can only contain hyphens (-), at (@) and dot (.).'
+  + 'For e.g. "myserviceaccount@myproj.iam.gserviceaccount.com" or "<projectnumericid>-compute@developer.gserviceaccount.com".';
+
+  expect(validateGCPKMSServiceAccount()).toBe('Field is required.');
+  expect(validateGCPKMSServiceAccount('service account')).toBe('Field must not contain whitespaces.');
+  expect(validateGCPKMSServiceAccount(inValidValueTest1)).toBe(expectedMsg);
+  expect(validateGCPKMSServiceAccount(inValidValueTest2)).toBe(expectedMsg);
+  expect(validateGCPKMSServiceAccount(validValueTest1)).toBe(undefined);
+  expect(validateGCPKMSServiceAccount(validValueTest2)).toBe(undefined);
 });

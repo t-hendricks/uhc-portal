@@ -5,7 +5,6 @@ import { fetchClusterDetails } from '../../../../../redux/actions/clustersAction
 import { postSchedule, clearPostedUpgradeScheduleResponse } from '../clusterUpgradeActions';
 import UpgradeWizard from './UpgradeWizard';
 
-
 const mapStateToProps = state => ({
   subscriptionID: state.modal.data.subscriptionID,
   clusterName: state.modal.data.clusterName,

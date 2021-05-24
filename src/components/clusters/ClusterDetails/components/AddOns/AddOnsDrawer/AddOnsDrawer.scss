@@ -1,0 +1,42 @@
+.drawer-panel-body {
+  padding-top: 24px !important;
+}
+
+.ocm-c-addons__drawer {
+  &--header {
+    img {
+      height: 50px;
+    }
+  }
+}
+
+.ocm-addons-tab {
+  &--configuration-title {
+    color: var(--pf-global--Color--100);
+    font-family: RedHatText;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: left;
+    font-weight: normal;
+  }
+
+  &--configuration-title-icon {
+    color: var(--pf-global--Color--200);
+  }
+
+  &--parameter-tooltip-icon {
+    height: 17px;
+    width: 18px;
+    padding-left: 4px;
+    margin-right: 3px;
+    color: var(--pf-global--Color--200);
+  }
+
+  &--addon-drawer {
+    margin-top: 24px;
+  }
+
+  &--drawer-panel-body {
+    padding-top: 24px;
+  }
+}

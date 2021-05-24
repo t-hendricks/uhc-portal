@@ -18,7 +18,7 @@ import {
 } from '@patternfly/react-icons';
 
 // eslint-disable-next-line camelcase
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import { monitoringStatuses } from '../monitoringHelper';
 
 function ClusterHealthCard({
@@ -92,6 +92,5 @@ ClusterHealthCard.propTypes = {
   discoveredIssues: PropTypes.number,
   lastCheckIn: PropTypes.instanceOf(Date),
 };
-
 
 export default ClusterHealthCard;

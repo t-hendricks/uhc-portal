@@ -2,6 +2,135 @@
 
 exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
 <Fragment>
+  <PageSection
+    variant="light"
+  >
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Title
+          headingLevel="h2"
+        >
+          Active subscriptions
+        </Title>
+      </StackItem>
+      <StackItem>
+        <Table
+          aria-label="Managed subscriptions"
+          borders={true}
+          canSelectAll={true}
+          canSortFavorites={true}
+          cells={
+            Array [
+              Object {
+                "cellFormatters": Array [
+                  [Function],
+                ],
+                "title": null,
+                "transforms": Array [
+                  [Function],
+                ],
+              },
+              Object {
+                "title": "Offerings",
+                "transforms": Array [
+                  [Function],
+                ],
+              },
+              Object {
+                "title": "Purchased through",
+                "transforms": Array [
+                  [Function],
+                ],
+              },
+              Object {
+                "title": "",
+                "transforms": Array [
+                  [Function],
+                ],
+              },
+              Object {
+                "title": "Get started",
+              },
+            ]
+          }
+          className="managed-subscriptions"
+          contentId="expanded-content"
+          dropdownDirection="down"
+          dropdownPosition="right"
+          expandId="expandable-toggle"
+          gridBreakPoint="grid-md"
+          isStickyHeader={false}
+          isTreeTable={false}
+          ouiaSafe={true}
+          role="grid"
+          rowLabeledBy="simple-node"
+          rows={
+            Array [
+              Object {
+                "cells": Array [
+                  Object {
+                    "title": <React.Fragment>
+                      <img
+                        alt="OSD"
+                        className="partner-logo"
+                        src="test-file-stub"
+                      />
+                    </React.Fragment>,
+                  },
+                  <React.Fragment>
+                    <a
+                      href="https://www.openshift.com/products/dedicated/"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Red Hat OpenShift Dedicated Trial
+                    </a>
+                  </React.Fragment>,
+                  "Red Hat",
+                  "Available on AWS and GCP",
+                  <React.Fragment>
+                    <Link
+                      id="create-trial-cluster"
+                      to="/create/osdtrial?trial=osd"
+                    >
+                      <Button
+                        className="create-trial-cluster"
+                      >
+                        Create trial cluster
+                      </Button>
+                    </Link>
+                  </React.Fragment>,
+                ],
+              },
+            ]
+          }
+          selectVariant="checkbox"
+          variant={null}
+        >
+          <TableHeader />
+          <Component />
+        </Table>
+        <Link
+          to="/quota"
+        >
+          <Button
+            id="subscriptions"
+            variant="link"
+          >
+            View your available quota
+             
+            <ArrowRightIcon
+              color="currentColor"
+              noVerticalAlign={false}
+              size="sm"
+            />
+          </Button>
+        </Link>
+      </StackItem>
+    </Stack>
+  </PageSection>
   <PageSection>
     <Stack
       hasGutter={true}
@@ -19,6 +148,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           aria-label="Managed services table"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               Object {
@@ -60,79 +190,13 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
           isStickyHeader={false}
+          isTreeTable={false}
           onCollapse={[Function]}
           ouiaSafe={true}
           role="grid"
           rowLabeledBy="simple-node"
           rows={
             Array [
-              Object {
-                "cells": Array [
-                  Object {
-                    "title": <React.Fragment>
-                      <img
-                        alt="OSD"
-                        className="partner-logo"
-                        src="test-file-stub"
-                      />
-                    </React.Fragment>,
-                  },
-                  <React.Fragment>
-                    <a
-                      href="https://www.openshift.com/products/dedicated/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      Red Hat OpenShift Dedicated
-                    </a>
-                  </React.Fragment>,
-                  "Red Hat",
-                  "Available on AWS and GCP",
-                  <React.Fragment>
-                    <Link
-                      id="create-cluster"
-                      to="/create/osdtrial"
-                    >
-                      <Button>
-                        Create cluster
-                      </Button>
-                    </Link>
-                  </React.Fragment>,
-                ],
-                "isOpen": false,
-              },
-              Object {
-                "cells": Array [
-                  Object {
-                    "title": <Stack
-                      hasGutter={true}
-                    >
-                      <StackItem>
-                        A complete OpenShift cluster provided as a fully-managed cloud service dedicated to a single customer. Reduce operational complexity and focus on building and scaling applications that add more value to your business.
-                        <br />
-                        Hosted on Amazon Web Services (AWS) and Google Cloud.
-                      </StackItem>
-                      <StackItem>
-                        <a
-                          href="https://www.openshift.com/products/dedicated/"
-                          rel="noopener noreferrer"
-                          target="_blank"
-                        >
-                          Learn more about Red Hat OpenShift Dedicated
-                           
-                          <ArrowRightIcon
-                            color="currentColor"
-                            noVerticalAlign={false}
-                            size="sm"
-                          />
-                        </a>
-                      </StackItem>
-                    </Stack>,
-                  },
-                ],
-                "fullWidth": true,
-                "parent": 0,
-              },
               Object {
                 "cells": Array [
                   <React.Fragment>
@@ -197,7 +261,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   },
                 ],
                 "fullWidth": true,
-                "parent": 2,
+                "parent": 0,
               },
               Object {
                 "cells": Array [
@@ -263,7 +327,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   },
                 ],
                 "fullWidth": true,
-                "parent": 4,
+                "parent": 2,
               },
               Object {
                 "cells": Array [
@@ -276,7 +340,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   </React.Fragment>,
                   <React.Fragment>
                     <a
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -288,11 +352,11 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   <React.Fragment>
                     <Button
                       component="a"
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       variant="secondary"
                     >
-                      Learn more
+                      Try it on AWS
                     </Button>
                   </React.Fragment>,
                 ],
@@ -311,7 +375,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://www.openshift.com/products/amazon-openshift"
+                          href="https://aws.amazon.com/rosa/"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -328,7 +392,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   },
                 ],
                 "fullWidth": true,
-                "parent": 6,
+                "parent": 4,
               },
             ]
           }
@@ -359,6 +423,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           aria-label="Run it yourself"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               "Cloud provider",
@@ -372,6 +437,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
           isStickyHeader={false}
+          isTreeTable={false}
           ouiaSafe={true}
           role="grid"
           rowLabeledBy="simple-node"
@@ -451,6 +517,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           aria-label="Managed subscriptions"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               Object {
@@ -492,6 +559,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
           isStickyHeader={false}
+          isTreeTable={false}
           ouiaSafe={true}
           role="grid"
           rowLabeledBy="simple-node"
@@ -524,7 +592,9 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                       id="create-cluster"
                       to="/create/osd"
                     >
-                      <Button>
+                      <Button
+                        className=""
+                      >
                         Create cluster
                       </Button>
                     </Link>
@@ -540,7 +610,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           <Component />
         </Table>
         <Link
-          to="/subscriptions"
+          to="/quota"
         >
           <Button
             id="subscriptions"
@@ -575,6 +645,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           aria-label="Managed services table"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               Object {
@@ -616,6 +687,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
           isStickyHeader={false}
+          isTreeTable={false}
           onCollapse={[Function]}
           ouiaSafe={true}
           role="grid"
@@ -765,7 +837,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   </React.Fragment>,
                   <React.Fragment>
                     <a
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -777,11 +849,11 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   <React.Fragment>
                     <Button
                       component="a"
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       variant="secondary"
                     >
-                      Learn more
+                      Try it on AWS
                     </Button>
                   </React.Fragment>,
                 ],
@@ -800,7 +872,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://www.openshift.com/products/amazon-openshift"
+                          href="https://aws.amazon.com/rosa/"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -848,6 +920,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           aria-label="Run it yourself"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               "Cloud provider",
@@ -861,6 +934,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
           isStickyHeader={false}
+          isTreeTable={false}
           ouiaSafe={true}
           role="grid"
           rowLabeledBy="simple-node"
@@ -939,6 +1013,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           aria-label="Managed services table"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               Object {
@@ -980,6 +1055,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
           isStickyHeader={false}
+          isTreeTable={false}
           onCollapse={[Function]}
           ouiaSafe={true}
           role="grid"
@@ -1197,7 +1273,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   </React.Fragment>,
                   <React.Fragment>
                     <a
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -1209,11 +1285,11 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   <React.Fragment>
                     <Button
                       component="a"
-                      href="https://www.openshift.com/products/amazon-openshift"
+                      href="https://console.aws.amazon.com/rosa/home"
                       rel="noopener noreferrer"
                       variant="secondary"
                     >
-                      Learn more
+                      Try it on AWS
                     </Button>
                   </React.Fragment>,
                 ],
@@ -1232,7 +1308,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://www.openshift.com/products/amazon-openshift"
+                          href="https://aws.amazon.com/rosa/"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -1280,6 +1356,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           aria-label="Run it yourself"
           borders={true}
           canSelectAll={true}
+          canSortFavorites={true}
           cells={
             Array [
               "Cloud provider",
@@ -1293,6 +1370,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
           isStickyHeader={false}
+          isTreeTable={false}
           ouiaSafe={true}
           role="grid"
           rowLabeledBy="simple-node"

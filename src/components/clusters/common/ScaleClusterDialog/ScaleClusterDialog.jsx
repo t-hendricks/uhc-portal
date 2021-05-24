@@ -12,7 +12,6 @@ import PersistentStorageDropdown from '../PersistentStorageDropdown';
 import LoadBalancersDropdown from '../LoadBalancersDropdown';
 import modals from '../../../common/Modal/modals';
 
-
 class ScaleClusterDialog extends Component {
   componentDidMount() {
     const {
@@ -70,6 +69,9 @@ class ScaleClusterDialog extends Component {
       isByoc,
       pristine,
       cloudProviderID,
+      billingModel,
+      product,
+      isMultiAZ,
     } = this.props;
 
     const cancelEdit = () => {
@@ -136,6 +138,10 @@ class ScaleClusterDialog extends Component {
                         disabled={pending}
                         currentValue={initialValues.load_balancers}
                         cloudProviderID={cloudProviderID}
+                        billingModel={billingModel}
+                        product={product}
+                        isBYOC={isByoc}
+                        isMultiAZ={isMultiAZ}
                       />
                     </FormGroup>
                   </GridItem>
@@ -153,6 +159,10 @@ class ScaleClusterDialog extends Component {
                         disabled={pending}
                         currentValue={initialValues.persistent_storage}
                         cloudProviderID={cloudProviderID}
+                        billingModel={billingModel}
+                        product={product}
+                        isBYOC={isByoc}
+                        isMultiAZ={isMultiAZ}
                       />
                     </FormGroup>
                   </GridItem>
@@ -196,6 +206,9 @@ ScaleClusterDialog.propTypes = {
   isByoc: PropTypes.bool,
   cloudProviderID: PropTypes.string.isRequired,
   pristine: PropTypes.bool, // from redux-form
+  billingModel: PropTypes.string.isRequired,
+  product: PropTypes.string.isRequired,
+  isMultiAZ: PropTypes.bool.isRequired,
 };
 
 ScaleClusterDialog.defaultProps = {

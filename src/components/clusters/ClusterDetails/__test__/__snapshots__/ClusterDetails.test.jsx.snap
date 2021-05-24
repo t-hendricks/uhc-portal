@@ -26,7 +26,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
           "items": null,
           "kind": "AWSInfrastructureAccessRoleGrantLink",
         },
-        "byoc": false,
         "ccs": Object {
           "disable_scp_checks": false,
           "enabled": false,
@@ -405,7 +404,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
           "current": null,
         }
       }
-      addBareMetalTabRef={
+      addAssistedTabRef={
         Object {
           "current": null,
         }
@@ -416,13 +415,13 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
         }
       }
       displayAccessControlTab={true}
-      displayAddBareMetalHosts={false}
-      displayAddOnsTab={false}
+      displayAddAssistedHosts={false}
+      displayAddOnsTab={true}
       displayInsightsTab={false}
       displayMachinePoolsTab={true}
       displayMonitoringTab={false}
       displayNetworkingTab={true}
-      displaySupportTab={false}
+      displaySupportTab={true}
       hasIssues={true}
       hasIssuesInsights={false}
       initTabOpen=""
@@ -673,7 +672,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               "items": null,
               "kind": "AWSInfrastructureAccessRoleGrantLink",
             },
-            "byoc": false,
             "ccs": Object {
               "disable_scp_checks": false,
               "enabled": false,
@@ -1025,6 +1023,13 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
         }
         openModal={[MockFunction]}
         refresh={[Function]}
+        userAccess={
+          Object {
+            "data": true,
+            "fulfilled": true,
+            "pending": false,
+          }
+        }
       />
     </ErrorBoundary>
   </ForwardRef>
@@ -1053,7 +1058,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               "items": null,
               "kind": "AWSInfrastructureAccessRoleGrantLink",
             },
-            "byoc": false,
             "ccs": Object {
               "disable_scp_checks": false,
               "enabled": false,
@@ -1402,6 +1406,18 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
     </ErrorBoundary>
   </ForwardRef>
   <ForwardRef
+    aria-label="Add-ons"
+    eventKey={3}
+    hidden={true}
+    id="addOnsTabContent"
+  >
+    <ErrorBoundary>
+      <Connect(AddOns)
+        clusterID="1i4counta3holamvo1g5tp6n8p3a03bq"
+      />
+    </ErrorBoundary>
+  </ForwardRef>
+  <ForwardRef
     aria-label="Networking"
     eventKey={4}
     hidden={true}
@@ -1427,6 +1443,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
   <ForwardRef
     aria-label="Machine pools"
     eventKey={6}
+    hidden={true}
     id="machinePoolsContent"
   >
     <ErrorBoundary>
@@ -1447,7 +1464,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               "items": null,
               "kind": "AWSInfrastructureAccessRoleGrantLink",
             },
-            "byoc": false,
             "ccs": Object {
               "disable_scp_checks": false,
               "enabled": false,

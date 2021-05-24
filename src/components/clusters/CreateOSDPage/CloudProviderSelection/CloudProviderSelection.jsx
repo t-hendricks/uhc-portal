@@ -9,7 +9,7 @@ import {
   Title,
   Tooltip,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import Unavailable from '../../../common/Unavailable';
 import CardBadge from '../../common/CardBadge';
 import Breadcrumbs from '../../common/Breadcrumbs';
@@ -31,17 +31,21 @@ class CloudProviderSelection extends Component {
 
   render() {
     const {
-      hasProductQuota, hasGcpQuota, hasAwsQuota, organization, osdTrialFeature, product,
+      hasProductQuota,
+      hasGcpQuota,
+      hasAwsQuota,
+      organization,
+      product,
     } = this.props;
 
     const selectedOSDTrial = product === normalizedProducts.OSDTrial;
     const productSlug = product.toLowerCase();
 
     if (!organization.pending && (organization.fulfilled || organization.error)) {
-      const noTrialQuota = (selectedOSDTrial && (!hasProductQuota || !osdTrialFeature));
-      if (noTrialQuota) {
+      const noTrialQuota = (selectedOSDTrial && !hasProductQuota);
+      if (noTrialQuota || (!hasGcpQuota && !hasAwsQuota)) {
         return (
-          <Redirect to="/create" />
+          <Redirect to={`/create${noTrialQuota ? '?trial=expired' : ''}`} />
         );
       }
     }
@@ -104,7 +108,7 @@ class CloudProviderSelection extends Component {
             <Card>
               <div className="pf-c-content ocm-page">
                 <Title headingLevel="h3" size="2xl">
-                Select an infrastructure provider
+                  Select an infrastructure provider
                 </Title>
                 <div className="flex-container">
                   {awsCard}
@@ -148,12 +152,7 @@ CloudProviderSelection.propTypes = {
   hasGcpQuota: PropTypes.bool.isRequired,
   hasAwsQuota: PropTypes.bool.isRequired,
   hasProductQuota: PropTypes.bool.isRequired,
-  osdTrialFeature: PropTypes.bool,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
-};
-
-CloudProviderSelection.defaultProps = {
-  osdTrialFeature: false,
 };
 
 export default CloudProviderSelection;

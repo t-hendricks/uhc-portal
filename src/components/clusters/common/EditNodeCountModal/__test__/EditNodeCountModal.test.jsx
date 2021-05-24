@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { Alert } from '@patternfly/react-core';
 
 import EditNodeCountModal from '../EditNodeCountModal';
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../../common/subscriptionTypes';
 
 const baseProps = {
   openModal: jest.fn(),
@@ -29,6 +29,7 @@ const baseProps = {
   },
   isMultiAz: true,
   isBYOC: false,
+  billingModel: billingModels.STANDARD,
 };
 
 describe('<EditNodeCountModal />', () => {

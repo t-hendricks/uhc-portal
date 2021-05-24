@@ -8,7 +8,7 @@ import {
   PageSection,
 } from '@patternfly/react-core';
 
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
 
 import './CreateClusterPage.scss';
@@ -49,7 +49,6 @@ class CreateCluster extends React.Component {
       const tabHash = tabIndexToHash[tabIndex];
       history.push(`/create/${tabHash}`);
     };
-
 
     render() {
       const {
@@ -127,8 +126,7 @@ class CreateCluster extends React.Component {
               <Tab eventKey={0} title={tabTitle(0)}>
                 <CloudTab
                   hasOSDQuota={hasOSDQuota}
-                  hasOSDTrialQuota={hasOSDTrialQuota}
-                  osdTrialFeature={osdTrialFeature}
+                  trialEnabled={hasOSDTrialQuota && osdTrialFeature}
                 />
               </Tab>
               <Tab eventKey={1} title={tabTitle(1)}>

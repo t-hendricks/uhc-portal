@@ -1,8 +1,16 @@
 import produce from 'immer';
 import get from 'lodash/get';
 
+import {
+  getClustervCPUCount as getAICluterCPUCount,
+  getClusterMemoryAmount as getAIMemoryAmount,
+  getMasterCount as getAICMasterCount,
+  getWorkerCount as getAICWorkerCount,
+} from 'openshift-assisted-ui-lib';
+
 import { versionComparator } from './versionComparator';
-import { normalizedProducts } from './subscriptionTypes';
+import { normalizedProducts, clustersServiceProducts } from './subscriptionTypes';
+import { isAISubscriptionWithoutMetrics } from './isAssistedInstallerCluster';
 
 /**
  * Erases the differences between clusters-service products and account-manager plans
@@ -19,12 +27,72 @@ const normalizeProductID = (id) => {
     RHMI: normalizedProducts.RHMI,
     MOA: normalizedProducts.ROSA,
     ROSA: normalizedProducts.ROSA,
+    ARO: normalizedProducts.ARO,
+    OCP_ASSISTEDINSTALL: normalizedProducts.OCP_Assisted_Install,
     ANY: normalizedProducts.ANY, // used by account-manager in quota_cost
   };
   if (typeof id !== 'string') {
     return normalizedProducts.UNKNOWN;
   }
-  return map[id.toUpperCase()] || normalizedProducts.UNKNOWN;
+  return map[id.toUpperCase().replace('-', '_')] || normalizedProducts.UNKNOWN;
+};
+
+const emptyMetrics = {
+  memory: {
+    used: {
+      value: 0,
+      unit: 'B',
+    },
+    total: {
+      value: 0,
+      unit: 'B',
+    },
+  },
+  cpu: {
+    used: {
+      value: 0,
+      unit: '',
+    },
+    total: {
+      value: 0,
+      unit: '',
+    },
+  },
+  storage: {
+    used: {
+      value: 0,
+      unit: 'B',
+    },
+    total: {
+      value: 0,
+      unit: 'B',
+    },
+  },
+  nodes: {
+    total: 0,
+    master: 0,
+    compute: 0,
+  },
+  state: 'N/A',
+  upgrade: {
+    available: false,
+  },
+};
+
+const normalizeMetrics = (metrics) => {
+  const ret = metrics ? { ...emptyMetrics, ...metrics } : { ...emptyMetrics };
+  const subFields = ['memory', 'storage', 'cpu', 'nodes'];
+  const consumptionFields = ['memory', 'storage', 'cpu']; // fields with total+used
+  subFields.forEach((field) => {
+    ret[field] = { ...emptyMetrics[field], ...ret[field] };
+    if (consumptionFields.includes(field)) {
+      const recievedTotal = ret[field]?.total || {};
+      const recievedUsed = ret[field]?.used || {};
+      ret[field].total = { ...emptyMetrics[field].total, ...recievedTotal };
+      ret[field].used = { ...emptyMetrics[field].used, ...recievedUsed };
+    }
+  });
+  return ret;
 };
 
 const normalizeCluster = (cluster) => {
@@ -32,7 +100,7 @@ const normalizeCluster = (cluster) => {
 
   // Convert data from older backend
   // See https://gitlab.cee.redhat.com/service/uhc-clusters-service/merge_requests/1175
-  if (!result.metrics.upgrade) {
+  if (result.metrics && !result.metrics.upgrade) {
     result.metrics.upgrade = {};
     if (result.metrics.version_update_available) {
       result.metrics.upgrade.available = result.metrics.version_update_available;
@@ -54,48 +122,8 @@ const normalizeCluster = (cluster) => {
 
 // Normalize data from AMS for an unmanaged cluster.
 const fakeClusterFromSubscription = (subscription) => {
-  const emptyMetrics = {
-    memory: {
-      used: {
-        value: 0,
-        unit: 'B',
-      },
-      total: {
-        value: 0,
-        unit: 'B',
-      },
-    },
-    cpu: {
-      used: {
-        value: 0,
-        unit: '',
-      },
-      total: {
-        value: 0,
-        unit: '',
-      },
-    },
-    storage: {
-      used: {
-        value: 0,
-        unit: 'B',
-      },
-      total: {
-        value: 0,
-        unit: 'B',
-      },
-    },
-    nodes: {
-      total: 0,
-      master: 0,
-      compute: 0,
-    },
-    state: 'N/A',
-    upgrade: {
-      available: false,
-    },
-  };
-  const metrics = subscription.metrics?.[0] || emptyMetrics;
+  const metric = subscription.metrics?.[0];
+  const metrics = normalizeMetrics(metric);
 
   // Omitting some fields that real data from clusters-service does have, but we won't use.
   const cluster = {
@@ -106,14 +134,17 @@ const fakeClusterFromSubscription = (subscription) => {
       url: subscription.console_url,
     },
     creation_timestamp: subscription.created_at,
-    activity_timestamp: subscription.updated_at,
+    activity_timestamp: metric ? metric.query_timestamp : subscription.last_telemetry_date,
     state: metrics.state,
     openshift_version: metrics.openshift_version,
     product: {
       // Omit other properties like "href", we only use the id anyway.
       id: normalizeProductID(subscription.plan.id),
     },
-    managed: false,
+    managed: clustersServiceProducts.includes(normalizeProductID(subscription.plan.id)),
+    ccs: {
+      enabled: false,
+    },
     metrics,
   };
   const cloudProvider = subscription.cloud_provider_id;
@@ -132,15 +163,35 @@ const fakeClusterFromSubscription = (subscription) => {
   return cluster;
 };
 
-const normalizeSubscription = subscription => (
-  {
-    ...subscription,
-    plan: {
-      // Omit other properties like "href", we only use the id anyway.
-      id: normalizeProductID(subscription.plan.id),
-    },
+const fakeAIClusterFromSubscription = (subscription, aiCluster) => {
+  const cluster = fakeClusterFromSubscription(subscription);
+  if (isAISubscriptionWithoutMetrics(subscription)) {
+    // Enrich for AI Cluster data instead.
+    const clusterWorkers = aiCluster ? getAICWorkerCount(aiCluster.hosts) : 0;
+    const clusterMasters = aiCluster ? getAICMasterCount(aiCluster.hosts) : 0;
+
+    cluster.metrics.memory.total.value = aiCluster ? getAIMemoryAmount(aiCluster) : 0;
+    cluster.metrics.cpu.total.value = aiCluster ? getAICluterCPUCount(aiCluster) : 0;
+    cluster.metrics.nodes.total = clusterWorkers + clusterMasters;
+    cluster.metrics.nodes.master = clusterMasters;
+    cluster.metrics.nodes.compute = clusterWorkers;
+    cluster.metrics.openshift_version = cluster.metrics.openshift_version || (aiCluster ? aiCluster.openshift_version : 'N/A');
+    cluster.metrics.state = aiCluster?.status || 'N/A';
+
+    cluster.state = cluster.metrics.state;
+    cluster.openshift_version = cluster.metrics.openshift_version;
   }
-);
+
+  return cluster;
+};
+
+const normalizeSubscription = subscription => ({
+  ...subscription,
+  plan: {
+    // Omit other properties like "href", we only use the id anyway.
+    id: normalizeProductID(subscription.plan.id),
+  },
+});
 
 /**
  * Normalize a single element of QuotaCostList (which may contain multiple related_resources).
@@ -174,7 +225,9 @@ export {
   normalizeProductID,
   normalizeCluster,
   fakeClusterFromSubscription,
+  fakeAIClusterFromSubscription,
   normalizeSubscription,
   normalizeQuotaCost,
   mapListResponse,
+  normalizeMetrics,
 };

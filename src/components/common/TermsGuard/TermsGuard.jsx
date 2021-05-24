@@ -8,13 +8,12 @@ import {
   EmptyState,
   EmptyStateBody,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import Modal from '../Modal/Modal';
 import Unavailable from '../Unavailable';
 import getTermsAppLink from '../../../common/getTermsAppLink';
 import './TermsGuard.scss';
-
 
 class TermsGuard extends Component {
   componentDidMount() {
@@ -67,7 +66,7 @@ class TermsGuard extends Component {
       // required: user needs accept or cancel.
       <TextContent>
         <Text component={TextVariants.p}>
-            Red Hat has Terms and Conditions for its managed services.
+          Red Hat has Terms and Conditions for its managed services.
         </Text>
         <Text component={TextVariants.p}>
           <b>
@@ -82,7 +81,7 @@ class TermsGuard extends Component {
       // optional: user needs accept, decline, defer, or cancel.
       <TextContent>
         <Text component={TextVariants.p}>
-            Red Hat has updated the Terms and Conditions for its managed services.
+          Red Hat has updated the Terms and Conditions for its managed services.
         </Text>
       </TextContent>
     );

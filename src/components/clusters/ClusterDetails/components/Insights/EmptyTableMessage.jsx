@@ -8,7 +8,7 @@ import {
   Title,
   Popover,
 } from '@patternfly/react-core';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import {
   CheckCircleIcon,
   InfoCircleIcon,
@@ -93,20 +93,20 @@ EmptyTableMessage.propTypes = {
 export const NoRulesMessage = () => (
   <EmptyTableMessage
     icon={InfoCircleIcon}
-    header="No health checks to display"
+    header="No recommendations to display"
     iconClassName="info-color"
     body={
       (
         <>
-        Insights identifies and prioritizes risks to security, performance, availability,
-        and stability of your clusters. This feature uses the Remote Health
-        functionality of OpenShift Container Platform. For further details about Insights,
-        see the
+          Insights identifies and prioritizes risks to security, performance, availability,
+          and stability of your clusters. This feature uses the Remote Health
+          functionality of OpenShift Container Platform. For further details about Insights,
+          see the
           {' '}
           <a href="https://docs.openshift.com/container-platform/latest/support/getting-support.html">
-          OpenShift documentation
+            OpenShift documentation
           </a>
-        .
+          .
         </>
 )
     }
@@ -133,7 +133,7 @@ export const NoIssuesMessage = ({ lastChecked }) => {
       <EmptyTableMessage
         icon={CheckCircleIcon}
         iconClassName="success-color"
-        header="Your cluster passed all health checks"
+        header="Your cluster passed all recommendations"
         body={body}
         showPopover
       />

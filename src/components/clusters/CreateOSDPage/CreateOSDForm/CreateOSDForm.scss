@@ -8,3 +8,26 @@
   position: relative;
   right: 10px;
 }
+
+
+.enableuwm {  
+  margin-bottom: var(--pf-global--spacer--md);   
+  font-size: var(--pf-global--FontSize--sm);
+  font-weight: var(--pf-global--FontWeight--bold);
+  
+}
+
+.enableuwmcreate { 
+  font-size: var(--pf-global--FontSize--md);
+  font-weight: var(--pf-global--FontWeight--Normal);
+}
+
+
+.clusterupdatespace {  
+  margin-top: var(--pf-global--spacer--md);   
+}
+
+#enable_user_workload_monitoring .pf-l-split__item span {
+  position: relative;
+  right: 10px;
+}

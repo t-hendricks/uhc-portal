@@ -92,7 +92,7 @@ describe('<DetailsRight />', () => {
       const wrapper = shallow(
         <DetailsRight
           cluster={{
-            ...clusterDetails.cluster, managed: true, byoc: true, storage_quota: null,
+            ...clusterDetails.cluster, managed: true, ccs: { enabled: true }, storage_quota: null,
           }}
           autoscaleEnabled={false}
         />,

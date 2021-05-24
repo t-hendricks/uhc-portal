@@ -4,7 +4,7 @@ import {
   Split,
   SplitItem,
 } from '@patternfly/react-core';
-import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 
 const PageTitle = ({ title, breadcrumbs }) => (
   <PageHeader>

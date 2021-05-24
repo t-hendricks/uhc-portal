@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import moment from 'moment';
+import config from '../../../../../config';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import { hasCpuAndMemory } from '../../clusterDetailsHelper';
 
@@ -49,7 +50,6 @@ const baseURLProps = {
  */
 const hasData = obj => get(obj, 'data.length', 0) > 0;
 
-
 /**
  * Get the number of issues and warnings by some defined criteria for each of them
  * An item is considered an issue if it's value of the health criteria matches the value
@@ -92,11 +92,12 @@ const hasResourceUsageMetrics = (cluster) => {
   const now = moment.utc();
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
   const isDisconnected = get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED;
+  const showOldMetrics = !!config.configData.showOldMetrics;
 
   const metricsAvailable = !isArchived
    && !isDisconnected
    && hasCpuAndMemory(get(cluster, 'metrics.cpu', null), get(cluster, 'metrics.memory', null))
-   && (OCM_SHOW_OLD_METRICS
+   && (showOldMetrics
    || (now.diff(metricsLastUpdate, 'hours') < maxMetricsTimeDelta));
 
   return metricsAvailable;

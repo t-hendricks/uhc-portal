@@ -55,7 +55,7 @@ class EditClusterRoutersCard extends React.Component {
         onClick={this.handleSaveChanges}
         isDisabled={disabled || pristine || !valid}
       >
-      Change settings
+        Change settings
       </Button>
     );
 

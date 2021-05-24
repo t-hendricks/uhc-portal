@@ -7,12 +7,8 @@ const constants = {
   loadBalancersHint: 'The load balancer quota set on the deployed cluster.',
   computeNodeInstanceTypeHint: `The instance type for the worker nodes. Instance type
     determines the amount of memory and vCPU allocated to each worker node.`,
-  computeNodeCountHint: `The number of worker nodes to provision per zone.
-    Single zone clusters require a minimum of 4 nodes, while multizone clusters require
-    a minimum of 3 worker nodes per zone (9 total) for resiliency.`,
-  computeNodeCountHintCCS: `The number of worker, nodes to provision per zone.
-    Single zone clusters require a minimum of 2 nodes, while multizone clusters require
-    a minimum of 1 worker node per zone (3 total) for resiliency.`,
+  computeNodeCountHint: 'The number of worker nodes to provision per zone. The minimum number of worker nodes will vary depending on which features are enbled.',
+  machinePoolComputeNodeCountHint: 'The number of worker nodes to provision per zone.',
   machineCIDRHint: `A block of IP addresses used by the OpenShift Container Platform installation
     program while installing the cluster. The address block must not overlap with any other network
     block.`,
@@ -29,6 +25,13 @@ const constants = {
     The SCP will still be enforced even if the checks are bypassed.`,
   enableEtcdHint: 'When you enable etcd encryption, encryption keys are created. These keys are rotated on a weekly basis.',
   autoscaleHint: 'Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.',
+  keyRing: 'A key ring organizes keys in a specific Google Cloud location and allows you to manage access control on groups of keys.',
+  keyName: 'A cryptographic key is a resource that is used for encrypting and decrypting data or for producing and verifying digital signatures',
+  keylocation: 'A key location represent the geographical regions where a Cloud KMS resource is stored and can be accessed.',
+  kmsserviceAccount: 'Compute Engine default service account',
+  enableUserWorkloadMonitoringHint: 'Monitor your own projects in isolation from Red Hat Site Reliability Engineer (SRE) platform metrics',
+  enableUserWorkloadMonitoringHelp: 'This feature is enabled by default and provides monitoring for user-defined projects.'
+  + 'This includes metrics provided through service endpoints in user-defined projects as well as pods running in user-defined projects.',
 };
 
 const billingModelConstants = {

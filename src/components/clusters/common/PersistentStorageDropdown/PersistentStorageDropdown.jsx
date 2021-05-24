@@ -10,10 +10,11 @@ import {
   Tooltip,
 } from '@patternfly/react-core';
 
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../common/ErrorBox';
 import { humanizeValueWithUnitGiB } from '../../../../common/units';
-import filterPersistentStorageValuesByQuota from './helpers';
+import { availableQuota, quotaTypes } from '../quotaSelectors';
+import { filterPersistentStorageValuesByQuota } from './PersistentStorageDropDownHelper';
 import { noQuotaTooltip } from '../../../../common/helpers';
 
 class PersistentStorageDropdown extends React.Component {
@@ -31,7 +32,8 @@ class PersistentStorageDropdown extends React.Component {
 
   render() {
     const {
-      input, persistentStorageValues, disabled, currentValue, storageQuota,
+      input, persistentStorageValues, disabled, currentValue, quotaList,
+      billingModel, product, cloudProviderID, isBYOC, isMultiAZ,
     } = this.props;
 
     // Set up options for storage values
@@ -52,6 +54,16 @@ class PersistentStorageDropdown extends React.Component {
     };
 
     if (persistentStorageValues.fulfilled) {
+      const storageQuota = availableQuota(quotaList, {
+        resourceType: quotaTypes.STORAGE,
+        billingModel,
+        product,
+        cloudProviderID,
+        isBYOC,
+        isMultiAZ,
+        resourceName: 'gp2',
+      });
+
       const filteredStorageValues = filterPersistentStorageValuesByQuota(currentValue,
         persistentStorageValues, storageQuota);
       const notEnoughQuota = filteredStorageValues.values.length <= 1;
@@ -99,8 +111,13 @@ PersistentStorageDropdown.propTypes = {
   persistentStorageValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
-  storageQuota: PropTypes.number.isRequired,
+  quotaList: PropTypes.object.isRequired,
   currentValue: PropTypes.number,
+  billingModel: PropTypes.string.isRequired,
+  product: PropTypes.string.isRequired,
+  cloudProviderID: PropTypes.string.isRequired,
+  isBYOC: PropTypes.bool.isRequired,
+  isMultiAZ: PropTypes.bool.isRequired,
 };
 
 export default PersistentStorageDropdown;

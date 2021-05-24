@@ -1,9 +1,13 @@
-
 import { machineTypesConstants } from '../constants';
 import { clusterService } from '../../services';
 
 // Determine resource_name to check quota
 const getResourceName = (machineType) => {
+  // return generic name if defined for machine type
+  if (machineType.generic_name) {
+    return machineType.generic_name;
+  }
+  // elese compute resource name from intance size and category
   let category = '';
   switch (machineType.category) {
     case 'general_purpose':
@@ -14,6 +18,9 @@ const getResourceName = (machineType) => {
       break;
     case 'memory_optimized':
       category = 'mem';
+      break;
+    case 'accelerated_computing':
+      category = 'gpu';
       break;
     default:
       break;

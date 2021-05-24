@@ -1,4 +1,4 @@
-#billing-model.flat-radio-buttons-flex-container {
+#byoc.flat-radio-buttons-flex-container {
   button, div.ocm-flat-radio-button-disabled {
     height: 85px;
     min-width: 460px;
@@ -8,4 +8,12 @@
       min-width: 444px;
     }
   }
+}
+
+#subscription-billing-model .pf-c-radio {
+    margin-bottom: var(--pf-global--spacer--lg);
+}
+
+#subscription-billing-model .pf-c-radio:nth-child(1) {
+  margin-top: var(--pf-global--spacer--md);
 }

@@ -5,16 +5,13 @@ import {
   EmptyState,
   EmptyStateBody,
   EmptyStateIcon,
-  Gallery,
   Title,
 } from '@patternfly/react-core';
-import { IntegrationIcon } from '@patternfly/react-icons';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { PlusCircleIcon } from '@patternfly/react-icons';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../common/ErrorBox';
-import { availableAddOns, getInstalled, hasQuota } from './AddOnsHelper';
-import AddOnsCard from './AddOnsCard';
-import AddOnsParametersModal from './AddOnsParametersModal';
-import AddOnsDeleteModal from './AddOnsDeleteModal';
+import { availableAddOns } from './AddOnsHelper';
+import AddOnsDrawer from './AddOnsDrawer';
 
 class AddOns extends React.Component {
   componentDidMount() {
@@ -34,15 +31,18 @@ class AddOns extends React.Component {
       getClusterAddOns,
       clusterAddOns,
       addClusterAddOnResponse,
+      updateClusterAddOnResponse,
       getOrganizationAndQuota,
       deleteClusterAddOnResponse,
     } = this.props;
     if (((addClusterAddOnResponse.fulfilled && prevProps.addClusterAddOnResponse.pending)
-    || (deleteClusterAddOnResponse.fulfilled && prevProps.deleteClusterAddOnResponse.pending))
-        && !clusterAddOns.pending) {
-      // Fetch cluster add-ons again if we just added or deleted a cluster add-on
-      getClusterAddOns(clusterID);
-      // Refresh quota after installing or deleting add-ons
+      || (updateClusterAddOnResponse.fulfilled && prevProps.updateClusterAddOnResponse.pending)
+      || (deleteClusterAddOnResponse.fulfilled && prevProps.deleteClusterAddOnResponse.pending))) {
+      // Fetch cluster add-ons again if we just added, updated or deleted a cluster add-on
+      if (!clusterAddOns.pending) {
+        getClusterAddOns(clusterID);
+      }
+      // Refresh quota after installing, updating or deleting add-ons
       getOrganizationAndQuota();
     }
   }
@@ -57,6 +57,7 @@ class AddOns extends React.Component {
       addOns,
       cluster,
       clusterAddOns,
+      clusterMachinePools,
       addClusterAddOnResponse,
       organization,
       quota,
@@ -78,7 +79,7 @@ class AddOns extends React.Component {
     if (!hasAddOns) {
       return (
         <EmptyState>
-          <EmptyStateIcon icon={IntegrationIcon} />
+          <EmptyStateIcon icon={PlusCircleIcon} />
           {addOns.error && (
             <ErrorBox message="Error getting add-ons" response={addOns} />
           )}
@@ -99,25 +100,19 @@ class AddOns extends React.Component {
     }
 
     return (
-      <div>
+      <>
         { addClusterAddOnResponse.error && (
-          <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
+        <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
         )}
-        <Gallery hasGutter>
-          { addOnsList.map(addOn => (
-            <AddOnsCard
-              key={addOn.id}
-              addOn={addOn}
-              installedAddOn={getInstalled(addOn, clusterAddOns)}
-              hasQuota={hasQuota(addOn, cluster, organization, quota)}
-            />
-          ))}
-        </Gallery>
-        <AddOnsParametersModal
-          clusterID={cluster.id}
+        <AddOnsDrawer
+          addOnsList={addOnsList}
+          clusterAddOns={clusterAddOns}
+          cluster={cluster}
+          clusterMachinePools={clusterMachinePools}
+          organization={organization}
+          quota={quota}
         />
-        <AddOnsDeleteModal />
-      </div>
+      </>
     );
   }
 }
@@ -127,11 +122,13 @@ AddOns.propTypes = {
   cluster: PropTypes.object.isRequired,
   addOns: PropTypes.object.isRequired,
   clusterAddOns: PropTypes.object.isRequired,
+  clusterMachinePools: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   quota: PropTypes.object.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getClusterAddOns: PropTypes.func.isRequired,
   addClusterAddOnResponse: PropTypes.object.isRequired,
+  updateClusterAddOnResponse: PropTypes.object.isRequired,
   deleteClusterAddOnResponse: PropTypes.object.isRequired,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,
 };

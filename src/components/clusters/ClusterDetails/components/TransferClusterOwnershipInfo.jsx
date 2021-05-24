@@ -7,9 +7,9 @@ import { Alert } from '@patternfly/react-core';
 import { normalizedProducts, subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import ExternalLink from '../../../common/ExternalLink';
 
-
 function TransferClusterOwnershipInfo({ subscription = {} }) {
-  if (get(subscription, 'plan.id', false) !== normalizedProducts.OCP || !subscription.released) {
+  const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(get(subscription, 'plan.id', false));
+  if (!isAllowedProducts || !subscription.released) {
     return null;
   }
 

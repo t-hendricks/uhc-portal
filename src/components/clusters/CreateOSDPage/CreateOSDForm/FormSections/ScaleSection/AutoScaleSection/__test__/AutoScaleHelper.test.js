@@ -11,7 +11,6 @@ test('Autoscaling min nodes allowed', () => {
   };
   expect(getMinNodesAllowed(ccsSingleAZ)).toBe(2);
 
-
   const rosaMultiAZ = {
     isDefaultMachinePool: true, product: normalizedProducts.ROSA, isBYOC: false, isMultiAz: true,
   };
@@ -21,7 +20,6 @@ test('Autoscaling min nodes allowed', () => {
   };
   expect(getMinNodesAllowed(rosaSingleAZ)).toBe(2);
 
-
   const osdMultiAZ = {
     isDefaultMachinePool: true, product: normalizedProducts.OSD, isBYOC: false, isMultiAz: true,
   };
@@ -30,7 +28,6 @@ test('Autoscaling min nodes allowed', () => {
     isDefaultMachinePool: true, product: normalizedProducts.OSD, isBYOC: false, isMultiAz: false,
   };
   expect(getMinNodesAllowed(osdSingleAZ)).toBe(4);
-
 
   const additionalMachinePoolMultiAZ = {
     isDefaultMachinePool: false, product: normalizedProducts.OSD, isBYOC: false, isMultiAz: true,

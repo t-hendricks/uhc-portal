@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EditTaintsModal /> renders correctl 1`] = `
+<Modal
+  isPrimaryDisabled={true}
+  modalSize="medium"
+  onClose={[Function]}
+  onPrimaryClick={[MockFunction]}
+  onSecondaryClick={[Function]}
+  primaryText="Save"
+  title="Edit taints"
+>
+  <Form
+    onSubmit={[MockFunction]}
+  >
+    <Grid
+      hasGutter={true}
+    >
+      <GridItem
+        span={5}
+      >
+        <Field
+          component={[Function]}
+          label="Machine pool"
+          name="machinePoolId"
+          onChange={[Function]}
+          options={
+            Array [
+              Object {
+                "name": "mp-with-taints",
+                "value": "mp-with-taints",
+              },
+              Object {
+                "name": "mp-withot-taints",
+                "value": "mp-withot-taints",
+              },
+            ]
+          }
+        />
+      </GridItem>
+      <GridItem
+        span={7}
+      />
+      <GridItem
+        span={12}
+      >
+        <FieldArray
+          component={[Function]}
+          isEditing={true}
+          name="taints"
+        />
+      </GridItem>
+    </Grid>
+  </Form>
+</Modal>
+`;

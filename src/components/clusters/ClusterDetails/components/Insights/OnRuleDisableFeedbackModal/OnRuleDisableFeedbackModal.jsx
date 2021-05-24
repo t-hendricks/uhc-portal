@@ -58,7 +58,7 @@ class OnRuleDisableFeedbackModal extends React.Component {
       <Modal
         className="insights-on-rule-disabled-feedback-modal"
         variant="small"
-        title="Disable health check"
+        title="Disable recommendation"
         isOpen={isOpen}
         onClose={this.onClose}
         actions={[
@@ -76,8 +76,8 @@ class OnRuleDisableFeedbackModal extends React.Component {
         onEscapePress={this.onClose}
       >
         <div>
-          If you disable this health check, OpenShift Cluster Manager will no longer show
-          this health check in dashboard, reports, and tables for this cluster.
+          If you disable this recommendation, OpenShift Cluster Manager will no longer show
+          this recommendation in dashboard, reports, and tables for this cluster.
         </div>
         <div>
           <Title className="insights-justification-note" headingLevel="h6" size="md">

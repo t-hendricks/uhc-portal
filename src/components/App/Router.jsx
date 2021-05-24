@@ -16,8 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import {
+  Route, Redirect, Switch, withRouter,
+} from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
 import { AssistedUiRouter } from 'openshift-assisted-ui-lib';
@@ -50,16 +51,18 @@ import InstallOSPUPI from '../clusters/install/InstallOSPUPI';
 import InstallRHV from '../clusters/install/InstallRHV';
 import InstallRHVIPI from '../clusters/install/InstallRHVIPI';
 import InstallRHVUPI from '../clusters/install/InstallRHVUPI';
+import InstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
+import InstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
 import InstallVSphere from '../clusters/install/InstallVSphere';
 import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallPullSecret from '../clusters/install/InstallPullSecret';
-import InstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
+import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
 import InstallIBM from '../clusters/install/InstallIBM';
 import InstallPower from '../clusters/install/InstallPower';
 import Tokens from '../tokens/Tokens';
 import TokensROSA from '../tokens/TokensROSA';
 import NotFoundError from './NotFoundError';
-import Subscriptions from '../subscriptions';
+import Quota from '../quota';
 import Insights from './Insights';
 import CloudProviderSelection from '../clusters/CreateOSDPage/CloudProviderSelection';
 import withFeatureGate from '../features/with-feature-gate';
@@ -67,6 +70,7 @@ import { ASSISTED_INSTALLER_FEATURE } from '../../redux/constants/featureConstan
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
+import Releases from '../releases/index';
 
 const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
@@ -88,6 +92,9 @@ function Router({ history }) {
             <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
             <Redirect from="/install/crc/installer-provisioned" to="/create/local" />
             <Redirect from="/token/moa" to="/token/rosa" />
+            <Redirect from="/insights" to="/overview" />
+            <Redirect from="/subscriptions" to="/quota" />
+
             <TermsGuardedRoute path="/token/rosa" component={TokensROSA} history={history} />
             <Route path="/token" component={Tokens} />
             <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
@@ -108,12 +115,14 @@ function Router({ history }) {
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
-            <Route path="/install/vsphere/user-provisioned" component={InstallVSphere} />
+            <Route path="/install/vsphere" exact component={InstallVSphere} />
+            <Route path="/install/vsphere/user-provisioned" component={InstallVSphereUPI} />
+            <Route path="/install/vsphere/installer-provisioned" component={InstallVSphereIPI} />
             <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
             <Route path="/install/power/user-provisioned" component={InstallPower} />
             <Route path="/install/pre-release" component={InstallPreRelease} />
             <Route path="/install/pull-secret" component={InstallPullSecret} />
-            <Route path="/install/azure/aro-provisioned" component={InstallPullSecretAzure} />
+            <Route path="/install/azure/aro-provisioned" component={ConnectedInstallPullSecretAzure} />
             <Redirect from="/install" to="/create" />
             <TermsGuardedRoute
               path="/create/osd/aws"
@@ -135,13 +144,16 @@ function Router({ history }) {
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
             <Route path="/create" component={CreateClusterPage} />
-            <Route path="/details/:clusterId/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
+            <Route path="/details/s/:subscriptionID/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
             <Route path="/details/s/:id" component={ClusterDetails} />
+            <Route path="/details/:id/insights/:reportId/:errorKey" render={props => <ClusterDetailsRedirector isInsightsRuleDetails {...props} />} />
             <Route path="/details/:id" component={ClusterDetailsRedirector} />
             <Route path="/register" component={RegisterCluster} />
-            <Route path="/subscriptions" component={Subscriptions} />
+            <Route path="/quota/resource-limits" render={props => <Quota marketplace {...props} />} />
+            <Route path="/quota" render={props => <Quota {...props} />} />
             <Route path="/archived" component={ArchivedClusterList} />
             <Route path="/overview" exact component={Overview} />
+            <Route path="/releases" exact component={Releases} />
             <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
             <Route path="/" exact component={ClustersList} />
             <Route component={NotFoundError} />

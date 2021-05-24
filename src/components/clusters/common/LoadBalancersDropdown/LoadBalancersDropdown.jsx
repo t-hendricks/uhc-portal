@@ -10,9 +10,10 @@ import {
   Tooltip,
 } from '@patternfly/react-core';
 
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../common/ErrorBox';
-import filterLoadBalancerValuesByQuota from './helpers';
+import { availableQuota, quotaTypes } from '../quotaSelectors';
+import { filterLoadBalancerValuesByQuota } from './LoadBalancersDropdownHelper';
 import { noQuotaTooltip } from '../../../../common/helpers';
 
 class LoadBalancersDropdown extends React.Component {
@@ -28,13 +29,23 @@ class LoadBalancersDropdown extends React.Component {
 
   render() {
     const {
-      input, loadBalancerValues, disabled, currentValue, quota,
+      input, loadBalancerValues, disabled, currentValue, quotaList,
+      billingModel, product, cloudProviderID, isBYOC, isMultiAZ,
     } = this.props;
     // Set up options for load balancers
     const loadBalancerOption = value => (
       <FormSelectOption key={value} value={value} label={value} />
     );
     if (loadBalancerValues.fulfilled) {
+      const query = {
+        resourceType: quotaTypes.LOAD_BALANCER,
+        billingModel,
+        product,
+        cloudProviderID,
+        isBYOC,
+        isMultiAZ,
+      };
+      const quota = availableQuota(quotaList, query);
       const filteredValues = filterLoadBalancerValuesByQuota(currentValue,
         loadBalancerValues, quota);
       const notEnoughQuota = filteredValues.values.length <= 1;
@@ -80,8 +91,13 @@ LoadBalancersDropdown.propTypes = {
   loadBalancerValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
-  quota: PropTypes.number.isRequired,
+  quotaList: PropTypes.object.isRequired,
   currentValue: PropTypes.number,
+  billingModel: PropTypes.string.isRequired,
+  product: PropTypes.string.isRequired,
+  cloudProviderID: PropTypes.string.isRequired,
+  isBYOC: PropTypes.bool.isRequired,
+  isMultiAZ: PropTypes.bool.isRequired,
 };
 
 export default LoadBalancersDropdown;

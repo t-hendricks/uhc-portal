@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/cjs/actions';
 
 // import usersActions from './UsersActions';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux/actions/notifications';
 import NetworkSelfServiceSection from './NetworkSelfServiceSection';
 import {
   getRoles, getGrants, addGrant, clearAddGrantResponse, deleteGrant,
@@ -18,7 +18,6 @@ const mapStateToProps = state => ({
   deleteGrantResponse: state.networkSelfService.deleteGrantResponse,
   roles: state.networkSelfService.roles,
 });
-
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   openAddGrantModal: () => dispatch(openModal('grant-modal')),

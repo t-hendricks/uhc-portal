@@ -11,7 +11,6 @@ import {
   subscriptionSystemUnits,
 } from '../../../common/subscriptionTypes';
 
-
 const reduxFormConfig = {
   form: 'RegisterCluster',
 };
@@ -42,43 +41,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   closeModal: (name) => { dispatch(closeModal(name)); },
   openModal: (name) => { dispatch(openModal(name)); },
-  onSubmit: (formData) => {
+  onSubmit: (registrationRequest, subscriptionRequest) => {
     // This request goes to account-manager,
-    const registrationRequest = {
-      cluster_uuid: formData.cluster_id,
-      plan_id: 'OCP',
-      status: 'Disconnected',
-      display_name: formData.display_name,
-      console_url: formData.web_console_url,
-    };
-
-    let subscriptionRequest = null;
-
-    if (formData.support_level !== 'Eval' && formData.support_level !== '') {
-      subscriptionRequest = {
-        support_level: formData.support_level,
-        service_level: formData.service_level,
-        usage: formData.usage,
-        system_units: formData.system_units,
-      };
-
-      if (formData.system_units === 'Sockets') {
-        subscriptionRequest.socket_total = parseInt(formData.socket_total, 10);
-        subscriptionRequest.cpu_total = subscriptionRequest.socket_total;
-      }
-
-      if (formData.system_units === 'Cores/vCPU') {
-        subscriptionRequest.cpu_total = parseInt(formData.cpu_total, 10);
-        subscriptionRequest.socket_total = 1;
-      }
-    }
-
     dispatch(registerDisconnectedCluster(registrationRequest, subscriptionRequest));
   },
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('RegisterCluster')),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormRegisterCluster);

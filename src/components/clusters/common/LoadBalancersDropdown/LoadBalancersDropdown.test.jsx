@@ -1,7 +1,9 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import LoadBalancersDropdown from './LoadBalancersDropdown';
+import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import { loadBalancerQuotaList } from '../__test__/quota.fixtures';
 
 const baseState = {
   error: false,
@@ -9,11 +11,6 @@ const baseState = {
   pending: false,
   fulfilled: false,
   values: [],
-};
-
-const organizationState = {
-  fulfilled: true,
-  pending: false,
 };
 
 describe('<LoadBalancersDropdown />', () => {
@@ -24,13 +21,17 @@ describe('<LoadBalancersDropdown />', () => {
     beforeAll(() => {
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
-      wrapper = mount(
+      wrapper = shallow(
         <LoadBalancersDropdown
           loadBalancerValues={baseState}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quota={0}
-          organization={organizationState}
+          quotaList={loadBalancerQuotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
         />,
       );
@@ -58,13 +59,17 @@ describe('<LoadBalancersDropdown />', () => {
 
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
-      wrapper = mount(
+      wrapper = shallow(
         <LoadBalancersDropdown
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quota={0}
-          organization={organizationState}
+          quotaList={loadBalancerQuotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
         />,
       );
@@ -89,13 +94,17 @@ describe('<LoadBalancersDropdown />', () => {
     beforeAll(() => {
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
-      wrapper = mount(
+      wrapper = shallow(
         <LoadBalancersDropdown
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quota={0}
-          organization={organizationState}
+          quotaList={loadBalancerQuotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
         />,
       );
@@ -122,20 +131,24 @@ describe('<LoadBalancersDropdown />', () => {
       const state = {
         ...baseState,
         fulfilled: true,
-        values: [0, 4, 8],
+        // loadBalancerQuotaList allows 17.
+        // Include higher values here to test quota computation.
+        values: [0, 4, 8, 12, 16, 20, 24],
       };
-
-      const quota = 4;
 
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
-      wrapper = mount(
+      wrapper = shallow(
         <LoadBalancersDropdown
           loadBalancerValues={state}
           input={{ onChange }}
           getLoadBalancers={getLoadBalancers}
-          quota={quota}
-          organization={organizationState}
+          quotaList={loadBalancerQuotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
         />,
       );

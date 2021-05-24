@@ -15,12 +15,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
 import get from 'lodash/get';
-import has from 'lodash/has';
-import intersection from 'lodash/intersection';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
-import { BareMetalHostsClusterDetailTab, canAddBareMetalHost } from 'openshift-assisted-ui-lib';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+import { HostsClusterDetailTab, canAddHost } from 'openshift-assisted-ui-lib';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
@@ -30,7 +28,6 @@ import Monitoring from './components/Monitoring';
 import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
-import { supportsFreeAddOns } from './components/AddOns/AddOnsHelper';
 import MachinePools from './components/MachinePools';
 import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
@@ -42,7 +39,7 @@ import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
 import getClusterName from '../../../common/getClusterName';
-import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
 import clusterStates, { isHibernating } from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
@@ -50,7 +47,7 @@ import Support from './components/Support';
 import AddNotificationContactDialog
   from './components/Support/components/AddNotificationContactDialog';
 import UpgradeSettingsTab from './components/UpgradeSettings';
-
+import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 
 class ClusterDetails extends Component {
   state = {
@@ -72,7 +69,7 @@ class ClusterDetails extends Component {
     this.machinePoolsTabRef = React.createRef();
     this.upgradeSettingsTabRef = React.createRef();
 
-    this.addBareMetalTabRef = React.createRef();
+    this.addAssistedTabRef = React.createRef();
   }
 
   componentDidMount() {
@@ -85,6 +82,7 @@ class ClusterDetails extends Component {
       addOns,
       getAddOns,
       clearGlobalError,
+      getUserAccess,
     } = this.props;
 
     clearGlobalError('clusterDetails');
@@ -97,6 +95,7 @@ class ClusterDetails extends Component {
     if (!addOns.pending && !addOns.error && !addOns.fulfilled) {
       getAddOns();
     }
+    getUserAccess({ type: 'OCP' });
   }
 
   componentDidUpdate(prevProps) {
@@ -200,9 +199,7 @@ class ClusterDetails extends Component {
     const {
       clusterDetails,
       getUsers,
-      getAlerts,
-      getNodes,
-      getClusterOperators,
+      getOnDemandMetrics,
       getClusterAddOns,
       getOrganizationAndQuota,
       getGrants,
@@ -212,7 +209,7 @@ class ClusterDetails extends Component {
       organization,
       getMachinePools,
       getSchedules,
-      fetchInsightsData,
+      fetchClusterInsights,
     } = this.props;
     const clusterID = get(clusterDetails, 'cluster.id');
     const isManaged = get(clusterDetails, 'cluster.managed', false);
@@ -222,7 +219,7 @@ class ClusterDetails extends Component {
     }
     const externalClusterID = get(clusterDetails, 'cluster.external_id');
     if (externalClusterID) {
-      fetchInsightsData(externalClusterID, isManaged);
+      fetchClusterInsights(externalClusterID, isManaged);
       this.fetchSupportData();
     }
 
@@ -244,9 +241,8 @@ class ClusterDetails extends Component {
         getGrants(clusterID);
       }
     } else {
-      getAlerts(clusterID);
-      getNodes(clusterID);
-      getClusterOperators(clusterID);
+      const subscriptionID = clusterDetails.cluster?.subscription?.id;
+      getOnDemandMetrics(subscriptionID);
     }
   }
 
@@ -257,12 +253,8 @@ class ClusterDetails extends Component {
       getSupportCases,
       supportCases,
       notificationContacts,
-      supportTabFeature,
     } = this.props;
 
-    if (!supportTabFeature) {
-      return;
-    }
     const subscriptionID = clusterDetails.cluster?.subscription?.id;
 
     if (isValid(subscriptionID)) {
@@ -274,35 +266,6 @@ class ClusterDetails extends Component {
         getSupportCases(subscriptionID);
       }
     }
-  }
-
-  // Determine if the org has quota for existing add-ons
-  hasAddOns() {
-    const {
-      addOns,
-      clusterAddOns,
-      clusterDetails,
-      organization,
-    } = this.props;
-    const { cluster } = clusterDetails;
-
-    // If cluster already has add-ons installed we can show the tab regardless of quota
-    if (get(clusterAddOns, 'items.length', 0)) {
-      return true;
-    }
-
-    // If there are compatible free add-ons available we can show the tab regardless of quota
-    if (supportsFreeAddOns(cluster) && get(addOns, 'freeAddOns.length', 0)) {
-      return true;
-    }
-
-    // If the organization has no add-ons quota, or there are no add-ons, we should hide the tab
-    if (!has(organization.quotaList, 'addOnsQuota') || !get(addOns, 'resourceNames.length', 0)) {
-      return false;
-    }
-
-    const addOnsQuota = Object.keys(organization.quotaList.addOnsQuota);
-    return !!intersection(addOns.resourceNames, addOnsQuota).length;
   }
 
   render() {
@@ -331,8 +294,8 @@ class ClusterDetails extends Component {
       toggleSubscriptionReleased,
       setOpenedTab,
       initTabOpen,
-      supportTabFeature,
       assistedInstallerEnabled,
+      userAccess,
     } = this.props;
     const { selectedTab } = this.state;
 
@@ -388,28 +351,47 @@ class ClusterDetails extends Component {
     const clusterHibernating = isHibernating(cluster.state);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED
     || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
-    const displayAddOnsTab = cluster.managed && this.hasAddOns();
-    const displayInsightsTab = !cluster.managed && !isArchived;
+    const isAROCluster = get(cluster, 'subscription.plan.id', '') === knownProducts.ARO;
+    const isManaged = cluster.managed;
+    const isClusterPending = cluster.state === clusterStates.PENDING;
+    const isClusterInstalling = cluster.state === clusterStates.INSTALLING;
+    const isClusterReady = cluster.state === clusterStates.READY;
+    const isClusterUpdating = cluster.state === clusterStates.UPDATING;
 
+    const displayAddOnsTab = !isClusterInstalling && !isClusterPending
+     && cluster.managed && !isArchived;
+    const displayInsightsTab = !cluster.managed && !isArchived && !isAROCluster
+      && !isUninstalledAICluster(cluster);
     const consoleURL = get(cluster, 'console.url');
-    const displayMonitoringTab = !isArchived && !cluster.managed;
+    const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster
+      && !isUninstalledAICluster(cluster);
     const displayAccessControlTab = cluster.managed && !!consoleURL
-      && (cluster.state === 'ready' || clusterHibernating);
+      && (isClusterReady || clusterHibernating);
     const cloudProvider = get(cluster, 'cloud_provider.id');
-    const displayNetworkingTab = (cluster.state === clusterStates.READY
-          || cluster.state === clusterStates.UPDATING || clusterHibernating)
+    const displayNetworkingTab = (isClusterReady || isClusterUpdating || clusterHibernating)
           && cluster.managed && !!get(cluster, 'api.url')
       && (cloudProvider === 'aws'
          || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')));
     const displayMachinePoolsTab = cluster.managed
-      && (cluster.state === clusterStates.READY || clusterHibernating);
+      && (isClusterReady || clusterHibernating);
     const clusterName = getClusterName(cluster);
-    const displaySupportTab = supportTabFeature
-      && (cluster.state === clusterStates.READY
-        || cluster.state === clusterStates.UPDATING
-        || clusterHibernating);
+    const hideSupportTab = (
+      cluster.managed
+      && (
+        // The (managed) cluster has not yet reported its cluster ID to AMS
+        // eslint-disable-next-line camelcase
+        cluster.subscription?.external_cluster_id === undefined
+        // The (managed) cluster has been deprovisioned
+        || cluster.subscription?.status === subscriptionStatuses.DEPROVISIONED
+      )
+    ) || (
+      !cluster.managed
+      // The (unmanaged) cluster has been archived
+      && (cluster.subscription?.status === subscriptionStatuses.ARCHIVED)
+    );
+    const displaySupportTab = !hideSupportTab;
     const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit;
-    const displayAddBareMetalHosts = assistedInstallerEnabled && canAddBareMetalHost({ cluster });
+    const displayAddAssistedHosts = assistedInstallerEnabled && canAddHost({ cluster });
 
     return (
       <PageSection id="clusterdetails-content">
@@ -438,7 +420,7 @@ class ClusterDetails extends Component {
             displaySupportTab={displaySupportTab}
             displayMachinePoolsTab={displayMachinePoolsTab}
             displayUpgradeSettingsTab={displayUpgradeSettingsTab}
-            displayAddBareMetalHosts={displayAddBareMetalHosts}
+            displayAddAssistedHosts={displayAddAssistedHosts}
             overviewTabRef={this.overviewTabRef}
             monitoringTabRef={this.monitoringTabRef}
             accessControlTabRef={this.accessControlTabRef}
@@ -448,7 +430,7 @@ class ClusterDetails extends Component {
             supportTabRef={this.supportTabRef}
             machinePoolsTabRef={this.machinePoolsTabRef}
             upgradeSettingsTabRef={this.upgradeSettingsTabRef}
-            addBareMetalTabRef={this.addBareMetalTabRef}
+            addAssistedTabRef={this.addAssistedTabRef}
             hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
             hasIssuesInsights={hasIssuesInsights}
             initTabOpen={initTabOpen}
@@ -471,6 +453,8 @@ class ClusterDetails extends Component {
               displayClusterLogs={displayClusterLogs}
               refresh={this.refresh}
               openModal={openModal}
+              insightsData={insightsData[cluster.external_id]}
+              userAccess={userAccess}
             />
           </ErrorBoundary>
         </TabContent>
@@ -504,7 +488,7 @@ class ClusterDetails extends Component {
             </ErrorBoundary>
           </TabContent>
         )}
-        {displayAddOnsTab && (
+        {isManaged && (
           <TabContent
             eventKey={3}
             id="addOnsTabContent"
@@ -558,25 +542,24 @@ class ClusterDetails extends Component {
             </ErrorBoundary>
           </TabContent>
         )}
-        {
-          <TabContent
-            eventKey={7}
-            id="supportTabContent"
-            ref={this.supportTabRef}
-            aria-label="Support"
-            hidden
-          >
-            <ErrorBoundary>
-              <Support />
-            </ErrorBoundary>
-          </TabContent>
-        }
+        <TabContent
+          eventKey={7}
+          id="supportTabContent"
+          ref={this.supportTabRef}
+          aria-label="Support"
+          hidden
+        >
+          <ErrorBoundary>
+            <Support />
+          </ErrorBoundary>
+        </TabContent>
         {displayMachinePoolsTab && (
           <TabContent
             eventKey={6}
             id="machinePoolsContent"
             ref={this.machinePoolsTabRef}
             aria-label="Machine pools"
+            hidden
           >
             <ErrorBoundary>
               <MachinePools cluster={cluster} />
@@ -589,24 +572,25 @@ class ClusterDetails extends Component {
             id="upgradeSettingsContent"
             ref={this.upgradeSettingsTabRef}
             aria-label="Upgrade settings"
+            hidden
           >
             <ErrorBoundary>
               <UpgradeSettingsTab />
             </ErrorBoundary>
           </TabContent>
         )}
-        {displayAddBareMetalHosts && (
+        {displayAddAssistedHosts && (
           <TabContent
             eventKey={9}
-            id="addBareMetalHostsContent"
-            ref={this.addBareMetalTabRef}
-            aria-label="Add Bare Metal Hosts"
+            id="addHostsContent"
+            ref={this.addAssistedTabRef}
+            aria-label="Add Hosts"
             hidden
           >
             <ErrorBoundary>
-              <BareMetalHostsClusterDetailTab
+              <HostsClusterDetailTab
                 cluster={cluster}
-                isVisible={selectedTab === 'addBareMetalHosts'}
+                isVisible={selectedTab === 'addAssistedHosts'}
               />
             </ErrorBoundary>
           </TabContent>
@@ -637,13 +621,11 @@ ClusterDetails.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
-  fetchInsightsData: PropTypes.func.isRequired,
+  fetchClusterInsights: PropTypes.func.isRequired,
   fetchGroups: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
-  getAlerts: PropTypes.func.isRequired,
-  getNodes: PropTypes.func.isRequired,
-  getClusterOperators: PropTypes.func.isRequired,
+  getOnDemandMetrics: PropTypes.func.isRequired,
   getAddOns: PropTypes.func.isRequired,
   getClusterAddOns: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
@@ -662,7 +644,6 @@ ClusterDetails.propTypes = {
     rejected: PropTypes.bool,
   }),
   addOns: PropTypes.object,
-  clusterAddOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   clusterDetails: PropTypes.shape({
@@ -699,17 +680,21 @@ ClusterDetails.propTypes = {
   hasIssuesInsights: PropTypes.bool.isRequired,
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   initTabOpen: PropTypes.string.isRequired,
-  supportTabFeature: PropTypes.bool.isRequired,
   notificationContacts: PropTypes.object.isRequired,
   getNotificationContacts: PropTypes.func.isRequired,
   getSupportCases: PropTypes.func.isRequired,
   supportCases: PropTypes.object.isRequired,
   assistedInstallerEnabled: PropTypes.bool,
   getSchedules: PropTypes.func,
+  getUserAccess: PropTypes.func.isRequired,
+  userAccess: PropTypes.shape({
+    data: PropTypes.bool,
+    pending: PropTypes.bool,
+    fulfilled: PropTypes.bool,
+  }).isRequired,
 };
 
 ClusterDetails.defaultProps = {
-  clusterAddOns: {},
   insightsData: {},
   groups: {},
   clusterDetails: {

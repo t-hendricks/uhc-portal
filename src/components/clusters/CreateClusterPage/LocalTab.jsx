@@ -10,9 +10,9 @@ import {
   Text,
   TextContent,
   Divider,
-  Button,
   Label,
 } from '@patternfly/react-core';
+import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
 import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
 import { downloadButtonModes } from '../install/instructions/components/DownloadButton';
@@ -30,14 +30,14 @@ const LocalTab = ({ token }) => (
       <Stack hasGutter className="download-instructions header">
         <StackItem>
           <Title headingLevel="h2" className="ocm-ocp-sandbox-title">
-          Red Hat CodeReady Containers
+            Red Hat CodeReady Containers
           </Title>
-          <Label>
+          <Label variant="outline">
             local sandbox
           </Label>
         </StackItem>
         <StackItem>
-        Create a minimal cluster on your desktop/laptop for local development and testing.
+          Create a minimal cluster on your desktop/laptop for local development and testing.
         </StackItem>
         <StackItem>
           <Text component="p" className="ocm-sandbox-graytext">
@@ -69,16 +69,8 @@ const LocalTab = ({ token }) => (
             </SplitItem>
             <SplitItem className="download-instructions" isFilled>
               <TextContent>
-                <Text component="h2">What you need to get started</Text>
-                <Text component="h3">CodeReady Containers archive</Text>
-                <Text component="p">
-                    Download and extract the CodeReady Containers archive for your
-                    operating system and place the executable in your
-                  {' '}
-                  <code>$PATH</code>
-                  {' '}
-                    .
-                </Text>
+                <Text component="h2">Download what you need to get started</Text>
+                <Text component="h3">CodeReady Containers</Text>
                 <DownloadAndOSSelection
                   token={token}
                   channel={channels.CRC}
@@ -100,35 +92,35 @@ const LocalTab = ({ token }) => (
             <SplitItem className="download-instructions" isFilled>
               <TextContent>
                 <Text component="h2">
-                    Follow the documentation to install CodeReady containers
+                  Follow the documentation to install CodeReady containers
                 </Text>
                 <Text component="p">
-                    Run the
+                  Run
                   {' '}
                   <code>crc setup</code>
                   {' '}
-                    command to set up your host operating system for the CodeReady
-                    Containers virtual machine.
+                  to set up your host operating system for the CodeReady
+                  Containers virtual machine.
                 </Text>
                 <Text component="p">
-                    Then, the
+                  Then, run
                   {' '}
                   <code>crc start</code>
                   {' '}
-                    will create a minimal OpenShift 4 cluster on your laptop or desktop computer.
+                  to create a minimal OpenShift 4 cluster on your computer.
                 </Text>
-                <Button
-                  className="pf-u-mb-md"
-                  component="a"
-                  href={docURL}
-                  rel="noreferrer noopener"
-                  target="_blank"
-                  variant="secondary"
-                  onClick={() => trackPendo('OCP-Download-OfficialDocumentation', cloudProviderID)}
-                >
-                    Get started
-                </Button>
               </TextContent>
+              <a
+                href={docURL}
+                rel="noreferrer noopener"
+                target="_blank"
+                variant="link"
+                onClick={() => trackPendo('OCP-Download-OfficialDocumentation', cloudProviderID)}
+              >
+                View the CodeReady Containers Getting started guide
+                {' '}
+                <ExternalLinkAltIcon color="#0066cc" size="sm" />
+              </a>
             </SplitItem>
           </Split>
         </StackItem>

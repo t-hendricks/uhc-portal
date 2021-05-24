@@ -16,11 +16,7 @@ import { cloudProviderActions } from '../../../redux/actions/cloudProviderAction
 import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalErrorActions';
 import { userActions } from '../../../redux/actions';
 import { modalActions } from '../../common/Modal/ModalActions';
-import {
-  getAlerts,
-  getClusterOperators,
-  getNodes,
-} from './components/Monitoring/MonitoringActions';
+import { getOnDemandMetrics } from './components/Monitoring/MonitoringActions';
 import { getAddOns, getClusterAddOns } from './components/AddOns/AddOnsActions';
 import { getGrants } from './components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceActions';
 import { clusterLogActions, getClusterHistory } from './components/ClusterLogs/clusterLogActions';
@@ -42,21 +38,21 @@ import issuesCountSelector from './components/Insights/InsightsSelectors';
 import canHibernateClusterSelector from '../common/HibernateClusterModal/HibernateClusterModalSelector';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
 import getBaseName from '../../../common/getBaseName';
-import { SUPPORT_TAB_FEATURE, ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
+import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureConstants';
 import supportActions from './components/Support/SupportActions';
+import { getUserAccess } from '../../../redux/actions/costActions';
 
 const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
   const { cloudProviders } = state;
   const { errorCode } = state.clusterLogs.requestState;
-  const { addOns, clusterAddOns } = state.addOns;
+  const { addOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
   const { insightsData, groups } = state.insightsData;
   const logsPresent = state.clusterLogs.clusterLogInitialized
     === state.clusterLogs.externalClusterID;
   const hideClusterLogs = !logsPresent || errorCode === 403 || errorCode === 404;
-  const supportTabFeature = state.features[SUPPORT_TAB_FEATURE];
   const {
     notificationContacts = {
       pending: false,
@@ -72,7 +68,6 @@ const mapStateToProps = (state, { location }) => {
     cloudProviders,
     clusterDetails: details,
     addOns,
-    clusterAddOns,
     clusterIdentityProviders,
     organization,
     displayClusterLogs: !hideClusterLogs,
@@ -85,18 +80,18 @@ const mapStateToProps = (state, { location }) => {
     anyModalOpen: !!state.modal.modalName,
     hasIssues: issuesAndWarningsSelector(state).issues.totalCount > 0,
     // check whether there are Critical (4) or Important (3) issues
-    hasIssuesInsights: insightsIssuesCount[4] || insightsIssuesCount[3],
+    hasIssuesInsights: !!(insightsIssuesCount[4] || insightsIssuesCount[3]),
     initTabOpen: location.hash.replace('#', ''),
-    supportTabFeature,
     notificationContacts,
     supportCases,
     assistedInstallerEnabled: state.features[ASSISTED_INSTALLER_FEATURE],
+    userAccess: state.cost.userAccess,
   });
 };
 
 const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   fetchDetails: clusterId => fetchClusterDetails(clusterId),
-  fetchInsightsData: (clusterId, isOSD) => fetchClusterInsights(clusterId, isOSD),
+  fetchClusterInsights,
   fetchGroups,
   voteOnRule: (clusterId, ruleId, vote) => voteOnRuleInsights(clusterId, ruleId, vote),
   disableRule: (clusterId, ruleId) => disableRuleInsights(clusterId, ruleId),
@@ -112,9 +107,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   resetClusterHistory: clusterLogActions.resetClusterHistory,
   clearGlobalError,
   setGlobalError,
-  getAlerts,
-  getNodes,
-  getClusterOperators,
+  getOnDemandMetrics,
   getAddOns,
   getClusterAddOns,
   getGrants,
@@ -129,6 +122,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   getNotificationContacts: supportActions.getNotificationContacts,
   getSupportCases: supportActions.getSupportCases,
   getSchedules,
+  getUserAccess,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

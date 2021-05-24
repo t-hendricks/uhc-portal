@@ -4,6 +4,7 @@ import { Button } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import AddOnsParametersModal from '../AddOnsParametersModal';
+import fixtures from '../../../../__test__/ClusterDetails.fixtures';
 
 const dummyValue = 'dummy value';
 
@@ -14,9 +15,12 @@ describe('<AddOnsParametersModal />', () => {
   let resetForm;
   let change;
   let handleSubmit;
+  let quota;
+  const { clusterDetails } = fixtures;
   beforeAll(() => {
     closeModal = jest.fn();
     clearClusterAddOnsResponses = jest.fn();
+    quota = {};
     resetForm = jest.fn();
     change = jest.fn();
     handleSubmit = jest.fn();
@@ -54,6 +58,8 @@ describe('<AddOnsParametersModal />', () => {
         pristine
         change={change}
         handleSubmit={handleSubmit}
+        quota={quota}
+        cluster={clusterDetails.cluster}
       />,
     );
   });
@@ -111,6 +117,67 @@ describe('<AddOnsParametersModal />', () => {
     const isUpdateForm = true;
     wrapper.setProps({ addOn, isUpdateForm }, () => {
       expect(wrapper.find(Field).props().isDisabled).toBeTruthy();
+    });
+  });
+
+  it('expect addon field to populate options', () => {
+    const addOn = {
+      description: 'Dummy Desc',
+      enabled: true,
+      editable: true,
+      id: 'Dummy ID',
+      name: 'Dummy Name',
+      parameters: {
+        items: [{
+          id: 'dummy item',
+          options: [
+            {
+              name: 'Option 1',
+              value: 'option1',
+            },
+          ],
+          enabled: true,
+          editable: false,
+        }],
+      },
+    };
+    wrapper.setProps({ addOn }, () => {
+      expect(wrapper.find(Field).props().options).toEqual([
+        { name: '-- Please Select --', value: undefined },
+        { name: 'Option 1', value: 'option1' },
+      ]);
+    });
+  });
+
+  it('expect default value text to be populated by option name', () => {
+    const addOn = {
+      description: 'Dummy Desc',
+      enabled: true,
+      editable: true,
+      id: 'Dummy ID',
+      name: 'Dummy Name',
+      parameters: {
+        items: [{
+          id: 'dummy item',
+          options: [
+            {
+              name: 'Option 1',
+              value: 'option1',
+            },
+          ],
+          default_value: 'option1',
+          enabled: true,
+          editable: true,
+        }],
+      },
+    };
+    wrapper.setProps({ addOn }, () => {
+      expect(wrapper.find(Field).props().options).toEqual([
+        { name: '-- Please Select --', value: undefined },
+        { name: 'Option 1', value: 'option1' },
+      ]);
+      expect(wrapper.find(Button).exists()).toBeTruthy();
+      expect(wrapper.find(Button).props().children[2]).toEqual('Option 1');
     });
   });
 });

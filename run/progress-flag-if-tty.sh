@@ -8,6 +8,4 @@
 # Is stdin a terminal?  This should catch both cases.
 if [ -t 0 ]; then
   echo --progress
-else
-  echo --no-progress
 fi

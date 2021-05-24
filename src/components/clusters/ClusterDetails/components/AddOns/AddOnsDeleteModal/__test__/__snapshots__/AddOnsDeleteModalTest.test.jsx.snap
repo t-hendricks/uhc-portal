@@ -28,7 +28,7 @@ exports[`<AddOnsDeleteModal /> renders correctly 1`] = `
        
       below:
     </p>
-    <ForwardRef
+    <TextInput
       aria-label="addon name"
       onChange={[Function]}
       placeholder="Enter name"

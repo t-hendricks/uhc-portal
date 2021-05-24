@@ -1,0 +1,230 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Quota /> OSDSubscriptionCard Empty should render empty OSD quota summary 1`] = `
+<PageSection
+  className="subscriptions-empty-state"
+>
+  <EmptyState>
+    <Title
+      headingLevel="h4"
+      size="2xl"
+    >
+      You do not have any quota
+    </Title>
+    <EmptyStateBody>
+      <p>
+        <a
+          href="https://www.openshift.com/products/dedicated/contact/"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          Contact sales
+        </a>
+         
+        to get started with OpenShift Dedicated.
+      </p>
+    </EmptyStateBody>
+  </EmptyState>
+</PageSection>
+`;
+
+exports[`<Quota /> OSDSubscriptionCard Error should render error OSD quota summary 1`] = `
+<PageSection
+  className="subscriptions-empty-state"
+>
+  <EmptyState>
+    <Title
+      headingLevel="h4"
+      size="2xl"
+    >
+      Unable to retrieve quota information
+    </Title>
+    <EmptyStateBody>
+      <p>
+        An error has occured! Try again or contact support by including this error message:
+      </p>
+      <q />
+      <p>
+        Operation ID: N/A
+      </p>
+    </EmptyStateBody>
+    <Button
+      onClick={[MockFunction]}
+    >
+      Try again
+    </Button>
+  </EmptyState>
+</PageSection>
+`;
+
+exports[`<Quota /> OSDSubscriptionCard Loading should render loading OSD quota summary 1`] = `
+<PageSection>
+  <Spinner
+    centered={true}
+  />
+</PageSection>
+`;
+
+exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
+<Card>
+  <CardTitle>
+    OpenShift Dedicated
+  </CardTitle>
+  <CardBody>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        The summary of all annual subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat. For on-demand resources, see
+         
+        <Link
+          to="/quota/resource-limits"
+        >
+          Dedicated (On-Demand Limits)
+        </Link>
+      </StackItem>
+      <StackItem
+        className="content-header"
+      >
+        Quota
+      </StackItem>
+      <StackItem
+        className="table-container"
+      >
+        <OSDSubscriptionTable
+          rows={
+            Array [
+              Array [
+                "cluster",
+                "gp.small",
+                Object {
+                  "title": "multizone",
+                },
+                "Standard",
+                "OSD",
+                "0 of 17",
+                Object {
+                  "title": <OutlinedCircleIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                  />,
+                },
+              ],
+              Array [
+                "compute.node",
+                "gp.small",
+                Object {
+                  "title": "N/A",
+                },
+                "Standard",
+                "OSD",
+                "4 of 27",
+                Object {
+                  "title": <ResourcesAlmostEmptyIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                  />,
+                },
+              ],
+              Array [
+                "add-on",
+                "addon-dba-operator",
+                Object {
+                  "title": "N/A",
+                },
+                "Any",
+                "ANY",
+                "0 of 15",
+                Object {
+                  "title": <OutlinedCircleIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                  />,
+                },
+              ],
+            ]
+          }
+        />
+      </StackItem>
+    </Stack>
+  </CardBody>
+</Card>
+`;
+
+exports[`<Quota /> OSDSubscriptionTable should render 1`] = `
+<Fragment>
+  <Table
+    aria-label="Quota Table"
+    borders={true}
+    canSelectAll={true}
+    canSortFavorites={true}
+    cells={
+      Array [
+        "Resource type",
+        "Resource name",
+        "Availability",
+        Object {
+          "title": "Plan type",
+          "transforms": Array [
+            [Function],
+          ],
+        },
+        "Cluster type",
+        Object {
+          "props": Object {
+            "className": "quota-table-used",
+          },
+          "title": "Used",
+        },
+        "Capacity",
+      ]
+    }
+    className=""
+    contentId="expanded-content"
+    dropdownDirection="down"
+    dropdownPosition="right"
+    expandId="expandable-toggle"
+    gridBreakPoint="grid-md"
+    isStickyHeader={false}
+    isTreeTable={false}
+    ouiaSafe={true}
+    role="grid"
+    rowLabeledBy="simple-node"
+    rows={Array []}
+    selectVariant="checkbox"
+    variant={null}
+  >
+    <TableHeader />
+    <Component />
+  </Table>
+</Fragment>
+`;
+
+exports[`<Quota /> Quota should render 1`] = `
+<Fragment>
+  <PageHeader>
+    <PageHeaderTitle
+      className="page-title"
+      title="Dedicated (Annual)"
+    />
+  </PageHeader>
+  <PageSection
+    className="ocm-p-subscriptions"
+  >
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem
+        className="ocm-l-osd-subscription__section"
+      >
+        <Connect(OSDSubscriptionCard)
+          organizationID="org-1"
+        />
+      </StackItem>
+    </Stack>
+  </PageSection>
+</Fragment>
+`;

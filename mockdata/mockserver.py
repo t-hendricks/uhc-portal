@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import http.server
+import urllib.parse
 import os.path
 import sys
 
@@ -18,14 +19,26 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     # But our APIs generally treat 'foos/?...' same as 'foos?...',
     # and we prefer 'foos.json' files to ugly 'foos/.json', so strip it.
     path = super().translate_path(path).rstrip('/') + '.json'
+    path = path.replace('/openshift_api', '')
     print('Accessing ' + path)
     return path
 
   def do_GET(self):
+    parts = urllib.parse.urlparse(self.path)
+    params = urllib.parse.parse_qs(parts.query)
     if self.path == '/api/aggregator/v1/clusters/8b00e902-f675-4903-9118-91a8f9f5110a/report':
         self.send_response(401, '')
         self.end_headers()
         return
+
+    # UI for [un]install logs keeps polling with ?offset and if we return same static JSON
+    # it will keep appending it.  So return empty content after first response.
+    if 'offset' in params and int(params['offset'][0]) > 0:
+        self.send_response(200, '')
+        self.end_headers()
+        self.wfile.write(b'{"content": ""}')
+        return
+
     return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
   def end_headers(self):

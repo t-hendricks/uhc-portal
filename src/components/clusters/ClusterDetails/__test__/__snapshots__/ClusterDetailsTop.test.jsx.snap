@@ -73,7 +73,6 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
                 "items": null,
                 "kind": "AWSInfrastructureAccessRoleGrantLink",
               },
-              "byoc": false,
               "ccs": Object {
                 "disable_scp_checks": false,
                 "enabled": false,
@@ -429,6 +428,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
               "updated_at": "2019-01-02T18:28:14.851121Z",
             }
           }
+          refreshFunc={[MockFunction]}
           showConsoleButton={false}
           toggleSubscriptionReleased={[MockFunction]}
         />
@@ -461,7 +461,6 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           "items": null,
           "kind": "AWSInfrastructureAccessRoleGrantLink",
         },
-        "byoc": false,
         "ccs": Object {
           "disable_scp_checks": false,
           "enabled": false,

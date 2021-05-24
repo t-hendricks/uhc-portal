@@ -59,7 +59,6 @@ describe('installation logs Redcuer', () => {
       expect(result).toHaveProperty('len', 1);
     });
 
-
     it('should handle get logs action when no lines were returned', () => {
       const noLinesAction = {
         type: FULFILLED_ACTION(GET_LOGS),

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -40,7 +39,7 @@ class ReportActionsDropdown extends React.Component {
     );
 
     const actions = [{
-      title: `${report.disabled ? 'Enable' : 'Disable'} health check`,
+      title: `${report.disabled ? 'Enable' : 'Disable'} recommendation`,
       onClick: () => {
         if (report.disabled) {
           enableRule(report.rule_id);

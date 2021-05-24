@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Radio, Title, FormGroup, Form, TextInput, Select, SelectOption,
 } from '@patternfly/react-core';
-import { DateFormat } from '@redhat-cloud-services/frontend-components/components/DateFormat';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import DatePicker from 'react-datepicker';
 
 class UpgradeTimeSelection extends React.Component {
@@ -131,6 +131,7 @@ class UpgradeTimeSelection extends React.Component {
                   dateFormat="yyyy-MM-dd"
                   customInput={<TextInput iconVariant="calendar" />}
                   minDate={new Date()}
+                  maxDate={maxDate}
                 />
                 <Select
                   selections={getSelectedTime()}

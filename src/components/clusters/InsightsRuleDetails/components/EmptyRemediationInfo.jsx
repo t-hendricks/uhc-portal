@@ -18,7 +18,7 @@ const EmptyRemediationInfo = ({ title }) => (
     </Title>
 
     <EmptyStateBody>
-      {`This health check has no ${title} description to display. For details how to solve this problem, see the corresponding knowledgebase article.`}
+      {`This recommendation has no ${title} description to display. For details how to solve this problem, see the corresponding knowledgebase article.`}
     </EmptyStateBody>
   </EmptyState>
 );

@@ -1,6 +1,9 @@
 import get from 'lodash/get';
 
-import { normalizeCluster, normalizeProductID, normalizeQuotaCost } from '../normalize';
+import {
+  normalizeCluster, normalizeProductID,
+  normalizeQuotaCost, normalizeMetrics,
+} from '../normalize';
 import { normalizedProducts } from '../subscriptionTypes';
 import { dedicatedRhInfra, unlimitedROSA, rhmiAddon } from '../../components/clusters/common/__test__/quota_cost.fixtures';
 
@@ -33,6 +36,12 @@ const planROSA = {
   href: '/api/accounts_mgmt/v1/plans/ROSA',
 };
 
+const planARO = {
+  id: 'ARO',
+  kind: 'Plan',
+  href: '/api/accounts_mgmt/v1/plans/ARO',
+};
+
 describe('normalizeProductID', () => {
   test('Normalizes clusters-service products', () => {
     expect(normalizeProductID(productOCP.id)).toEqual(normalizedProducts.OCP);
@@ -43,6 +52,7 @@ describe('normalizeProductID', () => {
     expect(normalizeProductID(planOCP.id)).toEqual(normalizedProducts.OCP);
     expect(normalizeProductID(planMOA.id)).toEqual(normalizedProducts.ROSA);
     expect(normalizeProductID(planROSA.id)).toEqual(normalizedProducts.ROSA);
+    expect(normalizeProductID(planARO.id)).toEqual(normalizedProducts.ARO);
     // quota_cost may contain "product": "any".
     expect(normalizeProductID('any')).toEqual(normalizedProducts.ANY);
   });
@@ -298,4 +308,100 @@ test('Normalizes cluster whose metrics fields completely missing', () => {
   const res = normalizeCluster(clusterWithMissingMetrics);
   expect(get(res, 'metrics.cpu.total.value')).toBeUndefined();
   expect(get(res, 'metrics.nodes.master')).toBeUndefined();
+});
+
+describe('normalizeMetrics()', () => {
+  const emptyMetrics = {
+    memory: {
+      used: {
+        value: 0,
+        unit: 'B',
+      },
+      total: {
+        value: 0,
+        unit: 'B',
+      },
+    },
+    cpu: {
+      used: {
+        value: 0,
+        unit: '',
+      },
+      total: {
+        value: 0,
+        unit: '',
+      },
+    },
+    storage: {
+      used: {
+        value: 0,
+        unit: 'B',
+      },
+      total: {
+        value: 0,
+        unit: 'B',
+      },
+    },
+    nodes: {
+      total: 0,
+      master: 0,
+      compute: 0,
+    },
+    state: 'N/A',
+    upgrade: {
+      available: false,
+    },
+  };
+
+  it('returns empty metrics structure when empty object is received', () => {
+    const ret = normalizeMetrics({});
+    expect(ret).toMatchObject(emptyMetrics);
+  });
+
+  it('returns empty metrics structure when undefined is received', () => {
+    const ret = normalizeMetrics();
+    expect(ret).toMatchObject(emptyMetrics);
+  });
+
+  it('fills in missing fields when partial metrics are recieved', () => {
+    const ret = normalizeMetrics({
+      memory: {
+        used: {
+          value: 1,
+          unit: 'B',
+        },
+        total: {
+          value: 1,
+          unit: 'B',
+        },
+      },
+    });
+    expect(ret.storage).toMatchObject(emptyMetrics.storage);
+  });
+
+  it('fills in missing unit fields when partial metrics are recieved', () => {
+    const ret = normalizeMetrics({
+      memory: {
+        used: {
+          value: 1,
+        },
+        total: {
+        },
+      },
+    });
+    expect(ret.memory).toMatchObject({
+      used: {
+        value: 1,
+        unit: 'B',
+      },
+      total: {
+        value: 0,
+        unit: 'B',
+      },
+    });
+  });
+
+  it('returns original metrics when everything is fine', () => {
+    expect(normalizeMetrics(clusterWithMetrics.metrics)).toMatchObject(clusterWithMetrics.metrics);
+  });
 });

@@ -1,0 +1,131 @@
+{
+  "report": {
+    "meta": { "count": 15, "last_checked_at": "2021-01-11T18:59:06Z" },
+    "data": [
+      {
+        "rule_id": "ccx_rules_ocm.tutorial_rule.report",
+        "created_at": "2020-04-08T00:42:00Z",
+        "description": "Introducing Insights for Red Hat OpenShift Container Platform",
+        "details": "Red Hat Insights for OpenShift is a proactive management solution. It provides ongoing infrastructure analyses of your Red Hat OpenShift Container Platform 4.2 and later installations. Red Hat Insights helps you identify, prioritize, and resolve risks to security, performance, availability, and stability before they become urgent issues.\nRed Hat Insights for OpenShift uses the Remote Health Monitoring feature of OpenShift 4. The health checks are created by Red Hat subject matter experts and assessed according to severity and impact.\nThis is an example  recommendation that you can safely ignore. To disable it, click  the triple-dot menu button next to the header, and select Disable.\n\n[Knowledgebase Article](https://access.redhat.com/search/#/knowledgebase)\n\n",
+        "reason": "",
+        "resolution": "",
+        "total_risk": 1,
+        "risk_of_change": 0,
+        "disabled": false,
+        "disable_feedback": "",
+        "disabled_at": "2020-10-07T14:54:02Z",
+        "internal": false,
+        "user_vote": 1,
+        "extra_data": { "error_key": "TUTORIAL_ERROR", "type": "rule" },
+        "tags": ["openshift", "service_availability"]
+      },
+      {
+        "rule_id": "ccx_rules_ocp.external.rules.ocp_version_end_of_life.report",
+        "created_at": "2020-06-17T15:00:00Z",
+        "description": "The running OpenShift version has reached its End of Life",
+        "details": "The running OpenShift version has reached its End of Life. It is no longer eligible to receive maintenance updates. Technical support is limited only to aid upgrades to in-support versions of OpenShift 4. \n",
+        "reason": "",
+        "resolution": "Red Hat recommends that you upgrade the OpenShift cluster to a more recent version. \n\nFor more information, see the *Updating a cluster between minor versions* section of the documentation of the desired OpenShift version:\n\n* [OpenShift {{=pydata.minor_plus[1]['version']}}](https://docs.openshift.com/container-platform/{{=pydata.minor_plus[1]['version']}}/updating/updating-cluster-between-minor.html)\n* [OpenShift {{=pydata.minor_plus[2]['version']}}](https://docs.openshift.com/container-platform/{{=pydata.minor_plus[2]['version']}}/updating/updating-cluster-between-minor.html){{?pydata.beyond_eol}}\n* [OpenShift {{=pydata.minor_plus[3]['version']}}](https://docs.openshift.com/container-platform/{{=pydata.minor_plus[3]['version']}}/updating/updating-cluster-between-minor.html){{?}}\n",
+        "total_risk": 2,
+        "risk_of_change": 0,
+        "disabled": false,
+        "disable_feedback": "",
+        "disabled_at": "",
+        "internal": false,
+        "user_vote": 0,
+        "extra_data": {
+          "beyond_eol": true,
+          "current_version": "4.3.11",
+          "error_key": "OCP4X_BEYOND_EOL",
+          "minor_plus": [
+            { "ga": "2020-01-23T00:00:00Z", "version": "4.3" },
+            { "ga": "2020-05-05T00:00:00Z", "version": "4.4" },
+            { "ga": "2020-07-13T00:00:00Z", "version": "4.5" },
+            { "ga": "2020-10-27T00:00:00Z", "version": "4.6" }
+          ],
+          "type": "rule"
+        },
+        "tags": ["openshift", "service_availability", "pssa"]
+      },
+      {
+        "rule_id": "ccx_rules_ocp.external.rules.samples_op_failed_image_import_check.report",
+        "created_at": "2020-02-07T14:19:00Z",
+        "description": "Pods could fail to start if openshift-samples is degraded due to FailedImageImport which is caused by a hiccup while talking to the Red Hat registry",
+        "details": "The `openshift-samples` cluster-operator is degraded due to `FailedImageImport` because of a hiccup while talking to the Red Hat registry.\n\n[Knowledgebase Article](https://access.redhat.com/solutions/4563171)\n",
+        "reason": "Due to a temporary hiccup talking to the Red Hat registry the openshift-samples failed to import some of the imagestreams.\n\n\nSource of the issue:\n\n**Cluster-operator:**  **{{=pydata.info[\"name\"]}}**\n- *Condition:* {{=pydata.info[\"condition\"]}}\n- *Reason:* {{=pydata.info[\"reason\"]}}\n- *Message:* {{=pydata.info[\"message\"]}}\n- *Last* Transition: {{=pydata.info[\"lastTransitionTime\"]}}\n",
+        "resolution": "Red Hat recommends that you to follow these steps:\n\n1. Fix 1, Try running:\n~~~\n# oc import-image \u003cfor the ImageStream(s) in question\u003e\n~~~\n\n1. Fix 2, Try running:\n~~~\n# oc delete configs.samples cluster\n~~~",
+        "total_risk": 3,
+        "risk_of_change": 0,
+        "disabled": false,
+        "disable_feedback": "",
+        "disabled_at": "",
+        "internal": false,
+        "user_vote": 0,
+        "extra_data": {
+          "error_key": "SAMPLES_FAILED_IMAGE_IMPORT_ERR",
+          "info": {
+            "condition": "Degraded",
+            "lastTransitionTime": "2019-12-06T15:58:09Z",
+            "message": "Samples installed at , with image import failures for these imagestreams:",
+            "name": "openshift-samples",
+            "reason": "FailedImageImports"
+          },
+          "type": "rule"
+        },
+        "tags": [
+          "openshift",
+          "incident",
+          "networking",
+          "registry",
+          "service_availability",
+          "pssa"
+        ]
+      },
+      {
+        "rule_id": "ccx_rules_ocp.external.rules.unsupport_sdn_plugin.report",
+        "created_at": "2020-08-06T12:00:00Z",
+        "description": "Cluster is running with 3rd party SDN plugin",
+        "details": "Cluster is running with a 3rd party SDN plugin that will encounter support limitations.\n",
+        "reason": "This cluster is running with 3rd party SDN plugin `{{=pydata.network_type}}`, which will encounter support limitations.\n",
+        "resolution": "Red Hat recommends that you migrate to a supported SDN plugin.\n\n**Supported SDN plugin:**\n - *OpenShiftSDN*\n - *OVNKubernetes*\n - *Kuryr*\n\nFor update steps, please refer to this doc:\n{{? ['4.0', '4.1', '4.2', '4.3', '4.4', '4.5'].indexOf(pydata.current_version) \u003e= 0}}\n[Migrating to the OVN-Kubernetes default CNI network provider](https://docs.openshift.com/container-platform/4.5/networking/ovn_kubernetes_network_provider/migrate-from-openshift-sdn.html)\n{{??}}\n[Migrating to the OVN-Kubernetes default CNI network provider](https://docs.openshift.com/container-platform/{{=pydata.current_version}}/networking/ovn_kubernetes_network_provider/migrate-from-openshift-sdn.html)\n{{?}}\n\n",
+        "total_risk": 2,
+        "risk_of_change": 0,
+        "disabled": false,
+        "disable_feedback": "",
+        "disabled_at": "2021-01-12T08:50:27Z",
+        "internal": false,
+        "user_vote": 1,
+        "extra_data": {
+          "current_version": "4.3",
+          "error_key": "UNSUPPORT_SDN_PLUGIN",
+          "network_type": "Something unsupported",
+          "type": "rule"
+        },
+        "tags": ["sbr_shift", "openshift", "sdn", "fault_tolerance", "pssa"]
+      },
+      {
+        "rule_id": "ccx_rules_ocp.external.security.CVE_2020_8555_kubernetes.report",
+        "created_at": "2021-01-08T12:00:00Z",
+        "description": "CVE-2020-8555: compromised node could escalate to cluster level privileges",
+        "details": "The running OpenShift version is vulnerable to CVE-2020-8555: Compromised node could escalate to cluster level with Moderate security impact.\n\nThis flaw allows an attacker who can intercept requests on a compromised node to redirect those requests, along with their credentials, to perform actions on other endpoints that trust those credentials (including other clusters), allowing for escalation of privileges.\n",
+        "reason": "* The cluster is running OpenShift {{=pydata.current_version}}.\n",
+        "resolution": "Red Hat recommends that you upgrade the OpenShift cluster to a more recent version. \n\nFor more information, see the *Updating a cluster within a minor version from the web console* section of the documentation of the OpenShift version:\n\n* [OpenShift {{=pydata.minor_version}}](https://docs.openshift.com/container-platform/{{=pydata.minor_version}}/updating/updating-cluster.html)\n",
+        "total_risk": 3,
+        "risk_of_change": 0,
+        "disabled": true,
+        "disable_feedback": "dsgdgd",
+        "disabled_at": "2021-03-09T10:10:20Z",
+        "internal": false,
+        "user_vote": 0,
+        "extra_data": {
+          "current_version": "4.3.11",
+          "error_key": "CVE_2020_8555_KUBERNETES",
+          "minor_version": "4.3",
+          "type": "rule"
+        },
+        "tags": ["security", "openshift", "cve"]
+      }
+    ]
+  },
+  "status": "ok"
+}

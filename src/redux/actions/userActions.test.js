@@ -1,6 +1,6 @@
 import { userActions } from './userActions';
 import { accountsService } from '../../services';
-import { normalizedProducts } from '../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../common/subscriptionTypes';
 
 jest.mock('../../services/accountsService.js');
 
@@ -9,6 +9,7 @@ jest.mock('../../services/accountsService.js');
 const { OCP } = normalizedProducts;
 const { OSD } = normalizedProducts;
 const { OSDTrial } = normalizedProducts;
+const { STANDARD } = billingModels;
 
 describe('clustersActions', () => {
   let item;
@@ -40,10 +41,10 @@ describe('clustersActions', () => {
     it('should process empty quota', () => {
       const resources = [];
       userActions.processClusterQuota(clusterQuota, item, resources);
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz).not.toContain('gp.small');
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz.available).toEqual(0);
-      expect(clusterQuota[OSD].aws.rhInfra.totalAvailable).toEqual(0);
-      expect(clusterQuota[OSD].aws.isAvailable).toEqual(false);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz).not.toContain('gp.small');
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz.available).toEqual(0);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.totalAvailable).toEqual(0);
+      expect(clusterQuota[STANDARD][OSD].aws.isAvailable).toEqual(false);
     });
 
     it('should process quota for basic OSD on AWS', () => {
@@ -54,14 +55,15 @@ describe('clustersActions', () => {
         availability_zone_type: 'single',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz['gp.small']).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz.available).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.totalAvailable).toEqual(1);
-      expect(clusterQuota[OSD].aws.isAvailable).toEqual(true);
-      expect(clusterQuota[OSD].gcp.isAvailable).toEqual(false);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz['gp.small']).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz.available).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.totalAvailable).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.isAvailable).toEqual(true);
+      expect(clusterQuota[STANDARD][OSD].gcp.isAvailable).toEqual(false);
     });
 
     it('should process quota for basic OSD on AWS and byoc', () => {
@@ -73,6 +75,7 @@ describe('clustersActions', () => {
           availability_zone_type: 'single',
           resource_name: 'gp.small',
           product: OSD,
+          billing_model: STANDARD,
           cost: 1,
         },
         {
@@ -82,17 +85,18 @@ describe('clustersActions', () => {
           byoc: 'byoc',
           availability_zone_type: 'single',
           product: OSD,
+          billing_model: STANDARD,
           cost: 1,
         },
       ];
       userActions.processClusterQuota(clusterQuota, item, resources);
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz['gp.small']).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz.available).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.totalAvailable).toEqual(1);
-      expect(clusterQuota[OSD].aws.byoc.singleAz.available).toEqual(1);
-      expect(clusterQuota[OSD].aws.byoc.totalAvailable).toEqual(1);
-      expect(clusterQuota[OSD].aws.isAvailable).toEqual(true);
-      expect(clusterQuota[OSD].gcp.isAvailable).toEqual(false);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz['gp.small']).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz.available).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.totalAvailable).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.byoc.singleAz.available).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.byoc.totalAvailable).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.isAvailable).toEqual(true);
+      expect(clusterQuota[STANDARD][OSD].gcp.isAvailable).toEqual(false);
     });
 
     it('should process quota for OSDTrial', () => {
@@ -104,20 +108,21 @@ describe('clustersActions', () => {
           byoc: 'byoc',
           availability_zone_type: 'any',
           product: 'OSDTrial',
+          billing_model: STANDARD,
           cost: 1,
         },
       ];
       userActions.processClusterQuota(clusterQuota, item, resources);
-      expect(clusterQuota[OCP].aws.isAvailable).toEqual(false);
-      expect(clusterQuota[OSD].aws.isAvailable).toEqual(false);
-      expect(clusterQuota[OSDTrial].aws.byoc.singleAz.available).toEqual(1);
-      expect(clusterQuota[OSDTrial].aws.byoc.singleAz['cpu.large']).toEqual(1);
-      expect(clusterQuota[OSDTrial].aws.byoc.totalAvailable).toEqual(1);
-      expect(clusterQuota[OSDTrial].aws.isAvailable).toEqual(true);
-      expect(clusterQuota[OSDTrial].gcp.byoc.singleAz.available).toEqual(1);
-      expect(clusterQuota[OSDTrial].gcp.byoc.singleAz['cpu.large']).toEqual(1);
-      expect(clusterQuota[OSDTrial].gcp.byoc.totalAvailable).toEqual(1);
-      expect(clusterQuota[OSDTrial].gcp.isAvailable).toEqual(true);
+      expect(clusterQuota[STANDARD][OCP].aws.isAvailable).toEqual(false);
+      expect(clusterQuota[STANDARD][OSD].aws.isAvailable).toEqual(false);
+      expect(clusterQuota[STANDARD][OSDTrial].aws.byoc.singleAz.available).toEqual(1);
+      expect(clusterQuota[STANDARD][OSDTrial].aws.byoc.singleAz['cpu.large']).toEqual(1);
+      expect(clusterQuota[STANDARD][OSDTrial].aws.byoc.totalAvailable).toEqual(1);
+      expect(clusterQuota[STANDARD][OSDTrial].aws.isAvailable).toEqual(true);
+      expect(clusterQuota[STANDARD][OSDTrial].gcp.byoc.singleAz.available).toEqual(1);
+      expect(clusterQuota[STANDARD][OSDTrial].gcp.byoc.singleAz['cpu.large']).toEqual(1);
+      expect(clusterQuota[STANDARD][OSDTrial].gcp.byoc.totalAvailable).toEqual(1);
+      expect(clusterQuota[STANDARD][OSDTrial].gcp.isAvailable).toEqual(true);
     });
 
     it('should process quota for any product', () => {
@@ -129,17 +134,18 @@ describe('clustersActions', () => {
           byoc: 'byoc',
           availability_zone_type: 'single',
           product: normalizedProducts.ANY,
+          billing_model: STANDARD,
           cost: 1,
         },
       ];
       userActions.processClusterQuota(clusterQuota, item, resources);
       [OCP, OSD, OSDTrial].forEach((product) => {
-        expect(clusterQuota[product].aws.byoc.singleAz['cpu.large']).toEqual(1);
-        expect(clusterQuota[product].aws.byoc.singleAz.available).toEqual(1);
-        expect(clusterQuota[product].aws.byoc.multiAz.available).toEqual(0);
-        expect(clusterQuota[product].aws.byoc.totalAvailable).toEqual(1);
-        expect(clusterQuota[product].aws.isAvailable).toEqual(true);
-        expect(clusterQuota[product].gcp.isAvailable).toEqual(false);
+        expect(clusterQuota[STANDARD][product].aws.byoc.singleAz['cpu.large']).toEqual(1);
+        expect(clusterQuota[STANDARD][product].aws.byoc.singleAz.available).toEqual(1);
+        expect(clusterQuota[STANDARD][product].aws.byoc.multiAz.available).toEqual(0);
+        expect(clusterQuota[STANDARD][product].aws.byoc.totalAvailable).toEqual(1);
+        expect(clusterQuota[STANDARD][product].aws.isAvailable).toEqual(true);
+        expect(clusterQuota[STANDARD][product].gcp.isAvailable).toEqual(false);
       });
     });
 
@@ -151,17 +157,18 @@ describe('clustersActions', () => {
         availability_zone_type: 'single',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz['gp.small']).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz.available).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.totalAvailable).toEqual(1);
-      expect(clusterQuota[OSD].aws.isAvailable).toEqual(true);
-      expect(clusterQuota[OSD].gcp.rhInfra.singleAz['gp.small']).toEqual(1);
-      expect(clusterQuota[OSD].gcp.rhInfra.singleAz.available).toEqual(1);
-      expect(clusterQuota[OSD].gcp.rhInfra.totalAvailable).toEqual(1);
-      expect(clusterQuota[OSD].gcp.isAvailable).toEqual(true);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz['gp.small']).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz.available).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.totalAvailable).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.isAvailable).toEqual(true);
+      expect(clusterQuota[STANDARD][OSD].gcp.rhInfra.singleAz['gp.small']).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].gcp.rhInfra.singleAz.available).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].gcp.rhInfra.totalAvailable).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].gcp.isAvailable).toEqual(true);
     });
 
     it('should process quota for any infrastructure', () => {
@@ -172,17 +179,18 @@ describe('clustersActions', () => {
         availability_zone_type: 'single',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
-      expect(clusterQuota[OSD].aws.byoc.singleAz['gp.small']).toEqual(1);
-      expect(clusterQuota[OSD].aws.byoc.singleAz.available).toEqual(1);
-      expect(clusterQuota[OSD].aws.byoc.totalAvailable).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz['gp.small']).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz.available).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.totalAvailable).toEqual(1);
-      expect(clusterQuota[OSD].aws.isAvailable).toEqual(true);
-      expect(clusterQuota[OSD].gcp.isAvailable).toEqual(false);
+      expect(clusterQuota[STANDARD][OSD].aws.byoc.singleAz['gp.small']).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.byoc.singleAz.available).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.byoc.totalAvailable).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz['gp.small']).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz.available).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.totalAvailable).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.isAvailable).toEqual(true);
+      expect(clusterQuota[STANDARD][OSD].gcp.isAvailable).toEqual(false);
     });
 
     it('should process quota for any availability zone', () => {
@@ -193,16 +201,18 @@ describe('clustersActions', () => {
         availability_zone_type: 'any',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processClusterQuota(clusterQuota, item, resources);
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz['gp.small']).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.singleAz.available).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.multiAz['gp.small']).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.multiAz.available).toEqual(1);
-      expect(clusterQuota[OSD].aws.rhInfra.totalAvailable).toEqual(1);
-      expect(clusterQuota[OSD].aws.isAvailable).toEqual(true);
-      expect(clusterQuota[OSD].gcp.isAvailable).toEqual(false);
+
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz['gp.small']).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.singleAz.available).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.multiAz['gp.small']).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.multiAz.available).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.rhInfra.totalAvailable).toEqual(1);
+      expect(clusterQuota[STANDARD][OSD].aws.isAvailable).toEqual(true);
+      expect(clusterQuota[STANDARD][OSD].gcp.isAvailable).toEqual(false);
     });
   });
 
@@ -210,14 +220,16 @@ describe('clustersActions', () => {
     let nodesQuota;
     beforeEach(() => {
       nodesQuota = {
-        // not all products, just enough for test.
-        [OSD]: {
-          aws: { byoc: {}, rhInfra: {} },
-          gcp: { rhInfra: {} },
-        },
-        [OCP]: {
-          aws: { byoc: {}, rhInfra: {} },
-          gcp: { rhInfra: {} },
+        standard: {
+          // not all products, just enough for test.
+          [OSD]: {
+            aws: { byoc: {}, rhInfra: {} },
+            gcp: { rhInfra: {} },
+          },
+          [OCP]: {
+            aws: { byoc: {}, rhInfra: {} },
+            gcp: { rhInfra: {} },
+          },
         },
       };
     });
@@ -229,10 +241,11 @@ describe('clustersActions', () => {
         byoc: 'rhinfra',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processNodeQuota(nodesQuota, item, resources);
-      expect(nodesQuota[OSD].aws.rhInfra['gp.small'].available).toEqual(1);
+      expect(nodesQuota[STANDARD][OSD].aws.rhInfra['gp.small'].available).toEqual(1);
     });
 
     it('should process quota for OSD compute nodes on AWS and byoc', () => {
@@ -243,6 +256,7 @@ describe('clustersActions', () => {
           byoc: 'rhinfra',
           resource_name: 'gp.small',
           product: OSD,
+          billing_model: STANDARD,
           cost: 1,
         },
         {
@@ -252,12 +266,13 @@ describe('clustersActions', () => {
           byoc: 'byoc',
           availability_zone_type: 'any',
           product: OSD,
+          billing_model: STANDARD,
           cost: 1,
         },
       ];
       userActions.processNodeQuota(nodesQuota, item, resources);
-      expect(nodesQuota[OSD].aws.rhInfra['gp.small'].available).toEqual(1);
-      expect(nodesQuota[OSD].aws.byoc['cpu.large'].available).toEqual(1);
+      expect(nodesQuota[STANDARD][OSD].aws.rhInfra['gp.small'].available).toEqual(1);
+      expect(nodesQuota[STANDARD][OSD].aws.byoc['cpu.large'].available).toEqual(1);
     });
 
     it('should process quota for any cloud provider', () => {
@@ -267,11 +282,12 @@ describe('clustersActions', () => {
         byoc: 'rhinfra',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processNodeQuota(nodesQuota, item, resources);
-      expect(nodesQuota[OSD].aws.rhInfra['gp.small'].available).toEqual(1);
-      expect(nodesQuota[OSD].gcp.rhInfra['gp.small'].available).toEqual(1);
+      expect(nodesQuota[STANDARD][OSD].aws.rhInfra['gp.small'].available).toEqual(1);
+      expect(nodesQuota[STANDARD][OSD].gcp.rhInfra['gp.small'].available).toEqual(1);
     });
 
     it('should process quota for any infrastructure', () => {
@@ -281,11 +297,12 @@ describe('clustersActions', () => {
         byoc: 'any',
         resource_name: 'gp.small',
         product: OSD,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processNodeQuota(nodesQuota, item, resources);
-      expect(nodesQuota[OSD].aws.byoc['gp.small'].available).toEqual(1);
-      expect(nodesQuota[OSD].aws.rhInfra['gp.small'].available).toEqual(1);
+      expect(nodesQuota[STANDARD][OSD].aws.byoc['gp.small'].available).toEqual(1);
+      expect(nodesQuota[STANDARD][OSD].aws.rhInfra['gp.small'].available).toEqual(1);
     });
 
     it('should process quota for any product', () => {
@@ -294,82 +311,129 @@ describe('clustersActions', () => {
         byoc: 'rhinfra',
         resource_name: 'gp.small',
         product: normalizedProducts.ANY,
+        billing_model: STANDARD,
         cost: 1,
       }];
       userActions.processNodeQuota(nodesQuota, item, resources);
-      expect(nodesQuota[OSD].aws.rhInfra['gp.small'].available).toEqual(1);
-      expect(nodesQuota[OCP].aws.rhInfra['gp.small'].available).toEqual(1);
+      expect(nodesQuota[STANDARD][OSD].aws.rhInfra['gp.small'].available).toEqual(1);
+      expect(nodesQuota[STANDARD][OCP].aws.rhInfra['gp.small'].available).toEqual(1);
     });
   });
 
   describe('processStorageQuota', () => {
     let storageQuota;
     beforeEach(() => {
-      storageQuota = {
-        aws: { available: 0 },
-        gcp: { available: 0 },
-      };
+      storageQuota = userActions.emptyQuota().storageQuota;
     });
 
     it('should process quota on AWS', () => {
       const resources = [{
+        resource_type: 'pv.storage',
         cloud_provider: 'aws',
+        byoc: 'rhinfra',
+        resource_name: 'gp2',
+        availability_zone_type: 'any',
+        product: OSD,
+        cost: 1,
       }];
-      userActions.processStorageQuota(storageQuota, item, resources);
-      expect(storageQuota.aws.available).toEqual(1);
-      expect(storageQuota.gcp.available).toEqual(0);
-    });
-
-    it('should process quota for any cloud provider', () => {
-      const resources = [{
-        cloud_provider: 'any',
-      }];
-      userActions.processStorageQuota(storageQuota, item, resources);
-      expect(storageQuota.aws.available).toEqual(1);
-      expect(storageQuota.gcp.available).toEqual(1);
+      userActions.processStorageQuota(storageQuota, { allowed: 2700, consumed: 0 }, resources);
+      expect(storageQuota[STANDARD][OSD].aws.rhInfra.singleAZ.gp2).toEqual(2700);
     });
   });
 
   describe('processLoadBalancerQuota', () => {
     let loadBalancerQuota;
     beforeEach(() => {
-      loadBalancerQuota = {
-        aws: { available: 0 },
-        gcp: { available: 0 },
-      };
+      loadBalancerQuota = userActions.emptyQuota().loadBalancerQuota;
     });
 
     it('should process quota on AWS', () => {
       const resources = [{
+        resource_type: 'network.loadbalancer',
         cloud_provider: 'aws',
+        byoc: 'rhinfra',
+        resource_name: 'network',
+        availability_zone_type: 'any',
+        product: OSD,
+        billing_model: 'standard',
+        cost: 1,
       }];
-      userActions.processLoadBalancerQuota(loadBalancerQuota, item, resources);
-      expect(loadBalancerQuota.aws.available).toEqual(1);
-      expect(loadBalancerQuota.gcp.available).toEqual(0);
-    });
-
-    it('should process quota for any cloud provider', () => {
-      const resources = [{
-        cloud_provider: 'any',
-      }];
-      userActions.processLoadBalancerQuota(loadBalancerQuota, item, resources);
-      expect(loadBalancerQuota.aws.available).toEqual(1);
-      expect(loadBalancerQuota.gcp.available).toEqual(1);
+      userActions.processLoadBalancerQuota(loadBalancerQuota,
+        { allowed: 40, consumed: 0 }, resources);
+      expect(loadBalancerQuota[STANDARD][OSD].aws.rhInfra.singleAZ.network).toEqual(40);
     });
   });
 
   describe('processAddOnQuota', () => {
     let addOnsQuota;
     beforeEach(() => {
-      addOnsQuota = {};
+      addOnsQuota = userActions.emptyQuota().addOnsQuota;
     });
 
-    it('should process quota', () => {
-      const resources = [{
-        resource_name: 'fake-addon',
-      }];
+    it('should process empty quota', () => {
+      const resources = [];
       userActions.processAddOnQuota(addOnsQuota, item, resources);
-      expect(addOnsQuota['fake-addon']).toEqual(1);
+      expect(addOnsQuota[STANDARD][OSD].aws.rhInfra.singleAz.available).toEqual(0);
+      expect(addOnsQuota[STANDARD][OSD].aws.rhInfra.totalAvailable).toEqual(0);
+      expect(addOnsQuota[STANDARD][OSD].aws.isAvailable).toEqual(false);
+    });
+
+    it('for a free addon with 0 allowed there are infinite available', () => {
+      const name = 'addon-cluster-logging-operator';
+      const resources = [{
+        resource_type: 'add-on',
+        cloud_provider: 'any',
+        byoc: 'any',
+        availability_zone_type: 'any',
+        resource_name: name,
+        product: 'ANY',
+        billing_model: STANDARD,
+        cost: 0,
+      }];
+      userActions.processAddOnQuota(addOnsQuota, { allowed: 0, consumed: 0 }, resources);
+      expect(addOnsQuota[STANDARD][OSD].aws.rhInfra.singleAz['other-addon']).toBeUndefined();
+      expect(addOnsQuota[STANDARD][OSD].aws.rhInfra.singleAz[name]).toEqual(Infinity);
+      expect(addOnsQuota[STANDARD][OSD].aws.rhInfra.singleAz.available).toEqual(Infinity);
+      expect(addOnsQuota[STANDARD][OSD].aws.byoc.totalAvailable).toEqual(Infinity);
+      expect(addOnsQuota[STANDARD][OSD].aws.isAvailable).toEqual(true);
+    });
+
+    it('for a cost 1 addon with 2 allowed but consumed 2 there are 0 available', () => {
+      const name = 'addon-cluster-logging-operator';
+      const resources = [{
+        resource_type: 'add-on',
+        cloud_provider: 'any',
+        byoc: 'rhinfra',
+        availability_zone_type: 'any',
+        resource_name: name,
+        product: 'OSD',
+        billing_model: STANDARD,
+        cost: 1,
+      }];
+      userActions.processAddOnQuota(addOnsQuota, { allowed: 2, consumed: 2 }, resources);
+
+      expect(addOnsQuota[STANDARD][OSD].aws.rhInfra.singleAz[name]).toEqual(0);
+      expect(addOnsQuota[STANDARD][OSD].aws.byoc.totalAvailable).toEqual(0);
+      expect(addOnsQuota[STANDARD][OSD].aws.isAvailable).toEqual(false);
+    });
+
+    it('for a cost 1 addon with 15 allowed there are 15 available', () => {
+      const name = 'addon-cluster-logging-operator';
+      const resources = [{
+        resource_type: 'add-on',
+        cloud_provider: 'any',
+        byoc: 'rhinfra',
+        availability_zone_type: 'any',
+        resource_name: name,
+        product: 'OSD',
+        billing_model: STANDARD,
+        cost: 1,
+      }];
+      userActions.processAddOnQuota(addOnsQuota, { allowed: 15, consumed: 0 }, resources);
+
+      expect(addOnsQuota[STANDARD][OSD].aws.rhInfra.singleAz[name]).toEqual(15);
+      expect(addOnsQuota[STANDARD][OSD].aws.rhInfra.totalAvailable).toEqual(15);
+      expect(addOnsQuota[STANDARD][OSD].aws.isAvailable).toEqual(true);
     });
   });
 });

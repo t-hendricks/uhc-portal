@@ -13,8 +13,6 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import isUuid from 'uuid-validate';
-import { Redirect } from 'react-router';
 import get from 'lodash/get';
 
 import {
@@ -30,8 +28,8 @@ import {
   Title,
   EmptyStateBody,
 } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
-import { Markdown } from '@redhat-cloud-services/rule-components/dist/cjs/index';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
+import { Markdown } from '@redhat-cloud-services/rule-components/Markdown';
 import moment from 'moment';
 import { EyeSlashIcon } from '@patternfly/react-icons';
 
@@ -71,19 +69,14 @@ class InsightsRuleDetails extends Component {
       clusterDetails,
       fetchReportData,
     } = this.props;
-    const clusterID = match.params.clusterId;
-    const oldClusterID = prevProps.match.params.clusterId;
+    const { subscriptionID } = match.params;
     const externalId = get(clusterDetails, 'cluster.external_id');
     const reportID = match.params.reportId.replace(/\|/g, '.');
     const { errorKey } = match.params;
 
-    if (get(clusterDetails, 'cluster.id') === clusterID) {
+    if (get(clusterDetails, 'cluster.subscription.id') === subscriptionID) {
       const clusterName = getClusterName(clusterDetails.cluster);
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
-    }
-
-    if (clusterID !== oldClusterID && isValid(clusterID)) {
-      this.refresh();
     }
 
     if (
@@ -104,11 +97,11 @@ class InsightsRuleDetails extends Component {
       match,
       clusterDetails,
     } = this.props;
-    const { clusterId, errorKey } = match.params;
+    const { subscriptionID, errorKey } = match.params;
     const reportID = match.params.reportId.replace(/\|/g, '.');
-    if (isValid(clusterId)) {
+    if (isValid(subscriptionID)) {
       this.fetchDetailsAndInsightsData(
-        clusterId,
+        subscriptionID,
         get(clusterDetails, 'cluster.external_id'),
         reportID,
         errorKey,
@@ -117,12 +110,12 @@ class InsightsRuleDetails extends Component {
     }
   }
 
-  fetchDetailsAndInsightsData(clusterId, externalId, reportId, errorKey, isOSD) {
+  fetchDetailsAndInsightsData(subscriptionID, externalId, reportId, errorKey, isOSD) {
     const {
       fetchClusterDetails,
       fetchReportData,
     } = this.props;
-    fetchClusterDetails(clusterId);
+    fetchClusterDetails(subscriptionID);
     if (externalId) {
       fetchReportData(externalId, reportId, errorKey, isOSD);
     }
@@ -142,21 +135,14 @@ class InsightsRuleDetails extends Component {
 
     const { cluster } = clusterDetails;
 
-    // InsightsRuleDetails can be entered via normal id from OCM, or via external_id (a uuid)
-    // from openshift console. if we enter via the uuid, switch to the normal id.
-    const requestedClusterID = match.params.clusterId;
+    const requestedSubscriptionID = match.params.subscriptionID;
     const requestedReportID = match.params.reportId.replace(/\|/g, '.');
-    if (cluster && cluster.shouldRedirect && isUuid(requestedClusterID)) {
-      return (
-        <Redirect to={`/details/${cluster.id}/insights/${match.params.reportId}`} />
-      );
-    }
 
     // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
     // the redux state will have the data for the previous cluster. We want to ensure we only
     // show data for the requested cluster, so different data should be marked as pending.
 
-    const isPending = (((get(cluster, 'id') !== requestedClusterID) && !clusterDetails.error) || (get(reportDetails.report, 'rule_id') !== requestedReportID && !reportDetails.rejected));
+    const isPending = (((get(cluster, 'subscription.id') !== requestedSubscriptionID) && !clusterDetails.error) || (get(reportDetails.report, 'rule_id') !== requestedReportID && !reportDetails.rejected));
 
     const errorClusterState = () => (
       <>
@@ -184,13 +170,13 @@ class InsightsRuleDetails extends Component {
 
     // show a full error state only if we don't have data at all,
     // or when we only have data for a different cluster
-    if (clusterDetails.error && (!cluster || get(cluster, 'id') !== requestedClusterID)) {
+    if (clusterDetails.error && (!cluster || get(cluster, 'id') !== requestedSubscriptionID)) {
       if (clusterDetails.errorCode === 404) {
         setGlobalError((
           <>
             Cluster
             {' '}
-            <b>{requestedClusterID}</b>
+            <b>{requestedSubscriptionID}</b>
             {' '}
             was not found, it might have been deleted or you don&apos;t have permission to see it.
           </>
@@ -251,27 +237,27 @@ class InsightsRuleDetails extends Component {
             ? (
               <div>
                 <Card>
-                  <CardTitle className="disabled-health-check-title">Heath check is disabled</CardTitle>
+                  <CardTitle className="disabled-recommendation-title">Recommendation is disabled</CardTitle>
                   <CardBody>
-                    <div className="disabled-heath-check-message">
-                      This health check is disabled for the following reason:
+                    <div className="disabled-recommendation-message">
+                      This recommendation is disabled for the following reason:
                       <i>{ ruleDisableFeedback && ruleDisableFeedback.length ? ruleDisableFeedback : 'None' }</i>
                       <span>{moment(ruleDisabledAtDate).format('DD MMM YYYY')}</span>
                     </div>
                   </CardBody>
                   <CardFooter>
                     <Button variant="link" isInline onClick={() => enableRule(currentRuleId)}>
-                      Enable health check
+                      Enable recommendation
                     </Button>
                   </CardFooter>
                 </Card>
                 <EmptyState>
                   <EmptyStateIcon icon={EyeSlashIcon} />
                   <Title size="lg" headingLevel="h4">
-                    Health check is disabled
+                    Recommendation is disabled
                   </Title>
                   <EmptyStateBody>
-                    This health check has been disabled and has no results.
+                    This recommendation has been disabled and has no results.
                   </EmptyStateBody>
                 </EmptyState>
               </div>

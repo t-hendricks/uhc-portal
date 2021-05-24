@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Bullseye } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import {
   NoIssuesMessage,
   NoRulesMessage,
@@ -14,7 +14,6 @@ import './index.scss';
 
 const Insights = ({
   insightsData,
-  voteOnRule,
   disableRule,
   enableRule,
   groups,
@@ -52,7 +51,6 @@ const Insights = ({
       cluster={cluster}
       insightsData={insightsData}
       groups={groups}
-      voteOnRule={voteOnRule}
       disableRule={disableRule}
       enableRule={enableRule}
       openModal={openModal}
@@ -64,7 +62,6 @@ Insights.propTypes = {
   cluster: PropTypes.object.isRequired,
   insightsData: PropTypes.object,
   groups: PropTypes.array.isRequired,
-  voteOnRule: PropTypes.func.isRequired,
   disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,

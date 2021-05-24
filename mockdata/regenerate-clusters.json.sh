@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-cd "$(dirname "$0")"  # directory of this script
+cd "$(dirname "$0")" # directory of this script
 cd "$(git rev-parse --show-toplevel)"
 
 CLUSTERS=mockdata/api/clusters_mgmt/v1/clusters
@@ -12,7 +12,7 @@ jq --slurp '{
   size: . | length,
   total: . | length,
   items: . | sort_by(.display_name),
-}' "$CLUSTERS"/*.json > "$CLUSTERS.json"
+}' "$CLUSTERS"/*.json >"$CLUSTERS.json"
 
 echo "Regenerated '$CLUSTERS.json'."
 git status --short "$CLUSTERS.json"
@@ -23,7 +23,7 @@ jq --slurp '{
   size: . | length,
   total: . | length,
   items: . | sort_by(.display_name),
-}' "$SUBSCRIPTIONS"/*.json > "$SUBSCRIPTIONS.json"
+}' "$SUBSCRIPTIONS"/*.json >"$SUBSCRIPTIONS.json"
 
 echo "Regenerated '$SUBSCRIPTIONS.json'."
 git status --short "$SUBSCRIPTIONS.json"
@@ -33,10 +33,14 @@ echo "Checking consistency between '$CLUSTERS.json' and '$SUBSCRIPTIONS.json':"
 echo "# order is [cluster id, subscription id, external id, display name]"
 echo "# both sides should be sorted by display_name."
 
-diff --report-identical-files --side-by-side --label="from $CLUSTERS.json" --label="from $SUBSCRIPTIONS.json" \
- <(jq '.items[] | [.id, .subscription.id, .external_id, .display_name]' "$CLUSTERS.json") \
- <(jq '.items[] | [.cluster_id, .id, .external_cluster_id, .display_name]' "$SUBSCRIPTIONS.json") |
-(colordiff || cat)
+# During install, clusters-service can know external_id while account-manager still has null.
+# To allow the comparison to pass, replace those
+diff --report-identical-files --side-by-side \
+  --ignore-matching-lines='EXPECT-AMS-null\|null,' \
+  --label="from $CLUSTERS.json" --label="from $SUBSCRIPTIONS.json" \
+  <(jq '.items[] | [.id, .subscription.id, .external_id, .display_name]' "$CLUSTERS.json") \
+  <(jq '.items[] | [.cluster_id, .id, .external_cluster_id, .display_name]' "$SUBSCRIPTIONS.json") |
+  (colordiff || cat)
 
 # exit status - only 0 if nothing changes and consistency was good
 [ "${PIPESTATUS[0]}" == 0 ] && git diff --quiet -- "$CLUSTERS.json" "$SUBSCRIPTIONS.json"

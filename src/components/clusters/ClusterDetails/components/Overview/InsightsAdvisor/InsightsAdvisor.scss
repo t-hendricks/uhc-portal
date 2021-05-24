@@ -1,0 +1,26 @@
+.ocm-c-overview-advisor {
+  &--card {
+    &__title {
+      display: inline-block;
+      margin-right: 9px;
+    }
+  }
+
+  &--enabled-link {
+    tspan {
+      fill: var(--pf-global--link--Color) !important;
+      cursor: pointer;
+
+      &:hover {
+        fill: var(--pf-global--link--Color--hover) !important;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &--disabled-link {
+    tspan {
+      fill: gray !important;
+    }
+  }
+}

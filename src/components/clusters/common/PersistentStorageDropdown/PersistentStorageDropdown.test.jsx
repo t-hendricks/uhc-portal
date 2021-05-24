@@ -2,18 +2,14 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import PersistentStorageDropdown from './PersistentStorageDropdown';
+import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
+import { storageQuotaList } from '../__test__/quota.fixtures';
 
 const baseState = {
   error: false,
   errorMessage: '',
   pending: false,
   fulfilled: false,
-  values: [],
-};
-
-const organizationState = {
-  fulfilled: true,
-  pending: false,
 };
 
 describe('<PersistentStorageDropdown />', () => {
@@ -29,9 +25,13 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={baseState}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          organization={organizationState}
+          quotaList={storageQuotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
-          storageQuota={0}
         />,
       );
     });
@@ -63,8 +63,12 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          storageQuota={0}
-          organization={organizationState}
+          quotaList={storageQuotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
         />,
       );
@@ -94,8 +98,12 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          storageQuota={0}
-          organization={organizationState}
+          quotaList={storageQuotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
         />,
       );
@@ -125,8 +133,6 @@ describe('<PersistentStorageDropdown />', () => {
         values: [{ unit: 'B', value: 107374182400 }, { unit: 'B', value: 644245094400 }, { unit: 'B', value: 1181116006400 }],
       };
 
-      const quota = 600;
-
       getPersistentStorage = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
@@ -134,8 +140,12 @@ describe('<PersistentStorageDropdown />', () => {
           persistentStorageValues={state}
           input={{ onChange }}
           getPersistentStorage={getPersistentStorage}
-          storageQuota={quota}
-          organization={organizationState}
+          quotaList={storageQuotaList}
+          product={fixtures.clusterDetails.cluster.subscription.plan.id}
+          cloudProviderID={fixtures.clusterDetails.cluster.cloud_provider.id}
+          billingModel="standard"
+          isBYOC={fixtures.clusterDetails.cluster.ccs.enabled}
+          isMultiAZ={fixtures.clusterDetails.cluster.multi_az}
           disabled={false}
         />,
       );

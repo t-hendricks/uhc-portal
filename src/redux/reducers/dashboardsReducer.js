@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import produce from 'immer';
+import get from 'lodash/get';
 import {
   REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../reduxHelpers';
@@ -28,7 +29,7 @@ const initialState = {
   },
   unhealthyClusters: {
     ...baseRequestState,
-    clusters: [],
+    subscriptions: [],
   },
 };
 
@@ -65,16 +66,26 @@ function dashboardsReducer(state = initialState, action) {
       case PENDING_ACTION(dashboardsConstants.GET_UNHEALTHY_CLUSTERS):
         draft.unhealthyClusters.pending = true;
         break;
-      case FULFILLED_ACTION(dashboardsConstants.GET_UNHEALTHY_CLUSTERS):
+      case FULFILLED_ACTION(dashboardsConstants.GET_UNHEALTHY_CLUSTERS): {
+        // convert metrics array to its first item
+        const items = action.payload.data.items.map((item) => {
+          const metrics = get(item, 'metrics[0]', {});
+          return {
+            ...item,
+            metrics,
+          };
+        });
         draft.unhealthyClusters = {
           ...initialState.unhealthyClusters,
           fulfilled: true,
-          clusters: action.payload.data.items,
+          subscriptions: items,
         };
         break;
+      }
     }
   });
 }
+
 dashboardsReducer.initialState = initialState;
 
 export { initialState, dashboardsReducer };

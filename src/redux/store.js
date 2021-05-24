@@ -3,7 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import { routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
-import { notificationsMiddleware } from '@redhat-cloud-services/frontend-components-notifications';
+import { notificationsMiddleware } from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
 
 import { reduxReducers } from './reducers';
 import sentryMiddleware from './sentryMiddleware';

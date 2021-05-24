@@ -18,39 +18,27 @@
 # This script is executed by a Jenkins job for each change request. If it
 # doesn't succeed the change won't be merged.
 
-# The cert required to connect to Nexus is already in system CA store per:
-# https://gitlab.cee.redhat.com/app-sre/infra/blob/master/ansible/playbooks/roles/baseline/tasks/main.yml
-# but not sufficient for unknown reason?
-export npm_config_cafile=/etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
-ls -l /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
-yarn config list
+# Log in to the image registry. This is needed because some of the images used
+# for the Selenium tests (the `nginx` image in particular) are private.
+if [ -z "${QUAY_USER}" ]; then
+  echo "Environment variable 'QUAY_USER' is mandatory."
+  exit 1
+fi
+if [ -z "${QUAY_TOKEN}" ]; then
+  echo "Environment variable 'QUAY_TOKEN' is mandatory."
+  exit 1
+fi
+podman login -u "${QUAY_USER}" -p "${QUAY_TOKEN}" quay.io
 
 # Run the checks:
 
-mockdata/regenerate-clusters.json.sh  # first because really fast
+mockdata/regenerate-clusters.json.sh # first because really fast
 
 make \
-  lint \
+  js-lint \
   app \
   test \
   binaries
-
-# Selenium tests
-# --------------
-function finish {
-  # Commands here should always return 0, to retain exit code from the test.
-
-  # Don't leave run-away containers.
-  yarn stop || true
-  run/podman-or-docker.sh ps --all || true
-  pgrep --full --list-full spandx || true
-}
-trap finish EXIT
-
-make run/verification-tests
-# Re-pulling allows iterating on a new version of the image (OK to keep pushing the new tag until merged).
-# But when Quay is down and we have a cached image, use it.
-make selenium-tests-pull || true
 
 # Comes from Vault, see
 # https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/resources/jenkins/uhc/secrets.yaml
@@ -58,7 +46,14 @@ export UHC_TOKEN=$TEST_SELENIUM_NOANYQUOTA_OFFLINE_TOKEN
 export UNATTENDED=1
 export FORCE_COLOR=1
 
-# If test gets stuck, stop after realistic time.
-# Jenkins aborting after 30min is wasteful and doesn't
-# give our `finish` function enough time to clean up.
-timeout --signal=TERM --kill-after=2m 5m yarn e2e-test-run
+# Run the Selenium tests. If they get stuck, stop after realistic time. Jenkins
+# aborting after 30 minutes is wasteful and doesn't give our `cleanup` function
+# enough time to clean up.
+timeout \
+  --signal "TERM" \
+  --kill-after "2m" \
+  "5m" \
+  "run/selenium-pod.sh"
+
+make \
+  go-lint

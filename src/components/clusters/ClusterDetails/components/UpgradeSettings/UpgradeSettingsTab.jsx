@@ -10,6 +10,9 @@ import getClusterName from '../../../../../common/getClusterName';
 import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
+import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
+import '../../../common/Upgrades/UpgradeSettingsFields.scss';
+import clusterStates from '../../../common/clusterStates';
 
 class UpgradeSettingsTab extends React.Component {
   state = { confirmationModalOpen: false }
@@ -73,6 +76,10 @@ class UpgradeSettingsTab extends React.Component {
     // eslint-disable-next-line camelcase
     const availableUpgrades = cluster?.version?.available_upgrades;
 
+    const showUpdateButton = !!cluster.openshift_version
+                            && availableUpgrades?.length > 0
+                            && !scheduledUpgrade && !clusterHibernating;
+
     const isPending = upgradeScheduleRequest.pending
                    || deleteScheduleRequest.pending
                    || editClusterRequest.pending;
@@ -87,6 +94,7 @@ class UpgradeSettingsTab extends React.Component {
         Save
       </Button>
     );
+    const disableUVM = cluster.state !== clusterStates.READY;
 
     const hibernatingClusterInfo = (
       <Alert
@@ -99,10 +107,17 @@ class UpgradeSettingsTab extends React.Component {
     );
 
     return (
-      <Grid hasGutter>
-        <GridItem lg={9} md={12}>
+      <Grid hasGutter className="ocm-c-upgrade-monitoring">
+        <GridItem>
           <Card>
-            <CardTitle>Update Strategy</CardTitle>
+            <CardBody>
+              <UserWorkloadMonitoringSection parent="details" disableUVM={disableUVM} />
+            </CardBody>
+          </Card>
+        </GridItem>
+        <GridItem lg={9} md={12} className="ocm-c-upgrade-monitoring-top">
+          <Card>
+            <CardTitle>Update strategy</CardTitle>
             <CardBody>
               {scheduledManualUpgrade && confirmationModalOpen && (
               <Modal
@@ -126,13 +141,13 @@ class UpgradeSettingsTab extends React.Component {
               )}
               {clusterHibernating && hibernatingClusterInfo}
               {upgradeScheduleRequest.error && (
-                <ErrorBox response={upgradeScheduleRequest} message="Can't schedule upgrade" />
+              <ErrorBox response={upgradeScheduleRequest} message="Can't schedule upgrade" />
               )}
               {deleteScheduleRequest.error && (
-                <ErrorBox response={deleteScheduleRequest} message="Can't unschedule upgrade" />
+              <ErrorBox response={deleteScheduleRequest} message="Can't unschedule upgrade" />
               )}
               {editClusterRequest.error && (
-                <ErrorBox response={editClusterRequest} message="Can't set grace period" />
+              <ErrorBox response={editClusterRequest} message="Can't set grace period" />
               )}
               <Form>
                 <Grid hasGutter>
@@ -161,14 +176,14 @@ class UpgradeSettingsTab extends React.Component {
                 </FlexItem>
                 <FlexItem>
                   <Button onClick={reset} variant="link" isDisabled={actionsDisabled}>
-                  Cancel
+                    Cancel
                   </Button>
                 </FlexItem>
               </Flex>
             </CardFooter>
           </Card>
         </GridItem>
-        <GridItem lg={3} md={12}>
+        <GridItem lg={3} md={12} className="ocm-c-upgrade-monitoring-top">
           <Card>
             <CardTitle>
               Update Status
@@ -182,7 +197,7 @@ class UpgradeSettingsTab extends React.Component {
                 availableUpgrades={availableUpgrades}
                 openModal={openModal}
               />
-              {availableUpgrades?.length > 0 && !scheduledUpgrade && !clusterHibernating && (
+              {showUpdateButton && (
                 <Button
                   variant="secondary"
                   onClick={() => openModal(modals.UPGRADE_WIZARD,
@@ -217,6 +232,7 @@ UpgradeSettingsTab.propTypes = {
       channel_group: PropTypes.string,
       available_upgrades: PropTypes.arrayOf(PropTypes.string),
     }),
+    state: PropTypes.string,
   }),
   getSchedules: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,

@@ -154,13 +154,6 @@ ${SUBJECT}
   popd
 }
 
-# Configure the cert required to connect to Nexus (yarn respects npm configs too).
-# The file is placed there by
-# https://gitlab.cee.redhat.com/app-sre/infra/blob/master/ansible/playbooks/roles/baseline/tasks/main.yml
-export npm_config_cafile=/etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
-ls -l /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
-yarn config list
-
 # Install dependencies:
 echo "Installing dependencies"
 rm -rf node_modules
@@ -170,25 +163,31 @@ if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     echo "running staging push"
     echo "staging branch is available on https://qaprodauth.cloud.redhat.com/openshift"
     rm -rf build
-    yarn build --mode=production --api-env="staging"
+    yarn build --mode=production --env api-env=staging
     push_build "qa-stable"
 
     echo "running staging (qa-beta) push"
     echo "staging branch is available on https://qaprodauth.cloud.redhat.com/beta/openshift"
     rm -rf build
-    yarn build --mode=production --beta="true" --api-env="staging"
+    yarn build --mode=production --env api-env=staging beta="true"
     push_build "qa-beta"
+
+    echo "running push to secondary environment - ci-beta (not supported)"
+    rm -rf build
+    yarn build --mode=production --env api-env=disabled beta="true"
+    push_build "ci-beta"
+
 elif [ "$1" == "candidate" ]; then
     echo "running candidate push"
     echo "Candidate branch is available on https://cloud.redhat.com/beta/openshift"
     rm -rf build
-    yarn build --mode=production --beta="true" --api-env="production"
+    yarn build --mode=production --env api-env=production beta="true"
     push_build "prod-beta"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
     echo "stable branch is available on https://cloud.redhat.com/openshift"
     rm -rf build
-    yarn build --mode=production --beta="false" --api-env="production"
+    yarn build --mode=production --env api-env=production beta="false"
     push_build "prod-stable"
 else
     echo "mode (first param) must be one of: staging / candidate / stable"

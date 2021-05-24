@@ -15,8 +15,8 @@ describe('Register cluster flow', async () => {
     expect(await ClusterListPage.createClusterBtn).toExist();
   });
 
-  it('navigate to register cluster', async () => {
-    await ClusterListPage.navigateToRegisterCluster();
+  it('navigate to register cluster (wide window)', async () => {
+    await ClusterListPage.navigateToRegisterCluster({ wide: true });
     expect(await RegisterClusterPage.isRegisterClusterPage()).toBeTruthy();
   });
 
@@ -52,7 +52,7 @@ describe('Register cluster flow', async () => {
   });
 
   it('creates a new cluster and redirects to its details page', async () => {
-    await ClusterListPage.navigateToRegisterCluster();
+    await ClusterListPage.navigateToRegisterCluster({ wide: true });
     expect(await RegisterClusterPage.isRegisterClusterPage()).toBeTruthy();
 
     const clusterID = v4();
@@ -65,7 +65,7 @@ describe('Register cluster flow', async () => {
     expect(ClusterDetailsPage.isClusterDetailsPage(clusterID)).toBeTruthy();
   });
 
-  it('sucessfully changes the console URL for the cluster', async () => {
+  it('successfully changes the console URL for the cluster', async () => {
     await (await ClusterDetailsPage.addConsoleURLButton).click();
     await (await ClusterDetailsPage.editConsoleURLDialogInput).setValue('http://example.com');
     await (await ClusterDetailsPage.editConsoleURLDialogConfirm).click();
@@ -74,8 +74,10 @@ describe('Register cluster flow', async () => {
   });
 
   it('successfully changes display name', async () => {
+    await (await ClusterDetailsPage.actionsDropdownToggle).waitForClickable();
     await (await ClusterDetailsPage.actionsDropdownToggle).click();
     await (await ClusterDetailsPage.editDisplayNameDropdownItem).click();
+    expect(ClusterDetailsPage.editDisplayNameInput).toExist();
     await (await ClusterDetailsPage.editDisplayNameInput).setValue(`${clusterName}-test`);
     await (await ClusterDetailsPage.editDisplaynameConfirm).click();
     expect(ClusterDetailsPage.editDisplaynameConfirm).not.toExist();
@@ -106,5 +108,5 @@ describe('Register cluster flow', async () => {
     await (await ClusterDetailsPage.actionsDropdownToggle).click();
     await (await ClusterDetailsPage.archiveClusterDropdownItem).click();
     await (await ClusterDetailsPage.archiveClusterDialogConfirm).click();
-  }).timeout(8000);
+  });
 });

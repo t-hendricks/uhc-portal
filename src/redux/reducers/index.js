@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { connectRouter } from 'connected-react-router';
-import { notifications } from '@redhat-cloud-services/frontend-components-notifications';
 
+import notifications from '@redhat-cloud-services/frontend-components-notifications/redux/actions/notifications';
 import { clustersReducer } from './clustersReducer';
 import { clusterLogReducer } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogReducer';
 import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
@@ -11,6 +11,7 @@ import userReducer from './userReducer';
 import tollboothReducer from './tollbooth';
 import { dashboardsReducer } from './dashboardsReducer';
 import { cloudProvidersReducer } from './cloudProvidersReducer';
+import { costReducer } from './costReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
 import { InstallationLogReducer } from '../../components/clusters/ClusterDetails/components/Overview/InstallationLogView/InstallationLogReducer';
 import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersModal/IdentityProvidersReducer';
@@ -63,6 +64,7 @@ const reducers = {
   subscriptionReleased: subscriptionReleasedReducer,
   insightsData: insightsReducer,
   clusterRouters: NetworkingReducer,
+  cost: costReducer,
   dashboards: dashboardsReducer,
   supportStatus: supportStatusReducer,
   features: featuresReducer,

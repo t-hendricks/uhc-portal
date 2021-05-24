@@ -28,10 +28,20 @@ const baseState = {
   valid: true,
 };
 
+// Fields here, that are *also* known to be always present from backend -> normalize.js results,
+// can be assumed always present.
+const emptyCluster = {
+  managed: false,
+  ccs: {
+    enabled: false,
+  },
+};
+
 const initialState = {
   clusters: {
     ...baseState,
     valid: false,
+    meta: {},
     clusters: [],
     queryParams: {},
   },
@@ -41,29 +51,31 @@ const initialState = {
   },
   details: {
     ...baseState,
-    cluster: null,
+    cluster: emptyCluster,
   },
   createdCluster: {
     ...baseState,
-    cluster: null,
+    cluster: emptyCluster,
   },
   editedCluster: {
     ...baseState,
-    cluster: null,
+    cluster: emptyCluster,
   },
   archivedCluster: {
     ...baseState,
-    cluster: null,
+    cluster: emptyCluster,
   },
   unarchivedCluster: {
     ...baseState,
-    cluster: null,
+    cluster: emptyCluster,
   },
   hibernatingCluster: {
     ...baseState,
+    cluster: emptyCluster,
   },
   resumeHibernatingCluster: {
     ...baseState,
+    cluster: emptyCluster,
   },
 };
 
@@ -91,16 +103,23 @@ function clustersReducer(state = initialState, action) {
           clusters: state.clusters.clusters,
         };
         break;
-      case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
+      case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS): {
+        const { data } = action.payload;
+        const clustersServiceError = !!data?.meta?.clustersServiceError
+                                     && getErrorState({ payload: data.meta.clustersServiceError });
         draft.clusters = {
           ...initialState.clusters,
-          clusters: action.payload.data.items,
-          queryParams: action.payload.data.queryParams,
+          clusters: data.items,
+          queryParams: data.queryParams,
+          meta: {
+            clustersServiceError: clustersServiceError || undefined,
+          },
           pending: false,
           fulfilled: true,
           valid: true,
         };
         break;
+      }
       case clustersConstants.SET_CLUSTER_DETAILS: {
         const { cluster, mergeDetails } = action.payload;
         draft.details = {
@@ -288,6 +307,32 @@ function clustersReducer(state = initialState, action) {
         };
         break;
 
+      // Upgrade trial cluster
+      case FULFILLED_ACTION(clustersConstants.UPGRADE_TRIAL_CLUSTER):
+        draft.upgradedCluster = {
+          ...initialState.upgradedCluster,
+          cluster: action.payload.data,
+          fulfilled: true,
+        };
+        break;
+      case REJECTED_ACTION(clustersConstants.UPGRADE_TRIAL_CLUSTER):
+        draft.upgradedCluster = {
+          ...initialState.upgradedCluster,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.UPGRADE_TRIAL_CLUSTER):
+        draft.upgradeCluster = {
+          ...initialState.upgradedCluster,
+          pending: true,
+        };
+        break;
+      case clustersConstants.CLEAR_UPGRADE_TRIAL_CLUSTER_RESPONSE:
+        draft.upgradedCluster = {
+          ...initialState.upgradedCluster,
+        };
+        break;
+
       // GET_CLUSTER_STATUS
       case REJECTED_ACTION(clustersConstants.GET_CLUSTER_STATUS):
         draft.clusterStatus = {
@@ -309,7 +354,6 @@ function clustersReducer(state = initialState, action) {
           status: action.payload.data,
         };
         break;
-
 
       default:
         return state;

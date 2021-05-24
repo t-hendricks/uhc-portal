@@ -12,6 +12,10 @@ class TabsRow extends React.Component {
     initialTabKey: this.getInitTab(),
   };
 
+  componentDidMount() {
+    window.addEventListener('popstate', this.onPopState);
+  }
+
   componentDidUpdate() {
     const { activeTabKey, initialTabKey } = this.state;
     const {
@@ -27,6 +31,10 @@ class TabsRow extends React.Component {
     if (initialTabKey !== null && initialTab.show) {
       this.handleTabClick(undefined, initialTabKey);
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('popstate', this.onPopState);
   }
 
   getInitTab() {
@@ -48,7 +56,7 @@ class TabsRow extends React.Component {
       displaySupportTab,
       displayMachinePoolsTab,
       displayUpgradeSettingsTab,
-      displayAddBareMetalHosts,
+      displayAddAssistedHosts,
       overviewTabRef,
       monitoringTabRef,
       accessControlTabRef,
@@ -58,7 +66,7 @@ class TabsRow extends React.Component {
       insightsTabRef,
       machinePoolsTabRef,
       upgradeSettingsTabRef,
-      addBareMetalTabRef,
+      addAssistedTabRef,
       hasIssues,
       hasIssuesInsights,
     } = this.props;
@@ -112,9 +120,9 @@ class TabsRow extends React.Component {
         key: 5,
         title:
   <>
-    <TabTitleText>Insights</TabTitleText>
+    <TabTitleText>Insights Advisor</TabTitleText>
     {hasIssuesInsights
-    && <TabTitleIcon id="insights-issues-icon"><ExclamationCircleIcon className="danger" /></TabTitleIcon>}
+      ? <TabTitleIcon id="insights-issues-icon"><ExclamationCircleIcon className="danger" /></TabTitleIcon> : ''}
   </>,
         contentId: 'insightsTabContent',
         id: 'insights',
@@ -139,7 +147,7 @@ class TabsRow extends React.Component {
       },
       {
         key: 8,
-        title: 'Update settings',
+        title: 'Settings',
         contentId: 'upgradeSettingsTabContent',
         id: 'updateSettings',
         show: displayUpgradeSettingsTab,
@@ -147,11 +155,11 @@ class TabsRow extends React.Component {
       },
       {
         key: 9,
-        title: 'Bare Metal',
-        contentId: 'addBareMetalHostsContent',
-        id: 'addBareMetalHosts',
-        show: displayAddBareMetalHosts,
-        ref: addBareMetalTabRef,
+        title: 'Add Hosts',
+        contentId: 'addHostsContent',
+        id: 'addAssistedHosts',
+        show: displayAddAssistedHosts,
+        ref: addAssistedTabRef,
       },
     ];
   }
@@ -180,6 +188,16 @@ class TabsRow extends React.Component {
         }
       }
     });
+  };
+
+  /* use browser API (window) as a temporary workaround to change
+     the active tab when hash is changed inside URL */
+  onPopState = ({ target }) => {
+    const targetTabKey = this.getTabs()
+      .find(t => t.id === target.location.hash.substring(1))?.key;
+    if (targetTabKey) {
+      this.handleTabClick(undefined, targetTabKey);
+    }
   };
 
   render() {
@@ -212,7 +230,7 @@ TabsRow.propTypes = {
   displaySupportTab: PropTypes.bool,
   displayMachinePoolsTab: PropTypes.bool,
   displayUpgradeSettingsTab: PropTypes.bool,
-  displayAddBareMetalHosts: PropTypes.bool,
+  displayAddAssistedHosts: PropTypes.bool,
   overviewTabRef: PropTypes.object.isRequired,
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
@@ -222,7 +240,7 @@ TabsRow.propTypes = {
   networkingTabRef: PropTypes.object.isRequired,
   supportTabRef: PropTypes.object.isRequired,
   upgradeSettingsTabRef: PropTypes.object.isRequired,
-  addBareMetalTabRef: PropTypes.object.isRequired,
+  addAssistedTabRef: PropTypes.object.isRequired,
   hasIssues: PropTypes.bool.isRequired,
   hasIssuesInsights: PropTypes.bool.isRequired,
   initTabOpen: PropTypes.string,
@@ -237,7 +255,7 @@ TabsRow.defaultProps = {
   displayAddOnsTab: false,
   displayNetworkingTab: false,
   displayMachinePoolsTab: false,
-  displayAddBareMetalHosts: false,
+  displayAddAssistedHosts: false,
   initTabOpen: '',
 };
 

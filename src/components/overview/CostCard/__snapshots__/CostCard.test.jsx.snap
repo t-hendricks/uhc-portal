@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CostCard /> When cost report is available renders cluster costs 1`] = `
+<Card
+  className="ocm--cost-card"
+>
+  <CardTitle>
+    <Title
+      headingLevel="h2"
+      size="lg"
+    >
+      Cost Management
+    </Title>
+  </CardTitle>
+  <CardBody
+    className="ocm--cost-card__body"
+  >
+    <CostSummary
+      report={
+        Object {
+          "data": Array [
+            Object {
+              "clusters": Array [
+                Object {
+                  "values": Array [
+                    Object {
+                      "cluster": "a94ea9bc-9e4f-4b91-89c2-c7099ec08427",
+                      "clusters": Array [
+                        "OCP-OnPrem01",
+                      ],
+                      "cost": Object {
+                        "total": Object {
+                          "units": "USD",
+                          "value": 27664.774872,
+                        },
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "values": Array [
+                    Object {
+                      "cluster": "d37fd94b-f44c-4da7-b6d1-9d8344f7977c",
+                      "clusters": Array [
+                        "DemoCluster4.6-Go",
+                      ],
+                      "cost": Object {
+                        "total": Object {
+                          "units": "USD",
+                          "value": 2378.2362022992506,
+                        },
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "values": Array [
+                    Object {
+                      "cluster": "8a3e59b7-23a8-4ed1-b1cf-afd5afea54b9",
+                      "clusters": Array [
+                        "OpenShift on AWS",
+                      ],
+                      "cost": Object {
+                        "total": Object {
+                          "units": "USD",
+                          "value": 537.552548636,
+                        },
+                      },
+                    },
+                  ],
+                },
+                Object {
+                  "values": Array [
+                    Object {
+                      "cluster": "eb93b259-1369-4f90-88ce-e68c6ba879a9",
+                      "clusters": Array [
+                        "OpenShift on Azure",
+                      ],
+                      "cost": Object {
+                        "total": Object {
+                          "units": "USD",
+                          "value": 0,
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          "fulfilled": true,
+          "meta": Object {},
+          "pending": false,
+        }
+      }
+    />
+  </CardBody>
+  <CardFooter>
+    <a
+      href="//cost-management"
+    >
+      View more in Cost management
+    </a>
+  </CardFooter>
+</Card>
+`;
+
+exports[`<CostCard /> When no source providers are available renders empty state 1`] = `
+<Card
+  className="ocm--cost-card"
+>
+  <CardTitle>
+    <Title
+      headingLevel="h2"
+      size="lg"
+    >
+      Cost Management
+    </Title>
+  </CardTitle>
+  <CardBody
+    className="ocm--cost-card__body"
+  >
+    <CostEmptyState />
+  </CardBody>
+</Card>
+`;

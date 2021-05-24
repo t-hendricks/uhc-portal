@@ -12,6 +12,8 @@ describe('<Overview />', () => {
       history: {},
       displayClusterLogs: false,
       openModal: jest.fn(),
+      insightsData: {},
+      userAccess: fixtures.userAccess,
     };
     const wrapper = shallow(
       <Overview {...props} />,
@@ -29,6 +31,26 @@ describe('<Overview />', () => {
       history: {},
       displayClusterLogs: true,
       openModal: jest.fn(),
+      insightsData: fixtures.insightsData,
+      userAccess: fixtures.userAccess,
+    };
+    const wrapper = shallow(
+      <Overview {...props} />,
+    );
+    it('should render', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('for an ARO cluster', () => {
+    const props = {
+      cluster: fixtures.AROClusterDetails.cluster,
+      cloudProviders: fixtures.cloudProviders,
+      history: {},
+      displayClusterLogs: true,
+      openModal: jest.fn(),
+      insightsData: {},
+      userAccess: fixtures.userAccess,
     };
     const wrapper = shallow(
       <Overview {...props} />,

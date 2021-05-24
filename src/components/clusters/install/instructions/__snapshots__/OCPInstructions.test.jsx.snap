@@ -469,9 +469,9 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
             <DownloadsAndPullSecretSection
               channel="stable"
               cloudProviderID="Bare Metal"
+              displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
-              rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal"
               token={Object {}}
             />
           </SplitItem>
@@ -648,9 +648,9 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
             <DownloadsAndPullSecretSection
               channel="stable"
               cloudProviderID="GCP"
+              displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
-              rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra"
               token={Object {}}
             />
           </SplitItem>
@@ -738,9 +738,9 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
             <DownloadsAndPullSecretSection
               channel="ibmz"
               cloudProviderID="IBM-Z"
+              displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
-              rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z"
               token={Object {}}
             />
           </SplitItem>
@@ -828,9 +828,9 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
             <DownloadsAndPullSecretSection
               channel="ppc64le"
               cloudProviderID="Power"
+              displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
-              rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power"
               token={Object {}}
             />
           </SplitItem>
@@ -1007,9 +1007,9 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
             <DownloadsAndPullSecretSection
               channel="stable"
               cloudProviderID="Red Hat OpenStack Platform"
+              displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
-              rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user"
               token={Object {}}
             />
           </SplitItem>
@@ -1251,7 +1251,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
+exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
 <Fragment>
   <Card
     className="ocm-ocp-instructions__card"
@@ -1274,10 +1274,9 @@ exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
           >
             <DownloadsAndPullSecretSection
               channel="stable"
-              cloudProviderID="VMWare vSphere"
+              cloudProviderID="VMware vSphere"
               isBMIPI={false}
               pendoID="/"
-              rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere"
               token={Object {}}
             />
           </SplitItem>
@@ -1306,7 +1305,97 @@ exports[`Every OCP instruction page should render:  VMWare vSphere 1`] = `
                 Follow the instructions to configure your environment and install your cluster
               </Text>
               <GetStarted
-                cloudProviderID="VMWare vSphere"
+                cloudProviderID="VMware vSphere"
+                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
+                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned.html"
+                isBMIPI={false}
+                pendoID="/"
+              />
+            </TextContent>
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider />
+      <StackItem>
+        <Split>
+          <SplitItem
+            className="step-number"
+          >
+            <Title
+              headingLevel="h1"
+            >
+              3
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <SubscriptionAndSupport />
+          </SplitItem>
+        </Split>
+      </StackItem>
+    </Stack>
+  </Card>
+</Fragment>
+`;
+
+exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
+<Fragment>
+  <Card
+    className="ocm-ocp-instructions__card"
+  >
+    <Stack>
+      <StackItem>
+        <Split>
+          <SplitItem
+            className="step-number"
+          >
+            <Title
+              headingLevel="h1"
+            >
+              1
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <DownloadsAndPullSecretSection
+              channel="stable"
+              cloudProviderID="VMware vSphere"
+              displayRHCOSSection={true}
+              isBMIPI={false}
+              pendoID="/"
+              token={Object {}}
+            />
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider />
+      <StackItem>
+        <Split>
+          <SplitItem
+            className="step-number"
+          >
+            <Title
+              headingLevel="h1"
+            >
+              2
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <TextContent>
+              <Text
+                component="h2"
+              >
+                Follow the instructions to configure your environment and install your cluster
+              </Text>
+              <GetStarted
+                cloudProviderID="VMware vSphere"
                 customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
                 docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html"
                 isBMIPI={false}

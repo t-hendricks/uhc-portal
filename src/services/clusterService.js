@@ -28,17 +28,6 @@ const getClusterStatus = clusterID => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/status`,
 });
 
-const getUnhealthyClusters = params => apiRequest({
-  method: 'get',
-  url: '/api/clusters_mgmt/v1/dashboards/summary/unhealthy_clusters',
-  params: {
-    page: params.page,
-    size: params.page_size,
-    order: params.order,
-    search: params.filter,
-  },
-});
-
 const editCluster = (id, data) => apiRequest({
   method: 'patch',
   url: `/api/clusters_mgmt/v1/clusters/${id}`,
@@ -113,21 +102,6 @@ const deleteClusterGroupUser = (clusterID, groupID, userID) => apiRequest({
 const getMachineTypes = () => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/machine_types',
-});
-
-const getAlerts = clusterID => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/alerts`,
-});
-
-const getNodes = clusterID => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/nodes`,
-});
-
-const getClusterOperators = clusterID => apiRequest({
-  method: 'get',
-  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/metric_queries/cluster_operators`,
 });
 
 const getStorageQuotaValues = () => apiRequest({
@@ -260,7 +234,6 @@ const patchUpgradeSchedule = (clusterID, policyID, schedule) => apiRequest({
   data: schedule,
 });
 
-
 const getUpgradeSchedules = clusterID => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies`,
@@ -298,10 +271,14 @@ const deleteMachinePool = (clusterID, machinePoolID) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools/${machinePoolID}`,
 });
 
+const upgradeTrialCluster = (clusterID, params) => apiRequest({
+  method: 'patch',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}`,
+  data: params,
+});
 
 const clusterService = {
   getClusters,
-  getUnhealthyClusters,
   postNewCluster,
   getClusterDetails,
   editCluster,
@@ -315,9 +292,6 @@ const clusterService = {
   deleteClusterGroupUser,
   deleteIdentityProvider,
   getMachineTypes,
-  getNodes,
-  getAlerts,
-  getClusterOperators,
   archiveCluster,
   hibernateCluster,
   resumeCluster,
@@ -345,6 +319,7 @@ const clusterService = {
   addMachinePool,
   scaleMachinePool,
   deleteMachinePool,
+  upgradeTrialCluster,
 };
 export {
   postUpgradeSchedule,

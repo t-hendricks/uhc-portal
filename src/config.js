@@ -16,13 +16,13 @@ if (isDevOrStaging) {
 }
 
 if (APP_DEV_SERVER) {
-  // running in webpack dev server, default to development config
+  // running in webpack dev server, add development configs
   configs.development = import(/* webpackMode: "eager" */ './config/development.json');
-  configs.default = configs.development;
-} else {
-  // running in a real build, select config according to the APP_API_ENV flag
-  configs.default = configs[APP_API_ENV];
+  configs.mockserver = import(/* webpackMode: "eager" */ './config/mockserver.json');
 }
+
+// select config according to the APP_API_ENV flag (see webpack.config.js)
+configs.default = configs[APP_API_ENV];
 
 const parseEnvQueryParam = () => {
   let ret;
@@ -46,10 +46,25 @@ const parseFakeQueryParam = () => {
   return ret;
 };
 
-
 const config = {
   configData: {},
   override: false,
+
+  loadConfig(data) {
+    this.configData = {
+      ...data,
+      // replace $SELF_PATH$ with the current host
+      // to avoid CORS issues when not using prod.foo
+      apiGateway: data.apiGateway.replace('$SELF_PATH$', window.location.host),
+      insightsGateway: data.insightsGateway?.replace('$SELF_PATH$', window.location.host) || undefined,
+    };
+
+    if (isDevOrStaging) {
+      // make config available in browser devtools for debugging
+      window.ocmConfig = this;
+    }
+  },
+
   fetchConfig() {
     const that = this;
     return new Promise((resolve) => {
@@ -59,14 +74,20 @@ const config = {
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
       if (queryEnv && configs[queryEnv]) {
         configs[queryEnv].then((data) => {
-          that.configData = data;
+          this.loadConfig(data);
+          if (isDevOrStaging) {
+            console.info(`Loaded override config: ${queryEnv}`);
+          }
           that.override = queryEnv;
           localStorage.setItem(ENV_OVERRIDE_LOCALSTORAGE_KEY, queryEnv);
           resolve();
         });
       } else {
         configs.default.then((data) => {
-          that.configData = data;
+          this.loadConfig(data);
+          if (isDevOrStaging) {
+            console.info(`Loaded default config: ${APP_API_ENV}`);
+          }
           resolve();
         });
       }
@@ -74,5 +95,5 @@ const config = {
   },
 };
 
-export { ENV_OVERRIDE_LOCALSTORAGE_KEY };
+export { ENV_OVERRIDE_LOCALSTORAGE_KEY, isDevOrStaging };
 export default config;

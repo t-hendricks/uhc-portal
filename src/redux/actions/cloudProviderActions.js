@@ -17,6 +17,7 @@ const getCloudProvidersAndRegions = () => clusterService.getCloudProviders().the
             display_name: region.display_name,
             enabled: region.enabled,
             supports_multi_az: region.supports_multi_az,
+            kms_specific_region: region.kms_location_id,
           };
         });
       }
@@ -25,7 +26,6 @@ const getCloudProvidersAndRegions = () => clusterService.getCloudProviders().the
     return cloudProviders;
   },
 );
-
 
 const getCloudProviders = () => dispatch => dispatch({
   type: cloudProviderConstants.GET_CLOUD_PROVIDERS,

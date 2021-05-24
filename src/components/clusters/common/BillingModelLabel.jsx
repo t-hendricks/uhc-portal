@@ -2,15 +2,33 @@ import PropTypes from 'prop-types';
 
 import get from 'lodash/get';
 
-import { normalizedProducts } from '../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 
 function BillingModelLabel({ cluster }) {
-  if (get(cluster, 'product.id') === normalizedProducts.ROSA) {
+  const planId = get(cluster, 'subscription.plan.id');
+  const billingModel = get(cluster, 'billing_model');
+  const { ROSA, OSD, OSDTrial } = normalizedProducts;
+  const { STANDARD, MARKETPLACE } = billingModels;
+  const CCS = get(cluster, 'ccs.enabled');
+
+  if (planId === ROSA) {
     return 'Through AWS';
   }
-  if (get(cluster, 'ccs.enabled')) {
-    return 'Customer cloud subscription';
+
+  if (planId === OSDTrial) {
+    return 'Free trial, upgradeable';
   }
+
+  // OSD non-ccs standard quota
+  if (planId === OSD && billingModel === STANDARD) {
+    return 'Subscription (yearly)';
+  }
+
+  // OSD CCS marketplace
+  if (planId === OSD && billingModel === MARKETPLACE && CCS) {
+    return 'On-demand (hourly)';
+  }
+
   return 'Standard';
 }
 

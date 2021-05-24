@@ -43,12 +43,15 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
           >
             Initiate transfer
           </Button>,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
+          undefined,
+          false,
         ]
       }
       appendTo={[Function]}
@@ -62,6 +65,8 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
       ouiaSafe={true}
       showClose={true}
       title="Transfer cluster ownership"
+      titleIconVariant={null}
+      titleLabel=""
       variant="large"
       width={600}
     >
@@ -113,10 +118,15 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                     class="pf-c-modal-box__header"
                   >
                     <h1
-                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      class="pf-c-modal-box__title"
                       id="pf-modal-part-1"
                     >
-                      Transfer cluster ownership
+                      
+                      <span
+                        class="pf-c-modal-box__title-text"
+                      >
+                        Transfer cluster ownership
+                      </span>
                     </h1>
                   </header>
                   <div
@@ -226,12 +236,15 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
               >
                 Initiate transfer
               </Button>,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
+              undefined,
+              false,
             ]
           }
           aria-describedby=""
@@ -248,6 +261,8 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
           ouiaSafe={true}
           showClose={true}
           title="Transfer cluster ownership"
+          titleIconVariant={null}
+          titleLabel=""
           variant="large"
           width={600}
         >
@@ -264,6 +279,7 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                   }
                 }
                 paused={false}
+                preventScrollOnDeactivate={false}
               >
                 <div
                   className="pf-l-bullseye"
@@ -272,7 +288,7 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                     aria-describedby="pf-modal-part-2"
                     aria-label=""
                     aria-labelledby="pf-modal-part-1"
-                    className={null}
+                    className=""
                     data-ouia-component-id="OUIA-Generated-Modal-large-1"
                     data-ouia-component-type="PF4/ModalContent"
                     data-ouia-safe={true}
@@ -349,20 +365,27 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                           </button>
                         </Button>
                       </ModalBoxCloseButton>
-                      <ModalBoxHeader>
+                      <ModalBoxHeader
+                        help={null}
+                      >
                         <header
                           className="pf-c-modal-box__header"
                         >
                           <ModalBoxTitle
-                            className="pf-c-modal-box__title"
                             id="pf-modal-part-1"
                             title="Transfer cluster ownership"
+                            titleIconVariant={null}
+                            titleLabel=""
                           >
                             <h1
-                              className="pf-c-modal-box__title pf-c-modal-box__title"
+                              className="pf-c-modal-box__title"
                               id="pf-modal-part-1"
                             >
-                              Transfer cluster ownership
+                              <span
+                                className="pf-c-modal-box__title-text"
+                              >
+                                Transfer cluster ownership
+                              </span>
                             </h1>
                           </ModalBoxTitle>
                         </header>
@@ -501,7 +524,7 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                             </button>
                           </Button>
                           <Button
-                            key="cancel"
+                            key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >
@@ -578,12 +601,15 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
           >
             Initiate transfer
           </Button>,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
+          undefined,
+          false,
         ]
       }
       appendTo={[Function]}
@@ -597,6 +623,8 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
       ouiaSafe={true}
       showClose={true}
       title="Transfer cluster ownership"
+      titleIconVariant={null}
+      titleLabel=""
       variant="large"
       width={600}
     >
@@ -648,10 +676,15 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                     class="pf-c-modal-box__header"
                   >
                     <h1
-                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      class="pf-c-modal-box__title"
                       id="pf-modal-part-3"
                     >
-                      Transfer cluster ownership
+                      
+                      <span
+                        class="pf-c-modal-box__title-text"
+                      >
+                        Transfer cluster ownership
+                      </span>
                     </h1>
                   </header>
                   <div
@@ -755,12 +788,15 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
               >
                 Initiate transfer
               </Button>,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
+              undefined,
+              false,
             ]
           }
           aria-describedby=""
@@ -777,6 +813,8 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
           ouiaSafe={true}
           showClose={true}
           title="Transfer cluster ownership"
+          titleIconVariant={null}
+          titleLabel=""
           variant="large"
           width={600}
         >
@@ -793,6 +831,7 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                   }
                 }
                 paused={false}
+                preventScrollOnDeactivate={false}
               >
                 <div
                   className="pf-l-bullseye"
@@ -801,7 +840,7 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                     aria-describedby="pf-modal-part-4"
                     aria-label=""
                     aria-labelledby="pf-modal-part-3"
-                    className={null}
+                    className=""
                     data-ouia-component-id="OUIA-Generated-Modal-large-3"
                     data-ouia-component-type="PF4/ModalContent"
                     data-ouia-safe={true}
@@ -878,20 +917,27 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                           </button>
                         </Button>
                       </ModalBoxCloseButton>
-                      <ModalBoxHeader>
+                      <ModalBoxHeader
+                        help={null}
+                      >
                         <header
                           className="pf-c-modal-box__header"
                         >
                           <ModalBoxTitle
-                            className="pf-c-modal-box__title"
                             id="pf-modal-part-3"
                             title="Transfer cluster ownership"
+                            titleIconVariant={null}
+                            titleLabel=""
                           >
                             <h1
-                              className="pf-c-modal-box__title pf-c-modal-box__title"
+                              className="pf-c-modal-box__title"
                               id="pf-modal-part-3"
                             >
-                              Transfer cluster ownership
+                              <span
+                                className="pf-c-modal-box__title-text"
+                              >
+                                Transfer cluster ownership
+                              </span>
                             </h1>
                           </ModalBoxTitle>
                         </header>
@@ -1020,7 +1066,7 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                             </button>
                           </Button>
                           <Button
-                            key="cancel"
+                            key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >
@@ -1095,12 +1141,15 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
           >
             Initiate transfer
           </Button>,
+          undefined,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
+          undefined,
+          false,
         ]
       }
       appendTo={[Function]}
@@ -1114,6 +1163,8 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
       ouiaSafe={true}
       showClose={true}
       title="Transfer cluster ownership"
+      titleIconVariant={null}
+      titleLabel=""
       variant="large"
       width={600}
     >
@@ -1165,10 +1216,15 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                     class="pf-c-modal-box__header"
                   >
                     <h1
-                      class="pf-c-modal-box__title pf-c-modal-box__title"
+                      class="pf-c-modal-box__title"
                       id="pf-modal-part-4"
                     >
-                      Transfer cluster ownership
+                      
+                      <span
+                        class="pf-c-modal-box__title-text"
+                      >
+                        Transfer cluster ownership
+                      </span>
                     </h1>
                   </header>
                   <div
@@ -1324,12 +1380,15 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
               >
                 Initiate transfer
               </Button>,
+              undefined,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
+              undefined,
+              false,
             ]
           }
           aria-describedby=""
@@ -1346,6 +1405,8 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
           ouiaSafe={true}
           showClose={true}
           title="Transfer cluster ownership"
+          titleIconVariant={null}
+          titleLabel=""
           variant="large"
           width={600}
         >
@@ -1362,6 +1423,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                   }
                 }
                 paused={false}
+                preventScrollOnDeactivate={false}
               >
                 <div
                   className="pf-l-bullseye"
@@ -1370,7 +1432,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                     aria-describedby="pf-modal-part-5"
                     aria-label=""
                     aria-labelledby="pf-modal-part-4"
-                    className={null}
+                    className=""
                     data-ouia-component-id="OUIA-Generated-Modal-large-4"
                     data-ouia-component-type="PF4/ModalContent"
                     data-ouia-safe={true}
@@ -1447,20 +1509,27 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                           </button>
                         </Button>
                       </ModalBoxCloseButton>
-                      <ModalBoxHeader>
+                      <ModalBoxHeader
+                        help={null}
+                      >
                         <header
                           className="pf-c-modal-box__header"
                         >
                           <ModalBoxTitle
-                            className="pf-c-modal-box__title"
                             id="pf-modal-part-4"
                             title="Transfer cluster ownership"
+                            titleIconVariant={null}
+                            titleLabel=""
                           >
                             <h1
-                              className="pf-c-modal-box__title pf-c-modal-box__title"
+                              className="pf-c-modal-box__title"
                               id="pf-modal-part-4"
                             >
-                              Transfer cluster ownership
+                              <span
+                                className="pf-c-modal-box__title-text"
+                              >
+                                Transfer cluster ownership
+                              </span>
                             </h1>
                           </ModalBoxTitle>
                         </header>
@@ -1493,6 +1562,8 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                                 data-ouia-component-id="OUIA-Generated-Alert-danger-1"
                                 data-ouia-component-type="PF4/Alert"
                                 data-ouia-safe={true}
+                                onMouseEnter={[Function]}
+                                onMouseLeave={[Function]}
                               >
                                 <Component
                                   variant="danger"
@@ -1677,7 +1748,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                             </button>
                           </Button>
                           <Button
-                            key="cancel"
+                            key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >

@@ -10,18 +10,18 @@ import {
 
 import MachineTypeSelection from './MachineTypeSelection';
 
-import { ReduxFormKeyValueList, ReudxFormTaints } from '../../../../../common/ReduxFormComponents';
+import { ReduxFormKeyValueList, ReduxFormTaints } from '../../../../../common/ReduxFormComponents';
 import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../../common/LoadBalancersDropdown';
 import NodeCountInput from '../../../../common/NodeCountInput';
-import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../../../common/subscriptionTypes';
 import { constants } from '../../CreateOSDFormConstants';
 
 import PopoverHint from '../../../../../common/PopoverHint';
 import { required } from '../../../../../../common/validators';
+import ExternalLink from '../../../../../common/ExternalLink';
 
 import AutoScaleSection from './AutoScaleSection/AutoScaleSection';
-
 
 function ScaleSection({
   pending,
@@ -32,7 +32,8 @@ function ScaleSection({
   cloudProviderID,
   product,
   showStorageAndLoadBalancers = true,
-  gridSpan = 9,
+  instanceTypeGridSpan = 4,
+  autoscaleAndNodeCountGridSpan = 4,
   minNodes,
   isMachinePool = false,
   canAutoScale = false,
@@ -40,9 +41,9 @@ function ScaleSection({
   autoScaleMinNodesValue = '0',
   autoScaleMaxNodesValue = '0',
   change,
+  billingModel,
 }) {
   const expandableSectionTitle = isMachinePool ? 'Edit node labels and taints' : 'Edit node labels';
-
 
   const labelsAndTaintsSection = (
     <ExpandableSection
@@ -52,23 +53,25 @@ function ScaleSection({
       <GridItem span={4} className="space-bottom-md">
         <Title headingLevel="h3">Node labels</Title>
       </GridItem>
-      <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
-      {isMachinePool
-  && (
-    <>
-      <GridItem span={4} className="space-bottom-md space-top-lg">
-        <Title headingLevel="h3">Taints</Title>
+      <GridItem span={4}>
+        <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
       </GridItem>
-      <FieldArray name="taints" component={ReudxFormTaints} />
-    </>
-  )}
+      {isMachinePool
+        && (
+          <>
+            <GridItem span={4} className="space-bottom-md space-top-lg">
+              <Title headingLevel="h3">Taints</Title>
+            </GridItem>
+            <FieldArray name="taints" component={ReduxFormTaints} />
+          </>
+        )}
     </ExpandableSection>
   );
 
   return (
     <>
       {/* Instance type */}
-      <GridItem span={gridSpan}>
+      <GridItem span={instanceTypeGridSpan}>
         <FormGroup
           label="Worker node instance type"
           isRequired
@@ -86,34 +89,32 @@ function ScaleSection({
             cloudProviderID={cloudProviderID}
             product={product}
             isMachinePool={isMachinePool}
+            billingModel={billingModel}
           />
         </FormGroup>
       </GridItem>
-      {gridSpan === 9 && <GridItem span={3} />}
+      {instanceTypeGridSpan !== 12 && <GridItem span={12 - instanceTypeGridSpan} />}
       {/* autoscale */}
-      {canAutoScale
-      && (
-        <>
-          <GridItem span={gridSpan}>
-            <AutoScaleSection
-              autoscalingEnabled={autoscalingEnabled}
-              isMultiAz={isMultiAz}
-              change={change}
-              autoScaleMinNodesValue={autoScaleMinNodesValue}
-              autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-              product={product}
-              isBYOC={isBYOC}
-              isDefaultMachinePool={!isMachinePool}
-            />
-            {autoscalingEnabled && labelsAndTaintsSection}
-          </GridItem>
-          {gridSpan === 9 && <GridItem span={3} />}
-        </>
-      )}
-      {/* Worker nodes */}
-      { !autoscalingEnabled && (
-        <>
-          <GridItem span={4}>
+      <GridItem span={autoscaleAndNodeCountGridSpan}>
+        {canAutoScale
+          && (
+            <>
+              <AutoScaleSection
+                autoscalingEnabled={autoscalingEnabled}
+                isMultiAz={isMultiAz}
+                change={change}
+                autoScaleMinNodesValue={autoScaleMinNodesValue}
+                autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+                product={product}
+                isBYOC={isBYOC}
+                isDefaultMachinePool={!isMachinePool}
+              />
+              {autoscalingEnabled && labelsAndTaintsSection}
+            </>
+          )}
+        {/* Worker nodes */}
+        {!autoscalingEnabled && (
+          <>
             <Field
               component={NodeCountInput}
               name="nodes_compute"
@@ -122,19 +123,26 @@ function ScaleSection({
               isByoc={isBYOC}
               machineType={machineType}
               isDisabled={pending}
-              extendedHelpText={isBYOC
-                ? constants.computeNodeCountHintCCS
-                : constants.computeNodeCountHint}
+              extendedHelpText={(
+                <>
+                  {constants.computeNodeCountHint}
+                  {' '}
+                  <ExternalLink href="https://www.openshift.com/products/dedicated/service-definition#compute-instances">Learn more about worker node count</ExternalLink>
+                </>
+              )}
               cloudProviderID={cloudProviderID}
               product={product}
               minNodes={minNodes}
               isMachinePool={isMachinePool}
+              billingModel={billingModel}
             />
             {labelsAndTaintsSection}
-          </GridItem>
-          <GridItem span={8} />
-        </>
-      )}
+
+          </>
+        )}
+      </GridItem>
+      {autoscaleAndNodeCountGridSpan !== 12
+        && <GridItem span={12 - autoscaleAndNodeCountGridSpan} />}
       {/* Persistent Storage & Load Balancers */}
       { showStorageAndLoadBalancers && !isBYOC && (
         <>
@@ -150,6 +158,10 @@ function ScaleSection({
                 disabled={pending}
                 currentValue={null}
                 cloudProviderID={cloudProviderID}
+                billingModel={billingModel}
+                product={product}
+                isBYOC={isBYOC}
+                isMultiAZ={isMultiAz}
               />
             </FormGroup>
           </GridItem>
@@ -167,6 +179,10 @@ function ScaleSection({
                 disabled={pending}
                 currentValue={null}
                 cloudProviderID={cloudProviderID}
+                billingModel={billingModel}
+                product={product}
+                isBYOC={isBYOC}
+                isMultiAZ={isMultiAz}
               />
             </FormGroup>
           </GridItem>
@@ -177,6 +193,10 @@ function ScaleSection({
   );
 }
 
+ScaleSection.defaultProps = {
+  billingModel: billingModels.STANDARD,
+};
+
 ScaleSection.propTypes = {
   pending: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
@@ -185,8 +205,10 @@ ScaleSection.propTypes = {
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
+  billingModel: PropTypes.oneOf(Object.values(billingModels)),
   handleMachineTypesChange: PropTypes.func.isRequired,
-  gridSpan: PropTypes.number,
+  instanceTypeGridSpan: PropTypes.number,
+  autoscaleAndNodeCountGridSpan: PropTypes.number,
   minNodes: PropTypes.number,
   isMachinePool: PropTypes.bool,
   canAutoScale: PropTypes.bool,

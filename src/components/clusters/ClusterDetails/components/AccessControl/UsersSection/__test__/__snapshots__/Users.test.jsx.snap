@@ -91,6 +91,7 @@ exports[`<Users /> with users should render 1`] = `
       aria-label="Users"
       borders={true}
       canSelectAll={true}
+      canSortFavorites={true}
       cells={
         Array [
           Object {
@@ -161,6 +162,7 @@ exports[`<Users /> with users should render 1`] = `
       expandId="expandable-toggle"
       gridBreakPoint="grid-md"
       isStickyHeader={false}
+      isTreeTable={false}
       ouiaSafe={true}
       role="grid"
       rowLabeledBy="simple-node"

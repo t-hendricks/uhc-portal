@@ -1,0 +1,258 @@
+{
+  "kind": "AddOnList",
+  "page": 1,
+  "size": 8,
+  "total": 8,
+  "items": [
+    {
+      "kind": "AddOn",
+      "href": "/api/clusters_mgmt/v1/addons/cluster-logging-operator",
+      "id": "cluster-logging-operator",
+      "name": "Red Hat OpenShift Cluster logging operator",
+      "description": "The Cluster Logging Operator for OKD provides a means for configuring and managing your aggregated logging stack.",
+      "label": "api.openshift.com/addon-cluster-logging-operator",
+      "icon": null,
+      "enabled": true,
+      "resource_name": "addon-cluster-logging-operator",
+      "resource_cost": 1,
+      "target_namespace": "openshift-logging",
+      "install_mode": "single_namespace",
+      "operator_name": "cluster-logging",
+      "hidden": false,
+      "has_external_resources": true,
+      "parameters": {
+        "items": [
+          {
+            "id": "use-cloudwatch",
+            "name": "Use AWS CloudWatch",
+            "description": "Select this if you want to use AWS CloudWatch",
+            "value_type": "boolean",
+            "validation": "",
+            "required": false,
+            "editable": true,
+            "enabled": true,
+            "default_value": "True"
+          },
+          {
+            "id": "use-app-logs",
+            "name": "Collect Applications logs",
+            "description": "Let the operator to collect application logs (everything that is deployed not in the `openshift-*` namespaces)",
+            "value_type": "boolean",
+            "validation": "",
+            "required": false,
+            "editable": true,
+            "enabled": true,
+            "default_value": "True"
+          },
+          {
+            "id": "use-infra-logs",
+            "name": "Collect Infrastructure logs",
+            "description": "Let the operator to collect logs from openshift and kubernetes pods and some nodes",
+            "value_type": "boolean",
+            "validation": "",
+            "required": false,
+            "editable": true,
+            "enabled": true,
+            "default_value": "True"
+          },
+          {
+            "id": "use-audit-logs",
+            "name": "Collect Audit logs",
+            "description": "Let the operator to collect node logs related to security audits",
+            "value_type": "boolean",
+            "validation": "",
+            "required": false,
+            "editable": true,
+            "enabled": true,
+            "default_value": "False"
+          },
+          {
+            "id": "cloudwatch-region",
+            "name": "CloudWatch region",
+            "description": "AWS region for CloudWatch. Leave empty to set to the cluster region. Example: us-west-1",
+            "value_type": "string",
+            "validation": "",
+            "required": false,
+            "editable": true,
+            "enabled": true,
+            "default_value": ""
+          }
+        ]
+      }
+    },
+    {
+      "kind": "AddOn",
+      "href": "/api/clusters_mgmt/v1/addons/codeready-workspaces",
+      "id": "codeready-workspaces",
+      "name": "Red Hat CodeReady Workspaces",
+      "description": "A collaborative Kubernetes-native development solution that delivers OpenShift workspaces and in-browser IDE for rapid cloud application development. This add-on installs PostgreSQL, Red Hat SSO, and the Red Hat CodeReady Workspaces server, as well as configures all three services.",
+      "docs_link": "https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces",
+      "label": "api.openshift.com/addon-codeready-workspaces-operator",
+      "icon": null,
+      "enabled": true,
+      "resource_name": "addon-crw-operator",
+      "resource_cost": 1,
+      "target_namespace": "codeready-workspaces-operator",
+      "install_mode": "single_namespace",
+      "operator_name": "crwoperator",
+      "hidden": false,
+      "has_external_resources": false
+    },
+    {
+      "kind": "AddOn",
+      "href": "/api/clusters_mgmt/v1/addons/dba-operator",
+      "id": "dba-operator",
+      "name": "DBA Operator",
+      "description": "Kubernetes Operator that orchestrates relational database schema migrations",
+      "label": "api.openshift.com/addon-dba-operator",
+      "icon": null,
+      "enabled": true,
+      "resource_name": "addon-dba-operator",
+      "resource_cost": 1,
+      "target_namespace": "addon-dba-operator",
+      "install_mode": "all_namespaces",
+      "operator_name": "dba-operator",
+      "hidden": false,
+      "has_external_resources": false
+    },
+    {
+      "kind": "AddOn",
+      "href": "/api/clusters_mgmt/v1/addons/managed-api-service",
+      "id": "managed-api-service",
+      "name": "API Management service",
+      "description": "Install and configure the OpenShift API Management service.\n",
+      "docs_link": "https://access.redhat.com/documentation/en-us/red_hat_openshift_api_management/1/",
+      "label": "api.openshift.com/addon-managed-api-service",
+      "icon": null,
+      "enabled": true,
+      "resource_name": "addon-managed-api-service",
+      "resource_cost": 1,
+      "target_namespace": "redhat-rhoam-operator",
+      "install_mode": "single_namespace",
+      "operator_name": "managed-api-service",
+      "hidden": false,
+      "has_external_resources": true,
+      "parameters": {
+        "items": [
+          {
+            "id": "cidr-range",
+            "name": "CIDR range",
+            "description": "Required: Enter a CIDR block value or apply the default by clicking the link. IMPORTANT: You cannot modify the CIDR block value after installation.",
+            "value_type": "cidr",
+            "validation": "",
+            "required": true,
+            "editable": false,
+            "enabled": true,
+            "default_value": "10.1.0.0/26"
+          },
+          {
+            "id": "notification-email",
+            "name": "Notification email",
+            "description": "Enter one or more email addresses for API usage alerts, separated by a space.",
+            "value_type": "string",
+            "validation": "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}",
+            "required": true,
+            "editable": true,
+            "enabled": true,
+            "default_value": ""
+          }
+        ]
+      }
+    },
+    {
+      "kind": "AddOn",
+      "href": "/api/clusters_mgmt/v1/addons/managed-api-service-internal",
+      "id": "managed-api-service-internal",
+      "name": "API Management service (internal)",
+      "description": "Install and configure the OpenShift API Management service.\n",
+      "docs_link": "https://access.redhat.com/documentation/en-us/red_hat_openshift_api_management/1/",
+      "label": "api.openshift.com/addon-managed-api-service-internal",
+      "icon": null,
+      "enabled": true,
+      "resource_name": "addon-managed-api-service",
+      "resource_cost": 1,
+      "target_namespace": "redhat-rhoam-operator",
+      "install_mode": "single_namespace",
+      "operator_name": "managed-api-service",
+      "hidden": false,
+      "has_external_resources": true,
+      "parameters": {
+        "items": [
+          {
+            "id": "cidr-range",
+            "name": "CIDR range",
+            "description": "Required: Enter a CIDR block value or apply the default by clicking the link. IMPORTANT: You cannot modify the CIDR block value after installation.",
+            "value_type": "cidr",
+            "validation": "",
+            "required": true,
+            "editable": false,
+            "enabled": true,
+            "default_value": "10.1.0.0/26"
+          },
+          {
+            "id": "notification-email",
+            "name": "Notification email",
+            "description": "Enter one or more email addresses for API usage alerts, separated by a space.",
+            "value_type": "string",
+            "validation": "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}",
+            "required": true,
+            "editable": true,
+            "enabled": true,
+            "default_value": ""
+          }
+        ]
+      }
+    },
+    {
+      "kind": "AddOn",
+      "href": "/api/clusters_mgmt/v1/addons/prow-operator",
+      "id": "prow-operator",
+      "name": "Prow Operator",
+      "description": "Manage Prow CRDs",
+      "label": "api.openshift.com/addon-prow-operator",
+      "icon": null,
+      "enabled": true,
+      "resource_name": "addon-prow-operator",
+      "resource_cost": 1,
+      "target_namespace": "prow",
+      "install_mode": "single_namespace",
+      "operator_name": "prow-operator",
+      "hidden": false,
+      "has_external_resources": false
+    },
+    {
+      "kind": "AddOn",
+      "href": "/api/clusters_mgmt/v1/addons/rhmi",
+      "id": "rhmi",
+      "name": "RHMI Operator",
+      "description": "Install and configure the RHMI suite of Software",
+      "label": "api.openshift.com/addon-rhmi-operator",
+      "icon": null,
+      "enabled": true,
+      "resource_name": "addon-rhmi-operator",
+      "resource_cost": 1,
+      "target_namespace": "redhat-rhmi-operator",
+      "install_mode": "single_namespace",
+      "operator_name": "integreatly-operator",
+      "hidden": false,
+      "has_external_resources": true
+    },
+    {
+      "kind": "AddOn",
+      "href": "/api/clusters_mgmt/v1/addons/rhmi-internal",
+      "id": "rhmi-internal",
+      "name": "RHMI Operator (internal)",
+      "description": "Install and configure the RHMI suite of Software",
+      "label": "api.openshift.com/addon-rhmi-operator-internal",
+      "icon": null,
+      "enabled": true,
+      "resource_name": "addon-rhmi-operator",
+      "resource_cost": 1,
+      "target_namespace": "redhat-rhmi-operator",
+      "install_mode": "single_namespace",
+      "operator_name": "integreatly-operator",
+      "hidden": false,
+      "has_external_resources": true
+    }
+  ]
+}

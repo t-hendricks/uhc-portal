@@ -1,3 +1,4 @@
+import produce from 'immer';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 const match = { params: { id: '1msoogsgTLQ4PePjrTOt3UqvMzX' } };
@@ -9,7 +10,7 @@ const funcs = () => ({
     hash: '',
   },
   fetchDetails: jest.fn(),
-  fetchInsightsData: jest.fn(),
+  fetchClusterInsights: jest.fn(),
   setOpenedTab: jest.fn(),
   fetchGroups: jest.fn(),
   getCloudProviders: jest.fn(),
@@ -26,9 +27,7 @@ const funcs = () => ({
   resetIdentityProvidersState: jest.fn(),
   clearGlobalError: jest.fn(),
   setGlobalError: jest.fn(),
-  getAlerts: jest.fn(),
-  getNodes: jest.fn(),
-  getClusterOperators: jest.fn(),
+  getOnDemandMetrics: jest.fn(),
   getAddOns: jest.fn(),
   getClusterAddOns: jest.fn(),
   getGrants: jest.fn(),
@@ -44,6 +43,7 @@ const funcs = () => ({
   getNotificationContacts: jest.fn(),
   getSupportCases: jest.fn(),
   getSchedules: jest.fn(),
+  getUserAccess: jest.fn(),
 });
 
 const clusterDetails = {
@@ -131,7 +131,6 @@ const clusterDetails = {
     },
     multi_az: false,
     managed: true,
-    byoc: false,
     ccs: {
       enabled: false,
       disable_scp_checks: false,
@@ -409,8 +408,26 @@ const clusterDetails = {
       region_id: 'us-east-1',
     },
   },
-
 };
+
+const CCSClusterDetails = produce(clusterDetails, (draft) => {
+  draft.cluster.ccs.enabled = true;
+});
+
+const OSDTrialClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.OSDTrial };
+  draft.cluster.subscription.plan = { id: normalizedProducts.OSDTrial };
+});
+
+const ROSAClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.ROSA };
+  draft.cluster.subscription.plan = { id: normalizedProducts.ROSA };
+});
+
+const RHMIClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.RHMI };
+  draft.cluster.subscription.plan = { id: normalizedProducts.RHMI };
+});
 
 const insightsData = {
   meta: {
@@ -450,6 +467,7 @@ const insightsData = {
       tags: ['tag1'],
     },
   ],
+  status: 200,
 };
 
 const OCPClusterDetails = {
@@ -572,7 +590,7 @@ const OCPClusterDetails = {
     canEdit: true,
     canDelete: true,
     subscription: {
-      id: '1FDpnxsGxqFFFp2VNIWp5VajPc8',
+      id: '1msoogsgTLQ4PePjrTOt3UqvMzX',
       kind: 'Subscription',
       href: '/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8',
       plan: {
@@ -593,6 +611,154 @@ const OCPClusterDetails = {
     },
     product: {
       id: normalizedProducts.OCP,
+    },
+    status: {
+      state: 'ready',
+      dns_ready: true,
+    },
+  },
+};
+
+const AROClusterDetails = {
+  error: false,
+  errorMessage: '',
+  pending: false,
+  fulfilled: true,
+  cluster: {
+    kind: 'Cluster',
+    id: '1IztzhAGrbjtKkMbiPewHjImARo',
+    name: 'test-aro',
+    external_id: '9f50940b-fba8-4c59-9c6c-d64284a2beef',
+    display_name: 'test-aro',
+    cluster_admin_enabled: false,
+    creation_timestamp: '2021-03-15T15:20:21.061111Z',
+    cloud_provider: {
+      kind: 'CloudProviderLink',
+      id: 'azure',
+      href: '/api/clusters_mgmt/v1/cloud_providers/azure',
+    },
+    region: {
+      kind: 'CloudRegionLink',
+      id: 'eastus2',
+      href: '/api/clusters_mgmt/v1/cloud_providers/azure/regions/eastus2',
+    },
+    console: {
+      url: 'https://console-openshift-console.apps.test-aro.sdev.devshift.net',
+    },
+    api: {
+      url: 'https://api.test-aro.sdev.devshift.net:6443',
+    },
+    nodes: {
+      total: 9,
+      master: 3,
+      compute: 6,
+    },
+    storage_quota: {
+      value: 100000000,
+      unit: 'B',
+    },
+    load_balancer_quota: 0,
+    metrics: {
+      memory: {
+        updated_timestamp: '2021-03-15T15:20:20Z',
+        used: {
+          value: 16546058240,
+          unit: 'B',
+        },
+        total: {
+          value: 82293346304,
+          unit: 'B',
+        },
+      },
+      cpu: {
+        updated_timestamp: '2021-03-15T15:20:20Z',
+        used: {
+          value: 3.995410922987096,
+          unit: '',
+        },
+        total: {
+          value: 16,
+          unit: '',
+        },
+      },
+      sockets: {
+        updated_timestamp: '2021-03-15T15:20:20Z',
+        used: {
+          value: 0,
+          unit: '',
+        },
+        total: {
+          value: 0,
+          unit: '',
+        },
+      },
+      storage: {
+        updated_timestamp: '2021-03-15T15:20:20Z',
+        used: {
+          value: 0,
+          unit: 'B',
+        },
+        total: {
+          value: 0,
+          unit: 'B',
+        },
+      },
+      nodes: {
+        total: 7,
+        master: 3,
+        compute: 4,
+      },
+    },
+    state: 'ready',
+    flavour: {
+      kind: 'FlavourLink',
+      id: 'ocp-4',
+      href: '/api/clusters_mgmt/v1/flavours/ocp-4',
+    },
+    dns: {
+      base_domain: 'sdev.devshift.net',
+    },
+    network: {
+      machine_cidr: '10.0.0.0/16',
+      service_cidr: '172.30.0.0/16',
+      pod_cidr: '10.128.0.0/14',
+      router_shards: {
+        kind: 'RouterShardListLink',
+        href: '/api/clusters_mgmt/v1/clusters/1IztzhAGrbjtKkMbiPewHjImARo/router_shards',
+        id: '1IztzhAGrbjtKkMbiPewHjImARo',
+      },
+    },
+    multi_az: false,
+    managed: false,
+    version: {
+      kind: 'VersionLink',
+      id: 'openshift-v4.0-latest',
+      href: '/api/clusters_mgmt/v1/versions/openshift-v4.0-latest',
+    },
+    canEdit: true,
+    canDelete: true,
+    subscription: {
+      id: '1msoogsgTLQ4PePjrTOt3UqvMzX',
+      kind: 'Subscription',
+      href: '/api/accounts_mgmt/v1/subscriptions/1msoogsgTLQ4PePjrTOt3UqvMzX',
+      plan: {
+        id: 'ARO',
+        kind: 'Plan',
+        href: '/api/accounts_mgmt/v1/plans/ARO',
+      },
+      registry_credential: {
+        id: '1EaZd2cDHH6ibIb1FFqav2Mles6',
+        kind: 'RegistryCredential',
+        href: '/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Maro6',
+      },
+      cluster_id: '1IztzhAGrbjtKkMbiPewHjImARo',
+      external_cluster_id: 'test-aro',
+      last_telemetry_date: '2021-03-15T15:20:20Z',
+      created_at: '2021-03-10T15:20:20Z',
+      updated_at: '2021-03-15T15:20:20Z',
+    },
+    product: {
+      id: normalizedProducts.ARO,
     },
     status: {
       state: 'ready',
@@ -810,11 +976,22 @@ const clusterRouters = {
   },
 };
 
+const userAccess = {
+  data: true,
+  fulfilled: true,
+  pending: false,
+};
+
 const fixtures = {
   match,
   clusterDetails,
+  CCSClusterDetails,
+  OSDTrialClusterDetails,
+  ROSAClusterDetails,
+  RHMIClusterDetails,
   insightsData,
   OCPClusterDetails,
+  AROClusterDetails,
   cloudProviders,
   clusterIdentityProviders,
   organization,
@@ -824,13 +1001,13 @@ const fixtures = {
   supportCases: {},
   notificationContacts: {},
   initTabOpen: '',
-  supportTabFeature: false,
   displayClusterLogs: false,
   canTransferClusterOwnership: false,
   canHibernateCluster: true,
   canSubscribeOCP: false,
   hasIssues: false,
   hasIssuesInsights: false,
+  userAccess,
 };
 
 export { funcs };

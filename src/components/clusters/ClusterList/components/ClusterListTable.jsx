@@ -18,6 +18,7 @@ import {
 } from '@patternfly/react-table';
 
 import { Link } from 'react-router-dom';
+import { ClusterStatus as AIClusterStatus } from 'openshift-assisted-ui-lib';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
 import clusterStates, { getClusterStateAndDescription } from '../../common/clusterStates';
@@ -28,13 +29,13 @@ import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActio
 import skeletonRows from '../../../common/SkeletonRows';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
-
+import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
 
 function ClusterListTable(props) {
   const {
     viewOptions, setSorting, clusters, openModal, isPending, setClusterDetails,
     canSubscribeOCPList = {}, canTransferClusterOwnershipList = {}, toggleSubscriptionReleased,
-    canHibernateClusterList = {},
+    canHibernateClusterList = {}, refreshFunc,
   } = props;
   if (!isPending && (!clusters || clusters.length === 0)) {
     return <p className="notfound">No results match the filter criteria.</p>;
@@ -56,14 +57,25 @@ function ClusterListTable(props) {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
 
     const clusterName = (
-      <Link to={`/details/s/${cluster.subscription.id}`} onClick={() => setClusterDetails(cluster)}>
+      <Link
+        to={`/details/s/${cluster.subscription.id}`}
+        onClick={() => {
+          if (!cluster.partialCS) {
+            setClusterDetails(cluster);
+          }
+        }}
+      >
         {getClusterName(cluster)}
       </Link>
     );
 
     const clusterState = getClusterStateAndDescription(cluster);
     const icon = <ClusterStateIcon clusterState={clusterState.state || ''} animated={false} />;
-    const clusterStatus = (state) => {
+    const clusterStatus = (clusterStateAndDescription) => {
+      const { state, description } = clusterStateAndDescription;
+      if (isAISubscriptionWithoutMetrics(cluster.subscription)) {
+        return <AIClusterStatus status={cluster.state} className="clusterstate" />;
+      }
       if (state === clusterStates.ERROR) {
         return (
           <span>
@@ -92,7 +104,7 @@ function ClusterListTable(props) {
                 isInline
                 icon={icon}
               >
-                {state}
+                {description}
               </Button>
             </Popover>
           </span>
@@ -112,7 +124,7 @@ function ClusterListTable(props) {
               isInline
               icon={icon}
             >
-              {state}
+              {description}
             </Button>
           </Popover>
         );
@@ -120,7 +132,7 @@ function ClusterListTable(props) {
       return (
         <span className="cluster-status-string">
           {icon}
-          {state}
+          {description}
         </span>
       );
     };
@@ -136,7 +148,7 @@ function ClusterListTable(props) {
     return {
       cells: [
         { title: clusterName },
-        { title: clusterStatus(clusterState.state) },
+        { title: clusterStatus(clusterState) },
         { title: <ClusterTypeLabel cluster={cluster} /> },
         { title: <ClusterCreatedIndicator cluster={cluster} /> },
         { title: clusterVersion },
@@ -170,8 +182,7 @@ function ClusterListTable(props) {
       canSubscribeOCPList[get(rowData, 'cluster.id')] || false,
       canTransferClusterOwnershipList[get(rowData, 'cluster.id')] || false,
       canHibernateClusterList[get(rowData, 'cluster.id')] || false,
-      toggleSubscriptionReleased);
-
+      toggleSubscriptionReleased, refreshFunc);
 
   return (
     <Table
@@ -199,6 +210,7 @@ ClusterListTable.propTypes = {
   canTransferClusterOwnershipList: PropTypes.objectOf(PropTypes.bool),
   canHibernateClusterList: PropTypes.objectOf(PropTypes.bool),
   toggleSubscriptionReleased: PropTypes.func.isRequired,
+  refreshFunc: PropTypes.func.isRequired,
 };
 
 export default ClusterListTable;

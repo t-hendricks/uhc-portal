@@ -31,6 +31,11 @@ class ClusterVersionInfo extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { clearSchedulesResponse } = this.props;
+    clearSchedulesResponse();
+  }
+
   render() {
     const {
       cluster, openModal, schedules,
@@ -85,7 +90,7 @@ class ClusterVersionInfo extends React.Component {
                     )}
                   >
                     <Button variant="link">
-                    View details
+                      View details
                       {' '}
                       <OutlinedQuestionCircleIcon />
                     </Button>
@@ -125,6 +130,7 @@ ClusterVersionInfo.propTypes = {
     managed: PropTypes.bool,
     version: PropTypes.shape({
       channel_group: PropTypes.string,
+      available_upgrades: PropTypes.arrayOf(PropTypes.string),
     }),
     canEdit: PropTypes.bool,
   }),
@@ -144,6 +150,7 @@ ClusterVersionInfo.propTypes = {
   }).isRequired,
   openModal: PropTypes.func.isRequired,
   getSchedules: PropTypes.func.isRequired,
+  clearSchedulesResponse: PropTypes.func.isRequired,
 };
 
 export default ClusterVersionInfo;

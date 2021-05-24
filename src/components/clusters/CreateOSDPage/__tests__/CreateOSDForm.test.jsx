@@ -17,6 +17,7 @@ describe('CreateOSDForm;', () => {
       product={normalizedProducts.OSD}
       canAutoScale={false}
       autoscalingEnabled={false}
+      getMarketplaceQuota={jest.fn()}
     />);
 
     expect(wrapper).toMatchSnapshot();
@@ -34,8 +35,26 @@ describe('CreateOSDForm;', () => {
       canEnableEtcdEncryption
       canAutoScale={false}
       autoscalingEnabled={false}
+      getMarketplaceQuota={jest.fn()}
     />);
 
     expect(wrapper.find('Field[name="etcd_encryption"]').length).toEqual(1);
+  });
+
+  it('should render OSDTrial with availability zone', () => {
+    const wrapper = shallow(<CreateOSDForm
+      openModal={jest.fn()}
+      closeModal={jest.fn()}
+      change={jest.fn()}
+      clustersQuota={awsRhInfraGcpRhInfraClustersQuota}
+      cloudProviderID="aws"
+      privateClusterSelected={false}
+      product={normalizedProducts.OSDTrial}
+      canAutoScale={false}
+      autoscalingEnabled={false}
+      getMarketplaceQuota={jest.fn()}
+    />);
+
+    expect(wrapper).toMatchSnapshot();
   });
 });

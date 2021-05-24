@@ -7,19 +7,13 @@ exports[`<DetailsRight /> CCS clusters should not render storage quota 1`] = `
       <DescriptionListTerm>
         Status
       </DescriptionListTerm>
-      <DescriptionListDescription
-        style={
-          Object {
-            "textTransform": "capitalize",
-          }
-        }
-      >
+      <DescriptionListDescription>
         <ClusterStateIcon
           animated={true}
           clusterState="ready"
         />
          
-        ready
+        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -106,10 +100,8 @@ exports[`<DetailsRight /> CCS clusters should not render storage quota 1`] = `
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": true,
           "ccs": Object {
-            "disable_scp_checks": false,
-            "enabled": false,
+            "enabled": true,
           },
           "cloud_provider": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
@@ -281,11 +273,8 @@ exports[`<DetailsRight /> CCS clusters should not render storage quota 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": Object {
-            "description": "ready",
+            "description": "Ready",
             "state": "ready",
-            "style": Object {
-              "textTransform": "capitalize",
-            },
           },
           "status": Object {
             "dns_ready": true,
@@ -465,19 +454,13 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
       <DescriptionListTerm>
         Status
       </DescriptionListTerm>
-      <DescriptionListDescription
-        style={
-          Object {
-            "textTransform": "capitalize",
-          }
-        }
-      >
+      <DescriptionListDescription>
         <ClusterStateIcon
           animated={true}
           clusterState="ready"
         />
          
-        ready
+        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -555,7 +538,6 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,
@@ -713,11 +695,8 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
             "kind": "CloudRegionLink",
           },
           "state": Object {
-            "description": "ready",
+            "description": "Ready",
             "state": "ready",
-            "style": Object {
-              "textTransform": "capitalize",
-            },
           },
           "status": Object {
             "dns_ready": true,
@@ -900,19 +879,13 @@ exports[`<DetailsRight /> Self Managed cluster should not render vcpu and memory
       <DescriptionListTerm>
         Status
       </DescriptionListTerm>
-      <DescriptionListDescription
-        style={
-          Object {
-            "textTransform": "capitalize",
-          }
-        }
-      >
+      <DescriptionListDescription>
         <ClusterStateIcon
           animated={true}
           clusterState="ready"
         />
          
-        ready
+        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -970,7 +943,6 @@ exports[`<DetailsRight /> Self Managed cluster should not render vcpu and memory
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,
@@ -1128,11 +1100,8 @@ exports[`<DetailsRight /> Self Managed cluster should not render vcpu and memory
             "kind": "CloudRegionLink",
           },
           "state": Object {
-            "description": "ready",
+            "description": "Ready",
             "state": "ready",
-            "style": Object {
-              "textTransform": "capitalize",
-            },
           },
           "status": Object {
             "dns_ready": true,
@@ -1168,19 +1137,13 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
       <DescriptionListTerm>
         Status
       </DescriptionListTerm>
-      <DescriptionListDescription
-        style={
-          Object {
-            "textTransform": "capitalize",
-          }
-        }
-      >
+      <DescriptionListDescription>
         <ClusterStateIcon
           animated={true}
           clusterState="ready"
         />
          
-        ready
+        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1258,7 +1221,6 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,
@@ -1433,11 +1395,8 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
             "kind": "CloudRegionLink",
           },
           "state": Object {
-            "description": "ready",
+            "description": "Ready",
             "state": "ready",
-            "style": Object {
-              "textTransform": "capitalize",
-            },
           },
           "status": Object {
             "dns_ready": true,
@@ -1473,19 +1432,13 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
       <DescriptionListTerm>
         Status
       </DescriptionListTerm>
-      <DescriptionListDescription
-        style={
-          Object {
-            "textTransform": "capitalize",
-          }
-        }
-      >
+      <DescriptionListDescription>
         <ClusterStateIcon
           animated={true}
           clusterState="ready"
         />
          
-        ready
+        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1513,7 +1466,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         Load balancers
       </DescriptionListTerm>
       <DescriptionListDescription>
-        0
+        N/A
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1521,9 +1474,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
         Persistent storage
       </DescriptionListTerm>
       <DescriptionListDescription>
-        100
-         
-        GiB
+        100  GiB
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1590,7 +1541,6 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,
@@ -1765,11 +1715,8 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
             "kind": "CloudRegionLink",
           },
           "state": Object {
-            "description": "ready",
+            "description": "Ready",
             "state": "ready",
-            "style": Object {
-              "textTransform": "capitalize",
-            },
           },
           "status": Object {
             "dns_ready": true,
@@ -1805,19 +1752,13 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
       <DescriptionListTerm>
         Status
       </DescriptionListTerm>
-      <DescriptionListDescription
-        style={
-          Object {
-            "textTransform": "capitalize",
-          }
-        }
-      >
+      <DescriptionListDescription>
         <ClusterStateIcon
           animated={true}
           clusterState="ready"
         />
          
-        ready
+        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1845,7 +1786,7 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
         Load balancers
       </DescriptionListTerm>
       <DescriptionListDescription>
-        0
+        N/A
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1853,9 +1794,7 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
         Persistent storage
       </DescriptionListTerm>
       <DescriptionListDescription>
-        100
-         
-        GiB
+        100  GiB
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -1922,7 +1861,6 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,
@@ -2097,11 +2035,8 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": Object {
-            "description": "ready",
+            "description": "Ready",
             "state": "ready",
-            "style": Object {
-              "textTransform": "capitalize",
-            },
           },
           "status": Object {
             "dns_ready": true,
@@ -2284,19 +2219,13 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
       <DescriptionListTerm>
         Status
       </DescriptionListTerm>
-      <DescriptionListDescription
-        style={
-          Object {
-            "textTransform": "capitalize",
-          }
-        }
-      >
+      <DescriptionListDescription>
         <ClusterStateIcon
           animated={true}
           clusterState="ready"
         />
          
-        ready
+        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -2324,7 +2253,7 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
         Load balancers
       </DescriptionListTerm>
       <DescriptionListDescription>
-        0
+        N/A
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -2332,9 +2261,7 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
         Persistent storage
       </DescriptionListTerm>
       <DescriptionListDescription>
-        100
-         
-        GiB
+        100  GiB
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -2430,7 +2357,6 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
-          "byoc": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": false,
@@ -2605,11 +2531,8 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
             "kind": "CloudRegionLink",
           },
           "state": Object {
-            "description": "ready",
+            "description": "Ready",
             "state": "ready",
-            "style": Object {
-              "textTransform": "capitalize",
-            },
           },
           "status": Object {
             "dns_ready": true,

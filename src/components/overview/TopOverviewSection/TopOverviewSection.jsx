@@ -13,7 +13,6 @@ import { Link } from 'react-router-dom';
 import ResourceUsage from '../../clusters/common/ResourceUsage/ResourceUsage';
 import ClustersWithIssuesCard from '../ClustersWithIssuesCard';
 
-
 const TopOverviewSection = ({
   totalClusters,
   totalUnhealthyClusters,
@@ -43,7 +42,7 @@ const TopOverviewSection = ({
         <GridItem md={3} sm={12}>
           <Card className="clusters-overview-card">
             <CardTitle>
-                Clusters
+              Clusters
             </CardTitle>
             { errorBody }
           </Card>
@@ -51,7 +50,7 @@ const TopOverviewSection = ({
         <GridItem md={9} sm={12} rowSpan={2}>
           <Card id="metrics-charts">
             <CardTitle>
-                CPU and Memory utilization
+              CPU and Memory utilization
             </CardTitle>
             { errorBody }
           </Card>
@@ -110,7 +109,7 @@ const TopOverviewSection = ({
         <Link to="/" className="overview-clusters-link">
           <Card className="clusters-overview-card">
             <CardTitle>
-                  Clusters
+              Clusters
             </CardTitle>
             <CardBody>
               <Bullseye>
@@ -125,7 +124,7 @@ const TopOverviewSection = ({
       <GridItem md={9} rowSpan={2} sm={12}>
         <Card id="metrics-charts">
           <CardTitle>
-                  CPU and Memory utilization
+            CPU and Memory utilization
           </CardTitle>
           { resourceUsageBody }
         </Card>

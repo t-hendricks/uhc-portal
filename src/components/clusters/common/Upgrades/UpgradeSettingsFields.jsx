@@ -1,9 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 // Form fields for upgrade settings, used in Upgrade Settings tab and in cluster creation
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import {
-  Divider, Title, GridItem,
+  Divider, Title, GridItem, Text,
 } from '@patternfly/react-core';
 
 import ExternalLink from '../../../common/ExternalLink';
@@ -45,18 +46,19 @@ function UpgradeSettingsFields({
               label: 'Manual',
               description: (
                 <>
-        You are responsible for updating your cluster.
+                  You are responsible for updating your cluster.
                   {' '}
-        Note that if your cluster version falls too far behind,
+                  Note that if your cluster version falls more than 1 minor version behind
                   {' '}
-        it will be automatically updated. See the
+                  the latest available, it will have SRE alerting disabled and will be
+                  unsupported until it's upgraded. See the
                   {' '}
                   <ExternalLink href="https://access.redhat.com/support/policy/updates/openshift/dedicated">version support information</ExternalLink>
-        .
+                  .
                   <p>
-        Note: High and Critical security concerns (CVEs) will be patched automatically
+                    Note: High and Critical security concerns (CVEs) will be automatically
                     {' '}
-          within 48 hours, regardless of your chosen update strategy.
+                    updated to the latest z-stream version not impacted by the CVE.
                   </p>
                 </>
               ),
@@ -67,14 +69,15 @@ function UpgradeSettingsFields({
       </GridItem>
       {showDivider && <Divider />}
       <GridItem span={12}>
-        <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">Node draining</Title>
-      You may set a grace period for how long Pod Disruption Budget-protected workloads will
+        {showDivider ? <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">Node draining</Title>
+          : <Text className="ocm-c-upgrade-node-draining-title">Node draining</Text>}
+        You may set a grace period for how long Pod Disruption Budget-protected workloads will
         {' '}
-      be respected during updates. After this grace period, any workloads protected by
+        be respected during updates. After this grace period, any workloads protected by
         {' '}
-      Pod Disruption Budgets that have not been successfully drained from a node will be
+        Pod Disruption Budgets that have not been successfully drained from a node will be
         {' '}
-      forcibly evicted.
+        forcibly evicted.
         <Field
           name="node_drain_grace_period"
           component={PodDistruptionBudgetGraceSelect}

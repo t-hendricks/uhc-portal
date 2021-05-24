@@ -4,7 +4,6 @@ import ErrorBox from '../../../common/ErrorBox';
 
 import ScaleClusterDialog from './ScaleClusterDialog';
 
-
 describe('<ScaleClusterDialog />', () => {
   let wrapper;
   let closeModal;
@@ -50,6 +49,9 @@ describe('<ScaleClusterDialog />', () => {
       persistentStorageValues={fulfilledRequest}
       organization={fulfilledRequest}
       cloudProviderID="aws"
+      billingModel="standard"
+      isMultiAZ
+      product="OSD"
       initialValues={{
         id: 'test-id', nodes_compute: 4, load_balancers: 4, persistent_storage: 107374182400,
       }}
@@ -91,6 +93,9 @@ describe('<ScaleClusterDialog />', () => {
         persistentStorageValues={requestInitialState}
         organization={fulfilledRequest}
         cloudProviderID="aws"
+        isMultiAZ
+        billingModel="standard"
+        product="OSD"
         initialValues={{
           id: 'test-id', nodes_compute: 4, load_balancers: 4, persistent_storage: 107374182400,
         }}

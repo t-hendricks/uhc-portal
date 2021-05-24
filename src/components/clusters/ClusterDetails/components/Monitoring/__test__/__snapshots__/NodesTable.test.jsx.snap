@@ -5,6 +5,7 @@ exports[`<ClusterHealthCard /> should render 1`] = `
   aria-label="nodes"
   borders={false}
   canSelectAll={true}
+  canSortFavorites={true}
   cells={
     Array [
       Object {
@@ -25,6 +26,7 @@ exports[`<ClusterHealthCard /> should render 1`] = `
   expandId="expandable-toggle"
   gridBreakPoint="grid-md"
   isStickyHeader={false}
+  isTreeTable={false}
   ouiaSafe={true}
   role="grid"
   rowLabeledBy="simple-node"

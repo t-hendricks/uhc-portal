@@ -7,7 +7,6 @@ import {
 import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
 
-
 const mapStateToProps = state => ({
   subscription: state.modal.data,
   requestState: state.subscriptionReleased.requestState,

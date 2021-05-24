@@ -11,6 +11,7 @@ import {
 import Timestamp from '../../../../common/Timestamp';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import BillingModelLabel from '../../../common/BillingModelLabel';
+import InfrastructureModelLabel from '../../../common/InfrastructureModelLabel';
 import ClusterVersionInfo from './ClusterVersionInfo';
 
 function DetailsLeft({ cluster, cloudProviders }) {
@@ -86,10 +87,18 @@ function DetailsLeft({ cluster, cloudProviders }) {
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>
-                Billing model
+                Subscription type
               </DescriptionListTerm>
               <DescriptionListDescription>
                 <BillingModelLabel cluster={cluster} />
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+            <DescriptionListGroup>
+              <DescriptionListTerm>
+                Infrastructure type
+              </DescriptionListTerm>
+              <DescriptionListDescription>
+                <InfrastructureModelLabel cluster={cluster} />
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>

@@ -1,0 +1,2118 @@
+{
+  "kind": "QuotaCostList",
+  "page": 1,
+  "size": 51,
+  "total": 51,
+  "items": [
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|mem.small|any|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-4",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.small",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "add-on|addon-prow-operator",
+      "allowed": 15,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "addon-prow-operator",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|byoc|moa",
+      "allowed": 0,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "aws",
+          "resource_name": "any",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "MOA",
+          "billing_model": "standard",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|cpu|byoc|ocp",
+      "allowed": 0,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "any",
+          "resource_type": "compute.node",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "OCP",
+          "billing_model": "standard",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "add-on|addon-rhmi-operator",
+      "allowed": 15,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "addon-rhmi-operator",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "addon-rhmi-operator",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "RHMI",
+          "billing_model": "standard",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|mem.large|single|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-16",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.large",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|mem.large|multi|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-16",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.large",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "add-on|addon-ocs-converged",
+      "allowed": 15,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "addon-ocs-converged",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "network.io|network-io-apac|aws",
+      "allowed": 0,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "aws",
+          "resource_name": "network-io-apac",
+          "resource_type": "network.io",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|gp.medium|any|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-8",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.medium",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|mem.medium|multi|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-8",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.medium",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|gp.large|single|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-16",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.large",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|cpu|byoc|osd",
+      "allowed": 520,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-16",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.large",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-8",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.medium",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-36",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 36
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.xlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 36
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-48",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.xxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-72",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 72
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.xxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 72
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-96",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 96
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.xxxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 96
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-16",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.large",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-8",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.medium",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-4",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 4
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.small",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 4
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-32",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 32
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.xlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 32
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-48",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.xxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-64",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 64
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.xxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 64
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-96",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 96
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.xxxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 96
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-16",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.large",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-8",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.medium",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-4",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 4
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.small",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 4
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-32",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 32
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.xlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 32
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-48",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.xxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-64",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 64
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.xxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 64
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-96",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 96
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.xxxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 96
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "add-on|addon-managed-api-service",
+      "allowed": 15,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "aws",
+          "resource_name": "addon-managed-api-service",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "any",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "aws",
+          "resource_name": "addon-managed-api-service",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "MOA",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "aws",
+          "resource_name": "addon-managed-api-service",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "OSDTrial",
+          "billing_model": "standard",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "add-on|addon-acm-operator",
+      "allowed": 15,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "addon-acm-operator",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|gp.small|any|rhinfra|osd|any",
+      "allowed": 27,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-4",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.small",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|cpu.large|single|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-16",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.large",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "network.io|network-io-north-america|aws",
+      "allowed": 0,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "aws",
+          "resource_name": "network-io-north-america",
+          "resource_type": "network.io",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|cpu.medium|single|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-8",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.medium",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "pv.storage|gp2",
+      "allowed": 30000,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp2",
+          "resource_type": "pv.storage",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp2",
+          "resource_type": "pv.storage",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|gp.medium|multi|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-8",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.medium",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|mem.small|single|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-4",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.small",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|mem.large|any|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-16",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.large",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|mem.medium|single|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-8",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.medium",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "add-on|addon-dba-operator",
+      "allowed": 15,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "addon-dba-operator",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|cpu|byoc|moa",
+      "allowed": 0,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "aws",
+          "resource_name": "highcpu-16",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "MOA",
+          "billing_model": "standard",
+          "cost": 0
+        },
+        {
+          "cloud_provider": "aws",
+          "resource_name": "cpu.large",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "MOA",
+          "billing_model": "standard",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|byoc|osd|marketplace",
+      "allowed": 20,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "any",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "add-on|addon-managed-kafka",
+      "allowed": 15,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "addon-managed-kafka",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|gp.small|single|rhinfra|osd|any",
+      "allowed": 35,
+      "consumed": 1,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-4",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.small",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|cpu.large|any|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-16",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.large",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "network.io|network-io-emea|aws",
+      "allowed": 0,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "aws",
+          "resource_name": "network-io-emea",
+          "resource_type": "network.io",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|cpu|byoc|ocp",
+      "allowed": 0,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "any",
+          "resource_type": "cluster",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "OCP",
+          "billing_model": "standard",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|cpu|byoc|osd|marketplace",
+      "allowed": 4000,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-16",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.large",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-8",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.medium",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-36",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 36
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.xlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 36
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-48",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.xxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-72",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 72
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.xxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 72
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-96",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 96
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.xxxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 96
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-16",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.large",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-8",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.medium",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-4",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 4
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.small",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 4
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-32",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 32
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.xlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 32
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-48",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.xxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-64",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 64
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.xxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 64
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-96",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 96
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.xxxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 96
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-16",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.large",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 16
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-8",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.medium",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 8
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-4",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 4
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.small",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 4
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-32",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 32
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.xlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 32
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-48",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.xxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 48
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-64",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 64
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.xxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 64
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-96",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 96
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.xxxxlarge",
+          "resource_type": "compute.node",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "marketplace",
+          "cost": 96
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|mem.medium|any|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-8",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.medium",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|gp.large|multi|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-16",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.large",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "add-on|addon-cluster-logging-operator",
+      "allowed": 15,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "addon-cluster-logging-operator",
+          "resource_type": "add-on",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 0
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "addon-cluster-logging-operator",
+          "resource_type": "add-on",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "network.loadbalancer|network",
+      "allowed": 40,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "network",
+          "resource_type": "network.loadbalancer",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "network",
+          "resource_type": "network.loadbalancer",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|gp.small|multi|rhinfra|osd|any",
+      "allowed": 17,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-4",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.small",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|cpu.medium|any|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-8",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.medium",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|gp.medium|single|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-8",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.medium",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "single",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "add-on|addon-open-data-hub",
+      "allowed": 15,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "aws",
+          "resource_name": "addon-open-data-hub",
+          "resource_type": "add-on",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "compute.node|gp.large|any|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "standard-16",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "gp.large",
+          "resource_type": "compute.node",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "add-on|addon-crw-operator",
+      "allowed": 15,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "addon-crw-operator",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|rhinfra|rhosaktrial|marketplace",
+      "allowed": 0,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "rhosak",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "any",
+          "product": "RHOSAKTrial",
+          "billing_model": "marketplace",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "network.io|network-io-latam|aws",
+      "allowed": 0,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "aws",
+          "resource_name": "network-io-latam",
+          "resource_type": "network.io",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|cpu.medium|multi|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-8",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.medium",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|byoc|osd",
+      "allowed": 20,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "any",
+          "resource_type": "cluster",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "network.io|network-io|gcp",
+      "allowed": 0,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "gcp",
+          "resource_name": "network-io",
+          "resource_type": "network.io",
+          "byoc": "byoc",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 0
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "add-on|addon-elasticsearch-operator",
+      "allowed": 15,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "addon-elasticsearch-operator",
+          "resource_type": "add-on",
+          "byoc": "any",
+          "availability_zone_type": "any",
+          "product": "ANY",
+          "billing_model": "any",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|cpu.large|multi|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highcpu-16",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "cpu.large",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    },
+    {
+      "kind": "QuotaCost",
+      "href": "/api/accounts_mgmt/v1/organizations/1MK6ieFXd0eu1hERdENAPvpbi7x/quota_cost",
+      "organization_id": "1MK6ieFXd0eu1hERdENAPvpbi7x",
+      "quota_id": "cluster|mem.small|multi|rhinfra|osd|any",
+      "allowed": 2,
+      "consumed": 0,
+      "related_resources": [
+        {
+          "cloud_provider": "any",
+          "resource_name": "highmem-4",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        },
+        {
+          "cloud_provider": "any",
+          "resource_name": "mem.small",
+          "resource_type": "cluster",
+          "byoc": "rhinfra",
+          "availability_zone_type": "multi",
+          "product": "OSD",
+          "billing_model": "standard",
+          "cost": 1
+        }
+      ]
+    }
+  ]
+}

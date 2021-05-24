@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import { Spinner } from '@redhat-cloud-services/frontend-components';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import {
   Button, Alert, Split, SplitItem, Title,
 } from '@patternfly/react-core';
@@ -13,7 +13,8 @@ import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../../common/ErrorTriangle';
 import getClusterName from '../../../../common/getClusterName';
-import { subscriptionStatuses } from '../../../../common/subscriptionTypes';
+import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
+import { isUninstalledAICluster } from '../../../../common/isAssistedInstallerCluster';
 import ExpirationAlert from './ExpirationAlert';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
@@ -39,6 +40,7 @@ function ClusterDetailsTop(props) {
     toggleSubscriptionReleased,
   } = props;
 
+  const isProductOSDTrial = get(cluster, 'subscription.plan.id', '') === normalizedProducts.OSDTrial;
   const clusterName = getClusterName(cluster);
   const consoleURL = cluster.console ? cluster.console.url : false;
 
@@ -52,7 +54,6 @@ function ClusterDetailsTop(props) {
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
   const isDeprovisioned = get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
-
 
   const openIDPModal = () => {
     openModal('create-identity-provider');
@@ -69,16 +70,15 @@ function ClusterDetailsTop(props) {
       {' '}
       <Button variant="link" isInline onClick={openIDPModal}>Add OAuth configuration</Button>
       {' '}
-      to allow  others to log in.
+      to allow others to log in.
     </Alert>
   );
-
 
   let launchConsole;
   const disableConsoleOnStates = [
     clusterStates.UNINSTALLING,
     clusterStates.POWERING_DOWN,
-    clusterStates.POWERING_UP,
+    clusterStates.RESUMING,
     clusterStates.HIBERNATING,
   ];
   if (consoleURL && !disableConsoleOnStates.includes(cluster.state)) {
@@ -90,14 +90,14 @@ function ClusterDetailsTop(props) {
   } else if (cluster.managed) {
     launchConsole = (
       <Button variant="primary" isDisabled title={cluster.state === clusterStates.UNINSTALLING ? 'The cluster is being uninstalled' : 'Admin console is not yet available for this cluster'}>
-      Open console
+        Open console
       </Button>
     );
-  } else if (cluster.canEdit) {
+  } else if (cluster.canEdit && !isUninstalledAICluster(cluster)) {
     launchConsole = (<Button variant="primary" onClick={() => openModal(modals.EDIT_CONSOLE_URL, cluster)}>Add console URL</Button>);
   }
 
-  const actions = (
+  const actions = !isUninstalledAICluster(cluster) && (
     <ClusterActionsDropdown
       disabled={!cluster.canEdit && !cluster.canDelete}
       cluster={cluster}
@@ -107,6 +107,7 @@ function ClusterDetailsTop(props) {
       canTransferClusterOwnership={canTransferClusterOwnership}
       toggleSubscriptionReleased={toggleSubscriptionReleased}
       canHibernateCluster={canHibernateCluster}
+      refreshFunc={refreshFunc}
     />
   );
 
@@ -125,6 +126,7 @@ function ClusterDetailsTop(props) {
       || organization.pending
       || clusterIdentityProviders.pending;
 
+  const trialEndDate = isProductOSDTrial && get(cluster, 'subscription.trial_end_date');
 
   return (
     <div id="cl-details-top" className="top-row">
@@ -161,7 +163,9 @@ function ClusterDetailsTop(props) {
                 Unarchive
               </Button>
             )}
-            { !isDeprovisioned && (<RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />)}
+            { !isDeprovisioned && (
+              <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />
+            )}
           </span>
         </SplitItem>
       </Split>
@@ -176,6 +180,13 @@ function ClusterDetailsTop(props) {
       && (
       <ExpirationAlert
         expirationTimestamp={cluster.expiration_timestamp}
+      />
+      )}
+      {trialEndDate && !isDeprovisioned
+      && (
+      <ExpirationAlert
+        expirationTimestamp={trialEndDate}
+        trialExpiration
       />
       )}
       <SubscriptionCompliancy

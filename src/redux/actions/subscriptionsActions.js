@@ -13,12 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import isUuid from 'uuid-validate';
+import { validate as isUuid } from 'uuid';
 
 import { subscriptionsConstants } from '../constants';
 import { accountsService, authorizationsService, clusterService } from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
-import { mapListResponse, normalizeQuotaCost } from '../../common/normalize';
 
 function fetchAccount() {
   return dispatch => dispatch({
@@ -55,12 +54,9 @@ const invalidateSubscriptions = () => dispatch => dispatch({
 function fetchQuotaCost(organizationID) {
   return dispatch => dispatch({
     type: subscriptionsConstants.GET_QUOTA_COST,
-    payload: accountsService.getOrganizationQuota(organizationID).then(response => (
-      mapListResponse(response, normalizeQuotaCost)
-    )),
+    payload: accountsService.getOrganizationQuota(organizationID),
   });
 }
-
 
 const getSubscriptionIDForCluster = (clusterID) => {
   if (isUuid(clusterID)) {

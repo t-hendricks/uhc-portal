@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddOnsPrimaryButton /> should render 1`] = `
+<Fragment>
+  <Button
+    component="a"
+    href="https://example.com/veryfakeconsole/k8s/ns/redhat-rhmi-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/integreatly-operator.v0.0.1"
+    rel="noopener noreferrer"
+    target="_blank"
+    variant="primary"
+  >
+    Open in Console
+     
+    <ExternalLinkAltIcon
+      className="link-icon"
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+  </Button>
+   
+  <Button
+    isDisabled={false}
+    onClick={[Function]}
+    ouiaId="uninstall-addon-managed-integration"
+    variant="link"
+  >
+    Uninstall
+  </Button>
+</Fragment>
+`;

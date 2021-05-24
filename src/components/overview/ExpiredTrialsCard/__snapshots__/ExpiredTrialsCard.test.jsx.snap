@@ -14,6 +14,7 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
       aria-label="Expired Trials"
       borders={true}
       canSelectAll={true}
+      canSortFavorites={true}
       cells={
         Array [
           Object {
@@ -28,6 +29,7 @@ exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
       expandId="expandable-toggle"
       gridBreakPoint="grid-md"
       isStickyHeader={false}
+      isTreeTable={false}
       ouiaSafe={true}
       role="grid"
       rowLabeledBy="simple-node"

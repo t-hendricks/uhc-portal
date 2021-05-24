@@ -143,7 +143,6 @@ describe('<CloudRegionComboBox />', () => {
       expect(wrapper.find('FormSelectOption').children()).toHaveLength(1);
     });
 
-
     it('should call handleCloudRegionChange on selection', () => {
       wrapper.find('.cloud-region-combo-box').at(0).simulate('change', {
         target: { value: enabledRegions[0].id, selectedIndex: 0 },

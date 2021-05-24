@@ -144,11 +144,10 @@ const GoogleDocLink = `${IDPDocBase}/configuring-google-identity-provider.html`;
 const OpenIDDocLink = `${IDPDocBase}/configuring-oidc-identity-provider.html`;
 const GitlabDocLink = 'https://docs.openshift.com/container-platform/latest/authentication/identity_providers/configuring-gitlab-identity-provider.html';
 
-
 const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({
-    client_id: formData.client_id,
-    client_secret: formData.client_secret,
+    client_id: formData.client_id.trim(),
+    client_secret: formData.client_secret.trim(),
     organizations: formData.github_auth_mode === 'organizations' ? multiInputToCleanArray(formData, 'organizations') : undefined,
     teams: formData.github_auth_mode === 'teams' ? multiInputToCleanArray(formData, 'teams') : undefined,
     hostname: formData.hostname,
@@ -156,8 +155,8 @@ const getCreateIDPRequestData = (formData) => {
   });
 
   const googleData = () => ({
-    client_id: formData.client_id,
-    client_secret: formData.client_secret,
+    client_id: formData.client_id.trim(),
+    client_secret: formData.client_secret.trim(),
     hosted_domain: formData.hosted_domain,
   });
 
@@ -176,8 +175,8 @@ const getCreateIDPRequestData = (formData) => {
   });
 
   const gitlabData = () => ({
-    client_id: formData.client_id,
-    client_secret: formData.client_secret,
+    client_id: formData.client_id.trim(),
+    client_secret: formData.client_secret.trim(),
     url: formData.gitlab_url,
     ca: formData.gitlab_ca ? formData.gitlab_ca.trim() : formData.gitlab_ca,
   });
@@ -189,8 +188,8 @@ const getCreateIDPRequestData = (formData) => {
       name: multiInputToCleanArray(formData, 'openid_name'),
       preferred_username: multiInputToCleanArray(formData, 'openid_preferred_username'),
     },
-    client_id: formData.client_id,
-    client_secret: formData.client_secret,
+    client_id: formData.client_id.trim(),
+    client_secret: formData.client_secret.trim(),
     extra_scopes: strToCleanArray(formData.openid_extra_scopes),
     issuer: formData.issuer,
   });
@@ -326,7 +325,6 @@ const getldapAttributes = (attributes, type) => {
   return ldapAttributesData;
 };
 
-
 const getGitHubTeamsAndOrgsData = (type) => {
   const data = [];
 
@@ -360,7 +358,6 @@ const getGitHubTeamsAndOrgsData = (type) => {
 
 const isEmptyReduxArray = (arr, key) => (arr ? arr.map(currentValue => isEmpty(currentValue[key]))
   .every(item => item) : false);
-
 
 export {
   getCreateIDPRequestData,

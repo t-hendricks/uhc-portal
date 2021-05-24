@@ -1,5 +1,7 @@
 import get from 'lodash/get';
+import { Config as AIConfig } from 'openshift-assisted-ui-lib';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
 
 const clusterStates = {
   PENDING: 'pending',
@@ -9,17 +11,20 @@ const clusterStates = {
   UNINSTALLING: 'uninstalling',
   HIBERNATING: 'hibernating',
   POWERING_DOWN: 'powering_down',
-  POWERING_UP: 'powering_up',
+  RESUMING: 'resuming',
   DISCONNECTED: 'disconnected',
   ERROR: 'error',
   DEPROVISIONED: 'deprovisioned',
   ARCHIVED: 'archived',
+  STALE: 'stale',
 };
 
 function getClusterStateAndDescription(cluster) {
   let state;
 
-  if ((cluster.state === clusterStates.INSTALLING
+  if (isAssistedInstallSubscription(cluster.subscription)) {
+    state = AIConfig.CLUSTER_STATUS_LABELS[cluster.status];
+  } else if ((cluster.state === clusterStates.INSTALLING
       || cluster.state === clusterStates.PENDING)) {
     state = clusterStates.INSTALLING;
   } else if (get(cluster, 'metrics.upgrade.state') === 'running' && !cluster.managed) {
@@ -42,21 +47,26 @@ function getClusterStateAndDescription(cluster) {
     state = clusterStates.HIBERNATING;
   } else if (cluster.state === clusterStates.POWERING_DOWN) {
     state = clusterStates.POWERING_DOWN;
-  } else if (cluster.state === clusterStates.POWERING_UP) {
-    state = clusterStates.POWERING_UP;
+  } else if (cluster.state === clusterStates.RESUMING) {
+    state = clusterStates.RESUMING;
+  } else if (!cluster.managed
+    && cluster.subscription.status === subscriptionStatuses.ACTIVE) {
+    state = clusterStates.READY;
+  } else if (!cluster.managed
+    && cluster.subscription.status === subscriptionStatuses.STALE) {
+    state = clusterStates.STALE;
   }
-
 
   return {
     state,
-    description: state,
-    style: { textTransform: 'capitalize' },
+    // Capitalize the first letter and replace any underscore with space.
+    description: state ? (state.charAt(0).toUpperCase() + state.slice(1)).replace(/_/g, ' ') : '',
   };
 }
 
 const isHibernating = state => state === clusterStates.HIBERNATING
   || state === clusterStates.POWERING_DOWN
-  || state === clusterStates.POWERING_UP;
+  || state === clusterStates.RESUMING;
 
 export { getClusterStateAndDescription, isHibernating };
 export default clusterStates;
