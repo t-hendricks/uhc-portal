@@ -146,10 +146,10 @@ class CreateOSDForm extends React.Component {
       change,
       openModal,
       isBYOCModalOpen,
-      clustersQuota,
       cloudProviderID,
       privateClusterSelected,
       product,
+      billingModel,
       isAutomaticUpgrade,
       canEnableEtcdEncryption,
       selectedRegion,
@@ -166,21 +166,14 @@ class CreateOSDForm extends React.Component {
       isMultiAz,
       machineType,
       mode,
-      billingModel,
     } = this.state;
 
     const isAws = cloudProviderID === 'aws';
     const isGCP = cloudProviderID === 'gcp';
 
     const isBYOCForm = this.isByocForm();
-    const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
     const showAvailability = product === normalizedProducts.OSD
-                          || product === normalizedProducts.OSDTrial;
-
-    let basicFieldsQuota = clustersQuota[cloudProviderID][infraType];
-    if (billingModel === billingModels.MARKETPLACE) {
-      basicFieldsQuota = clustersQuota.marketplace[cloudProviderID][infraType];
-    }
+      || product === normalizedProducts.OSDTrial;
 
     return (
       <>
@@ -272,9 +265,10 @@ class CreateOSDForm extends React.Component {
           showDNSBaseDomain={false}
           showAvailability={showAvailability}
           change={change}
+          product={product}
+          billingModel={billingModel}
           isBYOC={isBYOCForm}
           cloudProviderID={cloudProviderID}
-          quota={basicFieldsQuota}
           handleMultiAZChange={this.handleMultiAZChange}
           handleCloudRegionChange={this.handleCloudRegionChange}
           isMultiAz={isMultiAz}
@@ -325,24 +319,24 @@ class CreateOSDForm extends React.Component {
           </>
         )}
         {canEnableEtcdEncryption && (
-        <FormGroup
-          fieldId="etcd_encryption"
-          id="etcdEncryption"
-        >
-          <Field
-            component={ReduxCheckbox}
-            name="etcd_encryption"
-            label="Enable etcd encryption"
-            extendedHelpText={(
-              <>
-                {constants.enableEtcdHint}
-                {' '}
-                <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
-              </>
-                )}
-          />
-          <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
-        </FormGroup>
+          <FormGroup
+            fieldId="etcd_encryption"
+            id="etcdEncryption"
+          >
+            <Field
+              component={ReduxCheckbox}
+              name="etcd_encryption"
+              label="Enable etcd encryption"
+              extendedHelpText={(
+                <>
+                  {constants.enableEtcdHint}
+                  {' '}
+                  <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
+                </>
+              )}
+            />
+            <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
+          </FormGroup>
         )}
         {(isGCP && isBYOCForm) && (
 
