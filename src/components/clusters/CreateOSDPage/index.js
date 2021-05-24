@@ -80,8 +80,8 @@ const mapStateToProps = (state, ownProps) => {
       hasStandardOSDQuota,
       hasProductQuota: hasManagedQuotaSelector(state, product),
       hasOSDTrialQuota: hasManagedQuotaSelector(state, OSDTrial),
-      hasMarketplaceProductQuota: hasAwsQuotaSelector(state, product, MARKETPLACE)
-                               || hasGcpQuotaSelector(state, product, MARKETPLACE),
+      hasMarketplaceProductQuota: hasAwsQuotaSelector(state, OSD, MARKETPLACE)
+                               || hasGcpQuotaSelector(state, OSD, MARKETPLACE),
       hasAwsQuota,
       hasGcpQuota,
       aws: awsQuotaSelector(state, product, STANDARD),
