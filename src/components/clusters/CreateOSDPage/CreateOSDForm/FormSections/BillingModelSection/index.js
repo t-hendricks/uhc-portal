@@ -39,7 +39,9 @@ const mapStateToProps = (state, ownProps) => {
     }),
     hasMarketplaceQuota: quotaQuery({
       resourceType: quotaTypes.CLUSTER,
-      product,
+      // calculate marketplace quota for OSD even if OSDTrial was selected
+      // since there is no OSDTrial on RHM
+      product: OSD,
       billingModel: MARKETPLACE,
     }),
     hasBYOCquota: quotaQuery(
