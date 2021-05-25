@@ -47,6 +47,7 @@ import Support from './components/Support';
 import AddNotificationContactDialog
   from './components/Support/components/AddNotificationContactDialog';
 import UpgradeSettingsTab from './components/UpgradeSettings';
+import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 
 class ClusterDetails extends Component {
   state = {
@@ -351,6 +352,7 @@ class ClusterDetails extends Component {
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED
     || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
     const isAROCluster = get(cluster, 'subscription.plan.id', '') === knownProducts.ARO;
+    const isOSDTrial = get(cluster, 'subscription.plan.id', '') === knownProducts.OSDTrial;
     const isManaged = cluster.managed;
     const isClusterPending = cluster.state === clusterStates.PENDING;
     const isClusterInstalling = cluster.state === clusterStates.INSTALLING;
@@ -359,36 +361,31 @@ class ClusterDetails extends Component {
 
     const displayAddOnsTab = !isClusterInstalling && !isClusterPending
      && cluster.managed && !isArchived;
-    const displayInsightsTab = !cluster.managed && !isArchived && !isAROCluster;
+    const displayInsightsTab = !cluster.managed && !isArchived && !isAROCluster
+      && !isUninstalledAICluster(cluster);
     const consoleURL = get(cluster, 'console.url');
-    const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster;
+    const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster
+      && !isUninstalledAICluster(cluster);
     const displayAccessControlTab = cluster.managed && !!consoleURL
-      && (isClusterReady || clusterHibernating);
+      && (isClusterReady || clusterHibernating) && !isArchived;
     const cloudProvider = get(cluster, 'cloud_provider.id');
     const displayNetworkingTab = (isClusterReady || isClusterUpdating || clusterHibernating)
           && cluster.managed && !!get(cluster, 'api.url')
       && (cloudProvider === 'aws'
-         || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')));
+         || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')))
+      && !isArchived;
     const displayMachinePoolsTab = cluster.managed
-      && (isClusterReady || clusterHibernating);
+      && (isClusterReady || clusterHibernating)
+      && !isArchived;
     const clusterName = getClusterName(cluster);
-    const hideSupportTab = (
-      cluster.managed
-      && (
+    const hideSupportTab = cluster.managed
         // The (managed) cluster has not yet reported its cluster ID to AMS
         // eslint-disable-next-line camelcase
-        cluster.subscription?.external_cluster_id === undefined
-        // The (managed) cluster has been deprovisioned
-        || cluster.subscription?.status === subscriptionStatuses.DEPROVISIONED
-      )
-    ) || (
-      !cluster.managed
-      // The (unmanaged) cluster has been archived
-      && (cluster.subscription?.status === subscriptionStatuses.ARCHIVED)
-    );
-    const displaySupportTab = !hideSupportTab;
-    const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit;
-    const displayAddAssistedHosts = assistedInstallerEnabled && canAddHost({ cluster });
+        && cluster.subscription?.external_cluster_id === undefined;
+    const displaySupportTab = !hideSupportTab && !isOSDTrial;
+    const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit && !isArchived;
+    const displayAddAssistedHosts = assistedInstallerEnabled && canAddHost({ cluster })
+      && !isArchived;
 
     return (
       <PageSection id="clusterdetails-content">
@@ -547,7 +544,7 @@ class ClusterDetails extends Component {
           hidden
         >
           <ErrorBoundary>
-            <Support />
+            <Support isDisabled={isArchived} />
           </ErrorBoundary>
         </TabContent>
         {displayMachinePoolsTab && (

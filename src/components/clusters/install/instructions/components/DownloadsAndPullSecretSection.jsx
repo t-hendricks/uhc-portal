@@ -16,7 +16,7 @@ import DeveloperPreviewSection from './DeveloperPreviewSection';
 import links from '../../../../../common/installLinks';
 
 function DownloadsAndPullSecretSection({
-  rhcosLearnMoreURL,
+  displayRHCOSSection = false,
   token,
   showPreReleaseDocs = false,
   showPreReleasePageLink = true,
@@ -81,12 +81,11 @@ function DownloadsAndPullSecretSection({
             />
           </TextContent>
         </StackItem>
-        {rhcosLearnMoreURL && (
+        { displayRHCOSSection && (
           <StackItem key="rhcos">
             <TextContent>
               <Text component="h3">Red Hat Enterprise Linux CoreOS (RHCOS)</Text>
               <RHCOSSection
-                learnMoreURL={rhcosLearnMoreURL}
                 token={token}
                 pendoID={pendoID}
                 cloudProviderID={cloudProviderID}
@@ -100,7 +99,6 @@ function DownloadsAndPullSecretSection({
 }
 
 DownloadsAndPullSecretSection.propTypes = {
-  rhcosLearnMoreURL: PropTypes.string,
   showPreReleasePageLink: PropTypes.bool,
   showPreReleaseDocs: PropTypes.bool,
   token: PropTypes.object,
@@ -109,6 +107,7 @@ DownloadsAndPullSecretSection.propTypes = {
   channel: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   isBMIPI: PropTypes.bool,
+  displayRHCOSSection: PropTypes.bool,
 };
 
 DownloadsAndPullSecretSection.defaultProps = {

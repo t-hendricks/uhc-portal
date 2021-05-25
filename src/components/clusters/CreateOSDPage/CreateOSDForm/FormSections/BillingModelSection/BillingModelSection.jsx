@@ -6,6 +6,7 @@ import { Field } from 'redux-form';
 import {
   FormGroup,
   GridItem,
+  Text,
   Title,
 } from '@patternfly/react-core';
 
@@ -18,7 +19,7 @@ import BillingModelRadioButtons from './BillingModelRadioButtons';
 
 function BillingModelSection({
   hasBYOCquota,
-  hasStandardQuota,
+  hasRhInfraQuota,
   hasStandardOSDQuota,
   hasMarketplaceBYOCQuota,
   hasMarketplaceRhInfraQuota,
@@ -30,6 +31,7 @@ function BillingModelSection({
   toggleSubscriptionBilling,
   product,
   billingModel,
+  isWizard,
 }) {
   const { STANDARD } = billingModels;
 
@@ -62,13 +64,13 @@ function BillingModelSection({
 
   const hasMarketplaceSubscription = hasMarketplaceBYOCQuota || hasMarketplaceRhInfraQuota;
 
-  let isStandardQuotaDisabled;
+  let isRhInfraQuotaDisabled;
   let isBYOCQuotaDisabled;
   if (defaultBillingModel.split('-')[0] === STANDARD) {
-    isStandardQuotaDisabled = !hasStandardQuota;
+    isRhInfraQuotaDisabled = !hasRhInfraQuota;
     isBYOCQuotaDisabled = !hasBYOCquota;
   } else {
-    isStandardQuotaDisabled = !hasMarketplaceRhInfraQuota;
+    isRhInfraQuotaDisabled = !hasMarketplaceRhInfraQuota;
     isBYOCQuotaDisabled = !hasMarketplaceBYOCQuota;
   }
 
@@ -81,7 +83,6 @@ function BillingModelSection({
     {
       disabled: !hasStandardOSDQuota,
       value: billingModels.STANDARD,
-      ariaLabel: 'Standard',
       label: 'Annual: Fixed capacity subscription from Red Hat',
       description: 'Use the quota pre-purchased by your organization',
     },
@@ -91,7 +92,6 @@ function BillingModelSection({
     subscriptionOptions.unshift(
       {
         value: 'standard-trial',
-        ariaLabel: 'OSD Trial',
         label: 'Free trial (upgradeable)',
         // 60 days may be updated later based on an account capability
         // https://issues.redhat.com/browse/SDB-1846
@@ -105,7 +105,6 @@ function BillingModelSection({
       {
         disabled: !hasMarketplaceSubscription,
         value: billingModels.MARKETPLACE,
-        ariaLabel: 'Marketplace',
         label: 'On-demand: Flexible usage billed through the Red Hat Marketplace',
         description: marketplaceQuotaDescription,
       },
@@ -116,6 +115,17 @@ function BillingModelSection({
 
   return (
     <GridItem span={12}>
+      { isWizard && (
+        <>
+          <Title headingLevel="h2">Welcome to Red Hat OpenShift Dedicated</Title>
+          <Text component="p">
+            Reduce operational complexity and focus on building applications
+            that add more value to your business with Red Hat OpenShift Dedicated,
+            a fully managed service of Red Hat OpenShift on
+            Amazon Web Services (AWS) and Google Cloud.
+          </Text>
+        </>
+      )}
       {showSubscriptionType && (
         <>
           <Title headingLevel="h3">Subscription type:</Title>
@@ -141,14 +151,36 @@ function BillingModelSection({
         isRequired
         fieldId="byoc"
       >
-        <Field
-          component={BillingModelRadioButtons}
-          name="byoc"
-          isBYOCQuotaDisabled={isBYOCQuotaDisabled}
-          isStandardQuotaDisabled={isStandardQuotaDisabled}
-          byocSelected={byocSelected}
-          onChange={toggleBYOCFields}
-        />
+        { isWizard
+          ? (
+            <Field
+              component={RadioButtons}
+              name="byoc"
+              options={[{
+                label: 'Customer cloud subscription',
+                description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',
+                value: 'true',
+                disabled: isBYOCQuotaDisabled,
+              },
+              {
+                label: 'Red Hat cloud account',
+                description: 'Deploy in cloud provider accounts owned by Red Hat',
+                value: 'false',
+                disabled: isRhInfraQuotaDisabled,
+              }]}
+              onChange={toggleBYOCFields}
+            />
+          )
+          : (
+            <Field
+              component={BillingModelRadioButtons}
+              name="byoc"
+              isBYOCQuotaDisabled={isBYOCQuotaDisabled}
+              isRhInfraQuotaDisabled={isRhInfraQuotaDisabled}
+              byocSelected={byocSelected}
+              onChange={toggleBYOCFields}
+            />
+          )}
       </FormGroup>
     </GridItem>
   );
@@ -156,7 +188,7 @@ function BillingModelSection({
 
 BillingModelSection.propTypes = {
   hasBYOCquota: PropTypes.bool.isRequired,
-  hasStandardQuota: PropTypes.bool.isRequired,
+  hasRhInfraQuota: PropTypes.bool.isRequired,
   hasStandardOSDQuota: PropTypes.bool.isRequired,
   hasMarketplaceQuota: PropTypes.bool,
   hasMarketplaceBYOCQuota: PropTypes.bool,
@@ -168,6 +200,7 @@ BillingModelSection.propTypes = {
   toggleSubscriptionBilling: PropTypes.func.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
+  isWizard: PropTypes.bool,
 };
 
 export default BillingModelSection;

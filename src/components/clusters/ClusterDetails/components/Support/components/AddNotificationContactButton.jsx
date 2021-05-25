@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Tooltip } from '@patternfly/react-core';
 
-const addBtn = (canEdit, openModal) => (
+const addBtn = (isDisabled, openModal) => (
   // eslint-disable-next-line react/jsx-filename-extension
   <Button
     onClick={() => openModal('add-notification-contact')}
     variant="secondary"
     className="access-control-add"
-    isDisabled={!canEdit}
+    isDisabled={isDisabled}
   >
     Add notification contact
   </Button>
@@ -17,15 +17,16 @@ const addBtn = (canEdit, openModal) => (
 const AddNotificationContactButton = ({
   canEdit,
   openModal,
+  isDisabled = false,
 }) => (
   canEdit
-    ? addBtn(canEdit, openModal)
+    ? addBtn(isDisabled, openModal)
     : (
       <Tooltip
         content="You do not have permission to add a Notification Contact. Only cluster owners and organization administrators can add them."
       >
         <span>
-          {addBtn(canEdit, openModal)}
+          {addBtn(true, openModal)}
         </span>
       </Tooltip>
     )
@@ -34,6 +35,7 @@ const AddNotificationContactButton = ({
 AddNotificationContactButton.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 export default AddNotificationContactButton;

@@ -114,7 +114,7 @@ class AddOnsParametersModal extends Component {
       }
       return ({
         component: ReduxFormDropdown,
-        options: paramOptions,
+        options: [{ name: '-- Please Select --', value: undefined }, ...paramOptions],
         type: 'text',
       });
     }

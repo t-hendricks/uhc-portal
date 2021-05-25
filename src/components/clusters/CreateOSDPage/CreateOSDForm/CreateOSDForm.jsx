@@ -7,7 +7,7 @@ import { Field } from 'redux-form';
 import get from 'lodash/get';
 
 import CustomerCloudSubscriptionModal from './FormSections/BillingModelSection/CustomerCloudSubscriptionModal';
-import BillingModelSection from './FormSections/BillingModelSection/BillingModelSection';
+import BillingModelSection from './FormSections/BillingModelSection';
 import BasicFieldsSection from './FormSections/BasicFieldsSection';
 import AWSAccountDetailsSection from './FormSections/AWSAccountDetailsSection';
 import NetworkingSection from './FormSections/NetworkingSection/NetworkingSection';
@@ -146,10 +146,10 @@ class CreateOSDForm extends React.Component {
       change,
       openModal,
       isBYOCModalOpen,
-      clustersQuota,
       cloudProviderID,
       privateClusterSelected,
       product,
+      billingModel,
       isAutomaticUpgrade,
       canEnableEtcdEncryption,
       selectedRegion,
@@ -158,9 +158,7 @@ class CreateOSDForm extends React.Component {
       autoscalingEnabled,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
-      getMarketplaceQuota,
       customerManagedEncryptionSelected,
-      osdTrialFeature,
       kmsRegionsArray,
     } = this.props;
 
@@ -168,29 +166,14 @@ class CreateOSDForm extends React.Component {
       isMultiAz,
       machineType,
       mode,
-      billingModel,
     } = this.state;
 
     const isAws = cloudProviderID === 'aws';
     const isGCP = cloudProviderID === 'gcp';
 
-    const hasBYOCQuota = !!get(clustersQuota, `${cloudProviderID}.byoc.totalAvailable`);
-    const hasRhInfraQuota = !!get(clustersQuota, `${cloudProviderID}.rhInfra.totalAvailable`);
-    const hasMarketplaceProductQuota = !!get(clustersQuota, 'hasMarketplaceProductQuota');
-    const hasMarketplaceBYOCQuota = getMarketplaceQuota('byoc', cloudProviderID);
-    const hasMarketplaceRhInfraQuota = getMarketplaceQuota('rhInfra', cloudProviderID);
-    const hasStandardOSDQuota = !!get(clustersQuota, 'hasStandardOSDQuota');
-
     const isBYOCForm = this.isByocForm();
-    const infraType = isBYOCForm ? 'byoc' : 'rhInfra';
-    const showOSDTrial = osdTrialFeature && clustersQuota.hasOSDTrialQuota;
     const showAvailability = product === normalizedProducts.OSD
-                          || product === normalizedProducts.OSDTrial;
-
-    let basicFieldsQuota = clustersQuota[cloudProviderID][infraType];
-    if (billingModel === billingModels.MARKETPLACE) {
-      basicFieldsQuota = clustersQuota.marketplace[cloudProviderID][infraType];
-    }
+      || product === normalizedProducts.OSDTrial;
 
     return (
       <>
@@ -202,17 +185,11 @@ class CreateOSDForm extends React.Component {
           openModal={openModal}
           toggleBYOCFields={this.toggleBYOCFields}
           toggleSubscriptionBilling={this.toggleSubscriptionBilling}
-          hasBYOCquota={hasBYOCQuota}
-          hasStandardQuota={hasRhInfraQuota}
-          hasStandardOSDQuota={hasStandardOSDQuota}
-          hasMarketplaceQuota={hasMarketplaceProductQuota}
-          hasMarketplaceRhInfraQuota={hasMarketplaceRhInfraQuota}
-          hasMarketplaceBYOCQuota={hasMarketplaceBYOCQuota}
           byocSelected={isBYOCForm}
-          showOSDTrial={showOSDTrial}
           pending={pending}
           product={product}
           billingModel={billingModel}
+          cloudProviderID={cloudProviderID}
         />
 
         {/* BYOC modal */}
@@ -288,9 +265,10 @@ class CreateOSDForm extends React.Component {
           showDNSBaseDomain={false}
           showAvailability={showAvailability}
           change={change}
+          product={product}
+          billingModel={billingModel}
           isBYOC={isBYOCForm}
           cloudProviderID={cloudProviderID}
-          quota={basicFieldsQuota}
           handleMultiAZChange={this.handleMultiAZChange}
           handleCloudRegionChange={this.handleCloudRegionChange}
           isMultiAz={isMultiAz}
@@ -341,24 +319,24 @@ class CreateOSDForm extends React.Component {
           </>
         )}
         {canEnableEtcdEncryption && (
-        <FormGroup
-          fieldId="etcd_encryption"
-          id="etcdEncryption"
-        >
-          <Field
-            component={ReduxCheckbox}
-            name="etcd_encryption"
-            label="Enable etcd encryption"
-            extendedHelpText={(
-              <>
-                {constants.enableEtcdHint}
-                {' '}
-                <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
-              </>
-                )}
-          />
-          <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
-        </FormGroup>
+          <FormGroup
+            fieldId="etcd_encryption"
+            id="etcdEncryption"
+          >
+            <Field
+              component={ReduxCheckbox}
+              name="etcd_encryption"
+              label="Enable etcd encryption"
+              extendedHelpText={(
+                <>
+                  {constants.enableEtcdHint}
+                  {' '}
+                  <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
+                </>
+              )}
+            />
+            <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
+          </FormGroup>
         )}
         {(isGCP && isBYOCForm) && (
 
@@ -439,7 +417,6 @@ CreateOSDForm.propTypes = {
   autoscalingEnabled: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
-  osdTrialFeature: PropTypes.bool,
   getMarketplaceQuota: PropTypes.func.isRequired,
   kmsRegionsArray: PropTypes.object,
 };

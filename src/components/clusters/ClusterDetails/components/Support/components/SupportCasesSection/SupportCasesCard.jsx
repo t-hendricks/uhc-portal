@@ -26,6 +26,7 @@ class SupportCasesCard extends React.Component {
       supportCases,
       clusterUUID,
       product,
+      isDisabled = false,
     } = this.props;
 
     const columns = [
@@ -79,6 +80,7 @@ class SupportCasesCard extends React.Component {
           <a href={url} target="_blank" rel="noopener noreferrer">
             <Button
               variant="secondary"
+              isDisabled={isDisabled}
             >
               Open support case
             </Button>
@@ -111,6 +113,7 @@ SupportCasesCard.propTypes = {
   product: PropTypes.string.isRequired,
   supportCases: PropTypes.object.isRequired,
   getSupportCases: PropTypes.func.isRequired,
+  isDisabled: PropTypes.bool,
 };
 
 export default SupportCasesCard;

@@ -121,7 +121,7 @@ const parameterValuesForEditing = (addOnInstallation, addOn) => {
       }
       if (curr.options !== undefined && curr.options.length > 0) {
         // Ensure if options exist that one is always selected
-        paramValue = paramValue || curr.options[0].value;
+        paramValue = paramValue || undefined;
       }
       if (paramValue !== undefined) {
         // eslint-disable-next-line no-param-reassign

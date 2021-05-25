@@ -1,4 +1,4 @@
-import { normalizedProducts } from './subscriptionTypes';
+import { normalizedProducts, subscriptionStatuses } from './subscriptionTypes';
 
 const isAssistedInstallSubscription = subscription => (
   subscription?.plan?.id === normalizedProducts.OCP_Assisted_Install
@@ -11,7 +11,8 @@ export const isAssistedInstallCluster = cluster => (
 // An uninstalled cluster is any cluster which is either being defined by the user (in Draft),
 // being installed (in progress) or failed  installation (unsuccessful installation)
 export const isUninstalledAICluster = cluster => (
-  isAssistedInstallSubscription(cluster.subscription) && cluster.state !== 'installed'
+  isAssistedInstallSubscription(cluster.subscription)
+    && (cluster.subscription?.status === subscriptionStatuses.RESERVED && cluster.state !== 'installed')
 );
 
 // The cluster has not been installed yet or is shortly after installation.

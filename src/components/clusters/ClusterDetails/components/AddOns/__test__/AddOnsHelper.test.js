@@ -231,7 +231,7 @@ describe('parameterValuesForEditing', () => {
     const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
     expect(param).toEqual({ parameters: { 'my-bool': false } });
   });
-  it('should return option value for param with options and no installation param value', () => {
+  it('should return undefined for param with options and no installation param value', () => {
     const mockAddOnsParams = {
       parameters: {
         items: [
@@ -248,7 +248,7 @@ describe('parameterValuesForEditing', () => {
     };
     const mockAddOnsInstallParams = {};
     const param = parameterValuesForEditing(mockAddOnsInstallParams, mockAddOnsParams);
-    expect(param).toEqual({ parameters: { 'my-string': 'options 1' } });
+    expect(param).toEqual({ parameters: { 'my-string': undefined } });
   });
   it('should return current param value for param with options and installation param value', () => {
     const mockAddOnsParams = {

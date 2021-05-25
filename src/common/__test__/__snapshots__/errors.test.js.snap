@@ -30,3 +30,13 @@ Array [
   </pre>,
 ]
 `;
+
+exports[`formatErrorDetails() handles ExcessResources kind addon 1`] = `
+Array [
+  <ul>
+    <li>
+      addon: addon-prow-operator
+    </li>
+  </ul>,
+]
+`;

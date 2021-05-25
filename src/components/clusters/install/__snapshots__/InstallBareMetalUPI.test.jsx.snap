@@ -54,6 +54,7 @@ exports[`BareMetal UPI install renders correctly 1`] = `
       channel="stable"
       cloudProviderID="bareMetal"
       customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+      displayRHCOSSection={true}
       docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html"
       isBMIPI={false}
       rhcosAdditionalInstructions="Download the installer ISO image and the compressed metal RAW."
