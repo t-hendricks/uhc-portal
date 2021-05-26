@@ -7,6 +7,7 @@ import {
 
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
+import EditMachinePoolAlert from '../EditMachinePoolAlert';
 
 import { ReduxFormDropdown, ReduxFormTaints } from '../../../../../../common/ReduxFormComponents';
 
@@ -79,6 +80,7 @@ class EditTaintsModal extends Component {
         modalSize="medium"
       >
         <>
+          <EditMachinePoolAlert />
           {error}
           <Form onSubmit={handleSubmit}>
             <Grid hasGutter>
