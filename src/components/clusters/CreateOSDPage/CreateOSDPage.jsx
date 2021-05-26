@@ -308,7 +308,6 @@ class CreateOSDPage extends React.Component {
                     isBYOCModalOpen={isBYOCModalOpen}
                     openModal={openModal}
                     closeModal={closeModal}
-                    clustersQuota={clustersQuota}
                     cloudProviderID={cloudProviderID}
                     privateClusterSelected={privateClusterSelected}
                     product={product}
@@ -322,7 +321,6 @@ class CreateOSDPage extends React.Component {
                     autoScaleMinNodesValue={autoScaleMinNodesValue}
                     autoScaleMaxNodesValue={autoScaleMaxNodesValue}
                     billingModel={billingModel}
-                    getMarketplaceQuota={this.getMarketplaceQuota}
                   />
                   {/* Form footer */}
                   <GridItem>
