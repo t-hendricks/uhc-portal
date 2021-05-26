@@ -12,6 +12,10 @@ class ClusterList extends Page {
     return $("//a[contains(@href, '/openshift/register')]/button[text()='Register cluster']");
   }
 
+  get registerClusterBtn() {
+    return $("//a[contains(@href, '/openshift/register')]/button[text()='Register disconnected cluster']");
+  }
+
   get extraActionsKebab() {
     return $("div[data-testid='cluster-list-extra-actions-dropdown'] > button.pf-c-dropdown__toggle");
   }
@@ -30,16 +34,28 @@ class ClusterList extends Page {
     return readyDiv.isExisting();
   }
 
-  async navigateToRegisterCluster() {
-    const extraActionsKebab = await this.extraActionsKebab;
-    if (await extraActionsKebab.isExisting()) {
+  async navigateToRegisterClusterKebab() {
+    const kebab = await this.extraActionsKebab;
+    if (await kebab.isExisting()) {
       // kebab exists, so use the menu
-      await extraActionsKebab.click();
+      await kebab.click();
       await (await this.registerClusterItem).click();
+    }
+  }
+
+  async navigateToRegisterClusterButton() {
+    const registerButton = await this.registerClusterBtn;
+    if (await registerButton.isExisting()) {
+      // button exists, so use the menu
+      await registerButton.click();
     } else {
       // probably empty state?
       await (await this.emptyStateRegisterClusterLink).click();
     }
+  }
+
+  async navigateToRegisterCluster({ wide }) {
+    await (wide ? this.navigateToRegisterClusterButton() : this.navigateToRegisterClusterKebab());
   }
 }
 

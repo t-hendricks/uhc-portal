@@ -11,12 +11,10 @@ exports[`CreateOSDForm; should render 1`] = `
       Billing model
     </Title>
   </GridItem>
-  <BillingModelSection
+  <Connect(BillingModelSection)
+    billingModel="standard"
     byocSelected={false}
-    hasBYOCquota={false}
-    hasMarketplaceQuota={false}
-    hasStandardOSDQuota={true}
-    hasStandardQuota={true}
+    cloudProviderID="aws"
     openModal={[MockFunction]}
     pending={false}
     product="OSD"
@@ -32,7 +30,8 @@ exports[`CreateOSDForm; should render 1`] = `
       Cluster details
     </Title>
   </GridItem>
-  <BasicFieldsSection
+  <Connect(BasicFieldsSection)
+    billingModel="standard"
     change={[MockFunction]}
     cloudProviderID="aws"
     handleCloudRegionChange={[Function]}
@@ -40,18 +39,7 @@ exports[`CreateOSDForm; should render 1`] = `
     isBYOC={false}
     isMultiAz={false}
     pending={false}
-    quota={
-      Object {
-        "hasQuota": true,
-        "multiAz": Object {
-          "available": 1,
-        },
-        "singleAz": Object {
-          "available": 1,
-        },
-        "totalAvailable": 1,
-      }
-    }
+    product="OSD"
     showAvailability={true}
     showDNSBaseDomain={false}
   />
@@ -132,12 +120,10 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
       Billing model
     </Title>
   </GridItem>
-  <BillingModelSection
+  <Connect(BillingModelSection)
+    billingModel="standard"
     byocSelected={false}
-    hasBYOCquota={false}
-    hasMarketplaceQuota={false}
-    hasStandardOSDQuota={true}
-    hasStandardQuota={true}
+    cloudProviderID="aws"
     openModal={[MockFunction]}
     pending={false}
     product="OSDTrial"
@@ -153,7 +139,8 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
       Cluster details
     </Title>
   </GridItem>
-  <BasicFieldsSection
+  <Connect(BasicFieldsSection)
+    billingModel="standard"
     change={[MockFunction]}
     cloudProviderID="aws"
     handleCloudRegionChange={[Function]}
@@ -161,18 +148,7 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
     isBYOC={false}
     isMultiAz={false}
     pending={false}
-    quota={
-      Object {
-        "hasQuota": true,
-        "multiAz": Object {
-          "available": 1,
-        },
-        "singleAz": Object {
-          "available": 1,
-        },
-        "totalAvailable": 1,
-      }
-    }
+    product="OSDTrial"
     showAvailability={true}
     showDNSBaseDomain={false}
   />

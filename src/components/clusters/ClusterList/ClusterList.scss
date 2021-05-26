@@ -1,0 +1,12 @@
+@media only screen and (min-width: 1110px) and (max-width: 1199px),
+       only screen and (min-width: 1420px)
+{
+  #cluster-list-toolbar .visible-on-lgplus {
+    display: flex;
+    visibility: visible;
+  }
+}
+
+#cluster-list-header {
+    display: flex;
+}

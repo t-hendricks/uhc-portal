@@ -122,7 +122,8 @@ const normalizeCluster = (cluster) => {
 
 // Normalize data from AMS for an unmanaged cluster.
 const fakeClusterFromSubscription = (subscription) => {
-  const metrics = normalizeMetrics(subscription.metrics?.[0]);
+  const metric = subscription.metrics?.[0];
+  const metrics = normalizeMetrics(metric);
 
   // Omitting some fields that real data from clusters-service does have, but we won't use.
   const cluster = {
@@ -133,7 +134,7 @@ const fakeClusterFromSubscription = (subscription) => {
       url: subscription.console_url,
     },
     creation_timestamp: subscription.created_at,
-    activity_timestamp: subscription.updated_at,
+    activity_timestamp: metric ? metric.query_timestamp : subscription.last_telemetry_date,
     state: metrics.state,
     openshift_version: metrics.openshift_version,
     product: {

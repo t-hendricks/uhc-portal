@@ -18,13 +18,12 @@ import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 import {
-  Button,
   Card,
+  PageHeaderTools,
   PageSection,
   Toolbar,
   ToolbarItem,
@@ -32,7 +31,7 @@ import {
 } from '@patternfly/react-core';
 
 import ClusterListFilter from '../common/ClusterListFilter';
-import ClusterListExtraActions from './components/ClusterListExtraActions';
+import ClusterListActions from './components/ClusterListActions';
 import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
 import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup';
 
@@ -53,6 +52,8 @@ import { productFilterOptions } from '../../../common/subscriptionTypes';
 import { viewPropsChanged, createViewQueryObject, getQueryParam } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../../../redux/constants/featureConstants';
+
+import './ClusterList.scss';
 
 class ClusterList extends Component {
   state = {
@@ -160,9 +161,30 @@ class ClusterList extends Component {
 
     const { loadingChangedView } = this.state;
 
+    const hasNoFilters = !queryParams.has_filters
+      && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter);
+
+    /* isPendingNoData - we're waiting for the cluster list response,
+      and we have no valid data to show. In this case we probably want to show a "Skeleton".
+    */
+    const isPendingNoData = !size(clusters) && pending && (hasNoFilters || !valid);
+
+    const showSpinner = !isPendingNoData && pending && !loadingChangedView;
+    const showSkeleton = isPendingNoData || (pending && loadingChangedView);
+
     const pageHeader = (
-      <PageHeader>
+      <PageHeader id="cluster-list-header">
         <PageHeaderTitle title="Clusters" className="page-title" />
+        <PageHeaderTools>
+          {showSpinner && <Spinner size="lg" className="cluster-list-spinner" />}
+          {error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />}
+        </PageHeaderTools>
+        <RefreshBtn
+          autoRefresh={!anyModalOpen}
+          isDisabled={isPendingNoData}
+          refreshFunc={this.refresh}
+          classOptions="cluster-list-top"
+        />
       </PageHeader>
     );
 
@@ -186,17 +208,6 @@ class ClusterList extends Component {
         </>
       );
     }
-
-    const hasNoFilters = !queryParams.has_filters
-    && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter);
-
-    /* isPendingNoData - we're waiting for the cluster list response,
-      and we have no valid data to show. In this case we probably want to show a "Skeleton".
-    */
-    const isPendingNoData = !size(clusters) && pending && (hasNoFilters || !valid);
-
-    const showSpinner = !isPendingNoData && pending && !loadingChangedView;
-    const showSkeleton = isPendingNoData || (pending && loadingChangedView);
 
     // This signals to end-to-end tests that page has completed loading.
     // For now deliberately ignoring in-place reloads with a spinner;
@@ -245,23 +256,12 @@ class ClusterList extends Component {
                       history={history}
                     />
                   </ToolbarItem>
-                  <ToolbarItem>
-                    <Link to="/create">
-                      <Button>Create cluster</Button>
-                    </Link>
-                  </ToolbarItem>
-                  <ToolbarItem>
-                    <ClusterListExtraActions />
-                  </ToolbarItem>
-                  <ToolbarItem>
-                    { showSpinner && (
-                    <Spinner className="cluster-list-spinner" />
-                    ) }
-                    { error && (
-                    <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
-                    ) }
-                  </ToolbarItem>
-                  <ToolbarItem alignment={{ default: 'alignRight' }} variant="pagination">
+                  <ClusterListActions />
+                  <ToolbarItem
+                    alignment={{ default: 'alignRight' }}
+                    variant="pagination"
+                    className="pf-m-hidden visible-on-lgplus"
+                  >
                     <ViewPaginationRow
                       viewType={viewConstants.CLUSTERS_VIEW}
                       currentPage={viewOptions.currentPage}
@@ -270,14 +270,6 @@ class ClusterList extends Component {
                       totalPages={viewOptions.totalPages}
                       variant="top"
                       isDisabled={isPendingNoData}
-                    />
-                  </ToolbarItem>
-                  <ToolbarItem>
-                    <RefreshBtn
-                      autoRefresh={!anyModalOpen}
-                      isDisabled={isPendingNoData}
-                      refreshFunc={this.refresh}
-                      classOptions="cluster-list-top"
                     />
                   </ToolbarItem>
                 </ToolbarContent>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import LoadBalancersDropdown from './LoadBalancersDropdown';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
@@ -21,7 +21,7 @@ describe('<LoadBalancersDropdown />', () => {
     beforeAll(() => {
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
-      wrapper = mount(
+      wrapper = shallow(
         <LoadBalancersDropdown
           loadBalancerValues={baseState}
           input={{ onChange }}
@@ -59,7 +59,7 @@ describe('<LoadBalancersDropdown />', () => {
 
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
-      wrapper = mount(
+      wrapper = shallow(
         <LoadBalancersDropdown
           loadBalancerValues={state}
           input={{ onChange }}
@@ -94,7 +94,7 @@ describe('<LoadBalancersDropdown />', () => {
     beforeAll(() => {
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
-      wrapper = mount(
+      wrapper = shallow(
         <LoadBalancersDropdown
           loadBalancerValues={state}
           input={{ onChange }}
@@ -131,12 +131,14 @@ describe('<LoadBalancersDropdown />', () => {
       const state = {
         ...baseState,
         fulfilled: true,
-        values: [0, 4, 8],
+        // loadBalancerQuotaList allows 17.
+        // Include higher values here to test quota computation.
+        values: [0, 4, 8, 12, 16, 20, 24],
       };
 
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
-      wrapper = mount(
+      wrapper = shallow(
         <LoadBalancersDropdown
           loadBalancerValues={state}
           input={{ onChange }}

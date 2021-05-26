@@ -61,7 +61,7 @@ class NotificationContactsCard extends React.Component {
   render() {
     const {
       subscriptionID,
-      canEdit,
+      isDisabled,
       hasContacts,
       notificationContacts,
       deleteContactResponse,
@@ -121,7 +121,7 @@ class NotificationContactsCard extends React.Component {
           variant={TableVariant.compact}
           cells={columns}
           rows={rows}
-          areActionsDisabled={() => !canEdit}
+          areActionsDisabled={() => isDisabled}
         >
           <TableHeader />
           <TableBody />
@@ -133,7 +133,7 @@ class NotificationContactsCard extends React.Component {
 
 NotificationContactsCard.propTypes = {
   subscriptionID: PropTypes.string.isRequired,
-  canEdit: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
   notificationContacts: PropTypes.object.isRequired,
   deleteContactResponse: PropTypes.object.isRequired,
   addContactResponse: PropTypes.object.isRequired,

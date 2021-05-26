@@ -323,7 +323,6 @@ class CreateOSDPage extends React.Component {
                     autoScaleMaxNodesValue={autoScaleMaxNodesValue}
                     billingModel={billingModel}
                     getMarketplaceQuota={this.getMarketplaceQuota}
-                    osdTrialFeature={osdTrialFeature}
                   />
                   {/* Form footer */}
                   <GridItem>

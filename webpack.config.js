@@ -16,6 +16,7 @@ limitations under the License.
 
 const path = require('path');
 const webpack = require('webpack');
+const axios = require('axios').default;
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -33,7 +34,7 @@ const modDir = 'node_modules';
 const srcDir = path.resolve(__dirname, 'src');
 const outDir = path.resolve(__dirname, 'build', insights.appname);
 
-module.exports = (_env, argv) => {
+module.exports = async (_env, argv) => {
   const devMode = argv.mode !== 'production';
   const betaMode = argv.env.beta == 'true';
   const isDevServer = process.argv.includes('serve');
@@ -51,6 +52,19 @@ module.exports = (_env, argv) => {
   }
   const publicPath = `/${appDeployment}/${insights.appname}/`;
   const entry = path.resolve(srcDir, 'bootstrap.js');
+
+  const noInsightsProxy = argv.env.noproxy;
+
+  const getESISnippet = async (snippetPath) => {
+    if (!noInsightsProxy) {
+      return `<esi:include src="${snippetPath}" />`;
+    }
+    const result = await axios.get(`https://cloud.redhat.com/${snippetPath}`);
+    return result.data;
+  };
+  const headSnippet = await getESISnippet(`/${appDeployment}/chrome/snippets/head.html`);
+  const bodySnippet = await getESISnippet(`/${appDeployment}/chrome/snippets/body.html`);
+
   return {
     mode: argv.mode || 'development',
     entry,
@@ -86,10 +100,10 @@ module.exports = (_env, argv) => {
       new ReplaceWebpackPlugin(
         [{
           pattern: '@@insights-esi-body@@',
-          replacement: `<esi:include src="/${appDeployment}/chrome/snippets/body.html" />`,
+          replacement: bodySnippet,
         }, {
           pattern: '@@insights-esi-head@@',
-          replacement: `<esi:include src="/${appDeployment}/chrome/snippets/head.html" />`,
+          replacement: headSnippet,
         }],
       ),
       new CopyWebpackPlugin({
@@ -199,8 +213,15 @@ module.exports = (_env, argv) => {
       historyApiFallback: {
         index: `${publicPath}index.html`,
       },
+      proxy: noInsightsProxy ? {
+        // proxy everything except our own app, mimicking insights-proxy behaviour
+        context: ['**', `!${publicPath}**`],
+        target: 'https://cloud.redhat.com',
+        changeOrigin: true,
+      } : undefined,
       hot: false,
-      port: 8001,
+      port: noInsightsProxy ? 1337 : 8001,
+      https: !!noInsightsProxy,
       host: 'localhost',
       firewall: false,
       transportMode: 'sockjs'

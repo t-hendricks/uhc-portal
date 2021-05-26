@@ -363,11 +363,21 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
 
   const cluster = {};
   if (isAssistedInstallSubscription(subscription.data)) {
-    const aiCluster = await assistedService.getAICluster(subscription.data.cluster_id);
-    cluster.data = fakeAIClusterFromSubscription(subscription.data, aiCluster?.data || null);
-    cluster.data.aiCluster = aiCluster.data;
+    try {
+      const aiCluster = await assistedService.getAICluster(subscription.data.cluster_id);
+      cluster.data = fakeAIClusterFromSubscription(subscription.data, aiCluster?.data || null);
+      cluster.data.aiCluster = aiCluster.data;
+    } catch (e) {
+      if (e.response?.status === 404) {
+        // The cluster is garbage collected or the user does not have privileges
+        console.info('Failed to query assisted-installer cluster id: ', subscription.data.cluster_id);
+        cluster.data = fakeClusterFromSubscription(subscription.data);
+      } else {
+        throw e;
+      }
+    }
   } else {
-    cluster.data = fakeClusterFromSubscription(subscription.data); // TODO remove fake cluster
+    cluster.data = fakeClusterFromSubscription(subscription.data);
   }
 
   cluster.data.canEdit = canEdit;

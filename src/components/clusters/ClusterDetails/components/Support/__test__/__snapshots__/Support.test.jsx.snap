@@ -25,18 +25,19 @@ exports[`<Support /> should render with notification contacts 1`] = `
     >
       <AddNotificationContactButton
         canEdit={true}
+        isDisabled={false}
         openModal={[MockFunction]}
       />
       <Connect(NotificationContactsCard)
         addContactResponse={Object {}}
         addNotificationToaster={[MockFunction]}
-        canEdit={true}
         clearDeleteNotificationContacts={[MockFunction]}
         clearNotificationContacts={[MockFunction]}
         deleteContactResponse={Object {}}
         deleteNotificationContact={[MockFunction]}
         getNotificationContacts={[MockFunction]}
         hasContacts={false}
+        isDisabled={false}
         notificationContacts={
           Object {
             "contacts": Array [
@@ -81,6 +82,7 @@ exports[`<Support /> should render with notification contacts 1`] = `
     >
       <Connect(SupportCasesCard)
         getSupportCases={[MockFunction]}
+        isDisabled={false}
         subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
         supportCases={
           Object {
@@ -120,18 +122,19 @@ exports[`<Support /> should render without notification contacts 1`] = `
     >
       <AddNotificationContactButton
         canEdit={true}
+        isDisabled={false}
         openModal={[MockFunction]}
       />
       <Connect(NotificationContactsCard)
         addContactResponse={Object {}}
         addNotificationToaster={[MockFunction]}
-        canEdit={true}
         clearDeleteNotificationContacts={[MockFunction]}
         clearNotificationContacts={[MockFunction]}
         deleteContactResponse={Object {}}
         deleteNotificationContact={[MockFunction]}
         getNotificationContacts={[MockFunction]}
         hasContacts={false}
+        isDisabled={false}
         notificationContacts={
           Object {
             "contacts": Array [],
@@ -161,6 +164,7 @@ exports[`<Support /> should render without notification contacts 1`] = `
     >
       <Connect(SupportCasesCard)
         getSupportCases={[MockFunction]}
+        isDisabled={false}
         subscriptionID="1iGW3xYbKZAEdZLi207rcA1l0ob"
         supportCases={
           Object {
