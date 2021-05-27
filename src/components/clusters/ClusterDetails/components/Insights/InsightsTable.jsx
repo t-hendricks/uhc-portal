@@ -21,6 +21,7 @@ import { severityMapping, appendCrParamToDocLinks } from './helpers';
 import DisabledTooltip from './DisabledTooltip';
 import { setReportDetails } from './InsightsActions';
 import OnRuleDisableFeedbackModal from './OnRuleDisableFeedbackModal';
+import { labelBorderColor } from './InsightsSelectors';
 
 const dataSortMapping = {
   Description: (a, b) => a.description.localeCompare(b.description),
@@ -316,6 +317,7 @@ class InsightsTable extends React.Component {
                       <div className="battery">
                         <InsightsLabel
                           value={riskNumber}
+                          rest={{ variant: 'outline', color: labelBorderColor[riskNumber] }}
                         />
                       </div>
                     ),
