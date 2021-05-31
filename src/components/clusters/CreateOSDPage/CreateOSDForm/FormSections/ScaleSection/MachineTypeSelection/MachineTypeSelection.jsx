@@ -154,6 +154,7 @@ class MachineTypeSelection extends React.Component {
       meta: { error, touched },
       cloudProviderID,
       isMachinePool,
+      inModal = false,
       ...extraProps
     } = this.props;
 
@@ -257,7 +258,8 @@ class MachineTypeSelection extends React.Component {
             isOpen={isOpen}
             onToggle={this.onToggle}
             onSelect={changeHandler}
-            maxHeight={600}
+            maxHeight={inModal ? 300 : 600}
+            menuAppendTo="parent"
           >
             {options}
           </Select>
@@ -288,6 +290,7 @@ MachineTypeSelection.propTypes = {
   isMultiAz: PropTypes.bool.isRequired,
   isBYOC: PropTypes.bool.isRequired,
   isMachinePool: PropTypes.bool.isRequired,
+  inModal: PropTypes.bool,
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
