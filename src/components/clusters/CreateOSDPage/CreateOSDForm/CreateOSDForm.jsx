@@ -149,7 +149,6 @@ class CreateOSDForm extends React.Component {
       cloudProviderID,
       privateClusterSelected,
       product,
-      billingModel,
       isAutomaticUpgrade,
       canEnableEtcdEncryption,
       selectedRegion,
@@ -161,6 +160,7 @@ class CreateOSDForm extends React.Component {
       customerManagedEncryptionSelected,
       kmsRegionsArray,
     } = this.props;
+    let { billingModel } = this.props;
 
     const {
       isMultiAz,
@@ -170,6 +170,11 @@ class CreateOSDForm extends React.Component {
 
     const isAws = cloudProviderID === 'aws';
     const isGCP = cloudProviderID === 'gcp';
+
+    // OSDTrial implies standard billing (not marketplace)
+    if (product === normalizedProducts.OSDTrial) {
+      [billingModel] = billingModel.split('-');
+    }
 
     const isBYOCForm = this.isByocForm();
     const showAvailability = product === normalizedProducts.OSD
@@ -404,10 +409,10 @@ CreateOSDForm.propTypes = {
     }),
     marketplace: PropTypes.object,
   }),
+  billingModel: PropTypes.string,
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
-  billingModel: PropTypes.oneOf(Object.values(billingModels)),
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
   customerManagedEncryptionSelected: PropTypes.bool,
