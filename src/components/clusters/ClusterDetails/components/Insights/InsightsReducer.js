@@ -28,6 +28,8 @@ import {
   SET_REPORT_DETAILS,
   SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS,
   GET_ORGANIZATION_INSIGHTS,
+  DISABLE_RULE_INSIGHTS,
+  ENABLE_RULE_INSIGHTS,
 } from './InsightsConstants';
 
 const initialState = {
@@ -51,6 +53,11 @@ const initialState = {
   },
   overview: {
     overview: null,
+    rejected: false,
+    pending: false,
+    fulfilled: false,
+  },
+  disableRule: {
     rejected: false,
     pending: false,
     fulfilled: false,
@@ -133,6 +140,39 @@ function insightsReducer(state = initialState, action) {
         draft.reportDetails.report = action.payload.data.report;
         draft.reportDetails.fulfilled = true;
         draft.reportDetails.pending = false;
+        break;
+      // DISABLE_RULE_INSIGHTS
+      case FULFILLED_ACTION(DISABLE_RULE_INSIGHTS):
+        draft.reportDetails.report.disabled = true;
+        draft.reportDetails.fulfilled = true;
+        draft.reportDetails.pending = false;
+        draft.reportDetails.rejected = false;
+        break;
+      case PENDING_ACTION(DISABLE_RULE_INSIGHTS):
+        draft.reportDetails.fulfilled = false;
+        draft.reportDetails.pending = true;
+        draft.reportDetails.rejected = false;
+        break;
+      case REJECTED_ACTION(DISABLE_RULE_INSIGHTS):
+        draft.reportDetails.fulfilled = false;
+        draft.reportDetails.pending = false;
+        draft.reportDetails.rejected = true;
+        break;
+      case FULFILLED_ACTION(ENABLE_RULE_INSIGHTS):
+        draft.reportDetails.report.disabled = false;
+        draft.reportDetails.fulfilled = true;
+        draft.reportDetails.pending = false;
+        draft.reportDetails.rejected = false;
+        break;
+      case PENDING_ACTION(ENABLE_RULE_INSIGHTS):
+        draft.reportDetails.fulfilled = false;
+        draft.reportDetails.pending = true;
+        draft.reportDetails.rejected = false;
+        break;
+      case REJECTED_ACTION(ENABLE_RULE_INSIGHTS):
+        draft.reportDetails.fulfilled = false;
+        draft.reportDetails.pending = false;
+        draft.reportDetails.rejected = true;
         break;
       default:
         break;
