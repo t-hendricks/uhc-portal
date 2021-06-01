@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
 import { closeModal } from '../../../../../common/Modal/ModalActions';
-import { sendFeedbackOnRuleDisableInsights } from '../InsightsActions';
+import { disableRuleInsights, sendFeedbackOnRuleDisableInsights } from '../InsightsActions';
 import OnRuleDisableFeedbackModal from './OnRuleDisableFeedbackModal';
 
 const mapStateToProps = (state) => {
@@ -21,6 +21,7 @@ const mapDispatchToProps = {
     sendFeedbackOnRuleDisableInsights(clusterId, ruleId, feedback)
   ),
   hideWindow: () => closeModal(),
+  disableRule: (clusterId, ruleId) => (disableRuleInsights(clusterId, ruleId)),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnRuleDisableFeedbackModal);

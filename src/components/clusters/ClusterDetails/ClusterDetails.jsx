@@ -283,7 +283,6 @@ class ClusterDetails extends Component {
       insightsData,
       groups,
       voteOnRule,
-      disableRule,
       enableRule,
       canSubscribeOCP,
       canTransferClusterOwnership,
@@ -525,9 +524,6 @@ class ClusterDetails extends Component {
                 voteOnRule={(ruleId, vote) => {
                   voteOnRule(cluster.external_id, ruleId, vote);
                 }}
-                disableRule={(ruleId) => {
-                  disableRule(cluster.external_id, ruleId);
-                }}
                 enableRule={(ruleId) => {
                   enableRule(cluster.external_id, ruleId);
                 }}
@@ -662,7 +658,6 @@ ClusterDetails.propTypes = {
   getMachinePools: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
   voteOnRule: PropTypes.func.isRequired,
-  disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   setOpenedTab: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
