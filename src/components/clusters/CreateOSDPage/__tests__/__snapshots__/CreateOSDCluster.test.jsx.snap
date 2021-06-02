@@ -73,7 +73,7 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
           <Grid
             hasGutter={true}
           >
-            <Connect(CreateOSDForm)
+            <CreateOSDForm
               autoScaleMaxNodesValue="0"
               autoScaleMinNodesValue="0"
               autoscalingEnabled={false}
@@ -82,6 +82,47 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
               change={[MockFunction]}
               closeModal={[MockFunction]}
               cloudProviderID="aws"
+              clustersQuota={
+                Object {
+                  "aws": Object {
+                    "byoc": Object {
+                      "multiAz": Object {
+                        "available": 5,
+                      },
+                      "singleAz": Object {
+                        "available": 5,
+                      },
+                      "totalAvailable": 10,
+                    },
+                    "rhInfra": Object {
+                      "multiAz": Object {
+                        "available": 5,
+                      },
+                      "singleAz": Object {
+                        "available": 5,
+                      },
+                      "totalAvailable": 10,
+                    },
+                  },
+                  "gcp": Object {
+                    "rhInfra": Object {
+                      "multiAz": Object {
+                        "available": 5,
+                      },
+                      "singleAz": Object {
+                        "available": 5,
+                      },
+                      "totalAvailable": 10,
+                    },
+                  },
+                  "hasAwsQuota": true,
+                  "hasGcpQuota": true,
+                  "hasMarketplaceProductQuota": false,
+                  "hasProductQuota": true,
+                  "hasStandardOSDQuota": true,
+                }
+              }
+              getMarketplaceQuota={[Function]}
               isBYOCModalOpen={false}
               openModal={[MockFunction]}
               pending={false}
