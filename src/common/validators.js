@@ -57,6 +57,10 @@ const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 // Function to validate that a field is mandatory, i.e. must be a non whitespace string
 const required = value => (value && value.trim() ? undefined : 'Field is required');
 
+// Function to validate that a field has a true value.
+// Use with checkbox to ensure it is selected on a form, e.g. Ts&Cs agreement
+const requiredTrue = value => (value && value === true ? undefined : 'Field must be selected');
+
 // Function to validate that the identity provider name field doesn't include whitespaces:
 const checkIdentityProviderName = (value) => {
   if (!value) {
@@ -897,6 +901,7 @@ const validators = {
 
 export {
   required,
+  requiredTrue,
   atLeastOneRequired,
   checkClusterUUID,
   checkIdentityProviderName,

@@ -11,7 +11,7 @@ import {
   ReduxFormDropdown,
   ReduxVerticalFormGroup,
 } from '../../../../../common/ReduxFormComponents';
-import { required, validateNumericInput } from '../../../../../../common/validators';
+import { required, requiredTrue, validateNumericInput } from '../../../../../../common/validators';
 import ErrorBox from '../../../../../common/ErrorBox';
 
 import '../AddOns.scss';
@@ -33,7 +33,14 @@ class AddOnsParametersModal extends Component {
 
   validationsForParameterField = (param) => {
     const validations = [];
-    if (param.required && param.value_type !== 'boolean') {
+
+    if (param.value_type === 'boolean') {
+      // We can't match using the regexp here as it might contain chars not supported (Go vs JS),
+      // instead we just do a simple check for '^true$' as the validation string
+      if (param.validation !== undefined && param.validation === '^true$') {
+        validations.push(requiredTrue);
+      }
+    } else if (param.required) {
       validations.push(required);
     }
     if (param.value_type === 'number') {
@@ -127,6 +134,7 @@ class AddOnsParametersModal extends Component {
       case 'boolean':
         return ({
           component: ReduxCheckbox,
+          isHelperTextBeforeField: true,
         });
       default:
         return ({
@@ -137,18 +145,23 @@ class AddOnsParametersModal extends Component {
   };
 
   fieldForParam = param => (
-    <Field
-      {...this.getFieldProps(param)}
-      key={param.id}
-      id={`field-addon-${param.id}`}
-      name={`parameters.${param.id}`}
-      label={param.name}
-      placeholder={this.getParamDefault(param)}
-      isRequired={param.required}
-      isDisabled={this.isFieldDisabled(param)}
-      helpText={this.getHelpText(param)}
-      validate={this.validationsForParameterField(param)}
-    />
+    <>
+      <Field
+        {...this.getFieldProps(param)}
+        key={param.id}
+        id={`field-addon-${param.id}`}
+        name={`parameters.${param.id}`}
+        label={param.name}
+        placeholder={this.getParamDefault(param)}
+        isRequired={param.required}
+        isDisabled={this.isFieldDisabled(param)}
+        helpText={this.getHelpText(param)}
+        validate={this.validationsForParameterField(param)}
+      />
+      {param.value_type && param.value_type === 'boolean' && (
+        <div className="ocm-c--reduxcheckbox-description">{this.getHelpText(param)}</div>
+      )}
+    </>
   );
 
   render() {
