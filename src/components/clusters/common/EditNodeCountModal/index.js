@@ -97,18 +97,22 @@ const mapStateToProps = (state) => {
     });
   };
 
+  let initialValuesNodesCompute = isMultiAz ? 9 : 4;
+  if (commonProps.isByoc) {
+    initialValuesNodesCompute = isMultiAz ? 3 : 2;
+  }
+
   // Cluster's default machine pool case
   if (selectedMachinePool === 'Default') {
     // eslint-disable-next-line camelcase
     machinePoolWithAutoscale = cluster.nodes?.autoscale_compute;
-
     return ({
       ...commonProps,
       editNodeCountResponse: state.clusters.editedCluster,
       machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
       machinePoolId: 'Default',
       initialValues: {
-        nodes_compute: get(cluster, 'nodes.compute', null) || (isMultiAz ? 9 : 4),
+        nodes_compute: get(cluster, 'nodes.compute', null) || initialValuesNodesCompute,
         machine_pool: 'Default',
         autoscalingEnabled: machinePoolWithAutoscale,
         ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(cluster.nodes.autoscale_compute)),
