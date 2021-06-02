@@ -50,6 +50,7 @@ describe('CreateOSDForm;', () => {
       cloudProviderID="aws"
       privateClusterSelected={false}
       product={normalizedProducts.OSDTrial}
+      billingModel="standard-trial"
       canAutoScale={false}
       autoscalingEnabled={false}
       getMarketplaceQuota={jest.fn()}

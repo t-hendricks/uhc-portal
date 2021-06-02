@@ -23,6 +23,13 @@ const issuesCountSelector = (state, externalId) => {
   return groupRulesByRisk(filteredData);
 };
 
-export { groupRulesByRisk };
+const labelBorderColor = {
+  1: 'blue',
+  2: 'orange',
+  3: 'orange',
+  4: 'red',
+};
+
+export { groupRulesByRisk, labelBorderColor };
 
 export default issuesCountSelector;

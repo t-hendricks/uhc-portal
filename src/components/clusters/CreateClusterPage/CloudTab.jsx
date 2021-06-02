@@ -452,7 +452,7 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
     <PageSection>
       <Stack hasGutter>
         <StackItem>
-          <Title headingLevel="h2" className="font-weight-light">
+          <Title headingLevel="h2">
             Run it yourself
           </Title>
         </StackItem>

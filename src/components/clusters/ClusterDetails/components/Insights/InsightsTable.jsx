@@ -21,6 +21,7 @@ import { severityMapping, appendCrParamToDocLinks } from './helpers';
 import DisabledTooltip from './DisabledTooltip';
 import { setReportDetails } from './InsightsActions';
 import OnRuleDisableFeedbackModal from './OnRuleDisableFeedbackModal';
+import { labelBorderColor } from './InsightsSelectors';
 
 const dataSortMapping = {
   Description: (a, b) => a.description.localeCompare(b.description),
@@ -121,10 +122,6 @@ class InsightsTable extends React.Component {
   }
 
   onRuleDisable(ruleId) {
-    if (!('ruleStatusFilter' in this.state.filters)) {
-      this.setFilter('ruleStatusFilter', 'enabled');
-    }
-
     const { openModal, cluster } = this.props;
     const clusterId = cluster.external_id;
 
@@ -231,7 +228,6 @@ class InsightsTable extends React.Component {
   render() {
     const {
       insightsData,
-      disableRule,
       enableRule,
       groups,
       cluster,
@@ -316,6 +312,7 @@ class InsightsTable extends React.Component {
                       <div className="battery">
                         <InsightsLabel
                           value={riskNumber}
+                          rest={{ variant: 'outline', color: labelBorderColor[riskNumber] }}
                         />
                       </div>
                     ),
@@ -365,7 +362,6 @@ class InsightsTable extends React.Component {
                     if (disabled) {
                       enableRule(ruleId);
                     } else {
-                      disableRule(ruleId);
                       this.onRuleDisable(ruleId);
                     }
                   },
@@ -398,7 +394,6 @@ InsightsTable.propTypes = {
   cluster: PropTypes.object.isRequired,
   insightsData: PropTypes.object.isRequired,
   groups: PropTypes.array.isRequired,
-  disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
 };

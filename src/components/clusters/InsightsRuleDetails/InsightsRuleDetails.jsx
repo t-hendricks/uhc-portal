@@ -41,12 +41,14 @@ import Unavailable from '../../common/Unavailable';
 import { isValid, scrollToTop } from '../../../common/helpers';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import OnRuleDisableFeedbackModal from '../ClusterDetails/components/Insights/OnRuleDisableFeedbackModal/index';
 
 class InsightsRuleDetails extends Component {
   constructor(props) {
     super(props);
     this.refresh = this.refresh.bind(this);
     this.fetchDetailsAndInsightsData = this.fetchDetailsAndInsightsData.bind(this);
+    this.onRuleDisable = this.onRuleDisable.bind(this);
 
     this.reasonTabRef = React.createRef();
     this.resolutionTabRef = React.createRef();
@@ -92,6 +94,12 @@ class InsightsRuleDetails extends Component {
     }
   }
 
+  onRuleDisable(ruleId) {
+    const { openModal, clusterDetails } = this.props;
+    const clusterId = get(clusterDetails, 'cluster.external_id');
+    openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId });
+  }
+
   refresh() {
     const {
       match,
@@ -129,7 +137,6 @@ class InsightsRuleDetails extends Component {
       match,
       voteOnRule,
       setGlobalError,
-      disableRule,
       enableRule,
     } = this.props;
 
@@ -223,7 +230,7 @@ class InsightsRuleDetails extends Component {
           pending={clusterDetails.pending || reportDetails.pending}
           refreshFunc={this.refresh}
           voteOnRule={voteOnRule}
-          disableRule={ruleId => disableRule(cluster.external_id, ruleId)}
+          disableRule={this.onRuleDisable}
           enableRule={ruleId => enableRule(cluster.external_id, ruleId)}
         >
           <TabsRow
@@ -231,6 +238,7 @@ class InsightsRuleDetails extends Component {
             resolutionTabRef={this.resolutionTabRef}
             isDisabled={isRuleDisabled}
           />
+          <OnRuleDisableFeedbackModal />
         </InsightsRuleDetailsTop>
         {
           isRuleDisabled
@@ -330,7 +338,6 @@ InsightsRuleDetails.propTypes = {
   fetchClusterDetails: PropTypes.func.isRequired,
   clearGlobalError: PropTypes.func.isRequired,
   setGlobalError: PropTypes.func.isRequired,
-  disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   reportDetails: PropTypes.object,
   clusterDetails: PropTypes.shape({
@@ -347,6 +354,7 @@ InsightsRuleDetails.propTypes = {
     pending: PropTypes.bool.isRequired,
   }),
   voteOnRule: PropTypes.func.isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
 InsightsRuleDetails.defaultProps = {

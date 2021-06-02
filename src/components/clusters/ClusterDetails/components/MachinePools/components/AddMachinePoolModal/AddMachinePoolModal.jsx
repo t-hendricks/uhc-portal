@@ -71,6 +71,8 @@ class AddMachinePoolModal extends Component {
       <ErrorBox message="Error adding machine pool" response={addMachinePoolResponse} />
     );
 
+    const modalDescription = 'A machine pool is a group of machines that are all clones of the same configuration, that can be used on demand by an application running on a pod.';
+
     const isPending = addMachinePoolResponse.pending || (organization && organization.pending);
 
     return (
@@ -78,6 +80,7 @@ class AddMachinePoolModal extends Component {
         variant="large"
         title="Add machine pool"
         onClose={this.cancelAddMachinePool}
+        description={modalDescription}
         primaryText="Add machine pool"
         secondaryText="Cancel"
         onPrimaryClick={submit}
@@ -89,7 +92,7 @@ class AddMachinePoolModal extends Component {
           {hasError}
           <Form className="control-form-cursor" onSubmit={(e) => { submit(); e.preventDefault(); }}>
             <Grid>
-              <GridItem span={4}>
+              <GridItem span={6}>
                 <FormGroup label="Machine pool name" className="space-bottom-md" isRequired>
                   <Field
                     component={ReduxVerticalFormGroup}
@@ -100,6 +103,7 @@ class AddMachinePoolModal extends Component {
                   />
                 </FormGroup>
               </GridItem>
+              <GridItem span={6} />
               <ScaleSection
                 pending={isPending}
                 isBYOC={!!cluster?.ccs?.enabled}
@@ -109,10 +113,11 @@ class AddMachinePoolModal extends Component {
                 cloudProviderID={cluster.cloud_provider.id}
                 product={cluster?.subscription?.plan?.id}
                 showStorageAndLoadBalancers={false}
-                instanceTypeGridSpan={12}
+                instanceTypeGridSpan={6}
                 autoscaleAndNodeCountGridSpan={6}
                 minNodes={0}
                 isMachinePool
+                inModal
                 canAutoScale={canAutoScale}
                 autoscalingEnabled={autoscalingEnabled}
                 change={change}
