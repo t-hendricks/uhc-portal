@@ -1,7 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CreateOSDForm from '../CreateOSDForm/CreateOSDForm';
+import CreateOSDForm from '../CreateOSDForm';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
+
+import { awsRhInfraGcpRhInfraClustersQuota } from '../../common/__test__/quota.fixtures';
 
 describe('CreateOSDForm;', () => {
   it('should render', () => {
@@ -9,30 +11,13 @@ describe('CreateOSDForm;', () => {
       openModal={jest.fn()}
       closeModal={jest.fn()}
       change={jest.fn()}
+      clustersQuota={awsRhInfraGcpRhInfraClustersQuota}
       cloudProviderID="aws"
       privateClusterSelected={false}
       product={normalizedProducts.OSD}
       canAutoScale={false}
       autoscalingEnabled={false}
-      hasRhInfraQuota
-      hasBYOCQuota={false}
-    />);
-
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it('should render with BYOC quota', () => {
-    const wrapper = shallow(<CreateOSDForm
-      openModal={jest.fn()}
-      closeModal={jest.fn()}
-      change={jest.fn()}
-      cloudProviderID="aws"
-      privateClusterSelected={false}
-      product={normalizedProducts.OSD}
-      canAutoScale={false}
-      autoscalingEnabled={false}
-      hasRhInfraQuota={false}
-      hasBYOCQuota
+      getMarketplaceQuota={jest.fn()}
     />);
 
     expect(wrapper).toMatchSnapshot();
@@ -43,14 +28,14 @@ describe('CreateOSDForm;', () => {
       openModal={jest.fn()}
       closeModal={jest.fn()}
       change={jest.fn()}
+      clustersQuota={awsRhInfraGcpRhInfraClustersQuota}
       cloudProviderID="aws"
       privateClusterSelected={false}
       product={normalizedProducts.OSD}
       canEnableEtcdEncryption
       canAutoScale={false}
       autoscalingEnabled={false}
-      hasRhInfraQuota
-      hasBYOCQuota={false}
+      getMarketplaceQuota={jest.fn()}
     />);
 
     expect(wrapper.find('Field[name="etcd_encryption"]').length).toEqual(1);
@@ -61,13 +46,13 @@ describe('CreateOSDForm;', () => {
       openModal={jest.fn()}
       closeModal={jest.fn()}
       change={jest.fn()}
+      clustersQuota={awsRhInfraGcpRhInfraClustersQuota}
       cloudProviderID="aws"
       privateClusterSelected={false}
       product={normalizedProducts.OSDTrial}
       canAutoScale={false}
       autoscalingEnabled={false}
-      hasRhInfraQuota
-      hasBYOCQuota={false}
+      getMarketplaceQuota={jest.fn()}
     />);
 
     expect(wrapper).toMatchSnapshot();

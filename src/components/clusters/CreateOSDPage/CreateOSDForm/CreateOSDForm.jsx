@@ -4,6 +4,7 @@ import {
   GridItem, Title, Divider, FormGroup,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+import get from 'lodash/get';
 
 import CustomerCloudSubscriptionModal from './FormSections/BillingModelSection/CustomerCloudSubscriptionModal';
 import BillingModelSection from './FormSections/BillingModelSection';
@@ -112,17 +113,29 @@ class CreateOSDForm extends React.Component {
     }
     change('product', product);
     change('billing_model', billingModel);
+    this.setState({ billingModel });
   };
 
   isByocForm = () => {
     const {
-      hasRhInfraQuota,
-      hasBYOCQuota,
+      clustersQuota,
+      cloudProviderID,
+      getMarketplaceQuota,
     } = this.props;
 
     const {
       byocSelected,
+      billingModel,
     } = this.state;
+
+    const { MARKETPLACE } = billingModels;
+    let hasBYOCQuota = !!get(clustersQuota, `${cloudProviderID}.byoc.totalAvailable`);
+    let hasRhInfraQuota = !!get(clustersQuota, `${cloudProviderID}.rhInfra.totalAvailable`);
+
+    if (billingModel === MARKETPLACE) {
+      hasBYOCQuota = getMarketplaceQuota('byoc', cloudProviderID);
+      hasRhInfraQuota = getMarketplaceQuota('rhInfra', cloudProviderID);
+    }
 
     return hasBYOCQuota && (!hasRhInfraQuota || byocSelected);
   }
@@ -366,6 +379,31 @@ CreateOSDForm.propTypes = {
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
+  clustersQuota: PropTypes.shape({
+    hasProductQuota: PropTypes.bool.isRequired,
+    hasMarketplaceProductQuota: PropTypes.bool,
+    hasOSDTrialQuota: PropTypes.bool,
+    aws: PropTypes.shape({
+      byoc: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+      rhInfra: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+    }),
+    gcp: PropTypes.shape({
+      rhInfra: PropTypes.shape({
+        singleAz: PropTypes.object.isRequired,
+        multiAz: PropTypes.object.isRequired,
+        totalAvailable: PropTypes.number.isRequired,
+      }).isRequired,
+    }),
+    marketplace: PropTypes.object,
+  }),
   cloudProviderID: PropTypes.string.isRequired,
   privateClusterSelected: PropTypes.bool.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
@@ -379,9 +417,8 @@ CreateOSDForm.propTypes = {
   autoscalingEnabled: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  getMarketplaceQuota: PropTypes.func.isRequired,
   kmsRegionsArray: PropTypes.object,
-  hasRhInfraQuota: PropTypes.bool.isRequired,
-  hasBYOCQuota: PropTypes.bool.isRequired,
 };
 
 export default CreateOSDForm;
