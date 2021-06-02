@@ -94,3 +94,16 @@ describe('OSD cluster tests', async () => {
     await (await ClusterDetailsPage.deleteClusterDialogConfirm).click();
   });
 });
+
+describe('OSD Trial cluster tests', async () => {
+  describe('View Create OSD Trial cluster page', async () => {
+    it('navigates to create OSD Trial cluster and CCS is selected', async () => {
+      await (await ClusterListPage.createClusterBtn).click();
+      expect(await CreateClusterPage.isCreateClusterPage()).toBeTruthy();
+      await (await CreateClusterPage.createOSDTrialClusterBtn).click();
+      expect(await CreateOSDCluster.isCreateOSDTrialPage()).toBeTruthy();
+      await (await CreateOSDCluster.createAWSOSDTrialClusterCard).click();
+      expect(await CreateOSDCluster.CCSSelected).toExist();
+    });
+  });
+});

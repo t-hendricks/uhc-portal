@@ -8,6 +8,8 @@ class CreateCluster extends Page {
   }
 
   get createOSDClusterBtn() { return $("//button[contains(text(),'Create cluster')]"); }
+
+  get createOSDTrialClusterBtn() { return $("//button[contains(text(),'Create trial cluster')]"); }
 }
 
 export default new CreateCluster();
