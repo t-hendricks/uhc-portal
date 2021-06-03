@@ -74,6 +74,7 @@ exports[`<Tokens /> Renders token 1`] = `
             component="pre"
           >
             <ClipboardCopy
+              additionalActions={null}
               clickTip="Successfully copied to clipboard!"
               entryDelay={100}
               exitDelay={1600}
