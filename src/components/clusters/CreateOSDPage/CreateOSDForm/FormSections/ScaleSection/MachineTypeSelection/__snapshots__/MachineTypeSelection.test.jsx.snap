@@ -5903,6 +5903,8 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
   }
 >
   <Select
+    aria-describedby=""
+    aria-invalid={false}
     aria-label=""
     aria-labelledby=""
     chipGroupComponent={null}
@@ -5920,6 +5922,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
     isCreatable={false}
     isDisabled={false}
     isGrouped={false}
+    isInputValuePersisted={false}
     isOpen={false}
     isPlain={false}
     maxHeight={600}
@@ -5939,6 +5942,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
     toggleIcon={null}
     toggleId={null}
     typeAheadAriaLabel=""
+    validated="default"
     variant="single"
     width=""
   >
@@ -5967,6 +5971,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               className=""
               handleTypeaheadKeys={[Function]}
               hasClearButton={false}
+              hasFooter={false}
               id="pf-select-toggle-id-1"
               isActive={false}
               isDisabled={false}
@@ -6056,6 +6061,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               className=""
               handleTypeaheadKeys={[Function]}
               hasClearButton={false}
+              hasFooter={false}
               id="pf-select-toggle-id-1"
               isActive={false}
               isDisabled={false}
@@ -9099,6 +9105,8 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
   }
 >
   <Select
+    aria-describedby=""
+    aria-invalid={false}
     aria-label=""
     aria-labelledby=""
     chipGroupComponent={null}
@@ -9116,6 +9124,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     isCreatable={false}
     isDisabled={false}
     isGrouped={false}
+    isInputValuePersisted={false}
     isOpen={false}
     isPlain={false}
     maxHeight={600}
@@ -9135,6 +9144,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     toggleIcon={null}
     toggleId={null}
     typeAheadAriaLabel=""
+    validated="default"
     variant="single"
     width=""
   >
@@ -9163,6 +9173,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               className=""
               handleTypeaheadKeys={[Function]}
               hasClearButton={false}
+              hasFooter={false}
               id="pf-select-toggle-id-0"
               isActive={false}
               isDisabled={false}
@@ -9252,6 +9263,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               className=""
               handleTypeaheadKeys={[Function]}
               hasClearButton={false}
+              hasFooter={false}
               id="pf-select-toggle-id-0"
               isActive={false}
               isDisabled={false}
