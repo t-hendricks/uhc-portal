@@ -38,6 +38,7 @@ function ScaleSection({
   isMachinePool = false,
   canAutoScale = false,
   autoscalingEnabled = false,
+  inModal = false,
   autoScaleMinNodesValue = '0',
   autoScaleMaxNodesValue = '0',
   change,
@@ -73,6 +74,7 @@ function ScaleSection({
       {/* Instance type */}
       <GridItem span={instanceTypeGridSpan}>
         <FormGroup
+          className="space-bottom-md"
           label="Worker node instance type"
           isRequired
           fieldId="node_type"
@@ -90,10 +92,11 @@ function ScaleSection({
             product={product}
             isMachinePool={isMachinePool}
             billingModel={billingModel}
+            inModal={inModal}
           />
         </FormGroup>
       </GridItem>
-      {instanceTypeGridSpan !== 12 && <GridItem span={12 - instanceTypeGridSpan} />}
+      {instanceTypeGridSpan !== 12 && (<GridItem span={12 - instanceTypeGridSpan} />)}
       {/* autoscale */}
       <GridItem span={autoscaleAndNodeCountGridSpan}>
         {canAutoScale
@@ -201,6 +204,7 @@ ScaleSection.propTypes = {
   pending: PropTypes.bool,
   isBYOC: PropTypes.bool.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
+  inModal: PropTypes.bool,
   showStorageAndLoadBalancers: PropTypes.bool,
   machineType: PropTypes.string.isRequired,
   cloudProviderID: PropTypes.string.isRequired,

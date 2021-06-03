@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 
 import InsightsRuleDetails from './InsightsRuleDetails';
+import { modalActions } from '../../common/Modal/ModalActions';
 
 import {
   fetchReportDetails,
   voteOnRuleInsights,
-  disableRuleInsights,
   enableRuleInsights,
+  sendFeedbackOnRuleDisableInsights,
 } from '../ClusterDetails/components/Insights/InsightsActions';
 
 import { setGlobalError, clearGlobalError } from '../../../redux/actions/globalErrorActions';
@@ -18,10 +19,12 @@ import './index.scss';
 const mapStateToProps = (state) => {
   const { details } = state.clusters;
   const { reportDetails } = state.insightsData;
+  const { sendFeedbackOnRuleDisable: sendFeedbackOnRuleRefresh } = state.insightsData;
 
   return ({
     clusterDetails: details,
     reportDetails,
+    sendFeedbackOnRuleRefresh,
   });
 };
 
@@ -30,11 +33,14 @@ const mapDispatchToProps = {
   fetchReportData: (clusterUUID, ruleId, errorKey, isOSD) => (
     fetchReportDetails(clusterUUID, ruleId, errorKey, isOSD)
   ),
-  disableRule: (clusterUUID, ruleId) => disableRuleInsights(clusterUUID, ruleId),
+  openModal: modalActions.openModal,
   enableRule: (clusterUUID, ruleId) => enableRuleInsights(clusterUUID, ruleId),
   clearGlobalError,
   setGlobalError,
   voteOnRule: (clusterUUID, ruleId, vote) => voteOnRuleInsights(clusterUUID, ruleId, vote),
+  sendFeedback: (clusterId, ruleId, feedback) => (
+    sendFeedbackOnRuleDisableInsights(clusterId, ruleId, feedback)
+  ),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(InsightsRuleDetails);

@@ -109,6 +109,9 @@ class UpgradeSettingsTab extends React.Component {
     return (
       <Grid hasGutter className="ocm-c-upgrade-monitoring">
         <GridItem>
+          {editClusterRequest.error && (
+          <ErrorBox response={editClusterRequest} message="Error processing request" />
+          )}
           <Card>
             <CardBody>
               <UserWorkloadMonitoringSection parent="details" disableUVM={disableUVM} />
@@ -146,9 +149,7 @@ class UpgradeSettingsTab extends React.Component {
               {deleteScheduleRequest.error && (
               <ErrorBox response={deleteScheduleRequest} message="Can't unschedule upgrade" />
               )}
-              {editClusterRequest.error && (
-              <ErrorBox response={editClusterRequest} message="Can't set grace period" />
-              )}
+
               <Form>
                 <Grid hasGutter>
                   <UpgradeSettingsFields

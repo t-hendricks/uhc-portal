@@ -54,7 +54,6 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
     >
       <StackItem>
         <Title
-          className="font-weight-light"
           headingLevel="h2"
         >
           Other datacenter options
@@ -180,7 +179,6 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
     >
       <StackItem>
         <Title
-          className="font-weight-light"
           headingLevel="h2"
         >
           datacenter options

@@ -17,10 +17,19 @@ const selfTermsReview = () => apiRequest({
   url: '/api/authorizations/v1/self_terms_review',
 });
 
+const selfFeatureReview = featureID => apiRequest({
+  method: 'post',
+  data: {
+    feature: featureID,
+  },
+  url: '/api/authorizations/v1/self_feature_review',
+});
+
 const authorizationsService = {
   selfResourceReview,
   selfAccessReview,
   selfTermsReview,
+  selfFeatureReview,
 };
 
 export default authorizationsService;

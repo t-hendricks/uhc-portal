@@ -14,7 +14,6 @@ import './index.scss';
 
 const Insights = ({
   insightsData,
-  disableRule,
   enableRule,
   groups,
   cluster,
@@ -51,7 +50,6 @@ const Insights = ({
       cluster={cluster}
       insightsData={insightsData}
       groups={groups}
-      disableRule={disableRule}
       enableRule={enableRule}
       openModal={openModal}
     />
@@ -62,7 +60,6 @@ Insights.propTypes = {
   cluster: PropTypes.object.isRequired,
   insightsData: PropTypes.object,
   groups: PropTypes.array.isRequired,
-  disableRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
 };

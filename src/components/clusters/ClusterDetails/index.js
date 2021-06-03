@@ -24,7 +24,6 @@ import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import { viewConstants } from '../../../redux/constants';
 import {
-  disableRuleInsights,
   enableRuleInsights,
   fetchClusterInsights,
   fetchGroups,
@@ -94,7 +93,6 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   fetchClusterInsights,
   fetchGroups,
   voteOnRule: (clusterId, ruleId, vote) => voteOnRuleInsights(clusterId, ruleId, vote),
-  disableRule: (clusterId, ruleId) => disableRuleInsights(clusterId, ruleId),
   enableRule: (clusterId, ruleId) => enableRuleInsights(clusterId, ruleId),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
