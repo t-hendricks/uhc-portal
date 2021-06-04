@@ -89,7 +89,7 @@ ReduxVerticalFormGroup.defaultProps = {
 ReduxVerticalFormGroup.propTypes = {
   label: PropTypes.string,
   helpText: PropTypes.string,
-  extendedHelpText: PropTypes.oneOfType(PropTypes.string, PropTypes.node),
+  extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   disabled: PropTypes.bool,
   // props passed by redux-form
   // collection of redux-form callbacks to be destructured into an html input element
