@@ -92,7 +92,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
 );
 
 ReduxFormKeyValueList.propTypes = {
-  fields: PropTypes.object.isRequired,
+  fields: PropTypes.array.isRequired,
   meta: PropTypes.shape({
     error: PropTypes.string,
     submitFailed: PropTypes.bool,
