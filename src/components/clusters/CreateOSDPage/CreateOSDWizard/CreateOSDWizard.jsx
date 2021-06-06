@@ -19,22 +19,21 @@ import ErrorModal from '../../../common/ErrorModal';
 import ErrorBox from '../../../common/ErrorBox';
 import Breadcrumbs from '../../common/Breadcrumbs';
 
-import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { shouldRefetchQuota } from '../../../../common/helpers';
 
 import BillingModelSection from '../CreateOSDForm/FormSections/BillingModelSection';
-import BasicFieldsSection from '../CreateOSDForm/FormSections/BasicFieldsSection/BasicFieldsSection';
+import CloudProviderScreen from './CloudProviderScreen';
+import ClusterSettingsScreen from './ClusterSettingsScreen';
+import DefaultMachinePoolScreen from './DefaultMachinePoolScreen';
+import ReviewClusterScreen from './ReviewClusterScreen';
 
 import wizardConnector from './WizardConnector';
 
+import './createOSDWizard.scss';
+
 const WizardBillingModelSection = wizardConnector(BillingModelSection);
-const WizardBasicFieldsSection = wizardConnector(BasicFieldsSection);
 
 class CreateOSDWizard extends React.Component {
-  state = {
-    currentStep: 0,
-  }
-
   componentDidMount() {
     const {
       machineTypes,
@@ -47,7 +46,6 @@ class CreateOSDWizard extends React.Component {
       getCloudProviders,
       getLoadBalancers,
       getPersistentStorage,
-      cloudProviderID,
     } = this.props;
 
     document.title = 'Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager';
@@ -69,64 +67,62 @@ class CreateOSDWizard extends React.Component {
     }
   }
 
-  render() {
-    const { isValid, isByoc } = this.props;
-    const steps = [
-      { name: 'Billing model', component: <Grid><WizardBillingModelSection isWizard /></Grid>, enableNext: isValid },
-      {
-        name: 'Cluster settings',
-        component: isByoc ? undefined : <Grid><WizardBasicFieldsSection isWizard /></Grid>,
-        steps: isByoc ? [
-          {
-            name: 'Cloud provider',
-            component: <p>TBD Cloud provider selection</p>,
-            enableNext: isValid,
-          },
-          {
-            name: 'Cluster details',
-            component: <Grid><WizardBasicFieldsSection isWizard /></Grid>,
-            enableNext: isValid,
-          },
-        ] : undefined,
-      },
-      { name: 'Networking', component: <p>Step 3 content</p> },
-      { name: 'Default machine pool', component: <p>Step 4 content</p> },
-      { name: 'Review and create', component: <p>Review step content</p>, nextButtonText: 'Finish' },
-    ];
-    const ariaTitle = 'Create OpenShift Dedicated cluster wizard';
+  componentDidUpdate() {
+    const { createClusterResponse, isErrorModalOpen, openModal } = this.props;
+    if (createClusterResponse.error && !isErrorModalOpen) {
+      openModal('osd-create-error');
+    }
+  }
 
+  render() {
     const {
-      handleSubmit,
+      isValid,
+      isByoc,
+      onSubmit,
       createClusterResponse,
-      change,
       machineTypes,
       organization,
       cloudProviders,
-      product,
-      osdTrialFeature,
       loadBalancerValues,
       persistentStorageValues,
       isErrorModalOpen,
       resetResponse,
-      isBYOCModalOpen,
-      openModal,
-      closeModal,
-      clustersQuota,
-      cloudProviderID,
-      privateClusterSelected,
-      isAutomaticUpgrade,
-      canEnableEtcdEncryption,
-      selectedRegion,
-      installToVPCSelected,
-      canAutoScale,
-      autoscalingEnabled,
-      autoScaleMinNodesValue,
-      autoScaleMaxNodesValue,
-      billingModel,
-      customerManagedEncryptionSelected,
+      hasProductQuota,
     } = this.props;
 
-    const selectedOSDTrial = product === normalizedProducts.OSDTrial;
+    const steps = [
+      {
+        name: 'Billing model',
+        component: <Grid><WizardBillingModelSection byocSelected={isByoc} isWizard /></Grid>,
+        enableNext: isValid,
+      },
+      {
+        name: 'Cluster settings',
+        steps: [
+          {
+            name: 'Cloud provider',
+            component: <CloudProviderScreen />,
+            enableNext: isValid,
+          },
+          {
+            name: 'Cluster details',
+            component: <ClusterSettingsScreen />,
+            enableNext: isValid,
+          },
+        ],
+        enableNext: isValid,
+      },
+      { name: 'Networking', component: <p>Step 3 content</p> },
+      { name: 'Default machine pool', component: <DefaultMachinePoolScreen />, enableNext: isValid },
+      {
+        name: 'Review and create',
+        component: <ReviewClusterScreen isPending={createClusterResponse.pending} />,
+        nextButtonText: 'Create cluster',
+        enableNext: isValid && !createClusterResponse.pending,
+      },
+    ];
+    const ariaTitle = 'Create OpenShift Dedicated cluster wizard';
+
     const orgWasFetched = !organization.pending && organization.fulfilled;
 
     if (createClusterResponse.fulfilled) {
@@ -135,25 +131,12 @@ class CreateOSDWizard extends React.Component {
       );
     }
 
-    // if (orgWasFetched
-    //  && !clustersQuota.hasProductQuota
-    //  && !clustersQuota.hasMarketplaceProductQuota) {
-    //   return (
-    //     <Redirect to="/create" />
-    //   );
-    // }
-
-    // if (orgWasFetched) {
-    //   if ((cloudProviderID === 'gcp' && !clustersQuota.hasGcpQuota) || (cloudProviderID === 'aws' && !clustersQuota.hasAwsQuota)) {
-    //     return (<Redirect to="/create/osd" />);
-    //   }
-    //   const noTrialQuota = selectedOSDTrial && (!clustersQuota.hasProductQuota || !osdTrialFeature);
-    //   if (noTrialQuota) {
-    //     return (
-    //       <Redirect to="/create" />
-    //     );
-    //   }
-    // }
+    if (orgWasFetched
+     && !hasProductQuota) {
+      return (
+        <Redirect to="/create" />
+      );
+    }
 
     const requests = [
       {
@@ -244,9 +227,11 @@ class CreateOSDWizard extends React.Component {
           <div className="ocm-page">
             {creationErrorModal}
             <Wizard
+              className="osd-wizard"
               navAriaLabel={`${ariaTitle} steps`}
               mainAriaLabel={`${ariaTitle} content`}
               steps={steps}
+              onSave={onSubmit}
             />
           </div>
         </PageSection>
@@ -254,5 +239,36 @@ class CreateOSDWizard extends React.Component {
     );
   }
 }
+
+const requestStatePropTypes = {
+  fulfilled: PropTypes.bool,
+  error: PropTypes.bool,
+};
+
+CreateOSDWizard.propTypes = {
+  isValid: PropTypes.bool,
+  isByoc: PropTypes.bool,
+  isErrorModalOpen: PropTypes.bool,
+
+  createClusterResponse: requestStatePropTypes,
+  machineTypes: requestStatePropTypes,
+  organization: requestStatePropTypes,
+  cloudProviders: requestStatePropTypes,
+  loadBalancerValues: requestStatePropTypes,
+  persistentStorageValues: requestStatePropTypes,
+
+  getMachineTypes: PropTypes.func,
+  getOrganizationAndQuota: PropTypes.func,
+  getCloudProviders: PropTypes.func,
+  getLoadBalancers: PropTypes.func,
+  getPersistentStorage: PropTypes.func,
+
+  resetResponse: PropTypes.func,
+  openModal: PropTypes.func,
+  onSubmit: PropTypes.func,
+
+  // for "no quota" redirect
+  hasProductQuota: PropTypes.bool,
+};
 
 export default CreateOSDWizard;

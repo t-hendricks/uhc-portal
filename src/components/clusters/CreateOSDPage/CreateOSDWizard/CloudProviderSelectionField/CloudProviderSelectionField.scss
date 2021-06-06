@@ -1,0 +1,15 @@
+.osd-wizard .infra-card.create-cluster-card {
+  flex: 0 0 380px;
+  margin: 20px;
+  cursor: pointer;
+  &:hover, &.create-cluster-card-selected {
+    // hover+selected colors
+      border-color: var(--pf-global--active-color--100);
+      border-width: var(--pf-global--BorderWidth--md);
+  }
+
+  &.create-cluster-card-selected::after {
+    // wider border for selected
+    border-width: var(--pf-global--BorderWidth--lg);
+  }
+}
