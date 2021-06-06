@@ -409,7 +409,7 @@ CreateOSDPage.propTypes = {
   getCloudProviders: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
-  billingModel: PropTypes.string.isRequired,
+  billingModel: PropTypes.string,
   privateClusterSelected: PropTypes.bool.isRequired,
   isAutomaticUpgrade: PropTypes.bool,
   canEnableEtcdEncryption: PropTypes.bool,
