@@ -357,7 +357,7 @@ class ClusterDetails extends Component {
     const isClusterInstalling = cluster.state === clusterStates.INSTALLING;
     const isClusterReady = cluster.state === clusterStates.READY;
     const isClusterUpdating = cluster.state === clusterStates.UPDATING;
-
+    const isPrivateCluster = cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
     const displayAddOnsTab = !isClusterInstalling && !isClusterPending
      && cluster.managed && !isArchived;
     const displayInsightsTab = !cluster.managed && !isArchived && !isAROCluster
@@ -370,8 +370,8 @@ class ClusterDetails extends Component {
     const cloudProvider = get(cluster, 'cloud_provider.id');
     const displayNetworkingTab = (isClusterReady || isClusterUpdating || clusterHibernating)
           && cluster.managed && !!get(cluster, 'api.url')
-      && (cloudProvider === 'aws'
-         || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')))
+      && ((cloudProvider === 'aws' && !isPrivateCluster)
+      || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')))
       && !isArchived;
     const displayMachinePoolsTab = cluster.managed
       && (isClusterReady || clusterHibernating)
