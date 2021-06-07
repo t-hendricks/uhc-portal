@@ -39,7 +39,7 @@ class RHCOSDownloadAndSelect extends React.Component {
       return (
         <SplitItem key={name}>
           <DownloadButton
-            token={token}
+            disabled={!!token.error}
             url={archURL[selection]}
             tool={tools.RHCOS}
             text={buttonText}

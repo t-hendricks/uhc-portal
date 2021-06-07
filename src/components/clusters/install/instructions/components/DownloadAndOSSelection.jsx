@@ -76,10 +76,9 @@ class DownloadAndOSSelection extends React.Component {
 
     return (
       <DownloadButton
-        token={token}
         url={url}
         tool={tool}
-        disabled={disabled}
+        disabled={disabled || !!token.error}
         pendoID={pendoID}
       />
     );

@@ -65,7 +65,7 @@ exports[`<TokensROSA /> Renders token 1`] = `
               <li>
                 Download and install the 
                 <a
-                  href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/"
+                  href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -76,7 +76,7 @@ exports[`<TokensROSA /> Renders token 1`] = `
               <li>
                 Copy the following Offline Access Token and use it to authenticate with the 
                 <a
-                  href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/"
+                  href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
