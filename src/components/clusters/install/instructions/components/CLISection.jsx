@@ -5,10 +5,10 @@ import {
 
 import PropTypes from 'prop-types';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
-import { downloadButtonModes } from './DownloadButton';
+import { tools, channels, architectures } from '../../../../../common/installLinks';
 
 const CLISection = ({
-  token, pendoID, channel, isBMIPI = false,
+  token, pendoID, channel, architecture, isBMIPI = false,
 }) => (
   <>
     <Text component="p">
@@ -21,31 +21,33 @@ const CLISection = ({
       <DownloadAndOSSelection
         token={token}
         pendoID={pendoID}
+        tool={tools.CLI_TOOLS}
         channel={channel}
-        mode={downloadButtonModes.CLI_TOOLS}
+        architecture={architecture}
       />
     </div>
     <Text component="p" />
     {!isBMIPI && (
-    <Text component="p">
-      When the installer is complete you will see the console URL and credentials for
-      accessing your new cluster. A
-      {' '}
-      <code>kubeconfig</code>
-      {' '}
-      file will also be generated for you to use with the
-      {' '}
-      <code>oc</code>
-      {' '}
-      CLI tools you downloaded.
-    </Text>
+      <Text component="p">
+        When the installer is complete you will see the console URL and credentials for
+        accessing your new cluster. A
+        {' '}
+        <code>kubeconfig</code>
+        {' '}
+        file will also be generated for you to use with the
+        {' '}
+        <code>oc</code>
+        {' '}
+        CLI tools you downloaded.
+      </Text>
     )}
   </>
 );
 CLISection.propTypes = {
   pendoID: PropTypes.string,
   token: PropTypes.object.isRequired,
-  channel: PropTypes.string.isRequired,
+  channel: PropTypes.oneOf(Object.values(channels)).isRequired,
+  architecture: PropTypes.oneOf(Object.values(architectures)).isRequired,
   isBMIPI: PropTypes.bool,
 };
 

@@ -13,7 +13,7 @@ import DownloadAndOSSelection from './DownloadAndOSSelection';
 import CLISection from './CLISection';
 import RHCOSSection from './RHCOSSection/RHCOSSection';
 import DeveloperPreviewSection from './DeveloperPreviewSection';
-import links from '../../../../../common/installLinks';
+import links, { tools, channels, architectures } from '../../../../../common/installLinks';
 
 function DownloadsAndPullSecretSection({
   displayRHCOSSection = false,
@@ -23,6 +23,7 @@ function DownloadsAndPullSecretSection({
   children,
   pendoID,
   channel,
+  architecture,
   cloudProviderID,
   isBMIPI,
 }) {
@@ -56,7 +57,9 @@ function DownloadsAndPullSecretSection({
                 )}
                 <DownloadAndOSSelection
                   token={token}
+                  tool={tools.INSTALLER}
                   channel={channel}
+                  architecture={architecture}
                   pendoID={pendoID}
                 />
                 {showPreReleasePageLink && <div><DeveloperPreviewSection /></div>}
@@ -77,11 +80,12 @@ function DownloadsAndPullSecretSection({
               token={token}
               pendoID={pendoID}
               channel={channel}
+              architecture={architecture}
               isBMIPI={isBMIPI}
             />
           </TextContent>
         </StackItem>
-        { displayRHCOSSection && (
+        {displayRHCOSSection && (
           <StackItem key="rhcos">
             <TextContent>
               <Text component="h3">Red Hat Enterprise Linux CoreOS (RHCOS)</Text>
@@ -104,8 +108,9 @@ DownloadsAndPullSecretSection.propTypes = {
   token: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   pendoID: PropTypes.string,
-  channel: PropTypes.string.isRequired,
-  cloudProviderID: PropTypes.string.isRequired,
+  channel: PropTypes.oneOf(Object.values(channels)).isRequired,
+  architecture: PropTypes.oneOf(Object.values(architectures)).isRequired,
+  cloudProviderID: PropTypes.string, // required when displayRHCOSSection = true.
   isBMIPI: PropTypes.bool,
   displayRHCOSSection: PropTypes.bool,
 };

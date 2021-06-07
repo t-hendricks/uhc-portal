@@ -14,7 +14,7 @@ import {
 } from '@patternfly/react-core';
 import { CodeIcon } from '@patternfly/react-icons';
 
-import links, { channels } from '../../../../common/installLinks';
+import links, { channels, architectures } from '../../../../common/installLinks';
 import TelemetryDisclaimer from './components/TelemetryDisclaimer';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
@@ -77,6 +77,7 @@ function InstructionsPreRelease({ token }) {
                 showPreReleaseDocs
                 showPreReleasePageLink={false}
                 channel={channels.PRE_RELEASE}
+                architecture={architectures.x86} // TODO: support other architectures
               />
             </CardBody>
             <CardFooter className="ocm-c-pre-release-instructions__card--footer">

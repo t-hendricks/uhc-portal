@@ -5,39 +5,31 @@ import {
 } from '@patternfly/react-core';
 
 import { trackPendo } from '../../../../../common/helpers';
+import { tools } from '../../../../../common/installLinks';
 
-export const downloadButtonModes = {
-  CLI_TOOLS: 'CLI_TOOLS',
-  CRC: 'CRC',
-  INSTALLER: 'INSTALLER',
-  RHCOS: 'RHCOS',
+const texts = {
+  [tools.CRC]: 'Download CodeReady Containers',
+  [tools.CLI_TOOLS]: 'Download command-line tools',
+  [tools.INSTALLER]: 'Download installer',
+};
+
+const pendoEvents = {
+  [tools.CRC]: 'OCP-Download-CRC',
+  [tools.CLI_TOOLS]: 'OCP-Download-CLITools',
+  [tools.INSTALLER]: 'OCP-Download-Installer',
 };
 
 const DownloadButton = ({
   token,
   url,
   disabled = false,
-  mode = downloadButtonModes.INSTALLER,
+  tool = tools.INSTALLER,
   pendoID,
   text = '',
   name = '',
 }) => {
-  let buttonText;
-  // eslint-disable-next-line default-case
-  switch (mode) {
-    case (downloadButtonModes.CRC):
-      buttonText = 'Download CodeReady Containers';
-      break;
-    case (downloadButtonModes.CLI_TOOLS):
-      buttonText = 'Download command-line tools';
-      break;
-    case (downloadButtonModes.INSTALLER):
-      buttonText = 'Download installer';
-      break;
-    case (downloadButtonModes.RHCOS):
-      buttonText = text;
-      break;
-  }
+  const buttonText = text || texts[tool];
+  const event = name || pendoEvents[tool];
 
   return (
     <Button
@@ -46,21 +38,7 @@ const DownloadButton = ({
       variant="secondary"
       className="install--download-installer"
       onClick={() => {
-        // eslint-disable-next-line default-case
-        switch (mode) {
-          case (downloadButtonModes.CRC):
-            trackPendo('OCP-Download-CRC', pendoID);
-            break;
-          case (downloadButtonModes.CLI_TOOLS):
-            trackPendo('OCP-Download-CLITools', pendoID);
-            break;
-          case (downloadButtonModes.INSTALLER):
-            trackPendo('OCP-Download-Installer', pendoID);
-            break;
-          case (downloadButtonModes.RHCOS):
-            trackPendo(name, pendoID);
-            break;
-        }
+        trackPendo(event, pendoID);
       }}
       disabled={!!token.error || disabled}
       download
@@ -74,7 +52,7 @@ DownloadButton.propTypes = {
   pendoID: PropTypes.string,
   url: PropTypes.string,
   disabled: PropTypes.bool,
-  mode: PropTypes.oneOf(['CLI_TOOLS', 'CRC', 'INSTALLER', 'RHCOS']),
+  tool: PropTypes.oneOf(Object.keys(tools)),
   text: PropTypes.string,
   name: PropTypes.string,
 };
