@@ -17,6 +17,7 @@ import GetStarted from './components/GetStarted';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import instructionsMapping from './instructionsMapping';
 import './Instructions.scss';
+import { channels, architectures } from '../../../../common/installLinks';
 
 const OCPInstructions = (props) => {
   const {
@@ -24,6 +25,7 @@ const OCPInstructions = (props) => {
     cloudProviderID,
     displayRHCOSSection,
     channel,
+    architecture,
     docURL,
     customizations = '',
     showPreReleaseDocs,
@@ -44,16 +46,16 @@ const OCPInstructions = (props) => {
         <Stack>
           {token.error
             && (
-            <StackItem>
-              <Split>
-                <SplitItem className="step-number alert">
-                  <Title headingLevel="h1" />
-                </SplitItem>
-                <SplitItem className="download-instructions alert" isFilled>
-                  <TokenErrorAlert token={token} />
-                </SplitItem>
-              </Split>
-            </StackItem>
+              <StackItem>
+                <Split>
+                  <SplitItem className="step-number alert">
+                    <Title headingLevel="h1" />
+                  </SplitItem>
+                  <SplitItem className="download-instructions alert" isFilled>
+                    <TokenErrorAlert token={token} />
+                  </SplitItem>
+                </Split>
+              </StackItem>
             )}
           <StackItem>
             <Split>
@@ -68,6 +70,7 @@ const OCPInstructions = (props) => {
                   cloudProviderID={cloudProviderID}
                   displayRHCOSSection={displayRHCOSSection}
                   channel={channel}
+                  architecture={architecture}
                   isBMIPI={isBMIPI}
                 />
               </SplitItem>
@@ -114,7 +117,8 @@ OCPInstructions.propTypes = {
   token: PropTypes.object.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   displayRHCOSSection: PropTypes.bool,
-  channel: PropTypes.string.isRequired,
+  channel: PropTypes.oneOf(Object.values(channels)).isRequired,
+  architecture: PropTypes.oneOf(Object.values(architectures)).isRequired,
   docURL: PropTypes.string.isRequired,
   showPreReleaseDocs: PropTypes.bool,
   customizations: PropTypes.string,

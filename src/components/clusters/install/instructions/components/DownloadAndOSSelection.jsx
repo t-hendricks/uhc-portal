@@ -6,58 +6,71 @@ import {
   Grid,
   GridItem,
 } from '@patternfly/react-core';
-import DownloadButton, { downloadButtonModes } from './DownloadButton';
-import { urls } from '../../../../../common/installLinks';
+import { get } from 'lodash';
 
-const operatingSystems = {
-  LINUX: 'linux',
-  MAC: 'mac',
-  WINDOWS: 'windows',
-};
+import DownloadButton from './DownloadButton';
+import {
+  urls, tools, channels, architectures, operatingSystems, operatingSystemOptions,
+} from '../../../../../common/installLinks';
 
-function detectOS(includeWindows = false) {
+/**
+ * @returns User's OS (one of `operatingSystems` keys), or null if detection failed.
+ */
+export function detectOS() {
   const { platform } = window.navigator;
   const macOSPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
   const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
 
   if (macOSPlatforms.indexOf(platform) !== -1) {
-    return operatingSystems.MAC;
-  } if (windowsPlatforms.indexOf(platform) !== -1 && includeWindows) {
-    return operatingSystems.WINDOWS;
-  } if (/Linux/.test(platform)) {
-    return operatingSystems.LINUX;
+    return operatingSystems.mac;
   }
-  return 'Select OS';
+  if (windowsPlatforms.indexOf(platform) !== -1) {
+    return operatingSystems.windows;
+  }
+  if (/Linux/.test(platform)) {
+    return operatingSystems.linux;
+  }
+  return null;
 }
 
+const titleOption = { value: 'Select OS', label: 'Select OS', disabled: true };
+
 class DownloadAndOSSelection extends React.Component {
-  state = { OS: undefined }
+  state = { OS: titleOption.value }
 
   componentDidMount() {
-    const { cliTools } = this.props;
-    this.setState({ OS: detectOS(cliTools) });
+    const OS = detectOS();
+    if (OS && this.urlForOS(OS)) {
+      this.setState({ OS });
+    }
   }
 
   onChange = (OS) => {
     this.setState({ OS });
   };
 
+  urlForOS = (OS) => {
+    const {
+      tool,
+      channel,
+      architecture,
+    } = this.props;
+    return get(urls, [tool, channel, architecture, OS]);
+  }
+
   downloadButton = () => {
     const {
       token,
-      mode = downloadButtonModes.INSTALLER,
       pendoID,
-      channel,
+      tool,
     } = this.props;
     const { OS } = this.state;
     let url;
     let disabled = true;
 
-    if (OS && OS !== 'Select OS') {
+    if (OS && OS !== titleOption.value) {
       // button should only be enabled if an OS is selected
-      const channelAndOsLinks = urls[channel][OS];
-      url = mode === downloadButtonModes.CLI_TOOLS
-        ? channelAndOsLinks.cli : channelAndOsLinks.installer;
+      url = this.urlForOS(OS);
       disabled = !url;
     }
 
@@ -65,7 +78,7 @@ class DownloadAndOSSelection extends React.Component {
       <DownloadButton
         token={token}
         url={url}
-        mode={mode}
+        tool={tool}
         disabled={disabled}
         pendoID={pendoID}
       />
@@ -73,26 +86,22 @@ class DownloadAndOSSelection extends React.Component {
   }
 
   render() {
-    const { mode = downloadButtonModes.INSTALLER, channel } = this.props;
+    const {
+      tool,
+    } = this.props;
     const { OS } = this.state;
 
-    let isMacInstructions = false;
-    let isCRC = false;
-    if (OS === operatingSystems.MAC) {
-      isMacInstructions = true;
-    }
-    if (channel === 'CRC') {
-      isCRC = true;
-    }
+    const isMacInstructions = OS === operatingSystems.mac;
+    const isCRC = tool === tools.CRC;
 
     const options = [
-      { value: 'Select OS', label: 'Select OS', disabled: true },
-      { value: operatingSystems.LINUX, label: 'Linux', disabled: false },
-      { value: operatingSystems.MAC, label: 'MacOS', disabled: false },
+      titleOption,
+      ...operatingSystemOptions
+        .filter(({ value }) => !!this.urlForOS(value))
+        .map(({ value, label }) => (
+          { value, label, disabled: false }
+        )),
     ];
-    if (mode !== downloadButtonModes.INSTALLER) {
-      options.push({ value: operatingSystems.WINDOWS, label: 'Windows', disabled: false });
-    }
 
     return (
       <>
@@ -131,10 +140,10 @@ class DownloadAndOSSelection extends React.Component {
 
 DownloadAndOSSelection.propTypes = {
   token: PropTypes.object.isRequired,
-  cliTools: PropTypes.bool,
   pendoID: PropTypes.string,
-  channel: PropTypes.string.isRequired,
-  mode: PropTypes.oneOf(['CLI_TOOLS', 'CRC', 'INSTALLER']),
+  tool: PropTypes.oneOf(Object.values(tools)).isRequired,
+  channel: PropTypes.oneOf(Object.values(channels)).isRequired,
+  architecture: PropTypes.oneOf(Object.values(architectures)).isRequired,
 };
 
 export default DownloadAndOSSelection;

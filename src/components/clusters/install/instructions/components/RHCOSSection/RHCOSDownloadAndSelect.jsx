@@ -6,8 +6,8 @@ import {
   Split,
   SplitItem,
 } from '@patternfly/react-core';
-import { architectures } from '../../instructionsMapping';
-import DownloadButton, { downloadButtonModes } from '../DownloadButton';
+import { architectureOptions, tools } from '../../../../../../common/installLinks';
+import DownloadButton from '../DownloadButton';
 
 class RHCOSDownloadAndSelect extends React.Component {
   state = {
@@ -16,8 +16,8 @@ class RHCOSDownloadAndSelect extends React.Component {
 
   options = [
     { value: 'Select architecture', label: 'Select architecture', disabled: true },
-    ...Object.keys(architectures).map(arch => (
-      { value: arch, label: architectures[arch], disabled: false }
+    ...architectureOptions.map(({ value, label }) => (
+      { value, label, disabled: false }
     )),
   ];
 
@@ -41,7 +41,7 @@ class RHCOSDownloadAndSelect extends React.Component {
           <DownloadButton
             token={token}
             url={archURL[selection]}
-            mode={downloadButtonModes.RHCOS}
+            tool={tools.RHCOS}
             text={buttonText}
             name={name}
             pendoID={pendoID}
