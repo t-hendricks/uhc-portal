@@ -2130,7 +2130,13 @@
       "nodes": {
         "master": 3,
         "infra": 2,
-        "compute": 4,
+        "autoscale_compute": {
+          "min_replicas": 4,
+          "max_replicas": 5
+        },
+        "compute_labels": {
+          "foo": "bar"
+        },
         "availability_zones": [
           "us-east1-b"
         ],
