@@ -52,8 +52,19 @@ const hasOrgLevelAutoscaleCapability = (state) => {
   return !!(autoScaleClusters && autoScaleClusters.value === 'true');
 };
 
-const canAutoScaleSelector = (state, product, billingModel) => product === normalizedProducts.ROSA
-  || (product === normalizedProducts.OSD && billingModel === billingModels.MARKETPLACE)
-  || (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
+const hasClusterLevelAutoscaleCapability = (state) => {
+  const cluster = get(state, 'clusters.details.cluster');
+  if (!cluster) {
+    return false;
+  }
+  const subCapabilities = get(cluster, 'subscription.capabilities', []);
+  const autoScaleClusters = subCapabilities.find(capability => capability.name === 'capability.cluster.autoscale_clusters');
+
+  return !!(autoScaleClusters && autoScaleClusters.value === 'true');
+};
+
+const canAutoScaleSelector = (state, product) => product === normalizedProducts.ROSA
+    || (product === normalizedProducts.OSD && hasClusterLevelAutoscaleCapability(state))
+    || (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
 
 export { hasMachinePoolsQuotaSelector, canAutoScaleSelector, hasOrgLevelAutoscaleCapability };

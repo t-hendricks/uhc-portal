@@ -72,7 +72,7 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = fa
 );
 
 ReduxFormTaints.propTypes = {
-  fields: PropTypes.object.isRequired,
+  fields: PropTypes.array.isRequired,
   isEditing: PropTypes.bool,
   meta: PropTypes.shape({
     error: PropTypes.string,

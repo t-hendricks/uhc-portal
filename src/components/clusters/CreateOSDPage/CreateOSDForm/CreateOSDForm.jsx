@@ -96,8 +96,8 @@ class CreateOSDForm extends React.Component {
   };
 
   toggleSubscriptionBilling = (_, value) => {
-    const { change, openModal } = this.props;
-    let { product, billingModel } = this.props;
+    const { openModal } = this.props;
+    let { billingModel } = this.props;
     const { byocSelected } = this.state;
     billingModel = !value ? billingModel : value.split('-')[0];
 
@@ -105,15 +105,6 @@ class CreateOSDForm extends React.Component {
     if ((billingModel === billingModels.MARKETPLACE || value === 'standard-trial') && !byocSelected) {
       openModal('customer-cloud-subscription');
     }
-
-    if (value === 'standard-trial') {
-      product = normalizedProducts.OSDTrial;
-    } else {
-      product = normalizedProducts.OSD;
-    }
-    change('product', product);
-    change('billing_model', billingModel);
-    this.setState({ billingModel });
   };
 
   isByocForm = () => {
@@ -121,11 +112,11 @@ class CreateOSDForm extends React.Component {
       clustersQuota,
       cloudProviderID,
       getMarketplaceQuota,
+      billingModel,
     } = this.props;
 
     const {
       byocSelected,
-      billingModel,
     } = this.state;
 
     const { MARKETPLACE } = billingModels;
@@ -195,6 +186,7 @@ class CreateOSDForm extends React.Component {
           product={product}
           billingModel={billingModel}
           cloudProviderID={cloudProviderID}
+          change={change}
         />
 
         {/* BYOC modal */}

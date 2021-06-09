@@ -29,6 +29,7 @@ exports[`BareMetal UPI install renders correctly 1`] = `
   />
   <PageSection>
     <OCPInstructions
+      architecture="x86"
       breadcrumbs={
         <Breadcrumbs
           path={

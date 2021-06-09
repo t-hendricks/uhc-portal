@@ -4,9 +4,10 @@ import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import {
   Stack, StackItem, Text,
 } from '@patternfly/react-core';
+import { tools } from '../../../../../../common/installLinks';
 import instructionsMapping from '../../instructionsMapping';
 import RHCOSDownloadAndSelect from './RHCOSDownloadAndSelect';
-import DownloadButton, { downloadButtonModes } from '../DownloadButton';
+import DownloadButton from '../DownloadButton';
 
 const RHCOSSection = (props) => {
   const {
@@ -27,9 +28,9 @@ const RHCOSSection = (props) => {
         buttonText,
         name,
       } = item;
-        /** item may be an object with field archURL when there are multi-arch variants available
-         * for it. It may also be an array of such objects, which corresponds to a row of buttons
-         * controlled by the same architecture selector,  */
+      /** item may be an object with field archURL when there are multi-arch variants available
+       * for it. It may also be an array of such objects, which corresponds to a row of buttons
+       * controlled by the same architecture selector,  */
       if ((!url && archURL) || Array.isArray(item)) {
         const key = Array.isArray(item) ? item.map(i => i.name).join('|') : name;
         return (
@@ -46,7 +47,7 @@ const RHCOSSection = (props) => {
           <DownloadButton
             token={token}
             url={url}
-            mode={downloadButtonModes.RHCOS}
+            tool={tools.RHCOS}
             text={buttonText}
             name={name}
             disabled={!token}
@@ -65,31 +66,31 @@ const RHCOSSection = (props) => {
     <>
       <Text component="p">
         Download RHCOS to create machines for your cluster to use during installation.
-        { instructionsObj.rhcosAdditionalInstructions
-        && typeof instructionsObj.rhcosAdditionalInstructions === 'string'
-        && (
-        <>
-          {' '}
-          {instructionsObj.rhcosAdditionalInstructions}
-        </>
-        )}
+        {instructionsObj.rhcosAdditionalInstructions
+          && typeof instructionsObj.rhcosAdditionalInstructions === 'string'
+          && (
+            <>
+              {' '}
+              {instructionsObj.rhcosAdditionalInstructions}
+            </>
+          )}
         {' '}
         {instructionsObj.rhcosLearnMoreURL && (
-        <Text component="a" href={instructionsObj.rhcosLearnMoreURL} rel="noreferrer noopener" target="_blank">
-          Learn more
-          {' '}
-          <ExternalLinkAltIcon size="sm" />
-          .
-        </Text>
+          <Text component="a" href={instructionsObj.rhcosLearnMoreURL} rel="noreferrer noopener" target="_blank">
+            Learn more
+            {' '}
+            <ExternalLinkAltIcon size="sm" />
+            .
+          </Text>
         )}
       </Text>
       { instructionsObj.rhcosAdditionalInstructions
         && typeof instructionsObj.rhcosAdditionalInstructions !== 'string'
         && (
-        <>
-          {' '}
-          {instructionsObj.rhcosAdditionalInstructions}
-        </>
+          <>
+            {' '}
+            {instructionsObj.rhcosAdditionalInstructions}
+          </>
         )}
       {
         downloadButtons(instructionsObj.rhcosDownloads)

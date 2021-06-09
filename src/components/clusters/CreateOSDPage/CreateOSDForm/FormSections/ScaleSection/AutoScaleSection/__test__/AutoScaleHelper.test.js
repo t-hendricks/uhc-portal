@@ -36,5 +36,22 @@ test('Autoscaling min nodes allowed', () => {
   const additionalMachinePoolSingleAZ = {
     isDefaultMachinePool: false, product: normalizedProducts.OSD, isBYOC: false, isMultiAz: false,
   };
+  // Additional cases for when clusters already have autoscaling enabled, and have a min node count
   expect(getMinNodesAllowed(additionalMachinePoolSingleAZ)).toBe(1);
+  const osdSingleAZAutoscaleEnabled = {
+    isDefaultMachinePool: true,
+    product: normalizedProducts.OSD,
+    isBYOC: false,
+    isMultiAz: false,
+    autoScaleMinNodesValue: 8,
+  };
+  expect(getMinNodesAllowed(osdSingleAZAutoscaleEnabled)).toBe(8);
+  const osdSMultiAZAutoscaleEnabled = {
+    isDefaultMachinePool: true,
+    product: normalizedProducts.OSD,
+    isBYOC: false,
+    isMultiAz: true,
+    autoScaleMinNodesValue: 5,
+  };
+  expect(getMinNodesAllowed(osdSMultiAZAutoscaleEnabled)).toBe(15);
 });

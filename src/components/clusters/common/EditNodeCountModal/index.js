@@ -79,7 +79,7 @@ const mapStateToProps = (state) => {
     isByoc: cluster?.ccs?.enabled,
     product: get(cluster, 'subscription.plan.id', ''),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
-    canAutoScale: canAutoScaleSelector(state, get(cluster, 'subscription.plan.id', ''), get(cluster, 'billing_model')),
+    canAutoScale: canAutoScaleSelector(state, get(cluster, 'subscription.plan.id', '')),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     billingModel: get(cluster, 'billing_model', ''),
@@ -97,18 +97,22 @@ const mapStateToProps = (state) => {
     });
   };
 
+  let initialValuesNodesCompute = isMultiAz ? 9 : 4;
+  if (commonProps.isByoc) {
+    initialValuesNodesCompute = isMultiAz ? 3 : 2;
+  }
+
   // Cluster's default machine pool case
   if (selectedMachinePool === 'Default') {
     // eslint-disable-next-line camelcase
     machinePoolWithAutoscale = cluster.nodes?.autoscale_compute;
-
     return ({
       ...commonProps,
       editNodeCountResponse: state.clusters.editedCluster,
       machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
       machinePoolId: 'Default',
       initialValues: {
-        nodes_compute: get(cluster, 'nodes.compute', null) || (isMultiAz ? 9 : 4),
+        nodes_compute: get(cluster, 'nodes.compute', null) || initialValuesNodesCompute,
         machine_pool: 'Default',
         autoscalingEnabled: machinePoolWithAutoscale,
         ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(cluster.nodes.autoscale_compute)),

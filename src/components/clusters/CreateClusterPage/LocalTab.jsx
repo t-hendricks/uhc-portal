@@ -15,8 +15,7 @@ import {
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
 import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
-import { downloadButtonModes } from '../install/instructions/components/DownloadButton';
-import { channels } from '../../../common/installLinks';
+import { tools, channels, architectures } from '../../../common/installLinks';
 import PullSecretSection from '../install/instructions/components/PullSecretSection';
 import { trackPendo } from '../../../common/helpers';
 import '../install/instructions/Instructions.scss';
@@ -50,7 +49,7 @@ const LocalTab = ({ token }) => (
       <Divider />
       <Stack>
         {token.error
-            && (
+          && (
             <StackItem>
               <Split>
                 <SplitItem className="step-number alert">
@@ -61,7 +60,7 @@ const LocalTab = ({ token }) => (
                 </SplitItem>
               </Split>
             </StackItem>
-            )}
+          )}
         <StackItem>
           <Split>
             <SplitItem className="step-number">
@@ -73,8 +72,9 @@ const LocalTab = ({ token }) => (
                 <Text component="h3">CodeReady Containers</Text>
                 <DownloadAndOSSelection
                   token={token}
-                  channel={channels.CRC}
-                  mode={downloadButtonModes.CRC}
+                  tool={tools.CRC}
+                  channel={channels.STABLE}
+                  architecture={architectures.x86}
                   cloudProviderID={cloudProviderID}
                 />
                 <Text component="h3">Pull secret</Text>
