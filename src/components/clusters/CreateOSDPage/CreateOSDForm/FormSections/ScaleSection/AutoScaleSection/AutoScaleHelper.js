@@ -1,9 +1,17 @@
+import max from 'lodash/max';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 
 const getMinNodesAllowed = ({
-  isDefaultMachinePool, product, isBYOC, isMultiAz,
+  isDefaultMachinePool,
+  product,
+  isBYOC, isMultiAz,
+  autoScaleMinNodesValue,
 }) => {
-  let minNodesAllowed = 0;
+  let currMinNodes = parseInt(autoScaleMinNodesValue, 10) || 0;
+  if (isMultiAz) {
+    currMinNodes *= 3;
+  }
+  let minNodesAllowed;
   if (isDefaultMachinePool) {
     if (isBYOC || product === normalizedProducts.ROSA) {
       minNodesAllowed = isMultiAz ? 3 : 2;
@@ -13,7 +21,7 @@ const getMinNodesAllowed = ({
   } else {
     minNodesAllowed = isMultiAz ? 3 : 1;
   }
-  return minNodesAllowed;
+  return max([currMinNodes, minNodesAllowed]);
 };
 
 export default getMinNodesAllowed;

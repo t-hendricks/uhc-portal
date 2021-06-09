@@ -32,6 +32,7 @@ function BillingModelSection({
   product,
   billingModel,
   isWizard,
+  change,
 }) {
   const { STANDARD } = billingModels;
 
@@ -66,7 +67,7 @@ function BillingModelSection({
 
   let isRhInfraQuotaDisabled;
   let isBYOCQuotaDisabled;
-  if (defaultBillingModel.split('-')[0] === STANDARD) {
+  if (defaultBillingModel === STANDARD || defaultBillingModel === 'standard-trial') {
     isRhInfraQuotaDisabled = !hasRhInfraQuota;
     isBYOCQuotaDisabled = !hasBYOCquota;
   } else {
@@ -78,6 +79,19 @@ function BillingModelSection({
   if (hasMarketplaceQuota && !hasStandardOSDQuota && hasMarketplaceSubscription) {
     defaultBillingModel = billingModels.MARKETPLACE;
   }
+
+  const onBillingModelChange = (_, value) => {
+    let selectedProduct;
+    if (value === 'standard-trial') {
+      selectedProduct = normalizedProducts.OSDTrial;
+    } else {
+      selectedProduct = normalizedProducts.OSD;
+    }
+    change('product', selectedProduct);
+    if (toggleSubscriptionBilling) {
+      toggleSubscriptionBilling(_, value);
+    }
+  };
 
   const subscriptionOptions = [
     {
@@ -139,7 +153,7 @@ function BillingModelSection({
               name="billing_model"
               className="radio-button"
               disabled={pending}
-              onChange={toggleSubscriptionBilling}
+              onChange={onBillingModelChange}
               options={subscriptionOptions}
               defaultValue={defaultBillingModel}
             />
@@ -197,10 +211,11 @@ BillingModelSection.propTypes = {
   byocSelected: PropTypes.bool,
   showOSDTrial: PropTypes.bool,
   pending: PropTypes.bool,
-  toggleSubscriptionBilling: PropTypes.func.isRequired,
+  toggleSubscriptionBilling: PropTypes.func,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
   isWizard: PropTypes.bool,
+  change: PropTypes.func.isRequired,
 };
 
 export default BillingModelSection;

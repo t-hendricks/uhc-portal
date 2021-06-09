@@ -120,84 +120,117 @@ const links = {
   ROSA_DOCS: 'https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html',
 };
 
-const channels = {
-  PRE_RELEASE: 'preRelease',
-  IBMZ: 'ibmz',
-  STABLE: 'stable',
-  PPC: 'ppc64le',
+// See also per-tool data in DownloadButton.jsx.
+const tools = {
+  CLI_TOOLS: 'CLI_TOOLS',
   CRC: 'CRC',
+  INSTALLER: 'INSTALLER',
+  RHCOS: 'RHCOS', // urls
 };
 
+const channels = {
+  PRE_RELEASE: 'preRelease',
+  STABLE: 'stable',
+};
+
+const architectures = {
+  x86: 'x86',
+  ppc: 'ppc',
+  s390x: 's390x',
+};
+
+const architectureOptions = [
+  { value: architectures.x86, label: 'x86-64', path: 'x86_64' }, // aka amd64
+  { value: architectures.ppc, label: 'ppc64le', path: 'ppc64le' }, // aka Power
+  { value: architectures.s390x, label: 's390x', path: 's390x' }, // aka IBM Z
+];
+
+const operatingSystems = {
+  linux: 'linux',
+  mac: 'mac',
+  windows: 'windows',
+};
+
+const operatingSystemOptions = [
+  { value: operatingSystems.linux, label: 'Linux' },
+  { value: operatingSystems.mac, label: 'MacOS' },
+  { value: operatingSystems.windows, label: 'Windows' },
+];
+
+/**
+ * {tool: {channel: {arch: {os: url}}}}
+ */
 const urls = {
-  [channels.STABLE]: {
-    windows: {
-      cli: links.CLI_TOOLS_WINDOWS,
+  [tools.CLI_TOOLS]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.windows]: links.CLI_TOOLS_WINDOWS,
+        [operatingSystems.linux]: links.CLI_TOOLS_LINUX,
+        [operatingSystems.mac]: links.CLI_TOOLS_MAC,
+      },
+      [architectures.s390x]: {
+        // TODO: what do these mean?
+        // Windows and OSX don's run on IBM Z, are these aliases for x86 binaries?
+        [operatingSystems.windows]: links.CLI_TOOLS_WINDOWS_IBMZ,
+        [operatingSystems.linux]: links.CLI_TOOLS_LINUX_IBMZ,
+        [operatingSystems.mac]: links.CLI_TOOLS_MAC_IBMZ,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.windows]: links.CLI_TOOLS_WINDOWS_PPC,
+        [operatingSystems.linux]: links.CLI_TOOLS_LINUX_PPC,
+        [operatingSystems.mac]: links.CLI_TOOLS_MAC_PPC,
+      },
     },
-    linux: {
-      installer: links.INSTALLER_LINUX,
-      cli: links.CLI_TOOLS_LINUX,
-    },
-    mac: {
-      installer: links.INSTALLER_MAC,
-      cli: links.CLI_TOOLS_MAC,
-    },
-  },
-  [channels.PRE_RELEASE]: {
-    windows: {
-      cli: links.CLI_TOOLS_WINDOWS_PRE_RELEASE,
-    },
-    linux: {
-      installer: links.INSTALLER_LINUX_PRE_RELEASE,
-      cli: links.CLI_TOOLS_LINUX_PRE_RELEASE,
-    },
-    mac: {
-      installer: links.INSTALLER_MAC_PRE_RELEASE,
-      cli: links.CLI_TOOLS_MAC_PRE_RELEASE,
-    },
-  },
-  [channels.IBMZ]: {
-    windows: {
-      cli: links.CLI_TOOLS_WINDOWS_IBMZ,
-    },
-    linux: {
-      installer: links.INSTALLER_LINUX_IBMZ,
-      cli: links.CLI_TOOLS_LINUX_IBMZ,
-    },
-    mac: {
-      installer: links.INSTALLER_MAC_IBMZ,
-      cli: links.CLI_TOOLS_MAC_IBMZ,
+    [channels.PRE_RELEASE]: {
+      [architectures.x86]: {
+        [operatingSystems.windows]: links.CLI_TOOLS_WINDOWS_PRE_RELEASE,
+        [operatingSystems.linux]: links.CLI_TOOLS_LINUX_PRE_RELEASE,
+        [operatingSystems.mac]: links.CLI_TOOLS_MAC_PRE_RELEASE,
+      },
     },
   },
 
-  [channels.PPC]: {
-    windows: {
-      cli: links.CLI_TOOLS_WINDOWS_PPC,
+  [tools.INSTALLER]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: links.INSTALLER_LINUX,
+        [operatingSystems.mac]: links.INSTALLER_MAC,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: links.INSTALLER_LINUX_IBMZ,
+        [operatingSystems.mac]: links.INSTALLER_MAC_IBMZ,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: links.INSTALLER_LINUX_PPC,
+        [operatingSystems.mac]: links.INSTALLER_MAC_PPC,
+      },
     },
-    linux: {
-      installer: links.INSTALLER_LINUX_PPC,
-      cli: links.CLI_TOOLS_LINUX_PPC,
-    },
-    mac: {
-      installer: links.INSTALLER_MAC_PPC,
-      cli: links.CLI_TOOLS_MAC_PPC,
+    [channels.PRE_RELEASE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: links.INSTALLER_LINUX_PRE_RELEASE,
+        [operatingSystems.mac]: links.INSTALLER_MAC_PRE_RELEASE,
+      },
     },
   },
 
-  [channels.CRC]: {
-    windows: {
-      installer: links.INSTALL_CRC_DOWNLOAD_WINDOWS,
-    },
-    mac: {
-      installer: links.INSTALL_CRC_DOWNLOAD_MACOS,
-    },
-    linux: {
-      installer: links.INSTALL_CRC_DOWNLOAD_LINUX,
+  [tools.CRC]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.windows]: links.INSTALL_CRC_DOWNLOAD_WINDOWS,
+        [operatingSystems.mac]: links.INSTALL_CRC_DOWNLOAD_MACOS,
+        [operatingSystems.linux]: links.INSTALL_CRC_DOWNLOAD_LINUX,
+      },
     },
   },
 };
 
 export {
+  architectures,
+  architectureOptions,
   channels,
+  operatingSystems,
+  operatingSystemOptions,
+  tools,
   urls,
 };
 export default links;

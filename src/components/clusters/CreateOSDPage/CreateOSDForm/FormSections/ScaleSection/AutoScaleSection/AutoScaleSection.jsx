@@ -61,8 +61,13 @@ class AutoScaleSection extends React.Component {
       autoscalingEnabled, change, isDefaultMachinePool, product, isBYOC, isMultiAz,
     } = this.props;
     if (!prevProps.autoscalingEnabled && autoscalingEnabled) {
+      const { autoScaleMinNodesValue } = this.props;
       const minAllowed = getMinNodesAllowed({
-        isDefaultMachinePool, product, isBYOC, isMultiAz,
+        isDefaultMachinePool,
+        product,
+        isBYOC,
+        isMultiAz,
+        autoScaleMinNodesValue,
       });
       change('min_replicas', isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString());
     }

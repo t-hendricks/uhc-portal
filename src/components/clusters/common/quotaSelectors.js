@@ -80,10 +80,11 @@ const availableQuota = (
     resourceName,
   },
 ) => {
+  const normalizedBillingModel = billingModel === 'standard-trial' ? billingModels.STANDARD : billingModel;
   const query = {
     resource_type: resourceType,
     product,
-    billing_model: billingModel || any,
+    billing_model: normalizedBillingModel || any,
     cloud_provider: cloudProviderID || any,
     byoc: { [true]: 'byoc', [false]: 'rhinfra', [undefined]: any }[isBYOC],
     availability_zone_type: { [true]: 'multi', [false]: 'single', [undefined]: any }[isMultiAz],

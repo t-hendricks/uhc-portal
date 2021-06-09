@@ -14,6 +14,7 @@ exports[`CreateOSDForm; should render 1`] = `
   <Connect(BillingModelSection)
     billingModel="standard"
     byocSelected={false}
+    change={[MockFunction]}
     cloudProviderID="aws"
     openModal={[MockFunction]}
     pending={false}
@@ -123,6 +124,7 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
   <Connect(BillingModelSection)
     billingModel="standard"
     byocSelected={false}
+    change={[MockFunction]}
     cloudProviderID="aws"
     openModal={[MockFunction]}
     pending={false}

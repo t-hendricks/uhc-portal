@@ -12,7 +12,8 @@
     "@babel/eslint-parser": "^7.13.14",
     "@patternfly/patternfly": "^4.87.3",
     "@patternfly/react-charts": "^6.14.2",
-    "@patternfly/react-core": "^4.97.2",
+    "@patternfly/react-code-editor": "^4.1.25",
+    "@patternfly/react-core": "^4.121.1",
     "@patternfly/react-icons": "^4.9.2",
     "@patternfly/react-table": "^4.23.2",
     "@patternfly/react-tokens": "^4.10.2",
@@ -38,7 +39,7 @@
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "netmask": "^1.0.6",
-    "openshift-assisted-ui-lib": "1.5.22-1",
+    "openshift-assisted-ui-lib": "1.5.23-1",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
@@ -49,12 +50,13 @@
     "react-datepicker": "^3.3.0",
     "react-dom": "^16.13.1",
     "react-markdown": "^4.3.1",
+    "react-monaco-editor": "^0.43.0",
     "react-redux": "^7.2.0",
     "react-router": "^5.2.0",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.0.0",
-    "react-tagsinput": "^3.19.0",
+    "react-tagsinput": "3.19.x",
     "redux": "^4.0.5",
     "redux-form": "^8.3.6",
     "redux-promise-middleware": "^6.1.2",
@@ -135,7 +137,7 @@
       "^.+\\.jsx?$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!lodash-es/)"
+      "<rootDir>/node_modules/(?!(react-monaco-editor|monaco-editor|lodash-es)/)"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",

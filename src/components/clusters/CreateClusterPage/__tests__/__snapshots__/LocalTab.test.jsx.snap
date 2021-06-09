@@ -66,10 +66,11 @@ exports[`<LocalTab /> renders correctly 1`] = `
                 CodeReady Containers
               </Text>
               <DownloadAndOSSelection
-                channel="CRC"
+                architecture="x86"
+                channel="stable"
                 cloudProviderID="/"
-                mode="CRC"
                 token={Object {}}
+                tool="CRC"
               />
               <Text
                 component="h3"
