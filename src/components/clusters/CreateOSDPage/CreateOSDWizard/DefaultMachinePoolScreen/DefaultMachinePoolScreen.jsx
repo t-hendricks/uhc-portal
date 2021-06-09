@@ -7,6 +7,7 @@ import {
   GridItem,
   ExpandableSection,
   Title,
+  Form,
 } from '@patternfly/react-core';
 
 import MachineTypeSelection from '../../CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection';
@@ -36,29 +37,30 @@ function DefaultMachinePoolScreen({
   billingModel,
 }) {
   return (
-    <Grid>
-      <GridItem span={4}>
-        <FormGroup
-          label="Worker node instance type"
-          isRequired
-          fieldId="node_type"
-          labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
-        >
-          <Field
-            component={MachineTypeSelection}
-            name="machine_type"
-            validate={required}
-            isMultiAz={isMultiAz}
-            isBYOC={isByoc}
-            cloudProviderID={cloudProviderID}
-            product={product}
-            billingModel={billingModel}
-          />
-        </FormGroup>
-      </GridItem>
-      <GridItem span={8} />
-      <GridItem span={4}>
-        {canAutoScale
+    <Form onSubmit={() => false}>
+      <Grid>
+        <GridItem span={4}>
+          <FormGroup
+            label="Worker node instance type"
+            isRequired
+            fieldId="node_type"
+            labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
+          >
+            <Field
+              component={MachineTypeSelection}
+              name="machine_type"
+              validate={required}
+              isMultiAz={isMultiAz}
+              isBYOC={isByoc}
+              cloudProviderID={cloudProviderID}
+              product={product}
+              billingModel={billingModel}
+            />
+          </FormGroup>
+        </GridItem>
+        <GridItem span={8} />
+        <GridItem span={4}>
+          {canAutoScale
           && (
           <AutoScaleSection
             autoscalingEnabled={autoscalingEnabled}
@@ -71,7 +73,7 @@ function DefaultMachinePoolScreen({
             isDefaultMachinePool
           />
           )}
-        {!autoscalingEnabled && (
+          {!autoscalingEnabled && (
           <>
             <Field
               component={NodeCountInput}
@@ -92,19 +94,20 @@ function DefaultMachinePoolScreen({
               billingModel={billingModel}
             />
           </>
-        )}
-        <ExpandableSection
-          toggleText="Edit node labels"
-        >
-          <GridItem span={4} className="space-bottom-md">
-            <Title headingLevel="h3">Node labels</Title>
-          </GridItem>
-          <GridItem span={4}>
-            <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
-          </GridItem>
-        </ExpandableSection>
-      </GridItem>
-    </Grid>
+          )}
+          <ExpandableSection
+            toggleText="Edit node labels"
+          >
+            <GridItem span={4} className="space-bottom-md">
+              <Title headingLevel="h3">Node labels</Title>
+            </GridItem>
+            <GridItem span={4}>
+              <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
+            </GridItem>
+          </ExpandableSection>
+        </GridItem>
+      </Grid>
+    </Form>
   );
 }
 

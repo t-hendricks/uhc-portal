@@ -5,6 +5,7 @@ import {
   Grid,
   GridItem,
   FormGroup,
+  Form,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
@@ -32,101 +33,105 @@ function ClusterSettingsScreen({
   cloudProviderID,
   product,
   billingModel,
+  change,
 }) {
   const isGCP = cloudProviderID === 'gcp';
 
   return (
-    <Grid>
-      <GridItem span={12}>
-        <Title headingLevel="h3">Cluster details</Title>
-      </GridItem>
-      <BasicFieldsSection
-        /* TODO move some props to index.js */
-        cloudProviderID={cloudProviderID}
-        isBYOC={isByoc}
-        isMultiAz={isMultiAz}
-        showAvailability
-      />
-      <GridItem span={4}>
-        <FormGroup
-          label="Persistent storage"
-          fieldId="persistent_storage"
-          labelIcon={<PopoverHint hint={constants.persistentStorageHint} />}
-        >
-          <Field
-            name="persistent_storage"
-            component={PersistentStorageDropdown}
-            currentValue={null}
-            cloudProviderID={cloudProviderID}
-            billingModel={billingModel}
-            product={product}
-            isBYOC={isByoc}
-            isMultiAZ={isMultiAz}
-          />
-        </FormGroup>
-      </GridItem>
-      <GridItem span={8} />
-      <GridItem span={4}>
-        <FormGroup
-          label="Load balancers"
-          fieldId="load_balancers"
-          labelIcon={<PopoverHint hint={constants.loadBalancersHint} />}
-        >
-          <Field
-            name="load_balancers"
-            component={LoadBalancersDropdown}
-            currentValue={null}
-            cloudProviderID={cloudProviderID}
-            billingModel={billingModel}
-            product={product}
-            isBYOC={isByoc}
-            isMultiAZ={isMultiAz}
-          />
-        </FormGroup>
-      </GridItem>
-      <UserWorkloadMonitoringSection parent="create" disableUVM={false} />
-      <GridItem span={12}>
-        <Title headingLevel="h3" className="clusterupdatespace">Cluster updates</Title>
-      </GridItem>
-      <UpgradeSettingsFields
-        isAutomatic={isAutomaticUpgrade}
-      />
-      {(canEnableEtcdEncryption || (isGCP && isByoc)) && (
-      <>
+    <Form onSubmit={() => false}>
+      <Grid>
         <GridItem span={12}>
-          <Title headingLevel="h3">Encryption</Title>
+          <Title headingLevel="h3">Cluster details</Title>
         </GridItem>
-      </>
-      )}
-      {canEnableEtcdEncryption && (
-      <FormGroup
-        fieldId="etcd_encryption"
-        id="etcdEncryption"
-      >
-        <Field
-          component={ReduxCheckbox}
-          name="etcd_encryption"
-          label="Enable etcd encryption"
-          extendedHelpText={(
-            <>
-              {constants.enableEtcdHint}
-              {' '}
-              <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
-            </>
-              )}
+        <BasicFieldsSection
+        /* TODO move some props to index.js */
+          cloudProviderID={cloudProviderID}
+          isBYOC={isByoc}
+          isMultiAz={isMultiAz}
+          showAvailability
+          change={change}
         />
-        <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
-      </FormGroup>
-      )}
-      {(isGCP && isByoc) && (
+        <GridItem span={4}>
+          <FormGroup
+            label="Persistent storage"
+            fieldId="persistent_storage"
+            labelIcon={<PopoverHint hint={constants.persistentStorageHint} />}
+          >
+            <Field
+              name="persistent_storage"
+              component={PersistentStorageDropdown}
+              currentValue={null}
+              cloudProviderID={cloudProviderID}
+              billingModel={billingModel}
+              product={product}
+              isBYOC={isByoc}
+              isMultiAZ={isMultiAz}
+            />
+          </FormGroup>
+        </GridItem>
+        <GridItem span={8} />
+        <GridItem span={4}>
+          <FormGroup
+            label="Load balancers"
+            fieldId="load_balancers"
+            labelIcon={<PopoverHint hint={constants.loadBalancersHint} />}
+          >
+            <Field
+              name="load_balancers"
+              component={LoadBalancersDropdown}
+              currentValue={null}
+              cloudProviderID={cloudProviderID}
+              billingModel={billingModel}
+              product={product}
+              isBYOC={isByoc}
+              isMultiAZ={isMultiAz}
+            />
+          </FormGroup>
+        </GridItem>
+        <UserWorkloadMonitoringSection parent="create" disableUVM={false} />
+        <GridItem span={12}>
+          <Title headingLevel="h3" className="clusterupdatespace">Cluster updates</Title>
+        </GridItem>
+        <UpgradeSettingsFields
+          isAutomatic={isAutomaticUpgrade}
+        />
+        {(canEnableEtcdEncryption || (isGCP && isByoc)) && (
+        <>
+          <GridItem span={12}>
+            <Title headingLevel="h3">Encryption</Title>
+          </GridItem>
+        </>
+        )}
+        {canEnableEtcdEncryption && (
+        <FormGroup
+          fieldId="etcd_encryption"
+          id="etcdEncryption"
+        >
+          <Field
+            component={ReduxCheckbox}
+            name="etcd_encryption"
+            label="Enable etcd encryption"
+            extendedHelpText={(
+              <>
+                {constants.enableEtcdHint}
+                {' '}
+                <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
+              </>
+              )}
+          />
+          <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
+        </FormGroup>
+        )}
+        {(isGCP && isByoc) && (
 
-      <GCPClusterEncryption
-        customerManagedEncryptionSelected={customerManagedEncryptionSelected}
-        selectedRegion={selectedRegion}
-      />
+        <GCPClusterEncryption
+          customerManagedEncryptionSelected={customerManagedEncryptionSelected}
+          selectedRegion={selectedRegion}
+        />
 
-      )}
-    </Grid>
+        )}
+      </Grid>
+    </Form>
   );
 }
 
@@ -140,6 +145,7 @@ ClusterSettingsScreen.propTypes = {
   product: PropTypes.string,
   billingModel: PropTypes.string,
   selectedRegion: PropTypes.string,
+  change: PropTypes.func,
 };
 
 export default ClusterSettingsScreen;

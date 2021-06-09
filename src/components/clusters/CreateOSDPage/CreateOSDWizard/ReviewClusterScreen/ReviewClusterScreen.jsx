@@ -13,6 +13,7 @@ import {
 } from '@patternfly/react-core';
 
 import reviewValues from './reviewValues';
+import './ReviewClusterScreen.scss';
 
 function clusterSpecDescriptionItem({ name, formValues }) {
   const reviewValue = reviewValues[name];
@@ -80,7 +81,7 @@ function ReviewClusterSecreen({ formValues, isPending }) {
     );
   }
   return (
-    <>
+    <div className="ocm-create-osd-review-screen">
       <Title headingLevel="h2">
         Review your dedicated cluster
       </Title>
@@ -112,8 +113,7 @@ function ReviewClusterSecreen({ formValues, isPending }) {
         {/* TODO: autoscaling details */}
         {clusterSpecDescriptionItem({ name: 'nodes_compute', formValues })}
       </DescriptionList>
-
-    </>
+    </div>
   );
 }
 ReviewClusterSecreen.propTypes = {
