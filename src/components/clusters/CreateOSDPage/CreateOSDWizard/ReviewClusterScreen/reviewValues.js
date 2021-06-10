@@ -5,7 +5,8 @@ import { humanizeValueWithUnitGiB } from '../../../../../common/units';
  * reviewValues structure - key: field name
  * {
  *  title - human readable title
- *  values - map from values to human readable strings. optional. when unspecified, actual value is shown
+ *  values - map from values to human readable strings. optional.
+ *           when unspecified, actual value is shown.
  *  valueTransfrom - function to transform current value to human readable string,
  *                   gets two parameters: value (current value), allValues (all form values)
  *                   only executed when `values` is not defined. optional.
