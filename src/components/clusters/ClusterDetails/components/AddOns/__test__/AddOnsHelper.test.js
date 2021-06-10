@@ -31,6 +31,8 @@ import {
   parameterValuesForEditing,
   parameterAndValue,
   validateAddOnRequirements,
+  validateAddOnParameterConditions,
+  getParameters,
   minQuotaCount,
 } from '../AddOnsHelper';
 
@@ -631,6 +633,139 @@ describe('validateAddOnRequirements', () => {
           },
         },
       });
+    });
+  });
+});
+
+describe('validateAddOnParameterConditions', () => {
+  let tstAddOnParam;
+  let tstCluster;
+
+  beforeAll(() => {
+    tstCluster = cloneDeep(OSDCluster);
+  });
+
+  it('should return true for addon parameter with no conditions', () => {
+    const status = validateAddOnParameterConditions(
+      tstAddOnParam, tstCluster,
+    );
+    expect(status.fulfilled)
+      .toEqual(true);
+    expect(status.errorMsgs)
+      .toEqual([]);
+  });
+
+  describe('cluster', () => {
+    beforeAll(() => {
+      tstAddOnParam = {
+        conditions: [
+          {
+            resource: 'cluster',
+            data: {
+              'cloud_provider.id': 'aws',
+            },
+          },
+        ],
+      };
+    });
+
+    it('should return true for addon parameter with fulfilled cluster requirements', () => {
+      const status = validateAddOnParameterConditions(
+        tstAddOnParam, tstCluster,
+      );
+      expect(status.fulfilled)
+        .toEqual(true);
+      expect(status.errorMsgs)
+        .toEqual([]);
+    });
+    it('should return false for addon parameter with unfulfilled cluster requirements', () => {
+      tstCluster.cloud_provider.id = 'gcp';
+      const status = validateAddOnParameterConditions(
+        tstAddOnParam, tstCluster,
+      );
+      expect(status.fulfilled)
+        .toEqual(false);
+      expect(status.errorMsgs)
+        .toEqual(['This addon requires a cluster where cloud_provider.id is aws']);
+    });
+  });
+});
+
+describe('getParameters', () => {
+  let tstAddOn;
+  let tstCluster;
+
+  beforeAll(() => {
+    tstCluster = cloneDeep(OSDCluster);
+  });
+
+  it('should return an empty array', () => {
+    const params = getParameters(
+      tstAddOn, tstCluster,
+    );
+    expect(params).toEqual([]);
+  });
+
+  describe('cluster', () => {
+    beforeAll(() => {
+      tstAddOn = {
+        parameters: {
+          items: [
+            {
+              id: 'my-string',
+              value_type: 'string',
+            },
+            {
+              id: 'my-string-aws',
+              value_type: 'string',
+              conditions: [
+                {
+                  resource: 'cluster',
+                  data: {
+                    'cloud_provider.id': 'aws',
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      };
+    });
+
+    it('should return 2 addon parameters for an aws cluster', () => {
+      const params = getParameters(
+        tstAddOn, tstCluster,
+      );
+      expect(params).toEqual([
+        {
+          id: 'my-string',
+          value_type: 'string',
+        },
+        {
+          id: 'my-string-aws',
+          value_type: 'string',
+          conditions: [
+            {
+              resource: 'cluster',
+              data: {
+                'cloud_provider.id': 'aws',
+              },
+            },
+          ],
+        },
+      ]);
+    });
+    it('should return 1 addon parameters for gcp a cluster', () => {
+      tstCluster.cloud_provider.id = 'gcp';
+      const params = getParameters(
+        tstAddOn, tstCluster,
+      );
+      expect(params).toEqual([
+        {
+          id: 'my-string',
+          value_type: 'string',
+        },
+      ]);
     });
   });
 });

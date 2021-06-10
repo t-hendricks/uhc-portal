@@ -205,49 +205,61 @@ const requirementFulfilledByResource = (myResource, requirement) => {
   return constraintsMet;
 };
 
-const validateAddOnRequirements = (
-  addOn, cluster, clusterAddOns, clusterMachinePools, breakOnFirstError = false,
+const validateAddOnResourceRequirement = (
+  requirement, cluster, clusterAddOns = [], clusterMachinePools = [],
+) => {
+  let requirementMet = false;
+  let requirementError;
+  switch (requirement.resource) {
+    case 'cluster': {
+      requirementMet = requirementFulfilledByResource(cluster, requirement);
+      break;
+    }
+    case 'addon': {
+      if (get(clusterAddOns, 'items.length', false)) {
+        requirementMet = clusterAddOns.items
+          .some(addon => requirementFulfilledByResource(addon, requirement));
+      }
+      if (!requirementMet) {
+        requirementError = 'This addon requires an addon to be installed where '
+          + `${formatRequirementData(requirement.data)}`;
+      }
+      break;
+    }
+    case 'machine_pool': {
+      if (get(clusterMachinePools, 'data.length', false)) {
+        requirementMet = clusterMachinePools.data
+          .some(machinePool => requirementFulfilledByResource(machinePool, requirement));
+      }
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+  if (!requirementMet) {
+    if (!requirementError) {
+      requirementError = `This addon requires a ${requirement.resource} where `
+        + `${formatRequirementData(requirement.data)}`;
+    }
+  }
+  return [requirementMet, requirementError];
+};
+
+const validateAddOnResourceRequirementList = (
+  requirements, cluster, clusterAddOns = [], clusterMachinePools = [], breakOnFirstError = false,
 ) => {
   const requirementStatus = {
     fulfilled: true,
     errorMsgs: [],
   };
-  if (hasRequirements(addOn)) {
-    addOn.requirements.every((requirement) => {
-      let requirementMet = false;
-      let requirementError;
-      switch (requirement.resource) {
-        case 'cluster': {
-          requirementMet = requirementFulfilledByResource(cluster, requirement);
-          break;
-        }
-        case 'addon': {
-          if (get(clusterAddOns, 'items.length', false)) {
-            requirementMet = clusterAddOns.items
-              .some(addon => requirementFulfilledByResource(addon, requirement));
-          }
-          if (!requirementMet) {
-            requirementError = 'This addon requires an addon to be installed where '
-              + `${formatRequirementData(requirement.data)}`;
-          }
-          break;
-        }
-        case 'machine_pool': {
-          if (get(clusterMachinePools, 'data.length', false)) {
-            requirementMet = clusterMachinePools.data
-              .some(machinePool => requirementFulfilledByResource(machinePool, requirement));
-          }
-          break;
-        }
-        default: {
-          break;
-        }
-      }
+  if (requirements.length > 0) {
+    requirements.every((requirement) => {
+      const [requirementMet, requirementError] = validateAddOnResourceRequirement(
+        requirement, cluster, clusterAddOns, clusterMachinePools,
+      );
+
       if (!requirementMet) {
-        if (!requirementError) {
-          requirementError = `This addon requires a ${requirement.resource} where `
-            + `${formatRequirementData(requirement.data)}`;
-        }
         requirementStatus.errorMsgs.push(requirementError);
       }
       if (requirementStatus.fulfilled) {
@@ -257,6 +269,30 @@ const validateAddOnRequirements = (
     });
   }
   return requirementStatus;
+};
+
+// validates that a given addons requirements are fulfilled
+const validateAddOnRequirements = (
+  addOn, cluster, clusterAddOns, clusterMachinePools, breakOnFirstError = false,
+) => validateAddOnResourceRequirementList(get(addOn, 'requirements', []), cluster,
+  clusterAddOns, clusterMachinePools, breakOnFirstError);
+
+// validates that a given addon parameters conditions are fulfilled
+const validateAddOnParameterConditions = (
+  addOnParam, cluster, breakOnFirstError = false,
+) => validateAddOnResourceRequirementList(get(addOnParam, 'conditions', []), cluster,
+  breakOnFirstError);
+
+// return a list of parameters for the given addon filtering out any that have conditions that are
+// not satisfied by the cluster
+const getParameters = (addOn, cluster) => {
+  if (!hasParameters(addOn)) {
+    return [];
+  }
+  return addOn.parameters.items.filter((param) => {
+    const requirementStatus = validateAddOnParameterConditions(param, cluster, true);
+    return requirementStatus.fulfilled;
+  });
 };
 
 export {
@@ -273,5 +309,9 @@ export {
   parameterValuesForEditing,
   parameterAndValue,
   minQuotaCount,
+  validateAddOnResourceRequirement,
+  validateAddOnResourceRequirementList,
   validateAddOnRequirements,
+  validateAddOnParameterConditions,
+  getParameters,
 };
