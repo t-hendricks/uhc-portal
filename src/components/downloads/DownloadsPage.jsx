@@ -122,11 +122,23 @@ const architectureDropdown = (tool, OS, architecture, setArchitecture) => {
   );
 };
 
-const useToolRow = (expanded, tool, name) => {
+/**
+ * @param tool - one of `installLinks.tools`.
+ * @param detectedOS - result of detectOS(), injected for testing.
+ * @returns {OS, architecture}
+ */
+export const initialSelection = (tool, detectedOS) => {
   // Start with an OS and architecture chosen so that some users can
   // click Download directly without having to change selections.
-  const [OS, setOS] = React.useState(detectOS() || allOperatingSystemsForTool(tool)[0]);
-  const [architecture, setArchitecture] = React.useState(architecturesForToolOS(tool, OS)[0]);
+  const OS = detectedOS || allOperatingSystemsForTool(tool)[0];
+  const architecture = architecturesForToolOS(tool, OS)[0];
+  return { OS, architecture };
+};
+
+export const useToolRow = (expanded, tool, name) => {
+  const initial = initialSelection(tool, detectOS());
+  const [OS, setOS] = React.useState(initial.OS);
+  const [architecture, setArchitecture] = React.useState(initial.architecture);
   const onChangeOS = (newOS) => {
     setOS(newOS);
     // Invalidate arch selection if not compatible
@@ -257,8 +269,8 @@ const installationRows = expanded => [
     </Stack>),
 ];
 
-const Downloads = () => {
-  // {index: isOpen}
+const DownloadsPage = () => {
+  // {tool: isOpen}
   const initialExpanded = {};
   Object.keys(tools).forEach((tool) => {
     initialExpanded[tool] = false;
@@ -352,5 +364,7 @@ const Downloads = () => {
     </>
   );
 };
+DownloadsPage.propTypes = {
+};
 
-export default Downloads;
+export default DownloadsPage;
