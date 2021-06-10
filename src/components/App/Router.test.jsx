@@ -22,6 +22,7 @@ const routes = [
   '/',
   '/token/rosa',
   '/token',
+  '/downloads',
   '/install/aws/installer-provisioned',
   '/install/aws/user-provisioned',
   '/install/aws',

@@ -59,6 +59,7 @@ import InstallPullSecret from '../clusters/install/InstallPullSecret';
 import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
 import InstallIBM from '../clusters/install/InstallIBM';
 import InstallPower from '../clusters/install/InstallPower';
+import DownloadsPage from '../downloads/DownloadsPage';
 import Tokens from '../tokens/Tokens';
 import TokensROSA from '../tokens/TokensROSA';
 import NotFoundError from './NotFoundError';
@@ -96,6 +97,7 @@ function Router({ history }) {
             <Redirect from="/subscriptions" to="/quota" />
 
             <TermsGuardedRoute path="/token/rosa" component={TokensROSA} history={history} />
+            <Route path="/downloads" component={DownloadsPage} />
             <Route path="/token" component={Tokens} />
             <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
