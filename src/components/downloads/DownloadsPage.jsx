@@ -130,8 +130,8 @@ const architectureDropdown = (tool, OS, architecture, setArchitecture) => {
 export const initialSelection = (tool, detectedOS) => {
   // Start with an OS and architecture chosen so that some users can
   // click Download directly without having to change selections.
-  const OS = detectedOS || allOperatingSystemsForTool(tool)[0];
-  const architecture = architecturesForToolOS(tool, OS)[0];
+  const OS = detectedOS || allOperatingSystemsForTool(tool)[0].value;
+  const architecture = architecturesForToolOS(tool, OS)[0].value;
   return { OS, architecture };
 };
 

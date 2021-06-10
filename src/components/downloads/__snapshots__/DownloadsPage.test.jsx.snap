@@ -94,12 +94,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value={
-                          Object {
-                            "label": "Linux",
-                            "value": "linux",
-                          }
-                        }
+                        value="linux"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -124,14 +119,14 @@ exports[`<DownloadsPage> renders 1`] = `
                       "title": <FormSelect
                         aria-label="select-arch-dropdown"
                         className=""
-                        isDisabled={true}
+                        isDisabled={false}
                         isRequired={false}
                         onBlur={[Function]}
                         onChange={[Function]}
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value=""
+                        value="x86"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -139,21 +134,15 @@ exports[`<DownloadsPage> renders 1`] = `
                           value="select"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="x86_64"
-                          title="This type of architecture is not available for the selected OS type"
                           value="x86"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="ppc64le"
-                          title="This type of architecture is not available for the selected OS type"
                           value="ppc"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="s390x"
-                          title="This type of architecture is not available for the selected OS type"
                           value="s390x"
                         />
                       </FormSelect>,
@@ -162,6 +151,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "title": <DownloadButton
                         text="Download"
                         tool="CLI_TOOLS"
+                        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz"
                       />,
                     },
                   ],
@@ -213,12 +203,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value={
-                          Object {
-                            "label": "Linux",
-                            "value": "linux",
-                          }
-                        }
+                        value="linux"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -250,7 +235,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value=""
+                        value="x86"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -258,9 +243,7 @@ exports[`<DownloadsPage> renders 1`] = `
                           value="select"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="x86_64"
-                          title="This type of architecture is not available for the selected OS type"
                           value="x86"
                         />
                       </FormSelect>,
@@ -269,6 +252,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "title": <DownloadButton
                         text="Download"
                         tool="ROSA"
+                        url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz"
                       />,
                     },
                   ],
@@ -389,12 +373,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value={
-                          Object {
-                            "label": "Linux",
-                            "value": "linux",
-                          }
-                        }
+                        value="linux"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -419,14 +398,14 @@ exports[`<DownloadsPage> renders 1`] = `
                       "title": <FormSelect
                         aria-label="select-arch-dropdown"
                         className=""
-                        isDisabled={true}
+                        isDisabled={false}
                         isRequired={false}
                         onBlur={[Function]}
                         onChange={[Function]}
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value=""
+                        value="x86"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -434,27 +413,19 @@ exports[`<DownloadsPage> renders 1`] = `
                           value="select"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="x86_64"
-                          title="This type of architecture is not available for the selected OS type"
                           value="x86"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="arm64"
-                          title="This type of architecture is not available for the selected OS type"
                           value="arm"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="ppc64le"
-                          title="This type of architecture is not available for the selected OS type"
                           value="ppc"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="s390x"
-                          title="This type of architecture is not available for the selected OS type"
                           value="s390x"
                         />
                       </FormSelect>,
@@ -463,6 +434,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "title": <DownloadButton
                         text="Download"
                         tool="ODO"
+                        url="https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64"
                       />,
                     },
                   ],
@@ -501,12 +473,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value={
-                          Object {
-                            "label": "Linux",
-                            "value": "linux",
-                          }
-                        }
+                        value="linux"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -531,14 +498,14 @@ exports[`<DownloadsPage> renders 1`] = `
                       "title": <FormSelect
                         aria-label="select-arch-dropdown"
                         className=""
-                        isDisabled={true}
+                        isDisabled={false}
                         isRequired={false}
                         onBlur={[Function]}
                         onChange={[Function]}
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value=""
+                        value="x86"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -546,21 +513,15 @@ exports[`<DownloadsPage> renders 1`] = `
                           value="select"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="x86_64"
-                          title="This type of architecture is not available for the selected OS type"
                           value="x86"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="ppc64le"
-                          title="This type of architecture is not available for the selected OS type"
                           value="ppc"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="s390x"
-                          title="This type of architecture is not available for the selected OS type"
                           value="s390x"
                         />
                       </FormSelect>,
@@ -569,6 +530,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "title": <DownloadButton
                         text="Download"
                         tool="HELM"
+                        url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64"
                       />,
                     },
                   ],
@@ -691,12 +653,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value={
-                          Object {
-                            "label": "Linux",
-                            "value": "linux",
-                          }
-                        }
+                        value="linux"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -717,14 +674,14 @@ exports[`<DownloadsPage> renders 1`] = `
                       "title": <FormSelect
                         aria-label="select-arch-dropdown"
                         className=""
-                        isDisabled={true}
+                        isDisabled={false}
                         isRequired={false}
                         onBlur={[Function]}
                         onChange={[Function]}
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value=""
+                        value="x86"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -732,21 +689,15 @@ exports[`<DownloadsPage> renders 1`] = `
                           value="select"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="x86_64"
-                          title="This type of architecture is not available for the selected OS type"
                           value="x86"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="ppc64le"
-                          title="This type of architecture is not available for the selected OS type"
                           value="ppc"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="s390x"
-                          title="This type of architecture is not available for the selected OS type"
                           value="s390x"
                         />
                       </FormSelect>,
@@ -755,6 +706,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "title": <DownloadButton
                         text="Download"
                         tool="INSTALLER"
+                        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-install-linux.tar.gz"
                       />,
                     },
                   ],
@@ -814,12 +766,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value={
-                          Object {
-                            "label": "Linux",
-                            "value": "linux",
-                          }
-                        }
+                        value="linux"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -851,7 +798,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         onFocus={[Function]}
                         ouiaSafe={true}
                         validated="default"
-                        value=""
+                        value="x86"
                       >
                         <FormSelectOption
                           isDisabled={true}
@@ -859,9 +806,7 @@ exports[`<DownloadsPage> renders 1`] = `
                           value="select"
                         />
                         <FormSelectOption
-                          isDisabled={true}
                           label="x86_64"
-                          title="This type of architecture is not available for the selected OS type"
                           value="x86"
                         />
                       </FormSelect>,
@@ -870,6 +815,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "title": <DownloadButton
                         text="Download"
                         tool="CRC"
+                        url="https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
                       />,
                     },
                   ],
