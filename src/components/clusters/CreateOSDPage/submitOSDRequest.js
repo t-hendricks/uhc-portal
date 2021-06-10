@@ -20,7 +20,7 @@ const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) 
     },
     managed: true,
     cloud_provider: {
-      id: cloudProviderID,
+      id: cloudProviderID || formData.cloud_provider,
     },
     multi_az: isMultiAz,
     node_drain_grace_period: {
@@ -51,7 +51,7 @@ const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) 
     clusterRequest.nodes.compute = parseInt(formData.nodes_compute, 10);
   }
 
-  const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
+  const parsedLabels = parseReduxFormKeyValueList(formData.node_labels || [{}]);
 
   if (!isEmpty(parsedLabels)) {
     clusterRequest.nodes.compute_labels = parseReduxFormKeyValueList(formData.node_labels);

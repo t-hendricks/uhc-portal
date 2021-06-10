@@ -35,6 +35,7 @@ import InsightsRuleDetails from '../clusters/InsightsRuleDetails';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import RegisterCluster from '../clusters/RegisterCluster';
 import CreateOSDPage from '../clusters/CreateOSDPage';
+import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import InstallAWS from '../clusters/install/InstallAWS';
 import InstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import InstallAWSIPI from '../clusters/install/InstallAWSIPI';
@@ -141,6 +142,7 @@ function Router({ history }) {
             <TermsGuardedRoute path="/create/osdtrial/aws" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="aws" product={normalizedProducts.OSDTrial} />} history={history} />
             <TermsGuardedRoute path="/create/osdtrial/gcp" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSDTrial} />} history={history} />
             <Route path="/create/osdtrial" render={() => <CloudProviderSelection product={normalizedProducts.OSDTrial} />} />
+            <Route path="/create/osdwizard" component={CreateOSDWizard} />
             <Route path="/create/osd" render={() => <CloudProviderSelection product={normalizedProducts.OSD} />} />
             <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
