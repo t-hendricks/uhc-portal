@@ -176,7 +176,7 @@ const cliToolRows = expanded => [
         {' '}
         or
         {' '}
-        <ExternalLink href={links.CLI_TOOLS_OCP_GETTING_STARTED}>
+        <ExternalLink href={links.CLI_TOOLS_OSD_GETTING_STARTED}>
           OpenShift Dedicated (OSD)
         </ExternalLink>
         .
