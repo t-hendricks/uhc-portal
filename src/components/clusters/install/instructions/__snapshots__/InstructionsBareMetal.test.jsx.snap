@@ -38,7 +38,7 @@ exports[`BareMetal instructions renders correctly 1`] = `
             Assisted Bare Metal Installer
           </Title>
            
-          Deploy an OpenShift 4.6 cluster on your own infrastructure using a Discovery ISO that makes it easy to connect discovered hardware.
+          Install OpenShift on your own infrastructure with step-by-step guidance.
         </CardBody>
       </Link>
       <Link
