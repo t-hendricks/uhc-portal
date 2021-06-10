@@ -31,7 +31,7 @@ describe('<Support isDisabled/>', () => {
       {...baseProps}
       isDisabled
     />);
-    expect(wrapper.find('AddNotificationContactButton').props().isDisabled).toBe(true);
+    expect(wrapper.find('AddNotificationContactButton').length).toEqual(0);
     expect(wrapper.find('Connect(NotificationContactsCard)').props().isDisabled).toBe(true);
     expect(wrapper.find('Connect(SupportCasesCard)').props().isDisabled).toBe(true);
   });
@@ -56,6 +56,6 @@ describe('<SupportCasesCard isDisabled/>', () => {
       product="OSD"
       isDisabled
     />);
-    expect(wrapper.find('Button').props().isDisabled).toBe(true);
+    expect(wrapper.find('Button').length).toEqual(0);
   });
 });
