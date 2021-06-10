@@ -6,10 +6,11 @@ import { humanizeValueWithUnitGiB } from '../../../../../common/units';
  * {
  *  title - human readable title
  *  values - map from values to human readable strings. optional.
- *           when unspecified, actual value is shown.
+ *           when both `values` and `valueTransform` are unspecified, actual value is shown.
  *  valueTransfrom - function to transform current value to human readable string,
  *                   gets two parameters: value (current value), allValues (all form values)
- *                   only executed when `values` is not defined. optional.
+ *                   executed when `values` is not defined,
+ *                   or when `values` has no entry for the provided value. optional.
  *  isBoolean - when set to `true`, value `undefined` will be treated as `false`,
  *             to match the behaviour of a boolean field.
  * }
