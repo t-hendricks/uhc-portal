@@ -16,7 +16,9 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
 import links from '../../../../../../common/installLinks';
-import { IDPTypeNames, getOauthCallbackURL, IDPNeedsOAuthURL } from '../../IdentityProvidersModal/IdentityProvidersHelper';
+import {
+  IDPTypeNames, getOauthCallbackURL, IDPNeedsOAuthURL, IDPformValues,
+} from '../../IdentityProvidersModal/IdentityProvidersHelper';
 
 function IDPSection({
   clusterID, clusterConsoleURL, identityProviders, openModal, canEdit, clusterHibernating,
@@ -25,30 +27,6 @@ function IDPSection({
     { title: 'Name', transforms: [cellWidth(30)] },
     { title: 'Type', transforms: [cellWidth(30)] },
     { title: 'Auth callback URL', transforms: [cellWidth(30)] },
-  ];
-
-  const actions = [
-    {
-      title: 'Edit',
-      onClick: (_, rowId, rowData) => openModal('create-identity-provider', {
-        clusterID,
-        idpID: rowData.idpID,
-        isEditForm: true,
-        rowId,
-      }),
-      className: 'hand-pointer',
-    },
-    {
-      title: 'Delete',
-      onClick: (_, __, rowData) => openModal('delete-idp', {
-        clusterID,
-        idpID:
-        rowData.idpID,
-        idpName: rowData.name.title,
-        idpType: rowData.type.title,
-      }),
-      className: 'hand-pointer',
-    },
   ];
 
   const idpRow = idp => ({
@@ -60,11 +38,39 @@ function IDPSection({
           <ClipboardCopyLinkButton className="access-control-tables-copy" text={getOauthCallbackURL(clusterConsoleURL, idp.name)}>
             Copy URL to clipboard
           </ClipboardCopyLinkButton>
-        ) : 'N/A',
+        ) : 'N/A'
+        ,
       },
     ],
     idpID: idp.id,
   });
+
+  const idpActionResolver = (rowData) => {
+    const editIDPAction = {
+      title: 'Edit',
+      onClick: (_, rowId, row) => openModal('create-identity-provider', {
+        clusterID,
+        idpID: row.idpID,
+        isEditForm: true,
+        rowId,
+      }),
+      className: 'hand-pointer',
+    };
+    const deleteIDPAction = {
+      title: 'Delete',
+      onClick: (_, __, row) => openModal('delete-idp', {
+        clusterID,
+        idpID: row.idpID,
+        idpName: row.name.title,
+        idpType: row.type.title,
+      }),
+      className: 'hand-pointer',
+    };
+    if (rowData.type.title === IDPTypeNames[IDPformValues.HTPASSWD]) {
+      return [deleteIDPAction];
+    }
+    return [editIDPAction, deleteIDPAction];
+  };
 
   const learnMoreLink = <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER} target="_blank">Learn more.</a>;
 
@@ -111,7 +117,7 @@ function IDPSection({
           { hasIDPs && (
             <Table
               aria-label="Identity Providers"
-              actions={actions}
+              actionResolver={idpActionResolver}
               variant={TableVariant.compact}
               cells={columns}
               rows={identityProviders.clusterIDPList.map(idpRow)}

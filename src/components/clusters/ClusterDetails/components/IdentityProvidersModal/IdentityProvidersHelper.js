@@ -7,7 +7,7 @@ const IDPformValues = {
   OPENID: 'OpenIDIdentityProvider',
   LDAP: 'LDAPIdentityProvider',
   GITLAB: 'GitlabIdentityProvider',
-  HTPASSWD: 'HTPasswdIdentityProvider', // HTPasswd IdP is meant for internal use and is not exposed to users
+  HTPASSWD: 'HTPasswdIdentityProvider',
 };
 
 const mappingMethodsformValues = {
@@ -38,6 +38,10 @@ const IDPtypes = [
     name: 'GitLab',
     value: IDPformValues.GITLAB,
   },
+  {
+    name: 'HTPasswd',
+    value: IDPformValues.HTPASSWD,
+  },
 ];
 
 const IDPTypeNames = {
@@ -46,6 +50,7 @@ const IDPTypeNames = {
   [IDPformValues.OPENID]: 'OpenID',
   [IDPformValues.LDAP]: 'LDAP',
   [IDPformValues.GITLAB]: 'GitLab',
+  [IDPformValues.HTPASSWD]: 'HTPasswd',
 };
 
 const IDPObjectNames = {
@@ -54,6 +59,7 @@ const IDPObjectNames = {
   [IDPformValues.OPENID]: 'open_id',
   [IDPformValues.LDAP]: 'ldap',
   [IDPformValues.GITLAB]: 'gitlab',
+  [IDPformValues.HTPASSWD]: 'htpasswd',
 };
 
 const mappingMethods = [
@@ -99,7 +105,7 @@ const getOauthCallbackURL = (consoleURL, IDPName) => {
  * this function will need to be modified to account for it.
  * @param {String} IDPType the identity provider type
  */
-const IDPNeedsOAuthURL = IDPType => IDPType !== IDPformValues.LDAP;
+const IDPNeedsOAuthURL = IDPType => ![IDPformValues.LDAP, IDPformValues.HTPASSWD].includes(IDPType);
 
 /**
  * Generate a usable IDP name, based on the IDP Type and already-configured IDPs.
@@ -143,6 +149,7 @@ const GithubDocLink = `${IDPDocBase}/configuring-github-identity-provider.html`;
 const GoogleDocLink = `${IDPDocBase}/configuring-google-identity-provider.html`;
 const OpenIDDocLink = `${IDPDocBase}/configuring-oidc-identity-provider.html`;
 const GitlabDocLink = 'https://docs.openshift.com/container-platform/latest/authentication/identity_providers/configuring-gitlab-identity-provider.html';
+const HTPasswdDocLink = 'https://docs.openshift.com/container-platform/latest/authentication/identity_providers/configuring-htpasswd-identity-provider.html';
 
 const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({
@@ -194,21 +201,35 @@ const getCreateIDPRequestData = (formData) => {
     issuer: formData.issuer,
   });
 
+  const htpasswdData = () => (
+    {
+      username: formData.htpasswd_username,
+      password: formData.htpasswd_password,
+    }
+  );
+
   const IDPs = {
     GithubIdentityProvider: { name: 'github', data: githubData },
     GoogleIdentityProvider: { name: 'google', data: googleData },
     OpenIDIdentityProvider: { name: 'open_id', data: openIdData },
     LDAPIdentityProvider: { name: 'ldap', data: ldapData },
     GitlabIdentityProvider: { name: 'gitlab', data: gitlabData },
+    HTPasswdIdentityProvider: { name: 'htpasswd', data: htpasswdData },
   };
 
   const basicData = {
     type: formData.type,
     name: formData.name,
-    mapping_method: formData.mappingMethod || 'claim',
     id: formData.idpId,
   };
+
   const selectedIDPData = IDPs[formData.type].data();
+  const selectedIDPName = IDPs[formData.type].name;
+
+  if (selectedIDPName !== 'htpasswd') {
+    basicData.mapping_method = formData.mappingMethod || mappingMethodsformValues.CLAIM;
+  }
+
   if (formData.idpId && formData.idpId !== '') {
     delete basicData.name;
     if (selectedIDPData.client_secret === 'CLIENT_SECRET') {
@@ -219,13 +240,10 @@ const getCreateIDPRequestData = (formData) => {
     }
   }
 
-  const selectedIDPName = IDPs[formData.type].name;
-
   const requestData = {
     ...basicData,
     [selectedIDPName]: { ...selectedIDPData },
   };
-
   return requestData;
 };
 
@@ -373,6 +391,7 @@ export {
   OpenIDDocLink,
   GoogleDocLink,
   GitlabDocLink,
+  HTPasswdDocLink,
   generateIDPName,
   IDPObjectNames,
   getldapAttributes,

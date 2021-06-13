@@ -6,6 +6,7 @@ import LDAPFormRequired from './LDAPFormRequired';
 import OpenIDForm from './OpenIDForm';
 import OpenIDFormRequired from './OpenIDFormRequired';
 import GitlabForm from './GitlabForm';
+import HTPasswdForm from './HTPasswdForm';
 
 export {
   IDPBasicFields,
@@ -16,4 +17,5 @@ export {
   OpenIDForm,
   OpenIDFormRequired,
   GitlabForm,
+  HTPasswdForm,
 };
