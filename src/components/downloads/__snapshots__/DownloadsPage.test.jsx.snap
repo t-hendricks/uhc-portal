@@ -148,15 +148,17 @@ exports[`<DownloadsPage> renders 1`] = `
                       </FormSelect>,
                     },
                     Object {
-                      "title": <DownloadButton
-                        text="Download"
-                        tool="CLI_TOOLS"
-                        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz"
-                      />,
+                      "title": <AlignRight>
+                        <DownloadButton
+                          text="Download"
+                          tool="CLI_TOOLS"
+                          url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz"
+                        />
+                      </AlignRight>,
                     },
                   ],
+                  "expandKey": "CLI_TOOLS",
                   "isOpen": false,
-                  "tool": "CLI_TOOLS",
                 },
                 Object {
                   "cells": Array [
@@ -167,6 +169,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         </Text>
                         <Text>
                           Get started with the OpenShift CLI for
+                           
                           <ExternalLink
                             href="https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/getting-started-cli.html"
                           >
@@ -249,15 +252,17 @@ exports[`<DownloadsPage> renders 1`] = `
                       </FormSelect>,
                     },
                     Object {
-                      "title": <DownloadButton
-                        text="Download"
-                        tool="ROSA"
-                        url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz"
-                      />,
+                      "title": <AlignRight>
+                        <DownloadButton
+                          text="Download"
+                          tool="ROSA"
+                          url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz"
+                        />
+                      </AlignRight>,
                     },
                   ],
+                  "expandKey": "ROSA",
                   "isOpen": false,
-                  "tool": "ROSA",
                 },
                 Object {
                   "cells": Array [
@@ -431,15 +436,17 @@ exports[`<DownloadsPage> renders 1`] = `
                       </FormSelect>,
                     },
                     Object {
-                      "title": <DownloadButton
-                        text="Download"
-                        tool="ODO"
-                        url="https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64"
-                      />,
+                      "title": <AlignRight>
+                        <DownloadButton
+                          text="Download"
+                          tool="ODO"
+                          url="https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64"
+                        />
+                      </AlignRight>,
                     },
                   ],
+                  "expandKey": "ODO",
                   "isOpen": false,
-                  "tool": "ODO",
                 },
                 Object {
                   "cells": Array [
@@ -527,15 +534,17 @@ exports[`<DownloadsPage> renders 1`] = `
                       </FormSelect>,
                     },
                     Object {
-                      "title": <DownloadButton
-                        text="Download"
-                        tool="HELM"
-                        url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64"
-                      />,
+                      "title": <AlignRight>
+                        <DownloadButton
+                          text="Download"
+                          tool="HELM"
+                          url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64"
+                        />
+                      </AlignRight>,
                     },
                   ],
+                  "expandKey": "HELM",
                   "isOpen": false,
-                  "tool": "HELM",
                 },
                 Object {
                   "cells": Array [
@@ -703,15 +712,17 @@ exports[`<DownloadsPage> renders 1`] = `
                       </FormSelect>,
                     },
                     Object {
-                      "title": <DownloadButton
-                        text="Download"
-                        tool="INSTALLER"
-                        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-install-linux.tar.gz"
-                      />,
+                      "title": <AlignRight>
+                        <DownloadButton
+                          text="Download"
+                          tool="INSTALLER"
+                          url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-install-linux.tar.gz"
+                        />
+                      </AlignRight>,
                     },
                   ],
+                  "expandKey": "INSTALLER",
                   "isOpen": false,
-                  "tool": "INSTALLER",
                 },
                 Object {
                   "cells": Array [
@@ -812,15 +823,17 @@ exports[`<DownloadsPage> renders 1`] = `
                       </FormSelect>,
                     },
                     Object {
-                      "title": <DownloadButton
-                        text="Download"
-                        tool="CRC"
-                        url="https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
-                      />,
+                      "title": <AlignRight>
+                        <DownloadButton
+                          text="Download"
+                          tool="CRC"
+                          url="https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
+                        />
+                      </AlignRight>,
                     },
                   ],
+                  "expandKey": "CRC",
                   "isOpen": false,
-                  "tool": "CRC",
                 },
                 Object {
                   "cells": Array [
@@ -835,6 +848,7 @@ exports[`<DownloadsPage> renders 1`] = `
                           >
                             Create a minimal cluster on your desktop
                           </Link>
+                           
                           for local development and testing.
                         </StackItem>
                       </Stack>,
@@ -842,6 +856,191 @@ exports[`<DownloadsPage> renders 1`] = `
                   ],
                   "fullWidth": true,
                   "parent": 2,
+                },
+              ]
+            }
+            selectVariant="checkbox"
+            variant={null}
+          >
+            <TableHeader />
+            <Component />
+          </Table>
+        </StackItem>
+        <StackItem>
+          <Title
+            headingLevel="h2"
+          >
+            Tokens
+          </Title>
+        </StackItem>
+        <StackItem>
+          <Table
+            aria-label="Tokens table"
+            borders={true}
+            canSelectAll={true}
+            canSortFavorites={true}
+            cells={
+              Array [
+                Object {
+                  "cellFormatters": Array [
+                    [Function],
+                  ],
+                  "title": null,
+                  "transforms": Array [
+                    [Function],
+                  ],
+                },
+                Object {
+                  "title": null,
+                  "transforms": Array [
+                    [Function],
+                  ],
+                },
+                Object {
+                  "title": null,
+                  "transforms": Array [
+                    [Function],
+                  ],
+                },
+              ]
+            }
+            className=""
+            contentId="expanded-content"
+            dropdownDirection="down"
+            dropdownPosition="right"
+            expandId="expandable-toggle"
+            gridBreakPoint="grid-md"
+            isStickyHeader={false}
+            isTreeTable={false}
+            onCollapse={[Function]}
+            ouiaSafe={true}
+            role="grid"
+            rowLabeledBy="simple-node"
+            rows={
+              Array [
+                Object {
+                  "cells": Array [
+                    "",
+                    "Pull secret",
+                    Object {
+                      "title": <AlignRight>
+                        <Memo(Connect(PullSecretButtons)) />
+                      </AlignRight>,
+                    },
+                  ],
+                  "expandKey": "PULL_SECRET",
+                  "isOpen": false,
+                },
+                Object {
+                  "cells": Array [
+                    Object {
+                      "title": <React.Fragment>
+                        <Text>
+                          An image pull secret provides authentication for the cluster to access services and registries which serve the container images for OpenShift components. Every individual user gets a single pull secret generated. The pull secret can be used when installing clusters, based on the required infrastructure.
+                        </Text>
+                        <Text>
+                          Learn how to
+                           
+                          <Link
+                            to="/create"
+                          >
+                            create a cluster
+                          </Link>
+                           
+                          or
+                           
+                          <ExternalLink
+                            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets"
+                          >
+                            learn more about pull secret
+                          </ExternalLink>
+                          .
+                        </Text>
+                      </React.Fragment>,
+                    },
+                  ],
+                  "fullWidth": true,
+                  "parent": 0,
+                },
+                Object {
+                  "cells": Array [
+                    "",
+                    "OpenShift Cluster Manager API Token",
+                    Object {
+                      "title": <AlignRight>
+                        <Link
+                          to="/token"
+                        >
+                          <Button
+                            icon={
+                              <ArrowRightIcon
+                                color="currentColor"
+                                noVerticalAlign={false}
+                                size="sm"
+                              />
+                            }
+                            iconPosition="right"
+                            variant="secondary"
+                          >
+                            See API token
+                          </Button>
+                        </Link>
+                      </AlignRight>,
+                    },
+                  ],
+                  "expandKey": "TOKEN_OCM",
+                  "isOpen": false,
+                },
+                Object {
+                  "cells": Array [
+                    Object {
+                      "title": <Text>
+                        Use your API token to authenticate against your OpenShift Cluster Manager account.
+                      </Text>,
+                    },
+                  ],
+                  "fullWidth": true,
+                  "parent": 2,
+                },
+                Object {
+                  "cells": Array [
+                    "",
+                    "Red Hat OpenShift Service on AWS API Token",
+                    Object {
+                      "title": <AlignRight>
+                        <Link
+                          to="/token/rosa"
+                        >
+                          <Button
+                            icon={
+                              <ArrowRightIcon
+                                color="currentColor"
+                                noVerticalAlign={false}
+                                size="sm"
+                              />
+                            }
+                            iconPosition="right"
+                            variant="secondary"
+                          >
+                            See API token
+                          </Button>
+                        </Link>
+                      </AlignRight>,
+                    },
+                  ],
+                  "expandKey": "TOKEN_ROSA",
+                  "isOpen": false,
+                },
+                Object {
+                  "cells": Array [
+                    Object {
+                      "title": <Text>
+                        Use your API token to authenticate against your Red Hat OpenShift Service on AWS account.
+                      </Text>,
+                    },
+                  ],
+                  "fullWidth": true,
+                  "parent": 4,
                 },
               ]
             }

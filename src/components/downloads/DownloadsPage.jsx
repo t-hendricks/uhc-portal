@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
+  Button,
   PageSection,
   Title,
   Stack,
@@ -11,6 +13,7 @@ import {
 import {
   Table, TableHeader, TableBody, expandable, cellWidth,
 } from '@patternfly/react-table';
+import { ArrowRightIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
 
 import { has, get } from 'lodash';
@@ -24,8 +27,23 @@ import links, {
   operatingSystemOptions,
   architectureOptions,
 } from '../../common/installLinks';
+
 import DownloadButton from '../clusters/install/instructions/components/DownloadButton';
 import { detectOS } from '../clusters/install/instructions/components/DownloadAndOSSelection';
+import PullSecretButtons from './PullSecretButtons';
+
+import './DownloadsPage.scss';
+
+const AlignRight = ({ children }) => (
+  <div className="downloads-align-right">
+    <span>
+      {children}
+    </span>
+  </div>
+);
+AlignRight.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 const columns = [
   {
@@ -39,16 +57,16 @@ const columns = [
   },
   {
     title: 'OS type',
-    transforms: [cellWidth(15)],
+    transforms: [cellWidth(20)],
   },
   {
     title: 'Architecture type',
-    transforms: [cellWidth(15)],
+    transforms: [cellWidth(20)],
   },
   {
     // For download button.
     title: '',
-    transforms: [cellWidth(20)],
+    transforms: [cellWidth(10)],
   },
 ];
 
@@ -151,13 +169,17 @@ export const useToolRow = (expanded, tool, name) => {
   const url = get(urls, [tool, channels.STABLE, architecture, OS]);
   return {
     isOpen: !!expanded[tool],
-    tool, // custom property for `onCollapse` callback
+    expandKey: tool, // custom property for `onCollapse` callback
     cells: [
       '',
       name,
       { title: operatingSystemDropdown(tool, OS, onChangeOS) },
       { title: architectureDropdown(tool, OS, architecture, setArchitecture) },
-      { title: <DownloadButton url={url} tool={tool} text="Download" /> },
+      {
+        title: (
+          <AlignRight><DownloadButton url={url} tool={tool} text="Download" /></AlignRight>
+        ),
+      },
     ],
   };
 };
@@ -271,15 +293,123 @@ const installationRows = expanded => [
     </Stack>),
 ];
 
+const tokenColumns = [
+  {
+    title: null,
+    cellFormatters: [expandable],
+    transforms: [cellWidth(10)],
+  },
+  {
+    title: null,
+    transforms: [cellWidth(90)],
+  },
+  {
+    title: null,
+    transforms: [cellWidth(10)],
+  },
+];
+
+/** Used to track row collapsed/expanded state */
+const expandKeys = {
+  ...tools,
+  // the rest should be distinct from `tools` keys.
+  PULL_SECRET: 'PULL_SECRET',
+  TOKEN_OCM: 'TOKEN_OCM',
+  TOKEN_ROSA: 'TOKEN_ROSA',
+};
+
+const tokenRows = expanded => [
+  {
+    isOpen: !!expanded[expandKeys.PULL_SECRET],
+    expandKey: expandKeys.PULL_SECRET, // custom property for `onCollapse` callback
+    cells: [
+      '',
+      'Pull secret',
+      { title: <AlignRight><PullSecretButtons /></AlignRight> },
+    ],
+  },
+  descriptionRow(0,
+    <>
+      <Text>
+        An image pull secret provides authentication for the cluster to access services and
+        registries which serve the container images for OpenShift components.
+        Every individual user gets a single pull secret generated.
+        The pull secret can be used when installing clusters, based on the required infrastructure.
+      </Text>
+      <Text>
+        Learn how to
+        {' '}
+        <Link to="/create">
+          create a cluster
+        </Link>
+        {' '}
+        or
+        {' '}
+        <ExternalLink href={links.OCM_DOCS_PULL_SECRETS}>
+          learn more about pull secret
+        </ExternalLink>
+        .
+      </Text>
+    </>),
+
+  {
+    isOpen: !!expanded[expandKeys.TOKEN_OCM],
+    expandKey: expandKeys.TOKEN_OCM, // custom property for `onCollapse` callback
+    cells: [
+      '',
+      'OpenShift Cluster Manager API Token',
+      {
+        title: (
+          <AlignRight>
+            <Link to="/token">
+              <Button variant="secondary" icon={<ArrowRightIcon />} iconPosition="right">
+                See API token
+              </Button>
+            </Link>
+          </AlignRight>
+        ),
+      },
+    ],
+  },
+  descriptionRow(2,
+    <Text>
+      Use your API token to authenticate against your OpenShift Cluster Manager account.
+    </Text>),
+
+  {
+    isOpen: !!expanded[expandKeys.TOKEN_ROSA],
+    expandKey: expandKeys.TOKEN_ROSA, // custom property for `onCollapse` callback
+    cells: [
+      '',
+      'Red Hat OpenShift Service on AWS API Token',
+      {
+        title: (
+          <AlignRight>
+            <Link to="/token/rosa">
+              <Button variant="secondary" icon={<ArrowRightIcon />} iconPosition="right">
+                See API token
+              </Button>
+            </Link>
+          </AlignRight>
+        ),
+      },
+    ],
+  },
+  descriptionRow(4,
+    <Text>
+      Use your API token to authenticate against your Red Hat OpenShift Service on AWS account.
+    </Text>),
+];
+
 const DownloadsPage = () => {
   // {tool: isOpen}
   const initialExpanded = {};
-  Object.keys(tools).forEach((tool) => {
+  Object.keys(expandKeys).forEach((tool) => {
     initialExpanded[tool] = false;
   });
   const [expanded, setExpanded] = useState(initialExpanded);
   const onCollapse = (event, rowIndex, newOpen, rowData) => {
-    setExpanded({ ...expanded, [rowData.tool]: newOpen });
+    setExpanded({ ...expanded, [rowData.expandKey]: newOpen });
   };
 
   return (
@@ -354,6 +484,24 @@ const DownloadsPage = () => {
                 aria-label="OpenShift installation table"
                 cells={columns}
                 rows={installationRows(expanded)}
+                onCollapse={onCollapse}
+              >
+                <TableHeader />
+                <TableBody />
+              </Table>
+            </StackItem>
+
+            <StackItem>
+              <Title headingLevel="h2">
+                Tokens
+              </Title>
+            </StackItem>
+
+            <StackItem>
+              <Table
+                aria-label="Tokens table"
+                cells={tokenColumns}
+                rows={tokenRows(expanded)}
                 onCollapse={onCollapse}
               >
                 <TableHeader />
