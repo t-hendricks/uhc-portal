@@ -182,6 +182,7 @@ const cliToolRows = expanded => [
       </Text>
       <Text>
         Get started with the OpenShift CLI for
+        {' '}
         <ExternalLink href={links.CLI_TOOLS_OCP_GETTING_STARTED}>
           OpenShift Container Platform (OCP)
         </ExternalLink>
@@ -264,6 +265,7 @@ const installationRows = expanded => [
       </StackItem>
       <StackItem>
         <Link to="/create/local">Create a minimal cluster on your desktop</Link>
+        {' '}
         for local development and testing.
       </StackItem>
     </Stack>),
