@@ -12,7 +12,7 @@ import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import { scrollToFirstError } from '../../../common/helpers';
 import { billingModels, normalizedProducts } from '../../../common/subscriptionTypes';
 
-import { canAutoScaleSelector } from '../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+import { canAutoScaleOnCreateSelector } from '../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import { OSD_TRIAL_FEATURE } from '../../../redux/constants/featureConstants';
 
 import {
@@ -98,7 +98,7 @@ const mapStateToProps = (state, ownProps) => {
     privateClusterSelected,
     product,
 
-    canAutoScale: canAutoScaleSelector(state, product),
+    canAutoScale: canAutoScaleOnCreateSelector(state, product),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
