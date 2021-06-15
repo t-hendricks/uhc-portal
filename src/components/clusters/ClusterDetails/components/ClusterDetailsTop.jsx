@@ -187,6 +187,8 @@ function ClusterDetailsTop(props) {
       <ExpirationAlert
         expirationTimestamp={trialEndDate}
         trialExpiration
+        openModal={openModal}
+        cluster={cluster}
       />
       )}
       <SubscriptionCompliancy
