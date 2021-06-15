@@ -695,7 +695,7 @@ describe('getParameters', () => {
   let tstAddOn;
   let tstCluster;
 
-  beforeAll(() => {
+  beforeEach(() => {
     tstCluster = cloneDeep(OSDCluster);
   });
 
@@ -707,7 +707,7 @@ describe('getParameters', () => {
   });
 
   describe('cluster', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       tstAddOn = {
         parameters: {
           items: [
@@ -732,6 +732,13 @@ describe('getParameters', () => {
       };
     });
 
+    it('should return empty array when no parameters defined', () => {
+      tstAddOn.parameters = undefined;
+      const params = getParameters(
+        tstAddOn, tstCluster,
+      );
+      expect(params).toEqual([]);
+    });
     it('should return 2 addon parameters for an aws cluster', () => {
       const params = getParameters(
         tstAddOn, tstCluster,
@@ -764,6 +771,27 @@ describe('getParameters', () => {
         {
           id: 'my-string',
           value_type: 'string',
+        },
+      ]);
+    });
+    it('should return 2 addon parameters when no cluster specified', () => {
+      const params = getParameters(tstAddOn);
+      expect(params).toEqual([
+        {
+          id: 'my-string',
+          value_type: 'string',
+        },
+        {
+          id: 'my-string-aws',
+          value_type: 'string',
+          conditions: [
+            {
+              resource: 'cluster',
+              data: {
+                'cloud_provider.id': 'aws',
+              },
+            },
+          ],
         },
       ]);
     });
