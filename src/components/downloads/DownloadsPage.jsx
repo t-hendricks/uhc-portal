@@ -315,7 +315,6 @@ const expandKeys = {
   // the rest should be distinct from `tools` keys.
   PULL_SECRET: 'PULL_SECRET',
   TOKEN_OCM: 'TOKEN_OCM',
-  TOKEN_ROSA: 'TOKEN_ROSA',
 };
 
 const tokenRows = expanded => [
@@ -374,30 +373,6 @@ const tokenRows = expanded => [
   descriptionRow(2,
     <Text>
       Use your API token to authenticate against your OpenShift Cluster Manager account.
-    </Text>),
-
-  {
-    isOpen: !!expanded[expandKeys.TOKEN_ROSA],
-    expandKey: expandKeys.TOKEN_ROSA, // custom property for `onCollapse` callback
-    cells: [
-      '',
-      'Red Hat OpenShift Service on AWS API Token',
-      {
-        title: (
-          <AlignRight>
-            <Link to="/token/rosa">
-              <Button variant="secondary" icon={<ArrowRightIcon />} iconPosition="right">
-                See API token
-              </Button>
-            </Link>
-          </AlignRight>
-        ),
-      },
-    ],
-  },
-  descriptionRow(4,
-    <Text>
-      Use your API token to authenticate against your Red Hat OpenShift Service on AWS account.
     </Text>),
 ];
 

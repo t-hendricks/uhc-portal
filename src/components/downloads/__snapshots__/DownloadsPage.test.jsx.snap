@@ -1002,46 +1002,6 @@ exports[`<DownloadsPage> renders 1`] = `
                   "fullWidth": true,
                   "parent": 2,
                 },
-                Object {
-                  "cells": Array [
-                    "",
-                    "Red Hat OpenShift Service on AWS API Token",
-                    Object {
-                      "title": <AlignRight>
-                        <Link
-                          to="/token/rosa"
-                        >
-                          <Button
-                            icon={
-                              <ArrowRightIcon
-                                color="currentColor"
-                                noVerticalAlign={false}
-                                size="sm"
-                              />
-                            }
-                            iconPosition="right"
-                            variant="secondary"
-                          >
-                            See API token
-                          </Button>
-                        </Link>
-                      </AlignRight>,
-                    },
-                  ],
-                  "expandKey": "TOKEN_ROSA",
-                  "isOpen": false,
-                },
-                Object {
-                  "cells": Array [
-                    Object {
-                      "title": <Text>
-                        Use your API token to authenticate against your Red Hat OpenShift Service on AWS account.
-                      </Text>,
-                    },
-                  ],
-                  "fullWidth": true,
-                  "parent": 4,
-                },
               ]
             }
             selectVariant="checkbox"
