@@ -6,7 +6,7 @@ import DownloadsPage, {
   allOperatingSystemsForTool,
   architecturesForToolOS,
   initialSelection,
-  useToolRow,
+  toolRow,
 } from './DownloadsPage';
 import {
   tools, operatingSystems, architectures, urls,
@@ -54,11 +54,12 @@ describe('architecturesForToolOS', () => {
   });
 });
 
-describe('useToolRow', () => {
-  // By react hook rules, useToolRow must be called inside a functional component.
+describe('toolRow', () => {
+  // By react hook rules, toolRow must be called inside a functional component.
   // For this test we only want the button from the last cell.
   const ToolRowButton = ({ tool }) => {
-    const row = useToolRow(false, tool, 'text');
+    const initial = initialSelection(tool, null);
+    const row = toolRow({ [tool]: false }, { [tool]: initial }, () => {}, tool, 'text');
     return row.cells[row.cells.length - 1].title;
   };
 
