@@ -6,10 +6,13 @@ import {
 } from './subscriptionReleasedActions';
 import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
+import getClusterName from '../../../../common/getClusterName';
 
 const mapStateToProps = state => ({
-  subscription: state.modal.data,
+  subscription: state.modal.data.subscription,
   requestState: state.subscriptionReleased.requestState,
+  shouldDisplayClusterName: state.modal.data.shouldDisplayClusterName || false,
+  clusterDisplayName: getClusterName(state.modal.data),
 });
 
 const mapDispatchToProps = dispatch => ({

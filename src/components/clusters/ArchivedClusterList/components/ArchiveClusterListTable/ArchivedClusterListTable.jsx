@@ -71,6 +71,7 @@ function ArchivedClusterListTable(props) {
       {
         subscriptionID: cluster.subscription ? cluster.subscription.id : '',
         name,
+        shouldDisplayClusterName: true,
       });
 
     const unarchiveButton = cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED && (

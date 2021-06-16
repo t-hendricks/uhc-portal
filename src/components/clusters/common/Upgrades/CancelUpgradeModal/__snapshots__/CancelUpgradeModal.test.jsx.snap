@@ -48,7 +48,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
       }
       appendTo={[Function]}
       aria-describedby=""
-      aria-label=""
+      aria-label="Cancel update"
       aria-labelledby=""
       className={null}
       hasNoBodyWrapper={false}
@@ -72,7 +72,8 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
               >
                 <div
                   aria-describedby="pf-modal-part-2"
-                  aria-labelledby="pf-modal-part-1"
+                  aria-label="Cancel update"
+                  aria-labelledby="pf-modal-part-0 pf-modal-part-1"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-sm"
                   data-ouia-component-id="OUIA-Generated-Modal-small-1"
@@ -193,7 +194,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
             ]
           }
           aria-describedby=""
-          aria-label=""
+          aria-label="Cancel update"
           aria-labelledby=""
           boxId="pf-modal-part-0"
           className={null}
@@ -230,8 +231,8 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                 >
                   <ModalBox
                     aria-describedby="pf-modal-part-2"
-                    aria-label=""
-                    aria-labelledby="pf-modal-part-1"
+                    aria-label="Cancel update"
+                    aria-labelledby="pf-modal-part-0 pf-modal-part-1"
                     className=""
                     data-ouia-component-id="OUIA-Generated-Modal-small-1"
                     data-ouia-component-type="PF4/ModalContent"
@@ -242,8 +243,8 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                   >
                     <div
                       aria-describedby="pf-modal-part-2"
-                      aria-label={null}
-                      aria-labelledby="pf-modal-part-1"
+                      aria-label="Cancel update"
+                      aria-labelledby="pf-modal-part-0 pf-modal-part-1"
                       aria-modal="true"
                       className="pf-c-modal-box pf-m-sm"
                       data-ouia-component-id="OUIA-Generated-Modal-small-1"

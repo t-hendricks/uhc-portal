@@ -72,6 +72,8 @@ class ScaleClusterDialog extends Component {
       billingModel,
       product,
       isMultiAZ,
+      shouldDisplayClusterName,
+      clusterDisplayName,
     } = this.props;
 
     const cancelEdit = () => {
@@ -107,11 +109,12 @@ class ScaleClusterDialog extends Component {
      || editClusterResponse.pending || organization.pending;
 
     const className = isByoc ? 'edit-cluster-modal' : 'edit-cluster-modal edit-cluster-modal-rhinfra';
-
+    const title = 'Edit load balancers and persistent storage';
     return (
       <Modal
         className={className}
-        title="Edit load balancers and persistent storage"
+        title={title}
+        secondaryTitle={shouldDisplayClusterName ? clusterDisplayName : undefined}
         onClose={cancelEdit}
         primaryText="Apply"
         onPrimaryClick={handleSubmit}
@@ -209,6 +212,8 @@ ScaleClusterDialog.propTypes = {
   billingModel: PropTypes.string.isRequired,
   product: PropTypes.string.isRequired,
   isMultiAZ: PropTypes.bool.isRequired,
+  shouldDisplayClusterName: PropTypes.bool,
+  clusterDisplayName: PropTypes.string,
 };
 
 ScaleClusterDialog.defaultProps = {

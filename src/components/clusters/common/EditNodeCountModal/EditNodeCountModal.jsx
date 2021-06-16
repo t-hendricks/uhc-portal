@@ -111,6 +111,8 @@ class EditNodeCountModal extends Component {
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
       billingModel,
+      shouldDisplayClusterName,
+      clusterDisplayName,
     } = this.props;
 
     const error = editNodeCountResponse.error ? (
@@ -144,6 +146,7 @@ class EditNodeCountModal extends Component {
       <Modal
         className="edit-cluster-modal edit-cluster-modal-rhinfra"
         title="Edit node count"
+        secondaryTitle={shouldDisplayClusterName ? clusterDisplayName : undefined}
         onClose={this.cancelEdit}
         primaryText="Apply"
         onPrimaryClick={handleSubmit}
@@ -248,6 +251,8 @@ EditNodeCountModal.propTypes = {
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
   billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
+  shouldDisplayClusterName: PropTypes.bool,
+  clusterDisplayName: PropTypes.string,
 };
 
 EditNodeCountModal.defaultProps = {

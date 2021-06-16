@@ -33,7 +33,9 @@ class HibernateClusterModal extends Component {
     const {
       closeModal, submit, hibernateClusterResponse, resetResponses,
       clusterID, clusterName, clusterUpgrades, history, subscriptionID,
+      shouldDisplayClusterName,
     } = this.props;
+
     const upgradesInState = state => clusterUpgrades.items
       .filter(schedule => schedule.state?.value === state);
 
@@ -161,6 +163,7 @@ class HibernateClusterModal extends Component {
       <Modal
         data-test-id="hibernate-cluster-modal"
         title="Hibernate cluster"
+        secondaryTitle={shouldDisplayClusterName ? clusterName : undefined}
         onClose={cancelHibernateCluster}
         primaryText={primaryText}
         secondaryText={secondaryText}
@@ -201,6 +204,7 @@ HibernateClusterModal.propTypes = {
       pathname: PropTypes.string.isRequired,
     }),
   }).isRequired,
+  shouldDisplayClusterName: PropTypes.bool,
 };
 
 HibernateClusterModal.defaultProps = {
