@@ -2,11 +2,19 @@
   padding-top: 24px !important;
 }
 
-.ocm-c-addons__drawer {
+body .ocm-c-addons__drawer {
   &--header {
     img {
       height: 50px;
     }
+  }
+
+  &--panel-content {
+    z-index: 2;
+  }
+
+  &--panel-gallery {
+    z-index: 1;
   }
 }
 

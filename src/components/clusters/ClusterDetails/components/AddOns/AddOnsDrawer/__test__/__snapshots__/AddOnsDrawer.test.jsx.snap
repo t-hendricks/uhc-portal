@@ -8,9 +8,11 @@ exports[`<AddOnsDrawer /> should render 1`] = `
     isInline={true}
   >
     <DrawerContent
-      className="pf-m-no-background"
+      className="pf-m-no-background ocm-c-addons__drawer--panel-gallery"
       panelContent={
-        <DrawerPanelContent>
+        <DrawerPanelContent
+          className="ocm-c-addons__drawer--panel-content"
+        >
           <DrawerHead
             className="ocm-c-addons__drawer--header"
           >
