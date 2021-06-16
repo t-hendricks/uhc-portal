@@ -18,6 +18,7 @@ const getCloudProvidersAndRegions = () => clusterService.getCloudProviders().the
             enabled: region.enabled,
             supports_multi_az: region.supports_multi_az,
             kms_specific_region: region.kms_location_id,
+            ccs_only: region.ccs_only,
           };
         });
       }

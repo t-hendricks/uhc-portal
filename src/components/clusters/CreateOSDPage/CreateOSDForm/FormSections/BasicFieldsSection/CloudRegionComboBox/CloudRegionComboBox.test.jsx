@@ -3,7 +3,9 @@ import { mount } from 'enzyme';
 
 import DisconnectedCloudRegionComboBox from './CloudRegionComboBox';
 
-const enabledRegions = [{ id: 'us-east-1', display_name: 'N. Virginia', enabled: true }];
+const availableRegions = [{
+  id: 'us-east-1', display_name: 'N. Virginia', enabled: true, ccs_only: false,
+}];
 
 describe('<CloudRegionComboBox />', () => {
   describe('when region list needs to be fetched', () => {
@@ -26,7 +28,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
-          enabledRegions={enabledRegions}
+          availableRegions={availableRegions}
           handleCloudRegionChange={handleCloudRegionChange}
           disabled={false}
         />,
@@ -58,7 +60,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
-          enabledRegions={enabledRegions}
+          availableRegions={availableRegions}
           handleCloudRegionChange={handleCloudRegionChange}
           disabled={false}
         />,
@@ -89,7 +91,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
-          enabledRegions={enabledRegions}
+          availableRegions={availableRegions}
           handleCloudRegionChange={handleCloudRegionChange}
           disabled={false}
         />,
@@ -128,7 +130,7 @@ describe('<CloudRegionComboBox />', () => {
           cloudProviderID="aws"
           cloudProviders={state}
           input={{ onChange }}
-          enabledRegions={enabledRegions}
+          availableRegions={availableRegions}
           handleCloudRegionChange={handleCloudRegionChange}
           disabled={false}
         />,
@@ -145,7 +147,7 @@ describe('<CloudRegionComboBox />', () => {
 
     it('should call handleCloudRegionChange on selection', () => {
       wrapper.find('.cloud-region-combo-box').at(0).simulate('change', {
-        target: { value: enabledRegions[0].id, selectedIndex: 0 },
+        target: { value: availableRegions[0].id, selectedIndex: 0 },
       });
       expect(handleCloudRegionChange).toBeCalled();
     });

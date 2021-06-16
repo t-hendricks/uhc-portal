@@ -34,7 +34,7 @@ class CloudRegionComboBox extends React.Component {
 
   render() {
     const {
-      input, enabledRegions, cloudProviders, disabled, isMultiAz,
+      input, availableRegions, cloudProviders, disabled, isMultiAz,
     } = this.props;
 
     const regionOption = region => (
@@ -55,7 +55,7 @@ class CloudRegionComboBox extends React.Component {
           {...input}
           onChange={this.onChange}
         >
-          {enabledRegions.map(region => regionOption(region))}
+          {availableRegions.map(region => regionOption(region))}
         </FormSelect>
       );
     }
@@ -73,7 +73,7 @@ class CloudRegionComboBox extends React.Component {
 
 CloudRegionComboBox.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
-  enabledRegions: PropTypes.array.isRequired,
+  availableRegions: PropTypes.array.isRequired,
   cloudProviders: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
