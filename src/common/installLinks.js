@@ -10,6 +10,8 @@ const MIRROR_ODO_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
 
+const OCM_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021';
+
 const links = {
 
   TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote_health_monitoring/about-remote-health-monitoring.html`,
@@ -130,6 +132,8 @@ const links = {
 
   ROSA_CLIENT_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest',
   ROSA_DOCS: 'https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html',
+
+  OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
 };
 
 // See also per-tool data in DownloadButton.jsx.
