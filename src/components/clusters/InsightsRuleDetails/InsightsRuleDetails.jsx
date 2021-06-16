@@ -100,6 +100,19 @@ class InsightsRuleDetails extends Component {
     openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId });
   }
 
+  onVoteOnRule = async (clusterUUID, ruleId, vote) => {
+    const {
+      voteOnRule,
+      clusterDetails,
+      fetchReportData,
+      match,
+    } = this.props;
+    const { errorKey } = match.params;
+
+    await voteOnRule(clusterUUID, ruleId, vote);
+    fetchReportData(clusterUUID, ruleId, errorKey, get(clusterDetails, 'cluster.managed', false));
+  }
+
   refresh() {
     const {
       match,
@@ -135,7 +148,6 @@ class InsightsRuleDetails extends Component {
       reportDetails,
       history,
       match,
-      voteOnRule,
       setGlobalError,
       enableRule,
     } = this.props;
@@ -229,7 +241,7 @@ class InsightsRuleDetails extends Component {
           rule={reportDetails.report}
           pending={clusterDetails.pending || reportDetails.pending}
           refreshFunc={this.refresh}
-          voteOnRule={voteOnRule}
+          voteOnRule={this.onVoteOnRule}
           disableRule={this.onRuleDisable}
           enableRule={ruleId => enableRule(cluster.external_id, ruleId)}
         >
