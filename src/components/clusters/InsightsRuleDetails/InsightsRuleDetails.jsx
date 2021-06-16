@@ -144,6 +144,7 @@ class InsightsRuleDetails extends Component {
 
     const requestedSubscriptionID = match.params.subscriptionID;
     const requestedReportID = match.params.reportId.replace(/\|/g, '.');
+    const externalId = get(clusterDetails, 'cluster.external_id');
 
     // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
     // the redux state will have the data for the previous cluster. We want to ensure we only
@@ -231,7 +232,7 @@ class InsightsRuleDetails extends Component {
           refreshFunc={this.refresh}
           voteOnRule={voteOnRule}
           disableRule={this.onRuleDisable}
-          enableRule={ruleId => enableRule(cluster.external_id, ruleId)}
+          enableRule={ruleId => enableRule(externalId, ruleId)}
         >
           <TabsRow
             reasonTabRef={this.reasonTabRef}
@@ -254,7 +255,7 @@ class InsightsRuleDetails extends Component {
                     </div>
                   </CardBody>
                   <CardFooter>
-                    <Button variant="link" isInline onClick={() => enableRule(currentRuleId)}>
+                    <Button variant="link" isInline onClick={() => enableRule(externalId, currentRuleId)}>
                       Enable recommendation
                     </Button>
                   </CardFooter>
