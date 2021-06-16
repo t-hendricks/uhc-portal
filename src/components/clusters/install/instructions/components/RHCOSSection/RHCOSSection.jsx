@@ -45,7 +45,6 @@ const RHCOSSection = (props) => {
       return (
         <StackItem key={name}>
           <DownloadButton
-            token={token}
             url={url}
             tool={tools.RHCOS}
             text={buttonText}

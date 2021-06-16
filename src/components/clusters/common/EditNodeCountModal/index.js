@@ -112,7 +112,9 @@ const mapStateToProps = (state) => {
       machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
       machinePoolId: 'Default',
       initialValues: {
-        nodes_compute: get(cluster, 'nodes.compute', null) || initialValuesNodesCompute,
+        nodes_compute: get(cluster, 'nodes.compute', null)
+          || get(cluster, 'nodes.autoscale_compute.min_replicas')
+          || initialValuesNodesCompute,
         machine_pool: 'Default',
         autoscalingEnabled: machinePoolWithAutoscale,
         ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(cluster.nodes.autoscale_compute)),

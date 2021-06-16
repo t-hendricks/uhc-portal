@@ -1,0 +1,16 @@
+.ocm-create-osd-review-screen {
+  h3 {
+    margin-top: var(--pf-global--spacer--md);
+    margin-bottom: var(--pf-global--spacer--md);
+  }
+  .pf-c-description-list {
+    --pf-c-description-list--m-horizontal__term--width: 14ch;
+    --pf-c-description-list--RowGap: var(--pf-global--gutter);
+  }
+  .pf-c-description-list__term .pf-c-description-list__text {
+    font-weight: normal;
+  }
+  .pf-c-description-list__description .pf-c-description-list__text {
+    color: var(--pf-global--Color--dark-200);
+  }
+}

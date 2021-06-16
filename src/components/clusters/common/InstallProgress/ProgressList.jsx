@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  ClipboardCopy,
   DescriptionList,
   DescriptionListTerm,
   DescriptionListGroup,
@@ -25,8 +26,18 @@ function ProgressList({ cluster }) {
 
     // first step in progress
     if (cluster.state === clusterStates.PENDING) {
+      let pendingText = 'Preparing account';
+      if (!cluster.status.oidc_ready && cluster?.aws?.sts?.oidc_endpoint_url) {
+        // Display OIDC endpoint URL but don't link to it
+        pendingText = (
+          <>
+            Waiting for OIDC configuration
+            <ClipboardCopy isReadOnly className="pf-u-mt-sm">{cluster.aws.sts.oidc_endpoint_url}</ClipboardCopy>
+          </>
+        );
+      }
       return {
-        awsAccountSetup: { icon: inProgressIcon, text: 'Preparing account' },
+        awsAccountSetup: { icon: inProgressIcon, text: pendingText },
         DNSSetup: pending,
         clusterInstallation: pending,
       };

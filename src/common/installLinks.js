@@ -5,8 +5,12 @@ const MIRROR_CLIENTS_LATEST_PRE = 'https://mirror.openshift.com/pub/openshift-v4
 const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
 const MIROR_RHCOS_LATEST_S390X = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
+const MIRROR_ODO_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest';
+
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
+
+const OCM_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021';
 
 const links = {
 
@@ -41,6 +45,11 @@ const links = {
   CLI_TOOLS_WINDOWS_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-windows.zip`,
   CLI_TOOLS_WINDOWS_IBMZ: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-client-windows.zip`,
   CLI_TOOLS_WINDOWS_PPC: `${MIRROR_CLIENTS_STABLE_PPC}openshift-client-windows.zip`,
+
+  CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
+  CLI_TOOLS_OSD_GETTING_STARTED: 'https://access.redhat.com/documentation/en-us/openshift_dedicated/4/html/cli_tools/index',
+
+  INSTALL_DOCS_ENTRY: `${DOCS_BASE}/installing/index.html`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
   INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
@@ -116,16 +125,28 @@ const links = {
   RHCOS_POWER_KERNEL: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-kernel-ppc64le`,
   RHCOS_POWER_ROOTFS: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-rootfs.ppc64le.img`,
 
-  ROSA_CLIENT_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/',
+  HELM_CLI_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest',
+  HELM_DOCS: `${DOCS_BASE}/cli_reference/helm_cli/getting-started-with-helm-on-openshift-container-platform.html`,
+
+  ODO_DOCS: `${DOCS_BASE}/cli_reference/developer_cli_odo/understanding-odo.html`,
+
+  ROSA_CLIENT_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest',
   ROSA_DOCS: 'https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html',
+
+  OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
 };
 
 // See also per-tool data in DownloadButton.jsx.
 const tools = {
   CLI_TOOLS: 'CLI_TOOLS',
   CRC: 'CRC',
+  HELM: 'HELM',
   INSTALLER: 'INSTALLER',
-  RHCOS: 'RHCOS', // urls
+  OCM: 'OCM',
+  ODO: 'ODO',
+  RHCOS: 'RHCOS',
+  RHOAS: 'RHOAS',
+  ROSA: 'ROSA',
 };
 
 const channels = {
@@ -134,13 +155,15 @@ const channels = {
 };
 
 const architectures = {
+  arm: 'arm',
   x86: 'x86',
   ppc: 'ppc',
   s390x: 's390x',
 };
 
 const architectureOptions = [
-  { value: architectures.x86, label: 'x86-64', path: 'x86_64' }, // aka amd64
+  { value: architectures.x86, label: 'x86_64', path: 'x86_64' }, // aka amd64
+  { value: architectures.arm, label: 'arm64', path: 'arm64' },
   { value: architectures.ppc, label: 'ppc64le', path: 'ppc64le' }, // aka Power
   { value: architectures.s390x, label: 's390x', path: 's390x' }, // aka IBM Z
 ];
@@ -190,6 +213,32 @@ const urls = {
     },
   },
 
+  [tools.CRC]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.windows]: links.INSTALL_CRC_DOWNLOAD_WINDOWS,
+        [operatingSystems.mac]: links.INSTALL_CRC_DOWNLOAD_MACOS,
+        [operatingSystems.linux]: links.INSTALL_CRC_DOWNLOAD_LINUX,
+      },
+    },
+  },
+
+  [tools.HELM]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${links.HELM_CLI_LATEST}/helm-linux-amd64`,
+        [operatingSystems.mac]: `${links.HELM_CLI_LATEST}/helm-darwin-amd64`,
+        [operatingSystems.windows]: `${links.HELM_CLI_LATEST}/helm-windows-amd64.exe`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${links.HELM_CLI_LATEST}/helm-linux-s390x`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${links.HELM_CLI_LATEST}/helm-linux-ppc64le`,
+      },
+    },
+  },
+
   [tools.INSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {
@@ -213,12 +262,35 @@ const urls = {
     },
   },
 
-  [tools.CRC]: {
+  // [tools.OCM] TODO: get URL to latest github release
+
+  [tools.ODO]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.windows]: links.INSTALL_CRC_DOWNLOAD_WINDOWS,
-        [operatingSystems.mac]: links.INSTALL_CRC_DOWNLOAD_MACOS,
-        [operatingSystems.linux]: links.INSTALL_CRC_DOWNLOAD_LINUX,
+        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-amd64`,
+        [operatingSystems.mac]: `${MIRROR_ODO_LATEST}/odo-darwin-amd64`,
+        [operatingSystems.windows]: `${MIRROR_ODO_LATEST}/odo-windows-amd64.exe`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-arm64`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-s390x`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-ppc64le`,
+      },
+    },
+  },
+
+  // [tools.RHOAS] TODO: get URL to latest github release
+
+  [tools.ROSA]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${links.ROSA_CLIENT_LATEST}/rosa-linux.tar.gz`,
+        [operatingSystems.mac]: `${links.ROSA_CLIENT_LATEST}/rosa-macosx.tar.gz`,
+        [operatingSystems.windows]: `${links.ROSA_CLIENT_LATEST}/rosa-windows.zip`,
       },
     },
   },

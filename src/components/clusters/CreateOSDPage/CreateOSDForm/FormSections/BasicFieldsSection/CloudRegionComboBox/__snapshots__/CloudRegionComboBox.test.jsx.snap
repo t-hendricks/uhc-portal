@@ -2,6 +2,16 @@
 
 exports[`<CloudRegionComboBox /> when region list needs to be fetched renders correctly 1`] = `
 <CloudRegionComboBox
+  availableRegions={
+    Array [
+      Object {
+        "ccs_only": false,
+        "display_name": "N. Virginia",
+        "enabled": true,
+        "id": "us-east-1",
+      },
+    ]
+  }
   cloudProviderID="aws"
   cloudProviders={
     Object {
@@ -13,15 +23,6 @@ exports[`<CloudRegionComboBox /> when region list needs to be fetched renders co
     }
   }
   disabled={false}
-  enabledRegions={
-    Array [
-      Object {
-        "display_name": "N. Virginia",
-        "enabled": true,
-        "id": "us-east-1",
-      },
-    ]
-  }
   handleCloudRegionChange={[MockFunction]}
   input={
     Object {
@@ -55,6 +56,16 @@ exports[`<CloudRegionComboBox /> when region list needs to be fetched renders co
 
 exports[`<CloudRegionComboBox /> when the region list is available renders correctly 1`] = `
 <CloudRegionComboBox
+  availableRegions={
+    Array [
+      Object {
+        "ccs_only": false,
+        "display_name": "N. Virginia",
+        "enabled": true,
+        "id": "us-east-1",
+      },
+    ]
+  }
   cloudProviderID="aws"
   cloudProviders={
     Object {
@@ -81,15 +92,6 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
     }
   }
   disabled={false}
-  enabledRegions={
-    Array [
-      Object {
-        "display_name": "N. Virginia",
-        "enabled": true,
-        "id": "us-east-1",
-      },
-    ]
-  }
   handleCloudRegionChange={[MockFunction]}
   input={
     Object {
@@ -143,6 +145,16 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
 
 exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1`] = `
 <CloudRegionComboBox
+  availableRegions={
+    Array [
+      Object {
+        "ccs_only": false,
+        "display_name": "N. Virginia",
+        "enabled": true,
+        "id": "us-east-1",
+      },
+    ]
+  }
   cloudProviderID="aws"
   cloudProviders={
     Object {
@@ -154,15 +166,6 @@ exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1
     }
   }
   disabled={false}
-  enabledRegions={
-    Array [
-      Object {
-        "display_name": "N. Virginia",
-        "enabled": true,
-        "id": "us-east-1",
-      },
-    ]
-  }
   handleCloudRegionChange={[MockFunction]}
   input={
     Object {
@@ -196,6 +199,16 @@ exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1
 
 exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] = `
 <CloudRegionComboBox
+  availableRegions={
+    Array [
+      Object {
+        "ccs_only": false,
+        "display_name": "N. Virginia",
+        "enabled": true,
+        "id": "us-east-1",
+      },
+    ]
+  }
   cloudProviderID="aws"
   cloudProviders={
     Object {
@@ -207,15 +220,6 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
     }
   }
   disabled={false}
-  enabledRegions={
-    Array [
-      Object {
-        "display_name": "N. Virginia",
-        "enabled": true,
-        "id": "us-east-1",
-      },
-    ]
-  }
   handleCloudRegionChange={[MockFunction]}
   input={
     Object {
