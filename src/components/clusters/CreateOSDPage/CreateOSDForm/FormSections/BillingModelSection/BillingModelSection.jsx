@@ -84,6 +84,10 @@ function BillingModelSection({
     let selectedProduct;
     if (value === 'standard-trial') {
       selectedProduct = normalizedProducts.OSDTrial;
+      if (isWizard) {
+        // Wizard has no byoc modal so this change must happen here
+        change('byoc', 'true');
+      }
     } else {
       selectedProduct = normalizedProducts.OSD;
     }
@@ -170,6 +174,7 @@ function BillingModelSection({
             <Field
               component={RadioButtons}
               name="byoc"
+              defaultValue="false"
               options={[{
                 label: 'Customer cloud subscription',
                 description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',

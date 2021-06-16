@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Alert } from '@patternfly/react-core';
+import { Alert, Button } from '@patternfly/react-core';
+import modals from '../../../common/Modal/modals';
 import './ExpirationAlert.scss';
 
-function ExpirationAlert({ expirationTimestamp, trialExpiration }) {
+function ExpirationAlert({
+  expirationTimestamp,
+  trialExpiration,
+  openModal,
+  cluster,
+}) {
   const now = moment.utc();
   const expirationTime = moment.utc(expirationTimestamp);
   const hours = expirationTime.diff(now, 'hours');
@@ -51,6 +57,12 @@ function ExpirationAlert({ expirationTimestamp, trialExpiration }) {
     contents = `Your free trial cluster will automatically be deleted on ${expirationTimeString}. Upgrade your cluster at any time to prevent deletion.`;
   }
 
+  const upgradeTrialProps = {
+    title: 'Upgrade cluster from Trial',
+    clusterID: cluster?.id,
+    cluster,
+  };
+
   return (
     <Alert
       id="expiration-alert"
@@ -58,7 +70,12 @@ function ExpirationAlert({ expirationTimestamp, trialExpiration }) {
       isInline
       title={`This cluster will be deleted ${timeUntilExpiryString}.`}
     >
-      {contents}
+      <p>
+        {contents}
+      </p>
+      {trialExpiration && (
+        <Button variant="secondary" className="pf-u-mt-sm" onClick={() => openModal(modals.UPGRADE_TRIAL_CLUSTER, upgradeTrialProps)}>Upgrade from trial</Button>
+      )}
     </Alert>
   );
 }
@@ -66,6 +83,8 @@ function ExpirationAlert({ expirationTimestamp, trialExpiration }) {
 ExpirationAlert.propTypes = {
   expirationTimestamp: PropTypes.string.isRequired,
   trialExpiration: PropTypes.bool,
+  openModal: PropTypes.func,
+  cluster: PropTypes.shape({ id: PropTypes.string }),
 };
 
 export default ExpirationAlert;

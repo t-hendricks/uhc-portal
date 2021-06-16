@@ -20,7 +20,6 @@ const pendoEvents = {
 };
 
 const DownloadButton = ({
-  token,
   url,
   disabled = false,
   tool = tools.INSTALLER,
@@ -40,7 +39,7 @@ const DownloadButton = ({
       onClick={() => {
         trackPendo(event, pendoID);
       }}
-      disabled={!!token.error || disabled}
+      disabled={!url || disabled}
       download
     >
       {buttonText}
@@ -48,7 +47,6 @@ const DownloadButton = ({
   );
 };
 DownloadButton.propTypes = {
-  token: PropTypes.object.isRequired,
   pendoID: PropTypes.string,
   url: PropTypes.string,
   disabled: PropTypes.bool,

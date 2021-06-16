@@ -35,6 +35,7 @@ import InsightsRuleDetails from '../clusters/InsightsRuleDetails';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import RegisterCluster from '../clusters/RegisterCluster';
 import CreateOSDPage from '../clusters/CreateOSDPage';
+import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import InstallAWS from '../clusters/install/InstallAWS';
 import InstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import InstallAWSIPI from '../clusters/install/InstallAWSIPI';
@@ -59,6 +60,7 @@ import InstallPullSecret from '../clusters/install/InstallPullSecret';
 import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
 import InstallIBM from '../clusters/install/InstallIBM';
 import InstallPower from '../clusters/install/InstallPower';
+import DownloadsPage from '../downloads/DownloadsPage';
 import Tokens from '../tokens/Tokens';
 import TokensROSA from '../tokens/TokensROSA';
 import NotFoundError from './NotFoundError';
@@ -96,6 +98,7 @@ function Router({ history }) {
             <Redirect from="/subscriptions" to="/quota" />
 
             <TermsGuardedRoute path="/token/rosa" component={TokensROSA} history={history} />
+            <Route path="/downloads" component={DownloadsPage} />
             <Route path="/token" component={Tokens} />
             <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
@@ -139,6 +142,7 @@ function Router({ history }) {
             <TermsGuardedRoute path="/create/osdtrial/aws" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="aws" product={normalizedProducts.OSDTrial} />} history={history} />
             <TermsGuardedRoute path="/create/osdtrial/gcp" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSDTrial} />} history={history} />
             <Route path="/create/osdtrial" render={() => <CloudProviderSelection product={normalizedProducts.OSDTrial} />} />
+            <Route path="/create/osdwizard" component={CreateOSDWizard} />
             <Route path="/create/osd" render={() => <CloudProviderSelection product={normalizedProducts.OSD} />} />
             <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />

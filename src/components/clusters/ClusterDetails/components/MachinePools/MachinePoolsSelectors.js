@@ -63,8 +63,17 @@ const hasClusterLevelAutoscaleCapability = (state) => {
   return !!(autoScaleClusters && autoScaleClusters.value === 'true');
 };
 
+// on the OSD creation page don't check cluster level capability for autoscaling
+const canAutoScaleOnCreateSelector = (state, product) => product === normalizedProducts.ROSA
+    || (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
+
 const canAutoScaleSelector = (state, product) => product === normalizedProducts.ROSA
     || (product === normalizedProducts.OSD && hasClusterLevelAutoscaleCapability(state))
     || (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
 
-export { hasMachinePoolsQuotaSelector, canAutoScaleSelector, hasOrgLevelAutoscaleCapability };
+export {
+  hasMachinePoolsQuotaSelector,
+  hasOrgLevelAutoscaleCapability,
+  canAutoScaleOnCreateSelector,
+  canAutoScaleSelector,
+};

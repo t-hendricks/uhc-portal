@@ -5,10 +5,12 @@ import CloudRegionComboBox from './CloudRegionComboBox';
 
 const mapStateToProps = (state, ownProps) => {
   const regions = get(state, `cloudProviders.providers[${ownProps.cloudProviderID}].regions`, {});
+  const enabledRegions = (Object.values(regions)).filter(region => region.enabled);
   return ({
     cloudProviders: state.cloudProviders,
-    enabledRegions: ownProps.isBYOC
-      ? Object.values(regions) : (Object.values(regions)).filter(region => region.enabled),
+    availableRegions: ownProps.isBYOC
+      ? enabledRegions : enabledRegions.filter(region => !region.ccs_only),
+
   });
 };
 

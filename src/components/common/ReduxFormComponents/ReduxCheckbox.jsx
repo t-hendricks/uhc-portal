@@ -28,13 +28,26 @@ function ReduxCheckbox(props) {
     meta: { error, touched },
     input,
     isSwitch = false,
+    isHelperTextBeforeField = false,
     extendedHelpText,
     ...extraProps // any extra props not specified above
   } = props;
 
+  const helperTextInvalid = () => {
+    if (touched && error) {
+      return error;
+    }
+    return '';
+  };
+
   const InputComponent = isSwitch ? Switch : Checkbox;
   return (
-    <FormGroup fieldId={input.name} validated={touched && error ? 'error' : null}>
+    <FormGroup
+      fieldId={input.name}
+      helperTextInvalid={helperTextInvalid()}
+      isHelperTextBeforeField={isHelperTextBeforeField}
+      validated={touched && error ? 'error' : null}
+    >
       <Split hasGutter>
         <SplitItem>
           <InputComponent
@@ -63,6 +76,7 @@ ReduxCheckbox.propTypes = {
   isSwitch: PropTypes.bool,
   // plus other props to be passed to the field...
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  isHelperTextBeforeField: PropTypes.bool,
 };
 
 export default ReduxCheckbox;

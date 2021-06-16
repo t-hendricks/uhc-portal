@@ -19,8 +19,7 @@ export const InstructionsBareMetal = () => (
             />
             <Title headingLevel="h3" size="lg">Assisted Bare Metal Installer</Title>
             {' '}
-            Deploy an OpenShift 4.6 cluster on your own infrastructure using a Discovery ISO
-            that makes it easy to connect discovered hardware.
+            Install OpenShift on your own infrastructure with step-by-step guidance.
           </CardBody>
         </Link>
         <Link to="/install/metal/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">

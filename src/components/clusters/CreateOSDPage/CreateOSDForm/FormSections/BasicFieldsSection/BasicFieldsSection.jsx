@@ -12,6 +12,7 @@ import PopoverHint from '../../../../../common/PopoverHint';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
+import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '../NetworkingSection/AvailabilityZoneSelection';
 
 function BasicFieldsSection({
   pending,
@@ -23,10 +24,20 @@ function BasicFieldsSection({
   hasSingleAzQuota,
   hasMultiAzQuota,
   handleMultiAZChange,
-  handleCloudRegionChange,
+  change,
 }) {
   const multiAzTooltip = !hasMultiAzQuota && noQuotaTooltip;
   const singleAzTooltip = !hasSingleAzQuota && noQuotaTooltip;
+
+  const handleCloudRegionChange = () => {
+    // Move the az selection form
+    // to its default value once the cloudRegion selection
+    // changes to avoid incorrect zone.
+    const azCount = isMultiAz ? 3 : 1;
+    for (let i = 0; i < azCount; i += 1) {
+      change(`az_${i}`, AVAILABILITY_ZONE_PLACEHOLDER);
+    }
+  };
 
   return (
     <>
@@ -132,7 +143,7 @@ BasicFieldsSection.propTypes = {
   showDNSBaseDomain: PropTypes.bool,
   showAvailability: PropTypes.bool,
   handleMultiAZChange: PropTypes.func.isRequired,
-  handleCloudRegionChange: PropTypes.func.isRequired,
+  change: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   isBYOC: PropTypes.bool.isRequired,
   hasSingleAzQuota: PropTypes.bool.isRequired,
