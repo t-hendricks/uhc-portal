@@ -1,25 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Button,
   PageSection,
-  Title,
-  Stack,
-  StackItem,
+  Split,
+  SplitItem,
   FormSelect,
   FormSelectOption,
   Text,
+  TextContent,
 } from '@patternfly/react-core';
+import {
+  PageHeader, PageHeaderTitle,
+} from '@redhat-cloud-services/frontend-components/PageHeader';
 import {
   Table, TableHeader, TableBody, expandable, cellWidth,
 } from '@patternfly/react-table';
-import { ArrowRightIcon } from '@patternfly/react-icons';
+import { AngleRightIcon, ArrowRightIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
 
 import produce from 'immer';
 import { has, get } from 'lodash';
 
-import PageTitle from '../common/PageTitle';
 import ExternalLink from '../common/ExternalLink';
 import links, {
   urls,
@@ -31,20 +32,12 @@ import links, {
 
 import DownloadButton from '../clusters/install/instructions/components/DownloadButton';
 import { detectOS } from '../clusters/install/instructions/components/DownloadAndOSSelection';
+import AlignRight from '../common/AlignRight';
+import DownloadsCategoryDropdown from './DownloadsCategoryDropdown';
+import DownloadsSection from './DownloadsSection';
 import PullSecretButtons from './PullSecretButtons';
 
 import './DownloadsPage.scss';
-
-const AlignRight = ({ children }) => (
-  <div className="downloads-align-right">
-    <span>
-      {children}
-    </span>
-  </div>
-);
-AlignRight.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 const columns = [
   {
@@ -104,7 +97,7 @@ export const architecturesForToolOS = (tool, OS) => (
 );
 
 const operatingSystemDropdown = (tool, OS, setOS) => (
-  <FormSelect value={OS} onChange={setOS} aria-label="select-os-dropdown">
+  <FormSelect value={OS} onChange={setOS} aria-label="Select OS dropdown">
     <FormSelectOption key="select" value="select" label="Select OS" isDisabled />
     {allOperatingSystemsForTool(tool).map(({ value, label }) => (
       <FormSelectOption key={value} value={value} label={label} />
@@ -210,7 +203,7 @@ const descriptionRow = (parentIndex, child) => (
 const cliToolRows = (expanded, selections, setSelections) => [
   toolRow(expanded, selections, setSelections, tools.CLI_TOOLS, 'OpenShift command-line interface (oc)'),
   descriptionRow(0,
-    <>
+    <TextContent>
       <Text>
         Create applications and manage OpenShift projects from the command line
         using the OpenShift CLI (oc).
@@ -229,7 +222,7 @@ const cliToolRows = (expanded, selections, setSelections) => [
         </ExternalLink>
         .
       </Text>
-    </>),
+    </TextContent>),
 
   // TODO ocm-cli
 
@@ -270,8 +263,8 @@ const devToolRows = (expanded, selections, setSelections) => [
 const installationRows = (expanded, selections, setSelections) => [
   toolRow(expanded, selections, setSelections, tools.INSTALLER, 'OpenShift Installer'),
   descriptionRow(0,
-    <Stack>
-      <StackItem>
+    <TextContent>
+      <Text>
         Download and extract your operating system&apos;s installation program and
         place the file in the directory where you&apos;ll store your configuration details.
         After installing OpenShift, create clusters on supported infrastructure using our
@@ -279,8 +272,8 @@ const installationRows = (expanded, selections, setSelections) => [
         <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
         {' '}
         as a guide.
-      </StackItem>
-      <StackItem>
+      </Text>
+      <Text>
         Learn how to deploy in the
         {' '}
         <Link to="/create">cloud</Link>
@@ -288,22 +281,22 @@ const installationRows = (expanded, selections, setSelections) => [
         {' '}
         <Link to="/create/datacenter">data center</Link>
         .
-      </StackItem>
-    </Stack>),
+      </Text>
+    </TextContent>),
 
   toolRow(expanded, selections, setSelections, tools.CRC, 'CodeReady Containers'),
   descriptionRow(2,
-    <Stack>
-      <StackItem>
+    <TextContent>
+      <Text>
         Download and open the CodeReady Containers file to automatically start
         a step-by-step installation guide.
-      </StackItem>
-      <StackItem>
+      </Text>
+      <Text>
         <Link to="/create/local">Create a minimal cluster on your desktop</Link>
         {' '}
         for local development and testing.
-      </StackItem>
-    </Stack>),
+      </Text>
+    </TextContent>),
 ];
 
 const tokenColumns = [
@@ -341,7 +334,7 @@ const tokenRows = expanded => [
     ],
   },
   descriptionRow(0,
-    <>
+    <TextContent>
       <Text>
         An image pull secret provides authentication for the cluster to access services and
         registries which serve the container images for OpenShift components.
@@ -362,7 +355,7 @@ const tokenRows = expanded => [
         </ExternalLink>
         .
       </Text>
-    </>),
+    </TextContent>),
 
   {
     isOpen: !!expanded[expandKeys.TOKEN_OCM],
@@ -408,8 +401,13 @@ class DownloadsPage extends React.Component {
   }
 
   state = {
+    selectedCategory: 'ALL', // one of `downloadsCategoryTitles` keys
     expanded: DownloadsPage.initialExpanded(), // { [tool]: isOpen }
     selections: DownloadsPage.initialSelections(), // { [tool]: { OS, architecture} }
+  }
+
+  setCategory = (selectedCategory) => {
+    this.setState({ selectedCategory });
   }
 
   onCollapse = (event, rowIndex, newOpen, rowData) => {
@@ -423,66 +421,105 @@ class DownloadsPage extends React.Component {
   }
 
   render() {
-    const { expanded, selections } = this.state;
+    const { selectedCategory, expanded, selections } = this.state;
+
+    const rowsByCategory = {
+      CLI: cliToolRows(expanded, selections, this.setSelections),
+      DEV: devToolRows(expanded, selections, this.setSelections),
+      INSTALLATION: installationRows(expanded, selections, this.setSelections),
+      TOKENS: tokenRows(expanded),
+    };
+    rowsByCategory.ALL = [].concat(...Object.values(rowsByCategory));
+
+    const expandCollapseAll = () => {
+      const shownKeys = rowsByCategory[selectedCategory].map(row => row.expandKey).filter(Boolean);
+      // Expand if at least one collapsed, collapse if all expanded.
+      const allExpanded = shownKeys.every(key => expanded[key]);
+      const newExpanded = !allExpanded;
+      this.setState(produce((draft) => {
+        shownKeys.forEach((key) => {
+          draft.expanded[key] = newExpanded;
+        });
+      }));
+    };
+
     return (
       <>
-        <PageTitle title="Downloads" />
+        <PageHeader className="downloads-page-header">
+          <Split>
+            <SplitItem isFilled>
+              <PageHeaderTitle className="ocm-page-title" title="Downloads" />
+            </SplitItem>
+          </Split>
+          <Split className="subheader">
+            <SplitItem>
+              <DownloadsCategoryDropdown
+                selectedCategory={selectedCategory}
+                setCategory={this.setCategory}
+              />
+            </SplitItem>
+            <SplitItem>
+              <Button
+                variant="link"
+                className="expand-collapse-all"
+                icon={<AngleRightIcon />}
+                onClick={expandCollapseAll}
+              >
+                Expand/Collapse all
+              </Button>
+            </SplitItem>
+          </Split>
+        </PageHeader>
 
         <PageSection>
-          <PageSection variant="light">
-            <Stack hasGutter>
-              <StackItem>
-                <Title headingLevel="h2">
-                  Command-line interface (CLI) tools
-                </Title>
-              </StackItem>
-
-              <StackItem>
+          <PageSection variant="light" padding={{ default: 'noPadding' }} className="downloads-page-body">
+            <DownloadsSection
+              selectedCategory={selectedCategory}
+              category="CLI"
+              description={(
                 <Text>
                   Download command line tools to manage and work with OpenShift from your terminal.
                 </Text>
-                <Table
-                  aria-label="CLI tools table"
-                  cells={columns}
-                  rows={cliToolRows(expanded, selections, this.setSelections)}
-                  onCollapse={this.onCollapse}
-                >
-                  <TableHeader />
-                  <TableBody />
-                </Table>
-              </StackItem>
+                )}
+            >
+              <Table
+                aria-label="CLI tools table"
+                cells={columns}
+                rows={rowsByCategory.CLI}
+                onCollapse={this.onCollapse}
+              >
+                <TableHeader />
+                <TableBody />
+              </Table>
+            </DownloadsSection>
 
-              <StackItem>
-                <Title headingLevel="h2">
-                  Developer tools
-                </Title>
-              </StackItem>
-
-              <StackItem>
+            <DownloadsSection
+              selectedCategory={selectedCategory}
+              category="DEV"
+              description={(
                 <Text>
                   Access all the powers of Kubernetes through a simplified workflow with
                   Red Hat’s developer tools.
                   {' '}
                   <ExternalLink href="https://developers.redhat.com/topics/developer-tools">Learn more</ExternalLink>
                 </Text>
-                <Table
-                  aria-label="Developer tools table"
-                  cells={columns}
-                  rows={devToolRows(expanded, selections, this.setSelections)}
-                  onCollapse={this.onCollapse}
-                >
-                  <TableHeader />
-                  <TableBody />
-                </Table>
-              </StackItem>
+                )}
+            >
+              <Table
+                aria-label="Developer tools table"
+                cells={columns}
+                rows={rowsByCategory.DEV}
+                onCollapse={this.onCollapse}
+              >
+                <TableHeader />
+                <TableBody />
+              </Table>
+            </DownloadsSection>
 
-              <StackItem>
-                <Title headingLevel="h2">
-                  OpenShift installation
-                </Title>
-              </StackItem>
-
-              <StackItem>
+            <DownloadsSection
+              selectedCategory={selectedCategory}
+              category="INSTALLATION"
+              description={(
                 <Text>
                   Install OpenShift based on your infrastructure.
                   Start by downloading the installer, then follow the steps provided
@@ -492,35 +529,30 @@ class DownloadsPage extends React.Component {
                   {' '}
                   page to install an OpenShift cluster.
                 </Text>
-                <Table
-                  aria-label="OpenShift installation table"
-                  cells={columns}
-                  rows={installationRows(expanded, selections, this.setSelections)}
-                  onCollapse={this.onCollapse}
-                >
-                  <TableHeader />
-                  <TableBody />
-                </Table>
-              </StackItem>
+              )}
+            >
+              <Table
+                aria-label="OpenShift installation table"
+                cells={columns}
+                rows={rowsByCategory.INSTALLATION}
+                onCollapse={this.onCollapse}
+              >
+                <TableHeader />
+                <TableBody />
+              </Table>
+            </DownloadsSection>
 
-              <StackItem>
-                <Title headingLevel="h2">
-                  Tokens
-                </Title>
-              </StackItem>
-
-              <StackItem>
-                <Table
-                  aria-label="Tokens table"
-                  cells={tokenColumns}
-                  rows={tokenRows(expanded)}
-                  onCollapse={this.onCollapse}
-                >
-                  <TableHeader />
-                  <TableBody />
-                </Table>
-              </StackItem>
-            </Stack>
+            <DownloadsSection category="TOKENS" selectedCategory={selectedCategory}>
+              <Table
+                aria-label="Tokens table"
+                cells={tokenColumns}
+                rows={rowsByCategory.TOKENS}
+                onCollapse={this.onCollapse}
+              >
+                <TableHeader />
+                <TableBody />
+              </Table>
+            </DownloadsSection>
           </PageSection>
         </PageSection>
       </>

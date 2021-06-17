@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DownloadsSection /> with ALL category selected should render 1`] = `
+<Fragment>
+  <div
+    className="downloads-section-header"
+  >
+    <Title
+      headingLevel="h2"
+    >
+      Developer tools
+    </Title>
+  </div>
+  <Button>
+    placeholder for test
+  </Button>
+</Fragment>
+`;
+
+exports[`<DownloadsSection /> with different category selected should render as empty 1`] = `""`;
+
+exports[`<DownloadsSection /> with same category selected should render 1`] = `
+<Fragment>
+  <div
+    className="downloads-section-header"
+  >
+    <Title
+      headingLevel="h2"
+    >
+      Developer tools
+    </Title>
+  </div>
+  <Button>
+    placeholder for test
+  </Button>
+</Fragment>
+`;
