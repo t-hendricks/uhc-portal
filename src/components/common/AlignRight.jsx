@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
  * Places children to the right side of the available space.
  */
 const AlignRight = ({ children }) => (
-  <div style={{ 'text-align': 'right' }}>
+  <div style={{ textAlign: 'right' }}>
     <span style={{ display: 'inline-block' }}>
       {children}
     </span>
