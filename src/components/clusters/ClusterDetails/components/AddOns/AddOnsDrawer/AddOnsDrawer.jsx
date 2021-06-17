@@ -35,6 +35,7 @@ import AddOnsParameterList from './AddOnsDrawerParameterList';
 import AddOnsPrimaryButton from './AddOnsDrawerPrimaryButton';
 import AddOnsMetaDataItem from './AddOnsDrawerMetadataItem';
 import AddOnsRequirementContent from './AddOnsDrawerRequirementContent';
+import AddOnsFailedBox from './AddOnsDrawerFailedBox';
 
 class AddOnsDrawer extends React.Component {
   state = {
@@ -227,6 +228,9 @@ class AddOnsDrawer extends React.Component {
               clusterAddOns,
               clusterMachinePools,
             )}
+            installedAddOn={installedAddOn}
+          />
+          <AddOnsFailedBox
             installedAddOn={installedAddOn}
           />
         </DrawerPanelBody>

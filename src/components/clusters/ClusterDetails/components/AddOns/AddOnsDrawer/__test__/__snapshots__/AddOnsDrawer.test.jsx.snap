@@ -46,6 +46,9 @@ exports[`<AddOnsDrawer /> should render 1`] = `
                 }
               }
             />
+            <AddOnsFailedBox
+              installedAddOn={null}
+            />
           </DrawerPanelBody>
           <div>
             <Tabs

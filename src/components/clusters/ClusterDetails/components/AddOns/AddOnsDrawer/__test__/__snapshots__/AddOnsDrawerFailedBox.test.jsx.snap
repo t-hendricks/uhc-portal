@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddOnsFailedBox /> should render 1`] = `
+<Alert
+  className="ocm-addons-failed--error-box"
+  isInline={true}
+  title="Add-on failed"
+  variant="danger"
+>
+  <Flex
+    direction={
+      Object {
+        "default": "column",
+      }
+    }
+  >
+    <FlexItem>
+      failed message
+    </FlexItem>
+    <FlexItem>
+      <ExternalLink
+        href="https://access.redhat.com/support/cases/#/case/new"
+        noIcon={true}
+      >
+        Contact support
+      </ExternalLink>
+    </FlexItem>
+  </Flex>
+</Alert>
+`;
