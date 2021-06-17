@@ -954,7 +954,35 @@ exports[`<DownloadsPage> renders 1`] = `
                   "Pull secret",
                   Object {
                     "title": <AlignRight>
-                      <Memo(Connect(PullSecretButtons)) />
+                      <Split
+                        hasGutter={true}
+                      >
+                        <SplitItem>
+                          <CopyPullSecret
+                            text="Copy"
+                            token={
+                              Object {
+                                "auths": Object {
+                                  "foo": "bar",
+                                },
+                              }
+                            }
+                            variant="button"
+                          />
+                        </SplitItem>
+                        <SplitItem>
+                          <DownloadPullSecret
+                            text="Download"
+                            token={
+                              Object {
+                                "auths": Object {
+                                  "foo": "bar",
+                                },
+                              }
+                            }
+                          />
+                        </SplitItem>
+                      </Split>
                     </AlignRight>,
                   },
                 ],
