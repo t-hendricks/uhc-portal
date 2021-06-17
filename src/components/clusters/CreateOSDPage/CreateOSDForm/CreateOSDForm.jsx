@@ -254,6 +254,7 @@ class CreateOSDForm extends React.Component {
           isBYOC={isBYOCForm}
           cloudProviderID={cloudProviderID}
           handleCloudRegionChange={this.handleCloudRegionChange}
+          handleMultiAZChange={this.handleMultiAZChange}
           isMultiAz={isMultiAz}
         />
 
