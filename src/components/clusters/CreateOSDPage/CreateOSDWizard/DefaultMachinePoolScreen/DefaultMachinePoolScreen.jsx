@@ -8,6 +8,7 @@ import {
   ExpandableSection,
   Title,
   Form,
+  Text,
 } from '@patternfly/react-core';
 
 import MachineTypeSelection from '../../CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection';
@@ -39,6 +40,17 @@ function DefaultMachinePoolScreen({
   return (
     <Form onSubmit={() => false}>
       <Grid>
+        <GridItem span={12}>
+          <Title headingLevel="h2">
+            Default machine pool
+          </Title>
+          <Text component="p">
+            Select a compute node instance type and count for your default machine pool.
+          </Text>
+          <Text component="p">
+            After cluster creation, your selected default machine pool instance type is permanent.
+          </Text>
+        </GridItem>
         <GridItem span={4}>
           <FormGroup
             label="Worker node instance type"

@@ -39,7 +39,7 @@ function ClusterSettingsScreen({
 
   return (
     <Form onSubmit={() => false}>
-      <Grid>
+      <Grid hasGutter>
         <GridItem span={12}>
           <Title headingLevel="h3">Cluster details</Title>
         </GridItem>

@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import {
-  Divider, Title, GridItem, Text,
+  Divider, Title, GridItem,
 } from '@patternfly/react-core';
 
 import ExternalLink from '../../../common/ExternalLink';
@@ -69,8 +69,7 @@ function UpgradeSettingsFields({
       </GridItem>
       {showDivider && <Divider />}
       <GridItem span={12}>
-        {showDivider ? <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">Node draining</Title>
-          : <Text className="ocm-c-upgrade-node-draining-title">Node draining</Text>}
+        <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">Node draining</Title>
         You may set a grace period for how long Pod Disruption Budget-protected workloads will
         {' '}
         be respected during updates. After this grace period, any workloads protected by
