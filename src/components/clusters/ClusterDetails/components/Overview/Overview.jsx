@@ -77,16 +77,19 @@ class Overview extends React.Component {
                              || cluster.state === clusterStates.UNINSTALLING;
 
     const showInsightsAdvisor = insightsData?.status === 200
-                              && insightsData?.data && !cluster.managed;
+                              && insightsData?.data && !cluster.managed
+                              && !isDeprovisioned && !isArchived;
     const showResourceUsage = !isHibernating(cluster.state)
       && !isAssistedInstallSubscription(cluster.subscription)
-      && !shouldShowLogs(cluster) && !isDeprovisioned;
+      && !shouldShowLogs(cluster) && !isDeprovisioned && !isArchived;
     const showCostBreakdown = !cluster.managed && userAccess.fulfilled
-      && userAccess.data !== undefined && userAccess.data === true;
+      && userAccess.data !== undefined && userAccess.data === true
+      && !isDeprovisioned && !isArchived;
     const showSidePanel = showInsightsAdvisor || showCostBreakdown;
     const showAssistedInstallerDetailCard = cluster.aiCluster && !isArchived
       && isAssistedInstallSubscription(cluster.subscription);
     const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
+    const showSubscriptionSettings = !isDeprovisioned && !isArchived;
 
     if (isHibernating(cluster.state)) {
       topCard = (
@@ -174,7 +177,7 @@ class Overview extends React.Component {
               </CardBody>
             </Card>
             )}
-            <SubscriptionSettings />
+            {showSubscriptionSettings && <SubscriptionSettings />}
           </Grid>
         </GridItem>
         {showSidePanel && (

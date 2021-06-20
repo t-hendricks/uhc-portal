@@ -18,6 +18,7 @@ import getClusterName from '../../../../../common/getClusterName';
 import modals from '../../../../common/Modal/modals';
 import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import { getClusterStateAndDescription } from '../../../common/clusterStates';
 
 function ArchivedClusterListTable(props) {
   const { viewOptions, setSorting } = props;
@@ -60,14 +61,11 @@ function ArchivedClusterListTable(props) {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
     const name = getClusterName(cluster);
 
-    const statusMap = {
-      Archived: 'Archived',
-      Deprovisioned: 'Deleted',
-    };
-
     const clusterName = (
       <Link to={`/details/s/${cluster.subscription.id}`}>{name}</Link>
     );
+
+    const clusterStatus = getClusterStateAndDescription(cluster).description;
 
     const openUnarchiveModal = () => openModal(modals.UNARCHIVE_CLUSTER,
       {
@@ -85,7 +83,7 @@ function ArchivedClusterListTable(props) {
       { title: clusterName },
       { title: <ClusterTypeLabel cluster={cluster} /> },
       {
-        title: <span className="cluster-status-string">{statusMap[cluster.subscription.status]}</span>,
+        title: <span className="cluster-status-string">{clusterStatus}</span>,
       },
       {
         title: <ClusterLocationLabel

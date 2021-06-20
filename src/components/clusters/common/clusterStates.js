@@ -19,6 +19,22 @@ const clusterStates = {
   STALE: 'stale',
 };
 
+const stateDescription = (state) => {
+  let description = '';
+  switch (state) {
+    case clusterStates.DEPROVISIONED:
+      description = 'Deleted';
+      break;
+    default:
+      if (state) {
+        // Capitalize the first letter and replace any underscore with space.
+        description = (state.charAt(0).toUpperCase() + state.slice(1)).replace(/_/g, ' ');
+      }
+      break;
+  }
+  return description;
+};
+
 function getClusterStateAndDescription(cluster) {
   let state;
 
@@ -59,8 +75,7 @@ function getClusterStateAndDescription(cluster) {
 
   return {
     state,
-    // Capitalize the first letter and replace any underscore with space.
-    description: state ? (state.charAt(0).toUpperCase() + state.slice(1)).replace(/_/g, ' ') : '',
+    description: stateDescription(state),
   };
 }
 

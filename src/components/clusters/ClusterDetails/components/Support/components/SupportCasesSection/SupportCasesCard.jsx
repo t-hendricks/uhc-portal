@@ -72,7 +72,7 @@ class SupportCasesCard extends React.Component {
 
     const rows = supportCases.cases.map(supportCaseRow);
     const hasRows = rows.length > 0;
-    const showOpenSupportCaseButton = product !== normalizedProducts.OSDTrial;
+    const showOpenSupportCaseButton = product !== normalizedProducts.OSDTrial && !isDisabled;
 
     return (
       <>
@@ -80,7 +80,6 @@ class SupportCasesCard extends React.Component {
           <a href={url} target="_blank" rel="noopener noreferrer">
             <Button
               variant="secondary"
-              isDisabled={isDisabled}
             >
               Open support case
             </Button>
