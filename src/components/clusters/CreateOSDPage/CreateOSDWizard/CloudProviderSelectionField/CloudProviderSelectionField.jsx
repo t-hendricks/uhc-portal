@@ -21,7 +21,7 @@ function CloudProviderSelectionField({
   const getCardClass = (hasQuota, isSelected) => cx(BASE_CARD_CLASS, !hasQuota ? 'card-disabled' : '', isSelected ? 'create-cluster-card-selected' : '');
 
   const gcpCard = (
-    <Card className={getCardClass(hasGcpQuota, value === 'gcp')} onClick={() => onChange('gcp')}>
+    <Card className={getCardClass(hasGcpQuota, value === 'gcp')} onClick={() => hasGcpQuota && onChange('gcp')}>
       <CardBody>
         <img src={GCPLogo} alt="GCP" className="create-cluster-logo" />
         <Title headingLevel="h5" size="lg">Run on Google Cloud Platform</Title>
@@ -30,7 +30,7 @@ function CloudProviderSelectionField({
   );
 
   const awsCard = (
-    <Card className={getCardClass(hasAwsQuota, value === 'aws')} onClick={() => onChange('aws')}>
+    <Card className={getCardClass(hasAwsQuota, value === 'aws')} onClick={() => hasAwsQuota && onChange('aws')}>
       <CardBody>
         <img src={AWSLogo} alt="AWS" className="create-cluster-logo" />
         <Title headingLevel="h5" size="lg">Run on Amazon Web Services</Title>

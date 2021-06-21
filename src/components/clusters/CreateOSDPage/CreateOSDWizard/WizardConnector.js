@@ -3,7 +3,8 @@
  * with the correct flags for proper wizard functionality.
  *
  * Each wizard screen is connected individually,
- * to allow checking form validity only for fields the user filled so far, and not ALL fields
+ * to allow configuring redux-form for proper wizard operation
+ * and to make it easier for each screen to be self-contained.
  */
 import { reduxForm } from 'redux-form';
 import { scrollToFirstError } from '../../../../common/helpers';

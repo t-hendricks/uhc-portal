@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  FormGroup, Text, Title,
+  FormGroup, GridItem, Title,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxCheckbox from '../../common/ReduxFormComponents/ReduxCheckbox';
@@ -10,10 +10,10 @@ import ExternalLink from '../../common/ExternalLink';
 import '../CreateOSDPage/CreateOSDForm/CreateOSDForm.scss';
 
 function UserWorkloadMonitoringSection({ parent, disableUVM }) {
+  const title = <Title headingLevel="h3" className="enableuwm"> Monitoring </Title>;
   return (
     <>
-      {parent === 'create' ? <Text className="enableuwmcreate"> Monitoring </Text>
-        : <Title headingLevel="h3" className="enableuwm"> Monitoring </Title>}
+      {parent === 'create' ? <GridItem span={12}>{title}</GridItem> : title}
       <FormGroup
         fieldId="enable_user_workload_monitoring"
         id="enable_user_workload_monitoring"
