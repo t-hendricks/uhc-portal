@@ -2,6 +2,7 @@ import get from 'lodash/get';
 import inRange from 'lodash/inRange';
 import cidrTools from 'cidr-tools';
 import { Validator, ValidationError } from 'jsonschema';
+import { indexOf } from 'lodash';
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
@@ -858,6 +859,40 @@ const validateGCPKMSServiceAccount = (value) => {
   return undefined;
 };
 
+const validateHTPasswdPassword = (password) => {
+  // eslint-disable-next-line no-control-regex
+  if ((password.match(/[^\x20-\x7E]/g) || []).length !== 0) {
+    return 'Password must only contain printable ASCII characters.';
+  }
+  if (password.indexOf(' ') !== -1) {
+    return 'Password must not contain whitespaces.';
+  }
+  if (password.length < 14) {
+    return 'Password must be at least 14 characters long.';
+  }
+  if ((password.match(/[A-Z]/g) || []).length === 0) {
+    return 'Password must contain uppercase letters.';
+  }
+  if ((password.match(/[a-z]/g) || []).length === 0) {
+    return 'Password must contain lowercase letters.';
+  }
+  if (/^[a-zA-Z]+$/.test(password)) {
+    return 'Password must contain numbers and/or symbols.';
+  }
+  return undefined;
+};
+
+const validateHTPasswdUsername = (username) => {
+  if (
+    indexOf(username, '%') !== -1
+    || indexOf(username, ':') !== -1
+    || indexOf(username, '/') !== -1
+  ) {
+    return 'Username contains disallowed characters.';
+  }
+  return undefined;
+};
+
 const validators = {
   required,
   checkIdentityProviderName,
@@ -930,6 +965,8 @@ export {
   validateGCPSubnet,
   validateGCPEncryptionKeys,
   validateGCPKMSServiceAccount,
+  validateHTPasswdPassword,
+  validateHTPasswdUsername,
 };
 
 export default validators;

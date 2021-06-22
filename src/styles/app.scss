@@ -723,8 +723,10 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-.access-control-tables-copy {
-  padding-left: 0;
+
+.pf-c-button.pf-m-link.access-control-tables-copy{
+  padding: 0;
+  font-size: var(--pf-c-table--cell--FontSize);
 }
 
 .idp-oauth-url-label {

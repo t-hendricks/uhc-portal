@@ -18,6 +18,7 @@ import {
   LDAPFormRequired,
   OpenIDFormRequired,
   GitlabForm,
+  HTPasswdForm,
 } from './ProvidersForms';
 
 import {
@@ -30,6 +31,7 @@ import {
   OpenIDDocLink,
   GoogleDocLink,
   GitlabDocLink,
+  HTPasswdDocLink,
   getOauthCallbackURL,
   IDPNeedsOAuthURL,
   generateIDPName,
@@ -123,6 +125,7 @@ class IDPForm extends React.Component {
       GithubIdentityProvider: GithubForm,
       GoogleIdentityProvider: GoogleFormRequired,
       GitlabIdentityProvider: GitlabForm,
+      HTPasswdIdentityProvider: HTPasswdForm,
     };
 
     const providerDocumentationLink = {
@@ -131,6 +134,7 @@ class IDPForm extends React.Component {
       GithubIdentityProvider: GithubDocLink,
       GoogleIdentityProvider: GoogleDocLink,
       GitlabIdentityProvider: GitlabDocLink,
+      HTPasswdIdentityProvider: HTPasswdDocLink,
     };
 
     const SelectedProivderRequiredFields = providersRequiredFields[selectedIDP];
@@ -164,6 +168,16 @@ class IDPForm extends React.Component {
           <GridItem span={8}>
             <Title headingLevel="h3" size="xl">Step 2: Enter provider type information</Title>
           </GridItem>
+          {
+            selectedIDP === IDPformValues.HTPASSWD && (
+              <GridItem span={8}>
+                Define an HTPasswd identity provider for your managed cluster
+                to create a single, static user that can log in to your cluster
+                and troubleshoot it. If this user needs elevated permissions,
+                add it to an administrative group within your organization.
+              </GridItem>
+            )
+          }
           <GridItem span={8}>
             <Field
               component={ReduxVerticalFormGroup}
@@ -188,6 +202,7 @@ class IDPForm extends React.Component {
           </GridItem>
 
           )}
+          {selectedIDP !== IDPformValues.HTPASSWD && (
           <GridItem span={8}>
             <Field
               component={ReduxFormDropdown}
@@ -198,6 +213,7 @@ class IDPForm extends React.Component {
               value={idpEdited.mapping_method}
             />
           </GridItem>
+          )}
           {SelectedProivderRequiredFields
         && (
           <SelectedProivderRequiredFields
