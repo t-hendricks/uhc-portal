@@ -21,7 +21,8 @@ const generatePassword = () => {
   const all = `${lower}${upper}${symbols}`;
 
   const getRandomIndex = (charset) => {
-    const result = new Uint8Array(1);
+    // A large range 2**32 gives a practically uniform distribution after modulo operation.
+    const result = new Uint32Array(1);
     crypto.getRandomValues(result);
     return result[0] % charset.length;
   };
