@@ -40,10 +40,6 @@ make \
   test \
   binaries
 
-# Comes from Vault, see
-# https://gitlab.cee.redhat.com/service/app-interface/-/blob/master/resources/jenkins/uhc/secrets.yaml
-export UHC_TOKEN=$TEST_SELENIUM_NOANYQUOTA_OFFLINE_TOKEN
-export UNATTENDED=1
 export FORCE_COLOR=1
 
 # Run the Selenium tests. If they get stuck, stop after realistic time. Jenkins
