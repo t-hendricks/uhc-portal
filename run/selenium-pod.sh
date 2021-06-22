@@ -139,18 +139,22 @@ http {
   access_log /dev/stdout;
   server {
     listen 8001;
-    location / {
+    location /apps/openshift {
       root /site;
-      index index.html;
+    }
+    location /openshift {
+      root /site/openshift;
+      # SPA - route everything to index.html
+      try_files /index.html =404;
     }
   }
 }
 .
 
 # Create a temporary directory for the content of the web site. The Insights
-# proxy expects the application files in the `/apps/openshift` directory of the
-# web site, and the index page in the `/openshift` directory. In the
-# development environment this is resolved by the Webpack development server,
+# proxy expects the static files in the `/apps/openshift` directory of the
+# web site, and the index page served for anything below `/openshift` directory.
+# In the development environment this is resolved by the Webpack development server,
 # but we won't be using that. Instead we create that directory structure and
 # use a simple web server that only handles static content.
 site_data=$(mktemp -d)
