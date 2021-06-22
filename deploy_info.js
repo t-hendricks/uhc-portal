@@ -19,7 +19,7 @@ const flags = yargs
 const getUpstreamRemote = async () => {
   const remoteUrls = await listGitRemotes(__dirname);
   for (const remoteName of Object.keys(remoteUrls)) {
-    if (remoteUrls[remoteName].match('.*gitlab.cee.redhat.com/service/uhc-portal.*')) {
+    if (remoteUrls[remoteName].match('.*gitlab\\.cee\\.redhat\\.com[:/]service/uhc-portal.*')) {
       return remoteName;
     }
   }
