@@ -101,7 +101,15 @@ function ReviewClusterSecreen({ formValues, isPending }) {
       </Title>
       <DescriptionList isHorizontal>
         {clusterSpecDescriptionItem({ name: 'network_configuration_toggle', formValues })}
-        {/* TODO: more networking options */}
+        { formValues.network_configuration_toggle === 'advanced' && (
+          <>
+            {clusterSpecDescriptionItem({ name: 'network_machine_cidr', formValues })}
+            {clusterSpecDescriptionItem({ name: 'network_service_cidr', formValues })}
+            {clusterSpecDescriptionItem({ name: 'network_pod_cidr', formValues })}
+            {clusterSpecDescriptionItem({ name: 'network_host_prefix', formValues })}
+            {clusterSpecDescriptionItem({ name: 'cluster_privacy', formValues })}
+          </>
+        )}
       </DescriptionList>
       <Title headingLevel="h3">
         Default machine pool

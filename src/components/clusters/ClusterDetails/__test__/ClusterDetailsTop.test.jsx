@@ -33,6 +33,10 @@ describe('<ClusterDetailsTop />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('should show refresh button', () => {
+    expect(wrapper.find('RefreshBtn').length).toEqual(1);
+  });
+
   it('should enable open console button when cluster has console url and cluster is not uninstalling', () => {
     const launchConsoleDisabled = wrapper.find(Button).at(0).props().isDisabled;
     expect(launchConsoleDisabled).toBeFalsy();
@@ -67,6 +71,7 @@ describe('<ClusterDetailsTop />', () => {
       expect(unarchiveButton.props().variant).toEqual('secondary');
       expect(unarchiveButton.props().children).toEqual('Unarchive');
       expect(wrapper.find('ClusterActionsDropdown').length).toEqual(0); // no cluster actions dropdown
+      expect(wrapper.find('RefreshBtn').length).toEqual(0); // no refresh button
       unarchiveButton.simulate('click');
       expect(functions.openModal).toBeCalledWith('unarchive-cluster', { subscriptionID: 'fake', name: cluster.name });
     });

@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UninstallProgress /> should render 1`] = `
+<Card>
+  <CardTitle>
+    <Title
+      className="card-title logview-title"
+      headingLevel="h2"
+      size="lg"
+    >
+      Cluster Uninstallation
+    </Title>
+  </CardTitle>
+  <CardBody>
+    <DescriptionList
+      className="uninstall-progress-list--description-list"
+    >
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          Add-on uninstallation
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <PendingIcon
+            className="uninstall-progress-list--icon-space-right"
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          Pending
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+      <DescriptionListGroup>
+        <DescriptionListTerm>
+          Cluster uninstallation
+        </DescriptionListTerm>
+        <DescriptionListDescription>
+          <PendingIcon
+            className="uninstall-progress-list--icon-space-right"
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          Pending
+        </DescriptionListDescription>
+      </DescriptionListGroup>
+    </DescriptionList>
+  </CardBody>
+</Card>
+`;

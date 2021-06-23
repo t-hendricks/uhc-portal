@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import {
   Button,
   PageSection,
-  Title,
-  Stack,
-  StackItem,
+  Split,
+  SplitItem,
   FormSelect,
   FormSelectOption,
   Text,
+  TextContent,
 } from '@patternfly/react-core';
+import {
+  PageHeader, PageHeaderTitle,
+} from '@redhat-cloud-services/frontend-components/PageHeader';
 import {
   Table, TableHeader, TableBody, expandable, cellWidth,
 } from '@patternfly/react-table';
-import { ArrowRightIcon } from '@patternfly/react-icons';
+import { AngleRightIcon, ArrowRightIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
 
+import produce from 'immer';
 import { has, get } from 'lodash';
 
-import PageTitle from '../common/PageTitle';
 import ExternalLink from '../common/ExternalLink';
 import links, {
   urls,
@@ -30,20 +32,12 @@ import links, {
 
 import DownloadButton from '../clusters/install/instructions/components/DownloadButton';
 import { detectOS } from '../clusters/install/instructions/components/DownloadAndOSSelection';
+import AlignRight from '../common/AlignRight';
+import DownloadsCategoryDropdown from './DownloadsCategoryDropdown';
+import DownloadsSection from './DownloadsSection';
 import PullSecretButtons from './PullSecretButtons';
 
 import './DownloadsPage.scss';
-
-const AlignRight = ({ children }) => (
-  <div className="downloads-align-right">
-    <span>
-      {children}
-    </span>
-  </div>
-);
-AlignRight.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 const columns = [
   {
@@ -103,7 +97,7 @@ export const architecturesForToolOS = (tool, OS) => (
 );
 
 const operatingSystemDropdown = (tool, OS, setOS) => (
-  <FormSelect value={OS} onChange={setOS} aria-label="select-os-dropdown">
+  <FormSelect value={OS} onChange={setOS} aria-label="Select OS dropdown">
     <FormSelectOption key="select" value="select" label="Select OS" isDisabled />
     {allOperatingSystemsForTool(tool).map(({ value, label }) => (
       <FormSelectOption key={value} value={value} label={label} />
@@ -148,22 +142,34 @@ const architectureDropdown = (tool, OS, architecture, setArchitecture) => {
 export const initialSelection = (tool, detectedOS) => {
   // Start with an OS and architecture chosen so that some users can
   // click Download directly without having to change selections.
-  const OS = detectedOS || allOperatingSystemsForTool(tool)[0].value;
-  const architecture = architecturesForToolOS(tool, OS)[0].value;
+  const OS = detectedOS || allOperatingSystemsForTool(tool)?.[0]?.value;
+  const architecture = architecturesForToolOS(tool, OS)?.[0]?.value;
   return { OS, architecture };
 };
 
-export const useToolRow = (expanded, tool, name) => {
-  const initial = initialSelection(tool, detectOS());
-  const [OS, setOS] = React.useState(initial.OS);
-  const [architecture, setArchitecture] = React.useState(initial.architecture);
+/**
+ *
+ * @param expanded - { [tool]: boolean }
+ * @param selections - { [tool]: { OS, architecture } }
+ * @param setSelections - callback to replace whole `selections` map
+ * @param tool - one of `tools`
+ * @param name - text for Name column
+ * @returns a row object suitable for <Table>.
+ */
+export const toolRow = (expanded, selections, setSelections, tool, name) => {
+  const { OS, architecture } = selections[tool];
+  // Callbacks for dropdowns:
   const onChangeOS = (newOS) => {
-    setOS(newOS);
+    let newArchitecture = architecture;
     // Invalidate arch selection if not compatible
     if (!has(urls, [tool, channels.STABLE, architecture, newOS])) {
       const optionsForOS = architecturesForToolOS(tool, newOS);
-      setArchitecture(optionsForOS.length > 1 ? 'select' : optionsForOS[0].value);
+      newArchitecture = optionsForOS.length > 1 ? 'select' : optionsForOS[0].value;
     }
+    setSelections({ ...selections, [tool]: { OS: newOS, architecture: newArchitecture } });
+  };
+  const onChangeArchitecture = (newArchitecture) => {
+    setSelections({ ...selections, [tool]: { OS, architecture: newArchitecture } });
   };
 
   const url = get(urls, [tool, channels.STABLE, architecture, OS]);
@@ -174,7 +180,7 @@ export const useToolRow = (expanded, tool, name) => {
       '',
       name,
       { title: operatingSystemDropdown(tool, OS, onChangeOS) },
-      { title: architectureDropdown(tool, OS, architecture, setArchitecture) },
+      { title: architectureDropdown(tool, OS, architecture, onChangeArchitecture) },
       {
         title: (
           <AlignRight><DownloadButton url={url} tool={tool} text="Download" /></AlignRight>
@@ -194,10 +200,10 @@ const descriptionRow = (parentIndex, child) => (
   }
 );
 
-const cliToolRows = expanded => [
-  useToolRow(expanded, tools.CLI_TOOLS, 'OpenShift command-line interface (oc)'),
+const cliToolRows = (expanded, selections, setSelections) => [
+  toolRow(expanded, selections, setSelections, tools.CLI_TOOLS, 'OpenShift command-line interface (oc)'),
   descriptionRow(0,
-    <>
+    <TextContent>
       <Text>
         Create applications and manage OpenShift projects from the command line
         using the OpenShift CLI (oc).
@@ -216,11 +222,11 @@ const cliToolRows = expanded => [
         </ExternalLink>
         .
       </Text>
-    </>),
+    </TextContent>),
 
   // TODO ocm-cli
 
-  useToolRow(expanded, tools.ROSA, 'Red Hat OpenShift Service on AWS (ROSA) command-line interface (rosa CLI)'),
+  toolRow(expanded, selections, setSelections, tools.ROSA, 'Red Hat OpenShift Service on AWS (ROSA) command-line interface (rosa CLI)'),
   descriptionRow(2,
     <Text>
       Manage your Red Hat OpenShift Service on AWS (ROSA) clusters
@@ -232,8 +238,8 @@ const cliToolRows = expanded => [
     </Text>),
 ];
 
-const devToolRows = expanded => [
-  useToolRow(expanded, tools.ODO, 'Developer-focused CLI for OpenShift (odo)'),
+const devToolRows = (expanded, selections, setSelections) => [
+  toolRow(expanded, selections, setSelections, tools.ODO, 'Developer-focused CLI for OpenShift (odo)'),
   descriptionRow(0,
     <Text>
       Write, build, and deploy applications on OpenShift with odo, a fast, iterative,
@@ -242,7 +248,7 @@ const devToolRows = expanded => [
       <ExternalLink href={links.ODO_DOCS}>Learn more</ExternalLink>
     </Text>),
 
-  useToolRow(expanded, tools.HELM, 'Helm 3 CLI'),
+  toolRow(expanded, selections, setSelections, tools.HELM, 'Helm 3 CLI'),
   descriptionRow(2,
     <Text>
       Define, install, and upgrade application packages as Helm charts using Helm 3,
@@ -254,11 +260,11 @@ const devToolRows = expanded => [
   // TODO rhoas
 ];
 
-const installationRows = expanded => [
-  useToolRow(expanded, tools.INSTALLER, 'OpenShift Installer'),
+const installationRows = (expanded, selections, setSelections) => [
+  toolRow(expanded, selections, setSelections, tools.INSTALLER, 'OpenShift Installer'),
   descriptionRow(0,
-    <Stack>
-      <StackItem>
+    <TextContent>
+      <Text>
         Download and extract your operating system&apos;s installation program and
         place the file in the directory where you&apos;ll store your configuration details.
         After installing OpenShift, create clusters on supported infrastructure using our
@@ -266,8 +272,8 @@ const installationRows = expanded => [
         <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
         {' '}
         as a guide.
-      </StackItem>
-      <StackItem>
+      </Text>
+      <Text>
         Learn how to deploy in the
         {' '}
         <Link to="/create">cloud</Link>
@@ -275,22 +281,22 @@ const installationRows = expanded => [
         {' '}
         <Link to="/create/datacenter">data center</Link>
         .
-      </StackItem>
-    </Stack>),
+      </Text>
+    </TextContent>),
 
-  useToolRow(expanded, tools.CRC, 'CodeReady Containers'),
+  toolRow(expanded, selections, setSelections, tools.CRC, 'CodeReady Containers'),
   descriptionRow(2,
-    <Stack>
-      <StackItem>
+    <TextContent>
+      <Text>
         Download and open the CodeReady Containers file to automatically start
         a step-by-step installation guide.
-      </StackItem>
-      <StackItem>
+      </Text>
+      <Text>
         <Link to="/create/local">Create a minimal cluster on your desktop</Link>
         {' '}
         for local development and testing.
-      </StackItem>
-    </Stack>),
+      </Text>
+    </TextContent>),
 ];
 
 const tokenColumns = [
@@ -328,7 +334,7 @@ const tokenRows = expanded => [
     ],
   },
   descriptionRow(0,
-    <>
+    <TextContent>
       <Text>
         An image pull secret provides authentication for the cluster to access services and
         registries which serve the container images for OpenShift components.
@@ -349,7 +355,7 @@ const tokenRows = expanded => [
         </ExternalLink>
         .
       </Text>
-    </>),
+    </TextContent>),
 
   {
     isOpen: !!expanded[expandKeys.TOKEN_OCM],
@@ -376,119 +382,183 @@ const tokenRows = expanded => [
     </Text>),
 ];
 
-const DownloadsPage = () => {
-  // {tool: isOpen}
-  const initialExpanded = {};
-  Object.keys(expandKeys).forEach((tool) => {
-    initialExpanded[tool] = false;
-  });
-  const [expanded, setExpanded] = useState(initialExpanded);
-  const onCollapse = (event, rowIndex, newOpen, rowData) => {
-    setExpanded({ ...expanded, [rowData.expandKey]: newOpen });
-  };
+class DownloadsPage extends React.Component {
+  static initialExpanded() {
+    const initial = {};
+    Object.keys(expandKeys).forEach((tool) => {
+      initial[tool] = false;
+    });
+    return initial;
+  }
 
-  return (
-    <>
-      <PageTitle title="Downloads" />
+  static initialSelections() {
+    const detectedOS = detectOS();
+    const initial = {};
+    Object.keys(tools).forEach((tool) => {
+      initial[tool] = initialSelection(tool, detectedOS);
+    });
+    return initial;
+  }
 
-      <PageSection>
-        <PageSection variant="light">
-          <Stack hasGutter>
-            <StackItem>
-              <Title headingLevel="h2">
-                Command-line interface (CLI) tools
-              </Title>
-            </StackItem>
+  state = {
+    selectedCategory: 'ALL', // one of `downloadsCategoryTitles` keys
+    expanded: DownloadsPage.initialExpanded(), // { [tool]: isOpen }
+    selections: DownloadsPage.initialSelections(), // { [tool]: { OS, architecture} }
+  }
 
-            <StackItem>
-              <Text>
-                Download command line tools to manage and work with OpenShift from your terminal.
-              </Text>
+  setCategory = (selectedCategory) => {
+    this.setState({ selectedCategory });
+  }
+
+  onCollapse = (event, rowIndex, newOpen, rowData) => {
+    this.setState(produce((draft) => {
+      draft.expanded[rowData.expandKey] = newOpen;
+    }));
+  }
+
+  setSelections = (selections) => {
+    this.setState({ selections });
+  }
+
+  render() {
+    const { selectedCategory, expanded, selections } = this.state;
+
+    const rowsByCategory = {
+      CLI: cliToolRows(expanded, selections, this.setSelections),
+      DEV: devToolRows(expanded, selections, this.setSelections),
+      INSTALLATION: installationRows(expanded, selections, this.setSelections),
+      TOKENS: tokenRows(expanded),
+    };
+    rowsByCategory.ALL = [].concat(...Object.values(rowsByCategory));
+
+    const expandCollapseAll = () => {
+      const shownKeys = rowsByCategory[selectedCategory].map(row => row.expandKey).filter(Boolean);
+      // Expand if at least one collapsed, collapse if all expanded.
+      const allExpanded = shownKeys.every(key => expanded[key]);
+      const newExpanded = !allExpanded;
+      this.setState(produce((draft) => {
+        shownKeys.forEach((key) => {
+          draft.expanded[key] = newExpanded;
+        });
+      }));
+    };
+
+    return (
+      <>
+        <PageHeader className="downloads-page-header">
+          <Split>
+            <SplitItem isFilled>
+              <PageHeaderTitle className="ocm-page-title" title="Downloads" />
+            </SplitItem>
+          </Split>
+          <Split className="subheader">
+            <SplitItem>
+              <DownloadsCategoryDropdown
+                selectedCategory={selectedCategory}
+                setCategory={this.setCategory}
+              />
+            </SplitItem>
+            <SplitItem>
+              <Button
+                variant="link"
+                className="expand-collapse-all"
+                icon={<AngleRightIcon />}
+                onClick={expandCollapseAll}
+              >
+                Expand/Collapse all
+              </Button>
+            </SplitItem>
+          </Split>
+        </PageHeader>
+
+        <PageSection>
+          <PageSection variant="light" padding={{ default: 'noPadding' }} className="downloads-page-body">
+            <DownloadsSection
+              selectedCategory={selectedCategory}
+              category="CLI"
+              description={(
+                <Text>
+                  Download command line tools to manage and work with OpenShift from your terminal.
+                </Text>
+                )}
+            >
               <Table
                 aria-label="CLI tools table"
                 cells={columns}
-                rows={cliToolRows(expanded)}
-                onCollapse={onCollapse}
+                rows={rowsByCategory.CLI}
+                onCollapse={this.onCollapse}
               >
                 <TableHeader />
                 <TableBody />
               </Table>
-            </StackItem>
+            </DownloadsSection>
 
-            <StackItem>
-              <Title headingLevel="h2">
-                Developer tools
-              </Title>
-            </StackItem>
-
-            <StackItem>
-              <Text>
-                Access all the powers of Kubernetes through a simplified workflow with
-                Red Hat’s developer tools.
-                {' '}
-                <ExternalLink href="https://developers.redhat.com/topics/developer-tools">Learn more</ExternalLink>
-              </Text>
+            <DownloadsSection
+              selectedCategory={selectedCategory}
+              category="DEV"
+              description={(
+                <Text>
+                  Access all the powers of Kubernetes through a simplified workflow with
+                  Red Hat’s developer tools.
+                  {' '}
+                  <ExternalLink href="https://developers.redhat.com/topics/developer-tools">Learn more</ExternalLink>
+                </Text>
+                )}
+            >
               <Table
                 aria-label="Developer tools table"
                 cells={columns}
-                rows={devToolRows(expanded)}
-                onCollapse={onCollapse}
+                rows={rowsByCategory.DEV}
+                onCollapse={this.onCollapse}
               >
                 <TableHeader />
                 <TableBody />
               </Table>
-            </StackItem>
+            </DownloadsSection>
 
-            <StackItem>
-              <Title headingLevel="h2">
-                OpenShift installation
-              </Title>
-            </StackItem>
-
-            <StackItem>
-              <Text>
-                Install OpenShift based on your infrastructure.
-                Start by downloading the installer, then follow the steps provided
-                within your infrastructure&apos;s tab on the
-                {' '}
-                <Link to="/create">create cluster</Link>
-                {' '}
-                page to install an OpenShift cluster.
-              </Text>
+            <DownloadsSection
+              selectedCategory={selectedCategory}
+              category="INSTALLATION"
+              description={(
+                <Text>
+                  Install OpenShift based on your infrastructure.
+                  Start by downloading the installer, then follow the steps provided
+                  within your infrastructure&apos;s tab on the
+                  {' '}
+                  <Link to="/create">create cluster</Link>
+                  {' '}
+                  page to install an OpenShift cluster.
+                </Text>
+              )}
+            >
               <Table
                 aria-label="OpenShift installation table"
                 cells={columns}
-                rows={installationRows(expanded)}
-                onCollapse={onCollapse}
+                rows={rowsByCategory.INSTALLATION}
+                onCollapse={this.onCollapse}
               >
                 <TableHeader />
                 <TableBody />
               </Table>
-            </StackItem>
+            </DownloadsSection>
 
-            <StackItem>
-              <Title headingLevel="h2">
-                Tokens
-              </Title>
-            </StackItem>
-
-            <StackItem>
+            <DownloadsSection category="TOKENS" selectedCategory={selectedCategory}>
               <Table
                 aria-label="Tokens table"
                 cells={tokenColumns}
-                rows={tokenRows(expanded)}
-                onCollapse={onCollapse}
+                rows={rowsByCategory.TOKENS}
+                onCollapse={this.onCollapse}
               >
                 <TableHeader />
                 <TableBody />
               </Table>
-            </StackItem>
-          </Stack>
+            </DownloadsSection>
+          </PageSection>
         </PageSection>
-      </PageSection>
-    </>
-  );
-};
+      </>
+    );
+  }
+}
 DownloadsPage.propTypes = {
 };
 

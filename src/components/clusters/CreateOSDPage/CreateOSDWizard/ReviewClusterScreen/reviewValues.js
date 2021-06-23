@@ -1,5 +1,11 @@
 import { billingModels } from '../../../../../common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
+import {
+  MACHINE_CIDR_PLACEHOLDER,
+  SERVICE_CIDR_PLACEHOLDER,
+  HOST_PREFIX_PLACEHOLDER,
+  podCidrPlaceholder,
+} from '../../CreateOSDForm/FormSections/NetworkingSection/networkingPlaceholders';
 
 /**
  * reviewValues structure - key: field name
@@ -77,6 +83,10 @@ const reviewValues = {
   },
   network_configuration_toggle: {
     title: 'Networking',
+    values: {
+      basic: 'Basic',
+      advanced: 'Advanced',
+    },
   },
   machine_type: {
     title: 'Node instance type',
@@ -96,6 +106,50 @@ const reviewValues = {
         return `${value} (× 3 zones = ${value * 3} compute nodes)`;
       }
       return value;
+    },
+  },
+  network_machine_cidr: {
+    title: 'Machine CIDR',
+    valueTransform: (value) => {
+      if (value) {
+        return value;
+      }
+      return `${MACHINE_CIDR_PLACEHOLDER} (default)`;
+    },
+  },
+  network_service_cidr: {
+    title: 'Service CIDR',
+    valueTransform: (value) => {
+      if (value) {
+        return value;
+      }
+      return `${SERVICE_CIDR_PLACEHOLDER} (default)`;
+    },
+  },
+  network_pod_cidr: {
+    title: 'Pod CIDR',
+    valueTransform: (value, allValues) => {
+      if (value) {
+        return value;
+      }
+      return `${podCidrPlaceholder(allValues.cloud_provider)} (default)`;
+    },
+  },
+  network_host_prefix: {
+    title: 'Host prefix',
+    valueTransform: (value) => {
+      if (value) {
+        return `/${value}`;
+      }
+      return `${HOST_PREFIX_PLACEHOLDER} (default)`;
+    },
+  },
+  cluster_privacy: {
+    title: 'Cluster privacy',
+    values: {
+      external: 'Public',
+      internal: 'Private',
+      undefined: 'Public',
     },
   },
 };

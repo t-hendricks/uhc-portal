@@ -6,59 +6,71 @@ import {
   TextArea,
   InputGroup,
   InputGroupText,
+  Button,
 } from '@patternfly/react-core';
+import {
+  EyeIcon,
+  EyeSlashIcon,
+} from '@patternfly/react-icons';
 import PopoverHint from '../PopoverHint';
 
 // To be used inside redux-form Field component.
-function ReduxVerticalFormGroup(props) {
-  const {
-    label,
-    helpText,
-    extendedHelpText,
-    isRequired,
-    meta: { error, touched },
-    input,
-    disabled,
-    isTextArea,
-    showHelpTextOnError,
-    inputPrefix,
-    formGroupClass,
-    ...extraProps // any extra props not specified above
-  } = props;
+class ReduxVerticalFormGroup extends React.Component {
+  state = {
+    inputValueHidden: true,
+  }
 
-  const InputComponent = isTextArea ? TextArea : TextInput;
-  // TextArea and TextInput has different ways to specify if the component is disabled
-  // this forces us to do this trick:
-  const disabledPropName = isTextArea ? 'disabled' : 'isDisabled';
-  const disabledProp = {
-    [disabledPropName]: disabled,
-  };
+  render() {
+    const {
+      label,
+      helpText,
+      extendedHelpText,
+      isRequired,
+      meta: { error, touched },
+      input,
+      disabled,
+      isTextArea,
+      showHelpTextOnError,
+      inputPrefix,
+      formGroupClass,
+      isPassword = false,
+      ...extraProps // any extra props not specified above
+    } = this.props;
 
-  const helperTextInvalid = () => {
-    if (touched && error) {
-      if (showHelpTextOnError) {
-        return `${helpText} ${error}`;
+    const { inputValueHidden } = this.state;
+    const InputComponent = isTextArea ? TextArea : TextInput;
+    // TextArea and TextInput has different ways to specify if the component is disabled
+    // this forces us to do this trick:
+    const disabledPropName = isTextArea ? 'disabled' : 'isDisabled';
+    const disabledProp = {
+      [disabledPropName]: disabled,
+    };
+
+    const helperTextInvalid = () => {
+      if (touched && error) {
+        if (showHelpTextOnError) {
+          return `${helpText} ${error}`;
+        }
+        return error;
       }
-      return error;
-    }
-    return '';
-  };
+      return '';
+    };
 
-  const isValid = !(touched && error);
+    const isValid = !(touched && error);
 
-  return (
-    <FormGroup
-      fieldId={input.name}
-      validated={isValid ? 'default' : 'error'}
-      label={label}
-      helperText={helpText}
-      helperTextInvalid={helperTextInvalid()}
-      isRequired={isRequired}
-      labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
-      className={formGroupClass}
-    >
-      <InputGroup className={isValid && 'valid-field'}>
-        {
+    return (
+      <FormGroup
+        fieldId={input.name}
+        validated={isValid ? 'default' : 'error'}
+        label={label}
+        helperText={helpText}
+        helperTextInvalid={helperTextInvalid()}
+        isRequired={isRequired}
+        labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
+        className={formGroupClass}
+      >
+        <InputGroup className={isValid && 'valid-field'}>
+          {
           inputPrefix
             ? (
               <InputGroupText>
@@ -66,19 +78,39 @@ function ReduxVerticalFormGroup(props) {
               </InputGroupText>
             ) : null
         }
-        <InputComponent
-          value={input.value}
-          isRequired={isRequired}
-          id={input.name}
-          name={input.name}
-          validated={isValid ? 'default' : 'error'}
-          {...disabledProp}
-          {...input}
-          {...extraProps}
-        />
-      </InputGroup>
-    </FormGroup>
-  );
+          <InputComponent
+            value={input.value}
+            isRequired={isRequired}
+            id={input.name}
+            name={input.name}
+            validated={isValid ? 'default' : 'error'}
+            {...disabledProp}
+            {...input}
+            {...extraProps}
+            type={isPassword && inputValueHidden ? 'password' : extraProps.type}
+          />
+          {
+            isPassword && (
+              <Button
+                aria-label={inputValueHidden ? 'show-password' : 'hide-password'}
+                variant="control"
+                onClick={() => this.setState(
+                  prevState => ({ inputValueHidden: !prevState.inputValueHidden }),
+                )}
+              >
+                { inputValueHidden
+                  ? (
+                    <EyeSlashIcon />
+                  ) : (
+                    <EyeIcon />
+                  )}
+              </Button>
+            )
+          }
+        </InputGroup>
+      </FormGroup>
+    );
+  }
 }
 ReduxVerticalFormGroup.defaultProps = {
   helpText: '',
@@ -100,6 +132,7 @@ ReduxVerticalFormGroup.propTypes = {
   isRequired: PropTypes.bool,
   // Render a textarea instead of a textinput?
   isTextArea: PropTypes.bool,
+  isPassword: PropTypes.bool,
   // plus other props passed from the <Field> component to the control (extraProps,
   // incl. children)...
   showHelpTextOnError: PropTypes.bool,

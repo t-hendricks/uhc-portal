@@ -50,11 +50,12 @@ const Support = ({
         </div>
       </CardTitle>
       <CardBody className="ocm-c-support-notification-contacts__card--body">
-        <AddNotificationContactSection
-          canEdit={canEdit}
-          openModal={openModal}
-          isDisabled={isDisabled}
-        />
+        {!isDisabled && (
+          <AddNotificationContactSection
+            canEdit={canEdit}
+            openModal={openModal}
+          />
+        )}
         <NotificationContactsCard
           subscriptionID={subscriptionID}
           isDisabled={!canEdit || isDisabled}

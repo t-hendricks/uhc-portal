@@ -205,6 +205,20 @@ export const mockClusterAddOns = {
   ],
 };
 
+export const mockClusterAddOnsWithExternalResources = {
+  items: [
+    {
+      kind: 'AddOnLink',
+      href: '/api/clusters_mgmt/v1/addons/cluster-logging-operator',
+      id: 'cluster-logging-operator',
+      addon: {
+        id: 'cluster-logging-operator',
+      },
+      state: 'ready',
+    },
+  ],
+};
+
 export const mockClusterAddOnsParams = {
   items: [
     {

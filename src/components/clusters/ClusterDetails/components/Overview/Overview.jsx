@@ -21,6 +21,7 @@ import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsa
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
 import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
 import InstallProgress from '../../../common/InstallProgress/InstallProgress';
+import UninstallProgress from '../../../common/UninstallProgress';
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
 import CostBreakdownCard from './CostBreakdownCard';
 import isAssistedInstallSubscription, { isUninstalledAICluster } from '../../../../../common/isAssistedInstallerCluster';
@@ -76,20 +77,34 @@ class Overview extends React.Component {
                              || cluster.state === clusterStates.UNINSTALLING;
 
     const showInsightsAdvisor = insightsData?.status === 200
-                              && insightsData?.data && !cluster.managed;
+                              && insightsData?.data && !cluster.managed
+                              && !isDeprovisioned && !isArchived;
     const showResourceUsage = !isHibernating(cluster.state)
       && !isAssistedInstallSubscription(cluster.subscription)
-      && !shouldShowLogs(cluster) && !isDeprovisioned;
+      && !shouldShowLogs(cluster) && !isDeprovisioned && !isArchived;
     const showCostBreakdown = !cluster.managed && userAccess.fulfilled
-      && userAccess.data !== undefined && userAccess.data === true;
+      && userAccess.data !== undefined && userAccess.data === true
+      && !isDeprovisioned && !isArchived;
     const showSidePanel = showInsightsAdvisor || showCostBreakdown;
     const showAssistedInstallerDetailCard = cluster.aiCluster && !isArchived
       && isAssistedInstallSubscription(cluster.subscription);
     const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
+    const showSubscriptionSettings = !isDeprovisioned && !isArchived;
 
     if (isHibernating(cluster.state)) {
       topCard = (
         <HibernatingClusterCard cluster={cluster} openModal={openModal} />
+      );
+    } else if (cluster.state === clusterStates.UNINSTALLING) {
+      topCard = !isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster) && (
+      <>
+        <UninstallProgress cluster={cluster}>
+          <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
+          <InstallationLogView
+            cluster={cluster}
+          />
+        </UninstallProgress>
+      </>
       );
     } else {
       topCard = !isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster) && (
@@ -98,7 +113,6 @@ class Overview extends React.Component {
             <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
             <InstallationLogView
               cluster={cluster}
-              isExpandable={cluster.state !== clusterStates.UNINSTALLING}
             />
           </InstallProgress>
         </>
@@ -163,7 +177,7 @@ class Overview extends React.Component {
               </CardBody>
             </Card>
             )}
-            <SubscriptionSettings />
+            {showSubscriptionSettings && <SubscriptionSettings />}
           </Grid>
         </GridItem>
         {showSidePanel && (

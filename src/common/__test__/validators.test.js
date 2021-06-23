@@ -21,6 +21,8 @@ import validators, {
   validateNumericInput,
   validateGCPSubnet,
   validateGCPKMSServiceAccount,
+  validateHTPasswdPassword,
+  validateHTPasswdUsername,
 } from '../validators';
 import fixtures from './validators.fixtures';
 
@@ -553,4 +555,21 @@ test('GCP KMSService Account', () => {
   expect(validateGCPKMSServiceAccount(inValidValueTest2)).toBe(expectedMsg);
   expect(validateGCPKMSServiceAccount(validValueTest1)).toBe(undefined);
   expect(validateGCPKMSServiceAccount(validValueTest2)).toBe(undefined);
+});
+
+test('HTPasswd password', () => {
+  expect(validateHTPasswdPassword('SOMETHINGsomething1')).toBeUndefined();
+  expect(validateHTPasswdPassword('something')).toBe('Password must be at least 14 characters long.');
+  expect(validateHTPasswdPassword('somethingsomething')).toBe('Password must contain uppercase letters.');
+  expect(validateHTPasswdPassword('SOMETHINGSOMEHING')).toBe('Password must contain lowercase letters.');
+  expect(validateHTPasswdPassword('SOMETHINGsomething')).toBe('Password must contain numbers and/or symbols.');
+  expect(validateHTPasswdPassword('something\u00D5')).toBe('Password must only contain printable ASCII characters.');
+  expect(validateHTPasswdPassword('something something')).toBe('Password must not contain whitespaces.');
+});
+
+test('HTPasswd username', () => {
+  expect(validateHTPasswdUsername('username1234')).toBeUndefined();
+  expect(validateHTPasswdUsername('username%')).toBe('Username contains disallowed characters.');
+  expect(validateHTPasswdUsername('username:')).toBe('Username contains disallowed characters.');
+  expect(validateHTPasswdUsername('username/')).toBe('Username contains disallowed characters.');
 });

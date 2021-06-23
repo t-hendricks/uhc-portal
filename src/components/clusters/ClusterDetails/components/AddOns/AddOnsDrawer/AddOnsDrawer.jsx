@@ -35,6 +35,7 @@ import AddOnsParameterList from './AddOnsDrawerParameterList';
 import AddOnsPrimaryButton from './AddOnsDrawerPrimaryButton';
 import AddOnsMetaDataItem from './AddOnsDrawerMetadataItem';
 import AddOnsRequirementContent from './AddOnsDrawerRequirementContent';
+import AddOnsFailedBox from './AddOnsDrawerFailedBox';
 
 class AddOnsDrawer extends React.Component {
   state = {
@@ -200,7 +201,7 @@ class AddOnsDrawer extends React.Component {
 
     // panel content for selected active card
     const panelContent = (
-      <DrawerPanelContent>
+      <DrawerPanelContent className="ocm-c-addons__drawer--panel-content">
         <DrawerHead className="ocm-c-addons__drawer--header">
           <Grid hasGutter>
             <GridItem span={3}>
@@ -227,6 +228,9 @@ class AddOnsDrawer extends React.Component {
               clusterAddOns,
               clusterMachinePools,
             )}
+            installedAddOn={installedAddOn}
+          />
+          <AddOnsFailedBox
             installedAddOn={installedAddOn}
           />
         </DrawerPanelBody>
@@ -296,7 +300,7 @@ class AddOnsDrawer extends React.Component {
     return (
       <>
         <Drawer isExpanded={isDrawerExpanded} isInline className="ocm-addons-tab--addon-drawer pf-m-inline-on-2xl">
-          <DrawerContent panelContent={panelContent} className="pf-m-no-background">
+          <DrawerContent panelContent={panelContent} className="pf-m-no-background ocm-c-addons__drawer--panel-gallery">
             <DrawerContentBody>
               <Gallery hasGutter>
                 { addOnsList.map(addOn => (

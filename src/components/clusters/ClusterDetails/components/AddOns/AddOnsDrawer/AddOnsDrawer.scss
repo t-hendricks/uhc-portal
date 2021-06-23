@@ -2,11 +2,19 @@
   padding-top: 24px !important;
 }
 
-.ocm-c-addons__drawer {
+body .ocm-c-addons__drawer {
   &--header {
     img {
       height: 50px;
     }
+  }
+
+  &--panel-content {
+    z-index: 2;
+  }
+
+  &--panel-gallery {
+    z-index: 1;
   }
 }
 
@@ -38,5 +46,15 @@
 
   &--drawer-panel-body {
     padding-top: 24px;
+  }
+}
+
+.ocm-addons-failed {
+  &--error-box {
+    margin-top: 24px;
+  }
+
+  &--error-button {
+    font-size: 14px !important;
   }
 }

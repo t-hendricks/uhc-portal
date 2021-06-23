@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DownloadsCategoryDropdown /> should render 1`] = `
+<FormSelect
+  aria-label="select-category"
+  className=""
+  isDisabled={false}
+  isRequired={false}
+  onBlur={[Function]}
+  onChange={[Function]}
+  onFocus={[Function]}
+  ouiaSafe={true}
+  validated="default"
+  value="DEV"
+>
+  <FormSelectOption
+    key="ALL"
+    label="All categories"
+    value="ALL"
+  />
+  <FormSelectOption
+    key="CLI"
+    label="Command-line interface (CLI) tools"
+    value="CLI"
+  />
+  <FormSelectOption
+    key="DEV"
+    label="Developer tools"
+    value="DEV"
+  />
+  <FormSelectOption
+    key="INSTALLATION"
+    label="OpenShift installation"
+    value="INSTALLATION"
+  />
+  <FormSelectOption
+    key="TOKENS"
+    label="Tokens"
+    value="TOKENS"
+  />
+</FormSelect>
+`;
