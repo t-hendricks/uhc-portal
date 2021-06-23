@@ -41,6 +41,8 @@ const getRandomID = () => {
   return `${id}`;
 };
 
+const randAlphanumString = length => btoa(Math.random()).substr(5, length);
+
 const omitEmptyFields = (obj) => {
   const objToClean = obj;
   Object.keys(objToClean).forEach((key) => {
@@ -168,6 +170,7 @@ export {
   multiInputToCleanArray,
   scrollToTop,
   getRandomID,
+  randAlphanumString,
   noQuotaTooltip,
   noMachineTypes,
   trackPendo,

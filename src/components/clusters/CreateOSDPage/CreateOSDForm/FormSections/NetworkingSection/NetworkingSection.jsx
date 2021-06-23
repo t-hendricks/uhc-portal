@@ -10,6 +10,14 @@ import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons
 import validators from '../../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import InstallToVPC from './InstallToVPC';
+
+import {
+  MACHINE_CIDR_PLACEHOLDER,
+  SERVICE_CIDR_PLACEHOLDER,
+  HOST_PREFIX_PLACEHOLDER,
+  podCidrPlaceholder,
+} from './networkingPlaceholders';
+
 import './NetworkingSection.scss';
 
 const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
@@ -166,7 +174,7 @@ function NetworkingSection({
                 component={ReduxVerticalFormGroup}
                 name="network_machine_cidr"
                 label="Machine CIDR"
-                placeholder="10.0.0.0/16"
+                placeholder={MACHINE_CIDR_PLACEHOLDER}
                 type="text"
                 validate={machineCidrValidators}
                 disabled={pending}
@@ -181,7 +189,7 @@ function NetworkingSection({
                 component={ReduxVerticalFormGroup}
                 name="network_service_cidr"
                 label="Service CIDR"
-                placeholder="172.30.0.0/16"
+                placeholder={SERVICE_CIDR_PLACEHOLDER}
                 type="text"
                 validate={serviceCidrValidators}
                 disabled={pending}
@@ -196,7 +204,7 @@ function NetworkingSection({
                 component={ReduxVerticalFormGroup}
                 name="network_pod_cidr"
                 label="Pod CIDR"
-                placeholder={`10.128.0.0/${cloudProviderID === 'aws' ? '16' : '14'}`}
+                placeholder={podCidrPlaceholder(cloudProviderID)}
                 type="text"
                 validate={podCidrValidators}
                 disabled={pending}
@@ -211,7 +219,7 @@ function NetworkingSection({
                 component={ReduxVerticalFormGroup}
                 name="network_host_prefix"
                 label="Host prefix"
-                placeholder="/23"
+                placeholder={HOST_PREFIX_PLACEHOLDER}
                 type="text"
                 format={formatHostPrefix}
                 normalize={normalizeHostPrefix}
@@ -224,7 +232,9 @@ function NetworkingSection({
             </GridItem>
             { showClusterPrivacy && (
               <>
-                <Title headingLevel="h4" size="xl" className="privacy-heading">Cluster privacy</Title>
+                <GridItem span={12}>
+                  <Title headingLevel="h4" size="xl" className="privacy-heading">Cluster privacy</Title>
+                </GridItem>
                 <GridItem span={8}>
                   <p>
                     Clusters may be created initially with control plane API endpoint

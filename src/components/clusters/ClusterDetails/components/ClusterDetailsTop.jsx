@@ -54,6 +54,12 @@ function ClusterDetailsTop(props) {
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
   const isDeprovisioned = get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+  const canUpgradeTrial = cluster.state === clusterStates.READY && cluster.canEdit;
+  const trialExpirationUpgradeProps = canUpgradeTrial ? {
+    trialExpiration: true,
+    openModal,
+    cluster,
+  } : {};
 
   const openIDPModal = () => {
     openModal('create-identity-provider');
@@ -163,7 +169,7 @@ function ClusterDetailsTop(props) {
                 Unarchive
               </Button>
             )}
-            { !isDeprovisioned && (
+            { !isDeprovisioned && !isArchived && (
               <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />
             )}
           </span>
@@ -186,9 +192,7 @@ function ClusterDetailsTop(props) {
       && (
       <ExpirationAlert
         expirationTimestamp={trialEndDate}
-        trialExpiration
-        openModal={openModal}
-        cluster={cluster}
+        {...trialExpirationUpgradeProps}
       />
       )}
       <SubscriptionCompliancy

@@ -26,6 +26,7 @@ import CloudProviderScreen from './CloudProviderScreen';
 import ClusterSettingsScreen from './ClusterSettingsScreen';
 import DefaultMachinePoolScreen from './DefaultMachinePoolScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
+import NetworkScreen from './NetworkScreen';
 
 import wizardConnector from './WizardConnector';
 
@@ -112,7 +113,7 @@ class CreateOSDWizard extends React.Component {
         ],
         enableNext: isValid,
       },
-      { name: 'Networking', component: <p>Step 3 content</p> },
+      { name: 'Networking', component: <NetworkScreen /> },
       { name: 'Default machine pool', component: <DefaultMachinePoolScreen />, enableNext: isValid },
       {
         name: 'Review and create',

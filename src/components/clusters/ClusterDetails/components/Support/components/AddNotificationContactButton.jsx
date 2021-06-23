@@ -17,10 +17,9 @@ const addBtn = (isDisabled, openModal) => (
 const AddNotificationContactButton = ({
   canEdit,
   openModal,
-  isDisabled = false,
 }) => (
   canEdit
-    ? addBtn(isDisabled, openModal)
+    ? addBtn(false, openModal)
     : (
       <Tooltip
         content="You do not have permission to add a Notification Contact. Only cluster owners and organization administrators can add them."
@@ -35,7 +34,6 @@ const AddNotificationContactButton = ({
 AddNotificationContactButton.propTypes = {
   canEdit: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
-  isDisabled: PropTypes.bool,
 };
 
 export default AddNotificationContactButton;

@@ -100,6 +100,19 @@ class InsightsRuleDetails extends Component {
     openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId });
   }
 
+  onVoteOnRule = async (clusterUUID, ruleId, vote) => {
+    const {
+      voteOnRule,
+      clusterDetails,
+      fetchReportData,
+      match,
+    } = this.props;
+    const { errorKey } = match.params;
+
+    await voteOnRule(clusterUUID, ruleId, vote);
+    fetchReportData(clusterUUID, ruleId, errorKey, get(clusterDetails, 'cluster.managed', false));
+  }
+
   refresh() {
     const {
       match,
@@ -135,7 +148,6 @@ class InsightsRuleDetails extends Component {
       reportDetails,
       history,
       match,
-      voteOnRule,
       setGlobalError,
       enableRule,
     } = this.props;
@@ -144,6 +156,7 @@ class InsightsRuleDetails extends Component {
 
     const requestedSubscriptionID = match.params.subscriptionID;
     const requestedReportID = match.params.reportId.replace(/\|/g, '.');
+    const externalId = get(clusterDetails, 'cluster.external_id');
 
     // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
     // the redux state will have the data for the previous cluster. We want to ensure we only
@@ -229,9 +242,9 @@ class InsightsRuleDetails extends Component {
           rule={reportDetails.report}
           pending={clusterDetails.pending || reportDetails.pending}
           refreshFunc={this.refresh}
-          voteOnRule={voteOnRule}
+          voteOnRule={this.onVoteOnRule}
           disableRule={this.onRuleDisable}
-          enableRule={ruleId => enableRule(cluster.external_id, ruleId)}
+          enableRule={ruleId => enableRule(externalId, ruleId)}
         >
           <TabsRow
             reasonTabRef={this.reasonTabRef}
@@ -254,7 +267,7 @@ class InsightsRuleDetails extends Component {
                     </div>
                   </CardBody>
                   <CardFooter>
-                    <Button variant="link" isInline onClick={() => enableRule(currentRuleId)}>
+                    <Button variant="link" isInline onClick={() => enableRule(externalId, currentRuleId)}>
                       Enable recommendation
                     </Button>
                   </CardFooter>

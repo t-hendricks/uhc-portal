@@ -5,7 +5,7 @@ import { Button, Form, FormGroup } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import { LevelUpAltIcon } from '@patternfly/react-icons';
 import Modal from '../../../../../common/Modal/Modal';
-import { getParameterValue, hasParameters, quotaCostOptions } from '../AddOnsHelper';
+import { getParameterValue, getParameters, quotaCostOptions } from '../AddOnsHelper';
 import {
   ReduxCheckbox,
   ReduxFormDropdown,
@@ -169,6 +169,7 @@ class AddOnsParametersModal extends Component {
       isOpen,
       handleSubmit,
       addOn,
+      cluster,
       isUpdateForm,
       submitClusterAddOnResponse,
       pristine,
@@ -195,7 +196,7 @@ class AddOnsParametersModal extends Component {
         )}
 
         <Form id={`form-addon-${addOn.id}`}>
-          {hasParameters(addOn) && addOn.parameters.items.map(param => (
+          {getParameters(addOn, cluster).map(param => (
             <FormGroup
               key={param.id}
             >
