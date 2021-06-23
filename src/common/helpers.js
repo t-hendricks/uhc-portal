@@ -90,10 +90,10 @@ const helpers = {
   nestedIsEmpty,
 };
 
-const trackPendo = (event, cloudProviderID) => {
+const trackPendo = (event, pendoID) => {
   if (window.pendo && window.pendo.isReady && window.pendo.isReady() && window.pendo.track) {
     window.pendo.track(event, {
-      type: cloudProviderID,
+      type: pendoID || window.location.pathname,
     });
   }
 };

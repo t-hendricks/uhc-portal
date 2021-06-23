@@ -14,9 +14,14 @@ const texts = {
 };
 
 const pendoEvents = {
-  [tools.CRC]: 'OCP-Download-CRC',
   [tools.CLI_TOOLS]: 'OCP-Download-CLITools',
+  [tools.CRC]: 'OCP-Download-CRC',
+  [tools.HELM]: 'Download-HELM-CLI',
   [tools.INSTALLER]: 'OCP-Download-Installer',
+  [tools.OCM]: 'Download-OCM-CLI',
+  [tools.ODO]: 'Download-ODO-CLI',
+  [tools.RHOAS]: 'Download-RHOAS-CLI',
+  [tools.ROSA]: 'Download-ROSA-CLI',
 };
 
 const DownloadButton = ({
