@@ -123,7 +123,7 @@ const architectureDropdown = (tool, OS, architecture, setArchitecture) => {
   const optionsForOS = architecturesForToolOS(tool, OS);
   return (
     <FormSelect
-      aria-label="select-arch-dropdown"
+      aria-label="Select architecture dropdown"
       value={architecture}
       onChange={setArchitecture}
       isDisabled={optionsForOS.length <= 1}
