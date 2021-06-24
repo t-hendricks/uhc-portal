@@ -64,11 +64,15 @@ const requirementFulfilledByResource = (myResource, requirement) => {
             clusterValue = get(myResource, 'nodes.autoscale_compute.max_replicas');
             break;
           }
+          case 'aws.sts.enabled': {
+            clusterValue = get(myResource, 'aws.sts.enabled', false);
+            break;
+          }
           case 'compute.memory':
           case 'compute.cpu': {
             // In these cases we don't want to deal with checking the requirement at all in the UI,
             // instead we just allow it through and let  the backend deal with it.
-            clusterValue = requiredValue;
+            return true;
           }
         }
       }
