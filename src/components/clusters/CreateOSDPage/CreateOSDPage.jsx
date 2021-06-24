@@ -25,7 +25,7 @@ import { shouldRefetchQuota } from '../../../common/helpers';
 import PageTitle from '../../common/PageTitle';
 import ErrorModal from '../../common/ErrorModal';
 import ErrorBox from '../../common/ErrorBox';
-import Breadcrumbs from '../common/Breadcrumbs';
+import Breadcrumbs from '../../common/Breadcrumbs';
 import CreateOSDForm from './CreateOSDForm';
 import './CreateOSDPage.scss';
 

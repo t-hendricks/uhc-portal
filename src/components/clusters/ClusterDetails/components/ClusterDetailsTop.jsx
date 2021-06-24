@@ -16,7 +16,7 @@ import getClusterName from '../../../../common/getClusterName';
 import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
 import { isUninstalledAICluster } from '../../../../common/isAssistedInstallerCluster';
 import ExpirationAlert from './ExpirationAlert';
-import Breadcrumbs from '../../common/Breadcrumbs';
+import Breadcrumbs from '../../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
 import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 import TermsAlert from './TermsAlert';

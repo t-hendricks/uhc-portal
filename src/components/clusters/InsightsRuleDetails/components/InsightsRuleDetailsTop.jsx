@@ -11,7 +11,7 @@ import { DateFormat } from '@redhat-cloud-services/frontend-components/DateForma
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import getClusterName from '../../../../common/getClusterName';
 import ReportActionsDropdown from './ReportActionsDropdown';
-import Breadcrumbs from '../../common/Breadcrumbs';
+import Breadcrumbs from '../../../common/Breadcrumbs';
 import DisabledTooltip from '../../ClusterDetails/components/Insights/DisabledTooltip';
 import { appendCrParamToDocLinks } from '../../ClusterDetails/components/Insights/helpers';
 
