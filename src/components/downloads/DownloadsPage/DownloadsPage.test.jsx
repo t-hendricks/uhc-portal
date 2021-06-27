@@ -10,7 +10,7 @@ import DownloadsPage, {
 } from './DownloadsPage';
 import {
   tools, operatingSystems, architectures, urls,
-} from '../../common/installLinks';
+} from '../../../common/installLinks';
 
 const { linux, mac, windows } = operatingSystems;
 const {
@@ -94,7 +94,8 @@ describe('initialSelection', () => {
 
 describe('<DownloadsPage>', () => {
   it('renders', () => {
-    const wrapper = shallow(<DownloadsPage />);
+    const token = { auths: { foo: 'bar' } };
+    const wrapper = shallow(<DownloadsPage token={token} getAuthToken={() => {}} />);
     expect(wrapper).toMatchSnapshot();
   });
 });
