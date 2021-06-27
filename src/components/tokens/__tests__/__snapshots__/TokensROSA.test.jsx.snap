@@ -3,33 +3,322 @@
 exports[`<TokensROSA /> Renders loading screen 1`] = `
 <Fragment>
   <PageHeader>
+    <Breadcrumbs
+      path={
+        Array [
+          Object {
+            "label": "Downloads",
+            "path": "/downloads",
+          },
+          Object {
+            "label": "OpenShift Cluster Manager API Token",
+          },
+        ]
+      }
+    />
     <PageHeaderTitle
-      title="Red Hat OpenShift Service on AWS"
+      title="OpenShift Cluster Manager API Token"
     />
   </PageHeader>
   <PageSection>
-    <Card
-      className="ins-c-card__skeleton"
+    <Stack
+      hasGutter={true}
     >
-      <CardTitle>
-        <Skeleton
-          isDark={false}
-          size="md"
-        />
-      </CardTitle>
-      <CardBody>
-        <Skeleton
-          isDark={false}
-          size="lg"
-        />
-      </CardBody>
-      <CardFooter>
-        <Skeleton
-          isDark={false}
-          size="sm"
-        />
-      </CardFooter>
-    </Card>
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Connect with offline tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <TextContent>
+              <Text
+                component="p"
+              >
+                Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
+              </Text>
+              <Title
+                headingLevel="h3"
+              >
+                Your API token
+              </Title>
+              <Text
+                component="p"
+              >
+                Use this API token to authenticate against your Red Hat OpenShift Service on AWS account.
+              </Text>
+              <Skeleton
+                isDark={false}
+                size="md"
+              />
+              <Title
+                headingLevel="h3"
+              >
+                Using your token in the command line
+              </Title>
+              <List
+                component="ol"
+              >
+                <ListItem>
+                  Download and install the
+                   
+                  <ExternalLink
+                    href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest"
+                    noIcon={true}
+                  >
+                    rosa command-line tool
+                  </ExternalLink>
+                </ListItem>
+                <ListItem>
+                  Copy and paste the authentication command in your terminal:
+                </ListItem>
+              </List>
+              <Skeleton
+                isDark={false}
+                size="md"
+              />
+              <Title
+                headingLevel="h3"
+              >
+                Need help connecting with your offline token?
+              </Title>
+              <Text
+                component="p"
+              >
+                Run
+                 
+                <code>
+                  rosa
+                   
+                  login --help
+                </code>
+                 
+                for in-terminal guidance, or
+                 
+                <ExternalLink
+                  href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+                  noIcon={true}
+                >
+                  read more about setting up the rosa CLI
+                </ExternalLink>
+                 
+                for more information about setting up the
+                 
+                <code>
+                  rosa
+                </code>
+                 
+                CLI.
+              </Text>
+            </TextContent>
+          </CardBody>
+        </Card>
+      </StackItem>
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Revoke previous tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <TextContent>
+              <Text>
+                To manage and revoke previous tokens:
+              </Text>
+              <List
+                component="ol"
+              >
+                <ListItem>
+                  Navigate to the
+                   
+                  <ExternalLink
+                    href="https://sso.redhat.com/auth/realms/redhat-external/account/applications"
+                  >
+                    <b>
+                      offline API token management
+                    </b>
+                  </ExternalLink>
+                   
+                  page.
+                </ListItem>
+                <ListItem>
+                  Locate the
+                   
+                  <b>
+                    cloud-services
+                  </b>
+                   
+                  application.
+                </ListItem>
+                <ListItem>
+                  Select
+                   
+                  <b>
+                    Revoke grant
+                  </b>
+                  .
+                </ListItem>
+              </List>
+              <Text>
+                Refresh tokens will stop working immediately after you revoke them, but existing access tokens may take up to 15 minutes to expire.
+              </Text>
+              <Text>
+                Refreshing this page will generate a new token.
+              </Text>
+            </TextContent>
+          </CardBody>
+        </Card>
+      </StackItem>
+    </Stack>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<TokensROSA /> Renders screen with button 1`] = `
+<Fragment>
+  <PageHeader>
+    <Breadcrumbs
+      path={
+        Array [
+          Object {
+            "label": "Downloads",
+            "path": "/downloads",
+          },
+          Object {
+            "label": "OpenShift Cluster Manager API Token",
+          },
+        ]
+      }
+    />
+    <PageHeaderTitle
+      title="OpenShift Cluster Manager API Token"
+    />
+  </PageHeader>
+  <PageSection>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Connect with offline tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <TextContent>
+              <Text
+                component="p"
+              >
+                Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
+              </Text>
+              <Title
+                headingLevel="h3"
+              >
+                Your API token
+              </Title>
+              <Text
+                component="p"
+              >
+                Use this API token to authenticate against your Red Hat OpenShift Service on AWS account.
+              </Text>
+              <Link
+                to="/token/show"
+              >
+                <Button
+                  onClick={[Function]}
+                  variant="primary"
+                >
+                  Load token
+                </Button>
+              </Link>
+            </TextContent>
+          </CardBody>
+        </Card>
+      </StackItem>
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Revoke previous tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <TextContent>
+              <Text>
+                To manage and revoke previous tokens:
+              </Text>
+              <List
+                component="ol"
+              >
+                <ListItem>
+                  Navigate to the
+                   
+                  <ExternalLink
+                    href="https://sso.redhat.com/auth/realms/redhat-external/account/applications"
+                  >
+                    <b>
+                      offline API token management
+                    </b>
+                  </ExternalLink>
+                   
+                  page.
+                </ListItem>
+                <ListItem>
+                  Locate the
+                   
+                  <b>
+                    cloud-services
+                  </b>
+                   
+                  application.
+                </ListItem>
+                <ListItem>
+                  Select
+                   
+                  <b>
+                    Revoke grant
+                  </b>
+                  .
+                </ListItem>
+              </List>
+              <Text>
+                Refresh tokens will stop working immediately after you revoke them, but existing access tokens may take up to 15 minutes to expire.
+              </Text>
+              <Text>
+                Refreshing this page will generate a new token.
+              </Text>
+            </TextContent>
+          </CardBody>
+        </Card>
+      </StackItem>
+    </Stack>
   </PageSection>
 </Fragment>
 `;
@@ -37,110 +326,187 @@ exports[`<TokensROSA /> Renders loading screen 1`] = `
 exports[`<TokensROSA /> Renders token 1`] = `
 <Fragment>
   <PageHeader>
+    <Breadcrumbs
+      path={
+        Array [
+          Object {
+            "label": "Downloads",
+            "path": "/downloads",
+          },
+          Object {
+            "label": "OpenShift Cluster Manager API Token",
+          },
+        ]
+      }
+    />
     <PageHeaderTitle
-      title="Red Hat OpenShift Service on AWS"
+      title="OpenShift Cluster Manager API Token"
     />
   </PageHeader>
   <PageSection>
-    <Card
-      className="ocm-c-api-token__card"
+    <Stack
+      hasGutter={true}
     >
-      <CardTitle>
-        Fully managed OpenShift clusters
-      </CardTitle>
-      <CardBody
-        className="ocm-c-api-token__card--body"
-      >
-        <TextContent>
-          <Text
-            component="p"
-          >
-            Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
-          </Text>
-          <Text
-            component="p"
-          >
-            To download the client:
-            <ol>
-              <li>
-                Download and install the 
-                <a
-                  href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  rosa
-                </a>
-                 command-line utility (CLI).
-              </li>
-              <li>
-                Copy the following Offline Access Token and use it to authenticate with the 
-                <a
-                  href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  rosa
-                </a>
-                 CLI:
-              </li>
-            </ol>
-          </Text>
-          <Text
-            component="pre"
-          >
-            <ClipboardCopy
-              additionalActions={null}
-              clickTip="Successfully copied to clipboard!"
-              entryDelay={100}
-              exitDelay={1600}
-              hoverTip="Copy to clipboard"
-              isCode={false}
-              isExpanded={false}
-              isReadOnly={true}
-              maxWidth="150px"
-              onChange={[Function]}
-              onCopy={[Function]}
-              position="top"
-              switchDelay={2000}
-              textAriaLabel="Copyable input"
-              toggleAriaLabel="Show content"
-              variant="inline"
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
             >
-              hello offline access token!
-            </ClipboardCopy>
-          </Text>
-          <Text
-            component="pre"
+              Connect with offline tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
           >
-            rosa login --token="\\
-hello offline access token!\\
-"
-          </Text>
-          <Text
-            component="p"
-          >
-            For help, run 
-            <code>
-              rosa login --help
-            </code>
-             or see the 
-            <a
-              href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
-              rel="noopener noreferrer"
-              target="_blank"
+            <TextContent>
+              <Text
+                component="p"
+              >
+                Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
+              </Text>
+              <Title
+                headingLevel="h3"
+              >
+                Your API token
+              </Title>
+              <Text
+                component="p"
+              >
+                Use this API token to authenticate against your Red Hat OpenShift Service on AWS account.
+              </Text>
+              <Skeleton
+                isDark={false}
+                size="md"
+              />
+              <Title
+                headingLevel="h3"
+              >
+                Using your token in the command line
+              </Title>
+              <List
+                component="ol"
+              >
+                <ListItem>
+                  Download and install the
+                   
+                  <ExternalLink
+                    href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest"
+                    noIcon={true}
+                  >
+                    rosa command-line tool
+                  </ExternalLink>
+                </ListItem>
+                <ListItem>
+                  Copy and paste the authentication command in your terminal:
+                </ListItem>
+              </List>
+              <Skeleton
+                isDark={false}
+                size="md"
+              />
+              <Title
+                headingLevel="h3"
+              >
+                Need help connecting with your offline token?
+              </Title>
+              <Text
+                component="p"
+              >
+                Run
+                 
+                <code>
+                  rosa
+                   
+                  login --help
+                </code>
+                 
+                for in-terminal guidance, or
+                 
+                <ExternalLink
+                  href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+                  noIcon={true}
+                >
+                  read more about setting up the rosa CLI
+                </ExternalLink>
+                 
+                for more information about setting up the
+                 
+                <code>
+                  rosa
+                </code>
+                 
+                CLI.
+              </Text>
+            </TextContent>
+          </CardBody>
+        </Card>
+      </StackItem>
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
             >
-              documentation
-            </a>
-             for more information about setting up the 
-            <code>
-              rosa
-            </code>
-             (CLI).
-          </Text>
-        </TextContent>
-      </CardBody>
-    </Card>
+              Revoke previous tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <TextContent>
+              <Text>
+                To manage and revoke previous tokens:
+              </Text>
+              <List
+                component="ol"
+              >
+                <ListItem>
+                  Navigate to the
+                   
+                  <ExternalLink
+                    href="https://sso.redhat.com/auth/realms/redhat-external/account/applications"
+                  >
+                    <b>
+                      offline API token management
+                    </b>
+                  </ExternalLink>
+                   
+                  page.
+                </ListItem>
+                <ListItem>
+                  Locate the
+                   
+                  <b>
+                    cloud-services
+                  </b>
+                   
+                  application.
+                </ListItem>
+                <ListItem>
+                  Select
+                   
+                  <b>
+                    Revoke grant
+                  </b>
+                  .
+                </ListItem>
+              </List>
+              <Text>
+                Refresh tokens will stop working immediately after you revoke them, but existing access tokens may take up to 15 minutes to expire.
+              </Text>
+              <Text>
+                Refreshing this page will generate a new token.
+              </Text>
+            </TextContent>
+          </CardBody>
+        </Card>
+      </StackItem>
+    </Stack>
   </PageSection>
 </Fragment>
 `;

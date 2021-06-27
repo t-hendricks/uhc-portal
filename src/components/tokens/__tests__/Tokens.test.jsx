@@ -30,21 +30,23 @@ window.insights = {
 };
 
 describe('<Tokens />', () => {
-  let component;
-  beforeAll(() => {
-    component = shallow(<Tokens />);
+  it('Renders screen with button', () => {
+    const component = shallow(<Tokens show={false} showPath="/token/show" />);
+    expect(component).toMatchSnapshot();
   });
 
   it('Renders loading screen', () => {
-    const loadingcomponent = shallow(<Tokens />);
+    const loadingcomponent = shallow(<Tokens show />);
     expect(loadingcomponent).toMatchSnapshot();
   });
 
   it('Calls getOfflineToken', () => {
+    shallow(<Tokens show />);
     expect(mockGetToken).toBeCalled();
   });
 
   it('Renders token', () => {
+    const component = shallow(<Tokens show />);
     expect(component).toMatchSnapshot();
   });
 });
