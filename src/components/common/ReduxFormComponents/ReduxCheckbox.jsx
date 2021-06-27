@@ -75,6 +75,7 @@ ReduxCheckbox.propTypes = {
   meta: PropTypes.object.isRequired,
   isSwitch: PropTypes.bool,
   // plus other props to be passed to the field...
+  isDisabled: PropTypes.bool,
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   isHelperTextBeforeField: PropTypes.bool,
 };
