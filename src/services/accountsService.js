@@ -20,6 +20,7 @@ const getSubscriptions = params => apiRequest({
     size: params.page_size,
     orderBy: params.order,
     search: params.filter,
+    fields: params.fields,
     fetchAccounts: true,
     fetchCapabilities: true,
   },

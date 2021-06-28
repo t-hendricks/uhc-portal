@@ -215,6 +215,17 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
   return result;
 };
 
+const fetchClusterIds = showArchived => dispatch => dispatch({
+  type: clustersConstants.GET_CLUSTER_IDS,
+  payload: (() => accountsService.getSubscriptions({
+    page_size: Number.MAX_SAFE_INTEGER,
+    fields: 'external_cluster_id',
+    search: showArchived
+      ? "status IN ('Deprovisioned', 'Archived')"
+      : "status NOT IN ('Deprovisioned', 'Archived')",
+  }))(),
+});
+
 const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFlag) => {
   let subscriptions;
   let canEdit;
@@ -445,4 +456,5 @@ export {
   getClusterStatus,
   upgradeTrialCluster,
   clearUpgradeTrialClusterResponse,
+  fetchClusterIds,
 };

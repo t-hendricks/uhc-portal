@@ -77,6 +77,11 @@ const initialState = {
     ...baseState,
     cluster: emptyCluster,
   },
+  clusterIds: {
+    ...baseState,
+    ids: [],
+    total: 0,
+  },
 };
 
 function clustersReducer(state = initialState, action) {
@@ -354,7 +359,27 @@ function clustersReducer(state = initialState, action) {
           status: action.payload.data,
         };
         break;
-
+      // GET_CLUSTER_IDS
+      case REJECTED_ACTION(clustersConstants.GET_CLUSTER_IDS):
+        draft.clusterIds = {
+          ...initialState.clusterIds,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.GET_CLUSTER_IDS):
+        draft.clusterIds = {
+          ...initialState.clusterIds,
+          pending: true,
+        };
+        break;
+      case FULFILLED_ACTION(clustersConstants.GET_CLUSTER_IDS):
+        draft.clusterIds = {
+          ...initialState.clusterIds,
+          fulfilled: true,
+          total: action.payload.data.total,
+          ids: action.payload.data.items,
+        };
+        break;
       default:
         return state;
     }
