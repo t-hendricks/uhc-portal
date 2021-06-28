@@ -146,7 +146,7 @@ export const fetchReportDetails = (clusterId, ruleId, errorKey, isOSD) => dispat
   payload: insightsService.getReportDetails(clusterId, ruleId, errorKey, isOSD),
 });
 
-export const fetchOrganizationInsights = () => dispatch => dispatch({
+export const fetchOrganizationInsights = clusterIds => dispatch => dispatch({
   type: GET_ORGANIZATION_INSIGHTS,
-  payload: insightsService.getOrganizationInsights(),
+  payload: insightsService.getOrganizationInsights(clusterIds),
 });

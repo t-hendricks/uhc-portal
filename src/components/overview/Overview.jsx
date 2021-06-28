@@ -39,8 +39,8 @@ class Overview extends Component {
       viewOptions,
       fetchInsightsGroups,
       insightsGroups,
-      fetchOrganizationInsights,
-      insightsOverview,
+      fetchClusterIds,
+      clusterIds,
     } = this.props;
     document.title = 'Overview | Red Hat OpenShift Cluster Manager';
 
@@ -56,10 +56,26 @@ class Overview extends Component {
       fetchInsightsGroups();
     }
 
-    if (!insightsOverview.pending && !insightsOverview.fulfilled) {
-      fetchOrganizationInsights();
+    if (!clusterIds.pending && !clusterIds.fulfilled) {
+      fetchClusterIds(false);
     }
     getUserAccess({ type: 'OCP' });
+  }
+
+  componentDidUpdate() {
+    const {
+      fetchOrganizationInsights,
+      insightsOverview,
+      clusterIds,
+    } = this.props;
+
+    if (!insightsOverview.rejected
+      && !insightsOverview.pending
+      && !insightsOverview.fulfilled
+      && clusterIds.fulfilled) {
+      fetchOrganizationInsights(clusterIds.ids.map(item => item.external_cluster_id)
+        .filter(id => id.length > 0));
+    }
   }
 
   render() {
@@ -265,6 +281,8 @@ Overview.propTypes = {
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
   }).isRequired,
+  clusterIds: PropTypes.object.isRequired,
+  fetchClusterIds: PropTypes.func.isRequired,
 };
 
 export default Overview;

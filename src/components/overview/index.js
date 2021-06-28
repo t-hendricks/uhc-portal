@@ -5,7 +5,7 @@ import { getSummaryDashboard, getUnhealthyClusters } from '../../redux/actions/d
 import { getUserAccess } from '../../redux/actions/costActions';
 import { invalidateSubscriptions } from '../../redux/actions/subscriptionsActions';
 import { fetchGroups, fetchOrganizationInsights } from '../clusters/ClusterDetails/components/Insights/InsightsActions';
-import { fetchClusters } from '../../redux/actions/clustersActions';
+import { fetchClusters, fetchClusterIds } from '../../redux/actions/clustersActions';
 import { viewConstants } from '../../redux/constants';
 
 const mapDispatchToProps = {
@@ -16,6 +16,7 @@ const mapDispatchToProps = {
   invalidateSubscriptions,
   fetchInsightsGroups: fetchGroups,
   fetchOrganizationInsights,
+  fetchClusterIds,
 };
 
 const mapStateToProps = state => ({
@@ -26,6 +27,7 @@ const mapStateToProps = state => ({
   insightsGroups: state.insightsData.groups,
   insightsOverview: state.insightsData.overview,
   userAccess: state.cost.userAccess,
+  clusterIds: state.clusters.clusterIds,
 
   // summary dashboard contain only one {time, value} pair - the current value.
   totalClusters: get(state.dashboards.summary, 'metrics.clusters_total[0].value', 0),
