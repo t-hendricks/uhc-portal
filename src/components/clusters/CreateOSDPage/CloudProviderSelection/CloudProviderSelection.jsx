@@ -12,7 +12,7 @@ import {
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import Unavailable from '../../../common/Unavailable';
 import CardBadge from '../../common/CardBadge';
-import Breadcrumbs from '../../common/Breadcrumbs';
+import Breadcrumbs from '../../../common/Breadcrumbs';
 import PageTitle from '../../../common/PageTitle';
 import { noQuotaTooltip, shouldRefetchQuota } from '../../../../common/helpers';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';

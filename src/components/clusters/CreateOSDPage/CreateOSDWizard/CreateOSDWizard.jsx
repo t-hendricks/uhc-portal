@@ -17,7 +17,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import PageTitle from '../../../common/PageTitle';
 import ErrorModal from '../../../common/ErrorModal';
 import ErrorBox from '../../../common/ErrorBox';
-import Breadcrumbs from '../../common/Breadcrumbs';
+import Breadcrumbs from '../../../common/Breadcrumbs';
 
 import { shouldRefetchQuota } from '../../../../common/helpers';
 

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { PageSection } from '@patternfly/react-core';
 import PageTitle from '../../common/PageTitle';
 
-import Breadcrumbs from '../common/Breadcrumbs';
+import Breadcrumbs from '../../common/Breadcrumbs';
 import InstructionsGCP from './instructions/InstructionsGCP';
 import { scrollToTop } from '../../../common/helpers';
 
