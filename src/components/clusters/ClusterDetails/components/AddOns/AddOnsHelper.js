@@ -48,45 +48,40 @@ const formatRequirementData = (data) => {
   return attrs.join(' and ');
 };
 
-const requirementFulfilledByResource = (myResource, requirement) => {
-  let constraintsMet = true;
-  Object.entries(requirement.data)
-    .every(([field, requiredValue]) => {
-      let clusterValue = get(myResource, field);
-      if (clusterValue === undefined) {
-        // eslint-disable-next-line default-case
-        switch (field) {
-          case 'replicas': {
-            clusterValue = get(myResource, 'autoscaling.max_replicas');
-            break;
-          }
-          case 'nodes.compute': {
-            clusterValue = get(myResource, 'nodes.autoscale_compute.max_replicas');
-            break;
-          }
-          case 'aws.sts.enabled': {
-            clusterValue = get(myResource, 'aws.sts.enabled', false);
-            break;
-          }
-          case 'compute.memory':
-          case 'compute.cpu': {
-            // In these cases we don't want to deal with checking the requirement at all in the UI,
-            // instead we just allow it through and let  the backend deal with it.
-            return true;
-          }
+const requirementFulfilledByResource = (myResource, requirement) => Object.entries(requirement.data)
+  .every(([field, requiredValue]) => {
+    let clusterValue = get(myResource, field);
+    if (clusterValue === undefined) {
+      // eslint-disable-next-line default-case
+      switch (field) {
+        case 'replicas': {
+          clusterValue = get(myResource, 'autoscaling.max_replicas');
+          break;
+        }
+        case 'nodes.compute': {
+          clusterValue = get(myResource, 'nodes.autoscale_compute.max_replicas');
+          break;
+        }
+        case 'aws.sts.enabled': {
+          clusterValue = false;
+          break;
+        }
+        case 'compute.memory':
+        case 'compute.cpu': {
+          // In these cases we don't want to deal with checking the requirement at all in the UI,
+          // instead we just allow it through and let the backend deal with it.
+          return true;
         }
       }
-      if (Array.isArray(requiredValue)) {
-        constraintsMet = requiredValue.includes(clusterValue);
-      } else if (typeof requiredValue === 'number') {
-        constraintsMet = clusterValue >= requiredValue;
-      } else {
-        constraintsMet = clusterValue === requiredValue;
-      }
-      return constraintsMet;
-    });
-  return constraintsMet;
-};
+    }
+    if (Array.isArray(requiredValue)) {
+      return requiredValue.includes(clusterValue);
+    }
+    if (typeof requiredValue === 'number') {
+      return clusterValue >= requiredValue;
+    }
+    return clusterValue === requiredValue;
+  });
 
 const validateAddOnResourceRequirement = (
   requirement, cluster, clusterAddOns = [], clusterMachinePools = [],
