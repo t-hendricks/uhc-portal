@@ -5,6 +5,9 @@ import { StarIcon } from '@patternfly/react-icons';
 import { global_active_color_100 } from '@patternfly/react-tokens';
 import { Label } from '@patternfly/react-core';
 
+/** Intended to annotate a Card.
+ * For stand-alone (Tech preview) with a popover explanation, see TechPreviewBadge.
+ */
 function CardBadge({
   isRecommened, isDevPreview, isHidden, devPreviewText = 'Developer Preview',
 }) {
