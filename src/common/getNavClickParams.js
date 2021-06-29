@@ -4,31 +4,47 @@ This file contain a function mapping OCM paths to Insights Platform `appNavClick
 This is used both for in-app navigation (see app/Insights.jsx) or on-load (see main.jsx)
 */
 
-import getBaseName from './getBaseName';
+import { removeBaseName } from './getBaseName';
 
 /**
  * Get parameters for `appNavClick` based on the provided path.
  * @param {string} pathname target path
 * */
 export default function getNavClickParams(pathname) {
-  const cleanPathName = pathname.replace(new RegExp(`^${getBaseName()}`, 'i'), ''); // remove basename
-  let params = {};
-  switch (cleanPathName.split('/')[1]) {
+  const cleanPathName = removeBaseName(pathname).replace(/^\//, '');
+  const components = cleanPathName.split('/');
+
+  // The `id` and `parentId` below correspond to current navigation structure
+  // https://github.com/cben/cloud-services-config/blob/prod-stable/main.yml
+  // TODO: will things change with new upcoming json format?
+  // https://github.com/cben/cloud-services-config/blob/ci-beta/chrome/openshift-navigation.json
+  switch (components[0]) {
+    case 'downloads':
+    case 'token':
+      return { id: 'downloads' };
+
     case 'quota':
-      params = {
-        id: cleanPathName.startsWith('/quota/resource-limits') ? 'resource-limits' : 'openshift-quota',
+      return {
+        id: components[1] || 'openshift-quota',
         parentId: 'subscriptions',
         secondaryNav: true,
       };
-      break;
+
+    // These belong to "appId": "subscriptions" but important not to send them to "Clusters"
+    case 'subscriptions':
+      return {
+        id: components[1],
+        parentId: 'subscriptions',
+        secondaryNav: true,
+      };
+
+    // Regular 1:1 cases.
     case 'overview':
-      params.id = 'overview';
-      break;
     case 'releases':
-      params.id = 'releases';
-      break;
+      return { id: components[0] };
+
+    // Too many cluster-related pages to list ('', 'details', 'archived', 'create', 'register'...)
     default:
-      params.id = '';
+      return { id: '' }; // "Clusters"
   }
-  return params;
 }
