@@ -215,15 +215,15 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
   return result;
 };
 
-const fetchClusterIds = showArchived => dispatch => dispatch({
+const fetchExternalClusterIds = (includeArchived, orgId) => accountsService.getSubscriptions({
+  page_size: -1,
+  fields: 'external_cluster_id',
+  filter: `organization_id = '${orgId}' and status ${!includeArchived ? 'NOT IN' : 'IN'} ('Deprovisioned', 'Archived')`,
+});
+
+const fetchClusterIds = (includeArchived, orgId) => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTER_IDS,
-  payload: (() => accountsService.getSubscriptions({
-    page_size: Number.MAX_SAFE_INTEGER,
-    fields: 'external_cluster_id',
-    search: showArchived
-      ? "status IN ('Deprovisioned', 'Archived')"
-      : "status NOT IN ('Deprovisioned', 'Archived')",
-  }))(),
+  payload: fetchExternalClusterIds(includeArchived, orgId),
 });
 
 const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFlag) => {
