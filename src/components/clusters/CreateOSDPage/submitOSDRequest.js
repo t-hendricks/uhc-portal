@@ -8,6 +8,8 @@ import { parseReduxFormKeyValueList } from '../../../common/helpers';
 
 const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) => {
   const isMultiAz = formData.multi_az === 'true';
+  // in non-wizard, cloudProviderID is supplied as a parameter. in the wizard, it's in the form.
+  const actualCloudProviderID = cloudProviderID || formData.cloud_provider;
   const clusterRequest = {
     name: formData.name,
     region: {
@@ -20,7 +22,7 @@ const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) 
     },
     managed: true,
     cloud_provider: {
-      id: cloudProviderID || formData.cloud_provider,
+      id: actualCloudProviderID,
     },
     multi_az: isMultiAz,
     node_drain_grace_period: {
@@ -85,7 +87,7 @@ const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) 
     clusterRequest.ccs = {
       enabled: true,
     };
-    if (cloudProviderID === 'aws') {
+    if (actualCloudProviderID === 'aws') {
       clusterRequest.aws = {
         access_key_id: formData.access_key_id,
         account_id: formData.account_id,
@@ -119,7 +121,7 @@ const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) 
         }
         clusterRequest.nodes.availability_zones = AZs;
       }
-    } else if (cloudProviderID === 'gcp') {
+    } else if (actualCloudProviderID === 'gcp') {
       const parsed = JSON.parse(formData.gcp_service_account);
       clusterRequest.gcp = pick(parsed, [
         'type',

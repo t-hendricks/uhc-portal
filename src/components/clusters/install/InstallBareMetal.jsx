@@ -3,7 +3,7 @@ import {
   PageSection,
 } from '@patternfly/react-core';
 
-import Breadcrumbs from '../common/Breadcrumbs';
+import Breadcrumbs from '../../common/Breadcrumbs';
 import { scrollToTop } from '../../../common/helpers';
 import PageTitle from '../../common/PageTitle';
 import InstructionsBM from './instructions/InstructionsBareMetal';

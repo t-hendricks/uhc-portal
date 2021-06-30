@@ -140,7 +140,7 @@ class EditClusterRoutersCard extends React.Component {
                               component={ReduxCheckbox}
                               name="private_additional_router"
                               label="Make router private"
-                              disabled={disabled}
+                              isDisabled={disabled}
                             />
                           </StackItem>
                         </>

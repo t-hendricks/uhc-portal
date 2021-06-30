@@ -4,6 +4,7 @@ import {
   Title,
   Grid,
   GridItem,
+  Form,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
@@ -15,21 +16,23 @@ import GCPByocFields from './GCPByocFields';
 
 function ClusterSettingsScreen({ isByoc, cloudProviderID }) {
   return (
-    <Grid>
-      <GridItem span={12}>
-        <Title headingLevel="h3">
-          Select a cloud provider
-        </Title>
-      </GridItem>
-      <Field
-        name="cloud_provider"
-        component={CloudProviderSelectionField}
-        validate={required}
-      />
-      { isByoc && (
-        cloudProviderID === 'aws' ? <AWSByocFields /> : <GCPByocFields />
-      )}
-    </Grid>
+    <Form onSubmit={() => false}>
+      <Grid hasGutter>
+        <GridItem span={12}>
+          <Title headingLevel="h3">
+            Select a cloud provider
+          </Title>
+        </GridItem>
+        <Field
+          name="cloud_provider"
+          component={CloudProviderSelectionField}
+          validate={required}
+        />
+        { isByoc && cloudProviderID && (
+          cloudProviderID === 'aws' ? <AWSByocFields /> : <GCPByocFields />
+        )}
+      </Grid>
+    </Form>
   );
 }
 

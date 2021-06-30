@@ -15,7 +15,7 @@ export const downloadsCategoryTitles = {
 
 const DownloadsCategoryDropdown = ({ selectedCategory, setCategory }) => (
   <FormSelect
-    aria-label="select-category"
+    aria-label="Select category"
     value={selectedCategory}
     onChange={setCategory}
   >

@@ -17,7 +17,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import PageTitle from '../../../common/PageTitle';
 import ErrorModal from '../../../common/ErrorModal';
 import ErrorBox from '../../../common/ErrorBox';
-import Breadcrumbs from '../../common/Breadcrumbs';
+import Breadcrumbs from '../../../common/Breadcrumbs';
 
 import { shouldRefetchQuota } from '../../../../common/helpers';
 
@@ -241,17 +241,27 @@ class CreateOSDWizard extends React.Component {
   }
 }
 
-const requestStatePropTypes = {
+const requestStatePropTypes = PropTypes.shape({
   fulfilled: PropTypes.bool,
   error: PropTypes.bool,
-};
+  pending: PropTypes.bool,
+});
 
 CreateOSDWizard.propTypes = {
   isValid: PropTypes.bool,
   isByoc: PropTypes.bool,
   isErrorModalOpen: PropTypes.bool,
 
-  createClusterResponse: requestStatePropTypes,
+  createClusterResponse: PropTypes.shape({
+    fulfilled: PropTypes.bool,
+    error: PropTypes.bool,
+    pending: PropTypes.bool,
+    cluster: PropTypes.shape({
+      subscription: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    }),
+  }),
   machineTypes: requestStatePropTypes,
   organization: requestStatePropTypes,
   cloudProviders: requestStatePropTypes,

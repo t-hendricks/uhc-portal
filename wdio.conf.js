@@ -228,7 +228,7 @@ exports.config = {
      */
   afterTest: async (test, context, { error, result, duration, passed, retries }) => {
     // if test passed, ignore, else take and save screenshot.
-    if (test.passed) {
+    if (passed) {
       return;
     }
     const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');

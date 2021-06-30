@@ -35,7 +35,7 @@ const DownloadButton = ({
       component="a"
       href={url}
       variant="secondary"
-      className="install--download-installer"
+      className={`download-button tool-${tool.toLowerCase()}`}
       onClick={() => {
         trackPendo(event, pendoID);
       }}

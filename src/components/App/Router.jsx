@@ -90,6 +90,8 @@ function Router({ history }) {
               IMPORTANT!
               When adding new routes, make sure to add the route both here and in Router.test.jsx,
               to ensure the route is tested.
+
+              When adding new top-level entries to left navigation, see also getNavClickParams.js.
             */}
             <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
             <Redirect from="/install/crc/installer-provisioned" to="/create/local" />
