@@ -66,10 +66,21 @@ const getEnvs = async (upstream) => {
     {
       name: 'live_master',
       ci_job: 'https://jenkins-jenkins.5a9f.insights-dev.openshiftapps.com/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-stable/ (login with "google")',
-      comment: 'Live at https://qaprodauth.cloud.redhat.com/',
+      comment: 'Live at https://qaprodauth.cloud.redhat.com/openshift/',
       info: appInfo('https://qaprodauth.cloud.redhat.com/apps/openshift/app.info.json'),
     },
-
+    {
+      name: 'build_pushed_beta_master',
+      ci_job: 'https://ci.int.devshift.net/job/ocm-portal-deploy-staging/',
+      comment: 'Build also pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/qa-beta',
+      info: appInfo('https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/qa-beta/app.info.json'),
+    },
+    {
+      name: 'live_beta_master',
+      ci_job: 'https://jenkins-jenkins.5a9f.insights-dev.openshiftapps.com/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-beta/ (login with "google")',
+      comment: 'Live at https://qaprodauth.cloud.redhat.com/beta/openshift/',
+      info: appInfo('https://qaprodauth.cloud.redhat.com/beta/apps/openshift/app.info.json'),
+    },
     {
       name: `${upstream}/candidate`,
       comment: 'https://gitlab.cee.redhat.com/service/uhc-portal/commits/candidate',
