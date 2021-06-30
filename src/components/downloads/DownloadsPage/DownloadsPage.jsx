@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Button,
   PageSection,
@@ -21,21 +22,22 @@ import { Link } from 'react-router-dom';
 import produce from 'immer';
 import { has, get } from 'lodash';
 
-import ExternalLink from '../common/ExternalLink';
+import ExternalLink from '../../common/ExternalLink';
 import links, {
   urls,
   tools,
   channels,
   operatingSystemOptions,
   architectureOptions,
-} from '../../common/installLinks';
+} from '../../../common/installLinks';
 
-import DownloadButton from '../clusters/install/instructions/components/DownloadButton';
-import { detectOS } from '../clusters/install/instructions/components/DownloadAndOSSelection';
-import AlignRight from '../common/AlignRight';
-import DownloadsCategoryDropdown from './DownloadsCategoryDropdown';
-import DownloadsSection from './DownloadsSection';
-import PullSecretButtons from './PullSecretButtons';
+import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
+import { detectOS } from '../../clusters/install/instructions/components/DownloadAndOSSelection';
+import AlignRight from '../../common/AlignRight';
+import DownloadsCategoryDropdown from '../DownloadsCategoryDropdown';
+import DownloadsSection from '../DownloadsSection';
+import DownloadPullSecret from '../DownloadPullSecret';
+import CopyPullSecret from '../CopyPullSecret';
 
 import './DownloadsPage.scss';
 
@@ -123,7 +125,7 @@ const architectureDropdown = (tool, OS, architecture, setArchitecture) => {
   const optionsForOS = architecturesForToolOS(tool, OS);
   return (
     <FormSelect
-      aria-label="select-arch-dropdown"
+      aria-label="Select architecture dropdown"
       value={architecture}
       onChange={setArchitecture}
       isDisabled={optionsForOS.length <= 1}
@@ -323,14 +325,27 @@ const expandKeys = {
   TOKEN_OCM: 'TOKEN_OCM',
 };
 
-const tokenRows = expanded => [
+const tokenRows = (expanded, token) => [
   {
     isOpen: !!expanded[expandKeys.PULL_SECRET],
     expandKey: expandKeys.PULL_SECRET, // custom property for `onCollapse` callback
     cells: [
       '',
       'Pull secret',
-      { title: <AlignRight><PullSecretButtons /></AlignRight> },
+      {
+        title: (
+          <AlignRight>
+            <Split hasGutter>
+              <SplitItem>
+                <CopyPullSecret token={token} text="Copy" variant="button" />
+              </SplitItem>
+              <SplitItem>
+                <DownloadPullSecret token={token} text="Download" />
+              </SplitItem>
+            </Split>
+          </AlignRight>
+        ),
+      },
     ],
   },
   descriptionRow(0,
@@ -406,6 +421,11 @@ class DownloadsPage extends React.Component {
     selections: DownloadsPage.initialSelections(), // { [tool]: { OS, architecture} }
   }
 
+  componentDidMount() {
+    const { getAuthToken } = this.props;
+    getAuthToken();
+  }
+
   setCategory = (selectedCategory) => {
     this.setState({ selectedCategory });
   }
@@ -421,13 +441,14 @@ class DownloadsPage extends React.Component {
   }
 
   render() {
+    const { token } = this.props;
     const { selectedCategory, expanded, selections } = this.state;
 
     const rowsByCategory = {
       CLI: cliToolRows(expanded, selections, this.setSelections),
       DEV: devToolRows(expanded, selections, this.setSelections),
       INSTALLATION: installationRows(expanded, selections, this.setSelections),
-      TOKENS: tokenRows(expanded),
+      TOKENS: tokenRows(expanded, token),
     };
     rowsByCategory.ALL = [].concat(...Object.values(rowsByCategory));
 
@@ -560,6 +581,8 @@ class DownloadsPage extends React.Component {
   }
 }
 DownloadsPage.propTypes = {
+  token: PropTypes.object.isRequired,
+  getAuthToken: PropTypes.func.isRequired,
 };
 
 export default DownloadsPage;

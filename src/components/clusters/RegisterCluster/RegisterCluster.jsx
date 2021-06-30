@@ -23,7 +23,7 @@ import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-com
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 import ReduxVerticalFormGroup from '../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ErrorModal from '../../common/ErrorModal';
-import Breadcrumbs from '../common/Breadcrumbs';
+import Breadcrumbs from '../../common/Breadcrumbs';
 import {
   checkClusterDisplayName,
   checkClusterUUID,

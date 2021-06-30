@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
+import createOSDInitialValues from '../../createOSDInitialValues';
+
 import wizardConnector from '../WizardConnector';
 import NetworkScreen from './NetworkScreen';
 
@@ -25,6 +27,7 @@ const mapStateToProps = (state) => {
     isCCS: isByoc,
     selectedRegion,
     networkingMode,
+    initialValues: createOSDInitialValues({ cloudProviderID, isMultiAz, isByoc }),
   };
 };
 

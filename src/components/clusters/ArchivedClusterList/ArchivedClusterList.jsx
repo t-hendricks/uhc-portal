@@ -37,7 +37,7 @@ import ArchivedClusterListTable from './components/ArchiveClusterListTable/Archi
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
 import GlobalErrorBox from '../common/GlobalErrorBox';
-import Breadcrumbs from '../common/Breadcrumbs';
+import Breadcrumbs from '../../common/Breadcrumbs';
 
 import Unavailable from '../../common/Unavailable';
 import ConnectedModal from '../../common/Modal/ConnectedModal';

@@ -1,0 +1,61 @@
+import Page from './page';
+
+/**
+ * sub page containing specific selectors and methods for a specific page
+ */
+class Downloads extends Page {
+  navigateToDownloads = async () => {
+    // TODO: Use navigation link when we'll add it.
+    await browser.url('/openshift/downloads');
+    await browser.waitUntil(this.isReady);
+  }
+
+  isReady = async () => (await this.visibleRowContaining('ROSA')).isExisting()
+
+  categoryDropdown = async () => $('//*[@aria-label="Select category"]')
+
+  expandCollapse = async () => $('//button[text()="Expand/Collapse all"]')
+
+  visibleRowContaining = async substring => (
+    $(`//tr[contains(., "${substring}")][@hidden=false()]`)
+  )
+
+  hiddenRowContaining = async substring => (
+    $(`//tr[contains(., "${substring}")][@hidden=true()]`)
+  )
+
+  expandToggle = async substring => (
+    $(`//tr[contains(., "${substring}")]//*[@aria-label="Details"]`)
+  )
+
+  OSDropdown = async substring => (
+    $(`//tr[contains(., "${substring}")]//*[@aria-label="Select OS dropdown"]`)
+  )
+
+  architectureDropdown = async substring => (
+    $(`//tr[contains(., "${substring}")]//*[@aria-label="Select architecture dropdown"]`)
+  )
+
+  // Returns all options, including disabled ones.
+  allArchitectureOptions = async (substring) => {
+    const dropdown = await this.architectureDropdown(substring);
+    const options = await dropdown.$$('.//option');
+    return Promise.all(options.map(e => e.getText()));
+  }
+
+  enabledArchitectureOptions = async (substring) => {
+    const dropdown = await this.architectureDropdown(substring);
+    const options = await dropdown.$$('.//option[@disabled=false()]');
+    return Promise.all(options.map(e => e.getText()));
+  }
+
+  download = async substring => (
+    $(`//tr[contains(., "${substring}")]//a[text()="Download"]`)
+  )
+
+  downloadHref = async substring => (
+    (await this.download(substring)).getAttribute('href')
+  )
+}
+
+export default new Downloads();

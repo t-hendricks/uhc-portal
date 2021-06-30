@@ -13,7 +13,7 @@ import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
 
 import './CreateClusterPage.scss';
 import PageTitle from '../../common/PageTitle';
-import Breadcrumbs from '../common/Breadcrumbs';
+import Breadcrumbs from '../../common/Breadcrumbs';
 import { shouldRefetchQuota } from '../../../common/helpers';
 import DatacenterTab from './DatacenterTab';
 import CloudTab from './CloudTab';
