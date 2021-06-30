@@ -3,11 +3,10 @@ import { formValueSelector } from 'redux-form';
 
 import canEnableEtcdSelector from '../../CreateOsdPageSelectors';
 
+import createOSDInitialValues from '../../createOSDInitialValues';
+
 import wizardConnector from '../WizardConnector';
 import ClusterSettingsScreen from './ClusterSettingsScreen';
-
-const AWS_DEFAULT_REGION = 'us-east-1';
-const GCP_DEFAULT_REGION = 'us-east1';
 
 const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
@@ -31,16 +30,7 @@ const mapStateToProps = (state) => {
     canEnableEtcdEncryption: canEnableEtcdSelector(state),
     customerManagedEncryptionSelected,
     selectedRegion,
-    initialValues: {
-      region: cloudProviderID === 'aws' ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION,
-      node_drain_grace_period: 60,
-      upgrade_policy: 'manual',
-      automatic_upgrade_schedule: '0 0 * * 0',
-      multi_az: 'false',
-      persistent_storage: '107374182400',
-      load_balancers: '0',
-      enable_user_workload_monitoring: 'true',
-    },
+    initialValues: createOSDInitialValues({ cloudProviderID, isMultiAz, isByoc }),
   };
 };
 
