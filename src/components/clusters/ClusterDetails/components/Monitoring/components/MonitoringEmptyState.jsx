@@ -30,6 +30,7 @@ function MonitoringEmptyState(
         {!hideLastCheckIn && (
           <p>
             Last Check-in:
+            {' '}
             <DateFormat date={lastCheckIn} type="relative" />
           </p>
         )}

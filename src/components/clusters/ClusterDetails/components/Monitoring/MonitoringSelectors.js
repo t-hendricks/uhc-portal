@@ -18,6 +18,8 @@ const lastCheckInSelector = (state) => {
   return new Date(timestamp);
 };
 
+const invalidDate = date => date.toString().includes('0001-01-01');
+
 const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
   const cluster = get(state, 'clusters.details.cluster', null);
   if (!cluster) {
@@ -28,6 +30,10 @@ const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
   const hours = diff / 1000 / 60 / 60;
   const showOldMetrics = !!config.configData.showOldMetrics;
   const freshActivity = showOldMetrics || hours < maxMetricsTimeDelta;
+
+  if (invalidDate(lastCheckIn)) {
+    return monitoringStatuses.UNKNOWN;
+  }
 
   if (get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED) {
     return monitoringStatuses.DISCONNECTED;
