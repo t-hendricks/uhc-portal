@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const util = require('util');
 const execFile = util.promisify(require('child_process').execFile);
-const execFileSync = require('child_process').execFileSync;
+const { execFileSync } = require('child_process');
 const listGitRemotes = util.promisify(require('list-git-remotes'));
 const fetch = require('node-fetch');
 const JSON5 = require('json5');
@@ -38,14 +38,14 @@ const gitBranch = async (branch) => {
 };
 
 // app.info.json files generated in push_to_insights.sh & insights-Jenkinsfile
-const appInfo = async url => {
+const appInfo = async (url) => {
   const response = await fetch(url);
   const text = await response.text();
   try {
     // Some contain a trailing comma, making it invalid JSON, so use JSON5.
     return JSON5.parse(text);
   } catch (err) {
-    return { ERROR: err + ' - ' + text };
+    return { ERROR: `${err} - ${text}` };
   }
 };
 
@@ -118,7 +118,7 @@ const getEnvs = async (upstream) => {
     },
   ];
   // Resolve all .info in parallel.
-  await Promise.all(envs.map(async e => {
+  await Promise.all(envs.map(async (e) => {
     e.info = await e.info;
   }));
   return envs;
@@ -143,13 +143,13 @@ const main = async () => {
     const widestName = Math.max(...envs.map(e => e.name.length));
 
     if (flags.short) {
-      for (const e of envs) {
+      envs.forEach((e) => {
         console.log(e.name.padStart(widestName, ' '), e.info.src_hash);
-      }
+      });
     }
 
     if (flags.setGitBranches || flags.gitGraph) {
-      for (const e of envs) {
+      envs.forEach((e) => {
         // Don't try overwriting branches taken from git like `upstream/master`
         // (would probably be a no-op but safer not to).
         if (e.name.match('build_pushed_.*|live_.*') && e.info.src_hash) {
@@ -159,7 +159,7 @@ const main = async () => {
         } else {
           console.log('#                 ', e.name.padStart(widestName, ' '), e.info.src_hash);
         }
-      }
+      });
     }
 
     if (flags.gitGraph) {
@@ -176,6 +176,6 @@ const main = async () => {
   } catch (err) {
     console.error(err);
   }
-}
+};
 
-main()
+main();
