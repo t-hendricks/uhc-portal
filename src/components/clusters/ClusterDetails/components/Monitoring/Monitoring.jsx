@@ -50,6 +50,19 @@ class Monitoring extends React.Component {
       );
     }
 
+    if (healthStatus === monitoringStatuses.UNKNOWN) {
+      return (
+        <MonitoringEmptyState hideLastCheckIn>
+          <p>
+            Monitoring data is not available - cluster did not send any metrics.
+            <br />
+            Check the cluster&apos;s web console if you think that this cluster should
+            be sending metrics.
+          </p>
+        </MonitoringEmptyState>
+      );
+    }
+
     return (
       <>
         <ClusterHealthCard
