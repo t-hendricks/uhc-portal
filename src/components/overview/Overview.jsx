@@ -56,7 +56,7 @@ class Overview extends Component {
       fetchInsightsGroups();
     }
 
-    if (!organization.pending && !organization.fulfulled) {
+    if (!organization.pending && !organization.fulfilled) {
       getOrganizationAndQuota();
     }
     getUserAccess({ type: 'OCP' });
@@ -83,7 +83,7 @@ class Overview extends Component {
       && !insightsOverview.fulfilled
       && clusterIds.fulfilled) {
       fetchOrganizationInsights(clusterIds.ids.map(item => item.external_cluster_id)
-        .filter(id => id.length > 0));
+        .filter(Boolean));
     }
   }
 
