@@ -5,3 +5,11 @@
     }
   }
 }
+
+/* Limit width so that whole token won't be visible,
+   and on big screens the copy button won't be too far. */
+.ocm-c-api-token-limit-width {
+  max-width: 800px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

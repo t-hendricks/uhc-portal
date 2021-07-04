@@ -98,10 +98,23 @@ function Router({ history }) {
             <Redirect from="/token/moa" to="/token/rosa" />
             <Redirect from="/insights" to="/overview" />
             <Redirect from="/subscriptions" to="/quota" />
-
-            <TermsGuardedRoute path="/token/rosa" component={TokensROSA} history={history} />
             <Route path="/downloads" component={DownloadsPage} />
-            <Route path="/token" component={Tokens} />
+
+            {/* Each token page has 2 routes with distinct paths, to remember that user wanted
+                to see it during page reload that may be needed for elevated auth. */}
+            <TermsGuardedRoute
+              path="/token/rosa/show"
+              history={history}
+              render={() => <TokensROSA show />}
+            />
+            <TermsGuardedRoute
+              path="/token/rosa"
+              history={history}
+              render={() => <TokensROSA show={false} showPath="/token/rosa/show" />}
+            />
+            <Route path="/token/show" render={() => <Tokens show />} />
+            <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
+
             <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
             <Route path="/install/aws" component={InstallAWS} />
