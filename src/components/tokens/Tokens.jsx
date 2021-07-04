@@ -50,7 +50,11 @@ import './Tokens.scss';
 const tokenBox = token => (
   token === null ? <Skeleton size="md" /> : (
     <Text component="pre">
-      <ClipboardCopy isReadOnly className="ocm-c-api-token-limit-width">
+      <ClipboardCopy
+        isReadOnly
+        className="ocm-c-api-token-limit-width"
+        textAriaLabel="Copyable token"
+      >
         {token}
       </ClipboardCopy>
     </Text>
@@ -63,7 +67,12 @@ const tokenBox = token => (
 const snippetBox = (token, commandName) => (
   token === null ? <Skeleton size="md" /> : (
     <Text component="pre">
-      <ClipboardCopy isReadOnly variant="expansion" className="ocm-c-api-token-limit-width">
+      <ClipboardCopy
+        isReadOnly
+        className="ocm-c-api-token-limit-width"
+        variant="expansion"
+        textAriaLabel="Copyable command"
+      >
         {`${commandName} login --token="${token}"`}
       </ClipboardCopy>
     </Text>
