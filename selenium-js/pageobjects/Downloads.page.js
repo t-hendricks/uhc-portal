@@ -14,7 +14,8 @@ class Downloads extends Page {
 
   categoryDropdown = async () => $('//*[@aria-label="Select category"]')
 
-  expandCollapse = async () => $('//button[text()="Expand/Collapse all"]')
+  expandAll = async () => $('//button[contains(., "Expand all")]')
+  collapseAll = async () => $('//button[contains(., "Collapse all")]')
 
   visibleRowContaining = async substring => (
     $(`//tr[contains(., "${substring}")][@hidden=false()]`)
