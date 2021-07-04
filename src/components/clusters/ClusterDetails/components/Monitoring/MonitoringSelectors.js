@@ -18,7 +18,7 @@ const lastCheckInSelector = (state) => {
   return new Date(timestamp);
 };
 
-const invalidDate = date => date.toString().includes('0001-01-01');
+const invalidDate = date => date.getUTCFullYear() <= 1;
 
 const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
   const cluster = get(state, 'clusters.details.cluster', null);
