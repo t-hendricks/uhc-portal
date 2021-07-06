@@ -161,7 +161,8 @@ class RenderFields extends React.Component {
 
     const fieldArrayErrorGridItem = (index, errorMessage) => {
       const { touched } = this.state;
-      if (errorMessage && index === 0 && touched) {
+      const { isGroupError } = this.props;
+      if (errorMessage && index === 0 && (touched || isGroupError)) {
         return (
           <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">{errorMessage}</GridItem>
         );
@@ -232,6 +233,7 @@ RenderFields.propTypes = {
     error: PropTypes.string,
     submitFailed: PropTypes.bool,
   }),
+  isGroupError: PropTypes.bool,
 };
 
 function ReduxFieldArray(props) {
