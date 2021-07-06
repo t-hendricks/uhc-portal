@@ -1,11 +1,12 @@
 import LoginPage from '../pageobjects/login.page';
+import GlobalNav from '../pageobjects/GlobalNav.page';
 import Downloads from '../pageobjects/Downloads.page';
 
 describe('Downloads page', async () => {
   it('login and navigate to downloads', async () => {
     await LoginPage.open();
     await LoginPage.login();
-    await Downloads.navigateToDownloads();
+    await GlobalNav.navigateTo("Downloads");
   });
 
   it('can expand and collapse rows', async () => {
