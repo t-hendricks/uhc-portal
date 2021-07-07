@@ -6,6 +6,7 @@ import {
   Button,
   Stack,
   StackItem,
+  Label,
 } from '@patternfly/react-core';
 import {
   Table, TableHeader, TableBody, expandable, cellWidth,
@@ -383,6 +384,13 @@ const runItYourself = () => {
   const rows = [
     [
       <><Link to="/install/aws">AWS</Link></>,
+      'Full stack automation and pre-existing infrastructure',
+    ],
+    [
+      <>
+        <Link to="/install/aws/arm" className="pf-u-mr-xs">AWS (ARM)</Link>
+        <Label variant="outline" color="orange">Developer preview</Label>
+      </>,
       'Full stack automation and pre-existing infrastructure',
     ],
     [

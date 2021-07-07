@@ -19,6 +19,7 @@ function DownloadsAndPullSecretSection({
   displayRHCOSSection = false,
   token,
   showPreReleaseDocs = false,
+  preReleaseDocsLink = links.INSTALL_PRE_RELEASE_INSTALLER_DOC,
   showPreReleasePageLink = true,
   children,
   pendoID,
@@ -47,7 +48,7 @@ function DownloadsAndPullSecretSection({
                   <Text component="p">
                     For pre-release documentation, refer to the
                     {' '}
-                    <Text component="a" href={links.INSTALL_PRE_RELEASE_INSTALLER_DOC} rel="noreferrer noopener" target="_blank">
+                    <Text component="a" href={preReleaseDocsLink} rel="noreferrer noopener" target="_blank">
                       latest installer documentation
                       {' '}
                       <ExternalLinkAltIcon size="sm" />
@@ -105,6 +106,7 @@ function DownloadsAndPullSecretSection({
 DownloadsAndPullSecretSection.propTypes = {
   showPreReleasePageLink: PropTypes.bool,
   showPreReleaseDocs: PropTypes.bool,
+  preReleaseDocsLink: PropTypes.string,
   token: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   pendoID: PropTypes.string,

@@ -455,6 +455,23 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
+                    to="/install/aws/arm"
+                  >
+                    AWS (ARM)
+                  </Link>
+                  <Label
+                    color="orange"
+                    variant="outline"
+                  >
+                    Developer preview
+                  </Label>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/azure"
                   >
                     Azure
@@ -951,6 +968,23 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
+                    to="/install/aws/arm"
+                  >
+                    AWS (ARM)
+                  </Link>
+                  <Label
+                    color="orange"
+                    variant="outline"
+                  >
+                    Developer preview
+                  </Label>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/azure"
                   >
                     Azure
@@ -1380,6 +1414,23 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   >
                     AWS
                   </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    className="pf-u-mr-xs"
+                    to="/install/aws/arm"
+                  >
+                    AWS (ARM)
+                  </Link>
+                  <Label
+                    color="orange"
+                    variant="outline"
+                  >
+                    Developer preview
+                  </Label>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
               ],
