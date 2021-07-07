@@ -125,6 +125,9 @@ const links = {
   RHCOS_POWER_KERNEL: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-kernel-ppc64le`,
   RHCOS_POWER_ROOTFS: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-rootfs.ppc64le.img`,
 
+  OCM_CLI_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
+  OCM_CLI_DOCS: 'https://access.redhat.com/articles/6114701',
+
   HELM_CLI_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest',
   HELM_DOCS: `${DOCS_BASE}/cli_reference/helm_cli/getting-started-with-helm-on-openshift-container-platform.html`,
 

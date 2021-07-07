@@ -131,36 +131,13 @@ exports[`<Monitoring /> should render correctly with every health status 5`] = `
 `;
 
 exports[`<Monitoring /> should render correctly with every health status 6`] = `
-<Fragment>
-  <ClusterHealthCard
-    discoveredIssues={0}
-    lastCheckIn={2020-02-02T00:00:00.000Z}
-    status="UNKNOWN"
-  />
-  <Card
-    className="ocm-c-monitoring-status__card"
-  >
-    <CardTitle
-      className="ocm-c-monitoring-status__card--header"
-    >
-      <Title
-        className="card-title"
-        headingLevel="h2"
-      >
-        Status
-      </Title>
-    </CardTitle>
-    <CardBody
-      className="ocm-c-monitoring-status__card--body"
-    >
-      <MonitoringList
-        alerts={Object {}}
-        cluster={Object {}}
-        nodes={Object {}}
-        operators={Object {}}
-        resourceUsage={Object {}}
-      />
-    </CardBody>
-  </Card>
-</Fragment>
+<MonitoringEmptyState
+  hideLastCheckIn={true}
+>
+  <p>
+    Monitoring data is not available - cluster did not send any metrics.
+    <br />
+    Check the cluster's web console if you think that this cluster should be sending metrics.
+  </p>
+</MonitoringEmptyState>
 `;

@@ -25,20 +25,13 @@ exports[`<DownloadsPage> renders 1`] = `
         />
       </SplitItem>
       <SplitItem>
-        <Button
+        <ExpandableSectionToggle
           className="expand-collapse-all"
-          icon={
-            <AngleRightIcon
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
-          }
-          onClick={[Function]}
-          variant="link"
+          isExpanded={false}
+          onToggle={[Function]}
         >
-          Expand/Collapse all
-        </Button>
+          Expand all
+        </ExpandableSectionToggle>
       </SplitItem>
     </Split>
   </PageHeader>

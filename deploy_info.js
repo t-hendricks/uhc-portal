@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const util = require('util');
 const execFile = util.promisify(require('child_process').execFile);
-const execFileSync = require('child_process').execFileSync;
+const { execFileSync } = require('child_process');
 const listGitRemotes = util.promisify(require('list-git-remotes'));
 const fetch = require('node-fetch');
 const JSON5 = require('json5');
@@ -38,14 +38,14 @@ const gitBranch = async (branch) => {
 };
 
 // app.info.json files generated in push_to_insights.sh & insights-Jenkinsfile
-const appInfo = async url => {
+const appInfo = async (url) => {
   const response = await fetch(url);
   const text = await response.text();
   try {
     // Some contain a trailing comma, making it invalid JSON, so use JSON5.
     return JSON5.parse(text);
   } catch (err) {
-    return { ERROR: err + ' - ' + text };
+    return { ERROR: `${err} - ${text}` };
   }
 };
 
@@ -66,10 +66,21 @@ const getEnvs = async (upstream) => {
     {
       name: 'live_master',
       ci_job: 'https://jenkins-jenkins.5a9f.insights-dev.openshiftapps.com/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-stable/ (login with "google")',
-      comment: 'Live at https://qaprodauth.cloud.redhat.com/',
+      comment: 'Live at https://qaprodauth.cloud.redhat.com/openshift/',
       info: appInfo('https://qaprodauth.cloud.redhat.com/apps/openshift/app.info.json'),
     },
-
+    {
+      name: 'build_pushed_beta_master',
+      ci_job: 'https://ci.int.devshift.net/job/ocm-portal-deploy-staging/',
+      comment: 'Build also pushed to https://github.com/RedHatInsights/uhc-portal-frontend-deploy/commits/qa-beta',
+      info: appInfo('https://raw.githubusercontent.com/RedHatInsights/uhc-portal-frontend-deploy/qa-beta/app.info.json'),
+    },
+    {
+      name: 'live_beta_master',
+      ci_job: 'https://jenkins-jenkins.5a9f.insights-dev.openshiftapps.com/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-beta/ (login with "google")',
+      comment: 'Live at https://qaprodauth.cloud.redhat.com/beta/openshift/',
+      info: appInfo('https://qaprodauth.cloud.redhat.com/beta/apps/openshift/app.info.json'),
+    },
     {
       name: `${upstream}/candidate`,
       comment: 'https://gitlab.cee.redhat.com/service/uhc-portal/commits/candidate',
@@ -107,7 +118,7 @@ const getEnvs = async (upstream) => {
     },
   ];
   // Resolve all .info in parallel.
-  await Promise.all(envs.map(async e => {
+  await Promise.all(envs.map(async (e) => {
     e.info = await e.info;
   }));
   return envs;
@@ -132,13 +143,13 @@ const main = async () => {
     const widestName = Math.max(...envs.map(e => e.name.length));
 
     if (flags.short) {
-      for (const e of envs) {
+      envs.forEach((e) => {
         console.log(e.name.padStart(widestName, ' '), e.info.src_hash);
-      }
+      });
     }
 
     if (flags.setGitBranches || flags.gitGraph) {
-      for (const e of envs) {
+      envs.forEach((e) => {
         // Don't try overwriting branches taken from git like `upstream/master`
         // (would probably be a no-op but safer not to).
         if (e.name.match('build_pushed_.*|live_.*') && e.info.src_hash) {
@@ -148,7 +159,7 @@ const main = async () => {
         } else {
           console.log('#                 ', e.name.padStart(widestName, ' '), e.info.src_hash);
         }
-      }
+      });
     }
 
     if (flags.gitGraph) {
@@ -165,6 +176,6 @@ const main = async () => {
   } catch (err) {
     console.error(err);
   }
-}
+};
 
-main()
+main();

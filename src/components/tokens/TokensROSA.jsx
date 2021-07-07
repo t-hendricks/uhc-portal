@@ -19,113 +19,53 @@ limitations under the License.
 
 import React from 'react';
 import {
-  PageSection,
-  Card,
-  CardBody,
-  CardFooter,
-  CardTitle,
   Text,
-  TextContent,
+  Title,
 } from '@patternfly/react-core';
-import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
-import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
-import Tokens, { splitToken, snippetBox, tokenBox } from './Tokens';
+import ExternalLink from '../common/ExternalLink';
+import Tokens from './Tokens';
 import links from '../../common/installLinks';
 
 // The <TokensROSA> component inherits from the <Tokens> component. This may
 // cause breakage if ever we change the <Tokens> component heavily, but in the
 // meantime prevents unnecessary code duplication with minimal effort.
 class TokensROSA extends Tokens {
-  componentDidMount() {
-    const { blockedByTerms = false } = this.props;
-    if (!blockedByTerms) {
-      // it reaches SSO for offline token.
-      super.componentDidMount();
-    }
-  }
+  commandName = 'rosa'
 
-  render() {
-    const { blockedByTerms = false } = this.props;
-    const { offlineAccessToken } = this.state;
-
-    const title = (
-      <PageHeader>
-        <PageHeaderTitle title="Red Hat OpenShift Service on AWS" />
-      </PageHeader>
-    );
-
-    if (offlineAccessToken === undefined || blockedByTerms) {
-      return (
-        <>
-          {title}
-          <PageSection>
-            <Card className="ins-c-card__skeleton">
-              <CardTitle>
-                <Skeleton size="md" />
-              </CardTitle>
-              <CardBody>
-                <Skeleton size="lg" />
-              </CardBody>
-              <CardFooter>
-                <Skeleton size="sm" />
-              </CardFooter>
-            </Card>
-          </PageSection>
-        </>
-      );
-    }
-
-    // Prepare the snippet of code that shows how to use the offline access token:
-    const offlineAccessTokenSnippet = [
-      'rosa login --token="\\',
-      splitToken(offlineAccessToken),
-      '"',
-    ];
-
-    const docsLink = (
-      <a href={links.ROSA_DOCS} target="_blank" rel="noopener noreferrer">documentation</a>
-    );
-    const rosaLink = (
-      <a href={links.ROSA_CLIENT_LATEST} target="_blank" rel="noopener noreferrer">rosa</a>
-    );
-
-    /* eslint-disable react/jsx-one-expression-per-line */
+  // Some methods here don't use `this`, but we can't convert to Class.method() calls,
+  // wouldn't allow TokensROSA which inhertis from Tokens to override them.
+  /* eslint-disable class-methods-use-this */
+  leadingInfo() {
     return (
       <>
-        {title}
-        <PageSection>
-          <Card className="ocm-c-api-token__card">
-            <CardTitle>Fully managed OpenShift clusters</CardTitle>
-            <CardBody className="ocm-c-api-token__card--body">
-              <TextContent>
-                <Text component="p">
-                  Red Hat OpenShift Service on AWS is a managed service that makes it easy for you
-                  to use OpenShift on AWS without needing to install, operate or upgrade your own
-                  OpenShift (Kubernetes) cluster.
-                </Text>
-                <Text component="p">
-                  To download the client:
-                  <ol>
-                    <li>Download and install the {rosaLink} command-line utility (CLI).</li>
-                    <li>
-                      Copy the following Offline Access Token and use it to authenticate with
-                      the {rosaLink} CLI:
-                    </li>
-                  </ol>
-                </Text>
-                {tokenBox(offlineAccessToken)}
-                {snippetBox(offlineAccessTokenSnippet)}
-                <Text component="p">
-                  For help, run <code>rosa login --help</code> or see the {docsLink} for more
-                  information about setting up the <code>rosa</code> (CLI).
-                </Text>
-              </TextContent>
-            </CardBody>
-          </Card>
-        </PageSection>
+        <Text component="p">
+          Red Hat OpenShift Service on AWS is a managed service that
+          makes it easy for you to use OpenShift on AWS without needing to
+          install, operate or upgrade your own OpenShift (Kubernetes) cluster.
+        </Text>
+        <Title headingLevel="h3">Your API token</Title>
+        <Text component="p">
+          Use this API token to authenticate against your
+          Red Hat OpenShift Service on AWS account.
+        </Text>
       </>
     );
-    /* eslint-enable react/jsx-one-expression-per-line */
+  }
+
+  docsLink() {
+    return (
+      <ExternalLink href={links.ROSA_DOCS} noIcon>
+        read more about setting up the rosa CLI
+      </ExternalLink>
+    );
+  }
+
+  downloadLink() {
+    return (
+      <ExternalLink href={links.ROSA_CLIENT_LATEST} noIcon>
+        rosa command-line tool
+      </ExternalLink>
+    );
   }
 }
 

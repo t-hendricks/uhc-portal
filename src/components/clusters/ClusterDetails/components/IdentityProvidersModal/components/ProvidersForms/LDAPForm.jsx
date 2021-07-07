@@ -52,7 +52,7 @@ class LDAPForm extends React.Component {
             component={ReduxCheckbox}
             name="ldap_insecure"
             label="Insecure"
-            disabled={isPending}
+            isDisabled={isPending}
             onChange={this.toggleCADisabled}
           />
         </GridItem>
