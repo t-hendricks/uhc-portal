@@ -4,17 +4,12 @@ import Page from './page';
  * sub page containing specific selectors and methods for a specific page
  */
 class Downloads extends Page {
-  navigateToDownloads = async () => {
-    // TODO: Use navigation link when we'll add it.
-    await browser.url('/openshift/downloads');
-    await browser.waitUntil(this.isReady);
-  }
-
   isReady = async () => (await this.visibleRowContaining('ROSA')).isExisting()
 
   categoryDropdown = async () => $('//*[@aria-label="Select category"]')
 
-  expandCollapse = async () => $('//button[text()="Expand/Collapse all"]')
+  expandAll = async () => $('//button[contains(., "Expand all")]')
+  collapseAll = async () => $('//button[contains(., "Collapse all")]')
 
   visibleRowContaining = async substring => (
     $(`//tr[contains(., "${substring}")][@hidden=false()]`)
@@ -56,6 +51,8 @@ class Downloads extends Page {
   downloadHref = async substring => (
     (await this.download(substring)).getAttribute('href')
   )
+
+  ocmTokenButton = async () => $('//button[contains(., "See API token")]')
 }
 
 export default new Downloads();

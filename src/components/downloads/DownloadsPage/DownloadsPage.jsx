@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
+  ExpandableSectionToggle,
   PageSection,
   Split,
   SplitItem,
@@ -16,7 +17,7 @@ import {
 import {
   Table, TableHeader, TableBody, expandable, cellWidth,
 } from '@patternfly/react-table';
-import { AngleRightIcon, ArrowRightIcon } from '@patternfly/react-icons';
+import { ArrowRightIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
 
 import produce from 'immer';
@@ -452,14 +453,15 @@ class DownloadsPage extends React.Component {
     };
     rowsByCategory.ALL = [].concat(...Object.values(rowsByCategory));
 
+    // Expand if at least one collapsed, collapse if all expanded.
+    const shownKeys = rowsByCategory[selectedCategory].map(row => row.expandKey).filter(Boolean);
+    const allExpanded = shownKeys.every(key => expanded[key]);
+    const willExpandAll = !allExpanded;
+
     const expandCollapseAll = () => {
-      const shownKeys = rowsByCategory[selectedCategory].map(row => row.expandKey).filter(Boolean);
-      // Expand if at least one collapsed, collapse if all expanded.
-      const allExpanded = shownKeys.every(key => expanded[key]);
-      const newExpanded = !allExpanded;
       this.setState(produce((draft) => {
         shownKeys.forEach((key) => {
-          draft.expanded[key] = newExpanded;
+          draft.expanded[key] = willExpandAll;
         });
       }));
     };
@@ -480,14 +482,13 @@ class DownloadsPage extends React.Component {
               />
             </SplitItem>
             <SplitItem>
-              <Button
-                variant="link"
+              <ExpandableSectionToggle
                 className="expand-collapse-all"
-                icon={<AngleRightIcon />}
-                onClick={expandCollapseAll}
+                isExpanded={!willExpandAll}
+                onToggle={expandCollapseAll}
               >
-                Expand/Collapse all
-              </Button>
+                {willExpandAll ? 'Expand all' : 'Collapse all'}
+              </ExpandableSectionToggle>
             </SplitItem>
           </Split>
         </PageHeader>

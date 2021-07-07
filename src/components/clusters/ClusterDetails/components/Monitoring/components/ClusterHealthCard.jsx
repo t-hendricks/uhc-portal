@@ -77,6 +77,7 @@ function ClusterHealthCard({
             {lastCheckIn !== undefined && (
               <>
                 Last check-in:
+                {' '}
                 <DateFormat date={lastCheckIn} type="relative" />
               </>
             )}

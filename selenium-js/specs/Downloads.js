@@ -1,11 +1,12 @@
 import LoginPage from '../pageobjects/login.page';
+import GlobalNav from '../pageobjects/GlobalNav.page';
 import Downloads from '../pageobjects/Downloads.page';
 
 describe('Downloads page', async () => {
   it('login and navigate to downloads', async () => {
     await LoginPage.open();
     await LoginPage.login();
-    await Downloads.navigateToDownloads();
+    await GlobalNav.navigateTo("Downloads");
   });
 
   it('can expand and collapse rows', async () => {
@@ -25,25 +26,27 @@ describe('Downloads page', async () => {
 
     await (await Downloads.categoryDropdown())
       .selectByVisibleText('Command-line interface (CLI) tools');
-    await (await Downloads.expandCollapse()).click();
+    await (await Downloads.expandAll()).click();
+    expect(await Downloads.visibleRowContaining('Get started with rosa CLI')).toExist();
+    expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
+    expect(await Downloads.hiddenRowContaining('Helm charts')).not.toExist();
 
+    await (await Downloads.categoryDropdown()).selectByVisibleText('All categories');
     expect(await Downloads.visibleRowContaining('Get started with rosa CLI')).toExist();
     expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
     expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
 
     // Given mixed state, first click expands all.
-    await (await Downloads.expandCollapse()).click();
+    await (await Downloads.expandAll()).click();
     expect(await Downloads.visibleRowContaining('Get started with rosa CLI')).toExist();
     expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
     expect(await Downloads.visibleRowContaining('Helm charts')).toExist();
 
     // Once all expanded, second click collapses all.
-    await (await Downloads.expandCollapse()).click();
+    await (await Downloads.collapseAll()).click();
     expect(await Downloads.hiddenRowContaining('Get started with rosa CLI')).toExist();
     expect(await Downloads.hiddenRowContaining('Get started with the OpenShift CLI')).toExist();
     expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
-
-    await (await Downloads.categoryDropdown()).selectByVisibleText('All categories');
   });
 
   it('selecting OS affects architecture options & href', async () => {

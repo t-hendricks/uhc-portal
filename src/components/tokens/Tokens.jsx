@@ -18,53 +18,139 @@ limitations under the License.
 // copy it and use it with command line utitilites like `curl` or OCM.
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import {
-  PageSection, Card, CardBody, CardFooter, ClipboardCopy, CardTitle, Text, TextContent,
+  PageSection,
+  Button,
+  Card,
+  CardBody,
+  CardTitle,
+  ClipboardCopy,
+  List,
+  ListItem,
+  Stack,
+  StackItem,
+  Text,
+  TextContent,
+  Title,
 } from '@patternfly/react-core';
-import './Tokens.scss';
 
-/**
- * Splits the given text into lines of 80 characters each, so that they look
- * nice when rendered in a shell code snippet. Note that each line will have
- * a backslash at the end, for line continuation.
- */
-const splitToken = (text) => {
-  if (!text || !text.match) {
-    return text;
-  }
-  const chunks = text.match(/.{1,80}/g);
-  const lines = chunks.map(chunk => `${chunk}\\`);
-  return lines.join('\n');
-};
+import links from '../../common/installLinks';
+import Breadcrumbs from '../common/Breadcrumbs';
+import ExternalLink from '../common/ExternalLink';
+import TechPreviewBadge from '../common/TechPreviewBadge';
+import './Tokens.scss';
 
 /**
  * Generates a box for containing the value of a token.
  */
 const tokenBox = token => (
-  <Text component="pre">
-    <ClipboardCopy isReadOnly>{token}</ClipboardCopy>
-  </Text>
+  token === null ? <Skeleton size="md" /> : (
+    <Text component="pre">
+      <ClipboardCopy
+        isReadOnly
+        className="ocm-c-api-token-limit-width"
+        textAriaLabel="Copyable token"
+      >
+        {token}
+      </ClipboardCopy>
+    </Text>
+  )
 );
 
 /**
- * Generates a text box for snippet of code for the given text, removing all
- * the leading and trailing blank lines, and removing from all the lines the
- * number of blanks that appear in the first line.
+ * Generates a text box for login snippet of code for the given token.
  */
-const snippetBox = lines => (
-  <Text component="pre">
-    {lines.join('\n')}
-  </Text>
+const snippetBox = (token, commandName) => (
+  token === null ? <Skeleton size="md" /> : (
+    <Text component="pre">
+      <ClipboardCopy
+        isReadOnly
+        className="ocm-c-api-token-limit-width"
+        variant="expansion"
+        textAriaLabel="Copyable command"
+      >
+        {`${commandName} login --token="${token}"`}
+      </ClipboardCopy>
+    </Text>
+  )
+);
+
+const manageTokensCard = show => (
+  <Card className="ocm-c-api-token__card">
+    <CardTitle>
+      <Title headingLevel="h2">Revoke previous tokens</Title>
+    </CardTitle>
+    <CardBody className="ocm-c-api-token__card--body">
+      <TextContent>
+        <Text>To manage and revoke previous tokens:</Text>
+
+        <List component="ol">
+          <ListItem>
+            Navigate to the
+            {' '}
+            <ExternalLink href="https://sso.redhat.com/auth/realms/redhat-external/account/applications">
+              <b>offline API token management</b>
+            </ExternalLink>
+            {' '}
+            page.
+          </ListItem>
+          <ListItem>
+            Locate the
+            {' '}
+            <b>cloud-services</b>
+            {' '}
+            application.
+          </ListItem>
+          <ListItem>
+            Select
+            {' '}
+            <b>Revoke grant</b>
+            .
+          </ListItem>
+        </List>
+
+        <Text>
+          Refresh tokens will stop working immediately after you revoke them,
+          but existing access tokens may take up to 15 minutes to expire.
+        </Text>
+
+        {show ? (
+          <Text>
+            To display a copiable version of your token, select the
+            {' '}
+            <b>Load token</b>
+            {' '}
+            button.
+          </Text>
+        ) : (
+          <Text>Refreshing this page will generate a new token.</Text>
+        )}
+      </TextContent>
+    </CardBody>
+  </Card>
 );
 
 class Tokens extends React.Component {
   state = {
-    offlineAccessToken: undefined,
+    offlineAccessToken: null,
   }
 
+  commandName = 'ocm'
+
+  // After requesting token, we might need to reload page doing stronger auth;
+  // after that we want the token to show, but we just loaded.
   componentDidMount() {
+    const { blockedByTerms, show } = this.props;
+    if (!blockedByTerms && show) {
+      this.loadToken();
+    }
+  }
+
+  loadToken = () => {
     const that = this;
     insights.chrome.auth.getOfflineToken().then((response) => {
       that.setState({ offlineAccessToken: response.data.refresh_token });
@@ -77,87 +163,152 @@ class Tokens extends React.Component {
     });
   }
 
-  render() {
+  // Some methods here don't use `this`, but we can't convert to Class.method() calls,
+  // wouldn't allow TokensROSA which inhertis from Tokens to override them.
+  /* eslint-disable class-methods-use-this */
+  leadingInfo() {
+    return (
+      <>
+        <Text component="p">
+          Red Hat OpenShift Cluster Manager is a managed service that
+          makes it easy for you to use OpenShift without needing to
+          install or upgrade your own OpenShift (Kubernetes) cluster.
+        </Text>
+        <Title headingLevel="h3">Your API token</Title>
+        <Text component="p">
+          Use this API token to authenticate against your
+          Red Hat OpenShift Cluster Manager account.
+        </Text>
+      </>
+    );
+  }
+
+  docsLink() {
+    return (
+      <ExternalLink href={links.OCM_CLI_DOCS} noIcon>
+        read more about setting up the ocm CLI
+      </ExternalLink>
+    );
+  }
+
+  downloadLink() {
+    return (
+      <>
+        <ExternalLink href={links.OCM_CLI_LATEST} noIcon>ocm command-line tool</ExternalLink>
+        {' '}
+        <TechPreviewBadge />
+      </>
+    );
+  }
+
+  tokenDetails() {
     const { offlineAccessToken } = this.state;
 
-    const title = (
+    return (
+      <>
+        {tokenBox(offlineAccessToken)}
+
+        <Title headingLevel="h3">Using your token in the command line</Title>
+        <List component="ol">
+          <ListItem>
+            Download and install the
+            {' '}
+            {this.downloadLink()}
+          </ListItem>
+          <ListItem>
+            Copy and paste the authentication command in your terminal:
+          </ListItem>
+        </List>
+        {snippetBox(offlineAccessToken, this.commandName)}
+
+        <Title headingLevel="h3">Need help connecting with your offline token?</Title>
+        <Text component="p">
+          Run
+          {' '}
+          <code>
+            {this.commandName}
+            {' '}
+            login --help
+          </code>
+          {' '}
+          for in-terminal guidance, or
+          {' '}
+          {this.docsLink()}
+          {' '}
+          for more information about setting up the
+          {' '}
+          <code>{this.commandName}</code>
+          {' '}
+          CLI.
+        </Text>
+      </>
+    );
+  }
+
+  buttonOrTokenDetails() {
+    const { show, showPath } = this.props;
+    return show ? this.tokenDetails() : (
+      <Link to={showPath}>
+        <Button variant="primary" onClick={this.loadToken}>
+          Load token
+        </Button>
+      </Link>
+    );
+  }
+
+  render() {
+    const title = 'OpenShift Cluster Manager API Token';
+    const header = (
       <PageHeader>
-        <PageHeaderTitle title="OpenShift Cluster Manager API Token" />
+        <Breadcrumbs path={[
+          { label: 'Downloads', path: '/downloads' },
+          { label: title },
+        ]}
+        />
+        <PageHeaderTitle title={title} />
       </PageHeader>
     );
 
-    if (offlineAccessToken === undefined) {
-      return (
-        <>
-          {title}
-          <PageSection>
-            <Card className="ins-c-card__skeleton">
-              <CardTitle>
-                <Skeleton size="md" />
-              </CardTitle>
-              <CardBody>
-                <Skeleton size="lg" />
-              </CardBody>
-              <CardFooter>
-                <Skeleton size="sm" />
-              </CardFooter>
-            </Card>
-          </PageSection>
-        </>
-      );
-    }
-
-    // Prepare the snippet of code that shows how to use the offline access token:
-    const offlineAccessTokenSnippet = [
-      'ocm login --token="\\',
-      splitToken(offlineAccessToken),
-      '"',
-    ];
-
-    // Link to latest ocm release:
-    const ocmLink = <a href="https://github.com/openshift-online/ocm-cli/releases/latest">ocm</a>;
-
-    /* eslint-disable react/jsx-one-expression-per-line */
     return (
       <>
-        {title}
+        {header}
         <PageSection>
-          <Card className="ocm-c-api-token__card">
-            <CardTitle>
-              <h2>OpenShift Cluster Manager API Token</h2>
-            </CardTitle>
-            <CardBody className="ocm-c-api-token__card--body">
-              <TextContent>
-                <Text component="p">
-                  Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you
-                  to use OpenShift without needing to install, operate or upgrade your own OpenShift
-                  (Kubernetes) cluster.
-                </Text>
-                <Text component="p">
-                  Download and install the {ocmLink} command-line utility and use the API token to
-                  authenticate against your Red Hat OpenShift Cluster Manager account.
-                </Text>
-                {tokenBox(offlineAccessToken)}
-                <Text component="p">
-                  Copy it, and then use it to authenticate with the {ocmLink} command-line utility:
-                </Text>
-                {snippetBox(offlineAccessTokenSnippet)}
-                <Text component="p">
-                  Run <code>ocm login --help</code> to get more information.
-                </Text>
-              </TextContent>
-            </CardBody>
-          </Card>
+          <Stack hasGutter>
+            <StackItem>
+              <Card className="ocm-c-api-token__card">
+                <CardTitle>
+                  <Title headingLevel="h2">Connect with offline tokens</Title>
+                </CardTitle>
+                <CardBody className="ocm-c-api-token__card--body">
+                  <TextContent>
+                    {this.leadingInfo()}
+                    {this.buttonOrTokenDetails()}
+                  </TextContent>
+                </CardBody>
+              </Card>
+            </StackItem>
+
+            <StackItem>
+              {manageTokensCard()}
+            </StackItem>
+          </Stack>
         </PageSection>
       </>
     );
-    /* eslint-enable react/jsx-one-expression-per-line */
   }
 }
+Tokens.defaultProps = {
+  blockedByTerms: false,
+};
+Tokens.propTypes = {
+  blockedByTerms: PropTypes.bool,
+  show: PropTypes.bool.isRequired,
+  showPath: PropTypes.string,
+};
 
 export default Tokens;
 export {
   snippetBox,
-  splitToken,
   tokenBox,
+  manageTokensCard,
 };
