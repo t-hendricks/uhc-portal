@@ -1,3 +1,5 @@
+/*
+
 import LoginPage from '../pageobjects/login.page';
 import TokenPages from '../pageobjects/Tokens.page';
 
@@ -33,3 +35,5 @@ describe('Token pages', async () => {
     await expect(await TokenPages.commandBox()).toHaveValueContaining('rosa login --token="eyJ');
   });
 });
+
+*/
