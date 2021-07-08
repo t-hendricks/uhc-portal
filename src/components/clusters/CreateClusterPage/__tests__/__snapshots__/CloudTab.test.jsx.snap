@@ -460,12 +460,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   >
                     AWS (ARM)
                   </Link>
-                  <Label
-                    color="orange"
-                    variant="outline"
-                  >
-                    Developer preview
-                  </Label>
+                  <DevPreviewBadge />
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
               ],
@@ -973,12 +968,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   >
                     AWS (ARM)
                   </Link>
-                  <Label
-                    color="orange"
-                    variant="outline"
-                  >
-                    Developer preview
-                  </Label>
+                  <DevPreviewBadge />
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
               ],
@@ -1425,12 +1415,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   >
                     AWS (ARM)
                   </Link>
-                  <Label
-                    color="orange"
-                    variant="outline"
-                  >
-                    Developer preview
-                  </Label>
+                  <DevPreviewBadge />
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
               ],

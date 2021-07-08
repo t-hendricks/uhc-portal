@@ -6,7 +6,6 @@ import {
   Button,
   Stack,
   StackItem,
-  Label,
 } from '@patternfly/react-core';
 import {
   Table, TableHeader, TableBody, expandable, cellWidth,
@@ -14,6 +13,7 @@ import {
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 
+import DevPreviewBadge from '../../common/DevPreviewBadge';
 import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
 import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
@@ -389,7 +389,7 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/aws/arm" className="pf-u-mr-xs">AWS (ARM)</Link>
-        <Label variant="outline" color="orange">Developer preview</Label>
+        <DevPreviewBadge />
       </>,
       'Full stack automation and pre-existing infrastructure',
     ],
