@@ -23,7 +23,7 @@ import {
 const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters, isError }) => {
   if (isError) {
     return (
-      <Card className="clusters-overview-card">
+      <Card className="ocm-overview-clusters__card">
         <CardTitle>
           Clusters with issues
         </CardTitle>
@@ -43,7 +43,7 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
 
   if (!totalConnectedClusters) {
     return (
-      <Card className="clusters-overview-card">
+      <Card className="ocm-overview-clusters__card">
         <CardTitle>
           Clusters with issues
         </CardTitle>
@@ -78,13 +78,13 @@ const ClustersWithIssuesCard = ({ totalUnhealthyClusters, totalConnectedClusters
 
   const cardContent = (
     <>
-      <span id={totalUnhealthyClusters > 0 ? 'clusters-with-issues-non-zero' : 'clusters-with-issues-zero'}>
+      <span className={totalUnhealthyClusters > 0 ? 'clusters-with-issues-non-zero' : 'clusters-with-issues-zero'}>
         { totalUnhealthyClusters }
       </span>
     </>
   );
   return (
-    <Card className="clusters-overview-card">
+    <Card className="ocm-overview-clusters__card">
       <CardTitle>
         Clusters with issues
       </CardTitle>
