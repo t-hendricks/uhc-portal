@@ -25,22 +25,34 @@ function GCPByocFields() {
       <GridItem span={12}>
         <ExpandableSection toggleText="Prerequisites">
           <TextContent>
-            <p>
-              In order to create a Customer Cloud Subscription cluster, you must have a Service
-              Account in GCP named
-              {' '}
-              <code>osd-ccs-admin</code>
-              {' '}
-              that meets
-              {' '}
-              <ExternalLink href="https://www.openshift.com/dedicated/ccs">these requirements.</ExternalLink>
-              {' '}
-              Create a key for that service account, export to a file named
-              {' '}
-              <code>osServiceAccount.json</code>
-              {' '}
-              and add it here.
-            </p>
+            Successful cluster provisioning requires that:
+            <ul>
+              <li>
+                Your Google Cloud account has the necessary resource quotas and
+                limits to support your desired cluster size according to the
+                {' '}
+                <ExternalLink noIcon href="https://www.openshift.com/dedicated/ccs">cluster resource requirements</ExternalLink>
+              </li>
+              <li>
+                An IAM Service account called osd-ccs-admin exists
+                with the following roles attached:
+                <ul>
+                  <li>DNS Administrator</li>
+                  <li>Organization Policy Viewer</li>
+                  <li>Owner</li>
+                  <li>Project IAM Admin</li>
+                  <li>Service Management Administrator</li>
+                  <li>Service Usage Admin</li>
+                  <li>Storage Admin</li>
+                </ul>
+              </li>
+            </ul>
+            Production Support from GCP is also recommended.
+            To prevent potential conflicts, we recommend that you have no other resources
+            provisioned in the project prior to provisioning OpenShift Dedicated.
+            For more guidance, see the
+            {' '}
+            <ExternalLink noIcon href="https://www.openshift.com/dedicated/ccs">customer cloud subscription requirements.</ExternalLink>
           </TextContent>
         </ExpandableSection>
       </GridItem>
@@ -48,6 +60,15 @@ function GCPByocFields() {
         <Field
           component={ReduxFileUpload}
           validate={[required, validateGCPServiceAccount]}
+          extendedHelpText={(
+            <>
+              <p>
+                To create a service account JSON file, create a key for your service account,
+                export it to a file and upload it to this field.
+              </p>
+              <ExternalLink href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">Learn how to create service account keys</ExternalLink>
+            </>
+          )}
           name="gcp_service_account"
           isRequired
           label="Service account JSON"

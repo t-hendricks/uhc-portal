@@ -35,6 +35,8 @@ import './createOSDWizard.scss';
 const WizardBillingModelSection = wizardConnector(BillingModelSection);
 
 class CreateOSDWizard extends React.Component {
+  state = { stepIdReached: 1 }
+
   componentDidMount() {
     const {
       machineTypes,
@@ -75,6 +77,13 @@ class CreateOSDWizard extends React.Component {
     }
   }
 
+  onNext = ({ id }) => {
+    const { stepIdReached } = this.state;
+    if (id && stepIdReached < id) {
+      this.setState({ stepIdReached: id });
+    }
+  };
+
   render() {
     const {
       isValid,
@@ -91,8 +100,11 @@ class CreateOSDWizard extends React.Component {
       hasProductQuota,
     } = this.props;
 
+    const { stepIdReached } = this.state;
+
     const steps = [
       {
+        id: 1,
         name: 'Billing model',
         component: <Grid><WizardBillingModelSection byocSelected={isByoc} isWizard /></Grid>,
         enableNext: isValid,
@@ -101,25 +113,43 @@ class CreateOSDWizard extends React.Component {
         name: 'Cluster settings',
         steps: [
           {
+            id: 2,
             name: 'Cloud provider',
             component: <CloudProviderScreen />,
             enableNext: isValid,
+            canJumpTo: stepIdReached >= 2,
           },
           {
+            id: 3,
             name: 'Cluster details',
             component: <ClusterSettingsScreen />,
             enableNext: isValid,
+            canJumpTo: stepIdReached >= 3,
           },
         ],
         enableNext: isValid,
       },
-      { name: 'Networking', component: <NetworkScreen /> },
-      { name: 'Default machine pool', component: <DefaultMachinePoolScreen />, enableNext: isValid },
       {
+        id: 4,
+        name: 'Networking',
+        component: <NetworkScreen />,
+        enableNext: isValid,
+        canJumpTo: stepIdReached >= 4,
+      },
+      {
+        id: 5,
+        name: 'Default machine pool',
+        component: <DefaultMachinePoolScreen />,
+        enableNext: isValid,
+        canJumpTo: stepIdReached >= 5,
+      },
+      {
+        id: 6,
         name: 'Review and create',
         component: <ReviewClusterScreen isPending={createClusterResponse.pending} />,
         nextButtonText: 'Create cluster',
         enableNext: isValid && !createClusterResponse.pending,
+        canJumpTo: stepIdReached >= 6 && isValid,
       },
     ];
     const ariaTitle = 'Create OpenShift Dedicated cluster wizard';
@@ -233,6 +263,7 @@ class CreateOSDWizard extends React.Component {
               mainAriaLabel={`${ariaTitle} content`}
               steps={steps}
               onSave={onSubmit}
+              onNext={this.onNext}
             />
           </div>
         </PageSection>
