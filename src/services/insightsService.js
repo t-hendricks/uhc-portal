@@ -52,9 +52,10 @@ const getGroupsInsights = () => insightsAPIRequest({
   url: '/groups',
 });
 
-const getOrganizationInsights = () => insightsAPIRequest({
-  method: 'get',
+const getOrganizationInsights = clusterIds => insightsAPIRequest({
+  method: 'post',
   url: '/org_overview',
+  data: { clusters: clusterIds },
 });
 
 const insigthsService = {
