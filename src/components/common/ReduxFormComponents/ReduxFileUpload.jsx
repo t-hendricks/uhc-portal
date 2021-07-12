@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FileUpload, FormGroup } from '@patternfly/react-core';
 
+import PopoverHint from '../PopoverHint';
+
 class ReduxFileUpload extends React.Component {
   state = {
     filename: '',
@@ -32,6 +34,7 @@ class ReduxFileUpload extends React.Component {
       input,
       isRequired,
       label,
+      extendedHelpText,
     } = this.props;
     const {
       filename,
@@ -51,6 +54,7 @@ class ReduxFileUpload extends React.Component {
         helperTextInvalid={helperTextInvalid()}
         validated={(dirty || touched) && error ? 'error' : 'default'}
         label={label}
+        labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
         isRequired={isRequired}
       >
         <FileUpload
@@ -75,6 +79,7 @@ ReduxFileUpload.defaultProps = {
 
 ReduxFileUpload.propTypes = {
   helpText: PropTypes.string,
+  extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
   isRequired: PropTypes.bool,
