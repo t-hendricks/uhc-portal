@@ -75,7 +75,7 @@ class Overview extends Component {
       && !clusterIds.pending
       && !clusterIds.fulfilled
       && organization.fulfilled) {
-      fetchClusterIds(false, organization.details.data.id);
+      fetchClusterIds(organization.details.data.id);
     }
 
     if (!insightsOverview.rejected
