@@ -66,24 +66,14 @@ class Overview extends Component {
     const {
       fetchOrganizationInsights,
       insightsOverview,
-      fetchClusterIds,
-      clusterIds,
       organization,
     } = this.props;
-
-    if (!clusterIds.rejected
-      && !clusterIds.pending
-      && !clusterIds.fulfilled
-      && organization.fulfilled) {
-      fetchClusterIds(organization.details.data.id);
-    }
 
     if (!insightsOverview.rejected
       && !insightsOverview.pending
       && !insightsOverview.fulfilled
-      && clusterIds.fulfilled) {
-      fetchOrganizationInsights(clusterIds.ids.map(item => item.external_cluster_id)
-        .filter(Boolean));
+      && organization.fulfilled) {
+      fetchOrganizationInsights(organization.details.data.id);
     }
   }
 
@@ -290,8 +280,6 @@ Overview.propTypes = {
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
   }).isRequired,
-  clusterIds: PropTypes.object.isRequired,
-  fetchClusterIds: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   organization: PropTypes.object.isRequired,
 };

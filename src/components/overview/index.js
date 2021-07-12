@@ -5,7 +5,7 @@ import { getSummaryDashboard, getUnhealthyClusters } from '../../redux/actions/d
 import { getUserAccess } from '../../redux/actions/costActions';
 import { invalidateSubscriptions } from '../../redux/actions/subscriptionsActions';
 import { fetchGroups, fetchOrganizationInsights } from '../clusters/ClusterDetails/components/Insights/InsightsActions';
-import { fetchClusters, fetchClusterIds } from '../../redux/actions/clustersActions';
+import { fetchClusters } from '../../redux/actions/clustersActions';
 import { viewConstants } from '../../redux/constants';
 import { getOrganizationAndQuota } from '../../redux/actions/userActions';
 
@@ -17,7 +17,6 @@ const mapDispatchToProps = {
   invalidateSubscriptions,
   fetchInsightsGroups: fetchGroups,
   fetchOrganizationInsights,
-  fetchClusterIds,
   getOrganizationAndQuota,
 };
 
@@ -29,7 +28,6 @@ const mapStateToProps = state => ({
   insightsGroups: state.insightsData.groups,
   insightsOverview: state.insightsData.overview,
   userAccess: state.cost.userAccess,
-  clusterIds: state.clusters.clusterIds,
   organization: state.userProfile.organization,
 
   // summary dashboard contain only one {time, value} pair - the current value.
