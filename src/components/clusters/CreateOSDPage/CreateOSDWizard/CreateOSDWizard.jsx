@@ -21,18 +21,14 @@ import Breadcrumbs from '../../../common/Breadcrumbs';
 
 import { shouldRefetchQuota } from '../../../../common/helpers';
 
-import BillingModelSection from '../CreateOSDForm/FormSections/BillingModelSection';
+import BillingModelScreen from './BillingModelScreen';
 import CloudProviderScreen from './CloudProviderScreen';
 import ClusterSettingsScreen from './ClusterSettingsScreen';
 import DefaultMachinePoolScreen from './DefaultMachinePoolScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
 import NetworkScreen from './NetworkScreen';
 
-import wizardConnector from './WizardConnector';
-
 import './createOSDWizard.scss';
-
-const WizardBillingModelSection = wizardConnector(BillingModelSection);
 
 class CreateOSDWizard extends React.Component {
   state = { stepIdReached: 1 }
@@ -87,7 +83,6 @@ class CreateOSDWizard extends React.Component {
   render() {
     const {
       isValid,
-      isByoc,
       onSubmit,
       createClusterResponse,
       machineTypes,
@@ -106,7 +101,7 @@ class CreateOSDWizard extends React.Component {
       {
         id: 1,
         name: 'Billing model',
-        component: <Grid><WizardBillingModelSection byocSelected={isByoc} isWizard /></Grid>,
+        component: <Grid><BillingModelScreen isWizard /></Grid>,
         enableNext: isValid,
       },
       {
@@ -280,7 +275,6 @@ const requestStatePropTypes = PropTypes.shape({
 
 CreateOSDWizard.propTypes = {
   isValid: PropTypes.bool,
-  isByoc: PropTypes.bool,
   isErrorModalOpen: PropTypes.bool,
 
   createClusterResponse: PropTypes.shape({
