@@ -595,6 +595,7 @@ const OCPClusterDetails = {
       href: '/api/accounts_mgmt/v1/subscriptions/1FDpnxsGxqFFFp2VNIWp5VajPc8',
       plan: {
         id: 'OCP',
+        type: 'OCP',
         kind: 'Plan',
         href: '/api/accounts_mgmt/v1/plans/OCP',
       },
