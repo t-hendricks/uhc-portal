@@ -25,6 +25,7 @@ import config from '../../config';
 
 const App = ({ children }) => (
   <>
+    <span id="scrollToTop" />
     {config.override && <EnvOverrideMessage env={config.override} />}
     <ErrorBoundary>
       {children || <Router />}
