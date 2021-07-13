@@ -14,7 +14,7 @@ import { ServerIcon, CloudIcon, LaptopIcon } from '@patternfly/react-icons';
 import './CreateClusterPage.scss';
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../../common/Breadcrumbs';
-import { shouldRefetchQuota } from '../../../common/helpers';
+import { scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
 import DatacenterTab from './DatacenterTab';
 import CloudTab from './CloudTab';
 import LocalTab from './LocalTab';
@@ -34,6 +34,8 @@ const tabIndexToHash = Object.entries(hashToTabIndex).reduce((acc, tabIndex) => 
 
 class CreateCluster extends React.Component {
   componentDidMount() {
+    scrollToTop();
+
     // Try to get quota or organization when the component is first mounted.
     const { getOrganizationAndQuota, organization, getAuthToken } = this.props;
 
