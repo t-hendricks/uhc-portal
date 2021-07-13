@@ -68,7 +68,7 @@ exports[`<LocalTab /> renders correctly 1`] = `
               <DownloadAndOSSelection
                 architecture="x86"
                 channel="stable"
-                cloudProviderID="/"
+                pendoID="/"
                 token={Object {}}
                 tool="CRC"
               />
@@ -78,7 +78,7 @@ exports[`<LocalTab /> renders correctly 1`] = `
                 Pull secret
               </Text>
               <PullSecretSection
-                cloudProviderID="/"
+                pendoID="/"
                 token={Object {}}
               />
             </TextContent>
@@ -131,7 +131,7 @@ exports[`<LocalTab /> renders correctly 1`] = `
               </Text>
             </TextContent>
             <a
-              href="https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/"
+              href="https://access.redhat.com/documentation/en-us/red_hat_codeready_containers"
               onClick={[Function]}
               rel="noreferrer noopener"
               target="_blank"
