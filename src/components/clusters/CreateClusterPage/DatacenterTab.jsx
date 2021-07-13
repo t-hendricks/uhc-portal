@@ -6,10 +6,10 @@ import {
   Button,
   Stack,
   StackItem,
-  Label,
 } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
+import TechPreviewBadge from '../../common/TechPreviewBadge';
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];
 const ocpTableRows = [
@@ -38,9 +38,7 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
             <Title headingLevel="h2" className="ocm-ocp-datacenter-title">
               Assisted Installer
             </Title>
-            <Label color="orange" variant="outline">
-              Technology preview
-            </Label>
+            <TechPreviewBadge />
           </StackItem>
           <StackItem>
             Create a cluster on bare metal following a guided installation
