@@ -367,7 +367,7 @@ const tokenRows = (expanded, token) => [
         or
         {' '}
         <ExternalLink href={links.OCM_DOCS_PULL_SECRETS}>
-          learn more about pull secret
+          learn more about pull secrets
         </ExternalLink>
         .
       </Text>
@@ -384,7 +384,7 @@ const tokenRows = (expanded, token) => [
           <AlignRight>
             <Link to="/token">
               <Button variant="secondary" icon={<ArrowRightIcon />} iconPosition="right">
-                See API token
+                View API token
               </Button>
             </Link>
           </AlignRight>
