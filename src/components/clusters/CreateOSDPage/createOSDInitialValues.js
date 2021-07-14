@@ -1,3 +1,5 @@
+import { normalizedProducts } from '../../../common/subscriptionTypes';
+
 const createOSDInitialValues = ({ cloudProviderID, isByoc, isMultiAz }) => {
   let defaultNodeCount;
   if (isByoc) {
@@ -26,6 +28,7 @@ const createOSDInitialValues = ({ cloudProviderID, isByoc, isMultiAz }) => {
     network_configuration_toggle: 'basic',
     disable_scp_checks: false,
     billing_model: 'standard',
+    product: normalizedProducts.OSD,
   };
   if (cloudProviderID) {
     initialValues.region = cloudProviderID === 'aws' ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;

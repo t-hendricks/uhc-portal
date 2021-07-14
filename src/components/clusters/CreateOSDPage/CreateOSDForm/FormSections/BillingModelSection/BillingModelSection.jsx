@@ -214,7 +214,7 @@ BillingModelSection.propTypes = {
   hasMarketplaceQuota: PropTypes.bool,
   hasMarketplaceBYOCQuota: PropTypes.bool,
   hasMarketplaceRhInfraQuota: PropTypes.bool,
-  toggleBYOCFields: PropTypes.func.isRequired,
+  toggleBYOCFields: PropTypes.func,
   byocSelected: PropTypes.bool,
   showOSDTrial: PropTypes.bool,
   pending: PropTypes.bool,

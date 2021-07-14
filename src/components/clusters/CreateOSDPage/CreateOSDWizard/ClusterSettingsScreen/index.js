@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
   const isByoc = valueSelector(state, 'byoc') === 'true';
   const isAutomaticUpgrade = valueSelector(state, 'upgrade_policy') === 'automatic';
   const product = valueSelector(state, 'product');
-  const billingModel = valueSelector(state, 'billingModel');
+  const billingModel = valueSelector(state, 'billing_model');
   const customerManagedEncryptionSelected = valueSelector(state, 'customer_managed_key');
   const selectedRegion = valueSelector(state, 'region');
 
