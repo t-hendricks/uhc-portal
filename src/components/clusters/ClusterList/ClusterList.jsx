@@ -30,6 +30,7 @@ import {
   ToolbarContent,
 } from '@patternfly/react-core';
 
+import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import ClusterListFilter from '../common/ClusterListFilter';
 import ClusterListActions from './components/ClusterListActions';
 import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
@@ -172,20 +173,25 @@ class ClusterList extends Component {
     const showSpinner = !isPendingNoData && pending && !loadingChangedView;
     const showSkeleton = isPendingNoData || (pending && loadingChangedView);
 
+    const someReadOnly = clusters.map(c => c?.status?.configuration_mode).includes('read_only');
+
     const pageHeader = (
-      <PageHeader id="cluster-list-header">
-        <PageHeaderTitle title="Clusters" className="page-title" />
-        <PageHeaderTools>
-          {showSpinner && <Spinner size="lg" className="cluster-list-spinner" />}
-          {error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />}
-        </PageHeaderTools>
-        <RefreshBtn
-          autoRefresh={!anyModalOpen}
-          isDisabled={isPendingNoData}
-          refreshFunc={this.refresh}
-          classOptions="cluster-list-top"
-        />
-      </PageHeader>
+      <>
+        <ReadOnlyBanner someReadOnly={someReadOnly} />
+        <PageHeader id="cluster-list-header">
+          <PageHeaderTitle title="Clusters" className="page-title" />
+          <PageHeaderTools>
+            {showSpinner && <Spinner size="lg" className="cluster-list-spinner" />}
+            {error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />}
+          </PageHeaderTools>
+          <RefreshBtn
+            autoRefresh={!anyModalOpen}
+            isDisabled={isPendingNoData}
+            refreshFunc={this.refresh}
+            classOptions="cluster-list-top"
+          />
+        </PageHeader>
+      </>
     );
 
     if (error && !size(clusters)) {
