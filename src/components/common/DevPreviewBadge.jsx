@@ -20,7 +20,7 @@ function DevPreviewBadge() {
   );
   return (
     <Popover position={PopoverPosition.top} bodyContent={info}>
-      <Label variant="outline" color="orange">Developer preview</Label>
+      <Label color="orange">Developer Preview</Label>
     </Popover>
   );
 }

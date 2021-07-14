@@ -24,9 +24,8 @@ exports[`<DevPreviewBadge> renders 1`] = `
 >
   <Label
     color="orange"
-    variant="outline"
   >
-    Developer preview
+    Developer Preview
   </Label>
 </Popover>
 `;
