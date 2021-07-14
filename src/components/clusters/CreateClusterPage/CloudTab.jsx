@@ -13,6 +13,7 @@ import {
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 
+import DevPreviewBadge from '../../common/DevPreviewBadge';
 import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
 import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
@@ -383,6 +384,13 @@ const runItYourself = () => {
   const rows = [
     [
       <><Link to="/install/aws">AWS</Link></>,
+      'Full stack automation and pre-existing infrastructure',
+    ],
+    [
+      <>
+        <Link to="/install/aws/arm" className="pf-u-mr-xs">AWS (ARM)</Link>
+        <DevPreviewBadge />
+      </>,
       'Full stack automation and pre-existing infrastructure',
     ],
     [

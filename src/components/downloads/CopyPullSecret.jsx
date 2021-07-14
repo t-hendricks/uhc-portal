@@ -8,6 +8,8 @@ import { PasteIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import isEmpty from 'lodash/isEmpty';
 
+import { trackPendo } from '../../common/helpers';
+
 class CopyPullSecret extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +31,9 @@ class CopyPullSecret extends React.Component {
   }
 
   render() {
-    const { token, text, variant } = this.props;
+    const {
+      token, text, variant, pendoID,
+    } = this.props;
     const isDisabled = (!token || !!token.error || isEmpty(token));
     const { clicked } = this.state;
     const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
@@ -45,6 +49,7 @@ class CopyPullSecret extends React.Component {
             type="button"
             tabIndex={0}
             isDisabled={isDisabled}
+            onClick={() => trackPendo('OCP-Copy-PullSecret', pendoID)}
           >
             {clicked ? 'Copied!' : text}
           </Button>
@@ -69,6 +74,7 @@ class CopyPullSecret extends React.Component {
             tabIndex={0}
             isDisabled={isDisabled}
             icon={<PasteIcon />}
+            onClick={() => trackPendo('OCP-Copy-PullSecret', pendoID)}
           >
             {text}
           </Button>
@@ -78,6 +84,7 @@ class CopyPullSecret extends React.Component {
   }
 }
 CopyPullSecret.propTypes = {
+  pendoID: PropTypes.string,
   token: PropTypes.object.isRequired,
   text: PropTypes.string,
   variant: PropTypes.oneOf(['link', 'button']).isRequired,

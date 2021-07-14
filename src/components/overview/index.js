@@ -7,6 +7,7 @@ import { invalidateSubscriptions } from '../../redux/actions/subscriptionsAction
 import { fetchGroups, fetchOrganizationInsights } from '../clusters/ClusterDetails/components/Insights/InsightsActions';
 import { fetchClusters } from '../../redux/actions/clustersActions';
 import { viewConstants } from '../../redux/constants';
+import { getOrganizationAndQuota } from '../../redux/actions/userActions';
 
 const mapDispatchToProps = {
   fetchClusters,
@@ -16,6 +17,7 @@ const mapDispatchToProps = {
   invalidateSubscriptions,
   fetchInsightsGroups: fetchGroups,
   fetchOrganizationInsights,
+  getOrganizationAndQuota,
 };
 
 const mapStateToProps = state => ({
@@ -26,6 +28,7 @@ const mapStateToProps = state => ({
   insightsGroups: state.insightsData.groups,
   insightsOverview: state.insightsData.overview,
   userAccess: state.cost.userAccess,
+  organization: state.userProfile.organization,
 
   // summary dashboard contain only one {time, value} pair - the current value.
   totalClusters: get(state.dashboards.summary, 'metrics.clusters_total[0].value', 0),

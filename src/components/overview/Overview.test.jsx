@@ -97,6 +97,8 @@ describe('<Overview />', () => {
         insightsGroups={dashboardState.insightsGroups}
         getUserAccess={getUserAccess}
         userAccess={userAccess}
+        getOrganizationAndQuota={jest.fn()}
+        organization={{}}
       />,
     );
   });

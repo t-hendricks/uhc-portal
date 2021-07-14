@@ -13,11 +13,16 @@ describe('Token pages', async () => {
 
     const button = await TokenPages.loadTokenButton();
     await expect(button).toExist();
+
+    /*
+    Disabled to avoid hitting offline_session_limit_exceeded.
+
     await button.click();
-    
+
     await expect(await TokenPages.loadTokenButton()).not.toExist();
     await expect(await TokenPages.tokenBox()).toHaveValueContaining('eyJ');
     await expect(await TokenPages.commandBox()).toHaveValueContaining('ocm login --token="eyJ');
+    */
   });
 
   it('rosa token page', async () => {
@@ -26,10 +31,15 @@ describe('Token pages', async () => {
 
     const button = await TokenPages.loadTokenButton();
     await expect(button).toExist();
+
+    /*
+    Disabled to avoid hitting offline_session_limit_exceeded.
+
     await button.click();
-    
+
     await expect(await TokenPages.loadTokenButton()).not.toExist();
     await expect(await TokenPages.tokenBox()).toHaveValueContaining('eyJ');
     await expect(await TokenPages.commandBox()).toHaveValueContaining('rosa login --token="eyJ');
+    */
   });
 });
