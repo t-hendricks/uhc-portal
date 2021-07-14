@@ -15,12 +15,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
         >
           Assisted Installer
         </Title>
-        <Label
-          color="orange"
-          variant="outline"
-        >
-          Technology preview
-        </Label>
+        <TechPreviewBadge />
       </StackItem>
       <StackItem>
         Create a cluster on bare metal following a guided installation process to connect your hardware.
