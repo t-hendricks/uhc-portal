@@ -15,7 +15,7 @@ const OCM_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/openshift_c
 
 const links = {
   AWS_ARM_GITHUB: 'https://github.com/openshift/ocp-on-arm',
-  AWS_ARM_DOCS: 'https://github.com/openshift/installer/blob/master/docs/user/aws/install.md',
+  AWS_ARM_DOCS: 'https://github.com/openshift/ocp-on-arm/blob/main/README.md',
 
   TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote_health_monitoring/about-remote-health-monitoring.html`,
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
