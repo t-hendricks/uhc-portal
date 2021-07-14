@@ -338,7 +338,7 @@ const tokenRows = (expanded, token) => [
           <AlignRight>
             <Split hasGutter>
               <SplitItem>
-                <CopyPullSecret token={token} text="Copy" variant="button" />
+                <CopyPullSecret token={token} text="Copy" variant="link-inplace" />
               </SplitItem>
               <SplitItem>
                 <DownloadPullSecret token={token} text="Download" />

@@ -960,7 +960,7 @@ exports[`<DownloadsPage> renders 1`] = `
                                 },
                               }
                             }
-                            variant="button"
+                            variant="link-inplace"
                           />
                         </SplitItem>
                         <SplitItem>
