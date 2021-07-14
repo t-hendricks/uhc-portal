@@ -15,13 +15,13 @@ import {
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
 import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
-import { tools, channels, architectures } from '../../../common/installLinks';
+import links, { tools, channels, architectures } from '../../../common/installLinks';
 import PullSecretSection from '../install/instructions/components/PullSecretSection';
 import { trackPendo } from '../../../common/helpers';
 import '../install/instructions/Instructions.scss';
 
-const cloudProviderID = window.location.pathname;
-const docURL = 'https://access.redhat.com/documentation/en-us/red_hat_codeready_containers/';
+const pendoID = window.location.pathname;
+const docURL = links.INSTALL_CRC_GETTING_STARTED;
 
 const LocalTab = ({ token }) => (
   <>
@@ -75,10 +75,10 @@ const LocalTab = ({ token }) => (
                   tool={tools.CRC}
                   channel={channels.STABLE}
                   architecture={architectures.x86}
-                  cloudProviderID={cloudProviderID}
+                  pendoID={pendoID}
                 />
                 <Text component="h3">Pull secret</Text>
-                <PullSecretSection token={token} cloudProviderID={cloudProviderID} />
+                <PullSecretSection token={token} pendoID={pendoID} />
               </TextContent>
             </SplitItem>
           </Split>
@@ -115,7 +115,7 @@ const LocalTab = ({ token }) => (
                 rel="noreferrer noopener"
                 target="_blank"
                 variant="link"
-                onClick={() => trackPendo('OCP-Download-OfficialDocumentation', cloudProviderID)}
+                onClick={() => trackPendo('OCP-Download-OfficialDocumentation', pendoID)}
               >
                 View the CodeReady Containers Getting started guide
                 {' '}

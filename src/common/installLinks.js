@@ -2,6 +2,7 @@ const MIRROR_CLIENTS_STABLE = 'https://mirror.openshift.com/pub/openshift-v4/cli
 const MIRROR_CLIENTS_STABLE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
 const MIRROR_CLIENTS_LATEST_PRE = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
+const MIRROR_CLIENTS_ARM_PRE = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release';
 const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
 const MIROR_RHCOS_LATEST_S390X = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
@@ -13,6 +14,8 @@ const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
 const OCM_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021';
 
 const links = {
+  AWS_ARM_GITHUB: 'https://github.com/openshift/ocp-on-arm',
+  AWS_ARM_DOCS: 'https://github.com/openshift/installer/blob/master/docs/user/aws/install.md',
 
   TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote_health_monitoring/about-remote-health-monitoring.html`,
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
@@ -213,6 +216,11 @@ const urls = {
         [operatingSystems.linux]: links.CLI_TOOLS_LINUX_PRE_RELEASE,
         [operatingSystems.mac]: links.CLI_TOOLS_MAC_PRE_RELEASE,
       },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_ARM_PRE}/openshift-client-linux-amd64.tar.gz`, // runs on amd64, installs on arm
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_ARM_PRE}/openshift-client-mac.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_CLIENTS_ARM_PRE}/openshift-client-windows.zip`,
+      },
     },
   },
 
@@ -261,6 +269,11 @@ const urls = {
       [architectures.x86]: {
         [operatingSystems.linux]: links.INSTALLER_LINUX_PRE_RELEASE,
         [operatingSystems.mac]: links.INSTALLER_MAC_PRE_RELEASE,
+      },
+
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_ARM_PRE}/openshift-install-linux-amd64.tar.gz`, // installs on ARM, runs on x86
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_ARM_PRE}/openshift-install-mac.tar.gz`,
       },
     },
   },

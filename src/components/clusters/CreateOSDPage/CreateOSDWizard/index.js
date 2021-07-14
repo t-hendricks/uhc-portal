@@ -28,11 +28,8 @@ const mapStateToProps = (state, ownProps) => {
   const selectedProduct = valueSelector(state, 'product');
   const product = selectedProduct || ownProps.product;
 
-  const isByoc = valueSelector(state, 'byoc') === 'true';
-
   return ({
     isValid: isValid('CreateCluster')(state),
-    isByoc,
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
 
     createClusterResponse: state.clusters.createdCluster,

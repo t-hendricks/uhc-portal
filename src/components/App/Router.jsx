@@ -73,6 +73,7 @@ import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
+import InstallAwsARM from '../clusters/install/InstallAwsARM';
 
 const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
@@ -117,6 +118,7 @@ function Router({ history }) {
 
             <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
+            <Route path="/install/aws/arm" component={InstallAwsARM} />
             <Route path="/install/aws" component={InstallAWS} />
             <Route path="/install/gcp/installer-provisioned" component={InstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={InstallGCPUPI} />

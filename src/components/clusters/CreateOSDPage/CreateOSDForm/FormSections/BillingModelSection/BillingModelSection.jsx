@@ -160,6 +160,7 @@ function BillingModelSection({
               onChange={onBillingModelChange}
               options={subscriptionOptions}
               defaultValue={defaultBillingModel}
+              disableDefaultValueHandling={isWizard}
             />
           </FormGroup>
           <Title headingLevel="h3">Infrastructure type:</Title>
@@ -175,6 +176,7 @@ function BillingModelSection({
               component={RadioButtons}
               name="byoc"
               defaultValue="false"
+              disableDefaultValueHandling
               options={[{
                 label: 'Customer cloud subscription',
                 description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',

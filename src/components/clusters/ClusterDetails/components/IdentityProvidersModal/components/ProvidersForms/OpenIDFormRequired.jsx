@@ -10,65 +10,83 @@ import { checkOpenIDIssuer } from '../../../../../../../common/validators';
 import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
 import { isEmptyReduxArray } from '../../IdentityProvidersHelper';
 
-const validate = (_, allValues) => {
-  if (isEmptyReduxArray(allValues.openid_preferred_username, 'openid_preferred_username')
-    && isEmptyReduxArray(allValues.openid_name, 'openid_name') && isEmptyReduxArray(allValues.openid_email, 'openid_email')) {
-    return 'At least one claim is required';
+class OpenIDFormRequired extends React.Component {
+  state = {
+    isGroupError: false,
   }
-  return undefined;
-};
 
-function OpenIDFormRequired({ isPending }) {
-  return (
-    <>
-      <IDPBasicFields />
-      <GridItem span={8}>
-        <Field
-          component={ReduxVerticalFormGroup}
-          name="issuer"
-          label="Issuer URL"
+  validate = (_, allValues) => {
+    if (isEmptyReduxArray(allValues.openid_preferred_username, 'openid_preferred_username')
+    && isEmptyReduxArray(allValues.openid_name, 'openid_name') && isEmptyReduxArray(allValues.openid_email, 'openid_email')) {
+      return 'At least one claim is required';
+    }
+    return undefined;
+  };
+
+  onValueChange = () => {
+    this.setState({ isGroupError: true });
+  }
+
+  render() {
+    const { isPending } = this.props;
+    const { isGroupError } = this.state;
+    return (
+      <>
+        <IDPBasicFields />
+        <GridItem span={8}>
+          <Field
+            component={ReduxVerticalFormGroup}
+            name="issuer"
+            label="Issuer URL"
+            type="text"
+            disabled={isPending}
+            validate={checkOpenIDIssuer}
+            isRequired
+            helpText="The URL that the OpenID provider asserts as the issuer identifier. It must use the https scheme with no URL query parameters or fragment."
+          />
+        </GridItem>
+        <GridItem span={8}>
+          <h4>Claims mappings</h4>
+        </GridItem>
+        <ReduxFieldArray
+          fieldName="openid_email"
+          label="Email"
           type="text"
+          placeholderText="e.g. email"
           disabled={isPending}
-          validate={checkOpenIDIssuer}
+          helpText="The list of attributes whose values should be used as the email address."
+          validate={this.validate}
+          isGroupError={isGroupError}
+          onFormChange={this.onValueChange}
           isRequired
-          helpText="The URL that the OpenID provider asserts as the issuer identifier. It must use the https scheme with no URL query parameters or fragment."
         />
-      </GridItem>
-      <GridItem span={8}>
-        <h4>Claims mappings</h4>
-      </GridItem>
-      <ReduxFieldArray
-        fieldName="openid_email"
-        label="Email"
-        type="text"
-        placeholderText="e.g. email"
-        disabled={isPending}
-        helpText="The list of attributes whose values should be used as the email address."
-        validate={validate}
-        isRequired
-      />
-      <ReduxFieldArray
-        fieldName="openid_name"
-        label="Name"
-        type="text"
-        placeholderText="e.g. name"
-        disabled={isPending}
-        validate={validate}
-        helpText="The list of attributes whose values should be used as the preferred username."
-        isRequired
-      />
-      <ReduxFieldArray
-        fieldName="openid_preferred_username"
-        label="Preferred username"
-        type="text"
-        placeholderText="e.g. preferred_username"
-        disabled={isPending}
-        validate={validate}
-        helpText="The list of attributes whose values should be used as the display name."
-        isRequired
-      />
-    </>
-  );
+        <ReduxFieldArray
+          fieldName="openid_name"
+          label="Name"
+          type="text"
+          placeholderText="e.g. name"
+          disabled={isPending}
+          validate={this.validate}
+          isGroupError={isGroupError}
+          onFormChange={this.onValueChange}
+          helpText="The list of attributes whose values should be used as the preferred username."
+          isRequired
+        />
+        <ReduxFieldArray
+          fieldName="openid_preferred_username"
+          label="Preferred username"
+          type="text"
+          placeholderText="e.g. preferred_username"
+          disabled={isPending}
+          validate={this.validate}
+          isGroupError={isGroupError}
+          onFormChange={this.onValueChange}
+          helpText="The list of attributes whose values should be used as the display name."
+          isRequired
+        />
+      </>
+    );
+  }
 }
 
 OpenIDFormRequired.propTypes = {

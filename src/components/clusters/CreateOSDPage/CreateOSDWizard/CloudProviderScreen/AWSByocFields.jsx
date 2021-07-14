@@ -34,7 +34,8 @@ function AWSByocFields() {
               </li>
               <li>
                 An IAM user called
-                <b>osd-ccs-admin</b>
+                {' '}
+                <b>osdCcsAdmin</b>
                 {' '}
                 exists with the AdministratorAccess policy.
               </li>

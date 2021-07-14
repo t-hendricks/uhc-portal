@@ -32,6 +32,7 @@ window.insights = {
 describe('<TokensROSA />', () => {
   it('Renders screen with button', () => {
     const component = shallow(<TokensROSA show={false} showPath="/token/show" />);
+    expect(mockGetToken).not.toBeCalled();
     expect(component).toMatchSnapshot();
   });
 

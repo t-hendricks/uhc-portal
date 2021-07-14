@@ -23,11 +23,13 @@ function ClusterSettingsScreen({ isByoc, cloudProviderID }) {
             Select a cloud provider
           </Title>
         </GridItem>
-        <Field
-          name="cloud_provider"
-          component={CloudProviderSelectionField}
-          validate={required}
-        />
+        <GridItem span={8}>
+          <Field
+            name="cloud_provider"
+            component={CloudProviderSelectionField}
+            validate={required}
+          />
+        </GridItem>
         { isByoc && cloudProviderID && (
           cloudProviderID === 'aws' ? <AWSByocFields /> : <GCPByocFields />
         )}
