@@ -13,7 +13,7 @@ import DownloadAndOSSelection from './DownloadAndOSSelection';
 import CLISection from './CLISection';
 import RHCOSSection from './RHCOSSection/RHCOSSection';
 import DeveloperPreviewSection from './DeveloperPreviewSection';
-import links, { tools, channels, architectures } from '../../../../../common/installLinks';
+import links, { tools, channels } from '../../../../../common/installLinks';
 
 function DownloadsAndPullSecretSection({
   displayRHCOSSection = false,
@@ -23,8 +23,8 @@ function DownloadsAndPullSecretSection({
   showPreReleasePageLink = true,
   children,
   pendoID,
+  tool,
   channel,
-  architecture,
   cloudProviderID,
   isBMIPI,
 }) {
@@ -58,9 +58,8 @@ function DownloadsAndPullSecretSection({
                 )}
                 <DownloadAndOSSelection
                   token={token}
-                  tool={tools.INSTALLER}
+                  tool={tool}
                   channel={channel}
-                  architecture={architecture}
                   pendoID={pendoID}
                 />
                 {showPreReleasePageLink && <div><DeveloperPreviewSection /></div>}
@@ -81,7 +80,6 @@ function DownloadsAndPullSecretSection({
               token={token}
               pendoID={pendoID}
               channel={channel}
-              architecture={architecture}
               isBMIPI={isBMIPI}
             />
           </TextContent>
@@ -110,8 +108,8 @@ DownloadsAndPullSecretSection.propTypes = {
   token: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   pendoID: PropTypes.string,
+  tool: PropTypes.oneOf(Object.values(tools)).isRequired,
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
-  architecture: PropTypes.oneOf(Object.values(architectures)).isRequired,
   cloudProviderID: PropTypes.string, // required when displayRHCOSSection = true.
   isBMIPI: PropTypes.bool,
   displayRHCOSSection: PropTypes.bool,

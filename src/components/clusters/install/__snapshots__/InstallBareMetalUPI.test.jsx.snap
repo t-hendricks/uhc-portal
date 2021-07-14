@@ -29,7 +29,6 @@ exports[`BareMetal UPI install renders correctly 1`] = `
   />
   <PageSection>
     <OCPInstructions
-      architecture="x86"
       breadcrumbs={
         <Breadcrumbs
           path={
@@ -57,30 +56,21 @@ exports[`BareMetal UPI install renders correctly 1`] = `
       customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
       displayRHCOSSection={true}
       docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html"
+      installer="X86INSTALLER"
       isBMIPI={false}
       rhcosAdditionalInstructions="Download the installer ISO image and the compressed metal RAW."
       rhcosDownloads={
         Array [
-          Array [
-            Object {
-              "archURL": Object {
-                "ppc": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/rhcos-live.ppc64le.iso",
-                "s390x": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/rhcos-live.s390x.iso",
-                "x86": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-live.x86_64.iso",
-              },
-              "buttonText": "Download RHCOS ISO",
-              "name": "OCP-Download-RHCOS-ISO",
-            },
-            Object {
-              "archURL": Object {
-                "ppc": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/rhcos-metal.ppc64le.raw.gz",
-                "s390x": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/rhcos-metal.s390x.raw.gz",
-                "x86": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-metal.x86_64.raw.gz",
-              },
-              "buttonText": "Download RHCOS RAW",
-              "name": "OCP-Download-RHCOS-RAW",
-            },
-          ],
+          Object {
+            "buttonText": "Download RHCOS ISO",
+            "name": "OCP-Download-RHCOS-ISO",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-live.x86_64.iso",
+          },
+          Object {
+            "buttonText": "Download RHCOS RAW",
+            "name": "OCP-Download-RHCOS-RAW",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-metal.x86_64.raw.gz",
+          },
         ]
       }
       rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal"
