@@ -74,6 +74,11 @@ const requirementFulfilledByResource = (myResource, requirement) => Object.entri
         }
       }
     }
+    // We need the product id to match what CS expects but the cluster value is always the AMS
+    // equivalent. Change the cluster value to lowercase for product id only to get round the issue.
+    if (clusterValue && field === 'product.id') {
+      clusterValue = clusterValue.toLowerCase();
+    }
     if (Array.isArray(requiredValue)) {
       return requiredValue.includes(clusterValue);
     }
