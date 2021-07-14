@@ -20,7 +20,7 @@ function TechPreviewBadge() {
   );
   return (
     <Popover position={PopoverPosition.top} bodyContent={info}>
-      <Label variant="outline" color="orange">Tech preview</Label>
+      <Label color="orange">Technology Preview</Label>
     </Popover>
   );
 }
