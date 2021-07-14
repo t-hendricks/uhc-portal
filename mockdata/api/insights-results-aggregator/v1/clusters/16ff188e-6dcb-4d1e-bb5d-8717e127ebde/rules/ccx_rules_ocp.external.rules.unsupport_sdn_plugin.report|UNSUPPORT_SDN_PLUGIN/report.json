@@ -6,6 +6,7 @@
     "details": "Cluster is running with a 3rd party SDN plugin that will encounter support limitations.\n",
     "reason": "This cluster is running with 3rd party SDN plugin `{{=pydata.network_type}}`, which will encounter support limitations.\n",
     "resolution": "Red Hat recommends that you migrate to a supported SDN plugin.\n\n**Supported SDN plugin:**\n - *OpenShiftSDN*\n - *OVNKubernetes*\n - *Kuryr*\n\nFor update steps, please refer to this doc:\n{{? ['4.0', '4.1', '4.2', '4.3', '4.4', '4.5'].indexOf(pydata.current_version) \u003e= 0}}\n[Migrating to the OVN-Kubernetes default CNI network provider](https://docs.openshift.com/container-platform/4.5/networking/ovn_kubernetes_network_provider/migrate-from-openshift-sdn.html)\n{{??}}\n[Migrating to the OVN-Kubernetes default CNI network provider](https://docs.openshift.com/container-platform/{{=pydata.current_version}}/networking/ovn_kubernetes_network_provider/migrate-from-openshift-sdn.html)\n{{?}}\n\n",
+    "more_info": "* For more information about the flaw, see [CVE-2020-8555](https://access.redhat.com/security/cve/CVE-2020-8555).\n* The Customer Portal page for the [Red Hat Security Team](https://access.redhat.com/security/) contains more information about policies, procedures, and alerts for Red Hat Products.\n* The Security Team also maintains a frequently updated blog at [securityblog.redhat.com](https://securityblog.redhat.com).\n",
     "total_risk": 2,
     "risk_of_change": 0,
     "disabled": false,
