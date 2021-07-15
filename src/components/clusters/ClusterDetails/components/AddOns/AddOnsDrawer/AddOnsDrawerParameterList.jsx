@@ -29,7 +29,7 @@ function AddOnsParameterList(props) {
   // render addon parameters list and link to configuration of parameters
   if (installedAddOn && activeCard) {
     // get addon installation parameter object
-    const paramObjects = parameterAndValue(installedAddOn, activeCard);
+    const paramObjects = parameterAndValue(installedAddOn, activeCard, cluster);
     const paramItems = Object.entries(paramObjects.parameters).map(([key, param]) => (
       <p key={key}>
         <b className="parameter-list-key">{param.name}</b>

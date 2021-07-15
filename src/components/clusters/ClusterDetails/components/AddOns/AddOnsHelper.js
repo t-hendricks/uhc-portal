@@ -260,10 +260,10 @@ const getParameterValue = (addOnInstallation, paramID, defaultValue = undefined)
   return defaultValue;
 };
 
-const parameterValuesForEditing = (addOnInstallation, addOn) => {
+const parameterValuesForEditing = (addOnInstallation, addOn, cluster = undefined) => {
   const vals = { parameters: {} };
-  if (hasParameters(addOn)) {
-    vals.parameters = Object.values(addOn.parameters.items).reduce((acc, curr) => {
+  if (hasParameters(addOn, cluster)) {
+    vals.parameters = getParameters(addOn, cluster).reduce((acc, curr) => {
       let paramValue = getParameterValue(addOnInstallation, curr.id);
       if (curr.value_type === 'boolean') {
         // Ensure existing boolean value is returned as a boolean, and always return false otherwise
@@ -284,10 +284,10 @@ const parameterValuesForEditing = (addOnInstallation, addOn) => {
 };
 
 // return a list of add-on parameters with the corresponding add-on installation parameter value
-const parameterAndValue = (addOnInstallation, addOn) => {
+const parameterAndValue = (addOnInstallation, addOn, cluster = undefined) => {
   const vals = { parameters: {} };
-  if (hasParameters(addOn)) {
-    vals.parameters = Object.values(addOn.parameters.items).reduce((acc, curr) => {
+  if (hasParameters(addOn, cluster)) {
+    vals.parameters = getParameters(addOn, cluster).reduce((acc, curr) => {
       let paramValue = getParameterValue(addOnInstallation, curr.id);
       if (curr.value_type === 'boolean') {
         // Ensure existing boolean value is returned as a boolean, and always return false otherwise
