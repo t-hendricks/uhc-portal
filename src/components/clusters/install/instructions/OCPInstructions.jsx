@@ -29,6 +29,7 @@ const OCPInstructions = (props) => {
     docURL,
     customizations = '',
     showPreReleaseDocs,
+    preReleasePageLink,
     isBMIPI,
   } = props;
   const pendoID = window.location.pathname;
@@ -65,6 +66,7 @@ const OCPInstructions = (props) => {
               <SplitItem className="download-instructions" isFilled>
                 <DownloadsAndPullSecretSection
                   showPreReleaseDocs={showPreReleaseDocs}
+                  preReleasePageLink={preReleasePageLink}
                   token={token}
                   pendoID={pendoID}
                   cloudProviderID={cloudProviderID}
@@ -121,6 +123,7 @@ OCPInstructions.propTypes = {
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
   docURL: PropTypes.string.isRequired,
   showPreReleaseDocs: PropTypes.bool,
+  preReleasePageLink: PropTypes.string,
   customizations: PropTypes.string,
   isBMIPI: PropTypes.bool,
 };

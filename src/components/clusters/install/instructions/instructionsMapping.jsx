@@ -135,6 +135,7 @@ const instructionsMapping = {
       },
     ],
     docURL: links.INSTALL_IBMZ_GETTING_STARTED,
+    preReleasePageLink: '/install/ibmz/pre-release',
     installer: tools.IBMZINSTALLER,
     channel: channels.STABLE,
   },
@@ -227,7 +228,7 @@ const instructionsMapping = {
         },
       ],
     rhcosAdditionalInstructions: 'Download either the installer ISO image or for PXE booting the initramfs, the kernel, and the rootfs files.',
-    showPreReleasePageLink: false,
+    preReleasePageLink: '/install/power/pre-release',
     docURL: links.INSTALL_POWER_GETTING_STARTED,
   },
   openstack: {

@@ -749,6 +749,7 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
               displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
+              preReleasePageLink="/install/ibmz/pre-release"
               token={Object {}}
               tool="IBMZINSTALLER"
             />
@@ -840,6 +841,7 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
               displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
+              preReleasePageLink="/install/power/pre-release"
               token={Object {}}
               tool="PPCINSTALLER"
             />

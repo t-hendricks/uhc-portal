@@ -59,7 +59,9 @@ import InstallPreRelease from '../clusters/install/InstallPreRelease';
 import InstallPullSecret from '../clusters/install/InstallPullSecret';
 import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
 import InstallIBM from '../clusters/install/InstallIBM';
+import InstallIBMPreRelease from '../clusters/install/InstallIBMPreRelease';
 import InstallPower from '../clusters/install/InstallPower';
+import InstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
 import DownloadsPage from '../downloads/DownloadsPage';
 import Tokens from '../tokens/Tokens';
 import TokensROSA from '../tokens/TokensROSA';
@@ -139,7 +141,9 @@ function Router({ history }) {
             <Route path="/install/vsphere/user-provisioned" component={InstallVSphereUPI} />
             <Route path="/install/vsphere/installer-provisioned" component={InstallVSphereIPI} />
             <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
+            <Route path="/install/ibmz/pre-release" component={InstallIBMPreRelease} />
             <Route path="/install/power/user-provisioned" component={InstallPower} />
+            <Route path="/install/power/pre-release" component={InstallPowerPreRelease} />
             <Route path="/install/pre-release" component={InstallPreRelease} />
             <Route path="/install/pull-secret" component={InstallPullSecret} />
             <Route path="/install/azure/aro-provisioned" component={ConnectedInstallPullSecretAzure} />

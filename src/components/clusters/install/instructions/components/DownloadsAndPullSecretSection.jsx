@@ -21,6 +21,7 @@ function DownloadsAndPullSecretSection({
   showPreReleaseDocs = false,
   preReleaseDocsLink = links.INSTALL_PRE_RELEASE_INSTALLER_DOC,
   showPreReleasePageLink = true,
+  preReleasePageLink = '/install/pre-release',
   children,
   pendoID,
   tool,
@@ -62,7 +63,11 @@ function DownloadsAndPullSecretSection({
                   channel={channel}
                   pendoID={pendoID}
                 />
-                {showPreReleasePageLink && <div><DeveloperPreviewSection /></div>}
+                {showPreReleasePageLink && (
+                  <div>
+                    <DeveloperPreviewSection devPreviewLink={preReleasePageLink} />
+                  </div>
+                )}
               </>
             )}
           </TextContent>
@@ -105,6 +110,7 @@ DownloadsAndPullSecretSection.propTypes = {
   showPreReleasePageLink: PropTypes.bool,
   showPreReleaseDocs: PropTypes.bool,
   preReleaseDocsLink: PropTypes.string,
+  preReleasePageLink: PropTypes.string,
   token: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   pendoID: PropTypes.string,

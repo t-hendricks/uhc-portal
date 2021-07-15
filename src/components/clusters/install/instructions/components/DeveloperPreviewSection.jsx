@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { CodeIcon } from '@patternfly/react-icons';
 import './DeveloperPreviewSection.scss';
 
-const DeveloperPreviewSection = ({ isDevPreview = false }) => (
+const DeveloperPreviewSection = ({ isDevPreview = false, devPreviewLink = '/install/pre-release' }) => (
   <>
     <span className="pf-c-label pf-m-compact dev-preview-label">
       <CodeIcon />
@@ -12,7 +12,7 @@ const DeveloperPreviewSection = ({ isDevPreview = false }) => (
       Developer Preview
     </span>
     {' '}
-    <Link to="/install/pre-release">
+    <Link to={devPreviewLink}>
       {isDevPreview ? 'About' : 'Download'}
       {' '}
       pre-release builds
@@ -22,6 +22,7 @@ const DeveloperPreviewSection = ({ isDevPreview = false }) => (
 
 DeveloperPreviewSection.propTypes = {
   isDevPreview: PropTypes.bool,
+  devPreviewLink: PropTypes.string,
 };
 
 export default DeveloperPreviewSection;
