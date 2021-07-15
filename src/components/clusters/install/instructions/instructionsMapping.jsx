@@ -33,7 +33,7 @@ const instructionsMapping = {
       channel: channels.STABLE,
       architecture: architectures.x86,
     },
-    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propogate).',
+    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propagate).',
   },
   gcp: {
     cloudProvider: 'GCP',
@@ -59,7 +59,7 @@ const instructionsMapping = {
       channel: channels.STABLE,
       architecture: architectures.x86,
     },
-    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through GCP but it will take some time for the DNS to propogate).',
+    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through GCP but it will take some time for the DNS to propagate).',
   },
   azure: {
     cloudProvider: 'Azure',
@@ -76,7 +76,7 @@ const instructionsMapping = {
       architecture: architectures.x86,
       docURL: links.INSTALL_AZUREUPI_GETTING_STARTED,
     },
-    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through Azure but it will take some time for the DNS to propogate).',
+    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through Azure but it will take some time for the DNS to propagate).',
   },
   ibmz: {
     cloudProvider: 'IBM-Z',
