@@ -93,7 +93,7 @@ class AddMachinePoolModal extends Component {
           <Form className="control-form-cursor" onSubmit={(e) => { submit(); e.preventDefault(); }}>
             <Grid>
               <GridItem span={6}>
-                <FormGroup label="Machine pool name" className="space-bottom-md" isRequired>
+                <FormGroup label="Machine pool name" className="pf-u-mb-md" isRequired>
                   <Field
                     component={ReduxVerticalFormGroup}
                     name="name"

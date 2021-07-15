@@ -90,7 +90,7 @@ function NetworkingSection({
 
   return (
     <>
-      <GridItem span={4}>
+      <GridItem>
         <Title headingLevel="h3">Networking</Title>
       </GridItem>
       <FormGroup
@@ -142,7 +142,7 @@ function NetworkingSection({
       { mode === 'advanced'
         && (
           <>
-            <GridItem span={5}>
+            <GridItem sm={12} md={10} lg={8}>
               <Alert
                 id="advanced-networking-alert"
                 isInline
@@ -168,8 +168,8 @@ function NetworkingSection({
                  )}
               </Alert>
             </GridItem>
-            <GridItem span={5} />
-            <GridItem span={4}>
+            <GridItem md={2} lg={4} />
+            <GridItem sm={12} md={5} lg={4}>
               <Field
                 component={ReduxVerticalFormGroup}
                 name="network_machine_cidr"
@@ -183,8 +183,8 @@ function NetworkingSection({
                 showHelpTextOnError={false}
               />
             </GridItem>
-            <GridItem span={8} />
-            <GridItem span={4}>
+            <GridItem md={7} lg={8} />
+            <GridItem sm={12} md={5} lg={4}>
               <Field
                 component={ReduxVerticalFormGroup}
                 name="network_service_cidr"
@@ -198,8 +198,8 @@ function NetworkingSection({
                 showHelpTextOnError={false}
               />
             </GridItem>
-            <GridItem span={8} />
-            <GridItem span={4}>
+            <GridItem md={7} lg={8} />
+            <GridItem sm={12} md={5} lg={4}>
               <Field
                 component={ReduxVerticalFormGroup}
                 name="network_pod_cidr"
@@ -213,8 +213,8 @@ function NetworkingSection({
                 showHelpTextOnError={false}
               />
             </GridItem>
-            <GridItem span={8} />
-            <GridItem span={4}>
+            <GridItem md={7} lg={8} />
+            <GridItem sm={12} md={5} lg={4}>
               <Field
                 component={ReduxVerticalFormGroup}
                 name="network_host_prefix"
@@ -272,18 +272,20 @@ function NetworkingSection({
                   defaultValue="external"
                 />
                 {privateClusterSelected && (
-                <Alert className="bottom-alert" variant="warning" isInline title="You will not be able to access your cluster until you edit network settings in your cloud provider.">
-                  {cloudProviderID === 'aws'
-                    && (
-                    <span>
-                      Follow the
-                      {' '}
-                      <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-understanding-aws.html">documentation</a>
-                      {' '}
-                      for how to do that.
-                    </span>
-                    )}
-                </Alert>
+                <GridItem sm={12} md={10} lg={8}>
+                  <Alert className="bottom-alert" variant="warning" isInline title="You will not be able to access your cluster until you edit network settings in your cloud provider.">
+                    {cloudProviderID === 'aws'
+                      && (
+                      <span>
+                        Follow the
+                        {' '}
+                        <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-understanding-aws.html">documentation</a>
+                        {' '}
+                        for how to do that.
+                      </span>
+                      )}
+                  </Alert>
+                </GridItem>
                 )}
               </>
             )}

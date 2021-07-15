@@ -190,13 +190,13 @@ class CreateOSDForm extends React.Component {
             <GridItem span={12}>
               <Title headingLevel="h3">AWS account details</Title>
             </GridItem>
-            <GridItem span={4}>
+            <GridItem sm={12} md={5} lg={4}>
               Before creating the cluster, review all the prerequisites in
               {' '}
               <ExternalLink href="https://www.openshift.com/dedicated/ccs">the documentation.</ExternalLink>
               {' '}
             </GridItem>
-            <GridItem span={8} />
+            <GridItem md={7} lg={8} />
             <AWSAccountDetailsSection pending={pending} />
           </>
         )}
@@ -225,7 +225,7 @@ class CreateOSDForm extends React.Component {
                   and add it here.
                 </p>
               </GridItem>
-              <GridItem span={4}>
+              <GridItem sm={12} md={5} lg={4}>
                 <Field
                   component={ReduxFileUpload}
                   validate={[required, validateGCPServiceAccount]}
@@ -234,6 +234,7 @@ class CreateOSDForm extends React.Component {
                   isRequired
                   label="Service account JSON"
                   helpText="Upload a JSON file or type to add"
+                  className="pf-c-form-control"
                 />
               </GridItem>
             </>
@@ -334,7 +335,7 @@ class CreateOSDForm extends React.Component {
         <GridItem span={12}>
           <Divider />
         </GridItem>
-        <GridItem span={4}>
+        <GridItem>
           <Title headingLevel="h3">Cluster settings</Title>
         </GridItem>
 
