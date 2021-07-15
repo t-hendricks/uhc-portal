@@ -16,6 +16,7 @@ import {
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import './OverviewEmptyState.scss';
 
+// TODO this is from 2015 for openshift 3.x, there's likely a better video for users coming here...
 const VIDEO_URL = 'https://www.youtube.com/embed/D_Lj0rObunI';
 
 function OverviewEmptyState() {
@@ -55,7 +56,7 @@ function OverviewEmptyState() {
               <CardBody>
                 Connect, secure and monitor microservices in your
                 OpenShift Container Platform environment.
-                <a href="https://docs.openshift.com/container-platform/latest/service_mesh/service_mesh_arch/understanding-ossm.html" rel="noreferrer noopener" target="_blank">
+                <a href="https://docs.openshift.com/container-platform/latest/service_mesh/v2x/ossm-architecture.html" rel="noreferrer noopener" target="_blank">
                   <Button variant="link" icon={<ArrowRightIcon />}>
                     Get started
                   </Button>
@@ -72,7 +73,7 @@ function OverviewEmptyState() {
               </CardTitle>
               <CardBody>
                 Run and manage virtual machine workloads alongside your container workloads.
-                <a href="https://docs.openshift.com/container-platform/latest/cnv/cnv-about-cnv.html" rel="noreferrer noopener" target="_blank">
+                <a href="https://docs.openshift.com/container-platform/4.7/virt/about-virt.html" rel="noreferrer noopener" target="_blank">
                   <Button variant="link" icon={<ArrowRightIcon />}>
                     Get started
                   </Button>
@@ -87,7 +88,7 @@ function OverviewEmptyState() {
               </CardTitle>
               <CardBody>
                 Plan your transition and migrate from OpenShift Container Platform 3 to 4.
-                <a href="https://docs.openshift.com/container-platform/latest/migration/migrating_3_4/about-migration.html" rel="noreferrer noopener" target="_blank">
+                <a href="https://docs.openshift.com/container-platform/latest/migrating_from_ocp_3_to_4/about-migrating-from-3-to-4.html" rel="noreferrer noopener" target="_blank">
                   <Button variant="link" icon={<ArrowRightIcon />}>
                     Get started
                   </Button>
@@ -122,10 +123,9 @@ function OverviewEmptyState() {
         <div>
           <Title headingLevel="h2" size="lg" className="space-left-lg space-bottom-md">Other resources</Title>
           <List>
-            <ListItem><a href="https://docs.openshift.com/container-platform/4.4/welcome/index.html" rel="noreferrer noopener" target="_blank">Official documents</a></ListItem>
+            <ListItem><a href="https://docs.openshift.com/container-platform/latest/welcome/" rel="noreferrer noopener" target="_blank">Official documents</a></ListItem>
             <ListItem><a href="https://www.openshift.com/blog" rel="noreferrer noopener" target="_blank">Blog</a></ListItem>
-            <ListItem><a href="https://www.openshift.com/learn/courses/getting-started/" rel="noreferrer noopener" target="_blank">Tutorials</a></ListItem>
-            <ListItem><a href="https://www.openshift.com/learn/courses/playground/" rel="noreferrer noopener" target="_blank">Playground</a></ListItem>
+            <ListItem><a href="https://learn.openshift.com/" rel="noreferrer noopener" target="_blank">Tutorials with live playgrounds!</a></ListItem>
             <ListItem><a href="https://www.twitch.tv/redhatopenshift" rel="noreferrer noopener" target="_blank">Twitch</a></ListItem>
           </List>
         </div>
