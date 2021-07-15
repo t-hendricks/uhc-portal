@@ -28,6 +28,8 @@ import { createOverviewQueryObject } from '../../common/queryHelpers';
 import Unavailable from '../common/Unavailable';
 import InsightsAdvisorCard from './InsightsAdvisorCard/InsightsAdvisorCard';
 
+import './Overview.scss';
+
 class Overview extends Component {
   componentDidMount() {
     const {
@@ -145,7 +147,7 @@ class Overview extends Component {
           <PageHeaderTitle title="Overview" className="page-title" />
         </PageHeader>
         <PageSection>
-          <Grid hasGutter id="overview-grid">
+          <Grid hasGutter className="ocm-c-overview">
             <TopOverviewSection
               isError={summaryDashboard.error}
               totalClusters={totalClusters}
@@ -173,7 +175,7 @@ class Overview extends Component {
               </GridItem>
             )}
             <GridItem md={6} sm={12}>
-              <Card className="clusters-overview-card">
+              <Card className="ocm-overview-clusters__card">
                 <CardTitle>
                   Telemetry
                 </CardTitle>
@@ -203,7 +205,7 @@ class Overview extends Component {
               </GridItem>
             )}
             <GridItem md={6} sm={12}>
-              <Card className="clusters-overview-card">
+              <Card className="ocm-overview-clusters__card">
                 <CardTitle>
                   Update status
                 </CardTitle>
