@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallOSPIPI renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "Red Hat OpenStack Platform",
+              "path": "/install/openstack",
+            },
+            Object {
+              "label": "Installer-provisioned infrastructure",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on Red Hat OpenStack Platform with installer-provisioned infrastructure"
+  />
+  <PageSection>
+    <OCPInstructions
+      channel="stable"
+      cloudProviderID="openstack"
+      customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
+      docURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
+      installer="X86INSTALLER"
+      isBMIPI={false}
+      title="Install OpenShift on Red Hat OpenStack Platform with installer-provisioned infrastructure"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;

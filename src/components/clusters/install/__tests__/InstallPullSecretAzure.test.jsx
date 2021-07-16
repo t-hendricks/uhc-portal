@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { InstallPullSecretAzure } from './InstallPullSecretAzure';
+import { InstallPullSecretAzure } from '../InstallPullSecretAzure';
 
 describe('InstallPullSecretAzure', () => {
   it('renders correctly', () => {

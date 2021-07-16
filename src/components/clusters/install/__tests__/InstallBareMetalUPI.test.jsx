@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { InstallBareMetalUPI } from './InstallBareMetalUPI';
+import { InstallBareMetalUPI } from '../InstallBareMetalUPI';
 
 describe('BareMetal UPI install', () => {
   it('renders correctly', () => {
