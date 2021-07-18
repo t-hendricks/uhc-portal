@@ -84,9 +84,7 @@ exports[`CreateOSDForm; should render 1`] = `
   >
     <Divider />
   </GridItem>
-  <GridItem
-    span={4}
-  >
+  <GridItem>
     <Title
       headingLevel="h3"
     >
@@ -193,9 +191,7 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
   >
     <Divider />
   </GridItem>
-  <GridItem
-    span={4}
-  >
+  <GridItem>
     <Title
       headingLevel="h3"
     >

@@ -42,7 +42,7 @@ function BasicFieldsSection({
   return (
     <>
       {/* cluster name */}
-      <GridItem span={4}>
+      <GridItem sm={12} md={5} lg={4}>
         <Field
           component={ReduxVerticalFormGroup}
           name="name"
@@ -54,12 +54,12 @@ function BasicFieldsSection({
           extendedHelpText={constants.clusterNameHint}
         />
       </GridItem>
-      <GridItem span={8} />
+      <GridItem md={7} lg={8} />
 
       {/* Base DNS domain */}
       {showDNSBaseDomain && (
         <>
-          <GridItem span={4}>
+          <GridItem sm={12} md={5} lg={4}>
             <Field
               component={ReduxVerticalFormGroup}
               name="dns_base_domain"
@@ -70,12 +70,12 @@ function BasicFieldsSection({
               normalize={value => value.toLowerCase()}
             />
           </GridItem>
-          <GridItem span={8} />
+          <GridItem md={7} lg={8} />
         </>
       )}
 
       {/* Region */}
-      <GridItem span={4}>
+      <GridItem sm={12} md={5} lg={4}>
         <FormGroup
           label="Region"
           isRequired
@@ -94,12 +94,12 @@ function BasicFieldsSection({
           />
         </FormGroup>
       </GridItem>
-      <GridItem span={8} />
+      <GridItem md={7} lg={8} />
 
       {/* Availability */}
       {showAvailability && (
         <>
-          <GridItem span={4}>
+          <GridItem sm={12} md={5} lg={4}>
             <FormGroup
               label="Availability"
               isRequired
@@ -130,7 +130,7 @@ function BasicFieldsSection({
               />
             </FormGroup>
           </GridItem>
-          <GridItem span={8} />
+          <GridItem md={7} lg={8} />
         </>
       )}
     </>
