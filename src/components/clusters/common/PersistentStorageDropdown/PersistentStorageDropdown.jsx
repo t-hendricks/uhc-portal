@@ -110,7 +110,7 @@ PersistentStorageDropdown.propTypes = {
   getPersistentStorage: PropTypes.func.isRequired,
   persistentStorageValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   quotaList: PropTypes.object.isRequired,
   currentValue: PropTypes.number,
   billingModel: PropTypes.string.isRequired,
