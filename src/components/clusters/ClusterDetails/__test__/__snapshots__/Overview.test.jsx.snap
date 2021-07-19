@@ -944,6 +944,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                         "href": "/api/accounts_mgmt/v1/plans/OCP",
                         "id": "OCP",
                         "kind": "Plan",
+                        "type": "OCP",
                       },
                       "registry_credential": Object {
                         "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",
@@ -1097,6 +1098,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
                         "href": "/api/accounts_mgmt/v1/plans/OCP",
                         "id": "OCP",
                         "kind": "Plan",
+                        "type": "OCP",
                       },
                       "registry_credential": Object {
                         "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Mles6",

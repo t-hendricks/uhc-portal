@@ -326,8 +326,10 @@ function actionResolver(
     && isArchived;
   const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL)
     && !isAssistedInstallCluster(cluster);
-  const showEditSubscriptionSettings = get(cluster, 'subscription.plan.id', '') === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
-  const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(get(cluster, 'subscription.plan.id', ''));
+  const product = get(cluster, 'subscription.plan.type', '');
+  const showEditSubscriptionSettings = product === normalizedProducts.OCP
+    && cluster.canEdit && canSubscribeOCP;
+  const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(product);
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership
     && isAllowedProducts
     && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
