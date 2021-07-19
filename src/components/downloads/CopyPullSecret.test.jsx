@@ -4,7 +4,7 @@ import { Button } from '@patternfly/react-core';
 
 import CopyPullSecret from './CopyPullSecret';
 
-const variants = ['button', 'link'];
+const variants = ['link-tooltip', 'link-inplace'];
 
 describe('<CopyPullSecret />', () => {
   describe('with token', () => {
@@ -31,7 +31,7 @@ describe('<CopyPullSecret />', () => {
     variants.forEach((variant) => {
       describe(variant, () => {
         const token = { error: 'my error' };
-        const wrapper = shallow(<CopyPullSecret variant="link" token={token} />);
+        const wrapper = shallow(<CopyPullSecret variant={variant} token={token} />);
 
         it('should render', () => {
           expect(wrapper).toMatchSnapshot();
