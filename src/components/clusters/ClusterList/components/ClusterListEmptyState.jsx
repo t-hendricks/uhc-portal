@@ -40,7 +40,7 @@ function ClusterListEmptyState() {
         create your first cluster.
       </EmptyStateBody>
       <Link to="/create">
-        <Button id="cluster-list-emptystate-primary-action">Create cluster</Button>
+        <Button className="pf-u-mt-xl">Create cluster</Button>
       </Link>
       <EmptyStateSecondaryActions>
         <Link to="/register">

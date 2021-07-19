@@ -9,7 +9,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
       className="ocm-c-machine-pools__card--body"
     >
       <Button
-        className="space-bottom-lg"
+        className="pf-u-mb-lg"
         id="add-machine-pool"
         isDisabled={false}
         onClick={[Function]}
@@ -143,7 +143,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
                   "title": <React.Fragment>
                     <React.Fragment>
                       <Title
-                        className="space-bottom-sm"
+                        className="pf-u-mb-sm"
                         headingLevel="h4"
                       >
                         Labels
@@ -159,7 +159,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
                     </React.Fragment>
                     <React.Fragment>
                       <Title
-                        className="space-bottom-sm space-top-lg"
+                        className="pf-u-mb-sm pf-u-mt-lg"
                         headingLevel="h4"
                       >
                         Taints
@@ -183,7 +183,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
                     </React.Fragment>
                     <React.Fragment>
                       <Title
-                        className="space-bottom-sm space-top-lg"
+                        className="pf-u-mb-sm pf-u-mt-lg"
                         headingLevel="h4"
                       >
                         Autoscaling
@@ -240,7 +240,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
       className="ocm-c-machine-pools__card--body"
     >
       <Button
-        className="space-bottom-lg"
+        className="pf-u-mb-lg"
         id="add-machine-pool"
         isDisabled={false}
         onClick={[Function]}
@@ -371,7 +371,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                   "title": <React.Fragment>
                     <React.Fragment>
                       <Title
-                        className="space-bottom-sm"
+                        className="pf-u-mb-sm"
                         headingLevel="h4"
                       >
                         Labels
@@ -387,7 +387,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                     </React.Fragment>
                     <React.Fragment>
                       <Title
-                        className="space-bottom-sm space-top-lg"
+                        className="pf-u-mb-sm pf-u-mt-lg"
                         headingLevel="h4"
                       >
                         Taints
@@ -448,7 +448,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                   "title": <React.Fragment>
                     <React.Fragment>
                       <Title
-                        className="space-bottom-sm"
+                        className="pf-u-mb-sm"
                         headingLevel="h4"
                       >
                         Labels
@@ -510,7 +510,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
                   "title": <React.Fragment>
                     <React.Fragment>
                       <Title
-                        className="space-bottom-sm"
+                        className="pf-u-mb-sm"
                         headingLevel="h4"
                       >
                         Taints
@@ -583,7 +583,7 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
       className="ocm-c-machine-pools__card--body"
     >
       <Button
-        className="space-bottom-lg"
+        className="pf-u-mb-lg"
         id="add-machine-pool"
         isDisabled={false}
         onClick={[Function]}
@@ -692,7 +692,7 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
       className="ocm-c-machine-pools__card--body"
     >
       <Button
-        className="space-bottom-lg"
+        className="pf-u-mb-lg"
         id="add-machine-pool"
         isDisabled={false}
         onClick={[Function]}
@@ -790,7 +790,7 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
                   "title": <React.Fragment>
                     <React.Fragment>
                       <Title
-                        className="space-bottom-sm"
+                        className="pf-u-mb-sm"
                         headingLevel="h4"
                       >
                         Labels

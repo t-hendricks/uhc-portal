@@ -56,7 +56,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
       const isRemoveDisabled = index === 0 && fields.length === 1;
 
       return (
-        <div className="space-bottom-md" key={`${fields.get(index).id}`}>
+        <div className="pf-u-mb-md" key={`${fields.get(index).id}`}>
           <Field
             name={`${label}.key`}
             type="text"

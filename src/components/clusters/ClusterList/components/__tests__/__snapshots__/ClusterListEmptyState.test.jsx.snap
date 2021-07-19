@@ -22,7 +22,7 @@ exports[`<ClusterListEmptyState /> renders correctly 1`] = `
     to="/create"
   >
     <Button
-      id="cluster-list-emptystate-primary-action"
+      className="pf-u-mt-xl"
     >
       Create cluster
     </Button>
