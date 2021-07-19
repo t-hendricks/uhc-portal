@@ -1,5 +1,5 @@
 {
   "apiGateway": "https://api.stage.openshift.com",
-  "insightsGateway": "https://$SELF_PATH$/api",
+  "insightsGateway": "https://stage.cloud.redhat.com/api",
   "sentryDSN": "https://***REMOVED***/17"
 }
