@@ -960,7 +960,7 @@ exports[`<DownloadsPage> renders 1`] = `
                                 },
                               }
                             }
-                            variant="button"
+                            variant="link-inplace"
                           />
                         </SplitItem>
                         <SplitItem>
@@ -1003,7 +1003,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         <ExternalLink
                           href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets"
                         >
-                          learn more about pull secret
+                          learn more about pull secrets
                         </ExternalLink>
                         .
                       </Text>
@@ -1033,7 +1033,7 @@ exports[`<DownloadsPage> renders 1`] = `
                           iconPosition="right"
                           variant="secondary"
                         >
-                          See API token
+                          View API token
                         </Button>
                       </Link>
                     </AlignRight>,
