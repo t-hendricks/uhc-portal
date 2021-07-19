@@ -228,6 +228,88 @@ exports[`<DownloadsPage> renders 1`] = `
                 "cells": Array [
                   "",
                   Object {
+                    "title": <React.Fragment>
+                      OCM API command-line interface (ocm-cli)
+                       
+                      <TechPreviewBadge />
+                    </React.Fragment>,
+                  },
+                  Object {
+                    "title": <FormSelect
+                      aria-label="Select OS dropdown"
+                      className=""
+                      isDisabled={false}
+                      isRequired={false}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      ouiaSafe={true}
+                      validated="default"
+                      value=""
+                    >
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="Select OS"
+                        value="select"
+                      />
+                    </FormSelect>,
+                  },
+                  Object {
+                    "title": <FormSelect
+                      aria-label="Select architecture dropdown"
+                      className=""
+                      isDisabled={true}
+                      isRequired={false}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      ouiaSafe={true}
+                      validated="default"
+                      value=""
+                    >
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="Select architecture"
+                        value="select"
+                      />
+                    </FormSelect>,
+                  },
+                  Object {
+                    "title": <AlignRight>
+                      <DownloadButton
+                        text="Download"
+                        tool="OCM"
+                      />
+                    </AlignRight>,
+                  },
+                ],
+                "expandKey": "OCM",
+                "isOpen": false,
+              },
+              Object {
+                "cells": Array [
+                  Object {
+                    "title": <TextContent>
+                      <Text>
+                        Manage your OpenShift clusters from the command line using the OpenShift Cluster Manager CLI (ocm CLI).
+                      </Text>
+                      <Text>
+                        <ExternalLink
+                          href="https://access.redhat.com/articles/6114701"
+                        >
+                          Get started with the ocm CLI
+                        </ExternalLink>
+                      </Text>
+                    </TextContent>,
+                  },
+                ],
+                "fullWidth": true,
+                "parent": 2,
+              },
+              Object {
+                "cells": Array [
+                  "",
+                  Object {
                     "title": "Red Hat OpenShift Service on AWS (ROSA) command-line interface (rosa CLI)",
                   },
                   Object {
@@ -314,7 +396,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   },
                 ],
                 "fullWidth": true,
-                "parent": 2,
+                "parent": 4,
               },
             ]
           }
@@ -599,6 +681,104 @@ exports[`<DownloadsPage> renders 1`] = `
                 ],
                 "fullWidth": true,
                 "parent": 2,
+              },
+              Object {
+                "cells": Array [
+                  "",
+                  Object {
+                    "title": <React.Fragment>
+                      Red Hat OpenShift Application Services CLI (rhoas CLI)
+                      <DevPreviewBadge />
+                    </React.Fragment>,
+                  },
+                  Object {
+                    "title": <FormSelect
+                      aria-label="Select OS dropdown"
+                      className=""
+                      isDisabled={false}
+                      isRequired={false}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      ouiaSafe={true}
+                      validated="default"
+                      value="linux"
+                    >
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="Select OS"
+                        value="select"
+                      />
+                      <FormSelectOption
+                        label="Linux"
+                        value="linux"
+                      />
+                      <FormSelectOption
+                        label="MacOS"
+                        value="mac"
+                      />
+                      <FormSelectOption
+                        label="Windows"
+                        value="windows"
+                      />
+                    </FormSelect>,
+                  },
+                  Object {
+                    "title": <FormSelect
+                      aria-label="Select architecture dropdown"
+                      className=""
+                      isDisabled={true}
+                      isRequired={false}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      ouiaSafe={true}
+                      validated="default"
+                      value="x86"
+                    >
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="Select architecture"
+                        value="select"
+                      />
+                      <FormSelectOption
+                        label="x86_64"
+                        value="x86"
+                      />
+                    </FormSelect>,
+                  },
+                  Object {
+                    "title": <AlignRight>
+                      <DownloadButton
+                        text="Download"
+                        tool="RHOAS"
+                        url="https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz"
+                      />
+                    </AlignRight>,
+                  },
+                ],
+                "expandKey": "RHOAS",
+                "isOpen": false,
+              },
+              Object {
+                "cells": Array [
+                  Object {
+                    "title": <TextContent>
+                      <Text>
+                        Create and manage Kafka instances and topics, service accounts, and more using the rhoas CLI.
+                      </Text>
+                      <Text>
+                        <ExternalLink
+                          href="https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047"
+                        >
+                          Get started with the rhoas CLI
+                        </ExternalLink>
+                      </Text>
+                    </TextContent>,
+                  },
+                ],
+                "fullWidth": true,
+                "parent": 4,
               },
             ]
           }

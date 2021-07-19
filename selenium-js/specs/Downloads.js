@@ -6,7 +6,7 @@ describe('Downloads page', async () => {
   it('login and navigate to downloads', async () => {
     await LoginPage.open();
     await LoginPage.login();
-    await GlobalNav.navigateTo("Downloads");
+    await GlobalNav.navigateTo('Downloads');
   });
 
   it('can expand and collapse rows', async () => {
