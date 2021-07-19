@@ -427,6 +427,7 @@ exports[`<AddOns /> should render 1`] = `
             "href": "/api/accounts_mgmt/v1/plans/OSD",
             "id": "OSD",
             "kind": "Plan",
+            "type": "OSD",
           },
           "provenance": "Provisioning",
           "region_id": "us-east-1",

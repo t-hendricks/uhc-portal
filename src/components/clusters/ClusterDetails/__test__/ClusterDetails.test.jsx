@@ -234,6 +234,7 @@ describe('<ClusterDetails />', () => {
               id: 'OSDTrial',
               kind: 'Plan',
               href: '/api/accounts_mgmt/v1/plans/OSD',
+              type: 'OSDTrial',
             },
           },
         },

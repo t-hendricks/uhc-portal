@@ -5,7 +5,7 @@ import get from 'lodash/get';
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 
 function BillingModelLabel({ cluster }) {
-  const planId = get(cluster, 'subscription.plan.id');
+  const planId = get(cluster, 'subscription.plan.type');
   const billingModel = get(cluster, 'billing_model');
   const { ROSA, OSD, OSDTrial } = normalizedProducts;
   const { STANDARD, MARKETPLACE } = billingModels;
