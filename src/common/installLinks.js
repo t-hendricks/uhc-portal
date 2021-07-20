@@ -169,7 +169,7 @@ const architectures = {
 
 const architectureOptions = [
   { value: architectures.x86, label: 'x86_64', path: 'x86_64' }, // aka amd64
-  { value: architectures.arm, label: 'arm64', path: 'arm64' },
+  { value: architectures.arm, label: 'aarch64', path: 'aarch64' }, // aka arm64
   { value: architectures.ppc, label: 'ppc64le', path: 'ppc64le' }, // aka Power
   { value: architectures.s390x, label: 's390x', path: 's390x' }, // aka IBM Z
 ];

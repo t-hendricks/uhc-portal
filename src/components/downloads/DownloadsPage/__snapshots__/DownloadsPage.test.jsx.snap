@@ -457,7 +457,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         value="x86"
                       />
                       <FormSelectOption
-                        label="arm64"
+                        label="aarch64"
                         value="arm"
                       />
                       <FormSelectOption
