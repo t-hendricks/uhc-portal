@@ -113,7 +113,9 @@ exports[`<DownloadsPage> renders 1`] = `
               Object {
                 "cells": Array [
                   "",
-                  "OpenShift command-line interface (oc)",
+                  Object {
+                    "title": "OpenShift command-line interface (oc)",
+                  },
                   Object {
                     "title": <FormSelect
                       aria-label="Select OS dropdown"
@@ -225,7 +227,9 @@ exports[`<DownloadsPage> renders 1`] = `
               Object {
                 "cells": Array [
                   "",
-                  "Red Hat OpenShift Service on AWS (ROSA) command-line interface (rosa CLI)",
+                  Object {
+                    "title": "Red Hat OpenShift Service on AWS (ROSA) command-line interface (rosa CLI)",
+                  },
                   Object {
                     "title": <FormSelect
                       aria-label="Select OS dropdown"
@@ -395,7 +399,9 @@ exports[`<DownloadsPage> renders 1`] = `
               Object {
                 "cells": Array [
                   "",
-                  "Developer-focused CLI for OpenShift (odo)",
+                  Object {
+                    "title": "Developer-focused CLI for OpenShift (odo)",
+                  },
                   Object {
                     "title": <FormSelect
                       aria-label="Select OS dropdown"
@@ -451,7 +457,7 @@ exports[`<DownloadsPage> renders 1`] = `
                         value="x86"
                       />
                       <FormSelectOption
-                        label="arm64"
+                        label="aarch64"
                         value="arm"
                       />
                       <FormSelectOption
@@ -497,7 +503,9 @@ exports[`<DownloadsPage> renders 1`] = `
               Object {
                 "cells": Array [
                   "",
-                  "Helm 3 CLI",
+                  Object {
+                    "title": "Helm 3 CLI",
+                  },
                   Object {
                     "title": <FormSelect
                       aria-label="Select OS dropdown"
@@ -677,7 +685,9 @@ exports[`<DownloadsPage> renders 1`] = `
               Object {
                 "cells": Array [
                   "",
-                  "OpenShift Installer",
+                  Object {
+                    "title": "OpenShift Installer",
+                  },
                   Object {
                     "title": <FormSelect
                       aria-label="Select OS dropdown"
@@ -792,7 +802,9 @@ exports[`<DownloadsPage> renders 1`] = `
               Object {
                 "cells": Array [
                   "",
-                  "CodeReady Containers",
+                  Object {
+                    "title": "CodeReady Containers",
+                  },
                   Object {
                     "title": <FormSelect
                       aria-label="Select OS dropdown"

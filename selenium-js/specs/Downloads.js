@@ -53,7 +53,7 @@ describe('Downloads page', async () => {
     const OSes = await Downloads.OSDropdown('(odo)');
     await OSes.scrollIntoView();
     expect(await Downloads.enabledArchitectureOptions('(odo)')).toEqual([
-      'x86_64', 'arm64', 'ppc64le', 's390x',
+      'x86_64', 'aarch64', 'ppc64le', 's390x',
     ]);
     const href = await Downloads.downloadHref('(odo)');
     expect(href).toEqual('https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64');
@@ -73,7 +73,7 @@ describe('Downloads page', async () => {
     ));
     expect(await Downloads.architectureDropdown('(odo)')).toHaveAttr('disabled', true);
     expect(await Downloads.allArchitectureOptions('(odo)')).toEqual([
-      'Select architecture', 'x86_64', 'arm64', 'ppc64le', 's390x',
+      'Select architecture', 'x86_64', 'aarch64', 'ppc64le', 's390x',
     ]);
     expect(await Downloads.enabledArchitectureOptions('(odo)')).toEqual([
       'x86_64',
