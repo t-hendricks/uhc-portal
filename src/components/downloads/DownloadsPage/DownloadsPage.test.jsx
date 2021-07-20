@@ -9,7 +9,7 @@ import DownloadsPage, {
   toolRow,
 } from './DownloadsPage';
 import {
-  tools, operatingSystems, architectures, urls,
+  tools, channels, operatingSystems, architectures, urls,
 } from '../../../common/installLinks';
 
 const { linux, mac, windows } = operatingSystems;
@@ -20,36 +20,37 @@ const {
 // These tests depend on installLinks.js data.
 describe('allOperatingSystemsForTool', () => {
   it('excludes Windows for installer', () => {
-    const values = allOperatingSystemsForTool(tools.INSTALLER).map(o => o.value);
+    const values = allOperatingSystemsForTool(tools.INSTALLER,
+      channels.STABLE).map(o => o.value);
     expect(values).toEqual([linux, mac]);
   });
 
   it('includes all OSes for oc', () => {
-    const values = allOperatingSystemsForTool(tools.CLI_TOOLS).map(o => o.value);
+    const values = allOperatingSystemsForTool(tools.CLI_TOOLS, channels.STABLE).map(o => o.value);
     expect(values).toEqual([linux, mac, windows]);
   });
 });
 
 describe('allArchitecturesForTool', () => {
   it('includes arm for odo', () => {
-    const values = allArchitecturesForTool(tools.ODO).map(o => o.value);
+    const values = allArchitecturesForTool(tools.ODO, channels.STABLE).map(o => o.value);
     expect(values).toEqual([x86, arm, ppc, s390x]);
   });
 
   it('has only x86 for rosa', () => {
-    const values = allArchitecturesForTool(tools.ROSA).map(o => o.value);
+    const values = allArchitecturesForTool(tools.ROSA, channels.STABLE).map(o => o.value);
     expect(values).toEqual([x86]);
   });
 });
 
 describe('architecturesForToolOS', () => {
   it('includes arm for odo Linux', () => {
-    const values = architecturesForToolOS(tools.ODO, linux).map(o => o.value);
+    const values = architecturesForToolOS(tools.ODO, channels.STABLE, linux).map(o => o.value);
     expect(values).toEqual([x86, arm, ppc, s390x]);
   });
 
   it('has only x86 for odo Windows', () => {
-    const values = architecturesForToolOS(tools.ODO, windows).map(o => o.value);
+    const values = architecturesForToolOS(tools.ODO, channels.STABLE, windows).map(o => o.value);
     expect(values).toEqual([x86]);
   });
 });
@@ -58,8 +59,9 @@ describe('toolRow', () => {
   // By react hook rules, toolRow must be called inside a functional component.
   // For this test we only want the button from the last cell.
   const ToolRowButton = ({ tool }) => {
-    const initial = initialSelection(tool, null);
-    const row = toolRow({ [tool]: false }, { [tool]: initial }, () => {}, tool, 'text');
+    const channel = channels.STABLE;
+    const initial = initialSelection(tool, channel, null);
+    const row = toolRow({ [tool]: false }, { [tool]: initial }, () => {}, tool, channel, 'text');
     return row.cells[row.cells.length - 1].title;
   };
 
@@ -77,17 +79,17 @@ describe('toolRow', () => {
 
 describe('initialSelection', () => {
   it('when detection fails, chooses Linux, x86', () => {
-    const initial = initialSelection(tools.CLI_TOOLS, null);
+    const initial = initialSelection(tools.CLI_TOOLS, channels.STABLE, null);
     expect(initial).toEqual({ OS: operatingSystems.linux, architecture: architectures.x86 });
   });
 
   it('on Linux, chooses x86', () => {
-    const initial = initialSelection(tools.CLI_TOOLS, operatingSystems.linux);
+    const initial = initialSelection(tools.CLI_TOOLS, channels.STABLE, operatingSystems.linux);
     expect(initial).toEqual({ OS: operatingSystems.linux, architecture: architectures.x86 });
   });
 
   it('on Windows, chooses x86', () => {
-    const initial = initialSelection(tools.CLI_TOOLS, operatingSystems.windows);
+    const initial = initialSelection(tools.CLI_TOOLS, channels.STABLE, operatingSystems.windows);
     expect(initial).toEqual({ OS: operatingSystems.windows, architecture: architectures.x86 });
   });
 });

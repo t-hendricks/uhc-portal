@@ -12,26 +12,9 @@ import DownloadButton from './DownloadButton';
 import {
   urls, tools, channels, architectures, operatingSystems, operatingSystemOptions,
 } from '../../../../../common/installLinks';
-
-/**
- * @returns User's OS (one of `operatingSystems` keys), or null if detection failed.
- */
-export function detectOS() {
-  const { platform } = window.navigator;
-  const macOSPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'];
-  const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'];
-
-  if (macOSPlatforms.indexOf(platform) !== -1) {
-    return operatingSystems.mac;
-  }
-  if (windowsPlatforms.indexOf(platform) !== -1) {
-    return operatingSystems.windows;
-  }
-  if (/Linux/.test(platform)) {
-    return operatingSystems.linux;
-  }
-  return null;
-}
+import {
+  detectOS,
+} from '../../../../downloads/DownloadsPage/DownloadsPage';
 
 const titleOption = { value: 'Select OS', label: 'Select OS', disabled: true };
 
