@@ -202,7 +202,7 @@ export const toolRow = (expanded, selections, setSelections, tool, channel, name
     expandKey: tool, // custom property for `onCollapse` callback
     cells: [
       '',
-      name,
+      { title: name },
       { title: operatingSystemDropdown(tool, channel, OS, onChangeOS) },
       { title: architectureDropdown(tool, channel, OS, architecture, onChangeArchitecture) },
       {
