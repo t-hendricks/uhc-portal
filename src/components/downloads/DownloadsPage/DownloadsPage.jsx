@@ -181,7 +181,7 @@ export const initialSelection = (tool, channel, detectedOS) => {
  * @returns a row object suitable for <Table>.
  */
 export const toolRow = (expanded, selections, setSelections, tool, channel, name) => {
-  const { OS, architecture } = selections[tool] ?? initialSelection(tool, channel, detectOS());
+  const { OS, architecture } = selections[tool] || initialSelection(tool, channel, detectOS());
   // Callbacks for dropdowns:
   const onChangeOS = (newOS) => {
     let newArchitecture = architecture;
