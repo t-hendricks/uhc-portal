@@ -12,7 +12,7 @@ import {
   mockQuotaList, emptyQuotaList,
   ROSAQuotaList, CCSQuotaList, TrialQuotaList,
   ROSACCSQuotaList, CCSROSAQuotaList, TrialCCSQuotaList, CCSTrialQuotaList,
-  rhQuotaList,
+  rhQuotaList, negativeQuotaList,
 } from './__test__/quota.fixtures';
 
 const state = quotaList => ({ userProfile: { organization: { quotaList } } });
@@ -56,6 +56,7 @@ describe('quotaSelectors', () => {
       expect(hasManagedQuotaSelector(state(CCSQuotaList), normalizedProducts.OSD)).toBe(true);
       expect(hasManagedQuotaSelector(state(rhQuotaList), normalizedProducts.OSD)).toBe(true);
       expect(hasManagedQuotaSelector(state(mockQuotaList), normalizedProducts.OSD)).toBe(true);
+      expect(hasManagedQuotaSelector(state(negativeQuotaList), normalizedProducts.OSD)).toBe(true);
     });
   });
 
