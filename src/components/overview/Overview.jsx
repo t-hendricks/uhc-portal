@@ -75,7 +75,7 @@ class Overview extends Component {
       && !insightsOverview.pending
       && !insightsOverview.fulfilled
       && organization.fulfilled) {
-      fetchOrganizationInsights(organization.details.data.id);
+      fetchOrganizationInsights(organization.details.id);
     }
   }
 

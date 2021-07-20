@@ -43,7 +43,7 @@ function userProfile(state = initialState, action) {
         draft.organization = {
           ...initialState.organization,
           fulfilled: true,
-          details: action.payload.organization,
+          details: action.payload.organization.data,
           quotaList: action.payload.quota,
           timestamp: new Date(),
         };
