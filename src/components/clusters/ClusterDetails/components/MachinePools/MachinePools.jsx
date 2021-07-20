@@ -203,7 +203,7 @@ class MachinePools extends React.Component {
 
       const autoScaling = machinePool.autoscaling && (
         <>
-          <Title headingLevel="h4" className="space-bottom-sm space-top-lg">Autoscaling</Title>
+          <Title headingLevel="h4" className="pf-u-mb-sm pf-u-mt-lg">Autoscaling</Title>
           <Split hasGutter>
             <SplitItem>
               <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${cluster.multi_az ? 'per zone' : ''}`}</Title>
@@ -223,13 +223,13 @@ class MachinePools extends React.Component {
         <>
           {labelsList && (
             <>
-              <Title headingLevel="h4" className="space-bottom-sm">Labels</Title>
+              <Title headingLevel="h4" className="pf-u-mb-sm">Labels</Title>
               {labelsList}
             </>
           )}
           {taintsList && (
             <>
-              <Title headingLevel="h4" className={cx('space-bottom-sm', labelsList && 'space-top-lg')}>Taints</Title>
+              <Title headingLevel="h4" className={cx('pf-u-mb-sm', labelsList && 'pf-u-mt-lg')}>Taints</Title>
               {taintsList}
             </>
           )}
@@ -338,7 +338,7 @@ class MachinePools extends React.Component {
     }
 
     const addMachinePoolBtn = (
-      <Button id="add-machine-pool" onClick={() => openModal('add-machine-pool')} variant="secondary" className="space-bottom-lg" isDisabled={addMachinePoolDisabled}>
+      <Button id="add-machine-pool" onClick={() => openModal('add-machine-pool')} variant="secondary" className="pf-u-mb-lg" isDisabled={addMachinePoolDisabled}>
         Add machine pool
       </Button>
     );

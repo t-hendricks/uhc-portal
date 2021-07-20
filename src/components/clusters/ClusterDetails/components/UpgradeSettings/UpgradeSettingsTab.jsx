@@ -99,7 +99,7 @@ class UpgradeSettingsTab extends React.Component {
     const hibernatingClusterInfo = (
       <Alert
         variant="info"
-        className="space-bottom-md"
+        className="pf-u-mb-md"
         isInline
         title="Version updates will not occur while this cluster is Hibernating.
             Once resumed, updates will start according to the selected updates strategy."
