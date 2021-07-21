@@ -11,7 +11,7 @@ import { validateGCPSubnet } from '../../../../../../common/validators';
 function GCPNetworkConfigSection() {
   return (
     <>
-      <GridItem span={3}>
+      <GridItem sm={12} md={3}>
         <Field
           component={ReduxVerticalFormGroup}
           name="vpc_name"
@@ -21,7 +21,7 @@ function GCPNetworkConfigSection() {
           placeholder="VPC Name"
         />
       </GridItem>
-      <GridItem span={3}>
+      <GridItem sm={12} md={3}>
         <Field
           component={ReduxVerticalFormGroup}
           name="control_plane_subnet"
@@ -31,7 +31,7 @@ function GCPNetworkConfigSection() {
           placeholder="Subnet name"
         />
       </GridItem>
-      <GridItem span={3}>
+      <GridItem sm={12} md={3}>
         <Field
           component={ReduxVerticalFormGroup}
           name="compute_subnet"
@@ -41,7 +41,6 @@ function GCPNetworkConfigSection() {
           placeholder="Subnet name"
         />
       </GridItem>
-      <GridItem span={3} />
     </>
   );
 }

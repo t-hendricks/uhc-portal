@@ -52,6 +52,7 @@ class InsightsRuleDetails extends Component {
 
     this.reasonTabRef = React.createRef();
     this.resolutionTabRef = React.createRef();
+    this.moreinfoTabRef = React.createRef();
   }
 
   componentDidMount() {
@@ -226,6 +227,7 @@ class InsightsRuleDetails extends Component {
       return errorReportState();
     }
 
+    const moreinfoExist = !!reportDetails.report.more_info;
     const reasonInfoExist = !!reportDetails.report.reason;
     const resolutionInfoExist = !!reportDetails.report.resolution;
     const {
@@ -233,6 +235,7 @@ class InsightsRuleDetails extends Component {
       disabled: isRuleDisabled,
       disable_feedback: ruleDisableFeedback,
       disabled_at: ruleDisabledAtDate,
+      more_info: moreinfoInsights,
     } = reportDetails.report;
 
     return (
@@ -249,6 +252,7 @@ class InsightsRuleDetails extends Component {
           <TabsRow
             reasonTabRef={this.reasonTabRef}
             resolutionTabRef={this.resolutionTabRef}
+            moreinfoTabRef={this.moreinfoTabRef}
             isDisabled={isRuleDisabled}
           />
           <OnRuleDisableFeedbackModal />
@@ -295,17 +299,15 @@ class InsightsRuleDetails extends Component {
                   <Card>
                     <CardBody>
                       {
-                        resolutionInfoExist && (
+                        resolutionInfoExist ? (
                           <Markdown
                             template={reportDetails.report.resolution}
                             definitions={reportDetails.report.extra_data}
                           />
                         )
-                      }
-                      {
-                        !resolutionInfoExist && (
-                          <EmptyRemediationInfo title="resolution" />
-                        )
+                          : (
+                            <EmptyRemediationInfo title="resolution" />
+                          )
                       }
                     </CardBody>
                   </Card>
@@ -333,6 +335,27 @@ class InsightsRuleDetails extends Component {
                           <EmptyRemediationInfo title="reason" />
                         )
                       }
+                    </CardBody>
+                  </Card>
+                </TabContent>
+                <TabContent
+                  eventKey={2}
+                  id="moreinfoTabContent"
+                  ref={this.moreinfoTabRef}
+                  aria-label="Additional info"
+                  ouiaId="moreinfoTabContent"
+                  hidden
+                >
+                  <Card>
+                    <CardBody>
+                      { moreinfoExist ? (
+                        <Markdown
+                          template={moreinfoInsights}
+                        />
+                      )
+                        : (
+                          <EmptyRemediationInfo title="additional information" />
+                        )}
                     </CardBody>
                   </Card>
                 </TabContent>

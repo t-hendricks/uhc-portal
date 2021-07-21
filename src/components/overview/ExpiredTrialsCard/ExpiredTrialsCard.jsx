@@ -47,7 +47,7 @@ class ExpiredTrialsCard extends React.Component {
 
     if (subscriptions.error) {
       return (
-        <Card id="clusters-overview-card">
+        <Card className="ocm-overview-clusters__card">
           <CardTitle>
             Expired trials
           </CardTitle>
@@ -111,7 +111,7 @@ class ExpiredTrialsCard extends React.Component {
       : subscriptions.items.map(subscription => expiredTrialRow(subscription));
 
     return (
-      <Card id="clusters-overview-card">
+      <Card className="ocm-overview-clusters__card">
         <CardTitle>
           Expired Trials
         </CardTitle>

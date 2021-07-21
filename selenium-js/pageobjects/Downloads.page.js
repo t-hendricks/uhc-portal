@@ -52,7 +52,7 @@ class Downloads extends Page {
     (await this.download(substring)).getAttribute('href')
   )
 
-  ocmTokenButton = async () => $('//button[contains(., "See API token")]')
+  ocmTokenButton = async () => $('//button[contains(., "View API token")]')
 }
 
 export default new Downloads();

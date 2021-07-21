@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
     clusterID: modalData.id,
     subscriptionID: get(modalData, 'subscription.id'),
     displayName: getClusterName(modalData),
+    shouldDisplayClusterName: modalData.shouldDisplayClusterName || false,
   });
 };
 

@@ -436,7 +436,7 @@ describe('validateAddOnRequirements', () => {
             id: 'cluster',
             resource: 'cluster',
             data: {
-              'cloud_provider.id': 'aws',
+              'product.id': 'osd',
             },
           },
         ],
@@ -453,14 +453,14 @@ describe('validateAddOnRequirements', () => {
         .toEqual([]);
     });
     it('should return false for addon with unfulfilled cluster requirements', () => {
-      tstCluster.cloud_provider.id = 'gcp';
+      tstCluster.product.id = 'ROSA';
       const status = validateAddOnRequirements(
         tstAddOn, tstCluster, {}, {},
       );
       expect(status.fulfilled)
         .toEqual(false);
       expect(status.errorMsgs)
-        .toEqual(['This addon requires a cluster where cloud_provider.id is aws']);
+        .toEqual(['This addon requires a cluster where product.id is osd']);
     });
   });
 

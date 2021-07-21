@@ -2332,7 +2332,7 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
          
         2
         <span
-          className="space-left-lg autoscale-data-t"
+          className="pf-u-ml-lg autoscale-data-t"
         >
           Max:
            

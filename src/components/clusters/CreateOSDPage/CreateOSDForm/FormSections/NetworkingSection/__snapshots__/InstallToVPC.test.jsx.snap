@@ -2,55 +2,38 @@
 
 exports[`<InstallToVPC> renders correctly when checkbox is not selected 1`] = `
 <Fragment>
-  <GridItem
-    span={4}
-  >
+  <GridItem>
     <Field
       component={[Function]}
       label="Install into an existing VPC"
       name="install_to_vpc"
     />
   </GridItem>
-  <GridItem
-    span={8}
-  />
 </Fragment>
 `;
 
 exports[`<InstallToVPC> renders correctly when checkbox is not selected 2`] = `
 <Fragment>
-  <GridItem
-    span={4}
-  >
+  <GridItem>
     <Field
       component={[Function]}
       label="Install into an existing VPC"
       name="install_to_vpc"
     />
   </GridItem>
-  <GridItem
-    span={8}
-  />
 </Fragment>
 `;
 
 exports[`<InstallToVPC> renders correctly when checkbox is selected 1`] = `
 <Fragment>
-  <GridItem
-    span={4}
-  >
+  <GridItem>
     <Field
       component={[Function]}
       label="Install into an existing VPC"
       name="install_to_vpc"
     />
   </GridItem>
-  <GridItem
-    span={8}
-  />
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Title
       headingLevel="h4"
       size="md"
@@ -79,21 +62,14 @@ exports[`<InstallToVPC> renders correctly when checkbox is selected 1`] = `
 
 exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
 <Fragment>
-  <GridItem
-    span={4}
-  >
+  <GridItem>
     <Field
       component={[Function]}
       label="Install into an existing VPC"
       name="install_to_vpc"
     />
   </GridItem>
-  <GridItem
-    span={8}
-  />
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Title
       headingLevel="h4"
       size="md"
@@ -125,21 +101,14 @@ exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
 
 exports[`<InstallToVPC> renders correctly when selected for single AZ 1`] = `
 <Fragment>
-  <GridItem
-    span={4}
-  >
+  <GridItem>
     <Field
       component={[Function]}
       label="Install into an existing VPC"
       name="install_to_vpc"
     />
   </GridItem>
-  <GridItem
-    span={8}
-  />
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Title
       headingLevel="h4"
       size="md"

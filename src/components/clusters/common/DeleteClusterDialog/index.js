@@ -7,6 +7,7 @@ import DeleteClusterDialog from './DeleteClusterDialog';
 const mapStateToProps = state => ({
   modalData: state.modal.data,
   deleteClusterResponse: state.deleteCluster,
+  shouldDisplayClusterName: state.modal.data.shouldDisplayClusterName || false,
 });
 
 const mapDispatchToProps = {

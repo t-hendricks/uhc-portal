@@ -140,6 +140,7 @@ const fakeClusterFromSubscription = (subscription) => {
     product: {
       // Omit other properties like "href", we only use the id anyway.
       id: normalizeProductID(subscription.plan.id),
+      type: normalizeProductID(subscription.plan.type),
     },
     managed: clustersServiceProducts.includes(normalizeProductID(subscription.plan.id)),
     ccs: {
@@ -188,8 +189,9 @@ const fakeAIClusterFromSubscription = (subscription, aiCluster) => {
 const normalizeSubscription = subscription => ({
   ...subscription,
   plan: {
-    // Omit other properties like "href", we only use the id anyway.
+    // Omit other properties like "href", we only use the id and type
     id: normalizeProductID(subscription.plan.id),
+    type: normalizeProductID(subscription.plan.type),
   },
 });
 

@@ -13,6 +13,7 @@ import {
   shouldShowLoadBalancerAlert,
 } from './ScaleClusterSelectors';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
+import getClusterName from '../../../../common/getClusterName';
 
 const reduxFormConfig = {
   form: 'ScaleCluster',
@@ -23,9 +24,11 @@ const reduxFormEditCluster = reduxForm(reduxFormConfig)(ScaleClusterDialog);
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;
   return ({
+    shouldDisplayClusterName: modalData.shouldDisplayClusterName || false,
     editClusterResponse: state.clusters.editedCluster,
     min: minValueSelector(modalData.multi_az, modalData.ccs?.enabled),
     consoleURL: get(modalData, 'console.url', null),
+    clusterDisplayName: getClusterName(modalData),
     showLoadBalancerAlert: shouldShowLoadBalancerAlert(state),
     showPersistentStorageAlert: shouldShowStorageQuotaAlert(state),
     persistentStorageValues: state.persistentStorageValues,

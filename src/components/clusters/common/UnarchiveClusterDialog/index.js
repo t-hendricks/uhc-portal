@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
     unarchiveClusterResponse: state.clusters.unarchivedCluster,
     subscriptionID: modalData.subscriptionID ? modalData.subscriptionID : '',
     name: modalData.name ? modalData.name : '',
+    shouldDisplayClusterName: modalData.shouldDisplayClusterName || false,
   });
 };
 

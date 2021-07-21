@@ -21,7 +21,7 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = fa
       const isRemoveDisabled = !isEditing && index === 0 && fields.length === 1;
 
       return (
-        <div className="space-bottom-md" key={`${fields.get(index).id}`}>
+        <div className="pf-u-mb-md" key={`${fields.get(index).id}`}>
           <Field
             name={`${label}.key`}
             component={ReduxVerticalFormGroup}
@@ -63,7 +63,7 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = fa
       onClick={() => fields.push({ id: getRandomID(), effect: 'NoSchedule' })}
       icon={<PlusCircleIcon />}
       variant="link"
-      className="reduxFormKeyValueList-addBtn space-bottom-lg"
+      className="reduxFormKeyValueList-addBtn pf-u-mb-lg"
     >
       Add taint
     </Button>

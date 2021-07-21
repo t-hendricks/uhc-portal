@@ -44,6 +44,7 @@ class DeleteClusterDialog extends React.Component {
       modalData,
       deleteCluster,
       deleteClusterResponse,
+      shouldDisplayClusterName,
     } = this.props;
 
     const {
@@ -76,6 +77,7 @@ class DeleteClusterDialog extends React.Component {
     return (
       <Modal
         title="Delete cluster"
+        secondaryTitle={shouldDisplayClusterName ? clusterName : undefined}
         onClose={() => this.closeDialog(false)}
         primaryText="Delete"
         onPrimaryClick={() => doSubmit(clusterID)}
@@ -123,6 +125,7 @@ DeleteClusterDialog.propTypes = {
   deleteCluster: PropTypes.func.isRequired,
   deleteClusterResponse: PropTypes.object,
   onClose: PropTypes.func,
+  shouldDisplayClusterName: PropTypes.bool,
 };
 
 DeleteClusterDialog.defaultProps = {

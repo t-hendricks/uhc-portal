@@ -21,6 +21,7 @@ class ArchiveClusterDialog extends Component {
   render() {
     const {
       closeModal, submit, archiveClusterResponse, resetResponse, subscriptionID, name,
+      shouldDisplayClusterName,
     } = this.props;
 
     const cancelEdit = () => {
@@ -35,6 +36,7 @@ class ArchiveClusterDialog extends Component {
     return (
       <Modal
         title="Archive cluster"
+        secondaryTitle={shouldDisplayClusterName ? name : undefined}
         data-test-id="archive-cluster-dialog"
         onClose={cancelEdit}
         primaryText="Archive cluster"
@@ -72,6 +74,7 @@ ArchiveClusterDialog.propTypes = {
   archiveClusterResponse: PropTypes.object,
   subscriptionID: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  shouldDisplayClusterName: PropTypes.bool,
 };
 
 ArchiveClusterDialog.defaultProps = {
