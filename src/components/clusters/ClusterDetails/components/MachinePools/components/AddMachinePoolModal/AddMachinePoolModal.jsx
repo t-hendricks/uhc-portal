@@ -113,8 +113,6 @@ class AddMachinePoolModal extends Component {
                 cloudProviderID={cluster.cloud_provider.id}
                 product={cluster?.subscription?.plan?.id}
                 showStorageAndLoadBalancers={false}
-                instanceTypeGridSpan={6}
-                autoscaleAndNodeCountGridSpan={6}
                 minNodes={0}
                 isMachinePool
                 inModal
