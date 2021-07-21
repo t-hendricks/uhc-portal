@@ -2,7 +2,7 @@
 
 exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
 <Card
-  className="clusters-overview-card"
+  className="ocm-overview-clusters__card"
 >
   <CardTitle>
     Clusters with issues
@@ -18,9 +18,6 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
         Array [
           Object {
             "title": "Name",
-            "transforms": Array [
-              [Function],
-            ],
           },
           Object {
             "columnTransforms": Array [
@@ -29,12 +26,11 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
             "title": "Issues detected",
             "transforms": Array [
               [Function],
-              [Function],
             ],
           },
         ]
       }
-      className=""
+      className="clusters-with-issues"
       contentId="expanded-content"
       dropdownDirection="down"
       dropdownPosition="right"

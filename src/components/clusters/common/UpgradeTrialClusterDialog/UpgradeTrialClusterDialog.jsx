@@ -153,7 +153,7 @@ class UpgradeTrialClusterDialog extends Component {
 
   render() {
     const {
-      submit, upgradeTrialClusterResponse, clusterID,
+      submit, upgradeTrialClusterResponse, clusterID, shouldDisplayClusterName, clusterDisplayName,
     } = this.props;
 
     const error = upgradeTrialClusterResponse.error ? (
@@ -172,6 +172,7 @@ class UpgradeTrialClusterDialog extends Component {
     return (
       <Modal
         title="Upgrade cluster from Trial"
+        secondaryTitle={shouldDisplayClusterName ? clusterDisplayName : undefined}
         data-test-id="upgrade-trial-cluster-dialog"
         modalSize={modalSize}
         {...primaryButton}
@@ -225,6 +226,8 @@ UpgradeTrialClusterDialog.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   upgradeTrialClusterResponse: PropTypes.object,
   machineTypesByID: PropTypes.object,
+  clusterDisplayName: PropTypes.string,
+  shouldDisplayClusterName: PropTypes.bool,
 };
 
 UpgradeTrialClusterDialog.defaultProps = {

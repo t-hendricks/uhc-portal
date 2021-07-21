@@ -14,6 +14,7 @@ class TabsRow extends React.Component {
     const {
       reasonTabRef,
       resolutionTabRef,
+      moreinfoTabRef,
     } = this.props;
     return [
       {
@@ -28,6 +29,13 @@ class TabsRow extends React.Component {
         title: 'Reason',
         contentId: 'reasonTabContent',
         ref: reasonTabRef,
+        show: true,
+      },
+      {
+        key: 2,
+        title: 'Additional info',
+        contentId: 'moreinfoTabContent',
+        ref: moreinfoTabRef,
         show: true,
       },
     ];
@@ -78,6 +86,7 @@ class TabsRow extends React.Component {
 TabsRow.propTypes = {
   reasonTabRef: PropTypes.object.isRequired,
   resolutionTabRef: PropTypes.object.isRequired,
+  moreinfoTabRef: PropTypes.object.isRequired,
   isDisabled: PropTypes.bool,
 };
 

@@ -11,7 +11,7 @@ exports[`<TopOverviewSection /> renders correctly 1`] = `
       to="/"
     >
       <Card
-        className="clusters-overview-card"
+        className="ocm-overview-clusters__card"
       >
         <CardTitle>
           Clusters
@@ -35,7 +35,7 @@ exports[`<TopOverviewSection /> renders correctly 1`] = `
     sm={12}
   >
     <Card
-      id="metrics-charts"
+      className="ocm-c-metrics-charts__card"
     >
       <CardTitle>
         CPU and Memory utilization

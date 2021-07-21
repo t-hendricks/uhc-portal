@@ -7,6 +7,7 @@ import {
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
+import getClusterName from '../../../../common/getClusterName';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;
@@ -15,7 +16,8 @@ const mapStateToProps = (state) => {
     organization: state.userProfile.organization,
     clusterID: modalData.clusterID ? modalData.clusterID : '',
     cluster: modalData.cluster ? modalData.cluster : '',
-    name: modalData.name ? modalData.name : '',
+    clusterDisplayName: getClusterName(modalData.cluster),
+    shouldDisplayClusterName: modalData.shouldDisplayClusterName,
     machineTypesByID: state.machineTypes.typesByID,
   });
 };

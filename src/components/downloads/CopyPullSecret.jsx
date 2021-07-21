@@ -4,7 +4,7 @@ import {
   Button,
   Tooltip,
 } from '@patternfly/react-core';
-import { PasteIcon } from '@patternfly/react-icons';
+import { CopyIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import isEmpty from 'lodash/isEmpty';
 
@@ -38,25 +38,29 @@ class CopyPullSecret extends React.Component {
     const { clicked } = this.state;
     const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
 
-    if (variant === 'button') {
-      return (
-        <CopyToClipboard
-          text={isDisabled ? '' : tokenView}
-          onCopy={this.onCopy}
-        >
-          <Button
-            variant="secondary"
-            type="button"
-            tabIndex={0}
-            isDisabled={isDisabled}
-            onClick={() => trackPendo('OCP-Copy-PullSecret', pendoID)}
-          >
-            {clicked ? 'Copied!' : text}
-          </Button>
-        </CopyToClipboard>
-      );
-    }
+    const linkText = (variant === 'link-inplace' && clicked) ? 'Copied!' : text;
 
+    const button = (
+      <CopyToClipboard
+        text={isDisabled ? '' : tokenView}
+        onCopy={this.onCopy}
+      >
+        <Button
+          variant="link"
+          type="button"
+          tabIndex={0}
+          isDisabled={isDisabled}
+          icon={<CopyIcon />}
+          onClick={() => trackPendo('OCP-Copy-PullSecret', pendoID)}
+        >
+          {linkText}
+        </Button>
+      </CopyToClipboard>
+    );
+
+    if (variant === 'link-inplace') {
+      return button;
+    }
     return (
       <Tooltip
         trigger="manual"
@@ -64,21 +68,7 @@ class CopyPullSecret extends React.Component {
         position="right"
         isVisible={clicked}
       >
-        <CopyToClipboard
-          text={isDisabled ? '' : tokenView}
-          onCopy={this.onCopy}
-        >
-          <Button
-            variant="link"
-            type="button"
-            tabIndex={0}
-            isDisabled={isDisabled}
-            icon={<PasteIcon />}
-            onClick={() => trackPendo('OCP-Copy-PullSecret', pendoID)}
-          >
-            {text}
-          </Button>
-        </CopyToClipboard>
+        {button}
       </Tooltip>
     );
   }
@@ -87,7 +77,7 @@ CopyPullSecret.propTypes = {
   pendoID: PropTypes.string,
   token: PropTypes.object.isRequired,
   text: PropTypes.string,
-  variant: PropTypes.oneOf(['link', 'button']).isRequired,
+  variant: PropTypes.oneOf(['link-tooltip', 'link-inplace']).isRequired,
 };
 CopyPullSecret.defaultProps = {
   text: 'Copy pull secret',

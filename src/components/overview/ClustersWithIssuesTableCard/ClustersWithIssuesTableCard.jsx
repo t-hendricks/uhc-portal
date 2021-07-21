@@ -11,7 +11,6 @@ import {
   Table,
   TableHeader,
   TableBody,
-  cellWidth,
   textCenter,
   TableVariant,
 } from '@patternfly/react-table';
@@ -43,7 +42,7 @@ class ClustersWithIssuesTableCard extends React.Component {
     } = this.props;
     if (unhealthyClusters.fulfilled && unhealthyClusters.subscriptions.length === 0) {
       return (
-        <Card className="clusters-overview-card">
+        <Card className="ocm-overview-clusters__card">
           <CardTitle>
             Clusters with issues
           </CardTitle>
@@ -82,8 +81,8 @@ class ClustersWithIssuesTableCard extends React.Component {
     };
 
     const columns = [
-      { title: 'Name', transforms: [cellWidth(30)] },
-      { title: 'Issues detected', transforms: [textCenter, cellWidth(15)], columnTransforms: [textCenter] },
+      { title: 'Name' },
+      { title: 'Issues detected', transforms: [textCenter], columnTransforms: [textCenter] },
     ];
 
     const showSkeleton = unhealthyClusters.pending
@@ -95,12 +94,13 @@ class ClustersWithIssuesTableCard extends React.Component {
       : rowData => actionResolver(rowData.subscription);
 
     return (
-      <Card className="clusters-overview-card">
+      <Card className="ocm-overview-clusters__card">
         <CardTitle>
           Clusters with issues
         </CardTitle>
         <CardBody>
           <Table
+            className="clusters-with-issues"
             aria-label="Clusters with issues"
             cells={columns}
             rows={rows}

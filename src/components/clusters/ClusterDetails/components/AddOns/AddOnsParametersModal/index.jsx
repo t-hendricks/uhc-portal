@@ -22,7 +22,7 @@ const mapStateToProps = state => ({
     ? state.addOns.updateClusterAddOnResponse
     : state.addOns.addClusterAddOnResponse,
   initialValues: parameterValuesForEditing(
-    state.modal.data.addOnInstallation, state.modal.data.addOn,
+    state.modal.data.addOnInstallation, state.modal.data.addOn, state.clusters.details.cluster,
   ),
   cluster: state.clusters.details.cluster,
   quota: state.userProfile.organization.quotaList,

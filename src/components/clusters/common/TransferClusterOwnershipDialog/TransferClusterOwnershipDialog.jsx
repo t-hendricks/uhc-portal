@@ -37,6 +37,8 @@ class TransferClusterOwnershipDialog extends Component {
     const {
       requestState,
       subscription,
+      clusterDisplayName,
+      shouldDisplayClusterName,
     } = this.props;
 
     const changePullSecretUrl = 'https://access.redhat.com/solutions/4902871';
@@ -75,6 +77,7 @@ class TransferClusterOwnershipDialog extends Component {
     return (
       <Modal
         title="Transfer cluster ownership"
+        secondaryTitle={shouldDisplayClusterName ? clusterDisplayName : undefined}
         width={600}
         variant="large"
         onClose={this.handleClose}
@@ -108,6 +111,8 @@ TransferClusterOwnershipDialog.propTypes = {
   closeModal: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  clusterDisplayName: PropTypes.string,
+  shouldDisplayClusterName: PropTypes.bool,
 };
 
 TransferClusterOwnershipDialog.modalName = modals.TRANSFER_CLUSTER_OWNERSHIP;

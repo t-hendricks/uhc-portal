@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  FormSelect, FormSelectOption, Grid, GridItem,
+  FormSelect, FormSelectOption,
 } from '@patternfly/react-core';
 
 class KMSKeyLocationComboBox extends React.Component {
@@ -25,24 +25,19 @@ class KMSKeyLocationComboBox extends React.Component {
   render() {
     const { kmsRegionsArray, input } = this.props;
     return (
-      <Grid hasGutter>
-        <GridItem span={8}>
-          <FormSelect
-            aria-label="KMS location"
-            {...input}
-            onChange={this.onChange}
-          >
-            {kmsRegionsArray.map(location => (
-              <FormSelectOption
-                key={location}
-                value={location}
-                label={location}
-              />
-            ))}
-          </FormSelect>
-        </GridItem>
-      </Grid>
-
+      <FormSelect
+        aria-label="KMS location"
+        {...input}
+        onChange={this.onChange}
+      >
+        {kmsRegionsArray.map(location => (
+          <FormSelectOption
+            key={location}
+            value={location}
+            label={location}
+          />
+        ))}
+      </FormSelect>
     );
   }
 }

@@ -51,16 +51,16 @@ function ScaleSection({
       toggleTextCollapsed={expandableSectionTitle}
       toggleTextExpanded={expandableSectionTitle}
     >
-      <GridItem span={4} className="space-bottom-md">
+      <GridItem sm={12} md={5} lg={4} className="pf-u-mb-md">
         <Title headingLevel="h3">Node labels</Title>
       </GridItem>
-      <GridItem span={4}>
+      <GridItem sm={12} md={5} lg={4}>
         <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
       </GridItem>
       {isMachinePool
         && (
           <>
-            <GridItem span={4} className="space-bottom-md space-top-lg">
+            <GridItem sm={12} md={5} lg={4} className="pf-u-mb-md pf-u-mt-lg">
               <Title headingLevel="h3">Taints</Title>
             </GridItem>
             <FieldArray name="taints" component={ReduxFormTaints} />
@@ -74,7 +74,7 @@ function ScaleSection({
       {/* Instance type */}
       <GridItem span={instanceTypeGridSpan}>
         <FormGroup
-          className="space-bottom-md"
+          className="pf-u-mb-md"
           label="Worker node instance type"
           isRequired
           fieldId="node_type"
@@ -149,7 +149,7 @@ function ScaleSection({
       {/* Persistent Storage & Load Balancers */}
       { showStorageAndLoadBalancers && !isBYOC && (
         <>
-          <GridItem span={4}>
+          <GridItem sm={12} md={5} lg={4}>
             <FormGroup
               label="Persistent storage"
               fieldId="persistent_storage"
@@ -168,9 +168,9 @@ function ScaleSection({
               />
             </FormGroup>
           </GridItem>
-          <GridItem span={8} />
+          <GridItem md={7} lg={8} />
 
-          <GridItem span={4}>
+          <GridItem sm={12} md={5} lg={4}>
             <FormGroup
               label="Load balancers"
               fieldId="load_balancers"
@@ -189,7 +189,7 @@ function ScaleSection({
               />
             </FormGroup>
           </GridItem>
-          <GridItem span={8} />
+          <GridItem md={7} lg={8} />
         </>
       )}
     </>

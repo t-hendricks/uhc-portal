@@ -6,6 +6,7 @@
     "details": "The running OpenShift version is vulnerable to CVE-2020-8555: Compromised node could escalate to cluster level with Moderate security impact.\n\nThis flaw allows an attacker who can intercept requests on a compromised node to redirect those requests, along with their credentials, to perform actions on other endpoints that trust those credentials (including other clusters), allowing for escalation of privileges.\n",
     "reason": "* The cluster is running OpenShift {{=pydata.current_version}}.\n",
     "resolution": "Red Hat recommends that you upgrade the OpenShift cluster to a more recent version. \n\nFor more information, see the *Updating a cluster within a minor version from the web console* section of the documentation of the OpenShift version:\n\n* [OpenShift {{=pydata.minor_version}}](https://docs.openshift.com/container-platform/{{=pydata.minor_version}}/updating/updating-cluster.html)\n",
+    "more_info": "* For more information about the flaw, see [CVE-2020-8555](https://access.redhat.com/security/cve/CVE-2020-8555).\n* The Customer Portal page for the [Red Hat Security Team](https://access.redhat.com/security/) contains more information about policies, procedures, and alerts for Red Hat Products.\n* The Security Team also maintains a frequently updated blog at [securityblog.redhat.com](https://securityblog.redhat.com).\n",
     "total_risk": 2,
     "risk_of_change": 0,
     "disabled": true,

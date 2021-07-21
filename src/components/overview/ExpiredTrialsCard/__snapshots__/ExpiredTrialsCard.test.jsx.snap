@@ -2,7 +2,7 @@
 
 exports[`<ExpiredTrialsCard /> When data is available renders correctly 1`] = `
 <Card
-  id="clusters-overview-card"
+  className="ocm-overview-clusters__card"
 >
   <CardTitle>
     Expired Trials

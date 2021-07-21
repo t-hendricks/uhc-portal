@@ -40,7 +40,7 @@ const TopOverviewSection = ({
     return (
       <>
         <GridItem md={3} sm={12}>
-          <Card className="clusters-overview-card">
+          <Card className="ocm-overview-clusters__card">
             <CardTitle>
               Clusters
             </CardTitle>
@@ -48,7 +48,7 @@ const TopOverviewSection = ({
           </Card>
         </GridItem>
         <GridItem md={9} sm={12} rowSpan={2}>
-          <Card id="metrics-charts">
+          <Card className="ocm-c-metrics-charts__card">
             <CardTitle>
               CPU and Memory utilization
             </CardTitle>
@@ -107,7 +107,7 @@ const TopOverviewSection = ({
     <>
       <GridItem md={3} sm={12}>
         <Link to="/" className="overview-clusters-link">
-          <Card className="clusters-overview-card">
+          <Card className="ocm-overview-clusters__card">
             <CardTitle>
               Clusters
             </CardTitle>
@@ -122,7 +122,7 @@ const TopOverviewSection = ({
         </Link>
       </GridItem>
       <GridItem md={9} rowSpan={2} sm={12}>
-        <Card id="metrics-charts">
+        <Card className="ocm-c-metrics-charts__card">
           <CardTitle>
             CPU and Memory utilization
           </CardTitle>

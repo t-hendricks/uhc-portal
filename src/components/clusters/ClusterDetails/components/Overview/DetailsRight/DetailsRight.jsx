@@ -241,7 +241,7 @@ function DetailsRight({
                   <span className="autoscale-data-t">Min:</span>
                   {' '}
                   {totalMinNodesCount}
-                  <span className="space-left-lg autoscale-data-t">
+                  <span className="pf-u-ml-lg autoscale-data-t">
                     Max:
                     {' '}
                   </span>

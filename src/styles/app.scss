@@ -47,9 +47,6 @@ limitations under the License.
   margin: 20px 0 20px 0;
 }
 
-#cluster-list-emptystate-primary-action {
-  margin-top: var(--pf-global--spacer--xl);
-}
 .cluster-list-empty-state .pf-c-empty-state__secondary {
   margin-top: var(--pf-global--spacer--sm);
 }
@@ -198,25 +195,6 @@ limitations under the License.
     margin-top: 0px;
 }
 
-.clusters-overview-card {
-  height: 100%;
-}
-
-#overview-grid {
-  max-width: 1710px;
-}
-
-#clusters-with-issues-zero {
-  font-size: var(--pf-global--FontSize--3xl);
-  padding-right: var(--pf-global--spacer--sm);
-}
-
-#clusters-with-issues-non-zero {
-  font-size: var(--pf-global--FontSize--3xl);
-  color: var(--pf-global--danger-color--100);
-  padding-right: var(--pf-global--spacer--sm);
-}
-
 .empty-state-color {
   color: var(--pf-global--Color--200);
 }
@@ -226,7 +204,7 @@ limitations under the License.
 }
 
 .ocm-c-overview-resource-usage__card--body,
-#metrics-charts .pf-c-card__body, .metrics-chart{
+.ocm-c-metrics-charts__card .pf-c-card__body, .metrics-chart{
   display: flex;
   justify-content: space-evenly;
   margin: 0;
@@ -246,13 +224,6 @@ limitations under the License.
 #clusterdetails-content .metrics-chart.chart-with-legend {
   height: 205px;
   width: 410px;
-}
-#metrics-charts .pf-c-card__header .pf-c-alert {
-  margin-top: 10px;
-}
-
-#overview-grid #metrics-charts {
-  min-height: 300px;
 }
 
 .pf-c-modal-box .error-box {
@@ -723,46 +694,9 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-
 .pf-c-button.pf-m-link.access-control-tables-copy{
   padding: 0;
   font-size: var(--pf-c-table--cell--FontSize);
-}
-
-.idp-oauth-url-label {
-  padding-bottom: var(--pf-global--spacer--sm);
-}
-
-.idp-helptext-heading {
-  margin-top: var(--pf-global--spacer--lg);
-}
-
-.space-top-lg {
-  margin-top: var(--pf-global--spacer--lg);
- }
-
-.space-right-lg {
- margin-right: var(--pf-global--spacer--lg);
-}
-
- .space-left-lg {
-  margin-left: var(--pf-global--spacer--lg);
- }
-
- .space-bottom-lg {
-  margin-bottom: var(--pf-global--spacer--lg);
- }
-
- .space-bottom-md {
-  margin-bottom: var(--pf-global--spacer--md);
- }
-
- .space-bottom-sm {
-  margin-bottom: var(--pf-global--spacer--sm);
- }
-
-a.overview-clusters-link:hover {
-  text-decoration: none;
 }
 
 .ins-c-empty-state__unavailable .pf-c-empty-state__icon {

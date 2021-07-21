@@ -83,7 +83,7 @@ class GithubFormRequired extends React.Component {
 
           <GridItem span={8}>
             <Divider />
-            <Title headingLevel="h3" size="xl" className="idp-helptext-heading">
+            <Title headingLevel="h3" size="xl" className="pf-u-mt-lg">
               Organizations or teams
             </Title>
             <p>

@@ -21,7 +21,7 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         span={6}
       >
         <FormGroup
-          className="space-bottom-md"
+          className="pf-u-mb-md"
           isRequired={true}
           label="Machine pool name"
         >

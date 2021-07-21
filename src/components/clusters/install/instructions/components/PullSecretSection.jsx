@@ -15,7 +15,7 @@ function PullSecretSection({ token, pendoID, text }) {
       </Text>
       <div>
         <DownloadPullSecret token={token} pendoID={pendoID} />
-        <CopyPullSecret token={token} variant="link" pendoID={pendoID} />
+        <CopyPullSecret token={token} variant="link-tooltip" pendoID={pendoID} />
       </div>
     </>
   );

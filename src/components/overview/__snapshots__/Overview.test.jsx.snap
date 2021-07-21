@@ -10,8 +10,8 @@ exports[`<Overview /> renders correctly 1`] = `
   </PageHeader>
   <PageSection>
     <Grid
+      className="ocm-c-overview"
       hasGutter={true}
-      id="overview-grid"
     >
       <TopOverviewSection
         isError={false}
@@ -190,7 +190,7 @@ exports[`<Overview /> renders correctly 1`] = `
         sm={12}
       >
         <Card
-          className="clusters-overview-card"
+          className="ocm-overview-clusters__card"
         >
           <CardTitle>
             Telemetry
@@ -212,7 +212,7 @@ exports[`<Overview /> renders correctly 1`] = `
         sm={12}
       >
         <Card
-          className="clusters-overview-card"
+          className="ocm-overview-clusters__card"
         >
           <CardTitle>
             Update status

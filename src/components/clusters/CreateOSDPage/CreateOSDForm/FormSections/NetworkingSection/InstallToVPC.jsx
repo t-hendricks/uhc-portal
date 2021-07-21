@@ -16,7 +16,7 @@ function InstallToVPC({
 }) {
   return (
     <>
-      <GridItem span={4}>
+      <GridItem>
         <Field
           component={ReduxCheckbox}
           name="install_to_vpc"
@@ -24,11 +24,10 @@ function InstallToVPC({
         />
       </GridItem>
 
-      <GridItem span={8} />
       {
           selected && cloudProviderID === 'aws' && (
             <>
-              <GridItem span={12}>
+              <GridItem>
                 <Title headingLevel="h4" size="md">
                   Existing VPC
                   <PopoverHint
@@ -58,7 +57,7 @@ function InstallToVPC({
       {
           selected && cloudProviderID === 'gcp' && (
             <>
-              <GridItem span={12}>
+              <GridItem>
                 <Title headingLevel="h4" size="md">
                   Existing VPC
                   <PopoverHint

@@ -52,6 +52,7 @@ class ClusterActionsDropdown extends React.Component {
       canHibernateCluster,
       toggleSubscriptionReleased,
       refreshFunc,
+      inClusterList: false,
     });
 
     const dropdown = (

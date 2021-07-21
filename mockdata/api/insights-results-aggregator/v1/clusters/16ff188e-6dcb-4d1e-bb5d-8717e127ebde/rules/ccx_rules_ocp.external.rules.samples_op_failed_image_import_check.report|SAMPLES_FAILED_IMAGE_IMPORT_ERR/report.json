@@ -6,6 +6,7 @@
     "details": "The `openshift-samples` cluster-operator is degraded due to `FailedImageImport` because of a hiccup while talking to the Red Hat registry.\n\n[Knowledgebase Article](https://access.redhat.com/solutions/4563171)\n",
     "reason": "Due to a temporary hiccup talking to the Red Hat registry the openshift-samples failed to import some of the imagestreams.\n\n\nSource of the issue:\n\n**Cluster-operator:**  **{{=pydata.info[\"name\"]}}**\n- *Condition:* {{=pydata.info[\"condition\"]}}\n- *Reason:* {{=pydata.info[\"reason\"]}}\n- *Message:* {{=pydata.info[\"message\"]}}\n- *Last* Transition: {{=pydata.info[\"lastTransitionTime\"]}}\n",
     "resolution": "Red Hat recommends that you to follow these steps:\n\n1. Fix 1, Try running:\n~~~\n# oc import-image \u003cfor the ImageStream(s) in question\u003e\n~~~\n\n1. Fix 2, Try running:\n~~~\n# oc delete configs.samples cluster\n~~~",
+    "more_info": "* For more information about the flaw, see [CVE-2020-8555](https://access.redhat.com/security/cve/CVE-2020-8555).\n* The Customer Portal page for the [Red Hat Security Team](https://access.redhat.com/security/) contains more information about policies, procedures, and alerts for Red Hat Products.\n* The Security Team also maintains a frequently updated blog at [securityblog.redhat.com](https://securityblog.redhat.com).\n",
     "total_risk": 2,
     "risk_of_change": 0,
     "disabled": false,

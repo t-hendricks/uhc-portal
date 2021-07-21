@@ -110,7 +110,7 @@ function DefaultMachinePoolScreen({
           <ExpandableSection
             toggleText="Edit node labels"
           >
-            <GridItem span={4} className="space-bottom-md">
+            <GridItem span={4} className="pf-u-mb-md">
               <Title headingLevel="h3">Node labels</Title>
             </GridItem>
             <GridItem span={4}>

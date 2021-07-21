@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import EditCCSCredentialsDialog from './EditCCSCredentialsDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import { clearClusterResponse, editCluster } from '../../../../redux/actions/clustersActions';
+import getClusterName from '../../../../common/getClusterName';
 
 const mapStateToProps = (state) => {
   const cluster = state.modal.data;
@@ -11,6 +12,8 @@ const mapStateToProps = (state) => {
     editClusterResponse: state.clusters.editedCluster,
     clusterID: cluster.id,
     awsAccountID: get(cluster, 'aws.account_id', ''),
+    clusterDisplayName: getClusterName(cluster),
+    shouldDisplayClusterName: getClusterName(cluster),
   });
 };
 

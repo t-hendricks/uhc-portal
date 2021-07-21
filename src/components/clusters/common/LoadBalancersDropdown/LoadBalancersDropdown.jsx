@@ -90,7 +90,7 @@ LoadBalancersDropdown.propTypes = {
   getLoadBalancers: PropTypes.func.isRequired,
   loadBalancerValues: PropTypes.object.isRequired,
   input: PropTypes.object.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   quotaList: PropTypes.object.isRequired,
   currentValue: PropTypes.number,
   billingModel: PropTypes.string.isRequired,

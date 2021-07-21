@@ -34,6 +34,8 @@ podman login -u "${QUAY_USER}" -p "${QUAY_TOKEN}" quay.io
 
 mockdata/regenerate-clusters.json.sh # first because really fast
 
+node --version
+
 make \
   js-lint \
   app \
