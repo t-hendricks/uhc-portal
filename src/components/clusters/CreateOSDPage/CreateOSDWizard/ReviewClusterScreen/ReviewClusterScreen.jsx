@@ -58,10 +58,13 @@ function clusterSpecDescriptionItem({ name, formValues }) {
 }
 
 function ReviewClusterSecreen({ formValues, isPending }) {
+  const isByoc = formValues.byoc === 'true';
   const clusterSettingsFields = [
-    'cloud_provider', 'name', 'region', 'multi_az', 'persistent_storage',
-    'load_balancers', 'upgrade_policy', 'node_drain_grace_period', 'etcd_encryption',
-  ];
+    'cloud_provider', 'name', 'region', 'multi_az',
+    !isByoc && 'persistent_storage',
+    !isByoc && 'load_balancers',
+    'upgrade_policy', 'node_drain_grace_period', 'etcd_encryption',
+  ].filter(Boolean);
   if (isPending) {
     return (
       <Bullseye>
