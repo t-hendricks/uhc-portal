@@ -5,6 +5,7 @@ exports[`<IdentityProvidersModal /> doesn't render when closed 1`] = `""`;
 exports[`<IdentityProvidersModal /> renders correctly 1`] = `
 <Modal
   data-test-id="add-idp-osd-dialog"
+  isPrimaryDisabled={false}
   onClose={[Function]}
   onPrimaryClick={[MockFunction]}
   onSecondaryClick={[Function]}

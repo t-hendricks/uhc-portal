@@ -10,7 +10,6 @@ import { checkClusterConsoleURL } from '../../../../common/validators';
 
 class EditConsoleURLDialog extends Component {
   state = {
-    beenSet: false,
     currentValue: '',
   }
 
@@ -34,9 +33,6 @@ class EditConsoleURLDialog extends Component {
     this.setState({
       currentValue: newValue,
     });
-    if (!this.beenSet) {
-      this.setState({ beenSet: true });
-    }
   }
 
   render() {
@@ -44,10 +40,10 @@ class EditConsoleURLDialog extends Component {
       closeModal, submit, editClusterResponse, resetResponse, clusterID, subscriptionID, consoleURL,
       shouldDisplayClusterName, clusterDisplayName,
     } = this.props;
-    const { currentValue, beenSet } = this.state;
+    const { currentValue } = this.state;
 
     const cancelEdit = () => {
-      this.setState({ currentValue: null, beenSet: false });
+      this.setState({ currentValue: null });
       resetResponse();
       closeModal();
     };
@@ -62,6 +58,7 @@ class EditConsoleURLDialog extends Component {
         submit(clusterID, subscriptionID, currentValue);
       }
     };
+    const beenSet = currentValue !== consoleURL;
 
     return (
 
@@ -74,7 +71,7 @@ class EditConsoleURLDialog extends Component {
         secondaryText="Cancel"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={cancelEdit}
-        isPrimaryDisabled={!!validationMessage}
+        isPrimaryDisabled={!!validationMessage || !beenSet}
       >
         <>
           {hasError}
