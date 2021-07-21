@@ -133,7 +133,9 @@ const mapStateToProps = (state) => {
     machineType: get(selectedMachinePoolData, 'instance_type', ''),
     machinePoolId: selectedMachinePool,
     initialValues: {
-      nodes_compute: get(selectedMachinePoolData, 'replicas', null) || 0,
+      nodes_compute: get(selectedMachinePoolData, 'replicas', null)
+      || get(machinePoolWithAutoscale, 'min_replicas', null)
+      || 0,
       machine_pool: selectedMachinePool,
       autoscalingEnabled: machinePoolWithAutoscale,
       ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(selectedMachinePoolData.autoscaling)),
