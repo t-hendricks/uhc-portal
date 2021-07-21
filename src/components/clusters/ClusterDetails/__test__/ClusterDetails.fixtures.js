@@ -265,6 +265,7 @@ const clusterDetails = {
         id: 'OSD',
         kind: 'Plan',
         href: '/api/accounts_mgmt/v1/plans/OSD',
+        type: 'OSD',
       },
       cluster_id: '1i4counta3holamvo1g5tp6n8p3a03bq',
       external_cluster_id: 'bae5b227-2472-4e71-be4d-a18fc60bb48a',
@@ -416,17 +417,26 @@ const CCSClusterDetails = produce(clusterDetails, (draft) => {
 
 const OSDTrialClusterDetails = produce(CCSClusterDetails, (draft) => {
   draft.cluster.product = { id: normalizedProducts.OSDTrial };
-  draft.cluster.subscription.plan = { id: normalizedProducts.OSDTrial };
+  draft.cluster.subscription.plan = {
+    id: normalizedProducts.OSDTrial,
+    type: normalizedProducts.OSDTrial,
+  };
 });
 
 const ROSAClusterDetails = produce(CCSClusterDetails, (draft) => {
   draft.cluster.product = { id: normalizedProducts.ROSA };
-  draft.cluster.subscription.plan = { id: normalizedProducts.ROSA };
+  draft.cluster.subscription.plan = {
+    id: normalizedProducts.ROSA,
+    type: normalizedProducts.ROSA,
+  };
 });
 
 const RHMIClusterDetails = produce(CCSClusterDetails, (draft) => {
   draft.cluster.product = { id: normalizedProducts.RHMI };
-  draft.cluster.subscription.plan = { id: normalizedProducts.RHMI };
+  draft.cluster.subscription.plan = {
+    id: normalizedProducts.RHMI,
+    type: normalizedProducts.RHMI,
+  };
 });
 
 const insightsData = {
@@ -746,6 +756,7 @@ const AROClusterDetails = {
         id: 'ARO',
         kind: 'Plan',
         href: '/api/accounts_mgmt/v1/plans/ARO',
+        type: 'ARO',
       },
       registry_credential: {
         id: '1EaZd2cDHH6ibIb1FFqav2Mles6',

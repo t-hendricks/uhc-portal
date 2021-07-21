@@ -37,7 +37,7 @@ const mapStateToProps = (state) => {
     isByoc: modalData.ccs?.enabled,
     // eslint-disable-next-line camelcase
     billingModel: modalData.subscription?.cluster_billing_model,
-    product: modalData.subscription?.plan.id,
+    product: modalData.subscription?.plan.type,
     isMultiAZ: modalData.multi_az,
     cloudProviderID: get(modalData, 'cloud_provider.id', ''),
     initialValues: {

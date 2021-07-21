@@ -27,7 +27,7 @@ const hasMachinePoolsQuotaSelector = (state) => {
     const resourceName = machineType.resource_name;
 
     const quotaParams = {
-      product: cluster?.subscription?.plan?.id,
+      product: cluster?.subscription?.plan?.type,
       cloudProviderID,
       isBYOC: !!cluster?.ccs?.enabled,
       isMultiAz: cluster.multi_az,

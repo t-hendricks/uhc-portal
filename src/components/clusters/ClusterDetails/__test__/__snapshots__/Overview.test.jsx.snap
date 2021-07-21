@@ -344,6 +344,7 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                         "href": "/api/accounts_mgmt/v1/plans/ARO",
                         "id": "ARO",
                         "kind": "Plan",
+                        "type": "ARO",
                       },
                       "registry_credential": Object {
                         "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Maro6",
@@ -496,6 +497,7 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
                         "href": "/api/accounts_mgmt/v1/plans/ARO",
                         "id": "ARO",
                         "kind": "Plan",
+                        "type": "ARO",
                       },
                       "registry_credential": Object {
                         "href": "/api/accounts_mgmt/v1/registry_credentials/1EaZd2cDHH6ibIb1FFqav2Maro6",
@@ -1866,6 +1868,7 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                         "href": "/api/accounts_mgmt/v1/plans/OSD",
                         "id": "OSD",
                         "kind": "Plan",
+                        "type": "OSD",
                       },
                       "provenance": "Provisioning",
                       "region_id": "us-east-1",
@@ -2234,6 +2237,7 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
                         "href": "/api/accounts_mgmt/v1/plans/OSD",
                         "id": "OSD",
                         "kind": "Plan",
+                        "type": "OSD",
                       },
                       "provenance": "Provisioning",
                       "region_id": "us-east-1",

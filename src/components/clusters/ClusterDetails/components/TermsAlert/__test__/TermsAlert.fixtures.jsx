@@ -15,7 +15,7 @@ const selfTermsReviewResult = {
 
 const subscription = {
   id: '1234567890',
-  plan: { id: normalizedProducts.ROSA },
+  plan: { id: normalizedProducts.ROSA, type: normalizedProducts.ROSA },
   status: 'Active',
 };
 

@@ -18,6 +18,7 @@ describe('<AddMachinePoolModal />', () => {
     subscription: {
       plan: {
         id: 'OSD',
+        type: 'OSD',
       },
     },
     multi_az: false,

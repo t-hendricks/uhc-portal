@@ -40,7 +40,7 @@ function ClusterDetailsTop(props) {
     toggleSubscriptionReleased,
   } = props;
 
-  const isProductOSDTrial = get(cluster, 'subscription.plan.id', '') === normalizedProducts.OSDTrial;
+  const isProductOSDTrial = get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTrial;
   const clusterName = getClusterName(cluster);
   const consoleURL = cluster.console ? cluster.console.url : false;
 
