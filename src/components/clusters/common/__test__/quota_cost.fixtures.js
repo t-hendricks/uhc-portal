@@ -557,3 +557,66 @@ export const loadBalancers = [
     ],
   },
 ];
+
+export const negativeQuotaList = [
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1j9Z27FYWyBiWHHnH9mqFHWW6tx/quota_cost',
+    organization_id: '1j9Z27FYWyBiWHHnH9mqFHWW6tx',
+    quota_id: 'cluster|gp.small|single|rhinfra|osd|any',
+    allowed: -3,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'standard-4',
+        resource_type: 'cluster',
+        byoc: 'rhinfra',
+        availability_zone_type: 'single',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 1,
+      },
+      {
+        cloud_provider: 'any',
+        resource_name: 'gp.small',
+        resource_type: 'cluster',
+        byoc: 'rhinfra',
+        availability_zone_type: 'single',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 1,
+      },
+    ],
+  },
+  {
+    kind: 'QuotaCost',
+    href: '/api/accounts_mgmt/v1/organizations/1j9Z27FYWyBiWHHnH9mqFHWW6tx/quota_cost',
+    organization_id: '1j9Z27FYWyBiWHHnH9mqFHWW6tx',
+    quota_id: 'cluster|gp.medium|single|rhinfra|osd|any',
+    allowed: 1,
+    consumed: 0,
+    related_resources: [
+      {
+        cloud_provider: 'any',
+        resource_name: 'standard-8',
+        resource_type: 'cluster',
+        byoc: 'rhinfra',
+        availability_zone_type: 'single',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 1,
+      },
+      {
+        cloud_provider: 'any',
+        resource_name: 'gp.medium',
+        resource_type: 'cluster',
+        byoc: 'rhinfra',
+        availability_zone_type: 'single',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 1,
+      },
+    ],
+  },
+];

@@ -40,6 +40,10 @@ export const rhQuotaList = userActions.processQuota({
   data: { items: quotaCostFixtures.dedicatedRhInfra },
 });
 
+export const negativeQuotaList = userActions.processQuota({
+  data: { items: quotaCostFixtures.negativeQuotaList },
+});
+
 export const crcWorkspacesAddonQuota = userActions.processQuota({
   data: { items: quotaCostFixtures.crcWorkspacesAddon },
 });
