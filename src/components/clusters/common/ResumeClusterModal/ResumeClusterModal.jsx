@@ -25,7 +25,7 @@ class ResumeClusterModal extends Component {
   render() {
     const {
       closeModal, submit, resumeClusterResponse, resetResponse,
-      clusterID, clusterName,
+      clusterID, clusterName, shouldDisplayClusterName,
     } = this.props;
 
     const cancelResumeCluster = () => {
@@ -45,6 +45,7 @@ class ResumeClusterModal extends Component {
       <Modal
         data-test-id="resume-cluster-modal"
         title="Resume from Hibernation"
+        secondaryTitle={shouldDisplayClusterName ? clusterName : undefined}
         onClose={cancelResumeCluster}
         primaryText="Resume cluster"
         secondaryText="Cancel"
@@ -56,10 +57,6 @@ class ResumeClusterModal extends Component {
           <Form onSubmit={() => handleSubmit()}>
             {error}
             <p>
-              <b>
-                {clusterName}
-              </b>
-              {' '}
               cluster will move out of Hibernating state
               and all cluster operations will be resumed.
             </p>
@@ -82,6 +79,7 @@ ResumeClusterModal.propTypes = {
   }),
   submit: PropTypes.func,
   onClose: PropTypes.func,
+  shouldDisplayClusterName: PropTypes.bool,
 };
 
 ResumeClusterModal.defaultProps = {

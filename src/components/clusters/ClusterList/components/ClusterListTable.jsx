@@ -182,7 +182,7 @@ function ClusterListTable(props) {
       canSubscribeOCPList[get(rowData, 'cluster.id')] || false,
       canTransferClusterOwnershipList[get(rowData, 'cluster.id')] || false,
       canHibernateClusterList[get(rowData, 'cluster.id')] || false,
-      toggleSubscriptionReleased, refreshFunc);
+      toggleSubscriptionReleased, refreshFunc, true);
 
   return (
     <Table

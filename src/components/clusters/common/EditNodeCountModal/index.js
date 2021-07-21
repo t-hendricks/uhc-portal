@@ -18,6 +18,7 @@ import {
 } from '../../ClusterDetails/components/MachinePools/MachinePoolsActions';
 
 import { canAutoScaleSelector } from '../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+import getClusterName from '../../../../common/getClusterName';
 
 const reduxFormConfig = {
   form: 'EditNodeCount',
@@ -83,6 +84,9 @@ const mapStateToProps = (state) => {
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     billingModel: get(cluster, 'billing_model', ''),
+    shouldDisplayClusterName: modalData.shouldDisplayClusterName
+      ? modalData.shouldDisplayClusterName : false,
+    clusterDisplayName: getClusterName(cluster),
   };
 
   let machinePoolWithAutoscale = false;

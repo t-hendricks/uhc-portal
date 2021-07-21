@@ -42,6 +42,7 @@ class EditConsoleURLDialog extends Component {
   render() {
     const {
       closeModal, submit, editClusterResponse, resetResponse, clusterID, subscriptionID, consoleURL,
+      shouldDisplayClusterName, clusterDisplayName,
     } = this.props;
     const { currentValue, beenSet } = this.state;
 
@@ -67,6 +68,7 @@ class EditConsoleURLDialog extends Component {
       <Modal
         data-test-id="edit-console-url-dialog"
         title={consoleURL ? 'Edit console URL' : 'Add console URL'}
+        secondaryTitle={shouldDisplayClusterName ? clusterDisplayName : undefined}
         onClose={cancelEdit}
         primaryText={consoleURL ? 'Save' : 'Add URL'}
         secondaryText="Cancel"
@@ -79,7 +81,7 @@ class EditConsoleURLDialog extends Component {
           {!consoleURL && (
             <p>
               Adding a cluster&apos;s web console URL will allow you to&nbsp;
-              launch the web console from the OpenShift Cluster Manager
+              launch the web console from the OpenShift Cluster Manager.
             </p>
           )}
           <Form onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
@@ -115,6 +117,8 @@ EditConsoleURLDialog.propTypes = {
   consoleURL: PropTypes.string,
   clusterID: PropTypes.string,
   subscriptionID: PropTypes.string,
+  shouldDisplayClusterName: PropTypes.bool,
+  clusterDisplayName: PropTypes.string,
 };
 
 EditConsoleURLDialog.defaultProps = {

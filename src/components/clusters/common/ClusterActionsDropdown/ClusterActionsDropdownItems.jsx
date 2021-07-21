@@ -18,7 +18,7 @@ import { isAssistedInstallCluster } from '../../../../common/isAssistedInstaller
 function actionResolver(
   cluster, showConsoleButton, openModal, canSubscribeOCP,
   canTransferClusterOwnership, canHibernateCluster,
-  toggleSubscriptionReleased, refreshFunc,
+  toggleSubscriptionReleased, refreshFunc, inClusterList,
 ) {
   const baseProps = {
     component: 'button',
@@ -86,13 +86,17 @@ function actionResolver(
       ...hibernateClusterBaseProps,
       title: 'Hibernate cluster',
       isDisabled: !isClusterReady,
-      onClick: () => openModal(modals.HIBERNATE_CLUSTER, clusterData),
+      onClick: () => openModal(
+        modals.HIBERNATE_CLUSTER, { ...clusterData, shouldDisplayClusterName: inClusterList },
+      ),
     };
     const resumeHibernatingClusterProps = {
       ...hibernateClusterBaseProps,
       isDisabled: isClusterPoweringDown,
       title: 'Resume from Hibernation',
-      onClick: () => openModal(modals.RESUME_CLUSTER, clusterData),
+      onClick: () => openModal(
+        modals.RESUME_CLUSTER, { ...clusterData, shouldDisplayClusterName: inClusterList },
+      ),
     };
 
     if (isClusterHibernatingOrPoweringDown) {
@@ -109,7 +113,9 @@ function actionResolver(
     };
     const managedEditProps = {
       ...scaleClusterBaseProps,
-      onClick: () => openModal(modals.SCALE_CLUSTER, cluster),
+      onClick: () => openModal(
+        modals.SCALE_CLUSTER, { ...cluster, shouldDisplayClusterName: inClusterList },
+      ),
     };
     const disabledManagedEditProps = {
       ...scaleClusterBaseProps,
@@ -127,7 +133,10 @@ function actionResolver(
     };
     const managedEditNodeCountProps = {
       ...editNodeCountBaseProps,
-      onClick: () => openModal(modals.EDIT_NODE_COUNT, { cluster, isDefaultMachinePool: true }),
+      onClick: () => openModal(
+        modals.EDIT_NODE_COUNT,
+        { cluster, isDefaultMachinePool: true, shouldDisplayClusterName: inClusterList },
+      ),
     };
     const disabledManagedEditProps = {
       ...editNodeCountBaseProps,
@@ -145,7 +154,8 @@ function actionResolver(
     };
     const managedEditProps = {
       ...editCCSCredentialsBaseProps,
-      onClick: () => openModal(modals.EDIT_CCS_CREDENTIALS, cluster),
+      onClick: () => openModal(modals.EDIT_CCS_CREDENTIALS,
+        { ...cluster, shouldDisplayClusterName: inClusterList }),
     };
     const disabledManagedEditProps = {
       ...editCCSCredentialsBaseProps,
@@ -165,7 +175,9 @@ function actionResolver(
     const editDisplayNameProps = {
       ...editDisplayNameBaseProps,
       title: 'Edit display name',
-      onClick: () => openModal(modals.EDIT_DISPLAY_NAME, cluster),
+      onClick: () => openModal(
+        modals.EDIT_DISPLAY_NAME, { ...cluster, shouldDisplayClusterName: inClusterList },
+      ),
     };
     const editDisplayNamePropsUninstalling = {
       ...editDisplayNameBaseProps,
@@ -195,7 +207,9 @@ function actionResolver(
     };
     return {
       ...baseArchiveProps,
-      onClick: () => openModal(modals.ARCHIVE_CLUSTER, archiveModalData),
+      onClick: () => openModal(
+        modals.ARCHIVE_CLUSTER, { ...archiveModalData, shouldDisplayClusterName: inClusterList },
+      ),
     };
   };
 
@@ -211,7 +225,10 @@ function actionResolver(
     };
     return {
       ...baseArchiveProps,
-      onClick: () => openModal(modals.UNARCHIVE_CLUSTER, unarchiveModalData),
+      onClick: () => openModal(
+        modals.UNARCHIVE_CLUSTER,
+        { ...unarchiveModalData, shouldDisplayClusterName: inClusterList },
+      ),
     };
   };
 
@@ -225,7 +242,9 @@ function actionResolver(
     const editConsoleURLProps = {
       title: hasConsoleURL ? 'Edit console URL' : 'Add console URL',
       ...editConsoleURLBaseProps,
-      onClick: () => openModal(modals.EDIT_CONSOLE_URL, cluster),
+      onClick: () => openModal(
+        modals.EDIT_CONSOLE_URL, { ...cluster, shouldDisplayClusterName: inClusterList },
+      ),
     };
     const editConsoleURLPropsUninstalling = {
       ...editConsoleURLBaseProps,
@@ -250,7 +269,12 @@ function actionResolver(
     } if (isClusterInHibernatingProcess) {
       return { ...baseDeleteProps, ...isClusterInHibernatingProcessProps };
     }
-    return { ...baseDeleteProps, onClick: () => openModal(modals.DELETE_CLUSTER, deleteModalData) };
+    return {
+      ...baseDeleteProps,
+      onClick: () => openModal(
+        modals.DELETE_CLUSTER, { ...deleteModalData, shouldDisplayClusterName: inClusterList },
+      ),
+    };
   };
 
   const getEditSubscriptionSettingsProps = () => {
@@ -258,7 +282,10 @@ function actionResolver(
       ...baseProps,
       title: 'Edit subscription settings',
       key: getKey('editsubscriptionsettings'),
-      onClick: () => openModal(modals.EDIT_SUBSCRIPTION_SETTINGS, cluster.subscription),
+      onClick: () => openModal(
+        modals.EDIT_SUBSCRIPTION_SETTINGS,
+        { subscription: cluster.subscription, shouldDisplayClusterName: inClusterList },
+      ),
     };
     return editSubscriptionSettingsProps;
   };
@@ -277,7 +304,10 @@ function actionResolver(
           toggleSubscriptionReleased(get(cluster, 'subscription.id'), false);
           refreshFunc();
         } else {
-          openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, cluster.subscription);
+          openModal(
+            modals.TRANSFER_CLUSTER_OWNERSHIP,
+            { subscription: cluster.subscription, shouldDisplayClusterName: inClusterList },
+          );
         }
       },
     };
@@ -296,7 +326,10 @@ function actionResolver(
     };
     return {
       ...upgradeTrialClusterProps,
-      onClick: () => openModal(modals.UPGRADE_TRIAL_CLUSTER, upgradeTrialClusterData),
+      onClick: () => openModal(
+        modals.UPGRADE_TRIAL_CLUSTER,
+        { ...upgradeTrialClusterData, shouldDisplayClusterName: inClusterList },
+      ),
     };
   };
 
@@ -358,12 +391,12 @@ function actionResolver(
 function dropDownItems({
   cluster, showConsoleButton, openModal, canSubscribeOCP,
   canTransferClusterOwnership, canHibernateCluster,
-  toggleSubscriptionReleased, refreshFunc,
+  toggleSubscriptionReleased, refreshFunc, inClusterList,
 }) {
   const actions = actionResolver(
     cluster, showConsoleButton, openModal, canSubscribeOCP,
     canTransferClusterOwnership, canHibernateCluster,
-    toggleSubscriptionReleased, refreshFunc,
+    toggleSubscriptionReleased, refreshFunc, inClusterList,
   );
   const menuItems = actions.map(
     action => (<DropdownItem {...action}>{action.title}</DropdownItem>),

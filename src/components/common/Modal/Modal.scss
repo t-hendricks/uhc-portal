@@ -1,0 +1,11 @@
+.modal-secondary-title {
+  .pf-l-split__item {
+    margin-top: var(--pf-global--spacer--xs);
+    font-size: var(--pf-global--FontSize--md);
+    &:first-child {
+      color: var(--pf-global--Color--400);
+      font-weight: var(--pf-global--FontWeight--bold);
+      margin-right: var(--pf-global--spacer--sm);
+    }
+  }
+}

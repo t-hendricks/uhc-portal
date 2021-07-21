@@ -34,6 +34,8 @@ class EditSubscriptionSettingsDialog extends Component {
       requestState,
       onClose,
       subscription,
+      clusterDisplayName,
+      shouldDisplayClusterName,
     } = this.props;
 
     const {
@@ -43,6 +45,7 @@ class EditSubscriptionSettingsDialog extends Component {
     return (
       <Modal
         title="Subscription settings"
+        secondaryTitle={shouldDisplayClusterName ? clusterDisplayName : undefined}
         width={810}
         variant="large"
         onClose={this.handleClose}
@@ -80,6 +83,8 @@ EditSubscriptionSettingsDialog.propTypes = {
   closeModal: PropTypes.func,
   submit: PropTypes.func,
   onClose: PropTypes.func,
+  clusterDisplayName: PropTypes.string,
+  shouldDisplayClusterName: PropTypes.bool,
 };
 
 EditSubscriptionSettingsDialog.defaultProps = {
