@@ -44,7 +44,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
     : '';
 
   const handleEditSettings = () => {
-    openModal('edit-subscription-settings', subscription);
+    openModal('edit-subscription-settings', { subscription });
   };
 
   const handleArchiveCluster = () => {
