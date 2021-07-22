@@ -292,7 +292,7 @@ const installationRows = (expanded, selections, setSelections) => [
       <Text>
         Download and extract your operating system&apos;s installation program and
         place the file in the directory where you&apos;ll store your configuration details.
-        After installing OpenShift for x86_64, create clusters on supported infrastructure using our
+        Then, create clusters on supported x86_64 infrastructure using our
         {' '}
         <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
         {' '}
@@ -315,7 +315,7 @@ const installationRows = (expanded, selections, setSelections) => [
       <Text>
         Download and extract your operating system&apos;s installation program and
         place the file in the directory where you&apos;ll store your configuration details.
-        After installing OpenShift for IBM Z, create clusters on supported infrastructure using our
+        Then, create clusters on supported IBM Z infrastructure using our
         {' '}
         <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
         {' '}
@@ -335,7 +335,7 @@ const installationRows = (expanded, selections, setSelections) => [
       <Text>
         Download and extract your operating system&apos;s installation program and
         place the file in the directory where you&apos;ll store your configuration details.
-        After installing OpenShift for Power, create clusters on supported infrastructure using our
+        Then, create clusters on supported Power infrastructure using our
         {' '}
         <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
         {' '}
@@ -360,7 +360,7 @@ const installationRows = (expanded, selections, setSelections) => [
       <Text>
         Download and extract your operating system&apos;s installation program and
         place the file in the directory where you&apos;ll store your configuration details.
-        After installing OpenShift for ARM, create clusters on supported infrastructure using our
+        Then, create clusters on supported ARM infrastructure using our
         {' '}
         <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
         {' '}
@@ -622,7 +622,9 @@ class DownloadsPage extends React.Component {
               description={(
                 <Text>
                   Install OpenShift based on your infrastructure.
-                  Start by downloading the installer, then follow the steps provided
+                  For the installer matching your infrastructure type, select
+                  the operating system and architecture on which you wish to
+                  run the installer.  Then follow the steps provided
                   within your infrastructure&apos;s tab on the
                   {' '}
                   <Link to="/create">create cluster</Link>

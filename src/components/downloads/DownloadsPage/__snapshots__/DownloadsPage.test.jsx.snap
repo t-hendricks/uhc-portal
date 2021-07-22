@@ -613,7 +613,7 @@ exports[`<DownloadsPage> renders 1`] = `
         category="INSTALLATION"
         description={
           <Text>
-            Install OpenShift based on your infrastructure. Start by downloading the installer, then follow the steps provided within your infrastructure's tab on the
+            Install OpenShift based on your infrastructure. For the installer matching your infrastructure type, select the operating system and architecture on which you wish to run the installer.  Then follow the steps provided within your infrastructure's tab on the
              
             <Link
               to="/create"
@@ -758,7 +758,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Object {
                     "title": <TextContent>
                       <Text>
-                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. After installing OpenShift for x86_64, create clusters on supported infrastructure using our
+                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported x86_64 infrastructure using our
                          
                         <ExternalLink
                           href="https://docs.openshift.com/container-platform/latest/installing/index.html"
@@ -873,7 +873,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Object {
                     "title": <TextContent>
                       <Text>
-                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. After installing OpenShift for IBM Z, create clusters on supported infrastructure using our
+                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported IBM Z infrastructure using our
                          
                         <ExternalLink
                           href="https://docs.openshift.com/container-platform/latest/installing/index.html"
@@ -981,7 +981,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Object {
                     "title": <TextContent>
                       <Text>
-                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. After installing OpenShift for Power, create clusters on supported infrastructure using our
+                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported Power infrastructure using our
                          
                         <ExternalLink
                           href="https://docs.openshift.com/container-platform/latest/installing/index.html"
@@ -1091,7 +1091,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Object {
                     "title": <TextContent>
                       <Text>
-                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. After installing OpenShift for ARM, create clusters on supported infrastructure using our
+                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported ARM infrastructure using our
                          
                         <ExternalLink
                           href="https://docs.openshift.com/container-platform/latest/installing/index.html"
