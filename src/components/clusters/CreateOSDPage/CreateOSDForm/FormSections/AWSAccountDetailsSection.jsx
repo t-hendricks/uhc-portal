@@ -68,7 +68,7 @@ function AWSAccountDetailsSection({ pending, isWizard }) {
         />
       </GridItem>
       <GridItem md={7} lg={8} />
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem>
         <Field
           component={ReduxCheckbox}
           name="disable_scp_checks"

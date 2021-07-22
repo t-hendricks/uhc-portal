@@ -39,7 +39,6 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
       <ScaleSection
         autoScaleMaxNodesValue="0"
         autoScaleMinNodesValue="0"
-        autoscaleAndNodeCountGridSpan={6}
         autoscalingEnabled={true}
         billingModel="standard"
         canAutoScale={true}
@@ -47,7 +46,6 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         cloudProviderID="aws"
         handleMachineTypesChange={[Function]}
         inModal={true}
-        instanceTypeGridSpan={6}
         isBYOC={false}
         isMachinePool={true}
         isMultiAz={false}
