@@ -272,6 +272,9 @@ const urls = {
       [architectures.ppc]: {
         [operatingSystems.linux]: `${links.HELM_CLI_LATEST}/helm-linux-ppc64le`,
       },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${links.HELM_CLI_LATEST}/helm-linux-arm64`,
+      },
     },
   },
 
