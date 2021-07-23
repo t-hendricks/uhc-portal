@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Title, TextContent } from '@patternfly/react-core';
+import { List, ListItem, Title, TextContent } from '@patternfly/react-core';
 
 import { billingModelConstants } from '../../CreateOSDFormConstants';
 import Modal from '../../../../../common/Modal/Modal';
+import './CustomerCloudSubscriptionModal.scss';
 
 const contentByCloudProvider = (cloudProviderID) => {
   if (cloudProviderID === 'aws') {
@@ -20,24 +21,24 @@ const contentByCloudProvider = (cloudProviderID) => {
           In order for the cluster provisioning to succeed, you must ensure the following:
         </TextContent>
         <TextContent>
-          <ul>
-            <li>
+          <List>
+            <ListItem>
               Your AWS account has the necessary limits to support the desired
               cluster size.
               {' '}
               <a href={billingModelConstants.resourceRequirementsLink} rel="noreferrer noopener" target="_blank"> See resource requirements.</a>
               {' '}
-            </li>
-            <li>An IAM user called “osdCcsAdmin” exists with the AdministratorAccess policy.</li>
-            <li>
+            </ListItem>
+            <ListItem>An IAM user called “osdCcsAdmin” exists with the AdministratorAccess policy.</ListItem>
+            <ListItem>
               An Organization Service Control Policy (SCP) is set up according to the
               {' '}
               <a href={billingModelConstants.scpDocumentationLink} rel="noreferrer noopener" target="_blank">
                 {' '}
                 documentation.
               </a>
-            </li>
-          </ul>
+            </ListItem>
+          </List>
         </TextContent>
         <TextContent>
           It is also recommended that you have at least Business Support from AWS. Refer to the
@@ -61,27 +62,27 @@ const contentByCloudProvider = (cloudProviderID) => {
         In order for the cluster provisioning to succeed, you must ensure the following:
       </TextContent>
       <TextContent>
-        <ul>
-          <li>
+        <List>
+          <ListItem>
             Your Google Cloud account has the necessary resource quotas and limits to support
             the desired cluster size.
             {' '}
             <a href="https://www.openshift.com/dedicated/ccs" rel="noreferrer noopener" target="_blank">See resource requirements.</a>
             {' '}
-          </li>
-          <li>
+          </ListItem>
+          <ListItem>
             An IAM service account called “osd-ccs-admin” exists with the following roles attached:
-            <ul className="unpadded-ul">
-              <li>DNS Administrator</li>
-              <li>Organization Policy Viewer</li>
-              <li>Owner</li>
-              <li>Project IAM Admin</li>
-              <li>Service Management Administrator</li>
-              <li>Service Usage Admin</li>
-              <li>Storage Admin</li>
-            </ul>
-          </li>
-        </ul>
+            <List className="unpadded-ul">
+              <ListItem>DNS Administrator</ListItem>
+              <ListItem>Organization Policy Viewer</ListItem>
+              <ListItem>Owner</ListItem>
+              <ListItem>Project IAM Admin</ListItem>
+              <ListItem>Service Management Administrator</ListItem>
+              <ListItem>Service Usage Admin</ListItem>
+              <ListItem>Storage Admin</ListItem>
+            </List>
+          </ListItem>
+        </List>
       </TextContent>
       <TextContent>
         It is also recommended that you have at least Production support from GCP.
@@ -101,7 +102,7 @@ const contentByCloudProvider = (cloudProviderID) => {
 function CustomerCloudSubscriptionModal({ closeModal, cloudProviderID }) {
   return (
     <Modal
-      className="ccsModal"
+      className="ocm-c-ccsModal"
       title="Customer cloud subscription"
       onClose={closeModal}
       primaryText="Close"
