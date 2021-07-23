@@ -21,6 +21,7 @@ class UnarchiveClusterDialog extends Component {
   render() {
     const {
       closeModal, submit, unarchiveClusterResponse, resetResponse, subscriptionID, name,
+      shouldDisplayClusterName,
     } = this.props;
 
     const cancelEdit = () => {
@@ -35,6 +36,7 @@ class UnarchiveClusterDialog extends Component {
     return (
       <Modal
         title="Unarchive cluster"
+        secondaryTitle={shouldDisplayClusterName ? name : undefined}
         data-test-id="unarchive-cluster-dialog"
         onClose={cancelEdit}
         primaryText="Unarchive cluster"
@@ -64,6 +66,7 @@ UnarchiveClusterDialog.propTypes = {
   unarchiveClusterResponse: PropTypes.object,
   subscriptionID: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  shouldDisplayClusterName: PropTypes.bool,
 };
 
 UnarchiveClusterDialog.defaultProps = {

@@ -194,7 +194,7 @@ class IDPForm extends React.Component {
           { IDPNeedsOAuthURL(selectedIDP) && (
           <GridItem span={8}>
             <div>
-              <span className="pf-c-form__label pf-c-form__label-text idp-oauth-url-label">OAuth callback URL</span>
+              <span className="pf-c-form__label pf-c-form__label-text pf-u-mb-sm">OAuth callback URL</span>
               <ClipboardCopy isReadOnly>
                 {getOauthCallbackURL(clusterConsoleURL, IDPName)}
               </ClipboardCopy>

@@ -18,6 +18,7 @@ import {
 } from '../../ClusterDetails/components/MachinePools/MachinePoolsActions';
 
 import { canAutoScaleSelector } from '../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+import getClusterName from '../../../../common/getClusterName';
 
 const reduxFormConfig = {
   form: 'EditNodeCount',
@@ -77,12 +78,15 @@ const mapStateToProps = (state) => {
     machineTypes: state.machineTypes,
     cloudProviderID,
     isByoc: cluster?.ccs?.enabled,
-    product: get(cluster, 'subscription.plan.id', ''),
+    product: get(cluster, 'subscription.plan.type', ''),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
-    canAutoScale: canAutoScaleSelector(state, get(cluster, 'subscription.plan.id', '')),
+    canAutoScale: canAutoScaleSelector(state, get(cluster, 'subscription.plan.type', '')),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     billingModel: get(cluster, 'billing_model', ''),
+    shouldDisplayClusterName: modalData.shouldDisplayClusterName
+      ? modalData.shouldDisplayClusterName : false,
+    clusterDisplayName: getClusterName(cluster),
   };
 
   let machinePoolWithAutoscale = false;

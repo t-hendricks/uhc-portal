@@ -36,8 +36,16 @@ class Insights extends Component {
     const { history } = this.props;
     const { location } = history;
     // update route only when it's clicked by the user and can have route change
-    if (event.domEvent && event.domEvent?.target?.pathname) {
-      const targetPathName = removeBaseName(event.domEvent?.target?.pathname);
+    /**
+     * Chrome is no longer sending the target object.
+     * Now it the link href is directly sent under "event.domEvent.href" path
+     * Condition won't be necessary after July 26th 2021.
+     * That is when nav changes hit prod-stable env
+     */
+    if (event.domEvent && (event.domEvent?.target?.pathname || event.domEvent?.href)) {
+      const targetPathName = removeBaseName(
+        event.domEvent?.target?.pathname || event.domEvent?.href,
+      );
       if (matchPath(location.pathname, { path: targetPathName, exact: true })) {
         this.dispatchOcmEvent('APP_REFRESH');
       } else {

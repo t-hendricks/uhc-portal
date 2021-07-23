@@ -350,8 +350,8 @@ class ClusterDetails extends Component {
     const clusterHibernating = isHibernating(cluster.state);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED
     || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
-    const isAROCluster = get(cluster, 'subscription.plan.id', '') === knownProducts.ARO;
-    const isOSDTrial = get(cluster, 'subscription.plan.id', '') === knownProducts.OSDTrial;
+    const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
+    const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
     const isManaged = cluster.managed;
     const isClusterPending = cluster.state === clusterStates.PENDING;
     const isClusterInstalling = cluster.state === clusterStates.INSTALLING;

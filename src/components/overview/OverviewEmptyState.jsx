@@ -23,13 +23,13 @@ function OverviewEmptyState() {
   return (
     <>
       <div id="overview-emptystate-bg-img-container">
-        <Title headingLevel="h1" size="3xl" className="space-left-lg space-bottom-md">Get started with OpenShift Container Platform</Title>
-        <Title headingLevel="h2" size="lg" className="space-left-lg space-bottom-md">Download, install and configure Red Hat OpenShift 4 for free now.</Title>
-        <Link to="/create" className="space-left-lg">
+        <Title headingLevel="h1" size="3xl" className="pf-u-ml-lg pf-u-mb-md">Get started with OpenShift Container Platform</Title>
+        <Title headingLevel="h2" size="lg" className="pf-u-ml-lg pf-u-mb-md">Download, install and configure Red Hat OpenShift 4 for free now.</Title>
+        <Link to="/create" className="pf-u-ml-lg">
           <span id="overview-emptystate-create-cluster">Create an OpenShift cluster</span>
         </Link>
       </div>
-      <Title size="xl" headingLevel="h1" className="space-top-lg space-bottom-lg">Get productive with OpenShift</Title>
+      <Title size="xl" headingLevel="h1" className="pf-u-mt-lg pf-u-mb-lg">Get productive with OpenShift</Title>
       <Flex id="overview-emptystate-get-productive">
         <Flex className="flex-pair">
           <FlexItem>
@@ -100,7 +100,7 @@ function OverviewEmptyState() {
       </Flex>
       <Grid>
         <GridItem span={12}>
-          <div id="dashboard-emptystate-osd" className="top-row space-top-lg">
+          <div id="dashboard-emptystate-osd" className="top-row pf-u-mt-lg">
             <Title headingLevel="h2" size="lg" className="card-title">Let Red Hat run it for you</Title>
             Red hat OpenShift Dedicated is a single-tenant, high availability Kubernetes clusters,
             managed by Red Hat on Amazon Web Services or Google Cloud Platform.
@@ -115,13 +115,13 @@ function OverviewEmptyState() {
           </div>
         </GridItem>
       </Grid>
-      <Title className="space-top-lg space-bottom-lg" size="lg" headingLevel="h1">Learn more about the platform</Title>
+      <Title className="pf-u-mt-lg pf-u-mb-lg" size="lg" headingLevel="h1">Learn more about the platform</Title>
       <div id="emptystate-learn-more">
         <div>
           <iframe title="learn more" width="560" height="315" src={VIDEO_URL} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
         </div>
         <div>
-          <Title headingLevel="h2" size="lg" className="space-left-lg space-bottom-md">Other resources</Title>
+          <Title headingLevel="h2" size="lg" className="pf-u-ml-lg pf-u-mb-md">Other resources</Title>
           <List>
             <ListItem><a href="https://docs.openshift.com/container-platform/latest/welcome/" rel="noreferrer noopener" target="_blank">Official documents</a></ListItem>
             <ListItem><a href="https://www.openshift.com/blog" rel="noreferrer noopener" target="_blank">Blog</a></ListItem>

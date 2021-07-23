@@ -18,6 +18,7 @@ const mapStateToProps = (state) => {
     clusterName: modalData.clusterName ? modalData.clusterName : '',
     clusterUpgrades: state.clusterUpgrades.schedules,
     subscriptionID: modalData.subscriptionID ? modalData.subscriptionID : '',
+    shouldDisplayClusterName: modalData.shouldDisplayClusterName || false,
   });
 };
 

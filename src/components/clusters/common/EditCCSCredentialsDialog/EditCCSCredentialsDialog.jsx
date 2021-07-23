@@ -43,6 +43,7 @@ class EditCCSCredentialsDialog extends Component {
     render() {
       const {
         submit, editClusterResponse, clusterID, awsAccountID,
+        clusterDisplayName, shouldDisplayClusterName,
       } = this.props;
       const { isUpdated } = this.state;
       const errorContainer = editClusterResponse.error && (
@@ -69,6 +70,7 @@ class EditCCSCredentialsDialog extends Component {
       return (
         <Modal
           title="Edit AWS account credentials"
+          secondaryTitle={shouldDisplayClusterName ? clusterDisplayName : undefined}
           onClose={() => this.onClose()}
           secondaryText="Cancel"
           onPrimaryClick={handleSubmit}
@@ -143,7 +145,8 @@ EditCCSCredentialsDialog.propTypes = {
   editClusterResponse: PropTypes.object,
   clusterID: PropTypes.string,
   awsAccountID: PropTypes.string,
-
+  shouldDisplayClusterName: PropTypes.bool,
+  clusterDisplayName: PropTypes.string.isRequired,
 };
 
 EditCCSCredentialsDialog.modalName = modals.EDIT_CCS_CREDENTIALS;

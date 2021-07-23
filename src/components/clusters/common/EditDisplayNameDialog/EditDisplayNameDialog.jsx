@@ -38,6 +38,7 @@ class EditDisplayNameDialog extends Component {
   render() {
     const {
       closeModal, submit, editClusterResponse, resetResponse, subscriptionID,
+      shouldDisplayClusterName, displayName,
     } = this.props;
     const { currentValue } = this.state;
 
@@ -60,9 +61,9 @@ class EditDisplayNameDialog extends Component {
     };
 
     return (
-
       <Modal
         title="Edit display name"
+        secondaryTitle={shouldDisplayClusterName ? displayName : undefined}
         data-test-id="edit-displayname-modal"
         onClose={cancelEdit}
         primaryText="Edit"
@@ -105,6 +106,7 @@ EditDisplayNameDialog.propTypes = {
   editClusterResponse: PropTypes.object,
   displayName: PropTypes.string,
   subscriptionID: PropTypes.string,
+  shouldDisplayClusterName: PropTypes.bool,
 };
 
 EditDisplayNameDialog.defaultProps = {

@@ -1,13 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Modal as PfModal } from '@patternfly/react-core';
+import {
+  Button,
+  Modal as PfModal,
+  StackItem,
+  Stack,
+  Split,
+  SplitItem,
+  Title,
+} from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-
+import './Modal.scss';
 import { noop } from '../../../common/helpers';
 
 function Modal({
   title = '',
+  secondaryTitle = '',
   onClose = noop,
   showPrimary = true,
   primaryText = 'Confirm',
@@ -29,13 +38,33 @@ function Modal({
   secondaryLink,
   ...extraProps
 }) {
+  const header = secondaryTitle ? (
+    <Stack>
+      <StackItem>
+        <Title headingLevel="h1">{title}</Title>
+      </StackItem>
+      <StackItem className="modal-secondary-title">
+        <Split>
+          <SplitItem>
+            Cluster
+          </SplitItem>
+          <SplitItem>
+            {secondaryTitle}
+          </SplitItem>
+        </Split>
+      </StackItem>
+    </Stack>
+  ) : undefined;
+
   return (
     <PfModal
       // For a medium size modal use variant="large".
       // For a full screen modal use isSmall=false.
       className={isPending ? 'pending-modal' : null}
+      aria-label={title}
       variant={modalSize || (isSmall ? 'small' : undefined)}
       title={title}
+      header={header}
       isOpen
       onClose={onClose}
       actions={isPending ? [] : [
@@ -96,6 +125,7 @@ Modal.propTypes = {
   isSmall: PropTypes.bool,
   modalSize: PropTypes.string,
   title: PropTypes.string,
+  secondaryTitle: PropTypes.string,
   onClose: PropTypes.func,
   primaryLink: PropTypes.string,
   secondaryLink: PropTypes.string,

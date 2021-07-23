@@ -32,8 +32,6 @@ function ScaleSection({
   cloudProviderID,
   product,
   showStorageAndLoadBalancers = true,
-  instanceTypeGridSpan = 4,
-  autoscaleAndNodeCountGridSpan = 4,
   minNodes,
   isMachinePool = false,
   canAutoScale = false,
@@ -72,7 +70,7 @@ function ScaleSection({
   return (
     <>
       {/* Instance type */}
-      <GridItem span={instanceTypeGridSpan}>
+      <GridItem sm={12} md={5} lg={4}>
         <FormGroup
           className="pf-u-mb-md"
           label="Worker node instance type"
@@ -96,9 +94,9 @@ function ScaleSection({
           />
         </FormGroup>
       </GridItem>
-      {instanceTypeGridSpan !== 12 && (<GridItem span={12 - instanceTypeGridSpan} />)}
+      <GridItem md={7} lg={8} />
       {/* autoscale */}
-      <GridItem span={autoscaleAndNodeCountGridSpan}>
+      <GridItem sm={12} md={5} lg={4}>
         {canAutoScale
           && (
             <>
@@ -144,8 +142,7 @@ function ScaleSection({
           </>
         )}
       </GridItem>
-      {autoscaleAndNodeCountGridSpan !== 12
-        && <GridItem span={12 - autoscaleAndNodeCountGridSpan} />}
+      <GridItem md={7} lg={8} />
       {/* Persistent Storage & Load Balancers */}
       { showStorageAndLoadBalancers && !isBYOC && (
         <>
@@ -211,8 +208,6 @@ ScaleSection.propTypes = {
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
   handleMachineTypesChange: PropTypes.func.isRequired,
-  instanceTypeGridSpan: PropTypes.number,
-  autoscaleAndNodeCountGridSpan: PropTypes.number,
   minNodes: PropTypes.number,
   isMachinePool: PropTypes.bool,
   canAutoScale: PropTypes.bool,

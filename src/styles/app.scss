@@ -47,9 +47,6 @@ limitations under the License.
   margin: 20px 0 20px 0;
 }
 
-#cluster-list-emptystate-primary-action {
-  margin-top: var(--pf-global--spacer--xl);
-}
 .cluster-list-empty-state .pf-c-empty-state__secondary {
   margin-top: var(--pf-global--spacer--sm);
 }
@@ -685,43 +682,10 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-
 .pf-c-button.pf-m-link.access-control-tables-copy{
   padding: 0;
   font-size: var(--pf-c-table--cell--FontSize);
 }
-
-.idp-oauth-url-label {
-  padding-bottom: var(--pf-global--spacer--sm);
-}
-
-.idp-helptext-heading {
-  margin-top: var(--pf-global--spacer--lg);
-}
-
-.space-top-lg {
-  margin-top: var(--pf-global--spacer--lg);
- }
-
-.space-right-lg {
- margin-right: var(--pf-global--spacer--lg);
-}
-
- .space-left-lg {
-  margin-left: var(--pf-global--spacer--lg);
- }
-
- .space-bottom-lg {
-  margin-bottom: var(--pf-global--spacer--lg);
- }
-
- .space-bottom-md {
-  margin-bottom: var(--pf-global--spacer--md);
- }
-
- .space-bottom-sm {
-  margin-bottom: var(--pf-global--spacer--sm);
- }
 
 .ins-c-empty-state__unavailable .pf-c-empty-state__icon {
   color: var(--pf-global--danger-color--100);

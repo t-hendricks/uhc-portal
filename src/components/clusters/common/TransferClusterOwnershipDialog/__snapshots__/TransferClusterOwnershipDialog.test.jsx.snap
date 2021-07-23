@@ -56,7 +56,7 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
       }
       appendTo={[Function]}
       aria-describedby=""
-      aria-label=""
+      aria-label="Transfer cluster ownership"
       aria-labelledby=""
       className={null}
       hasNoBodyWrapper={false}
@@ -81,7 +81,8 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
               >
                 <div
                   aria-describedby="pf-modal-part-2"
-                  aria-labelledby="pf-modal-part-1"
+                  aria-label="Transfer cluster ownership"
+                  aria-labelledby="pf-modal-part-0 pf-modal-part-1"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-lg"
                   data-ouia-component-id="OUIA-Generated-Modal-large-1"
@@ -248,7 +249,7 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
             ]
           }
           aria-describedby=""
-          aria-label=""
+          aria-label="Transfer cluster ownership"
           aria-labelledby=""
           boxId="pf-modal-part-0"
           className={null}
@@ -286,8 +287,8 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                 >
                   <ModalBox
                     aria-describedby="pf-modal-part-2"
-                    aria-label=""
-                    aria-labelledby="pf-modal-part-1"
+                    aria-label="Transfer cluster ownership"
+                    aria-labelledby="pf-modal-part-0 pf-modal-part-1"
                     className=""
                     data-ouia-component-id="OUIA-Generated-Modal-large-1"
                     data-ouia-component-type="PF4/ModalContent"
@@ -302,8 +303,8 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                   >
                     <div
                       aria-describedby="pf-modal-part-2"
-                      aria-label={null}
-                      aria-labelledby="pf-modal-part-1"
+                      aria-label="Transfer cluster ownership"
+                      aria-labelledby="pf-modal-part-0 pf-modal-part-1"
                       aria-modal="true"
                       className="pf-c-modal-box pf-m-lg"
                       data-ouia-component-id="OUIA-Generated-Modal-large-1"
@@ -614,7 +615,7 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
       }
       appendTo={[Function]}
       aria-describedby=""
-      aria-label=""
+      aria-label="Transfer cluster ownership"
       aria-labelledby=""
       className={null}
       hasNoBodyWrapper={false}
@@ -639,7 +640,8 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
               >
                 <div
                   aria-describedby="pf-modal-part-4"
-                  aria-labelledby="pf-modal-part-3"
+                  aria-label="Transfer cluster ownership"
+                  aria-labelledby="pf-modal-part-2 pf-modal-part-3"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-lg"
                   data-ouia-component-id="OUIA-Generated-Modal-large-3"
@@ -800,7 +802,7 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
             ]
           }
           aria-describedby=""
-          aria-label=""
+          aria-label="Transfer cluster ownership"
           aria-labelledby=""
           boxId="pf-modal-part-2"
           className={null}
@@ -838,8 +840,8 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                 >
                   <ModalBox
                     aria-describedby="pf-modal-part-4"
-                    aria-label=""
-                    aria-labelledby="pf-modal-part-3"
+                    aria-label="Transfer cluster ownership"
+                    aria-labelledby="pf-modal-part-2 pf-modal-part-3"
                     className=""
                     data-ouia-component-id="OUIA-Generated-Modal-large-3"
                     data-ouia-component-type="PF4/ModalContent"
@@ -854,8 +856,8 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                   >
                     <div
                       aria-describedby="pf-modal-part-4"
-                      aria-label={null}
-                      aria-labelledby="pf-modal-part-3"
+                      aria-label="Transfer cluster ownership"
+                      aria-labelledby="pf-modal-part-2 pf-modal-part-3"
                       aria-modal="true"
                       className="pf-c-modal-box pf-m-lg"
                       data-ouia-component-id="OUIA-Generated-Modal-large-3"
@@ -1154,7 +1156,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
       }
       appendTo={[Function]}
       aria-describedby=""
-      aria-label=""
+      aria-label="Transfer cluster ownership"
       aria-labelledby=""
       className={null}
       hasNoBodyWrapper={false}
@@ -1179,7 +1181,8 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
               >
                 <div
                   aria-describedby="pf-modal-part-5"
-                  aria-labelledby="pf-modal-part-4"
+                  aria-label="Transfer cluster ownership"
+                  aria-labelledby="pf-modal-part-3 pf-modal-part-4"
                   aria-modal="true"
                   class="pf-c-modal-box pf-m-lg"
                   data-ouia-component-id="OUIA-Generated-Modal-large-4"
@@ -1392,7 +1395,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
             ]
           }
           aria-describedby=""
-          aria-label=""
+          aria-label="Transfer cluster ownership"
           aria-labelledby=""
           boxId="pf-modal-part-3"
           className={null}
@@ -1430,8 +1433,8 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                 >
                   <ModalBox
                     aria-describedby="pf-modal-part-5"
-                    aria-label=""
-                    aria-labelledby="pf-modal-part-4"
+                    aria-label="Transfer cluster ownership"
+                    aria-labelledby="pf-modal-part-3 pf-modal-part-4"
                     className=""
                     data-ouia-component-id="OUIA-Generated-Modal-large-4"
                     data-ouia-component-type="PF4/ModalContent"
@@ -1446,8 +1449,8 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                   >
                     <div
                       aria-describedby="pf-modal-part-5"
-                      aria-label={null}
-                      aria-labelledby="pf-modal-part-4"
+                      aria-label="Transfer cluster ownership"
+                      aria-labelledby="pf-modal-part-3 pf-modal-part-4"
                       aria-modal="true"
                       className="pf-c-modal-box pf-m-lg"
                       data-ouia-component-id="OUIA-Generated-Modal-large-4"

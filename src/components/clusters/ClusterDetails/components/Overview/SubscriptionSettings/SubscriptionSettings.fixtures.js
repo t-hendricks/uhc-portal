@@ -11,6 +11,7 @@ const subscription = {
     id: 'OCP',
     kind: 'Plan',
     href: '/api/accounts_mgmt/v1/plans/OCP',
+    type: 'OCP',
   },
   support_level: 'Premium',
   service_level: 'L1-L3',

@@ -5,7 +5,6 @@ import { List, ListItem, Title, TextContent } from '@patternfly/react-core';
 
 import { billingModelConstants } from '../../CreateOSDFormConstants';
 import Modal from '../../../../../common/Modal/Modal';
-import './CustomerCloudSubscriptionModal.scss';
 
 const contentByCloudProvider = (cloudProviderID) => {
   if (cloudProviderID === 'aws') {
@@ -16,12 +15,12 @@ const contentByCloudProvider = (cloudProviderID) => {
           owned by you or your company. This allows you to pay AWS directly for public cloud costs,
           leveraging your existing relationship.
         </TextContent>
-        <Title headingLevel="h3" size="lg">Important</Title>
+        <Title headingLevel="h3" size="lg" className="pf-u-mt-sm">Important</Title>
         <TextContent>
           In order for the cluster provisioning to succeed, you must ensure the following:
         </TextContent>
         <TextContent>
-          <List>
+          <List className="pf-u-mb-md">
             <ListItem>
               Your AWS account has the necessary limits to support the desired
               cluster size.
@@ -57,7 +56,7 @@ const contentByCloudProvider = (cloudProviderID) => {
         owned by you or your company. This allows you to pay Google Cloud directly for public
         cloud costs, leveraging your existing relationship.
       </TextContent>
-      <Title headingLevel="h3" size="lg">Important</Title>
+      <Title headingLevel="h3" size="lg" className="pf-u-mt-sm">Important</Title>
       <TextContent>
         In order for the cluster provisioning to succeed, you must ensure the following:
       </TextContent>
@@ -72,7 +71,7 @@ const contentByCloudProvider = (cloudProviderID) => {
           </ListItem>
           <ListItem>
             An IAM service account called “osd-ccs-admin” exists with the following roles attached:
-            <List className="unpadded-ul">
+            <List className="pf-u-pb-0">
               <ListItem>DNS Administrator</ListItem>
               <ListItem>Organization Policy Viewer</ListItem>
               <ListItem>Owner</ListItem>
@@ -102,7 +101,6 @@ const contentByCloudProvider = (cloudProviderID) => {
 function CustomerCloudSubscriptionModal({ closeModal, cloudProviderID }) {
   return (
     <Modal
-      className="ocm-c-ccsModal"
       title="Customer cloud subscription"
       onClose={closeModal}
       primaryText="Close"

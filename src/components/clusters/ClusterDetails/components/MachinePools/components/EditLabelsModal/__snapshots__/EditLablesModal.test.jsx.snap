@@ -42,7 +42,7 @@ exports[`<EditLabelsModal /> renders correctly 1`] = `
         span={12}
       >
         <p
-          className="space-bottom-md"
+          className="pf-u-mb-md"
         >
           Labels help you organize and select resources. Adding labels below will let you query for objects that have similar, overlapping or dissimilar labels.
         </p>

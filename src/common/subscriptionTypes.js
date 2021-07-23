@@ -92,7 +92,8 @@ const knownProducts = {
 };
 
 /**
- * cluster.product.id, subscription.plan.id, quota_cost.related_resources[].product
+ * cluster.product.id, subscription.plan.type, subscription.plan.id,
+ * quota_cost.related_resources[].product
  * use related but different values (see https://issues.redhat.com/browse/SDB-1625).
  * They should all be passed through normalizeProductID(), should result in one of the values here.
  * @enum string

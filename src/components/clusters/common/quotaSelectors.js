@@ -61,7 +61,14 @@ const availableFromQuotaCostItem = (quotaCostItem, query) => {
   }
 
   // If you're able to create half a node, you're still in "not enough quota" situation.
-  return Math.floor((quotaCostItem.allowed - quotaCostItem.consumed) / bestCost);
+  const available = Math.floor((quotaCostItem.allowed - quotaCostItem.consumed) / bestCost);
+
+  // Negative ResourceQuota does exist
+  // For each quota cost item only consider the related resources with positive quota available
+  // Otherwise for queries containing "any" selectors could match negative quota cost items
+  // and incorrectly disable the item for a user when there may be another match that has
+  // available quota
+  return available > 0 ? available : 0;
 };
 
 /**
@@ -141,7 +148,7 @@ const hasPotentialQuota = (
  */
 const queryFromCluster = cluster => (
   {
-    product: cluster.subscription.plan.id, // TODO plan.type,
+    product: cluster.subscription.plan.type,
     billingModel: get(cluster, 'billing_model', billingModels.STANDARD),
     cloudProviderID: get(cluster, 'cloud_provider.id', 'any'),
     isBYOC: get(cluster, 'ccs.enabled', false),

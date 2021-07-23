@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
     resumeClusterResponse: state.clusters.resumeHibernatingCluster,
     clusterID: modalData.clusterID ? modalData.clusterID : '',
     clusterName: modalData.clusterName ? modalData.clusterName : '',
+    shouldDisplayClusterName: modalData.shouldDisplayClusterName || false,
   });
 };
 

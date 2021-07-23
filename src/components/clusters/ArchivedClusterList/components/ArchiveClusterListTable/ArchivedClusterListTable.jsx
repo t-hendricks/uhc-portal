@@ -40,7 +40,7 @@ function ArchivedClusterListTable(props) {
 
   const sortColumns = {
     Name: 'display_name',
-    Type: 'plan.id',
+    Type: 'plan.type',
     Status: 'status',
   };
 
@@ -71,6 +71,7 @@ function ArchivedClusterListTable(props) {
       {
         subscriptionID: cluster.subscription ? cluster.subscription.id : '',
         name,
+        shouldDisplayClusterName: true,
       });
 
     const unarchiveButton = cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED && (

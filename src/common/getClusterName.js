@@ -6,6 +6,9 @@ import get from 'lodash/get';
  * @param {*} cluster a cluster object.
  */
 const getClusterName = (cluster) => {
+  if (!cluster) {
+    return '';
+  }
   const clusterName = get(cluster, 'subscription.display_name', false) || cluster.display_name || cluster.name || cluster.external_id;
   if (clusterName === undefined) {
     if (get(cluster, 'subscription.status', false) === 'Deprovisioned') {
