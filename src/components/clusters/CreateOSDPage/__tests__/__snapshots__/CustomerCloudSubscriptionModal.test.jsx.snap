@@ -2,7 +2,6 @@
 
 exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
 <Modal
-  className="ccsModal"
   onClose={[MockFunction]}
   onPrimaryClick={[MockFunction]}
   primaryText="Close"
@@ -13,6 +12,7 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
     With this subscription option, the cluster will be provisioned in an AWS account owned by you or your company. This allows you to pay AWS directly for public cloud costs, leveraging your existing relationship.
   </TextContent>
   <Title
+    className="pf-u-mt-sm"
     headingLevel="h3"
     size="lg"
   >
@@ -22,8 +22,8 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
     In order for the cluster provisioning to succeed, you must ensure the following:
   </TextContent>
   <TextContent>
-    <ul>
-      <li>
+    <List>
+      <ListItem>
         Your AWS account has the necessary limits to support the desired cluster size.
          
         <a
@@ -34,11 +34,11 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
            See resource requirements.
         </a>
          
-      </li>
-      <li>
+      </ListItem>
+      <ListItem>
         An IAM user called “osdCcsAdmin” exists with the AdministratorAccess policy.
-      </li>
-      <li>
+      </ListItem>
+      <ListItem>
         An Organization Service Control Policy (SCP) is set up according to the
          
         <a
@@ -49,8 +49,8 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
            
           documentation.
         </a>
-      </li>
-    </ul>
+      </ListItem>
+    </List>
   </TextContent>
   <TextContent>
     It is also recommended that you have at least Business Support from AWS. Refer to the
@@ -70,7 +70,6 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
 
 exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
 <Modal
-  className="ccsModal"
   onClose={[MockFunction]}
   onPrimaryClick={[MockFunction]}
   primaryText="Close"
@@ -81,6 +80,7 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
     With this subscription option, the cluster will be provisioned in a Google Cloud account owned by you or your company. This allows you to pay Google Cloud directly for public cloud costs, leveraging your existing relationship.
   </TextContent>
   <Title
+    className="pf-u-mt-sm"
     headingLevel="h3"
     size="lg"
   >
@@ -90,8 +90,8 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
     In order for the cluster provisioning to succeed, you must ensure the following:
   </TextContent>
   <TextContent>
-    <ul>
-      <li>
+    <List>
+      <ListItem>
         Your Google Cloud account has the necessary resource quotas and limits to support the desired cluster size.
          
         <a
@@ -102,36 +102,36 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
           See resource requirements.
         </a>
          
-      </li>
-      <li>
+      </ListItem>
+      <ListItem>
         An IAM service account called “osd-ccs-admin” exists with the following roles attached:
-        <ul
-          className="unpadded-ul"
+        <List
+          className="pf-u-pb-xs"
         >
-          <li>
+          <ListItem>
             DNS Administrator
-          </li>
-          <li>
+          </ListItem>
+          <ListItem>
             Organization Policy Viewer
-          </li>
-          <li>
+          </ListItem>
+          <ListItem>
             Owner
-          </li>
-          <li>
+          </ListItem>
+          <ListItem>
             Project IAM Admin
-          </li>
-          <li>
+          </ListItem>
+          <ListItem>
             Service Management Administrator
-          </li>
-          <li>
+          </ListItem>
+          <ListItem>
             Service Usage Admin
-          </li>
-          <li>
+          </ListItem>
+          <ListItem>
             Storage Admin
-          </li>
-        </ul>
-      </li>
-    </ul>
+          </ListItem>
+        </List>
+      </ListItem>
+    </List>
   </TextContent>
   <TextContent>
     It is also recommended that you have at least Production support from GCP. To prevent potential conflicts, we also recommend that you have no other resources provisioned in the project prior to provisioning OpenShift Dedicated. Refer to

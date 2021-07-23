@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { List, ListItem, Title, TextContent } from '@patternfly/react-core';
+import {
+  List,
+  ListItem,
+  Title,
+  TextContent,
+} from '@patternfly/react-core';
 
 import { billingModelConstants } from '../../CreateOSDFormConstants';
 import Modal from '../../../../../common/Modal/Modal';
@@ -20,7 +25,7 @@ const contentByCloudProvider = (cloudProviderID) => {
           In order for the cluster provisioning to succeed, you must ensure the following:
         </TextContent>
         <TextContent>
-          <List className="pf-u-mb-md">
+          <List>
             <ListItem>
               Your AWS account has the necessary limits to support the desired
               cluster size.
@@ -28,7 +33,9 @@ const contentByCloudProvider = (cloudProviderID) => {
               <a href={billingModelConstants.resourceRequirementsLink} rel="noreferrer noopener" target="_blank"> See resource requirements.</a>
               {' '}
             </ListItem>
-            <ListItem>An IAM user called “osdCcsAdmin” exists with the AdministratorAccess policy.</ListItem>
+            <ListItem>
+              An IAM user called “osdCcsAdmin” exists with the AdministratorAccess policy.
+            </ListItem>
             <ListItem>
               An Organization Service Control Policy (SCP) is set up according to the
               {' '}
@@ -71,7 +78,7 @@ const contentByCloudProvider = (cloudProviderID) => {
           </ListItem>
           <ListItem>
             An IAM service account called “osd-ccs-admin” exists with the following roles attached:
-            <List className="pf-u-pb-0">
+            <List className="pf-u-pb-xs">
               <ListItem>DNS Administrator</ListItem>
               <ListItem>Organization Policy Viewer</ListItem>
               <ListItem>Owner</ListItem>
