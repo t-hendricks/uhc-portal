@@ -234,51 +234,15 @@ exports[`<DownloadsPage> renders 1`] = `
                       <TechPreviewBadge />
                     </React.Fragment>,
                   },
-                  Object {
-                    "title": <FormSelect
-                      aria-label="Select OS dropdown"
-                      className=""
-                      isDisabled={false}
-                      isRequired={false}
-                      onBlur={[Function]}
-                      onChange={[Function]}
-                      onFocus={[Function]}
-                      ouiaSafe={true}
-                      validated="default"
-                      value=""
-                    >
-                      <FormSelectOption
-                        isDisabled={true}
-                        label="Select OS"
-                        value="select"
-                      />
-                    </FormSelect>,
-                  },
-                  Object {
-                    "title": <FormSelect
-                      aria-label="Select architecture dropdown"
-                      className=""
-                      isDisabled={true}
-                      isRequired={false}
-                      onBlur={[Function]}
-                      onChange={[Function]}
-                      onFocus={[Function]}
-                      ouiaSafe={true}
-                      validated="default"
-                      value=""
-                    >
-                      <FormSelectOption
-                        isDisabled={true}
-                        label="Select architecture"
-                        value="select"
-                      />
-                    </FormSelect>,
-                  },
+                  "",
+                  "",
                   Object {
                     "title": <AlignRight>
                       <DownloadButton
+                        download={false}
                         text="Download"
                         tool="OCM"
+                        url="https://github.com/openshift-online/ocm-cli/releases/latest"
                       />
                     </AlignRight>,
                   },

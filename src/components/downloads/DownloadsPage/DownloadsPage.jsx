@@ -203,6 +203,31 @@ export const toolRow = (expanded, selections, setSelections, urls, tool, channel
     setSelections({ ...selections, [tool]: { OS, architecture: newArchitecture } });
   };
 
+  // If Github API fetching of last release fails, we can't link to direct download,
+  // fallback to navigating to last release page in new tab, where user will pick OS/arch.
+  let fallback = null;
+  if (allOperatingSystemsForTool(urls, tool, channel).length === 0) {
+    fallback = get(urls, [tool, channel, 'fallbackNavigateURL']);
+
+    return {
+      isOpen: !!expanded[tool],
+      expandKey: tool, // custom property for `onCollapse` callback
+      cells: [
+        '',
+        { title: name },
+        '', // hide OS dropdown
+        '', // hide architecture dropdown
+        {
+          title: (
+            <AlignRight>
+              <DownloadButton url={fallback} download={false} tool={tool} text="Download" />
+            </AlignRight>
+          ),
+        },
+      ],
+    };
+  }
+
   const url = get(urls, [tool, channel, architecture, OS]);
   return {
     isOpen: !!expanded[tool],

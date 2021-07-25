@@ -393,13 +393,26 @@ const githubReleasesToFetch = [
 /**
  * Computes full urls data.
  * @param state.githubReleases.
- * @return {tool: {channel: {arch: {os: url}}}}
+ * @return {tool: {
+ *   channel: {
+ *     arch: {os: url}},
+ *     fallbackNavigateURL: '...' // Optional, used when arch/os data missing. Open in new tab.
+ *   },
+ * }
  */
 const urlsSelector = (githubReleases) => {
   const result = {
     ...urls,
-    [tools.OCM]: {},
-    [tools.RHOAS]: {},
+    [tools.OCM]: {
+      [channels.STABLE]: {
+        fallbackNavigateURL: 'https://github.com/openshift-online/ocm-cli/releases/latest',
+      },
+    },
+    [tools.RHOAS]: {
+      [channels.STABLE]: {
+        fallbackNavigateURL: 'https://github.com/redhat-developer/app-services-cli/releases/latest',
+      },
+    },
   };
 
   const ocmRelease = githubReleases['openshift-online/ocm-cli'];
