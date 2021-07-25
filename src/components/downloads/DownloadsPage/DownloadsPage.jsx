@@ -137,6 +137,7 @@ const architectureSelectOption = (urls, tool, channel, OS, { value, label }) => 
   ) : (
     <FormSelectOption
       isDisabled
+      key={value}
       value={value}
       label={label}
       title="This type of architecture is not available for the selected OS type"
