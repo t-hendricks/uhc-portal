@@ -14,6 +14,7 @@ class Insights extends Component {
     insights.ocm = {
       on: (event, callback) => {
         if (event !== 'APP_REFRESH') {
+          // eslint-disable-next-line no-console
           console.error(`Invalid event - ${event}`);
           return () => {};
         }

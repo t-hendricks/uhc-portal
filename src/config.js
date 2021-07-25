@@ -76,6 +76,7 @@ const config = {
         configs[queryEnv].then((data) => {
           this.loadConfig(data);
           if (isDevOrStaging) {
+            // eslint-disable-next-line no-console
             console.info(`Loaded override config: ${queryEnv}`);
           }
           that.override = queryEnv;
@@ -86,6 +87,7 @@ const config = {
         configs.default.then((data) => {
           this.loadConfig(data);
           if (isDevOrStaging) {
+            // eslint-disable-next-line no-console
             console.info(`Loaded default config: ${APP_API_ENV}`);
           }
           resolve();

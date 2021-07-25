@@ -386,6 +386,7 @@ class EditSubscriptionSettingsFields extends Component {
             if (groupPos < groupEls.length) {
               return groupEls[groupPos];
             }
+            // eslint-disable-next-line no-console
             console.error(`Edit Subscription tooltip: error selecting ${radioGroupSelector} (${groupPos})`);
             return null;
           }}
