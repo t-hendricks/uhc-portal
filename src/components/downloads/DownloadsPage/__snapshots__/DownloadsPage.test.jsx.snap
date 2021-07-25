@@ -561,6 +561,10 @@ exports[`<DownloadsPage> renders 1`] = `
                         value="x86"
                       />
                       <FormSelectOption
+                        label="aarch64"
+                        value="arm"
+                      />
+                      <FormSelectOption
                         label="ppc64le"
                         value="ppc"
                       />
