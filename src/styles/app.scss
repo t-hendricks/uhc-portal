@@ -379,18 +379,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: 0;
 }
 
-.ccsModal {
-  ul {
-  padding-bottom: 15px;
-  &.unpadded-ul {
-      padding-bottom: 0px;
-    }
-  }
-  h3 {
-  padding-top: 10px;
-  }
-};
-
 .ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card, .ocm-c-ipi-upi-infra-card {
   flex: 0 0 380px;
   margin: 20px;
