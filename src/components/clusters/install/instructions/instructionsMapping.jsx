@@ -3,7 +3,7 @@ import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import {
   List, ListItem, Text,
 } from '@patternfly/react-core';
-import links, { channels, architectures } from '../../../../common/installLinks';
+import links, { tools, channels } from '../../../../common/installLinks';
 
 /**
  * RHCOS Downloads structure
@@ -24,14 +24,14 @@ const instructionsMapping = {
     ipi: {
       title: 'Install OpenShift on AWS with installer-provisioned infrastructure',
       docURL: links.INSTALL_AWSIPI_DOCS_LANDING,
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86,
     },
     upi: {
       title: 'Install OpenShift on AWS with user-provisioned infrastructure',
       docURL: links.INSTALL_AWSUPI_GETTING_STARTED,
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86,
     },
     getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propagate).',
   },
@@ -41,8 +41,8 @@ const instructionsMapping = {
     ipi: {
       title: 'Install OpenShift on GCP with installer-provisioned infrastructure',
       docURL: links.INSTALL_GCPIPI_GETTING_STARTED,
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86,
     },
     upi: {
       title: 'Install OpenShift on GCP with user-provisioned infrastructure',
@@ -56,8 +56,8 @@ const instructionsMapping = {
           url: links.RHCOS_GCPUPI_TAR_X86,
         },
       ],
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86,
     },
     getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through GCP but it will take some time for the DNS to propagate).',
   },
@@ -66,14 +66,14 @@ const instructionsMapping = {
     customizations: links.INSTALL_AZURE_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on Azure with installer-provisioned infrastructure',
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86,
       docURL: links.INSTALL_AZUREIPI_GETTING_STARTED,
     },
     upi: {
       title: 'Install OpenShift on Azure with user-provisioned infrastructure',
+      installer: tools.X86INSTALLER,
       channel: channels.PRE_RELEASE,
-      architecture: architectures.x86,
       docURL: links.INSTALL_AZUREUPI_GETTING_STARTED,
     },
     getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through Azure but it will take some time for the DNS to propagate).',
@@ -135,47 +135,39 @@ const instructionsMapping = {
       },
     ],
     docURL: links.INSTALL_IBMZ_GETTING_STARTED,
+    preReleasePageLink: '/install/ibmz/pre-release',
+    installer: tools.IBMZINSTALLER,
     channel: channels.STABLE,
-    architecture: architectures.s390x,
   },
   bareMetal: {
     cloudProvider: 'Bare Metal',
     customizations: links.INSTALL_BAREMETAL_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on Bare Metal with installer-provisioned infrastructure',
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86,
       docURL: links.INSTALL_BAREMETAL_IPI_GETTING_STARTED,
     },
     upi: {
       title: 'Install OpenShift on Bare Metal with user-provisioned infrastructure',
       displayRHCOSSection: true,
       rhcosLearnMoreURL: links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE,
-      rhcosDownloads: [
+      rhcosDownloads:
         [
           {
             buttonText: 'Download RHCOS ISO',
             name: 'OCP-Download-RHCOS-ISO',
-            archURL: {
-              x86: links.RHCOS_BAREMETAL_ISO_X86,
-              s390x: links.RHCOS_BAREMETAL_ISO_S390X,
-              ppc: links.RHCOS_BAREMETAL_ISO_PPC,
-            },
+            url: links.RHCOS_BAREMETAL_ISO_X86,
           },
           {
             buttonText: 'Download RHCOS RAW',
             name: 'OCP-Download-RHCOS-RAW',
-            archURL: {
-              x86: links.RHCOS_BAREMETAL_RAW_X86,
-              s390x: links.RHCOS_BAREMETAL_RAW_S390X,
-              ppc: links.RHCOS_BAREMETAL_RAW_PPC,
-            },
+            url: links.RHCOS_BAREMETAL_RAW_X86,
           },
         ],
-      ],
       rhcosAdditionalInstructions: 'Download the installer ISO image and the compressed metal RAW.',
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86, // for installer & oc CLI
       docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
     },
   },
@@ -187,8 +179,8 @@ const instructionsMapping = {
       docURL: links.INSTALL_VSPHEREUPI_GETTING_STARTED,
       displayRHCOSSection: true,
       rhcosLearnMoreURL: links.INSTALL_VSPHERE_RHCOS_LEARN_MORE,
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86,
       rhcosDownloads:
         [
           {
@@ -201,15 +193,15 @@ const instructionsMapping = {
     ipi: {
       title: 'Install OpenShift on vSphere with installer-provisioned infrastructure',
       docURL: links.INSTALL_VSPHEREIPI_GETTING_STARTED,
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86,
     },
   },
   power: {
     cloudProvider: 'Power',
     title: 'Install OpenShift on Power with user-provisioned infrastructure',
+    installer: tools.PPCINSTALLER,
     channel: channels.STABLE,
-    architecture: architectures.ppc,
     displayRHCOSSection: true,
     rhcosLearnMoreURL: links.INSTALL_POWER_RHCOS_LEARN_MORE,
     rhcosDownloads:
@@ -236,7 +228,7 @@ const instructionsMapping = {
         },
       ],
     rhcosAdditionalInstructions: 'Download either the installer ISO image or for PXE booting the initramfs, the kernel, and the rootfs files.',
-    showPreReleasePageLink: false,
+    preReleasePageLink: '/install/power/pre-release',
     docURL: links.INSTALL_POWER_GETTING_STARTED,
   },
   openstack: {
@@ -244,8 +236,8 @@ const instructionsMapping = {
     customizations: links.INSTALL_OSP_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on Red Hat OpenStack Platform with installer-provisioned infrastructure',
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86,
       docURL: links.INSTALL_OSPIPI_GETTING_STARTED,
     },
     upi: {
@@ -257,15 +249,11 @@ const instructionsMapping = {
         {
           buttonText: 'Download RHCOS QCOW',
           name: 'OCP-Download-RHCOS-QCOW',
-          archURL: {
-            x86: links.RHCOS_OSPUPI_QCOW_X86,
-            s390x: links.RHCOS_OSPUPI_QCOW_S390X,
-            ppc: links.RHCOS_OSPUPI_QCOW_PPC,
-          },
+          url: links.RHCOS_OSPUPI_QCOW_X86,
         },
       ],
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86, // for installer & oc CLI
     },
   },
   rhv: {
@@ -275,15 +263,15 @@ const instructionsMapping = {
       docURL: links.INSTALL_RHVIPI_GETTING_STARTED,
       title: 'Install OpenShift on Red Hat Virtualization with installer-provisioned infrastructure',
       showPreReleasePageLink: false,
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86,
     },
     upi: {
       docURL: links.INSTALL_RHVUPI_GETTING_STARTED,
       title: 'Install OpenShift on Red Hat Virtualization with user-provisioned infrastructure',
       showPreReleasePageLink: false,
+      installer: tools.X86INSTALLER,
       channel: channels.STABLE,
-      architecture: architectures.x86,
     },
   },
 };

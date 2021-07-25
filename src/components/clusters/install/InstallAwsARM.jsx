@@ -17,7 +17,7 @@ import {
 } from '@patternfly/react-core';
 import { CodeIcon } from '@patternfly/react-icons';
 
-import links, { channels, architectures } from '../../../common/installLinks';
+import links, { tools, channels } from '../../../common/installLinks';
 import TelemetryDisclaimer from './instructions/components/TelemetryDisclaimer';
 import TokenErrorAlert from './instructions/components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './instructions/components/DownloadsAndPullSecretSection';
@@ -105,8 +105,8 @@ class InstructionsAwsARM extends Component {
                     token={token}
                     showPreReleaseDocs
                     showPreReleasePageLink={false}
+                    tool={tools.ARMINSTALLER}
                     channel={channels.PRE_RELEASE}
-                    architecture={architectures.arm}
                     preReleaseDocsLink={links.AWS_ARM_DOCS}
                   />
                 </CardBody>

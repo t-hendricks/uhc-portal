@@ -15,7 +15,7 @@ import {
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
 import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
-import links, { tools, channels, architectures } from '../../../common/installLinks';
+import links, { tools, channels } from '../../../common/installLinks';
 import PullSecretSection from '../install/instructions/components/PullSecretSection';
 import { trackPendo } from '../../../common/helpers';
 import '../install/instructions/Instructions.scss';
@@ -74,7 +74,6 @@ const LocalTab = ({ token }) => (
                   token={token}
                   tool={tools.CRC}
                   channel={channels.STABLE}
-                  architecture={architectures.x86}
                   pendoID={pendoID}
                 />
                 <Text component="h3">Pull secret</Text>

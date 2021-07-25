@@ -17,18 +17,19 @@ import GetStarted from './components/GetStarted';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import instructionsMapping from './instructionsMapping';
 import './Instructions.scss';
-import { channels, architectures } from '../../../../common/installLinks';
+import { tools, channels } from '../../../../common/installLinks';
 
 const OCPInstructions = (props) => {
   const {
     token,
     cloudProviderID,
     displayRHCOSSection,
+    installer = tools.X86INSTALLER,
     channel,
-    architecture,
     docURL,
     customizations = '',
     showPreReleaseDocs,
+    preReleasePageLink,
     isBMIPI,
   } = props;
   const pendoID = window.location.pathname;
@@ -65,12 +66,13 @@ const OCPInstructions = (props) => {
               <SplitItem className="download-instructions" isFilled>
                 <DownloadsAndPullSecretSection
                   showPreReleaseDocs={showPreReleaseDocs}
+                  preReleasePageLink={preReleasePageLink}
                   token={token}
                   pendoID={pendoID}
                   cloudProviderID={cloudProviderID}
                   displayRHCOSSection={displayRHCOSSection}
+                  tool={installer}
                   channel={channel}
-                  architecture={architecture}
                   isBMIPI={isBMIPI}
                 />
               </SplitItem>
@@ -117,10 +119,11 @@ OCPInstructions.propTypes = {
   token: PropTypes.object.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   displayRHCOSSection: PropTypes.bool,
+  installer: PropTypes.oneOf(Object.values(tools)),
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
-  architecture: PropTypes.oneOf(Object.values(architectures)).isRequired,
   docURL: PropTypes.string.isRequired,
   showPreReleaseDocs: PropTypes.bool,
+  preReleasePageLink: PropTypes.string,
   customizations: PropTypes.string,
   isBMIPI: PropTypes.bool,
 };
