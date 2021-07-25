@@ -3,7 +3,7 @@
 exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
 <Modal
   data-test-id="edit-displayname-modal"
-  isPrimaryDisabled={false}
+  isPrimaryDisabled={true}
   onClose={[Function]}
   onPrimaryClick={[Function]}
   onSecondaryClick={[Function]}
@@ -35,7 +35,7 @@ exports[`<EditDisplayNameDialog /> renders correctly 1`] = `
 exports[`<EditDisplayNameDialog /> renders correctly when an error occurs 1`] = `
 <Modal
   data-test-id="edit-displayname-modal"
-  isPrimaryDisabled={false}
+  isPrimaryDisabled={true}
   onClose={[Function]}
   onPrimaryClick={[Function]}
   onSecondaryClick={[Function]}
@@ -77,7 +77,7 @@ exports[`<EditDisplayNameDialog /> renders correctly when pending 1`] = `
 <Modal
   data-test-id="edit-displayname-modal"
   isPending={true}
-  isPrimaryDisabled={false}
+  isPrimaryDisabled={true}
   onClose={[Function]}
   onPrimaryClick={[Function]}
   onSecondaryClick={[Function]}

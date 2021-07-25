@@ -55,7 +55,8 @@ class AddMachinePoolModal extends Component {
       submit,
       addMachinePoolResponse,
       cluster,
-      pristine,
+      anyTouched,
+      invalid,
       organization,
       canAutoScale,
       autoscalingEnabled,
@@ -85,7 +86,7 @@ class AddMachinePoolModal extends Component {
         secondaryText="Cancel"
         onPrimaryClick={submit}
         onSecondaryClick={this.cancelAddMachinePool}
-        isPrimaryDisabled={isPending || pristine}
+        isPrimaryDisabled={isPending || !anyTouched || invalid}
         isPending={isPending}
       >
         <>
@@ -140,7 +141,8 @@ AddMachinePoolModal.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
-  pristine: PropTypes.bool.isRequired,
+  anyTouched: PropTypes.bool.isRequired,
+  invalid: PropTypes.bool.isRequired,
   organization: PropTypes.object,
   canAutoScale: PropTypes.bool.isRequired,
   autoscalingEnabled: PropTypes.bool.isRequired,

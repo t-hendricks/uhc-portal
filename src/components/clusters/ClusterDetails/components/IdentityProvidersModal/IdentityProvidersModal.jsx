@@ -44,9 +44,20 @@ class IdentityProvidersModal extends React.Component {
 
   render() {
     const {
-      isOpen, handleSubmit, submitIDPResponse, clusterName, selectedIDP, selectedMappingMethod,
-      change, IDPList,
-      clusterConsoleURL, initialValues, idpEdited, isEditForm,
+      isOpen,
+      handleSubmit,
+      submitIDPResponse,
+      clusterName,
+      selectedIDP,
+      selectedMappingMethod,
+      change,
+      IDPList,
+      clusterConsoleURL,
+      initialValues,
+      idpEdited,
+      isEditForm,
+      pristine,
+      invalid,
     } = this.props;
 
     const isPending = submitIDPResponse.pending;
@@ -59,6 +70,7 @@ class IdentityProvidersModal extends React.Component {
       title={isEditForm ? `Edit identity provider (${clusterName})` : `Create identity provider (${clusterName})`}
       isPending={isPending}
       onPrimaryClick={handleSubmit}
+      isPrimaryDisabled={pristine || invalid}
       onSecondaryClick={() => this.onClose()}
       data-test-id="add-idp-osd-dialog"
     >
@@ -99,7 +111,8 @@ IdentityProvidersModal.propTypes = {
     idpId: PropTypes.string,
     name: PropTypes.string,
   }).isRequired,
-
+  pristine: PropTypes.bool.isRequired,
+  invalid: PropTypes.bool.isRequired,
 };
 
 IdentityProvidersModal.defaultProps = {
