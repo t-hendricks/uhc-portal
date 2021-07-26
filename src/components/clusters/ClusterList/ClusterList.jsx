@@ -261,6 +261,7 @@ class ClusterList extends Component {
                       view={viewConstants.CLUSTERS_VIEW}
                       isDisabled={pending}
                       history={history}
+                      className="cluster-filter-dropdown"
                     />
                   </ToolbarItem>
                   <ClusterListActions />
