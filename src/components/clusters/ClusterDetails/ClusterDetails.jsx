@@ -282,7 +282,6 @@ class ClusterDetails extends Component {
       displayClusterLogs,
       insightsData,
       groups,
-      voteOnRule,
       enableRule,
       canSubscribeOCP,
       canTransferClusterOwnership,
@@ -521,11 +520,8 @@ class ClusterDetails extends Component {
                 cluster={cluster}
                 groups={get(groups, 'groups', [])}
                 insightsData={insightsData[cluster.external_id]}
-                voteOnRule={(ruleId, vote) => {
-                  voteOnRule(cluster.external_id, ruleId, vote);
-                }}
-                enableRule={(ruleId) => {
-                  enableRule(cluster.external_id, ruleId);
+                enableRule={(ruleId, errorKey) => {
+                  enableRule(cluster.external_id, ruleId, errorKey);
                 }}
                 openModal={openModal}
               />
@@ -657,7 +653,6 @@ ClusterDetails.propTypes = {
   getClusterHistory: PropTypes.func.isRequired,
   getMachinePools: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
-  voteOnRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   setOpenedTab: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
