@@ -50,6 +50,8 @@ function ClusterSettingsScreen({
           isMultiAz={isMultiAz}
           showAvailability
           change={change}
+          product={product}
+          billingModel={billingModel}
         />
         { !isByoc && (
           <>
