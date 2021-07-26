@@ -52,17 +52,17 @@ export const fetchClusterInsights = (clusterId, isOSD) => dispatch => dispatch({
 // clusterId is id of the cluster
 // ruleId is id of the rule
 // vote is integer: -1(dislike), 0(reset_vote), 1(like)
-const voteOnSingleRuleInsights = async (dispatch, clusterId, ruleId, vote) => {
+const voteOnSingleRuleInsights = async (dispatch, clusterId, ruleId, errorKey, vote) => {
   let response;
   switch (vote) {
     case -1:
-      response = await insightsService.putDislikeOnRuleInsights(clusterId, ruleId);
+      response = await insightsService.putDislikeOnRuleInsights(clusterId, ruleId, errorKey);
       break;
     case 0:
-      response = await insightsService.resetVoteOnRuleInsights(clusterId, ruleId);
+      response = await insightsService.resetVoteOnRuleInsights(clusterId, ruleId, errorKey);
       break;
     case 1:
-      response = await insightsService.putLikeOnRuleInsights(clusterId, ruleId);
+      response = await insightsService.putLikeOnRuleInsights(clusterId, ruleId, errorKey);
       break;
     default:
       throw Error(`unsupported vote ${vote}`);
@@ -78,16 +78,16 @@ const voteOnSingleRuleInsights = async (dispatch, clusterId, ruleId, vote) => {
   };
 };
 
-export const voteOnRuleInsights = (clusterId, ruleId, vote) => dispatch => dispatch({
+export const voteOnRuleInsights = (clusterId, ruleId, errorKey, vote) => dispatch => dispatch({
   type: VOTE_ON_RULE_INSIGHTS,
-  payload: voteOnSingleRuleInsights(dispatch, clusterId, ruleId, vote),
+  payload: voteOnSingleRuleInsights(dispatch, clusterId, ruleId, errorKey, vote),
 });
 
 // clusterId is id of the cluster
 // ruleId is id of the rule
-const toggleSingleRuleInsights = async (dispatch, clusterId, ruleId, enable) => {
+const toggleSingleRuleInsights = async (dispatch, clusterId, ruleId, errorKey, enable) => {
   const action = enable ? insightsService.enableRuleInsights : insightsService.disableRuleInsights;
-  const response = action(clusterId, ruleId).then((resp) => {
+  const response = action(clusterId, ruleId, errorKey).then((resp) => {
     dispatch(fetchClusterInsights(clusterId));
 
     return resp;
@@ -103,9 +103,9 @@ const toggleSingleRuleInsights = async (dispatch, clusterId, ruleId, enable) => 
 // clusterId is id of the cluster
 // ruleId is id of the rule
 // feedback is feedback on rule
-const sendFeedbackOnSingleRuleDisableInsights = async (clusterId, ruleId, feedback) => {
+const sendFeedbackOnSingleRuleDisableInsights = async (clusterId, ruleId, errorKey, feedback) => {
   const response = await insightsService.sendFeedbackOnRuleDisableInsights(
-    clusterId, ruleId, feedback,
+    clusterId, ruleId, errorKey, feedback,
   );
 
   return {
@@ -115,25 +115,29 @@ const sendFeedbackOnSingleRuleDisableInsights = async (clusterId, ruleId, feedba
   };
 };
 
-export const disableRuleInsights = (clusterId, ruleId) => dispatch => (
+export const disableRuleInsights = (clusterId, ruleId, errorKey) => dispatch => (
   dispatch({
     type: DISABLE_RULE_INSIGHTS,
-    payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, false),
+    payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, errorKey, false),
   })
 );
 
-export const enableRuleInsights = (clusterId, ruleId) => dispatch => (
+export const enableRuleInsights = (clusterId, ruleId, errorKey) => dispatch => (
   dispatch({
     type: ENABLE_RULE_INSIGHTS,
-    payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, true),
+    payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, errorKey, true),
   })
 );
 
-export const sendFeedbackOnRuleDisableInsights = (clusterId, ruleId, feedback) => dispatch => (
-  dispatch({
-    type: SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS,
-    payload: sendFeedbackOnSingleRuleDisableInsights(clusterId, ruleId, feedback),
-  })
+export const sendFeedbackOnRuleDisableInsights = (
+  clusterId, ruleId, errorKey, feedback,
+) => dispatch => (
+  dispatch(
+    {
+      type: SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS,
+      payload: sendFeedbackOnSingleRuleDisableInsights(clusterId, ruleId, errorKey, feedback),
+    },
+  )
 );
 
 export const fetchGroups = () => dispatch => dispatch({
