@@ -7,7 +7,6 @@ import {
   fetchReportDetails,
   voteOnRuleInsights,
   enableRuleInsights,
-  sendFeedbackOnRuleDisableInsights,
 } from '../ClusterDetails/components/Insights/InsightsActions';
 
 import { setGlobalError, clearGlobalError } from '../../../redux/actions/globalErrorActions';
@@ -37,9 +36,8 @@ const mapDispatchToProps = {
   enableRule: (clusterUUID, ruleId) => enableRuleInsights(clusterUUID, ruleId),
   clearGlobalError,
   setGlobalError,
-  voteOnRule: (clusterUUID, ruleId, vote) => voteOnRuleInsights(clusterUUID, ruleId, vote),
-  sendFeedback: (clusterId, ruleId, feedback) => (
-    sendFeedbackOnRuleDisableInsights(clusterId, ruleId, feedback)
+  voteOnRule: (clusterUUID, ruleId, errorKey, vote) => voteOnRuleInsights(
+    clusterUUID, ruleId, errorKey, vote,
   ),
 };
 
