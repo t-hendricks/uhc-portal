@@ -11,7 +11,6 @@ describe('<InsightsTable />', () => {
     cluster: fixtures.clusterDetails.cluster,
     insightsData: fixtures.insightsData,
     groups: [],
-    voteOnRule: functions.voteOnRule,
     disableRule: functions.disableRule,
     enableRule: functions.enableRule,
     openModal: functions.openModal,
