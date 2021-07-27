@@ -27,7 +27,6 @@ import {
   enableRuleInsights,
   fetchClusterInsights,
   fetchGroups,
-  voteOnRuleInsights,
 } from './components/Insights/InsightsActions';
 import { getMachinePools, clearGetMachinePoolsResponse } from './components/MachinePools/MachinePoolsActions';
 import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
@@ -92,8 +91,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   fetchDetails: clusterId => fetchClusterDetails(clusterId),
   fetchClusterInsights,
   fetchGroups,
-  voteOnRule: (clusterId, ruleId, vote) => voteOnRuleInsights(clusterId, ruleId, vote),
-  enableRule: (clusterId, ruleId) => enableRuleInsights(clusterId, ruleId),
+  enableRule: (clusterId, ruleId, errorKey) => enableRuleInsights(clusterId, ruleId, errorKey),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
   invalidateClusters,

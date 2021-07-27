@@ -37,7 +37,6 @@ const funcs = () => ({
   resetClusterHistory: jest.fn(),
   enableRule: jest.fn(),
   disableRule: jest.fn(),
-  voteOnRule: jest.fn(),
   toggleSubscriptionReleased: jest.fn(),
   clearGetMachinePoolsResponse: jest.fn(),
   getNotificationContacts: jest.fn(),

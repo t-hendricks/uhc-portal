@@ -38,13 +38,14 @@ class OnRuleDisableFeedbackModal extends React.Component {
       sendFeedback,
       clusterId,
       ruleId,
+      errorKey,
       disableRule,
     } = this.props;
 
     const { feedback } = this.state;
 
-    await sendFeedback(clusterId, ruleId, feedback);
-    await disableRule(clusterId, ruleId);
+    await sendFeedback(clusterId, ruleId, errorKey, feedback);
+    await disableRule(clusterId, ruleId, errorKey);
 
     return true;
   };
@@ -110,8 +111,9 @@ OnRuleDisableFeedbackModal.propTypes = {
   hideWindow: PropTypes.func.isRequired,
   sendFeedback: PropTypes.func.isRequired,
   sendFeedbackOnRuleDisableResponse: PropTypes.object,
-  clusterId: PropTypes.string,
-  ruleId: PropTypes.string,
+  clusterId: PropTypes.string.isRequired,
+  ruleId: PropTypes.string.isRequired,
+  errorKey: PropTypes.string.isRequired,
   disableRule: PropTypes.func.isRequired,
 };
 
