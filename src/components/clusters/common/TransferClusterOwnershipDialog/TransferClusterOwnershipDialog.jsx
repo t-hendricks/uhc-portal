@@ -42,7 +42,7 @@ class TransferClusterOwnershipDialog extends Component {
     } = this.props;
 
     const changePullSecretUrl = 'https://access.redhat.com/solutions/4902871';
-    const descriptionText = subscription.status === subscriptionStatuses.DISCONNECTED ? (
+    const descriptionText = subscription?.status === subscriptionStatuses.DISCONNECTED ? (
       <>
         <TextList component={TextListVariants.ol}>
           <TextListItem>Initiate transfer</TextListItem>

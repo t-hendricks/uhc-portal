@@ -65,4 +65,9 @@ describe('<TransferClusterOwnershipDialog />', () => {
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(ErrorBox).length).toEqual(1);
   });
+
+  it('should not crash when subscription is undefined', () => {
+    wrapper.setProps({ subscription: undefined });
+    expect(wrapper).toMatchSnapshot();
+  });
 });
