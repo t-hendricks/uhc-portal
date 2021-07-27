@@ -33,7 +33,6 @@ import links, {
   githubReleasesToFetch,
   urlsSelector,
 } from '../../../common/installLinks';
-import TechPreviewBadge from '../../common/TechPreviewBadge';
 import DevPreviewBadge from '../../common/DevPreviewBadge';
 
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
@@ -284,7 +283,7 @@ const cliToolRows = (expanded, selections, setSelections, urls) => [
     <>
       OCM API command-line interface (ocm-cli)
       {' '}
-      <TechPreviewBadge />
+      <DevPreviewBadge />
     </>),
   descriptionRow(2,
     <TextContent>

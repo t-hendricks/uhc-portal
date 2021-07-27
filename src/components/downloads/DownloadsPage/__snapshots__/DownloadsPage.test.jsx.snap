@@ -231,7 +231,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     "title": <React.Fragment>
                       OCM API command-line interface (ocm-cli)
                        
-                      <TechPreviewBadge />
+                      <DevPreviewBadge />
                     </React.Fragment>,
                   },
                   "",

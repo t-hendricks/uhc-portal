@@ -41,7 +41,7 @@ import {
 import links from '../../common/installLinks';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
-import TechPreviewBadge from '../common/TechPreviewBadge';
+import DevPreviewBadge from '../common/DevPreviewBadge';
 import './Tokens.scss';
 
 /**
@@ -196,7 +196,7 @@ class Tokens extends React.Component {
       <>
         <ExternalLink href={links.OCM_CLI_LATEST} noIcon>ocm command-line tool</ExternalLink>
         {' '}
-        <TechPreviewBadge />
+        <DevPreviewBadge />
       </>
     );
   }
