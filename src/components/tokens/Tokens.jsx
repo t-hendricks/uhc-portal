@@ -146,18 +146,24 @@ class Tokens extends React.Component {
   componentDidMount() {
     const { blockedByTerms, show } = this.props;
     if (!blockedByTerms && show) {
-      this.loadToken();
+      // TODO: delay is a kludge which seems to reduce probability of redirect loop (?)
+      // https://issues.redhat.com/browse/SDA-4502
+      console.log('Tokens: componentDidMount', this.props);
+      setTimeout(this.loadToken, 1000);
     }
   }
 
   loadToken = () => {
     const that = this;
     insights.chrome.auth.getOfflineToken().then((response) => {
+      console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
       that.setState({ offlineAccessToken: response.data.refresh_token });
     }).catch((reason) => {
       if (reason === 'not available') {
+        console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
         insights.chrome.auth.doOffline();
       } else {
+        console.log('Tokens: getOfflineToken failed =>', reason);
         that.setState({ offlineAccessToken: reason });
       }
     });
