@@ -33,7 +33,7 @@ const mapDispatchToProps = {
     fetchReportDetails(clusterUUID, ruleId, errorKey, isOSD)
   ),
   openModal: modalActions.openModal,
-  enableRule: (clusterUUID, ruleId) => enableRuleInsights(clusterUUID, ruleId),
+  enableRule: (clusterId, ruleId, errorKey) => enableRuleInsights(clusterId, ruleId, errorKey),
   clearGlobalError,
   setGlobalError,
   voteOnRule: (clusterUUID, ruleId, errorKey, vote) => voteOnRuleInsights(

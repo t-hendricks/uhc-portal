@@ -95,8 +95,9 @@ class InsightsRuleDetails extends Component {
     }
   }
 
-  onRuleDisable(ruleId, errorKey) {
-    const { openModal, clusterDetails } = this.props;
+  onRuleDisable(ruleId) {
+    const { openModal, clusterDetails, match } = this.props;
+    const { errorKey } = match.params;
     const clusterId = get(clusterDetails, 'cluster.external_id');
     openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId, errorKey });
   }
