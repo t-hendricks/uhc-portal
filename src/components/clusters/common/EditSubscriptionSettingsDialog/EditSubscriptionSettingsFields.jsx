@@ -232,14 +232,16 @@ class EditSubscriptionSettingsFields extends Component {
       [SOCKET_TOTAL]: socketTotal,
     } = this.state;
 
-    const value = inputVal || (systemUnits === SOCKETS ? socketTotal : cpuTotal);
+    const stringValue = inputVal || (systemUnits === SOCKETS ? socketTotal : cpuTotal);
     // validate that `value` consists of decimal digits only
-    if (!/^\d+$/.test(`${value}`)) {
+    if (!/^\d+$/.test(`${stringValue}`)) {
       return {
         isValid: false,
         errorMsg: `${systemUnits} value can only be an integer number.`,
       };
     }
+    // now value is number for sure
+    const value = +stringValue;
     if (value < MIN_VAL) {
       return {
         isValid: false,
