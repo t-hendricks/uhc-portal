@@ -232,8 +232,9 @@ class EditSubscriptionSettingsFields extends Component {
       [SOCKET_TOTAL]: socketTotal,
     } = this.state;
 
-    const value = +(inputVal || (systemUnits === SOCKETS ? socketTotal : cpuTotal));
-    if (!Number.isInteger(value)) {
+    const value = inputVal || (systemUnits === SOCKETS ? socketTotal : cpuTotal);
+    // validate that `value` consists of decimal digits only
+    if (!/^\d+$/.test(`${value}`)) {
       return {
         isValid: false,
         errorMsg: `${systemUnits} value can only be an integer number.`,
