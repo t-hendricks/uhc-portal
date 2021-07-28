@@ -1704,7 +1704,8 @@
         "state": "ready",
         "dns_ready": true,
         "provision_error_message": "",
-        "provision_error_code": ""
+        "provision_error_code": "",
+        "configuration_mode": "full"
       },
       "node_drain_grace_period": {
         "value": 60,
@@ -2301,7 +2302,8 @@
         "state": "ready",
         "dns_ready": true,
         "provision_error_message": "",
-        "provision_error_code": ""
+        "provision_error_code": "",
+        "configuration_mode": "read_only"
       },
       "node_drain_grace_period": {
         "value": 60,
