@@ -2,7 +2,7 @@
 This repository contains the UI components for the OpenShift Cluster
 Manager site.
 
-The UI is a pure JavaScript application written in React and Redux.
+The UI is a JavaScript application written in React and Redux.
 Additionally it contains a helper development server, `backend`, written
 in Go.
 
@@ -45,6 +45,56 @@ yarn install
 yarn build
 ```
 
+# Running locally
+
+For a first time setup, run `make dev-env-setup`. This will ask for your `sudo` password, to add some entries to `/etc/hosts`
+
+After initial setup, run `yarn start`.
+
+The UI will be available at https://prod.foo.redhat.com:1337/openshift/
+
+## Running Without a Real Backend (mock backend)
+
+Sometimes the backend might be broken, but you still want to develop the
+UI. For this purpose we’ve created a basic mock server that sends mock
+data. It doesn’t support all actions the real backend supports, but it
+should allow you to run the UI and test basic read-only functionality.
+
+To configure the mock server with insights proxy, run `yarn insights-proxy-setup`
+then use `yarn startmock` to use the mock server
+
+# Automated Selenium tests
+
+## New style tests (webdriver.io)
+
+To make it easier for developers to write tests, we've decided to switch to a javascript based testing framework - [webdriver.io](https://webdriver.io).
+
+wdio tests are stored in the `selenium-js/` directory. We use the "page objects" pattern, in `selenium-js/pageobjects` - these define selectors for various components.
+
+Test cases are in `selenium-js/specs`.
+
+Short version: Don’t need anything running, just `yarn test-e2e` will start all services, run test & kill all services.  However when developing, the below procedure allows much faster iterations.
+
+Long version: To run these tests, assuming `yarn start` (or equivalent dev-env) is already running, run the following:
+
+1. `yarn selenium-browser` - this starts the browser container for the test. You can use VNC to connect to it to watch it in action, `localhost` with the password `secret`.
+
+2. Export the credentials in environment variables - `TEST_SELENIUM_WITHQUOTA_PASSWORD` and `TEST_SELENIUM_WITHQUOTA_USER`
+
+3. `yarn run wdio` or `yarn selenium-test` - runs the test.
+
+4.  Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`.
+    If you have Vinagre, simply run `yarn selenium-viewer`.
+
+
+# Alternative option for running locally: insights-proxy
+
+## The backend proxy
+
+You will need to start the backend proxy server, which acts as a
+proxy for the *OpenID* and API services that are required by the
+application.
+
 To build the `backend` proxy server run the `binaries` target of the
 *Makefile*:
 
@@ -52,27 +102,7 @@ To build the `backend` proxy server run the `binaries` target of the
 make binaries
 ```
 
-# Running locally
-
-To run the application in your development environment, you need 3
-things:
-
-1.  either a real or mock backend
-
-2.  insights "chrome" proxy
-
-3.  webpack dev server
-
-The following explains these parts in detail; see `README-tldr.md` file
-for quick commands that do all that.
-
-In general, once you configure your backend proxy, the `yarn start` command should suffice for running everything. The next section will teach you how to configure it.
-
-## A real backend
-
-You will need to start the backend proxy server, which acts as a
-proxy for the *OpenID* and API services that are required by the
-application. Before starting it make sure to have an offline access
+Before starting it make sure to have an offline access
 token, either in the `UHC_TOKEN` environment variable or in the `token`
 parameter of the configuration file:
 
@@ -141,18 +171,6 @@ proxies:
 That will forward requests starting with `/api/clusters_mgmt/` to your
 local clusters service, and the rest to the staging environment.
 
-## Running Without a Real Backend (mock backend)
-
-Sometimes the backend might be broken, but you still want to develop the
-UI. For this purpose we’ve created a basic mock server that sends mock
-data. It doesn’t support all actions the real backend supports, but it
-should allow you to run the UI and test basic read-only functionality.
-
-To run it, run `mockdata/mockserver.py`.
-
-Then follow below in another terminal, run `yarn dev-server-for-mock`
-instead of `yarn dev-server`, and you’ll get a working UI showing mock
-data running with the chromed environment.
 
 ## Insights "chrome" proxy
 
@@ -189,49 +207,6 @@ which tool the container will be updated/run.
 
   - Some ways to kill insights-proxy "detach" the container instead of
     exiting. `yarn stop-insights-proxy` helps.
-
-## Webpack dev server
-
-If using a real backend, run webpack with:
-
-    $ yarn build; yarn dev-server
-
-That also works with mockdata server, but all metrics timestamps will be
-"too old", hiding some of the UI. To disable these checks and show old
-metrics, use:
-
-    $ yarn build; yarn dev-server-for-mock
-
-The "build" step is crucial at the moment, but we should work to make it
-not required in the future.
-
-Once the server is running you can access your UI on
-<https://prod.foo.redhat.com:1337/openshift>.
-
-# Automated Selenium tests
-
-### Running old-style selenium Tests
-
-## New style tests (webdriver.io)
-
-To make it easier for developers to write tests, we've decided to switch to a javascript based testing framework - [webdriver.io](https://webdriver.io).
-
-wdio tests are stored in the `selenium-js/` directory. We use the "page objects" pattern, in `selenium-js/pageobjects` - these define selectors for various components.
-
-Test cases are in `selenium-js/specs`.
-
-Short version: Don’t need anything running, just `yarn test-e2e` will start all services, run test & kill all services.  However when developing, the below procedure allows much faster iterations.
-
-Long version: To run these tests, assuming `yarn start` (or equivalent dev-env) is already running, run the following:
-
-1. `yarn selenium-browser` - this starts the browser container for the test. You can use VNC to connect to it to watch it in action, `localhost` with the password `secret`.
-
-2. Export the credentials in environment variables - `TEST_SELENIUM_WITHQUOTA_PASSWORD` and `TEST_SELENIUM_WITHQUOTA_USER`
-
-3. `yarn run wdio` or `yarn selenium-test` - runs the test.
-
-4.  Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`.
-    If you have Vinagre, simply run `yarn selenium-viewer`.
 
 
 # Deploying
