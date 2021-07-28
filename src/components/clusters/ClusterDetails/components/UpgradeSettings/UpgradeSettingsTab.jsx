@@ -25,11 +25,21 @@ class UpgradeSettingsTab extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isAutomatic, schedules, pristine } = this.props;
+    const {
+      isAutomatic,
+      schedules,
+      pristine,
+      getClusterDetails,
+      editClusterRequest,
+      cluster,
+    } = this.props;
     const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual');
     if (!prevProps.isAutomatic && isAutomatic && !pristine && scheduledManualUpgrade) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ confirmationModalOpen: true });
+    }
+    if (prevProps.editClusterRequest.pending && editClusterRequest.fulfilled) {
+      getClusterDetails(cluster.subscription.id);
     }
   }
 
@@ -236,6 +246,7 @@ UpgradeSettingsTab.propTypes = {
     state: PropTypes.string,
   }),
   getSchedules: PropTypes.func.isRequired,
+  getClusterDetails: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   schedules: PropTypes.shape({
     fulfilled: PropTypes.bool,
@@ -254,6 +265,7 @@ UpgradeSettingsTab.propTypes = {
   editClusterRequest: PropTypes.shape({
     pending: PropTypes.bool,
     error: PropTypes.bool,
+    fulfilled: PropTypes.bool,
   }),
   reset: PropTypes.func,
   openModal: PropTypes.func,
