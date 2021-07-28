@@ -18,6 +18,7 @@ describe('<AddMachinePoolModal />', () => {
     subscription: {
       plan: {
         id: 'OSD',
+        type: 'OSD',
       },
     },
     multi_az: false,
@@ -40,7 +41,8 @@ describe('<AddMachinePoolModal />', () => {
       getOrganizationAndQuota={getOrganizationAndQuota}
       getMachineTypes={getMachineTypes}
       machineTypes={pendingRequest}
-      pristine={false}
+      anyTouched={false}
+      invalid={false}
       canAutoScale
       autoscalingEnabled
       change={change}

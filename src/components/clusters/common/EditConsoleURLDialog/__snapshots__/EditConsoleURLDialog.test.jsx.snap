@@ -3,7 +3,7 @@
 exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
 <Modal
   data-test-id="edit-console-url-dialog"
-  isPrimaryDisabled={false}
+  isPrimaryDisabled={true}
   onClose={[Function]}
   onPrimaryClick={[Function]}
   onSecondaryClick={[Function]}
@@ -36,7 +36,7 @@ exports[`<EditConsoleURLDialog /> renders correctly 1`] = `
 exports[`<EditConsoleURLDialog /> renders correctly when an erorr occurs 1`] = `
 <Modal
   data-test-id="edit-console-url-dialog"
-  isPrimaryDisabled={false}
+  isPrimaryDisabled={true}
   onClose={[Function]}
   onPrimaryClick={[Function]}
   onSecondaryClick={[Function]}

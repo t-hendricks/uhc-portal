@@ -51,43 +51,47 @@ function ClusterSettingsScreen({
           showAvailability
           change={change}
         />
-        <GridItem span={4}>
-          <FormGroup
-            label="Persistent storage"
-            fieldId="persistent_storage"
-            labelIcon={<PopoverHint hint={constants.persistentStorageHint} />}
-          >
-            <Field
-              name="persistent_storage"
-              component={PersistentStorageDropdown}
-              currentValue={null}
-              cloudProviderID={cloudProviderID}
-              billingModel={billingModel}
-              product={product}
-              isBYOC={isByoc}
-              isMultiAZ={isMultiAz}
-            />
-          </FormGroup>
-        </GridItem>
-        <GridItem span={8} />
-        <GridItem span={4}>
-          <FormGroup
-            label="Load balancers"
-            fieldId="load_balancers"
-            labelIcon={<PopoverHint hint={constants.loadBalancersHint} />}
-          >
-            <Field
-              name="load_balancers"
-              component={LoadBalancersDropdown}
-              currentValue={null}
-              cloudProviderID={cloudProviderID}
-              billingModel={billingModel}
-              product={product}
-              isBYOC={isByoc}
-              isMultiAZ={isMultiAz}
-            />
-          </FormGroup>
-        </GridItem>
+        { !isByoc && (
+          <>
+            <GridItem span={4}>
+              <FormGroup
+                label="Persistent storage"
+                fieldId="persistent_storage"
+                labelIcon={<PopoverHint hint={constants.persistentStorageHint} />}
+              >
+                <Field
+                  name="persistent_storage"
+                  component={PersistentStorageDropdown}
+                  currentValue={null}
+                  cloudProviderID={cloudProviderID}
+                  billingModel={billingModel}
+                  product={product}
+                  isBYOC={isByoc}
+                  isMultiAZ={isMultiAz}
+                />
+              </FormGroup>
+            </GridItem>
+            <GridItem span={8} />
+            <GridItem span={4}>
+              <FormGroup
+                label="Load balancers"
+                fieldId="load_balancers"
+                labelIcon={<PopoverHint hint={constants.loadBalancersHint} />}
+              >
+                <Field
+                  name="load_balancers"
+                  component={LoadBalancersDropdown}
+                  currentValue={null}
+                  cloudProviderID={cloudProviderID}
+                  billingModel={billingModel}
+                  product={product}
+                  isBYOC={isByoc}
+                  isMultiAZ={isMultiAz}
+                />
+              </FormGroup>
+            </GridItem>
+          </>
+        )}
         <UserWorkloadMonitoringSection parent="create" disableUVM={false} />
         <GridItem span={12}>
           <Title headingLevel="h3" className="clusterupdatespace">Cluster updates</Title>

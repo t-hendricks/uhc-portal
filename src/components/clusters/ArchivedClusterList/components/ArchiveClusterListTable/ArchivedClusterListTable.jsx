@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button } from '@patternfly/react-core';
+import { Button, Tooltip } from '@patternfly/react-core';
 import {
   cellWidth,
   classNames,
@@ -40,7 +40,7 @@ function ArchivedClusterListTable(props) {
 
   const sortColumns = {
     Name: 'display_name',
-    Type: 'plan.id',
+    Type: 'plan.type',
     Status: 'status',
   };
 
@@ -74,10 +74,26 @@ function ArchivedClusterListTable(props) {
         shouldDisplayClusterName: true,
       });
 
-    const unarchiveButton = cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED && (
-      <Button variant="secondary" onClick={openUnarchiveModal} isDisabled={!cluster.canEdit}>
+    const disabled = !cluster.canEdit;
+
+    const tooltipContent = 'You do not have permissions to unarchive this cluster';
+
+    const unarchiveBtn = (
+      <Button variant="secondary" onClick={openUnarchiveModal} isDisabled={disabled}>
         Unarchive
       </Button>
+    );
+    const unarchiveBtnCondition = cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED
+    && (
+      <>
+        {disabled ? (
+          <Tooltip content={tooltipContent}>
+            <span>
+              {unarchiveBtn}
+            </span>
+          </Tooltip>
+        ) : unarchiveBtn }
+      </>
     );
 
     return [
@@ -93,7 +109,7 @@ function ArchivedClusterListTable(props) {
         />,
       },
       {
-        title: unarchiveButton,
+        title: unarchiveBtnCondition,
       },
     ];
   };

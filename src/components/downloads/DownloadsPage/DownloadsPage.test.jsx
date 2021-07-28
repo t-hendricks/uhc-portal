@@ -20,7 +20,7 @@ const {
 // These tests depend on installLinks.js data.
 describe('allOperatingSystemsForTool', () => {
   it('excludes Windows for installer', () => {
-    const values = allOperatingSystemsForTool(tools.INSTALLER,
+    const values = allOperatingSystemsForTool(tools.X86INSTALLER,
       channels.STABLE).map(o => o.value);
     expect(values).toEqual([linux, mac]);
   });
@@ -59,7 +59,7 @@ describe('toolRow', () => {
   // By react hook rules, toolRow must be called inside a functional component.
   // For this test we only want the button from the last cell.
   const ToolRowButton = ({ tool }) => {
-    const channel = channels.STABLE;
+    const channel = (tool === tools.ARMINSTALLER) ? channels.PRE_RELEASE : channels.STABLE; // 4.9
     const initial = initialSelection(tool, channel, null);
     const row = toolRow({ [tool]: false }, { [tool]: initial }, () => {}, tool, channel, 'text');
     return row.cells[row.cells.length - 1].title;

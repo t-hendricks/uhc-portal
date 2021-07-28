@@ -5,6 +5,7 @@ import TimesIcon from '@patternfly/react-icons/dist/js/icons/times-icon';
 import TagsInput from 'react-tagsinput';
 
 import 'react-tagsinput/react-tagsinput.css';
+import './ReduxFormTagsInput.scss';
 
 class ReduxFormTagsInput extends Component {
   handleLabelsChange = (tags) => {

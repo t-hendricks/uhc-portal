@@ -32,6 +32,7 @@ import links, {
   operatingSystemOptions,
   architectureOptions,
 } from '../../../common/installLinks';
+import DevPreviewBadge from '../../common/DevPreviewBadge';
 
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
 import AlignRight from '../../common/AlignRight';
@@ -285,13 +286,13 @@ const devToolRows = (expanded, selections, setSelections) => [
 ];
 
 const installationRows = (expanded, selections, setSelections) => [
-  toolRow(expanded, selections, setSelections, tools.INSTALLER, channels.STABLE, 'OpenShift Installer'),
+  toolRow(expanded, selections, setSelections, tools.X86INSTALLER, channels.STABLE, 'OpenShift for x86_64 Installer'),
   descriptionRow(0,
     <TextContent>
       <Text>
         Download and extract your operating system&apos;s installation program and
         place the file in the directory where you&apos;ll store your configuration details.
-        After installing OpenShift, create clusters on supported infrastructure using our
+        Then, create clusters on supported x86_64 infrastructure using our
         {' '}
         <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
         {' '}
@@ -308,8 +309,73 @@ const installationRows = (expanded, selections, setSelections) => [
       </Text>
     </TextContent>),
 
-  toolRow(expanded, selections, setSelections, tools.CRC, channels.STABLE, 'CodeReady Containers'),
+  toolRow(expanded, selections, setSelections, tools.IBMZINSTALLER, channels.STABLE, 'OpenShift for IBM Z Installer'),
   descriptionRow(2,
+    <TextContent>
+      <Text>
+        Download and extract your operating system&apos;s installation program and
+        place the file in the directory where you&apos;ll store your configuration details.
+        Then, create clusters on supported IBM Z infrastructure using our
+        {' '}
+        <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
+        {' '}
+        as a guide.
+      </Text>
+      <Text>
+        Learn how to deploy in your
+        {' '}
+        <Link to="/install/ibmz/user-provisioned">data center</Link>
+        .
+      </Text>
+    </TextContent>),
+
+  toolRow(expanded, selections, setSelections, tools.PPCINSTALLER, channels.STABLE, 'OpenShift for Power Installer'),
+  descriptionRow(4,
+    <TextContent>
+      <Text>
+        Download and extract your operating system&apos;s installation program and
+        place the file in the directory where you&apos;ll store your configuration details.
+        Then, create clusters on supported Power infrastructure using our
+        {' '}
+        <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
+        {' '}
+        as a guide.
+      </Text>
+      <Text>
+        Learn how to deploy in your
+        {' '}
+        <Link to="/install/power/user-provisioned">data center</Link>
+        .
+      </Text>
+    </TextContent>),
+
+  toolRow(expanded, selections, setSelections, tools.ARMINSTALLER, channels.PRE_RELEASE,
+    <>
+      OpenShift for ARM Installer
+      {' '}
+      <DevPreviewBadge />
+    </>),
+  descriptionRow(6,
+    <TextContent>
+      <Text>
+        Download and extract your operating system&apos;s installation program and
+        place the file in the directory where you&apos;ll store your configuration details.
+        Then, create clusters on supported ARM infrastructure using our
+        {' '}
+        <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
+        {' '}
+        as a guide.
+      </Text>
+      <Text>
+        Learn how to deploy in
+        {' '}
+        <Link to="/install/aws/arm">AWS</Link>
+        .
+      </Text>
+    </TextContent>),
+
+  toolRow(expanded, selections, setSelections, tools.CRC, channels.STABLE, 'CodeReady Containers'),
+  descriptionRow(8,
     <TextContent>
       <Text>
         Download and open the CodeReady Containers file to automatically start
@@ -556,7 +622,9 @@ class DownloadsPage extends React.Component {
               description={(
                 <Text>
                   Install OpenShift based on your infrastructure.
-                  Start by downloading the installer, then follow the steps provided
+                  For the installer matching your infrastructure type, select
+                  the operating system and architecture on which you wish to
+                  run the installer.  Then follow the steps provided
                   within your infrastructure&apos;s tab on the
                   {' '}
                   <Link to="/create">create cluster</Link>

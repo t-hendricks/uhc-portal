@@ -91,7 +91,7 @@ class ExpiredTrialsCard extends React.Component {
     const actionResolver = ({ subscription }) => [
       {
         title: 'Edit subscription settings',
-        onClick: () => openModal('edit-subscription-settings', subscription),
+        onClick: () => openModal('edit-subscription-settings', { subscription }),
       },
       {
         title: 'Archive cluster',

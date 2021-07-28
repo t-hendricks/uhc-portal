@@ -96,9 +96,10 @@ class InsightsRuleDetails extends Component {
   }
 
   onRuleDisable(ruleId) {
-    const { openModal, clusterDetails } = this.props;
+    const { openModal, clusterDetails, match } = this.props;
+    const { errorKey } = match.params;
     const clusterId = get(clusterDetails, 'cluster.external_id');
-    openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId });
+    openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId, errorKey });
   }
 
   onVoteOnRule = async (clusterUUID, ruleId, vote) => {
@@ -110,7 +111,7 @@ class InsightsRuleDetails extends Component {
     } = this.props;
     const { errorKey } = match.params;
 
-    await voteOnRule(clusterUUID, ruleId, vote);
+    await voteOnRule(clusterUUID, ruleId, errorKey, vote);
     fetchReportData(clusterUUID, ruleId, errorKey, get(clusterDetails, 'cluster.managed', false));
   }
 
@@ -154,7 +155,7 @@ class InsightsRuleDetails extends Component {
     } = this.props;
 
     const { cluster } = clusterDetails;
-
+    const { errorKey } = match.params;
     const requestedSubscriptionID = match.params.subscriptionID;
     const requestedReportID = match.params.reportId.replace(/\|/g, '.');
     const externalId = get(clusterDetails, 'cluster.external_id');
@@ -227,16 +228,16 @@ class InsightsRuleDetails extends Component {
       return errorReportState();
     }
 
-    const moreinfoExist = !!reportDetails.report.more_info;
-    const reasonInfoExist = !!reportDetails.report.reason;
-    const resolutionInfoExist = !!reportDetails.report.resolution;
+    const moreinfoExist = !!reportDetails.report?.more_info;
+    const reasonInfoExist = !!reportDetails.report?.reason;
+    const resolutionInfoExist = !!reportDetails.report?.resolution;
     const {
       rule_id: currentRuleId,
       disabled: isRuleDisabled,
       disable_feedback: ruleDisableFeedback,
       disabled_at: ruleDisabledAtDate,
       more_info: moreinfoInsights,
-    } = reportDetails.report;
+    } = get(reportDetails, 'report', {});
 
     return (
       <PageSection id="ruledetails-content">
@@ -247,7 +248,7 @@ class InsightsRuleDetails extends Component {
           refreshFunc={this.refresh}
           voteOnRule={this.onVoteOnRule}
           disableRule={this.onRuleDisable}
-          enableRule={ruleId => enableRule(externalId, ruleId)}
+          enableRule={ruleId => enableRule(externalId, ruleId, errorKey)}
         >
           <TabsRow
             reasonTabRef={this.reasonTabRef}
@@ -271,7 +272,7 @@ class InsightsRuleDetails extends Component {
                     </div>
                   </CardBody>
                   <CardFooter>
-                    <Button variant="link" isInline onClick={() => enableRule(externalId, currentRuleId)}>
+                    <Button variant="link" isInline onClick={() => enableRule(externalId, currentRuleId, errorKey)}>
                       Enable recommendation
                     </Button>
                   </CardFooter>

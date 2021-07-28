@@ -31,7 +31,7 @@ class TermsAlert extends Component {
 
   isTermsReviewRequired() {
     const { subscription } = this.props;
-    const product = get(subscription, 'plan.id');
+    const product = get(subscription, 'plan.type');
     const status = get(subscription, 'status');
 
     return status !== subscriptionStatuses.DEPROVISIONED && (

@@ -78,9 +78,9 @@ const mapStateToProps = (state) => {
     machineTypes: state.machineTypes,
     cloudProviderID,
     isByoc: cluster?.ccs?.enabled,
-    product: get(cluster, 'subscription.plan.id', ''),
+    product: get(cluster, 'subscription.plan.type', ''),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
-    canAutoScale: canAutoScaleSelector(state, get(cluster, 'subscription.plan.id', '')),
+    canAutoScale: canAutoScaleSelector(state, get(cluster, 'subscription.plan.type', '')),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     billingModel: get(cluster, 'billing_model', ''),
@@ -137,7 +137,9 @@ const mapStateToProps = (state) => {
     machineType: get(selectedMachinePoolData, 'instance_type', ''),
     machinePoolId: selectedMachinePool,
     initialValues: {
-      nodes_compute: get(selectedMachinePoolData, 'replicas', null) || 0,
+      nodes_compute: get(selectedMachinePoolData, 'replicas', null)
+      || get(machinePoolWithAutoscale, 'min_replicas', null)
+      || 0,
       machine_pool: selectedMachinePool,
       autoscalingEnabled: machinePoolWithAutoscale,
       ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(selectedMachinePoolData.autoscaling)),

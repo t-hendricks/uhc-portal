@@ -25,6 +25,7 @@ describe('getClusterStateAndDescription', () => {
     const cluster = mockCluster({
       status: AIStatus,
       'subscription.plan.id': planId,
+      'subscription.plan.type': 'OCP',
     });
     const result = getClusterStateAndDescription(cluster);
     const AIState = AIConfig.CLUSTER_STATUS_LABELS[AIStatus];

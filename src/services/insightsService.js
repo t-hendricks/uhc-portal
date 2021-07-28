@@ -6,19 +6,19 @@ const insightsAPIRequest = params => apiRequest({
   baseURL: `${config.configData.insightsGateway}/insights-results-aggregator/v1`,
 });
 
-const putLikeOnRuleInsights = (clusterId, ruleId) => insightsAPIRequest({
+const putLikeOnRuleInsights = (clusterId, ruleId, errorKey) => insightsAPIRequest({
   method: 'put',
-  url: `/clusters/${clusterId}/rules/${ruleId}/like`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/error_key/${errorKey}/like`,
 });
 
-const putDislikeOnRuleInsights = (clusterId, ruleId) => insightsAPIRequest({
+const putDislikeOnRuleInsights = (clusterId, ruleId, errorKey) => insightsAPIRequest({
   method: 'put',
-  url: `/clusters/${clusterId}/rules/${ruleId}/dislike`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/error_key/${errorKey}/dislike`,
 });
 
-const resetVoteOnRuleInsights = (clusterId, ruleId) => insightsAPIRequest({
+const resetVoteOnRuleInsights = (clusterId, ruleId, errorKey) => insightsAPIRequest({
   method: 'put',
-  url: `/clusters/${clusterId}/rules/${ruleId}/reset_vote`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/error_key/${errorKey}/reset_vote`,
 });
 
 const getClusterInsights = (clusterId, isOSD) => insightsAPIRequest({
@@ -26,9 +26,9 @@ const getClusterInsights = (clusterId, isOSD) => insightsAPIRequest({
   url: `/clusters/${clusterId}/report?osd_eligible=${isOSD}&get_disabled=true`,
 });
 
-const disableRuleInsights = (clusterId, ruleId) => insightsAPIRequest({
+const disableRuleInsights = (clusterId, ruleId, errorKey) => insightsAPIRequest({
   method: 'put',
-  url: `/clusters/${clusterId}/rules/${ruleId}/disable`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/error_key/${errorKey}/disable`,
 });
 
 const getReportDetails = (clusterId, ruleId, errorKey, isOSD) => insightsAPIRequest({
@@ -36,14 +36,16 @@ const getReportDetails = (clusterId, ruleId, errorKey, isOSD) => insightsAPIRequ
   url: `/clusters/${clusterId}/rules/${ruleId.replace('.', '%2E')}|${errorKey}/report?osd_eligible=${isOSD}`,
 });
 
-const enableRuleInsights = (clusterId, ruleId) => insightsAPIRequest({
+const enableRuleInsights = (clusterId, ruleId, errorKey) => insightsAPIRequest({
   method: 'put',
-  url: `/clusters/${clusterId}/rules/${ruleId}/enable`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/error_key/${errorKey}/enable`,
 });
 
-const sendFeedbackOnRuleDisableInsights = (clusterId, ruleId, message) => insightsAPIRequest({
+const sendFeedbackOnRuleDisableInsights = (
+  clusterId, ruleId, errorKey, message,
+) => insightsAPIRequest({
   method: 'post',
-  url: `/clusters/${clusterId}/rules/${ruleId}/disable_feedback`,
+  url: `/clusters/${clusterId}/rules/${ruleId}/error_key/${errorKey}/disable_feedback`,
   data: { message },
 });
 

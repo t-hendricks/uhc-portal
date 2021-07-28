@@ -5,6 +5,9 @@ const getTrialExpiresInDays = (cluster) => {
   const trialEndDate = get(cluster, 'subscription.trial_end_date');
   if (trialEndDate) {
     const endsInDays = moment(trialEndDate).diff(moment(), 'days');
+    if (endsInDays === 0) {
+      return '< 1 day';
+    }
     return `${endsInDays} day${endsInDays === 1 ? '' : 's'}`;
   }
 

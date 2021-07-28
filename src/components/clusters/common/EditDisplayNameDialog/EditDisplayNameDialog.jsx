@@ -70,7 +70,7 @@ class EditDisplayNameDialog extends Component {
         secondaryText="Cancel"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={cancelEdit}
-        isPrimaryDisabled={!!validationMessage}
+        isPrimaryDisabled={!!validationMessage || currentValue === displayName}
         isPending={pending}
       >
         <>

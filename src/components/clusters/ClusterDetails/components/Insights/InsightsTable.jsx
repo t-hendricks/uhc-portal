@@ -121,11 +121,10 @@ class InsightsTable extends React.Component {
     }
   }
 
-  onRuleDisable(ruleId) {
+  onRuleDisable(ruleId, errorKey) {
     const { openModal, cluster } = this.props;
     const clusterId = cluster.external_id;
-
-    openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId });
+    openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId, errorKey });
   }
 
   setFilter = (filterName, filterValue) => {
@@ -355,14 +354,15 @@ class InsightsTable extends React.Component {
                 }
 
                 const { rule_id: ruleId, disabled } = shownDataForRow;
+                const errorKey = shownDataForRow.extra_data.error_key;
 
                 return [{
                   title: `${disabled ? 'Enable' : 'Disable'} recommendation`,
                   onClick: () => {
                     if (disabled) {
-                      enableRule(ruleId);
+                      enableRule(ruleId, errorKey);
                     } else {
-                      this.onRuleDisable(ruleId);
+                      this.onRuleDisable(ruleId, errorKey);
                     }
                   },
                 }];

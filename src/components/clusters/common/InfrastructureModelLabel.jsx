@@ -5,11 +5,11 @@ import get from 'lodash/get';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 
 function InfrastructureModelLabel({ cluster }) {
-  const planId = get(cluster, 'subscription.plan.id');
+  const planType = get(cluster, 'subscription.plan.type');
   const { ROSA, OSD } = normalizedProducts;
   const CCS = get(cluster, 'ccs.enabled');
 
-  if (planId === ROSA) {
+  if (planType === ROSA) {
     return 'Through AWS';
   }
 
@@ -17,7 +17,7 @@ function InfrastructureModelLabel({ cluster }) {
     return 'Customer cloud subscription';
   }
 
-  if (planId === OSD && !CCS) {
+  if (planType === OSD && !CCS) {
     return 'Red Hat cloud account';
   }
 

@@ -10,14 +10,20 @@ import { tools } from '../../../../../common/installLinks';
 const texts = {
   [tools.CRC]: 'Download CodeReady Containers',
   [tools.CLI_TOOLS]: 'Download command-line tools',
-  [tools.INSTALLER]: 'Download installer',
+  [tools.X86INSTALLER]: 'Download installer',
+  [tools.IBMZINSTALLER]: 'Download installer',
+  [tools.PPCINSTALLER]: 'Download installer',
+  [tools.ARMINSTALLER]: 'Download installer',
 };
 
 const pendoEvents = {
   [tools.CLI_TOOLS]: 'OCP-Download-CLITools',
   [tools.CRC]: 'OCP-Download-CRC',
   [tools.HELM]: 'Download-HELM-CLI',
-  [tools.INSTALLER]: 'OCP-Download-Installer',
+  [tools.X86INSTALLER]: 'OCP-Download-X86Installer',
+  [tools.IMBZINSTALLER]: 'OCP-Download-IBMZInstaller',
+  [tools.PPCINSTALLER]: 'OCP-Download-PPCInstaller',
+  [tools.ARMINSTALLER]: 'OCP-Download-ARMInstaller',
   [tools.OCM]: 'Download-OCM-CLI',
   [tools.ODO]: 'Download-ODO-CLI',
   [tools.RHOAS]: 'Download-RHOAS-CLI',
@@ -27,7 +33,7 @@ const pendoEvents = {
 const DownloadButton = ({
   url,
   disabled = false,
-  tool = tools.INSTALLER,
+  tool = tools.X86INSTALLER,
   pendoID,
   text = '',
   name = '',

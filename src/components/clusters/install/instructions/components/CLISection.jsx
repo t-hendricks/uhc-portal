@@ -5,10 +5,10 @@ import {
 
 import PropTypes from 'prop-types';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
-import { tools, channels, architectures } from '../../../../../common/installLinks';
+import { tools, channels } from '../../../../../common/installLinks';
 
 const CLISection = ({
-  token, pendoID, channel, architecture, isBMIPI = false,
+  token, pendoID, channel, isBMIPI = false,
 }) => (
   <>
     <Text component="p">
@@ -23,7 +23,6 @@ const CLISection = ({
         pendoID={pendoID}
         tool={tools.CLI_TOOLS}
         channel={channel}
-        architecture={architecture}
       />
     </div>
     <Text component="p" />
@@ -47,7 +46,6 @@ CLISection.propTypes = {
   pendoID: PropTypes.string,
   token: PropTypes.object.isRequired,
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
-  architecture: PropTypes.oneOf(Object.values(architectures)).isRequired,
   isBMIPI: PropTypes.bool,
 };
 
