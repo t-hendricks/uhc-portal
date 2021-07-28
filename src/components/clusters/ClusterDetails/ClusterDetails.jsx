@@ -224,12 +224,9 @@ class ClusterDetails extends Component {
       getClusterHistory(externalClusterID, clusterLogsViewOptions);
     }
 
-    if (clusterID) {
-      getAddOns(clusterID);
-    }
-
     if (isManaged) {
       // All managed-cluster-specific requests
+      getAddOns(clusterID);
       getUsers(clusterID);
       getClusterRouters(clusterID);
       getClusterAddOns(clusterID);
