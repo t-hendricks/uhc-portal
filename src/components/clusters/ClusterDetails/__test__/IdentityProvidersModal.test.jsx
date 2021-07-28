@@ -32,7 +32,7 @@ describe('<IdentityProvidersModal />', () => {
       initialValues={{
         isEditForm: false,
       }}
-      pristine={false}
+      anyTouched
       invalid={false}
     />);
   });
@@ -54,7 +54,7 @@ describe('<IdentityProvidersModal />', () => {
       initialValues={{
         isEditForm: false,
       }}
-      pristine={false}
+      anyTouched
       invalid={false}
     />);
     expect(wrapper).toMatchSnapshot();
