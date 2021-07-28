@@ -146,10 +146,8 @@ class Tokens extends React.Component {
   componentDidMount() {
     const { blockedByTerms, show } = this.props;
     if (!blockedByTerms && show) {
-      // TODO: delay is a kludge which seems to reduce probability of redirect loop (?)
-      // https://issues.redhat.com/browse/SDA-4502
-      console.log('Tokens: componentDidMount', this.props);
-      setTimeout(this.loadToken, 1000);
+      console.log('Tokens: componentDidMount, props =', this.props);
+      this.loadToken();
     }
   }
 
