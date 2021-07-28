@@ -79,8 +79,6 @@ class ClusterDetails extends Component {
     const {
       cloudProviders,
       getCloudProviders,
-      addOns,
-      getAddOns,
       clearGlobalError,
       getUserAccess,
     } = this.props;
@@ -91,9 +89,6 @@ class ClusterDetails extends Component {
 
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
-    }
-    if (!addOns.pending && !addOns.error && !addOns.fulfilled) {
-      getAddOns();
     }
     getUserAccess({ type: 'OCP' });
   }
@@ -198,6 +193,7 @@ class ClusterDetails extends Component {
     */
     const {
       clusterDetails,
+      getAddOns,
       getUsers,
       getOnDemandMetrics,
       getClusterAddOns,
@@ -225,6 +221,10 @@ class ClusterDetails extends Component {
 
     if (externalClusterID && clicked === 'clicked') {
       getClusterHistory(externalClusterID, clusterLogsViewOptions);
+    }
+
+    if (clusterID) {
+      getAddOns(clusterID);
     }
 
     if (isManaged) {
@@ -629,7 +629,6 @@ ClusterDetails.propTypes = {
     pending: PropTypes.bool,
     rejected: PropTypes.bool,
   }),
-  addOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   clusterDetails: PropTypes.shape({
@@ -687,7 +686,6 @@ ClusterDetails.defaultProps = {
     errorMessage: '',
     fulfilled: false,
   },
-  addOns: '',
 };
 
 export default ClusterDetails;

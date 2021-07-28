@@ -141,9 +141,9 @@ const getDashboard = id => apiRequest({
   url: `/api/clusters_mgmt/v1/dashboards/${id}`,
 });
 
-const getAddOns = () => apiRequest({
+const getAddOns = clusterID => apiRequest({
   method: 'get',
-  url: '/api/clusters_mgmt/v1/addons',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addon_inquiries`,
 });
 
 const getClusterAddOns = clusterID => apiRequest({
