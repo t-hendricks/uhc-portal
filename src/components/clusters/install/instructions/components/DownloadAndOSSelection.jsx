@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Grid,
   GridItem,
+  Text,
 } from '@patternfly/react-core';
 import { has, get } from 'lodash';
 
@@ -17,6 +18,31 @@ import {
   operatingSystemDropdown,
   architectureDropdown,
 } from '../../../../downloads/DownloadsPage/DownloadsPage';
+
+const crcInstructionsMapping = {
+  [operatingSystems.linux]: (
+    <Text>
+      Download and extract the CodeReady Containers archive for your
+      operating system and place the binary in your
+      {' '}
+      <code>$PATH</code>
+      {' '}
+      .
+    </Text>
+  ),
+  [operatingSystems.mac]: (
+    <Text>
+      Download and open the CodeReady Containers file. Opening the file will automatically
+      start a step-by-step installation guide.
+    </Text>
+  ),
+  [operatingSystems.windows]: (
+    <Text>
+      Download and extract the CodeReady Containers archive on your computer and open the
+      installer. Opening the installer will automatically start a step-by-step installation guide.
+    </Text>
+  ),
+};
 
 const toolRow = (selections, setSelections, tool, channel, token, pendoID) => {
   const { OS, architecture } = selections[tool] || initialSelection(tool, channel, detectOS());
@@ -67,29 +93,14 @@ class DownloadAndOSSelection extends React.Component {
     } = this.props;
     const { selections } = this.state;
 
-    const isMacInstructions = (selections[tool]?.OS || detectOS()) === operatingSystems.mac;
+    const OS = selections[tool]?.OS || detectOS();
     const isCRC = tool === tools.CRC;
 
     const chooser = toolRow(selections, this.setSelections, tool, channel, token, pendoID);
 
     return (
       <>
-        {isCRC && (isMacInstructions ? (
-          <p>
-            Download and open the CodeReady Containers file. Opening the file will automatically
-            start a step-by-step installation guide.
-            {' '}
-          </p>
-        ) : (
-          <p>
-            Download and extract the CodeReady Containers archive for your
-            operating system and place the binary in your
-            {' '}
-            <code>$PATH</code>
-            {' '}
-            .
-          </p>
-        ))}
+        {isCRC && crcInstructionsMapping[OS]}
         <Grid hasGutter className="os-based-download">
           <GridItem sm={12} md={3}>
             {chooser.osDropdown}
