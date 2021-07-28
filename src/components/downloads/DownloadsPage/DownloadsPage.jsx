@@ -573,6 +573,8 @@ class DownloadsPage extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Downloads | Red Hat OpenShift Cluster Manager';
+
     const { getAuthToken, githubReleases, getLatestRelease } = this.props;
     getAuthToken();
     githubReleasesToFetch.forEach((repo) => {
@@ -658,7 +660,7 @@ class DownloadsPage extends React.Component {
                 <Text>
                   Download command line tools to manage and work with OpenShift from your terminal.
                 </Text>
-              )}
+                )}
             >
               <Table
                 aria-label="CLI tools table"
@@ -681,7 +683,7 @@ class DownloadsPage extends React.Component {
                   {' '}
                   <ExternalLink href="https://developers.redhat.com/topics/developer-tools">Learn more</ExternalLink>
                 </Text>
-              )}
+                )}
             >
               <Table
                 aria-label="Developer tools table"
