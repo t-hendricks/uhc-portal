@@ -4,7 +4,7 @@ import get from 'lodash/get';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import {
-  Button, Alert, Split, SplitItem, Title,
+  Button, Alert, Split, SplitItem, Title, Tooltip,
 } from '@patternfly/react-core';
 
 import clusterStates from '../../common/clusterStates';
@@ -40,7 +40,7 @@ function ClusterDetailsTop(props) {
     toggleSubscriptionReleased,
   } = props;
 
-  const isProductOSDTrial = get(cluster, 'subscription.plan.id', '') === normalizedProducts.OSDTrial;
+  const isProductOSDTrial = get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTrial;
   const clusterName = getClusterName(cluster);
   const consoleURL = cluster.console ? cluster.console.url : false;
 
@@ -134,6 +134,22 @@ function ClusterDetailsTop(props) {
 
   const trialEndDate = isProductOSDTrial && get(cluster, 'subscription.trial_end_date');
 
+  const disabled = !cluster.canEdit;
+
+  const tooltipContent = 'You do not have permissions to unarchive this cluster';
+
+  const unarchiveBtn = (
+    <Button
+      variant="secondary"
+      onClick={() => openModal(modals.UNARCHIVE_CLUSTER, {
+        subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+        name: clusterName,
+      })}
+      isDisabled={disabled}
+    >
+      Unarchive
+    </Button>
+  );
   return (
     <div id="cl-details-top" className="top-row">
       <Split>
@@ -158,16 +174,15 @@ function ClusterDetailsTop(props) {
                 {actions}
               </>
             ) : !isDeprovisioned && (
-              <Button
-                variant="secondary"
-                onClick={() => openModal(modals.UNARCHIVE_CLUSTER, {
-                  subscriptionID: cluster.subscription ? cluster.subscription.id : '',
-                  name: clusterName,
-                })}
-                isDisabled={!cluster.canEdit}
-              >
-                Unarchive
-              </Button>
+              <>
+                {disabled ? (
+                  <Tooltip content={tooltipContent}>
+                    <span>
+                      {unarchiveBtn}
+                    </span>
+                  </Tooltip>
+                ) : unarchiveBtn }
+              </>
             )}
             { !isDeprovisioned && !isArchived && (
               <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />

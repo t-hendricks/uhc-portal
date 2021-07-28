@@ -282,7 +282,6 @@ class ClusterDetails extends Component {
       displayClusterLogs,
       insightsData,
       groups,
-      voteOnRule,
       enableRule,
       canSubscribeOCP,
       canTransferClusterOwnership,
@@ -350,8 +349,8 @@ class ClusterDetails extends Component {
     const clusterHibernating = isHibernating(cluster.state);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED
     || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
-    const isAROCluster = get(cluster, 'subscription.plan.id', '') === knownProducts.ARO;
-    const isOSDTrial = get(cluster, 'subscription.plan.id', '') === knownProducts.OSDTrial;
+    const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
+    const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
     const isManaged = cluster.managed;
     const isClusterPending = cluster.state === clusterStates.PENDING;
     const isClusterInstalling = cluster.state === clusterStates.INSTALLING;
@@ -521,11 +520,8 @@ class ClusterDetails extends Component {
                 cluster={cluster}
                 groups={get(groups, 'groups', [])}
                 insightsData={insightsData[cluster.external_id]}
-                voteOnRule={(ruleId, vote) => {
-                  voteOnRule(cluster.external_id, ruleId, vote);
-                }}
-                enableRule={(ruleId) => {
-                  enableRule(cluster.external_id, ruleId);
+                enableRule={(ruleId, errorKey) => {
+                  enableRule(cluster.external_id, ruleId, errorKey);
                 }}
                 openModal={openModal}
               />
@@ -657,7 +653,6 @@ ClusterDetails.propTypes = {
   getClusterHistory: PropTypes.func.isRequired,
   getMachinePools: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
-  voteOnRule: PropTypes.func.isRequired,
   enableRule: PropTypes.func.isRequired,
   setOpenedTab: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,

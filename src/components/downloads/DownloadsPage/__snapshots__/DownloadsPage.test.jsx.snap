@@ -561,6 +561,10 @@ exports[`<DownloadsPage> renders 1`] = `
                         value="x86"
                       />
                       <FormSelectOption
+                        label="aarch64"
+                        value="arm"
+                      />
+                      <FormSelectOption
                         label="ppc64le"
                         value="ppc"
                       />
@@ -613,7 +617,7 @@ exports[`<DownloadsPage> renders 1`] = `
         category="INSTALLATION"
         description={
           <Text>
-            Install OpenShift based on your infrastructure. Start by downloading the installer, then follow the steps provided within your infrastructure's tab on the
+            Install OpenShift based on your infrastructure. For the installer matching your infrastructure type, select the operating system and architecture on which you wish to run the installer.  Then follow the steps provided within your infrastructure's tab on the
              
             <Link
               to="/create"
@@ -686,7 +690,336 @@ exports[`<DownloadsPage> renders 1`] = `
                 "cells": Array [
                   "",
                   Object {
-                    "title": "OpenShift Installer",
+                    "title": "OpenShift for x86_64 Installer",
+                  },
+                  Object {
+                    "title": <FormSelect
+                      aria-label="Select OS dropdown"
+                      className=""
+                      isDisabled={false}
+                      isRequired={false}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      ouiaSafe={true}
+                      validated="default"
+                      value="linux"
+                    >
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="Select OS"
+                        value="select"
+                      />
+                      <FormSelectOption
+                        label="Linux"
+                        value="linux"
+                      />
+                      <FormSelectOption
+                        label="MacOS"
+                        value="mac"
+                      />
+                    </FormSelect>,
+                  },
+                  Object {
+                    "title": <FormSelect
+                      aria-label="Select architecture dropdown"
+                      className=""
+                      isDisabled={true}
+                      isRequired={false}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      ouiaSafe={true}
+                      validated="default"
+                      value="x86"
+                    >
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="Select architecture"
+                        value="select"
+                      />
+                      <FormSelectOption
+                        label="x86_64"
+                        value="x86"
+                      />
+                    </FormSelect>,
+                  },
+                  Object {
+                    "title": <AlignRight>
+                      <DownloadButton
+                        text="Download"
+                        tool="X86INSTALLER"
+                        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-install-linux.tar.gz"
+                      />
+                    </AlignRight>,
+                  },
+                ],
+                "expandKey": "X86INSTALLER",
+                "isOpen": false,
+              },
+              Object {
+                "cells": Array [
+                  Object {
+                    "title": <TextContent>
+                      <Text>
+                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported x86_64 infrastructure using our
+                         
+                        <ExternalLink
+                          href="https://docs.openshift.com/container-platform/latest/installing/index.html"
+                        >
+                          documentation
+                        </ExternalLink>
+                         
+                        as a guide.
+                      </Text>
+                      <Text>
+                        Learn how to deploy in the
+                         
+                        <Link
+                          to="/create"
+                        >
+                          cloud
+                        </Link>
+                        , or in your
+                         
+                        <Link
+                          to="/create/datacenter"
+                        >
+                          data center
+                        </Link>
+                        .
+                      </Text>
+                    </TextContent>,
+                  },
+                ],
+                "fullWidth": true,
+                "parent": 0,
+              },
+              Object {
+                "cells": Array [
+                  "",
+                  Object {
+                    "title": "OpenShift for IBM Z Installer",
+                  },
+                  Object {
+                    "title": <FormSelect
+                      aria-label="Select OS dropdown"
+                      className=""
+                      isDisabled={false}
+                      isRequired={false}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      ouiaSafe={true}
+                      validated="default"
+                      value="linux"
+                    >
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="Select OS"
+                        value="select"
+                      />
+                      <FormSelectOption
+                        label="Linux"
+                        value="linux"
+                      />
+                      <FormSelectOption
+                        label="MacOS"
+                        value="mac"
+                      />
+                    </FormSelect>,
+                  },
+                  Object {
+                    "title": <FormSelect
+                      aria-label="Select architecture dropdown"
+                      className=""
+                      isDisabled={true}
+                      isRequired={false}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      ouiaSafe={true}
+                      validated="default"
+                      value="s390x"
+                    >
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="Select architecture"
+                        value="select"
+                      />
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="x86_64"
+                        title="This type of architecture is not available for the selected OS type"
+                        value="x86"
+                      />
+                      <FormSelectOption
+                        label="s390x"
+                        value="s390x"
+                      />
+                    </FormSelect>,
+                  },
+                  Object {
+                    "title": <AlignRight>
+                      <DownloadButton
+                        text="Download"
+                        tool="IBMZINSTALLER"
+                        url="https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz"
+                      />
+                    </AlignRight>,
+                  },
+                ],
+                "expandKey": "IBMZINSTALLER",
+                "isOpen": false,
+              },
+              Object {
+                "cells": Array [
+                  Object {
+                    "title": <TextContent>
+                      <Text>
+                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported IBM Z infrastructure using our
+                         
+                        <ExternalLink
+                          href="https://docs.openshift.com/container-platform/latest/installing/index.html"
+                        >
+                          documentation
+                        </ExternalLink>
+                         
+                        as a guide.
+                      </Text>
+                      <Text>
+                        Learn how to deploy in your
+                         
+                        <Link
+                          to="/install/ibmz/user-provisioned"
+                        >
+                          data center
+                        </Link>
+                        .
+                      </Text>
+                    </TextContent>,
+                  },
+                ],
+                "fullWidth": true,
+                "parent": 2,
+              },
+              Object {
+                "cells": Array [
+                  "",
+                  Object {
+                    "title": "OpenShift for Power Installer",
+                  },
+                  Object {
+                    "title": <FormSelect
+                      aria-label="Select OS dropdown"
+                      className=""
+                      isDisabled={false}
+                      isRequired={false}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      ouiaSafe={true}
+                      validated="default"
+                      value="linux"
+                    >
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="Select OS"
+                        value="select"
+                      />
+                      <FormSelectOption
+                        label="Linux"
+                        value="linux"
+                      />
+                      <FormSelectOption
+                        label="MacOS"
+                        value="mac"
+                      />
+                    </FormSelect>,
+                  },
+                  Object {
+                    "title": <FormSelect
+                      aria-label="Select architecture dropdown"
+                      className=""
+                      isDisabled={true}
+                      isRequired={false}
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      ouiaSafe={true}
+                      validated="default"
+                      value="ppc"
+                    >
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="Select architecture"
+                        value="select"
+                      />
+                      <FormSelectOption
+                        isDisabled={true}
+                        label="x86_64"
+                        title="This type of architecture is not available for the selected OS type"
+                        value="x86"
+                      />
+                      <FormSelectOption
+                        label="ppc64le"
+                        value="ppc"
+                      />
+                    </FormSelect>,
+                  },
+                  Object {
+                    "title": <AlignRight>
+                      <DownloadButton
+                        text="Download"
+                        tool="PPCINSTALLER"
+                        url="https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz"
+                      />
+                    </AlignRight>,
+                  },
+                ],
+                "expandKey": "PPCINSTALLER",
+                "isOpen": false,
+              },
+              Object {
+                "cells": Array [
+                  Object {
+                    "title": <TextContent>
+                      <Text>
+                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported Power infrastructure using our
+                         
+                        <ExternalLink
+                          href="https://docs.openshift.com/container-platform/latest/installing/index.html"
+                        >
+                          documentation
+                        </ExternalLink>
+                         
+                        as a guide.
+                      </Text>
+                      <Text>
+                        Learn how to deploy in your
+                         
+                        <Link
+                          to="/install/power/user-provisioned"
+                        >
+                          data center
+                        </Link>
+                        .
+                      </Text>
+                    </TextContent>,
+                  },
+                ],
+                "fullWidth": true,
+                "parent": 4,
+              },
+              Object {
+                "cells": Array [
+                  "",
+                  Object {
+                    "title": <React.Fragment>
+                      OpenShift for ARM Installer
+                       
+                      <DevPreviewBadge />
+                    </React.Fragment>,
                   },
                   Object {
                     "title": <FormSelect
@@ -739,12 +1072,8 @@ exports[`<DownloadsPage> renders 1`] = `
                         value="x86"
                       />
                       <FormSelectOption
-                        label="ppc64le"
-                        value="ppc"
-                      />
-                      <FormSelectOption
-                        label="s390x"
-                        value="s390x"
+                        label="aarch64"
+                        value="arm"
                       />
                     </FormSelect>,
                   },
@@ -752,13 +1081,13 @@ exports[`<DownloadsPage> renders 1`] = `
                     "title": <AlignRight>
                       <DownloadButton
                         text="Download"
-                        tool="INSTALLER"
-                        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-install-linux.tar.gz"
+                        tool="ARMINSTALLER"
+                        url="https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz"
                       />
                     </AlignRight>,
                   },
                 ],
-                "expandKey": "INSTALLER",
+                "expandKey": "ARMINSTALLER",
                 "isOpen": false,
               },
               Object {
@@ -766,7 +1095,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Object {
                     "title": <TextContent>
                       <Text>
-                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. After installing OpenShift, create clusters on supported infrastructure using our
+                        Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported ARM infrastructure using our
                          
                         <ExternalLink
                           href="https://docs.openshift.com/container-platform/latest/installing/index.html"
@@ -777,19 +1106,12 @@ exports[`<DownloadsPage> renders 1`] = `
                         as a guide.
                       </Text>
                       <Text>
-                        Learn how to deploy in the
+                        Learn how to deploy in
                          
                         <Link
-                          to="/create"
+                          to="/install/aws/arm"
                         >
-                          cloud
-                        </Link>
-                        , or in your
-                         
-                        <Link
-                          to="/create/datacenter"
-                        >
-                          data center
+                          AWS
                         </Link>
                         .
                       </Text>
@@ -797,7 +1119,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   },
                 ],
                 "fullWidth": true,
-                "parent": 0,
+                "parent": 6,
               },
               Object {
                 "cells": Array [
@@ -894,7 +1216,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   },
                 ],
                 "fullWidth": true,
-                "parent": 2,
+                "parent": 8,
               },
             ]
           }

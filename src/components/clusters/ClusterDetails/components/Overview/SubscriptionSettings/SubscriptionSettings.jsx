@@ -42,7 +42,7 @@ function SubscriptionSettings({
   }
 
   const handleEditSettings = () => {
-    openModal('edit-subscription-settings', subscription);
+    openModal('edit-subscription-settings', { subscription });
   };
 
   const status = get(subscription, 'status');

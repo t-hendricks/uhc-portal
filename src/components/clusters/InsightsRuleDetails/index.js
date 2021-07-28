@@ -7,7 +7,6 @@ import {
   fetchReportDetails,
   voteOnRuleInsights,
   enableRuleInsights,
-  sendFeedbackOnRuleDisableInsights,
 } from '../ClusterDetails/components/Insights/InsightsActions';
 
 import { setGlobalError, clearGlobalError } from '../../../redux/actions/globalErrorActions';
@@ -34,12 +33,11 @@ const mapDispatchToProps = {
     fetchReportDetails(clusterUUID, ruleId, errorKey, isOSD)
   ),
   openModal: modalActions.openModal,
-  enableRule: (clusterUUID, ruleId) => enableRuleInsights(clusterUUID, ruleId),
+  enableRule: (clusterId, ruleId, errorKey) => enableRuleInsights(clusterId, ruleId, errorKey),
   clearGlobalError,
   setGlobalError,
-  voteOnRule: (clusterUUID, ruleId, vote) => voteOnRuleInsights(clusterUUID, ruleId, vote),
-  sendFeedback: (clusterId, ruleId, feedback) => (
-    sendFeedbackOnRuleDisableInsights(clusterId, ruleId, feedback)
+  voteOnRule: (clusterUUID, ruleId, errorKey, vote) => voteOnRuleInsights(
+    clusterUUID, ruleId, errorKey, vote,
   ),
 };
 

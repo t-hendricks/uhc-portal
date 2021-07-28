@@ -3,7 +3,7 @@
 exports[`<AddMachinePoolModal /> renders correctly 1`] = `
 <Modal
   description="A machine pool is a group of machines that are all clones of the same configuration, that can be used on demand by an application running on a pod."
-  isPrimaryDisabled={false}
+  isPrimaryDisabled={true}
   onClose={[Function]}
   onPrimaryClick={[MockFunction]}
   onSecondaryClick={[Function]}
@@ -39,7 +39,6 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
       <ScaleSection
         autoScaleMaxNodesValue="0"
         autoScaleMinNodesValue="0"
-        autoscaleAndNodeCountGridSpan={6}
         autoscalingEnabled={true}
         billingModel="standard"
         canAutoScale={true}
@@ -47,7 +46,6 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         cloudProviderID="aws"
         handleMachineTypesChange={[Function]}
         inModal={true}
-        instanceTypeGridSpan={6}
         isBYOC={false}
         isMachinePool={true}
         isMultiAz={false}

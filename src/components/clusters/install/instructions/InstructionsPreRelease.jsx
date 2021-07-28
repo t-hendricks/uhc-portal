@@ -14,14 +14,14 @@ import {
 } from '@patternfly/react-core';
 import { CodeIcon } from '@patternfly/react-icons';
 
-import links, { channels, architectures } from '../../../../common/installLinks';
+import links, { tools, channels } from '../../../../common/installLinks';
 import TelemetryDisclaimer from './components/TelemetryDisclaimer';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import DeveloperPreviewStatements from './components/DeveloperPreviewStatements';
 import './InstructionsPreRelease.scss';
 
-function InstructionsPreRelease({ token }) {
+function InstructionsPreRelease({ token, installer }) {
   return (
     <>
       <Title headingLevel="h3" size="2xl">
@@ -76,8 +76,8 @@ function InstructionsPreRelease({ token }) {
                 token={token}
                 showPreReleaseDocs
                 showPreReleasePageLink={false}
+                tool={installer}
                 channel={channels.PRE_RELEASE}
-                architecture={architectures.x86} // TODO: support other architectures
               />
             </CardBody>
             <CardFooter className="ocm-c-pre-release-instructions__card--footer">
@@ -108,6 +108,7 @@ function InstructionsPreRelease({ token }) {
 
 InstructionsPreRelease.propTypes = {
   token: PropTypes.object.isRequired,
+  installer: PropTypes.oneOf(Object.values(tools)).isRequired,
 };
 
 export default InstructionsPreRelease;

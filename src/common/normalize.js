@@ -15,8 +15,8 @@ import { isAISubscriptionWithoutMetrics } from './isAssistedInstallerCluster';
 /**
  * Erases the differences between clusters-service products and account-manager plans
  * which use related but different values (see https://issues.redhat.com/browse/SDB-1625).
- * @param {string} id - one of cluster.product.id, subscription.plan.id,
- *   quota_cost.related_resources[].product (including "any").
+ * @param {string} id - one of cluster.product.id, subscription.plan.type,
+ *   subscription.plan.id, quota_cost.related_resources[].product (including "any").
  * @returns {string} one of subscriptionTypes.normalizedProducts consts.
  */
 const normalizeProductID = (id) => {
@@ -142,7 +142,7 @@ const fakeClusterFromSubscription = (subscription) => {
       id: normalizeProductID(subscription.plan.id),
       type: normalizeProductID(subscription.plan.type),
     },
-    managed: clustersServiceProducts.includes(normalizeProductID(subscription.plan.id)),
+    managed: clustersServiceProducts.includes(normalizeProductID(subscription.plan.type)),
     ccs: {
       enabled: false,
     },

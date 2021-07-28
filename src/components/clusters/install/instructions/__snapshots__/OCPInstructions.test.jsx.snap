@@ -22,12 +22,12 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="AWS"
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -112,12 +112,12 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="AWS"
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -202,12 +202,12 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="Azure"
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -292,12 +292,12 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="preRelease"
               cloudProviderID="Azure"
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -382,12 +382,12 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="Bare Metal"
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -472,13 +472,13 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="Bare Metal"
               displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -563,12 +563,12 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="GCP"
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -653,13 +653,13 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="GCP"
               displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -744,13 +744,14 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="s390x"
               channel="stable"
               cloudProviderID="IBM-Z"
               displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
+              preReleasePageLink="/install/ibmz/pre-release"
               token={Object {}}
+              tool="IBMZINSTALLER"
             />
           </SplitItem>
         </Split>
@@ -835,13 +836,14 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="ppc"
               channel="stable"
               cloudProviderID="Power"
               displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
+              preReleasePageLink="/install/power/pre-release"
               token={Object {}}
+              tool="PPCINSTALLER"
             />
           </SplitItem>
         </Split>
@@ -926,12 +928,12 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="Red Hat OpenStack Platform"
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -1016,13 +1018,13 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="Red Hat OpenStack Platform"
               displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -1107,12 +1109,12 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="Red Hat Virutalization"
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -1197,12 +1199,12 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="Red Hat Virutalization"
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -1287,12 +1289,12 @@ exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="VMware vSphere"
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>
@@ -1377,13 +1379,13 @@ exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
             isFilled={true}
           >
             <DownloadsAndPullSecretSection
-              architecture="x86"
               channel="stable"
               cloudProviderID="VMware vSphere"
               displayRHCOSSection={true}
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
+              tool="X86INSTALLER"
             />
           </SplitItem>
         </Split>

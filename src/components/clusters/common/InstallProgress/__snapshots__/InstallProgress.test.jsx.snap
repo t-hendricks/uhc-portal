@@ -355,6 +355,7 @@ exports[`<InstallProgress /> should render correclty installing cluster 1`] = `
               "href": "/api/accounts_mgmt/v1/plans/OSD",
               "id": "OSD",
               "kind": "Plan",
+              "type": "OSD",
             },
             "provenance": "Provisioning",
             "region_id": "us-east-1",

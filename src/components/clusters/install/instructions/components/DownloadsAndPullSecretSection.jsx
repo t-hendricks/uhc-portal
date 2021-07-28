@@ -13,7 +13,7 @@ import DownloadAndOSSelection from './DownloadAndOSSelection';
 import CLISection from './CLISection';
 import RHCOSSection from './RHCOSSection/RHCOSSection';
 import DeveloperPreviewSection from './DeveloperPreviewSection';
-import links, { tools, channels, architectures } from '../../../../../common/installLinks';
+import links, { tools, channels } from '../../../../../common/installLinks';
 
 function DownloadsAndPullSecretSection({
   displayRHCOSSection = false,
@@ -21,10 +21,11 @@ function DownloadsAndPullSecretSection({
   showPreReleaseDocs = false,
   preReleaseDocsLink = links.INSTALL_PRE_RELEASE_INSTALLER_DOC,
   showPreReleasePageLink = true,
+  preReleasePageLink = '/install/pre-release',
   children,
   pendoID,
+  tool,
   channel,
-  architecture,
   cloudProviderID,
   isBMIPI,
 }) {
@@ -58,12 +59,15 @@ function DownloadsAndPullSecretSection({
                 )}
                 <DownloadAndOSSelection
                   token={token}
-                  tool={tools.INSTALLER}
+                  tool={tool}
                   channel={channel}
-                  architecture={architecture}
                   pendoID={pendoID}
                 />
-                {showPreReleasePageLink && <div><DeveloperPreviewSection /></div>}
+                {showPreReleasePageLink && (
+                  <div>
+                    <DeveloperPreviewSection devPreviewLink={preReleasePageLink} />
+                  </div>
+                )}
               </>
             )}
           </TextContent>
@@ -81,7 +85,6 @@ function DownloadsAndPullSecretSection({
               token={token}
               pendoID={pendoID}
               channel={channel}
-              architecture={architecture}
               isBMIPI={isBMIPI}
             />
           </TextContent>
@@ -107,11 +110,12 @@ DownloadsAndPullSecretSection.propTypes = {
   showPreReleasePageLink: PropTypes.bool,
   showPreReleaseDocs: PropTypes.bool,
   preReleaseDocsLink: PropTypes.string,
+  preReleasePageLink: PropTypes.string,
   token: PropTypes.object,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   pendoID: PropTypes.string,
+  tool: PropTypes.oneOf(Object.values(tools)).isRequired,
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
-  architecture: PropTypes.oneOf(Object.values(architectures)).isRequired,
   cloudProviderID: PropTypes.string, // required when displayRHCOSSection = true.
   isBMIPI: PropTypes.bool,
   displayRHCOSSection: PropTypes.bool,
