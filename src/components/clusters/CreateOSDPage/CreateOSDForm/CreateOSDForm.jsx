@@ -225,7 +225,7 @@ class CreateOSDForm extends React.Component {
                   and add it here.
                 </p>
               </GridItem>
-              <GridItem sm={12} md={5} lg={4}>
+              <GridItem>
                 <Field
                   component={ReduxFileUpload}
                   validate={[required, validateGCPServiceAccount]}

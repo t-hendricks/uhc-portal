@@ -9,16 +9,16 @@ import AWSAccountDetailsSection from '../../CreateOSDForm/FormSections/AWSAccoun
 function AWSByocFields() {
   return (
     <>
-      <GridItem span={12}>
+      <GridItem>
         <Alert variant="info" isInline title="Customer cloud subscription">
           Provision your cluster in an AWS account owned by you or your company
           to leverage your existing relationship and pay AWS directly for public cloud costs.
         </Alert>
       </GridItem>
-      <GridItem span={12}>
+      <GridItem>
         <Title headingLevel="h3">AWS account details</Title>
       </GridItem>
-      <GridItem span={12}>
+      <GridItem>
         <ExpandableSection toggleText="Prerequisites">
           <TextContent>
             Successful cluster provisioning requires that:
