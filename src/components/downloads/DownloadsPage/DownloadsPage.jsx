@@ -329,12 +329,21 @@ const devToolRows = (expanded, selections, setSelections, urls) => [
       <ExternalLink href={links.HELM_DOCS}>Learn more</ExternalLink>
     </Text>),
 
+  toolRow(expanded, selections, setSelections, urls, tools.OPM, channels.STABLE, 'Operator Package Manager'),
+  descriptionRow(4,
+    <Text>
+      Create and maintain catalogs of Operators from a list of bundles with the
+      Operator Package Manager.
+      {' '}
+      <ExternalLink href={links.OPM_DOCS}>Learn more</ExternalLink>
+    </Text>),
+
   toolRow(expanded, selections, setSelections, urls, tools.RHOAS, channels.STABLE,
     <>
       Red Hat OpenShift Application Services CLI (rhoas CLI)
       <DevPreviewBadge />
     </>),
-  descriptionRow(4,
+  descriptionRow(6,
     <TextContent>
       <Text>
         Create and manage Kafka instances and topics, service accounts, and more

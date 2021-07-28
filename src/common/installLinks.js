@@ -157,6 +157,14 @@ const links = {
 
   ODO_DOCS: `${DOCS_BASE}/cli_reference/developer_cli_odo/understanding-odo.html`,
 
+  OPM_LINUX_X86: `${MIRROR_CLIENTS_STABLE}opm-linux.tar.gz`,
+  OPM_LINUX_IBMZ: `${MIRROR_CLIENTS_STABLE_IBMZ}opm-linux.tar.gz`,
+  OPM_LINUX_PPC: `${MIRROR_CLIENTS_STABLE_PPC}opm-linux.tar.gz`,
+  OPM_LINUX_ARM: `${MIRROR_CLIENTS_STABLE_ARM}opm-linux.tar.gz`,
+  OPM_MAC_X86: `${MIRROR_CLIENTS_STABLE}opm-mac.tar.gz`,
+  OPM_WINDOWS: `${MIRROR_CLIENTS_STABLE}opm-windows.tar.gz`,
+  OPM_DOCS: `${DOCS_BASE}/cli_reference/opm-cli.html`,
+
   ROSA_CLIENT_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest',
   ROSA_DOCS: 'https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html',
 
@@ -174,6 +182,7 @@ const tools = {
   ARMINSTALLER: 'ARMINSTALLER',
   OCM: 'OCM',
   ODO: 'ODO',
+  OPM: 'OPM',
   RHCOS: 'RHCOS',
   RHOAS: 'RHOAS',
   ROSA: 'ROSA',
@@ -384,6 +393,27 @@ const urls = {
         [operatingSystems.mac]: `${links.ROSA_CLIENT_LATEST}/rosa-macosx.tar.gz`,
         [operatingSystems.windows]: `${links.ROSA_CLIENT_LATEST}/rosa-windows.zip`,
       },
+    },
+  },
+
+  [tools.OPM]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: links.OPM_LINUX_X86,
+        [operatingSystems.mac]: links.OPM_MAC_X86,
+        [operatingSystems.windows]: links.OPM_WINDOWS,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: links.OPM_LINUX_IBMZ,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: links.OPM_LINUX_PPC,
+      },
+      /* 4.9
+      [architectures.arm]: {
+        [operatingSystems.linux]: links.OPM_LINUX_ARM,
+      },
+      */
     },
   },
 };
