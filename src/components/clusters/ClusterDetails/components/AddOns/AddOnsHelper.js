@@ -8,7 +8,7 @@ import {
 // regardless of whether the org has quota or not
 const isAvailable = (addOn, cluster, organization, quotaList) => {
   // We get quota together with organization.
-  // TODO: have action/reducer set quota.fullfilled, drop organization arg.
+  // TODO: have action/reducer set quota.fulfilled, drop organization arg.
   if (!addOn.enabled || !organization.fulfilled) {
     return false;
   }

@@ -25,12 +25,13 @@ import { has, get } from 'lodash';
 
 import ExternalLink from '../../common/ExternalLink';
 import links, {
-  urls,
   tools,
   channels,
   operatingSystems,
   operatingSystemOptions,
   architectureOptions,
+  githubReleasesToFetch,
+  urlsSelector,
 } from '../../../common/installLinks';
 import DevPreviewBadge from '../../common/DevPreviewBadge';
 
@@ -91,7 +92,7 @@ export function detectOS() {
 /**
  * Returns relevant subset of `operatingSystemOptions`.
  */
-export const allOperatingSystemsForTool = (tool, channel) => (
+export const allOperatingSystemsForTool = (urls, tool, channel) => (
   operatingSystemOptions.filter(({ value: OS }) => (
     architectureOptions.find(({ value: architecture }) => (
       has(urls, [tool, channel, architecture, OS])
@@ -103,7 +104,7 @@ export const allOperatingSystemsForTool = (tool, channel) => (
  * Returns relevant subset of `architectureOptions`
  * (not all of them valid for currently chosen OS, but form _some_ OS).
  */
-export const allArchitecturesForTool = (tool, channel) => (
+export const allArchitecturesForTool = (urls, tool, channel) => (
   architectureOptions.filter(({ value: architecture }) => (
     operatingSystemOptions.find(({ value: OS }) => (
       has(urls, [tool, channel, architecture, OS])
@@ -114,27 +115,28 @@ export const allArchitecturesForTool = (tool, channel) => (
 /**
  * Returns relevant subset from `architectureOptions`.
  */
-export const architecturesForToolOS = (tool, channel, OS) => (
+export const architecturesForToolOS = (urls, tool, channel, OS) => (
   architectureOptions.filter(({ value: architecture }) => (
     has(urls, [tool, channel, architecture, OS])
   ))
 );
 
-export const operatingSystemDropdown = (tool, channel, OS, setOS) => (
+export const operatingSystemDropdown = (urls, tool, channel, OS, setOS) => (
   <FormSelect value={OS} onChange={setOS} aria-label="Select OS dropdown">
     <FormSelectOption key="select" value="select" label="Select OS" isDisabled />
-    {allOperatingSystemsForTool(tool, channel).map(({ value, label }) => (
+    {allOperatingSystemsForTool(urls, tool, channel).map(({ value, label }) => (
       <FormSelectOption key={value} value={value} label={label} />
     ))}
   </FormSelect>
 );
 
-const architectureSelectOption = (tool, channel, OS, { value, label }) => (
+const architectureSelectOption = (urls, tool, channel, OS, { value, label }) => (
   has(urls, [tool, channel, value, OS]) ? (
     <FormSelectOption key={value} value={value} label={label} />
   ) : (
     <FormSelectOption
       isDisabled
+      key={value}
       value={value}
       label={label}
       title="This type of architecture is not available for the selected OS type"
@@ -142,9 +144,9 @@ const architectureSelectOption = (tool, channel, OS, { value, label }) => (
   )
 );
 
-export const architectureDropdown = (tool, channel, OS, architecture, setArchitecture) => {
-  const allOptions = allArchitecturesForTool(tool, channel);
-  const optionsForOS = architecturesForToolOS(tool, channel, OS);
+export const architectureDropdown = (urls, tool, channel, OS, architecture, setArchitecture) => {
+  const allOptions = allArchitecturesForTool(urls, tool, channel);
+  const optionsForOS = architecturesForToolOS(urls, tool, channel, OS);
   return (
     <FormSelect
       aria-label="Select architecture dropdown"
@@ -153,7 +155,7 @@ export const architectureDropdown = (tool, channel, OS, architecture, setArchite
       isDisabled={optionsForOS.length <= 1}
     >
       <FormSelectOption key="select" value="select" label="Select architecture" isDisabled />
-      {allOptions.map(option => architectureSelectOption(tool, channel, OS, option))}
+      {allOptions.map(option => architectureSelectOption(urls, tool, channel, OS, option))}
     </FormSelect>
   );
 };
@@ -163,11 +165,11 @@ export const architectureDropdown = (tool, channel, OS, architecture, setArchite
  * @param detectedOS - result of detectOS(), injected for testing.
  * @returns {OS, architecture}
  */
-export const initialSelection = (tool, channel, detectedOS) => {
+export const initialSelection = (urls, tool, channel, detectedOS) => {
   // Start with an OS and architecture chosen so that some users can
   // click Download directly without having to change selections.
-  const OS = detectedOS || allOperatingSystemsForTool(tool, channel)?.[0]?.value;
-  const architecture = architecturesForToolOS(tool, channel, OS)?.[0]?.value;
+  const OS = detectedOS || allOperatingSystemsForTool(urls, tool, channel)?.[0]?.value;
+  const architecture = architecturesForToolOS(urls, tool, channel, OS)?.[0]?.value;
   return { OS, architecture };
 };
 
@@ -176,19 +178,22 @@ export const initialSelection = (tool, channel, detectedOS) => {
  * @param expanded - { [tool]: boolean }
  * @param selections - { [tool]: { OS, architecture } }
  * @param setSelections - callback to replace whole `selections` map
+ * @param urls - full urls data, including latest github releases.
  * @param tool - one of `tools`
  * @param channel - one of `channels`
  * @param name - text for Name column
  * @returns a row object suitable for <Table>.
  */
-export const toolRow = (expanded, selections, setSelections, tool, channel, name) => {
-  const { OS, architecture } = selections[tool] || initialSelection(tool, channel, detectOS());
+export const toolRow = (expanded, selections, setSelections, urls, tool, channel, name) => {
+  const { OS, architecture } = (
+    selections[tool] || initialSelection(urls, tool, channel, detectOS())
+  );
   // Callbacks for dropdowns:
   const onChangeOS = (newOS) => {
     let newArchitecture = architecture;
     // Invalidate arch selection if not compatible
     if (!has(urls, [tool, channel, architecture, newOS])) {
-      const optionsForOS = architecturesForToolOS(tool, channel, newOS);
+      const optionsForOS = architecturesForToolOS(urls, tool, channel, newOS);
       newArchitecture = optionsForOS.length > 1 ? 'select' : optionsForOS[0].value;
     }
     setSelections({ ...selections, [tool]: { OS: newOS, architecture: newArchitecture } });
@@ -197,6 +202,31 @@ export const toolRow = (expanded, selections, setSelections, tool, channel, name
     setSelections({ ...selections, [tool]: { OS, architecture: newArchitecture } });
   };
 
+  // If Github API fetching of last release fails, we can't link to direct download,
+  // fallback to navigating to last release page in new tab, where user will pick OS/arch.
+  let fallback = null;
+  if (allOperatingSystemsForTool(urls, tool, channel).length === 0) {
+    fallback = get(urls, [tool, channel, 'fallbackNavigateURL']);
+
+    return {
+      isOpen: !!expanded[tool],
+      expandKey: tool, // custom property for `onCollapse` callback
+      cells: [
+        '',
+        { title: name },
+        '', // hide OS dropdown
+        '', // hide architecture dropdown
+        {
+          title: (
+            <AlignRight>
+              <DownloadButton url={fallback} download={false} tool={tool} text="Download" />
+            </AlignRight>
+          ),
+        },
+      ],
+    };
+  }
+
   const url = get(urls, [tool, channel, architecture, OS]);
   return {
     isOpen: !!expanded[tool],
@@ -204,8 +234,8 @@ export const toolRow = (expanded, selections, setSelections, tool, channel, name
     cells: [
       '',
       { title: name },
-      { title: operatingSystemDropdown(tool, channel, OS, onChangeOS) },
-      { title: architectureDropdown(tool, channel, OS, architecture, onChangeArchitecture) },
+      { title: operatingSystemDropdown(urls, tool, channel, OS, onChangeOS) },
+      { title: architectureDropdown(urls, tool, channel, OS, architecture, onChangeArchitecture) },
       {
         title: (
           <AlignRight><DownloadButton url={url} tool={tool} text="Download" /></AlignRight>
@@ -225,8 +255,8 @@ const descriptionRow = (parentIndex, child) => (
   }
 );
 
-const cliToolRows = (expanded, selections, setSelections) => [
-  toolRow(expanded, selections, setSelections, tools.CLI_TOOLS, channels.STABLE, 'OpenShift command-line interface (oc)'),
+const cliToolRows = (expanded, selections, setSelections, urls) => [
+  toolRow(expanded, selections, setSelections, urls, tools.CLI_TOOLS, channels.STABLE, 'OpenShift command-line interface (oc)'),
   descriptionRow(0,
     <TextContent>
       <Text>
@@ -249,10 +279,27 @@ const cliToolRows = (expanded, selections, setSelections) => [
       </Text>
     </TextContent>),
 
-  // TODO ocm-cli
-
-  toolRow(expanded, selections, setSelections, tools.ROSA, channels.STABLE, 'Red Hat OpenShift Service on AWS (ROSA) command-line interface (rosa CLI)'),
+  toolRow(expanded, selections, setSelections, urls, tools.OCM, channels.STABLE,
+    <>
+      OCM API command-line interface (ocm-cli)
+      {' '}
+      <DevPreviewBadge />
+    </>),
   descriptionRow(2,
+    <TextContent>
+      <Text>
+        Manage your OpenShift clusters from the command line using the
+        OpenShift Cluster Manager CLI (ocm CLI).
+      </Text>
+      <Text>
+        <ExternalLink href={links.OCM_CLI_DOCS}>
+          Get started with the ocm CLI
+        </ExternalLink>
+      </Text>
+    </TextContent>),
+
+  toolRow(expanded, selections, setSelections, urls, tools.ROSA, channels.STABLE, 'Red Hat OpenShift Service on AWS (ROSA) command-line interface (rosa CLI)'),
+  descriptionRow(4,
     <Text>
       Manage your Red Hat OpenShift Service on AWS (ROSA) clusters
       from the command line using the rosa CLI.
@@ -263,8 +310,8 @@ const cliToolRows = (expanded, selections, setSelections) => [
     </Text>),
 ];
 
-const devToolRows = (expanded, selections, setSelections) => [
-  toolRow(expanded, selections, setSelections, tools.ODO, channels.STABLE, 'Developer-focused CLI for OpenShift (odo)'),
+const devToolRows = (expanded, selections, setSelections, urls) => [
+  toolRow(expanded, selections, setSelections, urls, tools.ODO, channels.STABLE, 'Developer-focused CLI for OpenShift (odo)'),
   descriptionRow(0,
     <Text>
       Write, build, and deploy applications on OpenShift with odo, a fast, iterative,
@@ -273,7 +320,7 @@ const devToolRows = (expanded, selections, setSelections) => [
       <ExternalLink href={links.ODO_DOCS}>Learn more</ExternalLink>
     </Text>),
 
-  toolRow(expanded, selections, setSelections, tools.HELM, channels.STABLE, 'Helm 3 CLI'),
+  toolRow(expanded, selections, setSelections, urls, tools.HELM, channels.STABLE, 'Helm 3 CLI'),
   descriptionRow(2,
     <Text>
       Define, install, and upgrade application packages as Helm charts using Helm 3,
@@ -282,11 +329,27 @@ const devToolRows = (expanded, selections, setSelections) => [
       <ExternalLink href={links.HELM_DOCS}>Learn more</ExternalLink>
     </Text>),
 
-  // TODO rhoas
+  toolRow(expanded, selections, setSelections, urls, tools.RHOAS, channels.STABLE,
+    <>
+      Red Hat OpenShift Application Services CLI (rhoas CLI)
+      <DevPreviewBadge />
+    </>),
+  descriptionRow(4,
+    <TextContent>
+      <Text>
+        Create and manage Kafka instances and topics, service accounts, and more
+        using the rhoas CLI.
+      </Text>
+      <Text>
+        <ExternalLink href={links.RHOAS_CLI_DOCS}>
+          Get started with the rhoas CLI
+        </ExternalLink>
+      </Text>
+    </TextContent>),
 ];
 
-const installationRows = (expanded, selections, setSelections) => [
-  toolRow(expanded, selections, setSelections, tools.X86INSTALLER, channels.STABLE, 'OpenShift for x86_64 Installer'),
+const installationRows = (expanded, selections, setSelections, urls) => [
+  toolRow(expanded, selections, setSelections, urls, tools.X86INSTALLER, channels.STABLE, 'OpenShift for x86_64 Installer'),
   descriptionRow(0,
     <TextContent>
       <Text>
@@ -309,7 +372,7 @@ const installationRows = (expanded, selections, setSelections) => [
       </Text>
     </TextContent>),
 
-  toolRow(expanded, selections, setSelections, tools.IBMZINSTALLER, channels.STABLE, 'OpenShift for IBM Z Installer'),
+  toolRow(expanded, selections, setSelections, urls, tools.IBMZINSTALLER, channels.STABLE, 'OpenShift for IBM Z Installer'),
   descriptionRow(2,
     <TextContent>
       <Text>
@@ -329,7 +392,7 @@ const installationRows = (expanded, selections, setSelections) => [
       </Text>
     </TextContent>),
 
-  toolRow(expanded, selections, setSelections, tools.PPCINSTALLER, channels.STABLE, 'OpenShift for Power Installer'),
+  toolRow(expanded, selections, setSelections, urls, tools.PPCINSTALLER, channels.STABLE, 'OpenShift for Power Installer'),
   descriptionRow(4,
     <TextContent>
       <Text>
@@ -349,7 +412,7 @@ const installationRows = (expanded, selections, setSelections) => [
       </Text>
     </TextContent>),
 
-  toolRow(expanded, selections, setSelections, tools.ARMINSTALLER, channels.PRE_RELEASE,
+  toolRow(expanded, selections, setSelections, urls, tools.ARMINSTALLER, channels.PRE_RELEASE,
     <>
       OpenShift for ARM Installer
       {' '}
@@ -374,7 +437,7 @@ const installationRows = (expanded, selections, setSelections) => [
       </Text>
     </TextContent>),
 
-  toolRow(expanded, selections, setSelections, tools.CRC, channels.STABLE, 'CodeReady Containers'),
+  toolRow(expanded, selections, setSelections, urls, tools.CRC, channels.STABLE, 'CodeReady Containers'),
   descriptionRow(8,
     <TextContent>
       <Text>
@@ -501,8 +564,13 @@ class DownloadsPage extends React.Component {
   }
 
   componentDidMount() {
-    const { getAuthToken } = this.props;
+    const { getAuthToken, githubReleases, getLatestRelease } = this.props;
     getAuthToken();
+    githubReleasesToFetch.forEach((repo) => {
+      if (!githubReleases[repo].fulfilled) {
+        getLatestRelease(repo);
+      }
+    });
   }
 
   setCategory = (selectedCategory) => {
@@ -520,13 +588,14 @@ class DownloadsPage extends React.Component {
   }
 
   render() {
-    const { token } = this.props;
+    const { token, githubReleases } = this.props;
     const { selectedCategory, expanded, selections } = this.state;
 
+    const urls = urlsSelector(githubReleases);
     const rowsByCategory = {
-      CLI: cliToolRows(expanded, selections, this.setSelections),
-      DEV: devToolRows(expanded, selections, this.setSelections),
-      INSTALLATION: installationRows(expanded, selections, this.setSelections),
+      CLI: cliToolRows(expanded, selections, this.setSelections, urls),
+      DEV: devToolRows(expanded, selections, this.setSelections, urls),
+      INSTALLATION: installationRows(expanded, selections, this.setSelections, urls),
       TOKENS: tokenRows(expanded, token),
     };
     rowsByCategory.ALL = [].concat(...Object.values(rowsByCategory));
@@ -580,7 +649,7 @@ class DownloadsPage extends React.Component {
                 <Text>
                   Download command line tools to manage and work with OpenShift from your terminal.
                 </Text>
-                )}
+              )}
             >
               <Table
                 aria-label="CLI tools table"
@@ -603,7 +672,7 @@ class DownloadsPage extends React.Component {
                   {' '}
                   <ExternalLink href="https://developers.redhat.com/topics/developer-tools">Learn more</ExternalLink>
                 </Text>
-                )}
+              )}
             >
               <Table
                 aria-label="Developer tools table"
@@ -664,6 +733,8 @@ class DownloadsPage extends React.Component {
 DownloadsPage.propTypes = {
   token: PropTypes.object.isRequired,
   getAuthToken: PropTypes.func.isRequired,
+  githubReleases: PropTypes.object.isRequired,
+  getLatestRelease: PropTypes.func.isRequired,
 };
 
 export default DownloadsPage;
