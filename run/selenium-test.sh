@@ -5,9 +5,8 @@ set -e -u -o pipefail
 
 cd "$(dirname "$0")"
 
-echo Waiting on insights-proxy and selenium...
+echo Waiting on selenium...
 yarn wait-on http-get://localhost:4444/wd/hub
-./wait-on-insights-proxy.js
 
 # Default must match selenium-browser.sh
 BROWSER="${BROWSER:-firefox}"

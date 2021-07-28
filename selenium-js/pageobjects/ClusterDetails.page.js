@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import Page from './page';
 
 /**
@@ -61,19 +62,103 @@ class ClusterDetails extends Page {
   /** Access control tab */
   get accessControlTabBtn() { return $('button[aria-controls="accessControlTabContent"]'); }
 
+  async waitForInstallCompletion() {
+    await (await this.installationSuccessAlert).waitForExist({ timeout: 5 * 60 * 1000 });
+    await (await this.accessControlTabBtn).waitForClickable({ timeout: 0.5 * 60 * 1000 });
+  }
+
   get addIDPButton() { return $("//button[contains(text(),'Add identity provider')]"); }
 
   get addIDPModalConfirm() { return $('div[data-test-id="add-idp-osd-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
 
   get IDPModalBody() { return $('div[data-test-id="add-idp-osd-dialog"]'); }
 
-  get IDPSelection() { return $('div[data-test-id="add-idp-osd-dialog"] > select#type'); }
+  get IDPSelection() { return $('div[data-test-id="add-idp-osd-dialog"] select#type'); }
 
-  get IDPNameInput() { return $('div[data-test-id="add-idp-osd-dialog"] > input#name'); }
+  get IDPNameInput() { return $('div[data-test-id="add-idp-osd-dialog"] input#name'); }
 
-  IDPModalRequiredFields() {
-    const allInputs = this.IDPModalBody().$$('input');
-    return allInputs.filter(input => input.hasAttribute('required'));
+  get IDPModalRequiredFields() { return $$('//div[@data-test-id="add-idp-osd-dialog"]//input[@required=""]'); }
+
+  get IDPTable() { return $('//table[@aria-label="Identity Providers"]'); }
+
+  firstIDPRowxPath = '//table[@aria-label="Identity Providers"]//tbody/tr[1]';
+
+  firstIDPRowActionsxPath = `${this.firstIDPRowxPath}//button[@aria-label="Actions"]`;
+
+  get firstRowURLCopy() {
+    return $(`${this.firstIDPRowxPath}//td[@data-label="Auth callback URL"]//button`);
+  }
+
+  get firstRowActions() {
+    return $(this.firstIDPRowActionsxPath);
+  }
+
+  get firstRowDeleteIDP() {
+    return $(`${this.firstIDPRowActionsxPath}//following-sibling::ul[1]//button[contains(text(), "Delete")]`);
+  }
+
+  deleteIDPModalxPath = '//ancestor::div[header//*[contains(text(), "Remove identity provider")]]';
+
+  get deleteIDPModal() { return $(this.deleteIDPModalxPath); }
+
+  get deleteIDPModalRemoveBtn() { return $(`${this.deleteIDPModalxPath}//button[text()="Remove"]`); }
+
+  /** Networking tab */
+  async navigateToNetworkingTab() {
+    await (await this.networkingTabBtn).waitForClickable({ timeout: 0.5 * 60 * 1000 });
+    await (await this.networkingTabBtn).click();
+  }
+
+  get networkingTabBtn() { return $('button[aria-controls="networkingTabContent"]'); }
+
+  routersCardxPath = '//div[contains(@class, "ocm-c-networking-edit-cluster-routers__card--body")]';
+
+  get routersCard() { return $(this.routersCardxPath); }
+
+  get copyAPIURLBtn() {
+    return $('//h1[contains(text(), "Control Plane API endpoint")]/parent::div/following-sibling::div[1]//button');
+  }
+
+  get makeAPIPrivateCheckbox() {
+    return $('//h1[contains(text(), "Control Plane API endpoint")]/parent::div/following-sibling::div[2]//input');
+  }
+
+  get saveNetworkingChangesBtn() {
+    return $(`${this.routersCardxPath}//button[text()="Change settings"]`);
+  }
+
+  get enableAdditionalRouterSwitch() {
+    return $(`${this.routersCardxPath}//input[@id="enable_additional_router"]/following-sibling::span[@class="pf-c-switch__toggle"]`);
+  }
+
+  get makeDefaultRouterPrivateCheckbox() {
+    return $('//h2[contains(text(), "Default application router")]/parent::div/following-sibling::div[2]//input');
+  }
+
+  get defaultRouterURLCopybox() {
+    return $('//h2[contains(text(), "Default application router")]/following::div[@class="pf-c-clipboard-copy__group"]/input');
+  }
+
+  get additionalRouterURLCopybox() {
+    return $('//h2[contains(text(), "Additional application router")]/following::div[@class="pf-c-clipboard-copy__group"]/input');
+  }
+
+  get labelMatchForAdditionalRouterField() {
+    return $(`${this.routersCardxPath}//input[@id="labels_additional_router"]`);
+  }
+
+  get labelMatchFieldError() {
+    return $(`${this.routersCardxPath}//div[@id="labels_additional_router-helper" and contains(@class, "pf-m-error")]`);
+  }
+
+  saveNetworkingChangesModalxPath = '//header//*[contains(text(), "Change cluster privacy settings?")]//ancestor::div[@class="pf-c-modal-box"]';
+
+  get saveNetworkingChangesModal() {
+    return $(`${this.saveNetworkingChangesModalxPath}`);
+  }
+
+  get saveNetworkingChangesModalConfirmBtn() {
+    return $(`${this.saveNetworkingChangesModalxPath}//button[text()="Change settings"]`);
   }
 }
 
