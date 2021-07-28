@@ -232,17 +232,26 @@ class EditSubscriptionSettingsFields extends Component {
       [SOCKET_TOTAL]: socketTotal,
     } = this.state;
 
-    const value = inputVal || (systemUnits === SOCKETS ? socketTotal : cpuTotal);
-    if (!Number.isInteger(value)) {
+    const stringValue = inputVal || (systemUnits === SOCKETS ? socketTotal : cpuTotal);
+    // validate that `value` consists of decimal digits only
+    if (!/^\d+$/.test(`${stringValue}`)) {
       return {
         isValid: false,
         errorMsg: `${systemUnits} value can only be an integer number.`,
       };
     }
-    if (value < MIN_VAL || value > MAX_VAL) {
+    // now value is number for sure
+    const value = +stringValue;
+    if (value < MIN_VAL) {
       return {
         isValid: false,
-        errorMsg: `${systemUnits} value must be a number between ${MIN_VAL}-${MAX_VAL}.`,
+        errorMsg: `${systemUnits} value must be an integer number greater than ${MIN_VAL - 1}.`,
+      };
+    }
+    if (value > MAX_VAL) {
+      return {
+        isValid: false,
+        errorMsg: `${systemUnits} value must be a integer number no larger than ${MAX_VAL}.`,
       };
     }
 
