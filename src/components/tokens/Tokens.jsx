@@ -155,6 +155,7 @@ class Tokens extends React.Component {
 
     const { blockedByTerms, show } = this.props;
     if (!blockedByTerms && show) {
+      // eslint-disable-next-line no-console
       console.log('Tokens: componentDidMount, props =', this.props);
       this.loadToken();
     }
@@ -163,13 +164,16 @@ class Tokens extends React.Component {
   loadToken = () => {
     const that = this;
     insights.chrome.auth.getOfflineToken().then((response) => {
+      // eslint-disable-next-line no-console
       console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
       that.setState({ offlineAccessToken: response.data.refresh_token });
     }).catch((reason) => {
       if (reason === 'not available') {
+        // eslint-disable-next-line no-console
         console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
         insights.chrome.auth.doOffline();
       } else {
+        // eslint-disable-next-line no-console
         console.log('Tokens: getOfflineToken failed =>', reason);
         that.setState({ offlineAccessToken: reason });
       }
