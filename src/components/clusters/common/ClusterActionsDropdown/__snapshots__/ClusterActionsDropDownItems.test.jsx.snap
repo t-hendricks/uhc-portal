@@ -87,8 +87,12 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
     component="button"
     isDisabled={true}
     key="undefined.menu.hibernatecluster"
-    onClick={[Function]}
     title="Hibernate cluster"
+    tooltip={
+      <span>
+        This cluster is not ready
+      </span>
+    }
   >
     Hibernate cluster
   </DropdownItem>
@@ -196,7 +200,6 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={false}
     key="1.menu.hibernatecluster"
     onClick={[Function]}
     title="Hibernate cluster"
@@ -233,14 +236,14 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
     component="button"
     isDisabled={true}
     key="undefined.menu.editdisplayname"
-    title="Edit display Name"
+    title="Edit display name"
     tooltip={
       <span>
         The cluster is being uninstalled
       </span>
     }
   >
-    Edit display Name
+    Edit display name
   </DropdownItem>
   <DropdownItem
     component="button"
@@ -272,8 +275,12 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
     component="button"
     isDisabled={true}
     key="undefined.menu.hibernatecluster"
-    onClick={[Function]}
     title="Hibernate cluster"
+    tooltip={
+      <span>
+        The cluster is being uninstalled
+      </span>
+    }
   >
     Hibernate cluster
   </DropdownItem>
