@@ -6,6 +6,7 @@ import { cloudProviderActions } from '../../../redux/actions/cloudProviderAction
 import { viewConstants } from '../../../redux/constants';
 import { viewActions } from '../../../redux/actions/viewOptionsActions';
 import { modalActions } from '../../common/Modal/ModalActions';
+import { clearGlobalError } from '../../../redux/actions/globalErrorActions';
 
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),
@@ -16,6 +17,7 @@ const mapDispatchToProps = {
   getCloudProviders: cloudProviderActions.getCloudProviders,
   openModal: modalActions.openModal,
   closeModal: modalActions.closeModal,
+  clearGlobalError,
 };
 
 const mapStateToProps = state => ({
