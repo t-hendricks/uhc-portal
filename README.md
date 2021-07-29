@@ -80,7 +80,7 @@ parameter of the configuration file:
     $ ./backend
 
 To obtain the access token go to the [token
-page](https://cloud.redhat.com/openshift/token) and copy the *offline
+page](https://console.redhat.com/openshift/token) and copy the *offline
 access token*.
 
 By default the backend proxy server will be available at
@@ -156,7 +156,7 @@ data running with the chromed environment.
 
 ## Insights "chrome" proxy
 
-As all apps under cloud.redhat.com, our app uses
+As all apps under console.redhat.com, our app uses
 [insights-chrome](https://github.com/RedHatInsights/insights-chrome).
 (The term "chrome" refers to it being responsible for header & menu
 around the main content, no relation to Google Chrome.)
