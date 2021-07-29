@@ -141,11 +141,21 @@ class Tokens extends React.Component {
 
   commandName = 'ocm'
 
+  // Should title or breadcrumbs differ for TokensROSA?
+  // Maybe but but both pages show same API token, only instructions differ,
+  // so should NOT say things like "rosa token" vs "ocm-cli token".
+  pageTitle = 'OpenShift Cluster Manager API Token'
+
+  windowTitle = 'API Token | OpenShift Cluster Manager'
+
   // After requesting token, we might need to reload page doing stronger auth;
   // after that we want the token to show, but we just loaded.
   componentDidMount() {
+    document.title = this.windowTitle;
+
     const { blockedByTerms, show } = this.props;
     if (!blockedByTerms && show) {
+      // eslint-disable-next-line no-console
       console.log('Tokens: componentDidMount, props =', this.props);
       this.loadToken();
     }
@@ -154,13 +164,16 @@ class Tokens extends React.Component {
   loadToken = () => {
     const that = this;
     insights.chrome.auth.getOfflineToken().then((response) => {
+      // eslint-disable-next-line no-console
       console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
       that.setState({ offlineAccessToken: response.data.refresh_token });
     }).catch((reason) => {
       if (reason === 'not available') {
+        // eslint-disable-next-line no-console
         console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
         insights.chrome.auth.doOffline();
       } else {
+        // eslint-disable-next-line no-console
         console.log('Tokens: getOfflineToken failed =>', reason);
         that.setState({ offlineAccessToken: reason });
       }
@@ -261,15 +274,14 @@ class Tokens extends React.Component {
   }
 
   render() {
-    const title = 'OpenShift Cluster Manager API Token';
     const header = (
       <PageHeader>
         <Breadcrumbs path={[
           { label: 'Downloads', path: '/downloads' },
-          { label: title },
+          { label: this.pageTitle },
         ]}
         />
-        <PageHeaderTitle title={title} />
+        <PageHeaderTitle title={this.pageTitle} />
       </PageHeader>
     );
 
