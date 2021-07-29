@@ -5,7 +5,7 @@ Run `make insights-proxy-setup`.  Note this will use `sudo` to add lines to your
 
 ## Development environment proxied to a real backend
 
-To start the "chromed environment" using the backend proxy, you'll need a token from https://cloud.redhat.com/openshift/token.
+To start the "chromed environment" using the backend proxy, you'll need a token from https://console.redhat.com/openshift/token.
 
 ```sh
 export UHC_TOKEN=...

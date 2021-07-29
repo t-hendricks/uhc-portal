@@ -179,13 +179,13 @@ if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
 
 elif [ "$1" == "candidate" ]; then
     echo "running candidate push"
-    echo "Candidate branch is available on https://cloud.redhat.com/beta/openshift"
+    echo "Candidate branch is available on https://console.redhat.com/beta/openshift"
     rm -rf build
     yarn build --mode=production --env api-env=production beta="true"
     push_build "prod-beta"
 elif [ "$1" == "stable" ]; then
     echo "running stable push"
-    echo "stable branch is available on https://cloud.redhat.com/openshift"
+    echo "stable branch is available on https://console.redhat.com/openshift"
     rm -rf build
     yarn build --mode=production --env api-env=production beta="false"
     push_build "prod-stable"
