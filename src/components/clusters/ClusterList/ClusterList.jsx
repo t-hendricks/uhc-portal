@@ -126,8 +126,9 @@ class ClusterList extends Component {
   }
 
   componentWillUnmount() {
-    const { closeModal } = this.props;
+    const { closeModal, clearGlobalError } = this.props;
     closeModal();
+    clearGlobalError('clusterList');
   }
 
   refresh = () => {
@@ -362,6 +363,7 @@ ClusterList.propTypes = {
   canSubscribeOCPList: PropTypes.objectOf(PropTypes.bool),
   canTransferClusterOwnershipList: PropTypes.objectOf(PropTypes.bool),
   toggleSubscriptionReleased: PropTypes.func.isRequired,
+  clearGlobalError: PropTypes.func.isRequired,
 };
 
 export default ClusterList;
