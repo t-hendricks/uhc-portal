@@ -20,7 +20,7 @@ class ClusterList extends Page {
   }
 
   get registerClusterBtn() {
-    return $("//a[contains(@href, '/openshift/register')]/button[text()='Register disconnected cluster']");
+    return $("//a[contains(@href, '/openshift/register')]/button[text()='Register cluster']");
   }
 
   get extraActionsKebab() {
