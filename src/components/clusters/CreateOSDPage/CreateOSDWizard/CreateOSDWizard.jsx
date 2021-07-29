@@ -93,6 +93,7 @@ class CreateOSDWizard extends React.Component {
       isErrorModalOpen,
       resetResponse,
       hasProductQuota,
+      history,
     } = this.props;
 
     const { stepIdReached } = this.state;
@@ -259,6 +260,7 @@ class CreateOSDWizard extends React.Component {
               steps={steps}
               onSave={onSubmit}
               onNext={this.onNext}
+              onClose={() => history.push('/create/cloud')}
             />
           </div>
         </PageSection>
@@ -305,6 +307,11 @@ CreateOSDWizard.propTypes = {
 
   // for "no quota" redirect
   hasProductQuota: PropTypes.bool,
+
+  // for cancel button
+  history: {
+    push: PropTypes.func,
+  },
 };
 
 export default CreateOSDWizard;

@@ -44,6 +44,7 @@ class NetworkScreen extends React.Component {
             isMultiAz={isMultiAz}
             selectedRegion={selectedRegion}
             installToVPCSelected={installToVPCSelected}
+            isWizard
           />
         </Grid>
       </Form>

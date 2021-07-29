@@ -67,6 +67,7 @@ function DefaultMachinePoolScreen({
               cloudProviderID={cloudProviderID}
               product={product}
               billingModel={billingModel}
+              isMachinePool={false}
             />
           </FormGroup>
         </GridItem>
