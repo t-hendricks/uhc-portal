@@ -99,7 +99,7 @@ insights-proxy-check: run/insights-proxy
 .PHONY: insights-proxy-setup
 insights-proxy-setup: run/insights-proxy
 	sudo bash -x run/insights-proxy/scripts/patch-etc-hosts.sh
-	run/podman-or-docker.sh pull quay.io/redhat-sd-devel/insights-proxy:pull-33
+	run/podman-or-docker.sh pull quay.io/redhat-sd-devel/insights-proxy:3.2.1
 
 .PHONY: clean
 clean:
