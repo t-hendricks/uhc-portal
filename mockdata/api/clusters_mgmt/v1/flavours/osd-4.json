@@ -13,9 +13,9 @@
     "host_prefix": 23
   },
   "aws": {
-    "master_instance_type": "m5.xlarge",
+    "master_instance_type": "m5.2xlarge",
     "compute_instance_type": "m5.xlarge",
-    "infra_instance_type": "m5.xlarge",
+    "infra_instance_type": "r5.xlarge",
     "master_volume": {
       "iops": 1000,
       "size": 350,
@@ -35,6 +35,6 @@
   "gcp": {
     "master_instance_type": "custom-4-16384",
     "compute_instance_type": "custom-4-16384",
-    "infra_instance_type": "custom-4-16384"
+    "infra_instance_type": "custom-4-32768-ext"
   }
 }
