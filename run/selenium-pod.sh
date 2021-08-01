@@ -36,7 +36,7 @@ fi
 # Quay, but in development environments that isn't convenient, so for those
 # images we use alternative public locations.
 browser_image="quay.io/app-sre/selenium-standalone-${browser}-debug:3.141.59"
-proxy_image="quay.io/redhat-sd-devel/insights-proxy:pull-33"
+proxy_image="quay.io/redhat-sd-devel/insights-proxy:3.2.1"
 site_image="quay.io/app-sre/nginx:1.20.0"
 if [ -z "${JENKINS_HOME}" ]; then
   site_image="docker.io/library/nginx:1.20.0"
