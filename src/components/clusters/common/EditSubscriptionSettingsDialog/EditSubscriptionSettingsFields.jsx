@@ -237,7 +237,7 @@ class EditSubscriptionSettingsFields extends Component {
     if (!/^\d+$/.test(`${stringValue}`)) {
       return {
         isValid: false,
-        errorMsg: `${systemUnits} value can only be an integer number.`,
+        errorMsg: `${systemUnits} value can only be a positive integer number.`,
       };
     }
     // now value is number for sure
