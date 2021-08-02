@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DownloadButton renders correctly 1`] = `
+<Button
+  className="download-button tool-cli_tools"
+  component="a"
+  disabled={false}
+  download={true}
+  href="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz"
+  onClick={[Function]}
+  variant="secondary"
+>
+  Download command-line tools
+</Button>
+`;
+
+exports[`DownloadButton when disabled should render 1`] = `
+<Button
+  className="download-button tool-x86installer"
+  component="a"
+  disabled={true}
+  onClick={[Function]}
+  rel="noreferrer noopener"
+  target="_blank"
+  variant="secondary"
+>
+  Not available
+</Button>
+`;

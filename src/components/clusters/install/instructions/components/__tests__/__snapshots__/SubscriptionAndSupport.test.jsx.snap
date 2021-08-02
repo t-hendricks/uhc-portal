@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubscriptionAndSupport renders correctly 1`] = `
+<TextContent>
+  <Text
+    component="h2"
+  >
+    Subscription and support
+  </Text>
+  <Text
+    component="p"
+  >
+    Your cluster will be automatically registered with a 60 day evaluation subscription which does not include support. In order to receive support for your cluster, you will need to edit the subscription settings from the cluster details page here in OpenShift Cluster Manager.
+  </Text>
+  <List>
+    <ListItem>
+      <span>
+        Choose "Edit subscriptions settings " from the actions menu in the upper right of the cluster details pages.
+      </span>
+    </ListItem>
+    <ListItem>
+      <span>
+        Select the options that apply to your cluster in the dialog and save.
+      </span>
+    </ListItem>
+  </List>
+</TextContent>
+`;

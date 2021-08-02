@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TelemetryDisclaimer renders correctly 1`] = `
+<Text
+  component="small"
+>
+  Red Hat collects a limited amount of telemetry data. By installing OpenShift Container Platform 4, you accept our data collection policy.
+   
+  <Text
+    component="a"
+    href="https://docs.openshift.com/container-platform/latest/support/remote_health_monitoring/about-remote-health-monitoring.html"
+    rel="noreferrer noopener"
+    target="_blank"
+  >
+    Learn more
+  </Text>
+   
+  about the data we collect.
+</Text>
+`;
