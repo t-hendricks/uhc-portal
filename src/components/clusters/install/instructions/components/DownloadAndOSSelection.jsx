@@ -45,13 +45,15 @@ const crcInstructionsMapping = {
 };
 
 const toolRow = (selections, setSelections, tool, channel, token, pendoID) => {
-  const { OS, architecture } = selections[tool] || initialSelection(tool, channel, detectOS());
+  const { OS, architecture } = (
+    selections[tool] || initialSelection(urls, tool, channel, detectOS())
+  );
   // Callbacks for dropdowns:
   const onChangeOS = (newOS) => {
     let newArchitecture = architecture;
     // Invalidate arch selection if not compatible
     if (!has(urls, [tool, channel, architecture, newOS])) {
-      const optionsForOS = architecturesForToolOS(tool, channel, newOS);
+      const optionsForOS = architecturesForToolOS(urls, tool, channel, newOS);
       newArchitecture = optionsForOS.length > 1 ? 'select' : optionsForOS[0].value;
     }
     setSelections({ ...selections, [tool]: { OS: newOS, architecture: newArchitecture } });
@@ -62,8 +64,8 @@ const toolRow = (selections, setSelections, tool, channel, token, pendoID) => {
 
   const url = get(urls, [tool, channel, architecture, OS]);
   return {
-    osDropdown: operatingSystemDropdown(tool, channel, OS, onChangeOS),
-    archDropdown: architectureDropdown(tool, channel, OS, architecture, onChangeArchitecture),
+    osDropdown: operatingSystemDropdown(urls, tool, channel, OS, onChangeOS),
+    archDropdown: architectureDropdown(urls, tool, channel, OS, architecture, onChangeArchitecture),
     downloadButton: (
       <DownloadButton
         url={url}
