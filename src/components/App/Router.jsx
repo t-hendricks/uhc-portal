@@ -21,7 +21,7 @@ import {
 } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { AssistedUiRouter } from 'openshift-assisted-ui-lib';
+import { OCM } from 'openshift-assisted-ui-lib';
 
 import TermsGuardedRoute from './TermsGuardedRoute';
 import apiRequest from '../../services/apiRequest';
@@ -76,6 +76,8 @@ import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
 import ConnectedInstallAwsARM from '../clusters/install/InstallAwsARM';
+
+const { AssistedUiRouter } = OCM;
 
 const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(

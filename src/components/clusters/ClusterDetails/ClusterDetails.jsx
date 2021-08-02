@@ -18,7 +18,7 @@ import get from 'lodash/get';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { HostsClusterDetailTab, canAddHost } from 'openshift-assisted-ui-lib';
+import { OCM } from 'openshift-assisted-ui-lib';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
@@ -50,6 +50,7 @@ import AddNotificationContactDialog
 import UpgradeSettingsTab from './components/UpgradeSettings';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 
+const { HostsClusterDetailTab, canAddHost } = OCM;
 class ClusterDetails extends Component {
   state = {
     selectedTab: '',
