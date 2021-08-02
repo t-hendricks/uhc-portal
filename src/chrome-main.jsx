@@ -21,7 +21,7 @@ import NotificationPortal from '@redhat-cloud-services/frontend-components-notif
 import * as Sentry from '@sentry/browser';
 import { SessionTiming } from '@sentry/integrations';
 
-import { Api, Config } from 'openshift-assisted-ui-lib';
+import { OCM } from 'openshift-assisted-ui-lib';
 
 import config from './config';
 
@@ -37,6 +37,8 @@ import { authInterceptor } from './services/apiRequest';
 import App from './components/App/App';
 
 import './styles/main.scss';
+
+const { Api, Config } = OCM;
 
 /**
  * Assisted Installer configuration

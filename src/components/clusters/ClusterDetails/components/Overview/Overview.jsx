@@ -6,7 +6,7 @@ import {
   Grid, GridItem, Card, CardBody, Title, Alert, CardTitle,
 } from '@patternfly/react-core';
 
-import { AssistedInstallerDetailCard } from 'openshift-assisted-ui-lib';
+import { OCM } from 'openshift-assisted-ui-lib';
 import clusterStates, { getClusterStateAndDescription, isHibernating } from '../../../common/clusterStates';
 
 import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
@@ -28,6 +28,7 @@ import isAssistedInstallSubscription, { isUninstalledAICluster } from '../../../
 
 import './Overview.scss';
 
+const { AssistedInstallerDetailCard } = OCM;
 class Overview extends React.Component {
   state = {
     showInstallSuccessAlert: false,
