@@ -50,14 +50,17 @@ describe('Cluster Actions Dropdown Items', () => {
     });
 
     it('menu buttons should be enabled', () => {
-      const launchConsoleDisabled = wrapper.find(DropdownItem).at(0).props().isDisabled;
-      const editDisplayNameDisabled = wrapper.find(DropdownItem).at(1).props().isDisabled;
-      const editDisabled = wrapper.find(DropdownItem).at(2).props().isDisabled;
-      const deleteDisabled = wrapper.find(DropdownItem).at(3).props().isDisabled;
-      expect(launchConsoleDisabled).toBeFalsy();
-      expect(editDisplayNameDisabled).toBeFalsy();
-      expect(editDisabled).toBeFalsy();
-      expect(deleteDisabled).toBeFalsy();
+      const actions = wrapper.find(DropdownItem).map(
+        a => [a.props().title, a.props().isDisabled === true],
+      );
+      expect(actions).toEqual([
+        ['Open console', false],
+        ['Edit display name', false],
+        ['Edit load balancers and persistent storage', false],
+        ['Edit node count', false],
+        ['Hibernate cluster', false],
+        ['Delete cluster', false],
+      ]);
     });
 
     describe('and product osdtrial', () => {
@@ -87,16 +90,17 @@ describe('Cluster Actions Dropdown Items', () => {
     });
 
     it('menu buttons should be disabled', () => {
-      const launchConsoleDisabled = wrapper.find(DropdownItem).at(0).props().isDisabled;
-      const editDisplayNameDisabled = wrapper.find(DropdownItem).at(1).props().isDisabled;
-      const editDisabled = wrapper.find(DropdownItem).at(2).props().isDisabled;
-      const deleteDisabled = wrapper.find(DropdownItem).at(3).props().isDisabled;
-      const toggleClsuterAdminsDisabled = wrapper.find(DropdownItem).at(4).props().isDisabled;
-      expect(launchConsoleDisabled).toEqual(true);
-      expect(editDisplayNameDisabled).toEqual(true);
-      expect(editDisabled).toEqual(true);
-      expect(deleteDisabled).toEqual(true);
-      expect(toggleClsuterAdminsDisabled).toEqual(true);
+      const actions = wrapper.find(DropdownItem).map(
+        a => [a.props().title, a.props().isDisabled === true],
+      );
+      expect(actions).toEqual([
+        ['Open console', true],
+        ['Edit display name', true],
+        ['Edit load balancers and persistent storage', true],
+        ['Edit node count', true],
+        ['Hibernate cluster', true],
+        ['Delete cluster', true],
+      ]);
     });
   });
 
@@ -108,16 +112,65 @@ describe('Cluster Actions Dropdown Items', () => {
     });
 
     it('disable open console & edit cluster, enable edit display name and delete cluster', () => {
-      const launchConsoleDisabled = wrapper.find(DropdownItem).at(0).props().isDisabled;
-      const editDisplayNameDisabled = wrapper.find(DropdownItem).at(1).props().isDisabled;
-      const editDisabled = wrapper.find(DropdownItem).at(2).props().isDisabled;
-      const hibernateDisabled = wrapper.find(DropdownItem).at(4).props().isDisabled;
-      const deleteDisabled = wrapper.find(DropdownItem).at(5).props().isDisabled;
-      expect(launchConsoleDisabled).toEqual(true);
-      expect(editDisplayNameDisabled).toBeFalsy();
-      expect(hibernateDisabled).toEqual(true);
-      expect(editDisabled).toEqual(true);
-      expect(deleteDisabled).toBeFalsy();
+      const actions = wrapper.find(DropdownItem).map(
+        a => [a.props().title, a.props().isDisabled === true],
+      );
+      expect(actions).toEqual([
+        ['Open console', true],
+        ['Edit display name', false],
+        ['Edit load balancers and persistent storage', true],
+        ['Edit node count', true],
+        ['Hibernate cluster', true],
+        ['Delete cluster', false],
+      ]);
+    });
+  });
+
+  describe('cluster state hibernating', () => {
+    const wrapper = shallow(<DropDownItemsRenderHelper
+      {...Fixtures.clusterHibernatingProps}
+    />);
+
+    it('should render (hibernating)', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('disable open console & edit cluster, enable delete cluster', () => {
+      const actions = wrapper.find(DropdownItem).map(
+        a => [a.props().title, a.props().isDisabled === true],
+      );
+      expect(actions).toEqual([
+        ['Open console', true],
+        ['Edit display name', true], // TODO why disabled?
+        ['Edit load balancers and persistent storage', true],
+        ['Edit node count', true],
+        ['Resume from Hibernation', false],
+        ['Delete cluster', true],
+      ]);
+    });
+  });
+
+  describe('cluster configuration_mode read_only', () => {
+    const wrapper = shallow(<DropDownItemsRenderHelper
+      {...Fixtures.clusterReadOnlyProps}
+    />);
+
+    it('should render (read_only)', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('TODO disable most actions, enable edit display name', () => {
+      const actions = wrapper.find(DropdownItem).map(
+        a => [a.props().title, a.props().isDisabled === true],
+      );
+      expect(actions).toEqual([
+        ['Open console', false],
+        ['Edit display name', false],
+        ['Edit load balancers and persistent storage', false],
+        ['Edit node count', false],
+        ['Hibernate cluster', false],
+        ['Delete cluster', false],
+      ]);
     });
   });
 
