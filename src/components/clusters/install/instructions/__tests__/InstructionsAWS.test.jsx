@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import InstallBareMetal from './InstallBareMetal';
+import InstructionsAWS from '../InstructionsAWS';
 
-describe('BareMetal install', () => {
+describe('AWS instructions', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<InstallBareMetal />);
+    const wrapper = shallow(<InstructionsAWS />);
     expect(wrapper).toMatchSnapshot();
   });
 });

@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import get from 'lodash/get';
-import OCPInstructions from './OCPInstructions';
-import instructionsMapping from './instructionsMapping';
+import OCPInstructions from '../OCPInstructions';
+import instructionsMapping from '../instructionsMapping';
 
 const ocpOptions = {};
 const providers = [];

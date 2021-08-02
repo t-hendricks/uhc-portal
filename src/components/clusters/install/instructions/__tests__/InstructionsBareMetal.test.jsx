@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { InstructionsBareMetal } from './InstructionsBareMetal';
+import InstructionsBareMetal from '../InstructionsBareMetal';
 
 describe('BareMetal instructions', () => {
   it('renders correctly', () => {

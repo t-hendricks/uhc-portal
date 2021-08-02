@@ -11,7 +11,7 @@ import InstructionsPreRelease from './instructions/InstructionsPreRelease';
 import { scrollToTop } from '../../../common/helpers';
 import { tools } from '../../../common/installLinks';
 
-class InstallIBMPreRelease extends Component {
+export class InstallIBMPreRelease extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | IBM Z | Experimental Developer Preview Builds';

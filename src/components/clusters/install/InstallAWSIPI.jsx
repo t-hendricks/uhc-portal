@@ -12,7 +12,7 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-class InstallAWSIPI extends Component {
+export class InstallAWSIPI extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS Installer-Provisioned Infrastructure';

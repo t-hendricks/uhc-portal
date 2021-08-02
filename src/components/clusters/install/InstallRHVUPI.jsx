@@ -12,7 +12,7 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-class InstallRHVIPI extends Component {
+export class InstallRHVUPI extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | RHV User-Provisioned Infrastructure';
@@ -49,11 +49,11 @@ class InstallRHVIPI extends Component {
   }
 }
 
-InstallRHVIPI.propTypes = {
+InstallRHVUPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallRHVIPI);
+export default connect(mapStateToProps)(InstallRHVUPI);

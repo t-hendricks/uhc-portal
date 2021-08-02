@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallAWSUPI renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "Amazon Web Services",
+              "path": "/install/aws",
+            },
+            Object {
+              "label": "User-provisioned infrastructure",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on AWS with user-provisioned infrastructure"
+  />
+  <PageSection>
+    <OCPInstructions
+      channel="stable"
+      cloudProviderID="aws"
+      customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
+      docURL="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-user-infra.html"
+      installer="X86INSTALLER"
+      isBMIPI={false}
+      title="Install OpenShift on AWS with user-provisioned infrastructure"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;

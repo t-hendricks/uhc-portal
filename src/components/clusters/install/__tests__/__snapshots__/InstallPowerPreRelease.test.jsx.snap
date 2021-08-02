@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallPowerPreRelease renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "Power",
+              "path": "/install/power/user-provisioned",
+            },
+            Object {
+              "label": "Pre-Release Builds",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on Power with user-provisioned infrastructure"
+  />
+  <PageSection>
+    <InstructionsPreRelease
+      installer="PPCINSTALLER"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;
