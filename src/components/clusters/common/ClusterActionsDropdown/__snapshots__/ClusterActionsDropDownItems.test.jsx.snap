@@ -106,14 +106,9 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
     key="1.menu.editdisplayname"
+    onClick={[Function]}
     title="Edit display name"
-    tooltip={
-      <span>
-        This cluster is hibernating; awaken cluster in order to perform actions
-      </span>
-    }
   >
     Edit display name
   </DropdownItem>

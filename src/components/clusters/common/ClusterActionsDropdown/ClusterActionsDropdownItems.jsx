@@ -171,7 +171,7 @@ function actionResolver(
     ...baseProps,
     title: 'Edit display name',
     key: getKey('editdisplayname'),
-    ...disableIfTooltip(uninstallingMessage || hibernatingMessage,
+    ...disableIfTooltip(uninstallingMessage,
       {
         onClick: () => openModal(
           modals.EDIT_DISPLAY_NAME, { ...cluster, shouldDisplayClusterName: inClusterList },

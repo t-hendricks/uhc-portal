@@ -135,13 +135,13 @@ describe('Cluster Actions Dropdown Items', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    it('disable open console & edit cluster, enable delete cluster', () => {
+    it('disable open console & edit cluster, enable edit display name and delete cluster', () => {
       const actions = wrapper.find(DropdownItem).map(
         a => [a.props().title, a.props().isDisabled === true],
       );
       expect(actions).toEqual([
         ['Open console', true],
-        ['Edit display name', true], // TODO why disabled?
+        ['Edit display name', false],
         ['Edit load balancers and persistent storage', true],
         ['Edit node count', true],
         ['Resume from Hibernation', false],
