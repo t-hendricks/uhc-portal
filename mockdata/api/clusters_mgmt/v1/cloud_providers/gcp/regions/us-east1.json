@@ -9,5 +9,8 @@
     "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
   },
   "enabled": true,
-  "supports_multi_az": true
+  "supports_multi_az": true,
+  "kms_location_name": "Global,nam4 (Iowa, South Carolina, and Oklahoma),US",
+  "kms_location_id": "global,nam4,us",
+  "ccs_only": false
 }

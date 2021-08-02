@@ -1,0 +1,47 @@
+{
+  "id": "1w7teeghc8qC97F5XkbTxaav2BX",
+  "kind": "Subscription",
+  "href": "/api/accounts_mgmt/v1/subscriptions/1w7teeghc8qC97F5XkbTxaav2BX",
+  "plan": {
+    "id": "OSD",
+    "kind": "Plan",
+    "href": "/api/accounts_mgmt/v1/plans/OSD",
+    "type": "OSD"
+  },
+  "cluster_id": "1ma4fruo1he73a7r3lrgs41eih1bmqhm",
+  "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+  "last_telemetry_date": "0001-01-01T00:00:00Z",
+  "created_at": "2021-08-01T12:39:11.30167Z",
+  "updated_at": "2021-08-01T12:39:11.30167Z",
+  "support_level": "Premium",
+  "display_name": "osd-gcp hibernating",
+  "creator": {
+    "id": "1N2ZckjW5J1xDPju7Rc3uBDEqgu",
+    "kind": "Account",
+    "href": "/api/accounts_mgmt/v1/accounts/1N2ZckjW5J1xDPju7Rc3uBDEqgu",
+    "name": "Beni Paskin-Cherniavsky",
+    "username": "bpaskinc.openshift",
+    "email": "***REMOVED***"
+  },
+  "managed": true,
+  "status": "Reserved",
+  "provenance": "Provisioning",
+  "last_reconcile_date": "0001-01-01T00:00:00Z",
+  "capabilities": [
+    {
+      "name": "capability.cluster.subscribed_ocp",
+      "value": "true",
+      "inherited": true
+    },
+    {
+      "name": "capability.cluster.autoscale_clusters",
+      "value": "true",
+      "inherited": true
+    }
+  ],
+  "last_released_at": "0001-01-01T00:00:00Z",
+  "cloud_provider_id": "gcp",
+  "cluster_billing_model": "standard",
+  "trial_end_date": "0001-01-01T00:00:00Z",
+  "billing_expiration_date": "0001-01-01T00:00:00Z"
+}
