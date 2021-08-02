@@ -72,6 +72,11 @@ function actionResolver(
     <span>This cluster is not ready</span>
   );
 
+  const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
+  const readOnlyMessage = isReadOnly && (
+    <span>This operation is not available during maintenance</span>
+  );
+
   const consoleURL = get(cluster, 'console.url', false);
   const consoleDisabledMessage = !consoleURL && (
     <span>Admin console is not yet available for this cluster</span>
@@ -109,7 +114,7 @@ function actionResolver(
     const hibernateClusterProps = {
       ...hibernateClusterBaseProps,
       title: 'Hibernate cluster',
-      ...disableIfTooltip(uninstallingMessage || notReadyMessage,
+      ...disableIfTooltip(uninstallingMessage || notReadyMessage || readOnlyMessage,
         {
           onClick: () => openModal(modals.HIBERNATE_CLUSTER, modalData),
         }),
@@ -117,7 +122,7 @@ function actionResolver(
     const resumeHibernatingClusterProps = {
       ...hibernateClusterBaseProps,
       title: 'Resume from Hibernation',
-      ...disableIfTooltip(poweringDownMessage,
+      ...disableIfTooltip(poweringDownMessage || readOnlyMessage,
         {
           onClick: () => openModal(modals.RESUME_CLUSTER, modalData),
         }),
@@ -133,7 +138,7 @@ function actionResolver(
     ...baseProps,
     title: 'Edit load balancers and persistent storage',
     key: getKey('scalecluster'),
-    ...disableIfTooltip(uninstallingMessage || notReadyMessage,
+    ...disableIfTooltip(uninstallingMessage || notReadyMessage || readOnlyMessage,
       {
         onClick: () => openModal(
           modals.SCALE_CLUSTER, { ...cluster, shouldDisplayClusterName: inClusterList },
@@ -145,7 +150,7 @@ function actionResolver(
     ...baseProps,
     title: 'Edit node count',
     key: getKey('editnodecount'),
-    ...disableIfTooltip(uninstallingMessage || notReadyMessage,
+    ...disableIfTooltip(uninstallingMessage || notReadyMessage || readOnlyMessage,
       {
         onClick: () => openModal(
           modals.EDIT_NODE_COUNT,
@@ -159,7 +164,8 @@ function actionResolver(
     title: 'Edit AWS credentials',
     key: getKey('editccscredentials'),
     ...disableIfTooltip(
-      uninstallingMessage || errorInAccountClaimPhaseMessage || noAccountIdMessage,
+      uninstallingMessage || errorInAccountClaimPhaseMessage || noAccountIdMessage
+      || readOnlyMessage,
       {
         onClick: () => openModal(modals.EDIT_CCS_CREDENTIALS,
           { ...cluster, shouldDisplayClusterName: inClusterList }),
@@ -190,9 +196,13 @@ function actionResolver(
     };
     return {
       ...baseArchiveProps,
-      onClick: () => openModal(
-        modals.ARCHIVE_CLUSTER, { ...archiveModalData, shouldDisplayClusterName: inClusterList },
-      ),
+      ...disableIfTooltip(readOnlyMessage,
+        {
+          onClick: () => openModal(
+            modals.ARCHIVE_CLUSTER,
+            { ...archiveModalData, shouldDisplayClusterName: inClusterList },
+          ),
+        }),
     };
   };
 
@@ -208,10 +218,13 @@ function actionResolver(
     };
     return {
       ...baseArchiveProps,
-      onClick: () => openModal(
-        modals.UNARCHIVE_CLUSTER,
-        { ...unarchiveModalData, shouldDisplayClusterName: inClusterList },
-      ),
+      ...disableIfTooltip(readOnlyMessage,
+        {
+          onClick: () => openModal(
+            modals.UNARCHIVE_CLUSTER,
+            { ...unarchiveModalData, shouldDisplayClusterName: inClusterList },
+          ),
+        }),
     };
   };
 
@@ -231,7 +244,7 @@ function actionResolver(
     ...baseProps,
     title: 'Delete cluster',
     key: getKey('deletecluster'),
-    ...disableIfTooltip(uninstallingMessage || hibernatingMessage,
+    ...disableIfTooltip(uninstallingMessage || readOnlyMessage || hibernatingMessage,
       {
         onClick: () => openModal(
           modals.DELETE_CLUSTER,
@@ -293,10 +306,13 @@ function actionResolver(
     };
     return {
       ...upgradeTrialClusterProps,
-      onClick: () => openModal(
-        modals.UPGRADE_TRIAL_CLUSTER,
-        { ...upgradeTrialClusterData, shouldDisplayClusterName: inClusterList },
-      ),
+      ...disableIfTooltip(readOnlyMessage,
+        {
+          onClick: () => openModal(
+            modals.UPGRADE_TRIAL_CLUSTER,
+            { ...upgradeTrialClusterData, shouldDisplayClusterName: inClusterList },
+          ),
+        }),
     };
   };
 

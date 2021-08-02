@@ -56,33 +56,53 @@ exports[`Cluster Actions Dropdown Items cluster configuration_mode read_only sho
   </DropdownItem>
   <DropdownItem
     component="button"
+    isDisabled={true}
     key="1.menu.scalecluster"
-    onClick={[Function]}
     title="Edit load balancers and persistent storage"
+    tooltip={
+      <span>
+        This operation is not available during maintenance
+      </span>
+    }
   >
     Edit load balancers and persistent storage
   </DropdownItem>
   <DropdownItem
     component="button"
+    isDisabled={true}
     key="1.menu.editnodecount"
-    onClick={[Function]}
     title="Edit node count"
+    tooltip={
+      <span>
+        This operation is not available during maintenance
+      </span>
+    }
   >
     Edit node count
   </DropdownItem>
   <DropdownItem
     component="button"
+    isDisabled={true}
     key="1.menu.hibernatecluster"
-    onClick={[Function]}
     title="Hibernate cluster"
+    tooltip={
+      <span>
+        This operation is not available during maintenance
+      </span>
+    }
   >
     Hibernate cluster
   </DropdownItem>
   <DropdownItem
     component="button"
+    isDisabled={true}
     key="1.menu.deletecluster"
-    onClick={[Function]}
     title="Delete cluster"
+    tooltip={
+      <span>
+        This operation is not available during maintenance
+      </span>
+    }
   >
     Delete cluster
   </DropdownItem>

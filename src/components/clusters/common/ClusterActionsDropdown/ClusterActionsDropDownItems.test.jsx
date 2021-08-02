@@ -159,17 +159,17 @@ describe('Cluster Actions Dropdown Items', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
-    it('TODO disable most actions, enable edit display name', () => {
+    it('disable provisioning actions, enable console and edit display name', () => {
       const actions = wrapper.find(DropdownItem).map(
         a => [a.props().title, a.props().isDisabled === true],
       );
       expect(actions).toEqual([
         ['Open console', false],
         ['Edit display name', false],
-        ['Edit load balancers and persistent storage', false],
-        ['Edit node count', false],
-        ['Hibernate cluster', false],
-        ['Delete cluster', false],
+        ['Edit load balancers and persistent storage', true],
+        ['Edit node count', true],
+        ['Hibernate cluster', true],
+        ['Delete cluster', true],
       ]);
     });
   });
