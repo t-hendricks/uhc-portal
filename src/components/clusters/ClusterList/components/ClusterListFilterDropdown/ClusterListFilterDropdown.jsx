@@ -9,6 +9,7 @@ import get from 'lodash/get';
 
 import { productFilterOptions } from '../../../../../common/subscriptionTypes';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
+import './ClusterListFilterDropdown.scss';
 
 class ClusterListFilterDropdown extends React.Component {
   constructor(props) {
