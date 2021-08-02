@@ -1,24 +1,17 @@
 # README - the short version
 
 ## First time setup?
-Run `make insights-proxy-setup`.  Note this will use `sudo` to add lines to your `/etc/hosts`.
+Run `make dev-env-setup`.  Note this will use `sudo` to add lines to your `/etc/hosts`.
 
-## Development environment proxied to a real backend
-
-To start the "chromed environment" using the backend proxy, you'll need a token from https://console.redhat.com/openshift/token.
+## Development environment proxied to a real backend (staging)
 
 ```sh
-export UHC_TOKEN=...
-make && yarn build && yarn start
+yarn build && yarn start
 ```
 
-### Alternative: Running the components separately
+### Alternative: Running with insights proxy
 
-First run `make` for various setup. Then:
-
-1. Run `yarn build && yarn dev-server`
-2. Run `./backend` (this will be your backend. Provide additional parameters like `--config=my_config_file.yml` if needed)
-3. Run `yarn insights-proxy`
+See full readme file for detailed instructions.
 
 ## Development environment using the mock data server
 
@@ -32,9 +25,7 @@ You can replace the backend while the app is running.
 
 ## => Accessing the UI
 
-With any of the above options, UI will be served at https://qa.foo.redhat.com:1337/openshift/
-
-Authentication is QA SSO which accepts various user names (e.g. `foo`, `user`, `redhat`), and the password is always `redhat`.
+With any of the above options, UI will be served at https://prod.foo.redhat.com:1337/openshift/
 
 ## Merge Request Review
 
