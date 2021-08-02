@@ -8,6 +8,18 @@ import modals from '../../../common/Modal/modals';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
 
 /**
+* Helper using reason message why it's disabled as source-of-truth
+* for whether it should be disabled.
+* This allows easy chaining `disableIfTooltip(reason1 || reason2 || ...)`.
+*
+* @param tooltip - message to show.  If truthy, also returns `isDisabled: true` prop.
+* @param [propsIfEnabled] - return value if `tooltip` was falsy (default {}).
+ */
+const disableIfTooltip = (tooltip, propsIfEnabled = {}) => (
+  tooltip ? { isDisabled: true, tooltip } : propsIfEnabled
+);
+
+/**
  * This function is used by PF tables to determine which dropdown items are displayed
  * on each row of the table. It returns a list of objects, containing props for DropdownItem
  * PF table renders automatically.
@@ -23,80 +35,92 @@ function actionResolver(
   const baseProps = {
     component: 'button',
   };
-  const uninstallingMessage = <span>The cluster is being uninstalled</span>;
-  const consoleDisabledMessage = <span>Admin console is not yet available for this cluster</span>;
-  const notReadyMessage = <span>This cluster is not ready</span>;
-  const hibernatingMessage = (
+  const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
+  const uninstallingMessage = isClusterUninstalling && (
+    <span>The cluster is being uninstalled</span>
+  );
+  const isClusterReady = cluster.state === clusterStates.READY;
+  // Superset of more specific uninstallingMessage.
+  const notReadyMessage = !isClusterReady && (
+    <span>This cluster is not ready</span>
+  );
+  const isClusterInHibernatingProcess = isHibernating(cluster.state);
+  const hibernatingMessage = isClusterInHibernatingProcess && (
     <span>
       This cluster is hibernating;
       awaken cluster in order to perform actions
     </span>
   );
-  const isClusterUninstalling = cluster.state === clusterStates.UNINSTALLING;
-  const isClusterInHibernatingProcess = isHibernating(cluster.state);
-  const isClusterInHibernatingProcessProps = isClusterInHibernatingProcess
-    ? { isDisabled: true, tooltip: hibernatingMessage } : {};
   const isClusterHibernatingOrPoweringDown = cluster.state === clusterStates.HIBERNATING
-  || cluster.state === clusterStates.POWERING_DOWN;
+    || cluster.state === clusterStates.POWERING_DOWN;
   const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
-  const isClusterReady = cluster.state === clusterStates.READY;
+  const poweringDownMessage = isClusterPoweringDown && (
+    <span>
+      This cluster is powering down; you will be able to resume after it reaches hibernating state.
+    </span>
+  );
   const isClusterErrorInAccountClaimPhase = cluster.state === clusterStates.ERROR
-  // eslint-disable-next-line camelcase
-  && !cluster.status?.dns_ready;
+    // eslint-disable-next-line camelcase
+    && !cluster.status?.dns_ready;
+  // TODO: should this case use a more specific message?
+  const errorInAccountClaimPhaseMessage = isClusterErrorInAccountClaimPhase && (
+    <span>This cluster is not ready</span>
+  );
   const hasAccountId = cluster.managed && cluster.aws && cluster.aws.account_id;
-  const isUninstallingProps = isClusterUninstalling
-    ? { isDisabled: true, tooltip: uninstallingMessage } : {};
+  // TODO: should this case use a more specific message?
+  const noAccountIdMessage = !hasAccountId && (
+    <span>This cluster is not ready</span>
+  );
+
+  const consoleURL = get(cluster, 'console.url', false);
+  const consoleDisabledMessage = !consoleURL && (
+    <span>Admin console is not yet available for this cluster</span>
+  );
+
   const getKey = item => `${cluster.id}.menu.${item}`;
   const clusterName = getClusterName(cluster);
   const isProductOSDTrial = cluster.product
-                         && cluster.product.id === normalizedProducts.OSDTrial;
+    && cluster.product.id === normalizedProducts.OSDTrial;
 
-  const getAdminConsoleProps = () => {
-    const consoleURL = cluster.console ? cluster.console.url : false;
-    const adminConsoleEnabled = {
-      component: 'a',
-      title: 'Open console',
-      href: consoleURL,
-      target: '_blank',
-      rel: 'noopener noreferrer',
-      key: getKey('adminconsole'),
-    };
-    const adminConsoleDisabled = {
-      ...baseProps,
-      title: 'Open console',
-      isDisabled: true,
-      tooltip: isClusterUninstalling ? uninstallingMessage : consoleDisabledMessage,
-      key: getKey('adminconsole'),
-    };
-    return consoleURL && !isClusterUninstalling
-       && !isClusterInHibernatingProcess ? adminConsoleEnabled : adminConsoleDisabled;
-  };
+  const getAdminConsoleProps = () => ({
+    ...baseProps,
+    title: 'Open console',
+    key: getKey('adminconsole'),
+    ...disableIfTooltip(uninstallingMessage || hibernatingMessage || consoleDisabledMessage,
+      {
+        component: 'a',
+        href: consoleURL,
+        target: '_blank',
+        rel: 'noopener noreferrer',
+      }),
+  });
 
   const getHibernateClusterProps = () => {
     const hibernateClusterBaseProps = {
       ...baseProps,
       key: getKey('hibernatecluster'),
     };
-    const clusterData = {
+    const modalData = {
       clusterID: cluster.id,
       clusterName,
       subscriptionID: cluster.subscription ? cluster.subscription.id : '',
+      shouldDisplayClusterName: inClusterList,
     };
     const hibernateClusterProps = {
       ...hibernateClusterBaseProps,
       title: 'Hibernate cluster',
-      isDisabled: !isClusterReady,
-      onClick: () => openModal(
-        modals.HIBERNATE_CLUSTER, { ...clusterData, shouldDisplayClusterName: inClusterList },
-      ),
+      ...disableIfTooltip(uninstallingMessage || notReadyMessage,
+        {
+          onClick: () => openModal(modals.HIBERNATE_CLUSTER, modalData),
+        }),
     };
     const resumeHibernatingClusterProps = {
       ...hibernateClusterBaseProps,
-      isDisabled: isClusterPoweringDown,
       title: 'Resume from Hibernation',
-      onClick: () => openModal(
-        modals.RESUME_CLUSTER, { ...clusterData, shouldDisplayClusterName: inClusterList },
-      ),
+      ...disableIfTooltip(poweringDownMessage,
+        {
+          onClick: () => openModal(modals.RESUME_CLUSTER, modalData),
+        }),
     };
 
     if (isClusterHibernatingOrPoweringDown) {
@@ -105,96 +129,55 @@ function actionResolver(
     return hibernateClusterProps;
   };
 
-  const getScaleClusterProps = () => {
-    const scaleClusterBaseProps = {
-      ...baseProps,
-      title: 'Edit load balancers and persistent storage',
-      key: getKey('scalecluster'),
-    };
-    const managedEditProps = {
-      ...scaleClusterBaseProps,
-      onClick: () => openModal(
-        modals.SCALE_CLUSTER, { ...cluster, shouldDisplayClusterName: inClusterList },
-      ),
-    };
-    const disabledManagedEditProps = {
-      ...scaleClusterBaseProps,
-      isDisabled: true,
-      tooltip: isClusterUninstalling ? uninstallingMessage : notReadyMessage,
-    };
-    return isClusterReady ? managedEditProps : disabledManagedEditProps;
-  };
+  const getScaleClusterProps = () => ({
+    ...baseProps,
+    title: 'Edit load balancers and persistent storage',
+    key: getKey('scalecluster'),
+    ...disableIfTooltip(uninstallingMessage || notReadyMessage,
+      {
+        onClick: () => openModal(
+          modals.SCALE_CLUSTER, { ...cluster, shouldDisplayClusterName: inClusterList },
+        ),
+      }),
+  });
 
-  const getEditNodeCountProps = () => {
-    const editNodeCountBaseProps = {
-      ...baseProps,
-      title: 'Edit node count',
-      key: getKey('editnodecount'),
-    };
-    const managedEditNodeCountProps = {
-      ...editNodeCountBaseProps,
-      onClick: () => openModal(
-        modals.EDIT_NODE_COUNT,
-        { cluster, isDefaultMachinePool: true, shouldDisplayClusterName: inClusterList },
-      ),
-    };
-    const disabledManagedEditProps = {
-      ...editNodeCountBaseProps,
-      isDisabled: true,
-      tooltip: isClusterUninstalling ? uninstallingMessage : notReadyMessage,
-    };
-    return isClusterReady ? managedEditNodeCountProps : disabledManagedEditProps;
-  };
+  const getEditNodeCountProps = () => ({
+    ...baseProps,
+    title: 'Edit node count',
+    key: getKey('editnodecount'),
+    ...disableIfTooltip(uninstallingMessage || notReadyMessage,
+      {
+        onClick: () => openModal(
+          modals.EDIT_NODE_COUNT,
+          { cluster, isDefaultMachinePool: true, shouldDisplayClusterName: inClusterList },
+        ),
+      }),
+  });
 
-  const getEditCCSCredentialsProps = () => {
-    const editCCSCredentialsBaseProps = {
-      ...baseProps,
-      title: 'Edit AWS credentials',
-      key: getKey('editccscredentials'),
-    };
-    const managedEditProps = {
-      ...editCCSCredentialsBaseProps,
-      onClick: () => openModal(modals.EDIT_CCS_CREDENTIALS,
-        { ...cluster, shouldDisplayClusterName: inClusterList }),
-    };
-    const disabledManagedEditProps = {
-      ...editCCSCredentialsBaseProps,
-      isDisabled: true,
-      tooltip: isClusterUninstalling ? uninstallingMessage : notReadyMessage,
-    };
-    return !isClusterErrorInAccountClaimPhase && !isClusterUninstalling && hasAccountId
-      ? managedEditProps : disabledManagedEditProps;
-  };
+  const getEditCCSCredentialsProps = () => ({
+    ...baseProps,
+    title: 'Edit AWS credentials',
+    key: getKey('editccscredentials'),
+    ...disableIfTooltip(
+      uninstallingMessage || errorInAccountClaimPhaseMessage || noAccountIdMessage,
+      {
+        onClick: () => openModal(modals.EDIT_CCS_CREDENTIALS,
+          { ...cluster, shouldDisplayClusterName: inClusterList }),
+      },
+    ),
+  });
 
-  const getEditDisplayNameProps = () => {
-    const editDisplayNameBaseProps = {
-      ...baseProps,
-      title: 'Edit display Name',
-      key: getKey('editdisplayname'),
-    };
-    const editDisplayNameProps = {
-      ...editDisplayNameBaseProps,
-      title: 'Edit display name',
-      onClick: () => openModal(
-        modals.EDIT_DISPLAY_NAME, { ...cluster, shouldDisplayClusterName: inClusterList },
-      ),
-    };
-    const editDisplayNamePropsUninstalling = {
-      ...editDisplayNameBaseProps,
-      ...isUninstallingProps,
-    };
-    const editDisplayNamePropsHibernating = {
-      ...editDisplayNameBaseProps,
-      ...isClusterInHibernatingProcessProps,
-    };
-
-    if (isClusterUninstalling) {
-      return editDisplayNamePropsUninstalling;
-    } if (isClusterInHibernatingProcess) {
-      return editDisplayNamePropsHibernating;
-    }
-    return editDisplayNameProps;
-  };
+  const getEditDisplayNameProps = () => ({
+    ...baseProps,
+    title: 'Edit display name',
+    key: getKey('editdisplayname'),
+    ...disableIfTooltip(uninstallingMessage || hibernatingMessage,
+      {
+        onClick: () => openModal(
+          modals.EDIT_DISPLAY_NAME, { ...cluster, shouldDisplayClusterName: inClusterList },
+        ),
+      }),
+  });
   const getArchiveClusterProps = () => {
     const baseArchiveProps = {
       ...baseProps,
@@ -232,50 +215,34 @@ function actionResolver(
     };
   };
 
-  const hasConsoleURL = get(cluster, 'console.url', false);
+  const getEditConsoleURLProps = () => ({
+    ...baseProps,
+    key: getKey('editconsoleurl'),
+    ...disableIfTooltip(uninstallingMessage,
+      {
+        title: consoleURL ? 'Edit console URL' : 'Add console URL',
+        onClick: () => openModal(
+          modals.EDIT_CONSOLE_URL, { ...cluster, shouldDisplayClusterName: inClusterList },
+        ),
+      }),
+  });
 
-  const getEditConsoleURLProps = () => {
-    const editConsoleURLBaseProps = {
-      ...baseProps,
-      key: getKey('editconsoleurl'),
-    };
-    const editConsoleURLProps = {
-      title: hasConsoleURL ? 'Edit console URL' : 'Add console URL',
-      ...editConsoleURLBaseProps,
-      onClick: () => openModal(
-        modals.EDIT_CONSOLE_URL, { ...cluster, shouldDisplayClusterName: inClusterList },
-      ),
-    };
-    const editConsoleURLPropsUninstalling = {
-      ...editConsoleURLBaseProps,
-      ...isUninstallingProps,
-    };
-    return isClusterUninstalling ? editConsoleURLPropsUninstalling : editConsoleURLProps;
-  };
-
-  const getDeleteItemProps = () => {
-    const baseDeleteProps = {
-      ...baseProps,
-      title: 'Delete cluster',
-      key: getKey('deletecluster'),
-    };
-    const deleteModalData = {
-      clusterID: cluster.id,
-      clusterName,
-    };
-
-    if (isClusterUninstalling) {
-      return { ...baseDeleteProps, ...isUninstallingProps };
-    } if (isClusterInHibernatingProcess) {
-      return { ...baseDeleteProps, ...isClusterInHibernatingProcessProps };
-    }
-    return {
-      ...baseDeleteProps,
-      onClick: () => openModal(
-        modals.DELETE_CLUSTER, { ...deleteModalData, shouldDisplayClusterName: inClusterList },
-      ),
-    };
-  };
+  const getDeleteItemProps = () => ({
+    ...baseProps,
+    title: 'Delete cluster',
+    key: getKey('deletecluster'),
+    ...disableIfTooltip(uninstallingMessage || hibernatingMessage,
+      {
+        onClick: () => openModal(
+          modals.DELETE_CLUSTER,
+          {
+            clusterID: cluster.id,
+            clusterName,
+            shouldDisplayClusterName: inClusterList,
+          },
+        ),
+      }),
+  });
 
   const getEditSubscriptionSettingsProps = () => {
     const editSubscriptionSettingsProps = {
@@ -357,7 +324,7 @@ function actionResolver(
     && !isArchived;
   const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
     && isArchived;
-  const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || hasConsoleURL)
+  const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || consoleURL)
     && !isAssistedInstallCluster(cluster);
   const product = get(cluster, 'subscription.plan.type', '');
   const showEditSubscriptionSettings = product === normalizedProducts.OCP
