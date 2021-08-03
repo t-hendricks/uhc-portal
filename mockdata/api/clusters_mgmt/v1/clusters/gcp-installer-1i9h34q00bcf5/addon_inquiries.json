@@ -516,34 +516,6 @@
             ]
           },
           {
-            "id": "trial-quota",
-            "name": "Quota",
-            "description": "Please choose a Quota from the list. IMPORTANT: changes to the configuration will update the configuration of the installation and reduce their rate limit.",
-            "value_type": "string",
-            "validation": "",
-            "required": true,
-            "editable": true,
-            "enabled": true,
-            "default_value": "0",
-            "options": [
-              {
-                "name": "Evaluation",
-                "value": "0"
-              }
-            ],
-            "conditions": [
-              {
-                "resource": "cluster",
-                "data": {
-                  "product.id": [
-                    "osdtrial",
-                    "OSDTrial"
-                  ]
-                }
-              }
-            ]
-          },
-          {
             "id": "addon-resource-required",
             "name": "Addon Resource Requirements",
             "description": "IMPORTANT: Before proceeding, please ensure the target cluster has sufficient resources to support the add-on install. Resource requirements are available from the Product Service Definition document: [https://access.redhat.com/articles/5534341]",
