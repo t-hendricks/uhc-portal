@@ -1,0 +1,16 @@
+{
+  "kind": "CloudRegion",
+  "id": "us-west2",
+  "href": "/api/clusters_mgmt/v1/cloud_providers/gcp/regions/us-west2",
+  "display_name": "Los Angeles, California, USA",
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "enabled": true,
+  "supports_multi_az": true,
+  "kms_location_name": "Global,US",
+  "kms_location_id": "global,us",
+  "ccs_only": false
+}

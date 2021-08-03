@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "g4dn.4xlarge - Accelerated Computing (1 GPU)",
+  "category": "accelerated_computing",
+  "size": "xlarge",
+  "id": "g4dn.4xlarge",
+  "href": "/api/clusters_mgmt/v1/machine_types/g4dn.4xlarge",
+  "memory": {
+    "value": 68719476736,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 16,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "aws",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+  },
+  "ccs_only": true,
+  "generic_name": "t4-gpu-16"
+}

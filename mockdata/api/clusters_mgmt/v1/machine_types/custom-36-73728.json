@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "custom-36-73728 - Compute optimized",
+  "category": "compute_optimized",
+  "size": "xlarge",
+  "id": "custom-36-73728",
+  "href": "/api/clusters_mgmt/v1/machine_types/custom-36-73728",
+  "memory": {
+    "value": 68719476736,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 36,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": true,
+  "generic_name": "highcpu-36"
+}

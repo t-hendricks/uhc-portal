@@ -1,16 +1,16 @@
 {
   "kind": "MachineType",
-  "name": "r5.xlarge - Memory Optimized",
-  "category": "memory_optimized",
-  "size": "small",
-  "id": "r5.xlarge",
-  "href": "/api/clusters_mgmt/v1/machine_types/r5.xlarge",
+  "name": "m5.2xlarge - General Purpose",
+  "category": "general_purpose",
+  "size": "medium",
+  "id": "m5.2xlarge",
+  "href": "/api/clusters_mgmt/v1/machine_types/m5.2xlarge",
   "memory": {
     "value": 34359738368,
     "unit": "B"
   },
   "cpu": {
-    "value": 4,
+    "value": 8,
     "unit": "vCPU"
   },
   "cloud_provider": {
@@ -19,5 +19,5 @@
     "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
   },
   "ccs_only": false,
-  "generic_name": "highmem-4"
+  "generic_name": "standard-8"
 }

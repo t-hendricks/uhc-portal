@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "n1-standard-8 and nvidia-tesla-t4 - Accelerated Computing (1 GPU)",
+  "category": "accelerated_computing",
+  "size": "medium",
+  "id": "n1-standard-8+nvidia-tesla-t4[1]",
+  "href": "/api/clusters_mgmt/v1/machine_types/n1-standard-8+nvidia-tesla-t4[1]",
+  "memory": {
+    "value": 32212254720,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 8,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": true,
+  "generic_name": "t4-gpu-8"
+}

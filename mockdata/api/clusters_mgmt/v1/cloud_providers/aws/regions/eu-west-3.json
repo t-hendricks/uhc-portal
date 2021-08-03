@@ -1,8 +1,8 @@
 {
   "kind": "CloudRegion",
-  "id": "us-east-1",
-  "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
-  "display_name": "US East, N. Virginia",
+  "id": "eu-west-3",
+  "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-west-3",
+  "display_name": "EU, Paris",
   "cloud_provider": {
     "kind": "CloudProviderLink",
     "id": "aws",

@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "custom-96-393216 - General purpose",
+  "category": "general_purpose",
+  "size": "xxxxlarge",
+  "id": "custom-96-393216",
+  "href": "/api/clusters_mgmt/v1/machine_types/custom-96-393216",
+  "memory": {
+    "value": 412316860416,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 96,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": true,
+  "generic_name": "standard-96"
+}

@@ -1,8 +1,8 @@
 {
   "kind": "MachineTypeList",
   "page": 1,
-  "size": 44,
-  "total": 44,
+  "size": 52,
+  "total": 52,
   "items": [
     {
       "kind": "MachineType",
@@ -24,7 +24,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highcpu-48"
     },
     {
       "kind": "MachineType",
@@ -46,7 +47,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highcpu-72"
     },
     {
       "kind": "MachineType",
@@ -68,7 +70,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highcpu-96"
     },
     {
       "kind": "MachineType",
@@ -90,7 +93,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "highcpu-8"
     },
     {
       "kind": "MachineType",
@@ -112,7 +116,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "highcpu-16"
     },
     {
       "kind": "MachineType",
@@ -134,7 +139,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highcpu-36"
     },
     {
       "kind": "MachineType",
@@ -156,7 +162,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "highmem-16"
     },
     {
       "kind": "MachineType",
@@ -178,7 +185,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "highcpu-16"
     },
     {
       "kind": "MachineType",
@@ -200,7 +208,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "standard-16"
     },
     {
       "kind": "MachineType",
@@ -222,29 +231,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": true
-    },
-    {
-      "kind": "MachineType",
-      "name": "custom-32-262144 - Memory optimized",
-      "category": "memory_optimized",
-      "size": "xlarge",
-      "id": "custom-32-262144",
-      "href": "/api/clusters_mgmt/v1/machine_types/custom-32-262144",
-      "memory": {
-        "value": 274877906944,
-        "unit": "B"
-      },
-      "cpu": {
-        "value": 32,
-        "unit": "vCPU"
-      },
-      "cloud_provider": {
-        "kind": "CloudProviderLink",
-        "id": "gcp",
-        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
-      },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "standard-32"
     },
     {
       "kind": "MachineType",
@@ -266,7 +254,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highcpu-36"
     },
     {
       "kind": "MachineType",
@@ -288,7 +277,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "standard-4"
     },
     {
       "kind": "MachineType",
@@ -310,7 +300,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "highmem-4"
     },
     {
       "kind": "MachineType",
@@ -332,29 +323,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": true
-    },
-    {
-      "kind": "MachineType",
-      "name": "custom-48-393216 - Memory optimized",
-      "category": "memory_optimized",
-      "size": "xxlarge",
-      "id": "custom-48-393216",
-      "href": "/api/clusters_mgmt/v1/machine_types/custom-48-393216",
-      "memory": {
-        "value": 412316860416,
-        "unit": "B"
-      },
-      "cpu": {
-        "value": 48,
-        "unit": "vCPU"
-      },
-      "cloud_provider": {
-        "kind": "CloudProviderLink",
-        "id": "gcp",
-        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
-      },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "standard-48"
     },
     {
       "kind": "MachineType",
@@ -376,7 +346,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highcpu-48"
     },
     {
       "kind": "MachineType",
@@ -398,29 +369,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": true
-    },
-    {
-      "kind": "MachineType",
-      "name": "custom-64-524288 - Memory optimized",
-      "category": "memory_optimized",
-      "size": "xxxlarge",
-      "id": "custom-64-524288",
-      "href": "/api/clusters_mgmt/v1/machine_types/custom-64-524288",
-      "memory": {
-        "value": 549755813888,
-        "unit": "B"
-      },
-      "cpu": {
-        "value": 64,
-        "unit": "vCPU"
-      },
-      "cloud_provider": {
-        "kind": "CloudProviderLink",
-        "id": "gcp",
-        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
-      },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "standard-64"
     },
     {
       "kind": "MachineType",
@@ -442,7 +392,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highcpu-72"
     },
     {
       "kind": "MachineType",
@@ -464,7 +415,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "highcpu-8"
     },
     {
       "kind": "MachineType",
@@ -486,7 +438,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "standard-8"
     },
     {
       "kind": "MachineType",
@@ -508,7 +461,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "highmem-8"
     },
     {
       "kind": "MachineType",
@@ -530,7 +484,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highcpu-96"
     },
     {
       "kind": "MachineType",
@@ -552,29 +507,8 @@
         "id": "gcp",
         "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
       },
-      "ccs_only": true
-    },
-    {
-      "kind": "MachineType",
-      "name": "custom-96-786432 - Memory optimized",
-      "category": "memory_optimized",
-      "size": "xxxxlarge",
-      "id": "custom-96-786432",
-      "href": "/api/clusters_mgmt/v1/machine_types/custom-96-786432",
-      "memory": {
-        "value": 824633720832,
-        "unit": "B"
-      },
-      "cpu": {
-        "value": 96,
-        "unit": "vCPU"
-      },
-      "cloud_provider": {
-        "kind": "CloudProviderLink",
-        "id": "gcp",
-        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
-      },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "standard-96"
     },
     {
       "kind": "MachineType",
@@ -596,7 +530,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "t4-gpu-48"
     },
     {
       "kind": "MachineType",
@@ -618,7 +553,54 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "t4-gpu-8"
+    },
+    {
+      "kind": "MachineType",
+      "name": "g4dn.4xlarge - Accelerated Computing (1 GPU)",
+      "category": "accelerated_computing",
+      "size": "xlarge",
+      "id": "g4dn.4xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/g4dn.4xlarge",
+      "memory": {
+        "value": 68719476736,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 16,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "ccs_only": true,
+      "generic_name": "t4-gpu-16"
+    },
+    {
+      "kind": "MachineType",
+      "name": "g4dn.xlarge - Accelerated Computing (1 GPU)",
+      "category": "accelerated_computing",
+      "size": "small",
+      "id": "g4dn.xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/g4dn.xlarge",
+      "memory": {
+        "value": 17179869184,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 4,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "ccs_only": true,
+      "generic_name": "t4-gpu-4"
     },
     {
       "kind": "MachineType",
@@ -640,7 +622,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "standard-48"
     },
     {
       "kind": "MachineType",
@@ -662,7 +645,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "standard-64"
     },
     {
       "kind": "MachineType",
@@ -684,7 +668,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "standard-96"
     },
     {
       "kind": "MachineType",
@@ -706,7 +691,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "standard-8"
     },
     {
       "kind": "MachineType",
@@ -728,7 +714,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "standard-16"
     },
     {
       "kind": "MachineType",
@@ -750,7 +737,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": false
+      "ccs_only": true,
+      "generic_name": "standard-32"
     },
     {
       "kind": "MachineType",
@@ -772,7 +760,192 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "standard-4"
+    },
+    {
+      "kind": "MachineType",
+      "name": "n1-custom-48-184320 and nvidia-tesla-t4 - Accelerated Computing (4 GPU)",
+      "category": "accelerated_computing",
+      "size": "xxlarge",
+      "id": "n1-custom-48-184320+nvidia-tesla-t4[4]",
+      "href": "/api/clusters_mgmt/v1/machine_types/n1-custom-48-184320+nvidia-tesla-t4[4]",
+      "memory": {
+        "value": 103079215104,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 48,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "ccs_only": true,
+      "generic_name": "t4-gpu-48"
+    },
+    {
+      "kind": "MachineType",
+      "name": "n1-highmem-32 and nvidia-tesla-v100 - Accelerated Computing (4 GPUs)",
+      "category": "accelerated_computing",
+      "size": "xlarge",
+      "id": "n1-highmem-32+nvidia-tesla-v100[4]",
+      "href": "/api/clusters_mgmt/v1/machine_types/n1-highmem-32+nvidia-tesla-v100[4]",
+      "memory": {
+        "value": 223338299392,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 32,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "ccs_only": true,
+      "generic_name": "v100-gpu-32"
+    },
+    {
+      "kind": "MachineType",
+      "name": "n1-highmem-64 and nvidia-tesla-v100 - Accelerated Computing (8 GPU)",
+      "category": "accelerated_computing",
+      "size": "xxxlarge",
+      "id": "n1-highmem-64+nvidia-tesla-v100[8]",
+      "href": "/api/clusters_mgmt/v1/machine_types/n1-highmem-64+nvidia-tesla-v100[8]",
+      "memory": {
+        "value": 446676598784,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 64,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "ccs_only": true,
+      "generic_name": "v100-gpu-64"
+    },
+    {
+      "kind": "MachineType",
+      "name": "n1-highmem-8 and nvidia-tesla-v100 - Accelerated Computing (1 GPU)",
+      "category": "accelerated_computing",
+      "size": "medium",
+      "id": "n1-highmem-8+nvidia-tesla-v100[1]",
+      "href": "/api/clusters_mgmt/v1/machine_types/n1-highmem-8+nvidia-tesla-v100[1]",
+      "memory": {
+        "value": 55834574848,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 8,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "ccs_only": true,
+      "generic_name": "v100-gpu-8"
+    },
+    {
+      "kind": "MachineType",
+      "name": "n1-highmem-96 and nvidia-tesla-v100 - Accelerated Computing (8 GPU)",
+      "category": "accelerated_computing",
+      "size": "xxxxlarge",
+      "id": "n1-highmem-96+nvidia-tesla-v100[8]",
+      "href": "/api/clusters_mgmt/v1/machine_types/n1-highmem-96+nvidia-tesla-v100[8]",
+      "memory": {
+        "value": 670014898176,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 96,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "ccs_only": true,
+      "generic_name": "v100-gpu-96"
+    },
+    {
+      "kind": "MachineType",
+      "name": "n1-standard-16 and nvidia-tesla-t4 - Accelerated Computing (1 GPU)",
+      "category": "accelerated_computing",
+      "size": "large",
+      "id": "n1-standard-16+nvidia-tesla-t4[1]",
+      "href": "/api/clusters_mgmt/v1/machine_types/n1-standard-16+nvidia-tesla-t4[1]",
+      "memory": {
+        "value": 64424509440,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 16,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "ccs_only": true,
+      "generic_name": "t4-gpu-16"
+    },
+    {
+      "kind": "MachineType",
+      "name": "n1-standard-4 and nvidia-tesla-t4 - Accelerated Computing (1 GPU)",
+      "category": "accelerated_computing",
+      "size": "small",
+      "id": "n1-standard-4+nvidia-tesla-t4[1]",
+      "href": "/api/clusters_mgmt/v1/machine_types/n1-standard-4+nvidia-tesla-t4[1]",
+      "memory": {
+        "value": 16106127360,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 4,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "ccs_only": true,
+      "generic_name": "t4-gpu-4"
+    },
+    {
+      "kind": "MachineType",
+      "name": "n1-standard-8 and nvidia-tesla-t4 - Accelerated Computing (1 GPU)",
+      "category": "accelerated_computing",
+      "size": "medium",
+      "id": "n1-standard-8+nvidia-tesla-t4[1]",
+      "href": "/api/clusters_mgmt/v1/machine_types/n1-standard-8+nvidia-tesla-t4[1]",
+      "memory": {
+        "value": 32212254720,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 8,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "gcp",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+      },
+      "ccs_only": true,
+      "generic_name": "t4-gpu-8"
     },
     {
       "kind": "MachineType",
@@ -794,7 +967,31 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "v100-gpu-64"
+    },
+    {
+      "kind": "MachineType",
+      "name": "p3.2xlarge - Accelerated Computing (1 GPU)",
+      "category": "accelerated_computing",
+      "size": "medium",
+      "id": "p3.2xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/p3.2xlarge",
+      "memory": {
+        "value": 65498251264,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 8,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "ccs_only": true,
+      "generic_name": "v100-gpu-8"
     },
     {
       "kind": "MachineType",
@@ -816,7 +1013,31 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "v100-gpu-32"
+    },
+    {
+      "kind": "MachineType",
+      "name": "p3dn.24xlarge - Accelerated Computing (8 GPUs)",
+      "category": "accelerated_computing",
+      "size": "xxxxlarge",
+      "id": "p3dn.24xlarge",
+      "href": "/api/clusters_mgmt/v1/machine_types/p3dn.24xlarge",
+      "memory": {
+        "value": 824633720832,
+        "unit": "B"
+      },
+      "cpu": {
+        "value": 96,
+        "unit": "vCPU"
+      },
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "ccs_only": true,
+      "generic_name": "v100-gpu-96"
     },
     {
       "kind": "MachineType",
@@ -838,7 +1059,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highmem-48"
     },
     {
       "kind": "MachineType",
@@ -860,7 +1082,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highmem-64"
     },
     {
       "kind": "MachineType",
@@ -882,7 +1105,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highmem-96"
     },
     {
       "kind": "MachineType",
@@ -904,7 +1128,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "highmem-8"
     },
     {
       "kind": "MachineType",
@@ -926,7 +1151,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "highmem-16"
     },
     {
       "kind": "MachineType",
@@ -948,7 +1174,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": true
+      "ccs_only": true,
+      "generic_name": "highmem-32"
     },
     {
       "kind": "MachineType",
@@ -970,7 +1197,8 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "ccs_only": false
+      "ccs_only": false,
+      "generic_name": "highmem-4"
     }
   ]
 }
