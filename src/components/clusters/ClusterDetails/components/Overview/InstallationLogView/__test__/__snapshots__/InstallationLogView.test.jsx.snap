@@ -18,17 +18,6 @@ exports[`<InstallationLogView /> should render with logs 1`] = `
 </div>
 `;
 
-exports[`<InstallationLogView /> should render without logs 1`] = `
-<div
-  className=""
-  id="log-window-container"
->
-  <p>
-    Cluster installation has started. Installation log will appear here once it becomes available.
-  </p>
-</div>
-`;
-
 exports[`<InstallationLogView /> should stop the timer when recieving 403 error code 1`] = `
 <div
   className=""
@@ -36,6 +25,17 @@ exports[`<InstallationLogView /> should stop the timer when recieving 403 error 
 >
   <p>
     This cluster is installing so some data might not be available. This may take a few minutes.
+  </p>
+</div>
+`;
+
+exports[`<InstallationLogView /> without logs should render 1`] = `
+<div
+  className=""
+  id="log-window-container"
+>
+  <p>
+    Cluster installation has started. Installation log will appear here once it becomes available.
   </p>
 </div>
 `;

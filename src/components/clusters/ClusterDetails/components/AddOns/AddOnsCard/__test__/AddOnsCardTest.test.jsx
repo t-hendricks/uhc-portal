@@ -7,7 +7,7 @@ import AddOnsConstants from '../../AddOnsConstants';
 describe('<AddOnsCard />', () => {
   let wrapper;
   let onClick;
-  beforeAll(() => {
+  beforeEach(() => {
     onClick = jest.fn();
     wrapper = shallow(
       <AddOnsCard

@@ -5,13 +5,16 @@ import SubnetFields, { SingleSubnetFieldsRow } from './SubnetFields';
 import GCPNetworkConfigSection from './GCPNetworkConfigSection';
 
 describe('<InstallToVPC>', () => {
-  const wrapper = shallow(
-    <InstallToVPC
-      selectedRegion="us-east-1"
-      isMultiAz={false}
-      cloudProviderID="aws"
-    />,
-  );
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(
+      <InstallToVPC
+        selectedRegion="us-east-1"
+        isMultiAz={false}
+        cloudProviderID="aws"
+      />,
+    );
+  });
 
   it('renders correctly when checkbox is not selected', () => {
     const fieldRowSets = wrapper.find(SubnetFields);
@@ -27,7 +30,7 @@ describe('<InstallToVPC>', () => {
   });
 
   it('renders correctly when selected for multi AZ', () => {
-    wrapper.setProps({ isMultiAz: true });
+    wrapper.setProps({ selected: true, isMultiAz: true });
     const fieldRows = wrapper.find(SubnetFields).dive().find(SingleSubnetFieldsRow);
     expect(fieldRows.length).toEqual(3);
     expect(wrapper).toMatchSnapshot();
@@ -35,12 +38,15 @@ describe('<InstallToVPC>', () => {
 });
 
 describe('<InstallToVPC>', () => {
-  const wrapper = shallow(
-    <InstallToVPC
-      selectedRegion="us-east1"
-      cloudProviderID="gcp"
-    />,
-  );
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(
+      <InstallToVPC
+        selectedRegion="us-east1"
+        cloudProviderID="gcp"
+      />,
+    );
+  });
 
   it('renders correctly when checkbox is not selected', () => {
     const fieldRowSets = wrapper.find(GCPNetworkConfigSection);

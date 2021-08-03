@@ -7,7 +7,7 @@ import * as Fixtures from './ClusterActionsDropdown.fixtures';
 describe('<ClusterActionsDropdown />', () => {
   describe('cluster with state ready and console url', () => {
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       wrapper = shallow(<ClusterActionsDropdown {...Fixtures.managedReadyProps} />);
     });
 

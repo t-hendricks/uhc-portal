@@ -18,10 +18,13 @@ const status = {
 
 describe('<ClusterStatusMonitor />', () => {
   let wrapper;
-  const getClusterStatus = jest.fn();
-  const refresh = jest.fn();
-  const history = { push: jest.fn() };
-  beforeAll(() => {
+  let getClusterStatus;
+  let refresh;
+  let history;
+  beforeEach(() => {
+    getClusterStatus = jest.fn();
+    refresh = jest.fn();
+    history = { push: jest.fn() };
     wrapper = shallow(<ClusterStatusMonitor
       cluster={{ ...clusterDetails.cluster, state: 'installing' }}
       getClusterStatus={getClusterStatus}
@@ -114,6 +117,20 @@ describe('<ClusterStatusMonitor />', () => {
   });
 
   it('renders an alert when cluster is errored', () => {
+    wrapper.setProps(
+      {
+        status: {
+          fulfilled: true,
+          pending: false,
+          status: {
+            id: clusterDetails.cluster.id,
+            state: 'error',
+            provision_error_code: 'OCM1002',
+            provision_error_message: 'Invalid AWS credentials (authentication)',
+          },
+        },
+      },
+    );
     expect(wrapper).toMatchSnapshot();
   });
 });

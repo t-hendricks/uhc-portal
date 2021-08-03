@@ -108,7 +108,7 @@ describe('<CostCard />', () => {
   let getReport;
   let getSources;
   describe('When no source providers are available', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       getReport = jest.fn();
       getSources = jest.fn();
       wrapper = shallow(
@@ -128,12 +128,12 @@ describe('<CostCard />', () => {
       expect(getSources).toBeCalled();
     });
     it('calls getReport on mount', () => {
-      expect(getSources).toBeCalled();
+      expect(getReport).toBeCalled();
     });
   });
 
   describe('When cost report is available', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       getReport = jest.fn();
       getSources = jest.fn();
       wrapper = shallow(

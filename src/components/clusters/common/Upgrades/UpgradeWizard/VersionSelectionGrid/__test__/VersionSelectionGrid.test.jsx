@@ -55,7 +55,7 @@ describe('<VersionSelectionGrid />', () => {
     },
   ];
 
-  beforeAll(() => {
+  beforeEach(() => {
     getVersion = jest.fn();
     onSelect = jest.fn();
     wrapper = shallow(

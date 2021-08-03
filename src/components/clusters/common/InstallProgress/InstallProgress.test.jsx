@@ -10,9 +10,12 @@ describe('<InstallProgress />', () => {
     state: clusterStates.INSTALLING,
   };
 
-  const wrapper = shallow(
-    <InstallProgress cluster={clusterInstalling} />,
-  );
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(
+      <InstallProgress cluster={clusterInstalling} />,
+    );
+  });
 
   it('should render correclty installing cluster', () => {
     expect(wrapper).toMatchSnapshot();

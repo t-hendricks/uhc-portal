@@ -16,7 +16,7 @@ function DropDownItemsRenderHelper(props) {
 describe('Cluster Actions Dropdown Items', () => {
   describe('cluster with state ready and console url', () => {
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.managedReadyProps} />);
     });
 
@@ -64,7 +64,7 @@ describe('Cluster Actions Dropdown Items', () => {
     });
 
     describe('and product osdtrial', () => {
-      beforeAll(() => {
+      beforeEach(() => {
         wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.managedReadyOsdTrialProps} />);
       });
 

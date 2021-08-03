@@ -16,10 +16,13 @@ describe('<ReduxFormKeyValueList />', () => {
   const emptyListFields = new MockFields({});
   const listWithItemsFields = new MockFields({ key: 'aa', value: 'bb' }, { key: 'cc', value: 'dd' });
 
-  const wrapper = shallow(<ReduxFormKeyValueList
-    fields={emptyListFields}
-    meta={{ error: '', submitFailed: false }}
-  />);
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(<ReduxFormKeyValueList
+      fields={emptyListFields}
+      meta={{ error: '', submitFailed: false }}
+    />);
+  });
 
   it('should render when there is no input - initial reder', () => {
     expect(wrapper).toMatchSnapshot();
@@ -31,12 +34,14 @@ describe('<ReduxFormKeyValueList />', () => {
   });
 
   it('should add a new item', () => {
+    wrapper.setProps({ fields: listWithItemsFields });
     const addBtn = wrapper.find('Button[className="reduxFormKeyValueList-addBtn"]');
     addBtn.simulate('click');
     expect(listWithItemsFields.push).toBeCalled();
   });
 
   it('should remove an item', () => {
+    wrapper.setProps({ fields: listWithItemsFields });
     const rmBtn = wrapper.find('Button[className="reduxFormKeyValueList-removeBtn"]');
     rmBtn.at(1).simulate('click');
     expect(listWithItemsFields.remove).toBeCalled();

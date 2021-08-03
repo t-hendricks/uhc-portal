@@ -10,7 +10,7 @@ describe('<DeleteClusterDialog />', () => {
   let closeModal;
   let onClose;
   let deleteCluster;
-  beforeAll(() => {
+  beforeEach(() => {
     clear = jest.fn();
     closeModal = jest.fn();
     deleteCluster = jest.fn();

@@ -41,7 +41,7 @@ describe('<NetworkSelfServiceSection />', () => {
   let openAddGrantModal;
   let addNotification;
 
-  beforeAll(() => {
+  beforeEach(() => {
     getRoles = jest.fn();
     getGrants = jest.fn();
     deleteGrant = jest.fn();
@@ -89,7 +89,7 @@ describe('<NetworkSelfServiceSection />', () => {
   it('should call getGrants() when a grant is removed', () => {
     wrapper.setProps({ deleteGrantResponse: { ...baseResponse, pending: true } });
     wrapper.setProps({ deleteGrantResponse: { ...baseResponse, fulfilled: true } });
-    expect(getGrants).toHaveBeenCalledTimes(3); // one on mount, one in previous test case, one now
+    expect(getGrants).toHaveBeenCalledTimes(2); // one on mount, one now
   });
 
   it('should render skeleton when pending and no grants are set', () => {

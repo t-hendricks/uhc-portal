@@ -6,7 +6,7 @@ import AddOnsRequirementContent from '../AddOnsDrawerRequirementContent';
 describe('<AddOnsRequirementContent />', () => {
   let wrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<AddOnsRequirementContent
       activeCardRequirements={[
         'first requirement',

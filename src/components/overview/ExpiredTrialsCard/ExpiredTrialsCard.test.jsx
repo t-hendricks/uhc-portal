@@ -26,7 +26,7 @@ describe('<ExpiredTrialsCard />', () => {
   let wrapper;
   const openModal = jest.fn();
   describe('When the request was not fulfilled', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       getSubscriptions = jest.fn();
       wrapper = shallow(
         <ExpiredTrialsCard
@@ -46,7 +46,7 @@ describe('<ExpiredTrialsCard />', () => {
   });
 
   describe('When data is available', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       getSubscriptions = jest.fn();
       const subscriptions = {
         ...initialState,

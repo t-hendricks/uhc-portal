@@ -9,8 +9,12 @@ import OSDSubscriptionTable from '../OSDSubscriptionCard/OSDSubscriptionTable';
 import SubscriptionNotFulfilled from '../SubscriptionNotFulfilled';
 
 describe('<Quota />', () => {
+  let wrapper;
+  let refreshFn;
   describe('Quota', () => {
-    const wrapper = shallow(<Quota {...Fixtures} />);
+    beforeEach(() => {
+      wrapper = shallow(<Quota {...Fixtures} />);
+    });
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
@@ -25,7 +29,9 @@ describe('<Quota />', () => {
   });
 
   describe('OSDSubscriptionCard', () => {
-    const wrapper = shallow(<OSDSubscriptionCard {...Fixtures} />);
+    beforeEach(() => {
+      wrapper = shallow(<OSDSubscriptionCard {...Fixtures} />);
+    });
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
@@ -41,7 +47,9 @@ describe('<Quota />', () => {
   });
 
   describe('OSDSubscriptionTable', () => {
-    const wrapper = shallow(<OSDSubscriptionTable {...Fixtures} />);
+    beforeEach(() => {
+      wrapper = shallow(<OSDSubscriptionTable {...Fixtures} />);
+    });
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
@@ -51,9 +59,11 @@ describe('<Quota />', () => {
   // TODO: following tests should test OSDSubscriptionCard rather than
   //   directly calling SubscriptionNotFulfilled.
   describe('OSDSubscriptionCard Loading', () => {
-    const refreshFn = jest.fn();
     const quotaCost = { ...Fixtures.quotaCost, pending: true, type: 'osd' };
-    const wrapper = shallow(<SubscriptionNotFulfilled data={quotaCost} refresh={refreshFn} />);
+    beforeEach(() => {
+      refreshFn = jest.fn();
+      wrapper = shallow(<SubscriptionNotFulfilled data={quotaCost} refresh={refreshFn} />);
+    });
 
     it('should render loading OSD quota summary', () => {
       expect(wrapper).toMatchSnapshot();
@@ -62,9 +72,11 @@ describe('<Quota />', () => {
   });
 
   describe('OSDSubscriptionCard Empty', () => {
-    const refreshFn = jest.fn();
     const quotaCost = { ...Fixtures.emptyQuotaCost, empty: true, type: 'osd' };
-    const wrapper = shallow(<SubscriptionNotFulfilled data={quotaCost} refresh={refreshFn} />);
+    beforeEach(() => {
+      refreshFn = jest.fn();
+      wrapper = shallow(<SubscriptionNotFulfilled data={quotaCost} refresh={refreshFn} />);
+    });
 
     it('should render empty OSD quota summary', () => {
       expect(wrapper).toMatchSnapshot();
@@ -72,9 +84,11 @@ describe('<Quota />', () => {
   });
 
   describe('OSDSubscriptionCard Error', () => {
-    const refreshFn = jest.fn();
     const quotaCost = { ...Fixtures.quotaCost, error: true, type: 'osd' };
-    const wrapper = shallow(<SubscriptionNotFulfilled data={quotaCost} refresh={refreshFn} />);
+    beforeEach(() => {
+      refreshFn = jest.fn();
+      wrapper = shallow(<SubscriptionNotFulfilled data={quotaCost} refresh={refreshFn} />);
+    });
 
     it('should render error OSD quota summary', () => {
       expect(wrapper).toMatchSnapshot();

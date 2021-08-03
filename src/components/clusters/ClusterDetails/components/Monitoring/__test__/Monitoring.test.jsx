@@ -7,7 +7,7 @@ import { monitoringStatuses } from '../monitoringHelper';
 describe('<Monitoring />', () => {
   let wrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<Monitoring
       cluster={{}}
       alerts={{}}

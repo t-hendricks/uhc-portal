@@ -6,7 +6,7 @@ import ClusterOperators from '../components/ClusterOperators';
 describe('<ClusterOperators />', () => {
   let wrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<ClusterOperators />);
   });
 

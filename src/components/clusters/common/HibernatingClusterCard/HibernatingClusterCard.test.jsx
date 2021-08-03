@@ -16,7 +16,7 @@ describe('<HibernateClusterModal />', () => {
     state: clusterStates.HIBERNATING,
   };
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<HibernatingClusterCard
       cluster={cluster}
       openModal={openModal}

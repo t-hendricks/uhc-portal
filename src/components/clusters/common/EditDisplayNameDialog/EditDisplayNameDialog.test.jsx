@@ -12,7 +12,7 @@ describe('<EditDisplayNameDialog />', () => {
   const submit = jest.fn();
   const resetResponse = jest.fn();
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<EditDisplayNameDialog
       isOpen
       closeModal={closeModal}

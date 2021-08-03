@@ -6,7 +6,7 @@ import ClusterLocationLabel from './ClusterLocationLabel';
 describe('<ClusterLocationLabel />', () => {
   let wrapper;
   const getCloudProviders = jest.fn();
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(
       <ClusterLocationLabel
         getCloudProviders={getCloudProviders}

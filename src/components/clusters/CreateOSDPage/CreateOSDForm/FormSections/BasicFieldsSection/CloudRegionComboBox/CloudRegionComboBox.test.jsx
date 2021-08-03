@@ -12,7 +12,7 @@ describe('<CloudRegionComboBox />', () => {
     let onChange;
     let handleCloudRegionChange;
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       const state = {
         error: false,
         errorMessage: '',
@@ -44,7 +44,7 @@ describe('<CloudRegionComboBox />', () => {
     let onChange;
     let handleCloudRegionChange;
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       const state = {
         error: true,
         errorMessage: 'This is an error message',
@@ -83,7 +83,7 @@ describe('<CloudRegionComboBox />', () => {
       fulfilled: false,
       providers: {},
     };
-    beforeAll(() => {
+    beforeEach(() => {
       onChange = jest.fn();
       handleCloudRegionChange = jest.fn();
       wrapper = mount(
@@ -107,7 +107,7 @@ describe('<CloudRegionComboBox />', () => {
     let onChange;
     let handleCloudRegionChange;
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       const state = {
         error: false,
         errorMessage: '',
