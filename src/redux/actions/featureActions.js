@@ -6,6 +6,7 @@ import {
   ASSISTED_INSTALLER_CNV_FEATURE,
   OSD_TRIAL_FEATURE,
   ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
+  ASSISTED_INSTALLER_NETWORK_TYPE_SELECTION_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 
@@ -27,6 +28,7 @@ export const features = [
   getSimpleUnleashFeature('assisted-installer-ocs', ASSISTED_INSTALLER_OCS_FEATURE),
   getSimpleUnleashFeature('assisted-installer-cnv', ASSISTED_INSTALLER_CNV_FEATURE),
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
+  getSimpleUnleashFeature('assisted-installer-network-type-selection', ASSISTED_INSTALLER_NETWORK_TYPE_SELECTION_FEATURE),
   {
     name: ASSISTED_INSTALLER_FEATURE,
     action: () => Promise.all([
