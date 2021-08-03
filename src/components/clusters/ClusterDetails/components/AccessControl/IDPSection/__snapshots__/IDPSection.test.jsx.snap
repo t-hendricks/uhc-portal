@@ -44,20 +44,14 @@ exports[`<IDPSection /> should render (no IDPs) 1`] = `
         Learn more.
       </a>
     </p>
-    <Tooltip
-      content="You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers."
+    <ButtonWithTooltip
+      className="access-control-add"
+      disableReason="You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers."
+      onClick={[Function]}
+      variant="secondary"
     >
-      <span>
-        <Button
-          className="access-control-add"
-          isDisabled={true}
-          onClick={[Function]}
-          variant="secondary"
-        >
-          Add identity provider
-        </Button>
-      </span>
-    </Tooltip>
+      Add identity provider
+    </ButtonWithTooltip>
   </CardBody>
 </Card>
 `;
@@ -165,20 +159,14 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
       <TableHeader />
       <Component />
     </Table>
-    <Tooltip
-      content="You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers."
+    <ButtonWithTooltip
+      className="access-control-add"
+      disableReason="You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers."
+      onClick={[Function]}
+      variant="secondary"
     >
-      <span>
-        <Button
-          className="access-control-add"
-          isDisabled={true}
-          onClick={[Function]}
-          variant="secondary"
-        >
-          Add identity provider
-        </Button>
-      </span>
-    </Tooltip>
+      Add identity provider
+    </ButtonWithTooltip>
   </CardBody>
 </Card>
 `;

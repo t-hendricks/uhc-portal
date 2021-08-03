@@ -9,7 +9,7 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Tooltip, CardTitle,
+  CardTitle,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -30,6 +30,7 @@ import {
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
+import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 
 class NetworkSelfServiceSection extends React.Component {
   state = { deletedRowIndex: undefined };
@@ -229,15 +230,20 @@ class NetworkSelfServiceSection extends React.Component {
 
     const rows = hasGrants && grants.data.map(grantRow);
 
-    const disabled = !canEdit || clusterHibernating;
-
-    const tooltipContent = clusterHibernating ? 'This operation is not available while cluster is hibernating'
-      : 'You do not have permission to grant a role. Only cluster owners and organization administrators can grant roles.';
+    const hibernatingReason = clusterHibernating && 'This operation is not available while cluster is hibernating';
+    const canNotEditReason = !canEdit && 'You do not have permission to grant a role. Only cluster owners and organization administrators can grant roles.';
+    const disableReason = hibernatingReason || canNotEditReason;
 
     const addGrantBtn = (
-      <Button onClick={() => { setTimeout(() => openAddGrantModal(), 0); }} variant="secondary" className="access-control-add" isDisabled={disabled}>
+      <ButtonWithTooltip
+        onClick={() => { setTimeout(() => openAddGrantModal(), 0); }}
+        variant="secondary"
+        className="access-control-add"
+        disableReason={disableReason}
+      >
         Grant role
-      </Button>
+      </ButtonWithTooltip
+      >
     );
 
     return grants.pending && !hasGrants ? (
@@ -267,19 +273,13 @@ class NetworkSelfServiceSection extends React.Component {
               {loginAWSLink}
               <ExternalLinkAltIcon color="#0066cc" size="sm" />
             </p>
-            { hasGrants && (
-            <Table aria-label="Grants" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows} areActionsDisabled={rowData => (rowData.state === 'deleting') || !canEdit}>
-              <TableHeader />
-              <TableBody />
-            </Table>
+            {hasGrants && (
+              <Table aria-label="Grants" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows} areActionsDisabled={rowData => (rowData.state === 'deleting') || !!disableReason}>
+                <TableHeader />
+                <TableBody />
+              </Table>
             )}
-            {disabled ? (
-              <Tooltip content={tooltipContent}>
-                <span>
-                  {addGrantBtn}
-                </span>
-              </Tooltip>
-            ) : addGrantBtn }
+            {addGrantBtn}
           </CardBody>
         </Card>
       </>

@@ -181,14 +181,14 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
         <TableHeader />
         <Component />
       </Table>
-      <Button
+      <ButtonWithTooltip
         className="access-control-add"
-        isDisabled={false}
+        disableReason={false}
         onClick={[Function]}
         variant="secondary"
       >
         Grant role
-      </Button>
+      </ButtonWithTooltip>
     </CardBody>
   </Card>
 </Fragment>
@@ -365,14 +365,14 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant succeeds 1`] =
         <TableHeader />
         <Component />
       </Table>
-      <Button
+      <ButtonWithTooltip
         className="access-control-add"
-        isDisabled={false}
+        disableReason={false}
         onClick={[Function]}
         variant="secondary"
       >
         Grant role
-      </Button>
+      </ButtonWithTooltip>
     </CardBody>
   </Card>
 </Fragment>
@@ -572,14 +572,14 @@ exports[`<NetworkSelfServiceSection /> should render with grants 1`] = `
         <TableHeader />
         <Component />
       </Table>
-      <Button
+      <ButtonWithTooltip
         className="access-control-add"
-        isDisabled={false}
+        disableReason={false}
         onClick={[Function]}
         variant="secondary"
       >
         Grant role
-      </Button>
+      </ButtonWithTooltip>
     </CardBody>
   </Card>
 </Fragment>
@@ -614,14 +614,14 @@ exports[`<NetworkSelfServiceSection /> should render with no data 1`] = `
           size="sm"
         />
       </p>
-      <Button
+      <ButtonWithTooltip
         className="access-control-add"
-        isDisabled={false}
+        disableReason={false}
         onClick={[Function]}
         variant="secondary"
       >
         Grant role
-      </Button>
+      </ButtonWithTooltip>
     </CardBody>
   </Card>
 </Fragment>

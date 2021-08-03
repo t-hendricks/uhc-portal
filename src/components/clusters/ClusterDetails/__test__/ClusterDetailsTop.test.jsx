@@ -6,6 +6,7 @@ import { Button } from '@patternfly/react-core';
 import ClusterDetailsTop from '../components/ClusterDetailsTop';
 import fixtures, { funcs } from './ClusterDetails.fixtures';
 import clusterStates from '../../common/clusterStates';
+import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 
 describe('<ClusterDetailsTop />', () => {
   let wrapper;
@@ -67,7 +68,7 @@ describe('<ClusterDetailsTop />', () => {
   it('should show only Unarchive button if the cluster is archived', () => {
     const cluster = { ...fixtures.clusterDetails.cluster, subscription: { status: 'Archived', id: 'fake' } };
     wrapper.setProps({ cluster }, () => {
-      const unarchiveButton = wrapper.find(Button).at(0);
+      const unarchiveButton = wrapper.find(ButtonWithTooltip).at(0);
       expect(unarchiveButton.props().variant).toEqual('secondary');
       expect(unarchiveButton.props().children).toEqual('Unarchive');
       expect(wrapper.find('ClusterActionsDropdown').length).toEqual(0); // no cluster actions dropdown

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
 import {
-  Card, Title, Button, CardBody, CardFooter, Tooltip, CardTitle,
+  Card, Title, CardBody, CardFooter, CardTitle,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -13,6 +13,7 @@ import {
   cellWidth,
 } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
+import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
 import links from '../../../../../../common/installLinks';
@@ -79,15 +80,19 @@ function IDPSection({
 
   const hasIDPs = !!identityProviders.clusterIDPList.length;
 
-  const disabled = !canEdit || clusterHibernating;
-
-  const tooltipContent = clusterHibernating ? 'This operation is not available while cluster is hibernating'
-    : 'You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers.';
+  const hibernatingReason = clusterHibernating && 'This operation is not available while cluster is hibernating';
+  const canNotEditReason = !canEdit && 'You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers.';
+  const disableReason = hibernatingReason || canNotEditReason;
 
   const addIdpBtn = (
-    <Button onClick={() => openModal('create-identity-provider')} variant="secondary" className="access-control-add" isDisabled={disabled}>
+    <ButtonWithTooltip
+      disableReason={disableReason}
+      onClick={() => openModal('create-identity-provider')}
+      variant="secondary"
+      className="access-control-add"
+    >
       Add identity provider
-    </Button>
+    </ButtonWithTooltip>
   );
 
   return (
@@ -121,20 +126,13 @@ function IDPSection({
               variant={TableVariant.compact}
               cells={columns}
               rows={identityProviders.clusterIDPList.map(idpRow)}
-              areActionsDisabled={() => disabled}
+              areActionsDisabled={() => !!disableReason}
             >
               <TableHeader />
               <TableBody />
             </Table>
           )}
-          {disabled ? (
-            <Tooltip content={tooltipContent}>
-              <span>
-                {addIdpBtn}
-              </span>
-            </Tooltip>
-          )
-            : addIdpBtn}
+          {addIdpBtn}
         </CardBody>
       </Card>
     )
