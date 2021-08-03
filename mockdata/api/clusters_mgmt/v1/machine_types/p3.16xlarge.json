@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "p3.16xlarge - Accelerated Computing (8 GPUs)",
+  "category": "accelerated_computing",
+  "size": "xxxlarge",
+  "id": "p3.16xlarge",
+  "href": "/api/clusters_mgmt/v1/machine_types/p3.16xlarge",
+  "memory": {
+    "value": 523986010112,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 64,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "aws",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+  },
+  "ccs_only": true,
+  "generic_name": "v100-gpu-64"
+}

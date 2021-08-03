@@ -1,15 +1,15 @@
 {
   "kind": "CloudRegion",
-  "id": "us-east-1",
-  "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
-  "display_name": "US East, N. Virginia",
+  "id": "us-west-1",
+  "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-west-1",
+  "display_name": "US West, N. California",
   "cloud_provider": {
     "kind": "CloudProviderLink",
     "id": "aws",
     "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
   },
   "enabled": true,
-  "supports_multi_az": true,
+  "supports_multi_az": false,
   "kms_location_name": "",
   "kms_location_id": "",
   "ccs_only": false

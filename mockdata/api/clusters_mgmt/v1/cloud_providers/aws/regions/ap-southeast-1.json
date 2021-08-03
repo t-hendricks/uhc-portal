@@ -1,8 +1,8 @@
 {
   "kind": "CloudRegion",
-  "id": "us-east-1",
-  "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/us-east-1",
-  "display_name": "US East, N. Virginia",
+  "id": "ap-southeast-1",
+  "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-southeast-1",
+  "display_name": "Asia Pacific, Singapore",
   "cloud_provider": {
     "kind": "CloudProviderLink",
     "id": "aws",

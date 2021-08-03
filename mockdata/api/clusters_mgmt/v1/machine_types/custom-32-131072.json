@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "custom-32-131072 - General purpose",
+  "category": "general_purpose",
+  "size": "xlarge",
+  "id": "custom-32-131072",
+  "href": "/api/clusters_mgmt/v1/machine_types/custom-32-131072",
+  "memory": {
+    "value": 137438953472,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 32,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": true,
+  "generic_name": "standard-32"
+}
