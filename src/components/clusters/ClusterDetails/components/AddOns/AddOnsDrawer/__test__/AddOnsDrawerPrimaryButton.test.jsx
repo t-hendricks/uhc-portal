@@ -41,13 +41,13 @@ describe('<AddOnsPrimaryButton />', () => {
       'https://example.com/veryfakeconsole/k8s/ns/redhat-rhmi-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/integreatly-operator.v0.0.1',
     );
 
-    const UninstallButton = wrapper.find('Button').at(1).props();
+    const UninstallButton = wrapper.find('ButtonWithTooltip').at(0).props();
     expect(UninstallButton.children).toEqual('Uninstall');
-    expect(UninstallButton.isDisabled).toBeFalsy();
+    expect(UninstallButton.disableReason).toBeFalsy();
   });
 
   it('uninstall button should open uninstall modal', () => {
-    const UninstallButton = wrapper.find('Button').at(1);
+    const UninstallButton = wrapper.find('ButtonWithTooltip').at(0);
     UninstallButton.simulate('click');
     expect(openModal).toBeCalledWith('add-ons-delete-modal', { addOnName: managedIntegration.name, addOnID: managedIntegration.id, clusterID: 'fake id' });
   });
@@ -72,8 +72,8 @@ describe('<AddOnsPrimaryButton />', () => {
       },
     });
 
-    const InstallButton = wrapper.find('Button').at(0);
-    expect(InstallButton.props().isDisabled).toBeTruthy();
+    const InstallButton = wrapper.find('ButtonWithTooltip').at(0);
+    expect(InstallButton.props().disableReason).toBeTruthy();
     expect(InstallButton.props().children).toEqual('Install');
   });
 
@@ -88,8 +88,8 @@ describe('<AddOnsPrimaryButton />', () => {
       },
     });
 
-    const InstallButton = wrapper.find('Button');
-    expect(InstallButton.props().isDisabled).toBeTruthy();
+    const InstallButton = wrapper.find('ButtonWithTooltip');
+    expect(InstallButton.props().disableReason).toBeTruthy();
     expect(InstallButton.props().children).toEqual('Install');
   });
 
@@ -105,8 +105,8 @@ describe('<AddOnsPrimaryButton />', () => {
       },
     });
 
-    const InstallButton = wrapper.find('Button');
-    expect(InstallButton.props().isDisabled).toBeTruthy();
+    const InstallButton = wrapper.find('ButtonWithTooltip');
+    expect(InstallButton.props().disableReason).toBeTruthy();
     expect(InstallButton.props().children).toEqual('Install');
   });
 
@@ -123,8 +123,8 @@ describe('<AddOnsPrimaryButton />', () => {
       },
     });
 
-    const InstallButton = wrapper.find('Button');
-    expect(InstallButton.props().isDisabled).toBeTruthy();
+    const InstallButton = wrapper.find('ButtonWithTooltip');
+    expect(InstallButton.props().disableReason).toBeTruthy();
     expect(InstallButton.props().children).toEqual('Install');
   });
 
@@ -141,9 +141,9 @@ describe('<AddOnsPrimaryButton />', () => {
       },
     });
 
-    const InstallButton = wrapper.find('Button');
+    const InstallButton = wrapper.find('ButtonWithTooltip');
     expect(InstallButton.props().variant).toEqual('primary');
-    expect(InstallButton.props().isDisabled).toBeFalsy();
+    expect(InstallButton.props().disableReason).toBeFalsy();
     expect(InstallButton.props().children).toEqual('Install');
 
     InstallButton.simulate('click');
