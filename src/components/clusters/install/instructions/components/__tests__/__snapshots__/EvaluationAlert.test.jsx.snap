@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EvaluationAlert renders correctly 1`] = `
+<Alert
+  isInline={true}
+  title="New clusters are automatically registered with a 60-day evaluation subscription."
+  variant="warning"
+>
+  Evaluation subscriptions do not include support from Red Hat. You can edit your subscription settings after the cluster is created to receive support.
+   
+  <a
+    href="https://access.redhat.com/articles/4389911"
+    rel="noreferrer noopener"
+    target="_blank"
+  >
+    Learn more
+     
+    <ExternalLinkAltIcon
+      color="#0066cc"
+      noVerticalAlign={false}
+      size="sm"
+    />
+  </a>
+  .
+</Alert>
+`;
