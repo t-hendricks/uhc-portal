@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TokenErrorAlert renders correctly 1`] = `
+<Alert
+  className="token-error-alert"
+  isInline={true}
+  title="Failed to obtain pull secret"
+  variant="danger"
+>
+  <br />
+  <br />
+  Try again by refreshing the page. If the problem persists, report the issue to
+   
+  <a
+    href="mailto:ocm-feedback@redhat.com"
+    rel="noreferrer noopener"
+    target="_blank"
+  >
+    ocm-feedback@redhat.com
+     
+    <ExternalLinkAltIcon
+      color="#0066cc"
+      noVerticalAlign={false}
+      size="sm"
+    />
+  </a>
+  .
+</Alert>
+`;

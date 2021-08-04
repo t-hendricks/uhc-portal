@@ -10,7 +10,7 @@ import InstructionsPullSecret from './instructions/InstructionsPullSecret';
 
 import { scrollToTop } from '../../../common/helpers';
 
-class InstallPullSecret extends Component {
+export class InstallPullSecret extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | Pull Secret';

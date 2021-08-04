@@ -18,7 +18,7 @@ import get from 'lodash/get';
 
 import { PageSection, TabContent } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import { HostsClusterDetailTab, canAddHost } from 'openshift-assisted-ui-lib';
+import { OCM } from 'openshift-assisted-ui-lib';
 
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
@@ -34,6 +34,7 @@ import DeleteIDPDialog from './components/DeleteIDPDialog';
 
 import ErrorBoundary from '../../App/ErrorBoundary';
 
+import ReadOnlyBanner from '../common/ReadOnlyBanner';
 import CommonClusterModals from '../common/CommonClusterModals';
 import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 
@@ -49,6 +50,7 @@ import AddNotificationContactDialog
 import UpgradeSettingsTab from './components/UpgradeSettings';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 
+const { HostsClusterDetailTab, canAddHost } = OCM;
 class ClusterDetails extends Component {
   state = {
     selectedTab: '',
@@ -79,8 +81,6 @@ class ClusterDetails extends Component {
     const {
       cloudProviders,
       getCloudProviders,
-      addOns,
-      getAddOns,
       clearGlobalError,
       getUserAccess,
     } = this.props;
@@ -91,9 +91,6 @@ class ClusterDetails extends Component {
 
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
       getCloudProviders();
-    }
-    if (!addOns.pending && !addOns.error && !addOns.fulfilled) {
-      getAddOns();
     }
     getUserAccess({ type: 'OCP' });
   }
@@ -198,6 +195,7 @@ class ClusterDetails extends Component {
     */
     const {
       clusterDetails,
+      getAddOns,
       getUsers,
       getOnDemandMetrics,
       getClusterAddOns,
@@ -229,6 +227,7 @@ class ClusterDetails extends Component {
 
     if (isManaged) {
       // All managed-cluster-specific requests
+      getAddOns(clusterID);
       getUsers(clusterID);
       getClusterRouters(clusterID);
       getClusterAddOns(clusterID);
@@ -356,6 +355,7 @@ class ClusterDetails extends Component {
     const isClusterInstalling = cluster.state === clusterStates.INSTALLING;
     const isClusterReady = cluster.state === clusterStates.READY;
     const isClusterUpdating = cluster.state === clusterStates.UPDATING;
+    const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
     const isPrivateCluster = cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
     const displayAddOnsTab = !isClusterInstalling && !isClusterPending
      && cluster.managed && !isArchived;
@@ -386,71 +386,73 @@ class ClusterDetails extends Component {
       && !isArchived;
 
     return (
-      <PageSection id="clusterdetails-content">
-        <ClusterDetailsTop
-          cluster={cluster}
-          openModal={openModal}
-          pending={clusterDetails.pending}
-          refreshFunc={this.refresh}
-          clickRefreshFunc={() => this.refresh('clicked')}
-          clusterIdentityProviders={clusterIdentityProviders}
-          organization={organization}
-          error={clusterDetails.error}
-          errorMessage={clusterDetails.errorMessage}
-          canSubscribeOCP={canSubscribeOCP}
-          canTransferClusterOwnership={canTransferClusterOwnership}
-          canHibernateCluster={canHibernateCluster}
-          autoRefreshEnabled={!anyModalOpen}
-          toggleSubscriptionReleased={toggleSubscriptionReleased}
-        >
-          <TabsRow
-            displayMonitoringTab={displayMonitoringTab}
-            displayAccessControlTab={displayAccessControlTab}
-            displayAddOnsTab={displayAddOnsTab}
-            displayNetworkingTab={displayNetworkingTab}
-            displayInsightsTab={displayInsightsTab}
-            displaySupportTab={displaySupportTab}
-            displayMachinePoolsTab={displayMachinePoolsTab}
-            displayUpgradeSettingsTab={displayUpgradeSettingsTab}
-            displayAddAssistedHosts={displayAddAssistedHosts}
-            overviewTabRef={this.overviewTabRef}
-            monitoringTabRef={this.monitoringTabRef}
-            accessControlTabRef={this.accessControlTabRef}
-            addOnsTabRef={this.addOnsTabRef}
-            networkingTabRef={this.networkingTabRef}
-            insightsTabRef={this.insightsTabRef}
-            supportTabRef={this.supportTabRef}
-            machinePoolsTabRef={this.machinePoolsTabRef}
-            upgradeSettingsTabRef={this.upgradeSettingsTabRef}
-            addAssistedTabRef={this.addAssistedTabRef}
-            hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
-            hasIssuesInsights={hasIssuesInsights}
-            initTabOpen={initTabOpen}
-            setOpenedTab={setOpenedTab}
-            onTabSelected={onTabSelected}
-          />
-        </ClusterDetailsTop>
-        <TabContent
-          eventKey={0}
-          id="overviewTabContent"
-          ref={this.overviewTabRef}
-          aria-label="Overview"
-          ouiaId="overviewTabContent"
-        >
-          <ErrorBoundary>
-            <Overview
-              cluster={cluster}
-              cloudProviders={cloudProviders}
-              history={history}
-              displayClusterLogs={displayClusterLogs}
-              refresh={this.refresh}
-              openModal={openModal}
-              insightsData={insightsData[cluster.external_id]}
-              userAccess={userAccess}
+      <>
+        <ReadOnlyBanner isReadOnly={isReadOnly} />
+        <PageSection id="clusterdetails-content">
+          <ClusterDetailsTop
+            cluster={cluster}
+            openModal={openModal}
+            pending={clusterDetails.pending}
+            refreshFunc={this.refresh}
+            clickRefreshFunc={() => this.refresh('clicked')}
+            clusterIdentityProviders={clusterIdentityProviders}
+            organization={organization}
+            error={clusterDetails.error}
+            errorMessage={clusterDetails.errorMessage}
+            canSubscribeOCP={canSubscribeOCP}
+            canTransferClusterOwnership={canTransferClusterOwnership}
+            canHibernateCluster={canHibernateCluster}
+            autoRefreshEnabled={!anyModalOpen}
+            toggleSubscriptionReleased={toggleSubscriptionReleased}
+          >
+            <TabsRow
+              displayMonitoringTab={displayMonitoringTab}
+              displayAccessControlTab={displayAccessControlTab}
+              displayAddOnsTab={displayAddOnsTab}
+              displayNetworkingTab={displayNetworkingTab}
+              displayInsightsTab={displayInsightsTab}
+              displaySupportTab={displaySupportTab}
+              displayMachinePoolsTab={displayMachinePoolsTab}
+              displayUpgradeSettingsTab={displayUpgradeSettingsTab}
+              displayAddAssistedHosts={displayAddAssistedHosts}
+              overviewTabRef={this.overviewTabRef}
+              monitoringTabRef={this.monitoringTabRef}
+              accessControlTabRef={this.accessControlTabRef}
+              addOnsTabRef={this.addOnsTabRef}
+              networkingTabRef={this.networkingTabRef}
+              insightsTabRef={this.insightsTabRef}
+              supportTabRef={this.supportTabRef}
+              machinePoolsTabRef={this.machinePoolsTabRef}
+              upgradeSettingsTabRef={this.upgradeSettingsTabRef}
+              addAssistedTabRef={this.addAssistedTabRef}
+              hasIssues={cluster.state !== clusterStates.INSTALLING && hasIssues}
+              hasIssuesInsights={hasIssuesInsights}
+              initTabOpen={initTabOpen}
+              setOpenedTab={setOpenedTab}
+              onTabSelected={onTabSelected}
             />
-          </ErrorBoundary>
-        </TabContent>
-        { displayMonitoringTab && (
+          </ClusterDetailsTop>
+          <TabContent
+            eventKey={0}
+            id="overviewTabContent"
+            ref={this.overviewTabRef}
+            aria-label="Overview"
+            ouiaId="overviewTabContent"
+          >
+            <ErrorBoundary>
+              <Overview
+                cluster={cluster}
+                cloudProviders={cloudProviders}
+                history={history}
+                displayClusterLogs={displayClusterLogs}
+                refresh={this.refresh}
+                openModal={openModal}
+                insightsData={insightsData[cluster.external_id]}
+                userAccess={userAccess}
+              />
+            </ErrorBoundary>
+          </TabContent>
+          { displayMonitoringTab && (
           <TabContent
             eventKey={1}
             id="monitoringTabContent"
@@ -462,8 +464,8 @@ class ClusterDetails extends Component {
               <Monitoring cluster={cluster} />
             </ErrorBoundary>
           </TabContent>
-        )}
-        {displayAccessControlTab && (
+          )}
+          {displayAccessControlTab && (
           <TabContent
             eventKey={2}
             id="accessControlTabContent"
@@ -479,8 +481,8 @@ class ClusterDetails extends Component {
               />
             </ErrorBoundary>
           </TabContent>
-        )}
-        {isManaged && (
+          )}
+          {isManaged && (
           <TabContent
             eventKey={3}
             id="addOnsTabContent"
@@ -492,8 +494,8 @@ class ClusterDetails extends Component {
               <AddOns clusterID={cluster.id} />
             </ErrorBoundary>
           </TabContent>
-        )}
-        {displayNetworkingTab && (
+          )}
+          {displayNetworkingTab && (
           <TabContent
             eventKey={4}
             id="networkingTabContent"
@@ -505,8 +507,8 @@ class ClusterDetails extends Component {
               <Networking clusterID={cluster.id} refreshCluster={this.refresh} />
             </ErrorBoundary>
           </TabContent>
-        )}
-        {displayInsightsTab && (
+          )}
+          {displayInsightsTab && (
           <TabContent
             eventKey={5}
             id="insightsTabContent"
@@ -527,19 +529,19 @@ class ClusterDetails extends Component {
               />
             </ErrorBoundary>
           </TabContent>
-        )}
-        <TabContent
-          eventKey={7}
-          id="supportTabContent"
-          ref={this.supportTabRef}
-          aria-label="Support"
-          hidden
-        >
-          <ErrorBoundary>
-            <Support isDisabled={isArchived} />
-          </ErrorBoundary>
-        </TabContent>
-        {displayMachinePoolsTab && (
+          )}
+          <TabContent
+            eventKey={7}
+            id="supportTabContent"
+            ref={this.supportTabRef}
+            aria-label="Support"
+            hidden
+          >
+            <ErrorBoundary>
+              <Support isDisabled={isArchived} />
+            </ErrorBoundary>
+          </TabContent>
+          {displayMachinePoolsTab && (
           <TabContent
             eventKey={6}
             id="machinePoolsContent"
@@ -551,8 +553,8 @@ class ClusterDetails extends Component {
               <MachinePools cluster={cluster} />
             </ErrorBoundary>
           </TabContent>
-        )}
-        {displayUpgradeSettingsTab && (
+          )}
+          {displayUpgradeSettingsTab && (
           <TabContent
             eventKey={8}
             id="upgradeSettingsContent"
@@ -564,8 +566,8 @@ class ClusterDetails extends Component {
               <UpgradeSettingsTab />
             </ErrorBoundary>
           </TabContent>
-        )}
-        {displayAddAssistedHosts && (
+          )}
+          {displayAddAssistedHosts && (
           <TabContent
             eventKey={9}
             id="addHostsContent"
@@ -580,25 +582,26 @@ class ClusterDetails extends Component {
               />
             </ErrorBoundary>
           </TabContent>
-        )}
-        <CommonClusterModals
-          onClose={this.onDialogClose}
-          onClusterDeleted={() => {
-            invalidateClusters();
-            history.push('/');
-          }}
-        />
-        <IdentityProvidersModal
-          clusterID={cluster.id}
-          clusterName={clusterName}
-          clusterConsoleURL={consoleURL}
-          refreshParent={this.refreshIDP}
-        />
-        <DeleteIDPDialog refreshParent={this.refreshIDP} />
-        <AddNotificationContactDialog />
-        <AddGrantModal clusterID={cluster.id} />
-        <CancelUpgradeModal />
-      </PageSection>
+          )}
+          <CommonClusterModals
+            onClose={this.onDialogClose}
+            onClusterDeleted={() => {
+              invalidateClusters();
+              history.push('/');
+            }}
+          />
+          <IdentityProvidersModal
+            clusterID={cluster.id}
+            clusterName={clusterName}
+            clusterConsoleURL={consoleURL}
+            refreshParent={this.refreshIDP}
+          />
+          <DeleteIDPDialog refreshParent={this.refreshIDP} />
+          <AddNotificationContactDialog />
+          <AddGrantModal clusterID={cluster.id} />
+          <CancelUpgradeModal />
+        </PageSection>
+      </>
     );
   }
 }
@@ -629,7 +632,6 @@ ClusterDetails.propTypes = {
     pending: PropTypes.bool,
     rejected: PropTypes.bool,
   }),
-  addOns: PropTypes.object,
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   clusterDetails: PropTypes.shape({
@@ -687,7 +689,6 @@ ClusterDetails.defaultProps = {
     errorMessage: '',
     fulfilled: false,
   },
-  addOns: '',
 };
 
 export default ClusterDetails;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Button } from '@patternfly/react-core';
 
 import IDPSection from './IDPSection';
+import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 
 const baseIDPs = {
   clusterIDPList: [],
@@ -23,7 +23,7 @@ describe('<IDPSection />', () => {
       clusterConsoleURL="http://example.com/"
     />);
     expect(wrapper).toMatchSnapshot();
-    wrapper.find(Button).simulate('click');
+    wrapper.find(ButtonWithTooltip).simulate('click');
     expect(openModal).toBeCalledWith('create-identity-provider');
   });
 
@@ -73,7 +73,7 @@ describe('<IDPSection />', () => {
       clusterConsoleURL="http://example.com/"
     />);
     expect(wrapper).toMatchSnapshot();
-    wrapper.find(Button).simulate('click');
+    wrapper.find(ButtonWithTooltip).simulate('click');
     expect(openModal).toBeCalledWith('create-identity-provider');
   });
 });

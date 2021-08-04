@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "p3.8xlarge - Accelerated Computing (4 GPUs)",
+  "category": "accelerated_computing",
+  "size": "xlarge",
+  "id": "p3.8xlarge",
+  "href": "/api/clusters_mgmt/v1/machine_types/p3.8xlarge",
+  "memory": {
+    "value": 261993005056,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 32,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "aws",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+  },
+  "ccs_only": true,
+  "generic_name": "v100-gpu-32"
+}

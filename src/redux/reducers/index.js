@@ -33,6 +33,7 @@ import { NetworkingReducer } from '../../components/clusters/ClusterDetails/comp
 import supportStatusReducer from '../../components/clusters/ClusterDetails/components/Overview/SupportStatusLabel/supportStatusReducer';
 import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
 import machinePools from '../../components/clusters/ClusterDetails/components/MachinePools/MachinePoolsReducer';
+import githubReducer from './githubReducer';
 
 import featuresReducer from './featuresReducer';
 import apiErrorReducer from '../../components/App/ApiError/ApiErrorReducer';
@@ -71,6 +72,7 @@ const reducers = {
   clusterUpgrades,
   apiError: apiErrorReducer,
   machinePools,
+  githubReleases: githubReducer,
 };
 
 const reduxReducers = history => combineReducers({

@@ -9,5 +9,8 @@
     "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
   },
   "enabled": true,
-  "supports_multi_az": true
+  "supports_multi_az": true,
+  "kms_location_name": "",
+  "kms_location_id": "",
+  "ccs_only": false
 }

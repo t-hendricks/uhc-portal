@@ -38,6 +38,7 @@ function NetworkingSection({
   isCCS,
   selectedRegion,
   installToVPCSelected,
+  isWizard,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -127,6 +128,7 @@ function NetworkingSection({
             ),
           }]}
           defaultValue="basic"
+          disableDefaultValueHandling={isWizard}
         />
       </FormGroup>
       {
@@ -300,6 +302,7 @@ NetworkingSection.defaultProps = {
 };
 
 NetworkingSection.propTypes = {
+  isWizard: PropTypes.bool,
   pending: PropTypes.bool,
   mode: PropTypes.string,
   toggleNetwork: PropTypes.func,

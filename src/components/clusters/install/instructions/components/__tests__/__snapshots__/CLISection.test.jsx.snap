@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CLISection renders correctly 1`] = `
+<Fragment>
+  <Text
+    component="p"
+  >
+    Download the OpenShift command-line tools and add them to your
+     
+    <code>
+      PATH
+    </code>
+    .
+  </Text>
+  <div>
+    <DownloadAndOSSelection
+      channel="stable"
+      token={
+        Object {
+          "auths": Object {
+            "foo": "bar",
+          },
+        }
+      }
+      tool="CLI_TOOLS"
+    />
+  </div>
+  <Text
+    component="p"
+  />
+  <Text
+    component="p"
+  >
+    When the installer is complete you will see the console URL and credentials for accessing your new cluster. A
+     
+    <code>
+      kubeconfig
+    </code>
+     
+    file will also be generated for you to use with the
+     
+    <code>
+      oc
+    </code>
+     
+    CLI tools you downloaded.
+  </Text>
+</Fragment>
+`;

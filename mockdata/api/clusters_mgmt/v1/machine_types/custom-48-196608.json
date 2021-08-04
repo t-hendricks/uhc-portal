@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "custom-48-196608 - General purpose",
+  "category": "general_purpose",
+  "size": "xxlarge",
+  "id": "custom-48-196608",
+  "href": "/api/clusters_mgmt/v1/machine_types/custom-48-196608",
+  "memory": {
+    "value": 206158430208,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 48,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": true,
+  "generic_name": "standard-48"
+}

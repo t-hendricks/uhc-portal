@@ -36,7 +36,7 @@ exports[`<GetStarted /> GetStarted w/ customizations should render 1`] = `
       <ClipboardCopy
         additionalActions={null}
         clickTip="Successfully copied to clipboard!"
-        entryDelay={100}
+        entryDelay={300}
         exitDelay={1600}
         hoverTip="Copy to clipboard"
         id="copy-command"
@@ -114,7 +114,7 @@ exports[`<GetStarted /> GetStarted w/o customizations should render 1`] = `
       <ClipboardCopy
         additionalActions={null}
         clickTip="Successfully copied to clipboard!"
-        entryDelay={100}
+        entryDelay={300}
         exitDelay={1600}
         hoverTip="Copy to clipboard"
         id="copy-command"

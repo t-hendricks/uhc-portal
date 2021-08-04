@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "c5.4xlarge - Compute Optimized",
+  "category": "compute_optimized",
+  "size": "large",
+  "id": "c5.4xlarge",
+  "href": "/api/clusters_mgmt/v1/machine_types/c5.4xlarge",
+  "memory": {
+    "value": 34359738368,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 16,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "aws",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+  },
+  "ccs_only": false,
+  "generic_name": "highcpu-16"
+}

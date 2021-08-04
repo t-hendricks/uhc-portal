@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "m5.16xlarge - General purpose",
+  "category": "general_purpose",
+  "size": "xxxlarge",
+  "id": "m5.16xlarge",
+  "href": "/api/clusters_mgmt/v1/machine_types/m5.16xlarge",
+  "memory": {
+    "value": 274877906944,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 64,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "aws",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+  },
+  "ccs_only": true,
+  "generic_name": "standard-64"
+}

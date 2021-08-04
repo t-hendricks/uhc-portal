@@ -2,6 +2,7 @@ import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 const invalidateClusters = jest.fn();
 const fetchClusters = jest.fn();
+const clearGlobalError = jest.fn();
 const setSorting = jest.fn();
 const getCloudProviders = jest.fn();
 const openModal = jest.fn();
@@ -244,4 +245,5 @@ export {
   setListFlag,
   operationID,
   cloudProviders,
+  clearGlobalError,
 };

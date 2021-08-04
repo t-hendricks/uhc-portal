@@ -1,7 +1,6 @@
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Tooltip } from '@patternfly/react-core';
 import {
   cellWidth,
   classNames,
@@ -13,6 +12,7 @@ import {
   Visibility,
 } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
+import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel';
 import getClusterName from '../../../../../common/getClusterName';
 import modals from '../../../../common/Modal/modals';
@@ -74,27 +74,15 @@ function ArchivedClusterListTable(props) {
         shouldDisplayClusterName: true,
       });
 
-    const disabled = !cluster.canEdit;
-
-    const tooltipContent = 'You do not have permissions to unarchive this cluster';
+    const canNotEditReason = !cluster.canEdit && 'You do not have permissions to unarchive this cluster';
 
     const unarchiveBtn = (
-      <Button variant="secondary" onClick={openUnarchiveModal} isDisabled={disabled}>
+      <ButtonWithTooltip variant="secondary" onClick={openUnarchiveModal} disableReason={canNotEditReason}>
         Unarchive
-      </Button>
+      </ButtonWithTooltip>
     );
     const unarchiveBtnCondition = cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED
-    && (
-      <>
-        {disabled ? (
-          <Tooltip content={tooltipContent}>
-            <span>
-              {unarchiveBtn}
-            </span>
-          </Tooltip>
-        ) : unarchiveBtn }
-      </>
-    );
+      && unarchiveBtn;
 
     return [
       { title: clusterName },

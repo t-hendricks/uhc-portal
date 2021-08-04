@@ -2,9 +2,9 @@ import get from 'lodash/get';
 import AddOnsConstants from './AddOnsConstants';
 import { clusterService } from '../../../../../services';
 
-const getAddOns = () => dispatch => dispatch({
+const getAddOns = clusterID => dispatch => dispatch({
   type: AddOnsConstants.GET_ADDONS,
-  payload: clusterService.getAddOns().then((response) => {
+  payload: clusterService.getAddOns(clusterID).then((response) => {
     const items = get(response, 'data.items', []);
     return ({
       items,

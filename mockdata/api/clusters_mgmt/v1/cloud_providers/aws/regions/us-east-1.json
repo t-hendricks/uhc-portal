@@ -11,5 +11,6 @@
   "enabled": true,
   "supports_multi_az": true,
   "kms_location_name": "",
-  "kms_location_id": ""
+  "kms_location_id": "",
+  "ccs_only": false
 }

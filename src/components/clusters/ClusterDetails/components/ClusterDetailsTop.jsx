@@ -4,7 +4,7 @@ import get from 'lodash/get';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import {
-  Button, Alert, Split, SplitItem, Title, Tooltip,
+  Button, Alert, Split, SplitItem, Title,
 } from '@patternfly/react-core';
 
 import clusterStates from '../../common/clusterStates';
@@ -20,6 +20,7 @@ import Breadcrumbs from '../../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
 import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 import TermsAlert from './TermsAlert';
+import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 
 function ClusterDetailsTop(props) {
   const {
@@ -134,21 +135,20 @@ function ClusterDetailsTop(props) {
 
   const trialEndDate = isProductOSDTrial && get(cluster, 'subscription.trial_end_date');
 
-  const disabled = !cluster.canEdit;
-
-  const tooltipContent = 'You do not have permissions to unarchive this cluster';
+  const canNotEditReason = !cluster.canEdit
+    && 'You do not have permissions to unarchive this cluster';
 
   const unarchiveBtn = (
-    <Button
+    <ButtonWithTooltip
       variant="secondary"
       onClick={() => openModal(modals.UNARCHIVE_CLUSTER, {
         subscriptionID: cluster.subscription ? cluster.subscription.id : '',
         name: clusterName,
       })}
-      isDisabled={disabled}
+      disableReason={canNotEditReason}
     >
       Unarchive
-    </Button>
+    </ButtonWithTooltip>
   );
   return (
     <div id="cl-details-top" className="top-row">
@@ -175,13 +175,7 @@ function ClusterDetailsTop(props) {
               </>
             ) : !isDeprovisioned && (
               <>
-                {disabled ? (
-                  <Tooltip content={tooltipContent}>
-                    <span>
-                      {unarchiveBtn}
-                    </span>
-                  </Tooltip>
-                ) : unarchiveBtn }
+                {unarchiveBtn}
               </>
             )}
             { !isDeprovisioned && !isArchived && (

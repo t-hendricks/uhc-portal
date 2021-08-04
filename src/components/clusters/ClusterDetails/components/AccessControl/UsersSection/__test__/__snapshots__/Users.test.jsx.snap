@@ -21,20 +21,14 @@ exports[`<Users /> should render without users 1`] = `
         Learn more.
       </a>
     </p>
-    <Tooltip
-      content="You do not have permission to add a user. Only cluster owners and organization administrators can add users."
+    <ButtonWithTooltip
+      className="access-control-add"
+      disableReason="You do not have permission to add a user. Only cluster owners and organization administrators can add users."
+      onClick={[Function]}
+      variant="secondary"
     >
-      <span>
-        <Button
-          className="access-control-add"
-          isDisabled={true}
-          onClick={[Function]}
-          variant="secondary"
-        >
-          Add user
-        </Button>
-      </span>
-    </Tooltip>
+      Add user
+    </ButtonWithTooltip>
     <AddUserDialog
       addUserResponse={
         Object {
@@ -204,20 +198,14 @@ exports[`<Users /> with users should render 1`] = `
       <TableHeader />
       <Component />
     </Table>
-    <Tooltip
-      content="You do not have permission to add a user. Only cluster owners and organization administrators can add users."
+    <ButtonWithTooltip
+      className="access-control-add"
+      disableReason="You do not have permission to add a user. Only cluster owners and organization administrators can add users."
+      onClick={[Function]}
+      variant="secondary"
     >
-      <span>
-        <Button
-          className="access-control-add"
-          isDisabled={true}
-          onClick={[Function]}
-          variant="secondary"
-        >
-          Add user
-        </Button>
-      </span>
-    </Tooltip>
+      Add user
+    </ButtonWithTooltip>
     <AddUserDialog
       addUserResponse={
         Object {

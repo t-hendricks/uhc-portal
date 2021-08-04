@@ -95,8 +95,8 @@ const getEnvs = async (upstream) => {
     {
       name: 'live_candidate',
       ci_job: 'https://jenkins-jenkins.5a9f.insights-dev.openshiftapps.com/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/prod-beta/ (login with "google")',
-      comment: 'Live at https://cloud.redhat.com/beta/openshift/',
-      info: appInfo('https://cloud.redhat.com/beta/apps/openshift/app.info.json'),
+      comment: 'Live at https://console.redhat.com/beta/openshift/',
+      info: appInfo('https://console.redhat.com/beta/apps/openshift/app.info.json'),
     },
 
     {
@@ -113,8 +113,8 @@ const getEnvs = async (upstream) => {
     {
       name: 'live_stable',
       ci_job: 'https://jenkins-jenkins.5a9f.insights-dev.openshiftapps.com/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/prod-stable/ (login with "google")',
-      comment: 'PRODUCTION - Live at https://cloud.redhat.com/openshift/',
-      info: appInfo('https://cloud.redhat.com/apps/openshift/app.info.json'),
+      comment: 'PRODUCTION - Live at https://console.redhat.com/openshift/',
+      info: appInfo('https://console.redhat.com/apps/openshift/app.info.json'),
     },
   ];
   // Resolve all .info in parallel.

@@ -173,6 +173,6 @@ describe('<NetworkSelfServiceSection />', () => {
         clusterHibernating={false}
       />,
     );
-    expect(wrapper.find('.access-control-add').props().isDisabled).toBeTruthy();
+    expect(wrapper.find('.access-control-add').props().disableReason).toBeTruthy();
   });
 });

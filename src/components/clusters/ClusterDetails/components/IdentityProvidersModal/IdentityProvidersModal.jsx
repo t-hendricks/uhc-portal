@@ -56,7 +56,7 @@ class IdentityProvidersModal extends React.Component {
       initialValues,
       idpEdited,
       isEditForm,
-      pristine,
+      anyTouched,
       invalid,
     } = this.props;
 
@@ -70,7 +70,7 @@ class IdentityProvidersModal extends React.Component {
       title={isEditForm ? `Edit identity provider (${clusterName})` : `Create identity provider (${clusterName})`}
       isPending={isPending}
       onPrimaryClick={handleSubmit}
-      isPrimaryDisabled={pristine || invalid}
+      isPrimaryDisabled={!anyTouched || invalid}
       onSecondaryClick={() => this.onClose()}
       data-test-id="add-idp-osd-dialog"
     >
@@ -111,7 +111,7 @@ IdentityProvidersModal.propTypes = {
     idpId: PropTypes.string,
     name: PropTypes.string,
   }).isRequired,
-  pristine: PropTypes.bool.isRequired,
+  anyTouched: PropTypes.bool.isRequired,
   invalid: PropTypes.bool.isRequired,
 };
 

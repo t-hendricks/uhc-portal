@@ -13,6 +13,38 @@
       "regions": [
         {
           "kind": "CloudRegion",
+          "id": "af-south-1",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/af-south-1",
+          "display_name": "Africa (Cape Town)",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": true
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "ap-east-1",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-east-1",
+          "display_name": "Asia Pacific (Hong Kong)",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": true
+        },
+        {
+          "kind": "CloudRegion",
           "id": "ap-northeast-1",
           "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-northeast-1",
           "display_name": "Asia Pacific, Tokyo",
@@ -24,7 +56,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -39,7 +72,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -54,7 +88,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -69,7 +104,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -84,7 +120,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -99,7 +136,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -114,7 +152,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -129,7 +168,24 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
+        },
+        {
+          "kind": "CloudRegion",
+          "id": "eu-south-1",
+          "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-south-1",
+          "display_name": "Europe (Milan)",
+          "cloud_provider": {
+            "kind": "CloudProviderLink",
+            "id": "aws",
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+          },
+          "enabled": true,
+          "supports_multi_az": true,
+          "kms_location_name": "",
+          "kms_location_id": "",
+          "ccs_only": true
         },
         {
           "kind": "CloudRegion",
@@ -144,7 +200,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -159,7 +216,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -174,7 +232,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -189,7 +248,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": true
         },
         {
           "kind": "CloudRegion",
@@ -204,7 +264,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -219,7 +280,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -234,7 +296,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -249,7 +312,8 @@
           "enabled": true,
           "supports_multi_az": false,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -264,7 +328,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         }
       ]
     },
@@ -288,7 +353,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -303,7 +369,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -318,7 +385,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -333,7 +401,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -348,7 +417,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -363,7 +433,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -378,7 +449,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -393,7 +465,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -408,7 +481,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -423,7 +497,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -438,7 +513,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -453,7 +529,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -468,7 +545,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -483,7 +561,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -498,7 +577,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -513,7 +593,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -528,7 +609,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -543,7 +625,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -558,7 +641,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -573,7 +657,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -588,7 +673,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -603,7 +689,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -618,7 +705,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -633,7 +721,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -648,7 +737,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -663,7 +753,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -678,7 +769,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -693,7 +785,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -708,7 +801,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -723,7 +817,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -738,7 +833,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -753,7 +849,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -768,7 +865,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -783,7 +881,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -798,7 +897,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         }
       ]
     },
@@ -822,7 +922,8 @@
           "enabled": false,
           "supports_multi_az": true,
           "kms_location_name": "",
-          "kms_location_id": ""
+          "kms_location_id": "",
+          "ccs_only": false
         }
       ]
     },
@@ -846,7 +947,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global,Asia",
-          "kms_location_id": "global,asia"
+          "kms_location_id": "global,asia",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -861,7 +963,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global,Asia",
-          "kms_location_id": "global,asia"
+          "kms_location_id": "global,asia",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -876,7 +979,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global,asia1 (Tokyo, Osaka, and Seoul),Asia",
-          "kms_location_id": "global,asia1,asia"
+          "kms_location_id": "global,asia1,asia",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -888,10 +992,11 @@
             "id": "gcp",
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
-          "enabled": false,
+          "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Asia,Global,asia1 (Tokyo, Osaka, and Seoul)",
-          "kms_location_id": "asia,global,asia1"
+          "kms_location_id": "asia,global,asia1",
+          "ccs_only": true
         },
         {
           "kind": "CloudRegion",
@@ -903,10 +1008,11 @@
             "id": "gcp",
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
-          "enabled": false,
+          "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Asia,Global",
-          "kms_location_id": "asia,global"
+          "kms_location_id": "asia,global",
+          "ccs_only": true
         },
         {
           "kind": "CloudRegion",
@@ -921,7 +1027,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Asia,Global",
-          "kms_location_id": "asia,global"
+          "kms_location_id": "asia,global",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -936,7 +1043,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global",
-          "kms_location_id": "global"
+          "kms_location_id": "global",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -948,10 +1056,11 @@
             "id": "gcp",
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
-          "enabled": false,
+          "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "eur4 (Finland, Netherlands, and Belgium),europe,Global",
-          "kms_location_id": "eur4,europe,global"
+          "kms_location_id": "eur4,europe,global",
+          "ccs_only": true
         },
         {
           "kind": "CloudRegion",
@@ -966,7 +1075,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "europe,Global",
-          "kms_location_id": "europe,global"
+          "kms_location_id": "europe,global",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -981,7 +1091,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global,eur5 (London, Netherlands, and Belgium),europe",
-          "kms_location_id": "global,eur5,europe"
+          "kms_location_id": "global,eur5,europe",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -993,10 +1104,11 @@
             "id": "gcp",
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
-          "enabled": false,
+          "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global,europe",
-          "kms_location_id": "global,europe"
+          "kms_location_id": "global,europe",
+          "ccs_only": true
         },
         {
           "kind": "CloudRegion",
@@ -1011,7 +1123,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "eur5 (London, Netherlands, and Belgium),Global,eur4 (Finland, Netherlands, and Belgium),europe",
-          "kms_location_id": "eur5,global,eur4,europe"
+          "kms_location_id": "eur5,global,eur4,europe",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -1023,10 +1136,11 @@
             "id": "gcp",
             "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
           },
-          "enabled": false,
+          "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global,europe",
-          "kms_location_id": "global,europe"
+          "kms_location_id": "global,europe",
+          "ccs_only": true
         },
         {
           "kind": "CloudRegion",
@@ -1041,7 +1155,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global",
-          "kms_location_id": "global"
+          "kms_location_id": "global",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -1056,7 +1171,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global",
-          "kms_location_id": "global"
+          "kms_location_id": "global",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -1071,7 +1187,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "US,Global,nam4 (Iowa, South Carolina, and Oklahoma)",
-          "kms_location_id": "us,global,nam4"
+          "kms_location_id": "us,global,nam4",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -1086,7 +1203,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "US,Global,nam4 (Iowa, South Carolina, and Oklahoma)",
-          "kms_location_id": "us,global,nam4"
+          "kms_location_id": "us,global,nam4",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -1101,7 +1219,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global,US",
-          "kms_location_id": "global,us"
+          "kms_location_id": "global,us",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -1116,7 +1235,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global,US",
-          "kms_location_id": "global,us"
+          "kms_location_id": "global,us",
+          "ccs_only": false
         },
         {
           "kind": "CloudRegion",
@@ -1131,7 +1251,8 @@
           "enabled": true,
           "supports_multi_az": true,
           "kms_location_name": "Global,US",
-          "kms_location_id": "global,us"
+          "kms_location_id": "global,us",
+          "ccs_only": false
         }
       ]
     },

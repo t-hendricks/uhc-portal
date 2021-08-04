@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "custom-64-262144 - General purpose",
+  "category": "general_purpose",
+  "size": "xxxlarge",
+  "id": "custom-64-262144",
+  "href": "/api/clusters_mgmt/v1/machine_types/custom-64-262144",
+  "memory": {
+    "value": 274877906944,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 64,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": true,
+  "generic_name": "standard-64"
+}

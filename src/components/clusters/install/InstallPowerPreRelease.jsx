@@ -11,7 +11,7 @@ import InstructionsPreRelease from './instructions/InstructionsPreRelease';
 import { scrollToTop } from '../../../common/helpers';
 import { tools } from '../../../common/installLinks';
 
-class InstallPowerPreRelease extends Component {
+export class InstallPowerPreRelease extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | Power | Experimental Developer Preview Builds';

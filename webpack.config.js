@@ -59,7 +59,7 @@ module.exports = async (_env, argv) => {
     if (!noInsightsProxy) {
       return `<esi:include src="${snippetPath}" />`;
     }
-    const result = await axios.get(`https://cloud.redhat.com/${snippetPath}`);
+    const result = await axios.get(`https://console.redhat.com/${snippetPath}`);
     return result.data;
   };
   const headSnippet = await getESISnippet(`/${appDeployment}/chrome/snippets/head.html`);
@@ -215,7 +215,7 @@ module.exports = async (_env, argv) => {
       proxy: noInsightsProxy ? {
         // proxy everything except our own app, mimicking insights-proxy behaviour
         context: ['**', `!${publicPath}**`],
-        target: 'https://cloud.redhat.com',
+        target: 'https://console.redhat.com',
         changeOrigin: true,
       } : undefined,
       hot: false,

@@ -25,6 +25,7 @@ describe('check installLinks', () => {
         timeout: 20000,
       });
       promise.catch((error) => {
+        // eslint-disable-next-line no-console
         console.error(`${linkName} : ${link} is BROKEN - ${error}`);
       });
       return expect(promise).resolves.toHaveProperty('status', 200);

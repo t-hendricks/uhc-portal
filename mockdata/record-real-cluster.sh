@@ -28,7 +28,7 @@ function request {
   path="$2"
   shift 2
   mkdir --parents mockdata/"$(dirname "$path")"
-  echo "${log_prefix}ocm get $path $@"
+  echo "${log_prefix}ocm get $path $*"
   # In case of error, leaving an empty file would result in mockserver returning
   # 200 OK with empty body. Better delete it so UI gets 404.
   ocm get "$path" "$@" > mockdata/"$path".json || rm mockdata/"$path".json
@@ -49,13 +49,15 @@ else
   cat "mockdata/$cluster_href.json" |
     jq '.. | select(try .kind | test(".*Link")).href' --raw-output |
     sort --unique |
-    while read href; do
+    while read -r href; do
       request "  " "$href"
     done
 
   request "" "$cluster_href/status"
   request "" "$cluster_href/logs/install"
   request "" "$cluster_href/logs/uninstall"
+  request "" "$cluster_href/addon_inquiries"
+  request "" "$cluster_href/upgrade_policies"
 
   subscription_href="$(jq .subscription.href "mockdata/$cluster_href".json --raw-output)"
   request "" "$subscription_href" --parameter=fetchAccounts=true --parameter=fetchCpuAndSocket=true --parameter=fetchCapabilities=true

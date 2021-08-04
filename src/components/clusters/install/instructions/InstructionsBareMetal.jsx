@@ -4,7 +4,7 @@ import { Card, CardBody, Title } from '@patternfly/react-core';
 import { UserIcon, ConnectedIcon, SyncAltIcon } from '@patternfly/react-icons';
 import CardBadge from '../../common/CardBadge';
 
-export const InstructionsBareMetal = () => (
+const InstructionsBareMetal = () => (
   <Card>
     <div className="pf-c-content ocm-page">
       <Title headingLevel="h3" size="2xl">

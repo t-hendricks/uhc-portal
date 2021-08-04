@@ -9,7 +9,7 @@ import {
   Flex,
 } from '@patternfly/react-core';
 
-import { ClusterStatus as AIClusterStatus } from 'openshift-assisted-ui-lib';
+import { OCM } from 'openshift-assisted-ui-lib';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
 import ClusterNetwork from '../ClusterNetwork';
 import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
@@ -19,6 +19,7 @@ import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 
+const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
   cluster, totalDesiredComputeNodes, autoscaleEnabled, totalMinNodesCount, totalMaxNodesCount,
 }) {

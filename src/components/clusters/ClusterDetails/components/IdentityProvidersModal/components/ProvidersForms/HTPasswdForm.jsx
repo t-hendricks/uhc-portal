@@ -192,7 +192,7 @@ class HTPasswdForm extends React.Component {
             title="Securely store your username and password"
           >
             If you lose these credentials, you will have to delete and
-            recreate the cluster admin user.
+            recreate the HTPasswd IDP.
           </Alert>
         </GridItem>
       </>

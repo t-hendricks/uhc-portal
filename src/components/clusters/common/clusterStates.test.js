@@ -2,7 +2,7 @@ import sample from 'lodash/sample';
 import keys from 'lodash/keys';
 import set from 'lodash/set';
 import forOwn from 'lodash/forOwn';
-import { Config as AIConfig } from 'openshift-assisted-ui-lib';
+import { OCM } from 'openshift-assisted-ui-lib';
 import { normalizedProducts, subscriptionStatuses } from '../../../common/subscriptionTypes';
 import clusterStates, { getClusterStateAndDescription } from './clusterStates';
 
@@ -20,7 +20,7 @@ const mockCluster = (data) => {
 
 describe('getClusterStateAndDescription', () => {
   it('should use AssistedInstall states', () => {
-    const AIStatus = sample(keys(AIConfig.CLUSTER_STATUS_LABELS));
+    const AIStatus = sample(keys(OCM.Constants.CLUSTER_STATUS_LABELS));
     const planId = normalizedProducts.OCP_Assisted_Install;
     const cluster = mockCluster({
       status: AIStatus,
@@ -28,7 +28,7 @@ describe('getClusterStateAndDescription', () => {
       'subscription.plan.type': 'OCP',
     });
     const result = getClusterStateAndDescription(cluster);
-    const AIState = AIConfig.CLUSTER_STATUS_LABELS[AIStatus];
+    const AIState = OCM.Constants.CLUSTER_STATUS_LABELS[AIStatus];
     expect(result.state).toEqual(AIState);
   });
 

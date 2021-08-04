@@ -21,7 +21,7 @@ import {
 } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { AssistedUiRouter } from 'openshift-assisted-ui-lib';
+import { OCM } from 'openshift-assisted-ui-lib';
 
 import TermsGuardedRoute from './TermsGuardedRoute';
 import apiRequest from '../../services/apiRequest';
@@ -37,31 +37,31 @@ import RegisterCluster from '../clusters/RegisterCluster';
 import CreateOSDPage from '../clusters/CreateOSDPage';
 import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import InstallAWS from '../clusters/install/InstallAWS';
-import InstallAWSUPI from '../clusters/install/InstallAWSUPI';
-import InstallAWSIPI from '../clusters/install/InstallAWSIPI';
+import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
+import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
 import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallAzure from '../clusters/install/InstallAzure';
-import InstallAzureIPI from '../clusters/install/InstallAzureIPI';
-import InstallAzureUPI from '../clusters/install/InstallAzureUPI';
+import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
+import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
 import InstallGCP from '../clusters/install/InstallGCP';
-import InstallGCPIPI from '../clusters/install/InstallGCPIPI';
-import InstallGCPUPI from '../clusters/install/InstallGCPUPI';
+import ConnectedInstallGCPIPI from '../clusters/install/InstallGCPIPI';
+import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
 import InstallOSP from '../clusters/install/InstallOSP';
-import InstallOSPIPI from '../clusters/install/InstallOSPIPI';
-import InstallOSPUPI from '../clusters/install/InstallOSPUPI';
+import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
+import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
 import InstallRHV from '../clusters/install/InstallRHV';
-import InstallRHVIPI from '../clusters/install/InstallRHVIPI';
-import InstallRHVUPI from '../clusters/install/InstallRHVUPI';
-import InstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
-import InstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
+import ConnectedInstallRHVIPI from '../clusters/install/InstallRHVIPI';
+import ConnectedInstallRHVUPI from '../clusters/install/InstallRHVUPI';
+import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
+import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
 import InstallVSphere from '../clusters/install/InstallVSphere';
-import InstallPreRelease from '../clusters/install/InstallPreRelease';
-import InstallPullSecret from '../clusters/install/InstallPullSecret';
+import ConnectedInstallPreRelease from '../clusters/install/InstallPreRelease';
+import ConnectedInstallPullSecret from '../clusters/install/InstallPullSecret';
 import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
-import InstallIBM from '../clusters/install/InstallIBM';
-import InstallIBMPreRelease from '../clusters/install/InstallIBMPreRelease';
-import InstallPower from '../clusters/install/InstallPower';
-import InstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
+import ConnectedInstallIBM from '../clusters/install/InstallIBM';
+import ConnectedInstallIBMPreRelease from '../clusters/install/InstallIBMPreRelease';
+import ConnectedInstallPower from '../clusters/install/InstallPower';
+import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
 import DownloadsPage from '../downloads/DownloadsPage';
 import Tokens from '../tokens/Tokens';
 import TokensROSA from '../tokens/TokensROSA';
@@ -75,7 +75,9 @@ import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
-import InstallAwsARM from '../clusters/install/InstallAwsARM';
+import ConnectedInstallAwsARM from '../clusters/install/InstallAwsARM';
+
+const { AssistedUiRouter } = OCM;
 
 const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
@@ -118,34 +120,34 @@ function Router({ history }) {
             <Route path="/token/show" render={() => <Tokens show />} />
             <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
 
-            <Route path="/install/aws/installer-provisioned" component={InstallAWSIPI} />
-            <Route path="/install/aws/user-provisioned" component={InstallAWSUPI} />
-            <Route path="/install/aws/arm" component={InstallAwsARM} />
+            <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
+            <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
+            <Route path="/install/aws/arm" component={ConnectedInstallAwsARM} />
             <Route path="/install/aws" component={InstallAWS} />
-            <Route path="/install/gcp/installer-provisioned" component={InstallGCPIPI} />
-            <Route path="/install/gcp/user-provisioned" component={InstallGCPUPI} />
+            <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
+            <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
             <Route path="/install/gcp" component={InstallGCP} />
-            <Route path="/install/openstack/installer-provisioned" component={InstallOSPIPI} />
-            <Route path="/install/openstack/user-provisioned" component={InstallOSPUPI} />
+            <Route path="/install/openstack/installer-provisioned" component={ConnectedInstallOSPIPI} />
+            <Route path="/install/openstack/user-provisioned" component={ConnectedInstallOSPUPI} />
             <Route path="/install/openstack" component={InstallOSP} />
-            <Route path="/install/rhv/installer-provisioned" component={InstallRHVIPI} />
-            <Route path="/install/rhv/user-provisioned" component={InstallRHVUPI} />
+            <Route path="/install/rhv/installer-provisioned" component={ConnectedInstallRHVIPI} />
+            <Route path="/install/rhv/user-provisioned" component={ConnectedInstallRHVUPI} />
             <Route path="/install/rhv" component={InstallRHV} />
-            <Route path="/install/azure/installer-provisioned" component={InstallAzureIPI} />
-            <Route path="/install/azure/user-provisioned" component={InstallAzureUPI} />
+            <Route path="/install/azure/installer-provisioned" component={ConnectedInstallAzureIPI} />
+            <Route path="/install/azure/user-provisioned" component={ConnectedInstallAzureUPI} />
             <Route path="/install/azure" exact component={InstallAzure} />
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
             <Route path="/install/vsphere" exact component={InstallVSphere} />
-            <Route path="/install/vsphere/user-provisioned" component={InstallVSphereUPI} />
-            <Route path="/install/vsphere/installer-provisioned" component={InstallVSphereIPI} />
-            <Route path="/install/ibmz/user-provisioned" component={InstallIBM} />
-            <Route path="/install/ibmz/pre-release" component={InstallIBMPreRelease} />
-            <Route path="/install/power/user-provisioned" component={InstallPower} />
-            <Route path="/install/power/pre-release" component={InstallPowerPreRelease} />
-            <Route path="/install/pre-release" component={InstallPreRelease} />
-            <Route path="/install/pull-secret" component={InstallPullSecret} />
+            <Route path="/install/vsphere/user-provisioned" component={ConnectedInstallVSphereUPI} />
+            <Route path="/install/vsphere/installer-provisioned" component={ConnectedInstallVSphereIPI} />
+            <Route path="/install/ibmz/user-provisioned" component={ConnectedInstallIBM} />
+            <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMPreRelease} />
+            <Route path="/install/power/user-provisioned" component={ConnectedInstallPower} />
+            <Route path="/install/power/pre-release" component={ConnectedInstallPowerPreRelease} />
+            <Route path="/install/pre-release" component={ConnectedInstallPreRelease} />
+            <Route path="/install/pull-secret" component={ConnectedInstallPullSecret} />
             <Route path="/install/azure/aro-provisioned" component={ConnectedInstallPullSecretAzure} />
             <Redirect from="/install" to="/create" />
             <TermsGuardedRoute

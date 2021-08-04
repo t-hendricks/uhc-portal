@@ -150,10 +150,20 @@ const links = {
   OCM_CLI_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
   OCM_CLI_DOCS: 'https://access.redhat.com/articles/6114701',
 
+  RHOAS_CLI_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047',
+
   HELM_CLI_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest',
   HELM_DOCS: `${DOCS_BASE}/cli_reference/helm_cli/getting-started-with-helm-on-openshift-container-platform.html`,
 
   ODO_DOCS: `${DOCS_BASE}/cli_reference/developer_cli_odo/understanding-odo.html`,
+
+  OPM_LINUX_X86: `${MIRROR_CLIENTS_STABLE}opm-linux.tar.gz`,
+  OPM_LINUX_IBMZ: `${MIRROR_CLIENTS_STABLE_IBMZ}opm-linux.tar.gz`,
+  OPM_LINUX_PPC: `${MIRROR_CLIENTS_STABLE_PPC}opm-linux.tar.gz`,
+  OPM_LINUX_ARM: `${MIRROR_CLIENTS_STABLE_ARM}opm-linux.tar.gz`,
+  OPM_MAC_X86: `${MIRROR_CLIENTS_STABLE}opm-mac.tar.gz`,
+  OPM_WINDOWS: `${MIRROR_CLIENTS_STABLE}opm-windows.tar.gz`,
+  OPM_DOCS: `${DOCS_BASE}/cli_reference/opm-cli.html`,
 
   ROSA_CLIENT_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest',
   ROSA_DOCS: 'https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html',
@@ -172,6 +182,7 @@ const tools = {
   ARMINSTALLER: 'ARMINSTALLER',
   OCM: 'OCM',
   ODO: 'ODO',
+  OPM: 'OPM',
   RHCOS: 'RHCOS',
   RHOAS: 'RHOAS',
   ROSA: 'ROSA',
@@ -209,6 +220,7 @@ const operatingSystemOptions = [
 ];
 
 /**
+ * Static subset of urls, see `urlsSelector` for complete data.
  * {tool: {channel: {arch: {os: url}}}}
  */
 const urls = {
@@ -355,8 +367,6 @@ const urls = {
     },
   },
 
-  // [tools.OCM] TODO: get URL to latest github release
-
   [tools.ODO]: {
     [channels.STABLE]: {
       [architectures.x86]: {
@@ -376,8 +386,6 @@ const urls = {
     },
   },
 
-  // [tools.RHOAS] TODO: get URL to latest github release
-
   [tools.ROSA]: {
     [channels.STABLE]: {
       [architectures.x86]: {
@@ -387,6 +395,91 @@ const urls = {
       },
     },
   },
+
+  [tools.OPM]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: links.OPM_LINUX_X86,
+        [operatingSystems.mac]: links.OPM_MAC_X86,
+        [operatingSystems.windows]: links.OPM_WINDOWS,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: links.OPM_LINUX_IBMZ,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: links.OPM_LINUX_PPC,
+      },
+      /* 4.9
+      [architectures.arm]: {
+        [operatingSystems.linux]: links.OPM_LINUX_ARM,
+      },
+      */
+    },
+  },
+};
+
+const githubReleasesToFetch = [
+  'openshift-online/ocm-cli',
+  'redhat-developer/app-services-cli',
+];
+
+/**
+ * Computes full urls data.
+ * @param state.githubReleases.
+ * @return {tool: {
+ *   channel: {
+ *     arch: {os: url}},
+ *     fallbackNavigateURL: '...' // Optional, used when arch/os data missing. Open in new tab.
+ *   },
+ * }
+ */
+const urlsSelector = (githubReleases) => {
+  const result = {
+    ...urls,
+    [tools.OCM]: {
+      [channels.STABLE]: {
+        fallbackNavigateURL: 'https://github.com/openshift-online/ocm-cli/releases/latest',
+      },
+    },
+    [tools.RHOAS]: {
+      [channels.STABLE]: {
+        fallbackNavigateURL: 'https://github.com/redhat-developer/app-services-cli/releases/latest',
+      },
+    },
+  };
+
+  const ocmRelease = githubReleases['openshift-online/ocm-cli'];
+  if (ocmRelease?.fulfilled) {
+    const tag = ocmRelease.data.tag_name;
+    const base = `https://github.com/openshift-online/ocm-cli/releases/download/${tag}`;
+    result[tools.OCM] = {
+      [channels.STABLE]: {
+        [architectures.x86]: {
+          [operatingSystems.linux]: `${base}/ocm-linux-amd64`,
+          [operatingSystems.mac]: `${base}/ocm-darwin-amd64`,
+          [operatingSystems.windows]: `${base}/ocm-windows-amd64`,
+        },
+      },
+    };
+  }
+
+  const rhoasRelease = githubReleases['redhat-developer/app-services-cli'];
+  if (rhoasRelease?.fulfilled) {
+    const tag = rhoasRelease.data.tag_name; // v0.25.0
+    const version = tag.replace(/^v/, ''); // 0.25.0
+    const base = `https://github.com/redhat-developer/app-services-cli/releases/download/${tag}`;
+    result[tools.RHOAS] = {
+      [channels.STABLE]: {
+        [architectures.x86]: {
+          [operatingSystems.linux]: `${base}/rhoas_${version}_linux_amd64.tar.gz`,
+          [operatingSystems.mac]: `${base}/rhoas_${version}_macOS_amd64.tar.gz`,
+          [operatingSystems.windows]: `${base}/rhoas_${version}_windows_amd64.zip`,
+        },
+      },
+    };
+  }
+
+  return result;
 };
 
 export {
@@ -397,5 +490,7 @@ export {
   operatingSystemOptions,
   tools,
   urls,
+  githubReleasesToFetch,
+  urlsSelector,
 };
 export default links;

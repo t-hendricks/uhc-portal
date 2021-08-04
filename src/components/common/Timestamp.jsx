@@ -34,6 +34,7 @@ function Timestamp(props) {
     const date = new Date(value);
     const time = date.getTime();
     if (Number.isNaN(time)) {
+      // eslint-disable-next-line no-console
       console.error("Can't parse date '%s'", value);
     } else {
       text = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;

@@ -187,6 +187,11 @@ limitations under the License.
   margin-bottom: 40px;
 }
 
+.pf-c-banner.configuration_mode_read_only {
+  text-align: center;
+  white-space: normal;
+}
+
 #clusterdetails-content .pf-c-card {
   margin-top: 24px;
 }
@@ -550,10 +555,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 .cluster-loading-container {
   margin-top: 15px;
   height: 132px;
-}
-
-.pf-c-dropdown__menu-item .pf-c-check__input {
-  margin-right: 10px;
 }
 
 .split-margin-left {
