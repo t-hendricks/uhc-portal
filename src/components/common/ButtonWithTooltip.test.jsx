@@ -10,6 +10,7 @@ describe('<ButtonWithTooltip>', () => {
     it('renders', () => {
       const button = shallow(<ButtonWithTooltip className="foo">Press me</ButtonWithTooltip>);
       expect(button).toMatchSnapshot();
+      expect(button.find('Button').at(0).props().isDisabled).toBeFalsy();
     });
   });
 
@@ -23,9 +24,13 @@ describe('<ButtonWithTooltip>', () => {
   describe('with string disableReason', () => {
     it('renders', () => {
       const button = shallow(
-        <ButtonWithTooltip className="foo" disableReason="Unsafe in hyperspace">Teleport</ButtonWithTooltip>,
+        <ButtonWithTooltip className="foo" disableReason="Unsafe in hyperspace" isDisabled={false}>
+          Teleport
+        </ButtonWithTooltip>,
       );
       expect(button).toMatchSnapshot();
+      expect(button.find('Tooltip').at(0).props().content).toEqual('Unsafe in hyperspace');
+      expect(button.find('Button').at(0).props().isDisabled).toBeTruthy();
     });
   });
 
@@ -42,6 +47,32 @@ describe('<ButtonWithTooltip>', () => {
         <ButtonWithTooltip className="foo" disableReason={reason}>Teleport</ButtonWithTooltip>,
       );
       expect(button).toMatchSnapshot();
+    });
+  });
+
+  describe('with disableReason and isDisabled', () => {
+    it('renders', () => {
+      const button = shallow(
+        <ButtonWithTooltip className="foo" disableReason="Parachute required" isDisabled>
+          Eject
+        </ButtonWithTooltip>,
+      );
+      expect(button).toMatchSnapshot();
+      expect(button.find('Tooltip').at(0).props().content).toEqual('Parachute required');
+      expect(button.find('Button').at(0).props().isDisabled).toBeTruthy();
+    });
+  });
+
+  describe('with isDisabled', () => {
+    it('renders', () => {
+      const button = shallow(
+        <ButtonWithTooltip className="foo" disableReason={false} isDisabled>
+          Not clickable
+        </ButtonWithTooltip>,
+      );
+      expect(button).toMatchSnapshot();
+      expect(button.find('Tooltip')).toHaveLength(0);
+      expect(button.find('Button').at(0).props().isDisabled).toBeTruthy();
     });
   });
 });
