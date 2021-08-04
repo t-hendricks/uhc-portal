@@ -175,7 +175,7 @@ function BillingModelSection({
             <Field
               component={RadioButtons}
               name="byoc"
-              defaultValue="false"
+              defaultValue={!isRhInfraQuotaDisabled ? 'false' : 'true'}
               disableDefaultValueHandling
               options={[{
                 label: 'Customer cloud subscription',
