@@ -8,15 +8,15 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
     <CardBody
       className="ocm-c-machine-pools__card--body"
     >
-      <Button
+      <ButtonWithTooltip
         className="pf-u-mb-lg"
+        disableReason={false}
         id="add-machine-pool"
-        isDisabled={false}
         onClick={[Function]}
         variant="secondary"
       >
         Add machine pool
-      </Button>
+      </ButtonWithTooltip>
       <Divider />
       <Table
         actionResolver={[Function]}
@@ -239,15 +239,15 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
     <CardBody
       className="ocm-c-machine-pools__card--body"
     >
-      <Button
+      <ButtonWithTooltip
         className="pf-u-mb-lg"
+        disableReason={false}
         id="add-machine-pool"
-        isDisabled={false}
         onClick={[Function]}
         variant="secondary"
       >
         Add machine pool
-      </Button>
+      </ButtonWithTooltip>
       <Divider />
       <Table
         actionResolver={[Function]}
@@ -582,15 +582,15 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
     <CardBody
       className="ocm-c-machine-pools__card--body"
     >
-      <Button
+      <ButtonWithTooltip
         className="pf-u-mb-lg"
+        disableReason={false}
         id="add-machine-pool"
-        isDisabled={false}
         onClick={[Function]}
         variant="secondary"
       >
         Add machine pool
-      </Button>
+      </ButtonWithTooltip>
       <Divider />
       <Table
         actionResolver={[Function]}
@@ -691,15 +691,15 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
     <CardBody
       className="ocm-c-machine-pools__card--body"
     >
-      <Button
+      <ButtonWithTooltip
         className="pf-u-mb-lg"
+        disableReason={false}
         id="add-machine-pool"
-        isDisabled={false}
         onClick={[Function]}
         variant="secondary"
       >
         Add machine pool
-      </Button>
+      </ButtonWithTooltip>
       <Divider />
       <Table
         actionResolver={[Function]}

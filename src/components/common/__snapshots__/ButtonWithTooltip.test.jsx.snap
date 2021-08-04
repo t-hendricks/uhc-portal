@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ButtonWithTooltip> with blank disableReason renders 1`] = `
+<Button
+  className="foo"
+>
+  Press me
+</Button>
+`;
+
+exports[`<ButtonWithTooltip> with node disableReason renders 1`] = `
+<Tooltip
+  content={
+    <Text>
+      Unsupported.
+       
+      <Link
+        to="http://example.com"
+      >
+        Learn more
+      </Link>
+    </Text>
+  }
+>
+  <span>
+    <Button
+      className="foo"
+      isDisabled={true}
+    >
+      Teleport
+    </Button>
+  </span>
+</Tooltip>
+`;
+
+exports[`<ButtonWithTooltip> with string disableReason renders 1`] = `
+<Tooltip
+  content="Unsafe in hyperspace"
+>
+  <span>
+    <Button
+      className="foo"
+      isDisabled={true}
+    >
+      Teleport
+    </Button>
+  </span>
+</Tooltip>
+`;
+
+exports[`<ButtonWithTooltip> without disableReason renders 1`] = `
+<Button
+  className="foo"
+>
+  Press me
+</Button>
+`;

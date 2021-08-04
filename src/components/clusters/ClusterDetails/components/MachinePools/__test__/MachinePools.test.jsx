@@ -155,13 +155,13 @@ describe('<MachinePools />', () => {
     const props = { ...baseProps, cluster: { canEdit: false } };
     const wrapper = shallow(<MachinePools {...props} />);
 
-    expect(wrapper.find('#add-machine-pool').props().isDisabled).toBeTruthy();
+    expect(wrapper.find('#add-machine-pool').props().disableReason).toBeTruthy();
   });
 
   it('should not allow adding machine pools to users without enough quota', () => {
     const props = { ...baseProps, hasMachinePoolsQuota: false };
     const wrapper = shallow(<MachinePools {...props} />);
 
-    expect(wrapper.find('#add-machine-pool').props().isDisabled).toBeTruthy();
+    expect(wrapper.find('#add-machine-pool').props().disableReason).toBeTruthy();
   });
 });
