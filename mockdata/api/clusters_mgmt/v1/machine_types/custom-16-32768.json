@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "custom-16-32768 - Compute Optimized",
+  "category": "compute_optimized",
+  "size": "large",
+  "id": "custom-16-32768",
+  "href": "/api/clusters_mgmt/v1/machine_types/custom-16-32768",
+  "memory": {
+    "value": 34359738368,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 16,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": false,
+  "generic_name": "highcpu-16"
+}

@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "custom-72-147456 - Compute optimized",
+  "category": "compute_optimized",
+  "size": "xxxlarge",
+  "id": "custom-72-147456",
+  "href": "/api/clusters_mgmt/v1/machine_types/custom-72-147456",
+  "memory": {
+    "value": 154618822656,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 72,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": true,
+  "generic_name": "highcpu-72"
+}

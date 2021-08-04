@@ -370,6 +370,7 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
     } catch (e) {
       if (e.response?.status === 404) {
         // The cluster is garbage collected or the user does not have privileges
+        // eslint-disable-next-line no-console
         console.info('Failed to query assisted-installer cluster id: ', subscription.data.cluster_id);
         cluster.data = fakeClusterFromSubscription(subscription.data);
       } else {

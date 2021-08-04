@@ -92,14 +92,17 @@ insights-proxy-check: run/insights-proxy
         || ! grep --with-filename prod.foo.redhat.com /etc/hosts; \
 	then \
 		echo "ERROR: Need aliases in /etc/hosts to access the UI."; \
-		echo "       To add them run: make insights-proxy-setup"; \
+		echo "       To add them run: make dev-env-setup"; \
 		exit 1; \
 	fi
 
-.PHONY: insights-proxy-setup
-insights-proxy-setup: run/insights-proxy
+.PHONY: dev-env-setup
+dev-env-setup: run/insights-proxy
 	sudo bash -x run/insights-proxy/scripts/patch-etc-hosts.sh
-	run/podman-or-docker.sh pull quay.io/redhat-sd-devel/insights-proxy:pull-33
+
+.PHONY: insights-proxy-setup
+insights-proxy-setup: dev-env-setup
+	run/podman-or-docker.sh pull quay.io/redhat-sd-devel/insights-proxy:3.2.1
 
 .PHONY: clean
 clean:

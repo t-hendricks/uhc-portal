@@ -6,7 +6,7 @@ import {
   getSchedules, postSchedule, editSchedule, deleteSchedule, replaceSchedule,
   clearPostedUpgradeScheduleResponse, clearDeleteScheduleResponse,
 } from '../../../common/Upgrades/clusterUpgradeActions';
-import { editCluster } from '../../../../../redux/actions/clustersActions';
+import { editCluster, fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { isHibernating } from '../../../common/clusterStates';
 import { openModal } from '../../../../common/Modal/ModalActions';
 
@@ -45,6 +45,7 @@ const mapDispatchToProps = dispatch => ({
   },
   openModal: (modal, data) => dispatch(openModal(modal, data)),
   getSchedules: clusterID => dispatch(getSchedules(clusterID)),
+  getClusterDetails: clusterID => dispatch(fetchClusterDetails(clusterID)),
   onSubmit: (formData, clusterID, existingSchedules, existingGracePeriod,
     enableUserWorkloadMonitoring) => {
     const currentAutomaticUpgradePolicy = existingSchedules.items.find(policy => policy.schedule_type === 'automatic');

@@ -15,6 +15,7 @@ const cluster = {
   status: {
     state: clusterStates.READY,
     dns_ready: true,
+    configuration_mode: 'full',
   },
   subscription: {
     id: 'subscription-id',
@@ -62,18 +63,25 @@ const deleteModalData = {
   clusterName: cluster.name,
 };
 
+const clusterHibernatingProps = {
+  cluster: {
+    ...cluster,
+    state: clusterStates.HIBERNATING,
+    status: {
+      ...cluster.status,
+      state: clusterStates.HIBERNATING,
+    },
+  },
+  ...props,
+};
+
 const clusterUninstallingProps = {
   cluster: {
+    ...cluster,
     state: clusterStates.UNINSTALLING,
-    managed: true,
-    ccs: {
-      enabled: false,
-    },
-    canEdit: true,
-    canDelete: true,
     status: {
-      state: clusterStates.READY,
-      dns_ready: true,
+      ...cluster.status,
+      state: clusterStates.UNINSTALLING,
     },
   },
   ...props,
@@ -81,16 +89,25 @@ const clusterUninstallingProps = {
 
 const clusterNotReadyProps = {
   cluster: {
+    ...cluster,
+    console: undefined,
     state: clusterStates.ERROR,
-    managed: true,
-    ccs: {
-      enabled: false,
-    },
-    canEdit: true,
-    canDelete: true,
     status: {
-      state: clusterStates.READY,
-      dns_ready: true,
+      state: clusterStates.ERROR,
+      dns_ready: false,
+      provision_error_message: 'some message',
+      provision_error_code: 'some code',
+    },
+  },
+  ...props,
+};
+
+const clusterReadOnlyProps = {
+  cluster: {
+    ...cluster,
+    status: {
+      ...cluster.status,
+      configuration_mode: 'read_only',
     },
   },
   ...props,
@@ -132,8 +149,10 @@ export {
   managedReadyProps,
   managedReadyOsdTrialProps,
   deleteModalData,
+  clusterHibernatingProps,
   clusterUninstallingProps,
   clusterNotReadyProps,
+  clusterReadOnlyProps,
   selfManagedProps,
   cluster,
   osdTrialCluster,

@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "n1-highmem-32 and nvidia-tesla-v100 - Accelerated Computing (4 GPUs)",
+  "category": "accelerated_computing",
+  "size": "xlarge",
+  "id": "n1-highmem-32+nvidia-tesla-v100[4]",
+  "href": "/api/clusters_mgmt/v1/machine_types/n1-highmem-32+nvidia-tesla-v100[4]",
+  "memory": {
+    "value": 223338299392,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 32,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": true,
+  "generic_name": "v100-gpu-32"
+}

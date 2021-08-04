@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "n1-custom-48-184320 and nvidia-tesla-t4 - Accelerated Computing (4 GPU)",
+  "category": "accelerated_computing",
+  "size": "xxlarge",
+  "id": "n1-custom-48-184320+nvidia-tesla-t4[4]",
+  "href": "/api/clusters_mgmt/v1/machine_types/n1-custom-48-184320+nvidia-tesla-t4[4]",
+  "memory": {
+    "value": 103079215104,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 48,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": true,
+  "generic_name": "t4-gpu-48"
+}

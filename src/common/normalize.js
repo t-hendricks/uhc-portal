@@ -1,16 +1,18 @@
 import produce from 'immer';
 import get from 'lodash/get';
 
-import {
-  getClustervCPUCount as getAICluterCPUCount,
-  getClusterMemoryAmount as getAIMemoryAmount,
-  getMasterCount as getAICMasterCount,
-  getWorkerCount as getAICWorkerCount,
-} from 'openshift-assisted-ui-lib';
+import { OCM } from 'openshift-assisted-ui-lib';
 
 import { versionComparator } from './versionComparator';
 import { normalizedProducts, clustersServiceProducts } from './subscriptionTypes';
 import { isAISubscriptionWithoutMetrics } from './isAssistedInstallerCluster';
+
+const {
+  getClustervCPUCount: getAICluterCPUCount,
+  getClusterMemoryAmount: getAIMemoryAmount,
+  getMasterCount: getAICMasterCount,
+  getWorkerCount: getAICWorkerCount,
+} = OCM;
 
 /**
  * Erases the differences between clusters-service products and account-manager plans

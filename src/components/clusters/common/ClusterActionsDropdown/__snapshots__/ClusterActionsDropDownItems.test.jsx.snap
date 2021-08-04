@@ -34,24 +34,21 @@ exports[`Cluster Actions Dropdown Items admin console url does not exist should 
 </Fragment>
 `;
 
-exports[`Cluster Actions Dropdown Items cluster with state not ready should render (not ready) 1`] = `
+exports[`Cluster Actions Dropdown Items cluster configuration_mode read_only should render (read_only) 1`] = `
 <Fragment>
   <DropdownItem
-    component="button"
-    isDisabled={true}
-    key="undefined.menu.adminconsole"
+    component="a"
+    href="www.testuhc.com"
+    key="1.menu.adminconsole"
+    rel="noopener noreferrer"
+    target="_blank"
     title="Open console"
-    tooltip={
-      <span>
-        Admin console is not yet available for this cluster
-      </span>
-    }
   >
     Open console
   </DropdownItem>
   <DropdownItem
     component="button"
-    key="undefined.menu.editdisplayname"
+    key="1.menu.editdisplayname"
     onClick={[Function]}
     title="Edit display name"
   >
@@ -60,7 +57,85 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
   <DropdownItem
     component="button"
     isDisabled={true}
-    key="undefined.menu.scalecluster"
+    key="1.menu.scalecluster"
+    title="Edit load balancers and persistent storage"
+    tooltip={
+      <span>
+        This operation is not available during maintenance
+      </span>
+    }
+  >
+    Edit load balancers and persistent storage
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    isDisabled={true}
+    key="1.menu.editnodecount"
+    title="Edit node count"
+    tooltip={
+      <span>
+        This operation is not available during maintenance
+      </span>
+    }
+  >
+    Edit node count
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    isDisabled={true}
+    key="1.menu.hibernatecluster"
+    title="Hibernate cluster"
+    tooltip={
+      <span>
+        This operation is not available during maintenance
+      </span>
+    }
+  >
+    Hibernate cluster
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    isDisabled={true}
+    key="1.menu.deletecluster"
+    title="Delete cluster"
+    tooltip={
+      <span>
+        This operation is not available during maintenance
+      </span>
+    }
+  >
+    Delete cluster
+  </DropdownItem>
+</Fragment>
+`;
+
+exports[`Cluster Actions Dropdown Items cluster state hibernating should render (hibernating) 1`] = `
+<Fragment>
+  <DropdownItem
+    component="button"
+    isDisabled={true}
+    key="1.menu.adminconsole"
+    title="Open console"
+    tooltip={
+      <span>
+        This cluster is hibernating; awaken cluster in order to perform actions
+      </span>
+    }
+  >
+    Open console
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    key="1.menu.editdisplayname"
+    onClick={[Function]}
+    title="Edit display name"
+  >
+    Edit display name
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    isDisabled={true}
+    key="1.menu.scalecluster"
     title="Edit load balancers and persistent storage"
     tooltip={
       <span>
@@ -73,7 +148,80 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
   <DropdownItem
     component="button"
     isDisabled={true}
-    key="undefined.menu.editnodecount"
+    key="1.menu.editnodecount"
+    title="Edit node count"
+    tooltip={
+      <span>
+        This cluster is not ready
+      </span>
+    }
+  >
+    Edit node count
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    key="1.menu.hibernatecluster"
+    onClick={[Function]}
+    title="Resume from Hibernation"
+  >
+    Resume from Hibernation
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    isDisabled={true}
+    key="1.menu.deletecluster"
+    title="Delete cluster"
+    tooltip={
+      <span>
+        This cluster is hibernating; awaken cluster in order to perform actions
+      </span>
+    }
+  >
+    Delete cluster
+  </DropdownItem>
+</Fragment>
+`;
+
+exports[`Cluster Actions Dropdown Items cluster with state not ready should render (not ready) 1`] = `
+<Fragment>
+  <DropdownItem
+    component="button"
+    isDisabled={true}
+    key="1.menu.adminconsole"
+    title="Open console"
+    tooltip={
+      <span>
+        Admin console is not yet available for this cluster
+      </span>
+    }
+  >
+    Open console
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    key="1.menu.editdisplayname"
+    onClick={[Function]}
+    title="Edit display name"
+  >
+    Edit display name
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    isDisabled={true}
+    key="1.menu.scalecluster"
+    title="Edit load balancers and persistent storage"
+    tooltip={
+      <span>
+        This cluster is not ready
+      </span>
+    }
+  >
+    Edit load balancers and persistent storage
+  </DropdownItem>
+  <DropdownItem
+    component="button"
+    isDisabled={true}
+    key="1.menu.editnodecount"
     title="Edit node count"
     tooltip={
       <span>
@@ -86,15 +234,19 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
   <DropdownItem
     component="button"
     isDisabled={true}
-    key="undefined.menu.hibernatecluster"
-    onClick={[Function]}
+    key="1.menu.hibernatecluster"
     title="Hibernate cluster"
+    tooltip={
+      <span>
+        This cluster is not ready
+      </span>
+    }
   >
     Hibernate cluster
   </DropdownItem>
   <DropdownItem
     component="button"
-    key="undefined.menu.deletecluster"
+    key="1.menu.deletecluster"
     onClick={[Function]}
     title="Delete cluster"
   >
@@ -196,7 +348,6 @@ exports[`Cluster Actions Dropdown Items cluster with state ready and console url
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={false}
     key="1.menu.hibernatecluster"
     onClick={[Function]}
     title="Hibernate cluster"
@@ -219,7 +370,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
   <DropdownItem
     component="button"
     isDisabled={true}
-    key="undefined.menu.adminconsole"
+    key="1.menu.adminconsole"
     title="Open console"
     tooltip={
       <span>
@@ -232,20 +383,20 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
   <DropdownItem
     component="button"
     isDisabled={true}
-    key="undefined.menu.editdisplayname"
-    title="Edit display Name"
+    key="1.menu.editdisplayname"
+    title="Edit display name"
     tooltip={
       <span>
         The cluster is being uninstalled
       </span>
     }
   >
-    Edit display Name
+    Edit display name
   </DropdownItem>
   <DropdownItem
     component="button"
     isDisabled={true}
-    key="undefined.menu.scalecluster"
+    key="1.menu.scalecluster"
     title="Edit load balancers and persistent storage"
     tooltip={
       <span>
@@ -258,7 +409,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
   <DropdownItem
     component="button"
     isDisabled={true}
-    key="undefined.menu.editnodecount"
+    key="1.menu.editnodecount"
     title="Edit node count"
     tooltip={
       <span>
@@ -271,16 +422,20 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
   <DropdownItem
     component="button"
     isDisabled={true}
-    key="undefined.menu.hibernatecluster"
-    onClick={[Function]}
+    key="1.menu.hibernatecluster"
     title="Hibernate cluster"
+    tooltip={
+      <span>
+        The cluster is being uninstalled
+      </span>
+    }
   >
     Hibernate cluster
   </DropdownItem>
   <DropdownItem
     component="button"
     isDisabled={true}
-    key="undefined.menu.deletecluster"
+    key="1.menu.deletecluster"
     title="Delete cluster"
     tooltip={
       <span>

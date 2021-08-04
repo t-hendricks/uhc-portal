@@ -17,5 +17,7 @@
     "kind": "CloudProviderLink",
     "id": "aws",
     "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
-  }
+  },
+  "ccs_only": false,
+  "generic_name": "standard-4"
 }

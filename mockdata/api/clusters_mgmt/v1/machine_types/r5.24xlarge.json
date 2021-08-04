@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "r5.24xlarge - Memory optimized",
+  "category": "memory_optimized",
+  "size": "xxxxlarge",
+  "id": "r5.24xlarge",
+  "href": "/api/clusters_mgmt/v1/machine_types/r5.24xlarge",
+  "memory": {
+    "value": 824633720832,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 96,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "aws",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+  },
+  "ccs_only": true,
+  "generic_name": "highmem-96"
+}

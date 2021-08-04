@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "custom-48-98304 - Compute optimized",
+  "category": "compute_optimized",
+  "size": "xxlarge",
+  "id": "custom-48-98304",
+  "href": "/api/clusters_mgmt/v1/machine_types/custom-48-98304",
+  "memory": {
+    "value": 103079215104,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 48,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": true,
+  "generic_name": "highcpu-48"
+}

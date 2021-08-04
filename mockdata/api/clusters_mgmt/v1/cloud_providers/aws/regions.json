@@ -1,9 +1,41 @@
 {
   "kind": "CloudRegionList",
   "page": 1,
-  "size": 17,
-  "total": 17,
+  "size": 20,
+  "total": 20,
   "items": [
+    {
+      "kind": "CloudRegion",
+      "id": "af-south-1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/af-south-1",
+      "display_name": "Africa (Cape Town)",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": true
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "ap-east-1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/ap-east-1",
+      "display_name": "Asia Pacific (Hong Kong)",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": true
+    },
     {
       "kind": "CloudRegion",
       "id": "ap-northeast-1",
@@ -14,7 +46,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -26,7 +62,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -38,7 +78,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -50,7 +94,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -62,7 +110,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -74,7 +126,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -86,7 +142,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -98,7 +158,27 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
+    },
+    {
+      "kind": "CloudRegion",
+      "id": "eu-south-1",
+      "href": "/api/clusters_mgmt/v1/cloud_providers/aws/regions/eu-south-1",
+      "display_name": "Europe (Milan)",
+      "cloud_provider": {
+        "kind": "CloudProviderLink",
+        "id": "aws",
+        "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+      },
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": true
     },
     {
       "kind": "CloudRegion",
@@ -110,7 +190,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -122,7 +206,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -134,7 +222,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -146,7 +238,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": true
     },
     {
       "kind": "CloudRegion",
@@ -158,7 +254,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -170,7 +270,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -182,7 +286,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -194,7 +302,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": false,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     },
     {
       "kind": "CloudRegion",
@@ -206,7 +318,11 @@
         "id": "aws",
         "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
       },
-      "enabled": true
+      "enabled": true,
+      "supports_multi_az": true,
+      "kms_location_name": "",
+      "kms_location_id": "",
+      "ccs_only": false
     }
   ]
 }

@@ -153,6 +153,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                       >
                         <p
                           class=""
+                          data-ouia-component-id="OUIA-Generated-Text-1"
+                          data-ouia-component-type="PF4/Text"
+                          data-ouia-safe="true"
                           data-pf-content="true"
                         >
                           Edit your subscription settings to receive the correct level of cluster support.
@@ -840,43 +843,51 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <button
-                            aria-disabled={false}
+                          <ButtonBase
                             aria-label="Close"
-                            className="pf-c-button pf-m-plain"
-                            data-ouia-component-id="OUIA-Generated-Button-plain-1"
-                            data-ouia-component-type="PF4/Button"
-                            data-ouia-safe={true}
-                            disabled={false}
+                            className=""
+                            innerRef={null}
                             onClick={[Function]}
-                            role={null}
-                            type="button"
+                            variant="plain"
                           >
-                            <TimesIcon
-                              color="currentColor"
-                              noVerticalAlign={false}
-                              size="sm"
+                            <button
+                              aria-disabled={false}
+                              aria-label="Close"
+                              className="pf-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-1"
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              role={null}
+                              type="button"
                             >
-                              <svg
-                                aria-hidden={true}
-                                aria-labelledby={null}
-                                fill="currentColor"
-                                height="1em"
-                                role="img"
-                                style={
-                                  Object {
-                                    "verticalAlign": "-0.125em",
-                                  }
-                                }
-                                viewBox="0 0 352 512"
-                                width="1em"
+                              <TimesIcon
+                                color="currentColor"
+                                noVerticalAlign={false}
+                                size="sm"
                               >
-                                <path
-                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                />
-                              </svg>
-                            </TimesIcon>
-                          </button>
+                                <svg
+                                  aria-hidden={true}
+                                  aria-labelledby={null}
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  style={
+                                    Object {
+                                      "verticalAlign": "-0.125em",
+                                    }
+                                  }
+                                  viewBox="0 0 352 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  />
+                                </svg>
+                              </TimesIcon>
+                            </button>
+                          </ButtonBase>
                         </Button>
                       </ModalBoxCloseButton>
                       <ModalBoxHeader
@@ -939,6 +950,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                   >
                                     <p
                                       className=""
+                                      data-ouia-component-id="OUIA-Generated-Text-1"
+                                      data-ouia-component-type="PF4/Text"
+                                      data-ouia-safe={true}
                                       data-pf-content={true}
                                     >
                                       Edit your subscription settings to receive the correct level of cluster support.
@@ -2562,49 +2576,57 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                               onClick={[Function]}
                                               variant="control"
                                             >
-                                              <button
-                                                aria-disabled={true}
+                                              <ButtonBase
                                                 aria-label="decrement the number by 1"
-                                                className="pf-c-button pf-m-control pf-m-disabled"
-                                                data-ouia-component-id="OUIA-Generated-Button-control-1"
-                                                data-ouia-component-type="PF4/Button"
-                                                data-ouia-safe={true}
-                                                disabled={true}
+                                                innerRef={null}
+                                                isDisabled={true}
                                                 onClick={[Function]}
-                                                role={null}
-                                                tabIndex={null}
-                                                type="button"
+                                                variant="control"
                                               >
-                                                <span
-                                                  className="pf-c-number-input__icon"
+                                                <button
+                                                  aria-disabled={true}
+                                                  aria-label="decrement the number by 1"
+                                                  className="pf-c-button pf-m-control pf-m-disabled"
+                                                  data-ouia-component-id="OUIA-Generated-Button-control-1"
+                                                  data-ouia-component-type="PF4/Button"
+                                                  data-ouia-safe={true}
+                                                  disabled={true}
+                                                  onClick={[Function]}
+                                                  role={null}
+                                                  tabIndex={null}
+                                                  type="button"
                                                 >
-                                                  <MinusIcon
-                                                    aria-hidden="true"
-                                                    color="currentColor"
-                                                    noVerticalAlign={false}
-                                                    size="sm"
+                                                  <span
+                                                    className="pf-c-number-input__icon"
                                                   >
-                                                    <svg
+                                                    <MinusIcon
                                                       aria-hidden="true"
-                                                      aria-labelledby={null}
-                                                      fill="currentColor"
-                                                      height="1em"
-                                                      role="img"
-                                                      style={
-                                                        Object {
-                                                          "verticalAlign": "-0.125em",
-                                                        }
-                                                      }
-                                                      viewBox="0 0 448 512"
-                                                      width="1em"
+                                                      color="currentColor"
+                                                      noVerticalAlign={false}
+                                                      size="sm"
                                                     >
-                                                      <path
-                                                        d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                                                      />
-                                                    </svg>
-                                                  </MinusIcon>
-                                                </span>
-                                              </button>
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        aria-labelledby={null}
+                                                        fill="currentColor"
+                                                        height="1em"
+                                                        role="img"
+                                                        style={
+                                                          Object {
+                                                            "verticalAlign": "-0.125em",
+                                                          }
+                                                        }
+                                                        viewBox="0 0 448 512"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                                        />
+                                                      </svg>
+                                                    </MinusIcon>
+                                                  </span>
+                                                </button>
+                                              </ButtonBase>
                                             </Button>
                                             <input
                                               aria-label="Number of compute cores (excluding control plane nodes)"
@@ -2621,49 +2643,57 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                               onClick={[Function]}
                                               variant="control"
                                             >
-                                              <button
-                                                aria-disabled={true}
+                                              <ButtonBase
                                                 aria-label="increment the number by 1"
-                                                className="pf-c-button pf-m-control pf-m-disabled"
-                                                data-ouia-component-id="OUIA-Generated-Button-control-2"
-                                                data-ouia-component-type="PF4/Button"
-                                                data-ouia-safe={true}
-                                                disabled={true}
+                                                innerRef={null}
+                                                isDisabled={true}
                                                 onClick={[Function]}
-                                                role={null}
-                                                tabIndex={null}
-                                                type="button"
+                                                variant="control"
                                               >
-                                                <span
-                                                  className="pf-c-number-input__icon"
+                                                <button
+                                                  aria-disabled={true}
+                                                  aria-label="increment the number by 1"
+                                                  className="pf-c-button pf-m-control pf-m-disabled"
+                                                  data-ouia-component-id="OUIA-Generated-Button-control-2"
+                                                  data-ouia-component-type="PF4/Button"
+                                                  data-ouia-safe={true}
+                                                  disabled={true}
+                                                  onClick={[Function]}
+                                                  role={null}
+                                                  tabIndex={null}
+                                                  type="button"
                                                 >
-                                                  <PlusIcon
-                                                    aria-hidden="true"
-                                                    color="currentColor"
-                                                    noVerticalAlign={false}
-                                                    size="sm"
+                                                  <span
+                                                    className="pf-c-number-input__icon"
                                                   >
-                                                    <svg
+                                                    <PlusIcon
                                                       aria-hidden="true"
-                                                      aria-labelledby={null}
-                                                      fill="currentColor"
-                                                      height="1em"
-                                                      role="img"
-                                                      style={
-                                                        Object {
-                                                          "verticalAlign": "-0.125em",
-                                                        }
-                                                      }
-                                                      viewBox="0 0 448 512"
-                                                      width="1em"
+                                                      color="currentColor"
+                                                      noVerticalAlign={false}
+                                                      size="sm"
                                                     >
-                                                      <path
-                                                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                                                      />
-                                                    </svg>
-                                                  </PlusIcon>
-                                                </span>
-                                              </button>
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        aria-labelledby={null}
+                                                        fill="currentColor"
+                                                        height="1em"
+                                                        role="img"
+                                                        style={
+                                                          Object {
+                                                            "verticalAlign": "-0.125em",
+                                                          }
+                                                        }
+                                                        viewBox="0 0 448 512"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                                        />
+                                                      </svg>
+                                                    </PlusIcon>
+                                                  </span>
+                                                </button>
+                                              </ButtonBase>
                                             </Button>
                                           </div>
                                         </div>
@@ -2694,40 +2724,54 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                             type="submit"
                             variant="primary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-primary"
-                              data-ouia-component-id="OUIA-Generated-Button-primary-1"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
+                              isDisabled={false}
                               onClick={[Function]}
-                              role={null}
                               type="submit"
+                              variant="primary"
                             >
-                              Save
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-primary"
+                                data-ouia-component-id="OUIA-Generated-Button-primary-1"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="submit"
+                              >
+                                Save
+                              </button>
+                            </ButtonBase>
                           </Button>
                           <Button
                             key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-secondary"
-                              data-ouia-component-id="OUIA-Generated-Button-secondary-1"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
                               onClick={[Function]}
-                              role={null}
-                              type="button"
+                              variant="secondary"
                             >
-                              Cancel
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-secondary"
+                                data-ouia-component-id="OUIA-Generated-Button-secondary-1"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="button"
+                              >
+                                Cancel
+                              </button>
+                            </ButtonBase>
                           </Button>
                         </footer>
                       </ModalBoxFooter>
@@ -2942,6 +2986,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                       >
                         <p
                           class=""
+                          data-ouia-component-id="OUIA-Generated-Text-8"
+                          data-ouia-component-type="PF4/Text"
+                          data-ouia-safe="true"
                           data-pf-content="true"
                         >
                           Edit your subscription settings to receive the correct level of cluster support.
@@ -3629,43 +3676,51 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <button
-                            aria-disabled={false}
+                          <ButtonBase
                             aria-label="Close"
-                            className="pf-c-button pf-m-plain"
-                            data-ouia-component-id="OUIA-Generated-Button-plain-8"
-                            data-ouia-component-type="PF4/Button"
-                            data-ouia-safe={true}
-                            disabled={false}
+                            className=""
+                            innerRef={null}
                             onClick={[Function]}
-                            role={null}
-                            type="button"
+                            variant="plain"
                           >
-                            <TimesIcon
-                              color="currentColor"
-                              noVerticalAlign={false}
-                              size="sm"
+                            <button
+                              aria-disabled={false}
+                              aria-label="Close"
+                              className="pf-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-8"
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              role={null}
+                              type="button"
                             >
-                              <svg
-                                aria-hidden={true}
-                                aria-labelledby={null}
-                                fill="currentColor"
-                                height="1em"
-                                role="img"
-                                style={
-                                  Object {
-                                    "verticalAlign": "-0.125em",
-                                  }
-                                }
-                                viewBox="0 0 352 512"
-                                width="1em"
+                              <TimesIcon
+                                color="currentColor"
+                                noVerticalAlign={false}
+                                size="sm"
                               >
-                                <path
-                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                />
-                              </svg>
-                            </TimesIcon>
-                          </button>
+                                <svg
+                                  aria-hidden={true}
+                                  aria-labelledby={null}
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  style={
+                                    Object {
+                                      "verticalAlign": "-0.125em",
+                                    }
+                                  }
+                                  viewBox="0 0 352 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  />
+                                </svg>
+                              </TimesIcon>
+                            </button>
+                          </ButtonBase>
                         </Button>
                       </ModalBoxCloseButton>
                       <ModalBoxHeader
@@ -3808,6 +3863,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                   >
                                     <p
                                       className=""
+                                      data-ouia-component-id="OUIA-Generated-Text-8"
+                                      data-ouia-component-type="PF4/Text"
+                                      data-ouia-safe={true}
                                       data-pf-content={true}
                                     >
                                       Edit your subscription settings to receive the correct level of cluster support.
@@ -5431,49 +5489,57 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                               onClick={[Function]}
                                               variant="control"
                                             >
-                                              <button
-                                                aria-disabled={true}
+                                              <ButtonBase
                                                 aria-label="decrement the number by 1"
-                                                className="pf-c-button pf-m-control pf-m-disabled"
-                                                data-ouia-component-id="OUIA-Generated-Button-control-15"
-                                                data-ouia-component-type="PF4/Button"
-                                                data-ouia-safe={true}
-                                                disabled={true}
+                                                innerRef={null}
+                                                isDisabled={true}
                                                 onClick={[Function]}
-                                                role={null}
-                                                tabIndex={null}
-                                                type="button"
+                                                variant="control"
                                               >
-                                                <span
-                                                  className="pf-c-number-input__icon"
+                                                <button
+                                                  aria-disabled={true}
+                                                  aria-label="decrement the number by 1"
+                                                  className="pf-c-button pf-m-control pf-m-disabled"
+                                                  data-ouia-component-id="OUIA-Generated-Button-control-15"
+                                                  data-ouia-component-type="PF4/Button"
+                                                  data-ouia-safe={true}
+                                                  disabled={true}
+                                                  onClick={[Function]}
+                                                  role={null}
+                                                  tabIndex={null}
+                                                  type="button"
                                                 >
-                                                  <MinusIcon
-                                                    aria-hidden="true"
-                                                    color="currentColor"
-                                                    noVerticalAlign={false}
-                                                    size="sm"
+                                                  <span
+                                                    className="pf-c-number-input__icon"
                                                   >
-                                                    <svg
+                                                    <MinusIcon
                                                       aria-hidden="true"
-                                                      aria-labelledby={null}
-                                                      fill="currentColor"
-                                                      height="1em"
-                                                      role="img"
-                                                      style={
-                                                        Object {
-                                                          "verticalAlign": "-0.125em",
-                                                        }
-                                                      }
-                                                      viewBox="0 0 448 512"
-                                                      width="1em"
+                                                      color="currentColor"
+                                                      noVerticalAlign={false}
+                                                      size="sm"
                                                     >
-                                                      <path
-                                                        d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                                                      />
-                                                    </svg>
-                                                  </MinusIcon>
-                                                </span>
-                                              </button>
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        aria-labelledby={null}
+                                                        fill="currentColor"
+                                                        height="1em"
+                                                        role="img"
+                                                        style={
+                                                          Object {
+                                                            "verticalAlign": "-0.125em",
+                                                          }
+                                                        }
+                                                        viewBox="0 0 448 512"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                                        />
+                                                      </svg>
+                                                    </MinusIcon>
+                                                  </span>
+                                                </button>
+                                              </ButtonBase>
                                             </Button>
                                             <input
                                               aria-label="Number of compute cores (excluding control plane nodes)"
@@ -5490,49 +5556,57 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                               onClick={[Function]}
                                               variant="control"
                                             >
-                                              <button
-                                                aria-disabled={true}
+                                              <ButtonBase
                                                 aria-label="increment the number by 1"
-                                                className="pf-c-button pf-m-control pf-m-disabled"
-                                                data-ouia-component-id="OUIA-Generated-Button-control-16"
-                                                data-ouia-component-type="PF4/Button"
-                                                data-ouia-safe={true}
-                                                disabled={true}
+                                                innerRef={null}
+                                                isDisabled={true}
                                                 onClick={[Function]}
-                                                role={null}
-                                                tabIndex={null}
-                                                type="button"
+                                                variant="control"
                                               >
-                                                <span
-                                                  className="pf-c-number-input__icon"
+                                                <button
+                                                  aria-disabled={true}
+                                                  aria-label="increment the number by 1"
+                                                  className="pf-c-button pf-m-control pf-m-disabled"
+                                                  data-ouia-component-id="OUIA-Generated-Button-control-16"
+                                                  data-ouia-component-type="PF4/Button"
+                                                  data-ouia-safe={true}
+                                                  disabled={true}
+                                                  onClick={[Function]}
+                                                  role={null}
+                                                  tabIndex={null}
+                                                  type="button"
                                                 >
-                                                  <PlusIcon
-                                                    aria-hidden="true"
-                                                    color="currentColor"
-                                                    noVerticalAlign={false}
-                                                    size="sm"
+                                                  <span
+                                                    className="pf-c-number-input__icon"
                                                   >
-                                                    <svg
+                                                    <PlusIcon
                                                       aria-hidden="true"
-                                                      aria-labelledby={null}
-                                                      fill="currentColor"
-                                                      height="1em"
-                                                      role="img"
-                                                      style={
-                                                        Object {
-                                                          "verticalAlign": "-0.125em",
-                                                        }
-                                                      }
-                                                      viewBox="0 0 448 512"
-                                                      width="1em"
+                                                      color="currentColor"
+                                                      noVerticalAlign={false}
+                                                      size="sm"
                                                     >
-                                                      <path
-                                                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                                                      />
-                                                    </svg>
-                                                  </PlusIcon>
-                                                </span>
-                                              </button>
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        aria-labelledby={null}
+                                                        fill="currentColor"
+                                                        height="1em"
+                                                        role="img"
+                                                        style={
+                                                          Object {
+                                                            "verticalAlign": "-0.125em",
+                                                          }
+                                                        }
+                                                        viewBox="0 0 448 512"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                                        />
+                                                      </svg>
+                                                    </PlusIcon>
+                                                  </span>
+                                                </button>
+                                              </ButtonBase>
                                             </Button>
                                           </div>
                                         </div>
@@ -5563,40 +5637,54 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                             type="submit"
                             variant="primary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-primary"
-                              data-ouia-component-id="OUIA-Generated-Button-primary-8"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
+                              isDisabled={false}
                               onClick={[Function]}
-                              role={null}
                               type="submit"
+                              variant="primary"
                             >
-                              Save
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-primary"
+                                data-ouia-component-id="OUIA-Generated-Button-primary-8"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="submit"
+                              >
+                                Save
+                              </button>
+                            </ButtonBase>
                           </Button>
                           <Button
                             key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-secondary"
-                              data-ouia-component-id="OUIA-Generated-Button-secondary-8"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
                               onClick={[Function]}
-                              role={null}
-                              type="button"
+                              variant="secondary"
                             >
-                              Cancel
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-secondary"
+                                data-ouia-component-id="OUIA-Generated-Button-secondary-8"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="button"
+                              >
+                                Cancel
+                              </button>
+                            </ButtonBase>
                           </Button>
                         </footer>
                       </ModalBoxFooter>
@@ -5770,6 +5858,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                       >
                         <p
                           class=""
+                          data-ouia-component-id="OUIA-Generated-Text-5"
+                          data-ouia-component-type="PF4/Text"
+                          data-ouia-safe="true"
                           data-pf-content="true"
                         >
                           Edit your subscription settings to receive the correct level of cluster support.
@@ -6560,43 +6651,51 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <button
-                            aria-disabled={false}
+                          <ButtonBase
                             aria-label="Close"
-                            className="pf-c-button pf-m-plain"
-                            data-ouia-component-id="OUIA-Generated-Button-plain-5"
-                            data-ouia-component-type="PF4/Button"
-                            data-ouia-safe={true}
-                            disabled={false}
+                            className=""
+                            innerRef={null}
                             onClick={[Function]}
-                            role={null}
-                            type="button"
+                            variant="plain"
                           >
-                            <TimesIcon
-                              color="currentColor"
-                              noVerticalAlign={false}
-                              size="sm"
+                            <button
+                              aria-disabled={false}
+                              aria-label="Close"
+                              className="pf-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-5"
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              role={null}
+                              type="button"
                             >
-                              <svg
-                                aria-hidden={true}
-                                aria-labelledby={null}
-                                fill="currentColor"
-                                height="1em"
-                                role="img"
-                                style={
-                                  Object {
-                                    "verticalAlign": "-0.125em",
-                                  }
-                                }
-                                viewBox="0 0 352 512"
-                                width="1em"
+                              <TimesIcon
+                                color="currentColor"
+                                noVerticalAlign={false}
+                                size="sm"
                               >
-                                <path
-                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                />
-                              </svg>
-                            </TimesIcon>
-                          </button>
+                                <svg
+                                  aria-hidden={true}
+                                  aria-labelledby={null}
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  style={
+                                    Object {
+                                      "verticalAlign": "-0.125em",
+                                    }
+                                  }
+                                  viewBox="0 0 352 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  />
+                                </svg>
+                              </TimesIcon>
+                            </button>
+                          </ButtonBase>
                         </Button>
                       </ModalBoxCloseButton>
                       <ModalBoxHeader
@@ -6659,6 +6758,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                   >
                                     <p
                                       className=""
+                                      data-ouia-component-id="OUIA-Generated-Text-5"
+                                      data-ouia-component-type="PF4/Text"
+                                      data-ouia-safe={true}
                                       data-pf-content={true}
                                     >
                                       Edit your subscription settings to receive the correct level of cluster support.
@@ -8461,49 +8563,57 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                               onClick={[Function]}
                                               variant="control"
                                             >
-                                              <button
-                                                aria-disabled={true}
+                                              <ButtonBase
                                                 aria-label="decrement the number by 1"
-                                                className="pf-c-button pf-m-control pf-m-disabled"
-                                                data-ouia-component-id="OUIA-Generated-Button-control-9"
-                                                data-ouia-component-type="PF4/Button"
-                                                data-ouia-safe={true}
-                                                disabled={true}
+                                                innerRef={null}
+                                                isDisabled={true}
                                                 onClick={[Function]}
-                                                role={null}
-                                                tabIndex={null}
-                                                type="button"
+                                                variant="control"
                                               >
-                                                <span
-                                                  className="pf-c-number-input__icon"
+                                                <button
+                                                  aria-disabled={true}
+                                                  aria-label="decrement the number by 1"
+                                                  className="pf-c-button pf-m-control pf-m-disabled"
+                                                  data-ouia-component-id="OUIA-Generated-Button-control-9"
+                                                  data-ouia-component-type="PF4/Button"
+                                                  data-ouia-safe={true}
+                                                  disabled={true}
+                                                  onClick={[Function]}
+                                                  role={null}
+                                                  tabIndex={null}
+                                                  type="button"
                                                 >
-                                                  <MinusIcon
-                                                    aria-hidden="true"
-                                                    color="currentColor"
-                                                    noVerticalAlign={false}
-                                                    size="sm"
+                                                  <span
+                                                    className="pf-c-number-input__icon"
                                                   >
-                                                    <svg
+                                                    <MinusIcon
                                                       aria-hidden="true"
-                                                      aria-labelledby={null}
-                                                      fill="currentColor"
-                                                      height="1em"
-                                                      role="img"
-                                                      style={
-                                                        Object {
-                                                          "verticalAlign": "-0.125em",
-                                                        }
-                                                      }
-                                                      viewBox="0 0 448 512"
-                                                      width="1em"
+                                                      color="currentColor"
+                                                      noVerticalAlign={false}
+                                                      size="sm"
                                                     >
-                                                      <path
-                                                        d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                                                      />
-                                                    </svg>
-                                                  </MinusIcon>
-                                                </span>
-                                              </button>
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        aria-labelledby={null}
+                                                        fill="currentColor"
+                                                        height="1em"
+                                                        role="img"
+                                                        style={
+                                                          Object {
+                                                            "verticalAlign": "-0.125em",
+                                                          }
+                                                        }
+                                                        viewBox="0 0 448 512"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                                        />
+                                                      </svg>
+                                                    </MinusIcon>
+                                                  </span>
+                                                </button>
+                                              </ButtonBase>
                                             </Button>
                                             <input
                                               aria-label="Number of compute cores (excluding control plane nodes)"
@@ -8520,49 +8630,57 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                               onClick={[Function]}
                                               variant="control"
                                             >
-                                              <button
-                                                aria-disabled={true}
+                                              <ButtonBase
                                                 aria-label="increment the number by 1"
-                                                className="pf-c-button pf-m-control pf-m-disabled"
-                                                data-ouia-component-id="OUIA-Generated-Button-control-10"
-                                                data-ouia-component-type="PF4/Button"
-                                                data-ouia-safe={true}
-                                                disabled={true}
+                                                innerRef={null}
+                                                isDisabled={true}
                                                 onClick={[Function]}
-                                                role={null}
-                                                tabIndex={null}
-                                                type="button"
+                                                variant="control"
                                               >
-                                                <span
-                                                  className="pf-c-number-input__icon"
+                                                <button
+                                                  aria-disabled={true}
+                                                  aria-label="increment the number by 1"
+                                                  className="pf-c-button pf-m-control pf-m-disabled"
+                                                  data-ouia-component-id="OUIA-Generated-Button-control-10"
+                                                  data-ouia-component-type="PF4/Button"
+                                                  data-ouia-safe={true}
+                                                  disabled={true}
+                                                  onClick={[Function]}
+                                                  role={null}
+                                                  tabIndex={null}
+                                                  type="button"
                                                 >
-                                                  <PlusIcon
-                                                    aria-hidden="true"
-                                                    color="currentColor"
-                                                    noVerticalAlign={false}
-                                                    size="sm"
+                                                  <span
+                                                    className="pf-c-number-input__icon"
                                                   >
-                                                    <svg
+                                                    <PlusIcon
                                                       aria-hidden="true"
-                                                      aria-labelledby={null}
-                                                      fill="currentColor"
-                                                      height="1em"
-                                                      role="img"
-                                                      style={
-                                                        Object {
-                                                          "verticalAlign": "-0.125em",
-                                                        }
-                                                      }
-                                                      viewBox="0 0 448 512"
-                                                      width="1em"
+                                                      color="currentColor"
+                                                      noVerticalAlign={false}
+                                                      size="sm"
                                                     >
-                                                      <path
-                                                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                                                      />
-                                                    </svg>
-                                                  </PlusIcon>
-                                                </span>
-                                              </button>
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        aria-labelledby={null}
+                                                        fill="currentColor"
+                                                        height="1em"
+                                                        role="img"
+                                                        style={
+                                                          Object {
+                                                            "verticalAlign": "-0.125em",
+                                                          }
+                                                        }
+                                                        viewBox="0 0 448 512"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                                        />
+                                                      </svg>
+                                                    </PlusIcon>
+                                                  </span>
+                                                </button>
+                                              </ButtonBase>
                                             </Button>
                                           </div>
                                         </div>
@@ -8593,41 +8711,55 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                             type="submit"
                             variant="primary"
                           >
-                            <button
-                              aria-disabled={true}
-                              aria-label={null}
-                              className="pf-c-button pf-m-primary pf-m-disabled"
-                              data-ouia-component-id="OUIA-Generated-Button-primary-5"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={true}
+                            <ButtonBase
+                              innerRef={null}
+                              isDisabled={true}
                               onClick={[Function]}
-                              role={null}
-                              tabIndex={null}
                               type="submit"
+                              variant="primary"
                             >
-                              Save
-                            </button>
+                              <button
+                                aria-disabled={true}
+                                aria-label={null}
+                                className="pf-c-button pf-m-primary pf-m-disabled"
+                                data-ouia-component-id="OUIA-Generated-Button-primary-5"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={true}
+                                onClick={[Function]}
+                                role={null}
+                                tabIndex={null}
+                                type="submit"
+                              >
+                                Save
+                              </button>
+                            </ButtonBase>
                           </Button>
                           <Button
                             key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-secondary"
-                              data-ouia-component-id="OUIA-Generated-Button-secondary-5"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
                               onClick={[Function]}
-                              role={null}
-                              type="button"
+                              variant="secondary"
                             >
-                              Cancel
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-secondary"
+                                data-ouia-component-id="OUIA-Generated-Button-secondary-5"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="button"
+                              >
+                                Cancel
+                              </button>
+                            </ButtonBase>
                           </Button>
                         </footer>
                       </ModalBoxFooter>
@@ -8797,6 +8929,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                       >
                         <p
                           class=""
+                          data-ouia-component-id="OUIA-Generated-Text-2"
+                          data-ouia-component-type="PF4/Text"
+                          data-ouia-safe="true"
                           data-pf-content="true"
                         >
                           Edit your subscription settings to receive the correct level of cluster support.
@@ -9513,43 +9648,51 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <button
-                            aria-disabled={false}
+                          <ButtonBase
                             aria-label="Close"
-                            className="pf-c-button pf-m-plain"
-                            data-ouia-component-id="OUIA-Generated-Button-plain-2"
-                            data-ouia-component-type="PF4/Button"
-                            data-ouia-safe={true}
-                            disabled={false}
+                            className=""
+                            innerRef={null}
                             onClick={[Function]}
-                            role={null}
-                            type="button"
+                            variant="plain"
                           >
-                            <TimesIcon
-                              color="currentColor"
-                              noVerticalAlign={false}
-                              size="sm"
+                            <button
+                              aria-disabled={false}
+                              aria-label="Close"
+                              className="pf-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-2"
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              role={null}
+                              type="button"
                             >
-                              <svg
-                                aria-hidden={true}
-                                aria-labelledby={null}
-                                fill="currentColor"
-                                height="1em"
-                                role="img"
-                                style={
-                                  Object {
-                                    "verticalAlign": "-0.125em",
-                                  }
-                                }
-                                viewBox="0 0 352 512"
-                                width="1em"
+                              <TimesIcon
+                                color="currentColor"
+                                noVerticalAlign={false}
+                                size="sm"
                               >
-                                <path
-                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                />
-                              </svg>
-                            </TimesIcon>
-                          </button>
+                                <svg
+                                  aria-hidden={true}
+                                  aria-labelledby={null}
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  style={
+                                    Object {
+                                      "verticalAlign": "-0.125em",
+                                    }
+                                  }
+                                  viewBox="0 0 352 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  />
+                                </svg>
+                              </TimesIcon>
+                            </button>
+                          </ButtonBase>
                         </Button>
                       </ModalBoxCloseButton>
                       <ModalBoxHeader
@@ -9612,6 +9755,9 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                   >
                                     <p
                                       className=""
+                                      data-ouia-component-id="OUIA-Generated-Text-2"
+                                      data-ouia-component-type="PF4/Text"
+                                      data-ouia-safe={true}
                                       data-pf-content={true}
                                     >
                                       Edit your subscription settings to receive the correct level of cluster support.
@@ -11276,49 +11422,57 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                               onClick={[Function]}
                                               variant="control"
                                             >
-                                              <button
-                                                aria-disabled={true}
+                                              <ButtonBase
                                                 aria-label="decrement the number by 1"
-                                                className="pf-c-button pf-m-control pf-m-disabled"
-                                                data-ouia-component-id="OUIA-Generated-Button-control-3"
-                                                data-ouia-component-type="PF4/Button"
-                                                data-ouia-safe={true}
-                                                disabled={true}
+                                                innerRef={null}
+                                                isDisabled={true}
                                                 onClick={[Function]}
-                                                role={null}
-                                                tabIndex={null}
-                                                type="button"
+                                                variant="control"
                                               >
-                                                <span
-                                                  className="pf-c-number-input__icon"
+                                                <button
+                                                  aria-disabled={true}
+                                                  aria-label="decrement the number by 1"
+                                                  className="pf-c-button pf-m-control pf-m-disabled"
+                                                  data-ouia-component-id="OUIA-Generated-Button-control-3"
+                                                  data-ouia-component-type="PF4/Button"
+                                                  data-ouia-safe={true}
+                                                  disabled={true}
+                                                  onClick={[Function]}
+                                                  role={null}
+                                                  tabIndex={null}
+                                                  type="button"
                                                 >
-                                                  <MinusIcon
-                                                    aria-hidden="true"
-                                                    color="currentColor"
-                                                    noVerticalAlign={false}
-                                                    size="sm"
+                                                  <span
+                                                    className="pf-c-number-input__icon"
                                                   >
-                                                    <svg
+                                                    <MinusIcon
                                                       aria-hidden="true"
-                                                      aria-labelledby={null}
-                                                      fill="currentColor"
-                                                      height="1em"
-                                                      role="img"
-                                                      style={
-                                                        Object {
-                                                          "verticalAlign": "-0.125em",
-                                                        }
-                                                      }
-                                                      viewBox="0 0 448 512"
-                                                      width="1em"
+                                                      color="currentColor"
+                                                      noVerticalAlign={false}
+                                                      size="sm"
                                                     >
-                                                      <path
-                                                        d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                                                      />
-                                                    </svg>
-                                                  </MinusIcon>
-                                                </span>
-                                              </button>
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        aria-labelledby={null}
+                                                        fill="currentColor"
+                                                        height="1em"
+                                                        role="img"
+                                                        style={
+                                                          Object {
+                                                            "verticalAlign": "-0.125em",
+                                                          }
+                                                        }
+                                                        viewBox="0 0 448 512"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                                        />
+                                                      </svg>
+                                                    </MinusIcon>
+                                                  </span>
+                                                </button>
+                                              </ButtonBase>
                                             </Button>
                                             <input
                                               aria-label="Number of sockets"
@@ -11335,49 +11489,57 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                               onClick={[Function]}
                                               variant="control"
                                             >
-                                              <button
-                                                aria-disabled={true}
+                                              <ButtonBase
                                                 aria-label="increment the number by 1"
-                                                className="pf-c-button pf-m-control pf-m-disabled"
-                                                data-ouia-component-id="OUIA-Generated-Button-control-4"
-                                                data-ouia-component-type="PF4/Button"
-                                                data-ouia-safe={true}
-                                                disabled={true}
+                                                innerRef={null}
+                                                isDisabled={true}
                                                 onClick={[Function]}
-                                                role={null}
-                                                tabIndex={null}
-                                                type="button"
+                                                variant="control"
                                               >
-                                                <span
-                                                  className="pf-c-number-input__icon"
+                                                <button
+                                                  aria-disabled={true}
+                                                  aria-label="increment the number by 1"
+                                                  className="pf-c-button pf-m-control pf-m-disabled"
+                                                  data-ouia-component-id="OUIA-Generated-Button-control-4"
+                                                  data-ouia-component-type="PF4/Button"
+                                                  data-ouia-safe={true}
+                                                  disabled={true}
+                                                  onClick={[Function]}
+                                                  role={null}
+                                                  tabIndex={null}
+                                                  type="button"
                                                 >
-                                                  <PlusIcon
-                                                    aria-hidden="true"
-                                                    color="currentColor"
-                                                    noVerticalAlign={false}
-                                                    size="sm"
+                                                  <span
+                                                    className="pf-c-number-input__icon"
                                                   >
-                                                    <svg
+                                                    <PlusIcon
                                                       aria-hidden="true"
-                                                      aria-labelledby={null}
-                                                      fill="currentColor"
-                                                      height="1em"
-                                                      role="img"
-                                                      style={
-                                                        Object {
-                                                          "verticalAlign": "-0.125em",
-                                                        }
-                                                      }
-                                                      viewBox="0 0 448 512"
-                                                      width="1em"
+                                                      color="currentColor"
+                                                      noVerticalAlign={false}
+                                                      size="sm"
                                                     >
-                                                      <path
-                                                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                                                      />
-                                                    </svg>
-                                                  </PlusIcon>
-                                                </span>
-                                              </button>
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        aria-labelledby={null}
+                                                        fill="currentColor"
+                                                        height="1em"
+                                                        role="img"
+                                                        style={
+                                                          Object {
+                                                            "verticalAlign": "-0.125em",
+                                                          }
+                                                        }
+                                                        viewBox="0 0 448 512"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                                                        />
+                                                      </svg>
+                                                    </PlusIcon>
+                                                  </span>
+                                                </button>
+                                              </ButtonBase>
                                             </Button>
                                           </div>
                                         </div>
@@ -11408,41 +11570,55 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                             type="submit"
                             variant="primary"
                           >
-                            <button
-                              aria-disabled={true}
-                              aria-label={null}
-                              className="pf-c-button pf-m-primary pf-m-disabled"
-                              data-ouia-component-id="OUIA-Generated-Button-primary-2"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={true}
+                            <ButtonBase
+                              innerRef={null}
+                              isDisabled={true}
                               onClick={[Function]}
-                              role={null}
-                              tabIndex={null}
                               type="submit"
+                              variant="primary"
                             >
-                              Save
-                            </button>
+                              <button
+                                aria-disabled={true}
+                                aria-label={null}
+                                className="pf-c-button pf-m-primary pf-m-disabled"
+                                data-ouia-component-id="OUIA-Generated-Button-primary-2"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={true}
+                                onClick={[Function]}
+                                role={null}
+                                tabIndex={null}
+                                type="submit"
+                              >
+                                Save
+                              </button>
+                            </ButtonBase>
                           </Button>
                           <Button
                             key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-secondary"
-                              data-ouia-component-id="OUIA-Generated-Button-secondary-2"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
                               onClick={[Function]}
-                              role={null}
-                              type="button"
+                              variant="secondary"
                             >
-                              Cancel
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-secondary"
+                                data-ouia-component-id="OUIA-Generated-Button-secondary-2"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="button"
+                              >
+                                Cancel
+                              </button>
+                            </ButtonBase>
                           </Button>
                         </footer>
                       </ModalBoxFooter>

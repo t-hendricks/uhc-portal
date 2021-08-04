@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "r5.12xlarge - Memory optimized",
+  "category": "memory_optimized",
+  "size": "xxlarge",
+  "id": "r5.12xlarge",
+  "href": "/api/clusters_mgmt/v1/machine_types/r5.12xlarge",
+  "memory": {
+    "value": 412316860416,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 48,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "aws",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
+  },
+  "ccs_only": true,
+  "generic_name": "highmem-48"
+}

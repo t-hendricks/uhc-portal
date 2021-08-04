@@ -1,3 +1,4 @@
+import get from 'lodash/get';
 import Page from './page';
 
 /**
@@ -8,12 +9,18 @@ class ClusterList extends Page {
     return $("//a[contains(@href, '/openshift/create')]/button[text()='Create cluster'] | //a/span[text()='Create an OpenShift cluster']");
   }
 
+  emptyStatexPath = '//div[contains(@class, "cluster-list-empty-state")]';
+
+  get emptyState() {
+    return $(this.emptyStatexPath);
+  }
+
   get emptyStateRegisterClusterLink() {
-    return $("//a[contains(@href, '/openshift/register')]/button[text()='Register cluster']");
+    return $(`${this.emptyStatexPath}//a[contains(@href, '/openshift/register')]/button[text()='Register cluster']`);
   }
 
   get registerClusterBtn() {
-    return $("//a[contains(@href, '/openshift/register')]/button[text()='Register disconnected cluster']");
+    return $("//a[contains(@href, '/openshift/register')]/button[text()='Register cluster']");
   }
 
   get extraActionsKebab() {
@@ -22,6 +29,20 @@ class ClusterList extends Page {
 
   get registerClusterItem() {
     return $("button[data-testid='register-cluster-item']");
+  }
+
+  get clusterSearch() { return $('input.cluster-list-filter'); }
+
+  async searchResult(clusterName) {
+    const result = await $(`//td[@data-label="Name"]//a[text()="${clusterName}"]`);
+    if (get(result, 'error.error') === 'no such element') {
+      return null;
+    }
+    return result;
+  }
+
+  get noSearchResults() {
+    return $('//p[contains(text(), "No results match the filter criteria.")]');
   }
 
   async isClusterListPage() {

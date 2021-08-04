@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DeveloperPreviewSection with default parameters renders correctly 1`] = `
+<Fragment>
+  <span
+    className="pf-c-label pf-m-compact dev-preview-label"
+  >
+    <CodeIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+     
+    Developer Preview
+  </span>
+   
+  <Link
+    to="/install/pre-release"
+  >
+    Download
+     
+    pre-release builds
+  </Link>
+</Fragment>
+`;
+
+exports[`DeveloperPreviewSection with devPreviewLink renders correctly 1`] = `
+<Fragment>
+  <span
+    className="pf-c-label pf-m-compact dev-preview-label"
+  >
+    <CodeIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+     
+    Developer Preview
+  </span>
+   
+  <Link
+    to="/install/ibmz/pre-release"
+  >
+    Download
+     
+    pre-release builds
+  </Link>
+</Fragment>
+`;

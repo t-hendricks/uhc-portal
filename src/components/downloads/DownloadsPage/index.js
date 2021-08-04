@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
 import DownloadsPage from './DownloadsPage';
-import { tollboothActions } from '../../../redux/actions';
+import { tollboothActions, githubActions } from '../../../redux/actions';
 
 const mapStateToProps = state => ({
   token: state.tollbooth.token || {},
+  githubReleases: state.githubReleases,
 });
 
-const mapDispatchToProps = () => dispatch => ({
-  getAuthToken: () => dispatch(tollboothActions.createAuthToken()),
-});
+const mapDispatchToProps = {
+  getAuthToken: tollboothActions.createAuthToken,
+  getLatestRelease: githubActions.getLatestRelease,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(DownloadsPage);

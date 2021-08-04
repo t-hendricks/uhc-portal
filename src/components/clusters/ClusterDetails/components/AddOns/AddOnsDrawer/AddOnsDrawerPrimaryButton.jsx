@@ -5,7 +5,6 @@ import './AddOnsDrawer.scss';
 
 import {
   Button,
-  Tooltip,
 } from '@patternfly/react-core';
 
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
@@ -14,6 +13,7 @@ import clusterStates, { isHibernating } from '../../../../common/clusterStates';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
 
 import AddOnsConstants from '../AddOnsConstants';
+import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 
 function AddOnsPrimaryButton(props) {
   const {
@@ -44,12 +44,23 @@ function AddOnsPrimaryButton(props) {
     }
   };
 
+  const canNotEditReason = !cluster.canEdit && (
+    'You do not have permission to install add ons. Only cluster owners and organization administrators can install add ons.'
+  );
+  const hibernatingReason = isHibernating(cluster.state) && (
+    'This operation is not available while cluster is hibernating'
+  );
+  // a superset of hibernatingReason.
+  const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
+  const requirementsReason = !activeCardRequirementsFulfilled && 'Prerequisites not met';
+  const quotaReason = !hasQuota && noQuotaTooltip;
+
   // open uninstall modal
   const uninstallAddonAction = (
-    <Button
+    <ButtonWithTooltip
       ouiaId={`uninstall-addon-${activeCard?.id}`}
       variant="link"
-      isDisabled={!cluster.canEdit}
+      disableReason={hibernatingReason || notReadyReason || canNotEditReason}
       onClick={() => openModal('add-ons-delete-modal', {
         addOnName: activeCard?.name,
         addOnID: activeCard?.id,
@@ -57,51 +68,23 @@ function AddOnsPrimaryButton(props) {
       })}
     >
       Uninstall
-    </Button>
+    </ButtonWithTooltip>
   );
 
   // if addon not installed show install button
   if (!installedAddOn) {
-    // if no quota, no permissions or cluster hibernating disable button with tooltip
-    const clusterHibernating = isHibernating(cluster.state);
-    if (!hasQuota || !cluster.canEdit || clusterHibernating) {
-      let tooltipContent;
-      if (clusterHibernating) {
-        tooltipContent = 'This operation is not available while cluster is hibernating';
-      } else if (!cluster.canEdit) {
-        tooltipContent = 'You do not have permission to install add ons. Only cluster owners and organization administrators can install add ons.';
-      } else {
-        tooltipContent = noQuotaTooltip;
-      }
-      return (
-        <Tooltip
-          content={tooltipContent}
-        >
-          <div className="pf-u-display-inline-block">
-            <Button isDisabled ouiaId={`install-addon-${activeCard?.id}`}>
-              Install
-            </Button>
-          </div>
-        </Tooltip>
-      );
-    }
-
-    // render install button
+    const pendingReason = addClusterAddOnResponse.pending && 'installing...';
     return (
-      <Button
+      <ButtonWithTooltip
+        disableReason={hibernatingReason || notReadyReason || requirementsReason
+          || canNotEditReason || quotaReason || pendingReason}
+        ouiaId={`install-addon-${activeCard?.id}`}
         variant="primary"
         aria-label="Install"
-        isDisabled={
-                    addClusterAddOnResponse.pending
-                    || cluster.state !== clusterStates.READY
-                    || !cluster.canEdit
-                    || !activeCardRequirementsFulfilled
-                  }
-        ouiaId={`install-addon-${activeCard?.id}`}
         onClick={installAddOnAction}
       >
         Install
-      </Button>
+      </ButtonWithTooltip>
     );
   }
 

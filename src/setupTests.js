@@ -21,6 +21,7 @@ const testsExcludedFromWarningFail = [
 // Warnings are printed with console.error
 // Fail tests with proptypes warnings if not in the excluded list
 const { error } = console;
+// eslint-disable-next-line no-console
 console.error = (...args) => {
   const { testPath } = expect.getState();
   if (testsExcludedFromWarningFail.some(v => testPath.includes(v))) {

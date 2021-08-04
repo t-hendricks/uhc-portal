@@ -19,13 +19,13 @@ exports[`<AddOnsPrimaryButton /> should render 1`] = `
     />
   </Button>
    
-  <Button
-    isDisabled={false}
+  <ButtonWithTooltip
+    disableReason={false}
     onClick={[Function]}
     ouiaId="uninstall-addon-managed-integration"
     variant="link"
   >
     Uninstall
-  </Button>
+  </ButtonWithTooltip>
 </Fragment>
 `;

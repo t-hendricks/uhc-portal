@@ -132,6 +132,9 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                     >
                       <p
                         class=""
+                        data-ouia-component-id="OUIA-Generated-Text-13"
+                        data-ouia-component-type="PF4/Text"
+                        data-ouia-safe="true"
                         data-pf-content="true"
                       >
                         Transferring cluster ownership will allow another individual to manage this cluster. The steps for transferring cluster ownership are:
@@ -177,12 +180,18 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                       </ol>
                       <p
                         class=""
+                        data-ouia-component-id="OUIA-Generated-Text-14"
+                        data-ouia-component-type="PF4/Text"
+                        data-ouia-safe="true"
                         data-pf-content="true"
                       >
                         The transfer is complete when OpenShift Cluster Manager receives telemetry data from the cluster with the new pull secret.
                       </p>
                       <h4
                         class=""
+                        data-ouia-component-id="OUIA-Generated-Text-15"
+                        data-ouia-component-type="PF4/Text"
+                        data-ouia-safe="true"
                         data-pf-content="true"
                       >
                         If the transfer is not completed within 5 days, the procedure must be restarted.
@@ -320,43 +329,51 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <button
-                            aria-disabled={false}
+                          <ButtonBase
                             aria-label="Close"
-                            className="pf-c-button pf-m-plain"
-                            data-ouia-component-id="OUIA-Generated-Button-plain-5"
-                            data-ouia-component-type="PF4/Button"
-                            data-ouia-safe={true}
-                            disabled={false}
+                            className=""
+                            innerRef={null}
                             onClick={[Function]}
-                            role={null}
-                            type="button"
+                            variant="plain"
                           >
-                            <TimesIcon
-                              color="currentColor"
-                              noVerticalAlign={false}
-                              size="sm"
+                            <button
+                              aria-disabled={false}
+                              aria-label="Close"
+                              className="pf-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-5"
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              role={null}
+                              type="button"
                             >
-                              <svg
-                                aria-hidden={true}
-                                aria-labelledby={null}
-                                fill="currentColor"
-                                height="1em"
-                                role="img"
-                                style={
-                                  Object {
-                                    "verticalAlign": "-0.125em",
-                                  }
-                                }
-                                viewBox="0 0 352 512"
-                                width="1em"
+                              <TimesIcon
+                                color="currentColor"
+                                noVerticalAlign={false}
+                                size="sm"
                               >
-                                <path
-                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                />
-                              </svg>
-                            </TimesIcon>
-                          </button>
+                                <svg
+                                  aria-hidden={true}
+                                  aria-labelledby={null}
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  style={
+                                    Object {
+                                      "verticalAlign": "-0.125em",
+                                    }
+                                  }
+                                  viewBox="0 0 352 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  />
+                                </svg>
+                              </TimesIcon>
+                            </button>
+                          </ButtonBase>
                         </Button>
                       </ModalBoxCloseButton>
                       <ModalBoxHeader
@@ -400,6 +417,9 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                               >
                                 <p
                                   className=""
+                                  data-ouia-component-id="OUIA-Generated-Text-13"
+                                  data-ouia-component-type="PF4/Text"
+                                  data-ouia-safe={true}
                                   data-pf-content={true}
                                 >
                                   Transferring cluster ownership will allow another individual to manage this cluster. The steps for transferring cluster ownership are:
@@ -472,6 +492,9 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                               >
                                 <p
                                   className=""
+                                  data-ouia-component-id="OUIA-Generated-Text-14"
+                                  data-ouia-component-type="PF4/Text"
+                                  data-ouia-safe={true}
                                   data-pf-content={true}
                                 >
                                   The transfer is complete when OpenShift Cluster Manager receives telemetry data from the cluster with the new pull secret.
@@ -482,6 +505,9 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                               >
                                 <h4
                                   className=""
+                                  data-ouia-component-id="OUIA-Generated-Text-15"
+                                  data-ouia-component-type="PF4/Text"
+                                  data-ouia-safe={true}
                                   data-pf-content={true}
                                 >
                                   If the transfer is not completed within 5 days, the procedure must be restarted.
@@ -502,40 +528,54 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                             type="submit"
                             variant="primary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-primary"
-                              data-ouia-component-id="OUIA-Generated-Button-primary-5"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
+                              isDisabled={false}
                               onClick={[Function]}
-                              role={null}
                               type="submit"
+                              variant="primary"
                             >
-                              Initiate transfer
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-primary"
+                                data-ouia-component-id="OUIA-Generated-Button-primary-5"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="submit"
+                              >
+                                Initiate transfer
+                              </button>
+                            </ButtonBase>
                           </Button>
                           <Button
                             key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-secondary"
-                              data-ouia-component-id="OUIA-Generated-Button-secondary-5"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
                               onClick={[Function]}
-                              role={null}
-                              type="button"
+                              variant="secondary"
                             >
-                              Cancel
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-secondary"
+                                data-ouia-component-id="OUIA-Generated-Button-secondary-5"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="button"
+                              >
+                                Cancel
+                              </button>
+                            </ButtonBase>
                           </Button>
                         </footer>
                       </ModalBoxFooter>
@@ -691,6 +731,9 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                     >
                       <p
                         class=""
+                        data-ouia-component-id="OUIA-Generated-Text-1"
+                        data-ouia-component-type="PF4/Text"
+                        data-ouia-safe="true"
                         data-pf-content="true"
                       >
                         Transferring cluster ownership will allow another individual to manage this cluster. The steps for transferring cluster ownership are:
@@ -736,12 +779,18 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                       </ol>
                       <p
                         class=""
+                        data-ouia-component-id="OUIA-Generated-Text-2"
+                        data-ouia-component-type="PF4/Text"
+                        data-ouia-safe="true"
                         data-pf-content="true"
                       >
                         The transfer is complete when OpenShift Cluster Manager receives telemetry data from the cluster with the new pull secret.
                       </p>
                       <h4
                         class=""
+                        data-ouia-component-id="OUIA-Generated-Text-3"
+                        data-ouia-component-type="PF4/Text"
+                        data-ouia-safe="true"
                         data-pf-content="true"
                       >
                         If the transfer is not completed within 5 days, the procedure must be restarted.
@@ -879,43 +928,51 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <button
-                            aria-disabled={false}
+                          <ButtonBase
                             aria-label="Close"
-                            className="pf-c-button pf-m-plain"
-                            data-ouia-component-id="OUIA-Generated-Button-plain-1"
-                            data-ouia-component-type="PF4/Button"
-                            data-ouia-safe={true}
-                            disabled={false}
+                            className=""
+                            innerRef={null}
                             onClick={[Function]}
-                            role={null}
-                            type="button"
+                            variant="plain"
                           >
-                            <TimesIcon
-                              color="currentColor"
-                              noVerticalAlign={false}
-                              size="sm"
+                            <button
+                              aria-disabled={false}
+                              aria-label="Close"
+                              className="pf-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-1"
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              role={null}
+                              type="button"
                             >
-                              <svg
-                                aria-hidden={true}
-                                aria-labelledby={null}
-                                fill="currentColor"
-                                height="1em"
-                                role="img"
-                                style={
-                                  Object {
-                                    "verticalAlign": "-0.125em",
-                                  }
-                                }
-                                viewBox="0 0 352 512"
-                                width="1em"
+                              <TimesIcon
+                                color="currentColor"
+                                noVerticalAlign={false}
+                                size="sm"
                               >
-                                <path
-                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                />
-                              </svg>
-                            </TimesIcon>
-                          </button>
+                                <svg
+                                  aria-hidden={true}
+                                  aria-labelledby={null}
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  style={
+                                    Object {
+                                      "verticalAlign": "-0.125em",
+                                    }
+                                  }
+                                  viewBox="0 0 352 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  />
+                                </svg>
+                              </TimesIcon>
+                            </button>
+                          </ButtonBase>
                         </Button>
                       </ModalBoxCloseButton>
                       <ModalBoxHeader
@@ -959,6 +1016,9 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                               >
                                 <p
                                   className=""
+                                  data-ouia-component-id="OUIA-Generated-Text-1"
+                                  data-ouia-component-type="PF4/Text"
+                                  data-ouia-safe={true}
                                   data-pf-content={true}
                                 >
                                   Transferring cluster ownership will allow another individual to manage this cluster. The steps for transferring cluster ownership are:
@@ -1031,6 +1091,9 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                               >
                                 <p
                                   className=""
+                                  data-ouia-component-id="OUIA-Generated-Text-2"
+                                  data-ouia-component-type="PF4/Text"
+                                  data-ouia-safe={true}
                                   data-pf-content={true}
                                 >
                                   The transfer is complete when OpenShift Cluster Manager receives telemetry data from the cluster with the new pull secret.
@@ -1041,6 +1104,9 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                               >
                                 <h4
                                   className=""
+                                  data-ouia-component-id="OUIA-Generated-Text-3"
+                                  data-ouia-component-type="PF4/Text"
+                                  data-ouia-safe={true}
                                   data-pf-content={true}
                                 >
                                   If the transfer is not completed within 5 days, the procedure must be restarted.
@@ -1061,40 +1127,54 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                             type="submit"
                             variant="primary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-primary"
-                              data-ouia-component-id="OUIA-Generated-Button-primary-1"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
+                              isDisabled={false}
                               onClick={[Function]}
-                              role={null}
                               type="submit"
+                              variant="primary"
                             >
-                              Initiate transfer
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-primary"
+                                data-ouia-component-id="OUIA-Generated-Button-primary-1"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="submit"
+                              >
+                                Initiate transfer
+                              </button>
+                            </ButtonBase>
                           </Button>
                           <Button
                             key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-secondary"
-                              data-ouia-component-id="OUIA-Generated-Button-secondary-1"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
                               onClick={[Function]}
-                              role={null}
-                              type="button"
+                              variant="secondary"
                             >
-                              Cancel
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-secondary"
+                                data-ouia-component-id="OUIA-Generated-Button-secondary-1"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="button"
+                              >
+                                Cancel
+                              </button>
+                            </ButtonBase>
                           </Button>
                         </footer>
                       </ModalBoxFooter>
@@ -1250,6 +1330,9 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                     >
                       <p
                         class=""
+                        data-ouia-component-id="OUIA-Generated-Text-7"
+                        data-ouia-component-type="PF4/Text"
+                        data-ouia-safe="true"
                         data-pf-content="true"
                       >
                         Transferring cluster ownership will allow another individual to manage this cluster. The steps for transferring cluster ownership are:
@@ -1295,6 +1378,9 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                       </ol>
                       <h4
                         class=""
+                        data-ouia-component-id="OUIA-Generated-Text-9"
+                        data-ouia-component-type="PF4/Text"
+                        data-ouia-safe="true"
                         data-pf-content="true"
                       >
                         If the transfer is not completed within 5 days, the procedure must be restarted.
@@ -1432,43 +1518,51 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <button
-                            aria-disabled={false}
+                          <ButtonBase
                             aria-label="Close"
-                            className="pf-c-button pf-m-plain"
-                            data-ouia-component-id="OUIA-Generated-Button-plain-3"
-                            data-ouia-component-type="PF4/Button"
-                            data-ouia-safe={true}
-                            disabled={false}
+                            className=""
+                            innerRef={null}
                             onClick={[Function]}
-                            role={null}
-                            type="button"
+                            variant="plain"
                           >
-                            <TimesIcon
-                              color="currentColor"
-                              noVerticalAlign={false}
-                              size="sm"
+                            <button
+                              aria-disabled={false}
+                              aria-label="Close"
+                              className="pf-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-3"
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              role={null}
+                              type="button"
                             >
-                              <svg
-                                aria-hidden={true}
-                                aria-labelledby={null}
-                                fill="currentColor"
-                                height="1em"
-                                role="img"
-                                style={
-                                  Object {
-                                    "verticalAlign": "-0.125em",
-                                  }
-                                }
-                                viewBox="0 0 352 512"
-                                width="1em"
+                              <TimesIcon
+                                color="currentColor"
+                                noVerticalAlign={false}
+                                size="sm"
                               >
-                                <path
-                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                />
-                              </svg>
-                            </TimesIcon>
-                          </button>
+                                <svg
+                                  aria-hidden={true}
+                                  aria-labelledby={null}
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  style={
+                                    Object {
+                                      "verticalAlign": "-0.125em",
+                                    }
+                                  }
+                                  viewBox="0 0 352 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  />
+                                </svg>
+                              </TimesIcon>
+                            </button>
+                          </ButtonBase>
                         </Button>
                       </ModalBoxCloseButton>
                       <ModalBoxHeader
@@ -1512,6 +1606,9 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                               >
                                 <p
                                   className=""
+                                  data-ouia-component-id="OUIA-Generated-Text-7"
+                                  data-ouia-component-type="PF4/Text"
+                                  data-ouia-safe={true}
                                   data-pf-content={true}
                                 >
                                   Transferring cluster ownership will allow another individual to manage this cluster. The steps for transferring cluster ownership are:
@@ -1584,6 +1681,9 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                               >
                                 <h4
                                   className=""
+                                  data-ouia-component-id="OUIA-Generated-Text-9"
+                                  data-ouia-component-type="PF4/Text"
+                                  data-ouia-safe={true}
                                   data-pf-content={true}
                                 >
                                   If the transfer is not completed within 5 days, the procedure must be restarted.
@@ -1604,40 +1704,54 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                             type="submit"
                             variant="primary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-primary"
-                              data-ouia-component-id="OUIA-Generated-Button-primary-3"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
+                              isDisabled={false}
                               onClick={[Function]}
-                              role={null}
                               type="submit"
+                              variant="primary"
                             >
-                              Initiate transfer
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-primary"
+                                data-ouia-component-id="OUIA-Generated-Button-primary-3"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="submit"
+                              >
+                                Initiate transfer
+                              </button>
+                            </ButtonBase>
                           </Button>
                           <Button
                             key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-secondary"
-                              data-ouia-component-id="OUIA-Generated-Button-secondary-3"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
                               onClick={[Function]}
-                              role={null}
-                              type="button"
+                              variant="secondary"
                             >
-                              Cancel
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-secondary"
+                                data-ouia-component-id="OUIA-Generated-Button-secondary-3"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="button"
+                              >
+                                Cancel
+                              </button>
+                            </ButtonBase>
                           </Button>
                         </footer>
                       </ModalBoxFooter>
@@ -1837,6 +1951,9 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                     >
                       <p
                         class=""
+                        data-ouia-component-id="OUIA-Generated-Text-10"
+                        data-ouia-component-type="PF4/Text"
+                        data-ouia-safe="true"
                         data-pf-content="true"
                       >
                         Transferring cluster ownership will allow another individual to manage this cluster. The steps for transferring cluster ownership are:
@@ -1882,12 +1999,18 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                       </ol>
                       <p
                         class=""
+                        data-ouia-component-id="OUIA-Generated-Text-11"
+                        data-ouia-component-type="PF4/Text"
+                        data-ouia-safe="true"
                         data-pf-content="true"
                       >
                         The transfer is complete when OpenShift Cluster Manager receives telemetry data from the cluster with the new pull secret.
                       </p>
                       <h4
                         class=""
+                        data-ouia-component-id="OUIA-Generated-Text-12"
+                        data-ouia-component-type="PF4/Text"
+                        data-ouia-safe="true"
                         data-pf-content="true"
                       >
                         If the transfer is not completed within 5 days, the procedure must be restarted.
@@ -2025,43 +2148,51 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                           onClick={[Function]}
                           variant="plain"
                         >
-                          <button
-                            aria-disabled={false}
+                          <ButtonBase
                             aria-label="Close"
-                            className="pf-c-button pf-m-plain"
-                            data-ouia-component-id="OUIA-Generated-Button-plain-4"
-                            data-ouia-component-type="PF4/Button"
-                            data-ouia-safe={true}
-                            disabled={false}
+                            className=""
+                            innerRef={null}
                             onClick={[Function]}
-                            role={null}
-                            type="button"
+                            variant="plain"
                           >
-                            <TimesIcon
-                              color="currentColor"
-                              noVerticalAlign={false}
-                              size="sm"
+                            <button
+                              aria-disabled={false}
+                              aria-label="Close"
+                              className="pf-c-button pf-m-plain"
+                              data-ouia-component-id="OUIA-Generated-Button-plain-4"
+                              data-ouia-component-type="PF4/Button"
+                              data-ouia-safe={true}
+                              disabled={false}
+                              onClick={[Function]}
+                              role={null}
+                              type="button"
                             >
-                              <svg
-                                aria-hidden={true}
-                                aria-labelledby={null}
-                                fill="currentColor"
-                                height="1em"
-                                role="img"
-                                style={
-                                  Object {
-                                    "verticalAlign": "-0.125em",
-                                  }
-                                }
-                                viewBox="0 0 352 512"
-                                width="1em"
+                              <TimesIcon
+                                color="currentColor"
+                                noVerticalAlign={false}
+                                size="sm"
                               >
-                                <path
-                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                                />
-                              </svg>
-                            </TimesIcon>
-                          </button>
+                                <svg
+                                  aria-hidden={true}
+                                  aria-labelledby={null}
+                                  fill="currentColor"
+                                  height="1em"
+                                  role="img"
+                                  style={
+                                    Object {
+                                      "verticalAlign": "-0.125em",
+                                    }
+                                  }
+                                  viewBox="0 0 352 512"
+                                  width="1em"
+                                >
+                                  <path
+                                    d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                                  />
+                                </svg>
+                              </TimesIcon>
+                            </button>
+                          </ButtonBase>
                         </Button>
                       </ModalBoxCloseButton>
                       <ModalBoxHeader
@@ -2185,6 +2316,9 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                               >
                                 <p
                                   className=""
+                                  data-ouia-component-id="OUIA-Generated-Text-10"
+                                  data-ouia-component-type="PF4/Text"
+                                  data-ouia-safe={true}
                                   data-pf-content={true}
                                 >
                                   Transferring cluster ownership will allow another individual to manage this cluster. The steps for transferring cluster ownership are:
@@ -2257,6 +2391,9 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                               >
                                 <p
                                   className=""
+                                  data-ouia-component-id="OUIA-Generated-Text-11"
+                                  data-ouia-component-type="PF4/Text"
+                                  data-ouia-safe={true}
                                   data-pf-content={true}
                                 >
                                   The transfer is complete when OpenShift Cluster Manager receives telemetry data from the cluster with the new pull secret.
@@ -2267,6 +2404,9 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                               >
                                 <h4
                                   className=""
+                                  data-ouia-component-id="OUIA-Generated-Text-12"
+                                  data-ouia-component-type="PF4/Text"
+                                  data-ouia-safe={true}
                                   data-pf-content={true}
                                 >
                                   If the transfer is not completed within 5 days, the procedure must be restarted.
@@ -2287,40 +2427,54 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                             type="submit"
                             variant="primary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-primary"
-                              data-ouia-component-id="OUIA-Generated-Button-primary-4"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
+                              isDisabled={false}
                               onClick={[Function]}
-                              role={null}
                               type="submit"
+                              variant="primary"
                             >
-                              Initiate transfer
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-primary"
+                                data-ouia-component-id="OUIA-Generated-Button-primary-4"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="submit"
+                              >
+                                Initiate transfer
+                              </button>
+                            </ButtonBase>
                           </Button>
                           <Button
                             key="secondary"
                             onClick={[Function]}
                             variant="secondary"
                           >
-                            <button
-                              aria-disabled={false}
-                              aria-label={null}
-                              className="pf-c-button pf-m-secondary"
-                              data-ouia-component-id="OUIA-Generated-Button-secondary-4"
-                              data-ouia-component-type="PF4/Button"
-                              data-ouia-safe={true}
-                              disabled={false}
+                            <ButtonBase
+                              innerRef={null}
                               onClick={[Function]}
-                              role={null}
-                              type="button"
+                              variant="secondary"
                             >
-                              Cancel
-                            </button>
+                              <button
+                                aria-disabled={false}
+                                aria-label={null}
+                                className="pf-c-button pf-m-secondary"
+                                data-ouia-component-id="OUIA-Generated-Button-secondary-4"
+                                data-ouia-component-type="PF4/Button"
+                                data-ouia-safe={true}
+                                disabled={false}
+                                onClick={[Function]}
+                                role={null}
+                                type="button"
+                              >
+                                Cancel
+                              </button>
+                            </ButtonBase>
                           </Button>
                         </footer>
                       </ModalBoxFooter>

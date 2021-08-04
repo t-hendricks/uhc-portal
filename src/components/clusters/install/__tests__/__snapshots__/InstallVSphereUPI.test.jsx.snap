@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallVSphereUPI renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "VMware vSphere",
+              "path": "/install/vsphere",
+            },
+            Object {
+              "label": "User-provisioned infrastructure",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on vSphere with user-provisioned infrastructure"
+  />
+  <PageSection>
+    <OCPInstructions
+      channel="stable"
+      cloudProviderID="vmware"
+      customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
+      displayRHCOSSection={true}
+      docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html"
+      installer="X86INSTALLER"
+      isBMIPI={false}
+      rhcosDownloads={
+        Array [
+          Object {
+            "buttonText": "Download RHCOS OVA",
+            "name": "OCP-Download-RHCOS-OVA",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-vmware.x86_64.ova",
+          },
+        ]
+      }
+      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere"
+      title="Install OpenShift on vSphere with user-provisioned infrastructure"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;

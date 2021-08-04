@@ -1,0 +1,23 @@
+{
+  "kind": "MachineType",
+  "name": "custom-16-131072-ext - Memory Optimized",
+  "category": "memory_optimized",
+  "size": "large",
+  "id": "custom-16-131072-ext",
+  "href": "/api/clusters_mgmt/v1/machine_types/custom-16-131072-ext",
+  "memory": {
+    "value": 137438953472,
+    "unit": "B"
+  },
+  "cpu": {
+    "value": 16,
+    "unit": "vCPU"
+  },
+  "cloud_provider": {
+    "kind": "CloudProviderLink",
+    "id": "gcp",
+    "href": "/api/clusters_mgmt/v1/cloud_providers/gcp"
+  },
+  "ccs_only": false,
+  "generic_name": "highmem-16"
+}

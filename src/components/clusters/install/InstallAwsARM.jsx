@@ -30,7 +30,7 @@ import PageTitle from '../../common/PageTitle';
 import { tollboothActions } from '../../../redux/actions';
 import { scrollToTop } from '../../../common/helpers';
 
-class InstructionsAwsARM extends Component {
+export class InstructionsAwsARM extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | AWS ARM | Experimental Developer Preview Builds';

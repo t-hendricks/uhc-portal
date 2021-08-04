@@ -26,6 +26,7 @@ const pendoEvents = {
   [tools.ARMINSTALLER]: 'OCP-Download-ARMInstaller',
   [tools.OCM]: 'Download-OCM-CLI',
   [tools.ODO]: 'Download-ODO-CLI',
+  [tools.OPM]: 'Download-OPM-CLI',
   [tools.RHOAS]: 'Download-RHOAS-CLI',
   [tools.ROSA]: 'Download-ROSA-CLI',
 };
@@ -33,6 +34,7 @@ const pendoEvents = {
 const DownloadButton = ({
   url,
   disabled = false,
+  download = true,
   tool = tools.X86INSTALLER,
   pendoID,
   text = '',
@@ -40,6 +42,11 @@ const DownloadButton = ({
 }) => {
   const buttonText = text || texts[tool];
   const event = name || pendoEvents[tool];
+  const downloadProps = download ? (
+    { download: true }
+  ) : (
+    { rel: 'noreferrer noopener', target: '_blank' }
+  );
 
   return (
     <Button
@@ -51,7 +58,7 @@ const DownloadButton = ({
         trackPendo(event, pendoID);
       }}
       disabled={!url || disabled}
-      download
+      {...downloadProps}
     >
       {buttonText}
     </Button>
@@ -61,6 +68,7 @@ DownloadButton.propTypes = {
   pendoID: PropTypes.string,
   url: PropTypes.string,
   disabled: PropTypes.bool,
+  download: PropTypes.bool,
   tool: PropTypes.oneOf(Object.keys(tools)),
   text: PropTypes.string,
   name: PropTypes.string,

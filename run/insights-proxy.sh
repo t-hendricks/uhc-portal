@@ -44,6 +44,6 @@ run/podman-or-docker.sh run \
                       --security-opt label=disable \
                       $OPTS \
                       -p 1337:1337 \
-                      quay.io/redhat-sd-devel/insights-proxy:pull-33 &
+                      quay.io/redhat-sd-devel/insights-proxy:3.2.1 &
 child_pid=$!
 wait $child_pid

@@ -12,6 +12,7 @@ import canSubscribeOCPListSelector from '../common/EditSubscriptionSettingsDialo
 import { canTransferClusterOwnershipListSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import canHibernateClusterListSelector from '../common/HibernateClusterModal/CanHibernateClusterListSelector';
 import { toggleSubscriptionReleased } from '../common/TransferClusterOwnershipDialog/subscriptionReleasedActions';
+import { clearGlobalError } from '../../../redux/actions/globalErrorActions';
 
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),
@@ -25,6 +26,7 @@ const mapDispatchToProps = {
   openModal: modalActions.openModal,
   closeModal: modalActions.closeModal,
   toggleSubscriptionReleased,
+  clearGlobalError,
 };
 
 const mapStateToProps = state => ({

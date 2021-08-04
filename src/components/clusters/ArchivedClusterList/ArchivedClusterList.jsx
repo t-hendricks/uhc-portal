@@ -81,9 +81,10 @@ class ArchivedClusterList extends Component {
   }
 
   componentWillUnmount() {
-    const { closeModal, invalidateClusters } = this.props;
+    const { closeModal, invalidateClusters, clearGlobalError } = this.props;
     closeModal();
     invalidateClusters();
+    clearGlobalError('archivedClusterList');
   }
 
   refresh() {
@@ -244,6 +245,7 @@ ArchivedClusterList.propTypes = {
   closeModal: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
   operationID: PropTypes.string,
+  clearGlobalError: PropTypes.func.isRequired,
 };
 
 export default ArchivedClusterList;

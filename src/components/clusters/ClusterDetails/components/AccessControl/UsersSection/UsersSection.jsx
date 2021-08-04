@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { HelpIcon } from '@patternfly/react-icons';
 import {
   EmptyState, Title, Button, CardFooter,
-  Popover, PopoverPosition, Card, CardBody, Tooltip, CardTitle,
+  Popover, PopoverPosition, Card, CardBody, CardTitle,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -17,6 +17,7 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import links from '../../../../../../common/installLinks';
 import ErrorBox from '../../../../../common/ErrorBox';
+import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 
 import AddUserDialog from './AddUserDialog';
 
@@ -173,15 +174,19 @@ class UsersSection extends React.Component {
       rows[deletedRowIndex] = skeletonRow;
     }
 
-    const disabled = !cluster.canEdit || clusterHibernating;
-
-    const tooltipContent = clusterHibernating ? 'This operation is not available while cluster is hibernating'
-      : 'You do not have permission to add a user. Only cluster owners and organization administrators can add users.';
+    const hibernatingReason = clusterHibernating && 'This operation is not available while cluster is hibernating';
+    const canNotEditReason = !cluster.canEdit && 'You do not have permission to add a user. Only cluster owners and organization administrators can add users.';
+    const disableReason = hibernatingReason || canNotEditReason;
 
     const addUserBtn = (
-      <Button onClick={() => { setTimeout(() => openModal('add-user'), 0); }} variant="secondary" className="access-control-add" isDisabled={disabled}>
+      <ButtonWithTooltip
+        onClick={() => { setTimeout(() => openModal('add-user'), 0); }}
+        variant="secondary"
+        className="access-control-add"
+        disableReason={disableReason}
+      >
         Add user
-      </Button>
+      </ButtonWithTooltip>
     );
 
     return showSkeleton ? (
@@ -215,19 +220,12 @@ class UsersSection extends React.Component {
             <ErrorBox message="Error deleting user" response={deleteUserResponse} />
           )}
           { hasUsers && (
-            <Table aria-label="Users" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows} areActionsDisabled={() => !cluster.canEdit}>
+            <Table aria-label="Users" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows} areActionsDisabled={() => !!disableReason}>
               <TableHeader />
               <TableBody />
             </Table>
           )}
-          {disabled ? (
-            <Tooltip content={tooltipContent}>
-              <span>
-                {addUserBtn}
-              </span>
-            </Tooltip>
-          )
-            : addUserBtn}
+          {addUserBtn}
           <AddUserDialog
             isOpen={isAddUserModalOpen}
             closeModal={closeModal}

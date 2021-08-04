@@ -53,11 +53,8 @@ const omitEmptyFields = (obj) => {
 };
 
 const scrollToTop = () => {
-  const overrideMessage = document.getElementById('env-override-message');
-  const pageTop = document.querySelector('section.pf-c-page__main-section');
-  if (overrideMessage) {
-    overrideMessage.scrollIntoView();
-  } else if (pageTop) {
+  const pageTop = document.getElementById('scrollToTop');
+  if (pageTop) {
     pageTop.scrollIntoView();
   }
 };

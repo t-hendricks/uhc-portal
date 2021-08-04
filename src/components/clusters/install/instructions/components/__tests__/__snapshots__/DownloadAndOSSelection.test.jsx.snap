@@ -1,0 +1,621 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DownloadAndOSSelection with error should render 1`] = `
+<Fragment>
+  <Grid
+    className="os-based-download"
+    hasGutter={true}
+  >
+    <GridItem
+      md={3}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select OS dropdown"
+        className=""
+        isDisabled={false}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="linux"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select OS"
+          value="select"
+        />
+        <FormSelectOption
+          key="linux"
+          label="Linux"
+          value="linux"
+        />
+        <FormSelectOption
+          key="mac"
+          label="MacOS"
+          value="mac"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={4}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select architecture dropdown"
+        className=""
+        isDisabled={true}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="x86"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select architecture"
+          value="select"
+        />
+        <FormSelectOption
+          key="x86"
+          label="x86_64"
+          value="x86"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={5}
+      sm={12}
+    >
+      <DownloadButton
+        disabled={true}
+        tool="X86INSTALLER"
+        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-install-linux.tar.gz"
+      />
+    </GridItem>
+  </Grid>
+</Fragment>
+`;
+
+exports[`DownloadAndOSSelection ARMINSTALLER renders correctly 1`] = `
+<Fragment>
+  <Grid
+    className="os-based-download"
+    hasGutter={true}
+  >
+    <GridItem
+      md={3}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select OS dropdown"
+        className=""
+        isDisabled={false}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="linux"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select OS"
+          value="select"
+        />
+        <FormSelectOption
+          key="linux"
+          label="Linux"
+          value="linux"
+        />
+        <FormSelectOption
+          key="mac"
+          label="MacOS"
+          value="mac"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={4}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select architecture dropdown"
+        className=""
+        isDisabled={false}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="x86"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select architecture"
+          value="select"
+        />
+        <FormSelectOption
+          key="x86"
+          label="x86_64"
+          value="x86"
+        />
+        <FormSelectOption
+          key="arm"
+          label="aarch64"
+          value="arm"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={5}
+      sm={12}
+    >
+      <DownloadButton
+        disabled={false}
+        tool="ARMINSTALLER"
+        url="https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz"
+      />
+    </GridItem>
+  </Grid>
+</Fragment>
+`;
+
+exports[`DownloadAndOSSelection CLI_TOOLS renders correctly 1`] = `
+<Fragment>
+  <Grid
+    className="os-based-download"
+    hasGutter={true}
+  >
+    <GridItem
+      md={3}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select OS dropdown"
+        className=""
+        isDisabled={false}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="linux"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select OS"
+          value="select"
+        />
+        <FormSelectOption
+          key="linux"
+          label="Linux"
+          value="linux"
+        />
+        <FormSelectOption
+          key="mac"
+          label="MacOS"
+          value="mac"
+        />
+        <FormSelectOption
+          key="windows"
+          label="Windows"
+          value="windows"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={4}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select architecture dropdown"
+        className=""
+        isDisabled={false}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="x86"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select architecture"
+          value="select"
+        />
+        <FormSelectOption
+          key="x86"
+          label="x86_64"
+          value="x86"
+        />
+        <FormSelectOption
+          key="ppc"
+          label="ppc64le"
+          value="ppc"
+        />
+        <FormSelectOption
+          key="s390x"
+          label="s390x"
+          value="s390x"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={5}
+      sm={12}
+    >
+      <DownloadButton
+        disabled={false}
+        tool="CLI_TOOLS"
+        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz"
+      />
+    </GridItem>
+  </Grid>
+</Fragment>
+`;
+
+exports[`DownloadAndOSSelection CRC renders correctly 1`] = `
+<Fragment>
+  <Grid
+    className="os-based-download"
+    hasGutter={true}
+  >
+    <GridItem
+      md={3}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select OS dropdown"
+        className=""
+        isDisabled={false}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="linux"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select OS"
+          value="select"
+        />
+        <FormSelectOption
+          key="linux"
+          label="Linux"
+          value="linux"
+        />
+        <FormSelectOption
+          key="mac"
+          label="MacOS"
+          value="mac"
+        />
+        <FormSelectOption
+          key="windows"
+          label="Windows"
+          value="windows"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={4}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select architecture dropdown"
+        className=""
+        isDisabled={true}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="x86"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select architecture"
+          value="select"
+        />
+        <FormSelectOption
+          key="x86"
+          label="x86_64"
+          value="x86"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={5}
+      sm={12}
+    >
+      <DownloadButton
+        disabled={false}
+        tool="CRC"
+        url="https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz"
+      />
+    </GridItem>
+  </Grid>
+</Fragment>
+`;
+
+exports[`DownloadAndOSSelection IBMZINSTALLER renders correctly 1`] = `
+<Fragment>
+  <Grid
+    className="os-based-download"
+    hasGutter={true}
+  >
+    <GridItem
+      md={3}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select OS dropdown"
+        className=""
+        isDisabled={false}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="linux"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select OS"
+          value="select"
+        />
+        <FormSelectOption
+          key="linux"
+          label="Linux"
+          value="linux"
+        />
+        <FormSelectOption
+          key="mac"
+          label="MacOS"
+          value="mac"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={4}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select architecture dropdown"
+        className=""
+        isDisabled={true}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="s390x"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select architecture"
+          value="select"
+        />
+        <FormSelectOption
+          isDisabled={true}
+          key="x86"
+          label="x86_64"
+          title="This type of architecture is not available for the selected OS type"
+          value="x86"
+        />
+        <FormSelectOption
+          key="s390x"
+          label="s390x"
+          value="s390x"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={5}
+      sm={12}
+    >
+      <DownloadButton
+        disabled={false}
+        tool="IBMZINSTALLER"
+        url="https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz"
+      />
+    </GridItem>
+  </Grid>
+</Fragment>
+`;
+
+exports[`DownloadAndOSSelection PPCINSTALLER renders correctly 1`] = `
+<Fragment>
+  <Grid
+    className="os-based-download"
+    hasGutter={true}
+  >
+    <GridItem
+      md={3}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select OS dropdown"
+        className=""
+        isDisabled={false}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="linux"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select OS"
+          value="select"
+        />
+        <FormSelectOption
+          key="linux"
+          label="Linux"
+          value="linux"
+        />
+        <FormSelectOption
+          key="mac"
+          label="MacOS"
+          value="mac"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={4}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select architecture dropdown"
+        className=""
+        isDisabled={true}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="ppc"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select architecture"
+          value="select"
+        />
+        <FormSelectOption
+          isDisabled={true}
+          key="x86"
+          label="x86_64"
+          title="This type of architecture is not available for the selected OS type"
+          value="x86"
+        />
+        <FormSelectOption
+          key="ppc"
+          label="ppc64le"
+          value="ppc"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={5}
+      sm={12}
+    >
+      <DownloadButton
+        disabled={false}
+        tool="PPCINSTALLER"
+        url="https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz"
+      />
+    </GridItem>
+  </Grid>
+</Fragment>
+`;
+
+exports[`DownloadAndOSSelection X86INSTALLER renders correctly 1`] = `
+<Fragment>
+  <Grid
+    className="os-based-download"
+    hasGutter={true}
+  >
+    <GridItem
+      md={3}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select OS dropdown"
+        className=""
+        isDisabled={false}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="linux"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select OS"
+          value="select"
+        />
+        <FormSelectOption
+          key="linux"
+          label="Linux"
+          value="linux"
+        />
+        <FormSelectOption
+          key="mac"
+          label="MacOS"
+          value="mac"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={4}
+      sm={12}
+    >
+      <FormSelect
+        aria-label="Select architecture dropdown"
+        className=""
+        isDisabled={true}
+        isRequired={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        ouiaSafe={true}
+        validated="default"
+        value="x86"
+      >
+        <FormSelectOption
+          isDisabled={true}
+          key="select"
+          label="Select architecture"
+          value="select"
+        />
+        <FormSelectOption
+          key="x86"
+          label="x86_64"
+          value="x86"
+        />
+      </FormSelect>
+    </GridItem>
+    <GridItem
+      md={5}
+      sm={12}
+    >
+      <DownloadButton
+        disabled={false}
+        tool="X86INSTALLER"
+        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-install-linux.tar.gz"
+      />
+    </GridItem>
+  </Grid>
+</Fragment>
+`;

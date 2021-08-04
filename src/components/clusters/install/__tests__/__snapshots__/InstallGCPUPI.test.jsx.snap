@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallGCPUPI renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "Google Cloud Platform",
+              "path": "/install/gcp",
+            },
+            Object {
+              "label": "User-provisioned infrastructure",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on GCP with user-provisioned infrastructure"
+  />
+  <PageSection>
+    <OCPInstructions
+      channel="stable"
+      cloudProviderID="gcp"
+      customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
+      displayRHCOSSection={true}
+      docURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-user-infra.html"
+      installer="X86INSTALLER"
+      isBMIPI={false}
+      rhcosDownloads={
+        Array [
+          Object {
+            "buttonText": "Download RHCOS tar",
+            "name": "OCP-Download-RHCOS-tar",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-4.5.6-x86_64-gcp.x86_64.tar.gz",
+          },
+        ]
+      }
+      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra"
+      title="Install OpenShift on GCP with user-provisioned infrastructure"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;

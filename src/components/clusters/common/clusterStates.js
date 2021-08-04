@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import { Config as AIConfig } from 'openshift-assisted-ui-lib';
+import { OCM } from 'openshift-assisted-ui-lib';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
 
@@ -39,7 +39,7 @@ function getClusterStateAndDescription(cluster) {
   let state;
 
   if (isAssistedInstallSubscription(cluster.subscription)) {
-    state = AIConfig.CLUSTER_STATUS_LABELS[cluster.status];
+    state = OCM.Constants.CLUSTER_STATUS_LABELS[cluster.status];
   } else if ((cluster.state === clusterStates.INSTALLING
       || cluster.state === clusterStates.PENDING)) {
     state = clusterStates.INSTALLING;

@@ -9,7 +9,6 @@ import {
   Button,
   CardBody,
   CardFooter,
-  Tooltip,
   CardTitle,
   Divider,
   EmptyState,
@@ -34,6 +33,7 @@ import EditLabelsModal from './components/EditLabelsModal';
 import './MachinePools.scss';
 import { actionResolver } from './machinePoolsHelper';
 
+import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ErrorBox from '../../../../common/ErrorBox';
 import modals from '../../../../common/Modal/modals';
 
@@ -326,21 +326,24 @@ class MachinePools extends React.Component {
       rows[deletedRowIndex] = skeletonRow;
     }
 
-    const clusterHibernating = isHibernating(cluster.state);
-    const addMachinePoolDisabled = !cluster.canEdit || !hasMachinePoolsQuota || clusterHibernating;
-    let tooltipContent;
-    if (clusterHibernating) {
-      tooltipContent = 'This operation is not available while cluster is hibernating';
-    } else if (!cluster.canEdit) {
-      tooltipContent = 'You do not have permission to add a machine pool. Only cluster owners and organization administrators can add machine pools.';
-    } else {
-      tooltipContent = noQuotaTooltip;
-    }
+    const hibernatingReason = isHibernating(cluster.state) && (
+      'This operation is not available while cluster is hibernating'
+    );
+    const canNotEditReason = !cluster.canEdit && (
+      'You do not have permission to add a machine pool. Only cluster owners and organization administrators can add machine pools.'
+    );
+    const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
 
     const addMachinePoolBtn = (
-      <Button id="add-machine-pool" onClick={() => openModal('add-machine-pool')} variant="secondary" className="pf-u-mb-lg" isDisabled={addMachinePoolDisabled}>
+      <ButtonWithTooltip
+        disableReason={hibernatingReason || canNotEditReason || quotaReason}
+        id="add-machine-pool"
+        onClick={() => openModal('add-machine-pool')}
+        variant="secondary"
+        className="pf-u-mb-lg"
+      >
         Add machine pool
-      </Button>
+      </ButtonWithTooltip>
     );
 
     return (
@@ -363,14 +366,7 @@ class MachinePools extends React.Component {
               { machinePoolsList.error && (
               <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
               )}
-              {addMachinePoolDisabled ? (
-                <Tooltip content={tooltipContent}>
-                  <span>
-                    {addMachinePoolBtn}
-                  </span>
-                </Tooltip>
-              )
-                : addMachinePoolBtn}
+              {addMachinePoolBtn}
               <Divider />
               { deleteMachinePoolResponse.error && (
               <ErrorBox message="Error deleting machine pool" response={machinePoolsList} />
@@ -387,7 +383,7 @@ class MachinePools extends React.Component {
                     onClickEditTaintsAction,
                     onClickEditLaeblsAction)
                 }
-                areActionsDisabled={() => !cluster.canEdit || clusterHibernating}
+                areActionsDisabled={() => !!(hibernatingReason || canNotEditReason)}
               >
                 <TableHeader />
                 <TableBody />

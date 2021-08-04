@@ -18,7 +18,7 @@ import {
 } from '@patternfly/react-table';
 
 import { Link } from 'react-router-dom';
-import { ClusterStatus as AIClusterStatus } from 'openshift-assisted-ui-lib';
+import { OCM } from 'openshift-assisted-ui-lib';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
 import clusterStates, { getClusterStateAndDescription } from '../../common/clusterStates';
@@ -31,6 +31,7 @@ import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
 
+const { ClusterStatus: AIClusterStatus } = OCM;
 function ClusterListTable(props) {
   const {
     viewOptions, setSorting, clusters, openModal, isPending, setClusterDetails,
