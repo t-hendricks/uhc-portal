@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Button, Card, CardBody, CardFooter, CardTitle,
   Form, Flex, FlexItem, Grid, GridItem, Modal,
-  Tooltip, Alert,
+  Alert,
 } from '@patternfly/react-core';
 import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
 import getClusterName from '../../../../../common/getClusterName';
@@ -13,6 +13,7 @@ import modals from '../../../../common/Modal/modals';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
 import '../../../common/Upgrades/UpgradeSettingsFields.scss';
 import clusterStates from '../../../common/clusterStates';
+import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 
 class UpgradeSettingsTab extends React.Component {
   state = { confirmationModalOpen: false }
@@ -78,9 +79,15 @@ class UpgradeSettingsTab extends React.Component {
 
     const isDisabled = !schedules.fulfilled
                       || upgradeScheduleRequest.pending;
+    const hibernatingReason = clusterHibernating && (
+      'This operation is not available while cluster is hibernating'
+    );
+    // a superset of hibernatingReason.
+    const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
+    const pristineReason = pristine && 'No changes to save';
+    const actionsDisableReason = pristineReason || hibernatingReason;
 
     const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual');
-    const actionsDisabled = isDisabled || pristine || clusterHibernating;
 
     const scheduledUpgrade = schedules.items.find(schedule => ['manual', 'automatic'].includes(schedule.schedule_type));
     // eslint-disable-next-line camelcase
@@ -95,16 +102,28 @@ class UpgradeSettingsTab extends React.Component {
                    || editClusterRequest.pending;
 
     const saveButton = (
-      <Button
+      <ButtonWithTooltip
+        disableReason={actionsDisableReason}
+        isDisabled={isDisabled}
         variant="primary"
         onClick={handleSubmit}
-        isDisabled={actionsDisabled}
         isLoading={isPending}
       >
         Save
-      </Button>
+      </ButtonWithTooltip>
     );
-    const disableUVM = cluster.state !== clusterStates.READY;
+    const resetButton = (
+      <ButtonWithTooltip
+        disableReason={actionsDisableReason}
+        isDisabled={isDisabled}
+        variant="link"
+        onClick={reset}
+      >
+        Cancel
+      </ButtonWithTooltip>
+    );
+
+    const disableUVM = !!notReadyReason;
 
     const hibernatingClusterInfo = (
       <Alert
@@ -120,7 +139,7 @@ class UpgradeSettingsTab extends React.Component {
       <Grid hasGutter className="ocm-c-upgrade-monitoring">
         <GridItem>
           {editClusterRequest.error && (
-          <ErrorBox response={editClusterRequest} message="Error processing request" />
+            <ErrorBox response={editClusterRequest} message="Error processing request" />
           )}
           <Card>
             <CardBody>
@@ -133,31 +152,31 @@ class UpgradeSettingsTab extends React.Component {
             <CardTitle>Update strategy</CardTitle>
             <CardBody>
               {scheduledManualUpgrade && confirmationModalOpen && (
-              <Modal
-                variant="small"
-                title="Automatic updates"
-                isOpen
-                onClose={() => { this.closeConfirmationModal(); reset(); }}
-                actions={[
-                  <Button key="confirm" variant="primary" onClick={this.closeConfirmationModal}>
-                    Yes, cancel scheduled update
-                  </Button>,
-                  <Button key="cancel" variant="secondary" onClick={() => { this.closeConfirmationModal(); reset(); }}>
-                    No, keep scheduled update
-                  </Button>,
-                ]}
-              >
-                By choosing automatic updates, your scheduled manual update will be cancelled.
-                {' '}
-                Are you sure you want to continue?
-              </Modal>
+                <Modal
+                  variant="small"
+                  title="Automatic updates"
+                  isOpen
+                  onClose={() => { this.closeConfirmationModal(); reset(); }}
+                  actions={[
+                    <Button key="confirm" variant="primary" onClick={this.closeConfirmationModal}>
+                      Yes, cancel scheduled update
+                    </Button>,
+                    <Button key="cancel" variant="secondary" onClick={() => { this.closeConfirmationModal(); reset(); }}>
+                      No, keep scheduled update
+                    </Button>,
+                  ]}
+                >
+                  By choosing automatic updates, your scheduled manual update will be cancelled.
+                  {' '}
+                  Are you sure you want to continue?
+                </Modal>
               )}
               {clusterHibernating && hibernatingClusterInfo}
               {upgradeScheduleRequest.error && (
-              <ErrorBox response={upgradeScheduleRequest} message="Can't schedule upgrade" />
+                <ErrorBox response={upgradeScheduleRequest} message="Can't schedule upgrade" />
               )}
               {deleteScheduleRequest.error && (
-              <ErrorBox response={deleteScheduleRequest} message="Can't unschedule upgrade" />
+                <ErrorBox response={deleteScheduleRequest} message="Can't unschedule upgrade" />
               )}
 
               <Form>
@@ -175,20 +194,10 @@ class UpgradeSettingsTab extends React.Component {
             <CardFooter>
               <Flex>
                 <FlexItem>
-                  {
-                    clusterHibernating ? (
-                      <Tooltip content="This operation is not available while cluster is hibernating">
-                        <span>
-                          {saveButton}
-                        </span>
-                      </Tooltip>
-                    ) : saveButton
-                  }
+                  {saveButton}
                 </FlexItem>
                 <FlexItem>
-                  <Button onClick={reset} variant="link" isDisabled={actionsDisabled}>
-                    Cancel
-                  </Button>
+                  {resetButton}
                 </FlexItem>
               </Flex>
             </CardFooter>
