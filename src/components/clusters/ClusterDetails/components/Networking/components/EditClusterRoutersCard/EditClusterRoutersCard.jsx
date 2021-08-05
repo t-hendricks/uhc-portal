@@ -43,17 +43,19 @@ class EditClusterRoutersCard extends React.Component {
       additionalRouterAddress,
       canEdit,
       clusterHibernating,
+      isReadOnly,
       provider,
     } = this.props;
 
     // Reasons to disable whole form
+    const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason = clusterHibernating && (
       'This operation is not available while cluster is hibernating'
     );
     const canNotEditReason = !canEdit && (
       'You do not have permission to edit routers. Only cluster owners and organization administrators can edit routers.'
     );
-    const formDisableReason = hibernatingReason || canNotEditReason;
+    const formDisableReason = readOnlyReason || hibernatingReason || canNotEditReason;
 
     // Reasons to block save button only
     const pristineReason = pristine && 'No changes to save';
@@ -227,6 +229,7 @@ EditClusterRoutersCard.propTypes = {
   additionalRouterAddress: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   provider: PropTypes.string,
 };
 

@@ -326,6 +326,8 @@ class MachinePools extends React.Component {
       rows[deletedRowIndex] = skeletonRow;
     }
 
+    const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
+    const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason = isHibernating(cluster.state) && (
       'This operation is not available while cluster is hibernating'
     );
@@ -336,7 +338,7 @@ class MachinePools extends React.Component {
 
     const addMachinePoolBtn = (
       <ButtonWithTooltip
-        disableReason={hibernatingReason || canNotEditReason || quotaReason}
+        disableReason={readOnlyReason || hibernatingReason || canNotEditReason || quotaReason}
         id="add-machine-pool"
         onClick={() => openModal('add-machine-pool')}
         variant="secondary"
@@ -345,6 +347,8 @@ class MachinePools extends React.Component {
         Add machine pool
       </ButtonWithTooltip>
     );
+
+    const tableActionsDisabled = !!(readOnlyReason || hibernatingReason || canNotEditReason);
 
     return (
       <>
@@ -383,7 +387,7 @@ class MachinePools extends React.Component {
                     onClickEditTaintsAction,
                     onClickEditLaeblsAction)
                 }
-                areActionsDisabled={() => !!(hibernatingReason || canNotEditReason)}
+                areActionsDisabled={() => tableActionsDisabled}
               >
                 <TableHeader />
                 <TableBody />

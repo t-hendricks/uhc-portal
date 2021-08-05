@@ -74,18 +74,20 @@ class UpgradeSettingsTab extends React.Component {
       change,
       initialValues,
       clusterHibernating,
+      isReadOnly,
     } = this.props;
     const { confirmationModalOpen } = this.state;
 
     const isDisabled = !schedules.fulfilled
                       || upgradeScheduleRequest.pending;
+    const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason = clusterHibernating && (
       'This operation is not available while cluster is hibernating'
     );
     // a superset of hibernatingReason.
     const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
     const pristineReason = pristine && 'No changes to save';
-    const actionsDisableReason = pristineReason || hibernatingReason;
+    const formDisableReason = readOnlyReason || hibernatingReason;
 
     const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual');
 
@@ -103,7 +105,7 @@ class UpgradeSettingsTab extends React.Component {
 
     const saveButton = (
       <ButtonWithTooltip
-        disableReason={actionsDisableReason}
+        disableReason={formDisableReason || pristineReason}
         isDisabled={isDisabled}
         variant="primary"
         onClick={handleSubmit}
@@ -114,8 +116,7 @@ class UpgradeSettingsTab extends React.Component {
     );
     const resetButton = (
       <ButtonWithTooltip
-        disableReason={actionsDisableReason}
-        isDisabled={isDisabled}
+        isDisabled={pristine}
         variant="link"
         onClick={reset}
       >
@@ -123,7 +124,7 @@ class UpgradeSettingsTab extends React.Component {
       </ButtonWithTooltip>
     );
 
-    const disableUVM = !!notReadyReason;
+    const disableUVM = !!(readOnlyReason || hibernatingReason || notReadyReason);
 
     const hibernatingClusterInfo = (
       <Alert
@@ -183,7 +184,7 @@ class UpgradeSettingsTab extends React.Component {
                 <Grid hasGutter>
                   <UpgradeSettingsFields
                     isAutomatic={isAutomatic}
-                    isDisabled={isDisabled}
+                    isDisabled={!!formDisableReason}
                     change={change}
                     initialSceduleValue={initialValues.automatic_upgrade_schedule}
                     showDivider
@@ -241,6 +242,7 @@ UpgradeSettingsTab.propTypes = {
   pristine: PropTypes.bool,
   isAutomatic: PropTypes.bool,
   clusterHibernating: PropTypes.bool,
+  isReadOnly: PropTypes.bool.isRequired,
   cluster: PropTypes.shape({
     canEdit: PropTypes.bool,
     openshift_version: PropTypes.string,
