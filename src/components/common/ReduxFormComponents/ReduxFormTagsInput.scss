@@ -1,3 +1,22 @@
 .react-tagsinput-input {
   width: min-content;
 }
+
+.react-tagsinput--focused {
+  border-color: #000000;
+}
+
+.react-tagsinput {
+  padding: 2.5px 5px;
+
+  .pf-c-label {
+    margin-right: 5px;
+  }
+  
+   > span {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 3px;
+  }
+}
