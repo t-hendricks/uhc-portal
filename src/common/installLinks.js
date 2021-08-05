@@ -1,3 +1,4 @@
+const MIRROR_BUTANE_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest';
 const MIRROR_CLIENTS_STABLE = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
@@ -6,6 +7,7 @@ const MIRROR_CLIENTS_LATEST_PRE = 'https://mirror.openshift.com/pub/openshift-v4
 const MIRROR_CLIENTS_LATEST_PRE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/';
+const MIRROR_COREOS_INSTALLER_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest';
 const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
 const MIROR_RHCOS_LATEST_S390X = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
@@ -167,6 +169,9 @@ const links = {
   ROSA_CLIENT_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest',
   ROSA_DOCS: 'https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html',
 
+  BUTANE_DOCS: `${DOCS_BASE}/installing/install_config/installing-customizing.html`,
+  COREOS_INSTALLER_DOCS: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
+
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
 };
 
@@ -175,6 +180,8 @@ const links = {
 // See also per-tool data in DownloadButton.jsx.
 const tools = {
   OC: 'oc',
+  BUTANE: 'butane',
+  COREOS_INSTALLER: 'coreos-installer',
   CRC: 'crc',
   HELM: 'helm',
   X86INSTALLER: 'x86_64-openshift-install',
@@ -256,6 +263,42 @@ const urls = {
       },
       [architectures.arm]: {
         [operatingSystems.linux]: links.CLI_TOOLS_LINUX_ARM_PRE_RELEASE,
+      },
+    },
+  },
+
+  [tools.BUTANE]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_BUTANE_LATEST}/butane-amd64`,
+        [operatingSystems.mac]: `${MIRROR_BUTANE_LATEST}/butane-darwin-amd64`,
+        [operatingSystems.windows]: `${MIRROR_BUTANE_LATEST}/butane-windows-amd64.exe`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_BUTANE_LATEST}/butane-s390x`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_BUTANE_LATEST}/butane-ppc64le`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_BUTANE_LATEST}/butane-aarch64`,
+      },
+    },
+  },
+
+  [tools.COREOS_INSTALLER]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_COREOS_INSTALLER_LATEST}/coreos-installer_amd64`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_COREOS_INSTALLER_LATEST}/coreos-installer_s390x`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_COREOS_INSTALLER_LATEST}/coreos-installer_ppc64le`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_COREOS_INSTALLER_LATEST}/coreos-installer_aarch64`,
       },
     },
   },

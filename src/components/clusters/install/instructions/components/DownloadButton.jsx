@@ -18,6 +18,8 @@ const texts = {
 
 const pendoEvents = {
   [tools.OC]: 'OCP-Download-CLITools',
+  [tools.BUTANE]: 'Download-BUTANE-CLI',
+  [tools.COREOS_INSTALLER]: 'Download-CoreOSInstaller-CLI',
   [tools.CRC]: 'OCP-Download-CRC',
   [tools.HELM]: 'Download-HELM-CLI',
   [tools.X86INSTALLER]: 'OCP-Download-X86Installer',
