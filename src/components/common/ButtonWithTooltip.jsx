@@ -9,11 +9,13 @@ import { Button, Tooltip } from '@patternfly/react-core';
  *
  * Will disable and show tooltip iff `disableReason` is truthy.
  * Value can be "node-like", including string.
- * Shows normal active button for all falsy values (missing/undefined, false etc.).
+ * Shows normal button for all falsy values (missing/undefined, false etc.).
+ *
+ * Will also disable if `isDisabled` is true (but prefer giving a reason when possible).
  *
  * All other props passed down to Button.
  */
-function ButtonWithTooltip({ disableReason, ...buttonProps }) {
+function ButtonWithTooltip({ disableReason, isDisabled, ...buttonProps }) {
   if (disableReason) {
     // span is workaround for https://github.com/patternfly/patternfly-react/issues/1894.
     // Without it, tooltip triggers on the button component itself, and won't show
@@ -28,10 +30,11 @@ function ButtonWithTooltip({ disableReason, ...buttonProps }) {
       </Tooltip>
     );
   }
-  return <Button {...buttonProps} />;
+  return <Button isDisabled={isDisabled} {...buttonProps} />;
 }
 ButtonWithTooltip.propTypes = {
   disableReason: PropTypes.node,
+  isDisabled: PropTypes.bool,
 };
 
 export default ButtonWithTooltip;

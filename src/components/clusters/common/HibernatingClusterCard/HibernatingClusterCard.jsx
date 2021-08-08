@@ -11,18 +11,19 @@ import {
   EmptyStateVariant,
   EmptyStateBody,
   EmptyStateSecondaryActions,
-  Button,
 } from '@patternfly/react-core';
 
 import { AsleepIcon, InProgressIcon } from '@patternfly/react-icons';
 import clusterStates from '../clusterStates';
 import modals from '../../../common/Modal/modals';
+import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
 
 function HibernatingClusterCard({ cluster, openModal }) {
   let icon;
   let title;
   let body;
-  let button;
+  let showButton = false;
+  let buttonDisableReason = null;
 
   const openResumeClusterModal = () => {
     const clusterData = {
@@ -32,6 +33,10 @@ function HibernatingClusterCard({ cluster, openModal }) {
     };
     openModal(modals.RESUME_CLUSTER, clusterData);
   };
+
+  const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
+  const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
+  const canNotEditReason = !cluster.canEdit && 'You do not have permission to resume from hibernation. Only cluster owners and organization administrators can change hibernation state.';
 
   switch (cluster.state) {
     case clusterStates.RESUMING:
@@ -43,19 +48,18 @@ function HibernatingClusterCard({ cluster, openModal }) {
       title = 'Cluster is powering down and moving to a hibernating state';
       body = 'The cluster will not utilize any infrastructure and all operations will not be available';
       icon = InProgressIcon;
-      button = (
-        <Button variant="link" isDisabled onClick={openResumeClusterModal}>Resume from Hibernation</Button>
-      );
+      showButton = true;
+      buttonDisableReason = 'This cluster is powering down; you will be able to resume after it reaches hibernating state.';
       break;
     default:
       title = 'Cluster is currently hibernating';
       body = 'The cluster is not utilizing any infrastructure and all operations will not be available';
       icon = AsleepIcon;
-      button = (
-        <Button variant="link" disabled={!cluster.canEdit} onClick={openResumeClusterModal}>Resume from Hibernation</Button>
-      );
+      showButton = true;
+      buttonDisableReason = readOnlyReason || canNotEditReason;
       break;
   }
+
   return (
     <Card id="hibernatingClusterCard">
       <CardBody>
@@ -68,7 +72,11 @@ function HibernatingClusterCard({ cluster, openModal }) {
             {body}
           </EmptyStateBody>
           <EmptyStateSecondaryActions>
-            {button}
+            {showButton && (
+              <ButtonWithTooltip variant="link" disableReason={buttonDisableReason} onClick={openResumeClusterModal}>
+                Resume from Hibernation
+              </ButtonWithTooltip>
+            )}
           </EmptyStateSecondaryActions>
         </EmptyState>
       </CardBody>
