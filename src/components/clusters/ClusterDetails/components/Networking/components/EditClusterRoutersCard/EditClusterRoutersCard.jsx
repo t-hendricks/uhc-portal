@@ -22,6 +22,7 @@ import { ReduxCheckbox, ReduxVerticalFormGroup } from '../../../../../../common/
 import { checkRouteSelectors } from '../../../../../../../common/validators';
 import ChangePrivacySettingsDialog from '../ChangePrivacySettingsDialog';
 import './EditClusterRoutersCard.scss';
+import ButtonWithTooltip from '../../../../../../common/ButtonWithTooltip';
 
 class EditClusterRoutersCard extends React.Component {
   handleSaveChanges = () => {
@@ -42,33 +43,55 @@ class EditClusterRoutersCard extends React.Component {
       additionalRouterAddress,
       canEdit,
       clusterHibernating,
+      isReadOnly,
       provider,
     } = this.props;
 
-    const disabled = !canEdit || clusterHibernating;
-    const tooltipContent = clusterHibernating ? 'This operation is not available while cluster is hibernating'
-      : 'You do not have permission to edit routers. Only cluster owners and organization administrators can edit routers.';
+    // Reasons to disable whole form
+    const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
+    const hibernatingReason = clusterHibernating && (
+      'This operation is not available while cluster is hibernating'
+    );
+    const canNotEditReason = !canEdit && (
+      'You do not have permission to edit routers. Only cluster owners and organization administrators can edit routers.'
+    );
+    const formDisableReason = readOnlyReason || hibernatingReason || canNotEditReason;
+
+    // Reasons to block save button only
+    const pristineReason = pristine && 'No changes to save';
+    const isDisabled = !valid;
 
     const changeSettingsBtn = (
-      <Button
+      <ButtonWithTooltip
         variant="primary"
         onClick={this.handleSaveChanges}
-        isDisabled={disabled || pristine || !valid}
+        disableReason={formDisableReason || pristineReason}
+        isDisabled={isDisabled}
       >
         Change settings
-      </Button>
+      </ButtonWithTooltip>
     );
 
-    const additionalRouterRadio = (
+    let additionalRouterRadio = (
       <Field
         component={ReduxCheckbox}
         isSwitch
         name="enable_additional_router"
         labelOff="Not enabled"
         label="Enabled"
-        isDisabled={disabled}
+        isDisabled={!!formDisableReason}
       />
     );
+    // TODO: tooltips on all fields, or none?
+    if (formDisableReason) {
+      additionalRouterRadio = (
+        <Tooltip content={formDisableReason}>
+          <span>
+            {additionalRouterRadio}
+          </span>
+        </Tooltip>
+      );
+    }
 
     return (
       <>
@@ -91,7 +114,7 @@ class EditClusterRoutersCard extends React.Component {
                         component={ReduxCheckbox}
                         name="private_api"
                         label="Make API private"
-                        isDisabled={disabled}
+                        isDisabled={!!formDisableReason}
                       />
                     </StackItem>
                     <StackItem>
@@ -107,7 +130,7 @@ class EditClusterRoutersCard extends React.Component {
                         component={ReduxCheckbox}
                         name="private_default_router"
                         label="Make router private"
-                        isDisabled={disabled}
+                        isDisabled={!!formDisableReason}
                       />
                     </StackItem>
                     <StackItem>
@@ -116,14 +139,7 @@ class EditClusterRoutersCard extends React.Component {
                           <Title headingLevel="h2" size="md" className="card-title">Additional application router</Title>
                         </SplitItem>
                         <SplitItem>
-                          {
-                          disabled ? (
-                            <Tooltip content={tooltipContent}>
-                              {additionalRouterRadio}
-                            </Tooltip>
-                          )
-                            : additionalRouterRadio
-                          }
+                          {additionalRouterRadio}
                         </SplitItem>
                       </Split>
                     </StackItem>
@@ -140,7 +156,7 @@ class EditClusterRoutersCard extends React.Component {
                               component={ReduxCheckbox}
                               name="private_additional_router"
                               label="Make router private"
-                              isDisabled={disabled}
+                              isDisabled={!!formDisableReason}
                             />
                           </StackItem>
                         </>
@@ -159,20 +175,14 @@ class EditClusterRoutersCard extends React.Component {
                             validate={checkRouteSelectors}
                             key="route_selectors"
                             onChange={this.handleChangeRouteSelectors}
-                            isReadOnly={disabled}
+                            isReadOnly={!!formDisableReason}
                           />
                         </StackItem>
                       )
                     }
                     <StackItem>
                       <ActionGroup>
-                        { disabled ? (
-                          <Tooltip content={tooltipContent}>
-                            <span>
-                              {changeSettingsBtn}
-                            </span>
-                          </Tooltip>
-                        ) : changeSettingsBtn }
+                        {changeSettingsBtn}
                         <Button
                           variant="secondary"
                           isDisabled={pristine}
@@ -219,6 +229,7 @@ EditClusterRoutersCard.propTypes = {
   additionalRouterAddress: PropTypes.string.isRequired,
   canEdit: PropTypes.bool.isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   provider: PropTypes.string,
 };
 

@@ -13,11 +13,13 @@ const mapStateToProps = (state) => {
   const cloudProviderID = valueSelector(state, 'cloud_provider');
   const isMultiAz = valueSelector(state, 'multi_az') === 'true';
   const isByoc = valueSelector(state, 'byoc') === 'true';
+  const billingModel = valueSelector(state, 'billing_model');
 
   return {
     initialValues: createOSDInitialValues({ cloudProviderID, isMultiAz, isByoc }),
     isWizard: true,
     byocSelected: isByoc,
+    billingModel,
   };
 };
 

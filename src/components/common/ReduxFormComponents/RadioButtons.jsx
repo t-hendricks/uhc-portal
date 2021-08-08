@@ -10,14 +10,14 @@ class RadioButtons extends React.Component {
       input,
     } = this.props;
 
-    if (!disableDefaultValueHandling) {
+    if (!disableDefaultValueHandling || this.isCurrentValueDisabled()) {
       input.onChange(defaultValue);
     }
   }
 
   componentDidUpdate() {
     const {
-      options, defaultValue, input, disableDefaultValueHandling,
+      defaultValue, input, disableDefaultValueHandling,
     } = this.props;
 
     if (!disableDefaultValueHandling) {
@@ -26,11 +26,10 @@ class RadioButtons extends React.Component {
       if (input.value === '') {
         input.onChange(defaultValue);
       }
-      // if an option got disabled during the lifetime of the component, we should revert to default
-      if (options.some(option => input.value === option.value && option.disabled
-                               && option.value !== defaultValue)) {
-        input.onChange(defaultValue);
-      }
+    }
+    // if an option got disabled during the lifetime of the component, we should revert to default
+    if (this.isCurrentValueDisabled()) {
+      input.onChange(defaultValue);
     }
   }
 
@@ -43,6 +42,12 @@ class RadioButtons extends React.Component {
       onChangeCallback(input.name, newValue);
     }
   };
+
+  isCurrentValueDisabled() {
+    const { options, input, defaultValue } = this.props;
+    return options.some(option => input.value === option.value && option.disabled
+      && option.value !== defaultValue);
+  }
 
   render() {
     const {

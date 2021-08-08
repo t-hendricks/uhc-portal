@@ -94,6 +94,7 @@ class NetworkSelfServiceSection extends React.Component {
       openAddGrantModal,
       canEdit,
       clusterHibernating,
+      isReadOnly,
     } = this.props;
     const { deletedRowIndex } = this.state;
 
@@ -230,9 +231,10 @@ class NetworkSelfServiceSection extends React.Component {
 
     const rows = hasGrants && grants.data.map(grantRow);
 
+    const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason = clusterHibernating && 'This operation is not available while cluster is hibernating';
     const canNotEditReason = !canEdit && 'You do not have permission to grant a role. Only cluster owners and organization administrators can grant roles.';
-    const disableReason = hibernatingReason || canNotEditReason;
+    const disableReason = readOnlyReason || hibernatingReason || canNotEditReason;
 
     const addGrantBtn = (
       <ButtonWithTooltip
@@ -298,6 +300,7 @@ NetworkSelfServiceSection.propTypes = {
   addNotification: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };
 
 export default NetworkSelfServiceSection;
