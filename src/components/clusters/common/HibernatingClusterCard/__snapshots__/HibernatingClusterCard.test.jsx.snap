@@ -22,13 +22,13 @@ exports[`<HibernateClusterModal /> renders correctly 1`] = `
         The cluster is not utilizing any infrastructure and all operations will not be available
       </EmptyStateBody>
       <EmptyStateSecondaryActions>
-        <Button
-          disabled={true}
+        <ButtonWithTooltip
+          disableReason="You do not have permission to resume from hibernation. Only cluster owners and organization administrators can change hibernation state."
           onClick={[Function]}
           variant="link"
         >
           Resume from Hibernation
-        </Button>
+        </ButtonWithTooltip>
       </EmptyStateSecondaryActions>
     </EmptyState>
   </CardBody>
