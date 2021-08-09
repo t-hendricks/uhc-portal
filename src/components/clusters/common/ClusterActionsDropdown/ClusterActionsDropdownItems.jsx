@@ -59,18 +59,6 @@ function actionResolver(
       This cluster is powering down; you will be able to resume after it reaches hibernating state.
     </span>
   );
-  const isClusterErrorInAccountClaimPhase = cluster.state === clusterStates.ERROR
-    // eslint-disable-next-line camelcase
-    && !cluster.status?.dns_ready;
-  // TODO: should this case use a more specific message?
-  const errorInAccountClaimPhaseMessage = isClusterErrorInAccountClaimPhase && (
-    <span>This cluster is not ready</span>
-  );
-  const hasAccountId = cluster.managed && cluster.aws && cluster.aws.account_id;
-  // TODO: should this case use a more specific message?
-  const noAccountIdMessage = !hasAccountId && (
-    <span>This cluster is not ready</span>
-  );
 
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const readOnlyMessage = isReadOnly && (
@@ -157,20 +145,6 @@ function actionResolver(
           { cluster, isDefaultMachinePool: true, shouldDisplayClusterName: inClusterList },
         ),
       }),
-  });
-
-  const getEditCCSCredentialsProps = () => ({
-    ...baseProps,
-    title: 'Edit AWS credentials',
-    key: getKey('editccscredentials'),
-    ...disableIfTooltip(
-      uninstallingMessage || errorInAccountClaimPhaseMessage || noAccountIdMessage
-      || readOnlyMessage,
-      {
-        onClick: () => openModal(modals.EDIT_CCS_CREDENTIALS,
-          { ...cluster, shouldDisplayClusterName: inClusterList }),
-      },
-    ),
   });
 
   const getEditDisplayNameProps = () => ({
@@ -327,7 +301,6 @@ function actionResolver(
   const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
   const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
   const upgradeTrialClusterProps = getUpgradeTrialClusterProps();
-  const editccscredentialsProps = getEditCCSCredentialsProps();
   const hibernateClusterProps = getHibernateClusterProps();
 
   const showDelete = cluster.canDelete && cluster.managed;
@@ -349,9 +322,6 @@ function actionResolver(
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership
     && isAllowedProducts
     && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
-  // eslint-disable-next-line max-len
-  // const showccscredentials = cluster.ccs?.enabled && cluster.cloud_provider && cluster.cloud_provider.id !== 'gcp';
-  const showccscredentials = false; // Temporary until backend is fixed
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [
@@ -367,7 +337,6 @@ function actionResolver(
     showUnarchive && unarchiveClusterItemProps,
     showEditSubscriptionSettings && editSubscriptionSettingsProps,
     showTransferClusterOwnership && transferClusterOwnershipProps,
-    showccscredentials && editccscredentialsProps,
   ].filter(Boolean);
 }
 
