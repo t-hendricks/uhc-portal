@@ -4,6 +4,7 @@ import React from 'react';
 import { Redirect } from 'react-router';
 
 import {
+  Banner,
   Wizard,
   Grid,
   PageSection,
@@ -27,6 +28,7 @@ import ClusterSettingsScreen from './ClusterSettingsScreen';
 import DefaultMachinePoolScreen from './DefaultMachinePoolScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
 import NetworkScreen from './NetworkScreen';
+import config from '../../../../config';
 
 import './createOSDWizard.scss';
 
@@ -251,6 +253,11 @@ class CreateOSDWizard extends React.Component {
       <>
         {title}
         <PageSection>
+          {config.fakeOSD && (
+          <Banner variant="warning">
+            On submit, a fake OSD cluster will be created.
+          </Banner>
+          )}
           <div className="ocm-page">
             {creationErrorModal}
             <Wizard
