@@ -47,6 +47,8 @@ function AddOnsPrimaryButton(props) {
   const canNotEditReason = !cluster.canEdit && (
     'You do not have permission to install add ons. Only cluster owners and organization administrators can install add ons.'
   );
+  const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
+  const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
   const hibernatingReason = isHibernating(cluster.state) && (
     'This operation is not available while cluster is hibernating'
   );
@@ -60,7 +62,7 @@ function AddOnsPrimaryButton(props) {
     <ButtonWithTooltip
       ouiaId={`uninstall-addon-${activeCard?.id}`}
       variant="link"
-      disableReason={hibernatingReason || notReadyReason || canNotEditReason}
+      disableReason={readOnlyReason || hibernatingReason || notReadyReason || canNotEditReason}
       onClick={() => openModal('add-ons-delete-modal', {
         addOnName: activeCard?.name,
         addOnID: activeCard?.id,
@@ -76,7 +78,7 @@ function AddOnsPrimaryButton(props) {
     const pendingReason = addClusterAddOnResponse.pending && 'installing...';
     return (
       <ButtonWithTooltip
-        disableReason={hibernatingReason || notReadyReason || requirementsReason
+        disableReason={readOnlyReason || hibernatingReason || notReadyReason || requirementsReason
           || canNotEditReason || quotaReason || pendingReason}
         ouiaId={`install-addon-${activeCard?.id}`}
         variant="primary"

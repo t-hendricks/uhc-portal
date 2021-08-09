@@ -9,6 +9,7 @@ exports[`<AccessControl /> should render 1`] = `
     clusterConsoleURL="https://console-openshift-console.apps.example.com"
     clusterHibernating={false}
     clusterID="fake id"
+    isReadOnly={false}
   />
   <Connect(UsersSection)
     cluster={
@@ -18,11 +19,13 @@ exports[`<AccessControl /> should render 1`] = `
       }
     }
     clusterHibernating={false}
+    isReadOnly={false}
   />
   <Connect(NetworkSelfServiceSection)
     canEdit={true}
     clusterHibernating={false}
     clusterID="fake id"
+    isReadOnly={false}
   />
 </div>
 `;

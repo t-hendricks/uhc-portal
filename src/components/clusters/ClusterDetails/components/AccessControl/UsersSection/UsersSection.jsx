@@ -69,6 +69,7 @@ class UsersSection extends React.Component {
       deleteUserResponse,
       cluster,
       clusterHibernating,
+      isReadOnly,
       deleteUser,
       addUser,
       isAddUserModalOpen,
@@ -174,9 +175,10 @@ class UsersSection extends React.Component {
       rows[deletedRowIndex] = skeletonRow;
     }
 
+    const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason = clusterHibernating && 'This operation is not available while cluster is hibernating';
     const canNotEditReason = !cluster.canEdit && 'You do not have permission to add a user. Only cluster owners and organization administrators can add users.';
-    const disableReason = hibernatingReason || canNotEditReason;
+    const disableReason = readOnlyReason || hibernatingReason || canNotEditReason;
 
     const addUserBtn = (
       <ButtonWithTooltip
@@ -257,6 +259,7 @@ UsersSection.propTypes = {
   clearAddUserResponses: PropTypes.func.isRequired,
   hasUsers: PropTypes.bool.isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };
 
 export default UsersSection;

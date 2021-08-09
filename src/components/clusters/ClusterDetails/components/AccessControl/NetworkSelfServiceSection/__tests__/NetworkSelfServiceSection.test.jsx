@@ -60,6 +60,7 @@ describe('<NetworkSelfServiceSection />', () => {
         deleteGrantResponse={baseResponse}
         addGrantResponse={baseResponse}
         clusterHibernating={false}
+        isReadOnly={false}
       />,
     );
   });
@@ -171,6 +172,45 @@ describe('<NetworkSelfServiceSection />', () => {
         deleteGrantResponse={baseResponse}
         addGrantResponse={baseResponse}
         clusterHibernating={false}
+        isReadOnly={false}
+      />,
+    );
+    expect(wrapper.find('.access-control-add').props().disableReason).toBeTruthy();
+  });
+
+  it('should disable add button when hibernating', () => {
+    wrapper = shallow(
+      <NetworkSelfServiceSection
+        canEdit
+        getRoles={getRoles}
+        getGrants={getGrants}
+        deleteGrant={deleteGrant}
+        openAddGrantModal={openAddGrantModal}
+        addNotification={addNotification}
+        grants={{ ...baseResponse, fulfilled: true, data: fakeGrants }}
+        deleteGrantResponse={baseResponse}
+        addGrantResponse={baseResponse}
+        clusterHibernating
+        isReadOnly={false}
+      />,
+    );
+    expect(wrapper.find('.access-control-add').props().disableReason).toBeTruthy();
+  });
+
+  it('should disable add button when read_only', () => {
+    wrapper = shallow(
+      <NetworkSelfServiceSection
+        canEdit
+        getRoles={getRoles}
+        getGrants={getGrants}
+        deleteGrant={deleteGrant}
+        openAddGrantModal={openAddGrantModal}
+        addNotification={addNotification}
+        grants={{ ...baseResponse, fulfilled: true, data: fakeGrants }}
+        deleteGrantResponse={baseResponse}
+        addGrantResponse={baseResponse}
+        clusterHibernating={false}
+        isReadOnly
       />,
     );
     expect(wrapper.find('.access-control-add').props().disableReason).toBeTruthy();

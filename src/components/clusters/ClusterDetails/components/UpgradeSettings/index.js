@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
   return {
     cluster,
     clusterHibernating: isHibernating(cluster.state),
+    isReadOnly: cluster?.status?.configuration_mode === 'read_only',
     isAutomatic: valueSelector(state, 'upgrade_policy') === 'automatic',
     schedules: state.clusterUpgrades.schedules,
     upgradeScheduleRequest: state.clusterUpgrades.postedUpgradeSchedule,

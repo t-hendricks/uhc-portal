@@ -22,7 +22,8 @@ import {
 } from '../../IdentityProvidersModal/IdentityProvidersHelper';
 
 function IDPSection({
-  clusterID, clusterConsoleURL, identityProviders, openModal, canEdit, clusterHibernating,
+  clusterID, clusterConsoleURL, identityProviders, openModal,
+  canEdit, clusterHibernating, isReadOnly,
 }) {
   const columns = [
     { title: 'Name', transforms: [cellWidth(30)] },
@@ -80,9 +81,10 @@ function IDPSection({
 
   const hasIDPs = !!identityProviders.clusterIDPList.length;
 
+  const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
   const hibernatingReason = clusterHibernating && 'This operation is not available while cluster is hibernating';
   const canNotEditReason = !canEdit && 'You do not have permission to add an identity provider. Only cluster owners and organization administrators can add identity providers.';
-  const disableReason = hibernatingReason || canNotEditReason;
+  const disableReason = readOnlyReason || hibernatingReason || canNotEditReason;
 
   const addIdpBtn = (
     <ButtonWithTooltip
@@ -146,6 +148,7 @@ IDPSection.propTypes = {
   openModal: PropTypes.func.isRequired,
   canEdit: PropTypes.bool.isRequired,
   clusterHibernating: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };
 
 export default IDPSection;

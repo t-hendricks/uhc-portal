@@ -9,6 +9,7 @@ import { isHibernating } from '../../../common/clusterStates';
 
 function AccessControl({ cluster, clusterConsoleURL, cloudProvider }) {
   const clusterHibernating = isHibernating(cluster.state);
+  const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   return (
     <div className="cluster-details-user-tab-contents">
       <IDPSection
@@ -16,13 +17,19 @@ function AccessControl({ cluster, clusterConsoleURL, cloudProvider }) {
         clusterConsoleURL={clusterConsoleURL}
         canEdit={cluster.canEdit}
         clusterHibernating={clusterHibernating}
+        isReadOnly={isReadOnly}
       />
-      <UsersSection cluster={cluster} clusterHibernating={clusterHibernating} />
+      <UsersSection
+        cluster={cluster}
+        clusterHibernating={clusterHibernating}
+        isReadOnly={isReadOnly}
+      />
       {cloudProvider === 'aws' && !get(cluster, 'ccs.enabled', false) && (
         <NetworkSelfServiceSection
           clusterID={get(cluster, 'id')}
           canEdit={cluster.canEdit}
           clusterHibernating={clusterHibernating}
+          isReadOnly={isReadOnly}
         />
       )}
     </div>

@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
     clusterID: cluster.id,
     canEdit: cluster.canEdit,
     clusterHibernating: isHibernating(cluster.state),
+    isReadOnly: cluster?.status?.configuration_mode === 'read_only',
     initialValues: {
       private_api: APIPrivate,
       private_default_router: clusterRouters.default.isPrivate,

@@ -8,6 +8,30 @@ exports[`<ButtonWithTooltip> with blank disableReason renders 1`] = `
 </Button>
 `;
 
+exports[`<ButtonWithTooltip> with disableReason and isDisabled renders 1`] = `
+<Tooltip
+  content="Parachute required"
+>
+  <span>
+    <Button
+      className="foo"
+      isDisabled={true}
+    >
+      Eject
+    </Button>
+  </span>
+</Tooltip>
+`;
+
+exports[`<ButtonWithTooltip> with isDisabled renders 1`] = `
+<Button
+  className="foo"
+  isDisabled={true}
+>
+  Not clickable
+</Button>
+`;
+
 exports[`<ButtonWithTooltip> with node disableReason renders 1`] = `
 <Tooltip
   content={
