@@ -12,11 +12,13 @@ import { isAssistedInstallCluster } from '../../../../common/isAssistedInstaller
 * for whether it should be disabled.
 * This allows easy chaining `disableIfTooltip(reason1 || reason2 || ...)`.
 *
-* @param tooltip - message to show.  If truthy, also returns `isDisabled: true` prop.
+* @param tooltip - message to show.  If truthy, also returns `isAriaDisabled: true` prop.
 * @param [propsIfEnabled] - return value if `tooltip` was falsy (default {}).
  */
 const disableIfTooltip = (tooltip, propsIfEnabled = {}) => (
-  tooltip ? { isDisabled: true, tooltip } : propsIfEnabled
+  // isDisabled blocks mouse events, so tooltip doesn't show on hover.
+  // isAriaDisabled solved this, https://github.com/patternfly/patternfly-react/pull/6038.
+  tooltip ? { isAriaDisabled: true, tooltip } : propsIfEnabled
 );
 
 /**
