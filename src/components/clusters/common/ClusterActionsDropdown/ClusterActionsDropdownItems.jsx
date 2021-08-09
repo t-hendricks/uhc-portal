@@ -49,8 +49,7 @@ function actionResolver(
   const isClusterInHibernatingProcess = isHibernating(cluster.state);
   const hibernatingMessage = isClusterInHibernatingProcess && (
     <span>
-      This cluster is hibernating;
-      awaken cluster in order to perform actions
+      This cluster is hibernating; resume cluster in order to perform actions
     </span>
   );
   const isClusterHibernatingOrPoweringDown = cluster.state === clusterStates.HIBERNATING
@@ -116,7 +115,7 @@ function actionResolver(
     const hibernateClusterProps = {
       ...hibernateClusterBaseProps,
       title: 'Hibernate cluster',
-      ...disableIfTooltip(uninstallingMessage || notReadyMessage || readOnlyMessage,
+      ...disableIfTooltip(uninstallingMessage || readOnlyMessage || notReadyMessage,
         {
           onClick: () => openModal(modals.HIBERNATE_CLUSTER, modalData),
         }),
@@ -140,25 +139,29 @@ function actionResolver(
     ...baseProps,
     title: 'Edit load balancers and persistent storage',
     key: getKey('scalecluster'),
-    ...disableIfTooltip(uninstallingMessage || notReadyMessage || readOnlyMessage,
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
       {
         onClick: () => openModal(
           modals.SCALE_CLUSTER, { ...cluster, shouldDisplayClusterName: inClusterList },
         ),
-      }),
+      },
+    ),
   });
 
   const getEditNodeCountProps = () => ({
     ...baseProps,
     title: 'Edit node count',
     key: getKey('editnodecount'),
-    ...disableIfTooltip(uninstallingMessage || notReadyMessage || readOnlyMessage,
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
       {
         onClick: () => openModal(
           modals.EDIT_NODE_COUNT,
           { cluster, isDefaultMachinePool: true, shouldDisplayClusterName: inClusterList },
         ),
-      }),
+      },
+    ),
   });
 
   const getEditCCSCredentialsProps = () => ({

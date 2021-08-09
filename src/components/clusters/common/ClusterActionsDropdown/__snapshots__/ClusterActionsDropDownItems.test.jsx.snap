@@ -118,7 +118,7 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
     title="Open console"
     tooltip={
       <span>
-        This cluster is hibernating; awaken cluster in order to perform actions
+        This cluster is hibernating; resume cluster in order to perform actions
       </span>
     }
   >
@@ -139,7 +139,7 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
     title="Edit load balancers and persistent storage"
     tooltip={
       <span>
-        This cluster is hibernating; awaken cluster in order to perform actions
+        This cluster is hibernating; resume cluster in order to perform actions
       </span>
     }
   >
@@ -152,7 +152,7 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
     title="Edit node count"
     tooltip={
       <span>
-        This cluster is hibernating; awaken cluster in order to perform actions
+        This cluster is hibernating; resume cluster in order to perform actions
       </span>
     }
   >
@@ -173,7 +173,7 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
     title="Delete cluster"
     tooltip={
       <span>
-        This cluster is hibernating; awaken cluster in order to perform actions
+        This cluster is hibernating; resume cluster in order to perform actions
       </span>
     }
   >
