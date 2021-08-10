@@ -1,18 +1,18 @@
 import React from 'react';
 import cx from 'classnames';
 import {
-  Button, Split, SplitItem, Title, Tooltip,
+  Split, SplitItem, Title,
 } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 
 import './FlatRadioButton.scss';
+import ButtonWithTooltip from './ButtonWithTooltip';
 
 const BASE_CLASS_NAME = 'ocm-flat-radio-button';
 
 function FlatRadioButton({
-  isDisabled = false,
   isSelected = false,
-  tooltip = undefined,
+  disableReason = undefined,
   value = '',
   onChange,
   titleText,
@@ -28,9 +28,9 @@ function FlatRadioButton({
     onChange(value);
   };
 
-  const button = (
-    <Button
-      isDisabled={isDisabled}
+  return (
+    <ButtonWithTooltip
+      disableReason={disableReason}
       onClick={onClick}
       className={className}
       variant="tertiary"
@@ -47,33 +47,19 @@ function FlatRadioButton({
           {secondaryText && secondaryText}
         </SplitItem>
       </Split>
-    </Button>
-  );
-
-  if (!tooltip) {
-    return button;
-  }
-  return (
-    <Tooltip content={tooltip}>
-      <div className="ocm-flat-radio-button-disabled">
-        {/* we have to have a div here since disabled buttons
-        don't react to pointer events, and thus can't have tooltips */}
-        {button}
-      </div>
-    </Tooltip>
+    </ButtonWithTooltip>
   );
 }
 
 FlatRadioButton.propTypes = {
   icon: PropTypes.node,
-  isDisabled: PropTypes.bool,
   isSelected: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   secondaryText: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   titleText: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
   value: PropTypes.string.isRequired,
   extraClass: PropTypes.string,
-  tooltip: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
+  disableReason: PropTypes.node,
 };
 
 export default FlatRadioButton;

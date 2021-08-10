@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<FlatRadioButton /> should render normally 1`] = `
-<Button
+<ButtonWithTooltip
   className="ocm-flat-radio-button"
-  isDisabled={false}
   onClick={[Function]}
   variant="tertiary"
 >
@@ -22,13 +21,13 @@ exports[`<FlatRadioButton /> should render normally 1`] = `
       test
     </SplitItem>
   </Split>
-</Button>
+</ButtonWithTooltip>
 `;
 
 exports[`<FlatRadioButton /> should render when disabled 1`] = `
-<Button
+<ButtonWithTooltip
   className="ocm-flat-radio-button"
-  isDisabled={true}
+  disableReason="out of cheese"
   onClick={[Function]}
   variant="tertiary"
 >
@@ -47,13 +46,12 @@ exports[`<FlatRadioButton /> should render when disabled 1`] = `
       test
     </SplitItem>
   </Split>
-</Button>
+</ButtonWithTooltip>
 `;
 
 exports[`<FlatRadioButton /> should render when selected 1`] = `
-<Button
+<ButtonWithTooltip
   className="ocm-flat-radio-button selected"
-  isDisabled={false}
   onClick={[Function]}
   variant="tertiary"
 >
@@ -72,38 +70,30 @@ exports[`<FlatRadioButton /> should render when selected 1`] = `
       test
     </SplitItem>
   </Split>
-</Button>
+</ButtonWithTooltip>
 `;
 
 exports[`<FlatRadioButton /> should render with tooltip 1`] = `
-<Tooltip
-  content="hello world!"
+<ButtonWithTooltip
+  className="ocm-flat-radio-button"
+  onClick={[Function]}
+  tooltip="hello world!"
+  variant="tertiary"
 >
-  <div
-    className="ocm-flat-radio-button-disabled"
+  <Split
+    hasGutter={true}
   >
-    <Button
-      className="ocm-flat-radio-button"
-      isDisabled={false}
-      onClick={[Function]}
-      variant="tertiary"
+    <SplitItem
+      isFilled={true}
     >
-      <Split
-        hasGutter={true}
+      <Title
+        headingLevel="h4"
+        size="lg"
       >
-        <SplitItem
-          isFilled={true}
-        >
-          <Title
-            headingLevel="h4"
-            size="lg"
-          >
-            hello
-          </Title>
-          test
-        </SplitItem>
-      </Split>
-    </Button>
-  </div>
-</Tooltip>
+        hello
+      </Title>
+      test
+    </SplitItem>
+  </Split>
+</ButtonWithTooltip>
 `;

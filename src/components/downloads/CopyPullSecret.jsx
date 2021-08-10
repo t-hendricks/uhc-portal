@@ -49,7 +49,7 @@ class CopyPullSecret extends React.Component {
           variant="link"
           type="button"
           tabIndex={0}
-          isDisabled={isDisabled}
+          isAriaDisabled={isDisabled}
           icon={<CopyIcon />}
           onClick={() => trackPendo('OCP-Copy-PullSecret', pendoID)}
         >

@@ -21,7 +21,7 @@ describe('<CopyPullSecret />', () => {
           expect(copy.length).toEqual(1);
           const copyButton = copy.find(Button);
           expect(copyButton.length).toEqual(1);
-          expect(copyButton.props().isDisabled).toEqual(false);
+          expect(copyButton.props().isAriaDisabled).toBeFalsy();
         });
       });
     });
@@ -39,7 +39,7 @@ describe('<CopyPullSecret />', () => {
         it('should disable Copy', () => {
           const buttons = wrapper.find(Button);
           expect(buttons.length).toEqual(1);
-          expect(buttons.at(0).props().isDisabled).toEqual(true);
+          expect(buttons.at(0).props().isAriaDisabled).toEqual(true);
         });
       });
     });

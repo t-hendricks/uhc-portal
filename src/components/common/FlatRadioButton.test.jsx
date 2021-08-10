@@ -12,7 +12,7 @@ const props = {
 
 describe('<FlatRadioButton />', () => {
   it('should render when disabled', () => {
-    const wrapper = shallow(<FlatRadioButton isDisabled {...props} />);
+    const wrapper = shallow(<FlatRadioButton disableReason="out of cheese" {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
   it('should render when selected', () => {
