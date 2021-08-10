@@ -15,7 +15,6 @@ import TransferClusterOwnershipDialog from './TransferClusterOwnershipDialog';
 import UpgradeTrialClusterDialog from './UpgradeTrialClusterDialog';
 import DeleteClusterDialog from './DeleteClusterDialog';
 import UpgradeWizard from './Upgrades/UpgradeWizard';
-import EditCCSCredentialsDialog from './EditCCSCredentialsDialog';
 import ConnectedModal from '../../common/Modal/ConnectedModal';
 
 function CommonClusterModals({ onClose, onClusterDeleted }) {
@@ -35,10 +34,6 @@ function CommonClusterModals({ onClose, onClusterDeleted }) {
       <ConnectedModal ModalComponent={ResumeClusterModal} onClose={onClose} />
       <ConnectedModal
         ModalComponent={UnarchiveClusterDialog}
-        onClose={onClose}
-      />
-      <ConnectedModal
-        ModalComponent={EditCCSCredentialsDialog}
         onClose={onClose}
       />
       <ConnectedModal
