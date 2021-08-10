@@ -128,7 +128,6 @@ class CreateOSDForm extends React.Component {
       privateClusterSelected,
       product,
       isAutomaticUpgrade,
-      canEnableEtcdEncryption,
       selectedRegion,
       installToVPCSelected,
       canAutoScale,
@@ -296,33 +295,27 @@ class CreateOSDForm extends React.Component {
           installToVPCSelected={installToVPCSelected}
         />
         {/* Encryption */}
-        {(canEnableEtcdEncryption || (isGCP && isBYOCForm)) && (
-          <>
-            <GridItem span={12}>
-              <Title headingLevel="h3">Encryption</Title>
-            </GridItem>
-          </>
-        )}
-        {canEnableEtcdEncryption && (
-          <FormGroup
-            fieldId="etcd_encryption"
-            id="etcdEncryption"
-          >
-            <Field
-              component={ReduxCheckbox}
-              name="etcd_encryption"
-              label="Enable etcd encryption"
-              extendedHelpText={(
-                <>
-                  {constants.enableEtcdHint}
-                  {' '}
-                  <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
-                </>
+        <GridItem span={12}>
+          <Title headingLevel="h3">Encryption</Title>
+        </GridItem>
+        <FormGroup
+          fieldId="etcd_encryption"
+          id="etcdEncryption"
+        >
+          <Field
+            component={ReduxCheckbox}
+            name="etcd_encryption"
+            label="Enable etcd encryption"
+            extendedHelpText={(
+              <>
+                {constants.enableEtcdHint}
+                {' '}
+                <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
+              </>
               )}
-            />
-            <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
-          </FormGroup>
-        )}
+          />
+          <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
+        </FormGroup>
         {(isGCP && isBYOCForm) && (
 
           <GCPClusterEncryption
@@ -394,7 +387,6 @@ CreateOSDForm.propTypes = {
   privateClusterSelected: PropTypes.bool.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   isAutomaticUpgrade: PropTypes.bool,
-  canEnableEtcdEncryption: PropTypes.bool,
   customerManagedEncryptionSelected: PropTypes.bool,
   selectedRegion: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
