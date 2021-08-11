@@ -64,6 +64,7 @@ class OnRuleDisableFeedbackModal extends React.Component {
         title="Disable recommendation"
         isOpen={isOpen}
         onClose={this.onClose}
+        ouiaId="ruleDisableModal"
         actions={[
           <Button
             key="confirm"

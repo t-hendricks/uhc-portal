@@ -12,7 +12,7 @@ import AdvisorEmptyState from './AdvisorEmptyState';
 import './InsightsAdvisorCard.scss';
 
 const InsightsAdvisorCard = ({ overview, groups }) => (
-  <Card className="ocm-insights--advisor-card">
+  <Card className="ocm-insights--advisor-card" ouiaId="insightsAdvisor">
     <CardBody className="ocm-insights--advisor-card__body">
       {!overview.clusters_hit || overview.clusters_hit === 0 ? (
         <AdvisorEmptyState />

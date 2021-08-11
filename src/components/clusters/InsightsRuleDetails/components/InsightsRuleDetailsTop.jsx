@@ -67,7 +67,7 @@ function InsightsRuleDetailsTop(props) {
             actions={(
               <span id="cl-details-btns">
                 {actions}
-                <RefreshButton id="refresh" autoRefresh refreshFunc={refreshFunc} />
+                <RefreshButton id="refresh" ouiaId="refresh" autoRefresh refreshFunc={refreshFunc} />
               </span>
             )}
             createdAt={<DateFormat date={rule.created_at} />}

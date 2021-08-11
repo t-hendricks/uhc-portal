@@ -265,7 +265,7 @@ class InsightsRuleDetails extends Component {
           isRuleDisabled
             ? (
               <div>
-                <Card>
+                <Card ouiaId="recommendationDisabledCard">
                   <CardTitle className="disabled-recommendation-title">Recommendation is disabled</CardTitle>
                   <CardBody>
                     <div className="disabled-recommendation-message">
@@ -300,7 +300,7 @@ class InsightsRuleDetails extends Component {
                   aria-label="How to remediate"
                   ouiaId="resolutionTabContent"
                 >
-                  <Card>
+                  <Card ouiaId="resolution">
                     <CardBody>
                       { resolution ? <Markdown template={resolution} definitions={extraData} />
                         : <EmptyRemediationInfo />}
@@ -315,7 +315,7 @@ class InsightsRuleDetails extends Component {
                   ouiaId="reasonTabContent"
                   hidden
                 >
-                  <Card>
+                  <Card ouiaId="reason">
                     <CardBody>
                       { reason ? <Markdown template={reason} definitions={extraData} />
                         : <EmptyRemediationInfo />}
@@ -331,7 +331,7 @@ class InsightsRuleDetails extends Component {
                   ouiaId="moreinfoTabContent"
                   hidden
                 >
-                  <Card>
+                  <Card ouiaId="moreinfo">
                     <CardBody>
                       <Markdown template={moreInfo} definitions={extraData} />
                     </CardBody>
