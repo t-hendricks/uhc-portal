@@ -86,7 +86,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
                   <Link
                     to="/install/metal"
                   >
-                    Bare Metal
+                    Bare Metal (x86_64)
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
@@ -211,7 +211,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
                   <Link
                     to="/install/metal"
                   >
-                    Bare Metal
+                    Bare Metal (x86_64)
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",

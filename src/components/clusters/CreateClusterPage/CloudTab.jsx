@@ -383,7 +383,7 @@ const runItYourself = () => {
   const columns = ['Cloud provider', 'Installation options'];
   const rows = [
     [
-      <><Link to="/install/aws">AWS</Link></>,
+      <><Link to="/install/aws">AWS (x86_64)</Link></>,
       'Full stack automation and pre-existing infrastructure',
     ],
     [
