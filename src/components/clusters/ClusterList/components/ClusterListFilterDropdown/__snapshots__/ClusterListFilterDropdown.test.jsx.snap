@@ -16,6 +16,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
             isValid={true}
             label="OCP"
             onChange={[Function]}
+            ouiaSafe={true}
           />
         </DropdownItem>
         <DropdownItem>
@@ -27,6 +28,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
             isValid={true}
             label="OSD"
             onChange={[Function]}
+            ouiaSafe={true}
           />
         </DropdownItem>
         <DropdownItem>
@@ -38,6 +40,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
             isValid={true}
             label="ROSA"
             onChange={[Function]}
+            ouiaSafe={true}
           />
         </DropdownItem>
         <DropdownItem>
@@ -49,6 +52,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
             isValid={true}
             label="ARO"
             onChange={[Function]}
+            ouiaSafe={true}
           />
         </DropdownItem>
       </DropdownGroup>,

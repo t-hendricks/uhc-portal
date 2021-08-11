@@ -7,7 +7,7 @@ exports[`<ClusterActionsDropdown /> admin console url does not exist should rend
     Array [
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Open console"
         tooltip={
           <span>
@@ -53,7 +53,7 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
     Array [
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Open console"
         tooltip={
           <span>
@@ -72,7 +72,7 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
       </DropdownItem>,
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Edit load balancers and persistent storage"
         tooltip={
           <span>
@@ -84,7 +84,7 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
       </DropdownItem>,
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Edit node count"
         tooltip={
           <span>
@@ -96,7 +96,7 @@ exports[`<ClusterActionsDropdown /> cluster with state not ready should render (
       </DropdownItem>,
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Hibernate cluster"
         tooltip={
           <span>
@@ -199,7 +199,7 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
     Array [
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Open console"
         tooltip={
           <span>
@@ -211,7 +211,7 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
       </DropdownItem>,
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Edit display name"
         tooltip={
           <span>
@@ -223,7 +223,7 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
       </DropdownItem>,
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Edit load balancers and persistent storage"
         tooltip={
           <span>
@@ -235,7 +235,7 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
       </DropdownItem>,
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Edit node count"
         tooltip={
           <span>
@@ -247,7 +247,7 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
       </DropdownItem>,
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Hibernate cluster"
         tooltip={
           <span>
@@ -259,7 +259,7 @@ exports[`<ClusterActionsDropdown /> cluster with state uninstalling should rende
       </DropdownItem>,
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Delete cluster"
         tooltip={
           <span>
@@ -320,7 +320,7 @@ exports[`<ClusterActionsDropdown /> self managed cluster should render (self man
     Array [
       <DropdownItem
         component="button"
-        isDisabled={true}
+        isAriaDisabled={true}
         title="Open console"
         tooltip={
           <span>
