@@ -21,12 +21,10 @@ import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitorin
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 
 import BasicFieldsSection from '../../CreateOSDForm/FormSections/BasicFieldsSection';
-import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
 
 function ClusterSettingsScreen({
   isByoc,
   isMultiAz,
-  isAutomaticUpgrade,
   customerManagedEncryptionSelected,
   selectedRegion,
   cloudProviderID,
@@ -94,17 +92,9 @@ function ClusterSettingsScreen({
           </>
         )}
         <UserWorkloadMonitoringSection parent="create" disableUVM={false} />
-        <GridItem>
-          <Title headingLevel="h3" className="clusterupdatespace">Cluster updates</Title>
+        <GridItem span={12}>
+          <Title headingLevel="h3">Encryption</Title>
         </GridItem>
-        <UpgradeSettingsFields
-          isAutomatic={isAutomaticUpgrade}
-        />
-        <>
-          <GridItem span={12}>
-            <Title headingLevel="h3">Encryption</Title>
-          </GridItem>
-        </>
         <FormGroup
           fieldId="etcd_encryption"
           id="etcdEncryption"
@@ -140,7 +130,6 @@ ClusterSettingsScreen.propTypes = {
   isByoc: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
-  isAutomaticUpgrade: PropTypes.bool,
   customerManagedEncryptionSelected: PropTypes.bool,
   product: PropTypes.string,
   billingModel: PropTypes.string,
