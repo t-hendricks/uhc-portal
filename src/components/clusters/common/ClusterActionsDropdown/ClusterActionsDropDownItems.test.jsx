@@ -51,7 +51,7 @@ describe('Cluster Actions Dropdown Items', () => {
 
     it('menu buttons should be enabled', () => {
       const actions = wrapper.find(DropdownItem).map(
-        a => [a.props().title, a.props().isDisabled === true],
+        a => [a.props().title, a.props().isAriaDisabled === true],
       );
       expect(actions).toEqual([
         ['Open console', false],
@@ -91,7 +91,7 @@ describe('Cluster Actions Dropdown Items', () => {
 
     it('menu buttons should be disabled', () => {
       const actions = wrapper.find(DropdownItem).map(
-        a => [a.props().title, a.props().isDisabled === true],
+        a => [a.props().title, a.props().isAriaDisabled === true],
       );
       expect(actions).toEqual([
         ['Open console', true],
@@ -113,7 +113,7 @@ describe('Cluster Actions Dropdown Items', () => {
 
     it('disable open console & edit cluster, enable edit display name and delete cluster', () => {
       const actions = wrapper.find(DropdownItem).map(
-        a => [a.props().title, a.props().isDisabled === true],
+        a => [a.props().title, a.props().isAriaDisabled === true],
       );
       expect(actions).toEqual([
         ['Open console', true],
@@ -137,7 +137,7 @@ describe('Cluster Actions Dropdown Items', () => {
 
     it('disable open console & edit cluster, enable edit display name and delete cluster', () => {
       const actions = wrapper.find(DropdownItem).map(
-        a => [a.props().title, a.props().isDisabled === true],
+        a => [a.props().title, a.props().isAriaDisabled === true],
       );
       expect(actions).toEqual([
         ['Open console', true],
@@ -161,7 +161,7 @@ describe('Cluster Actions Dropdown Items', () => {
 
     it('disable provisioning actions, enable console and edit display name', () => {
       const actions = wrapper.find(DropdownItem).map(
-        a => [a.props().title, a.props().isDisabled === true],
+        a => [a.props().title, a.props().isAriaDisabled === true],
       );
       expect(actions).toEqual([
         ['Open console', false],

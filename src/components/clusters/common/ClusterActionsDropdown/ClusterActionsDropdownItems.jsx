@@ -12,11 +12,13 @@ import { isAssistedInstallCluster } from '../../../../common/isAssistedInstaller
 * for whether it should be disabled.
 * This allows easy chaining `disableIfTooltip(reason1 || reason2 || ...)`.
 *
-* @param tooltip - message to show.  If truthy, also returns `isDisabled: true` prop.
+* @param tooltip - message to show.  If truthy, also returns `isAriaDisabled: true` prop.
 * @param [propsIfEnabled] - return value if `tooltip` was falsy (default {}).
  */
 const disableIfTooltip = (tooltip, propsIfEnabled = {}) => (
-  tooltip ? { isDisabled: true, tooltip } : propsIfEnabled
+  // isDisabled blocks mouse events, so tooltip doesn't show on hover.
+  // isAriaDisabled solved this, https://github.com/patternfly/patternfly-react/pull/6038.
+  tooltip ? { isAriaDisabled: true, tooltip } : propsIfEnabled
 );
 
 /**
@@ -47,8 +49,7 @@ function actionResolver(
   const isClusterInHibernatingProcess = isHibernating(cluster.state);
   const hibernatingMessage = isClusterInHibernatingProcess && (
     <span>
-      This cluster is hibernating;
-      awaken cluster in order to perform actions
+      This cluster is hibernating; resume cluster in order to perform actions
     </span>
   );
   const isClusterHibernatingOrPoweringDown = cluster.state === clusterStates.HIBERNATING
@@ -58,18 +59,6 @@ function actionResolver(
     <span>
       This cluster is powering down; you will be able to resume after it reaches hibernating state.
     </span>
-  );
-  const isClusterErrorInAccountClaimPhase = cluster.state === clusterStates.ERROR
-    // eslint-disable-next-line camelcase
-    && !cluster.status?.dns_ready;
-  // TODO: should this case use a more specific message?
-  const errorInAccountClaimPhaseMessage = isClusterErrorInAccountClaimPhase && (
-    <span>This cluster is not ready</span>
-  );
-  const hasAccountId = cluster.managed && cluster.aws && cluster.aws.account_id;
-  // TODO: should this case use a more specific message?
-  const noAccountIdMessage = !hasAccountId && (
-    <span>This cluster is not ready</span>
   );
 
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
@@ -114,7 +103,7 @@ function actionResolver(
     const hibernateClusterProps = {
       ...hibernateClusterBaseProps,
       title: 'Hibernate cluster',
-      ...disableIfTooltip(uninstallingMessage || notReadyMessage || readOnlyMessage,
+      ...disableIfTooltip(uninstallingMessage || readOnlyMessage || notReadyMessage,
         {
           onClick: () => openModal(modals.HIBERNATE_CLUSTER, modalData),
         }),
@@ -138,37 +127,27 @@ function actionResolver(
     ...baseProps,
     title: 'Edit load balancers and persistent storage',
     key: getKey('scalecluster'),
-    ...disableIfTooltip(uninstallingMessage || notReadyMessage || readOnlyMessage,
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
       {
         onClick: () => openModal(
           modals.SCALE_CLUSTER, { ...cluster, shouldDisplayClusterName: inClusterList },
         ),
-      }),
+      },
+    ),
   });
 
   const getEditNodeCountProps = () => ({
     ...baseProps,
     title: 'Edit node count',
     key: getKey('editnodecount'),
-    ...disableIfTooltip(uninstallingMessage || notReadyMessage || readOnlyMessage,
+    ...disableIfTooltip(
+      uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
       {
         onClick: () => openModal(
           modals.EDIT_NODE_COUNT,
           { cluster, isDefaultMachinePool: true, shouldDisplayClusterName: inClusterList },
         ),
-      }),
-  });
-
-  const getEditCCSCredentialsProps = () => ({
-    ...baseProps,
-    title: 'Edit AWS credentials',
-    key: getKey('editccscredentials'),
-    ...disableIfTooltip(
-      uninstallingMessage || errorInAccountClaimPhaseMessage || noAccountIdMessage
-      || readOnlyMessage,
-      {
-        onClick: () => openModal(modals.EDIT_CCS_CREDENTIALS,
-          { ...cluster, shouldDisplayClusterName: inClusterList }),
       },
     ),
   });
@@ -327,7 +306,6 @@ function actionResolver(
   const editSubscriptionSettingsProps = getEditSubscriptionSettingsProps();
   const transferClusterOwnershipProps = getTransferClusterOwnershipProps();
   const upgradeTrialClusterProps = getUpgradeTrialClusterProps();
-  const editccscredentialsProps = getEditCCSCredentialsProps();
   const hibernateClusterProps = getHibernateClusterProps();
 
   const showDelete = cluster.canDelete && cluster.managed;
@@ -349,9 +327,6 @@ function actionResolver(
   const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership
     && isAllowedProducts
     && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
-  // eslint-disable-next-line max-len
-  // const showccscredentials = cluster.ccs?.enabled && cluster.cloud_provider && cluster.cloud_provider.id !== 'gcp';
-  const showccscredentials = false; // Temporary until backend is fixed
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [
@@ -367,7 +342,6 @@ function actionResolver(
     showUnarchive && unarchiveClusterItemProps,
     showEditSubscriptionSettings && editSubscriptionSettingsProps,
     showTransferClusterOwnership && transferClusterOwnershipProps,
-    showccscredentials && editccscredentialsProps,
   ].filter(Boolean);
 }
 

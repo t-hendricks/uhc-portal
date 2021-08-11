@@ -4,7 +4,7 @@ exports[`Cluster Actions Dropdown Items admin console url does not exist should 
 <Fragment>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="undefined.menu.adminconsole"
     title="Open console"
     tooltip={
@@ -56,7 +56,7 @@ exports[`Cluster Actions Dropdown Items cluster configuration_mode read_only sho
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.scalecluster"
     title="Edit load balancers and persistent storage"
     tooltip={
@@ -69,7 +69,7 @@ exports[`Cluster Actions Dropdown Items cluster configuration_mode read_only sho
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.editnodecount"
     title="Edit node count"
     tooltip={
@@ -82,7 +82,7 @@ exports[`Cluster Actions Dropdown Items cluster configuration_mode read_only sho
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.hibernatecluster"
     title="Hibernate cluster"
     tooltip={
@@ -95,7 +95,7 @@ exports[`Cluster Actions Dropdown Items cluster configuration_mode read_only sho
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.deletecluster"
     title="Delete cluster"
     tooltip={
@@ -113,12 +113,12 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
 <Fragment>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.adminconsole"
     title="Open console"
     tooltip={
       <span>
-        This cluster is hibernating; awaken cluster in order to perform actions
+        This cluster is hibernating; resume cluster in order to perform actions
       </span>
     }
   >
@@ -134,12 +134,12 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.scalecluster"
     title="Edit load balancers and persistent storage"
     tooltip={
       <span>
-        This cluster is not ready
+        This cluster is hibernating; resume cluster in order to perform actions
       </span>
     }
   >
@@ -147,12 +147,12 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.editnodecount"
     title="Edit node count"
     tooltip={
       <span>
-        This cluster is not ready
+        This cluster is hibernating; resume cluster in order to perform actions
       </span>
     }
   >
@@ -168,12 +168,12 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.deletecluster"
     title="Delete cluster"
     tooltip={
       <span>
-        This cluster is hibernating; awaken cluster in order to perform actions
+        This cluster is hibernating; resume cluster in order to perform actions
       </span>
     }
   >
@@ -186,7 +186,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
 <Fragment>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.adminconsole"
     title="Open console"
     tooltip={
@@ -207,7 +207,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.scalecluster"
     title="Edit load balancers and persistent storage"
     tooltip={
@@ -220,7 +220,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.editnodecount"
     title="Edit node count"
     tooltip={
@@ -233,7 +233,7 @@ exports[`Cluster Actions Dropdown Items cluster with state not ready should rend
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.hibernatecluster"
     title="Hibernate cluster"
     tooltip={
@@ -369,7 +369,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
 <Fragment>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.adminconsole"
     title="Open console"
     tooltip={
@@ -382,7 +382,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.editdisplayname"
     title="Edit display name"
     tooltip={
@@ -395,7 +395,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.scalecluster"
     title="Edit load balancers and persistent storage"
     tooltip={
@@ -408,7 +408,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.editnodecount"
     title="Edit node count"
     tooltip={
@@ -421,7 +421,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.hibernatecluster"
     title="Hibernate cluster"
     tooltip={
@@ -434,7 +434,7 @@ exports[`Cluster Actions Dropdown Items cluster with state uninstalling should r
   </DropdownItem>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="1.menu.deletecluster"
     title="Delete cluster"
     tooltip={
@@ -467,7 +467,7 @@ exports[`Cluster Actions Dropdown Items self managed cluster should render (self
 <Fragment>
   <DropdownItem
     component="button"
-    isDisabled={true}
+    isAriaDisabled={true}
     key="undefined.menu.adminconsole"
     title="Open console"
     tooltip={

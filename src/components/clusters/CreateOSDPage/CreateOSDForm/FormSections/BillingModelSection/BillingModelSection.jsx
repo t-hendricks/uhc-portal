@@ -65,6 +65,14 @@ function BillingModelSection({
 
   const hasMarketplaceSubscription = hasMarketplaceBYOCQuota || hasMarketplaceRhInfraQuota;
 
+  // Select marketplace billing if user only has marketplace quota
+  // Also, if the selected default billing model is disabled
+  // Default to marketplace
+  if ((!showOSDTrial || defaultBillingModel === STANDARD)
+  && hasMarketplaceQuota && !hasStandardOSDQuota && hasMarketplaceSubscription) {
+    defaultBillingModel = billingModels.MARKETPLACE;
+  }
+
   let isRhInfraQuotaDisabled;
   let isBYOCQuotaDisabled;
   if (defaultBillingModel === STANDARD || defaultBillingModel === 'standard-trial') {
@@ -73,11 +81,6 @@ function BillingModelSection({
   } else {
     isRhInfraQuotaDisabled = !hasMarketplaceRhInfraQuota;
     isBYOCQuotaDisabled = !hasMarketplaceBYOCQuota;
-  }
-
-  // Select marketplace billing if user only has marketplace quota
-  if (hasMarketplaceQuota && !hasStandardOSDQuota && hasMarketplaceSubscription) {
-    defaultBillingModel = billingModels.MARKETPLACE;
   }
 
   const onBillingModelChange = (_, value) => {
