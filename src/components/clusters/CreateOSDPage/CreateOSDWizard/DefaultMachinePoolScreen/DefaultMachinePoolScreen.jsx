@@ -51,7 +51,7 @@ function DefaultMachinePoolScreen({
             After cluster creation, your selected default machine pool instance type is permanent.
           </Text>
         </GridItem>
-        <GridItem span={4}>
+        <GridItem sm={12} md={5} lg={4}>
           <FormGroup
             label="Worker node instance type"
             isRequired
@@ -71,8 +71,8 @@ function DefaultMachinePoolScreen({
             />
           </FormGroup>
         </GridItem>
-        <GridItem span={8} />
-        <GridItem span={4}>
+        <GridItem md={7} lg={8} />
+        <GridItem sm={12} md={5} lg={4}>
           {canAutoScale
           && (
           <AutoScaleSection
@@ -111,10 +111,10 @@ function DefaultMachinePoolScreen({
           <ExpandableSection
             toggleText="Edit node labels"
           >
-            <GridItem span={4} className="pf-u-mb-md">
+            <GridItem className="pf-u-mb-md">
               <Title headingLevel="h3">Node labels</Title>
             </GridItem>
-            <GridItem span={4}>
+            <GridItem sm={12} md={5} lg={4}>
               <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
             </GridItem>
           </ExpandableSection>

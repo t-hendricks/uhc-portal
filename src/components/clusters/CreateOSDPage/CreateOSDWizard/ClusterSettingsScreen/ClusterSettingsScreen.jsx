@@ -39,7 +39,7 @@ function ClusterSettingsScreen({
   return (
     <Form onSubmit={() => false}>
       <Grid hasGutter>
-        <GridItem span={12}>
+        <GridItem>
           <Title headingLevel="h3">Cluster details</Title>
         </GridItem>
         <BasicFieldsSection
@@ -54,7 +54,7 @@ function ClusterSettingsScreen({
         />
         { !isByoc && (
           <>
-            <GridItem span={4}>
+            <GridItem sm={12} md={5} lg={4}>
               <FormGroup
                 label="Persistent storage"
                 fieldId="persistent_storage"
@@ -72,8 +72,8 @@ function ClusterSettingsScreen({
                 />
               </FormGroup>
             </GridItem>
-            <GridItem span={8} />
-            <GridItem span={4}>
+            <GridItem md={7} lg={8} />
+            <GridItem sm={12} md={5} lg={4}>
               <FormGroup
                 label="Load balancers"
                 fieldId="load_balancers"
@@ -94,7 +94,7 @@ function ClusterSettingsScreen({
           </>
         )}
         <UserWorkloadMonitoringSection parent="create" disableUVM={false} />
-        <GridItem span={12}>
+        <GridItem>
           <Title headingLevel="h3" className="clusterupdatespace">Cluster updates</Title>
         </GridItem>
         <UpgradeSettingsFields
