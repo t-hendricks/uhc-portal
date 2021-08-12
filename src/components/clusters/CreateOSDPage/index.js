@@ -22,7 +22,6 @@ import {
   awsQuotaSelector,
   gcpQuotaSelector,
 } from '../common/quotaSelectors';
-import canEnableEtcdSelector from './CreateOsdPageSelectors';
 
 import submitOSDRequest from './submitOSDRequest';
 
@@ -92,8 +91,6 @@ const mapStateToProps = (state, ownProps) => {
         gcp: gcpQuotaSelector(state, OSD, MARKETPLACE),
       },
     },
-
-    canEnableEtcdEncryption: canEnableEtcdSelector(state),
 
     privateClusterSelected,
     product,
