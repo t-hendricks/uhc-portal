@@ -63,7 +63,7 @@ function ReviewClusterSecreen({ formValues, isPending }) {
     'cloud_provider', 'name', 'region', 'multi_az',
     !isByoc && 'persistent_storage',
     !isByoc && 'load_balancers',
-    'upgrade_policy', 'node_drain_grace_period', 'etcd_encryption',
+    'etcd_encryption',
   ].filter(Boolean);
   if (isPending) {
     return (
@@ -123,6 +123,13 @@ function ReviewClusterSecreen({ formValues, isPending }) {
         {clusterSpecDescriptionItem({ name: 'autoscalingEnabled', formValues })}
         {/* TODO: autoscaling details */}
         {clusterSpecDescriptionItem({ name: 'nodes_compute', formValues })}
+      </DescriptionList>
+      <Title headingLevel="h3">
+        Updates
+      </Title>
+      <DescriptionList isHorizontal>
+        {clusterSpecDescriptionItem({ name: 'upgrade_policy', formValues })}
+        {clusterSpecDescriptionItem({ name: 'node_drain_grace_period', formValues })}
       </DescriptionList>
     </div>
   );

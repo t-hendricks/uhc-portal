@@ -25,9 +25,10 @@ import { shouldRefetchQuota } from '../../../../common/helpers';
 import BillingModelScreen from './BillingModelScreen';
 import CloudProviderScreen from './CloudProviderScreen';
 import ClusterSettingsScreen from './ClusterSettingsScreen';
-import DefaultMachinePoolScreen from './DefaultMachinePoolScreen';
+import MachinePoolScreen from './MachinePoolScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
 import NetworkScreen from './NetworkScreen';
+import UpdatesScreen from './UpdatesScreen';
 import config from '../../../../config';
 
 import './createOSDWizard.scss';
@@ -124,30 +125,37 @@ class CreateOSDWizard extends React.Component {
             enableNext: isValid,
             canJumpTo: stepIdReached >= 3,
           },
+          {
+            id: 4,
+            name: 'Machine pool',
+            component: <MachinePoolScreen />,
+            enableNext: isValid,
+            canJumpTo: stepIdReached >= 4,
+          },
         ],
         enableNext: isValid,
       },
       {
-        id: 4,
+        id: 5,
         name: 'Networking',
         component: <NetworkScreen />,
-        enableNext: isValid,
-        canJumpTo: stepIdReached >= 4,
-      },
-      {
-        id: 5,
-        name: 'Default machine pool',
-        component: <DefaultMachinePoolScreen />,
         enableNext: isValid,
         canJumpTo: stepIdReached >= 5,
       },
       {
         id: 6,
+        name: 'Updates',
+        component: <UpdatesScreen />,
+        enableNext: isValid,
+        canJumpTo: stepIdReached >= 6,
+      },
+      {
+        id: 7,
         name: 'Review and create',
         component: <ReviewClusterScreen isPending={createClusterResponse.pending} />,
         nextButtonText: 'Create cluster',
         enableNext: isValid && !createClusterResponse.pending,
-        canJumpTo: stepIdReached >= 6 && isValid,
+        canJumpTo: stepIdReached >= 7 && isValid,
       },
     ];
     const ariaTitle = 'Create OpenShift Dedicated cluster wizard';
