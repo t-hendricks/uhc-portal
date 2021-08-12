@@ -8,7 +8,6 @@ import wizardConnector from '../WizardConnector';
 import BillingModelSection from '../../CreateOSDForm/FormSections/BillingModelSection';
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps);
   const valueSelector = formValueSelector('CreateCluster');
 
   const cloudProviderID = valueSelector(state, 'cloud_provider');
