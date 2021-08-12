@@ -31,6 +31,8 @@ import NetworkScreen from './NetworkScreen';
 import UpdatesScreen from './UpdatesScreen';
 import config from '../../../../config';
 
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
+
 import './createOSDWizard.scss';
 
 class CreateOSDWizard extends React.Component {
@@ -97,6 +99,7 @@ class CreateOSDWizard extends React.Component {
       resetResponse,
       hasProductQuota,
       history,
+      product, // for OSDTrial URL
     } = this.props;
 
     const { stepIdReached } = this.state;
@@ -105,7 +108,11 @@ class CreateOSDWizard extends React.Component {
       {
         id: 1,
         name: 'Billing model',
-        component: <Grid><BillingModelScreen isWizard /></Grid>,
+        component: (
+          <Grid>
+            <BillingModelScreen isWizard isTrialDefault={product === normalizedProducts.OSDTrial} />
+          </Grid>
+        ),
         enableNext: isValid,
       },
       {
@@ -327,6 +334,9 @@ CreateOSDWizard.propTypes = {
   history: {
     push: PropTypes.func,
   },
+
+  // for the /create/osdtrial url
+  product: PropTypes.string,
 };
 
 export default CreateOSDWizard;
