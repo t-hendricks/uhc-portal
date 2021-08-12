@@ -6,7 +6,7 @@ import AddOnsFailedBox from '../AddOnsDrawerFailedBox';
 describe('<AddOnsFailedBox />', () => {
   let wrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<AddOnsFailedBox
       installedAddOn={{ state: 'failed', state_description: 'failed message' }}
     />);

@@ -4,17 +4,21 @@ import AvailabilityZoneSelection from './AvailabilityZoneSelection';
 
 describe('<AvailabilityZoneSelection />', () => {
   const onChange = jest.fn();
-  const wrapper = shallow(
-    <AvailabilityZoneSelection
-      label="some label"
-      region="fake-region"
-      input={{
-        value: '',
-        onChange,
-      }}
-      meta={{}}
-    />,
-  );
+
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(
+      <AvailabilityZoneSelection
+        label="some label"
+        region="fake-region"
+        input={{
+          value: '',
+          onChange,
+        }}
+        meta={{}}
+      />,
+    );
+  });
 
   it('should render', () => {
     expect(wrapper).toMatchSnapshot();

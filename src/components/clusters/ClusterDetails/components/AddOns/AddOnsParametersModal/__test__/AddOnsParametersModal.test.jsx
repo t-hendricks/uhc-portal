@@ -17,7 +17,7 @@ describe('<AddOnsParametersModal />', () => {
   let handleSubmit;
   let quota;
   const { clusterDetails } = fixtures;
-  beforeAll(() => {
+  beforeEach(() => {
     closeModal = jest.fn();
     clearClusterAddOnsResponses = jest.fn();
     quota = {};

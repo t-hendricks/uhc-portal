@@ -13,7 +13,7 @@ describe('<UninstallProgress />', () => {
 
   const { clusterDetails } = fixtures;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<UninstallProgress
       cluster={clusterDetails.cluster}
       getClusterAddOns={getClusterAddOns}

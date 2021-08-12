@@ -18,7 +18,7 @@ describe('<AddOnsDrawer />', () => {
 
   const { clusterDetails, organization } = fixtures;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<AddOnsDrawer
       addOnsList={mockAddOns.items}
       mockClusterAddOns={mockClusterAddOns}

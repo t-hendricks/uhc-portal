@@ -59,7 +59,7 @@ describe('<Overview />', () => {
   let fetchInsightsGroups;
   let fetchOrganizationInsights;
   let userAccess;
-  beforeAll(() => {
+  beforeEach(() => {
     getSummaryDashboard = jest.fn();
     getUnhealthyClusters = jest.fn();
     getUserAccess = jest.fn();

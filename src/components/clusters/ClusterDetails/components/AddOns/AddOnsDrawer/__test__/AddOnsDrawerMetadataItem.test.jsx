@@ -6,7 +6,7 @@ import AddOnsMetaDataItem from '../AddOnsDrawerMetadataItem';
 describe('<AddOnsMetaDataItem />', () => {
   let wrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(
       <AddOnsMetaDataItem
         activeCardDocsLink="https://example.com/veryfakedocs"

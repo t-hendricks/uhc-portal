@@ -6,7 +6,7 @@ import NodesTable from '../components/NodesTable';
 describe('<ClusterHealthCard />', () => {
   let wrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<NodesTable />);
   });
 

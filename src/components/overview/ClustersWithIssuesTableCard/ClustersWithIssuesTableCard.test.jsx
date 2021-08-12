@@ -27,7 +27,7 @@ describe('<ClustersWithIssuesTableCard />', () => {
   let setClusterDetails;
   let getUnhealthyClusters;
   let wrapper;
-  beforeAll(() => {
+  beforeEach(() => {
     setClusterDetails = jest.fn();
     getUnhealthyClusters = jest.fn();
     wrapper = shallow(

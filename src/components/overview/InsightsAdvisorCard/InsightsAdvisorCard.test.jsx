@@ -13,7 +13,7 @@ describe('<InsightsAdvisorCard />', () => {
   let wrapper;
 
   describe('When no Advisor recommendations (no rule hits)', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       wrapper = shallow(
         <InsightsAdvisorCard
           overview={initialState.overview}
@@ -28,7 +28,7 @@ describe('<InsightsAdvisorCard />', () => {
   });
 
   describe('When recommendations are available (rule hits)', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       const overview = {
         clusters_hit: 3,
         hit_by_risk: {

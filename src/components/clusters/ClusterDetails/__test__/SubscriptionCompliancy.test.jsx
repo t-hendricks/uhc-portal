@@ -16,7 +16,7 @@ describe('<SubscriptionCompliancy />', () => {
   const { OCPClusterDetails, clusterDetails, organization } = fixtures;
   const openModal = jest.fn();
   let wrapper;
-  beforeAll(() => {
+  beforeEach(() => {
     const props = {
       cluster: OCPClusterDetails.cluster,
       canSubscribeOCP: false,

@@ -6,7 +6,7 @@ import fixtures from './ClusterDetails.fixtures';
 
 describe('<ClusterNetwork />', () => {
   let wrapper;
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(
       <ClusterNetwork cluster={fixtures.clusterDetails.cluster} />,
     );

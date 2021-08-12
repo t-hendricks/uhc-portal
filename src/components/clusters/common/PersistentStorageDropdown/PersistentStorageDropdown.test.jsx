@@ -17,7 +17,7 @@ describe('<PersistentStorageDropdown />', () => {
     let getPersistentStorage;
     let onChange;
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       getPersistentStorage = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
@@ -49,7 +49,7 @@ describe('<PersistentStorageDropdown />', () => {
     let getPersistentStorage;
     let onChange;
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       const state = {
         ...baseState,
         error: true,
@@ -90,7 +90,7 @@ describe('<PersistentStorageDropdown />', () => {
       fulfilled: false,
       values: [],
     };
-    beforeAll(() => {
+    beforeEach(() => {
       getPersistentStorage = jest.fn();
       onChange = jest.fn();
       wrapper = mount(
@@ -126,7 +126,7 @@ describe('<PersistentStorageDropdown />', () => {
     let getPersistentStorage;
     let onChange;
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       const state = {
         ...baseState,
         fulfilled: true,

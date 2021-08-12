@@ -108,7 +108,7 @@ describe('<CostBreakdownCard />', () => {
   let getReport;
   let getSources;
   describe('When no source providers are available', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       getReport = jest.fn();
       getSources = jest.fn();
       wrapper = shallow(
@@ -133,7 +133,7 @@ describe('<CostBreakdownCard />', () => {
   });
 
   describe('When cost report is available', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       getReport = jest.fn();
       getSources = jest.fn();
       wrapper = shallow(

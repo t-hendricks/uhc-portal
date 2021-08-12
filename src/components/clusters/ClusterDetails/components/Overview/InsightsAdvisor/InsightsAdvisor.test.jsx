@@ -11,7 +11,7 @@ describe('<InsightsAdvisor />', () => {
   let chartWrapper;
   let chartDonutWrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     widgetWrapper = shallow(<InsightsAdvisor insightsData={fixtures.insightsData} />);
     chartWrapper = shallow(<Chart entries={[['1', 0], ['2', 1], ['3', 0], ['4', 2]]} issueCount={3} />);
     chartDonutWrapper = chartWrapper.find('ChartDonut');

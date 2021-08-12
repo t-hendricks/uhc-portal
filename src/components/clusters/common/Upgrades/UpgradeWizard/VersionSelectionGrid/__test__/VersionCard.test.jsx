@@ -3,11 +3,13 @@ import { shallow } from 'enzyme';
 import VersionCard from '../VersionCard';
 
 let wrapper;
-const onKeyDown = jest.fn();
-const onClick = jest.fn();
+let onKeyDown;
+let onClick;
 
 describe('<VersionCard>', () => {
-  it('should render correctly when recommended', () => {
+  beforeEach(() => {
+    onKeyDown = jest.fn();
+    onClick = jest.fn();
     wrapper = shallow(
       <VersionCard
         isRecommended
@@ -18,6 +20,9 @@ describe('<VersionCard>', () => {
         The latest on your current minor version.
       </VersionCard>,
     );
+  });
+
+  it('should render correctly when recommended', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
