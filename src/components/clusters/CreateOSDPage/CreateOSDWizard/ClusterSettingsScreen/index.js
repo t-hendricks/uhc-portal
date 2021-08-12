@@ -1,8 +1,6 @@
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
-import canEnableEtcdSelector from '../../CreateOsdPageSelectors';
-
 import createOSDInitialValues from '../../createOSDInitialValues';
 
 import wizardConnector from '../WizardConnector';
@@ -27,7 +25,6 @@ const mapStateToProps = (state) => {
     billingModel,
     isByoc,
     isAutomaticUpgrade,
-    canEnableEtcdEncryption: canEnableEtcdSelector(state),
     customerManagedEncryptionSelected,
     selectedRegion,
     initialValues: createOSDInitialValues({ cloudProviderID, isMultiAz, isByoc }),
