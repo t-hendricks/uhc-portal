@@ -27,7 +27,6 @@ function ClusterSettingsScreen({
   isByoc,
   isMultiAz,
   isAutomaticUpgrade,
-  canEnableEtcdEncryption,
   customerManagedEncryptionSelected,
   selectedRegion,
   cloudProviderID,
@@ -101,14 +100,11 @@ function ClusterSettingsScreen({
         <UpgradeSettingsFields
           isAutomatic={isAutomaticUpgrade}
         />
-        {(canEnableEtcdEncryption || (isGCP && isByoc)) && (
         <>
           <GridItem span={12}>
             <Title headingLevel="h3">Encryption</Title>
           </GridItem>
         </>
-        )}
-        {canEnableEtcdEncryption && (
         <FormGroup
           fieldId="etcd_encryption"
           id="etcdEncryption"
@@ -127,7 +123,6 @@ function ClusterSettingsScreen({
           />
           <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
         </FormGroup>
-        )}
         {(isGCP && isByoc) && (
 
         <GCPClusterEncryption
@@ -146,7 +141,6 @@ ClusterSettingsScreen.propTypes = {
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
   isAutomaticUpgrade: PropTypes.bool,
-  canEnableEtcdEncryption: PropTypes.bool,
   customerManagedEncryptionSelected: PropTypes.bool,
   product: PropTypes.string,
   billingModel: PropTypes.string,
