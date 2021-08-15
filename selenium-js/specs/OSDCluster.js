@@ -194,7 +194,9 @@ describe('OSD Trial cluster tests', async () => {
   describe('View Create OSD Trial cluster page', async () => {
     it('navigates to create OSD Trial cluster and CCS is selected', async () => {
       await (await ClusterListPage.createClusterBtn).click();
-      expect(await CreateOSDWizardPage.isOSDWizardPage()).toBeTruthy();
+      expect(await CreateClusterPage.isCreateClusterPage()).toBeTruthy();
+      await (await CreateClusterPage.createOSDTrialClusterBtn).click();
+      expect(await CreateOSDWizardPage.isCreateOSDTrialPage()).toBeTruthy();
       expect(await CreateOSDWizardPage.CCSSelected).toExist();
       expect(await CreateOSDWizardPage.TrialSelected).toExist();
     });
