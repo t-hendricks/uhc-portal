@@ -22,7 +22,7 @@ const createOSDInitialValues = ({
     enable_user_workload_monitoring: 'true',
     nodes_compute: defaultNodeCount,
     node_labels: [{}],
-    byoc: (!!isByoc || isTrialDefault).toString(),
+    byoc: (!!isByoc || !!isTrialDefault).toString(),
     name: '',
     dns_base_domain: '',
     aws_access_key_id: '',
