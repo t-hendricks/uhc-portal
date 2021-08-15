@@ -78,6 +78,12 @@ class CreateOSDWizard extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { resetResponse, resetForm } = this.props;
+    resetResponse();
+    resetForm();
+  }
+
   onNext = ({ id }) => {
     const { stepIdReached } = this.state;
     if (id && stepIdReached < id) {
@@ -324,6 +330,7 @@ CreateOSDWizard.propTypes = {
   getPersistentStorage: PropTypes.func,
 
   resetResponse: PropTypes.func,
+  resetForm: PropTypes.func,
   openModal: PropTypes.func,
   onSubmit: PropTypes.func,
 
