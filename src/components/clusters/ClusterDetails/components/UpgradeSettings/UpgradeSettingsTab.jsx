@@ -106,7 +106,7 @@ class UpgradeSettingsTab extends React.Component {
     const saveButton = (
       <ButtonWithTooltip
         disableReason={formDisableReason || pristineReason}
-        isDisabled={isDisabled}
+        isAriaDisabled={isDisabled}
         variant="primary"
         onClick={handleSubmit}
         isLoading={isPending}

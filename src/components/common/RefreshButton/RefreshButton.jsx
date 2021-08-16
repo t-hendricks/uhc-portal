@@ -46,7 +46,7 @@ class RefreshBtn extends React.Component {
 
     return (
       <Tooltip position={TooltipPosition.bottom} content="Refresh">
-        <Button variant="plain" aria-label="Refresh" className={classOptions} onClick={onClickFunc} isDisabled={isDisabled}>
+        <Button variant="plain" aria-label="Refresh" className={classOptions} onClick={onClickFunc} isAriaDisabled={isDisabled}>
           <RedoIcon />
         </Button>
       </Tooltip>

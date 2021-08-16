@@ -10,7 +10,7 @@ describe('<ButtonWithTooltip>', () => {
     it('renders', () => {
       const button = shallow(<ButtonWithTooltip className="foo">Press me</ButtonWithTooltip>);
       expect(button).toMatchSnapshot();
-      expect(button.find('Button').at(0).props().isDisabled).toBeFalsy();
+      expect(button.find('Button').at(0).props().isAriaDisabled).toBeFalsy();
     });
   });
 
@@ -24,13 +24,18 @@ describe('<ButtonWithTooltip>', () => {
   describe('with string disableReason', () => {
     it('renders', () => {
       const button = shallow(
-        <ButtonWithTooltip className="foo" disableReason="Unsafe in hyperspace" isDisabled={false}>
+        <ButtonWithTooltip
+          disableReason="Unsafe in hyperspace"
+          isAriaDisabled={false}
+          tooltipProps={{ position: 'right' }}
+          className="foo"
+        >
           Teleport
         </ButtonWithTooltip>,
       );
       expect(button).toMatchSnapshot();
       expect(button.find('Tooltip').at(0).props().content).toEqual('Unsafe in hyperspace');
-      expect(button.find('Button').at(0).props().isDisabled).toBeTruthy();
+      expect(button.find('Button').at(0).props().isAriaDisabled).toBeTruthy();
     });
   });
 
@@ -50,29 +55,29 @@ describe('<ButtonWithTooltip>', () => {
     });
   });
 
-  describe('with disableReason and isDisabled', () => {
+  describe('with disableReason and isAriaDisabled', () => {
     it('renders', () => {
       const button = shallow(
-        <ButtonWithTooltip className="foo" disableReason="Parachute required" isDisabled>
+        <ButtonWithTooltip className="foo" disableReason="Parachute required" isAriaDisabled>
           Eject
         </ButtonWithTooltip>,
       );
       expect(button).toMatchSnapshot();
       expect(button.find('Tooltip').at(0).props().content).toEqual('Parachute required');
-      expect(button.find('Button').at(0).props().isDisabled).toBeTruthy();
+      expect(button.find('Button').at(0).props().isAriaDisabled).toBeTruthy();
     });
   });
 
-  describe('with isDisabled', () => {
+  describe('with isAriaDisabled', () => {
     it('renders', () => {
       const button = shallow(
-        <ButtonWithTooltip className="foo" disableReason={false} isDisabled>
+        <ButtonWithTooltip className="foo" disableReason={false} isAriaDisabled>
           Not clickable
         </ButtonWithTooltip>,
       );
       expect(button).toMatchSnapshot();
       expect(button.find('Tooltip')).toHaveLength(0);
-      expect(button.find('Button').at(0).props().isDisabled).toBeTruthy();
+      expect(button.find('Button').at(0).props().isAriaDisabled).toBeTruthy();
     });
   });
 });

@@ -42,7 +42,7 @@ class ClipboardCopyLinkButton extends React.Component {
         content={<div>{copied ? 'Successfuly copied to clipboard!' : 'Copy to clipboard'}</div>}
       >
         <CopyToClipboard text={text} onCopy={this.onCopy}>
-          <Button className={className} variant="link" isDisabled={isDisabled}>{children}</Button>
+          <Button className={className} variant="link" isAriaDisabled={isDisabled}>{children}</Button>
         </CopyToClipboard>
       </Tooltip>
     );
