@@ -70,7 +70,7 @@ import Quota from '../quota';
 import Insights from './Insights';
 import CloudProviderSelection from '../clusters/CreateOSDPage/CloudProviderSelection';
 import withFeatureGate from '../features/with-feature-gate';
-import { ASSISTED_INSTALLER_FEATURE } from '../../redux/constants/featureConstants';
+import { ASSISTED_INSTALLER_FEATURE, OSD_CREATION_WIZARD_FEATURE } from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
@@ -82,6 +82,9 @@ const { AssistedUiRouter } = OCM;
 const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
   InstallBareMetal, ASSISTED_INSTALLER_FEATURE, InstallBMUPI, InstallBMIPI,
+);
+const GatedCreationWizard = withFeatureGate(
+  CreateOSDWizard, OSD_CREATION_WIZARD_FEATURE, CloudProviderSelection,
 );
 
 function Router({ history }) {
@@ -164,9 +167,8 @@ function Router({ history }) {
             />
             <TermsGuardedRoute path="/create/osdtrial/aws" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="aws" product={normalizedProducts.OSDTrial} />} history={history} />
             <TermsGuardedRoute path="/create/osdtrial/gcp" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSDTrial} />} history={history} />
-            <Route path="/create/osdtrial" render={() => <CloudProviderSelection product={normalizedProducts.OSDTrial} />} />
-            <Route path="/create/osdwizard" component={CreateOSDWizard} />
-            <Route path="/create/osd" render={() => <CloudProviderSelection product={normalizedProducts.OSD} />} />
+            <Route path="/create/osdtrial" render={() => <GatedCreationWizard product={normalizedProducts.OSDTrial} />} />
+            <Route path="/create/osd" render={() => <GatedCreationWizard product={normalizedProducts.OSD} />} />
             <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />

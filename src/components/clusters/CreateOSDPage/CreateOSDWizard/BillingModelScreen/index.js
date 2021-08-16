@@ -7,7 +7,7 @@ import wizardConnector from '../WizardConnector';
 
 import BillingModelSection from '../../CreateOSDForm/FormSections/BillingModelSection';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
   const cloudProviderID = valueSelector(state, 'cloud_provider');
@@ -16,7 +16,9 @@ const mapStateToProps = (state) => {
   const billingModel = valueSelector(state, 'billing_model');
 
   return {
-    initialValues: createOSDInitialValues({ cloudProviderID, isMultiAz, isByoc }),
+    initialValues: createOSDInitialValues({
+      cloudProviderID, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
+    }),
     isWizard: true,
     byocSelected: isByoc,
     billingModel,

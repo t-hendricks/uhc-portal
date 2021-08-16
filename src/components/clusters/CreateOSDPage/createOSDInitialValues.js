@@ -1,8 +1,10 @@
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 
-const createOSDInitialValues = ({ cloudProviderID, isByoc, isMultiAz }) => {
+const createOSDInitialValues = ({
+  cloudProviderID, isByoc, isMultiAz, isTrialDefault,
+}) => {
   let defaultNodeCount;
-  if (isByoc) {
+  if (isByoc || isTrialDefault) {
     defaultNodeCount = isMultiAz ? 3 : 2;
   } else {
     defaultNodeCount = isMultiAz ? 9 : 4;
@@ -20,15 +22,15 @@ const createOSDInitialValues = ({ cloudProviderID, isByoc, isMultiAz }) => {
     enable_user_workload_monitoring: 'true',
     nodes_compute: defaultNodeCount,
     node_labels: [{}],
-    byoc: (!!isByoc).toString(),
+    byoc: (!!isByoc || !!isTrialDefault).toString(),
     name: '',
     dns_base_domain: '',
     aws_access_key_id: '',
     aws_secret_access_key: '',
     network_configuration_toggle: 'basic',
     disable_scp_checks: false,
-    billing_model: 'standard',
-    product: normalizedProducts.OSD,
+    billing_model: isTrialDefault ? 'standard-trial' : 'standard',
+    product: isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD,
   };
   if (cloudProviderID) {
     initialValues.region = cloudProviderID === 'aws' ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;
