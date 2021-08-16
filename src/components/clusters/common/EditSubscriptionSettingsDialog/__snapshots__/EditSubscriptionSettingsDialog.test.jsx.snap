@@ -200,7 +200,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                           class="pf-c-alert__description"
                         >
                           <a
-                            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html/managing_clusters/assembly-cluster-subscriptions"
+                            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions"
                             rel="noreferrer noopener"
                             target="_blank"
                           >
@@ -1044,7 +1044,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                       className="pf-c-alert__description"
                                     >
                                       <a
-                                        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html/managing_clusters/assembly-cluster-subscriptions"
+                                        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions"
                                         rel="noreferrer noopener"
                                         target="_blank"
                                       >
@@ -3033,7 +3033,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                           class="pf-c-alert__description"
                         >
                           <a
-                            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html/managing_clusters/assembly-cluster-subscriptions"
+                            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions"
                             rel="noreferrer noopener"
                             target="_blank"
                           >
@@ -3957,7 +3957,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                       className="pf-c-alert__description"
                                     >
                                       <a
-                                        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html/managing_clusters/assembly-cluster-subscriptions"
+                                        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions"
                                         rel="noreferrer noopener"
                                         target="_blank"
                                       >
@@ -5979,7 +5979,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                           class="pf-c-alert__description"
                         >
                           <a
-                            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html/managing_clusters/assembly-cluster-subscriptions"
+                            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions"
                             rel="noreferrer noopener"
                             target="_blank"
                           >
@@ -6990,7 +6990,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                       className="pf-c-alert__description"
                                     >
                                       <a
-                                        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html/managing_clusters/assembly-cluster-subscriptions"
+                                        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions"
                                         rel="noreferrer noopener"
                                         target="_blank"
                                       >
@@ -8976,7 +8976,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                           class="pf-c-alert__description"
                         >
                           <a
-                            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html/managing_clusters/assembly-cluster-subscriptions"
+                            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions"
                             rel="noreferrer noopener"
                             target="_blank"
                           >
@@ -9849,7 +9849,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                       className="pf-c-alert__description"
                                     >
                                       <a
-                                        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html/managing_clusters/assembly-cluster-subscriptions"
+                                        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions"
                                         rel="noreferrer noopener"
                                         target="_blank"
                                       >
