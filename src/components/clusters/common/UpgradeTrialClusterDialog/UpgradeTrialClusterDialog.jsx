@@ -191,7 +191,7 @@ class UpgradeTrialClusterDialog extends Component {
             Convert this trial cluster to a fully supported OpenShift Dedicated cluster.
             <br />
             <br />
-            <ExternalLink href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html-single/managing_clusters/index#upgrading-osd-trial-cluster_assembly-cluster-subscriptions">
+            <ExternalLink href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html-single/managing_clusters/index#upgrading-osd-trial-cluster_assembly-cluster-subscriptions">
               Learn more
             </ExternalLink>
             {noQuota && (

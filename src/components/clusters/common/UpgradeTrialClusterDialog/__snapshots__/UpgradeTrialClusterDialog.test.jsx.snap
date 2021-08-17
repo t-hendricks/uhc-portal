@@ -25,7 +25,7 @@ exports[`<UpgradeTrialClusterDialog /> renders correctly 1`] = `
       <br />
       <br />
       <ExternalLink
-        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html-single/managing_clusters/index#upgrading-osd-trial-cluster_assembly-cluster-subscriptions"
+        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html-single/managing_clusters/index#upgrading-osd-trial-cluster_assembly-cluster-subscriptions"
       >
         Learn more
       </ExternalLink>
@@ -86,7 +86,7 @@ exports[`<UpgradeTrialClusterDialog /> renders correctly when an erorr occurs 1`
       <br />
       <br />
       <ExternalLink
-        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html-single/managing_clusters/index#upgrading-osd-trial-cluster_assembly-cluster-subscriptions"
+        href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html-single/managing_clusters/index#upgrading-osd-trial-cluster_assembly-cluster-subscriptions"
       >
         Learn more
       </ExternalLink>
