@@ -85,6 +85,8 @@ describe('toolRow', () => {
 
 describe('initialSelection', () => {
   it('when detection fails, chooses Linux, x86', () => {
+    // If user has some exotic browser/OS, it's more convenient to select _something_
+    // so all Download buttons work, than force user to choose in all rows.
     const initial = initialSelection(urls, tools.CLI_TOOLS, channels.STABLE, null);
     expect(initial).toEqual({ OS: linux, architecture: architectures.x86 });
   });
@@ -97,6 +99,17 @@ describe('initialSelection', () => {
   it('on Windows, chooses x86', () => {
     const initial = initialSelection(urls, tools.CLI_TOOLS, channels.STABLE, windows);
     expect(initial).toEqual({ OS: windows, architecture: architectures.x86 });
+  });
+
+  it('when not available for detected OS, chooses first option Linux x86', () => {
+    // The concrete use case is Windows user, installer is only available for Linux & Mac.
+    // Plausible behaviors in that case:
+    //  1. keep download disabled, force user to "Select OS".
+    //     Benefit: user will not miss that this row needs a different OS from the rest.
+    //  2. pre-select first OS - Linux.
+    //     Benefit: user needs _something_ and Linux is more useful (WSL, free VMs).
+    const initial = initialSelection(urls, tools.X86INSTALLER, channels.STABLE, windows);
+    expect(initial).toEqual({ OS: linux, architecture: architectures.x86 });
   });
 });
 
