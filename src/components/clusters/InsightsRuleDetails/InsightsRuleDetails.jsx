@@ -228,15 +228,15 @@ class InsightsRuleDetails extends Component {
       return errorReportState();
     }
 
-    const moreinfoExist = !!reportDetails.report?.more_info;
-    const reasonInfoExist = !!reportDetails.report?.reason;
-    const resolutionInfoExist = !!reportDetails.report?.resolution;
     const {
       rule_id: currentRuleId,
       disabled: isRuleDisabled,
       disable_feedback: ruleDisableFeedback,
       disabled_at: ruleDisabledAtDate,
-      more_info: moreinfoInsights,
+      resolution,
+      reason,
+      more_info: moreInfo,
+      extra_data: extraData,
     } = get(reportDetails, 'report', {});
 
     return (
@@ -250,12 +250,15 @@ class InsightsRuleDetails extends Component {
           disableRule={this.onRuleDisable}
           enableRule={ruleId => enableRule(externalId, ruleId, errorKey)}
         >
+          {!isRuleDisabled
+          && (
           <TabsRow
             reasonTabRef={this.reasonTabRef}
             resolutionTabRef={this.resolutionTabRef}
             moreinfoTabRef={this.moreinfoTabRef}
-            isDisabled={isRuleDisabled}
+            showMoreInfo={!!moreInfo}
           />
+          )}
           <OnRuleDisableFeedbackModal />
         </InsightsRuleDetailsTop>
         {
@@ -299,17 +302,8 @@ class InsightsRuleDetails extends Component {
                 >
                   <Card>
                     <CardBody>
-                      {
-                        resolutionInfoExist ? (
-                          <Markdown
-                            template={reportDetails.report.resolution}
-                            definitions={reportDetails.report.extra_data}
-                          />
-                        )
-                          : (
-                            <EmptyRemediationInfo title="resolution" />
-                          )
-                      }
+                      { resolution ? <Markdown template={resolution} definitions={extraData} />
+                        : <EmptyRemediationInfo />}
                     </CardBody>
                   </Card>
                 </TabContent>
@@ -323,22 +317,12 @@ class InsightsRuleDetails extends Component {
                 >
                   <Card>
                     <CardBody>
-                      {
-                        reasonInfoExist && (
-                          <Markdown
-                            template={reportDetails.report.reason}
-                            definitions={reportDetails.report.extra_data}
-                          />
-                        )
-                      }
-                      {
-                        !reasonInfoExist && (
-                          <EmptyRemediationInfo title="reason" />
-                        )
-                      }
+                      { reason ? <Markdown template={reason} definitions={extraData} />
+                        : <EmptyRemediationInfo />}
                     </CardBody>
                   </Card>
                 </TabContent>
+                {moreInfo && (
                 <TabContent
                   eventKey={2}
                   id="moreinfoTabContent"
@@ -349,17 +333,11 @@ class InsightsRuleDetails extends Component {
                 >
                   <Card>
                     <CardBody>
-                      { moreinfoExist ? (
-                        <Markdown
-                          template={moreinfoInsights}
-                        />
-                      )
-                        : (
-                          <EmptyRemediationInfo title="additional information" />
-                        )}
+                      <Markdown template={moreInfo} definitions={extraData} />
                     </CardBody>
                   </Card>
                 </TabContent>
+                )}
               </div>
             )
         }

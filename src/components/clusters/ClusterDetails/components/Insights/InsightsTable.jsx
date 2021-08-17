@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Card, CardBody, EmptyStateIcon, Stack, StackItem,
+  Button, Card, CardBody, EmptyStateIcon, Label, Stack, StackItem,
 } from '@patternfly/react-core';
 import { cellWidth, RowWrapper } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
@@ -18,7 +18,6 @@ import { InsightsLabel } from '@redhat-cloud-services/frontend-components/Insigh
 import { CheckCircleIcon } from '@patternfly/react-icons';
 import AnalysisSummary from './AnalysisSummary';
 import { severityMapping, appendCrParamToDocLinks } from './helpers';
-import DisabledTooltip from './DisabledTooltip';
 import { setReportDetails } from './InsightsActions';
 import OnRuleDisableFeedbackModal from './OnRuleDisableFeedbackModal';
 import { labelBorderColor } from './InsightsSelectors';
@@ -289,7 +288,7 @@ class InsightsTable extends React.Component {
                   title: 'Description',
                   selector: report => (
                     <>
-                      {report.disabled ? <DisabledTooltip /> : null}
+                      {report.disabled ? <Label className="disabled-tooltip">Disabled</Label> : null}
                       <Link
                         to={`/details/s/${cluster.subscription.id}/insights/${report.rule_id.replace(/\./g, '|')}/${report.extra_data.error_key}`}
                         onClick={() => setReportDetails(report)}

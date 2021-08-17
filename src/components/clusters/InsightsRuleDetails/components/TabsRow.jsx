@@ -15,6 +15,7 @@ class TabsRow extends React.Component {
       reasonTabRef,
       resolutionTabRef,
       moreinfoTabRef,
+      showMoreInfo,
     } = this.props;
     return [
       {
@@ -36,7 +37,7 @@ class TabsRow extends React.Component {
         title: 'Additional info',
         contentId: 'moreinfoTabContent',
         ref: moreinfoTabRef,
-        show: true,
+        show: showMoreInfo,
       },
     ];
   }
@@ -60,11 +61,9 @@ class TabsRow extends React.Component {
 
   render() {
     const { activeTabKey } = this.state;
-    const { isDisabled } = this.props;
 
     return (
       <Tabs
-        className={isDisabled ? 'disabled-tabs' : ''}
         activeKey={activeTabKey}
         onSelect={this.handleTabClick}
         ouiaId="rule_details_tab"
@@ -76,6 +75,7 @@ class TabsRow extends React.Component {
             title={tab.title}
             ouiaId={tab.title}
             tabContentId={tab.contentId}
+            isHidden={!tab.show}
           />
         ))}
       </Tabs>
@@ -87,7 +87,7 @@ TabsRow.propTypes = {
   reasonTabRef: PropTypes.object.isRequired,
   resolutionTabRef: PropTypes.object.isRequired,
   moreinfoTabRef: PropTypes.object.isRequired,
-  isDisabled: PropTypes.bool,
+  showMoreInfo: PropTypes.bool.isRequired,
 };
 
 export default TabsRow;
