@@ -29,6 +29,7 @@
 	.cl-details-page-title {
 		top: 0;
 		transform: none;
+		margin-bottom: 1rem;
 	}
 
 	.ins-c-critical-icon {
@@ -43,8 +44,8 @@
 		font-weight: lighter;
 	}
 
-	.disabled-color {
-		color: var(--pf-global--disabled-color--100);
+	.danger-color {
+		color: var(--pf-global--danger-color--100);
 	}
 
 	.disabled-recommendation-message > * {
@@ -53,5 +54,10 @@
 
 	.disabled-recommendation-title {
 		font-size: var(--pf-global--FontSize--lg);
+	}
+
+	.ins-c-rule__risk-detail-title {
+		font-weight: normal;
+		margin-bottom: var(--pf-global--spacer--sm);
 	}
 }

@@ -6,7 +6,7 @@ import ClusterHealthCard from '../components/ClusterHealthCard';
 describe('<ClusterHealthCard />', () => {
   let wrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<ClusterHealthCard />);
   });
 

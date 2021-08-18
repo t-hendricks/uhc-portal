@@ -16,7 +16,7 @@ describe('<HibernateClusterModal />', () => {
   const history = { push: jest.fn() };
   const buttonSelector = variant => (`Button[variant="${variant}"]`);
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<HibernateClusterModal
       isOpen
       getSchedules={getSchedules}
@@ -47,7 +47,7 @@ describe('<HibernateClusterModal />', () => {
   it('renders correctly when pending', () => {
     wrapper.setProps({
       hibernateClusterResponse:
-      { pending: true, error: false, fulfilled: false },
+        { pending: true, error: false, fulfilled: false },
     });
     expect(wrapper).toMatchSnapshot();
     const modal = wrapper.find(Modal);

@@ -21,9 +21,12 @@ describe('<ProgressList />', () => {
     dns_ready: true,
   };
 
-  const wrapper = shallow(
-    <ProgressList cluster={firstStepPending} />,
-  );
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(
+      <ProgressList cluster={firstStepPending} />,
+    );
+  });
 
   it('should render when first step in progress', () => {
     expect(wrapper).toMatchSnapshot();

@@ -26,9 +26,8 @@ function BillingModelRadioButtons({
         isSelected={!byocSelected}
         titleText={standard}
         secondaryText={standardText}
-        isDisabled={isRhInfraQuotaDisabled}
         onChange={onChange}
-        tooltip={isRhInfraQuotaDisabled && noQuotaTooltip}
+        disableReason={isRhInfraQuotaDisabled && noQuotaTooltip}
       />
       <FlatRadioButton
         id={customerCloudSubscription.toLowerCase()}
@@ -37,8 +36,7 @@ function BillingModelRadioButtons({
         titleText={customerCloudSubscription}
         secondaryText={customerCloudSubscriptionText}
         onChange={onChange}
-        isDisabled={isBYOCQuotaDisabled}
-        tooltip={isBYOCQuotaDisabled && noQuotaTooltip}
+        disableReason={isBYOCQuotaDisabled && noQuotaTooltip}
       />
     </div>
   );

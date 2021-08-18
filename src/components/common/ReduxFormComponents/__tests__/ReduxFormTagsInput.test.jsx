@@ -3,7 +3,10 @@ import { shallow } from 'enzyme';
 import ReduxFormTagsInput from '../ReduxFormTagsInput';
 
 describe('<ReduxFormTagsInput />', () => {
-  const wrapper = shallow(<ReduxFormTagsInput tags={['hello=world', 'foo=bar']} meta={{ error: undefined }} input={{ onChange: jest.fn() }} />);
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(<ReduxFormTagsInput tags={['hello=world', 'foo=bar']} meta={{ error: undefined }} input={{ onChange: jest.fn() }} />);
+  });
 
   it('should render with tags', () => {
     expect(wrapper).toMatchSnapshot();

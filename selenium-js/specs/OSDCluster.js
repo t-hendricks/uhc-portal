@@ -1,9 +1,7 @@
 import LoginPage from '../pageobjects/login.page';
 import ClusterListPage from '../pageobjects/ClusterList.page';
 import CreateClusterPage from '../pageobjects/CreateCluster.page';
-import CreateOSDCluster from '../pageobjects/CreateOSDCluster.page';
-import CreateOSDAWSPage from '../pageobjects/CreateOSDAWS.page';
-import CreateOSDFormPage from '../pageobjects/CreateOSDForm.page';
+import CreateOSDWizardPage from '../pageobjects/CreateOSDWizard.page';
 import ClusterDetailsPage from '../pageobjects/ClusterDetails.page';
 
 describe('OSD cluster tests', async () => {
@@ -24,35 +22,50 @@ describe('OSD cluster tests', async () => {
       await (await ClusterListPage.createClusterBtn).click();
       expect(await CreateClusterPage.isCreateClusterPage()).toBeTruthy();
       await (await CreateClusterPage.createOSDClusterBtn).click();
-      expect(await CreateOSDCluster.isCreateOSDPage()).toBeTruthy();
+      expect(await CreateOSDWizardPage.isCreateOSDPage()).toBeTruthy();
+      expect(await CreateOSDWizardPage.fakeClusterBanner).toExist();
     });
 
-    it('navigates to create OSD on AWS form', async () => {
-      await (await CreateOSDCluster.createAWSClusterCard).click();
-      expect(await CreateOSDAWSPage.isCreateOSDAWSPage()).toBeTruthy();
-      expect(await CreateOSDFormPage.fakeClusterBanner).toExist();
-    });
+    it('disallows continuing without a cloud provider selected', async () => {
+      expect(await CreateOSDWizardPage.isBillingModelScreen()).toBeTruthy();
+      await (await CreateOSDWizardPage.primaryButton).click();
 
-    it('disallows submitting an empty form and scrolls to error', async () => {
-      await (await CreateOSDFormPage.submitButton).click();
-      expect((await CreateOSDFormPage.clusterNameInputError).scrollIntoView());
-      expect(CreateOSDFormPage.clusterNameInputError).toHaveText('Cluster name is required.');
+      expect(await CreateOSDWizardPage.isCloudProviderSelectionScreen()).toBeTruthy();
+
+      expect(await (await CreateOSDWizardPage.primaryButton).isEnabled()).toBe(false);
     });
 
     it('shows an error with invalid and empty names', async () => {
-      await (await CreateOSDFormPage.clusterNameInput).setValue('a'.repeat(16));
-      expect(CreateOSDFormPage.clusterNameInputError).toExist();
-      expect(CreateOSDFormPage.clusterNameInputError).toHaveText('Cluster names may not exceed 15 characters.');
+      await (await CreateOSDWizardPage.awsProvider).click();
+      await (await CreateOSDWizardPage.primaryButton).click();
 
-      await (await CreateOSDFormPage.clusterNameInput).setValue('');
-      expect(CreateOSDFormPage.clusterNameInputError).toExist();
-      expect(CreateOSDFormPage.clusterNameInputError).toHaveText('Cluster name is required.');
+      expect(await CreateOSDWizardPage.isClusterDetailsScreen()).toBeTruthy();
+
+      await (await CreateOSDWizardPage.clusterNameInput).setValue('a'.repeat(16));
+      expect(CreateOSDWizardPage.clusterNameInputError).toExist();
+      expect(CreateOSDWizardPage.clusterNameInputError).toHaveText('Cluster names may not exceed 15 characters.');
+
+      await (await CreateOSDWizardPage.clusterNameInput).setValue('');
+      expect(CreateOSDWizardPage.clusterNameInputError).toExist();
+      expect(CreateOSDWizardPage.clusterNameInputError).toHaveText('Cluster name is required.');
     });
 
     it('creates an OSD cluster and navigates to its details page', async () => {
-      await (await CreateOSDFormPage.clusterNameInput).setValue(clusterName);
-      expect(CreateOSDFormPage.clusterNameInputError).not.toExist();
-      await (await CreateOSDFormPage.submitButton).click();
+      await (await CreateOSDWizardPage.clusterNameInput).setValue(clusterName);
+      expect(CreateOSDWizardPage.clusterNameInputError).not.toExist();
+
+      // click "next" until the cluster is created :)
+      await (await CreateOSDWizardPage.primaryButton).click();
+      expect(await CreateOSDWizardPage.isMachinePoolScreen()).toBeTruthy();
+      await (await CreateOSDWizardPage.primaryButton).click();
+      expect(await CreateOSDWizardPage.isNetworkingScreen()).toBeTruthy();
+      await (await CreateOSDWizardPage.primaryButton).click();
+      expect(await CreateOSDWizardPage.isUpdatesScreen()).toBeTruthy();
+      await (await CreateOSDWizardPage.primaryButton).click();
+      expect(await CreateOSDWizardPage.isReviewScreen()).toBeTruthy();
+
+      await (await CreateOSDWizardPage.primaryButton).click();
+
       await browser.waitUntil(
         async () => ClusterDetailsPage.isClusterDetailsPage(),
         { timeout: 1 * 60 * 1000 },
@@ -180,12 +193,16 @@ describe('OSD cluster tests', async () => {
 describe('OSD Trial cluster tests', async () => {
   describe('View Create OSD Trial cluster page', async () => {
     it('navigates to create OSD Trial cluster and CCS is selected', async () => {
+      await browser.waitUntil(ClusterListPage.isClusterListPage);
+      await browser.waitUntil(ClusterListPage.isReady);
+      expect(await ClusterListPage.createClusterBtn).toExist();
+
       await (await ClusterListPage.createClusterBtn).click();
       expect(await CreateClusterPage.isCreateClusterPage()).toBeTruthy();
       await (await CreateClusterPage.createOSDTrialClusterBtn).click();
-      expect(await CreateOSDCluster.isCreateOSDTrialPage()).toBeTruthy();
-      await (await CreateOSDCluster.createAWSOSDTrialClusterCard).click();
-      expect(await CreateOSDCluster.CCSSelected).toExist();
+      expect(await CreateOSDWizardPage.isCreateOSDTrialPage()).toBeTruthy();
+      expect(await CreateOSDWizardPage.CCSSelected).toExist();
+      expect(await CreateOSDWizardPage.TrialSelected).toExist();
     });
   });
 });

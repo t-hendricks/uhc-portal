@@ -6,25 +6,25 @@ import {
   EmptyStateVariant,
   Title,
 } from '@patternfly/react-core';
-import { WrenchIcon } from '@patternfly/react-icons';
-import PropTypes from 'prop-types';
+import { ExclamationCircleIcon } from '@patternfly/react-icons';
 
-const EmptyRemediationInfo = ({ title }) => (
+import ExternalLink from '../../../common/ExternalLink';
+
+const EmptyRemediationInfo = () => (
   <EmptyState className="empty-table-message" variant={EmptyStateVariant.large}>
-    <EmptyStateIcon className="disabled-color" icon={WrenchIcon} />
-
+    <EmptyStateIcon className="danger-color" icon={ExclamationCircleIcon} />
     <Title headingLevel="h5" size="lg">
-      {`No ${title} to display`}
+      There was an error fetching the data.
     </Title>
-
     <EmptyStateBody>
-      {`This recommendation has no ${title} description to display. For details how to solve this problem, see the corresponding knowledgebase article.`}
+      Try refreshing the page. If the bug persists, please,
+      {' '}
+      <ExternalLink href="https://bugzilla.redhat.com/enter_bug.cgi?product=Red%20Hat%20Hybrid%20Cloud%20Console%20%28console.redhat.com%29&component=Insights%20-%20OpenShift%20Integration&priority=urgent">
+        let us know
+      </ExternalLink>
+      .
     </EmptyStateBody>
   </EmptyState>
 );
-
-EmptyRemediationInfo.propTypes = {
-  title: PropTypes.string,
-};
 
 export default EmptyRemediationInfo;

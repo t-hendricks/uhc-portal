@@ -6,7 +6,7 @@ import MonitoringList from '../components/MonitoringList';
 describe('<MonitoringList />', () => {
   let wrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<MonitoringList />);
   });
 

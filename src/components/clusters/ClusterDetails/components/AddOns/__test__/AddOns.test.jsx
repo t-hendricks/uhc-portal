@@ -18,7 +18,7 @@ describe('<AddOns />', () => {
 
   const { clusterDetails, organization } = fixtures;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<AddOns
       clusterID={clusterDetails.cluster.id}
       cluster={clusterDetails.cluster}

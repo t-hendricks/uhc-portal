@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import {
-  Split, SplitItem, Title,
+  Label, Split, SplitItem, Title,
 } from '@patternfly/react-core';
 import ReportDetails from '@redhat-cloud-services/rule-components/ReportDetails';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
@@ -12,7 +12,6 @@ import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import getClusterName from '../../../../common/getClusterName';
 import ReportActionsDropdown from './ReportActionsDropdown';
 import Breadcrumbs from '../../../common/Breadcrumbs';
-import DisabledTooltip from '../../ClusterDetails/components/Insights/DisabledTooltip';
 import { appendCrParamToDocLinks } from '../../ClusterDetails/components/Insights/helpers';
 
 function InsightsRuleDetailsTop(props) {
@@ -60,7 +59,7 @@ function InsightsRuleDetailsTop(props) {
           <ReportDetails
             title={(
               <Title size="lg" headingLevel="h1" className="cl-details-page-title">
-                {rule.disabled && <DisabledTooltip />}
+                {rule.disabled && <Label className="disabled-tooltip">Disabled</Label>}
                 {rule.description}
                 {pending && <Spinner className="cluster-details-spinner" />}
               </Title>

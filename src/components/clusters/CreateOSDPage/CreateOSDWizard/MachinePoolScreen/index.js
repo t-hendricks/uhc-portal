@@ -4,7 +4,7 @@ import { formValueSelector } from 'redux-form';
 import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 
 import wizardConnector from '../WizardConnector';
-import DefaultMachinePoolScreen from './DefaultMachinePoolScreen';
+import MachinePoolScreen from './MachinePoolScreen';
 import createOSDInitialValues from '../../createOSDInitialValues';
 
 const mapStateToProps = (state) => {
@@ -32,4 +32,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(wizardConnector(DefaultMachinePoolScreen));
+export default connect(mapStateToProps)(wizardConnector(MachinePoolScreen));

@@ -14,9 +14,9 @@ describe('<CreateClusterPage />', () => {
     fulfilled: false,
   };
   const push = jest.fn();
-  let wrapper;
 
-  it('renders correctly', () => {
+  let wrapper;
+  beforeEach(() => {
     wrapper = shallow(<CreateClusterPage
       hasOSDQuota
       hasOSDTrialQuota={false}
@@ -27,6 +27,9 @@ describe('<CreateClusterPage />', () => {
       history={{ push }}
       osdTrialFeature={false}
     />);
+  });
+
+  it('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -67,7 +70,7 @@ describe('<CreateClusterPage />', () => {
   });
 
   describe('Quota not fetched yet', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       wrapper = shallow(<CreateClusterPage
         hasOSDQuota={false}
         hasOSDTrialQuota={false}

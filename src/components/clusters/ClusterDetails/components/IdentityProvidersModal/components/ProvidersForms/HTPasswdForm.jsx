@@ -156,7 +156,13 @@ class HTPasswdForm extends React.Component {
         <GridItem span={8} className="htpasswd-form">
           <Field
             component={this.radioControlledInputGroup}
-            suggestedValueRadioLabel={`Use suggested username: ${suggestedUsername}`}
+            suggestedValueRadioLabel={(
+              <span>
+                Use suggested username:
+                {' '}
+                <span className="suggestion">{suggestedUsername}</span>
+              </span>
+          )}
             createOwnRadioLabel="Create your own username"
             name="htpasswd_username"
             label="Username"
@@ -171,7 +177,13 @@ class HTPasswdForm extends React.Component {
           <Field
             component={this.radioControlledInputGroup}
             isPassword
-            suggestedValueRadioLabel={`Use suggested password: ${suggestedPassword}`}
+            suggestedValueRadioLabel={(
+              <span>
+                Use suggested password:
+                {' '}
+                <span className="suggestion">{suggestedPassword}</span>
+              </span>
+            )}
             createOwnRadioLabel="Create your own password"
             name="htpasswd_password"
             label="Password"

@@ -37,13 +37,11 @@ function AWSAccountDetailsSection({ pending, isWizard }) {
       <GridItem sm={12} md={5} lg={4}>
         <Title headingLevel="h4">AWS IAM user credentials</Title>
       </GridItem>
-      <GridItem md={7} lg={8} />
       <GridItem sm={12} md={10} lg={8}>
         { !isWizard && (
           <Alert className="bottom-alert" variant="warning" title={billingModelConstants.awsCredentialsWarning} isInline />
         )}
       </GridItem>
-      <GridItem md={2} lg={4} />
       <GridItem sm={12} md={5} lg={4}>
         <Field
           component={ReduxVerticalFormGroup}

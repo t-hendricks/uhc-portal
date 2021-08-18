@@ -66,7 +66,7 @@ class EditClusterRoutersCard extends React.Component {
         variant="primary"
         onClick={this.handleSaveChanges}
         disableReason={formDisableReason || pristineReason}
-        isDisabled={isDisabled}
+        isAriaDisabled={isDisabled}
       >
         Change settings
       </ButtonWithTooltip>

@@ -12,7 +12,7 @@ describe('<IdentityProvidersModal />', () => {
   let submitIDPResponse;
   let change;
 
-  beforeAll(() => {
+  beforeEach(() => {
     closeModal = jest.fn();
     resetResponse = jest.fn();
     resetForm = jest.fn();

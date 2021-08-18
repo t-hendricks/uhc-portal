@@ -56,7 +56,7 @@ function GCPByocFields() {
           </TextContent>
         </ExpandableSection>
       </GridItem>
-      <GridItem span={4}>
+      <GridItem sm={12} md={5}>
         <Field
           component={ReduxFileUpload}
           validate={[required, validateGCPServiceAccount]}
@@ -73,6 +73,7 @@ function GCPByocFields() {
           isRequired
           label="Service account JSON"
           helpText="Upload a JSON file or type to add"
+          className="pf-c-form-control"
         />
       </GridItem>
     </>

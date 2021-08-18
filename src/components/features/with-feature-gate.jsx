@@ -38,7 +38,7 @@ const withFeatureGate = (
     );
   }
   if (!enabled) {
-    return <FallbackComponent location={location} />;
+    return <FallbackComponent location={location} {...componentProps} />;
   }
   return <WrappedComponent {...componentProps} />;
 });

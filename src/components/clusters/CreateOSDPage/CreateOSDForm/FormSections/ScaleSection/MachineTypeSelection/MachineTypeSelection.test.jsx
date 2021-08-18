@@ -128,7 +128,7 @@ describe('<MachineTypeSelection />', () => {
     let onChange;
     let getMachineTypes;
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       onChange = jest.fn();
       getMachineTypes = jest.fn();
       wrapper = mount(
@@ -160,7 +160,7 @@ describe('<MachineTypeSelection />', () => {
     let onChange;
     let getMachineTypes;
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       const state = {
         ...baseState,
         error: true,
@@ -205,7 +205,7 @@ describe('<MachineTypeSelection />', () => {
       fulfilled: false,
       types: [],
     };
-    beforeAll(() => {
+    beforeEach(() => {
       onChange = jest.fn();
       getMachineTypes = jest.fn();
       wrapper = mount(
@@ -239,7 +239,7 @@ describe('<MachineTypeSelection />', () => {
     let wrapper;
 
     describe('with rhinfra quota available', () => {
-      beforeAll(() => {
+      beforeEach(() => {
         const state = {
           ...baseState,
           fulfilled: true,
@@ -283,7 +283,7 @@ describe('<MachineTypeSelection />', () => {
     });
 
     describe('byoc with sufficient byoc quota available', () => {
-      beforeAll(() => {
+      beforeEach(() => {
         const state = {
           ...baseState,
           fulfilled: true,
@@ -327,7 +327,7 @@ describe('<MachineTypeSelection />', () => {
     });
 
     describe('byoc lacking enough byoc node quota', () => {
-      beforeAll(() => {
+      beforeEach(() => {
         const state = {
           ...baseState,
           fulfilled: true,

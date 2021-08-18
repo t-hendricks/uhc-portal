@@ -18,7 +18,7 @@ import { isAssistedInstallCluster } from '../../../../common/isAssistedInstaller
 const disableIfTooltip = (tooltip, propsIfEnabled = {}) => (
   // isDisabled blocks mouse events, so tooltip doesn't show on hover.
   // isAriaDisabled solved this, https://github.com/patternfly/patternfly-react/pull/6038.
-  tooltip ? { isAriaDisabled: true, tooltip } : propsIfEnabled
+  tooltip ? { isAriaDisabled: true, tooltip, tooltipProps: { position: 'left' } } : propsIfEnabled
 );
 
 /**

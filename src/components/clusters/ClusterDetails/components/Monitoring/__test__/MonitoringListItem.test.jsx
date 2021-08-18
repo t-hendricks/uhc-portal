@@ -7,7 +7,7 @@ import { mockOCPActiveClusterDetails } from './Monitoring.fixtures';
 describe('<MonitoringListItem />', () => {
   let wrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<MonitoringListItem cluster={mockOCPActiveClusterDetails} />);
   });
 

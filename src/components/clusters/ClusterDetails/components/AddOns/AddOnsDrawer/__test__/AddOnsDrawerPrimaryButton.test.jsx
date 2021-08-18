@@ -11,7 +11,7 @@ describe('<AddOnsPrimaryButton />', () => {
   const addClusterAddOnResponse = {};
   const openModal = jest.fn();
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<AddOnsPrimaryButton
       activeCard={managedIntegration}
       activeCardRequirementsFulfilled
