@@ -6,7 +6,7 @@ import createOSDInitialValues from '../../createOSDInitialValues';
 import wizardConnector from '../WizardConnector';
 import NetworkScreen from './NetworkScreen';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
   const cloudProviderID = valueSelector(state, 'cloud_provider');
@@ -27,7 +27,9 @@ const mapStateToProps = (state) => {
     isCCS: isByoc,
     selectedRegion,
     networkingMode,
-    initialValues: createOSDInitialValues({ cloudProviderID, isMultiAz, isByoc }),
+    initialValues: createOSDInitialValues({
+      cloudProviderID, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
+    }),
   };
 };
 
