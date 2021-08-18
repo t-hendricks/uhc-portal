@@ -49,6 +49,7 @@ function ClusterSettingsScreen({
           change={change}
           product={product}
           billingModel={billingModel}
+          isWizard
         />
         { !isByoc && (
           <>

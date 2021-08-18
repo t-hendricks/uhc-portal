@@ -56,16 +56,9 @@ class CreateOSDForm extends React.Component {
     closeModal();
   }
 
-  handleMultiAZChange = (_, value) => {
-    const { change } = this.props;
+  handleMultiAZChange = (value) => {
     const isMultiAz = value === 'true';
-    let computeNodes = isMultiAz ? '9' : '4';
-
-    if (this.isByocForm()) {
-      computeNodes = isMultiAz ? '3' : '2';
-    }
     this.setState({ isMultiAz });
-    change('nodes_compute', computeNodes);
   };
 
   handleMachineTypesChange = (_, value) => {
@@ -254,7 +247,7 @@ class CreateOSDForm extends React.Component {
           isBYOC={isBYOCForm}
           cloudProviderID={cloudProviderID}
           handleCloudRegionChange={this.handleCloudRegionChange}
-          handleMultiAZChange={this.handleMultiAZChange}
+          handleMultiAZChangeForOldForm={this.handleMultiAZChange}
           isMultiAz={isMultiAz}
         />
 
