@@ -8,25 +8,23 @@ exports[`<ButtonWithTooltip> with blank disableReason renders 1`] = `
 </Button>
 `;
 
-exports[`<ButtonWithTooltip> with disableReason and isDisabled renders 1`] = `
+exports[`<ButtonWithTooltip> with disableReason and isAriaDisabled renders 1`] = `
 <Tooltip
   content="Parachute required"
 >
-  <span>
-    <Button
-      className="foo"
-      isDisabled={true}
-    >
-      Eject
-    </Button>
-  </span>
+  <Button
+    className="foo"
+    isAriaDisabled={true}
+  >
+    Eject
+  </Button>
 </Tooltip>
 `;
 
-exports[`<ButtonWithTooltip> with isDisabled renders 1`] = `
+exports[`<ButtonWithTooltip> with isAriaDisabled renders 1`] = `
 <Button
   className="foo"
-  isDisabled={true}
+  isAriaDisabled={true}
 >
   Not clickable
 </Button>
@@ -46,29 +44,26 @@ exports[`<ButtonWithTooltip> with node disableReason renders 1`] = `
     </Text>
   }
 >
-  <span>
-    <Button
-      className="foo"
-      isDisabled={true}
-    >
-      Teleport
-    </Button>
-  </span>
+  <Button
+    className="foo"
+    isAriaDisabled={true}
+  >
+    Teleport
+  </Button>
 </Tooltip>
 `;
 
 exports[`<ButtonWithTooltip> with string disableReason renders 1`] = `
 <Tooltip
   content="Unsafe in hyperspace"
+  position="right"
 >
-  <span>
-    <Button
-      className="foo"
-      isDisabled={true}
-    >
-      Teleport
-    </Button>
-  </span>
+  <Button
+    className="foo"
+    isAriaDisabled={true}
+  >
+    Teleport
+  </Button>
 </Tooltip>
 `;
 

@@ -40,7 +40,12 @@ exports[`<ReduxFormTagsInput /> should render with error 1`] = `
       }
     }
     validationRegex={/\\.\\*/}
-    value={Array []}
+    value={
+      Array [
+        "hello=world",
+        "foo=bar",
+      ]
+    }
   />
   <div
     className="pf-c-form__helper-text pf-m-error"

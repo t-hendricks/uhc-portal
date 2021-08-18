@@ -25,10 +25,13 @@ import { shouldRefetchQuota } from '../../../../common/helpers';
 import BillingModelScreen from './BillingModelScreen';
 import CloudProviderScreen from './CloudProviderScreen';
 import ClusterSettingsScreen from './ClusterSettingsScreen';
-import DefaultMachinePoolScreen from './DefaultMachinePoolScreen';
+import MachinePoolScreen from './MachinePoolScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
 import NetworkScreen from './NetworkScreen';
+import UpdatesScreen from './UpdatesScreen';
 import config from '../../../../config';
+
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 import './createOSDWizard.scss';
 
@@ -75,6 +78,12 @@ class CreateOSDWizard extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { resetResponse, resetForm } = this.props;
+    resetResponse();
+    resetForm();
+  }
+
   onNext = ({ id }) => {
     const { stepIdReached } = this.state;
     if (id && stepIdReached < id) {
@@ -96,6 +105,7 @@ class CreateOSDWizard extends React.Component {
       resetResponse,
       hasProductQuota,
       history,
+      product, // for OSDTrial URL
     } = this.props;
 
     const { stepIdReached } = this.state;
@@ -104,7 +114,11 @@ class CreateOSDWizard extends React.Component {
       {
         id: 1,
         name: 'Billing model',
-        component: <Grid><BillingModelScreen isWizard /></Grid>,
+        component: (
+          <Grid>
+            <BillingModelScreen isWizard isTrialDefault={product === normalizedProducts.OSDTrial} />
+          </Grid>
+        ),
         enableNext: isValid,
       },
       {
@@ -124,30 +138,37 @@ class CreateOSDWizard extends React.Component {
             enableNext: isValid,
             canJumpTo: stepIdReached >= 3,
           },
+          {
+            id: 4,
+            name: 'Machine pool',
+            component: <MachinePoolScreen />,
+            enableNext: isValid,
+            canJumpTo: stepIdReached >= 4,
+          },
         ],
         enableNext: isValid,
       },
       {
-        id: 4,
+        id: 5,
         name: 'Networking',
         component: <NetworkScreen />,
-        enableNext: isValid,
-        canJumpTo: stepIdReached >= 4,
-      },
-      {
-        id: 5,
-        name: 'Default machine pool',
-        component: <DefaultMachinePoolScreen />,
         enableNext: isValid,
         canJumpTo: stepIdReached >= 5,
       },
       {
         id: 6,
+        name: 'Updates',
+        component: <UpdatesScreen />,
+        enableNext: isValid,
+        canJumpTo: stepIdReached >= 6,
+      },
+      {
+        id: 7,
         name: 'Review and create',
         component: <ReviewClusterScreen isPending={createClusterResponse.pending} />,
         nextButtonText: 'Create cluster',
         enableNext: isValid && !createClusterResponse.pending,
-        canJumpTo: stepIdReached >= 6 && isValid,
+        canJumpTo: stepIdReached >= 7 && isValid,
       },
     ];
     const ariaTitle = 'Create OpenShift Dedicated cluster wizard';
@@ -309,6 +330,7 @@ CreateOSDWizard.propTypes = {
   getPersistentStorage: PropTypes.func,
 
   resetResponse: PropTypes.func,
+  resetForm: PropTypes.func,
   openModal: PropTypes.func,
   onSubmit: PropTypes.func,
 
@@ -319,6 +341,9 @@ CreateOSDWizard.propTypes = {
   history: {
     push: PropTypes.func,
   },
+
+  // for the /create/osdtrial url
+  product: PropTypes.string,
 };
 
 export default CreateOSDWizard;

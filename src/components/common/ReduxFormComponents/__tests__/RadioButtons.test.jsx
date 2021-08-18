@@ -23,7 +23,12 @@ describe('<RadioButtons />', () => {
     ],
 
   };
-  const wrapper = shallow(<RadioButtons {...props} />);
+
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(<RadioButtons {...props} />);
+  });
+
   it('should render - basic', () => {
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('Radio').length).toEqual(2);

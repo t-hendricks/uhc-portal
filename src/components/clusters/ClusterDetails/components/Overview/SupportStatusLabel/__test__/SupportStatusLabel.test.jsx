@@ -14,7 +14,7 @@ const supportStatuses = {
 describe('<SupportStatusLabel />', () => {
   let wrapper;
   let getSupportStatus;
-  beforeAll(() => {
+  beforeEach(() => {
     getSupportStatus = jest.fn();
     wrapper = shallow(<SupportStatusLabel getSupportStatus={getSupportStatus} clusterVersion="4.5" />);
   });

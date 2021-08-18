@@ -9,7 +9,7 @@ describe('<AddOnsDeleteModal />', () => {
   let closeModal;
   let deleteClusterAddOn;
   let clearClusterAddOnsResponses;
-  beforeAll(() => {
+  beforeEach(() => {
     closeModal = jest.fn();
     deleteClusterAddOn = jest.fn();
     clearClusterAddOnsResponses = jest.fn();

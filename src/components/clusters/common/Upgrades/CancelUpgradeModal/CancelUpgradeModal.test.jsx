@@ -7,21 +7,26 @@ describe('<CancelUpgradeModal />', () => {
   const closeModal = jest.fn();
   const deleteSchedule = jest.fn();
   const clearDeleteScheduleResponse = jest.fn();
-  const wrapper = mount(
-    <CancelUpgradeModal
-      isOpen
-      closeModal={closeModal}
-      deleteSchedule={deleteSchedule}
-      deleteScheduleRequest={{}}
-      schedule={{
-        id: 'foo',
-        cluster_id: 'bar',
-        version: 'v1.2.3',
-        next_run: new Date('2020-11-02').toISOString(),
-      }}
-      clearDeleteScheduleResponse={clearDeleteScheduleResponse}
-    />,
-  );
+
+  let wrapper;
+  beforeEach(() => {
+    wrapper = mount(
+      <CancelUpgradeModal
+        isOpen
+        closeModal={closeModal}
+        deleteSchedule={deleteSchedule}
+        deleteScheduleRequest={{}}
+        schedule={{
+          id: 'foo',
+          cluster_id: 'bar',
+          version: 'v1.2.3',
+          next_run: new Date('2020-11-02').toISOString(),
+        }}
+        clearDeleteScheduleResponse={clearDeleteScheduleResponse}
+      />,
+    );
+  });
+
   it('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });

@@ -18,7 +18,7 @@ describe('<LoadBalancersDropdown />', () => {
     let getLoadBalancers;
     let onChange;
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
       wrapper = shallow(
@@ -50,7 +50,7 @@ describe('<LoadBalancersDropdown />', () => {
     let getLoadBalancers;
     let onChange;
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       const state = {
         ...baseState,
         error: true,
@@ -91,7 +91,7 @@ describe('<LoadBalancersDropdown />', () => {
       fulfilled: false,
       values: [],
     };
-    beforeAll(() => {
+    beforeEach(() => {
       getLoadBalancers = jest.fn();
       onChange = jest.fn();
       wrapper = shallow(
@@ -127,7 +127,7 @@ describe('<LoadBalancersDropdown />', () => {
     let getLoadBalancers;
     let onChange;
     let wrapper;
-    beforeAll(() => {
+    beforeEach(() => {
       const state = {
         ...baseState,
         fulfilled: true,

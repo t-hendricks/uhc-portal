@@ -15,6 +15,8 @@ import ExternalLink from '../../../../../common/ExternalLink';
 
 import { normalizedProducts, billingModels } from '../../../../../../common/subscriptionTypes';
 
+import CreateOSDWizardIntro from '../../../../../../styles/images/CreateOSDWizard-intro.png';
+
 import BillingModelRadioButtons from './BillingModelRadioButtons';
 
 function BillingModelSection({
@@ -135,19 +137,25 @@ function BillingModelSection({
   const showSubscriptionType = subscriptionOptions.length > 1;
 
   return (
-    <GridItem span={12}>
+    <>
       { isWizard && (
         <>
-          <Title headingLevel="h2">Welcome to Red Hat OpenShift Dedicated</Title>
-          <Text component="p">
-            Reduce operational complexity and focus on building applications
-            that add more value to your business with Red Hat OpenShift Dedicated,
-            a fully managed service of Red Hat OpenShift on
-            Amazon Web Services (AWS) and Google Cloud.
-          </Text>
+          <GridItem span={8}>
+            <Title headingLevel="h2">Welcome to Red Hat OpenShift Dedicated</Title>
+            <Text component="p">
+              Reduce operational complexity and focus on building applications
+              that add more value to your business with Red Hat OpenShift Dedicated,
+              a fully managed service of Red Hat OpenShift on
+              Amazon Web Services (AWS) and Google Cloud.
+            </Text>
+          </GridItem>
+          <GridItem span={4}>
+            <img src={CreateOSDWizardIntro} className="ocm-c-wizard-intro-image" aria-hidden="true" alt="" />
+          </GridItem>
         </>
       )}
-      {showSubscriptionType && (
+      <GridItem span={12}>
+        {showSubscriptionType && (
         <>
           <Title headingLevel="h3">Subscription type:</Title>
           <FormGroup
@@ -168,45 +176,46 @@ function BillingModelSection({
           </FormGroup>
           <Title headingLevel="h3">Infrastructure type:</Title>
         </>
-      )}
-      <FormGroup
-        isRequired
-        fieldId="byoc"
-      >
-        { isWizard
-          ? (
-            <Field
-              component={RadioButtons}
-              name="byoc"
-              defaultValue={!isRhInfraQuotaDisabled ? 'false' : 'true'}
-              disableDefaultValueHandling
-              options={[{
-                label: 'Customer cloud subscription',
-                description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',
-                value: 'true',
-                disabled: isBYOCQuotaDisabled,
-              },
-              {
-                label: 'Red Hat cloud account',
-                description: 'Deploy in cloud provider accounts owned by Red Hat',
-                value: 'false',
-                disabled: isRhInfraQuotaDisabled,
-              }]}
-              onChange={toggleBYOCFields}
-            />
-          )
-          : (
-            <Field
-              component={BillingModelRadioButtons}
-              name="byoc"
-              isBYOCQuotaDisabled={isBYOCQuotaDisabled}
-              isRhInfraQuotaDisabled={isRhInfraQuotaDisabled}
-              byocSelected={byocSelected}
-              onChange={toggleBYOCFields}
-            />
-          )}
-      </FormGroup>
-    </GridItem>
+        )}
+        <FormGroup
+          isRequired
+          fieldId="byoc"
+        >
+          { isWizard
+            ? (
+              <Field
+                component={RadioButtons}
+                name="byoc"
+                defaultValue={!isRhInfraQuotaDisabled ? 'false' : 'true'}
+                disableDefaultValueHandling
+                options={[{
+                  label: 'Customer cloud subscription',
+                  description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',
+                  value: 'true',
+                  disabled: isBYOCQuotaDisabled,
+                },
+                {
+                  label: 'Red Hat cloud account',
+                  description: 'Deploy in cloud provider accounts owned by Red Hat',
+                  value: 'false',
+                  disabled: isRhInfraQuotaDisabled,
+                }]}
+                onChange={toggleBYOCFields}
+              />
+            )
+            : (
+              <Field
+                component={BillingModelRadioButtons}
+                name="byoc"
+                isBYOCQuotaDisabled={isBYOCQuotaDisabled}
+                isRhInfraQuotaDisabled={isRhInfraQuotaDisabled}
+                byocSelected={byocSelected}
+                onChange={toggleBYOCFields}
+              />
+            )}
+        </FormGroup>
+      </GridItem>
+    </>
   );
 }
 

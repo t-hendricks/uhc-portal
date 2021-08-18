@@ -11,30 +11,27 @@ import { Button, Tooltip } from '@patternfly/react-core';
  * Value can be "node-like", including string.
  * Shows normal button for all falsy values (missing/undefined, false etc.).
  *
- * Will also disable if `isDisabled` is true (but prefer giving a reason when possible).
+ * Will also disable if `isAriaDisabled` is true (but prefer giving a reason when possible).
  *
- * All other props passed down to Button.
+ * Can optionally specify `tooltipProps` to pass to Tooltip;
+ * all other props (including children) passed down to Button.
  */
-function ButtonWithTooltip({ disableReason, isDisabled, ...buttonProps }) {
+function ButtonWithTooltip({
+  disableReason, isAriaDisabled, tooltipProps = {}, ...buttonProps
+}) {
   if (disableReason) {
-    // span is workaround for https://github.com/patternfly/patternfly-react/issues/1894.
-    // Without it, tooltip triggers on the button component itself, and won't show
-    // due to `pointer-events: none` style on disabled buttons.
-    // This might not be best workaround, should check accessibility, see
-    // https://github.com/patternfly/patternfly-react/issues/1894#issuecomment-596714910
     return (
-      <Tooltip content={disableReason}>
-        <span>
-          <Button isDisabled {...buttonProps} />
-        </span>
+      <Tooltip content={disableReason} {...tooltipProps}>
+        <Button isAriaDisabled {...buttonProps} />
       </Tooltip>
     );
   }
-  return <Button isDisabled={isDisabled} {...buttonProps} />;
+  return <Button isAriaDisabled={isAriaDisabled} {...buttonProps} />;
 }
 ButtonWithTooltip.propTypes = {
   disableReason: PropTypes.node,
-  isDisabled: PropTypes.bool,
+  isAriaDisabled: PropTypes.bool,
+  tooltipProps: PropTypes.object,
 };
 
 export default ButtonWithTooltip;

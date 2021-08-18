@@ -6,7 +6,6 @@ import last from 'lodash/last';
 import {
   Button,
   GridItem,
-  Tooltip,
 } from '@patternfly/react-core';
 import {
   PlusCircleIcon,
@@ -15,6 +14,7 @@ import {
 import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import { getRandomID } from '../../../common/helpers';
 import './ReduxFieldArray.scss';
+import ButtonWithTooltip from '../ButtonWithTooltip';
 
 class RenderFields extends React.Component {
   state = { areFieldsFilled: [], touched: false };
@@ -171,43 +171,33 @@ class RenderFields extends React.Component {
     };
 
     const minusButtonGridItem = (index) => {
-      const isDisabled = index === 0 && fields.length === 1;
-      const minusButton = (
+      const isOnlyItem = index === 0 && fields.length === 1;
+      return (
         <GridItem className="field-grid-item minus-button" span={1}>
-          <Button
+          <ButtonWithTooltip
+            disableReason={isOnlyItem && 'You cannot delete the only item'}
+            tooltipProps={{ position: 'right', distance: 0 }}
             onClick={() => this.removeField(index)}
-            isDisabled={isDisabled}
             icon={<MinusCircleIcon />}
             variant="link"
           />
         </GridItem>
       );
-      if (isDisabled) {
-        return (
-          <Tooltip
-            content="You cannot delete the only item"
-            position="right"
-            distance={0}
-          >
-            {minusButton}
-          </Tooltip>
-        );
-      } return minusButton;
     };
 
     return (
       <>
         {
-        fields.map((item, index) => (
-          <React.Fragment key={`${fields.get(index).id}`}>
-            {labelGridItem(index)}
-            {fieldGridItem(item, index)}
-            {minusButtonGridItem(index)}
-            {fieldArrayErrorGridItem(index, error)}
-            {addMoreButtonGridItem(index)}
-          </React.Fragment>
-        ))
-      }
+          fields.map((item, index) => (
+            <React.Fragment key={`${fields.get(index).id}`}>
+              {labelGridItem(index)}
+              {fieldGridItem(item, index)}
+              {minusButtonGridItem(index)}
+              {fieldArrayErrorGridItem(index, error)}
+              {addMoreButtonGridItem(index)}
+            </React.Fragment>
+          ))
+        }
       </>
     );
   }

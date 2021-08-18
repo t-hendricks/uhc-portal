@@ -10,7 +10,7 @@ describe('<KMSKeyLocationComboBox />', () => {
     let wrapper;
     let onChange;
 
-    beforeAll(() => {
+    beforeEach(() => {
       onChange = jest.fn();
       wrapper = mount(
         <DisconnectedKMSKeyLocationComboBox

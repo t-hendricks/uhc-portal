@@ -91,7 +91,7 @@ function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
           </p>
           <br />
           <a
-            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021-02/html/managing_clusters/assembly-cluster-subscriptions"
+            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions"
             rel="noreferrer noopener"
             target="_blank"
           >

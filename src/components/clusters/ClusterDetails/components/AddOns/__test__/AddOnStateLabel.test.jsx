@@ -7,7 +7,7 @@ import AddOnsConstants from '../AddOnsConstants';
 describe('<AddOnsStateLabel />', () => {
   let wrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(<AddOnStateLabel
       addOn={{}}
       installedAddOn={{

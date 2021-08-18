@@ -14,16 +14,19 @@ const schedule = {
 
 describe('<UpgradeStatus />', () => {
   describe('when cluster is up to date', () => {
-    const wrapper = shallow(
-      <UpgradeStatus
-        clusterID="fake"
-        availableUpgrades={[]}
-        canEdit
-        clusterVersion="1.2.3"
-        onCancelClick={() => {}}
-        openModal={() => {}}
-      />,
-    );
+    let wrapper;
+    beforeEach(() => {
+      wrapper = shallow(
+        <UpgradeStatus
+          clusterID="fake"
+          availableUpgrades={[]}
+          canEdit
+          clusterVersion="1.2.3"
+          onCancelClick={() => { }}
+          openModal={() => { }}
+        />,
+      );
+    });
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -35,16 +38,19 @@ describe('<UpgradeStatus />', () => {
     });
   });
   describe('when updates are available', () => {
-    const wrapper = shallow(
-      <UpgradeStatus
-        clusterID="fake"
-        availableUpgrades={['1.2.4']}
-        canEdit
-        clusterVersion="1.2.3"
-        onCancelClick={() => {}}
-        openModal={() => {}}
-      />,
-    );
+    let wrapper;
+    beforeEach(() => {
+      wrapper = shallow(
+        <UpgradeStatus
+          clusterID="fake"
+          availableUpgrades={['1.2.4']}
+          canEdit
+          clusterVersion="1.2.3"
+          onCancelClick={() => { }}
+          openModal={() => { }}
+        />,
+      );
+    });
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -55,17 +61,22 @@ describe('<UpgradeStatus />', () => {
   describe('when a manual update is scheduled', () => {
     const openModal = jest.fn();
     const onCancelClick = jest.fn();
-    const wrapper = shallow(
-      <UpgradeStatus
-        clusterID="fake"
-        availableUpgrades={['1.2.4']}
-        canEdit
-        clusterVersion="1.2.3"
-        scheduledUpgrade={schedule}
-        onCancelClick={onCancelClick}
-        openModal={openModal}
-      />,
-    );
+
+    let wrapper;
+    beforeEach(() => {
+      wrapper = shallow(
+        <UpgradeStatus
+          clusterID="fake"
+          availableUpgrades={['1.2.4']}
+          canEdit
+          clusterVersion="1.2.3"
+          scheduledUpgrade={schedule}
+          onCancelClick={onCancelClick}
+          openModal={openModal}
+        />,
+      );
+    });
+
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -92,20 +103,24 @@ describe('<UpgradeStatus />', () => {
     });
   });
   describe('when an automatic update is scheduled', () => {
-    const wrapper = shallow(
-      <UpgradeStatus
-        clusterID="fake"
-        availableUpgrades={['1.2.4']}
-        canEdit
-        clusterVersion="1.2.3"
-        scheduledUpgrade={{
-          ...schedule,
-          schedule_type: 'automatic',
-        }}
-        onCancelClick={() => {}}
-        openModal={() => {}}
-      />,
-    );
+    let wrapper;
+    beforeEach(() => {
+      wrapper = shallow(
+        <UpgradeStatus
+          clusterID="fake"
+          availableUpgrades={['1.2.4']}
+          canEdit
+          clusterVersion="1.2.3"
+          scheduledUpgrade={{
+            ...schedule,
+            schedule_type: 'automatic',
+          }}
+          onCancelClick={() => { }}
+          openModal={() => { }}
+        />,
+      );
+    });
+
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -136,22 +151,26 @@ describe('<UpgradeStatus />', () => {
   });
 
   describe('when an update is in progress', () => {
-    const wrapper = shallow(
-      <UpgradeStatus
-        clusterID="fake"
-        availableUpgrades={['1.2.4']}
-        canEdit
-        clusterVersion="1.2.3"
-        scheduledUpgrade={{
-          ...schedule,
-          state: {
-            value: 'started',
-          },
-        }}
-        onCancelClick={() => {}}
-        openModal={() => {}}
-      />,
-    );
+    let wrapper;
+    beforeEach(() => {
+      wrapper = shallow(
+        <UpgradeStatus
+          clusterID="fake"
+          availableUpgrades={['1.2.4']}
+          canEdit
+          clusterVersion="1.2.3"
+          scheduledUpgrade={{
+            ...schedule,
+            state: {
+              value: 'started',
+            },
+          }}
+          onCancelClick={() => { }}
+          openModal={() => { }}
+        />,
+      );
+    });
+
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
     });

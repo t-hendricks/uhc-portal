@@ -9,11 +9,12 @@ jest.useFakeTimers('legacy'); // TODO 'modern'
 
 describe('<InstallationLogView />', () => {
   const { clusterDetails } = fixtures;
-  let wrapper;
-  const clearLogs = jest.fn();
-  const getLogs = jest.fn();
+  let wrapper; let clearLogs; let
+    getLogs;
 
-  beforeAll(() => {
+  beforeEach(() => {
+    clearLogs = jest.fn();
+    getLogs = jest.fn();
     wrapper = shallow(<InstallationLogView
       cluster={clusterDetails.cluster}
       clearLogs={clearLogs}
@@ -48,10 +49,10 @@ describe('<InstallationLogView />', () => {
   });
 
   it('should not fetch logs when pending', () => {
+    expect(getLogs).toHaveBeenCalledTimes(1);
     wrapper.setProps({ pending: true });
     jest.runOnlyPendingTimers();
-    // call count after the previous test was 3. this is checking it doesn't increase
-    expect(getLogs).toHaveBeenCalledTimes(3);
+    expect(getLogs).toHaveBeenCalledTimes(1);
   });
 
   it('should clear logs and reset timer on unmount', () => {
@@ -60,19 +61,26 @@ describe('<InstallationLogView />', () => {
     expect(clearInterval).toHaveBeenCalled();
   });
 
-  it('should render without logs', () => {
-    wrapper = shallow(<InstallationLogView
-      cluster={clusterDetails.cluster}
-      clearLogs={clearLogs}
-      getLogs={getLogs}
-      lines=""
-      len={0}
-    />);
-    expect(wrapper).toMatchSnapshot();
-  });
+  describe('without logs', () => {
+    beforeEach(() => {
+      clearLogs = jest.fn();
+      getLogs = jest.fn();
+      wrapper = shallow(<InstallationLogView
+        cluster={clusterDetails.cluster}
+        clearLogs={clearLogs}
+        getLogs={getLogs}
+        lines=""
+        len={0}
+      />);
+    });
 
-  it('without logs, getLogs() offset should be 0', () => {
-    expect(getLogs).toHaveBeenLastCalledWith(clusterDetails.cluster.id, 0, 'install');
+    it('should render', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('getLogs() offset should be 0', () => {
+      expect(getLogs).toHaveBeenLastCalledWith(clusterDetails.cluster.id, 0, 'install');
+    });
   });
 
   it('should stop the timer when recieving 403 error code', () => {

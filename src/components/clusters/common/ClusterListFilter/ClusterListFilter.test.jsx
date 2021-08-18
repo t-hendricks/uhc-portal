@@ -10,7 +10,7 @@ describe('<ClusterListFilter />', () => {
   let wrapper;
   let wrapperWithPrefilledText;
 
-  beforeAll(() => {
+  beforeEach(() => {
     setFilter = jest.fn();
     wrapper = shallow(<ClusterListFilter
       setFilter={setFilter}

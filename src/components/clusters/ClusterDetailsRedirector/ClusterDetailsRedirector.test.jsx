@@ -10,7 +10,7 @@ describe('<ClusterDetailsRedirector />', () => {
 
   describe('when pending or not yet fulfilled', () => {
     const fetchSubscriptionIDForCluster = jest.fn();
-    beforeAll(() => {
+    beforeEach(() => {
       wrapper = shallow(
         <ClusterDetailsRedirector
           fetchSubscriptionIDForCluster={fetchSubscriptionIDForCluster}

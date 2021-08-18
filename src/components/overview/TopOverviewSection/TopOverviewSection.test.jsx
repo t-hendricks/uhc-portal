@@ -12,7 +12,7 @@ describe('<TopOverviewSection />', () => {
   const usedMem = { value: 5 };
   let wrapper;
 
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = shallow(
       <TopOverviewSection
         totalClusters={totalClusters}
