@@ -10,41 +10,41 @@ describe('Downloads page', async () => {
   });
 
   it('can expand and collapse rows', async () => {
-    expect(await Downloads.hiddenRowContaining('Get started with rosa CLI')).toExist();
+    expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
 
-    await (await Downloads.expandToggle('(rosa CLI)')).click();
-    expect(await Downloads.visibleRowContaining('Get started with rosa CLI')).toExist();
+    await (await Downloads.expandToggle('(rosa)')).click();
+    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
 
-    await (await Downloads.expandToggle('(rosa CLI)')).click();
-    expect(await Downloads.hiddenRowContaining('Get started with rosa CLI')).toExist();
+    await (await Downloads.expandToggle('(rosa)')).click();
+    expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
   });
 
   it('expand/collapse affects only selected category', async () => {
-    expect(await Downloads.hiddenRowContaining('Get started with rosa CLI')).toExist();
+    expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
     expect(await Downloads.hiddenRowContaining('Get started with the OpenShift CLI')).toExist();
     expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
 
     await (await Downloads.categoryDropdown())
       .selectByVisibleText('Command-line interface (CLI) tools');
     await (await Downloads.expandAll()).click();
-    expect(await Downloads.visibleRowContaining('Get started with rosa CLI')).toExist();
+    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
     expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
     expect(await Downloads.hiddenRowContaining('Helm charts')).not.toExist();
 
     await (await Downloads.categoryDropdown()).selectByVisibleText('All categories');
-    expect(await Downloads.visibleRowContaining('Get started with rosa CLI')).toExist();
+    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
     expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
     expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
 
     // Given mixed state, first click expands all.
     await (await Downloads.expandAll()).click();
-    expect(await Downloads.visibleRowContaining('Get started with rosa CLI')).toExist();
+    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
     expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
     expect(await Downloads.visibleRowContaining('Helm charts')).toExist();
 
     // Once all expanded, second click collapses all.
     await (await Downloads.collapseAll()).click();
-    expect(await Downloads.hiddenRowContaining('Get started with rosa CLI')).toExist();
+    expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
     expect(await Downloads.hiddenRowContaining('Get started with the OpenShift CLI')).toExist();
     expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
   });
@@ -88,12 +88,12 @@ describe('Downloads page', async () => {
     await (await Downloads.OSDropdown('CodeReady')).selectByVisibleText('Windows');
 
     await (await Downloads.categoryDropdown()).selectByVisibleText('Tokens');
-    expect(await Downloads.visibleRowContaining('ROSA')).not.toExist();
+    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).not.toExist();
     expect(await Downloads.visibleRowContaining('Helm')).not.toExist();
     expect(await Downloads.visibleRowContaining('CodeReady')).not.toExist();
 
     await (await Downloads.categoryDropdown()).selectByVisibleText('All categories');
-    expect(await Downloads.visibleRowContaining('ROSA')).toExist();
+    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
     expect(await Downloads.visibleRowContaining('Helm')).toExist();
     expect(await Downloads.visibleRowContaining('CodeReady')).toExist();
 

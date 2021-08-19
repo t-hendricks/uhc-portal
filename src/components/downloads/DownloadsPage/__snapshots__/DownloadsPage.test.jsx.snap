@@ -35,7 +35,9 @@ exports[`<DownloadsPage> renders 1`] = `
       </SplitItem>
     </Split>
   </PageHeader>
-  <PageSection>
+  <PageSection
+    className="downloads-page-body"
+  >
     <PageSection
       className="downloads-page-body"
       padding={
@@ -114,7 +116,13 @@ exports[`<DownloadsPage> renders 1`] = `
                 "cells": Array [
                   "",
                   Object {
-                    "title": "OpenShift command-line interface (oc)",
+                    "title": <React.Fragment>
+                      OpenShift command-line interface (
+                      <code>
+                        oc
+                      </code>
+                      )
+                    </React.Fragment>,
                   },
                   Object {
                     "title": <FormSelect
@@ -198,7 +206,12 @@ exports[`<DownloadsPage> renders 1`] = `
                   Object {
                     "title": <TextContent>
                       <Text>
-                        Create applications and manage OpenShift projects from the command line using the OpenShift CLI (oc).
+                        Create applications and manage OpenShift projects from the command line using the OpenShift client
+                         
+                        <code>
+                          oc
+                        </code>
+                        .
                       </Text>
                       <Text>
                         Get started with the OpenShift CLI for
@@ -229,7 +242,11 @@ exports[`<DownloadsPage> renders 1`] = `
                   "",
                   Object {
                     "title": <React.Fragment>
-                      OCM API command-line interface (ocm-cli)
+                      OpenShift Cluster Manager API command-line interface (
+                      <code>
+                        ocm
+                      </code>
+                      )
                        
                       <DevPreviewBadge />
                     </React.Fragment>,
@@ -255,13 +272,17 @@ exports[`<DownloadsPage> renders 1`] = `
                   Object {
                     "title": <TextContent>
                       <Text>
-                        Manage your OpenShift clusters from the command line using the OpenShift Cluster Manager CLI (ocm CLI).
-                      </Text>
-                      <Text>
+                        Manage your OpenShift clusters from the command line using the OpenShift Cluster Manager API client
+                         
+                        <code>
+                          ocm
+                        </code>
+                        .
+                         
                         <ExternalLink
                           href="https://access.redhat.com/articles/6114701"
                         >
-                          Get started with the ocm CLI
+                          Get started
                         </ExternalLink>
                       </Text>
                     </TextContent>,
@@ -274,7 +295,13 @@ exports[`<DownloadsPage> renders 1`] = `
                 "cells": Array [
                   "",
                   Object {
-                    "title": "Red Hat OpenShift Service on AWS (ROSA) command-line interface (rosa CLI)",
+                    "title": <React.Fragment>
+                      Red Hat OpenShift Service on AWS command-line interface (
+                      <code>
+                        rosa
+                      </code>
+                      )
+                    </React.Fragment>,
                   },
                   Object {
                     "title": <FormSelect
@@ -349,12 +376,12 @@ exports[`<DownloadsPage> renders 1`] = `
                 "cells": Array [
                   Object {
                     "title": <Text>
-                      Manage your Red Hat OpenShift Service on AWS (ROSA) clusters from the command line using the rosa CLI.
+                      Manage your Red Hat OpenShift Service on AWS (ROSA) clusters from the command line using the ROSA client for OCM and AWS APIs.
                        
                       <ExternalLink
                         href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
                       >
-                        Get started with rosa CLI
+                        Get started
                       </ExternalLink>
                     </Text>,
                   },
@@ -446,7 +473,13 @@ exports[`<DownloadsPage> renders 1`] = `
                 "cells": Array [
                   "",
                   Object {
-                    "title": "Developer-focused CLI for OpenShift (odo)",
+                    "title": <React.Fragment>
+                      Developer-focused CLI for OpenShift (
+                      <code>
+                        odo
+                      </code>
+                      )
+                    </React.Fragment>,
                   },
                   Object {
                     "title": <FormSelect
@@ -533,7 +566,12 @@ exports[`<DownloadsPage> renders 1`] = `
                 "cells": Array [
                   Object {
                     "title": <Text>
-                      Write, build, and deploy applications on OpenShift with odo, a fast, iterative, and straightforward CLI tool for developers.
+                      Write, build, and deploy applications on OpenShift with
+                       
+                      <code>
+                        odo
+                      </code>
+                      , a fast, iterative, and straightforward CLI tool for developers.
                        
                       <ExternalLink
                         href="https://docs.openshift.com/container-platform/latest/cli_reference/developer_cli_odo/understanding-odo.html"
@@ -550,7 +588,13 @@ exports[`<DownloadsPage> renders 1`] = `
                 "cells": Array [
                   "",
                   Object {
-                    "title": "Helm 3 CLI",
+                    "title": <React.Fragment>
+                      Helm 3 CLI (
+                      <code>
+                        helm
+                      </code>
+                      )
+                    </React.Fragment>,
                   },
                   Object {
                     "title": <FormSelect
@@ -654,7 +698,13 @@ exports[`<DownloadsPage> renders 1`] = `
                 "cells": Array [
                   "",
                   Object {
-                    "title": "Operator Package Manager",
+                    "title": <React.Fragment>
+                      Operator Package Manager (
+                      <code>
+                        opm
+                      </code>
+                      )
+                    </React.Fragment>,
                   },
                   Object {
                     "title": <FormSelect
@@ -755,7 +805,12 @@ exports[`<DownloadsPage> renders 1`] = `
                   "",
                   Object {
                     "title": <React.Fragment>
-                      Red Hat OpenShift Application Services CLI (rhoas CLI)
+                      Red Hat OpenShift Application Services CLI (
+                      <code>
+                        rhoas
+                      </code>
+                      )
+                       
                       <DevPreviewBadge />
                     </React.Fragment>,
                   },
@@ -833,13 +888,18 @@ exports[`<DownloadsPage> renders 1`] = `
                   Object {
                     "title": <TextContent>
                       <Text>
-                        Create and manage Kafka instances and topics, service accounts, and more using the rhoas CLI.
+                        Create and manage Kafka instances and topics, service accounts, and more using
+                         
+                        <code>
+                          rhoas
+                        </code>
+                        .
                       </Text>
                       <Text>
                         <ExternalLink
                           href="https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047"
                         >
-                          Get started with the rhoas CLI
+                          Get started
                         </ExternalLink>
                       </Text>
                     </TextContent>,
@@ -1369,7 +1429,13 @@ exports[`<DownloadsPage> renders 1`] = `
                 "cells": Array [
                   "",
                   Object {
-                    "title": "CodeReady Containers",
+                    "title": <React.Fragment>
+                      CodeReady Containers (
+                      <code>
+                        crc
+                      </code>
+                      )
+                    </React.Fragment>,
                   },
                   Object {
                     "title": <FormSelect
