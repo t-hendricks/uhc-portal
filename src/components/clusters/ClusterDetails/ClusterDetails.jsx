@@ -29,7 +29,6 @@ import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
 import MachinePools from './components/MachinePools';
-import IdentityProvidersModal from './components/IdentityProvidersModal';
 import DeleteIDPDialog from './components/DeleteIDPDialog';
 
 import ErrorBoundary from '../../App/ErrorBoundary';
@@ -86,7 +85,6 @@ class ClusterDetails extends Component {
     } = this.props;
 
     clearGlobalError('clusterDetails');
-
     this.refresh();
 
     if (!cloudProviders.pending && !cloudProviders.error && !cloudProviders.fulfilled) {
@@ -361,7 +359,6 @@ class ClusterDetails extends Component {
     const displayMachinePoolsTab = cluster.managed
       && (isClusterReady || clusterHibernating)
       && !isArchived;
-    const clusterName = getClusterName(cluster);
     const hideSupportTab = cluster.managed
         // The (managed) cluster has not yet reported its cluster ID to AMS
         // eslint-disable-next-line camelcase
@@ -464,6 +461,7 @@ class ClusterDetails extends Component {
                 cluster={cluster}
                 clusterConsoleURL={consoleURL}
                 cloudProvider={get(cluster, 'cloud_provider.id')}
+                history={history}
               />
             </ErrorBoundary>
           </TabContent>
@@ -574,12 +572,6 @@ class ClusterDetails extends Component {
               invalidateClusters();
               history.push('/');
             }}
-          />
-          <IdentityProvidersModal
-            clusterID={cluster.id}
-            clusterName={clusterName}
-            clusterConsoleURL={consoleURL}
-            refreshParent={this.refreshIDP}
           />
           <DeleteIDPDialog refreshParent={this.refreshIDP} />
           <AddNotificationContactDialog />
