@@ -50,6 +50,13 @@ const formatRequirementData = (data) => {
 
 const requirementFulfilledByResource = (myResource, requirement) => Object.entries(requirement.data)
   .every(([field, requiredValue]) => {
+    if (field === 'version.raw_id') {
+      // The version constraint is handled differently in CS and does not just do a simple string
+      // comparison, but instead should be processed as a semantic version constraint(s)
+      // All requirement processing will be removed from the UI https://issues.redhat.com/browse/SDA-3724
+      // this is here temporarily to prevent blocking installs of addons in the meantime.
+      return true;
+    }
     let clusterValue = get(myResource, field);
     if (clusterValue === undefined) {
       // eslint-disable-next-line default-case
