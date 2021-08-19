@@ -9,7 +9,7 @@ import {
 
 import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsFields';
 
-function UpdatesScreen({ isAutomaticUpgrade }) {
+function UpdatesScreen({ isAutomaticUpgrade, change }) {
   return (
     <Form onSubmit={() => false}>
       <Grid hasGutter>
@@ -18,6 +18,9 @@ function UpdatesScreen({ isAutomaticUpgrade }) {
         </GridItem>
         <UpgradeSettingsFields
           isAutomatic={isAutomaticUpgrade}
+          change={change}
+          initialSceduleValue="0 0 * * 0"
+          isWizard
         />
       </Grid>
     </Form>
@@ -26,6 +29,7 @@ function UpdatesScreen({ isAutomaticUpgrade }) {
 
 UpdatesScreen.propTypes = {
   isAutomaticUpgrade: PropTypes.bool,
+  change: PropTypes.func.isRequired,
 };
 
 export default UpdatesScreen;

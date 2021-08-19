@@ -129,6 +129,7 @@ function ReviewClusterSecreen({ formValues, isPending }) {
       </Title>
       <DescriptionList isHorizontal>
         {clusterSpecDescriptionItem({ name: 'upgrade_policy', formValues })}
+        {formValues.upgrade_policy === 'automatic' && clusterSpecDescriptionItem({ name: 'automatic_upgrade_schedule', formValues })}
         {clusterSpecDescriptionItem({ name: 'node_drain_grace_period', formValues })}
       </DescriptionList>
     </div>
