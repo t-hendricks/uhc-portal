@@ -269,6 +269,7 @@ class InsightsTable extends React.Component {
           <CardBody className="no-padding">
             <RuleTable
               ouiaId="rules"
+              toolbarProps={{ ouiaId: 'rulesToolbar' }}
               rowWrapper={customRowWrapper}
               rules={{
                 meta,

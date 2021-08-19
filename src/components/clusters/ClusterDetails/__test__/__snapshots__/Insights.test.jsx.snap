@@ -172,6 +172,11 @@ exports[`<InsightsTable /> should render 1`] = `
             "direction": "asc",
           }
         }
+        toolbarProps={
+          Object {
+            "ouiaId": "rulesToolbar",
+          }
+        }
       />
       <Connect(OnRuleDisableFeedbackModal) />
     </CardBody>

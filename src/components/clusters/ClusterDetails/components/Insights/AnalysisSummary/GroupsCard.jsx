@@ -47,7 +47,7 @@ const GroupsCard = ({ insightsData, groups, groupClicked }) => {
   const groupedRulesByGroups = groupRulesByGroups(insightsData.data || [], [...groups]);
 
   return (
-    <Card className="insights-analysis-card group-card">
+    <Card className="insights-analysis-card group-card" ouiaId="summaryByCategory">
       <CardBody>
         <Stack>
           <StackItem>

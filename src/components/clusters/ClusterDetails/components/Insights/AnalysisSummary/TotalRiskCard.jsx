@@ -79,7 +79,7 @@ const TotalRiskCard = ({ insightsData, batteryClicked }) => {
   const CursorVoronoiContainer = createContainer('voronoi');
 
   return (
-    <Card className="insights-analysis-card">
+    <Card className="insights-analysis-card" ouiaId="summaryByRisk">
       <CardBody>
         <Stack>
           <StackItem>

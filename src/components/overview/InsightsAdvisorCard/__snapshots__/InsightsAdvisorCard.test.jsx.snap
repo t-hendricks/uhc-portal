@@ -3,6 +3,7 @@
 exports[`<InsightsAdvisorCard /> When no Advisor recommendations (no rule hits) renders empty state 1`] = `
 <Card
   className="ocm-insights--advisor-card"
+  ouiaId="insightsAdvisor"
 >
   <CardBody
     className="ocm-insights--advisor-card__body"
@@ -15,6 +16,7 @@ exports[`<InsightsAdvisorCard /> When no Advisor recommendations (no rule hits) 
 exports[`<InsightsAdvisorCard /> When recommendations are available (rule hits) renders two charts 1`] = `
 <Card
   className="ocm-insights--advisor-card"
+  ouiaId="insightsAdvisor"
 >
   <CardBody
     className="ocm-insights--advisor-card__body"

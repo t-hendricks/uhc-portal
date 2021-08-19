@@ -1189,6 +1189,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
       >
         <Card
           className="ocm-c-overview-advisor--card"
+          ouiaId="insightsAdvisor"
         >
           <CardBody>
             <InsightsAdvisor
