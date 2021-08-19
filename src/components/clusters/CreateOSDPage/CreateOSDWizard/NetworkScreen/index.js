@@ -17,6 +17,7 @@ const mapStateToProps = (state, ownProps) => {
   const billingModel = valueSelector(state, 'billingModel');
   const selectedRegion = valueSelector(state, 'region');
   const networkingMode = valueSelector(state, 'network_configuration_toggle');
+  const installToVPCSelected = valueSelector(state, 'install_to_vpc');
 
   return {
     cloudProviderID,
@@ -27,6 +28,7 @@ const mapStateToProps = (state, ownProps) => {
     isCCS: isByoc,
     selectedRegion,
     networkingMode,
+    installToVPCSelected,
     initialValues: createOSDInitialValues({
       cloudProviderID, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
     }),
