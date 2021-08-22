@@ -34,6 +34,7 @@ class ReduxVerticalFormGroup extends React.Component {
       inputPrefix,
       formGroupClass,
       isPassword = false,
+      hasOtherValidation = false,
       ...extraProps // any extra props not specified above
     } = this.props;
 
@@ -47,16 +48,16 @@ class ReduxVerticalFormGroup extends React.Component {
     };
 
     const helperTextInvalid = () => {
-      if (touched && error) {
+      if (touched && error && typeof error === 'string') {
         if (showHelpTextOnError) {
           return `${helpText} ${error}`;
         }
         return error;
       }
-      return '';
+      return isPassword ? helpText : '';
     };
 
-    const isValid = !(touched && error);
+    const isValid = !hasOtherValidation ? !(touched && error) : true;
 
     return (
       <FormGroup
@@ -133,6 +134,7 @@ ReduxVerticalFormGroup.propTypes = {
   // Render a textarea instead of a textinput?
   isTextArea: PropTypes.bool,
   isPassword: PropTypes.bool,
+  hasOtherValidation: PropTypes.bool,
   // plus other props passed from the <Field> component to the control (extraProps,
   // incl. children)...
   showHelpTextOnError: PropTypes.bool,

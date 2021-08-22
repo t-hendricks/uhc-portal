@@ -1,5 +1,11 @@
 import { connect } from 'react-redux';
-import { reduxForm, reset, formValueSelector } from 'redux-form';
+import {
+  reduxForm,
+  reset,
+  formValueSelector,
+  getFormSyncErrors,
+} from 'redux-form';
+import get from 'lodash/get';
 import IdentityProvidersModal from './IdentityProvidersModal';
 import {
   createClusterIdentityProvider, resetCreatedClusterIDPResponse, getClusterIdentityProviders,
@@ -58,6 +64,7 @@ const mapStateToProps = (state) => {
   let idpEdited = {};
   let editedType;
   const valueSelector = formValueSelector('CreateIdentityProvider');
+  const errorSelector = getFormSyncErrors('CreateIdentityProvider');
   const IDPList = state.identityProviders.clusterIdentityProviders.clusterIDPList || [];
   const defaultIDP = IDPformValues.GITHUB;
   const { isEditForm } = state.modal.data;
@@ -65,7 +72,6 @@ const mapStateToProps = (state) => {
     idpEdited = IDPList[state.modal.data.rowId];
     editedType = IDPObjectNames[idpEdited.type];
   }
-
   return ({
     isOpen: shouldShowModal(state, 'create-identity-provider'),
     submitIDPResponse: isEditForm ? state.identityProviders.editClusterIDP
@@ -84,10 +90,10 @@ const mapStateToProps = (state) => {
       ldap_id: [{ ldap_id: 'dn', id: 'default' }],
       ldap_preferred_username: [{ ldap_preferred_username: 'uid', id: 'default' }],
       ldap_name: [{ ldap_name: 'cn', id: 'default' }],
-
     },
     selectedIDP: valueSelector(state, 'type') || defaultIDP,
     selectedMappingMethod: valueSelector(state, 'mappingMethod'),
+    HTPasswdPasswordErrors: get(errorSelector(state, 'htpasswd_password'), 'htpasswd_password', undefined),
     IDPList,
   });
 };
