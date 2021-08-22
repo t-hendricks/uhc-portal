@@ -6,6 +6,7 @@ import {
   HOST_PREFIX_PLACEHOLDER,
   podCidrPlaceholder,
 } from '../../CreateOSDForm/FormSections/NetworkingSection/networkingPlaceholders';
+import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
 
 /**
  * reviewValues structure - key: field name
@@ -68,6 +69,15 @@ const reviewValues = {
   },
   upgrade_policy: {
     title: 'Updates',
+  },
+  automatic_upgrade_schedule: {
+    title: 'Automatic upgrade schedule',
+    valueTransform: (value) => {
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const hours = [...Array(24).keys()].map(hour => `${hour.toString().padStart(2, 0)}:00`);
+      const [hour, day] = parseUpdateSchedule(value);
+      return `Every ${days[day]} at ${hours[hour]} UTC`;
+    },
   },
   node_drain_grace_period: {
     title: 'Node draining',

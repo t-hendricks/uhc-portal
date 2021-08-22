@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Select, SelectOption, FormGroup, Grid, GridItem, Button,
 } from '@patternfly/react-core';
+import parseUpdateSchedule from './parseUpdateSchedule';
 
 const VALID_SCHEDULE_REGEX = /00? [0-9][0-9]? \* \* ([0-6]|SUN|MON|TUE|WED|THU|FRI|SAT)/i;
 
@@ -54,13 +55,7 @@ class UpgradeScheduleSelection extends React.Component {
     if (!input.value) {
       return ['', ''];
     }
-    const splitted = input.value.split(' ');
-    const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-    let day = splitted[splitted.length - 1];
-    if (weekdays.includes(day)) {
-      day = weekdays.indexOf(day);
-    }
-    return [splitted[1], day];
+    return parseUpdateSchedule(input.value);
   }
 
   render() {
