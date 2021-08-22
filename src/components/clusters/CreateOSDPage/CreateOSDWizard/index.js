@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import {
   isValid, reset, formValueSelector, getFormValues,
 } from 'redux-form';
@@ -60,4 +61,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   getLoadBalancers: () => dispatch(getLoadBalancerValues()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateOSDWizard);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateOSDWizard));

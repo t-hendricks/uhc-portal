@@ -339,9 +339,9 @@ CreateOSDWizard.propTypes = {
   hasProductQuota: PropTypes.bool,
 
   // for cancel button
-  history: {
-    push: PropTypes.func,
-  },
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 
   // for the /create/osdtrial url
   product: PropTypes.string,
