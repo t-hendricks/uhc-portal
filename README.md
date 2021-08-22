@@ -73,7 +73,7 @@ wdio tests are stored in the `selenium-js/` directory. We use the "page objects"
 
 Test cases are in `selenium-js/specs`.
 
-Short version: Don’t need anything running, just `yarn test-e2e` will start all services, run test & kill all services.  However when developing, the below procedure allows much faster iterations.
+Short version: Don’t need anything running, just `yarn e2e-test` will start all services, run test & kill all services.  However when developing, the below procedure allows much faster iterations.
 
 Long version: To run these tests, assuming `yarn start` (or equivalent dev-env) is already running, run the following:
 
@@ -118,7 +118,7 @@ By default the backend proxy server will be available at
 application is already prepared to use it.
 
 If you need to change the configuration used by this backend proxy, then
-create a YAML file. 
+create a YAML file.
 
 By default, if nothing else is specified, the backend proxy will attempt to load the config file from the default location: `backend-config.yml`.
 
