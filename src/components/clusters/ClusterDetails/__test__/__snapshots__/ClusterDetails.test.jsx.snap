@@ -1807,7 +1807,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
             }
           }
           enableRule={[Function]}
-          groups={Array []}
           openModal={[MockFunction]}
         />
       </ErrorBoundary>
