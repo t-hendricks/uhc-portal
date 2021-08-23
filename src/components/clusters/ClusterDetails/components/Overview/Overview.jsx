@@ -19,7 +19,7 @@ import InstallationLogView, { shouldShowLogs } from './InstallationLogView';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 import { metricsStatusMessages } from '../../../common/ResourceUsage/ResourceUsage.consts';
 import { hasResourceUsageMetrics } from '../Monitoring/monitoringHelper';
-import { subscriptionStatuses } from '../../../../../common/subscriptionTypes';
+import { subscriptionStatuses, knownProducts } from '../../../../../common/subscriptionTypes';
 import InstallProgress from '../../../common/InstallProgress/InstallProgress';
 import UninstallProgress from '../../../common/UninstallProgress';
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
@@ -66,6 +66,7 @@ class Overview extends React.Component {
     const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
     const isDeprovisioned = get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+    const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
     const metricsAvailable = hasResourceUsageMetrics(cluster)
       && (cluster.canEdit
           || (cluster.state !== clusterStates.PENDING
@@ -78,7 +79,7 @@ class Overview extends React.Component {
                              || cluster.state === clusterStates.UNINSTALLING;
 
     const showInsightsAdvisor = insightsData?.status === 200
-                              && insightsData?.data && !cluster.managed
+                              && insightsData?.data && !isAROCluster
                               && !isDeprovisioned && !isArchived;
     const showResourceUsage = !isHibernating(cluster.state)
       && !isAssistedInstallSubscription(cluster.subscription)
