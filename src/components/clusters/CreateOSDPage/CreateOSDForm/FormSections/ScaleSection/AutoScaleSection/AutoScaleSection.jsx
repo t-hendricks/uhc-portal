@@ -84,7 +84,9 @@ class AutoScaleSection extends React.Component {
     const minNodesAllowed = getMinNodesAllowed({
       val, isDefaultMachinePool, product, isBYOC, isMultiAz,
     });
-    return validateNumericInput(val, { min: isMultiAz ? minNodesAllowed / 3 : minNodesAllowed });
+    return validateNumericInput(
+      val, { min: isMultiAz ? minNodesAllowed / 3 : minNodesAllowed, allowZero: true },
+    );
   }
 
   validateMaxNodes = (val, allValues) => {
