@@ -21,6 +21,7 @@ import { severityMapping, appendCrParamToDocLinks } from './helpers';
 import { setReportDetails } from './InsightsActions';
 import OnRuleDisableFeedbackModal from './OnRuleDisableFeedbackModal';
 import { labelBorderColor } from './InsightsSelectors';
+import { INSIGHTS_RULE_CATEGORIES } from './InsightsConstants';
 
 const dataSortMapping = {
   Description: (a, b) => a.description.localeCompare(b.description),
@@ -41,12 +42,12 @@ const groupsFilter = groups => ({ onChange, value, ...props } = { onChange: () =
   filterValues: {
     value,
     onChange,
-    items: Object.entries(groups)
-      .sort((a, b) => a[1].title.localeCompare(b[1].title))
+    items: groups // groups holds an array of { title: string, tags: string[] }-like objects
+      .sort((a, b) => a.title.localeCompare(b.title))
       .map(groupValues => ({
-        label: groupValues[1].title,
-        textual: groupValues[1].title,
-        value: groupValues[1].tags.join(','),
+        label: groupValues.title,
+        textual: groupValues.title,
+        value: groupValues.tags.join(','),
       })),
   },
 });
@@ -227,7 +228,6 @@ class InsightsTable extends React.Component {
     const {
       insightsData,
       enableRule,
-      groups,
       cluster,
     } = this.props;
 
@@ -260,7 +260,7 @@ class InsightsTable extends React.Component {
     return (
       <div id="cluster-insights-table">
         <AnalysisSummary
-          groups={groups}
+          groups={INSIGHTS_RULE_CATEGORIES}
           insightsData={insightsData}
           batteryClicked={this.addTotalRiskFilter}
           groupClicked={this.addGroupsFilter}
@@ -280,7 +280,7 @@ class InsightsTable extends React.Component {
                 descriptionFilter,
                 totalRiskFilter,
                 ruleStatusFilter,
-                groupsFilter: groupsFilter(groups),
+                groupsFilter: groupsFilter(INSIGHTS_RULE_CATEGORIES),
               }}
               filterValues={filters}
               sortBy={sortBy}
@@ -393,7 +393,6 @@ class InsightsTable extends React.Component {
 InsightsTable.propTypes = {
   cluster: PropTypes.object.isRequired,
   insightsData: PropTypes.object.isRequired,
-  groups: PropTypes.array.isRequired,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
 };

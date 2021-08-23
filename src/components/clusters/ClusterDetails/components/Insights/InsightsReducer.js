@@ -23,7 +23,6 @@ import {
 
 import {
   GET_CLUSTER_INSIGHTS,
-  GET_GROUPS_INSIGHTS,
   GET_REPORT_DETAILS,
   SET_REPORT_DETAILS,
   SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS,
@@ -79,19 +78,6 @@ function insightsReducer(state = initialState, action) {
         draft.insightsData[action.meta.clusterId] = {
           status: action.payload.response.status,
         };
-        break;
-      // GET_GROUPS_INSIGHTS
-      case FULFILLED_ACTION(GET_GROUPS_INSIGHTS):
-        draft.groups.groups = action.payload.data.groups;
-        draft.groups.fulfilled = true;
-        draft.groups.pending = false;
-        break;
-      case PENDING_ACTION(GET_GROUPS_INSIGHTS):
-        draft.groups.pending = true;
-        break;
-      case REJECTED_ACTION(GET_GROUPS_INSIGHTS):
-        draft.groups.rejected = true;
-        draft.groups.pending = false;
         break;
       // GET_REPORT_DETAILS
       case FULFILLED_ACTION(GET_REPORT_DETAILS):
