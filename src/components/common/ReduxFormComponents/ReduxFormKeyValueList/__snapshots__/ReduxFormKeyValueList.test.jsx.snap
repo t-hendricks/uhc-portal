@@ -1,26 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ReduxFormKeyValueList /> should render when there is no input - initial reder 1`] = `
-<div
-  className="reduxFormKeyValueList"
+<Grid
+  hasGutter={true}
 >
-  <div
-    className="pf-c-form__label reduxFormKeyValueList-colTitles"
+  <GridItem
+    className="pf-c-form__label pf-c-form__label-text"
+    span={4}
   >
-    <div
-      className="reduxFormKeyValueList-title pf-c-form__label-text"
-    >
-      Key
-    </div>
-    <div
-      className="reduxFormKeyValueList-title reduxFormKeyValueList-title-value pf-c-form__label-text"
-    >
-      Value
-    </div>
-  </div>
-  <div
-    className="pf-u-mb-md"
-    key="undefined"
+    Key
+  </GridItem>
+  <GridItem
+    className="pf-c-form__label pf-c-form__label-text"
+    span={4}
+  >
+    Value
+  </GridItem>
+  <GridItem
+    span={4}
+  />
+  <GridItem
+    span={4}
   >
     <Field
       component={[Function]}
@@ -28,12 +28,20 @@ exports[`<ReduxFormKeyValueList /> should render when there is no input - initia
       name="[object Object].key"
       type="text"
     />
+  </GridItem>
+  <GridItem
+    span={4}
+  >
     <Field
       component={[Function]}
       index={0}
       name="[object Object].value"
       type="text"
     />
+  </GridItem>
+  <GridItem
+    span={4}
+  >
     <Button
       className="reduxFormKeyValueList-removeBtn-disabled"
       icon={
@@ -47,45 +55,50 @@ exports[`<ReduxFormKeyValueList /> should render when there is no input - initia
       onClick={[Function]}
       variant="link"
     />
-  </div>
-  <Button
-    className="reduxFormKeyValueList-addBtn"
-    icon={
-      <PlusCircleIcon
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-      />
-    }
-    onClick={[Function]}
-    variant="link"
+  </GridItem>
+  <GridItem
+    span={12}
   >
-    Add label
-  </Button>
-</div>
+    <Button
+      className="reduxFormKeyValueList-addBtn"
+      icon={
+        <PlusCircleIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      }
+      isInline={true}
+      onClick={[Function]}
+      variant="link"
+    >
+      Add label
+    </Button>
+  </GridItem>
+</Grid>
 `;
 
 exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
-<div
-  className="reduxFormKeyValueList"
+<Grid
+  hasGutter={true}
 >
-  <div
-    className="pf-c-form__label reduxFormKeyValueList-colTitles"
+  <GridItem
+    className="pf-c-form__label pf-c-form__label-text"
+    span={4}
   >
-    <div
-      className="reduxFormKeyValueList-title pf-c-form__label-text"
-    >
-      Key
-    </div>
-    <div
-      className="reduxFormKeyValueList-title reduxFormKeyValueList-title-value pf-c-form__label-text"
-    >
-      Value
-    </div>
-  </div>
-  <div
-    className="pf-u-mb-md"
-    key="undefined"
+    Key
+  </GridItem>
+  <GridItem
+    className="pf-c-form__label pf-c-form__label-text"
+    span={4}
+  >
+    Value
+  </GridItem>
+  <GridItem
+    span={4}
+  />
+  <GridItem
+    span={4}
   >
     <Field
       component={[Function]}
@@ -93,12 +106,20 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
       name="[object Object].key"
       type="text"
     />
+  </GridItem>
+  <GridItem
+    span={4}
+  >
     <Field
       component={[Function]}
       index={0}
       name="[object Object].value"
       type="text"
     />
+  </GridItem>
+  <GridItem
+    span={4}
+  >
     <Button
       className="reduxFormKeyValueList-removeBtn"
       icon={
@@ -112,10 +133,9 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
       onClick={[Function]}
       variant="link"
     />
-  </div>
-  <div
-    className="pf-u-mb-md"
-    key="undefined"
+  </GridItem>
+  <GridItem
+    span={4}
   >
     <Field
       component={[Function]}
@@ -123,12 +143,20 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
       name="[object Object].key"
       type="text"
     />
+  </GridItem>
+  <GridItem
+    span={4}
+  >
     <Field
       component={[Function]}
       index={1}
       name="[object Object].value"
       type="text"
     />
+  </GridItem>
+  <GridItem
+    span={4}
+  >
     <Button
       className="reduxFormKeyValueList-removeBtn"
       icon={
@@ -142,20 +170,25 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
       onClick={[Function]}
       variant="link"
     />
-  </div>
-  <Button
-    className="reduxFormKeyValueList-addBtn"
-    icon={
-      <PlusCircleIcon
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-      />
-    }
-    onClick={[Function]}
-    variant="link"
+  </GridItem>
+  <GridItem
+    span={12}
   >
-    Add label
-  </Button>
-</div>
+    <Button
+      className="reduxFormKeyValueList-addBtn"
+      icon={
+        <PlusCircleIcon
+          color="currentColor"
+          noVerticalAlign={false}
+          size="sm"
+        />
+      }
+      isInline={true}
+      onClick={[Function]}
+      variant="link"
+    >
+      Add label
+    </Button>
+  </GridItem>
+</Grid>
 `;
