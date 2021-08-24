@@ -21,7 +21,6 @@ import {
   DISABLE_RULE_INSIGHTS,
   ENABLE_RULE_INSIGHTS,
   SEND_FEEDBACK_ON_RULE_DISABLE_INSIGHTS,
-  GET_GROUPS_INSIGHTS,
   GET_REPORT_DETAILS,
   SET_REPORT_DETAILS,
   GET_ORGANIZATION_INSIGHTS,
@@ -139,11 +138,6 @@ export const sendFeedbackOnRuleDisableInsights = (
     },
   )
 );
-
-export const fetchGroups = () => dispatch => dispatch({
-  type: GET_GROUPS_INSIGHTS,
-  payload: insightsService.getGroupsInsights(),
-});
 
 export const fetchReportDetails = (clusterId, ruleId, errorKey, isOSD) => dispatch => dispatch({
   type: GET_REPORT_DETAILS,
