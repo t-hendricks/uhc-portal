@@ -81,6 +81,7 @@ class ClusterVersionInfo extends React.Component {
                         clusterID={cluster.id}
                         canEdit={cluster.canEdit}
                         clusterVersion={cluster.openshift_version}
+                        clusterVersionRawID={cluster.version.raw_id}
                         scheduledUpgrade={scheduledUpdate}
                         openModal={openModal}
                         // eslint-disable-next-line camelcase
@@ -131,6 +132,7 @@ ClusterVersionInfo.propTypes = {
     version: PropTypes.shape({
       channel_group: PropTypes.string,
       available_upgrades: PropTypes.arrayOf(PropTypes.string),
+      raw_id: PropTypes.string,
     }),
     canEdit: PropTypes.bool,
   }),
