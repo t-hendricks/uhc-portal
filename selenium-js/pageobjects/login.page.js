@@ -33,6 +33,18 @@ class LoginPage extends Page {
     await pw.setValue(password);
     await (await this.btnSubmit).click();
     await browser.waitUntil(async () => !await this.isLoginPage(), { timeoutMsg: 'Login failed: did not redirect after timeout' });
+    await this.closePendoIfShowing();
+  }
+
+  async closePendoIfShowing() {
+    // This might not work, it takes time for Pendo to pop up.
+    // But don't want to block here waiting, have fallback in wdio.conf.js.
+    const close = await $('._pendo-close-guide');
+    if (await close.isExisting()) {
+      // eslint-disable-next-line no-console
+      console.log("Trying to close pendo guide");
+      await close.click();
+    }
   }
 
   async open() {

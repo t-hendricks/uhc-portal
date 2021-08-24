@@ -226,21 +226,33 @@ exports.config = {
      * Function to be executed after a test (in Mocha/Jasmine).
      */
   afterTest: async (test, context, { error, result, duration, passed, retries }) => {
-    // if test passed, ignore, else take and save screenshot.
+    // if test passed, ignore, else debug / take and save screenshot.
     if (passed) {
       return;
     }
+
     const log = logger('afterTest');
+
+    if (/not clickable.*because another element.*pendo.*obscures it/.test(error)) {
+      // If we got here, it ruined this run, but let's try make next runs pass.
+      const close = await $('._pendo-close-guide');
+      const exists = await close.isExisting();
+      log.error('Trying to close pendo guide, exists = ', exists);
+      if (exists) {
+        await close.click();
+      }
+    }
+
     if (process.env.SELENIUM_DEBUG === 'true') {
       await browser.debug();
     } else {
-      const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
-      const timestamp = new Date().toISOString();
-      const dir = 'run/output/embedded_files/';
-      const filepath = path.join(dir, `${timestamp}.${testName}.png`);
-      await util.promisify(fs.mkdir)(dir, { recursive: true });
-      await browser.saveScreenshot(filepath);
-      process.emit('test:screenshot', filepath);
+    const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
+    const timestamp = new Date().toISOString();
+    const dir = 'run/output/embedded_files/';
+    const filepath = path.join(dir, `${timestamp}.${testName}.png`);
+    await util.promisify(fs.mkdir)(dir, { recursive: true });
+    await browser.saveScreenshot(filepath);
+    process.emit('test:screenshot', filepath);
       log.error(`screenshot:\n  ${filepath}\n`);
       log.info('Tip: to stop for interactive debugging, set SELENIUM_DEBUG=true env var');
     }
