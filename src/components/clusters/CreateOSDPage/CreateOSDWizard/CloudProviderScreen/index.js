@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
   return {
     cloudProviderID,
     isByoc,
+    ccsCredentialsValidityResponse: state.ccsInquiries.ccsCredentialsValidity,
   };
 };
 

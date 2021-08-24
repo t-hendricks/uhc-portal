@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
   Alert, GridItem, ExpandableSection, TextContent, Title,
@@ -9,7 +10,7 @@ import { required, validateGCPServiceAccount } from '../../../../../common/valid
 import ExternalLink from '../../../../common/ExternalLink';
 import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
 
-function GCPByocFields() {
+function GCPByocFields({ isValidating }) {
   return (
     <>
       <GridItem span={12}>
@@ -76,8 +77,19 @@ function GCPByocFields() {
           className="pf-c-form-control"
         />
       </GridItem>
+      <GridItem>
+        {isValidating && (
+          <>
+            Validating...
+          </>
+        )}
+      </GridItem>
     </>
   );
 }
+
+GCPByocFields.propTypes = {
+  isValidating: PropTypes.bool,
+};
 
 export default GCPByocFields;
