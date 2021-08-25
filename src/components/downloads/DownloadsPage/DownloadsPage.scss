@@ -11,3 +11,9 @@
     margin-left: var(--pf-global--spacer--xl);
   }
 }
+
+.downloads-page-body {
+  code {
+    font-family: var(--pf-global--FontFamily--monospace);
+  }
+}
