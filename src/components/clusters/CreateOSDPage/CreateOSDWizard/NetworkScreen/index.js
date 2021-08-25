@@ -6,7 +6,7 @@ import createOSDInitialValues from '../../createOSDInitialValues';
 import wizardConnector from '../WizardConnector';
 import NetworkScreen from './NetworkScreen';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
   const cloudProviderID = valueSelector(state, 'cloud_provider');
@@ -17,6 +17,7 @@ const mapStateToProps = (state) => {
   const billingModel = valueSelector(state, 'billingModel');
   const selectedRegion = valueSelector(state, 'region');
   const networkingMode = valueSelector(state, 'network_configuration_toggle');
+  const installToVPCSelected = valueSelector(state, 'install_to_vpc');
 
   return {
     cloudProviderID,
@@ -27,7 +28,10 @@ const mapStateToProps = (state) => {
     isCCS: isByoc,
     selectedRegion,
     networkingMode,
-    initialValues: createOSDInitialValues({ cloudProviderID, isMultiAz, isByoc }),
+    installToVPCSelected,
+    initialValues: createOSDInitialValues({
+      cloudProviderID, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
+    }),
   };
 };
 

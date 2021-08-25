@@ -860,26 +860,37 @@ const validateGCPKMSServiceAccount = (value) => {
 };
 
 const validateHTPasswdPassword = (password) => {
-  // eslint-disable-next-line no-control-regex
-  if ((password.match(/[^\x20-\x7E]/g) || []).length !== 0) {
-    return 'Password must only contain printable ASCII characters.';
+  const errors = {
+    emptyPassword: false,
+    baseRequirements: false,
+    uppercase: false,
+    lowercase: false,
+    numbersOrSymbols: false,
+  };
+  if (!password || !password.trim()) {
+    errors.emptyPassword = true;
+    return errors;
   }
-  if (password.indexOf(' ') !== -1) {
-    return 'Password must not contain whitespaces.';
-  }
-  if (password.length < 14) {
-    return 'Password must be at least 14 characters long.';
+  if (
+    (password.match(/[^\x20-\x7E]/g) || []).length !== 0
+    || password.indexOf(' ') !== -1
+    || password.length < 14
+  ) {
+    errors.baseRequirements = true;
   }
   if ((password.match(/[A-Z]/g) || []).length === 0) {
-    return 'Password must contain uppercase letters.';
+    errors.uppercase = true;
   }
   if ((password.match(/[a-z]/g) || []).length === 0) {
-    return 'Password must contain lowercase letters.';
+    errors.lowercase = true;
   }
-  if (/^[a-zA-Z]+$/.test(password)) {
-    return 'Password must contain numbers and/or symbols.';
+  if (/^[a-zA-Z ]+$/.test(password)) {
+    errors.numbersOrSymbols = true;
   }
-  return undefined;
+  if (Object.values(errors).every(item => item === false)) {
+    return undefined;
+  }
+  return errors;
 };
 
 const validateHTPasswdUsername = (username) => {

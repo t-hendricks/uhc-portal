@@ -34,6 +34,7 @@ const Chart = ({ entries, issueCount }) => (
         x={210}
       />
     )}
+    padAngle={0}
     padding={{
       bottom: 0,
       left: 20,

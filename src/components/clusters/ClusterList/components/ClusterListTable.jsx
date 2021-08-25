@@ -193,6 +193,7 @@ function ClusterListTable(props) {
       actionResolver={resolver}
       onSort={onSortToggle}
       sortBy={sortBy}
+      ouiaId="clusterList"
     >
       <TableHeader />
       <TableBody />

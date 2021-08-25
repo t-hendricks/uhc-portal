@@ -3,6 +3,7 @@
 exports[`<InsightsAdvisorCard /> When no Advisor recommendations (no rule hits) renders empty state 1`] = `
 <Card
   className="ocm-insights--advisor-card"
+  ouiaId="insightsAdvisor"
 >
   <CardBody
     className="ocm-insights--advisor-card__body"
@@ -15,6 +16,7 @@ exports[`<InsightsAdvisorCard /> When no Advisor recommendations (no rule hits) 
 exports[`<InsightsAdvisorCard /> When recommendations are available (rule hits) renders two charts 1`] = `
 <Card
   className="ocm-insights--advisor-card"
+  ouiaId="insightsAdvisor"
 >
   <CardBody
     className="ocm-insights--advisor-card__body"
@@ -31,18 +33,28 @@ exports[`<InsightsAdvisorCard /> When recommendations are available (rule hits) 
       groups={
         Array [
           Object {
-            "description": "title1 desc",
             "tags": Array [
-              "tag1",
+              "performance",
             ],
-            "title": "title1",
+            "title": "Performance",
           },
           Object {
-            "description": "title2 desc",
             "tags": Array [
-              "tag2",
+              "service_availability",
             ],
-            "title": "title2",
+            "title": "Service Availability",
+          },
+          Object {
+            "tags": Array [
+              "security",
+            ],
+            "title": "Security",
+          },
+          Object {
+            "tags": Array [
+              "fault_tolerance",
+            ],
+            "title": "Fault Tolerance",
           },
         ]
       }

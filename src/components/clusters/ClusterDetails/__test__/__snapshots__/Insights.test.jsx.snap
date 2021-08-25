@@ -7,7 +7,34 @@ exports[`<InsightsTable /> should render 1`] = `
   <AnalysisSummary
     batteryClicked={[Function]}
     groupClicked={[Function]}
-    groups={Array []}
+    groups={
+      Array [
+        Object {
+          "tags": Array [
+            "performance",
+          ],
+          "title": "Performance",
+        },
+        Object {
+          "tags": Array [
+            "service_availability",
+          ],
+          "title": "Service Availability",
+        },
+        Object {
+          "tags": Array [
+            "security",
+          ],
+          "title": "Security",
+        },
+        Object {
+          "tags": Array [
+            "fault_tolerance",
+          ],
+          "title": "Fault Tolerance",
+        },
+      ]
+    }
     insightsData={
       Object {
         "data": Array [
@@ -170,6 +197,11 @@ exports[`<InsightsTable /> should render 1`] = `
               "title": "Description",
             },
             "direction": "asc",
+          }
+        }
+        toolbarProps={
+          Object {
+            "ouiaId": "rulesToolbar",
           }
         }
       />

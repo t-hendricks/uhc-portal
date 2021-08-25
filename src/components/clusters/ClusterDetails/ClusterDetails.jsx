@@ -98,26 +98,13 @@ class ClusterDetails extends Component {
   componentDidUpdate(prevProps) {
     const {
       match,
-      groups,
       clusterDetails,
-      insightsData,
-      fetchGroups,
     } = this.props;
     const subscriptionID = match.params.id;
-    const externalId = get(clusterDetails, 'cluster.external_id');
 
     if (get(clusterDetails, 'cluster.subscription.id') === subscriptionID) {
       const clusterName = getClusterName(clusterDetails.cluster);
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
-    }
-
-    if (
-      !groups.pending
-      && !groups.fulfilled
-      && !groups.rejected
-      && get(insightsData[externalId], 'meta.count', 0) > 0
-    ) {
-      fetchGroups();
     }
 
     if (!prevProps.clusterDetails?.cluster?.id
@@ -280,7 +267,6 @@ class ClusterDetails extends Component {
       setGlobalError,
       displayClusterLogs,
       insightsData,
-      groups,
       enableRule,
       canSubscribeOCP,
       canTransferClusterOwnership,
@@ -359,7 +345,7 @@ class ClusterDetails extends Component {
     const isPrivateCluster = cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
     const displayAddOnsTab = !isClusterInstalling && !isClusterPending
      && cluster.managed && !isArchived;
-    const displayInsightsTab = !cluster.managed && !isArchived && !isAROCluster
+    const displayInsightsTab = !isArchived && !isAROCluster
       && !isUninstalledAICluster(cluster);
     const consoleURL = get(cluster, 'console.url');
     const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster
@@ -520,7 +506,6 @@ class ClusterDetails extends Component {
             <ErrorBoundary>
               <Insights
                 cluster={cluster}
-                groups={get(groups, 'groups', [])}
                 insightsData={insightsData[cluster.external_id]}
                 enableRule={(ruleId, errorKey) => {
                   enableRule(cluster.external_id, ruleId, errorKey);
@@ -611,7 +596,6 @@ ClusterDetails.propTypes = {
   history: PropTypes.object.isRequired,
   fetchDetails: PropTypes.func.isRequired,
   fetchClusterInsights: PropTypes.func.isRequired,
-  fetchGroups: PropTypes.func.isRequired,
   getCloudProviders: PropTypes.func.isRequired,
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getOnDemandMetrics: PropTypes.func.isRequired,
@@ -626,12 +610,6 @@ ClusterDetails.propTypes = {
   resetClusterHistory: PropTypes.func.isRequired,
   getClusterIdentityProviders: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
-  groups: PropTypes.shape({
-    groups: PropTypes.array,
-    fulfilled: PropTypes.bool,
-    pending: PropTypes.bool,
-    rejected: PropTypes.bool,
-  }),
   clusterIdentityProviders: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   clusterDetails: PropTypes.shape({
@@ -682,7 +660,6 @@ ClusterDetails.propTypes = {
 
 ClusterDetails.defaultProps = {
   insightsData: {},
-  groups: {},
   clusterDetails: {
     cluster: null,
     error: false,

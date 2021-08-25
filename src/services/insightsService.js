@@ -49,11 +49,6 @@ const sendFeedbackOnRuleDisableInsights = (
   data: { message },
 });
 
-const getGroupsInsights = () => insightsAPIRequest({
-  method: 'get',
-  url: '/groups',
-});
-
 const getOrganizationInsights = clusterIds => insightsAPIRequest({
   method: 'post',
   url: '/org_overview',
@@ -68,7 +63,6 @@ const insigthsService = {
   disableRuleInsights,
   enableRuleInsights,
   sendFeedbackOnRuleDisableInsights,
-  getGroupsInsights,
   getReportDetails,
   getOrganizationInsights,
 };

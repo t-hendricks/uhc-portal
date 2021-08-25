@@ -26,7 +26,6 @@ import { viewConstants } from '../../../redux/constants';
 import {
   enableRuleInsights,
   fetchClusterInsights,
-  fetchGroups,
 } from './components/Insights/InsightsActions';
 import { getMachinePools, clearGetMachinePoolsResponse } from './components/MachinePools/MachinePoolsActions';
 import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
@@ -47,7 +46,7 @@ const mapStateToProps = (state, { location }) => {
   const { addOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
-  const { insightsData, groups } = state.insightsData;
+  const { insightsData } = state.insightsData;
   const logsPresent = state.clusterLogs.clusterLogInitialized
     === state.clusterLogs.externalClusterID;
   const hideClusterLogs = !logsPresent || errorCode === 403 || errorCode === 404;
@@ -71,7 +70,6 @@ const mapStateToProps = (state, { location }) => {
     displayClusterLogs: !hideClusterLogs,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
-    groups,
     canSubscribeOCP: canSubscribeOCPSelector(state),
     canTransferClusterOwnership: canTransferClusterOwnershipSelector(state),
     canHibernateCluster: canHibernateClusterSelector(state),
@@ -90,7 +88,6 @@ const mapStateToProps = (state, { location }) => {
 const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   fetchDetails: clusterId => fetchClusterDetails(clusterId),
   fetchClusterInsights,
-  fetchGroups,
   enableRule: (clusterId, ruleId, errorKey) => enableRuleInsights(clusterId, ruleId, errorKey),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
