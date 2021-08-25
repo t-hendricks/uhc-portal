@@ -105,10 +105,11 @@ class CreateOSDWizard extends React.Component {
       resetResponse,
       hasProductQuota,
       history,
-      product, // for OSDTrial URL
+      product, // for OSDTrial URL, prop from the router
     } = this.props;
 
     const { stepIdReached } = this.state;
+    const isTrialDefault = product === normalizedProducts.OSDTrial;
 
     const steps = [
       {
@@ -116,7 +117,7 @@ class CreateOSDWizard extends React.Component {
         name: 'Billing model',
         component: (
           <Grid>
-            <BillingModelScreen isWizard isTrialDefault={product === normalizedProducts.OSDTrial} />
+            <BillingModelScreen isWizard isTrialDefault={isTrialDefault} />
           </Grid>
         ),
         enableNext: isValid,
@@ -134,14 +135,14 @@ class CreateOSDWizard extends React.Component {
           {
             id: 3,
             name: 'Cluster details',
-            component: <ClusterSettingsScreen />,
+            component: <ClusterSettingsScreen isTrialDefault={isTrialDefault} />,
             enableNext: isValid,
             canJumpTo: stepIdReached >= 3,
           },
           {
             id: 4,
             name: 'Machine pool',
-            component: <MachinePoolScreen />,
+            component: <MachinePoolScreen isTrialDefault={isTrialDefault} />,
             enableNext: isValid,
             canJumpTo: stepIdReached >= 4,
           },
@@ -151,7 +152,7 @@ class CreateOSDWizard extends React.Component {
       {
         id: 5,
         name: 'Networking',
-        component: <NetworkScreen />,
+        component: <NetworkScreen isTrialDefault={isTrialDefault} />,
         enableNext: isValid,
         canJumpTo: stepIdReached >= 5,
       },
@@ -338,9 +339,9 @@ CreateOSDWizard.propTypes = {
   hasProductQuota: PropTypes.bool,
 
   // for cancel button
-  history: {
-    push: PropTypes.func,
-  },
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 
   // for the /create/osdtrial url
   product: PropTypes.string,

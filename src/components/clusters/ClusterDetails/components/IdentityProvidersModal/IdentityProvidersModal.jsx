@@ -58,6 +58,7 @@ class IdentityProvidersModal extends React.Component {
       isEditForm,
       anyTouched,
       invalid,
+      HTPasswdPasswordErrors,
     } = this.props;
 
     const isPending = submitIDPResponse.pending;
@@ -84,6 +85,7 @@ class IdentityProvidersModal extends React.Component {
         isEditForm={isEditForm}
         idpEdited={idpEdited}
         idpName={initialValues.name}
+        HTPasswdPasswordErrors={HTPasswdPasswordErrors}
       />
     </Modal>
     );
@@ -113,6 +115,7 @@ IdentityProvidersModal.propTypes = {
   }).isRequired,
   anyTouched: PropTypes.bool.isRequired,
   invalid: PropTypes.bool.isRequired,
+  HTPasswdPasswordErrors: PropTypes.object,
 };
 
 IdentityProvidersModal.defaultProps = {

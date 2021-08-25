@@ -12,7 +12,6 @@ const funcs = () => ({
   fetchDetails: jest.fn(),
   fetchClusterInsights: jest.fn(),
   setOpenedTab: jest.fn(),
-  fetchGroups: jest.fn(),
   getCloudProviders: jest.fn(),
   invalidateClusters: jest.fn(),
   getOrganizationAndQuota: jest.fn(),

@@ -19,7 +19,7 @@ const getMinNodesAllowed = ({
       minNodesAllowed = isMultiAz ? 9 : 4;
     }
   } else {
-    minNodesAllowed = isMultiAz ? 3 : 1;
+    minNodesAllowed = 0;
   }
   return max([currMinNodes, minNodesAllowed]);
 };

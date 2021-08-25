@@ -22,6 +22,7 @@ describe('<UpgradeStatus />', () => {
           availableUpgrades={[]}
           canEdit
           clusterVersion="1.2.3"
+          clusterVersionRawID="1.2.3"
           onCancelClick={() => { }}
           openModal={() => { }}
         />,
@@ -46,6 +47,7 @@ describe('<UpgradeStatus />', () => {
           availableUpgrades={['1.2.4']}
           canEdit
           clusterVersion="1.2.3"
+          clusterVersionRawID="1.2.3"
           onCancelClick={() => { }}
           openModal={() => { }}
         />,
@@ -70,6 +72,7 @@ describe('<UpgradeStatus />', () => {
           availableUpgrades={['1.2.4']}
           canEdit
           clusterVersion="1.2.3"
+          clusterVersionRawID="1.2.3"
           scheduledUpgrade={schedule}
           onCancelClick={onCancelClick}
           openModal={openModal}
@@ -111,6 +114,7 @@ describe('<UpgradeStatus />', () => {
           availableUpgrades={['1.2.4']}
           canEdit
           clusterVersion="1.2.3"
+          clusterVersionRawID="1.2.3"
           scheduledUpgrade={{
             ...schedule,
             schedule_type: 'automatic',
@@ -159,6 +163,7 @@ describe('<UpgradeStatus />', () => {
           availableUpgrades={['1.2.4']}
           canEdit
           clusterVersion="1.2.3"
+          clusterVersionRawID="1.2.3"
           scheduledUpgrade={{
             ...schedule,
             state: {

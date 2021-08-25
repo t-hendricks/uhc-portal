@@ -39,8 +39,6 @@ class Overview extends Component {
       getUnhealthyClusters,
       getUserAccess,
       viewOptions,
-      fetchInsightsGroups,
-      insightsGroups,
       getOrganizationAndQuota,
       organization,
     } = this.props;
@@ -52,10 +50,6 @@ class Overview extends Component {
 
     if (!unhealthyClusters.fulfilled && !unhealthyClusters.pending) {
       getUnhealthyClusters(createOverviewQueryObject(viewOptions));
-    }
-
-    if (!insightsGroups.pending && !insightsGroups.fulfilled) {
-      fetchInsightsGroups();
     }
 
     if (!organization.pending && !organization.fulfilled) {
@@ -94,7 +88,6 @@ class Overview extends Component {
       usedMem,
       upToDate,
       upgradeAvailable,
-      insightsGroups,
       insightsOverview,
       userAccess,
     } = this.props;
@@ -170,7 +163,6 @@ class Overview extends Component {
               <GridItem md={6} sm={12}>
                 <InsightsAdvisorCard
                   overview={insightsOverview.overview}
-                  groups={insightsGroups.groups}
                 />
               </GridItem>
             )}
@@ -273,9 +265,7 @@ Overview.propTypes = {
   usedMem: PropTypes.object.isRequired,
   upToDate: PropTypes.object.isRequired,
   upgradeAvailable: PropTypes.object.isRequired,
-  fetchInsightsGroups: PropTypes.func.isRequired,
   fetchOrganizationInsights: PropTypes.func.isRequired,
-  insightsGroups: PropTypes.object.isRequired,
   insightsOverview: PropTypes.object.isRequired,
   userAccess: PropTypes.shape({
     data: PropTypes.bool,

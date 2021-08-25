@@ -23,8 +23,9 @@ function BasicFieldsSection({
   isMultiAz,
   hasSingleAzQuota,
   hasMultiAzQuota,
-  handleMultiAZChange,
   change,
+  isWizard,
+  handleMultiAZChangeForOldForm,
 }) {
   const multiAzTooltip = !hasMultiAzQuota && noQuotaTooltip;
   const singleAzTooltip = !hasSingleAzQuota && noQuotaTooltip;
@@ -36,6 +37,20 @@ function BasicFieldsSection({
     const azCount = isMultiAz ? 3 : 1;
     for (let i = 0; i < azCount; i += 1) {
       change(`az_${i}`, AVAILABILITY_ZONE_PLACEHOLDER);
+    }
+  };
+
+  const handleMultiAZChange = (_, value) => {
+    // when multiAz changes, reset node count
+    const isValueMultiAz = value === 'true';
+    let computeNodes = isValueMultiAz ? '9' : '4';
+
+    if (isBYOC) {
+      computeNodes = isValueMultiAz ? '3' : '2';
+    }
+    change('nodes_compute', computeNodes);
+    if (handleMultiAZChangeForOldForm) {
+      handleMultiAZChangeForOldForm(value);
     }
   };
 
@@ -127,6 +142,7 @@ function BasicFieldsSection({
                   },
                 ]}
                 defaultValue={hasSingleAzQuota ? 'false' : 'true'}
+                disableDefaultValueHandling={isWizard}
               />
             </FormGroup>
           </GridItem>
@@ -142,12 +158,13 @@ BasicFieldsSection.propTypes = {
   isMultiAz: PropTypes.bool.isRequired,
   showDNSBaseDomain: PropTypes.bool,
   showAvailability: PropTypes.bool,
-  handleMultiAZChange: PropTypes.func.isRequired,
+  handleMultiAZChangeForOldForm: PropTypes.func,
   change: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   isBYOC: PropTypes.bool.isRequired,
   hasSingleAzQuota: PropTypes.bool.isRequired,
   hasMultiAzQuota: PropTypes.bool.isRequired,
+  isWizard: PropTypes.bool,
 };
 
 export default BasicFieldsSection;

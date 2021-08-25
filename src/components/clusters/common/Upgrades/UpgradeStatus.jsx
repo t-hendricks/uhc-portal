@@ -12,6 +12,7 @@ function UpgradeStatus({
   clusterID,
   canEdit,
   clusterVersion,
+  clusterVersionRawID,
   scheduledUpgrade,
   availableUpgrades = [],
   onCancelClick,
@@ -71,7 +72,7 @@ function UpgradeStatus({
       <div>
         {upgradeStateIcon()}
         <UpdateGraph
-          currentVersion={clusterVersion}
+          currentVersion={clusterVersionRawID}
           updateVersion={isManualUpgradeScheduled ? scheduledUpgrade.version : latestAvailable}
           hasMore={!isManualUpgradeScheduled && availableUpgrades.length > 1}
         />
@@ -107,6 +108,7 @@ UpgradeStatus.propTypes = {
   clusterID: PropTypes.string.isRequired,
   canEdit: PropTypes.bool,
   clusterVersion: PropTypes.string,
+  clusterVersionRawID: PropTypes.string,
   scheduledUpgrade: PropTypes.shape({
     version: PropTypes.string,
     next_run: PropTypes.string,

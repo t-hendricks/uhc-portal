@@ -4,7 +4,7 @@ import Overview from './Overview';
 import { getSummaryDashboard, getUnhealthyClusters } from '../../redux/actions/dashboardsActions';
 import { getUserAccess } from '../../redux/actions/costActions';
 import { invalidateSubscriptions } from '../../redux/actions/subscriptionsActions';
-import { fetchGroups, fetchOrganizationInsights } from '../clusters/ClusterDetails/components/Insights/InsightsActions';
+import { fetchOrganizationInsights } from '../clusters/ClusterDetails/components/Insights/InsightsActions';
 import { fetchClusters } from '../../redux/actions/clustersActions';
 import { viewConstants } from '../../redux/constants';
 import { getOrganizationAndQuota } from '../../redux/actions/userActions';
@@ -15,7 +15,6 @@ const mapDispatchToProps = {
   getUnhealthyClusters,
   getUserAccess,
   invalidateSubscriptions,
-  fetchInsightsGroups: fetchGroups,
   fetchOrganizationInsights,
   getOrganizationAndQuota,
 };
@@ -25,7 +24,6 @@ const mapStateToProps = state => ({
   unhealthyClusters: state.dashboards.unhealthyClusters,
   viewOptions: state.viewOptions[viewConstants.OVERVIEW_VIEW],
   clusters: state.clusters.clusters,
-  insightsGroups: state.insightsData.groups,
   insightsOverview: state.insightsData.overview,
   userAccess: state.cost.userAccess,
   organization: state.userProfile.organization,

@@ -64,7 +64,7 @@ class ClusterDetails extends Page {
 
   async waitForInstallCompletion() {
     await (await this.installationSuccessAlert).waitForExist({ timeout: 5 * 60 * 1000 });
-    await (await this.accessControlTabBtn).waitForClickable({ timeout: 60 * 1000 });
+    await (await this.accessControlTabBtn).waitForClickable({ timeout: 2.5 * 60 * 1000 });
   }
 
   get addIDPButton() { return $("//button[contains(text(),'Add identity provider')]"); }

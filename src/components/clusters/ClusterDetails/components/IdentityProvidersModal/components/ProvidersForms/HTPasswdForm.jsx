@@ -1,8 +1,11 @@
 import React from 'react';
 import { Field } from 'redux-form';
 import {
-  GridItem, Radio, Stack, StackItem, Alert,
+  GridItem, Radio, Stack, StackItem, Alert, HelperText, HelperTextItem,
 } from '@patternfly/react-core';
+import {
+  CheckCircleIcon, ExclamationCircleIcon,
+} from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 import { randAlphanumString } from '../../../../../../../common/helpers';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -144,12 +147,70 @@ class HTPasswdForm extends React.Component {
   render() {
     const {
       isPending,
+      HTPasswdPasswordErrors,
     } = this.props;
 
     const {
       suggestedUsername,
       suggestedPassword,
     } = this.state;
+
+    const helpTextItemVariant = (errName) => {
+      const emptyPassword = HTPasswdPasswordErrors?.emptyPassword || false;
+      if (emptyPassword) {
+        return 'default';
+      }
+      if (HTPasswdPasswordErrors === undefined) {
+        return 'success';
+      }
+      const hasError = HTPasswdPasswordErrors[errName];
+      return hasError ? 'error' : 'success';
+    };
+
+    const helpTextItemIcon = (errName) => {
+      const variant = helpTextItemVariant(errName);
+      switch (variant) {
+        case 'success':
+          return (<CheckCircleIcon />);
+        case 'error':
+          return (<ExclamationCircleIcon />);
+        default:
+          return (<span>•</span>);
+      }
+    };
+
+    const helpText = (
+      <HelperText>
+        <HelperTextItem
+          isDynamic
+          variant={helpTextItemVariant('baseRequirements')}
+          icon={helpTextItemIcon('baseRequirements')}
+        >
+          At least 14 characters (ASCII-standard) without whitespaces
+        </HelperTextItem>
+        <HelperTextItem
+          isDynamic
+          variant={helpTextItemVariant('lowercase')}
+          icon={helpTextItemIcon('lowercase')}
+        >
+          Include lowercase letters
+        </HelperTextItem>
+        <HelperTextItem
+          isDynamic
+          variant={helpTextItemVariant('uppercase')}
+          icon={helpTextItemIcon('uppercase')}
+        >
+          Include uppercase letters
+        </HelperTextItem>
+        <HelperTextItem
+          isDynamic
+          variant={helpTextItemVariant('numbersOrSymbols')}
+          icon={helpTextItemIcon('numbersOrSymbols')}
+        >
+          Include numbers or symbols (ASCII-standard characters only)
+        </HelperTextItem>
+      </HelperText>
+    );
 
     return (
       <>
@@ -177,6 +238,7 @@ class HTPasswdForm extends React.Component {
           <Field
             component={this.radioControlledInputGroup}
             isPassword
+            hasOtherValidation
             suggestedValueRadioLabel={(
               <span>
                 Use suggested password:
@@ -188,13 +250,10 @@ class HTPasswdForm extends React.Component {
             name="htpasswd_password"
             label="Password"
             type="text"
-            validate={[required, validateHTPasswdPassword]}
+            validate={validateHTPasswdPassword}
             isRequired
             disabled={isPending}
-            helpText={`
-              Must be at least 14 characters with lowercase letters, uppercase letters,
-              numbers and/or symbols (ASCII-standard characters only).
-            `}
+            helpText={helpText}
           />
         </GridItem>
         <GridItem span={8}>
@@ -204,7 +263,7 @@ class HTPasswdForm extends React.Component {
             title="Securely store your username and password"
           >
             If you lose these credentials, you will have to delete and
-            recreate the HTPasswd IDP.
+            recreate the cluster admin user.
           </Alert>
         </GridItem>
       </>
@@ -216,6 +275,13 @@ HTPasswdForm.propTypes = {
   isPending: PropTypes.bool,
   change: PropTypes.func,
   input: PropTypes.object,
+  HTPasswdPasswordErrors: {
+    emptyPassword: PropTypes.bool,
+    baseRequirements: PropTypes.bool,
+    uppercase: PropTypes.bool,
+    lowercase: PropTypes.bool,
+    numbers: PropTypes.bool,
+  },
 };
 
 HTPasswdForm.defaultProps = {

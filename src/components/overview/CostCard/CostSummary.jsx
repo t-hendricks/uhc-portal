@@ -80,7 +80,7 @@ class CostSummary extends Component {
       <Grid hasGutter>
         <GridItem lg={5} md={12}>
           <Title className="ocm--cost-total" size="2xl" headingLevel="h2">{this.getTotal()}</Title>
-          <span className="ocm--cost-total__desc">Month todate cost</span>
+          <span className="ocm--cost-total__desc">Month-to-date cost</span>
         </GridItem>
         <GridItem lg={7} md={12}>
           <div className="ocm--cost-clusters">

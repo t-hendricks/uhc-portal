@@ -7,7 +7,7 @@ import wizardConnector from '../WizardConnector';
 import MachinePoolScreen from './MachinePoolScreen';
 import createOSDInitialValues from '../../createOSDInitialValues';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
   const cloudProviderID = valueSelector(state, 'cloud_provider');
@@ -28,7 +28,9 @@ const mapStateToProps = (state) => {
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
-    initialValues: createOSDInitialValues({ cloudProviderID, isMultiAz, isByoc }),
+    initialValues: createOSDInitialValues({
+      cloudProviderID, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
+    }),
   };
 };
 

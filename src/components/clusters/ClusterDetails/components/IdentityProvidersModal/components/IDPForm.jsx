@@ -100,7 +100,7 @@ class IDPForm extends React.Component {
   render() {
     const {
       submitIDPResponse, selectedMappingMethod, clusterConsoleURL, isEditForm,
-      idpEdited, change, selectedIDP,
+      idpEdited, change, selectedIDP, HTPasswdPasswordErrors,
     } = this.props;
     const { IDPName, isExpanded } = this.state;
 
@@ -137,7 +137,7 @@ class IDPForm extends React.Component {
       HTPasswdIdentityProvider: HTPasswdDocLink,
     };
 
-    const SelectedProivderRequiredFields = providersRequiredFields[selectedIDP];
+    const SelectedProviderRequiredFields = providersRequiredFields[selectedIDP];
     const SelectedProviderAdvancedOptions = providersAdvancedOptions[selectedIDP];
 
     return (
@@ -214,9 +214,9 @@ class IDPForm extends React.Component {
             />
           </GridItem>
           )}
-          {SelectedProivderRequiredFields
+          {SelectedProviderRequiredFields
         && (
-          <SelectedProivderRequiredFields
+          <SelectedProviderRequiredFields
             isPending={isPending}
             // make google required form optional when mapping method is lookup
             isRequired={selectedIDP === IDPformValues.GOOGLE
@@ -224,6 +224,7 @@ class IDPForm extends React.Component {
             isEditForm={isEditForm}
             idpEdited={idpEdited}
             change={change}
+            HTPasswdPasswordErrors={HTPasswdPasswordErrors}
           />
         )}
           {SelectedProviderAdvancedOptions
@@ -259,6 +260,7 @@ IDPForm.propTypes = {
   isEditForm: PropTypes.bool,
   idpEdited: PropTypes.object,
   idpName: PropTypes.string,
+  HTPasswdPasswordErrors: PropTypes.object,
 };
 
 IDPForm.defaultProps = {

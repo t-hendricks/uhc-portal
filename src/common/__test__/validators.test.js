@@ -559,12 +559,48 @@ test('GCP KMSService Account', () => {
 
 test('HTPasswd password', () => {
   expect(validateHTPasswdPassword('SOMETHINGsomething1')).toBeUndefined();
-  expect(validateHTPasswdPassword('something')).toBe('Password must be at least 14 characters long.');
-  expect(validateHTPasswdPassword('somethingsomething')).toBe('Password must contain uppercase letters.');
-  expect(validateHTPasswdPassword('SOMETHINGSOMEHING')).toBe('Password must contain lowercase letters.');
-  expect(validateHTPasswdPassword('SOMETHINGsomething')).toBe('Password must contain numbers and/or symbols.');
-  expect(validateHTPasswdPassword('something\u00D5')).toBe('Password must only contain printable ASCII characters.');
-  expect(validateHTPasswdPassword('something something')).toBe('Password must not contain whitespaces.');
+  expect(validateHTPasswdPassword('something')).toMatchObject({
+    emptyPassword: false,
+    baseRequirements: true,
+    uppercase: true,
+    lowercase: false,
+    numbersOrSymbols: true,
+  });
+  expect(validateHTPasswdPassword('somethingsomething')).toMatchObject({
+    emptyPassword: false,
+    baseRequirements: false,
+    uppercase: true,
+    lowercase: false,
+    numbersOrSymbols: true,
+  });
+  expect(validateHTPasswdPassword('SOMETHINGSOMEHING')).toMatchObject({
+    emptyPassword: false,
+    baseRequirements: false,
+    uppercase: false,
+    lowercase: true,
+    numbersOrSymbols: true,
+  });
+  expect(validateHTPasswdPassword('SOMETHINGsomething')).toMatchObject({
+    emptyPassword: false,
+    baseRequirements: false,
+    uppercase: false,
+    lowercase: false,
+    numbersOrSymbols: true,
+  });
+  expect(validateHTPasswdPassword('something\u00D5')).toMatchObject({
+    emptyPassword: false,
+    baseRequirements: true,
+    uppercase: true,
+    lowercase: false,
+    numbersOrSymbols: false,
+  });
+  expect(validateHTPasswdPassword('something something')).toMatchObject({
+    emptyPassword: false,
+    baseRequirements: true,
+    uppercase: true,
+    lowercase: false,
+    numbersOrSymbols: true,
+  });
 });
 
 test('HTPasswd username', () => {
