@@ -326,7 +326,7 @@ class CreateOSDWizard extends React.Component {
               onClose={() => history.push('/create/cloud')}
               /* custom footer is needed to prevent advancing to the next screen
                  before validating CCS credentials :( */
-              footer={ controlledFooter ? (
+              footer={controlledFooter ? (
                 <WizardFooter>
                   <Button
                     variant="primary"
