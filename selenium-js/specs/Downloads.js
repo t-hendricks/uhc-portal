@@ -52,6 +52,7 @@ describe('Downloads page', async () => {
   it('selecting OS affects architecture options & href', async () => {
     const OSes = await Downloads.OSDropdown('(odo)');
     await OSes.scrollIntoView();
+    await OSes.selectByVisibleText('Linux');
     expect(await Downloads.enabledArchitectureOptions('(odo)')).toEqual([
       'x86_64', 'aarch64', 'ppc64le', 's390x',
     ]);
