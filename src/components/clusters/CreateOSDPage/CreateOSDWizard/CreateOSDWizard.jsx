@@ -38,7 +38,10 @@ import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import './createOSDWizard.scss';
 
 class CreateOSDWizard extends React.Component {
-  state = { stepIdReached: 1 }
+  state = {
+    stepIdReached: 1,
+    currentStep: 1,
+  }
 
   componentDidMount() {
     const {
@@ -97,7 +100,16 @@ class CreateOSDWizard extends React.Component {
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
+    this.setState({ currentStep: id });
   };
+
+  onGoToStep = ({ id }) => {
+    this.setState({ currentStep: id });
+  }
+
+  onBack = ({ id }) => {
+    this.setState({ currentStep: id });
+  }
 
   render() {
     const {
@@ -125,7 +137,7 @@ class CreateOSDWizard extends React.Component {
       getAWSCloudProviderRegions,
     } = this.props;
 
-    const { stepIdReached } = this.state;
+    const { stepIdReached, currentStep } = this.state;
     const isTrialDefault = product === normalizedProducts.OSDTrial;
 
     const steps = [
@@ -287,6 +299,9 @@ class CreateOSDWizard extends React.Component {
         resetResponse={resetResponse}
       />
     );
+    const controlledFooter = isCCSCredentialsValidationNeeded
+                             && !!cloudProviderID
+                             && currentStep === 2;
 
     return (
       <>
@@ -306,10 +321,12 @@ class CreateOSDWizard extends React.Component {
               steps={steps}
               onSave={onSubmit}
               onNext={this.onNext}
+              onBack={this.onBack}
+              onGoToStep={this.onGoToStep}
               onClose={() => history.push('/create/cloud')}
               /* custom footer is needed to prevent advancing to the next screen
                  before validating CCS credentials :( */
-              footer={(isCCSCredentialsValidationNeeded && !!cloudProviderID) ? (
+              footer={ controlledFooter ? (
                 <WizardFooter>
                   <Button
                     variant="primary"
