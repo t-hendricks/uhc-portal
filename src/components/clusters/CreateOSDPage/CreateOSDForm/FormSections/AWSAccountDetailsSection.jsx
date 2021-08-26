@@ -8,7 +8,7 @@ import { required, awsNumericAccountID } from '../../../../../common/validators'
 import ExternalLink from '../../../../common/ExternalLink';
 import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox';
 
-function AWSAccountDetailsSection({ pending, isWizard }) {
+function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
   return (
     <>
       <GridItem sm={12} md={5} lg={4}>
@@ -49,7 +49,8 @@ function AWSAccountDetailsSection({ pending, isWizard }) {
           label="AWS access key ID"
           type="text"
           validate={required}
-          disabled={pending}
+          disabled={pending || isValidating}
+          helpText={isValidating && 'Validating...'}
           isRequired
         />
       </GridItem>
@@ -61,7 +62,8 @@ function AWSAccountDetailsSection({ pending, isWizard }) {
           label="AWS secret access key"
           type="text"
           validate={required}
-          disabled={pending}
+          disabled={pending || isValidating}
+          helpText={isValidating && 'Validating...'}
           isRequired
         />
       </GridItem>
@@ -81,6 +83,7 @@ function AWSAccountDetailsSection({ pending, isWizard }) {
 AWSAccountDetailsSection.propTypes = {
   isWizard: PropTypes.bool,
   pending: PropTypes.bool,
+  isValidating: PropTypes.bool,
 };
 
 export default AWSAccountDetailsSection;
