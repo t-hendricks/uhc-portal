@@ -4,7 +4,7 @@ exports[`<AddOnsPrimaryButton /> should render 1`] = `
 <Fragment>
   <Button
     component="a"
-    href="https://example.com/veryfakeconsole/k8s/ns/redhat-rhmi-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/integreatly-operator.v0.0.1"
+    href="https://example.com/veryfakeconsole/k8s/ns/redhat-rhmi-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/fake-addon.0.0.1"
     rel="noopener noreferrer"
     target="_blank"
     variant="primary"
