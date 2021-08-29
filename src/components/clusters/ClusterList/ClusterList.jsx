@@ -126,8 +126,9 @@ class ClusterList extends Component {
   }
 
   componentWillUnmount() {
-    const { closeModal, clearGlobalError } = this.props;
+    const { closeModal, clearGlobalError, clearClusterDetails } = this.props;
     closeModal();
+    clearClusterDetails();
     clearGlobalError('clusterList');
   }
 
@@ -365,6 +366,7 @@ ClusterList.propTypes = {
   canTransferClusterOwnershipList: PropTypes.objectOf(PropTypes.bool),
   toggleSubscriptionReleased: PropTypes.func.isRequired,
   clearGlobalError: PropTypes.func.isRequired,
+  clearClusterDetails: PropTypes.func.isRequired,
 };
 
 export default ClusterList;
