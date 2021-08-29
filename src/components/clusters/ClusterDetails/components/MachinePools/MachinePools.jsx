@@ -72,6 +72,7 @@ class MachinePools extends React.Component {
       scaleMachinePoolResponse,
       getMachinePools,
       machinePoolsList,
+      getOrganizationAndQuota,
     } = this.props;
     const { deletedRowIndex } = this.state;
 
@@ -80,6 +81,7 @@ class MachinePools extends React.Component {
       || (scaleMachinePoolResponse.fulfilled && prevProps.scaleMachinePoolResponse.pending))
       && (!machinePoolsList.pending)
     ) {
+      getOrganizationAndQuota();
       getMachinePools();
     }
 
