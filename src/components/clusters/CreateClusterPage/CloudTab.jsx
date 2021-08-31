@@ -402,8 +402,8 @@ const runItYourself = () => {
       'Full stack automation and pre-existing infrastructure',
     ],
     [
-      <><Link to="/install/metal">Platform agnostic</Link></>,
-      'Full stack automation and pre-existing infrastructure',
+      <><Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link></>,
+      'Pre-existing infrastructure',
     ],
   ];
   return (

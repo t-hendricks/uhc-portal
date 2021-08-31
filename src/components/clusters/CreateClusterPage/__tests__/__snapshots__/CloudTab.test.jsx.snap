@@ -487,12 +487,12 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/metal"
+                    to="/install/platform-agnostic"
                   >
-                    Platform agnostic
+                    Platform agnostic (x86_64)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Pre-existing infrastructure",
               ],
             ]
           }
@@ -995,12 +995,12 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/metal"
+                    to="/install/platform-agnostic"
                   >
-                    Platform agnostic
+                    Platform agnostic (x86_64)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Pre-existing infrastructure",
               ],
             ]
           }
@@ -1442,12 +1442,12 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/metal"
+                    to="/install/platform-agnostic"
                   >
-                    Platform agnostic
+                    Platform agnostic (x86_64)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Pre-existing infrastructure",
               ],
             ]
           }

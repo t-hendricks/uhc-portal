@@ -814,6 +814,97 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
 </Fragment>
 `;
 
+exports[`Every OCP instruction page should render:  Platform Agnostic 1`] = `
+<Fragment>
+  <Card
+    className="ocm-ocp-instructions__card"
+  >
+    <Stack>
+      <StackItem>
+        <Split>
+          <SplitItem
+            className="step-number"
+          >
+            <Title
+              headingLevel="h1"
+            >
+              1
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <DownloadsAndPullSecretSection
+              channel="stable"
+              cloudProviderID="Platform Agnostic"
+              displayRHCOSSection={true}
+              isBMIPI={false}
+              pendoID="/"
+              token={Object {}}
+              tool="x86_64-openshift-install"
+            />
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider />
+      <StackItem>
+        <Split>
+          <SplitItem
+            className="step-number"
+          >
+            <Title
+              headingLevel="h1"
+            >
+              2
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <TextContent>
+              <Text
+                component="h2"
+              >
+                Follow the instructions to configure your environment and install your cluster
+              </Text>
+              <GetStarted
+                cloudProviderID="Platform Agnostic"
+                customizations=""
+                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_platform_agnostic/installing-platform-agnostic.html"
+                isBMIPI={false}
+                pendoID="/"
+              />
+            </TextContent>
+          </SplitItem>
+        </Split>
+      </StackItem>
+      <Divider />
+      <StackItem>
+        <Split>
+          <SplitItem
+            className="step-number"
+          >
+            <Title
+              headingLevel="h1"
+            >
+              3
+            </Title>
+          </SplitItem>
+          <SplitItem
+            className="download-instructions"
+            isFilled={true}
+          >
+            <SubscriptionAndSupport />
+          </SplitItem>
+        </Split>
+      </StackItem>
+    </Stack>
+  </Card>
+</Fragment>
+`;
+
 exports[`Every OCP instruction page should render:  Power 1`] = `
 <Fragment>
   <Card
