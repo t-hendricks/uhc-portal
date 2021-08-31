@@ -18,7 +18,7 @@ const ClusterUpdateLink = ({
                               && cluster.openshift_version && !hideOSDUpdates;
 
   // Show which version the cluster is currently updating to
-  if (upgrade.state === 'running' && upgrade.version && (cluster.openshift_version !== upgrade.version)) {
+  if (upgrade.state === 'running' && upgrade.version && (cluster.version.raw_id !== upgrade.version)) {
     return (
       <span>
         {' '}
