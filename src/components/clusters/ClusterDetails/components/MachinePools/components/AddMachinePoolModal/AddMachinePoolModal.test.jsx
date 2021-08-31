@@ -41,7 +41,7 @@ describe('<AddMachinePoolModal />', () => {
       getOrganizationAndQuota={getOrganizationAndQuota}
       getMachineTypes={getMachineTypes}
       machineTypes={pendingRequest}
-      anyTouched={false}
+      pristine
       invalid={false}
       canAutoScale
       autoscalingEnabled
