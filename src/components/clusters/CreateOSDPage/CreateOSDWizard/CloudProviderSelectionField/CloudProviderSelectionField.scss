@@ -1,23 +1,12 @@
-.osd-wizard .infra-card.create-cluster-card {
-  flex: 0 0 293px;
-  height: 145px;
-  margin: 20px;
+.osd-wizard .ocm-tile-create-cluster {
+  margin: var(--pf-global--spacer--lg);
+  --pf-c-tile--PaddingLeft: 0;
+  --pf-c-tile--PaddingRight: 0;
+  --pf-c-tile__header--m-stacked__icon--MarginBottom: var(--pf-global--spacer--md);
   cursor: pointer;
   border-radius: 3px;
-  .create-cluster-logo {
-    height: 54px;
-  }
-  h5 {
-    font-size: 16px;
-  }
-  &:hover, &.create-cluster-card-selected {
-    // hover+selected colors
-      border-color: var(--pf-global--active-color--100);
-      border-width: var(--pf-global--BorderWidth--md);
-  }
-
-  &.create-cluster-card-selected::after {
-    // wider border for selected
-    border-width: var(--pf-global--BorderWidth--lg);
+  .pf-c-tile__title {
+    font-size: var(--pf-global--FontSize--md);
+    font-weight: var(--pf-global--FontWeight--semi-bold);
   }
 }

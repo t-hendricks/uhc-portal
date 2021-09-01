@@ -1,15 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {
-  Card,
-  CardBody,
-  Title,
-  Tooltip,
-} from '@patternfly/react-core';
+import { Tile, Tooltip } from '@patternfly/react-core';
 import { noQuotaTooltip } from '../../../../../common/helpers';
-import AWSLogo from '../../../../../styles/images/AWS.png';
-import GCPLogo from '../../../../../styles/images/google-cloud-logo.svg';
+import AWSLogo from '../../../../../styles/images/AWSLogo';
+import GCPLogo from '../../../../../styles/images/GCPLogo';
 import './CloudProviderSelectionField.scss';
 
 function CloudProviderSelectionField({
@@ -17,29 +12,33 @@ function CloudProviderSelectionField({
   hasAwsQuota,
   input: { value, onChange },
 }) {
-  const BASE_CARD_CLASS = 'infra-card create-cluster-card';
-  const getCardClass = (hasQuota, isSelected) => cx(BASE_CARD_CLASS, !hasQuota ? 'card-disabled' : '', isSelected ? 'create-cluster-card-selected' : '');
+  const BASE_CARD_CLASS = 'ocm-tile-create-cluster';
+  const getCardClass = hasQuota => cx(BASE_CARD_CLASS, !hasQuota ? 'card-disabled' : '');
 
   const gcpCard = (
-    <Card className={getCardClass(hasGcpQuota, value === 'gcp')} onClick={() => hasGcpQuota && onChange('gcp')} data-test-id="gcp-provider-card">
-      <CardBody>
-        <img src={GCPLogo} alt="GCP" className="create-cluster-logo" />
-        <Title headingLevel="h5" size="lg">Run on Google Cloud Platform</Title>
-      </CardBody>
-    </Card>
+    <Tile
+      className={getCardClass(hasGcpQuota, value === 'gcp')}
+      onClick={() => hasGcpQuota && onChange('gcp')}
+      data-test-id="gcp-provider-card"
+      title="Run on Google Cloud Platform"
+      icon={<GCPLogo />}
+      isStacked
+    />
   );
 
   const awsCard = (
-    <Card className={getCardClass(hasAwsQuota, value === 'aws')} onClick={() => hasAwsQuota && onChange('aws')} data-test-id="aws-provider-card">
-      <CardBody>
-        <img src={AWSLogo} alt="AWS" className="create-cluster-logo" />
-        <Title headingLevel="h5" size="lg">Run on Amazon Web Services</Title>
-      </CardBody>
-    </Card>
+    <Tile
+      className={getCardClass(hasAwsQuota, value === 'aws')}
+      onClick={() => hasAwsQuota && onChange('aws')}
+      data-test-id="aws-provider-card"
+      title="Run on Amazon Web Services"
+      icon={<AWSLogo />}
+      isStacked
+    />
   );
 
   return (
-    <div className="flex-container">
+    <div>
       {hasAwsQuota ? awsCard : (
         <Tooltip content={noQuotaTooltip}>
           {awsCard}
