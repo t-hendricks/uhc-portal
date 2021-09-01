@@ -121,7 +121,7 @@ function AddOnsPrimaryButton(props) {
       );
     case AddOnsConstants.INSTALLATION_STATE.READY:
       if (cluster?.console.url) {
-        url = `${cluster.console.url}/k8s/ns/${activeCard?.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${activeCard?.operator_name}.v${installedAddOn?.operator_version}`;
+        url = `${cluster.console.url}/k8s/ns/${activeCard?.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${installedAddOn?.csv_name}`;
         return (
           <>
             <Button

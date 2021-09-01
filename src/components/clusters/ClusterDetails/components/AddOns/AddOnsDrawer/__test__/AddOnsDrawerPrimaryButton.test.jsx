@@ -24,7 +24,7 @@ describe('<AddOnsPrimaryButton />', () => {
         console: { url: 'https://example.com/veryfakeconsole' },
       }}
       hasQuota
-      installedAddOn={{ state: 'ready', operator_version: '0.0.1' }}
+      installedAddOn={{ state: 'ready', operator_version: '0.0.1', csv_name: 'fake-addon.0.0.1' }}
       openModal={openModal}
     />);
   });
@@ -38,7 +38,7 @@ describe('<AddOnsPrimaryButton />', () => {
 
     expect(OpenButton.children[0]).toEqual('Open in Console');
     expect(OpenButton.href).toEqual(
-      'https://example.com/veryfakeconsole/k8s/ns/redhat-rhmi-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/integreatly-operator.v0.0.1',
+      'https://example.com/veryfakeconsole/k8s/ns/redhat-rhmi-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/fake-addon.0.0.1',
     );
 
     const UninstallButton = wrapper.find('ButtonWithTooltip').at(0).props();
