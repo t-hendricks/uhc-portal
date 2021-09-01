@@ -9,7 +9,7 @@ class ReduxFileUpload extends React.Component {
     filename: '',
   };
 
-  handleFileChange = (value, filename, e) => {
+  handleFileChange = (value, _, e) => {
     const { input } = this.props;
     if (e.target.files) {
       const file = e.target.files[0];
@@ -22,7 +22,6 @@ class ReduxFileUpload extends React.Component {
       };
       reader.readAsText(file, 'UTF-8');
     } else {
-      this.setState({ filename });
       input.onChange(value);
     }
   }

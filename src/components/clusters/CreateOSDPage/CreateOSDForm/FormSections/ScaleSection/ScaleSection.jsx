@@ -48,19 +48,14 @@ function ScaleSection({
     <ExpandableSection
       toggleTextCollapsed={expandableSectionTitle}
       toggleTextExpanded={expandableSectionTitle}
+      className="pf-u-mt-md"
     >
-      <GridItem sm={12} md={5} lg={4} className="pf-u-mb-md">
-        <Title headingLevel="h3">Node labels</Title>
-      </GridItem>
-      <GridItem sm={12} md={5} lg={4}>
-        <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
-      </GridItem>
+      <Title headingLevel="h3" className="pf-u-mb-md">Node labels</Title>
+      <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
       {isMachinePool
         && (
           <>
-            <GridItem sm={12} md={5} lg={4} className="pf-u-mb-md pf-u-mt-lg">
-              <Title headingLevel="h3">Taints</Title>
-            </GridItem>
+            <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">Taints</Title>
             <FieldArray name="taints" component={ReduxFormTaints} />
           </>
         )}
@@ -70,7 +65,7 @@ function ScaleSection({
   return (
     <>
       {/* Instance type */}
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem sm={12} lg={6}>
         <FormGroup
           className="pf-u-mb-md"
           label="Worker node instance type"
@@ -94,9 +89,9 @@ function ScaleSection({
           />
         </FormGroup>
       </GridItem>
-      <GridItem md={7} lg={8} />
+      <GridItem lg={6} />
       {/* autoscale */}
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem sm={12} lg={6}>
         {canAutoScale
           && (
             <>
@@ -138,15 +133,14 @@ function ScaleSection({
               billingModel={billingModel}
             />
             {labelsAndTaintsSection}
-
           </>
         )}
       </GridItem>
-      <GridItem md={7} lg={8} />
+      <GridItem lg={6} />
       {/* Persistent Storage & Load Balancers */}
       { showStorageAndLoadBalancers && !isBYOC && (
         <>
-          <GridItem sm={12} md={5} lg={4}>
+          <GridItem sm={12} lg={6}>
             <FormGroup
               label="Persistent storage"
               fieldId="persistent_storage"
@@ -165,9 +159,9 @@ function ScaleSection({
               />
             </FormGroup>
           </GridItem>
-          <GridItem md={7} lg={8} />
+          <GridItem lg={6} />
 
-          <GridItem sm={12} md={5} lg={4}>
+          <GridItem sm={12} lg={6}>
             <FormGroup
               label="Load balancers"
               fieldId="load_balancers"
@@ -186,7 +180,7 @@ function ScaleSection({
               />
             </FormGroup>
           </GridItem>
-          <GridItem md={7} lg={8} />
+          <GridItem lg={6} />
         </>
       )}
     </>

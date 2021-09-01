@@ -277,6 +277,29 @@ const upgradeTrialCluster = (clusterID, params) => apiRequest({
   data: params,
 });
 
+const listGCPVPCs = (credentials, region) => apiRequest({
+  method: 'post',
+  url: '/api/clusters_mgmt/v1/gcp_inquiries/vpcs',
+  data: {
+    gcp: credentials,
+    region: {
+      id: region,
+    },
+  },
+});
+
+const listAWSRegions = (accountID, accessKey, secretKey) => apiRequest({
+  method: 'post',
+  url: '/api/clusters_mgmt/v1/aws_inquiries/regions',
+  data: {
+    aws: {
+      account_id: accountID,
+      access_key_id: accessKey,
+      secret_access_key: secretKey,
+    },
+  },
+});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -327,6 +350,8 @@ export {
   getUpgradeScheduleState,
   deleteUpgradeSchedule,
   patchUpgradeSchedule,
+  listGCPVPCs,
+  listAWSRegions,
 };
 
 export default clusterService;

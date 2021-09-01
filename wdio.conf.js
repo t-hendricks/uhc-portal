@@ -58,13 +58,12 @@ exports.config = {
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
   capabilities: [{
-
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
     // grid with only 5 firefox instances available you can make sure that not more than
     // 5 instances get started at a time.
     maxInstances: 1,
     //
-    browserName: 'firefox',
+    browserName: process.env.BROWSER || 'firefox',
     acceptInsecureCerts: true,
     // If outputDir is provided WebdriverIO can capture driver session logs
     // it is possible to configure which logTypes to include/exclude.
@@ -231,14 +230,20 @@ exports.config = {
     if (passed) {
       return;
     }
-    const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
-    const timestamp = new Date().toISOString();
-    const dir = 'run/output/embedded_files/';
-    const filepath = path.join(dir, `${timestamp}.${testName}.png`);
-    await util.promisify(fs.mkdir)(dir, { recursive: true });
-    await browser.saveScreenshot(filepath);
-    process.emit('test:screenshot', filepath);
-    logger('afterTest screenshot').error(`\n  ${filepath}\n`);
+    const log = logger('afterTest');
+    if (process.env.SELENIUM_DEBUG === 'true') {
+      await browser.debug();
+    } else {
+      const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
+      const timestamp = new Date().toISOString();
+      const dir = 'run/output/embedded_files/';
+      const filepath = path.join(dir, `${timestamp}.${testName}.png`);
+      await util.promisify(fs.mkdir)(dir, { recursive: true });
+      await browser.saveScreenshot(filepath);
+      process.emit('test:screenshot', filepath);
+      log.error(`screenshot:\n  ${filepath}\n`);
+      log.info('Tip: to stop for interactive debugging, set SELENIUM_DEBUG=true env var');
+    }
   },
 
   /**

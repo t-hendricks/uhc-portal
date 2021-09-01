@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { TextInput, Button } from '@patternfly/react-core';
+import {
+  Button,
+  Grid,
+  GridItem,
+  TextInput,
+} from '@patternfly/react-core';
 import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
 
 import { getRandomID } from '../../../../common/helpers';
@@ -12,7 +17,6 @@ const LabelKey = ({ input, meta: { touched, error } }) => (
   <>
     <TextInput
       aria-label="Key-value list key"
-      className="reduxFormKeyValueList-key"
       {...input}
     />
     {touched && error && <span>{error}</span>}
@@ -31,7 +35,6 @@ const LabelValue = ({ input, meta: { touched, error } }) => (
   <>
     <TextInput
       aria-label="Key-value list value"
-      className="reduxFormKeyValueList-value"
       {...input}
     />
     {touched && error && <span>{error}</span>}
@@ -47,48 +50,56 @@ LabelValue.propTypes = {
 };
 
 const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
-  <div className="reduxFormKeyValueList">
-    <div className="pf-c-form__label reduxFormKeyValueList-colTitles">
-      <div className="reduxFormKeyValueList-title pf-c-form__label-text">Key</div>
-      <div className="reduxFormKeyValueList-title reduxFormKeyValueList-title-value pf-c-form__label-text">Value</div>
-    </div>
+  <Grid hasGutter>
+    <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">Key</GridItem>
+    <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">Value</GridItem>
+    <GridItem span={4} />
     {fields.map((label, index) => {
       const isRemoveDisabled = index === 0 && fields.length === 1;
 
       return (
-        <div className="pf-u-mb-md" key={`${fields.get(index).id}`}>
-          <Field
-            name={`${label}.key`}
-            type="text"
-            component={LabelKey}
-            index={index}
-          />
-          <Field
-            name={`${label}.value`}
-            type="text"
-            component={LabelValue}
-            index={index}
-          />
-          <Button
-            onClick={() => fields.remove(index)}
-            icon={<MinusCircleIcon />}
-            variant="link"
-            isDisabled={isRemoveDisabled}
-            className={isRemoveDisabled ? 'reduxFormKeyValueList-removeBtn-disabled' : 'reduxFormKeyValueList-removeBtn'}
-          />
-        </div>
+        <React.Fragment key={`${fields.get(index).id}`}>
+          <GridItem span={4}>
+            <Field
+              name={`${label}.key`}
+              type="text"
+              component={LabelKey}
+              index={index}
+            />
+          </GridItem>
+          <GridItem span={4}>
+            <Field
+              name={`${label}.value`}
+              type="text"
+              component={LabelValue}
+              index={index}
+            />
+          </GridItem>
+          <GridItem span={4}>
+            <Button
+              onClick={() => fields.remove(index)}
+              icon={<MinusCircleIcon />}
+              variant="link"
+              isDisabled={isRemoveDisabled}
+              className={isRemoveDisabled ? 'reduxFormKeyValueList-removeBtn-disabled' : 'reduxFormKeyValueList-removeBtn'}
+            />
+          </GridItem>
+        </React.Fragment>
       );
     })}
-    <Button
-      onClick={() => fields.push({ id: getRandomID() })}
-      icon={<PlusCircleIcon />}
-      variant="link"
-      className="reduxFormKeyValueList-addBtn"
-    >
-      Add label
-    </Button>
-    {submitFailed && error && <span>{error}</span>}
-  </div>
+    <GridItem span={12}>
+      <Button
+        onClick={() => fields.push({ id: getRandomID() })}
+        icon={<PlusCircleIcon />}
+        variant="link"
+        isInline
+        className="reduxFormKeyValueList-addBtn"
+      >
+        Add label
+      </Button>
+      {submitFailed && error && <span>{error}</span>}
+    </GridItem>
+  </Grid>
 );
 
 ReduxFormKeyValueList.propTypes = {

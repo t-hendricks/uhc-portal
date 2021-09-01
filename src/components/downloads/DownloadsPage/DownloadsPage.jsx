@@ -257,12 +257,20 @@ const descriptionRow = (parentIndex, child) => (
 );
 
 const cliToolRows = (expanded, selections, setSelections, urls) => [
-  toolRow(expanded, selections, setSelections, urls, tools.CLI_TOOLS, channels.STABLE, 'OpenShift command-line interface (oc)'),
+  toolRow(expanded, selections, setSelections, urls, tools.CLI_TOOLS, channels.STABLE,
+    <>
+      OpenShift command-line interface (
+      <code>oc</code>
+      )
+    </>),
   descriptionRow(0,
     <TextContent>
       <Text>
         Create applications and manage OpenShift projects from the command line
-        using the OpenShift CLI (oc).
+        using the OpenShift client
+        {' '}
+        <code>oc</code>
+        .
       </Text>
       <Text>
         Get started with the OpenShift CLI for
@@ -282,7 +290,9 @@ const cliToolRows = (expanded, selections, setSelections, urls) => [
 
   toolRow(expanded, selections, setSelections, urls, tools.OCM, channels.STABLE,
     <>
-      OCM API command-line interface (ocm-cli)
+      OpenShift Cluster Manager API command-line interface (
+      <code>ocm</code>
+      )
       {' '}
       <DevPreviewBadge />
     </>),
@@ -290,38 +300,58 @@ const cliToolRows = (expanded, selections, setSelections, urls) => [
     <TextContent>
       <Text>
         Manage your OpenShift clusters from the command line using the
-        OpenShift Cluster Manager CLI (ocm CLI).
-      </Text>
-      <Text>
+        OpenShift Cluster Manager API client
+        {' '}
+        <code>ocm</code>
+        .
+        {' '}
         <ExternalLink href={links.OCM_CLI_DOCS}>
-          Get started with the ocm CLI
+          Get started
         </ExternalLink>
       </Text>
     </TextContent>),
 
-  toolRow(expanded, selections, setSelections, urls, tools.ROSA, channels.STABLE, 'Red Hat OpenShift Service on AWS (ROSA) command-line interface (rosa CLI)'),
+  toolRow(expanded, selections, setSelections, urls, tools.ROSA, channels.STABLE,
+    <>
+      Red Hat OpenShift Service on AWS command-line interface (
+      <code>rosa</code>
+      )
+    </>),
   descriptionRow(4,
     <Text>
       Manage your Red Hat OpenShift Service on AWS (ROSA) clusters
-      from the command line using the rosa CLI.
+      from the command line using the ROSA client for OCM and AWS APIs.
       {' '}
       <ExternalLink href={links.ROSA_DOCS}>
-        Get started with rosa CLI
+        Get started
       </ExternalLink>
     </Text>),
 ];
 
 const devToolRows = (expanded, selections, setSelections, urls) => [
-  toolRow(expanded, selections, setSelections, urls, tools.ODO, channels.STABLE, 'Developer-focused CLI for OpenShift (odo)'),
+  toolRow(expanded, selections, setSelections, urls, tools.ODO, channels.STABLE,
+    <>
+      Developer-focused CLI for OpenShift (
+      <code>odo</code>
+      )
+    </>),
   descriptionRow(0,
     <Text>
-      Write, build, and deploy applications on OpenShift with odo, a fast, iterative,
+      Write, build, and deploy applications on OpenShift with
+      {' '}
+      <code>odo</code>
+      , a fast, iterative,
       and straightforward CLI tool for developers.
       {' '}
       <ExternalLink href={links.ODO_DOCS}>Learn more</ExternalLink>
     </Text>),
 
-  toolRow(expanded, selections, setSelections, urls, tools.HELM, channels.STABLE, 'Helm 3 CLI'),
+  toolRow(expanded, selections, setSelections, urls, tools.HELM, channels.STABLE,
+    <>
+      Helm 3 CLI (
+      <code>helm</code>
+      )
+    </>),
   descriptionRow(2,
     <Text>
       Define, install, and upgrade application packages as Helm charts using Helm 3,
@@ -330,7 +360,12 @@ const devToolRows = (expanded, selections, setSelections, urls) => [
       <ExternalLink href={links.HELM_DOCS}>Learn more</ExternalLink>
     </Text>),
 
-  toolRow(expanded, selections, setSelections, urls, tools.OPM, channels.STABLE, 'Operator Package Manager'),
+  toolRow(expanded, selections, setSelections, urls, tools.OPM, channels.STABLE,
+    <>
+      Operator Package Manager (
+      <code>opm</code>
+      )
+    </>),
   descriptionRow(4,
     <Text>
       Create and maintain catalogs of Operators from a list of bundles with the
@@ -341,18 +376,24 @@ const devToolRows = (expanded, selections, setSelections, urls) => [
 
   toolRow(expanded, selections, setSelections, urls, tools.RHOAS, channels.STABLE,
     <>
-      Red Hat OpenShift Application Services CLI (rhoas CLI)
+      Red Hat OpenShift Application Services CLI (
+      <code>rhoas</code>
+      )
+      {' '}
       <DevPreviewBadge />
     </>),
   descriptionRow(6,
     <TextContent>
       <Text>
         Create and manage Kafka instances and topics, service accounts, and more
-        using the rhoas CLI.
+        using
+        {' '}
+        <code>rhoas</code>
+        .
       </Text>
       <Text>
         <ExternalLink href={links.RHOAS_CLI_DOCS}>
-          Get started with the rhoas CLI
+          Get started
         </ExternalLink>
       </Text>
     </TextContent>),
@@ -447,7 +488,12 @@ const installationRows = (expanded, selections, setSelections, urls) => [
       </Text>
     </TextContent>),
 
-  toolRow(expanded, selections, setSelections, urls, tools.CRC, channels.STABLE, 'CodeReady Containers'),
+  toolRow(expanded, selections, setSelections, urls, tools.CRC, channels.STABLE,
+    <>
+      CodeReady Containers (
+      <code>crc</code>
+      )
+    </>),
   descriptionRow(8,
     <TextContent>
       <Text>
@@ -652,7 +698,7 @@ class DownloadsPage extends React.Component {
           </Split>
         </PageHeader>
 
-        <PageSection>
+        <PageSection className="downloads-page-body">
           <PageSection variant="light" padding={{ default: 'noPadding' }} className="downloads-page-body">
             <DownloadsSection
               selectedCategory={selectedCategory}
@@ -661,7 +707,7 @@ class DownloadsPage extends React.Component {
                 <Text>
                   Download command line tools to manage and work with OpenShift from your terminal.
                 </Text>
-                )}
+              )}
             >
               <Table
                 aria-label="CLI tools table"
@@ -684,7 +730,7 @@ class DownloadsPage extends React.Component {
                   {' '}
                   <ExternalLink href="https://developers.redhat.com/topics/developer-tools">Learn more</ExternalLink>
                 </Text>
-                )}
+              )}
             >
               <Table
                 aria-label="Developer tools table"

@@ -6,6 +6,8 @@ The UI is a JavaScript application written in React and Redux.
 Additionally it contains a helper development server, `backend`, written
 in Go.
 
+Slack channels: `#service-development` for OCM in general, `#ocm-osd-ui` for UI.
+
 # Style
 
 To promote consistency in the code base and prevent bike-shedding over
@@ -75,17 +77,38 @@ Test cases are in `selenium-js/specs`.
 
 Short version: Don’t need anything running, just `yarn e2e-test` will start all services, run test & kill all services.  However when developing, the below procedure allows much faster iterations.
 
-Long version: To run these tests, assuming `yarn start` (or equivalent dev-env) is already running, run the following:
+Long version: To run these tests, assuming `yarn start` (or equivalent dev-env) is already running, run the following in separate terminals.
 
-1. `yarn selenium-browser` - this starts the browser container for the test. You can use VNC to connect to it to watch it in action, `localhost` with the password `secret`.
+ 1. You need _some_ WebDriver server running on localhost:4444.
 
-2. Export the credentials in environment variables - `TEST_SELENIUM_WITHQUOTA_PASSWORD` and `TEST_SELENIUM_WITHQUOTA_USER`
+    - To use same thing as under CI, in a container:
 
-3. `yarn run wdio` or `yarn selenium-test` - runs the test.
+      Optionally export `BROWSER=firefox` or `BROWSER=chrome`.
+      Run `yarn selenium-browser`. This starts a selenium control server on port 4444, and VNC server on port 5900.
 
-4.  Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`.
-    If you have Vinagre, simply run `yarn selenium-viewer`.
+      Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`.
+      If you have Vinagre (`sudo dnf install vinagre`), simply run `yarn selenium-viewer`.
 
+      - Actually in CI we use run/selenium-pod.sh that starts containers differently to avoid port conflicts for parallel CI.
+        It also uses static nginx, which requires a full `yarn build` on every change — inconvenient for development.
+
+    - Or get a local driver, that opens a browser window directly on your screen — no VNC needed!
+      For chrome: `sudo dnf install chromedriver` or `brew install --cask chromedriver`.
+      
+      Having that, run `chromedriver --port=4444 --url-base=/wd/hub --verbose`
+
+      See https://webdriver.io/docs/driverbinaries for some other options.
+
+ 2. Export the credentials in environment variables - `TEST_SELENIUM_WITHQUOTA_PASSWORD` and `TEST_SELENIUM_WITHQUOTA_USER` (ask team members).
+
+    Optionally export `SELENIUM_DEBUG=true` environment variable if you want to stop on failure to let you debug (otherwise, it writes a screenshot file and moves on).
+
+    Optionally export `BROWSER=chrome` or similar — should match driver you're using.  
+    Run `yarn selenium-test`.  
+    Can pass wdio flags e.g. `yarn selenium-test --spec selenium-js/specs/Downloads.js`.
+
+The yarn commands are defined in package.json "scripts" section, some running scripts from run/ directory.
+Both `selenium-test` and `selenium-viewer` will wait for the browser, so you can start them in any order.
 
 # Alternative option for running locally: insights-proxy
 
@@ -203,7 +226,7 @@ config, passing API requests to the backend (or mock server) described
 above.
 
 You may set `RUNNER=podman` or `RUNNER=docker` env var to choose with
-which tool the container will be updated/run.
+which tool containers will be updated/run.
 
   - Some ways to kill insights-proxy "detach" the container instead of
     exiting. `yarn stop-insights-proxy` helps.

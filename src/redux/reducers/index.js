@@ -34,6 +34,7 @@ import supportStatusReducer from '../../components/clusters/ClusterDetails/compo
 import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
 import machinePools from '../../components/clusters/ClusterDetails/components/MachinePools/MachinePoolsReducer';
 import githubReducer from './githubReducer';
+import ccsInquiriesReducer from '../../components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
 
 import featuresReducer from './featuresReducer';
 import apiErrorReducer from '../../components/App/ApiError/ApiErrorReducer';
@@ -73,6 +74,7 @@ const reducers = {
   apiError: apiErrorReducer,
   machinePools,
   githubReleases: githubReducer,
+  ccsInquiries: ccsInquiriesReducer,
 };
 
 const reduxReducers = history => combineReducers({

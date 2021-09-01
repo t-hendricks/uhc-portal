@@ -22,6 +22,9 @@ describe('<ClusterUpdateLink />', () => {
   it('shows previous and next version numbers when an upgrade is running', () => {
     const cluster = {
       openshift_version: 'some-old-version',
+      version: {
+        raw_id: 'some-old-version',
+      },
       metrics: {
         upgrade: {
           available: true,

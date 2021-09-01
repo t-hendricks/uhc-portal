@@ -11,6 +11,8 @@ import {
   EmptyState,
   Stack,
   StackItem,
+  WizardFooter,
+  Button,
 } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
@@ -36,7 +38,10 @@ import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import './createOSDWizard.scss';
 
 class CreateOSDWizard extends React.Component {
-  state = { stepIdReached: 1 }
+  state = {
+    stepIdReached: 1,
+    currentStep: 1,
+  }
 
   componentDidMount() {
     const {
@@ -71,10 +76,16 @@ class CreateOSDWizard extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    const { createClusterResponse, isErrorModalOpen, openModal } = this.props;
+  componentDidUpdate(prevProps) {
+    const {
+      createClusterResponse, isErrorModalOpen, openModal, isCCSCredentialsValidationNeeded,
+    } = this.props;
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
+    }
+    if (isCCSCredentialsValidationNeeded && !prevProps.isCCSCredentialsValidationNeeded) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ stepIdReached: 2 }); // prevent going to next steps when validation is needed
     }
   }
 
@@ -89,7 +100,16 @@ class CreateOSDWizard extends React.Component {
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
+    this.setState({ currentStep: id });
   };
+
+  onGoToStep = ({ id }) => {
+    this.setState({ currentStep: id });
+  }
+
+  onBack = ({ id }) => {
+    this.setState({ currentStep: id });
+  }
 
   render() {
     const {
@@ -106,9 +126,18 @@ class CreateOSDWizard extends React.Component {
       hasProductQuota,
       history,
       product, // for OSDTrial URL, prop from the router
+      ccsValidationPending,
+      isCCSCredentialsValidationNeeded,
+      cloudProviderID,
+      getGCPCloudProviderVPCs,
+      gcpCredentials,
+      awsAccountID,
+      awsAccessKey,
+      awsSecretKey,
+      getAWSCloudProviderRegions,
     } = this.props;
 
-    const { stepIdReached } = this.state;
+    const { stepIdReached, currentStep } = this.state;
     const isTrialDefault = product === normalizedProducts.OSDTrial;
 
     const steps = [
@@ -129,7 +158,7 @@ class CreateOSDWizard extends React.Component {
             id: 2,
             name: 'Cloud provider',
             component: <CloudProviderScreen />,
-            enableNext: isValid,
+            enableNext: isValid && !ccsValidationPending,
             canJumpTo: stepIdReached >= 2,
           },
           {
@@ -270,6 +299,9 @@ class CreateOSDWizard extends React.Component {
         resetResponse={resetResponse}
       />
     );
+    const controlledFooter = isCCSCredentialsValidationNeeded
+                             && !!cloudProviderID
+                             && currentStep === 2;
 
     return (
       <>
@@ -289,7 +321,29 @@ class CreateOSDWizard extends React.Component {
               steps={steps}
               onSave={onSubmit}
               onNext={this.onNext}
+              onBack={this.onBack}
+              onGoToStep={this.onGoToStep}
               onClose={() => history.push('/create/cloud')}
+              /* custom footer is needed to prevent advancing to the next screen
+                 before validating CCS credentials :( */
+              footer={controlledFooter ? (
+                <WizardFooter>
+                  <Button
+                    variant="primary"
+                    isDisabled={!isValid || ccsValidationPending}
+                    onClick={() => {
+                      if (cloudProviderID === 'gcp') {
+                        getGCPCloudProviderVPCs(gcpCredentials);
+                      } else {
+                        getAWSCloudProviderRegions(awsAccountID, awsAccessKey, awsSecretKey);
+                      }
+                    }}
+                    isLoading={ccsValidationPending}
+                  >
+                    Validate
+                  </Button>
+                </WizardFooter>
+              ) : undefined}
             />
           </div>
         </PageSection>
@@ -306,7 +360,13 @@ const requestStatePropTypes = PropTypes.shape({
 
 CreateOSDWizard.propTypes = {
   isValid: PropTypes.bool,
+  ccsValidationPending: PropTypes.bool,
+  isCCSCredentialsValidationNeeded: PropTypes.bool,
+  cloudProviderID: PropTypes.string,
   isErrorModalOpen: PropTypes.bool,
+  awsAccountID: PropTypes.string,
+  awsAccessKey: PropTypes.string,
+  awsSecretKey: PropTypes.string,
 
   createClusterResponse: PropTypes.shape({
     fulfilled: PropTypes.bool,
@@ -329,6 +389,8 @@ CreateOSDWizard.propTypes = {
   getCloudProviders: PropTypes.func,
   getLoadBalancers: PropTypes.func,
   getPersistentStorage: PropTypes.func,
+  getGCPCloudProviderVPCs: PropTypes.func,
+  getAWSCloudProviderRegions: PropTypes.func,
 
   resetResponse: PropTypes.func,
   resetForm: PropTypes.func,
@@ -345,6 +407,7 @@ CreateOSDWizard.propTypes = {
 
   // for the /create/osdtrial url
   product: PropTypes.string,
+  gcpCredentials: PropTypes.string,
 };
 
 export default CreateOSDWizard;

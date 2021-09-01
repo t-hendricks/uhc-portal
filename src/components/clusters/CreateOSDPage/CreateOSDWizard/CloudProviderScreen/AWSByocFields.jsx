@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
   Alert, GridItem, ExpandableSection, TextContent, Title,
@@ -6,7 +7,7 @@ import ExternalLink from '../../../../common/ExternalLink';
 import { billingModelConstants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import AWSAccountDetailsSection from '../../CreateOSDForm/FormSections/AWSAccountDetailsSection';
 
-function AWSByocFields() {
+function AWSByocFields({ isValidating }) {
   return (
     <>
       <GridItem>
@@ -52,9 +53,13 @@ function AWSByocFields() {
           </TextContent>
         </ExpandableSection>
       </GridItem>
-      <AWSAccountDetailsSection isWizard />
+      <AWSAccountDetailsSection isWizard isValidating={isValidating} />
     </>
   );
 }
+
+AWSByocFields.propTypes = {
+  isValidating: PropTypes.bool,
+};
 
 export default AWSByocFields;
