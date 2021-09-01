@@ -22,6 +22,7 @@ function CloudProviderSelectionField({
       data-test-id="gcp-provider-card"
       title="Run on Google Cloud Platform"
       icon={<GCPLogo />}
+      isDisplayLarge
       isStacked
     />
   );
@@ -33,6 +34,7 @@ function CloudProviderSelectionField({
       data-test-id="aws-provider-card"
       title="Run on Amazon Web Services"
       icon={<AWSLogo />}
+      isDisplayLarge
       isStacked
     />
   );

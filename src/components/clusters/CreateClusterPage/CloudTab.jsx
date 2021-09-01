@@ -17,7 +17,7 @@ import DevPreviewBadge from '../../common/DevPreviewBadge';
 import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
 import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
-import AWSLogo from '../../../styles/images/AWS.png';
+import AWSLogo from '../../../styles/images/AWSLogo';
 import links from './CreateClusterConsts';
 
 const getColumns = () => ([
@@ -314,7 +314,7 @@ const managedServices = (hasQuota, trialEnabled) => {
     cells: [
       (
         <>
-          <img className="partner-logo" src={AWSLogo} alt="AWS" />
+          <AWSLogo className="partner-logo" alt="AWS" />
         </>
       ),
       (

@@ -18,7 +18,8 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
   >
     <Grid>
       <GridItem
-        span={6}
+        lg={6}
+        sm={12}
       >
         <FormGroup
           className="pf-u-mb-md"
@@ -34,7 +35,7 @@ exports[`<AddMachinePoolModal /> renders correctly 1`] = `
         </FormGroup>
       </GridItem>
       <GridItem
-        span={6}
+        lg={6}
       />
       <ScaleSection
         autoScaleMaxNodesValue="0"

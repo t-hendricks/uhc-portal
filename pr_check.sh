@@ -50,7 +50,7 @@ export FORCE_COLOR=1
 timeout \
   --signal "TERM" \
   --kill-after "2m" \
-  "5m" \
+  "10m" \
   "run/selenium-pod.sh"
 
 make \

@@ -55,7 +55,7 @@ class AddMachinePoolModal extends Component {
       submit,
       addMachinePoolResponse,
       cluster,
-      anyTouched,
+      pristine,
       invalid,
       organization,
       canAutoScale,
@@ -86,14 +86,14 @@ class AddMachinePoolModal extends Component {
         secondaryText="Cancel"
         onPrimaryClick={submit}
         onSecondaryClick={this.cancelAddMachinePool}
-        isPrimaryDisabled={isPending || !anyTouched || invalid}
+        isPrimaryDisabled={isPending || pristine || invalid}
         isPending={isPending}
       >
         <>
           {hasError}
           <Form className="control-form-cursor" onSubmit={(e) => { submit(); e.preventDefault(); }}>
             <Grid>
-              <GridItem span={6}>
+              <GridItem sm={12} lg={6}>
                 <FormGroup label="Machine pool name" className="pf-u-mb-md" isRequired>
                   <Field
                     component={ReduxVerticalFormGroup}
@@ -104,7 +104,7 @@ class AddMachinePoolModal extends Component {
                   />
                 </FormGroup>
               </GridItem>
-              <GridItem span={6} />
+              <GridItem lg={6} />
               <ScaleSection
                 pending={isPending}
                 isBYOC={!!cluster?.ccs?.enabled}
@@ -141,7 +141,7 @@ AddMachinePoolModal.propTypes = {
   getOrganizationAndQuota: PropTypes.func.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
-  anyTouched: PropTypes.bool.isRequired,
+  pristine: PropTypes.bool.isRequired,
   invalid: PropTypes.bool.isRequired,
   organization: PropTypes.object,
   canAutoScale: PropTypes.bool.isRequired,

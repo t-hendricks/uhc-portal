@@ -6,10 +6,7 @@ const AWSLogo = () => (
   <svg
     version="1.1"
     id="Layer_1"
-    x="0px"
-    y="0px"
-    height="50"
-    width="300"
+    height="1em"
     viewBox="0 0 304 182"
     style={{ enableBackground: '0 0 304 182' }}
   >

@@ -16,7 +16,7 @@ import Breadcrumbs from '../../../common/Breadcrumbs';
 import PageTitle from '../../../common/PageTitle';
 import { noQuotaTooltip, shouldRefetchQuota } from '../../../../common/helpers';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
-import AWSLogo from '../../../../styles/images/AWS.png';
+import AWSLogo from '../../../../styles/images/AWSLogo';
 import GCPLogo from '../../../../styles/images/google-cloud-logo.svg';
 import './CloudProviderSelection.scss';
 
@@ -80,7 +80,7 @@ class CloudProviderSelection extends Component {
 
     const awsCardBody = (
       <CardBody>
-        <img src={AWSLogo} alt="AWS" className="create-cluster-logo" />
+        <AWSLogo alt="AWS" className="create-cluster-logo" />
         <Title headingLevel="h5" size="lg">Run on Amazon Web Services</Title>
       </CardBody>
     );
