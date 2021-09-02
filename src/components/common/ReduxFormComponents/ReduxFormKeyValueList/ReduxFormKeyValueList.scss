@@ -1,31 +1,3 @@
-.reduxFormKeyValueList {
-  .reduxFormKeyValueList-title,
-  .reduxFormKeyValueList-key,
-  .reduxFormKeyValueList-value,
-  .reduxFormKeyValueList-extraField  {
-    width: 28%;
-    float: left;
-  }
-
-  .reduxFormKeyValueList-title {
-    float: left;
-  }
-
-  .reduxFormKeyValueList-title-value,
-  .reduxFormKeyValueList-value,
-  .reduxFormKeyValueList-extraField {
-    margin-left: 3%;
-  }
-
-  .reduxFormKeyValueList-addBtn {
-    padding-left: 0;
-  }
-
-  .reduxFormKeyValueList-colTitles {
-    padding-bottom: var(--pf-global--spacer--lg);
-  }
-
-  button.reduxFormKeyValueList-removeBtn-disabled{
-    color: #d2d2d2;
-  }
+.reduxFormKeyValueList-removeBtn-disabled {
+  color: #d2d2d2 !important;
 }

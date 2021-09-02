@@ -5,6 +5,7 @@ import {
   Grid,
   GridItem,
   Form,
+  Alert,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
@@ -14,7 +15,7 @@ import CloudProviderSelectionField from '../CloudProviderSelectionField';
 import AWSByocFields from './AWSByocFields';
 import GCPByocFields from './GCPByocFields';
 
-function ClusterSettingsScreen({ isByoc, cloudProviderID }) {
+function ClusterSettingsScreen({ isByoc, cloudProviderID, ccsCredentialsValidityResponse }) {
   return (
     <Form onSubmit={() => false}>
       <Grid hasGutter>
@@ -31,8 +32,17 @@ function ClusterSettingsScreen({ isByoc, cloudProviderID }) {
           />
         </GridItem>
         { isByoc && cloudProviderID && (
-          cloudProviderID === 'aws' ? <AWSByocFields /> : <GCPByocFields />
+          cloudProviderID === 'aws' ? <AWSByocFields isValidating={ccsCredentialsValidityResponse.pending} /> : <GCPByocFields isValidating={ccsCredentialsValidityResponse.pending} />
         )}
+        <GridItem>
+          { isByoc && ccsCredentialsValidityResponse.error && (
+            <Alert variant="danger" isInline title={`${cloudProviderID.toUpperCase()} wasn't able to verify your credentials`}>
+              Verify that your entered
+              {' '}
+              {cloudProviderID === 'aws' ? 'access keys match the access keys provided in your AWS account.' : 'service account details are correct'}
+            </Alert>
+          )}
+        </GridItem>
       </Grid>
     </Form>
   );
@@ -41,6 +51,10 @@ function ClusterSettingsScreen({ isByoc, cloudProviderID }) {
 ClusterSettingsScreen.propTypes = {
   isByoc: PropTypes.bool,
   cloudProviderID: PropTypes.string,
+  ccsCredentialsValidityResponse: PropTypes.shape({
+    pending: PropTypes.bool,
+    error: PropTypes.bool,
+  }),
 };
 
 export default ClusterSettingsScreen;
