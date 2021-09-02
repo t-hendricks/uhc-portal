@@ -76,9 +76,10 @@ exports[`<CloudProviderSelection /> with aws quota and osd trial feature renders
               isHidden={true}
             />
             <CardBody>
-              <AWSLogo
+              <img
                 alt="AWS"
                 className="create-cluster-logo"
+                src="test-file-stub"
               />
               <Title
                 headingLevel="h5"
@@ -161,9 +162,10 @@ exports[`<CloudProviderSelection /> with aws quota renders correctly 1`] = `
               isHidden={true}
             />
             <CardBody>
-              <AWSLogo
+              <img
                 alt="AWS"
                 className="create-cluster-logo"
+                src="test-file-stub"
               />
               <Title
                 headingLevel="h5"
@@ -245,9 +247,10 @@ exports[`<CloudProviderSelection /> with gcp quota renders correctly 1`] = `
               className="infra-card create-cluster-card card-disabled"
             >
               <CardBody>
-                <AWSLogo
+                <img
                   alt="AWS"
                   className="create-cluster-logo"
+                  src="test-file-stub"
                 />
                 <Title
                   headingLevel="h5"
