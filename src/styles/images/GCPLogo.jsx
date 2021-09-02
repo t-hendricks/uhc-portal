@@ -5,10 +5,7 @@ const GCPLogo = () => (
   // eslint-disable-next-line max-len
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    height="50"
-    width="300"
-    y="0"
-    x="0"
+    height=".9em"
     id="Art"
     version="1.1"
     viewBox="-1348.0212 -351.96825 11682.8504 2111.8095"
