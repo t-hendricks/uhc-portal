@@ -42,11 +42,11 @@ class ClusterVersionInfo extends React.Component {
     } = this.props;
     const { popoverOpen } = this.state;
     const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
-    const clusterVersion = (isUpgrading ? cluster.version.raw_id : cluster.openshift_version) || 'N/A';
+    const clusterVersion = (isUpgrading ? cluster.version?.raw_id : cluster.openshift_version) || 'N/A';
     const channel = get(cluster, 'metrics.channel');
 
     const scheduledUpdate = schedules.items.find(
-      schedule => schedule.version !== cluster.version.raw_id,
+      schedule => schedule.version !== cluster.version?.raw_id,
     );
 
     return (
@@ -81,7 +81,7 @@ class ClusterVersionInfo extends React.Component {
                         clusterID={cluster.id}
                         canEdit={cluster.canEdit}
                         clusterVersion={cluster.openshift_version}
-                        clusterVersionRawID={cluster.version.raw_id}
+                        clusterVersionRawID={cluster.version?.raw_id}
                         scheduledUpgrade={scheduledUpdate}
                         openModal={openModal}
                         // eslint-disable-next-line camelcase
