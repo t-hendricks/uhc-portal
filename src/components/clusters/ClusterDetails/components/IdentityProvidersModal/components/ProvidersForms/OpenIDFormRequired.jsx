@@ -69,7 +69,7 @@ class OpenIDFormRequired extends React.Component {
           validate={this.validate}
           isGroupError={isGroupError}
           onFormChange={this.onValueChange}
-          helpText="The list of attributes whose values should be used as the preferred username."
+          helpText="The end user's full name including all name parts, ordered according to the end user's locale and preferences."
           isRequired
         />
         <ReduxFieldArray
@@ -81,7 +81,7 @@ class OpenIDFormRequired extends React.Component {
           validate={this.validate}
           isGroupError={isGroupError}
           onFormChange={this.onValueChange}
-          helpText="The list of attributes whose values should be used as the display name."
+          helpText="Shorthand name by which the end user wishes to be referred to at the RP, such as janedone or j.doe."
           isRequired
         />
       </>
