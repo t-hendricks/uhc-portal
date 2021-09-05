@@ -64,6 +64,9 @@ function ReviewClusterSecreen({ formValues, isPending }) {
     !isByoc && 'persistent_storage',
     !isByoc && 'load_balancers',
     'etcd_encryption',
+    'machine_type',
+    'autoscalingEnabled',
+    'nodes_compute',
   ].filter(Boolean);
   if (isPending) {
     return (
@@ -113,16 +116,6 @@ function ReviewClusterSecreen({ formValues, isPending }) {
             {clusterSpecDescriptionItem({ name: 'cluster_privacy', formValues })}
           </>
         )}
-      </DescriptionList>
-      <Title headingLevel="h3">
-        Default machine pool
-      </Title>
-      <DescriptionList isHorizontal>
-        {clusterSpecDescriptionItem({ name: 'machine_type', formValues })}
-        {/* TODO: human readable machineType */}
-        {clusterSpecDescriptionItem({ name: 'autoscalingEnabled', formValues })}
-        {/* TODO: autoscaling details */}
-        {clusterSpecDescriptionItem({ name: 'nodes_compute', formValues })}
       </DescriptionList>
       <Title headingLevel="h3">
         Updates
