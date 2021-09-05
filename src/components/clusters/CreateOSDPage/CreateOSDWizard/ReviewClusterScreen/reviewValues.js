@@ -32,7 +32,7 @@ const reviewValues = {
     },
   },
   byoc: {
-    title: 'Infrastracture type',
+    title: 'Infrastructure type',
     isBoolean: true,
     values: { // note: keys here are strings, on purpose, to match redux-form behaviour
       true: 'Customer cloud subscription',
