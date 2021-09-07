@@ -332,9 +332,10 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
               Object {
                 "cells": Array [
                   <React.Fragment>
-                    <AWSLogo
+                    <img
                       alt="AWS"
                       className="partner-logo"
+                      src="test-file-stub"
                     />
                   </React.Fragment>,
                   <React.Fragment>
@@ -839,9 +840,10 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Object {
                 "cells": Array [
                   <React.Fragment>
-                    <AWSLogo
+                    <img
                       alt="AWS"
                       className="partner-logo"
+                      src="test-file-stub"
                     />
                   </React.Fragment>,
                   <React.Fragment>
@@ -1285,9 +1287,10 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
               Object {
                 "cells": Array [
                   <React.Fragment>
-                    <AWSLogo
+                    <img
                       alt="AWS"
                       className="partner-logo"
+                      src="test-file-stub"
                     />
                   </React.Fragment>,
                   <React.Fragment>

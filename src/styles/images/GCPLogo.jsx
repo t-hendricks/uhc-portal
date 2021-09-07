@@ -4,6 +4,8 @@ import './GCPLogo.scss';
 const GCPLogo = () => (
   // eslint-disable-next-line max-len
   <svg
+    role="img"
+    title="GCP"
     xmlns="http://www.w3.org/2000/svg"
     height=".9em"
     id="Art"

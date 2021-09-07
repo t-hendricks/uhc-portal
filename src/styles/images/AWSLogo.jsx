@@ -4,6 +4,8 @@ import './AWSLogo.scss';
 const AWSLogo = () => (
   // eslint-disable-next-line max-len
   <svg
+    role="img"
+    title="AWS"
     version="1.1"
     id="Layer_1"
     height=".9em"
