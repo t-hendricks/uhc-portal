@@ -24,7 +24,6 @@ const {
   SYSTEM_UNITS,
   CLUSTER_BILLING_MODEL,
   CPU_TOTAL,
-  SOCKET_TOTAL,
 } = subscriptionSettings;
 
 const {
@@ -61,7 +60,7 @@ describe('<EditSubscriptionSettingsDialog />', () => {
   const radioSelector = name => (`ReduxFormRadioGroup[name="${name}"] Radio`);
   const disabledGroupSelector = name => (`ReduxFormRadioGroup[name="${name}"][isDisabled=true]`);
   const numberInputSelector = name => (`NumberInput[inputName="${name}"]`);
-  const disabledNumberInputSelector = name => (`NumberInput[inputName="${name}"][isDisabled=true]`);
+  const cpuSocketNumberText = 'span[id="cpu-socket-value"]';
   const buttonSelector = variant => (`Button[variant="${variant}"]`);
   const disabledButtonSelector = variant => (`Button[variant="${variant}"][isDisabled=true]`);
   const billingModelInfoSelector = 'Alert[id="subscription-settings-cluster-billing-model-alert"]';
@@ -128,7 +127,7 @@ describe('<EditSubscriptionSettingsDialog />', () => {
     expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
     expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(0);
     expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
-    expect(wrapper.find(disabledNumberInputSelector(CPU_TOTAL)).length).toEqual(1);
+    expect(wrapper.find(cpuSocketNumberText).length).toEqual(1);
     expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
     expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
     expect(wrapper.find(disabledButtonSelector('primary')).length).toEqual(0);
@@ -150,7 +149,7 @@ describe('<EditSubscriptionSettingsDialog />', () => {
     expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
     expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(1);
     expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
-    expect(wrapper.find(disabledNumberInputSelector(SOCKET_TOTAL)).length).toEqual(1);
+    expect(wrapper.find(cpuSocketNumberText).length).toEqual(1);
     expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
     expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
     expect(wrapper.find(disabledButtonSelector('primary')).length).toEqual(1);
@@ -192,7 +191,7 @@ describe('<EditSubscriptionSettingsDialog />', () => {
     expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
     expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(1);
     expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
-    expect(wrapper.find(disabledNumberInputSelector(CPU_TOTAL)).length).toEqual(1);
+    expect(wrapper.find(cpuSocketNumberText).length).toEqual(1);
     // all are disabled due to pre-set, but the button should still be enabled.
     expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
     expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
@@ -217,7 +216,7 @@ describe('<EditSubscriptionSettingsDialog />', () => {
     expect(wrapper.find(radioSelector(SERVICE_LEVEL)).length).toEqual(2);
     expect(wrapper.find(disabledGroupSelector(SYSTEM_UNITS)).length).toEqual(1);
     expect(wrapper.find(radioSelector(SYSTEM_UNITS)).length).toEqual(2);
-    expect(wrapper.find(disabledNumberInputSelector(CPU_TOTAL)).length).toEqual(1);
+    expect(wrapper.find(cpuSocketNumberText).length).toEqual(1);
     expect(wrapper.find(buttonSelector('primary')).length).toEqual(1);
     expect(wrapper.find(buttonSelector('secondary')).length).toEqual(1);
     expect(wrapper.find(disabledButtonSelector('primary')).length).toEqual(1);
