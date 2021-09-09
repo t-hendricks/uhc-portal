@@ -6,7 +6,7 @@ import DownloadsPage, {
   allOperatingSystemsForTool,
   architecturesForToolOS,
   initialSelection,
-  toolRow,
+  downloadChoice,
 } from './DownloadsPage';
 import {
   tools, channels, operatingSystems, architectures, urls,
@@ -60,21 +60,17 @@ describe('architecturesForToolOS', () => {
   });
 });
 
-describe('toolRow', () => {
+describe('downloadChoice', () => {
   // For this test we only want the button from the last cell.
-  const ToolRowButton = ({ tool }) => {
-    const expanded = { [tool]: false };
+  Object.keys(tools).forEach((tool) => {
     const selections = {};
     const setSelections = () => { };
     const channel = (tool === tools.ARMINSTALLER) ? channels.PRE_RELEASE : channels.STABLE; // 4.9
-    const row = toolRow(expanded, selections, setSelections, urls, tool, channel, 'text');
-    return row.cells[row.cells.length - 1].title;
-  };
+    const chooser = downloadChoice(selections, setSelections, urls, tool, channel, 'text');
 
-  Object.keys(tools).forEach((tool) => {
     if (urls[tool]) { // skip tools that have no data yet
       it(`initially ${tool} button has a url`, () => {
-        const wrapper = shallow(<ToolRowButton tool={tool} />);
+        const wrapper = shallow(chooser.downloadButton);
         wrapper.find('DownloadButton').forEach((w) => {
           expect(w.props().url).toBeDefined();
         });
