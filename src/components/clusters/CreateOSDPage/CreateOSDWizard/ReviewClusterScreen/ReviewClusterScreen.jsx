@@ -57,7 +57,7 @@ function clusterSpecDescriptionItem({ name, formValues }) {
   );
 }
 
-function ReviewClusterSecreen({ formValues, isPending }) {
+function ReviewClusterSecreen({ formValues, canAutoScale, isPending }) {
   const isByoc = formValues.byoc === 'true';
   const clusterSettingsFields = [
     'cloud_provider', 'name', 'region', 'multi_az',
@@ -118,6 +118,16 @@ function ReviewClusterSecreen({ formValues, isPending }) {
         )}
       </DescriptionList>
       <Title headingLevel="h3">
+        Default machine pool
+      </Title>
+      <DescriptionList isHorizontal>
+        {clusterSpecDescriptionItem({ name: 'machine_type', formValues })}
+        {/* TODO: human readable machineType */}
+        {canAutoScale && clusterSpecDescriptionItem({ name: 'autoscalingEnabled', formValues })}
+        {/* TODO: autoscaling details */}
+        {clusterSpecDescriptionItem({ name: 'nodes_compute', formValues })}
+      </DescriptionList>
+      <Title headingLevel="h3">
         Updates
       </Title>
       <DescriptionList isHorizontal>
@@ -133,6 +143,7 @@ ReviewClusterSecreen.propTypes = {
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),
   isPending: PropTypes.bool,
+  canAutoScale: PropTypes.bool,
 };
 
 export default ReviewClusterSecreen;
