@@ -264,29 +264,17 @@ const cliToolRows = (expanded, selections, setSelections, urls) => [
       )
     </>),
   descriptionRow(0,
-    <TextContent>
-      <Text>
-        Create applications and manage OpenShift projects from the command line
-        using the OpenShift client
-        {' '}
-        <code>oc</code>
-        .
-      </Text>
-      <Text>
-        Get started with the OpenShift CLI for
-        {' '}
-        <ExternalLink href={links.CLI_TOOLS_OCP_GETTING_STARTED}>
-          OpenShift Container Platform (OCP)
-        </ExternalLink>
-        {' '}
-        or
-        {' '}
-        <ExternalLink href={links.CLI_TOOLS_OSD_GETTING_STARTED}>
-          OpenShift Dedicated (OSD)
-        </ExternalLink>
-        .
-      </Text>
-    </TextContent>),
+    <Text>
+      Create applications and manage OpenShift projects from the command line
+      using the OpenShift client
+      {' '}
+      <code>oc</code>
+      .
+      {' '}
+      <ExternalLink ExternalLink href={links.CLI_TOOLS_OCP_GETTING_STARTED}>
+        Get started
+      </ExternalLink>
+    </Text>),
 
   toolRow(expanded, selections, setSelections, urls, tools.OCM, channels.STABLE,
     <>

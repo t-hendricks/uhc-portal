@@ -204,34 +204,21 @@ exports[`<DownloadsPage> renders 1`] = `
               Object {
                 "cells": Array [
                   Object {
-                    "title": <TextContent>
-                      <Text>
-                        Create applications and manage OpenShift projects from the command line using the OpenShift client
-                         
-                        <code>
-                          oc
-                        </code>
-                        .
-                      </Text>
-                      <Text>
-                        Get started with the OpenShift CLI for
-                         
-                        <ExternalLink
-                          href="https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/getting-started-cli.html"
-                        >
-                          OpenShift Container Platform (OCP)
-                        </ExternalLink>
-                         
-                        or
-                         
-                        <ExternalLink
-                          href="https://access.redhat.com/documentation/en-us/openshift_dedicated/4/html/cli_tools/index"
-                        >
-                          OpenShift Dedicated (OSD)
-                        </ExternalLink>
-                        .
-                      </Text>
-                    </TextContent>,
+                    "title": <Text>
+                      Create applications and manage OpenShift projects from the command line using the OpenShift client
+                       
+                      <code>
+                        oc
+                      </code>
+                      .
+                       
+                      <ExternalLink
+                        ExternalLink={true}
+                        href="https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/getting-started-cli.html"
+                      >
+                        Get started
+                      </ExternalLink>
+                    </Text>,
                   },
                 ],
                 "fullWidth": true,
