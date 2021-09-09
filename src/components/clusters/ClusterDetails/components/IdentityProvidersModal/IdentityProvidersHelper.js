@@ -143,13 +143,13 @@ const getldapca = (formData) => {
   return formData.ldap_ca;
 };
 
-const IDPDocBase = 'https://docs.openshift.com/dedicated/4/authentication/identity_providers';
+const IDPDocBase = 'https://docs.openshift.com/container-platform/4.8/authentication/identity_providers';
 const LDAPDocLink = `${IDPDocBase}/configuring-ldap-identity-provider.html`;
 const GithubDocLink = `${IDPDocBase}/configuring-github-identity-provider.html`;
 const GoogleDocLink = `${IDPDocBase}/configuring-google-identity-provider.html`;
 const OpenIDDocLink = `${IDPDocBase}/configuring-oidc-identity-provider.html`;
-const GitlabDocLink = 'https://docs.openshift.com/container-platform/latest/authentication/identity_providers/configuring-gitlab-identity-provider.html';
-const HTPasswdDocLink = 'https://docs.openshift.com/container-platform/latest/authentication/identity_providers/configuring-htpasswd-identity-provider.html';
+const GitlabDocLink = `${IDPDocBase}/configuring-gitlab-identity-provider.html`;
+const HTPasswdDocLink = `${IDPDocBase}/configuring-htpasswd-identity-provider.html`;
 
 const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({
