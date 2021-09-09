@@ -9,13 +9,13 @@ class LoginPage extends Page {
   /**
      * define selectors using getter methods
      */
-  get inputUsername() { return $('#username'); }
+  get inputUsername() { return $('//input[@name="username"]'); }
 
-  get inputPassword() { return $('#password'); }
+  get inputPassword() { return $('//input[@name="password"]'); }
 
-  get btnNext() { return $('#login-show-step2'); }
+  get btnNext() { return $('//button[text()="Next"]'); }
 
-  get btnSubmit() { return $('#kc-login'); }
+  get btnSubmit() { return $('//button[@type="submit"][contains(text(), "Log in")]'); }
 
   async isLoginPage() {
     const URL = await browser.getUrl();
