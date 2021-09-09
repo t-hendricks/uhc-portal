@@ -143,13 +143,13 @@ const getldapca = (formData) => {
   return formData.ldap_ca;
 };
 
-const IDPDocBase = 'https://docs.openshift.com/container-platform/4.8/authentication/identity_providers';
-const LDAPDocLink = `${IDPDocBase}/configuring-ldap-identity-provider.html`;
-const GithubDocLink = `${IDPDocBase}/configuring-github-identity-provider.html`;
-const GoogleDocLink = `${IDPDocBase}/configuring-google-identity-provider.html`;
-const OpenIDDocLink = `${IDPDocBase}/configuring-oidc-identity-provider.html`;
-const GitlabDocLink = `${IDPDocBase}/configuring-gitlab-identity-provider.html`;
-const HTPasswdDocLink = `${IDPDocBase}/configuring-htpasswd-identity-provider.html`;
+const IDPDocBase = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.8/html/authentication_and_authorization/configuring-identity-providers';
+const LDAPDocLink = `${IDPDocBase}#configuring-ldap-identity-provider`;
+const GithubDocLink = `${IDPDocBase}#configuring-github-identity-provider`;
+const GoogleDocLink = `${IDPDocBase}#configuring-google-identity-provider`;
+const OpenIDDocLink = `${IDPDocBase}#configuring-oidc-identity-provider`;
+const GitlabDocLink = `${IDPDocBase}#configuring-gitlab-identity-provider`;
+const HTPasswdDocLink = `${IDPDocBase}#configuring-htpasswd-identity-provider`;
 
 const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({
