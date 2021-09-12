@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 import {
   DescriptionList,
   DescriptionListTerm,
@@ -57,7 +58,12 @@ function clusterSpecDescriptionItem({ name, formValues }) {
   );
 }
 
-function ReviewClusterScreen({ formValues, canAutoScale, isPending }) {
+function ReviewClusterScreen({
+  formValues,
+  canAutoScale,
+  autoscalingEnabled,
+  isPending,
+}) {
   const isByoc = formValues.byoc === 'true';
   const clusterSettingsFields = [
     'cloud_provider', 'name', 'region', 'multi_az',
@@ -122,10 +128,12 @@ function ReviewClusterScreen({ formValues, canAutoScale, isPending }) {
       </Title>
       <DescriptionList isHorizontal>
         {clusterSpecDescriptionItem({ name: 'machine_type', formValues })}
-        {/* TODO: human readable machineType */}
-        {canAutoScale && clusterSpecDescriptionItem({ name: 'autoscalingEnabled', formValues })}
-        {/* TODO: autoscaling details */}
-        {clusterSpecDescriptionItem({ name: 'nodes_compute', formValues })}
+        {autoscalingEnabled
+          ? clusterSpecDescriptionItem({ name: 'min_replicas', formValues })
+          : clusterSpecDescriptionItem({ name: 'nodes_compute', formValues })}
+        {autoscalingEnabled
+        && !(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0]))
+        && clusterSpecDescriptionItem({ name: 'node_labels', formValues })}
       </DescriptionList>
       <Title headingLevel="h3">
         Updates
@@ -144,6 +152,7 @@ ReviewClusterScreen.propTypes = {
   ),
   isPending: PropTypes.bool,
   canAutoScale: PropTypes.bool,
+  autoscalingEnabled: PropTypes.bool,
 };
 
 export default ReviewClusterScreen;
