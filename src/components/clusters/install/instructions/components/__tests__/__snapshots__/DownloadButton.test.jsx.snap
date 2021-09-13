@@ -2,7 +2,7 @@
 
 exports[`DownloadButton renders correctly 1`] = `
 <Button
-  className="download-button tool-cli_tools"
+  className="download-button tool-oc"
   component="a"
   disabled={false}
   download={true}
@@ -16,7 +16,7 @@ exports[`DownloadButton renders correctly 1`] = `
 
 exports[`DownloadButton when disabled should render 1`] = `
 <Button
-  className="download-button tool-x86installer"
+  className="download-button tool-x86_64-openshift-install"
   component="a"
   disabled={true}
   onClick={[Function]}

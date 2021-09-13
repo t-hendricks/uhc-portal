@@ -6,7 +6,7 @@ import DownloadAndOSSelection from '../DownloadAndOSSelection';
 
 // only a subset of installLinks.tools are used with DownloadAndOSSelection
 const testtools = [
-  tools.CLI_TOOLS,
+  tools.OC,
   tools.CRC,
   tools.X86INSTALLER,
   tools.IBMZINSTALLER,

@@ -9,7 +9,7 @@ import { tools } from '../../../../../common/installLinks';
 
 const texts = {
   [tools.CRC]: 'Download CodeReady Containers',
-  [tools.CLI_TOOLS]: 'Download command-line tools',
+  [tools.OC]: 'Download command-line tools',
   [tools.X86INSTALLER]: 'Download installer',
   [tools.IBMZINSTALLER]: 'Download installer',
   [tools.PPCINSTALLER]: 'Download installer',
@@ -17,7 +17,7 @@ const texts = {
 };
 
 const pendoEvents = {
-  [tools.CLI_TOOLS]: 'OCP-Download-CLITools',
+  [tools.OC]: 'OCP-Download-CLITools',
   [tools.CRC]: 'OCP-Download-CRC',
   [tools.HELM]: 'Download-HELM-CLI',
   [tools.X86INSTALLER]: 'OCP-Download-X86Installer',
@@ -69,7 +69,7 @@ DownloadButton.propTypes = {
   url: PropTypes.string,
   disabled: PropTypes.bool,
   download: PropTypes.bool,
-  tool: PropTypes.oneOf(Object.keys(tools)),
+  tool: PropTypes.oneOf(Object.values(tools)),
   text: PropTypes.string,
   name: PropTypes.string,
 };

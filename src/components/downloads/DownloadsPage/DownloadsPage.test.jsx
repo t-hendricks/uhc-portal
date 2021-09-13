@@ -26,7 +26,7 @@ describe('allOperatingSystemsForTool', () => {
   });
 
   it('includes all OSes for oc', () => {
-    const values = allOperatingSystemsForTool(urls, tools.CLI_TOOLS, channels.STABLE)
+    const values = allOperatingSystemsForTool(urls, tools.OC, channels.STABLE)
       .map(o => o.value);
     expect(values).toEqual([linux, mac, windows]);
   });
@@ -62,7 +62,7 @@ describe('architecturesForToolOS', () => {
 
 describe('downloadChoice', () => {
   // For this test we only want the button from the last cell.
-  Object.keys(tools).forEach((tool) => {
+  Object.values(tools).forEach((tool) => {
     const selections = {};
     const setSelections = () => { };
     const channel = (tool === tools.ARMINSTALLER) ? channels.PRE_RELEASE : channels.STABLE; // 4.9
@@ -83,17 +83,17 @@ describe('initialSelection', () => {
   it('when detection fails, chooses Linux, x86', () => {
     // If user has some exotic browser/OS, it's more convenient to select _something_
     // so all Download buttons work, than force user to choose in all rows.
-    const initial = initialSelection(urls, tools.CLI_TOOLS, channels.STABLE, null);
+    const initial = initialSelection(urls, tools.OC, channels.STABLE, null);
     expect(initial).toEqual({ OS: linux, architecture: architectures.x86 });
   });
 
   it('on Linux, chooses x86', () => {
-    const initial = initialSelection(urls, tools.CLI_TOOLS, channels.STABLE, linux);
+    const initial = initialSelection(urls, tools.OC, channels.STABLE, linux);
     expect(initial).toEqual({ OS: linux, architecture: architectures.x86 });
   });
 
   it('on Windows, chooses x86', () => {
-    const initial = initialSelection(urls, tools.CLI_TOOLS, channels.STABLE, windows);
+    const initial = initialSelection(urls, tools.OC, channels.STABLE, windows);
     expect(initial).toEqual({ OS: windows, architecture: architectures.x86 });
   });
 

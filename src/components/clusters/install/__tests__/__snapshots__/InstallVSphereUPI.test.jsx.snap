@@ -34,7 +34,7 @@ exports[`InstallVSphereUPI renders correctly 1`] = `
       customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
       displayRHCOSSection={true}
       docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html"
-      installer="X86INSTALLER"
+      installer="x86_64-openshift-install"
       isBMIPI={false}
       rhcosDownloads={
         Array [

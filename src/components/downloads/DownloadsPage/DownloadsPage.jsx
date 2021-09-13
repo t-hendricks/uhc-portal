@@ -216,12 +216,12 @@ export const downloadChoice = (
   };
 };
 
-/** Used to track row collapsed/expanded state */
+/** Used to track row collapsed/expanded state, and also for URLs linking to specific row. */
 const expandKeys = {
   ...tools,
   // the rest should be distinct from `tools` keys.
-  PULL_SECRET: 'PULL_SECRET',
-  TOKEN_OCM: 'TOKEN_OCM',
+  PULL_SECRET: 'pull-secret',
+  TOKEN_OCM: 'ocm-api-token',
 };
 
 /** An expandable pair of table rows. */
@@ -308,7 +308,7 @@ ToolAndDescriptionRows.propTypes = {
 };
 
 const rowsByCategory = {
-  CLI: [tools.CLI_TOOLS, tools.OCM, tools.ROSA],
+  CLI: [tools.OC, tools.OCM, tools.ROSA],
   DEV: [tools.ODO, tools.HELM, tools.OPM, tools.RHOAS],
   INSTALLATION: [
     tools.X86INSTALLER, tools.IBMZINSTALLER, tools.PPCINSTALLER, tools.ARMINSTALLER, tools.CRC,
@@ -325,7 +325,7 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, urls) => 
     <>
       <ToolAndDescriptionRows
         {...commonProps}
-        tool={tools.CLI_TOOLS}
+        tool={tools.OC}
         channel={channels.STABLE}
         name={(
           <>
