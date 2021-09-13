@@ -10,7 +10,7 @@ const mockCluster = (data) => {
   const cluster = {
     state: '',
     status: '',
-    managed: false,
+    managed: Math.random() < 0.5, // getClusterStateAndDescription should not rely on managed field.
     subscription: {},
     metrics: {},
   };
@@ -53,7 +53,7 @@ describe('getClusterStateAndDescription', () => {
 
   it('should show descriptions derived from the cluster state', () => {
     const expectDescription = (state, expectedDescription) => {
-      const cluster = mockCluster({ state, managed: true });
+      const cluster = mockCluster({ state });
       const result = getClusterStateAndDescription(cluster);
       expect(result.description).toEqual(expectedDescription);
     };
