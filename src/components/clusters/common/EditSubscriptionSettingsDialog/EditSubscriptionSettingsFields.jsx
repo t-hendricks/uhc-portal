@@ -501,6 +501,38 @@ class EditSubscriptionSettingsFields extends Component {
       </>
     );
 
+    // the number field for CPU/vCores or Socket
+    const cpuSocketValue = systemUnits === SOCKETS ? socketTotal : cpuTotal;
+    const CpuSocketNumberField = isDisconnectedSub ? (
+      <NumberInput
+        value={cpuSocketValue}
+        min={MIN_VAL}
+        max={MAX_VAL}
+        inputName={systemUnits === SOCKETS ? SOCKET_TOTAL : CPU_TOTAL}
+        isDisabled={isDisabled
+          || isDisabledByBillingModel
+          || isDisabledBySupportLevel}
+        onMinus={this.handleUnitsNumberDelta(-1)}
+        onPlus={this.handleUnitsNumberDelta(1)}
+        onChange={this.handleUnitsNumberChange}
+        inputAriaLabel={systemUnits === SOCKETS ? 'Number of sockets' : 'Number of compute cores (excluding control plane nodes)'}
+        minusBtnAriaLabel="decrement the number by 1"
+        plusBtnAriaLabel="increment the number by 1"
+        widthChars={MAX_VAL.toString().length}
+      />
+    ) : (
+      <>
+        <span id="cpu-socket-value">{`${cpuSocketValue} ${systemUnits === SOCKETS ? 'Sockets' : 'Cores/vCPU'}`}</span>
+        <PopoverHint
+          id="cpu-socket-value-hint"
+          hint="This data is gathered directly from the telemetry metrics submitted by the cluster and cannot be changed."
+          iconClassName={labelIconClass}
+          hasAutoWidth
+          maxWidth="30.0rem"
+        />
+      </>
+    );
+
     return (
       <>
         {isBillingModelVisible && (
@@ -554,31 +586,12 @@ class EditSubscriptionSettingsFields extends Component {
         />
         <FormGroup
           label={systemUnits === SOCKETS ? 'Number of sockets' : 'Number of compute cores (excluding control plane nodes)'}
-          isRequired={!isDisabled
-            && !isDisabledByBillingModel
-            && !isDisabledBySupportLevel
-            && isDisconnectedSub}
-          helperText={`${systemUnits} value can be any integer number between ${MIN_VAL}-${MAX_VAL}`}
+          isRequired={isDisconnectedSub}
+          helperText={isDisconnectedSub ? `${systemUnits} value can be any integer number between ${MIN_VAL}-${MAX_VAL}` : ''}
           helperTextInvalid={systemUnitsNumericErrorMsg}
           validated={systemUnitsNumericIsValid ? 'default' : 'error'}
         >
-          <NumberInput
-            value={systemUnits === SOCKETS ? socketTotal : cpuTotal}
-            min={MIN_VAL}
-            max={MAX_VAL}
-            inputName={systemUnits === SOCKETS ? SOCKET_TOTAL : CPU_TOTAL}
-            isDisabled={isDisabled
-              || isDisabledByBillingModel
-              || isDisabledBySupportLevel
-              || !isDisconnectedSub}
-            onMinus={this.handleUnitsNumberDelta(-1)}
-            onPlus={this.handleUnitsNumberDelta(1)}
-            onChange={this.handleUnitsNumberChange}
-            inputAriaLabel={systemUnits === SOCKETS ? 'Number of sockets' : 'Number of compute cores (excluding control plane nodes)'}
-            minusBtnAriaLabel="decrement the number by 1"
-            plusBtnAriaLabel="increment the number by 1"
-            widthChars={MAX_VAL.toString().length}
-          />
+          {CpuSocketNumberField}
         </FormGroup>
         {tooltips}
       </>

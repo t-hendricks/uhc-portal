@@ -69,7 +69,6 @@ const links = {
   CLI_TOOLS_WINDOWS_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-windows.zip`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
-  CLI_TOOLS_OSD_GETTING_STARTED: 'https://access.redhat.com/documentation/en-us/openshift_dedicated/4/html/cli_tools/index',
 
   INSTALL_DOCS_ENTRY: `${DOCS_BASE}/installing/index.html`,
 

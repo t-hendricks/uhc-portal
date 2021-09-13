@@ -18,6 +18,7 @@ const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),
   fetchClusters: queryObj => clustersActions.fetchClusters(queryObj),
   setClusterDetails: clustersActions.setClusterDetails,
+  clearClusterDetails: clustersActions.clearClusterDetails,
   setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
   setListFlag: (key, value) => viewActions.onListFlagsSet(key, value, viewConstants.CLUSTERS_VIEW),
   getCloudProviders: cloudProviderActions.getCloudProviders,

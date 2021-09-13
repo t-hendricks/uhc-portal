@@ -397,6 +397,9 @@ const setClusterDetails = (cluster, mergeDetails = false) => dispatch => dispatc
   payload: { cluster, mergeDetails },
 });
 
+const clearClusterDetails = () => dispatch => dispatch({
+  type: clustersConstants.CLEAR_CLUSTER_DETAILS,
+});
 const resetCreatedClusterResponse = () => dispatch => dispatch({
   type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
 });
@@ -414,6 +417,7 @@ const clustersActions = {
   fetchClusters,
   fetchClusterDetails,
   setClusterDetails,
+  clearClusterDetails,
   invalidateClusters,
   resetCreatedClusterResponse,
   editClusterDisplayName,
