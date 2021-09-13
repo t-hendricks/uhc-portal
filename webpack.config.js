@@ -71,7 +71,7 @@ module.exports = async (_env, argv) => {
 
     output: {
       path: outDir,
-      filename: 'bundle.[name].js',
+      filename: 'bundle.[name].[contenthash].js',
       publicPath,
     },
     devtool: 'source-map',
