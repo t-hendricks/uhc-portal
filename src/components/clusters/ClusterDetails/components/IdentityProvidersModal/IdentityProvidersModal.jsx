@@ -21,6 +21,8 @@ import Modal from '../../../../common/Modal/Modal';
 
 import IDPForm from './components/IDPForm';
 
+import { IDPformValues } from './IdentityProvidersHelper';
+
 class IdentityProvidersModal extends React.Component {
   componentDidUpdate() {
     const { submitIDPResponse, getClusterIdentityProviders } = this.props;
@@ -71,7 +73,9 @@ class IdentityProvidersModal extends React.Component {
       title={isEditForm ? `Edit identity provider (${clusterName})` : `Create identity provider (${clusterName})`}
       isPending={isPending}
       onPrimaryClick={handleSubmit}
-      isPrimaryDisabled={!anyTouched || invalid}
+      // do not disable primary for untouched HTPasswdIdentityProvider
+      // since the form is valid on inital load
+      isPrimaryDisabled={(selectedIDP !== IDPformValues.HTPASSWD && !anyTouched) || invalid}
       onSecondaryClick={() => this.onClose()}
       data-test-id="add-idp-osd-dialog"
     >
