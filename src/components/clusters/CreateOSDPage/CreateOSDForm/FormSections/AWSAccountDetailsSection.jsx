@@ -50,7 +50,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           type="text"
           validate={required}
           disabled={pending || isValidating}
-          helpText={isValidating && 'Validating...'}
+          helpText={isValidating ? 'Validating...' : ''}
           isRequired
         />
       </GridItem>
@@ -63,7 +63,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           type="text"
           validate={required}
           disabled={pending || isValidating}
-          helpText={isValidating && 'Validating...'}
+          helpText={isValidating ? 'Validating...' : ''}
           isRequired
         />
       </GridItem>
