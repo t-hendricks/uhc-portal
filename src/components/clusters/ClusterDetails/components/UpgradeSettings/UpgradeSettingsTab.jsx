@@ -207,7 +207,7 @@ class UpgradeSettingsTab extends React.Component {
         <GridItem lg={3} md={12} className="ocm-c-upgrade-monitoring-top">
           <Card>
             <CardTitle>
-              Update Status
+              Update status
             </CardTitle>
             <CardBody>
               <UpgradeStatus

@@ -153,7 +153,11 @@ function clustersReducer(state = initialState, action) {
           cluster: action.payload.data,
         };
         break;
-
+      case clustersConstants.CLEAR_CLUSTER_DETAILS:
+        draft.details = {
+          ...initialState.details,
+        };
+        break;
       // CREATE_CLUSTER
       case REJECTED_ACTION(clustersConstants.CREATE_CLUSTER):
         draft.createdCluster = {

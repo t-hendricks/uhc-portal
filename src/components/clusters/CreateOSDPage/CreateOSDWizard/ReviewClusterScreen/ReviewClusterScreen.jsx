@@ -57,13 +57,16 @@ function clusterSpecDescriptionItem({ name, formValues }) {
   );
 }
 
-function ReviewClusterSecreen({ formValues, isPending }) {
+function ReviewClusterSecreen({ formValues, canAutoScale, isPending }) {
   const isByoc = formValues.byoc === 'true';
   const clusterSettingsFields = [
     'cloud_provider', 'name', 'region', 'multi_az',
     !isByoc && 'persistent_storage',
     !isByoc && 'load_balancers',
     'etcd_encryption',
+    'machine_type',
+    'autoscalingEnabled',
+    'nodes_compute',
   ].filter(Boolean);
   if (isPending) {
     return (
@@ -120,7 +123,7 @@ function ReviewClusterSecreen({ formValues, isPending }) {
       <DescriptionList isHorizontal>
         {clusterSpecDescriptionItem({ name: 'machine_type', formValues })}
         {/* TODO: human readable machineType */}
-        {clusterSpecDescriptionItem({ name: 'autoscalingEnabled', formValues })}
+        {canAutoScale && clusterSpecDescriptionItem({ name: 'autoscalingEnabled', formValues })}
         {/* TODO: autoscaling details */}
         {clusterSpecDescriptionItem({ name: 'nodes_compute', formValues })}
       </DescriptionList>
@@ -140,6 +143,7 @@ ReviewClusterSecreen.propTypes = {
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),
   isPending: PropTypes.bool,
+  canAutoScale: PropTypes.bool,
 };
 
 export default ReviewClusterSecreen;

@@ -1,14 +1,17 @@
 import { connect } from 'react-redux';
-import { getFormValues } from 'redux-form';
+import { formValueSelector, getFormValues } from 'redux-form';
 
 import wizardConnector from '../WizardConnector';
 import ReviewClusterScreen from './ReviewClusterScreen';
+import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 
 const mapStateToProps = (state) => {
-  const valueSelector = getFormValues('CreateCluster');
-
+  const valueSelector = formValueSelector('CreateCluster');
+  const product = valueSelector(state, 'product');
+  const canAutoScale = canAutoScaleOnCreateSelector(state, product);
   return {
-    formValues: valueSelector(state),
+    formValues: getFormValues('CreateCluster')(state),
+    canAutoScale,
   };
 };
 
