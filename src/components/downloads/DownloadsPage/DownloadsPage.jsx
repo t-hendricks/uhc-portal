@@ -224,16 +224,18 @@ const expandKeys = {
   TOKEN_OCM: 'ocm-api-token',
 };
 
+const rowId = expandKey => `tool-${expandKey}`;
+
 /** An expandable pair of table rows. */
 const ExpandableRowPair = ({
-  expanded, setExpanded, expandKey, cells, description,
+  expanded, setExpanded, expandKey, cells, description, toolRefs,
 }) => {
   const isExpanded = !!expanded[expandKey];
   const onToggle = (event, rowIndex, newOpen) => {
     setExpanded({ ...expanded, [expandKey]: newOpen });
   };
   return (
-    <Tbody isExpanded={isExpanded}>
+    <Tbody isExpanded={isExpanded} ref={get(toolRefs, expandKey)}>
       <Tr>
         <Td expand={{ isExpanded, onToggle }} />
         {cells}
@@ -251,6 +253,8 @@ ExpandableRowPair.propTypes = {
   expanded: PropTypes.object,
   // callback to replace whole `expanded` map
   setExpanded: PropTypes.func,
+  // { [expandKey]: ref } - to allow referring to specific row pairs
+  toolRefs: PropTypes.object,
   // tool or other key for `expanded` array
   expandKey: PropTypes.oneOf(Object.values(expandKeys)),
   // array of `<Td>` cells for first row
@@ -261,7 +265,7 @@ ExpandableRowPair.propTypes = {
 
 /** Row pair for a tool. */
 const ToolAndDescriptionRows = ({
-  expanded, setExpanded, selections, setSelections,
+  expanded, setExpanded, selections, setSelections, toolRefs,
   urls, tool, channel, name, description,
 }) => {
   const chooser = downloadChoice(selections, setSelections, urls, tool, channel, { text: 'Download' });
@@ -270,6 +274,7 @@ const ToolAndDescriptionRows = ({
     <ExpandableRowPair
       expanded={expanded}
       setExpanded={setExpanded}
+      toolRefs={toolRefs}
       expandKey={tool}
       cells={[
         <Td dataLabel="Name">{name}</Td>,
@@ -295,6 +300,8 @@ ToolAndDescriptionRows.propTypes = {
   selections: PropTypes.object,
   // callback to replace whole `selections` map
   setSelections: PropTypes.func,
+  // { [tool]: ref } - to allow referring to specific tool rows
+  toolRefs: PropTypes.object,
   // either static `installLinks.urls` or result of urlsSelector() with github links.
   urls: PropTypes.object,
   // one of `tools`
@@ -317,9 +324,9 @@ const rowsByCategory = {
 };
 rowsByCategory.ALL = [].concat(...Object.values(rowsByCategory));
 
-const cliToolRows = (expanded, setExpanded, selections, setSelections, urls) => {
+const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
   const commonProps = {
-    expanded, setExpanded, selections, setSelections, urls,
+    expanded, setExpanded, selections, setSelections, toolRefs, urls,
   };
   return (
     <>
@@ -405,9 +412,9 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, urls) => 
   );
 };
 
-const devToolRows = (expanded, setExpanded, selections, setSelections, urls) => {
+const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
   const commonProps = {
-    expanded, setExpanded, selections, setSelections, urls,
+    expanded, setExpanded, selections, setSelections, toolRefs, urls,
   };
   return (
     <>
@@ -511,9 +518,9 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, urls) => 
   );
 };
 
-const installationRows = (expanded, setExpanded, selections, setSelections, urls) => {
+const installationRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
   const commonProps = {
-    expanded, setExpanded, selections, setSelections, urls,
+    expanded, setExpanded, selections, setSelections, toolRefs, urls,
   };
   return (
     <>
@@ -670,11 +677,12 @@ const TokensHeadings = () => (
   </Thead>
 );
 
-const tokenRows = (expanded, setExpanded, token) => (
+const tokenRows = (expanded, setExpanded, toolRefs, token) => (
   <>
     <ExpandableRowPair
       expanded={expanded}
       setExpanded={setExpanded}
+      toolRefs={toolRefs}
       expandKey={expandKeys.PULL_SECRET}
       cells={[
         <Td>Pull secret</Td>,
@@ -720,6 +728,7 @@ const tokenRows = (expanded, setExpanded, token) => (
     <ExpandableRowPair
       expanded={expanded}
       setExpanded={setExpanded}
+      toolRefs={toolRefs}
       expandKey={expandKeys.TOKEN_OCM}
       cells={[
         <Td>OpenShift Cluster Manager API Token</Td>,
@@ -748,15 +757,24 @@ class DownloadsPage extends React.Component {
     Object.values(expandKeys).forEach((key) => {
       initial[key] = false;
     });
-
     return initial;
+  }
+
+  static makeRefs() {
+    const toolRefs = {};
+    Object.values(expandKeys).forEach((key) => {
+      toolRefs[key] = React.createRef();
+    });
+    return toolRefs;
   }
 
   state = {
     selectedCategory: 'ALL', // one of `downloadsCategoryTitles` keys
-    expanded: DownloadsPage.initialExpanded(), // {[tool]: isOpen }
-    selections: {}, // {[tool]: {OS, architecture} }
+    expanded: DownloadsPage.initialExpanded(), // { [tool]: isOpen }
+    selections: {}, // { [tool]: {OS, architecture} }
   }
+
+  toolRefs = DownloadsPage.makeRefs() // { [tool]: ref }
 
   componentDidMount() {
     document.title = 'Downloads | Red Hat OpenShift Cluster Manager';
@@ -768,6 +786,13 @@ class DownloadsPage extends React.Component {
         getLatestRelease(repo);
       }
     });
+
+    this.focusRowByHash();
+    window.addEventListener('hashchange', this.focusRowByHash);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this.focusRowByHash);
   }
 
   setCategory = (selectedCategory) => {
@@ -776,10 +801,46 @@ class DownloadsPage extends React.Component {
 
   setExpanded = (expanded) => {
     this.setState({ expanded });
+
+    // "Advertise" link targets by setting #tool-foo URL when single item selected.
+    const expandedKeys = Object.keys(expanded).filter(k => expanded[k]);
+    if (expandedKeys.length === 1) {
+      const hash = `#${rowId(expandedKeys[0])}`;
+      const { location, history } = this.props;
+      if (hash !== location.hash) {
+        // pushState/replaceState API never trigger `hashchange` event,
+        // avoiding undesired effects like scrolling.
+        history.replace({ ...location, hash });
+      }
+    }
   }
 
   setSelections = (selections) => {
     this.setState({ selections });
+  }
+
+  focusRowByHash = () => {
+    const { location } = this.props;
+    const hash = location.hash.replace('#', '');
+    const key = Object.values(expandKeys).find(k => rowId(k) === hash);
+    if (key) {
+      // Expand to draw attention.
+      const { expanded } = this.state;
+      this.setExpanded({ ...expanded, [key]: true });
+
+      const row = this.toolRefs[key]?.current;
+      if (row) {
+        row.scrollIntoView({ block: 'start', behavior: 'smooth' });
+
+        // Goal: Bring keyboard focus somewhere in the chosen row.
+        // .focus() only works on focusable elements - input, select, button, etc.
+        // The row expand toggle happens to be a button.
+        const elem = row.querySelector('button, select');
+        if (elem) {
+          elem.focus({ preventScroll: true }); // don't interfere with smooth scroll.
+        }
+      }
+    }
   }
 
   render() {
@@ -841,7 +902,8 @@ class DownloadsPage extends React.Component {
             >
               <TableComposable aria-label="CLI tools table">
                 <ColumnHeadings />
-                {cliToolRows(expanded, this.setExpanded, selections, this.setSelections, urls)}
+                {cliToolRows(expanded, this.setExpanded, selections, this.setSelections,
+                  this.toolRefs, urls)}
               </TableComposable>
             </DownloadsSection>
 
@@ -859,7 +921,8 @@ class DownloadsPage extends React.Component {
             >
               <TableComposable aria-label="Developer tools table">
                 <ColumnHeadings />
-                {devToolRows(expanded, this.setExpanded, selections, this.setSelections, urls)}
+                {devToolRows(expanded, this.setExpanded, selections, this.setSelections,
+                  this.toolRefs, urls)}
               </TableComposable>
             </DownloadsSection>
 
@@ -882,7 +945,8 @@ class DownloadsPage extends React.Component {
             >
               <TableComposable aria-label="OpenShift installation table">
                 <ColumnHeadings />
-                {installationRows(expanded, this.setExpanded, selections, this.setSelections, urls)}
+                {installationRows(expanded, this.setExpanded, selections, this.setSelections,
+                  this.toolRefs, urls)}
               </TableComposable>
             </DownloadsSection>
 
@@ -891,7 +955,7 @@ class DownloadsPage extends React.Component {
                 aria-label="Tokens table"
               >
                 <TokensHeadings />
-                {tokenRows(expanded, this.setExpanded, token)}
+                {tokenRows(expanded, this.setExpanded, this.toolRefs, token)}
               </TableComposable>
             </DownloadsSection>
           </PageSection>
@@ -901,6 +965,8 @@ class DownloadsPage extends React.Component {
   }
 }
 DownloadsPage.propTypes = {
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   token: PropTypes.object.isRequired,
   getAuthToken: PropTypes.func.isRequired,
   githubReleases: PropTypes.object.isRequired,

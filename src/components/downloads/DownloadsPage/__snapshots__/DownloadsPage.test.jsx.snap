@@ -111,6 +111,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="oc"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -347,6 +396,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="ocm"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -574,6 +672,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="rosa"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -827,6 +974,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="odo"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -1054,6 +1250,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="helm"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -1281,6 +1526,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="opm"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -1518,6 +1812,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="rhoas"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -1781,6 +2124,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="x86_64-openshift-install"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -2014,6 +2406,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="s390x-openshift-install"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -2247,6 +2688,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="ppc64le-openshift-install"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -2486,6 +2976,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="aarch64-openshift-install"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -2718,6 +3257,55 @@ exports[`<DownloadsPage> renders 1`] = `
             setExpanded={[Function]}
             setSelections={[Function]}
             tool="crc"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
                 "aarch64-openshift-install": Object {
@@ -2997,6 +3585,55 @@ exports[`<DownloadsPage> renders 1`] = `
               }
             }
             setExpanded={[Function]}
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
           />
           <ExpandableRowPair
             cells={
@@ -3053,6 +3690,55 @@ exports[`<DownloadsPage> renders 1`] = `
               }
             }
             setExpanded={[Function]}
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
           />
         </TableComposable>
       </DownloadsSection>

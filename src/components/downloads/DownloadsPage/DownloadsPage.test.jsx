@@ -112,6 +112,8 @@ describe('initialSelection', () => {
 describe('<DownloadsPage>', () => {
   it('renders', () => {
     const props = {
+      location: { hash: '' },
+      history: { replace: () => { } },
       token: { auths: { foo: 'bar' } },
       getAuthToken: () => { },
       githubReleases: {
