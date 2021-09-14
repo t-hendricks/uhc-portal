@@ -10,6 +10,7 @@ import {
 import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
 
 import { getRandomID } from '../../../../common/helpers';
+import { validateNodeLabel } from '../../../../common/validators';
 
 import './ReduxFormKeyValueList.scss';
 
@@ -35,9 +36,10 @@ const LabelValue = ({ input, meta: { touched, error } }) => (
   <>
     <TextInput
       aria-label="Key-value list value"
+      validated={!(touched && error) ? 'default' : 'error'}
       {...input}
     />
-    {touched && error && <span>{error}</span>}
+    {touched && error && <span className="pf-c-form__helper-text pf-m-error">{error}</span>}
   </>
 );
 
@@ -73,6 +75,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
               type="text"
               component={LabelValue}
               index={index}
+              validate={validateNodeLabel}
             />
           </GridItem>
           <GridItem span={4}>
