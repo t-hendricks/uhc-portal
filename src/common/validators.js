@@ -55,6 +55,10 @@ const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}$/;
 
 const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 
+// A valid label must be an empty string or consist of alphanumeric characters, '-', '_' or '.',
+// and must start and end with an alphanumeric character. e.g. 'MyValue', or 'my_value', or '12345'
+const NODE_LABEL_REGEX = /^[A-Za-z0-9]([-A-Za-z0-9_.]*[A-Za-z0-9])?$/;
+
 // Function to validate that a field is mandatory, i.e. must be a non whitespace string
 const required = value => (value && value.trim() ? undefined : 'Field is required');
 
@@ -904,6 +908,13 @@ const validateHTPasswdUsername = (username) => {
   return undefined;
 };
 
+const validateNodeLabel = (value) => {
+  if (!NODE_LABEL_REGEX.test(value)) {
+    return 'A valid label must be an empty string or consist of alphanumeric characters, \'-\', \'_\' or \'.\', and must start and end with an alphanumeric character.';
+  }
+  return undefined;
+};
+
 const validators = {
   required,
   checkIdentityProviderName,
@@ -927,6 +938,7 @@ const validators = {
   nodes,
   nodesMultiAz,
   validateNumericInput,
+  validateNodeLabel,
   checkOpenIDIssuer,
   checkGithubTeams,
   checkRouteSelectors,
@@ -978,6 +990,7 @@ export {
   validateGCPKMSServiceAccount,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
+  validateNodeLabel,
 };
 
 export default validators;

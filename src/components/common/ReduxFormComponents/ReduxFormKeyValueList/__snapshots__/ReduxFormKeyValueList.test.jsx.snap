@@ -37,6 +37,7 @@ exports[`<ReduxFormKeyValueList /> should render when there is no input - initia
       index={0}
       name="[object Object].value"
       type="text"
+      validate={[Function]}
     />
   </GridItem>
   <GridItem
@@ -115,6 +116,7 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
       index={0}
       name="[object Object].value"
       type="text"
+      validate={[Function]}
     />
   </GridItem>
   <GridItem
@@ -152,6 +154,7 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
       index={1}
       name="[object Object].value"
       type="text"
+      validate={[Function]}
     />
   </GridItem>
   <GridItem
