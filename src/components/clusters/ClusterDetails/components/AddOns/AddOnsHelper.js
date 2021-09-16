@@ -34,6 +34,9 @@ const getInstalled = (addOn, clusterAddOns) => clusterAddOns.items.find(
 );
 
 const formatRequirementData = (data) => {
+  if (data === undefined) {
+    return '';
+  }
   const attrs = [];
   Object.entries(data)
     .forEach(([field, requiredValue]) => {
@@ -45,7 +48,7 @@ const formatRequirementData = (data) => {
         attrs.push(`${field} is ${requiredValue}`);
       }
     });
-  return attrs.join(' and ');
+  return `where ${attrs.join(' and ')}`;
 };
 
 const validateAddOnResourceRequirement = (requirement) => {
@@ -55,10 +58,13 @@ const validateAddOnResourceRequirement = (requirement) => {
   if (!requirementMet) {
     if (get(requirementErrors, 'length', 0) === 0) {
       if (requirement.resource === 'addon') {
-        requirementErrors.push('This addon requires an addon to be installed where '
+        requirementErrors.push('This addon requires another addon to be installed '
+          + `${formatRequirementData(requirement.data)}`);
+      } else if (requirement.resource === 'machine_pool') {
+        requirementErrors.push('This addon requires a machine pool to exist '
           + `${formatRequirementData(requirement.data)}`);
       } else {
-        requirementErrors.push(`This addon requires a ${requirement.resource} where `
+        requirementErrors.push(`This addon requires a ${requirement.resource} `
           + `${formatRequirementData(requirement.data)}`);
       }
     }
