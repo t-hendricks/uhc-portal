@@ -196,7 +196,7 @@ class InsightsRuleDetails extends Component {
       if (clusterDetails.errorCode === 404) {
         setGlobalError((
           <>
-            Cluster
+            Cluster with ID
             {' '}
             <b>{requestedSubscriptionID}</b>
             {' '}
@@ -215,7 +215,7 @@ class InsightsRuleDetails extends Component {
     if (isArchived || (!reportDetails.pending && reportDetails.rejected)) {
       setGlobalError((
         <>
-          Report
+          Recommendation
           {' '}
           <b>{requestedReportID}</b>
           {' '}
