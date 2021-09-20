@@ -1,3 +1,5 @@
+import { validateLabelKey, validateLabelValue } from '../../../../../common/validators';
+
 const actionResolver = (rowData,
   onClickDelete,
   onClickScale,
@@ -44,7 +46,10 @@ const actionResolver = (rowData,
 
 const isValidLabel = (label) => {
   const labelParts = label.split('=');
-  return (labelParts.length === 2 && labelParts[0] !== '' && labelParts[1] !== '');
+  // label key may NOT be an empty string (label value may be an empty string)
+  return (labelParts.length === 2 && labelParts[0] !== ''
+    && validateLabelKey(labelParts[0]) === undefined
+    && validateLabelValue(labelParts[1]) === undefined);
 };
 
 const findDuplicateKey = (labels) => {
@@ -79,7 +84,7 @@ const parseTags = (tags) => {
 
 const validateLabels = (labels) => {
   if (labels.some(label => !(isValidLabel(label)))) {
-    return 'Each label should be in the form of "key=value".';
+    return 'Each label should be in the form of "key=value" and each key and value must consist of alphanumeric characters, \' -\', \'_\' or \'.\', and must start and end with an alphanumeric character. A label value may be an empty string';
   }
   const duplicateKey = findDuplicateKey(labels);
   if (duplicateKey) {
