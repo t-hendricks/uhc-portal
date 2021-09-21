@@ -67,7 +67,8 @@ const Releases = () => {
                 <Stack hasGutter>
                   <StackItem>
                     View general information on the most recent OpenShift Container Platform
-                    release versions that you can install.
+                    release versions that you can install. Versions are only supported when
+                    released to the fast, stable, or eus channels.
                   </StackItem>
                   <Gallery hasGutter>
                     {versionsToDisplay?.map(version => (
@@ -93,8 +94,8 @@ const Releases = () => {
                             <dl className="ocm-l-ocp-releases__channels pf-c-description-list__group">
                               <ReleaseChannel channel={`stable-${version.name}`} />
                               <ReleaseChannel channel={`fast-${version.name}`} />
-                              <ReleaseChannel channel={`candidate-${version.name}`} />
                               {hasEUSChannel(version.name) && <ReleaseChannel channel={`eus-${version.name}`} />}
+                              <ReleaseChannel channel={`candidate-${version.name}`} />
                             </dl>
                           </CardBody>
                         </Card>
