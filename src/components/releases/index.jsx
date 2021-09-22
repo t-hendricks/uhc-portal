@@ -19,7 +19,6 @@ import { Link } from 'react-router-dom';
 import getReleaseNotesLink from './getReleaseNotesLink';
 import ExternalLink from '../common/ExternalLink';
 import getOCPLifeCycleStatus from '../../services/productLifeCycleService';
-import SupportStatus from '../common/SupportStatus';
 import ReleaseChannel from './ReleaseChannel';
 import './Releases.scss';
 
@@ -40,7 +39,7 @@ const Releases = () => {
 
   const allVersions = statusData[0]?.versions;
   const filteredVersions = allVersions?.filter(version => !version.name.includes('EUS'));
-  const versionsToDisplay = filteredVersions?.splice(0, 4);
+  const versionsToDisplay = filteredVersions?.splice(0, 6);
   const hasEUSChannel = versionName => allVersions?.find(v => v.name.includes(`${versionName} EUS`));
   const latestVersion = versionsToDisplay ? versionsToDisplay[0]?.name : '4.7';
   const renderProductName = versionName => (
@@ -69,40 +68,7 @@ const Releases = () => {
                     View general information on the most recent OpenShift Container Platform
                     release versions that you can install. Versions are only supported when
                     released to the fast, stable, or eus channels.
-                  </StackItem>
-                  <Gallery hasGutter>
-                    {versionsToDisplay?.map(version => (
-                      <GalleryItem key={version.name}>
-                        <Card isFlat className="ocm-l-ocp-releases__card">
-                          <CardTitle>
-                            <div className="ocm-l-ocp-releases__card-title pf-u-mb-sm">
-                              {getReleaseNotesLink(version.name) ? (
-                                <ExternalLink href={getReleaseNotesLink(version.name)} noIcon>
-                                  {renderProductName(version.name)}
-                                </ExternalLink>
-                              ) : (
-                                renderProductName(version.name)
-                              )}
-                            </div>
-                            <SupportStatus status={version.type} />
-                            <Divider className="ocm-l-ocp-releases__divider pf-u-mt-xl pf-u-mb-sm" />
-                          </CardTitle>
-                          <CardBody>
-                            <div className="ocm-l-ocp-releases__subheading">
-                              Channel details
-                            </div>
-                            <dl className="ocm-l-ocp-releases__channels pf-c-description-list__group">
-                              <ReleaseChannel channel={`stable-${version.name}`} />
-                              <ReleaseChannel channel={`fast-${version.name}`} />
-                              {hasEUSChannel(version.name) && <ReleaseChannel channel={`eus-${version.name}`} />}
-                              <ReleaseChannel channel={`candidate-${version.name}`} />
-                            </dl>
-                          </CardBody>
-                        </Card>
-                      </GalleryItem>
-                    ))}
-                  </Gallery>
-                  <StackItem>
+                    {' '}
                     <Popover
                       aria-label="Version help"
                       bodyContent={
@@ -134,6 +100,57 @@ const Releases = () => {
                       </Button>
                     </Popover>
                   </StackItem>
+                  <Gallery
+                    hasGutter
+                    minWidths={{
+                      sm: '340px',
+                    }}
+                    maxWidths={{
+                      default: '340px',
+                    }}
+                  >
+                    {versionsToDisplay?.map(version => (
+                      <GalleryItem key={version.name}>
+                        <Card isFlat className="ocm-l-ocp-releases__card">
+                          <CardTitle>
+                            <div className="ocm-l-ocp-releases__card-title pf-u-mb-sm">
+                              {getReleaseNotesLink(version.name) ? (
+                                <ExternalLink href={getReleaseNotesLink(version.name)} noIcon>
+                                  {renderProductName(version.name)}
+                                </ExternalLink>
+                              ) : (
+                                renderProductName(version.name)
+                              )}
+                            </div>
+                            <Divider className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm" />
+                          </CardTitle>
+                          <CardBody>
+                            <div className="ocm-l-ocp-releases__subheading">
+                              Channel details
+                            </div>
+                            <dl className="ocm-l-ocp-releases__channels">
+                              <ReleaseChannel channel={`stable-${version.name}`} status={version.type} />
+                              <ReleaseChannel channel={`fast-${version.name}`} status={version.type} />
+                              {hasEUSChannel(version.name) ? (
+                                <ReleaseChannel
+                                  channel={`eus-${version.name}`}
+                                  status={hasEUSChannel(version.name)?.type}
+                                />
+                              ) : (
+                                <>
+                                  <dt className="pf-c-description-list__term pf-u-mt-md">-</dt>
+                                  <dd className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail">
+                                    {`No EUS channel in ${version.name}`}
+                                  </dd>
+                                </>
+                              )}
+                              <ReleaseChannel channel={`candidate-${version.name}`} />
+                            </dl>
+                          </CardBody>
+                        </Card>
+                      </GalleryItem>
+                    ))}
+                  </Gallery>
                 </Stack>
               </CardBody>
             </Card>
