@@ -2,6 +2,28 @@ import sortMachineTypes from './sortMachineTypes';
 
 const awsMachineTypes = [
   {
+    id: 'g4dn.12xlarge',
+    category: 'accelerated_computing',
+    memory: {
+      value: 16 * 1024 * 1024 * 1024,
+      unit: 'B',
+    },
+    cpu: {
+      value: '48',
+    },
+  },
+  {
+    id: 'g4dn.2xlarge',
+    category: 'accelerated_computing',
+    memory: {
+      value: 16 * 1024 * 1024 * 1024,
+      unit: 'B',
+    },
+    cpu: {
+      value: '8',
+    },
+  },
+  {
     id: 'c5.2xlarge',
     category: 'compute_optimized',
     memory: {
@@ -203,6 +225,8 @@ describe('sort machine type', () => {
       'r5.4xlarge',
       'c5.2xlarge',
       'c5.4xlarge',
+      'g4dn.2xlarge',
+      'g4dn.12xlarge',
     ]);
   });
   it('sorts correctly for gcp', () => {
