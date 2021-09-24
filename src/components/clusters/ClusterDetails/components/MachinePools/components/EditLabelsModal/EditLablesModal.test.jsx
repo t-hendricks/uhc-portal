@@ -36,6 +36,7 @@ describe('<EditLabelsModal />', () => {
     change,
     reset,
     pristine: true,
+    invalid: false,
     clusterId: 'test-id',
   };
 
