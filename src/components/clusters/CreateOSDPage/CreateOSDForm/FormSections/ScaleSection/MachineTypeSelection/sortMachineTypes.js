@@ -1,8 +1,10 @@
 // This is a helper function to sort a MachineType structure according to size and category.
 import get from 'lodash/get';
+import map from 'lodash/map';
 import { parseValueWithUnit } from '../../../../../../../common/units';
+import { machineCategories } from './MachineTypeSelection';
 
-const categories = ['general_purpose', 'memory_optimized', 'compute_optimized'];
+const categories = map(machineCategories, 'name');
 
 function sortByMemory(a, b) {
   // sort by memory, ascending order
