@@ -95,6 +95,7 @@ function AddOnsPrimaryButton(props) {
   switch (installedAddOn?.state) {
     case AddOnsConstants.INSTALLATION_STATE.PENDING:
     case AddOnsConstants.INSTALLATION_STATE.INSTALLING:
+    case AddOnsConstants.INSTALLATION_STATE.UPDATING:
       return (
         <>{uninstallAddonAction}</>
       );
