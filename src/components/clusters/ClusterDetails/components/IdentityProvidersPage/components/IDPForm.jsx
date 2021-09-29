@@ -22,7 +22,6 @@ import {
 } from './ProvidersForms';
 
 import {
-  IDPtypes,
   mappingMethods,
   IDPformValues,
   mappingMethodsformValues,
@@ -36,6 +35,7 @@ import {
   IDPNeedsOAuthURL,
   generateIDPName,
 } from '../IdentityProvidersHelper';
+import ExternalLink from '../../../../../common/ExternalLink';
 
 class IDPForm extends React.Component {
   state = {
@@ -100,7 +100,7 @@ class IDPForm extends React.Component {
   render() {
     const {
       submitIDPResponse, selectedMappingMethod, clusterConsoleURL, isEditForm,
-      idpEdited, change, selectedIDP, HTPasswdPasswordErrors,
+      idpEdited, change, selectedIDP, idpTypeName, formTitle, HTPasswdPasswordErrors,
     } = this.props;
     const { IDPName, isExpanded } = this.state;
 
@@ -140,41 +140,134 @@ class IDPForm extends React.Component {
     const SelectedProviderRequiredFields = providersRequiredFields[selectedIDP];
     const SelectedProviderAdvancedOptions = providersAdvancedOptions[selectedIDP];
 
+    const topText = (idp) => {
+      let text = null;
+      switch (idp) {
+        case IDPformValues.HTPASSWD:
+          text = (
+            <>
+              Define an
+              {' '}
+              <code>htpasswd</code>
+              {' '}
+              identity provider for your managed cluster
+              to create a single, static user that can log in to your cluster
+              and troubleshoot it. If this user needs elevated permissions,
+              add it to an
+              {' '}
+              <ExternalLink href="https://access.redhat.com/documentation/en-us/openshift_dedicated/4/html/administering_a_cluster/dedicated-administrator-role#dedicated-admin-granting-permissions_dedicated-administrator">
+                administrative group
+              </ExternalLink>
+              {' '}
+              within your organization.
+            </>
+          );
+          break;
+        case IDPformValues.OPENID:
+          text = (
+            <>
+              Configure an
+              {' '}
+              <code>oidc</code>
+              {' '}
+              identity provider to integrate with an OpenID Connect identity provider using an
+              {' '}
+              <ExternalLink href="http://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth">
+                Authorization Code Flow
+              </ExternalLink>
+              .
+            </>
+          );
+          break;
+        case IDPformValues.LDAP:
+          text = (
+            <>
+              Configure the
+              {' '}
+              <code>ldap</code>
+              {' '}
+              identity provider to validate user names and passwords against an LDAPv3 server,
+              using simple bind authentication.
+            </>
+          );
+          break;
+        case IDPformValues.GITHUB:
+          text = (
+            <>
+              Configure a
+              {' '}
+              <code>github</code>
+              {' '}
+              identity provider to validate user names and passwords against GitHub or
+              GitHub Enterprise’s OAuth authentication server.
+            </>
+          );
+          break;
+        case IDPformValues.GITLAB:
+          text = (
+            <>
+              Configure a
+              {' '}
+              <code>gitlab</code>
+              {' '}
+              identity provider to use
+              {' '}
+              <ExternalLink href="https://gitlab.com/">
+                GitLab.com
+              </ExternalLink>
+              {' '}
+              or any other GitLab instance as an identity provider.
+            </>
+          );
+          break;
+        case IDPformValues.GOOGLE:
+          text = (
+            <>
+              Configure a
+              {' '}
+              <code>google</code>
+              {' '}
+              identity provider using
+              {' '}
+              <ExternalLink href="https://developers.google.com/identity/protocols/OpenIDConnect">
+                Google’s OpenID Connect integration
+              </ExternalLink>
+              .
+            </>
+          );
+          break;
+        default:
+          return null;
+      }
+      return (
+        <GridItem span={8}>
+          {text}
+        </GridItem>
+      );
+    };
+
     return (
       <Form>
-        <Grid hasGutter>
+        <Grid id="identity-provider-form" hasGutter>
           <GridItem span={8}>
-            {submissionError}
-            <p>
-              Identity providers determine how users log into the cluster.
-              Add an identity provider by selecting a type from the dropdown below.
-            </p>
-            <p>
-              <a target="_blank" rel="noreferrer noopener" href={providerDocumentationLink[selectedIDP]}>Learn more about identity providers in the OpenShift documentation.</a>
-            </p>
+            <Title headingLevel="h3" size="xl">{formTitle}</Title>
           </GridItem>
-          <GridItem span={8}>
-            <Title headingLevel="h3" size="xl">Step 1: Select identity providers type</Title>
-          </GridItem>
-          <GridItem span={8}>
-            <Field
-              component={ReduxFormDropdown}
-              options={IDPtypes}
-              name="type"
-              label="Identity Provider"
-              disabled={isPending || isEditForm}
-            />
-          </GridItem>
-          <GridItem span={8}>
-            <Title headingLevel="h3" size="xl">Step 2: Enter provider type information</Title>
-          </GridItem>
+          { submissionError && (
+            <GridItem span={8}>
+              {submissionError}
+            </GridItem>
+          )}
+          {topText(selectedIDP)}
           {
-            selectedIDP === IDPformValues.HTPASSWD && (
+            !isEditForm && (
               <GridItem span={8}>
-                Define an HTPasswd identity provider for your managed cluster
-                to create a single, static user that can log in to your cluster
-                and troubleshoot it. If this user needs elevated permissions,
-                add it to an administrative group within your organization.
+                <ExternalLink href={providerDocumentationLink[selectedIDP]}>
+                  Learn more about
+                  {' '}
+                  {idpTypeName}
+                  {' '}
+                  identity providers
+                </ExternalLink>
               </GridItem>
             )
           }
@@ -261,6 +354,8 @@ IDPForm.propTypes = {
   idpEdited: PropTypes.object,
   idpName: PropTypes.string,
   HTPasswdPasswordErrors: PropTypes.object,
+  idpTypeName: PropTypes.string,
+  formTitle: PropTypes.string,
 };
 
 IDPForm.defaultProps = {

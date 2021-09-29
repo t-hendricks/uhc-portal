@@ -1,8 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-
 import IDPSection from './IDPSection';
-import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 
 const baseIDPs = {
   clusterIDPList: [],
@@ -17,6 +15,7 @@ describe('<IDPSection />', () => {
     const wrapper = shallow(<IDPSection
       canEdit={false}
       clusterID="fake id"
+      subscriptionID="fake sub"
       identityProviders={baseIDPs}
       clusterHibernating={false}
       isReadOnly={false}
@@ -24,8 +23,6 @@ describe('<IDPSection />', () => {
       clusterConsoleURL="http://example.com/"
     />);
     expect(wrapper).toMatchSnapshot();
-    wrapper.find(ButtonWithTooltip).simulate('click');
-    expect(openModal).toBeCalledWith('create-identity-provider');
   });
 
   it('should render (IDPs pending)', () => {
@@ -40,6 +37,7 @@ describe('<IDPSection />', () => {
       clusterHibernating={false}
       isReadOnly={false}
       clusterID="fake id"
+      subscriptionID="fake sub"
       identityProviders={IDPs}
       openModal={jest.fn()}
       clusterConsoleURL="http://example.com/"
@@ -69,6 +67,7 @@ describe('<IDPSection />', () => {
     const wrapper = shallow(<IDPSection
       canEdit={false}
       clusterID="fake id"
+      subscriptionID="fake sub"
       identityProviders={IDPs}
       clusterHibernating={false}
       isReadOnly={false}
@@ -76,7 +75,5 @@ describe('<IDPSection />', () => {
       clusterConsoleURL="http://example.com/"
     />);
     expect(wrapper).toMatchSnapshot();
-    wrapper.find(ButtonWithTooltip).simulate('click');
-    expect(openModal).toBeCalledWith('create-identity-provider');
   });
 });

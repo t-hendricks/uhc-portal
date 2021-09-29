@@ -76,6 +76,7 @@ import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
 import ConnectedInstallAwsARM from '../clusters/install/InstallAwsARM';
+import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 
 const { AssistedUiRouter } = OCM;
 
@@ -174,6 +175,8 @@ function Router({ history }) {
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
             <Route path="/create" component={CreateClusterPage} />
             <Route path="/details/s/:subscriptionID/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
+            <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />
+            <Route path="/details/s/:id/edit-idp/:idpName" render={({ match }) => <IdentityProvidersPage isEditForm match={match} />} />
             <Route path="/details/s/:id" component={ClusterDetails} />
             <Route path="/details/:id/insights/:reportId/:errorKey" render={props => <ClusterDetailsRedirector isInsightsRuleDetails {...props} />} />
             <Route path="/details/:id" component={ClusterDetailsRedirector} />

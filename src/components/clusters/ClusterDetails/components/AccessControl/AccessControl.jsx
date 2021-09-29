@@ -7,13 +7,19 @@ import IDPSection from './IDPSection';
 import NetworkSelfServiceSection from './NetworkSelfServiceSection';
 import { isHibernating } from '../../../common/clusterStates';
 
-function AccessControl({ cluster, clusterConsoleURL, cloudProvider }) {
+function AccessControl({
+  cluster,
+  clusterConsoleURL,
+  cloudProvider,
+  history,
+}) {
   const clusterHibernating = isHibernating(cluster.state);
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   return (
     <div className="cluster-details-user-tab-contents">
       <IDPSection
         clusterID={get(cluster, 'id')}
+        history={history}
         clusterConsoleURL={clusterConsoleURL}
         canEdit={cluster.canEdit}
         clusterHibernating={clusterHibernating}
@@ -40,6 +46,7 @@ AccessControl.propTypes = {
   cluster: PropTypes.object.isRequired,
   clusterConsoleURL: PropTypes.string.isRequired,
   cloudProvider: PropTypes.string.isRequired,
+  history: PropTypes.object,
 };
 
 export default AccessControl;

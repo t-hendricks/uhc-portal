@@ -1409,6 +1409,11 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
             }
           }
           clusterConsoleURL="https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org"
+          history={
+            Object {
+              "push": [MockFunction],
+            }
+          }
         />
       </ErrorBoundary>
     </ForwardRef>
@@ -2197,12 +2202,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
     <CommonClusterModals
       onClose={[Function]}
       onClusterDeleted={[Function]}
-    />
-    <Connect(ReduxForm)
-      clusterConsoleURL="https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org"
-      clusterID="1i4counta3holamvo1g5tp6n8p3a03bq"
-      clusterName="test-liza"
-      refreshParent={[Function]}
     />
     <Connect(DeleteIDPDialog)
       refreshParent={[Function]}
