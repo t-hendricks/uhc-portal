@@ -387,10 +387,12 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   return cluster;
 };
 
-const fetchClusterDetails = subscriptionID => dispatch => dispatch({
-  type: clustersConstants.GET_CLUSTER_DETAILS,
-  payload: fetchSingleClusterAndPermissions(subscriptionID),
-});
+const fetchClusterDetails = subscriptionID => (dispatch) => {
+  dispatch({
+    type: clustersConstants.GET_CLUSTER_DETAILS,
+    payload: fetchSingleClusterAndPermissions(subscriptionID),
+  });
+};
 
 const setClusterDetails = (cluster, mergeDetails = false) => dispatch => dispatch({
   type: clustersConstants.SET_CLUSTER_DETAILS,

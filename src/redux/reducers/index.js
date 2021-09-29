@@ -14,7 +14,7 @@ import { cloudProvidersReducer } from './cloudProvidersReducer';
 import { costReducer } from './costReducer';
 import modalReducer from '../../components/common/Modal/ModalReducer';
 import { InstallationLogReducer } from '../../components/clusters/ClusterDetails/components/Overview/InstallationLogView/InstallationLogReducer';
-import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersModal/IdentityProvidersReducer';
+import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetails/components/IdentityProvidersPage/IdentityProvidersReducer';
 import NetworkSelfServiceReducer from '../../components/clusters/ClusterDetails/components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceReducer';
 import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
 import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/AccessControl/UsersSection/UsersReducer';

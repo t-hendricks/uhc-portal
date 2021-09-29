@@ -79,7 +79,7 @@ exports[`<Releases /> should render 1`] = `
                             <div
                               className="pf-l-stack__item"
                             >
-                              View general information on the most recent OpenShift Container Platform release versions that you can install.
+                              View general information on the most recent OpenShift Container Platform release versions that you can install. Versions are only supported when released to the fast, stable, or eus channels.
                             </div>
                           </StackItem>
                           <Gallery
@@ -308,21 +308,21 @@ exports[`<Releases /> should render 1`] = `
                                               </dt>
                                             </mockConstructor>
                                             <mockConstructor
-                                              channel="candidate-4.6"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                candidate-4.6
-                                              </dt>
-                                            </mockConstructor>
-                                            <mockConstructor
                                               channel="eus-4.6"
                                             >
                                               <dt
                                                 className="pf-c-description-list__term pf-u-mt-md"
                                               >
                                                 eus-4.6
+                                              </dt>
+                                            </mockConstructor>
+                                            <mockConstructor
+                                              channel="candidate-4.6"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                candidate-4.6
                                               </dt>
                                             </mockConstructor>
                                           </dl>

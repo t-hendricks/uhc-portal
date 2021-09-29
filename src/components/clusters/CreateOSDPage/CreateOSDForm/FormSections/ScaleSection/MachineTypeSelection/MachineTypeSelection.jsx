@@ -16,7 +16,7 @@ import { noMachineTypes } from '../../../../../../../common/helpers';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../../../../../common/quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../../../../common/subscriptionTypes';
 
-const machineCategories = {
+export const machineCategories = {
   GENERAL_PURPOSE: { name: 'general_purpose', label: 'General purpose' },
   MEMORY_OPTIMIZED: { name: 'memory_optimized', label: 'Memory optimized' },
   COMPUTE_OPTIMIZED: { name: 'compute_optimized', label: 'Compute optimized' },

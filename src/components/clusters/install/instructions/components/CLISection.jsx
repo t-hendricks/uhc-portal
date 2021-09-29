@@ -21,7 +21,7 @@ const CLISection = ({
       <DownloadAndOSSelection
         token={token}
         pendoID={pendoID}
-        tool={tools.CLI_TOOLS}
+        tool={tools.OC}
         channel={channel}
       />
     </div>

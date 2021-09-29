@@ -57,7 +57,7 @@ function clusterSpecDescriptionItem({ name, formValues }) {
   );
 }
 
-function ReviewClusterSecreen({ formValues, canAutoScale, isPending }) {
+function ReviewClusterScreen({ formValues, canAutoScale, isPending }) {
   const isByoc = formValues.byoc === 'true';
   const clusterSettingsFields = [
     'cloud_provider', 'name', 'region', 'multi_az',
@@ -65,7 +65,7 @@ function ReviewClusterSecreen({ formValues, canAutoScale, isPending }) {
     !isByoc && 'load_balancers',
     'etcd_encryption',
     'machine_type',
-    'autoscalingEnabled',
+    canAutoScale && 'autoscalingEnabled',
     'nodes_compute',
   ].filter(Boolean);
   if (isPending) {
@@ -138,7 +138,7 @@ function ReviewClusterSecreen({ formValues, canAutoScale, isPending }) {
     </div>
   );
 }
-ReviewClusterSecreen.propTypes = {
+ReviewClusterScreen.propTypes = {
   formValues: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),
@@ -146,4 +146,4 @@ ReviewClusterSecreen.propTypes = {
   canAutoScale: PropTypes.bool,
 };
 
-export default ReviewClusterSecreen;
+export default ReviewClusterScreen;

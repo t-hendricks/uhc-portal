@@ -29,7 +29,7 @@ exports[`InstallIBMPreRelease renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsPreRelease
-      installer="IBMZINSTALLER"
+      installer="s390x-openshift-install"
       token={Object {}}
     />
   </PageSection>

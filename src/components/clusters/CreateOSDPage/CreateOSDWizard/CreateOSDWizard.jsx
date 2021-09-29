@@ -8,9 +8,6 @@ import {
   Wizard,
   Grid,
   PageSection,
-  EmptyState,
-  Stack,
-  StackItem,
   WizardFooter,
   Button,
 } from '@patternfly/react-core';
@@ -19,7 +16,6 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import PageTitle from '../../../common/PageTitle';
 import ErrorModal from '../../../common/ErrorModal';
-import ErrorBox from '../../../common/ErrorBox';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
 import { shouldRefetchQuota } from '../../../../common/helpers';
@@ -32,6 +28,7 @@ import ReviewClusterScreen from './ReviewClusterScreen';
 import NetworkScreen from './NetworkScreen';
 import UpdatesScreen from './UpdatesScreen';
 import config from '../../../../config';
+import Unavailable from '../../../common/Unavailable';
 
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
@@ -273,20 +270,18 @@ class CreateOSDWizard extends React.Component {
     if (anyErrors) {
       return (
         <>
-          {title}
           <PageSection>
-            <EmptyState variant="full">
-              <Stack hasGutter>
-                { requests.map(request => request.data.error && (
-                <StackItem key={request.name}>
-                  <ErrorBox
-                    message={`Error while loading required form data (${request.name})`}
-                    response={request.data}
-                  />
-                </StackItem>
-                ))}
-              </Stack>
-            </EmptyState>
+            <Unavailable
+              errors={
+                requests
+                  .filter(request => request.data.error)
+                  .map(request => ({
+                    key: request.name,
+                    message: `Error while loading required form data (${request.name})`,
+                    response: request.data,
+                  }))
+              }
+            />
           </PageSection>
         </>
       );
