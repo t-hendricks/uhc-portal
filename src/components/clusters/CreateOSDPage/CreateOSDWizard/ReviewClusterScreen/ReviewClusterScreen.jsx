@@ -65,7 +65,7 @@ function ReviewClusterSecreen({ formValues, canAutoScale, isPending }) {
     !isByoc && 'load_balancers',
     'etcd_encryption',
     'machine_type',
-    'autoscalingEnabled',
+    canAutoScale && 'autoscalingEnabled',
     'nodes_compute',
   ].filter(Boolean);
   if (isPending) {
