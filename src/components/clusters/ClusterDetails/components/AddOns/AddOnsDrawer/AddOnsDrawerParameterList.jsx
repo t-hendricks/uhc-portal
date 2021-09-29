@@ -11,7 +11,7 @@ import {
 
 import { PencilAltIcon, OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 
-import { parameterAndValue } from '../AddOnsHelper';
+import { hasParameters, parameterAndValue } from '../AddOnsHelper';
 
 import AddOnsConstants from '../AddOnsConstants';
 import AddOnsParametersModal from '../AddOnsParametersModal';
@@ -27,7 +27,7 @@ function AddOnsParameterList(props) {
   } = props;
 
   // render addon parameters list and link to configuration of parameters
-  if (installedAddOn && activeCard) {
+  if (installedAddOn && activeCard && hasParameters(activeCard)) {
     // get addon installation parameter object
     const paramObjects = parameterAndValue(installedAddOn, activeCard, cluster);
     const paramItems = Object.entries(paramObjects.parameters).map(([key, param]) => (
@@ -49,34 +49,32 @@ function AddOnsParameterList(props) {
     ));
 
     // return list of parameters and configure link
-    if (paramItems.length !== 0) {
-      return (
-        <FlexItem>
-          <p className="ocm-addons-tab--configuration-title">
-            Configuration
-            <Button
-              ouiaId={`update-addon-${activeCardID}`}
-              variant="link"
-              isDisabled={
-                  installedAddOnState !== AddOnsConstants.INSTALLATION_STATE.READY
-                  || !cluster.canEdit
-                }
-              icon={<PencilAltIcon className="ocm-addons-tab--configuration-title-icon" />}
-              onClick={() => openModal('add-ons-parameters-modal', {
-                clusterID: cluster.id,
-                addOn: activeCard,
-                addOnInstallation: installedAddOn,
-                isUpdateForm: true,
-              })}
-            />
-          </p>
-          {paramItems}
-          <AddOnsParametersModal
-            clusterID={cluster.id}
+    return (
+      <FlexItem>
+        <p className="ocm-addons-tab--configuration-title">
+          Configuration
+          <Button
+            ouiaId={`update-addon-${activeCardID}`}
+            variant="link"
+            isDisabled={
+              installedAddOnState !== AddOnsConstants.INSTALLATION_STATE.READY
+              || !cluster.canEdit
+            }
+            icon={<PencilAltIcon className="ocm-addons-tab--configuration-title-icon" />}
+            onClick={() => openModal('add-ons-parameters-modal', {
+              clusterID: cluster.id,
+              addOn: activeCard,
+              addOnInstallation: installedAddOn,
+              isUpdateForm: true,
+            })}
           />
-        </FlexItem>
-      );
-    }
+        </p>
+        {paramItems}
+        <AddOnsParametersModal
+          clusterID={cluster.id}
+        />
+      </FlexItem>
+    );
   }
   return '';
 }
