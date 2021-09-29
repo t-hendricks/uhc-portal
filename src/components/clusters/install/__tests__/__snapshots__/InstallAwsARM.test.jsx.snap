@@ -94,7 +94,7 @@ exports[`InstallAwsARM renders correctly 1`] = `
               showPreReleaseDocs={true}
               showPreReleasePageLink={false}
               token={Object {}}
-              tool="ARMINSTALLER"
+              tool="aarch64-openshift-install"
             />
           </CardBody>
           <CardFooter

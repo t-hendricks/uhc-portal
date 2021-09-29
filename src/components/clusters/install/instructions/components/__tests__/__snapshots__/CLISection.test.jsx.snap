@@ -22,7 +22,7 @@ exports[`CLISection renders correctly 1`] = `
           },
         }
       }
-      tool="CLI_TOOLS"
+      tool="oc"
     />
   </div>
   <Text

@@ -27,7 +27,7 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -117,7 +117,7 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -207,7 +207,7 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -297,7 +297,7 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -387,7 +387,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -478,7 +478,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -568,7 +568,7 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -659,7 +659,7 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -751,7 +751,7 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
               pendoID="/"
               preReleasePageLink="/install/ibmz/pre-release"
               token={Object {}}
-              tool="IBMZINSTALLER"
+              tool="s390x-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -843,7 +843,7 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
               pendoID="/"
               preReleasePageLink="/install/power/pre-release"
               token={Object {}}
-              tool="PPCINSTALLER"
+              tool="ppc64le-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -933,7 +933,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -1024,7 +1024,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -1114,7 +1114,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -1204,7 +1204,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -1294,7 +1294,7 @@ exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>
@@ -1385,7 +1385,7 @@ exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
               isBMIPI={false}
               pendoID="/"
               token={Object {}}
-              tool="X86INSTALLER"
+              tool="x86_64-openshift-install"
             />
           </SplitItem>
         </Split>

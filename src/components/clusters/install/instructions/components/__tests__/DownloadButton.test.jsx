@@ -12,7 +12,7 @@ import {
 import DownloadButton from '../DownloadButton';
 
 describe('DownloadButton', () => {
-  const tool = tools.CLI_TOOLS;
+  const tool = tools.OC;
   const channel = channels.STABLE;
   const url = get(urls, [tool, channel, architectures.x86, operatingSystems.linux]);
   it('renders correctly', () => {
