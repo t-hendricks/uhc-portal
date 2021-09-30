@@ -240,7 +240,7 @@ class IDPForm extends React.Component {
           return null;
       }
       return (
-        <GridItem span={8}>
+        <GridItem span={9}>
           {text}
         </GridItem>
       );

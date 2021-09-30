@@ -17,7 +17,7 @@ import { fetchClusterDetails } from '../../../../../redux/actions/clustersAction
 
 import {
   getCreateIDPRequestData, generateIDPName, IDPformValues,
-  getldapAttributes, getOpenIdClaims, getGitHubTeamsAndOrgsData, IDPTypeNames,
+  getldapAttributes, getOpenIdClaims, getGitHubTeamsAndOrgsData, IDPObjectNames,
 } from './IdentityProvidersHelper';
 import { scrollToFirstError } from '../../../../../common/helpers';
 
@@ -82,7 +82,8 @@ const mapStateToProps = (state, ownProps) => {
   if (isEditForm) {
     if (clusterIDPs.fulfilled) {
       idpEdited = clusterIDPList.find(idp => idp.name === match.params.idpName) || {};
-      editedType = get(IDPTypeNames, idpEdited.type, '').toLowerCase();
+      editedType = get(IDPObjectNames, idpEdited.type, '');
+      selectedIDP = idpEdited.type;
     }
   } else {
     selectedIDP = get(IDPformValues, match.params.idpTypeName.toUpperCase(), false);
@@ -91,6 +92,7 @@ const mapStateToProps = (state, ownProps) => {
   return ({
     clusterDetails: state.clusters.details,
     clusterID: state.clusters.details.cluster.id,
+    clusterConsoleURL: get(state.clusters.details.cluster, 'console.url'),
     selectedIDP,
     submitIDPResponse: isEditForm ? state.identityProviders.editClusterIDP
       : state.identityProviders.createdClusterIDP,
