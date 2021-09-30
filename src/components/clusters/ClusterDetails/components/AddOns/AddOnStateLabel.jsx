@@ -46,6 +46,12 @@ function AddOnStateLabel(props) {
           Installing
         </Label>
       );
+    case AddOnsConstants.INSTALLATION_STATE.UPDATING:
+      return (
+        <Label variant="outline" icon={<InProgressIcon />}>
+          Updating
+        </Label>
+      );
     case AddOnsConstants.INSTALLATION_STATE.DELETED:
     case AddOnsConstants.INSTALLATION_STATE.DELETING:
       return (

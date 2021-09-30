@@ -15,6 +15,7 @@ const AddOnsConstants = {
   INSTALLATION_STATE: {
     PENDING: 'pending',
     INSTALLING: 'installing',
+    UPDATING: 'updating',
     DELETING: 'deleting',
     DELETED: 'deleted',
     FAILED: 'failed',
