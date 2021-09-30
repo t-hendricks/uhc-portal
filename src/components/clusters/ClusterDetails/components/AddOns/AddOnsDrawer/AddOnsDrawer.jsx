@@ -113,9 +113,7 @@ class AddOnsDrawer extends React.Component {
   // handles card click, setting active card state
   handleCardClick = addOn => () => {
     const {
-      cluster,
       clusterAddOns,
-      clusterMachinePools,
     } = this.props;
 
     const {
@@ -135,12 +133,7 @@ class AddOnsDrawer extends React.Component {
     );
 
     // get addOn requirements
-    const requirements = validateAddOnRequirements(
-      addOn,
-      cluster,
-      clusterAddOns,
-      clusterMachinePools,
-    );
+    const requirements = validateAddOnRequirements(addOn);
 
     this.setState({
       // set active card states
@@ -178,8 +171,6 @@ class AddOnsDrawer extends React.Component {
       addClusterAddOnResponse,
       addOnsList,
       cluster,
-      clusterAddOns,
-      clusterMachinePools,
       openModal,
     } = this.props;
 
@@ -222,12 +213,7 @@ class AddOnsDrawer extends React.Component {
         <DrawerPanelBody>
           <AddOnStateLabel
             addOn={activeCard}
-            requirements={validateAddOnRequirements(
-              activeCard,
-              cluster,
-              clusterAddOns,
-              clusterMachinePools,
-            )}
+            requirements={validateAddOnRequirements(activeCard)}
             installedAddOn={installedAddOn}
           />
           <AddOnsFailedBox
@@ -311,12 +297,7 @@ class AddOnsDrawer extends React.Component {
                             this.getInstalledAddon(addOn)
                           }
                     requirements={
-                            validateAddOnRequirements(
-                              addOn,
-                              cluster,
-                              clusterAddOns,
-                              clusterMachinePools,
-                            )
+                            validateAddOnRequirements(addOn)
                           }
                     onClick={this.handleCardClick(addOn)}
                     activeCard={activeCard?.id}
@@ -339,7 +320,6 @@ AddOnsDrawer.propTypes = {
   addOnsList: PropTypes.array.isRequired,
   clusterAddOns: PropTypes.object.isRequired,
   cluster: PropTypes.object.isRequired,
-  clusterMachinePools: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
   quota: PropTypes.object.isRequired,
   openModal: PropTypes.func.isRequired,

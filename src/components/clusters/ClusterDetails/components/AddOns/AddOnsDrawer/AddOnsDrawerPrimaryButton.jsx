@@ -29,7 +29,7 @@ function AddOnsPrimaryButton(props) {
 
   // install an add on or open params modal
   const installAddOnAction = () => {
-    if (hasParameters(activeCard, cluster)) {
+    if (hasParameters(activeCard)) {
       openModal('add-ons-parameters-modal', {
         clusterID: cluster.id,
         addOn: activeCard,

@@ -31,7 +31,6 @@ import {
   parameterValuesForEditing,
   parameterAndValue,
   validateAddOnRequirements,
-  validateAddOnParameterConditions,
   getParameters,
   minQuotaCount,
 } from '../AddOnsHelper';
@@ -412,16 +411,9 @@ describe('minQuotaCount', () => {
 
 describe('validateAddOnRequirements', () => {
   let tstAddOn;
-  let tstCluster;
-
-  beforeAll(() => {
-    tstCluster = cloneDeep(OSDCluster);
-  });
 
   it('should return true for addon with no requirements', () => {
-    const status = validateAddOnRequirements(
-      tstAddOn, tstCluster, {}, {},
-    );
+    const status = validateAddOnRequirements(tstAddOn);
     expect(status.fulfilled)
       .toEqual(true);
     expect(status.errorMsgs)
@@ -429,7 +421,7 @@ describe('validateAddOnRequirements', () => {
   });
 
   describe('cluster', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       tstAddOn = {
         requirements: [
           {
@@ -438,125 +430,37 @@ describe('validateAddOnRequirements', () => {
             data: {
               'product.id': 'osd',
             },
+            status: {
+              fulfilled: true,
+            },
           },
         ],
       };
     });
 
     it('should return true for addon with fulfilled cluster requirements', () => {
-      const status = validateAddOnRequirements(
-        tstAddOn, tstCluster, {}, {},
-      );
+      const status = validateAddOnRequirements(tstAddOn);
       expect(status.fulfilled)
         .toEqual(true);
       expect(status.errorMsgs)
         .toEqual([]);
     });
     it('should return false for addon with unfulfilled cluster requirements', () => {
-      tstCluster.product.id = 'ROSA';
-      const status = validateAddOnRequirements(
-        tstAddOn, tstCluster, {}, {},
-      );
+      tstAddOn.requirements[0].status.fulfilled = false;
+      const status = validateAddOnRequirements(tstAddOn);
       expect(status.fulfilled)
         .toEqual(false);
       expect(status.errorMsgs)
         .toEqual(['This addon requires a cluster where product.id is osd']);
     });
-  });
-
-  describe('addon', () => {
-    beforeAll(() => {
-      tstAddOn = {
-        requirements: [
-          {
-            id: 'addon',
-            resource: 'addon',
-            data: {
-              id: 'some-addon',
-              state: 'ready',
-            },
-          },
-        ],
-      };
-    });
-
-    it('should return true for addon with fulfilled addon requirements', () => {
-      const clusterAddOns = {
-        items: [
-          {
-            kind: 'AddOnLink',
-            href: '/api/clusters_mgmt/v1/addons/some-addon',
-            id: 'some-addon',
-            addon: {
-              id: 'some-addon',
-            },
-            state: 'ready',
-          },
-        ],
-      };
-      const status = validateAddOnRequirements(
-        tstAddOn, tstCluster, clusterAddOns, {},
-      );
-      expect(status.fulfilled)
-        .toEqual(true);
-      expect(status.errorMsgs)
-        .toEqual([]);
-    });
-    it('should return false for addon with unfulfilled addon requirements', () => {
-      const status = validateAddOnRequirements(
-        tstAddOn, tstCluster, {}, {},
-      );
+    it('should return error messages from status', () => {
+      tstAddOn.requirements[0].status.fulfilled = false;
+      tstAddOn.requirements[0].status.error_msgs = ["This addon is not supported on clusters with a value of 'osd' for 'product.id'"];
+      const status = validateAddOnRequirements(tstAddOn);
       expect(status.fulfilled)
         .toEqual(false);
       expect(status.errorMsgs)
-        .toEqual(['This addon requires an addon to be installed where id is some-addon and state '
-        + 'is ready']);
-    });
-  });
-
-  describe('machine_pool', () => {
-    beforeAll(() => {
-      tstAddOn = {
-        requirements: [
-          {
-            id: 'machine_pool',
-            resource: 'machine_pool',
-            data: {
-              replicas: 2,
-              instance_type: 'm5.xlarge',
-            },
-          },
-        ],
-      };
-    });
-
-    it('should return true for addon with fulfilled machine pool requirements', () => {
-      const clusterMachinePools = {
-        data: [
-          {
-            id: 'some-machine-pool',
-            instance_type: 'm5.xlarge',
-            replicas: 4,
-          },
-        ],
-      };
-      const status = validateAddOnRequirements(
-        tstAddOn, tstCluster, {}, clusterMachinePools,
-      );
-      expect(status.fulfilled)
-        .toEqual(true);
-      expect(status.errorMsgs)
-        .toEqual([]);
-    });
-    it('should return false for addon with unfulfilled machine pool requirements', () => {
-      const status = validateAddOnRequirements(
-        tstAddOn, tstCluster, {}, {},
-      );
-      expect(status.fulfilled)
-        .toEqual(false);
-      expect(status.errorMsgs)
-        .toEqual(['This addon requires a machine_pool where replicas >= 2 and instance_type is '
-        + 'm5.xlarge']);
+        .toEqual(["This addon is not supported on clusters with a value of 'osd' for 'product.id'"]);
     });
   });
 
@@ -637,60 +541,6 @@ describe('validateAddOnRequirements', () => {
   });
 });
 
-describe('validateAddOnParameterConditions', () => {
-  let tstAddOnParam;
-  let tstCluster;
-
-  beforeAll(() => {
-    tstCluster = cloneDeep(OSDCluster);
-  });
-
-  it('should return true for addon parameter with no conditions', () => {
-    const status = validateAddOnParameterConditions(
-      tstAddOnParam, tstCluster,
-    );
-    expect(status.fulfilled)
-      .toEqual(true);
-    expect(status.errorMsgs)
-      .toEqual([]);
-  });
-
-  describe('cluster', () => {
-    beforeAll(() => {
-      tstAddOnParam = {
-        conditions: [
-          {
-            resource: 'cluster',
-            data: {
-              'cloud_provider.id': 'aws',
-            },
-          },
-        ],
-      };
-    });
-
-    it('should return true for addon parameter with fulfilled cluster requirements', () => {
-      const status = validateAddOnParameterConditions(
-        tstAddOnParam, tstCluster,
-      );
-      expect(status.fulfilled)
-        .toEqual(true);
-      expect(status.errorMsgs)
-        .toEqual([]);
-    });
-    it('should return false for addon parameter with unfulfilled cluster requirements', () => {
-      tstCluster.cloud_provider.id = 'gcp';
-      const status = validateAddOnParameterConditions(
-        tstAddOnParam, tstCluster,
-      );
-      expect(status.fulfilled)
-        .toEqual(false);
-      expect(status.errorMsgs)
-        .toEqual(['This addon requires a cluster where cloud_provider.id is aws']);
-    });
-  });
-});
-
 describe('getParameters', () => {
   let tstAddOn;
   let tstCluster;
@@ -734,47 +584,10 @@ describe('getParameters', () => {
 
     it('should return empty array when no parameters defined', () => {
       tstAddOn.parameters = undefined;
-      const params = getParameters(
-        tstAddOn, tstCluster,
-      );
+      const params = getParameters(tstAddOn);
       expect(params).toEqual([]);
     });
     it('should return 2 addon parameters for an aws cluster', () => {
-      const params = getParameters(
-        tstAddOn, tstCluster,
-      );
-      expect(params).toEqual([
-        {
-          id: 'my-string',
-          value_type: 'string',
-        },
-        {
-          id: 'my-string-aws',
-          value_type: 'string',
-          conditions: [
-            {
-              resource: 'cluster',
-              data: {
-                'cloud_provider.id': 'aws',
-              },
-            },
-          ],
-        },
-      ]);
-    });
-    it('should return 1 addon parameters for gcp a cluster', () => {
-      tstCluster.cloud_provider.id = 'gcp';
-      const params = getParameters(
-        tstAddOn, tstCluster,
-      );
-      expect(params).toEqual([
-        {
-          id: 'my-string',
-          value_type: 'string',
-        },
-      ]);
-    });
-    it('should return 2 addon parameters when no cluster specified', () => {
       const params = getParameters(tstAddOn);
       expect(params).toEqual([
         {

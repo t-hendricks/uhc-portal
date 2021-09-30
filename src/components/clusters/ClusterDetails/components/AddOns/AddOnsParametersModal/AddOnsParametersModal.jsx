@@ -169,7 +169,6 @@ class AddOnsParametersModal extends Component {
       isOpen,
       handleSubmit,
       addOn,
-      cluster,
       isUpdateForm,
       submitClusterAddOnResponse,
       pristine,
@@ -196,7 +195,7 @@ class AddOnsParametersModal extends Component {
         )}
 
         <Form id={`form-addon-${addOn.id}`}>
-          {getParameters(addOn, cluster).map(param => (
+          {getParameters(addOn).map(param => (
             <FormGroup
               key={param.id}
             >
