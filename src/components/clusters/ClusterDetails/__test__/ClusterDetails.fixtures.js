@@ -1,5 +1,5 @@
 import produce from 'immer';
-import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 
 const match = { params: { id: '1msoogsgTLQ4PePjrTOt3UqvMzX' } };
 const funcs = () => ({
@@ -419,6 +419,15 @@ const OSDTrialClusterDetails = produce(CCSClusterDetails, (draft) => {
     id: normalizedProducts.OSDTrial,
     type: normalizedProducts.OSDTrial,
   };
+});
+
+const OSDRHMClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.product = { id: normalizedProducts.OSD };
+  draft.cluster.subscription.plan = {
+    id: normalizedProducts.OSD,
+    type: normalizedProducts.OSD,
+  };
+  draft.cluster.subscription.cluster_billing_model = billingModels.MARKETPLACE;
 });
 
 const ROSAClusterDetails = produce(CCSClusterDetails, (draft) => {
@@ -997,6 +1006,7 @@ const fixtures = {
   clusterDetails,
   CCSClusterDetails,
   OSDTrialClusterDetails,
+  OSDRHMClusterDetails,
   ROSAClusterDetails,
   RHMIClusterDetails,
   insightsData,

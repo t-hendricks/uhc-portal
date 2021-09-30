@@ -4,12 +4,14 @@ import moment from 'moment';
 import { Alert, Button } from '@patternfly/react-core';
 import modals from '../../../common/Modal/modals';
 import './ExpirationAlert.scss';
+import ExternalLink from '../../../common/ExternalLink';
 
 function ExpirationAlert({
   expirationTimestamp,
   trialExpiration,
   openModal,
   cluster,
+  OSDRHMExpiration,
 }) {
   const now = moment.utc();
   const expirationTime = moment.utc(expirationTimestamp);
@@ -18,7 +20,7 @@ function ExpirationAlert({
   const expirationTimeString = expirationTime.local().format('dddd, MMMM Do YYYY, h:mm a');
   let variant;
 
-  if (hours < 0) {
+  if (hours <= 0) {
     return (
       <Alert
         id="expiration-alert"
@@ -57,6 +59,23 @@ function ExpirationAlert({
     contents = `Your free trial cluster will automatically be deleted on ${expirationTimeString}. Upgrade your cluster at any time to prevent deletion.`;
   }
 
+  if (OSDRHMExpiration) {
+    contents = (
+      <>
+        Your cluster subscription was purchased from Red Hat Marketplace and will expire on
+        {` ${expirationTimeString}. `}
+        Once expired, the cluster will be deleted permanently.
+        To avoid deletion, please purchase a new subscription from the
+        {' '}
+        <ExternalLink href="https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated">
+          Red Hat Marketplace
+        </ExternalLink>
+        {' '}
+        before the expiration date.
+      </>
+    );
+  }
+
   const upgradeTrialProps = {
     title: 'Upgrade cluster from Trial',
     clusterID: cluster?.id,
@@ -85,6 +104,7 @@ ExpirationAlert.propTypes = {
   trialExpiration: PropTypes.bool,
   openModal: PropTypes.func,
   cluster: PropTypes.shape({ id: PropTypes.string }),
+  OSDRHMExpiration: PropTypes.bool,
 };
 
 export default ExpirationAlert;
