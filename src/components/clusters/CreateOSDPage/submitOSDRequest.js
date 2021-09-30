@@ -92,6 +92,7 @@ const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) 
         access_key_id: formData.access_key_id,
         account_id: formData.account_id,
         secret_access_key: formData.secret_access_key,
+        kms_key_arn: formData.customer_managed_key ? formData.kms_key_arn : '',
       };
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
       if (isInstallExistingVPC) {
