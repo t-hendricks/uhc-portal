@@ -81,21 +81,21 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name={
@@ -110,10 +110,59 @@ exports[`<DownloadsPage> renders 1`] = `
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="CLI_TOOLS"
+            tool="oc"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -124,7 +173,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -155,58 +231,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -224,7 +254,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -239,7 +269,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -258,7 +288,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -267,7 +297,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -276,7 +306,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -315,21 +364,21 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name={
@@ -346,10 +395,59 @@ exports[`<DownloadsPage> renders 1`] = `
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="OCM"
+            tool="ocm"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -360,7 +458,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -391,58 +516,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -460,7 +539,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -475,7 +554,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -494,7 +573,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -503,7 +582,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -512,7 +591,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -544,21 +642,21 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name={
@@ -573,10 +671,59 @@ exports[`<DownloadsPage> renders 1`] = `
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="ROSA"
+            tool="rosa"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -587,7 +734,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -618,58 +792,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -687,7 +815,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -702,7 +830,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -721,7 +849,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -730,7 +858,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -739,7 +867,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -797,21 +944,21 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name={
@@ -826,10 +973,59 @@ exports[`<DownloadsPage> renders 1`] = `
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="ODO"
+            tool="odo"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -840,7 +1036,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -871,58 +1094,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -940,7 +1117,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -955,7 +1132,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -974,7 +1151,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -983,7 +1160,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -992,7 +1169,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1024,21 +1220,21 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name={
@@ -1053,10 +1249,59 @@ exports[`<DownloadsPage> renders 1`] = `
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="HELM"
+            tool="helm"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1067,7 +1312,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -1098,58 +1370,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -1167,7 +1393,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -1182,7 +1408,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1201,7 +1427,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -1210,7 +1436,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -1219,7 +1445,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1251,21 +1496,21 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name={
@@ -1280,10 +1525,59 @@ exports[`<DownloadsPage> renders 1`] = `
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="OPM"
+            tool="opm"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1294,7 +1588,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -1325,58 +1646,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -1394,7 +1669,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -1409,7 +1684,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1428,7 +1703,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -1437,7 +1712,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -1446,7 +1721,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1486,21 +1780,21 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name={
@@ -1517,10 +1811,59 @@ exports[`<DownloadsPage> renders 1`] = `
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="RHOAS"
+            tool="rhoas"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1531,7 +1874,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -1562,58 +1932,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -1631,7 +1955,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -1646,7 +1970,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1665,7 +1989,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -1674,7 +1998,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -1683,7 +2007,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1759,31 +2102,80 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name="OpenShift for x86_64 Installer"
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="X86INSTALLER"
+            tool="x86_64-openshift-install"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1794,7 +2186,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -1825,58 +2244,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -1894,7 +2267,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -1909,7 +2282,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1928,7 +2301,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -1937,7 +2310,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -1946,7 +2319,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -1992,31 +2384,80 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name="OpenShift for IBM Z Installer"
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="IBMZINSTALLER"
+            tool="s390x-openshift-install"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2027,7 +2468,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -2058,58 +2526,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -2127,7 +2549,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -2142,7 +2564,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2161,7 +2583,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -2170,7 +2592,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -2179,7 +2601,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2225,31 +2666,80 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name="OpenShift for Power Installer"
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="PPCINSTALLER"
+            tool="ppc64le-openshift-install"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2260,7 +2750,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -2291,58 +2808,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -2360,7 +2831,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -2375,7 +2846,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2394,7 +2865,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -2403,7 +2874,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -2412,7 +2883,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2458,21 +2948,21 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name={
@@ -2485,10 +2975,59 @@ exports[`<DownloadsPage> renders 1`] = `
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="ARMINSTALLER"
+            tool="aarch64-openshift-install"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2499,7 +3038,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -2530,58 +3096,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -2599,7 +3119,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -2614,7 +3134,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2633,7 +3153,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -2642,7 +3162,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -2651,7 +3171,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2688,21 +3227,21 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             name={
@@ -2717,10 +3256,59 @@ exports[`<DownloadsPage> renders 1`] = `
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
-            tool="CRC"
+            tool="crc"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
             urls={
               Object {
-                "ARMINSTALLER": Object {
+                "aarch64-openshift-install": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2731,7 +3319,34 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CLI_TOOLS": Object {
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "oc": Object {
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -2762,58 +3377,12 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "CRC": Object {
-                  "stable": Object {
-                    "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
-                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
-                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
-                    },
-                  },
-                },
-                "HELM": Object {
-                  "stable": Object {
-                    "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-arm64",
-                    },
-                    "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-ppc64le",
-                    },
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-s390x",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest/helm-windows-amd64.exe",
-                    },
-                  },
-                },
-                "IBMZINSTALLER": Object {
-                  "preRelease": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
-                    },
-                  },
-                  "stable": Object {
-                    "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
-                    },
-                    "x86": Object {
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
-                    },
-                  },
-                },
-                "OCM": Object {
+                "ocm": Object {
                   "stable": Object {
                     "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
                   },
                 },
-                "ODO": Object {
+                "odo": Object {
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
@@ -2831,7 +3400,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "OPM": Object {
+                "opm": Object {
                   "stable": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
@@ -2846,7 +3415,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "PPCINSTALLER": Object {
+                "ppc64le-openshift-install": Object {
                   "preRelease": Object {
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2865,7 +3434,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "RHOAS": Object {
+                "rhoas": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
@@ -2874,7 +3443,7 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "ROSA": Object {
+                "rosa": Object {
                   "stable": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest/rosa-linux.tar.gz",
@@ -2883,7 +3452,26 @@ exports[`<DownloadsPage> renders 1`] = `
                     },
                   },
                 },
-                "X86INSTALLER": Object {
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
                   "preRelease": Object {
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
@@ -2976,27 +3564,76 @@ exports[`<DownloadsPage> renders 1`] = `
                 </Text>
               </TextContent>
             }
-            expandKey="PULL_SECRET"
+            expandKey="pull-secret"
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             setExpanded={[Function]}
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
           />
           <ExpandableRowPair
             cells={
@@ -3032,27 +3669,76 @@ exports[`<DownloadsPage> renders 1`] = `
                 Use your API token to authenticate against your OpenShift Cluster Manager account.
               </Text>
             }
-            expandKey="TOKEN_OCM"
+            expandKey="ocm-api-token"
             expanded={
               Object {
-                "ARMINSTALLER": false,
-                "CLI_TOOLS": false,
-                "CRC": false,
-                "HELM": false,
-                "IBMZINSTALLER": false,
-                "OCM": false,
-                "ODO": false,
-                "OPM": false,
-                "PPCINSTALLER": false,
-                "PULL_SECRET": false,
-                "RHCOS": false,
-                "RHOAS": false,
-                "ROSA": false,
-                "TOKEN_OCM": false,
-                "X86INSTALLER": false,
+                "aarch64-openshift-install": false,
+                "crc": false,
+                "helm": false,
+                "oc": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
               }
             }
             setExpanded={[Function]}
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
           />
         </TableComposable>
       </DownloadsSection>

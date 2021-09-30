@@ -10,7 +10,7 @@ import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/
 import {
   getClusterIdentityProviders,
   resetIdentityProvidersState,
-} from './components/IdentityProvidersModal/IdentityProvidersActions';
+} from './components/IdentityProvidersPage/IdentityProvidersActions';
 import usersActions from './components/AccessControl/UsersSection/UsersActions';
 import { cloudProviderActions } from '../../../redux/actions/cloudProviderActions';
 import { clearGlobalError, setGlobalError } from '../../../redux/actions/globalErrorActions';

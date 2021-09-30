@@ -27,6 +27,8 @@ const routes = [
   '/downloads',
   '/details/:id',
   '/details/s/:id',
+  '/details/s/:id/add-idp/:idpTypeName',
+  '/details/s/:id/edit-idp/:idpName',
   '/create/osd/aws',
   '/create/osd/gcp',
   '/create/osd',

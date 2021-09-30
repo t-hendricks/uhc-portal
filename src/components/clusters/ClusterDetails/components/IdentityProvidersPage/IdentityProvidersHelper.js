@@ -53,6 +53,15 @@ const IDPTypeNames = {
   [IDPformValues.HTPASSWD]: 'HTPasswd',
 };
 
+const singularFormIDP = {
+  [IDPformValues.GITHUB]: 'a GitHub',
+  [IDPformValues.GOOGLE]: 'a Google',
+  [IDPformValues.OPENID]: 'an OpenID',
+  [IDPformValues.LDAP]: 'an LDAP',
+  [IDPformValues.GITLAB]: 'a GitLab',
+  [IDPformValues.HTPASSWD]: 'an HTPasswd',
+};
+
 const IDPObjectNames = {
   [IDPformValues.GITHUB]: 'github',
   [IDPformValues.GOOGLE]: 'google',
@@ -383,6 +392,7 @@ export {
   IDPNeedsOAuthURL,
   IDPtypes,
   IDPTypeNames,
+  singularFormIDP,
   mappingMethods,
   IDPformValues,
   mappingMethodsformValues,

@@ -29,7 +29,7 @@ exports[`InstallPowerPreRelease renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsPreRelease
-      installer="PPCINSTALLER"
+      installer="ppc64le-openshift-install"
       token={Object {}}
     />
   </PageSection>

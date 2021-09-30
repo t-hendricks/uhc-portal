@@ -13,9 +13,6 @@ import {
   Split,
   SplitItem,
   PageSection,
-  EmptyState,
-  Stack,
-  StackItem,
   Banner,
 } from '@patternfly/react-core';
 import config from '../../../config';
@@ -24,10 +21,10 @@ import { shouldRefetchQuota } from '../../../common/helpers';
 
 import PageTitle from '../../common/PageTitle';
 import ErrorModal from '../../common/ErrorModal';
-import ErrorBox from '../../common/ErrorBox';
 import Breadcrumbs from '../../common/Breadcrumbs';
 import CreateOSDForm from './CreateOSDForm';
 import './CreateOSDPage.scss';
+import Unavailable from '../../common/Unavailable';
 
 class CreateOSDPage extends React.Component {
   state = {
@@ -169,7 +166,6 @@ class CreateOSDPage extends React.Component {
       billingModel,
       customerManagedEncryptionSelected,
     } = this.props;
-
     const selectedOSDTrial = product === normalizedProducts.OSDTrial;
     const orgWasFetched = !organization.pending && organization.fulfilled;
 
@@ -249,26 +245,23 @@ class CreateOSDPage extends React.Component {
         </>
       );
     }
-
     const anyErrors = requests.some(request => request.data.error);
 
     if (anyErrors) {
       return (
         <>
-          {title}
           <PageSection>
-            <EmptyState variant="full">
-              <Stack hasGutter>
-                { requests.map(request => request.data.error && (
-                <StackItem key={request.name}>
-                  <ErrorBox
-                    message={`Error while loading required form data (${request.name})`}
-                    response={request.data}
-                  />
-                </StackItem>
-                ))}
-              </Stack>
-            </EmptyState>
+            <Unavailable
+              errors={
+                requests
+                  .filter(request => request.data.error)
+                  .map(request => ({
+                    key: request.name,
+                    message: `Error while loading required form data (${request.name})`,
+                    response: request.data,
+                  }))
+              }
+            />
           </PageSection>
         </>
       );

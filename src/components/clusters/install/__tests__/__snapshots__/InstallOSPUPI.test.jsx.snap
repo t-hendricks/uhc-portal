@@ -56,7 +56,7 @@ exports[`InstallOSPUPI renders correctly 1`] = `
       customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
       displayRHCOSSection={true}
       docURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-user.html"
-      installer="X86INSTALLER"
+      installer="x86_64-openshift-install"
       isBMIPI={false}
       rhcosDownloads={
         Array [

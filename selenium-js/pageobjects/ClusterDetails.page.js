@@ -67,17 +67,15 @@ class ClusterDetails extends Page {
     await (await this.accessControlTabBtn).waitForClickable({ timeout: 2.5 * 60 * 1000 });
   }
 
-  get addIDPButton() { return $("//button[contains(text(),'Add identity provider')]"); }
+  get addIDPDropdownToggle() { return $("//button[@id='add-identity-provider']"); }
+
+  get IDPDropdown() { return $("//ul[@aria-labelledby='add-identity-provider']"); }
+
+  get GoogleIDPDropdownItem() { return $("//ul[@aria-labelledby='add-identity-provider']/li/a[contains(text(), 'Google')]"); }
 
   get addIDPModalConfirm() { return $('div[data-test-id="add-idp-osd-dialog"] ~ footer.pf-c-modal-box__footer > .pf-c-button.pf-m-primary'); }
 
   get IDPModalBody() { return $('div[data-test-id="add-idp-osd-dialog"]'); }
-
-  get IDPSelection() { return $('div[data-test-id="add-idp-osd-dialog"] select#type'); }
-
-  get IDPNameInput() { return $('div[data-test-id="add-idp-osd-dialog"] input#name'); }
-
-  get IDPModalRequiredFields() { return $$('//div[@data-test-id="add-idp-osd-dialog"]//input[@required=""]'); }
 
   get IDPTable() { return $('//table[@aria-label="Identity Providers"]'); }
 

@@ -170,21 +170,23 @@ const links = {
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
 };
 
+// Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
+// For consistency, they should be the CLI binary name, where possible.
 // See also per-tool data in DownloadButton.jsx.
 const tools = {
-  CLI_TOOLS: 'CLI_TOOLS',
-  CRC: 'CRC',
-  HELM: 'HELM',
-  X86INSTALLER: 'X86INSTALLER',
-  IBMZINSTALLER: 'IBMZINSTALLER',
-  PPCINSTALLER: 'PPCINSTALLER',
-  ARMINSTALLER: 'ARMINSTALLER',
-  OCM: 'OCM',
-  ODO: 'ODO',
-  OPM: 'OPM',
-  RHCOS: 'RHCOS',
-  RHOAS: 'RHOAS',
-  ROSA: 'ROSA',
+  OC: 'oc',
+  CRC: 'crc',
+  HELM: 'helm',
+  X86INSTALLER: 'x86_64-openshift-install',
+  IBMZINSTALLER: 's390x-openshift-install',
+  PPCINSTALLER: 'ppc64le-openshift-install',
+  ARMINSTALLER: 'aarch64-openshift-install',
+  OCM: 'ocm',
+  ODO: 'odo',
+  OPM: 'opm',
+  RHCOS: 'rhcos',
+  RHOAS: 'rhoas',
+  ROSA: 'rosa',
 };
 
 const channels = {
@@ -223,7 +225,7 @@ const operatingSystemOptions = [
  * {tool: {channel: {arch: {os: url}}}}
  */
 const urls = {
-  [tools.CLI_TOOLS]: {
+  [tools.OC]: {
     [channels.STABLE]: {
       [architectures.x86]: {
         [operatingSystems.windows]: links.CLI_TOOLS_WINDOWS,

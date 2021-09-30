@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { deleteIDP, resetDeletedIDPResponse } from '../IdentityProvidersModal/IdentityProvidersActions';
+import { deleteIDP, resetDeletedIDPResponse } from '../IdentityProvidersPage/IdentityProvidersActions';
 import { closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 import DeleteIDPDialog from './DeleteIDPDialog';

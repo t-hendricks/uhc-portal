@@ -61,6 +61,7 @@ class EditLabelsModal extends Component {
       handleSubmit,
       editLabelsResponse,
       pristine,
+      invalid,
       tags,
     } = this.props;
 
@@ -77,7 +78,7 @@ class EditLabelsModal extends Component {
         primaryText="Save"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={this.cancelEdit}
-        isPrimaryDisabled={pending || pristine}
+        isPrimaryDisabled={pending || pristine || invalid}
         isPending={pending}
         modalSize="medium"
       >
@@ -137,6 +138,7 @@ EditLabelsModal.propTypes = {
   change: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
+  invalid: PropTypes.bool.isRequired,
   tags: PropTypes.array,
 };
 

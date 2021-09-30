@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<IdentityProvidersPage /> renders correctly (Google IDP) 1`] = `
+<Fragment>
+  <PageHeader>
+    <Breadcrumbs
+      path={
+        Array [
+          Object {
+            "label": "Clusters",
+          },
+          Object {
+            "label": "test-idp",
+            "path": "/details/s/1xFud5sJArB3KRvAuxmd1ef9RE8",
+          },
+          Object {
+            "label": "Access control",
+            "path": "/details/s/1xFud5sJArB3KRvAuxmd1ef9RE8#accessControl",
+          },
+          Object {
+            "label": "Add identity provider: Google",
+          },
+        ]
+      }
+    />
+    <PageHeaderTitle
+      title="Add identity provider: Google"
+    />
+  </PageHeader>
+  <PageSection>
+    <Card>
+      <CardBody>
+        <Grid>
+          <GridItem
+            lg={8}
+            md={8}
+            sm={12}
+          >
+            <IDPForm
+              IDPList={
+                Array [
+                  Object {
+                    "github": Object {
+                      "client_id": "asdasd",
+                      "organizations": Array [
+                        "sdfsdf",
+                      ],
+                    },
+                    "href": "/api/clusters_mgmt/v1/clusters/1mqfbqa8o7cep4enq4dtostelskt5k38/identity_providers/1mqibnjsmkkf3q9tgdsimbua8esa1hjd",
+                    "id": "1mqibnjsmkkf3q9tgdsimbua8esa1hjd",
+                    "kind": "IdentityProvider",
+                    "mapping_method": "claim",
+                    "name": "GitHub",
+                    "type": "GithubIdentityProvider",
+                  },
+                ]
+              }
+              change={[MockFunction]}
+              clusterConsoleURL=""
+              formTitle="Add a Google identity provider"
+              idpTypeName="Google"
+              isEditForm={false}
+              selectedIDP="GoogleIdentityProvider"
+              submitIDPResponse={
+                Object {
+                  "data": Object {},
+                  "error": false,
+                  "errorDetails": null,
+                  "errorMessage": "",
+                  "fulfilled": false,
+                  "pending": false,
+                }
+              }
+            />
+          </GridItem>
+        </Grid>
+      </CardBody>
+      <CardFooter>
+        <Split
+          hasGutter={true}
+        >
+          <SplitItem>
+            <Button
+              isDisabled={false}
+              onClick={[MockFunction]}
+              type="submit"
+              variant="primary"
+            >
+              Add
+            </Button>
+          </SplitItem>
+          <SplitItem>
+            <Link
+              to="/details/s/1xFud5sJArB3KRvAuxmd1ef9RE8#accessControl"
+            >
+              <Button
+                variant="secondary"
+              >
+                Cancel
+              </Button>
+            </Link>
+          </SplitItem>
+        </Split>
+      </CardFooter>
+    </Card>
+  </PageSection>
+</Fragment>
+`;

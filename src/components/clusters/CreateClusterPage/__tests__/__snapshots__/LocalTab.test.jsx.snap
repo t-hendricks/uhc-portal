@@ -69,7 +69,7 @@ exports[`<LocalTab /> renders correctly 1`] = `
                 channel="stable"
                 pendoID="/"
                 token={Object {}}
-                tool="CRC"
+                tool="crc"
               />
               <Text
                 component="h3"

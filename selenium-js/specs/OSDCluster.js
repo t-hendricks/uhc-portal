@@ -4,6 +4,7 @@ import CreateClusterPage from '../pageobjects/CreateCluster.page';
 import CreateOSDWizardPage from '../pageobjects/CreateOSDWizard.page';
 import ClusterDetailsPage from '../pageobjects/ClusterDetails.page';
 import GlobalNav from '../pageobjects/GlobalNav.page';
+import IdentityProviders from '../pageobjects/IdentityProviders.page';
 
 describe('OSD cluster tests', async () => {
   // eslint-disable-next-line no-undef
@@ -82,23 +83,30 @@ describe('OSD cluster tests', async () => {
     it('waits until cluster installs and goes to the access control tab', async () => {
       await ClusterDetailsPage.waitForInstallCompletion();
       await (await ClusterDetailsPage.accessControlTabBtn).click();
-      expect(await ClusterDetailsPage.addIDPButton).toBeDisplayed();
+      expect(await ClusterDetailsPage.addIDPDropdownToggle).toBeDisplayed();
     });
 
     it('adds a new IDP to the cluster', async () => {
-      await (await ClusterDetailsPage.addIDPButton).click();
-      expect(ClusterDetailsPage.IDPModalBody).toBeDisplayed();
-      await (await ClusterDetailsPage.IDPSelection).click();
-      await (await ClusterDetailsPage.IDPSelection).selectByVisibleText('Google');
-      expect(ClusterDetailsPage.IDPNameInput).toHaveValue('Google');
-      const requiredFields = await (await ClusterDetailsPage.IDPModalRequiredFields);
+      await (await ClusterDetailsPage.addIDPDropdownToggle).click();
+      expect(await ClusterDetailsPage.IDPDropdown).toBeDisplayed();
+      await (await ClusterDetailsPage.GoogleIDPDropdownItem).click();
+      await browser.waitUntil(
+        async () => IdentityProviders.isAddIDPPage('Google'),
+        { timeout: 1 * 60 * 1000 },
+      );
+      expect(IdentityProviders.IDPNameInput).toHaveValue('Google');
+      const requiredFields = await (await IdentityProviders.IDPFormRequiredFields);
       await Promise.all(requiredFields.map(async (input) => {
         const v = await input.getValue();
         if (!v) {
           await input.setValue('asdf');
         }
       }));
-      await (await ClusterDetailsPage.addIDPModalConfirm).click();
+      await (await IdentityProviders.addIDPConfirmBtn).click();
+      await browser.waitUntil(
+        async () => ClusterDetailsPage.isClusterDetailsPage(),
+        { timeout: 1 * 60 * 1000 },
+      );
       expect(await ClusterDetailsPage.IDPTable).toBeDisplayed();
     });
 
