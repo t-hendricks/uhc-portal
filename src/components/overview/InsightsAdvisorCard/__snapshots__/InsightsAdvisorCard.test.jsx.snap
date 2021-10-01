@@ -66,18 +66,6 @@ exports[`<InsightsAdvisorCard /> When recommendations are available (rule hits) 
         }
       }
     />
-    <div
-      className="ocm-insights--advisor-notice"
-    >
-      <QuestionCircleIcon
-        className="ocm-insights--advisor-notice__icon"
-        color="#6a6e73"
-        noVerticalAlign={false}
-        size="sm"
-      />
-       
-      Advisor information applies for OCP clusters only
-    </div>
   </CardBody>
 </Card>
 `;
