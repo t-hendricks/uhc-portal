@@ -6,13 +6,17 @@ import OnRuleDisableFeedbackModal from './OnRuleDisableFeedbackModal';
 
 const mapStateToProps = (state) => {
   const { sendFeedbackOnRuleDisable: sendFeedbackOnRuleDisableResponse } = state.insightsData;
-  const { clusterId, ruleId, errorKey } = state.modal.data;
+  const {
+    clusterId, ruleId, errorKey, isManagedCluster, isRuleDetailsPage,
+  } = state.modal.data;
 
   return {
     isOpen: shouldShowModal(state, 'insights-on-rule-disable-feedback-modal'),
     clusterId,
     ruleId,
     errorKey,
+    isManagedCluster,
+    isRuleDetailsPage,
     sendFeedbackOnRuleDisableResponse,
   };
 };
@@ -22,7 +26,7 @@ const mapDispatchToProps = {
     sendFeedbackOnRuleDisableInsights(clusterId, ruleId, errorKey, feedback)
   ),
   hideWindow: () => closeModal(),
-  disableRule: (clusterId, ruleId, errorKey) => (disableRuleInsights(clusterId, ruleId, errorKey)),
+  disableRule: disableRuleInsights,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnRuleDisableFeedbackModal);
