@@ -129,7 +129,6 @@ function insightsReducer(state = initialState, action) {
         break;
       // DISABLE_RULE_INSIGHTS
       case FULFILLED_ACTION(DISABLE_RULE_INSIGHTS):
-        draft.reportDetails.report.disabled = true;
         draft.reportDetails.fulfilled = true;
         draft.reportDetails.pending = false;
         draft.reportDetails.rejected = false;
@@ -145,7 +144,6 @@ function insightsReducer(state = initialState, action) {
         draft.reportDetails.rejected = true;
         break;
       case FULFILLED_ACTION(ENABLE_RULE_INSIGHTS):
-        draft.reportDetails.report.disabled = false;
         draft.reportDetails.fulfilled = true;
         draft.reportDetails.pending = false;
         draft.reportDetails.rejected = false;

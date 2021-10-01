@@ -196,13 +196,14 @@ class ClusterDetails extends Component {
     } = this.props;
     const clusterID = get(clusterDetails, 'cluster.id');
     const isManaged = get(clusterDetails, 'cluster.managed', false);
+    const isManagedSubscription = get(clusterDetails, 'cluster.subscription.managed', false);
 
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
     const externalClusterID = get(clusterDetails, 'cluster.external_id');
     if (externalClusterID) {
-      fetchClusterInsights(externalClusterID, isManaged);
+      fetchClusterInsights(externalClusterID, isManagedSubscription);
       this.fetchSupportData();
     }
 
@@ -335,6 +336,7 @@ class ClusterDetails extends Component {
     const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
     const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
     const isManaged = cluster.managed;
+    const isManagedSubscription = cluster.subscription.managed;
     const isClusterPending = cluster.state === clusterStates.PENDING;
     const isClusterInstalling = cluster.state === clusterStates.INSTALLING;
     const isClusterReady = cluster.state === clusterStates.READY;
@@ -506,7 +508,10 @@ class ClusterDetails extends Component {
                 cluster={cluster}
                 insightsData={insightsData[cluster.external_id]}
                 enableRule={(ruleId, errorKey) => {
-                  enableRule(cluster.external_id, ruleId, errorKey);
+                  /*  Use `managed` field from the subscription object because
+                      it evaluates to true for ARO clusters (yet Advisor considers
+                      ARO clusters are managed) */
+                  enableRule(cluster.external_id, ruleId, errorKey, false, isManagedSubscription);
                 }}
                 openModal={openModal}
               />
