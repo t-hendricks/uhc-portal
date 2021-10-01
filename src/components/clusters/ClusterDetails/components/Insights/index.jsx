@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Bullseye } from '@patternfly/react-core';
-import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import {
   NoIssuesMessage,
   NoRulesMessage,
@@ -18,18 +17,14 @@ const Insights = ({
   cluster,
   openModal,
 }) => {
-  if (!insightsData) {
+  const status = get(insightsData, 'status');
+
+  if (!insightsData || status === 404) {
     return (
       <Bullseye className="insights-loading-container">
-        <Spinner />
+        <NoRulesMessage />
       </Bullseye>
     );
-  }
-
-  const status = get(insightsData, 'status');
-  // No enabled rules for cluster
-  if (status === 404) {
-    return <NoRulesMessage />;
   }
   // insights-operator was just installed on cluster, no information yet
   if (status === 204) {
