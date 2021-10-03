@@ -44,6 +44,10 @@ const reviewValues = {
       false: 'Red Hat cloud account',
     },
   },
+  disable_scp_checks: {
+    title: 'AWS Service Control Policy (SCP) checks',
+    valueTransform: value => (value ? 'Disabled' : 'Enabled'),
+  },
   cloud_provider: {
     title: 'Cloud provider',
     valueTransform: value => value.toUpperCase(),
@@ -71,6 +75,14 @@ const reviewValues = {
   },
   load_balancers: {
     title: 'Load balancers',
+  },
+  enable_user_workload_monitoring: {
+    title: 'User workload monitoring',
+    isBoolean: true,
+    values: {
+      true: 'Enabled',
+      false: 'Disabled',
+    },
   },
   upgrade_policy: {
     title: 'Updates',
