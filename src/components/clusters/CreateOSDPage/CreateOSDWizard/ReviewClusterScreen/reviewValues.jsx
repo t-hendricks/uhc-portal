@@ -1,3 +1,8 @@
+import React from 'react';
+import {
+  LabelGroup,
+  Label,
+} from '@patternfly/react-core';
 import { billingModels } from '../../../../../common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
 import {
@@ -117,6 +122,36 @@ const reviewValues = {
       }
       return value;
     },
+  },
+  min_replicas: {
+    title: 'Compute node range',
+    valueTransform: (value, allValues) => (
+      <>
+        <span>Minimum nodes per zone:</span>
+        {' '}
+        {value}
+        <span className="pf-u-ml-lg">
+          Maximum nodes per zone:
+          {' '}
+        </span>
+        {allValues.max_replicas}
+      </>
+    ),
+  },
+  node_labels: {
+    title: 'Node labels',
+    valueTransform: labels => (
+      <LabelGroup>
+        {
+            // eslint-disable-next-line react/destructuring-assignment
+            labels.map(label => (
+              <Label color="blue">
+                {`${label.key} = ${label.value}`}
+              </Label>
+            ))
+          }
+      </LabelGroup>
+    ),
   },
   network_machine_cidr: {
     title: 'Machine CIDR',
