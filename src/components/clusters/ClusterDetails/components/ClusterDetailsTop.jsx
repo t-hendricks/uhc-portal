@@ -64,10 +64,6 @@ function ClusterDetailsTop(props) {
     cluster,
   } : {};
 
-  const openIDPModal = () => {
-    openModal('create-identity-provider');
-  };
-
   const IdentityProvidersHint = () => (
     <Alert
       id="idpHint"
@@ -77,7 +73,9 @@ function ClusterDetailsTop(props) {
     >
       Identity providers determine how users log into the cluster.
       {' '}
-      <Button variant="link" isInline onClick={openIDPModal}>Add OAuth configuration</Button>
+      <Button variant="link" isInline onClick={() => { window.location.hash = 'accessControl'; }}>
+        Add OAuth configuration
+      </Button>
       {' '}
       to allow others to log in.
     </Alert>
