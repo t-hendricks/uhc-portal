@@ -9,6 +9,7 @@ import {
   Title,
   Form,
   Text,
+  Alert,
 } from '@patternfly/react-core';
 
 import MachineTypeSelection from '../../CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection';
@@ -72,53 +73,70 @@ function DefaultMachinePoolScreen({
           </FormGroup>
         </GridItem>
         <GridItem md={7} lg={8} />
-        <GridItem sm={12} md={5} lg={4}>
-          {canAutoScale
+        {canAutoScale
           && (
-          <AutoScaleSection
-            autoscalingEnabled={autoscalingEnabled}
-            isMultiAz={isMultiAz}
-            change={change}
-            autoScaleMinNodesValue={autoScaleMinNodesValue}
-            autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-            product={product}
-            isBYOC={isByoc}
-            isDefaultMachinePool
-          />
-          )}
-          {!autoscalingEnabled && (
-          <>
-            <Field
-              component={NodeCountInput}
-              name="nodes_compute"
-              label={isMultiAz ? 'Worker node count (per zone)' : 'Worker node count'}
-              isMultiAz={isMultiAz}
-              isByoc={isByoc}
-              machineType={machineType}
-              extendedHelpText={(
+            <>
+              <GridItem sm={12} md={5} lg={4}>
+                <AutoScaleSection
+                  autoscalingEnabled={autoscalingEnabled}
+                  isMultiAz={isMultiAz}
+                  change={change}
+                  autoScaleMinNodesValue={autoScaleMinNodesValue}
+                  autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+                  product={product}
+                  isBYOC={isByoc}
+                  isDefaultMachinePool
+                />
+                {!autoscalingEnabled && (
                 <>
-                  {constants.computeNodeCountHint}
-                  {' '}
-                  <ExternalLink href="https://www.openshift.com/products/dedicated/service-definition#compute-instances">Learn more about worker node count</ExternalLink>
-                </>
+                  <Field
+                    component={NodeCountInput}
+                    name="nodes_compute"
+                    label={isMultiAz ? 'Worker node count (per zone)' : 'Worker node count'}
+                    isMultiAz={isMultiAz}
+                    isByoc={isByoc}
+                    machineType={machineType}
+                    extendedHelpText={(
+                      <>
+                        {constants.computeNodeCountHint}
+                        {' '}
+                        <ExternalLink href="https://www.openshift.com/products/dedicated/service-definition#compute-instances">Learn more about worker node count</ExternalLink>
+                      </>
               )}
-              cloudProviderID={cloudProviderID}
-              product={product}
-              billingModel={billingModel}
-            />
-          </>
+                    cloudProviderID={cloudProviderID}
+                    product={product}
+                    billingModel={billingModel}
+                  />
+                </>
+                )}
+              </GridItem>
+              <GridItem md={7} lg={8} />
+            </>
           )}
-          <ExpandableSection
-            toggleText="Edit node labels"
-          >
+        <ExpandableSection
+          toggleText="Edit node labels"
+        >
+          <Grid>
             <GridItem className="pf-u-mb-md">
               <Title headingLevel="h3">Node labels</Title>
             </GridItem>
             <GridItem sm={12} md={5} lg={4}>
               <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
             </GridItem>
-          </ExpandableSection>
-        </GridItem>
+            <GridItem span={10}>
+              <Alert
+                id="node-labels-alert"
+                variant="info"
+                isInline
+                title="Node labels cannot be edited after cluster creation"
+              >
+                The node labels in the default machine pool cannot be changed
+                after creating the cluster. Other machine pools can be added
+                to the cluster with additional labels.
+              </Alert>
+            </GridItem>
+          </Grid>
+        </ExpandableSection>
       </Grid>
     </Form>
   );
