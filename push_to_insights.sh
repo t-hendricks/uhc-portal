@@ -161,13 +161,13 @@ yarn install
 
 if [ "$1" == "staging" ] || [ "$1" == "beta" ]; then
     echo "running staging push"
-    echo "staging branch is available on https://qaprodauth.cloud.redhat.com/openshift"
+    echo "staging branch is available on https://qaprodauth.console.redhat.com/openshift"
     rm -rf build
     yarn build --mode=production --env api-env=staging
     push_build "qa-stable"
 
     echo "running staging (qa-beta) push"
-    echo "staging branch is available on https://qaprodauth.cloud.redhat.com/beta/openshift"
+    echo "staging branch is available on https://qaprodauth.console.redhat.com/beta/openshift"
     rm -rf build
     yarn build --mode=production --env api-env=staging beta="true"
     push_build "qa-beta"
