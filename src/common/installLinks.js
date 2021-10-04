@@ -152,7 +152,7 @@ const links = {
   RHOAS_CLI_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047',
 
   HELM_CLI_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest',
-  HELM_DOCS: `${DOCS_BASE}/cli_reference/helm_cli/getting-started-with-helm-on-openshift-container-platform.html`,
+  HELM_DOCS: 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.8/html/building_applications/working-with-helm-charts',
 
   ODO_DOCS: `${DOCS_BASE}/cli_reference/developer_cli_odo/understanding-odo.html`,
 
