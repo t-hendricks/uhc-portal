@@ -3,7 +3,7 @@ import { reduxForm, formValueSelector } from 'redux-form';
 import isEmpty from 'lodash/isEmpty';
 
 import AddMachinePoolModal from './AddMachinePoolModal';
-import { canAutoScaleSelector } from '../../MachinePoolsSelectors';
+import { canAutoScaleSelector, canUseSpotInstances } from '../../MachinePoolsSelectors';
 import { closeModal } from '../../../../../../common/Modal/ModalActions';
 import { getMachineTypes } from '../../../../../../../redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '../../../../../../../redux/actions/userActions';
@@ -13,6 +13,7 @@ import { parseReduxFormKeyValueList, parseReduxFormTaints } from '../../../../..
 
 const reduxFormConfig = {
   form: 'AddMachinePool',
+  touchOnChange: true,
 };
 const reduxFormAddMachinePool = reduxForm(reduxFormConfig)(AddMachinePoolModal);
 
@@ -27,6 +28,10 @@ const mapStateToProps = (state, ownProps) => {
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     canAutoScale: canAutoScaleSelector(state, ownProps.cluster.subscription.plan.type),
+    canUseSpotInstances: canUseSpotInstances(state, ownProps.cluster.subscription.plan.type),
+    useSpotInstances: valueSelector(state, 'spot_instances'),
+    spotInstancePricing: valueSelector(state, 'spot_instance_pricing'),
+    spotInstanceMaxHourlyPrice: valueSelector(state, 'spot_instance_max_hourly_price') || 0.01,
     initialValues: {
       name: '',
       nodes_compute: '0',
@@ -66,6 +71,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     if (parsedTaints.length > 0) {
       machinePoolRequest.taints = parsedTaints;
     }
+
+    if (formData.spot_instances) {
+      machinePoolRequest.aws = {
+        spot_market_options: (formData.spot_instance_pricing === 'maximum' && formData.spot_instance_max_hourly_price !== undefined)
+          ? { max_price: formData.spot_instance_max_hourly_price }
+          : {},
+      };
+    }
+
     dispatch(addMachinePool(ownProps.cluster.id, machinePoolRequest));
   },
   clearAddMachinePoolResponse: () => dispatch(clearAddMachinePoolResponse()),

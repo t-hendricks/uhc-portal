@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import {
+  Divider,
   Form, Grid, GridItem,
 } from '@patternfly/react-core';
 
 import { validateLabels, parseLabels } from '../../machinePoolsHelper';
+import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../SpotInstanceHelper';
 
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
@@ -63,6 +65,7 @@ class EditLabelsModal extends Component {
       pristine,
       invalid,
       tags,
+      selectedMachinePoolId,
     } = this.props;
 
     const error = editLabelsResponse.error ? (
@@ -115,6 +118,17 @@ class EditLabelsModal extends Component {
                   validate={validateLabels}
                 />
               </GridItem>
+              {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList)
+              && (
+              <>
+                <GridItem span={7} />
+                <Divider />
+                <GridItem span={7} />
+                <GridItem span={12}>
+                  <SpotInstanceInfoAlert />
+                </GridItem>
+              </>
+              )}
             </Grid>
           </Form>
         </>
@@ -140,6 +154,7 @@ EditLabelsModal.propTypes = {
   pristine: PropTypes.bool.isRequired,
   invalid: PropTypes.bool.isRequired,
   tags: PropTypes.array,
+  selectedMachinePoolId: PropTypes.string.isRequired,
 };
 
 export default EditLabelsModal;

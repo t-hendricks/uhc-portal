@@ -8,6 +8,7 @@ import {
 import NodeCountInput from '../NodeCountInput';
 import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
+import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../../ClusterDetails/components/MachinePools/components/SpotInstanceHelper';
 
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
@@ -210,6 +211,15 @@ class EditNodeCountModal extends Component {
                 </>
               )}
               {!!masterResizeAlertThreshold && resizingAlert(masterResizeAlertThreshold)}
+              {isMachinePoolUsingSpotInstances(machinePoolId, machinePoolsList)
+              && (
+                <>
+                  <GridItem span={7} />
+                  <GridItem span={12}>
+                    <SpotInstanceInfoAlert />
+                  </GridItem>
+                </>
+              )}
             </Grid>
           </Form>
         </>
