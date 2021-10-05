@@ -37,7 +37,8 @@ class Overview extends React.Component {
   componentDidUpdate(prevProps) {
     const { cluster } = this.props;
     if ((prevProps.cluster.state === clusterStates.INSTALLING
-      || prevProps.cluster.state === clusterStates.PENDING)
+      || prevProps.cluster.state === clusterStates.PENDING
+      || prevProps.cluster.state === clusterStates.WAITING)
         && cluster.state === clusterStates.READY
         && cluster.managed
         && prevProps.cluster.id === cluster.id) {
@@ -69,12 +70,14 @@ class Overview extends React.Component {
     const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
     const metricsAvailable = hasResourceUsageMetrics(cluster)
       && (cluster.canEdit
-          || (cluster.state !== clusterStates.PENDING
+          || (cluster.state !== clusterStates.WAITING
+              && cluster.state !== clusterStates.PENDING
               && cluster.state !== clusterStates.INSTALLING));
     const metricsStatusMessage = isArchived ? metricsStatusMessages.archived
       : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
 
-    const shouldMonitorStatus = cluster.state === clusterStates.PENDING
+    const shouldMonitorStatus = cluster.state === clusterStates.WAITING
+                             || cluster.state === clusterStates.PENDING
                              || cluster.state === clusterStates.INSTALLING
                              || cluster.state === clusterStates.UNINSTALLING;
 

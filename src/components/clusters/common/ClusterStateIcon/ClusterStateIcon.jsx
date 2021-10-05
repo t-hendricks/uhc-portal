@@ -29,6 +29,7 @@ function ClusterStateIcon(props) {
 
   // Icons from http://openshift.github.io/openshift-origin-design/web-console/4.0-designs/status/status
   switch (clusterState) {
+    case clusterStates.WAITING:
     case clusterStates.PENDING:
     case clusterStates.INSTALLING:
     case clusterStates.UPDATING:

@@ -4,6 +4,7 @@ import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
 
 const clusterStates = {
+  WAITING: 'waiting',
   PENDING: 'pending',
   INSTALLING: 'installing',
   UPDATING: 'updating',
@@ -55,6 +56,8 @@ function getClusterStateAndDescription(cluster) {
   } else if (cluster.state === clusterStates.INSTALLING
     || cluster.state === clusterStates.PENDING) {
     state = clusterStates.INSTALLING;
+  } else if (cluster.state === clusterStates.WAITING) {
+    state = clusterStates.WAITING;
   } else if (cluster.state === clusterStates.UNINSTALLING) {
     state = clusterStates.UNINSTALLING;
   } else if (cluster.state === clusterStates.ERROR) {
