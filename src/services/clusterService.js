@@ -234,9 +234,13 @@ const patchUpgradeSchedule = (clusterID, policyID, schedule) => apiRequest({
   data: schedule,
 });
 
+const OSDUpgradeType = 'OSD';
 const getUpgradeSchedules = clusterID => apiRequest({
   method: 'get',
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies`,
+  params: {
+    search: `upgrade_type='${OSDUpgradeType}'`,
+  },
 });
 
 const getUpgradeScheduleState = (clusterID, policyID) => apiRequest({
