@@ -196,13 +196,14 @@ class ClusterDetails extends Component {
     } = this.props;
     const clusterID = get(clusterDetails, 'cluster.id');
     const isManaged = get(clusterDetails, 'cluster.managed', false);
+    const isManagedSubscription = get(clusterDetails, 'cluster.subscription.managed', false);
 
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
     const externalClusterID = get(clusterDetails, 'cluster.external_id');
     if (externalClusterID) {
-      fetchClusterInsights(externalClusterID, isManaged);
+      fetchClusterInsights(externalClusterID, isManagedSubscription);
       this.fetchSupportData();
     }
 
@@ -331,18 +332,20 @@ class ClusterDetails extends Component {
 
     const clusterHibernating = isHibernating(cluster.state);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED
-    || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+      || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
     const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
     const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
     const isManaged = cluster.managed;
+    const isManagedSubscription = cluster.subscription.managed;
+    const isClusterWaiting = cluster.state === clusterStates.WAITING;
     const isClusterPending = cluster.state === clusterStates.PENDING;
     const isClusterInstalling = cluster.state === clusterStates.INSTALLING;
     const isClusterReady = cluster.state === clusterStates.READY;
     const isClusterUpdating = cluster.state === clusterStates.UPDATING;
     const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
     const isPrivateCluster = cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
-    const displayAddOnsTab = !isClusterInstalling && !isClusterPending
-     && cluster.managed && !isArchived;
+    const displayAddOnsTab = !isClusterInstalling && !isClusterPending && !isClusterWaiting
+      && cluster.managed && !isArchived;
     const displayInsightsTab = !isArchived && !isAROCluster
       && !isUninstalledAICluster(cluster);
     const consoleURL = get(cluster, 'console.url');
@@ -352,7 +355,7 @@ class ClusterDetails extends Component {
       && (isClusterReady || clusterHibernating) && !isArchived;
     const cloudProvider = get(cluster, 'cloud_provider.id');
     const displayNetworkingTab = (isClusterReady || isClusterUpdating || clusterHibernating)
-          && cluster.managed && !!get(cluster, 'api.url')
+      && cluster.managed && !!get(cluster, 'api.url')
       && ((cloudProvider === 'aws' && !isPrivateCluster)
       || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')))
       && !isArchived;
@@ -360,9 +363,9 @@ class ClusterDetails extends Component {
       && (isClusterReady || clusterHibernating)
       && !isArchived;
     const hideSupportTab = cluster.managed
-        // The (managed) cluster has not yet reported its cluster ID to AMS
-        // eslint-disable-next-line camelcase
-        && cluster.subscription?.external_cluster_id === undefined;
+      // The (managed) cluster has not yet reported its cluster ID to AMS
+      // eslint-disable-next-line camelcase
+      && cluster.subscription?.external_cluster_id === undefined;
     const displaySupportTab = !hideSupportTab && !isOSDTrial;
     const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit && !isArchived;
     const displayAddAssistedHosts = assistedInstallerEnabled && canAddHost({ cluster })
@@ -506,7 +509,10 @@ class ClusterDetails extends Component {
                 cluster={cluster}
                 insightsData={insightsData[cluster.external_id]}
                 enableRule={(ruleId, errorKey) => {
-                  enableRule(cluster.external_id, ruleId, errorKey);
+                  /*  Use `managed` field from the subscription object because
+                      it evaluates to true for ARO clusters (yet Advisor considers
+                      ARO clusters are managed) */
+                  enableRule(cluster.external_id, ruleId, errorKey, false, isManagedSubscription);
                 }}
                 openModal={openModal}
               />

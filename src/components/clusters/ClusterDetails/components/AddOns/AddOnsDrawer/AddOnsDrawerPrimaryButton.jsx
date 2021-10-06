@@ -29,7 +29,7 @@ function AddOnsPrimaryButton(props) {
 
   // install an add on or open params modal
   const installAddOnAction = () => {
-    if (hasParameters(activeCard, cluster)) {
+    if (hasParameters(activeCard)) {
       openModal('add-ons-parameters-modal', {
         clusterID: cluster.id,
         addOn: activeCard,
@@ -95,6 +95,7 @@ function AddOnsPrimaryButton(props) {
   switch (installedAddOn?.state) {
     case AddOnsConstants.INSTALLATION_STATE.PENDING:
     case AddOnsConstants.INSTALLATION_STATE.INSTALLING:
+    case AddOnsConstants.INSTALLATION_STATE.UPDATING:
       return (
         <>{uninstallAddonAction}</>
       );

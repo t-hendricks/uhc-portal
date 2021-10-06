@@ -77,4 +77,30 @@ describe('<ClusterDetailsTop />', () => {
       expect(functions.openModal).toBeCalledWith('unarchive-cluster', { subscriptionID: 'fake', name: cluster.name });
     });
   });
+
+  it('should show expiration alert for OSDTrial', () => {
+    const { cluster } = fixtures.OSDTrialClusterDetails;
+    const expDate = new Date();
+    expDate.setDate(expDate.getDate() + 1); // now + 1 day
+    cluster.subscription.trial_end_date = expDate.toISOString();
+    cluster.subscription.billing_expiration_date = '';
+    cluster.expiration_timestamp = '';
+    wrapper.setProps({ cluster }, () => {
+      const alert = wrapper.find('ExpirationAlert');
+      expect(alert.length).toEqual(1);
+    });
+  });
+
+  it('should show expiration alert for OSD RHM', () => {
+    const { cluster } = fixtures.OSDRHMClusterDetails;
+    const expDate = new Date();
+    expDate.setDate(expDate.getDate() + 1); // now + 1 day
+    cluster.subscription.trial_end_date = '';
+    cluster.subscription.billing_expiration_date = expDate.toISOString();
+    cluster.expiration_timestamp = '';
+    wrapper.setProps({ cluster }, () => {
+      const alert = wrapper.find('ExpirationAlert');
+      expect(alert.length).toEqual(1);
+    });
+  });
 });

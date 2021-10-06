@@ -34,6 +34,9 @@ const getInstalled = (addOn, clusterAddOns) => clusterAddOns.items.find(
 );
 
 const formatRequirementData = (data) => {
+  if (data === undefined) {
+    return '';
+  }
   const attrs = [];
   Object.entries(data)
     .forEach(([field, requiredValue]) => {
@@ -45,112 +48,41 @@ const formatRequirementData = (data) => {
         attrs.push(`${field} is ${requiredValue}`);
       }
     });
-  return attrs.join(' and ');
+  return `where ${attrs.join(' and ')}`;
 };
 
-const requirementFulfilledByResource = (myResource, requirement) => Object.entries(requirement.data)
-  .every(([field, requiredValue]) => {
-    if (field === 'version.raw_id') {
-      // The version constraint is handled differently in CS and does not just do a simple string
-      // comparison, but instead should be processed as a semantic version constraint(s)
-      // All requirement processing will be removed from the UI https://issues.redhat.com/browse/SDA-3724
-      // this is here temporarily to prevent blocking installs of addons in the meantime.
-      return true;
-    }
-    let clusterValue = get(myResource, field);
-    if (clusterValue === undefined) {
-      // eslint-disable-next-line default-case
-      switch (field) {
-        case 'replicas': {
-          clusterValue = get(myResource, 'autoscaling.max_replicas');
-          break;
-        }
-        case 'nodes.compute': {
-          clusterValue = get(myResource, 'nodes.autoscale_compute.max_replicas');
-          break;
-        }
-        case 'aws.sts.enabled': {
-          clusterValue = false;
-          break;
-        }
-        case 'compute.memory':
-        case 'compute.cpu': {
-          // In these cases we don't want to deal with checking the requirement at all in the UI,
-          // instead we just allow it through and let the backend deal with it.
-          return true;
-        }
-      }
-    }
-    // We need the product id to match what CS expects but the cluster value is always the AMS
-    // equivalent. Change the cluster value to lowercase for product id only to get round the issue.
-    if (clusterValue && field === 'product.id') {
-      clusterValue = clusterValue.toLowerCase();
-    }
-    if (Array.isArray(requiredValue)) {
-      return requiredValue.includes(clusterValue);
-    }
-    if (typeof requiredValue === 'number') {
-      return clusterValue >= requiredValue;
-    }
-    return clusterValue === requiredValue;
-  });
+const validateAddOnResourceRequirement = (requirement) => {
+  const requirementMet = get(requirement, 'status.fulfilled', false);
+  const requirementErrors = get(requirement, 'status.error_msgs', []);
 
-const validateAddOnResourceRequirement = (
-  requirement, cluster, clusterAddOns = [], clusterMachinePools = [],
-) => {
-  let requirementMet = false;
-  let requirementError;
-  switch (requirement.resource) {
-    case 'cluster': {
-      requirementMet = requirementFulfilledByResource(cluster, requirement);
-      break;
-    }
-    case 'addon': {
-      if (get(clusterAddOns, 'items.length', false)) {
-        requirementMet = clusterAddOns.items
-          .some(addon => requirementFulfilledByResource(addon, requirement));
-      }
-      if (!requirementMet) {
-        requirementError = 'This addon requires an addon to be installed where '
-          + `${formatRequirementData(requirement.data)}`;
-      }
-      break;
-    }
-    case 'machine_pool': {
-      if (get(clusterMachinePools, 'data.length', false)) {
-        requirementMet = clusterMachinePools.data
-          .some(machinePool => requirementFulfilledByResource(machinePool, requirement));
-      }
-      break;
-    }
-    default: {
-      break;
-    }
-  }
   if (!requirementMet) {
-    if (!requirementError) {
-      requirementError = `This addon requires a ${requirement.resource} where `
-        + `${formatRequirementData(requirement.data)}`;
+    if (get(requirementErrors, 'length', 0) === 0) {
+      if (requirement.resource === 'addon') {
+        requirementErrors.push('This addon requires another addon to be installed '
+          + `${formatRequirementData(requirement.data)}`);
+      } else if (requirement.resource === 'machine_pool') {
+        requirementErrors.push('This addon requires a machine pool to exist '
+          + `${formatRequirementData(requirement.data)}`);
+      } else {
+        requirementErrors.push(`This addon requires a ${requirement.resource} `
+          + `${formatRequirementData(requirement.data)}`);
+      }
     }
   }
-  return [requirementMet, requirementError];
+  return [requirementMet, requirementErrors];
 };
 
-const validateAddOnResourceRequirementList = (
-  requirements, cluster, clusterAddOns = [], clusterMachinePools = [], breakOnFirstError = false,
-) => {
+const validateAddOnResourceRequirementList = (requirements, breakOnFirstError = false) => {
   const requirementStatus = {
     fulfilled: true,
     errorMsgs: [],
   };
   if (requirements.length > 0) {
     requirements.every((requirement) => {
-      const [requirementMet, requirementError] = validateAddOnResourceRequirement(
-        requirement, cluster, clusterAddOns, clusterMachinePools,
-      );
+      const [requirementMet, requirementErrors] = validateAddOnResourceRequirement(requirement);
 
       if (!requirementMet) {
-        requirementStatus.errorMsgs.push(requirementError);
+        requirementStatus.errorMsgs.push(...requirementErrors);
       }
       if (requirementStatus.fulfilled) {
         requirementStatus.fulfilled = requirementMet;
@@ -162,35 +94,13 @@ const validateAddOnResourceRequirementList = (
 };
 
 // validates that a given addons requirements are fulfilled
-const validateAddOnRequirements = (
-  addOn, cluster, clusterAddOns, clusterMachinePools, breakOnFirstError = false,
-) => validateAddOnResourceRequirementList(get(addOn, 'requirements', []), cluster,
-  clusterAddOns, clusterMachinePools, breakOnFirstError);
+const validateAddOnRequirements = (addOn, breakOnFirstError = false) => validateAddOnResourceRequirementList(get(addOn, 'requirements', []), breakOnFirstError);
 
-// validates that a given addon parameters conditions are fulfilled
-const validateAddOnParameterConditions = (
-  addOnParam, cluster, breakOnFirstError = false,
-) => validateAddOnResourceRequirementList(get(addOnParam, 'conditions', []), cluster,
-  breakOnFirstError);
+// return a list of parameters for the given addon
+const getParameters = addOn => get(addOn, 'parameters.items', []);
 
-// return a list of parameters for the given addon filtering out any that have conditions that are
-// not satisfied by the cluster. If no cluster is specified, all parameters will be returned.
-const getParameters = (addOn, cluster = undefined) => {
-  if (get(addOn, 'parameters.items.length', 0) > 0) {
-    if (cluster === undefined) {
-      return get(addOn, 'parameters.items', []);
-    }
-    return addOn.parameters.items.filter((param) => {
-      const requirementStatus = validateAddOnParameterConditions(param, cluster, true);
-      return requirementStatus.fulfilled;
-    });
-  }
-  return [];
-};
-
-// returns true if the given addon has parameters. If a cluster is specified, any parameters with
-// conditions that are not satisfied by the cluster will be ignored.
-const hasParameters = (addOn, cluster = undefined) => get(getParameters(addOn, cluster), 'length', 0) > 0;
+// returns true if the given addon has parameters
+const hasParameters = addOn => get(getParameters(addOn), 'length', 0) > 0;
 
 const minQuotaCount = (addOn) => {
   let min = 1;
@@ -267,10 +177,10 @@ const getParameterValue = (addOnInstallation, paramID, defaultValue = undefined)
   return defaultValue;
 };
 
-const parameterValuesForEditing = (addOnInstallation, addOn, cluster = undefined) => {
+const parameterValuesForEditing = (addOnInstallation, addOn) => {
   const vals = { parameters: {} };
-  if (hasParameters(addOn, cluster)) {
-    vals.parameters = getParameters(addOn, cluster).reduce((acc, curr) => {
+  if (hasParameters(addOn)) {
+    vals.parameters = getParameters(addOn).reduce((acc, curr) => {
       let paramValue = getParameterValue(addOnInstallation, curr.id);
       if (curr.value_type === 'boolean') {
         // Ensure existing boolean value is returned as a boolean, and always return false otherwise
@@ -291,10 +201,10 @@ const parameterValuesForEditing = (addOnInstallation, addOn, cluster = undefined
 };
 
 // return a list of add-on parameters with the corresponding add-on installation parameter value
-const parameterAndValue = (addOnInstallation, addOn, cluster = undefined) => {
+const parameterAndValue = (addOnInstallation, addOn) => {
   const vals = { parameters: {} };
-  if (hasParameters(addOn, cluster)) {
-    vals.parameters = getParameters(addOn, cluster).reduce((acc, curr) => {
+  if (hasParameters(addOn)) {
+    vals.parameters = getParameters(addOn).reduce((acc, curr) => {
       let paramValue = getParameterValue(addOnInstallation, curr.id);
       if (curr.value_type === 'boolean') {
         // Ensure existing boolean value is returned as a boolean, and always return false otherwise
@@ -325,7 +235,6 @@ export {
   quotaCostOptions,
   availableAddOns,
   validateAddOnRequirements,
-  validateAddOnParameterConditions,
   getParameters,
   hasParameters,
   hasRequirements,

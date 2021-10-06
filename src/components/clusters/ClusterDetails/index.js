@@ -86,9 +86,9 @@ const mapStateToProps = (state, { location }) => {
 };
 
 const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
-  fetchDetails: clusterId => fetchClusterDetails(clusterId),
+  fetchDetails: fetchClusterDetails,
   fetchClusterInsights,
-  enableRule: (clusterId, ruleId, errorKey) => enableRuleInsights(clusterId, ruleId, errorKey),
+  enableRule: enableRuleInsights,
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
   invalidateClusters,
@@ -108,9 +108,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   getMachinePools,
   clearGetMachinePoolsResponse,
   setOpenedTab: tabKey => push(`${getBaseName()}${location.pathname}#${tabKey}`),
-  getClusterHistory: (
-    externalClusterID, queryObj,
-  ) => getClusterHistory(externalClusterID, queryObj),
+  getClusterHistory,
   toggleSubscriptionReleased,
   getNotificationContacts: supportActions.getNotificationContacts,
   getSupportCases: supportActions.getSupportCases,

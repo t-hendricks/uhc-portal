@@ -111,7 +111,9 @@ function ClusterListTable(props) {
           </span>
         );
       }
-      if (state === clusterStates.PENDING || state === clusterStates.INSTALLING) {
+      if (state === clusterStates.WAITING
+          || state === clusterStates.PENDING
+          || state === clusterStates.INSTALLING) {
         return (
           <Popover
             headerContent={<div>Installation status</div>}

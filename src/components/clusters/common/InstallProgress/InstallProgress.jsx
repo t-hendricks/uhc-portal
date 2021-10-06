@@ -21,7 +21,8 @@ function InstallProgress({ cluster, children }) {
       <CardBody>
         {children && children[0]}
         { (cluster.state === clusterStates.INSTALLING
-        || cluster.state === clusterStates.PENDING) && (
+        || cluster.state === clusterStates.PENDING
+        || cluster.state === clusterStates.WAITING) && (
           <ProgressList cluster={cluster} />
         )}
         {children && children[1]}

@@ -34,7 +34,7 @@ class UpgradeSettingsTab extends React.Component {
       editClusterRequest,
       cluster,
     } = this.props;
-    const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual');
+    const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual' && schedule.upgrade_type === 'OSD');
     if (!prevProps.isAutomatic && isAutomatic && !pristine && scheduledManualUpgrade) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ confirmationModalOpen: true });
@@ -89,9 +89,9 @@ class UpgradeSettingsTab extends React.Component {
     const pristineReason = pristine && 'No changes to save';
     const formDisableReason = readOnlyReason || hibernatingReason;
 
-    const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual');
+    const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual' && schedule.upgrade_type === 'OSD');
 
-    const scheduledUpgrade = schedules.items.find(schedule => ['manual', 'automatic'].includes(schedule.schedule_type));
+    const scheduledUpgrade = schedules.items.find(schedule => ['manual', 'automatic'].includes(schedule.schedule_type) && schedule.upgrade_type === 'OSD');
     // eslint-disable-next-line camelcase
     const availableUpgrades = cluster?.version?.available_upgrades;
 

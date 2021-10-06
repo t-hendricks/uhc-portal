@@ -13,7 +13,7 @@ import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../../common/ErrorTriangle';
 import getClusterName from '../../../../common/getClusterName';
-import { subscriptionStatuses, normalizedProducts } from '../../../../common/subscriptionTypes';
+import { subscriptionStatuses, normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { isUninstalledAICluster } from '../../../../common/isAssistedInstallerCluster';
 import ExpirationAlert from './ExpirationAlert';
 import Breadcrumbs from '../../../common/Breadcrumbs';
@@ -42,6 +42,8 @@ function ClusterDetailsTop(props) {
   } = props;
 
   const isProductOSDTrial = get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTrial;
+  const isProductOSDRHM = get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSD
+    && get(cluster, 'subscription.cluster_billing_model', '') === billingModels.MARKETPLACE;
   const clusterName = getClusterName(cluster);
   const consoleURL = cluster.console ? cluster.console.url : false;
 
@@ -132,6 +134,7 @@ function ClusterDetailsTop(props) {
       || clusterIdentityProviders.pending;
 
   const trialEndDate = isProductOSDTrial && get(cluster, 'subscription.trial_end_date');
+  const OSDRHMEndDate = isProductOSDRHM && get(cluster, 'subscription.billing_expiration_date');
 
   const canNotEditReason = !cluster.canEdit
     && 'You do not have permissions to unarchive this cluster';
@@ -200,6 +203,13 @@ function ClusterDetailsTop(props) {
       <ExpirationAlert
         expirationTimestamp={trialEndDate}
         {...trialExpirationUpgradeProps}
+      />
+      )}
+      {OSDRHMEndDate && !isDeprovisioned
+      && (
+      <ExpirationAlert
+        expirationTimestamp={OSDRHMEndDate}
+        OSDRHMExpiration
       />
       )}
       <SubscriptionCompliancy

@@ -32,6 +32,11 @@ export const setReportDetails = report => ({
   payload: report,
 });
 
+export const fetchReportDetails = (clusterId, ruleId, errorKey, isOSD) => dispatch => dispatch({
+  type: GET_REPORT_DETAILS,
+  payload: insightsService.getReportDetails(clusterId, ruleId, errorKey, isOSD),
+});
+
 const fetchSingleClusterInsights = (clusterId, isOSD) => insightsService
   .getClusterInsights(clusterId, isOSD)
   .then(response => ({
@@ -66,9 +71,6 @@ const voteOnSingleRuleInsights = async (dispatch, clusterId, ruleId, errorKey, v
     default:
       throw Error(`unsupported vote ${vote}`);
   }
-
-  dispatch(fetchClusterInsights(clusterId));
-
   return {
     insightsData: response.data,
     clusterId,
@@ -81,23 +83,6 @@ export const voteOnRuleInsights = (clusterId, ruleId, errorKey, vote) => dispatc
   type: VOTE_ON_RULE_INSIGHTS,
   payload: voteOnSingleRuleInsights(dispatch, clusterId, ruleId, errorKey, vote),
 });
-
-// clusterId is id of the cluster
-// ruleId is id of the rule
-const toggleSingleRuleInsights = async (dispatch, clusterId, ruleId, errorKey, enable) => {
-  const action = enable ? insightsService.enableRuleInsights : insightsService.disableRuleInsights;
-  const response = action(clusterId, ruleId, errorKey).then((resp) => {
-    dispatch(fetchClusterInsights(clusterId));
-
-    return resp;
-  });
-
-  return {
-    insightsData: response.data,
-    clusterId,
-    ruleId,
-  };
-};
 
 // clusterId is id of the cluster
 // ruleId is id of the rule
@@ -114,19 +99,37 @@ const sendFeedbackOnSingleRuleDisableInsights = async (clusterId, ruleId, errorK
   };
 };
 
-export const disableRuleInsights = (clusterId, ruleId, errorKey) => dispatch => (
-  dispatch({
-    type: DISABLE_RULE_INSIGHTS,
-    payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, errorKey, false),
-  })
-);
+export const disableRuleInsights = (
+  clusterId,
+  ruleId,
+  errorKey,
+  isRuleDetailsPage,
+  isManagedCluster,
+) => async (dispatch) => {
+  await insightsService.disableRuleInsights(clusterId, ruleId, errorKey);
+  if (isRuleDetailsPage) {
+    dispatch(fetchReportDetails(clusterId, ruleId, errorKey, isManagedCluster));
+  } else {
+    dispatch(fetchClusterInsights(clusterId, isManagedCluster));
+  }
+  dispatch({ type: DISABLE_RULE_INSIGHTS });
+};
 
-export const enableRuleInsights = (clusterId, ruleId, errorKey) => dispatch => (
-  dispatch({
-    type: ENABLE_RULE_INSIGHTS,
-    payload: toggleSingleRuleInsights(dispatch, clusterId, ruleId, errorKey, true),
-  })
-);
+export const enableRuleInsights = (
+  clusterId,
+  ruleId,
+  errorKey,
+  isRuleDetailsPage,
+  isManagedCluster,
+) => async (dispatch) => {
+  await insightsService.enableRuleInsights(clusterId, ruleId, errorKey);
+  if (isRuleDetailsPage) {
+    dispatch(fetchReportDetails(clusterId, ruleId, errorKey, isManagedCluster));
+  } else {
+    dispatch(fetchClusterInsights(clusterId, isManagedCluster));
+  }
+  dispatch({ type: ENABLE_RULE_INSIGHTS });
+};
 
 export const sendFeedbackOnRuleDisableInsights = (
   clusterId, ruleId, errorKey, feedback,
@@ -138,11 +141,6 @@ export const sendFeedbackOnRuleDisableInsights = (
     },
   )
 );
-
-export const fetchReportDetails = (clusterId, ruleId, errorKey, isOSD) => dispatch => dispatch({
-  type: GET_REPORT_DETAILS,
-  payload: insightsService.getReportDetails(clusterId, ruleId, errorKey, isOSD),
-});
 
 const fetchClusterIds = orgId => accountsService.getSubscriptions({
   page_size: -1,

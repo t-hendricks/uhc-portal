@@ -1212,7 +1212,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 Define, install, and upgrade application packages as Helm charts using Helm 3, a package manager for Kubernetes.
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/latest/cli_reference/helm_cli/getting-started-with-helm-on-openshift-container-platform.html"
+                  href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.8/html/building_applications/working-with-helm-charts"
                 >
                   Learn more
                 </ExternalLink>

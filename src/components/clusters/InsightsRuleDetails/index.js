@@ -28,17 +28,13 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchClusterDetails: subscriptionID => fetchClusterDetails(subscriptionID),
-  fetchReportData: (clusterUUID, ruleId, errorKey, isOSD) => (
-    fetchReportDetails(clusterUUID, ruleId, errorKey, isOSD)
-  ),
+  fetchClusterDetails,
+  fetchReportData: fetchReportDetails,
   openModal: modalActions.openModal,
-  enableRule: (clusterId, ruleId, errorKey) => enableRuleInsights(clusterId, ruleId, errorKey),
+  enableRule: enableRuleInsights,
   clearGlobalError,
   setGlobalError,
-  voteOnRule: (clusterUUID, ruleId, errorKey, vote) => voteOnRuleInsights(
-    clusterUUID, ruleId, errorKey, vote,
-  ),
+  voteOnRule: voteOnRuleInsights,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(InsightsRuleDetails);

@@ -29,19 +29,7 @@ $groups-chart-max-width: 500px;
           padding-left: 1rem;
         }
       }
-
-      .ocm-insights--advisor-notice {
-        color: var(--pf-global--Color--200);
-
-        &__icon {
-          margin-right: 0.3rem;
-        }
-      }
     }
-  }
-
-  &--advisor-notice {
-    margin-top: 0.6rem;
   }
 
   &--groups-chart {
