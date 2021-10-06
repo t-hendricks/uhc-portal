@@ -1,3 +1,8 @@
+import React from 'react';
+import {
+  LabelGroup,
+  Label,
+} from '@patternfly/react-core';
 import { billingModels } from '../../../../../common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
 import {
@@ -39,6 +44,10 @@ const reviewValues = {
       false: 'Red Hat cloud account',
     },
   },
+  disable_scp_checks: {
+    title: 'AWS Service Control Policy (SCP) checks',
+    valueTransform: value => (value ? 'Disabled' : 'Enabled'),
+  },
   cloud_provider: {
     title: 'Cloud provider',
     valueTransform: value => value.toUpperCase(),
@@ -66,6 +75,14 @@ const reviewValues = {
   },
   load_balancers: {
     title: 'Load balancers',
+  },
+  enable_user_workload_monitoring: {
+    title: 'User workload monitoring',
+    isBoolean: true,
+    values: {
+      true: 'Enabled',
+      false: 'Disabled',
+    },
   },
   upgrade_policy: {
     title: 'Updates',
@@ -117,6 +134,36 @@ const reviewValues = {
       }
       return value;
     },
+  },
+  min_replicas: {
+    title: 'Compute node range',
+    valueTransform: (value, allValues) => (
+      <>
+        <span>Minimum nodes per zone:</span>
+        {' '}
+        {value}
+        <span className="pf-u-ml-lg">
+          Maximum nodes per zone:
+          {' '}
+        </span>
+        {allValues.max_replicas}
+      </>
+    ),
+  },
+  node_labels: {
+    title: 'Node labels',
+    valueTransform: labels => (
+      <LabelGroup>
+        {
+            // eslint-disable-next-line react/destructuring-assignment
+            labels.map(label => (
+              <Label color="blue">
+                {`${label.key} = ${label.value}`}
+              </Label>
+            ))
+          }
+      </LabelGroup>
+    ),
   },
   network_machine_cidr: {
     title: 'Machine CIDR',

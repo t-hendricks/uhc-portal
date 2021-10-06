@@ -25,7 +25,7 @@ function ProgressList({ cluster }) {
     const inProgressIcon = <Spinner className="icon-space-right" size="sm" />;
 
     // first step in progress
-    if (cluster.state === clusterStates.PENDING) {
+    if (cluster.state === clusterStates.PENDING || cluster.state === clusterStates.WAITING) {
       let pendingText = 'Preparing account';
       if (!cluster.status.oidc_ready && cluster?.aws?.sts?.oidc_endpoint_url) {
         // Display OIDC endpoint URL but don't link to it

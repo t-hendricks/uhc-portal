@@ -9,9 +9,11 @@ const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
   const product = valueSelector(state, 'product');
   const canAutoScale = canAutoScaleOnCreateSelector(state, product);
+  const autoscalingEnabled = canAutoScale && formValueSelector(state, 'autoscalingEnabled');
   return {
     formValues: getFormValues('CreateCluster')(state),
     canAutoScale,
+    autoscalingEnabled,
   };
 };
 

@@ -122,9 +122,15 @@ class InsightsTable extends React.Component {
   }
 
   onRuleDisable(ruleId, errorKey) {
-    const { openModal, cluster } = this.props;
-    const clusterId = cluster.external_id;
-    openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId, errorKey });
+    const {
+      openModal,
+      cluster,
+    } = this.props;
+    const isManagedCluster = cluster?.subscription?.managed || false;
+    const clusterId = cluster?.external_id || '';
+    openModal('insights-on-rule-disable-feedback-modal', {
+      clusterId, ruleId, errorKey, isRuleDetailsPage: false, isManagedCluster,
+    });
   }
 
   setFilter = (filterName, filterValue) => {
@@ -391,7 +397,13 @@ class InsightsTable extends React.Component {
 }
 
 InsightsTable.propTypes = {
-  cluster: PropTypes.object.isRequired,
+  cluster: PropTypes.shape({
+    external_id: PropTypes.string,
+    subscription: PropTypes.shape({
+      id: PropTypes.string,
+      managed: PropTypes.bool,
+    }),
+  }),
   insightsData: PropTypes.object.isRequired,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,

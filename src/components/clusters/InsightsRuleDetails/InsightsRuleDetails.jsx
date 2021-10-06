@@ -72,25 +72,22 @@ class InsightsRuleDetails extends Component {
       clusterDetails,
       fetchReportData,
     } = this.props;
-    const { subscriptionID } = match.params;
-    const externalId = get(clusterDetails, 'cluster.external_id');
-    const reportID = match.params.reportId.replace(/\|/g, '.');
-    const { errorKey } = match.params;
+    const isManagedCluster = clusterDetails?.cluster?.subscription?.managed || false;
+    const externalId = clusterDetails?.cluster?.external_id || '';
+    const { subscriptionID, errorKey, reportId } = match.params;
+    const reportIdModified = reportId.replace(/\|/g, '.');
 
     if (get(clusterDetails, 'cluster.subscription.id') === subscriptionID) {
       const clusterName = getClusterName(clusterDetails.cluster);
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
     }
 
-    if (
-      get(clusterDetails, 'cluster.external_id')
-      && get(prevProps.clusterDetails, 'cluster.external_id') !== externalId
-    ) {
+    if (externalId && get(prevProps.clusterDetails, 'cluster.external_id') !== externalId) {
       fetchReportData(
-        get(clusterDetails, 'cluster.external_id'),
-        reportID,
+        externalId,
+        reportIdModified,
         errorKey,
-        get(clusterDetails, 'cluster.managed', false),
+        isManagedCluster,
       );
     }
   }
@@ -98,8 +95,11 @@ class InsightsRuleDetails extends Component {
   onRuleDisable(ruleId) {
     const { openModal, clusterDetails, match } = this.props;
     const { errorKey } = match.params;
-    const clusterId = get(clusterDetails, 'cluster.external_id');
-    openModal('insights-on-rule-disable-feedback-modal', { clusterId, ruleId, errorKey });
+    const isManagedCluster = clusterDetails?.cluster?.subscription?.managed || false;
+    const clusterId = clusterDetails?.cluster?.external_id || '';
+    openModal('insights-on-rule-disable-feedback-modal', {
+      clusterId, ruleId, errorKey, isRuleDetailsPage: true, isManagedCluster,
+    });
   }
 
   onVoteOnRule = async (clusterUUID, ruleId, vote) => {
@@ -109,10 +109,10 @@ class InsightsRuleDetails extends Component {
       fetchReportData,
       match,
     } = this.props;
+    const isManagedCluster = clusterDetails?.cluster?.subscription?.managed || false;
     const { errorKey } = match.params;
-
     await voteOnRule(clusterUUID, ruleId, errorKey, vote);
-    fetchReportData(clusterUUID, ruleId, errorKey, get(clusterDetails, 'cluster.managed', false));
+    fetchReportData(clusterUUID, ruleId, errorKey, isManagedCluster);
   }
 
   refresh() {
@@ -120,15 +120,17 @@ class InsightsRuleDetails extends Component {
       match,
       clusterDetails,
     } = this.props;
-    const { subscriptionID, errorKey } = match.params;
-    const reportID = match.params.reportId.replace(/\|/g, '.');
+    const isManagedCluster = clusterDetails?.cluster?.subscription?.managed || false;
+    const externalId = clusterDetails?.cluster?.external_id || '';
+    const { subscriptionID, errorKey, reportId } = match.params;
+    const reportIdModified = reportId.replace(/\|/g, '.');
     if (isValid(subscriptionID)) {
       this.fetchDetailsAndInsightsData(
         subscriptionID,
-        get(clusterDetails, 'cluster.external_id'),
-        reportID,
+        externalId,
+        reportIdModified,
         errorKey,
-        get(clusterDetails, 'cluster.managed', false),
+        isManagedCluster,
       );
     }
   }
@@ -155,16 +157,19 @@ class InsightsRuleDetails extends Component {
     } = this.props;
 
     const { cluster } = clusterDetails;
+    const isManagedCluster = cluster?.subscription?.managed || false;
+    const externalId = cluster?.external_id || '';
     const { errorKey } = match.params;
     const requestedSubscriptionID = match.params.subscriptionID;
     const requestedReportID = match.params.reportId.replace(/\|/g, '.');
-    const externalId = get(clusterDetails, 'cluster.external_id');
 
     // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
     // the redux state will have the data for the previous cluster. We want to ensure we only
     // show data for the requested cluster, so different data should be marked as pending.
 
-    const isPending = (((get(cluster, 'subscription.id') !== requestedSubscriptionID) && !clusterDetails.error) || (get(reportDetails.report, 'rule_id') !== requestedReportID && !reportDetails.rejected));
+    const isPending = (
+      ((get(cluster, 'subscription.id') !== requestedSubscriptionID) && !clusterDetails.error)
+    || (get(reportDetails.report, 'rule_id') !== requestedReportID && !reportDetails.rejected));
 
     const errorClusterState = () => (
       <>
@@ -248,7 +253,7 @@ class InsightsRuleDetails extends Component {
           refreshFunc={this.refresh}
           voteOnRule={this.onVoteOnRule}
           disableRule={this.onRuleDisable}
-          enableRule={ruleId => enableRule(externalId, ruleId, errorKey)}
+          enableRule={ruleId => enableRule(externalId, ruleId, errorKey, true, isManagedCluster)}
         >
           {!isRuleDisabled
           && (
@@ -269,13 +274,23 @@ class InsightsRuleDetails extends Component {
                   <CardTitle className="disabled-recommendation-title">Recommendation is disabled</CardTitle>
                   <CardBody>
                     <div className="disabled-recommendation-message">
-                      This recommendation is disabled for the following reason:
-                      <i>{ ruleDisableFeedback && ruleDisableFeedback.length ? ruleDisableFeedback : 'None' }</i>
-                      <span>{moment(ruleDisabledAtDate).format('DD MMM YYYY')}</span>
+                      This recommendation was disabled on
+                      {` ${moment(ruleDisabledAtDate).format('DD MMM YYYY')}`}
+                      {(ruleDisableFeedback && ruleDisableFeedback.length)
+                        && (
+                        <>
+                          {' '}
+                          for the following reason:
+                          <i>
+                            {ruleDisableFeedback}
+                          </i>
+                        </>
+                        )}
+                      .
                     </div>
                   </CardBody>
                   <CardFooter>
-                    <Button variant="link" isInline onClick={() => enableRule(externalId, currentRuleId, errorKey)}>
+                    <Button variant="link" isInline onClick={() => enableRule(externalId, currentRuleId, errorKey, true, isManagedCluster)}>
                       Enable recommendation
                     </Button>
                   </CardFooter>
@@ -356,7 +371,12 @@ InsightsRuleDetails.propTypes = {
   enableRule: PropTypes.func.isRequired,
   reportDetails: PropTypes.object,
   clusterDetails: PropTypes.shape({
-    cluster: PropTypes.object,
+    cluster: PropTypes.shape({
+      external_id: PropTypes.string,
+      subscription: PropTypes.shape({
+        managed: PropTypes.bool,
+      }),
+    }),
     error: PropTypes.bool,
     errorCode: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     errorMessage: PropTypes.oneOfType([
@@ -374,12 +394,7 @@ InsightsRuleDetails.propTypes = {
 
 InsightsRuleDetails.defaultProps = {
   reportDetails: {},
-  clusterDetails: {
-    cluster: null,
-    error: false,
-    errorMessage: '',
-    fulfilled: false,
-  },
+  clusterDetails: {},
 };
 
 export default InsightsRuleDetails;

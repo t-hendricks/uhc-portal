@@ -57,6 +57,7 @@ describe('getClusterStateAndDescription', () => {
       const result = getClusterStateAndDescription(cluster);
       expect(result.description).toEqual(expectedDescription);
     };
+    expectDescription(clusterStates.WAITING, 'Waiting');
     expectDescription(clusterStates.PENDING, 'Installing');
     expectDescription(clusterStates.INSTALLING, 'Installing');
     expectDescription(clusterStates.READY, 'Ready');

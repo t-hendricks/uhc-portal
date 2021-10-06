@@ -6,6 +6,8 @@ import { Field } from 'redux-form';
 import {
   FormGroup,
   GridItem,
+  Stack,
+  StackItem,
   Text,
   Title,
 } from '@patternfly/react-core';
@@ -142,7 +144,7 @@ function BillingModelSection({
         <>
           <GridItem span={8}>
             <Title headingLevel="h2">Welcome to Red Hat OpenShift Dedicated</Title>
-            <Text component="p">
+            <Text component="p" id="welcome-osd-text">
               Reduce operational complexity and focus on building applications
               that add more value to your business with Red Hat OpenShift Dedicated,
               a fully managed service of Red Hat OpenShift on
@@ -155,65 +157,71 @@ function BillingModelSection({
         </>
       )}
       <GridItem span={12}>
-        {showSubscriptionType && (
-        <>
-          <Title headingLevel="h3">Subscription type:</Title>
-          <FormGroup
-            isRequired
-            fieldId="billing_model"
-            id="subscription-billing-model"
-          >
-            <Field
-              component={RadioButtons}
-              name="billing_model"
-              className="radio-button"
-              disabled={pending}
-              onChange={onBillingModelChange}
-              options={subscriptionOptions}
-              defaultValue={defaultBillingModel}
-              disableDefaultValueHandling={isWizard}
-            />
-          </FormGroup>
-          <Title headingLevel="h3">Infrastructure type:</Title>
-        </>
-        )}
-        <FormGroup
-          isRequired
-          fieldId="byoc"
-        >
-          { isWizard
-            ? (
+        <Stack hasGutter>
+          {showSubscriptionType && (
+          <StackItem>
+            <Title headingLevel="h3">Subscription type:</Title>
+            <FormGroup
+              isRequired
+              fieldId="billing_model"
+              className="sub-infra-billing-model"
+            >
               <Field
                 component={RadioButtons}
-                name="byoc"
-                defaultValue={!isRhInfraQuotaDisabled ? 'false' : 'true'}
-                disableDefaultValueHandling
-                options={[{
-                  label: 'Customer cloud subscription',
-                  description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',
-                  value: 'true',
-                  disabled: isBYOCQuotaDisabled,
-                },
-                {
-                  label: 'Red Hat cloud account',
-                  description: 'Deploy in cloud provider accounts owned by Red Hat',
-                  value: 'false',
-                  disabled: isRhInfraQuotaDisabled,
-                }]}
-                onChange={toggleBYOCFields}
+                name="billing_model"
+                className="radio-button"
+                disabled={pending}
+                onChange={onBillingModelChange}
+                options={subscriptionOptions}
+                defaultValue={defaultBillingModel}
+                disableDefaultValueHandling={isWizard}
               />
-            )
-            : (
-              <Field
-                component={BillingModelRadioButtons}
-                name="byoc"
-                isBYOCQuotaDisabled={isBYOCQuotaDisabled}
-                isRhInfraQuotaDisabled={isRhInfraQuotaDisabled}
-                byocSelected={byocSelected}
-                onChange={toggleBYOCFields}
-              />
-            )}
-        </FormGroup>
+            </FormGroup>
+          </StackItem>
+          )}
+          <StackItem>
+            <Title headingLevel="h3">Infrastructure type:</Title>
+            <FormGroup
+              isRequired
+              fieldId="byoc"
+              className="sub-infra-billing-model"
+            >
+              { isWizard
+                ? (
+                  <Field
+                    component={RadioButtons}
+                    name="byoc"
+                    className="radio-button"
+                    defaultValue={!isRhInfraQuotaDisabled ? 'false' : 'true'}
+                    disableDefaultValueHandling
+                    options={[{
+                      label: 'Customer cloud subscription',
+                      description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',
+                      value: 'true',
+                      disabled: isBYOCQuotaDisabled,
+                    },
+                    {
+                      label: 'Red Hat cloud account',
+                      description: 'Deploy in cloud provider accounts owned by Red Hat',
+                      value: 'false',
+                      disabled: isRhInfraQuotaDisabled,
+                    }]}
+                    onChange={toggleBYOCFields}
+                  />
+                )
+                : (
+                  <Field
+                    component={BillingModelRadioButtons}
+                    name="byoc"
+                    isBYOCQuotaDisabled={isBYOCQuotaDisabled}
+                    isRhInfraQuotaDisabled={isRhInfraQuotaDisabled}
+                    byocSelected={byocSelected}
+                    onChange={toggleBYOCFields}
+                  />
+                )}
+            </FormGroup>
+          </StackItem>
+        </Stack>
       </GridItem>
     </>
   );
