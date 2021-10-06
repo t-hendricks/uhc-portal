@@ -224,6 +224,7 @@ module.exports = async (_env, argv) => {
         onProxyReq(request) {
           request.setHeader('origin', 'https://console.redhat.com');
         },
+        logLevel: 'debug',
       } : undefined,
       hot: false,
       port: noInsightsProxy ? 1337 : 8001,
