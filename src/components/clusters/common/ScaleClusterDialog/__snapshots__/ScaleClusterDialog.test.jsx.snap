@@ -33,7 +33,6 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
                 "$$typeof": Symbol(react.memo),
                 "WrappedComponent": [Function],
                 "compare": null,
-                "displayName": "Connect(LoadBalancersDropdown)",
                 "type": [Function],
               }
             }
@@ -64,7 +63,6 @@ exports[`<ScaleClusterDialog /> renders correctly 1`] = `
                 "$$typeof": Symbol(react.memo),
                 "WrappedComponent": [Function],
                 "compare": null,
-                "displayName": "Connect(PersistentStorageDropdown)",
                 "type": [Function],
               }
             }
@@ -127,7 +125,6 @@ exports[`<ScaleClusterDialog /> renders correctly when an error occurs 1`] = `
                 "$$typeof": Symbol(react.memo),
                 "WrappedComponent": [Function],
                 "compare": null,
-                "displayName": "Connect(LoadBalancersDropdown)",
                 "type": [Function],
               }
             }
@@ -158,7 +155,6 @@ exports[`<ScaleClusterDialog /> renders correctly when an error occurs 1`] = `
                 "$$typeof": Symbol(react.memo),
                 "WrappedComponent": [Function],
                 "compare": null,
-                "displayName": "Connect(PersistentStorageDropdown)",
                 "type": [Function],
               }
             }
