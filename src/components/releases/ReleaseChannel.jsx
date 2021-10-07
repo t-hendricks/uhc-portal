@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import semver from 'semver';
-import { Divider } from '@patternfly/react-core';
+import { Divider, Level, LevelItem } from '@patternfly/react-core';
 
 import getOCPReleaseChannel from '../../services/releaseChannelService';
 import ExternalLink from '../common/ExternalLink';
 import PopoverHint from '../common/PopoverHint';
 import getCandidateChannelLink from './getCandidateChannelLink';
 import getReleaseNotesLink from './getReleaseNotesLink';
+import SupportStatus from '../common/SupportStatus';
 
-const ReleaseChannel = ({ channel }) => {
+const ReleaseChannel = ({ channel, status }) => {
   const [latestVersion, setLatestVersion] = React.useState('');
   React.useEffect(() => {
     const fetchChannelData = async () => {
@@ -34,7 +35,7 @@ const ReleaseChannel = ({ channel }) => {
   return (
     <>
       <dt className="pf-c-description-list__term pf-u-mt-md">
-        {isCandidate && <Divider className="ocm-l-ocp-releases__divider pf-u-mb-md" />}
+        {isCandidate && (<Divider className="ocm-l-ocp-releases__divider pf-u-my-lg" />)}
         {channel}
         {isCandidate && (
           <PopoverHint
@@ -59,25 +60,33 @@ const ReleaseChannel = ({ channel }) => {
           />
         )}
       </dt>
-      {latestVersion && (
-        <dd className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail">
-          Latest version
-          {' '}
-          {releaseNotesLink ? (
-            <ExternalLink href={releaseNotesLink} noIcon>
-              {latestVersion}
-            </ExternalLink>
-          ) : (
-            latestVersion
+      <dd className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail">
+        <Level>
+          {latestVersion && (
+            <LevelItem>
+              Latest version
+              {' '}
+              {releaseNotesLink ? (
+                <ExternalLink href={releaseNotesLink} noIcon>
+                  {latestVersion}
+                </ExternalLink>
+              ) : (
+                latestVersion
+              )}
+            </LevelItem>
           )}
-        </dd>
-      )}
+          {status && (
+            <SupportStatus status={status} />
+          )}
+        </Level>
+      </dd>
     </>
   );
 };
 
 ReleaseChannel.propTypes = {
   channel: PropTypes.string.isRequired,
+  status: PropTypes.string,
 };
 
 export default ReleaseChannel;

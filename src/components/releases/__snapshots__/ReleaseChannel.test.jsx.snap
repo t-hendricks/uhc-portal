@@ -12,20 +12,30 @@ exports[`<ReleaseChannel /> should render 1`] = `
   <dd
     className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
   >
-    Latest version
-     
-    <ExternalLink
-      href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html#ocp-4-6-12"
-      noIcon={true}
-    >
-      <a
-        href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html#ocp-4-6-12"
-        rel="noreferrer noopener"
-        target="_blank"
+    <Level>
+      <div
+        className="pf-l-level"
       >
-        4.6.12
-      </a>
-    </ExternalLink>
+        <LevelItem>
+          <div>
+            Latest version
+             
+            <ExternalLink
+              href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html#ocp-4-6-12"
+              noIcon={true}
+            >
+              <a
+                href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html#ocp-4-6-12"
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                4.6.12
+              </a>
+            </ExternalLink>
+          </div>
+        </LevelItem>
+      </div>
+    </Level>
   </dd>
 </ReleaseChannel>
 `;
