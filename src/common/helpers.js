@@ -159,6 +159,30 @@ const parseReduxFormTaints = taintsFormData => taintsFormData.map(
    && { key: taint.key, value: taint.value, effect: taint.effect }),
 ).filter(Boolean);
 
+// https://pkg.go.dev/time#Time
+const goZeroTime = '0001-01-01T00:00:00Z';
+
+/**
+ * try to parse the go zero time, and return null for it.
+ * it does not exhaust all time formats.
+ * the fix is for AMS returning null timestamp in the form of go zerotime.
+ * @param {string} timeStr the timestamp string. Example:
+ * '2021-10-08T17:11:02Z' returns '2021-10-08T17:11:02Z'
+ * '0001-01-01T00:00:00Z' returns null
+ */
+const goZeroTime2Null = (timeStr) => {
+  if (timeStr === goZeroTime) {
+    return null;
+  }
+
+  const tm = Date.parse(timeStr);
+  if (!Number.isNaN(tm) && tm === Date.parse(goZeroTime)) {
+    return null;
+  }
+
+  return timeStr;
+};
+
 export {
   noop,
   isValid,
@@ -176,6 +200,7 @@ export {
   scrollToFirstError,
   parseReduxFormKeyValueList,
   parseReduxFormTaints,
+  goZeroTime2Null,
 };
 
 export default helpers;
