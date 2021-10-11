@@ -238,11 +238,9 @@ const urls = {
       [architectures.ppc]: {
         [operatingSystems.linux]: links.CLI_TOOLS_LINUX_PPC,
       },
-      /* 4.9
       [architectures.arm]: {
         [operatingSystems.linux]: links.CLI_TOOLS_LINUX_ARM,
       },
-      */
     },
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
@@ -346,7 +344,6 @@ const urls = {
     },
   },
   [tools.ARMINSTALLER]: {
-    /* 4.9
     [channels.STABLE]: {
       [architectures.x86]: {
         [operatingSystems.linux]: links.ARMINSTALLER_LINUX_X86,
@@ -356,7 +353,6 @@ const urls = {
         [operatingSystems.linux]: links.ARMINSTALLER_LINUX_ARM,
       },
     },
-    */
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
         [operatingSystems.linux]: links.ARMINSTALLER_LINUX_X86_PRE_RELEASE,
@@ -410,11 +406,9 @@ const urls = {
       [architectures.ppc]: {
         [operatingSystems.linux]: links.OPM_LINUX_PPC,
       },
-      /* 4.9
       [architectures.arm]: {
         [operatingSystems.linux]: links.OPM_LINUX_ARM,
       },
-      */
     },
   },
 };

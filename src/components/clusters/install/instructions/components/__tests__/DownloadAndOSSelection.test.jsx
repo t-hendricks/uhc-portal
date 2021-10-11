@@ -17,9 +17,8 @@ const testtools = [
 const token = { auths: { foo: 'bar' } };
 
 describe('DownloadAndOSSelection', () => test.each(testtools)('%s renders correctly', (tool) => {
-  const channel = (tool === tools.ARMINSTALLER) ? channels.PRE_RELEASE : channels.STABLE; // 4.9
   const wrapper = shallow(
-    <DownloadAndOSSelection token={token} tool={tool} channel={channel} />,
+    <DownloadAndOSSelection token={token} tool={tool} channel={channels.STABLE} />,
   );
   expect(wrapper).toMatchSnapshot();
 }));

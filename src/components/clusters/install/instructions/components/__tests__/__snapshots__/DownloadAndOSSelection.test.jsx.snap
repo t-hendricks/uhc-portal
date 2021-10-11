@@ -81,7 +81,7 @@ exports[`DownloadAndOSSelection aarch64-openshift-install renders correctly 1`] 
       <DownloadButton
         disabled={false}
         tool="aarch64-openshift-install"
-        url="https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz"
+        url="https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/openshift-install-linux-amd64.tar.gz"
       />
     </GridItem>
   </Grid>
@@ -247,6 +247,11 @@ exports[`DownloadAndOSSelection oc renders correctly 1`] = `
           key="x86"
           label="x86_64"
           value="x86"
+        />
+        <FormSelectOption
+          key="arm"
+          label="aarch64"
+          value="arm"
         />
         <FormSelectOption
           key="ppc"
