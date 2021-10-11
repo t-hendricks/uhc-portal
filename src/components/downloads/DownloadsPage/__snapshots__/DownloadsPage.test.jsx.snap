@@ -284,6 +284,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -321,6 +322,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -569,6 +571,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -606,6 +609,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -845,6 +849,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -882,6 +887,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -1147,6 +1153,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -1184,6 +1191,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -1423,6 +1431,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -1460,6 +1469,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -1699,6 +1709,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -1736,6 +1747,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -1985,6 +1997,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -2022,6 +2035,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -2297,6 +2311,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -2334,6 +2349,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -2579,6 +2595,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -2616,6 +2633,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -2861,6 +2879,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -2898,6 +2917,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -3149,6 +3169,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -3186,6 +3207,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -3430,6 +3452,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
@@ -3467,6 +3490,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
                     },
                     "x86": Object {
+                      "linux": undefined,
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
                     },
                   },
