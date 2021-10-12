@@ -1,6 +1,7 @@
 import { userActions } from './userActions';
-import { accountsService } from '../../services';
+import { emptyQuota } from '../reducers/userReducer';
 import { normalizedProducts, billingModels } from '../../common/subscriptionTypes';
+import { userConstants } from '../constants';
 
 jest.mock('../../services/accountsService.js');
 
@@ -13,29 +14,30 @@ const { STANDARD } = billingModels;
 
 describe('clustersActions', () => {
   let item;
+  let mockDispatch;
   beforeEach(() => {
     item = {
       allowed: 1,
       consumed: 0,
     };
+    mockDispatch = jest.fn();
   });
 
   describe('getOrganizationAndQuota', () => {
-    it('calls accountsService.getCurrentAccount', () => {
-      userActions.getOrganizationAndQuota();
-      expect(accountsService.getCurrentAccount).toBeCalled();
-    });
-
-    it('calls accountsService.getOrganization', () => {
-      userActions.getOrganizationAndQuota();
-      expect(accountsService.getOrganization).toBeCalled();
+    it('dispatches successfully', () => {
+      const mockGetState = jest.fn().mockImplementation(() => ({}));
+      userActions.getOrganizationAndQuota({})(mockDispatch, mockGetState);
+      expect(mockDispatch).toBeCalledWith({
+        payload: expect.anything(),
+        type: userConstants.GET_ORGANIZATION,
+      });
     });
   });
 
   describe('processClusterQuota', () => {
     let clusterQuota;
     beforeEach(() => {
-      clusterQuota = userActions.emptyQuota().clustersQuota;
+      clusterQuota = emptyQuota().clustersQuota;
     });
 
     it('should process empty quota', () => {
@@ -323,7 +325,7 @@ describe('clustersActions', () => {
   describe('processStorageQuota', () => {
     let storageQuota;
     beforeEach(() => {
-      storageQuota = userActions.emptyQuota().storageQuota;
+      storageQuota = emptyQuota().storageQuota;
     });
 
     it('should process quota on AWS', () => {
@@ -344,7 +346,7 @@ describe('clustersActions', () => {
   describe('processLoadBalancerQuota', () => {
     let loadBalancerQuota;
     beforeEach(() => {
-      loadBalancerQuota = userActions.emptyQuota().loadBalancerQuota;
+      loadBalancerQuota = emptyQuota().loadBalancerQuota;
     });
 
     it('should process quota on AWS', () => {
@@ -367,7 +369,7 @@ describe('clustersActions', () => {
   describe('processAddOnQuota', () => {
     let addOnsQuota;
     beforeEach(() => {
-      addOnsQuota = userActions.emptyQuota().addOnsQuota;
+      addOnsQuota = emptyQuota().addOnsQuota;
     });
 
     it('should process empty quota', () => {
