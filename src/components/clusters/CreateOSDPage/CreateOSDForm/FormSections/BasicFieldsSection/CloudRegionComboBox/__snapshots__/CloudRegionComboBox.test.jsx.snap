@@ -254,7 +254,7 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
       >
-        <Component
+        <AlertIcon
           variant="danger"
         >
           <div
@@ -285,7 +285,7 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
               </svg>
             </ExclamationCircleIcon>
           </div>
-        </Component>
+        </AlertIcon>
         <h4
           className="pf-c-alert__title"
         >

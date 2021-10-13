@@ -11167,7 +11167,7 @@ exports[`<PersistentStorageDropdown /> when there was an error renders correctly
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
       >
-        <Component
+        <AlertIcon
           variant="danger"
         >
           <div
@@ -11198,7 +11198,7 @@ exports[`<PersistentStorageDropdown /> when there was an error renders correctly
               </svg>
             </ExclamationCircleIcon>
           </div>
-        </Component>
+        </AlertIcon>
         <h4
           className="pf-c-alert__title"
         >
