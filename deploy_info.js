@@ -66,8 +66,8 @@ const getEnvs = async (upstream) => {
     {
       name: 'live_master',
       ci_job: 'https://jenkins-jenkins.5a9f.insights-dev.openshiftapps.com/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-stable/ (login with "google")',
-      comment: 'Live at https://qaprodauth.cloud.redhat.com/openshift/',
-      info: appInfo('https://qaprodauth.cloud.redhat.com/apps/openshift/app.info.json'),
+      comment: 'Live at https://qaprodauth.console.redhat.com/openshift/',
+      info: appInfo('https://qaprodauth.console.redhat.com/apps/openshift/app.info.json'),
     },
     {
       name: 'build_pushed_beta_master',
@@ -78,8 +78,8 @@ const getEnvs = async (upstream) => {
     {
       name: 'live_beta_master',
       ci_job: 'https://jenkins-jenkins.5a9f.insights-dev.openshiftapps.com/job/insights-frontend-deployer/job/uhc-portal-frontend-deploy/job/qa-beta/ (login with "google")',
-      comment: 'Live at https://qaprodauth.cloud.redhat.com/beta/openshift/',
-      info: appInfo('https://qaprodauth.cloud.redhat.com/beta/apps/openshift/app.info.json'),
+      comment: 'Live at https://qaprodauth.console.redhat.com/beta/openshift/',
+      info: appInfo('https://qaprodauth.console.redhat.com/beta/apps/openshift/app.info.json'),
     },
     {
       name: `${upstream}/candidate`,

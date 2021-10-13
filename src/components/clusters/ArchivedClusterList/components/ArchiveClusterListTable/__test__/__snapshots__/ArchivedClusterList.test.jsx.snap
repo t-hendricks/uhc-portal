@@ -131,7 +131,6 @@ exports[`<ArchivedClusterList /> ArchivedClusterList should render 1`] = `
               "$$typeof": Symbol(react.memo),
               "WrappedComponent": [Function],
               "compare": null,
-              "displayName": "Connect(UnarchiveClusterDialog)",
               "modalName": "unarchive-cluster",
               "type": [Function],
             }
