@@ -80,969 +80,7 @@ exports[`<Releases /> should render 1`] = `
                               className="pf-l-stack__item"
                             >
                               View general information on the most recent OpenShift Container Platform release versions that you can install. Versions are only supported when released to the fast, stable, or eus channels.
-                            </div>
-                          </StackItem>
-                          <Gallery
-                            hasGutter={true}
-                          >
-                            <div
-                              className="pf-l-gallery pf-m-gutter"
-                            >
-                              <GalleryItem
-                                key="4.6"
-                              >
-                                <div>
-                                  <Card
-                                    className="ocm-l-ocp-releases__card"
-                                    isFlat={true}
-                                  >
-                                    <article
-                                      className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
-                                      data-ouia-component-id="OUIA-Generated-Card-3"
-                                      data-ouia-component-type="PF4/Card"
-                                      data-ouia-safe={true}
-                                      id=""
-                                    >
-                                      <CardTitle>
-                                        <div
-                                          className="pf-c-card__title"
-                                        >
-                                          <div
-                                            className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
-                                          >
-                                            <ExternalLink
-                                              href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html"
-                                              noIcon={true}
-                                            >
-                                              <a
-                                                href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html"
-                                                rel="noreferrer noopener"
-                                                target="_blank"
-                                              >
-                                                OpenShift
-                                                 
-                                                4.6
-                                              </a>
-                                            </ExternalLink>
-                                          </div>
-                                          <SupportStatus
-                                            status="Full Support"
-                                          >
-                                            <Popover
-                                              aria-label="Full support"
-                                              bodyContent="This minor version of OpenShift is fully supported. In order to receive security and bug fixes, continue to install patch (z-stream) updates to your cluster or upgrade to the latest minor version when available."
-                                              className="support-status-popover"
-                                              footerContent={
-                                                <React.Fragment>
-                                                  See
-                                                   
-                                                  <ExternalLink
-                                                    href="https://access.redhat.com/support/policy/updates/openshift"
-                                                    noIcon={true}
-                                                  >
-                                                    this resource
-                                                  </ExternalLink>
-                                                   
-                                                  to learn more about the support lifecycle.
-                                                </React.Fragment>
-                                              }
-                                              id="full-support"
-                                            >
-                                              <Popper
-                                                appendTo={[Function]}
-                                                distance={25}
-                                                enableFlip={true}
-                                                flipBehavior={
-                                                  Array [
-                                                    "top",
-                                                    "right",
-                                                    "bottom",
-                                                    "left",
-                                                    "top",
-                                                    "right",
-                                                    "bottom",
-                                                  ]
-                                                }
-                                                isVisible={false}
-                                                onDocumentClick={[Function]}
-                                                onDocumentKeyDown={[Function]}
-                                                onTriggerClick={[Function]}
-                                                onTriggerEnter={[Function]}
-                                                placement="top"
-                                                popper={
-                                                  <FocusTrap
-                                                    active={false}
-                                                    aria-describedby="popover-full-support-body"
-                                                    aria-label="Full support"
-                                                    aria-modal="true"
-                                                    className="pf-c-popover support-status-popover"
-                                                    focusTrapOptions={
-                                                      Object {
-                                                        "clickOutsideDeactivates": true,
-                                                        "fallbackFocus": [Function],
-                                                        "returnFocusOnDeactivate": true,
-                                                      }
-                                                    }
-                                                    onMouseDown={[Function]}
-                                                    paused={false}
-                                                    preventScrollOnDeactivate={true}
-                                                    role="dialog"
-                                                    style={
-                                                      Object {
-                                                        "maxWidth": null,
-                                                        "minWidth": null,
-                                                        "opacity": 0,
-                                                        "transition": "opacity 300ms cubic-bezier(.54, 1.5, .38, 1.11)",
-                                                      }
-                                                    }
-                                                  >
-                                                    <PopoverArrow />
-                                                    <PopoverContent>
-                                                      <PopoverCloseButton
-                                                        aria-label="Close"
-                                                        onClose={[Function]}
-                                                      />
-                                                      <PopoverBody
-                                                        id="popover-full-support-body"
-                                                      >
-                                                        This minor version of OpenShift is fully supported. In order to receive security and bug fixes, continue to install patch (z-stream) updates to your cluster or upgrade to the latest minor version when available.
-                                                      </PopoverBody>
-                                                      <PopoverFooter
-                                                        id="popover-full-support-footer"
-                                                      >
-                                                        <React.Fragment>
-                                                          See
-                                                           
-                                                          <ExternalLink
-                                                            href="https://access.redhat.com/support/policy/updates/openshift"
-                                                            noIcon={true}
-                                                          >
-                                                            this resource
-                                                          </ExternalLink>
-                                                           
-                                                          to learn more about the support lifecycle.
-                                                        </React.Fragment>
-                                                      </PopoverFooter>
-                                                    </PopoverContent>
-                                                  </FocusTrap>
-                                                }
-                                                popperMatchesTriggerWidth={false}
-                                                positionModifiers={
-                                                  Object {
-                                                    "bottom": "pf-m-bottom",
-                                                    "left": "pf-m-left",
-                                                    "right": "pf-m-right",
-                                                    "top": "pf-m-top",
-                                                  }
-                                                }
-                                                trigger={
-                                                  <Label
-                                                    className="support-status-label support-status-label--clickable"
-                                                    color="blue"
-                                                    variant="outline"
-                                                  >
-                                                    Full support
-                                                  </Label>
-                                                }
-                                                zIndex={9999}
-                                              >
-                                                <FindRefWrapper
-                                                  onFoundRef={[Function]}
-                                                >
-                                                  <Label
-                                                    className="support-status-label support-status-label--clickable"
-                                                    color="blue"
-                                                    variant="outline"
-                                                  >
-                                                    <span
-                                                      className="pf-c-label pf-m-blue pf-m-outline support-status-label support-status-label--clickable"
-                                                    >
-                                                      <span
-                                                        className="pf-c-label__content"
-                                                      >
-                                                        Full support
-                                                      </span>
-                                                    </span>
-                                                  </Label>
-                                                </FindRefWrapper>
-                                              </Popper>
-                                            </Popover>
-                                          </SupportStatus>
-                                          <Divider
-                                            className="ocm-l-ocp-releases__divider pf-u-mt-xl pf-u-mb-sm"
-                                          >
-                                            <hr
-                                              className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-xl pf-u-mb-sm"
-                                            />
-                                          </Divider>
-                                        </div>
-                                      </CardTitle>
-                                      <CardBody>
-                                        <div
-                                          className="pf-c-card__body"
-                                        >
-                                          <div
-                                            className="ocm-l-ocp-releases__subheading"
-                                          >
-                                            Channel details
-                                          </div>
-                                          <dl
-                                            className="ocm-l-ocp-releases__channels pf-c-description-list__group"
-                                          >
-                                            <mockConstructor
-                                              channel="stable-4.6"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                stable-4.6
-                                              </dt>
-                                            </mockConstructor>
-                                            <mockConstructor
-                                              channel="fast-4.6"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                fast-4.6
-                                              </dt>
-                                            </mockConstructor>
-                                            <mockConstructor
-                                              channel="eus-4.6"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                eus-4.6
-                                              </dt>
-                                            </mockConstructor>
-                                            <mockConstructor
-                                              channel="candidate-4.6"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                candidate-4.6
-                                              </dt>
-                                            </mockConstructor>
-                                          </dl>
-                                        </div>
-                                      </CardBody>
-                                    </article>
-                                  </Card>
-                                </div>
-                              </GalleryItem>
-                              <GalleryItem
-                                key="4.5"
-                              >
-                                <div>
-                                  <Card
-                                    className="ocm-l-ocp-releases__card"
-                                    isFlat={true}
-                                  >
-                                    <article
-                                      className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
-                                      data-ouia-component-id="OUIA-Generated-Card-4"
-                                      data-ouia-component-type="PF4/Card"
-                                      data-ouia-safe={true}
-                                      id=""
-                                    >
-                                      <CardTitle>
-                                        <div
-                                          className="pf-c-card__title"
-                                        >
-                                          <div
-                                            className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
-                                          >
-                                            <ExternalLink
-                                              href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html"
-                                              noIcon={true}
-                                            >
-                                              <a
-                                                href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html"
-                                                rel="noreferrer noopener"
-                                                target="_blank"
-                                              >
-                                                OpenShift
-                                                 
-                                                4.5
-                                              </a>
-                                            </ExternalLink>
-                                          </div>
-                                          <SupportStatus
-                                            status="Maintenance Support"
-                                          >
-                                            <Popover
-                                              aria-label="Maintenance support"
-                                              bodyContent="This minor version of OpenShift has reached the maintenance support phase. Critical and selected high priority fixes will continue to be delivered in patch (z-stream) releases."
-                                              className="support-status-popover"
-                                              footerContent={
-                                                <React.Fragment>
-                                                  See
-                                                   
-                                                  <ExternalLink
-                                                    href="https://access.redhat.com/support/policy/updates/openshift"
-                                                    noIcon={true}
-                                                  >
-                                                    this resource
-                                                  </ExternalLink>
-                                                   
-                                                  to learn more about the support lifecycle.
-                                                </React.Fragment>
-                                              }
-                                              id="maintenance-support"
-                                            >
-                                              <Popper
-                                                appendTo={[Function]}
-                                                distance={25}
-                                                enableFlip={true}
-                                                flipBehavior={
-                                                  Array [
-                                                    "top",
-                                                    "right",
-                                                    "bottom",
-                                                    "left",
-                                                    "top",
-                                                    "right",
-                                                    "bottom",
-                                                  ]
-                                                }
-                                                isVisible={false}
-                                                onDocumentClick={[Function]}
-                                                onDocumentKeyDown={[Function]}
-                                                onTriggerClick={[Function]}
-                                                onTriggerEnter={[Function]}
-                                                placement="top"
-                                                popper={
-                                                  <FocusTrap
-                                                    active={false}
-                                                    aria-describedby="popover-maintenance-support-body"
-                                                    aria-label="Maintenance support"
-                                                    aria-modal="true"
-                                                    className="pf-c-popover support-status-popover"
-                                                    focusTrapOptions={
-                                                      Object {
-                                                        "clickOutsideDeactivates": true,
-                                                        "fallbackFocus": [Function],
-                                                        "returnFocusOnDeactivate": true,
-                                                      }
-                                                    }
-                                                    onMouseDown={[Function]}
-                                                    paused={false}
-                                                    preventScrollOnDeactivate={true}
-                                                    role="dialog"
-                                                    style={
-                                                      Object {
-                                                        "maxWidth": null,
-                                                        "minWidth": null,
-                                                        "opacity": 0,
-                                                        "transition": "opacity 300ms cubic-bezier(.54, 1.5, .38, 1.11)",
-                                                      }
-                                                    }
-                                                  >
-                                                    <PopoverArrow />
-                                                    <PopoverContent>
-                                                      <PopoverCloseButton
-                                                        aria-label="Close"
-                                                        onClose={[Function]}
-                                                      />
-                                                      <PopoverBody
-                                                        id="popover-maintenance-support-body"
-                                                      >
-                                                        This minor version of OpenShift has reached the maintenance support phase. Critical and selected high priority fixes will continue to be delivered in patch (z-stream) releases.
-                                                      </PopoverBody>
-                                                      <PopoverFooter
-                                                        id="popover-maintenance-support-footer"
-                                                      >
-                                                        <React.Fragment>
-                                                          See
-                                                           
-                                                          <ExternalLink
-                                                            href="https://access.redhat.com/support/policy/updates/openshift"
-                                                            noIcon={true}
-                                                          >
-                                                            this resource
-                                                          </ExternalLink>
-                                                           
-                                                          to learn more about the support lifecycle.
-                                                        </React.Fragment>
-                                                      </PopoverFooter>
-                                                    </PopoverContent>
-                                                  </FocusTrap>
-                                                }
-                                                popperMatchesTriggerWidth={false}
-                                                positionModifiers={
-                                                  Object {
-                                                    "bottom": "pf-m-bottom",
-                                                    "left": "pf-m-left",
-                                                    "right": "pf-m-right",
-                                                    "top": "pf-m-top",
-                                                  }
-                                                }
-                                                trigger={
-                                                  <Label
-                                                    className="support-status-label support-status-label--clickable"
-                                                    color="blue"
-                                                    variant="outline"
-                                                  >
-                                                    Maintenance support
-                                                  </Label>
-                                                }
-                                                zIndex={9999}
-                                              >
-                                                <FindRefWrapper
-                                                  onFoundRef={[Function]}
-                                                >
-                                                  <Label
-                                                    className="support-status-label support-status-label--clickable"
-                                                    color="blue"
-                                                    variant="outline"
-                                                  >
-                                                    <span
-                                                      className="pf-c-label pf-m-blue pf-m-outline support-status-label support-status-label--clickable"
-                                                    >
-                                                      <span
-                                                        className="pf-c-label__content"
-                                                      >
-                                                        Maintenance support
-                                                      </span>
-                                                    </span>
-                                                  </Label>
-                                                </FindRefWrapper>
-                                              </Popper>
-                                            </Popover>
-                                          </SupportStatus>
-                                          <Divider
-                                            className="ocm-l-ocp-releases__divider pf-u-mt-xl pf-u-mb-sm"
-                                          >
-                                            <hr
-                                              className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-xl pf-u-mb-sm"
-                                            />
-                                          </Divider>
-                                        </div>
-                                      </CardTitle>
-                                      <CardBody>
-                                        <div
-                                          className="pf-c-card__body"
-                                        >
-                                          <div
-                                            className="ocm-l-ocp-releases__subheading"
-                                          >
-                                            Channel details
-                                          </div>
-                                          <dl
-                                            className="ocm-l-ocp-releases__channels pf-c-description-list__group"
-                                          >
-                                            <mockConstructor
-                                              channel="stable-4.5"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                stable-4.5
-                                              </dt>
-                                            </mockConstructor>
-                                            <mockConstructor
-                                              channel="fast-4.5"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                fast-4.5
-                                              </dt>
-                                            </mockConstructor>
-                                            <mockConstructor
-                                              channel="candidate-4.5"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                candidate-4.5
-                                              </dt>
-                                            </mockConstructor>
-                                          </dl>
-                                        </div>
-                                      </CardBody>
-                                    </article>
-                                  </Card>
-                                </div>
-                              </GalleryItem>
-                              <GalleryItem
-                                key="4.4"
-                              >
-                                <div>
-                                  <Card
-                                    className="ocm-l-ocp-releases__card"
-                                    isFlat={true}
-                                  >
-                                    <article
-                                      className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
-                                      data-ouia-component-id="OUIA-Generated-Card-5"
-                                      data-ouia-component-type="PF4/Card"
-                                      data-ouia-safe={true}
-                                      id=""
-                                    >
-                                      <CardTitle>
-                                        <div
-                                          className="pf-c-card__title"
-                                        >
-                                          <div
-                                            className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
-                                          >
-                                            <ExternalLink
-                                              href="https://docs.openshift.com/container-platform/4.4/release_notes/ocp-4-4-release-notes.html"
-                                              noIcon={true}
-                                            >
-                                              <a
-                                                href="https://docs.openshift.com/container-platform/4.4/release_notes/ocp-4-4-release-notes.html"
-                                                rel="noreferrer noopener"
-                                                target="_blank"
-                                              >
-                                                OpenShift
-                                                 
-                                                4.4
-                                              </a>
-                                            </ExternalLink>
-                                          </div>
-                                          <SupportStatus
-                                            status="Maintenance Support"
-                                          >
-                                            <Popover
-                                              aria-label="Maintenance support"
-                                              bodyContent="This minor version of OpenShift has reached the maintenance support phase. Critical and selected high priority fixes will continue to be delivered in patch (z-stream) releases."
-                                              className="support-status-popover"
-                                              footerContent={
-                                                <React.Fragment>
-                                                  See
-                                                   
-                                                  <ExternalLink
-                                                    href="https://access.redhat.com/support/policy/updates/openshift"
-                                                    noIcon={true}
-                                                  >
-                                                    this resource
-                                                  </ExternalLink>
-                                                   
-                                                  to learn more about the support lifecycle.
-                                                </React.Fragment>
-                                              }
-                                              id="maintenance-support"
-                                            >
-                                              <Popper
-                                                appendTo={[Function]}
-                                                distance={25}
-                                                enableFlip={true}
-                                                flipBehavior={
-                                                  Array [
-                                                    "top",
-                                                    "right",
-                                                    "bottom",
-                                                    "left",
-                                                    "top",
-                                                    "right",
-                                                    "bottom",
-                                                  ]
-                                                }
-                                                isVisible={false}
-                                                onDocumentClick={[Function]}
-                                                onDocumentKeyDown={[Function]}
-                                                onTriggerClick={[Function]}
-                                                onTriggerEnter={[Function]}
-                                                placement="top"
-                                                popper={
-                                                  <FocusTrap
-                                                    active={false}
-                                                    aria-describedby="popover-maintenance-support-body"
-                                                    aria-label="Maintenance support"
-                                                    aria-modal="true"
-                                                    className="pf-c-popover support-status-popover"
-                                                    focusTrapOptions={
-                                                      Object {
-                                                        "clickOutsideDeactivates": true,
-                                                        "fallbackFocus": [Function],
-                                                        "returnFocusOnDeactivate": true,
-                                                      }
-                                                    }
-                                                    onMouseDown={[Function]}
-                                                    paused={false}
-                                                    preventScrollOnDeactivate={true}
-                                                    role="dialog"
-                                                    style={
-                                                      Object {
-                                                        "maxWidth": null,
-                                                        "minWidth": null,
-                                                        "opacity": 0,
-                                                        "transition": "opacity 300ms cubic-bezier(.54, 1.5, .38, 1.11)",
-                                                      }
-                                                    }
-                                                  >
-                                                    <PopoverArrow />
-                                                    <PopoverContent>
-                                                      <PopoverCloseButton
-                                                        aria-label="Close"
-                                                        onClose={[Function]}
-                                                      />
-                                                      <PopoverBody
-                                                        id="popover-maintenance-support-body"
-                                                      >
-                                                        This minor version of OpenShift has reached the maintenance support phase. Critical and selected high priority fixes will continue to be delivered in patch (z-stream) releases.
-                                                      </PopoverBody>
-                                                      <PopoverFooter
-                                                        id="popover-maintenance-support-footer"
-                                                      >
-                                                        <React.Fragment>
-                                                          See
-                                                           
-                                                          <ExternalLink
-                                                            href="https://access.redhat.com/support/policy/updates/openshift"
-                                                            noIcon={true}
-                                                          >
-                                                            this resource
-                                                          </ExternalLink>
-                                                           
-                                                          to learn more about the support lifecycle.
-                                                        </React.Fragment>
-                                                      </PopoverFooter>
-                                                    </PopoverContent>
-                                                  </FocusTrap>
-                                                }
-                                                popperMatchesTriggerWidth={false}
-                                                positionModifiers={
-                                                  Object {
-                                                    "bottom": "pf-m-bottom",
-                                                    "left": "pf-m-left",
-                                                    "right": "pf-m-right",
-                                                    "top": "pf-m-top",
-                                                  }
-                                                }
-                                                trigger={
-                                                  <Label
-                                                    className="support-status-label support-status-label--clickable"
-                                                    color="blue"
-                                                    variant="outline"
-                                                  >
-                                                    Maintenance support
-                                                  </Label>
-                                                }
-                                                zIndex={9999}
-                                              >
-                                                <FindRefWrapper
-                                                  onFoundRef={[Function]}
-                                                >
-                                                  <Label
-                                                    className="support-status-label support-status-label--clickable"
-                                                    color="blue"
-                                                    variant="outline"
-                                                  >
-                                                    <span
-                                                      className="pf-c-label pf-m-blue pf-m-outline support-status-label support-status-label--clickable"
-                                                    >
-                                                      <span
-                                                        className="pf-c-label__content"
-                                                      >
-                                                        Maintenance support
-                                                      </span>
-                                                    </span>
-                                                  </Label>
-                                                </FindRefWrapper>
-                                              </Popper>
-                                            </Popover>
-                                          </SupportStatus>
-                                          <Divider
-                                            className="ocm-l-ocp-releases__divider pf-u-mt-xl pf-u-mb-sm"
-                                          >
-                                            <hr
-                                              className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-xl pf-u-mb-sm"
-                                            />
-                                          </Divider>
-                                        </div>
-                                      </CardTitle>
-                                      <CardBody>
-                                        <div
-                                          className="pf-c-card__body"
-                                        >
-                                          <div
-                                            className="ocm-l-ocp-releases__subheading"
-                                          >
-                                            Channel details
-                                          </div>
-                                          <dl
-                                            className="ocm-l-ocp-releases__channels pf-c-description-list__group"
-                                          >
-                                            <mockConstructor
-                                              channel="stable-4.4"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                stable-4.4
-                                              </dt>
-                                            </mockConstructor>
-                                            <mockConstructor
-                                              channel="fast-4.4"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                fast-4.4
-                                              </dt>
-                                            </mockConstructor>
-                                            <mockConstructor
-                                              channel="candidate-4.4"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                candidate-4.4
-                                              </dt>
-                                            </mockConstructor>
-                                          </dl>
-                                        </div>
-                                      </CardBody>
-                                    </article>
-                                  </Card>
-                                </div>
-                              </GalleryItem>
-                              <GalleryItem
-                                key="4.3"
-                              >
-                                <div>
-                                  <Card
-                                    className="ocm-l-ocp-releases__card"
-                                    isFlat={true}
-                                  >
-                                    <article
-                                      className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
-                                      data-ouia-component-id="OUIA-Generated-Card-6"
-                                      data-ouia-component-type="PF4/Card"
-                                      data-ouia-safe={true}
-                                      id=""
-                                    >
-                                      <CardTitle>
-                                        <div
-                                          className="pf-c-card__title"
-                                        >
-                                          <div
-                                            className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
-                                          >
-                                            <ExternalLink
-                                              href="https://docs.openshift.com/container-platform/4.3/release_notes/ocp-4-3-release-notes.html"
-                                              noIcon={true}
-                                            >
-                                              <a
-                                                href="https://docs.openshift.com/container-platform/4.3/release_notes/ocp-4-3-release-notes.html"
-                                                rel="noreferrer noopener"
-                                                target="_blank"
-                                              >
-                                                OpenShift
-                                                 
-                                                4.3
-                                              </a>
-                                            </ExternalLink>
-                                          </div>
-                                          <SupportStatus
-                                            status="End of life"
-                                          >
-                                            <Popover
-                                              aria-label="End of life"
-                                              bodyContent="This minor version of OpenShift has reached the end of life and is no longer supported. Upgrade to a newer version so that this cluster is supportable."
-                                              className="support-status-popover"
-                                              footerContent={
-                                                <React.Fragment>
-                                                  See
-                                                   
-                                                  <ExternalLink
-                                                    href="https://access.redhat.com/support/policy/updates/openshift"
-                                                    noIcon={true}
-                                                  >
-                                                    this resource
-                                                  </ExternalLink>
-                                                   
-                                                  to learn more about the support lifecycle.
-                                                </React.Fragment>
-                                              }
-                                              id="end-of-life"
-                                            >
-                                              <Popper
-                                                appendTo={[Function]}
-                                                distance={25}
-                                                enableFlip={true}
-                                                flipBehavior={
-                                                  Array [
-                                                    "top",
-                                                    "right",
-                                                    "bottom",
-                                                    "left",
-                                                    "top",
-                                                    "right",
-                                                    "bottom",
-                                                  ]
-                                                }
-                                                isVisible={false}
-                                                onDocumentClick={[Function]}
-                                                onDocumentKeyDown={[Function]}
-                                                onTriggerClick={[Function]}
-                                                onTriggerEnter={[Function]}
-                                                placement="top"
-                                                popper={
-                                                  <FocusTrap
-                                                    active={false}
-                                                    aria-describedby="popover-end-of-life-body"
-                                                    aria-label="End of life"
-                                                    aria-modal="true"
-                                                    className="pf-c-popover support-status-popover"
-                                                    focusTrapOptions={
-                                                      Object {
-                                                        "clickOutsideDeactivates": true,
-                                                        "fallbackFocus": [Function],
-                                                        "returnFocusOnDeactivate": true,
-                                                      }
-                                                    }
-                                                    onMouseDown={[Function]}
-                                                    paused={false}
-                                                    preventScrollOnDeactivate={true}
-                                                    role="dialog"
-                                                    style={
-                                                      Object {
-                                                        "maxWidth": null,
-                                                        "minWidth": null,
-                                                        "opacity": 0,
-                                                        "transition": "opacity 300ms cubic-bezier(.54, 1.5, .38, 1.11)",
-                                                      }
-                                                    }
-                                                  >
-                                                    <PopoverArrow />
-                                                    <PopoverContent>
-                                                      <PopoverCloseButton
-                                                        aria-label="Close"
-                                                        onClose={[Function]}
-                                                      />
-                                                      <PopoverBody
-                                                        id="popover-end-of-life-body"
-                                                      >
-                                                        This minor version of OpenShift has reached the end of life and is no longer supported. Upgrade to a newer version so that this cluster is supportable.
-                                                      </PopoverBody>
-                                                      <PopoverFooter
-                                                        id="popover-end-of-life-footer"
-                                                      >
-                                                        <React.Fragment>
-                                                          See
-                                                           
-                                                          <ExternalLink
-                                                            href="https://access.redhat.com/support/policy/updates/openshift"
-                                                            noIcon={true}
-                                                          >
-                                                            this resource
-                                                          </ExternalLink>
-                                                           
-                                                          to learn more about the support lifecycle.
-                                                        </React.Fragment>
-                                                      </PopoverFooter>
-                                                    </PopoverContent>
-                                                  </FocusTrap>
-                                                }
-                                                popperMatchesTriggerWidth={false}
-                                                positionModifiers={
-                                                  Object {
-                                                    "bottom": "pf-m-bottom",
-                                                    "left": "pf-m-left",
-                                                    "right": "pf-m-right",
-                                                    "top": "pf-m-top",
-                                                  }
-                                                }
-                                                trigger={
-                                                  <Label
-                                                    className="support-status-label support-status-label--clickable"
-                                                    color="red"
-                                                    variant="outline"
-                                                  >
-                                                    End of life
-                                                  </Label>
-                                                }
-                                                zIndex={9999}
-                                              >
-                                                <FindRefWrapper
-                                                  onFoundRef={[Function]}
-                                                >
-                                                  <Label
-                                                    className="support-status-label support-status-label--clickable"
-                                                    color="red"
-                                                    variant="outline"
-                                                  >
-                                                    <span
-                                                      className="pf-c-label pf-m-red pf-m-outline support-status-label support-status-label--clickable"
-                                                    >
-                                                      <span
-                                                        className="pf-c-label__content"
-                                                      >
-                                                        End of life
-                                                      </span>
-                                                    </span>
-                                                  </Label>
-                                                </FindRefWrapper>
-                                              </Popper>
-                                            </Popover>
-                                          </SupportStatus>
-                                          <Divider
-                                            className="ocm-l-ocp-releases__divider pf-u-mt-xl pf-u-mb-sm"
-                                          >
-                                            <hr
-                                              className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-xl pf-u-mb-sm"
-                                            />
-                                          </Divider>
-                                        </div>
-                                      </CardTitle>
-                                      <CardBody>
-                                        <div
-                                          className="pf-c-card__body"
-                                        >
-                                          <div
-                                            className="ocm-l-ocp-releases__subheading"
-                                          >
-                                            Channel details
-                                          </div>
-                                          <dl
-                                            className="ocm-l-ocp-releases__channels pf-c-description-list__group"
-                                          >
-                                            <mockConstructor
-                                              channel="stable-4.3"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                stable-4.3
-                                              </dt>
-                                            </mockConstructor>
-                                            <mockConstructor
-                                              channel="fast-4.3"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                fast-4.3
-                                              </dt>
-                                            </mockConstructor>
-                                            <mockConstructor
-                                              channel="candidate-4.3"
-                                            >
-                                              <dt
-                                                className="pf-c-description-list__term pf-u-mt-md"
-                                              >
-                                                candidate-4.3
-                                              </dt>
-                                            </mockConstructor>
-                                          </dl>
-                                        </div>
-                                      </CardBody>
-                                    </article>
-                                  </Card>
-                                </div>
-                              </GalleryItem>
-                            </div>
-                          </Gallery>
-                          <StackItem>
-                            <div
-                              className="pf-l-stack__item"
-                            >
+                               
                               <Popover
                                 aria-label="Version help"
                                 bodyContent={
@@ -1234,6 +272,654 @@ exports[`<Releases /> should render 1`] = `
                               </Popover>
                             </div>
                           </StackItem>
+                          <Gallery
+                            hasGutter={true}
+                            maxWidths={
+                              Object {
+                                "default": "340px",
+                              }
+                            }
+                            minWidths={
+                              Object {
+                                "sm": "340px",
+                              }
+                            }
+                          >
+                            <div
+                              className="pf-l-gallery pf-m-gutter"
+                              style={
+                                Object {
+                                  "--pf-l-gallery--GridTemplateColumns--max": "340px",
+                                  "--pf-l-gallery--GridTemplateColumns--min-on-sm": "340px",
+                                }
+                              }
+                            >
+                              <GalleryItem
+                                key="4.8"
+                              >
+                                <div>
+                                  <Card
+                                    className="ocm-l-ocp-releases__card"
+                                    isFlat={true}
+                                  >
+                                    <article
+                                      className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
+                                      data-ouia-component-id="OUIA-Generated-Card-3"
+                                      data-ouia-component-type="PF4/Card"
+                                      data-ouia-safe={true}
+                                      id=""
+                                    >
+                                      <CardTitle>
+                                        <div
+                                          className="pf-c-card__title"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
+                                          >
+                                            <ExternalLink
+                                              href="https://docs.openshift.com/container-platform/4.8/release_notes/ocp-4-8-release-notes.html"
+                                              noIcon={true}
+                                            >
+                                              <a
+                                                href="https://docs.openshift.com/container-platform/4.8/release_notes/ocp-4-8-release-notes.html"
+                                                rel="noreferrer noopener"
+                                                target="_blank"
+                                              >
+                                                OpenShift
+                                                 
+                                                4.8
+                                              </a>
+                                            </ExternalLink>
+                                          </div>
+                                          <Divider
+                                            className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                          >
+                                            <hr
+                                              className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                            />
+                                          </Divider>
+                                        </div>
+                                      </CardTitle>
+                                      <CardBody>
+                                        <div
+                                          className="pf-c-card__body"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__subheading"
+                                          >
+                                            Channel details
+                                          </div>
+                                          <dl
+                                            className="ocm-l-ocp-releases__channels"
+                                          >
+                                            <mockConstructor
+                                              channel="stable-4.8"
+                                              status="Full Support"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                stable-4.8
+                                              </dt>
+                                            </mockConstructor>
+                                            <mockConstructor
+                                              channel="fast-4.8"
+                                              status="Full Support"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                fast-4.8
+                                              </dt>
+                                            </mockConstructor>
+                                            <dt
+                                              className="pf-c-description-list__term pf-u-mt-md"
+                                            >
+                                              -
+                                            </dt>
+                                            <dd
+                                              className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+                                            >
+                                              No EUS channel in 4.8
+                                            </dd>
+                                            <mockConstructor
+                                              channel="candidate-4.8"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                candidate-4.8
+                                              </dt>
+                                            </mockConstructor>
+                                          </dl>
+                                        </div>
+                                      </CardBody>
+                                    </article>
+                                  </Card>
+                                </div>
+                              </GalleryItem>
+                              <GalleryItem
+                                key="4.7"
+                              >
+                                <div>
+                                  <Card
+                                    className="ocm-l-ocp-releases__card"
+                                    isFlat={true}
+                                  >
+                                    <article
+                                      className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
+                                      data-ouia-component-id="OUIA-Generated-Card-4"
+                                      data-ouia-component-type="PF4/Card"
+                                      data-ouia-safe={true}
+                                      id=""
+                                    >
+                                      <CardTitle>
+                                        <div
+                                          className="pf-c-card__title"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
+                                          >
+                                            <ExternalLink
+                                              href="https://docs.openshift.com/container-platform/4.7/release_notes/ocp-4-7-release-notes.html"
+                                              noIcon={true}
+                                            >
+                                              <a
+                                                href="https://docs.openshift.com/container-platform/4.7/release_notes/ocp-4-7-release-notes.html"
+                                                rel="noreferrer noopener"
+                                                target="_blank"
+                                              >
+                                                OpenShift
+                                                 
+                                                4.7
+                                              </a>
+                                            </ExternalLink>
+                                          </div>
+                                          <Divider
+                                            className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                          >
+                                            <hr
+                                              className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                            />
+                                          </Divider>
+                                        </div>
+                                      </CardTitle>
+                                      <CardBody>
+                                        <div
+                                          className="pf-c-card__body"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__subheading"
+                                          >
+                                            Channel details
+                                          </div>
+                                          <dl
+                                            className="ocm-l-ocp-releases__channels"
+                                          >
+                                            <mockConstructor
+                                              channel="stable-4.7"
+                                              status="Maintenance Support"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                stable-4.7
+                                              </dt>
+                                            </mockConstructor>
+                                            <mockConstructor
+                                              channel="fast-4.7"
+                                              status="Maintenance Support"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                fast-4.7
+                                              </dt>
+                                            </mockConstructor>
+                                            <dt
+                                              className="pf-c-description-list__term pf-u-mt-md"
+                                            >
+                                              -
+                                            </dt>
+                                            <dd
+                                              className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+                                            >
+                                              No EUS channel in 4.7
+                                            </dd>
+                                            <mockConstructor
+                                              channel="candidate-4.7"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                candidate-4.7
+                                              </dt>
+                                            </mockConstructor>
+                                          </dl>
+                                        </div>
+                                      </CardBody>
+                                    </article>
+                                  </Card>
+                                </div>
+                              </GalleryItem>
+                              <GalleryItem
+                                key="4.6"
+                              >
+                                <div>
+                                  <Card
+                                    className="ocm-l-ocp-releases__card"
+                                    isFlat={true}
+                                  >
+                                    <article
+                                      className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
+                                      data-ouia-component-id="OUIA-Generated-Card-5"
+                                      data-ouia-component-type="PF4/Card"
+                                      data-ouia-safe={true}
+                                      id=""
+                                    >
+                                      <CardTitle>
+                                        <div
+                                          className="pf-c-card__title"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
+                                          >
+                                            <ExternalLink
+                                              href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html"
+                                              noIcon={true}
+                                            >
+                                              <a
+                                                href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html"
+                                                rel="noreferrer noopener"
+                                                target="_blank"
+                                              >
+                                                OpenShift
+                                                 
+                                                4.6
+                                              </a>
+                                            </ExternalLink>
+                                          </div>
+                                          <Divider
+                                            className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                          >
+                                            <hr
+                                              className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                            />
+                                          </Divider>
+                                        </div>
+                                      </CardTitle>
+                                      <CardBody>
+                                        <div
+                                          className="pf-c-card__body"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__subheading"
+                                          >
+                                            Channel details
+                                          </div>
+                                          <dl
+                                            className="ocm-l-ocp-releases__channels"
+                                          >
+                                            <mockConstructor
+                                              channel="stable-4.6"
+                                              status="Maintenance Support"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                stable-4.6
+                                              </dt>
+                                            </mockConstructor>
+                                            <mockConstructor
+                                              channel="fast-4.6"
+                                              status="Maintenance Support"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                fast-4.6
+                                              </dt>
+                                            </mockConstructor>
+                                            <mockConstructor
+                                              channel="eus-4.6"
+                                              status="Maintenance Support"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                eus-4.6
+                                              </dt>
+                                            </mockConstructor>
+                                            <mockConstructor
+                                              channel="candidate-4.6"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                candidate-4.6
+                                              </dt>
+                                            </mockConstructor>
+                                          </dl>
+                                        </div>
+                                      </CardBody>
+                                    </article>
+                                  </Card>
+                                </div>
+                              </GalleryItem>
+                              <GalleryItem
+                                key="4.5"
+                              >
+                                <div>
+                                  <Card
+                                    className="ocm-l-ocp-releases__card"
+                                    isFlat={true}
+                                  >
+                                    <article
+                                      className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
+                                      data-ouia-component-id="OUIA-Generated-Card-6"
+                                      data-ouia-component-type="PF4/Card"
+                                      data-ouia-safe={true}
+                                      id=""
+                                    >
+                                      <CardTitle>
+                                        <div
+                                          className="pf-c-card__title"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
+                                          >
+                                            <ExternalLink
+                                              href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html"
+                                              noIcon={true}
+                                            >
+                                              <a
+                                                href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html"
+                                                rel="noreferrer noopener"
+                                                target="_blank"
+                                              >
+                                                OpenShift
+                                                 
+                                                4.5
+                                              </a>
+                                            </ExternalLink>
+                                          </div>
+                                          <Divider
+                                            className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                          >
+                                            <hr
+                                              className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                            />
+                                          </Divider>
+                                        </div>
+                                      </CardTitle>
+                                      <CardBody>
+                                        <div
+                                          className="pf-c-card__body"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__subheading"
+                                          >
+                                            Channel details
+                                          </div>
+                                          <dl
+                                            className="ocm-l-ocp-releases__channels"
+                                          >
+                                            <mockConstructor
+                                              channel="stable-4.5"
+                                              status="End of life"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                stable-4.5
+                                              </dt>
+                                            </mockConstructor>
+                                            <mockConstructor
+                                              channel="fast-4.5"
+                                              status="End of life"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                fast-4.5
+                                              </dt>
+                                            </mockConstructor>
+                                            <dt
+                                              className="pf-c-description-list__term pf-u-mt-md"
+                                            >
+                                              -
+                                            </dt>
+                                            <dd
+                                              className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+                                            >
+                                              No EUS channel in 4.5
+                                            </dd>
+                                            <mockConstructor
+                                              channel="candidate-4.5"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                candidate-4.5
+                                              </dt>
+                                            </mockConstructor>
+                                          </dl>
+                                        </div>
+                                      </CardBody>
+                                    </article>
+                                  </Card>
+                                </div>
+                              </GalleryItem>
+                              <GalleryItem
+                                key="4.4"
+                              >
+                                <div>
+                                  <Card
+                                    className="ocm-l-ocp-releases__card"
+                                    isFlat={true}
+                                  >
+                                    <article
+                                      className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
+                                      data-ouia-component-id="OUIA-Generated-Card-7"
+                                      data-ouia-component-type="PF4/Card"
+                                      data-ouia-safe={true}
+                                      id=""
+                                    >
+                                      <CardTitle>
+                                        <div
+                                          className="pf-c-card__title"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
+                                          >
+                                            <ExternalLink
+                                              href="https://docs.openshift.com/container-platform/4.4/release_notes/ocp-4-4-release-notes.html"
+                                              noIcon={true}
+                                            >
+                                              <a
+                                                href="https://docs.openshift.com/container-platform/4.4/release_notes/ocp-4-4-release-notes.html"
+                                                rel="noreferrer noopener"
+                                                target="_blank"
+                                              >
+                                                OpenShift
+                                                 
+                                                4.4
+                                              </a>
+                                            </ExternalLink>
+                                          </div>
+                                          <Divider
+                                            className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                          >
+                                            <hr
+                                              className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                            />
+                                          </Divider>
+                                        </div>
+                                      </CardTitle>
+                                      <CardBody>
+                                        <div
+                                          className="pf-c-card__body"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__subheading"
+                                          >
+                                            Channel details
+                                          </div>
+                                          <dl
+                                            className="ocm-l-ocp-releases__channels"
+                                          >
+                                            <mockConstructor
+                                              channel="stable-4.4"
+                                              status="End of life"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                stable-4.4
+                                              </dt>
+                                            </mockConstructor>
+                                            <mockConstructor
+                                              channel="fast-4.4"
+                                              status="End of life"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                fast-4.4
+                                              </dt>
+                                            </mockConstructor>
+                                            <dt
+                                              className="pf-c-description-list__term pf-u-mt-md"
+                                            >
+                                              -
+                                            </dt>
+                                            <dd
+                                              className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+                                            >
+                                              No EUS channel in 4.4
+                                            </dd>
+                                            <mockConstructor
+                                              channel="candidate-4.4"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                candidate-4.4
+                                              </dt>
+                                            </mockConstructor>
+                                          </dl>
+                                        </div>
+                                      </CardBody>
+                                    </article>
+                                  </Card>
+                                </div>
+                              </GalleryItem>
+                              <GalleryItem
+                                key="4.3"
+                              >
+                                <div>
+                                  <Card
+                                    className="ocm-l-ocp-releases__card"
+                                    isFlat={true}
+                                  >
+                                    <article
+                                      className="pf-c-card pf-m-flat ocm-l-ocp-releases__card"
+                                      data-ouia-component-id="OUIA-Generated-Card-8"
+                                      data-ouia-component-type="PF4/Card"
+                                      data-ouia-safe={true}
+                                      id=""
+                                    >
+                                      <CardTitle>
+                                        <div
+                                          className="pf-c-card__title"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__card-title pf-u-mb-sm"
+                                          >
+                                            <ExternalLink
+                                              href="https://docs.openshift.com/container-platform/4.3/release_notes/ocp-4-3-release-notes.html"
+                                              noIcon={true}
+                                            >
+                                              <a
+                                                href="https://docs.openshift.com/container-platform/4.3/release_notes/ocp-4-3-release-notes.html"
+                                                rel="noreferrer noopener"
+                                                target="_blank"
+                                              >
+                                                OpenShift
+                                                 
+                                                4.3
+                                              </a>
+                                            </ExternalLink>
+                                          </div>
+                                          <Divider
+                                            className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                          >
+                                            <hr
+                                              className="pf-c-divider ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm"
+                                            />
+                                          </Divider>
+                                        </div>
+                                      </CardTitle>
+                                      <CardBody>
+                                        <div
+                                          className="pf-c-card__body"
+                                        >
+                                          <div
+                                            className="ocm-l-ocp-releases__subheading"
+                                          >
+                                            Channel details
+                                          </div>
+                                          <dl
+                                            className="ocm-l-ocp-releases__channels"
+                                          >
+                                            <mockConstructor
+                                              channel="stable-4.3"
+                                              status="End of life"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                stable-4.3
+                                              </dt>
+                                            </mockConstructor>
+                                            <mockConstructor
+                                              channel="fast-4.3"
+                                              status="End of life"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                fast-4.3
+                                              </dt>
+                                            </mockConstructor>
+                                            <dt
+                                              className="pf-c-description-list__term pf-u-mt-md"
+                                            >
+                                              -
+                                            </dt>
+                                            <dd
+                                              className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+                                            >
+                                              No EUS channel in 4.3
+                                            </dd>
+                                            <mockConstructor
+                                              channel="candidate-4.3"
+                                            >
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                candidate-4.3
+                                              </dt>
+                                            </mockConstructor>
+                                          </dl>
+                                        </div>
+                                      </CardBody>
+                                    </article>
+                                  </Card>
+                                </div>
+                              </GalleryItem>
+                            </div>
+                          </Gallery>
                         </div>
                       </Stack>
                     </div>
@@ -1279,7 +965,7 @@ exports[`<Releases /> should render 1`] = `
                             >
                               Channels recommend release versions and help control the pace of updates.
                     Update channels are tied to a minor version of OpenShift Container Platform,
-                    for example 4.6. To update to the next minor release, you may need to change
+                    for example 4.8. To update to the next minor release, you may need to change
                     the channel you're in.
                             </div>
                           </StackItem>
@@ -1288,11 +974,11 @@ exports[`<Releases /> should render 1`] = `
                               className="pf-l-stack__item"
                             >
                               <ExternalLink
-                                href="https://docs.openshift.com/container-platform/4.6/updating/updating-cluster-between-minor.html"
+                                href="https://docs.openshift.com/container-platform/4.8/updating/updating-cluster-between-minor.html"
                                 noIcon={true}
                               >
                                 <a
-                                  href="https://docs.openshift.com/container-platform/4.6/updating/updating-cluster-between-minor.html"
+                                  href="https://docs.openshift.com/container-platform/4.8/updating/updating-cluster-between-minor.html"
                                   rel="noreferrer noopener"
                                   target="_blank"
                                 >

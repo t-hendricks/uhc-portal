@@ -21,6 +21,7 @@ import SubscriptionCompliancy from './SubscriptionCompliancy';
 import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
 import TermsAlert from './TermsAlert';
 import ButtonWithTooltip from '../../../common/ButtonWithTooltip';
+import { goZeroTime2Null } from '../../../../common/helpers';
 
 function ClusterDetailsTop(props) {
   const {
@@ -134,7 +135,7 @@ function ClusterDetailsTop(props) {
       || clusterIdentityProviders.pending;
 
   const trialEndDate = isProductOSDTrial && get(cluster, 'subscription.trial_end_date');
-  const OSDRHMEndDate = isProductOSDRHM && get(cluster, 'subscription.billing_expiration_date');
+  const OSDRHMEndDate = isProductOSDRHM && goZeroTime2Null(get(cluster, 'subscription.billing_expiration_date'));
 
   const canNotEditReason = !cluster.canEdit
     && 'You do not have permissions to unarchive this cluster';

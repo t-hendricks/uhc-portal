@@ -50,9 +50,7 @@ go-lint:
 		--enable=gofmt \
 		--enable=golint \
 		--enable=ineffassign \
-		--enable=interfacer \
 		--enable=lll \
-		--enable=maligned \
 		--enable=megacheck \
 		--enable=misspell \
 		--enable=structcheck \

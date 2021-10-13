@@ -1,9 +1,11 @@
 import get from 'lodash/get';
+import { store } from '../store';
 
 import { userConstants } from '../constants';
 import { accountsService, authorizationsService } from '../../services';
 import { normalizeQuotaCost } from '../../common/normalize';
-import { knownProducts, normalizedProducts, billingModels } from '../../common/subscriptionTypes';
+import { normalizedProducts } from '../../common/subscriptionTypes';
+import { emptyQuota } from '../reducers/userReducer';
 
 const userInfoResponse = payload => ({
   payload,
@@ -265,173 +267,6 @@ const processAddOnQuota = (addOnsQuota, item, resources) => {
 };
 
 /**
- * Constructs a blank quota data structure (extracted for tests).
- */
-const emptyQuota = () => {
-  const clustersQuotaByAz = () => ({
-    singleAz: { available: 0 },
-    multiAz: { available: 0 },
-    totalAvailable: 0,
-  });
-  const clustersQuotaByInfraAz = () => ({
-    byoc: clustersQuotaByAz(),
-    rhInfra: clustersQuotaByAz(),
-    isAvailable: false,
-  });
-  const clustersQuotaByProviderInfraAz = () => ({
-    aws: clustersQuotaByInfraAz(),
-    gcp: clustersQuotaByInfraAz(),
-  });
-  const clustersQuotaByProductProviderInfraAz = () => {
-    const result = {};
-    Object.keys(knownProducts).forEach((p) => {
-      result[p] = clustersQuotaByProviderInfraAz();
-    });
-    return result;
-  };
-  const clustersQuotaByBillingProductProviderInfraAz = () => {
-    const result = {};
-    Object.values(billingModels).forEach((model) => {
-      result[model] = clustersQuotaByProductProviderInfraAz();
-    });
-    return result;
-  };
-
-  const nodesQuotaByInfra = () => ({
-    byoc: { available: 0 },
-    rhInfra: { available: 0 },
-  });
-  const nodesQuotaByProviderInfra = () => ({
-    aws: nodesQuotaByInfra(),
-    gcp: nodesQuotaByInfra(),
-  });
-  const nodesQuotaByProductProviderInfra = () => {
-    const result = {};
-    Object.keys(knownProducts).forEach((p) => {
-      result[p] = nodesQuotaByProviderInfra();
-    });
-    return result;
-  };
-  const nodesQuotaByBillingProductProviderInfra = () => {
-    const result = {};
-    Object.values(billingModels).forEach((model) => {
-      result[model] = nodesQuotaByProductProviderInfra();
-    });
-    return result;
-  };
-
-  const storageQuotaByAZ = () => ({
-    singleAZ: { available: 0 },
-    multiAZ: { available: 0 },
-  });
-
-  const storageQuotaByInfraAZ = () => ({
-    byoc: storageQuotaByAZ(),
-    rhInfra: storageQuotaByAZ(),
-    isAvailable: false,
-  });
-
-  const storageQuotaByProviderInfraAZ = () => ({
-    aws: storageQuotaByInfraAZ(),
-    gcp: storageQuotaByInfraAZ(),
-  });
-
-  const storageQuotaByProductProviderInfraAZ = () => {
-    const result = {};
-    Object.keys(knownProducts).forEach((p) => {
-      result[p] = storageQuotaByProviderInfraAZ();
-    });
-    return result;
-  };
-
-  // Initialize an empty tree for storage quota.
-  // To be populated at processStorageQuota.
-  // the tree levels are:
-  // billing model -> products -> cloud-provider -> infra (byoc, rhinfra) -> multi / single az.
-  const storageQuotaByBillingProductProviderInfraAZ = () => {
-    const result = {};
-    Object.values(billingModels).forEach((model) => {
-      result[model] = storageQuotaByProductProviderInfraAZ();
-    });
-    return result;
-  };
-
-  const loadBalancerQuotaByAZ = () => ({
-    singleAZ: { available: 0 },
-    multiAZ: { available: 0 },
-  });
-
-  const loadBalancerQuotaByInfraAZ = () => ({
-    byoc: loadBalancerQuotaByAZ(),
-    rhInfra: loadBalancerQuotaByAZ(),
-    isAvailable: false,
-  });
-
-  const loadBalancerQuotaByProviderInfraAZ = () => ({
-    aws: loadBalancerQuotaByInfraAZ(),
-    gcp: loadBalancerQuotaByInfraAZ(),
-  });
-
-  const loadBalancerQuotaByProductProviderInfraAZ = () => {
-    const result = {};
-    Object.keys(knownProducts).forEach((p) => {
-      result[p] = loadBalancerQuotaByProviderInfraAZ();
-    });
-    return result;
-  };
-
-  // Initialize an empty tree for load balancer quota.
-  // To be populated at processLoadBalancerQuota.
-  // the tree levels are:
-  // billing model -> products -> cloud-provider -> infra (byoc, rhinfra) -> multi / single az.
-  const loadBalancerBillingProductProviderInfraAZ = () => {
-    const result = {};
-    Object.values(billingModels).forEach((model) => {
-      result[model] = loadBalancerQuotaByProductProviderInfraAZ();
-    });
-    return result;
-  };
-
-  const addOnsQuotaByAz = () => ({
-    singleAz: { available: 0 },
-    multiAz: { available: 0 },
-    totalAvailable: 0,
-  });
-  const addOnsQuotaByInfraAz = () => ({
-    byoc: addOnsQuotaByAz(),
-    rhInfra: addOnsQuotaByAz(),
-    isAvailable: false,
-  });
-  const addOnsQuotaByProviderInfraAz = () => ({
-    aws: addOnsQuotaByInfraAz(),
-    gcp: addOnsQuotaByInfraAz(),
-  });
-  const addOnsQuotaByProductProviderInfraAz = () => {
-    const result = {};
-    Object.keys(knownProducts).forEach((p) => {
-      result[p] = addOnsQuotaByProviderInfraAz();
-    });
-    return result;
-  };
-  const addOnsQuotaByBillingProductProviderInfraAz = () => {
-    const result = {};
-    Object.values(billingModels).forEach((model) => {
-      result[model] = addOnsQuotaByProductProviderInfraAz();
-    });
-    return result;
-  };
-
-  return {
-    items: [],
-    clustersQuota: clustersQuotaByBillingProductProviderInfraAz(),
-    nodesQuota: nodesQuotaByBillingProductProviderInfra(),
-    storageQuota: storageQuotaByBillingProductProviderInfraAZ(),
-    loadBalancerQuota: loadBalancerBillingProductProviderInfraAZ(),
-    addOnsQuota: addOnsQuotaByBillingProductProviderInfraAz(),
-  };
-};
-
-/**
  * Normalize incoming quota and construct an easy to query structure to figure
  * out how many of each resource types we have available.
  * This is done here to ensure the calculation is done every time we get the quota,
@@ -486,26 +321,37 @@ const fetchQuota = organizationID => (
   accountsService.getOrganizationQuota(organizationID).then(processQuota)
 );
 
-const getOrganizationAndQuota = () => ({
-  payload: accountsService.getCurrentAccount().then((response) => {
+const fetchQuotaAndOrganization = (organizationID, organization) => {
+  const ret = {
+    quota: undefined,
+    organization: organization !== undefined ? organization.details : organization,
+  };
+  const promises = [fetchQuota(organizationID).then((quota) => { ret.quota = quota; })];
+  if (organization === undefined) {
+    promises.push(accountsService.getOrganization(organizationID).then(
+      (fetchedOrganization) => { ret.organization = fetchedOrganization.data; },
+    ));
+  }
+  return Promise.all(promises).then(() => ret);
+};
+
+const fetchAccountThenQuotaAndOrganization = () => accountsService.getCurrentAccount().then(
+  (response) => {
     const organizationID = get(response.data, 'organization.id');
-    if (organizationID !== undefined) {
-      const ret = {
-        quota: undefined,
-        organization: undefined,
-      };
-      const promises = [
-        fetchQuota(organizationID).then((quota) => { ret.quota = quota; }),
-        accountsService.getOrganization(organizationID).then(
-          (organization) => { ret.organization = organization; },
-        ),
-      ];
-      return Promise.all(promises).then(() => ret);
-    }
-    return Promise.reject(Error('No organization'));
-  }),
-  type: userConstants.GET_ORGANIZATION,
-});
+    return (organizationID !== undefined) ? fetchQuotaAndOrganization(organizationID) : Promise.reject(Error('No organization'));
+  },
+);
+
+const getOrganizationAndQuota = () => {
+  const { userProfile } = store.getState();
+  const organizationID = userProfile?.organization?.details?.id;
+  return dispatch => dispatch({
+    payload: organizationID !== undefined
+      ? fetchQuotaAndOrganization(organizationID, userProfile?.organization)
+      : fetchAccountThenQuotaAndOrganization(),
+    type: userConstants.GET_ORGANIZATION,
+  });
+};
 
 function selfTermsReview() {
   return dispatch => dispatch({
@@ -522,7 +368,6 @@ const userActions = {
   processStorageQuota,
   processLoadBalancerQuota,
   processAddOnQuota,
-  emptyQuota,
   processQuota,
   selfTermsReview,
 };
