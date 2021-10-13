@@ -78,6 +78,7 @@ import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
 import ConnectedInstallAwsARM from '../clusters/install/InstallAwsARM';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
+import CreateROSAWelcome from '../clusters/CreateROSAWelcome';
 
 const { AssistedUiRouter } = OCM;
 
@@ -175,6 +176,7 @@ function Router({ history }) {
             <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
+            <TermsGuardedRoute path="/create/rosa/welcome" history={history} render={() => <CreateROSAWelcome />} />
             <Route path="/create" component={CreateClusterPage} />
             <Route path="/details/s/:subscriptionID/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
             <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />

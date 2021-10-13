@@ -14,6 +14,7 @@ const texts = {
   [tools.IBMZINSTALLER]: 'Download installer',
   [tools.PPCINSTALLER]: 'Download installer',
   [tools.ARMINSTALLER]: 'Download installer',
+  [tools.ROSA]: 'Download command-line tools',
 };
 
 const pendoEvents = {

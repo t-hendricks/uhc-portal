@@ -1,0 +1,25 @@
+.ocm-instructions__list-item {
+  counter-increment: ocm-instructions;
+  display: flex;
+  margin: 0 0 var(--pf-global--spacer--xl);
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--pf-global--BorderColor--100);
+    padding-bottom: var(--pf-global--spacer--xl);
+  }
+
+  &::before {
+    border: 2px solid var(--pf-global--BorderColor--100);
+    border-radius: 100%;
+    content: counter(ocm-instructions);
+    flex-shrink: 0;
+    font-size: 28px;
+    height: var(--pf-global--spacer--2xl);
+    text-align: center;
+    width: var(--pf-global--spacer--2xl);
+  }
+}
+
+.ocm-instructions__list-item-contents {
+  margin: 0 0 0 var(--pf-global--spacer--md);
+}
