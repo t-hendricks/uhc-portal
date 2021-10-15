@@ -56,7 +56,7 @@ const RHCOSSection = (props) => {
       );
     });
     return (
-      <Stack hasGutter id="download-buttons">
+      <Stack hasGutter className="pf-u-mt-md">
         {buttons}
       </Stack>
     );

@@ -2,21 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Card,
-  Title,
-  Split,
-  SplitItem,
-  Divider,
-  Stack,
-  StackItem,
+  CardBody,
   Text,
-  TextContent,
 } from '@patternfly/react-core';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import SubscriptionAndSupport from './components/SubscriptionAndSupport';
 import GetStarted from './components/GetStarted';
+import Instruction from '../../../common/Instruction';
+import Instructions from '../../../common/Instructions';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import instructionsMapping from './instructionsMapping';
-import './Instructions.scss';
 import { tools, channels } from '../../../../common/installLinks';
 
 const OCPInstructions = (props) => {
@@ -43,73 +38,43 @@ const OCPInstructions = (props) => {
     : `Follow the documentation to configure your ${instructionsMapping[cloudProviderID].cloudProvider} account and run the installer`;
   return (
     <>
-      <Card className="ocm-ocp-instructions__card">
-        <Stack>
-          {token.error
-            && (
-              <StackItem>
-                <Split>
-                  <SplitItem className="step-number alert">
-                    <Title headingLevel="h1" />
-                  </SplitItem>
-                  <SplitItem className="download-instructions alert" isFilled>
-                    <TokenErrorAlert token={token} />
-                  </SplitItem>
-                </Split>
-              </StackItem>
-            )}
-          <StackItem>
-            <Split>
-              <SplitItem className="step-number">
-                <Title headingLevel="h1">1</Title>
-              </SplitItem>
-              <SplitItem className="download-instructions" isFilled>
-                <DownloadsAndPullSecretSection
-                  showPreReleaseDocs={showPreReleaseDocs}
-                  preReleasePageLink={preReleasePageLink}
-                  token={token}
-                  pendoID={pendoID}
-                  cloudProviderID={cloudProviderID}
-                  displayRHCOSSection={displayRHCOSSection}
-                  tool={installer}
-                  channel={channel}
-                  isBMIPI={isBMIPI}
-                />
-              </SplitItem>
-            </Split>
-          </StackItem>
-          <Divider />
-          <StackItem>
-            <Split>
-              <SplitItem className="step-number">
-                <Title headingLevel="h1">2</Title>
-              </SplitItem>
-              <SplitItem className="download-instructions" isFilled>
-                <TextContent>
-                  <Text component="h2">{getStartedTitleText}</Text>
-                  <GetStarted
-                    docURL={docURL}
-                    pendoID={pendoID}
-                    cloudProviderID={cloudProviderID}
-                    customizations={customizations}
-                    isBMIPI={isBMIPI}
-                  />
-                </TextContent>
-              </SplitItem>
-            </Split>
-          </StackItem>
-          <Divider />
-          <StackItem>
-            <Split>
-              <SplitItem className="step-number">
-                <Title headingLevel="h1">3</Title>
-              </SplitItem>
-              <SplitItem className="download-instructions" isFilled>
-                <SubscriptionAndSupport />
-              </SplitItem>
-            </Split>
-          </StackItem>
-        </Stack>
+      <Card>
+        <CardBody>
+          {token.error && (
+            <>
+              <TokenErrorAlert token={token} />
+              <div className="pf-u-mb-lg" />
+            </>
+          )}
+          <Instructions>
+            <Instruction>
+              <DownloadsAndPullSecretSection
+                showPreReleaseDocs={showPreReleaseDocs}
+                preReleasePageLink={preReleasePageLink}
+                token={token}
+                pendoID={pendoID}
+                cloudProviderID={cloudProviderID}
+                displayRHCOSSection={displayRHCOSSection}
+                tool={installer}
+                channel={channel}
+                isBMIPI={isBMIPI}
+              />
+            </Instruction>
+            <Instruction>
+              <Text component="h2">{getStartedTitleText}</Text>
+              <GetStarted
+                docURL={docURL}
+                pendoID={pendoID}
+                cloudProviderID={cloudProviderID}
+                customizations={customizations}
+                isBMIPI={isBMIPI}
+              />
+            </Instruction>
+            <Instruction>
+              <SubscriptionAndSupport />
+            </Instruction>
+          </Instructions>
+        </CardBody>
       </Card>
     </>
   );
