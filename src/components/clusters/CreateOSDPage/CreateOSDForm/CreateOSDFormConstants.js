@@ -32,6 +32,11 @@ const constants = {
   enableUserWorkloadMonitoringHint: 'Monitor your own projects in isolation from Red Hat Site Reliability Engineer (SRE) platform metrics',
   enableUserWorkloadMonitoringHelp: 'This feature is enabled by default and provides monitoring for user-defined projects.'
   + 'This includes metrics provided through service endpoints in user-defined projects as well as pods running in user-defined projects.',
+  cloudKMSTitle: 'Cloud Key Management Service',
+  cloudKMS: 'Cloud KMS is a REST API that can use a key to encrypt, decrypt, or sign data such as secrets for storage.',
+  amazonEBSTitle: 'Amazon EBS encryption',
+  amazonEBS: 'A straight-forward encryption solution for your EBS resources associated with your EC2 instances.',
+  awsKeyARN: 'The key ARN is the Amazon Resource Name (ARN) of a CMK. It is a unique, fully qualified identifier for the CMK. A key ARN includes the AWS account, Region, and the key ID.',
 };
 
 const billingModelConstants = {

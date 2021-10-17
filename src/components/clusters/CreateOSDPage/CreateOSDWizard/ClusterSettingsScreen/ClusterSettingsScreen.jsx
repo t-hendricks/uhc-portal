@@ -15,7 +15,7 @@ import ExternalLink from '../../../../common/ExternalLink';
 import PersistentStorageDropdown from '../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../common/LoadBalancersDropdown';
 
-import GCPClusterEncryption from '../../CreateOSDForm/FormSections/EncryptionSection/GCPClusterEncryption';
+import CustomerManagedEncryptionSection from '../../CreateOSDForm/FormSections/EncryptionSection/CustomerManagedKeyEncryption';
 import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitoringSection';
 
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
@@ -32,8 +32,6 @@ function ClusterSettingsScreen({
   billingModel,
   change,
 }) {
-  const isGCP = cloudProviderID === 'gcp';
-
   return (
     <Form onSubmit={() => false}>
       <Grid hasGutter>
@@ -114,12 +112,12 @@ function ClusterSettingsScreen({
           />
           <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
         </FormGroup>
-        {(isGCP && isByoc) && (
-
-        <GCPClusterEncryption
-          customerManagedEncryptionSelected={customerManagedEncryptionSelected}
-          selectedRegion={selectedRegion}
-        />
+        {isByoc && (
+          <CustomerManagedEncryptionSection
+            customerManagedEncryptionSelected={customerManagedEncryptionSelected}
+            selectedRegion={selectedRegion}
+            cloudProviderID={cloudProviderID}
+          />
 
         )}
       </Grid>

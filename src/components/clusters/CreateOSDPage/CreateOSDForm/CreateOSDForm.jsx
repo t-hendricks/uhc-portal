@@ -12,6 +12,7 @@ import BasicFieldsSection from './FormSections/BasicFieldsSection';
 import AWSAccountDetailsSection from './FormSections/AWSAccountDetailsSection';
 import NetworkingSection from './FormSections/NetworkingSection/NetworkingSection';
 import ScaleSection from './FormSections/ScaleSection/ScaleSection';
+import CustomerManagedEncryption from './FormSections/EncryptionSection/CustomerManagedKeyEncryption';
 import { constants } from './CreateOSDFormConstants';
 
 import UpgradeSettingsFields from '../../common/Upgrades/UpgradeSettingsFields';
@@ -21,7 +22,6 @@ import { required, validateGCPServiceAccount } from '../../../../common/validato
 import ReduxFileUpload from '../../../common/ReduxFormComponents/ReduxFileUpload';
 import ReduxCheckbox from '../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../common/ExternalLink';
-import GCPClusterEncryption from './FormSections/EncryptionSection/GCPClusterEncryption';
 import UserWorkloadMonitoringSection from '../../common/UserWorkloadMonitoringSection';
 
 import './CreateOSDForm.scss';
@@ -128,7 +128,6 @@ class CreateOSDForm extends React.Component {
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
       customerManagedEncryptionSelected,
-      kmsRegionsArray,
     } = this.props;
     let { billingModel } = this.props;
 
@@ -309,14 +308,12 @@ class CreateOSDForm extends React.Component {
           />
           <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
         </FormGroup>
-        {(isGCP && isBYOCForm) && (
-
-          <GCPClusterEncryption
+        {isBYOCForm && (
+          <CustomerManagedEncryption
             customerManagedEncryptionSelected={customerManagedEncryptionSelected}
-            kmsRegionsArray={kmsRegionsArray}
             selectedRegion={selectedRegion}
+            cloudProviderID={cloudProviderID}
           />
-
         )}
         <GridItem span={12}>
           <Divider />
@@ -388,7 +385,6 @@ CreateOSDForm.propTypes = {
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
   getMarketplaceQuota: PropTypes.func.isRequired,
-  kmsRegionsArray: PropTypes.object,
 };
 
 export default CreateOSDForm;
