@@ -65,8 +65,7 @@ describe('downloadChoice', () => {
   Object.values(tools).forEach((tool) => {
     const selections = {};
     const setSelections = () => { };
-    const channel = (tool === tools.ARMINSTALLER) ? channels.PRE_RELEASE : channels.STABLE; // 4.9
-    const chooser = downloadChoice(selections, setSelections, urls, tool, channel, 'text');
+    const chooser = downloadChoice(selections, setSelections, urls, tool, channels.STABLE, 'text');
 
     if (urls[tool]) { // skip tools that have no data yet
       it(`initially ${tool} button has a url`, () => {

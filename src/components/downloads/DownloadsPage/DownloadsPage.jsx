@@ -608,7 +608,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.ARMINSTALLER}
-        channel={channels.PRE_RELEASE}
+        channel={channels.STABLE}
         name={(
           <>
             OpenShift for ARM Installer

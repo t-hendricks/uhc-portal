@@ -81,7 +81,7 @@ exports[`DownloadAndOSSelection aarch64-openshift-install renders correctly 1`] 
       <DownloadButton
         disabled={false}
         tool="aarch64-openshift-install"
-        url="https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz"
+        url="https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/openshift-install-linux-amd64.tar.gz"
       />
     </GridItem>
   </Grid>
@@ -249,6 +249,11 @@ exports[`DownloadAndOSSelection oc renders correctly 1`] = `
           value="x86"
         />
         <FormSelectOption
+          key="arm"
+          label="aarch64"
+          value="arm"
+        />
+        <FormSelectOption
           key="ppc"
           label="ppc64le"
           value="ppc"
@@ -321,14 +326,14 @@ exports[`DownloadAndOSSelection ppc64le-openshift-install renders correctly 1`] 
       <FormSelect
         aria-label="Select architecture dropdown"
         className=""
-        isDisabled={true}
+        isDisabled={false}
         isRequired={false}
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
         ouiaSafe={true}
         validated="default"
-        value="ppc"
+        value="x86"
       >
         <FormSelectOption
           isDisabled={true}
@@ -337,10 +342,8 @@ exports[`DownloadAndOSSelection ppc64le-openshift-install renders correctly 1`] 
           value="select"
         />
         <FormSelectOption
-          isDisabled={true}
           key="x86"
           label="x86_64"
-          title="This type of architecture is not available for the selected OS type"
           value="x86"
         />
         <FormSelectOption
@@ -357,7 +360,7 @@ exports[`DownloadAndOSSelection ppc64le-openshift-install renders correctly 1`] 
       <DownloadButton
         disabled={false}
         tool="ppc64le-openshift-install"
-        url="https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz"
+        url="https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz"
       />
     </GridItem>
   </Grid>
@@ -411,14 +414,14 @@ exports[`DownloadAndOSSelection s390x-openshift-install renders correctly 1`] = 
       <FormSelect
         aria-label="Select architecture dropdown"
         className=""
-        isDisabled={true}
+        isDisabled={false}
         isRequired={false}
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
         ouiaSafe={true}
         validated="default"
-        value="s390x"
+        value="x86"
       >
         <FormSelectOption
           isDisabled={true}
@@ -427,10 +430,8 @@ exports[`DownloadAndOSSelection s390x-openshift-install renders correctly 1`] = 
           value="select"
         />
         <FormSelectOption
-          isDisabled={true}
           key="x86"
           label="x86_64"
-          title="This type of architecture is not available for the selected OS type"
           value="x86"
         />
         <FormSelectOption
@@ -447,7 +448,6 @@ exports[`DownloadAndOSSelection s390x-openshift-install renders correctly 1`] = 
       <DownloadButton
         disabled={false}
         tool="s390x-openshift-install"
-        url="https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz"
       />
     </GridItem>
   </Grid>
