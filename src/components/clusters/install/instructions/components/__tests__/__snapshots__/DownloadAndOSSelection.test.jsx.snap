@@ -448,6 +448,7 @@ exports[`DownloadAndOSSelection s390x-openshift-install renders correctly 1`] = 
       <DownloadButton
         disabled={false}
         tool="s390x-openshift-install"
+        url="https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux-amd64.tar.gz"
       />
     </GridItem>
   </Grid>

@@ -306,7 +306,7 @@ const urls = {
   [tools.IBMZINSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: links.IMBZINSTALLER_LINUX_X86,
+        [operatingSystems.linux]: links.IBMZINSTALLER_LINUX_X86,
         [operatingSystems.mac]: links.IBMZINSTALLER_MAC_X86,
       },
       [architectures.s390x]: {
