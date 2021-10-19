@@ -21,7 +21,7 @@ const pendoEvents = {
   [tools.CRC]: 'OCP-Download-CRC',
   [tools.HELM]: 'Download-HELM-CLI',
   [tools.X86INSTALLER]: 'OCP-Download-X86Installer',
-  [tools.IMBZINSTALLER]: 'OCP-Download-IBMZInstaller',
+  [tools.IBMZINSTALLER]: 'OCP-Download-IBMZInstaller',
   [tools.PPCINSTALLER]: 'OCP-Download-PPCInstaller',
   [tools.ARMINSTALLER]: 'OCP-Download-ARMInstaller',
   [tools.OCM]: 'Download-OCM-CLI',
