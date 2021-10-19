@@ -33,7 +33,7 @@ import { scrollToTop } from '../../../common/helpers';
 export class InstructionsAwsARM extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | AWS ARM | Experimental Developer Preview Builds';
+    document.title = 'Install OpenShift 4 | AWS ARM (Developer Preview)';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -45,7 +45,7 @@ export class InstructionsAwsARM extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'AWS ARM Pre-Release Builds' },
+        { label: 'AWS ARM Developer Preview' },
       ]}
       />
     );
@@ -55,7 +55,7 @@ export class InstructionsAwsARM extends Component {
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection>
           <Title headingLevel="h3" size="2xl">
-            Experimental Developer Preview Builds for AWS (ARM)
+            Developer Preview Builds for AWS (ARM)
           </Title>
           <Stack hasGutter>
             <StackItem>
@@ -71,28 +71,10 @@ export class InstructionsAwsARM extends Component {
                   {token.error && <TokenErrorAlert token={token} />}
                   <TextContent>
                     <TelemetryDisclaimer />
-                    <Text component="p">
-                      As Red Hat OpenShift Container Platform (OCP) has moved to become a more
-                      agile and rapidly deployable Kubernetes offering, we want to allow
-                      existing and evaluation customers and partners access to the latest
-                      pre-release nightly builds to see a real-time view into the next version
-                      of OpenShift.
-                    </Text>
                     <DeveloperPreviewStatements />
                     <Text component="p">
-                      These nightly builds are useful for those who would like to stay up
-                      to date on features being developed in the next release of OpenShift.
-                      Such builds are advantageous for planning future deployments,
+                      These preview builds are advantageous for planning future deployments,
                       ISV integrations, or other educational purposes.
-                    </Text>
-                    <Text component="h3">
-                      Feature Completion in Nightly Builds
-                    </Text>
-                    <Text component="p">
-                      Each OpenShift minor release will target initiatives or focus areas.
-                      These features will not be the same in every nightly build.
-                      Because these are experimental nightly builds, some features
-                      may be incomplete or have bugs. This is the beauty of the development process.
                     </Text>
                   </TextContent>
                 </CardBody>
@@ -104,17 +86,18 @@ export class InstructionsAwsARM extends Component {
                   <DownloadsAndPullSecretSection
                     token={token}
                     showPreReleaseDocs
-                    showPreReleasePageLink={false}
+                    showPreReleasePageLink
                     tool={tools.ARMINSTALLER}
-                    channel={channels.PRE_RELEASE}
+                    channel={channels.STABLE}
                     preReleaseDocsLink={links.AWS_ARM_DOCS}
+                    preReleasePageLink="/install/arm/pre-release"
                   />
                 </CardBody>
                 <CardFooter className="ocm-c-pre-release-instructions__card--footer">
                   <TextContent>
                     <Text component="h3">Feedback and Support</Text>
                     <Text component="p">
-                      If you are a Red Hat customer or partner and have feedback about these ARM nightly builds, open an issue
+                      If you are a Red Hat customer or partner and have feedback about these ARM preview builds, open an issue
                       {' '}
                       <Text component="a" href={links.AWS_ARM_GITHUB}>
                         on our github repo

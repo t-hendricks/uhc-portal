@@ -15,7 +15,7 @@ exports[`InstallAwsARM renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "AWS ARM Pre-Release Builds",
+              "label": "AWS ARM Developer Preview",
             },
           ]
         }
@@ -28,7 +28,7 @@ exports[`InstallAwsARM renders correctly 1`] = `
       headingLevel="h3"
       size="2xl"
     >
-      Experimental Developer Preview Builds for AWS (ARM)
+      Developer Preview Builds for AWS (ARM)
     </Title>
     <Stack
       hasGutter={true}
@@ -55,26 +55,11 @@ exports[`InstallAwsARM renders correctly 1`] = `
           >
             <TextContent>
               <TelemetryDisclaimer />
-              <Text
-                component="p"
-              >
-                As Red Hat OpenShift Container Platform (OCP) has moved to become a more agile and rapidly deployable Kubernetes offering, we want to allow existing and evaluation customers and partners access to the latest pre-release nightly builds to see a real-time view into the next version of OpenShift.
-              </Text>
               <DeveloperPreviewStatements />
               <Text
                 component="p"
               >
-                These nightly builds are useful for those who would like to stay up to date on features being developed in the next release of OpenShift. Such builds are advantageous for planning future deployments, ISV integrations, or other educational purposes.
-              </Text>
-              <Text
-                component="h3"
-              >
-                Feature Completion in Nightly Builds
-              </Text>
-              <Text
-                component="p"
-              >
-                Each OpenShift minor release will target initiatives or focus areas. These features will not be the same in every nightly build. Because these are experimental nightly builds, some features may be incomplete or have bugs. This is the beauty of the development process.
+                These preview builds are advantageous for planning future deployments, ISV integrations, or other educational purposes.
               </Text>
             </TextContent>
           </CardBody>
@@ -88,11 +73,12 @@ exports[`InstallAwsARM renders correctly 1`] = `
             className="ocm-c-pre-release-instructions__card--body"
           >
             <DownloadsAndPullSecretSection
-              channel="preRelease"
+              channel="stable"
               isBMIPI={false}
               preReleaseDocsLink="https://github.com/openshift/ocp-on-arm/blob/main/README.md"
+              preReleasePageLink="/install/arm/pre-release"
               showPreReleaseDocs={true}
-              showPreReleasePageLink={false}
+              showPreReleasePageLink={true}
               token={Object {}}
               tool="aarch64-openshift-install"
             />
@@ -109,7 +95,7 @@ exports[`InstallAwsARM renders correctly 1`] = `
               <Text
                 component="p"
               >
-                If you are a Red Hat customer or partner and have feedback about these ARM nightly builds, open an issue
+                If you are a Red Hat customer or partner and have feedback about these ARM preview builds, open an issue
                  
                 <Text
                   component="a"

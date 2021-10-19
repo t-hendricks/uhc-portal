@@ -55,6 +55,8 @@ const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}$/;
 
 const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 
+const AWS_KMS_SERVICE_ACCOUNT_REGEX = /^arn:aws:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+
 // A valid label key must consist of alphanumeric characters, '-', '_'
 // or '.', and must start and end with an alphanumeric character. e.g. 'MyName', 'my.name',
 // or '123-abc'
@@ -869,6 +871,19 @@ const validateGCPKMSServiceAccount = (value) => {
   return undefined;
 };
 
+const validateAWSKMSKeyARN = (value) => {
+  if (!value) {
+    return 'Field is required.';
+  }
+  if (/\s/.test(value)) {
+    return 'Value must not contain whitespaces.';
+  }
+  if (!AWS_KMS_SERVICE_ACCOUNT_REGEX.test(value)) {
+    return 'Key provided is not a valid ARN. It should be in the format "arn:aws:kms:<region>:<accountid>:key/<keyid>".';
+  }
+  return undefined;
+};
+
 const validateHTPasswdPassword = (password) => {
   const errors = {
     emptyPassword: false,
@@ -1002,6 +1017,7 @@ export {
   validateGCPSubnet,
   validateGCPEncryptionKeys,
   validateGCPKMSServiceAccount,
+  validateAWSKMSKeyARN,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
   validateLabelKey,

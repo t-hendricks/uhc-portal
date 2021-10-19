@@ -941,7 +941,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                     onMouseEnter={[Function]}
                                     onMouseLeave={[Function]}
                                   >
-                                    <Component
+                                    <AlertIcon
                                       variant="info"
                                     >
                                       <div
@@ -972,7 +972,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                           </svg>
                                         </InfoCircleIcon>
                                       </div>
-                                    </Component>
+                                    </AlertIcon>
                                     <h4
                                       className="pf-c-alert__title"
                                     >
@@ -1265,9 +1265,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -1628,9 +1636,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -1958,9 +1974,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -2323,9 +2347,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -2573,9 +2605,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                             positionModifiers={
                                               Object {
                                                 "bottom": "pf-m-bottom",
+                                                "bottom-end": "pf-m-bottom-right",
+                                                "bottom-start": "pf-m-bottom-left",
                                                 "left": "pf-m-left",
+                                                "left-end": "pf-m-left-bottom",
+                                                "left-start": "pf-m-left-top",
                                                 "right": "pf-m-right",
+                                                "right-end": "pf-m-right-bottom",
+                                                "right-start": "pf-m-right-top",
                                                 "top": "pf-m-top",
+                                                "top-end": "pf-m-top-right",
+                                                "top-start": "pf-m-top-left",
                                               }
                                             }
                                             trigger={
@@ -3652,7 +3692,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                   onMouseEnter={[Function]}
                                   onMouseLeave={[Function]}
                                 >
-                                  <Component
+                                  <AlertIcon
                                     variant="danger"
                                   >
                                     <div
@@ -3683,7 +3723,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                         </svg>
                                       </ExclamationCircleIcon>
                                     </div>
-                                  </Component>
+                                  </AlertIcon>
                                   <h4
                                     className="pf-c-alert__title"
                                   >
@@ -3775,7 +3815,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                     onMouseEnter={[Function]}
                                     onMouseLeave={[Function]}
                                   >
-                                    <Component
+                                    <AlertIcon
                                       variant="info"
                                     >
                                       <div
@@ -3806,7 +3846,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                           </svg>
                                         </InfoCircleIcon>
                                       </div>
-                                    </Component>
+                                    </AlertIcon>
                                     <h4
                                       className="pf-c-alert__title"
                                     >
@@ -4099,9 +4139,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -4462,9 +4510,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -4792,9 +4848,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -5157,9 +5221,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -5407,9 +5479,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                             positionModifiers={
                                               Object {
                                                 "bottom": "pf-m-bottom",
+                                                "bottom-end": "pf-m-bottom-right",
+                                                "bottom-start": "pf-m-bottom-left",
                                                 "left": "pf-m-left",
+                                                "left-end": "pf-m-left-bottom",
+                                                "left-start": "pf-m-left-top",
                                                 "right": "pf-m-right",
+                                                "right-end": "pf-m-right-bottom",
+                                                "right-start": "pf-m-right-top",
                                                 "top": "pf-m-top",
+                                                "top-end": "pf-m-top-right",
+                                                "top-start": "pf-m-top-left",
                                               }
                                             }
                                             trigger={
@@ -6729,7 +6809,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                     onMouseEnter={[Function]}
                                     onMouseLeave={[Function]}
                                   >
-                                    <Component
+                                    <AlertIcon
                                       variant="info"
                                     >
                                       <div
@@ -6760,7 +6840,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                           </svg>
                                         </InfoCircleIcon>
                                       </div>
-                                    </Component>
+                                    </AlertIcon>
                                     <h4
                                       className="pf-c-alert__title"
                                     >
@@ -7057,9 +7137,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -7457,9 +7545,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -7787,9 +7883,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -8152,9 +8256,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -8402,9 +8514,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                             positionModifiers={
                                               Object {
                                                 "bottom": "pf-m-bottom",
+                                                "bottom-end": "pf-m-bottom-right",
+                                                "bottom-start": "pf-m-bottom-left",
                                                 "left": "pf-m-left",
+                                                "left-end": "pf-m-left-bottom",
+                                                "left-start": "pf-m-left-top",
                                                 "right": "pf-m-right",
+                                                "right-end": "pf-m-right-bottom",
+                                                "right-start": "pf-m-right-top",
                                                 "top": "pf-m-top",
+                                                "top-end": "pf-m-top-right",
+                                                "top-start": "pf-m-top-left",
                                               }
                                             }
                                             trigger={
@@ -9509,7 +9629,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                     onMouseEnter={[Function]}
                                     onMouseLeave={[Function]}
                                   >
-                                    <Component
+                                    <AlertIcon
                                       variant="info"
                                     >
                                       <div
@@ -9540,7 +9660,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                           </svg>
                                         </InfoCircleIcon>
                                       </div>
-                                    </Component>
+                                    </AlertIcon>
                                     <h4
                                       className="pf-c-alert__title"
                                     >
@@ -9837,9 +9957,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -10237,9 +10365,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -10567,9 +10703,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -10932,9 +11076,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                                   positionModifiers={
                                                     Object {
                                                       "bottom": "pf-m-bottom",
+                                                      "bottom-end": "pf-m-bottom-right",
+                                                      "bottom-start": "pf-m-bottom-left",
                                                       "left": "pf-m-left",
+                                                      "left-end": "pf-m-left-bottom",
+                                                      "left-start": "pf-m-left-top",
                                                       "right": "pf-m-right",
+                                                      "right-end": "pf-m-right-bottom",
+                                                      "right-start": "pf-m-right-top",
                                                       "top": "pf-m-top",
+                                                      "top-end": "pf-m-top-right",
+                                                      "top-start": "pf-m-top-left",
                                                     }
                                                   }
                                                   trigger={
@@ -11182,9 +11334,17 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                             positionModifiers={
                                               Object {
                                                 "bottom": "pf-m-bottom",
+                                                "bottom-end": "pf-m-bottom-right",
+                                                "bottom-start": "pf-m-bottom-left",
                                                 "left": "pf-m-left",
+                                                "left-end": "pf-m-left-bottom",
+                                                "left-start": "pf-m-left-top",
                                                 "right": "pf-m-right",
+                                                "right-end": "pf-m-right-bottom",
+                                                "right-start": "pf-m-right-top",
                                                 "top": "pf-m-top",
+                                                "top-end": "pf-m-top-right",
+                                                "top-start": "pf-m-top-left",
                                               }
                                             }
                                             trigger={
