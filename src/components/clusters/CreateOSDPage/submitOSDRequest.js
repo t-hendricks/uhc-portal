@@ -93,6 +93,9 @@ const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) 
         account_id: formData.account_id,
         secret_access_key: formData.secret_access_key,
       };
+      if (formData.customer_managed_key) {
+        clusterRequest.aws.kms_key_arn = formData.kms_key_arn;
+      }
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
       if (isInstallExistingVPC) {
         let subnetIds = [

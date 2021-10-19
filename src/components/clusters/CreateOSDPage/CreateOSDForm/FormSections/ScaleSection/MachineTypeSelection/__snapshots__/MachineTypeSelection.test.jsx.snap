@@ -5997,6 +5997,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
                     <button
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-label="Options menu"
                       aria-labelledby=" pf-select-toggle-id-3"
                       class="pf-c-select__toggle"
                       id="pf-select-toggle-id-3"
@@ -6087,6 +6088,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
                     <button
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-label="Options menu"
                       aria-labelledby=" pf-select-toggle-id-3"
                       class="pf-c-select__toggle"
                       id="pf-select-toggle-id-3"
@@ -6126,6 +6128,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               <button
                 aria-expanded={false}
                 aria-haspopup="listbox"
+                aria-label="Options menu"
                 aria-labelledby=" pf-select-toggle-id-3"
                 className="pf-c-select__toggle"
                 disabled={false}
@@ -9199,6 +9202,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                     <button
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-label="Options menu"
                       aria-labelledby=" pf-select-toggle-id-0"
                       class="pf-c-select__toggle"
                       id="pf-select-toggle-id-0"
@@ -9289,6 +9293,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
                     <button
                       aria-expanded="false"
                       aria-haspopup="listbox"
+                      aria-label="Options menu"
                       aria-labelledby=" pf-select-toggle-id-0"
                       class="pf-c-select__toggle"
                       id="pf-select-toggle-id-0"
@@ -9328,6 +9333,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               <button
                 aria-expanded={false}
                 aria-haspopup="listbox"
+                aria-label="Options menu"
                 aria-labelledby=" pf-select-toggle-id-0"
                 className="pf-c-select__toggle"
                 disabled={false}
@@ -9500,7 +9506,7 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
         onMouseEnter={[Function]}
         onMouseLeave={[Function]}
       >
-        <Component
+        <AlertIcon
           variant="danger"
         >
           <div
@@ -9531,7 +9537,7 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
               </svg>
             </ExclamationCircleIcon>
           </div>
-        </Component>
+        </AlertIcon>
         <h4
           className="pf-c-alert__title"
         >
