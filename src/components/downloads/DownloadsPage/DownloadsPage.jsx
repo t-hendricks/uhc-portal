@@ -19,6 +19,7 @@ import {
 } from '@patternfly/react-table';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
+import { OCM } from 'openshift-assisted-ui-lib';
 
 import produce from 'immer';
 import { has, get } from 'lodash';
@@ -33,7 +34,6 @@ import links, {
   githubReleasesToFetch,
   urlsSelector,
 } from '../../../common/installLinks';
-import DevPreviewBadge from '../../common/DevPreviewBadge';
 
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
 import AlignRight from '../../common/AlignRight';
@@ -44,6 +44,8 @@ import DownloadPullSecret from '../DownloadPullSecret';
 import CopyPullSecret from '../CopyPullSecret';
 
 import './DownloadsPage.scss';
+
+const { DeveloperPreview, PreviewBadgePosition } = OCM;
 
 const ColumnHeadings = () => (
   <Thead>
@@ -353,7 +355,7 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             <code>ocm</code>
             )
             {' '}
-            <DevPreviewBadge />
+            <DeveloperPreview position={PreviewBadgePosition.inline} />
           </>
         )}
         description={(
@@ -525,7 +527,7 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             <code>rhoas</code>
             )
             {' '}
-            <DevPreviewBadge />
+            <DeveloperPreview position={PreviewBadgePosition.inline} />
           </>
         )}
         description={(
@@ -644,7 +646,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
           <>
             OpenShift for ARM Installer
             {' '}
-            <DevPreviewBadge />
+            <DeveloperPreview position={PreviewBadgePosition.inline} />
           </>
         )}
         description={(

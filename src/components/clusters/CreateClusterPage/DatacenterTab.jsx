@@ -9,7 +9,9 @@ import {
 } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
-import TechPreviewBadge from '../../common/TechPreviewBadge';
+import { OCM } from 'openshift-assisted-ui-lib';
+
+const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];
 const ocpTableRows = [
@@ -38,7 +40,7 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
             <Title headingLevel="h2" className="ocm-ocp-datacenter-title">
               Assisted Installer
             </Title>
-            <TechPreviewBadge />
+            <TechnologyPreview position={PreviewBadgePosition.inline} />
           </StackItem>
           <StackItem>
             Create a cluster on bare metal following a guided installation
