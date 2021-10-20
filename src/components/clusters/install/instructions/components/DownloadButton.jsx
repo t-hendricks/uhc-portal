@@ -29,6 +29,7 @@ const pendoEvents = {
   [tools.ARMINSTALLER]: 'OCP-Download-ARMInstaller',
   [tools.OCM]: 'Download-OCM-CLI',
   [tools.ODO]: 'Download-ODO-CLI',
+  [tools.OPERATOR_SDK]: 'Download-OSDK-CLI',
   [tools.OPM]: 'Download-OPM-CLI',
   [tools.RHOAS]: 'Download-RHOAS-CLI',
   [tools.ROSA]: 'Download-ROSA-CLI',
