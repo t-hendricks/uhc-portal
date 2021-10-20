@@ -1,17 +1,20 @@
 const MIRROR_BUTANE_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest';
-const MIRROR_CLIENTS_STABLE = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/';
+const MIRROR_CLIENTS_STABLE_X86 = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/';
-const MIRROR_CLIENTS_LATEST_PRE = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
+const MIRROR_CLIENTS_LATEST_PRE_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/';
 const MIRROR_COREOS_INSTALLER_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest';
-const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
-const MIROR_RHCOS_LATEST_S390X = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
-const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
+const MIRROR_CRC_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest';
+const MIRROR_HELM_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest';
 const MIRROR_ODO_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest';
+const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
+const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
+const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
+const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest';
 
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
@@ -29,58 +32,13 @@ const links = {
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
   DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/administering_a_cluster/dedicated-admin-role.html`,
 
-  X86INSTALLER_LINUX_X86: `${MIRROR_CLIENTS_STABLE}openshift-install-linux.tar.gz`,
-  X86INSTALLER_LINUX_X86_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-install-linux.tar.gz`,
-  X86INSTALLER_MAC_X86: `${MIRROR_CLIENTS_STABLE}openshift-install-mac.tar.gz`,
-  X86INSTALLER_MAC_X86_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-install-mac.tar.gz`,
-
-  IBMZINSTALLER_LINUX_IBMZ: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-linux.tar.gz`,
-  IBMZINSTALLER_LINUX_X86: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-linux-amd64.tar.gz`,
-  IBMZINSTALLER_LINUX_IBMZ_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-linux.tar.gz`,
-  IBMZINSTALLER_LINUX_X86_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-linux-amd64.tar.gz`,
-  IBMZINSTALLER_MAC_X86: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-mac.tar.gz`,
-  IBMZINSTALLER_MAC_X86_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-mac.tar.gz`,
-
-  PPCINSTALLER_LINUX_PPC: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux.tar.gz`,
-  PPCINSTALLER_LINUX_X86: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux-amd64.tar.gz`,
-  PPCINSTALLER_LINUX_PPC_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-linux.tar.gz`,
-  PPCINSTALLER_LINUX_X86_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-linux-amd64.tar.gz`,
-  PPCINSTALLER_MAC_X86: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-mac.tar.gz`,
-  PPCINSTALLER_MAC_X86_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-mac.tar.gz`,
-
-  ARMINSTALLER_LINUX_ARM: `${MIRROR_CLIENTS_STABLE_ARM}openshift-install-linux.tar.gz`,
-  ARMINSTALLER_LINUX_X86: `${MIRROR_CLIENTS_STABLE_ARM}openshift-install-linux-amd64.tar.gz`,
-  ARMINSTALLER_LINUX_ARM_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-linux.tar.gz`,
-  ARMINSTALLER_LINUX_X86_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-linux-amd64.tar.gz`,
-  ARMINSTALLER_MAC_X86: `${MIRROR_CLIENTS_STABLE_ARM}openshift-install-mac.tar.gz`,
-  ARMINSTALLER_MAC_X86_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-mac.tar.gz`,
-
-  CLI_TOOLS_LINUX: `${MIRROR_CLIENTS_STABLE}openshift-client-linux.tar.gz`,
-  CLI_TOOLS_LINUX_IBMZ: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-client-linux.tar.gz`,
-  CLI_TOOLS_LINUX_PPC: `${MIRROR_CLIENTS_STABLE_PPC}openshift-client-linux.tar.gz`,
-  CLI_TOOLS_LINUX_ARM: `${MIRROR_CLIENTS_STABLE_ARM}openshift-client-linux.tar.gz`,
-  CLI_TOOLS_LINUX_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-linux.tar.gz`,
-  CLI_TOOLS_LINUX_IBMZ_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-client-linux.tar.gz`,
-  CLI_TOOLS_LINUX_PPC_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-client-linux.tar.gz`,
-  CLI_TOOLS_LINUX_ARM_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-client-linux.tar.gz`,
-
-  CLI_TOOLS_MAC: `${MIRROR_CLIENTS_STABLE}openshift-client-mac.tar.gz`,
-  CLI_TOOLS_MAC_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-mac.tar.gz`,
-
-  CLI_TOOLS_WINDOWS: `${MIRROR_CLIENTS_STABLE}openshift-client-windows.zip`,
-  CLI_TOOLS_WINDOWS_PRE_RELEASE: `${MIRROR_CLIENTS_LATEST_PRE}openshift-client-windows.zip`,
-
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
   INSTALL_DOCS_ENTRY: `${DOCS_BASE}/installing/index.html`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
   INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
-
-  INSTALL_AWSUPI_INSTALLER_LATEST: MIRROR_CLIENTS_STABLE,
-  INSTALL_AWSUPI_CLI_LATEST: MIRROR_CLIENTS_STABLE,
   INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_aws/installing-aws-user-infra.html`,
-
   INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html`,
 
   INSTALL_AZUREUPI_GETTING_STARTED: 'https://github.com/openshift/installer/blob/master/docs/user/azure/install_upi.md',
@@ -92,16 +50,9 @@ const links = {
   INSTALL_BAREMETAL_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal`,
   INSTALL_BAREMETAL_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal-network-customizations.html`,
   RHCOS_BAREMETAL_ISO_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live.x86_64.iso`,
-  RHCOS_BAREMETAL_ISO_S390X: `${MIROR_RHCOS_LATEST_S390X}/rhcos-live.s390x.iso`,
-  RHCOS_BAREMETAL_ISO_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live.ppc64le.iso`,
   RHCOS_BAREMETAL_RAW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-metal.x86_64.raw.gz`,
-  RHCOS_BAREMETAL_RAW_S390X: `${MIROR_RHCOS_LATEST_S390X}/rhcos-metal.s390x.raw.gz`,
-  RHCOS_BAREMETAL_RAW_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-metal.ppc64le.raw.gz`,
 
   INSTALL_CRC_GETTING_STARTED: 'https://access.redhat.com/documentation/en-us/red_hat_codeready_containers',
-  INSTALL_CRC_DOWNLOAD_WINDOWS: 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip',
-  INSTALL_CRC_DOWNLOAD_MACOS: 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg',
-  INSTALL_CRC_DOWNLOAD_LINUX: 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz',
 
   INSTALL_GCPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-account.html`,
   INSTALL_GCPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html`,
@@ -114,7 +65,6 @@ const links = {
   INSTALL_OSPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user`,
   INSTALL_OSP_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-installer-custom.html`,
   RHCOS_OSPUPI_QCOW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-openstack.x86_64.qcow2.gz`,
-  RHCOS_OSPUPI_QCOW_S390X: `${MIROR_RHCOS_LATEST_S390X}/rhcos-openstack.s390x.qcow2.gz`,
   RHCOS_OSPUPI_QCOW_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-openstack.ppc64le.qcow2.gz`,
 
   INSTALL_VSPHEREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere.html`,
@@ -126,10 +76,11 @@ const links = {
   INSTALL_IBMZ_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html`,
   INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm`,
   INSTALL_IBMZ_LEARN_MORE_ZVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
-  RHCOS_IBMZ_INITRAMFS: `${MIROR_RHCOS_LATEST_S390X}/rhcos-live-initramfs.s390x.img`,
-  RHCOS_IBMZ_KERNEL: `${MIROR_RHCOS_LATEST_S390X}/rhcos-live-kernel-s390x`,
-  RHCOS_IBMZ_ROOTFS: `${MIROR_RHCOS_LATEST_S390X}/rhcos-live-rootfs.s390x.img`,
-  RHCOS_IBMZ_QCOW: `${MIROR_RHCOS_LATEST_S390X}/rhcos-qemu.s390x.qcow2.gz`,
+  RHCOS_IBMZ_ISO: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live.s390x.iso`,
+  RHCOS_IBMZ_INITRAMFS: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-initramfs.s390x.img`,
+  RHCOS_IBMZ_KERNEL: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-kernel-s390x`,
+  RHCOS_IBMZ_ROOTFS: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-live-rootfs.s390x.img`,
+  RHCOS_IBMZ_QCOW: `${MIRROR_RHCOS_LATEST_IBMZ}/rhcos-qemu.s390x.qcow2.gz`,
 
   INSTALL_RHVIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-default.html`,
   INSTALL_RHV_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-customizations.html`,
@@ -150,30 +101,25 @@ const links = {
 
   INSTALL_POWER_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html`,
   INSTALL_POWER_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power`,
-  RHCOS_POWER_ISO_PPC: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live.ppc64le.iso`,
+  RHCOS_POWER_ISO: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live.ppc64le.iso`,
   RHCOS_POWER_INITRAMFS: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-initramfs.ppc64le.img`,
   RHCOS_POWER_KERNEL: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-kernel-ppc64le`,
   RHCOS_POWER_ROOTFS: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-rootfs.ppc64le.img`,
 
+  // TODO remove once Tokens uses DownloadAndOSSelection for direct downloads
   OCM_CLI_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
   OCM_CLI_DOCS: 'https://access.redhat.com/articles/6114701',
 
   RHOAS_CLI_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047',
 
-  HELM_CLI_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest',
   HELM_DOCS: 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.8/html/building_applications/working-with-helm-charts',
 
   ODO_DOCS: `${DOCS_BASE}/cli_reference/developer_cli_odo/understanding-odo.html`,
 
-  OPM_LINUX_X86: `${MIRROR_CLIENTS_STABLE}opm-linux.tar.gz`,
-  OPM_LINUX_IBMZ: `${MIRROR_CLIENTS_STABLE_IBMZ}opm-linux.tar.gz`,
-  OPM_LINUX_PPC: `${MIRROR_CLIENTS_STABLE_PPC}opm-linux.tar.gz`,
-  OPM_LINUX_ARM: `${MIRROR_CLIENTS_STABLE_ARM}opm-linux.tar.gz`,
-  OPM_MAC_X86: `${MIRROR_CLIENTS_STABLE}opm-mac.tar.gz`,
-  OPM_WINDOWS: `${MIRROR_CLIENTS_STABLE}opm-windows.tar.gz`,
   OPM_DOCS: 'https://docs.openshift.com/container-platform/4.9/cli_reference/opm/cli-opm-install.html',
 
-  ROSA_CLIENT_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest',
+  // TODO remove once TokensROSA uses DownloadAndOSSelection for direct downloads
+  ROSA_CLIENT_LATEST: MIRROR_ROSA_LATEST,
   ROSA_DOCS: 'https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html',
 
   BUTANE_DOCS: `${DOCS_BASE}/installing/install_config/installing-customizing.html`,
@@ -244,34 +190,34 @@ const urls = {
   [tools.OC]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.windows]: links.CLI_TOOLS_WINDOWS,
-        [operatingSystems.linux]: links.CLI_TOOLS_LINUX,
-        [operatingSystems.mac]: links.CLI_TOOLS_MAC,
+        [operatingSystems.windows]: `${MIRROR_CLIENTS_STABLE_X86}openshift-client-windows.zip`,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}openshift-client-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}openshift-client-mac.tar.gz`,
       },
       [architectures.s390x]: {
-        [operatingSystems.linux]: links.CLI_TOOLS_LINUX_IBMZ,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-client-linux.tar.gz`,
       },
       [architectures.ppc]: {
-        [operatingSystems.linux]: links.CLI_TOOLS_LINUX_PPC,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-client-linux.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: links.CLI_TOOLS_LINUX_ARM,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-client-linux.tar.gz`,
       },
     },
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
-        [operatingSystems.windows]: links.CLI_TOOLS_WINDOWS_PRE_RELEASE,
-        [operatingSystems.linux]: links.CLI_TOOLS_LINUX_PRE_RELEASE,
-        [operatingSystems.mac]: links.CLI_TOOLS_MAC_PRE_RELEASE,
+        [operatingSystems.windows]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-client-windows.zip`,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-client-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-client-mac.tar.gz`,
       },
       [architectures.s390x]: {
-        [operatingSystems.linux]: links.CLI_TOOLS_LINUX_IBMZ_PRE_RELEASE,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-client-linux.tar.gz`,
       },
       [architectures.ppc]: {
-        [operatingSystems.linux]: links.CLI_TOOLS_LINUX_PPC_PRE_RELEASE,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-client-linux.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: links.CLI_TOOLS_LINUX_ARM_PRE_RELEASE,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-client-linux.tar.gz`,
       },
     },
   },
@@ -315,9 +261,9 @@ const urls = {
   [tools.CRC]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.windows]: links.INSTALL_CRC_DOWNLOAD_WINDOWS,
-        [operatingSystems.mac]: links.INSTALL_CRC_DOWNLOAD_MACOS,
-        [operatingSystems.linux]: links.INSTALL_CRC_DOWNLOAD_LINUX,
+        [operatingSystems.windows]: `${MIRROR_CRC_LATEST}/crc-windows-installer.zip`,
+        [operatingSystems.mac]: `${MIRROR_CRC_LATEST}/crc-macos-amd64.pkg`,
+        [operatingSystems.linux]: `${MIRROR_CRC_LATEST}/crc-linux-amd64.tar.xz`,
       },
     },
   },
@@ -325,18 +271,18 @@ const urls = {
   [tools.HELM]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${links.HELM_CLI_LATEST}/helm-linux-amd64`,
-        [operatingSystems.mac]: `${links.HELM_CLI_LATEST}/helm-darwin-amd64`,
-        [operatingSystems.windows]: `${links.HELM_CLI_LATEST}/helm-windows-amd64.exe`,
+        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-amd64`,
+        [operatingSystems.mac]: `${MIRROR_HELM_LATEST}/helm-darwin-amd64`,
+        [operatingSystems.windows]: `${MIRROR_HELM_LATEST}/helm-windows-amd64.exe`,
       },
       [architectures.s390x]: {
-        [operatingSystems.linux]: `${links.HELM_CLI_LATEST}/helm-linux-s390x`,
+        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-s390x`,
       },
       [architectures.ppc]: {
-        [operatingSystems.linux]: `${links.HELM_CLI_LATEST}/helm-linux-ppc64le`,
+        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-ppc64le`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: `${links.HELM_CLI_LATEST}/helm-linux-arm64`,
+        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-arm64`,
       },
     },
   },
@@ -344,74 +290,74 @@ const urls = {
   [tools.X86INSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: links.X86INSTALLER_LINUX_X86,
-        [operatingSystems.mac]: links.X86INSTALLER_MAC_X86,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-mac.tar.gz`,
       },
     },
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: links.X86INSTALLER_LINUX_X86_PRE_RELEASE,
-        [operatingSystems.mac]: links.X86INSTALLER_MAC_X86_PRE_RELEASE,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-mac.tar.gz`,
       },
     },
   },
   [tools.IBMZINSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: links.IBMZINSTALLER_LINUX_X86,
-        [operatingSystems.mac]: links.IBMZINSTALLER_MAC_X86,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-linux-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-mac.tar.gz`,
       },
       [architectures.s390x]: {
-        [operatingSystems.linux]: links.IBMZINSTALLER_LINUX_IBMZ,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-linux.tar.gz`,
       },
     },
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: links.IBMZINSTALLER_LINUX_X86_PRE_RELEASE,
-        [operatingSystems.mac]: links.IBMZINSTALLER_MAC_X86_PRE_RELEASE,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-linux-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-mac.tar.gz`,
       },
       [architectures.s390x]: {
-        [operatingSystems.linux]: links.IBMZINSTALLER_LINUX_IBMZ_PRE_RELEASE,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-linux.tar.gz`,
       },
     },
   },
   [tools.PPCINSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: links.PPCINSTALLER_LINUX_X86,
-        [operatingSystems.mac]: links.PPCINSTALLER_MAC_X86,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-mac.tar.gz`,
       },
       [architectures.ppc]: {
-        [operatingSystems.linux]: links.PPCINSTALLER_LINUX_PPC,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux.tar.gz`,
       },
     },
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: links.PPCINSTALLER_LINUX_X86_PRE_RELEASE,
-        [operatingSystems.mac]: links.PPCINSTALLER_MAC_X86_PRE_RELEASE,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-linux-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-mac.tar.gz`,
       },
       [architectures.ppc]: {
-        [operatingSystems.linux]: links.PPCINSTALLER_LINUX_PPC_PRE_RELEASE,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-linux.tar.gz`,
       },
     },
   },
   [tools.ARMINSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: links.ARMINSTALLER_LINUX_X86,
-        [operatingSystems.mac]: links.ARMINSTALLER_MAC_X86,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-install-linux-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-install-mac.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: links.ARMINSTALLER_LINUX_ARM,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-install-linux.tar.gz`,
       },
     },
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: links.ARMINSTALLER_LINUX_X86_PRE_RELEASE,
-        [operatingSystems.mac]: links.ARMINSTALLER_MAC_X86_PRE_RELEASE,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-linux-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-mac.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: links.ARMINSTALLER_LINUX_ARM_PRE_RELEASE,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-linux.tar.gz`,
       },
     },
   },
@@ -438,9 +384,9 @@ const urls = {
   [tools.ROSA]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${links.ROSA_CLIENT_LATEST}/rosa-linux.tar.gz`,
-        [operatingSystems.mac]: `${links.ROSA_CLIENT_LATEST}/rosa-macosx.tar.gz`,
-        [operatingSystems.windows]: `${links.ROSA_CLIENT_LATEST}/rosa-windows.zip`,
+        [operatingSystems.linux]: `${MIRROR_ROSA_LATEST}/rosa-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_ROSA_LATEST}/rosa-macosx.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_ROSA_LATEST}/rosa-windows.zip`,
       },
     },
   },
@@ -448,18 +394,18 @@ const urls = {
   [tools.OPM]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: links.OPM_LINUX_X86,
-        [operatingSystems.mac]: links.OPM_MAC_X86,
-        [operatingSystems.windows]: links.OPM_WINDOWS,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}opm-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}opm-mac.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_CLIENTS_STABLE_X86}opm-windows.tar.gz`,
       },
       [architectures.s390x]: {
-        [operatingSystems.linux]: links.OPM_LINUX_IBMZ,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}opm-linux.tar.gz`,
       },
       [architectures.ppc]: {
-        [operatingSystems.linux]: links.OPM_LINUX_PPC,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}opm-linux.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: links.OPM_LINUX_ARM,
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}opm-linux.tar.gz`,
       },
     },
   },
