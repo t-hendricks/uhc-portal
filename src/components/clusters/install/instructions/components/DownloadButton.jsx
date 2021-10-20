@@ -27,6 +27,7 @@ const pendoEvents = {
   [tools.IBMZINSTALLER]: 'OCP-Download-IBMZInstaller',
   [tools.PPCINSTALLER]: 'OCP-Download-PPCInstaller',
   [tools.ARMINSTALLER]: 'OCP-Download-ARMInstaller',
+  [tools.KN]: 'Download-KN-CLI',
   [tools.OCM]: 'Download-OCM-CLI',
   [tools.ODO]: 'Download-ODO-CLI',
   [tools.OPERATOR_SDK]: 'Download-OSDK-CLI',

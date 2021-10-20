@@ -315,7 +315,7 @@ ToolAndDescriptionRows.propTypes = {
 };
 
 const rowsByCategory = {
-  CLI: [tools.OC, tools.OCM, tools.ROSA],
+  CLI: [tools.OC, tools.OCM, tools.ROSA, tools.KN],
   DEV: [tools.ODO, tools.HELM, tools.OPM, tools.OPERATOR_SDK, tools.RHOAS],
   INSTALLATION: [
     tools.X86INSTALLER, tools.IBMZINSTALLER, tools.PPCINSTALLER, tools.ARMINSTALLER, tools.CRC,
@@ -406,6 +406,30 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             <ExternalLink href={links.ROSA_DOCS}>
               Get started
             </ExternalLink>
+          </Text>
+        )}
+      />
+
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.KN}
+        channel={channels.STABLE}
+        name={(
+          <>
+            Knative command-line interface for OpenShift Serverless (
+            <code>kn</code>
+            )
+          </>
+        )}
+        description={(
+          <Text>
+            Interact with Knative components on OpenShift Container Platform with
+            the Knative client for OpenShift Serverless
+            {' '}
+            <code>kn</code>
+            .
+            {' '}
+            <ExternalLink href={links.KN_DOCS}>Learn more</ExternalLink>
           </Text>
         )}
       />
