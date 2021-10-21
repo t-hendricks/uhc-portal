@@ -1,17 +1,10 @@
 .cluster-create-page {
-  .ocm-sandbox-graytext {
-    color: var(--pf-global--Color--200);
-  }
-  h2.ocm-ocp-sandbox-title {
-    display: inline-block;
-    margin-right: var(--pf-global--spacer--md);
-  }
   h2.ocm-ocp-datacenter-title {
     display: inline-block;
     margin-right: var(--pf-global--spacer--md);
   }
 
-  table a.pf-c-button.pf-m-secondary {
+  .get-started-button {
     width: 150px;
   }
   h2.font-weight-light {
@@ -38,10 +31,6 @@
     #toggle-all-button {
       padding: 0px;
     }
-  }
-
-  .ocm-instructions-crc__card {
-    padding: 0;
   }
 
   #subscriptions {
