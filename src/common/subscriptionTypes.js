@@ -137,6 +137,15 @@ const billingModels = {
   MARKETPLACE: 'marketplace', // quota from Red Hat Marketplace
 };
 
+/**
+ * The ocmRoles contains all available roles that a customer
+ * can grant to other users within his own organization.
+ */
+const ocmRoles = {
+  CLUSTER_EDITOR: 'ClusterEditor',
+  CLUSTER_VIEWER: 'ClusterViewer',
+};
+
 export {
   subscriptionStatuses,
   subscriptionSettings,
@@ -150,4 +159,5 @@ export {
   clustersServiceProducts,
   productFilterOptions,
   billingModels,
+  ocmRoles,
 };

@@ -18,5 +18,6 @@ const modals = {
   RESUME_CLUSTER: 'resume-cluster',
   EDIT_TAINTS: 'edit-taints',
   EDIT_LABELS: 'edit-labels',
+  OCM_ROLES: 'ocm-roles',
 };
 export default modals;

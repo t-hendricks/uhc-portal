@@ -233,7 +233,7 @@ class NetworkSelfServiceSection extends React.Component {
 
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason = clusterHibernating && 'This operation is not available while cluster is hibernating';
-    const canNotEditReason = !canEdit && 'You do not have permission to grant a role. Only cluster owners and organization administrators can grant roles.';
+    const canNotEditReason = !canEdit && 'You do not have permission to grant a role. Only cluster owners, cluster editors, and organization administrators can grant roles.';
     const disableReason = readOnlyReason || hibernatingReason || canNotEditReason;
 
     const addGrantBtn = (

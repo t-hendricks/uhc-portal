@@ -175,6 +175,8 @@ const links = {
   ROSA_DOCS: 'https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html',
 
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
+  // TODO OCM RBAC phase 2: update this link once the new chapter is there.
+  OCM_DOCS_ROLES_AND_ACCESS: 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/index',
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.

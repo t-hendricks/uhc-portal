@@ -348,11 +348,39 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   max-width: 50ch; // pf default is 20ch
 }
 
-// cluster details -> users
-.cluster-details-user-tab-contents {
-  margin-top: 20px;
-  .row {
-    padding-bottom: 5px;
+// cluster details -> Access Control
+#cluster-details-access-control-tab-contents {
+  // the tab already provides padding.
+  padding: 0 0 0 0;
+
+  // style for vertical tab in AccessControl
+  @media (min-width: 768px) {
+    .pf-c-tabs {
+      float: left;
+      width: 220px;
+    }
+  }
+
+  // tab content
+  .pf-c-tab-content {
+    // the parent already draws a box.
+    // no boxes for the nested cards.
+    .pf-c-card {
+      --pf-c-card--BoxShadow: none;
+    }
+  }
+
+  // hide if there's single tab item
+  &.single-tab .pf-c-tabs  {
+    display: none;
+  }
+}
+
+#ocm-roles-access-dialog {
+  // TODO OCM RBAC pahse 2: remove this with the alert
+  .pf-c-alert {
+    background-color: unset;
+    border-top: unset;
   }
 }
 
@@ -568,6 +596,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .pf-c-form__group .pf-c-radio__input {
   margin-top: -3px;
+}
+
+// add some space between the text input label and the help icon
+.pf-c-form__group-label .text-input-tootip-icon {
+  margin-left: 5px;
 }
 
 .quota-dropdown {

@@ -121,6 +121,22 @@ const createRosaEntitlement = () => apiRequest({
   url: '/api/accounts_mgmt/v1/self_entitlement/rosa',
 });
 
+const getSubscriptionRoleBindings = subID => apiRequest({
+  method: 'get',
+  url: `/api/accounts_mgmt/v1/subscriptions/${subID}/role_bindings`,
+});
+
+const createSubscriptionRoleBinding = (subID, username, roleID) => apiRequest({
+  method: 'post',
+  data: { account_username: username, role_id: roleID },
+  url: `/api/accounts_mgmt/v1/subscriptions/${subID}/role_bindings`,
+});
+
+const deleteSubscriptionRoleBinding = (subID, roleBindingID) => apiRequest({
+  method: 'delete',
+  url: `/api/accounts_mgmt/v1/subscriptions/${subID}/role_bindings/${roleBindingID}`,
+});
+
 function getRequest(pathParams, params = {}) {
   const type = pathParams[0];
   let url;
@@ -149,6 +165,9 @@ const accountsService = {
   getSupportCases,
   fetchSubscriptionByExternalId,
   createRosaEntitlement,
+  getSubscriptionRoleBindings,
+  createSubscriptionRoleBinding,
+  deleteSubscriptionRoleBinding,
 };
 
 export default accountsService;

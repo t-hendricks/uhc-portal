@@ -1414,6 +1414,11 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               "push": [MockFunction],
             }
           }
+          refreshEvent={
+            Object {
+              "type": undefined,
+            }
+          }
         />
       </ErrorBoundary>
     </ForwardRef>
