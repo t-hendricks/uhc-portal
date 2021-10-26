@@ -13,7 +13,7 @@ import TechPreviewBadge from '../../common/TechPreviewBadge';
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];
 const ocpTableRows = [
-  [(<><Link to="/install/metal">Bare Metal</Link></>),
+  [(<><Link to="/install/metal">Bare Metal (x86_64)</Link></>),
     'Full stack automation and pre-existing infrastructure'],
   [(<><Link to="/install/ibmz/user-provisioned">IBM Z</Link></>),
     'Pre-existing infrastructure'],
@@ -25,8 +25,8 @@ const ocpTableRows = [
     'Full stack automation and pre-existing infrastructure'],
   [(<><Link to="/install/vsphere">vSphere</Link></>),
     'Full stack automation and pre-existing infrastructure'],
-  [(<><Link to="/install/metal">Platform agnostic</Link></>),
-    'Full stack automation and pre-existing infrastructure'],
+  [(<><Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link></>),
+    'Pre-existing infrastructure'],
 ];
 
 const DatacenterTab = ({ assistedInstallerFeature }) => (
