@@ -108,6 +108,14 @@ const reviewValues = {
       false: 'Disabled',
     },
   },
+  customer_managed_key: {
+    title: 'Customer-managed keys',
+    isBoolean: true,
+    values: {
+      true: 'Enabled',
+      false: 'Disabled',
+    },
+  },
   network_configuration_toggle: {
     title: 'Networking',
     values: {

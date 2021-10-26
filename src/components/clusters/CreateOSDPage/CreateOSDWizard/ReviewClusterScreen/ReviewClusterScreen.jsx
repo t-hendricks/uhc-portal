@@ -73,6 +73,7 @@ function ReviewClusterScreen({
     isByoc && isAWS && 'disable_scp_checks',
     'enable_user_workload_monitoring',
     'etcd_encryption',
+    isByoc && 'customer_managed_key',
     'machine_type',
     canAutoScale && 'autoscalingEnabled',
     'nodes_compute',
