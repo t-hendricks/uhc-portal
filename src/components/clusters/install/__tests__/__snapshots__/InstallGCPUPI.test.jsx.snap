@@ -41,7 +41,7 @@ exports[`InstallGCPUPI renders correctly 1`] = `
           Object {
             "buttonText": "Download RHCOS tar",
             "name": "OCP-Download-RHCOS-tar",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-4.5.6-x86_64-gcp.x86_64.tar.gz",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-gcp.x86_64.tar.gz",
           },
         ]
       }
