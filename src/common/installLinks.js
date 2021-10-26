@@ -162,7 +162,7 @@ const links = {
   OPM_LINUX_ARM: `${MIRROR_CLIENTS_STABLE_ARM}opm-linux.tar.gz`,
   OPM_MAC_X86: `${MIRROR_CLIENTS_STABLE}opm-mac.tar.gz`,
   OPM_WINDOWS: `${MIRROR_CLIENTS_STABLE}opm-windows.tar.gz`,
-  OPM_DOCS: `${DOCS_BASE}/cli_reference/opm-cli.html`,
+  OPM_DOCS: 'https://docs.openshift.com/container-platform/4.9/cli_reference/opm/cli-opm-install.html',
 
   ROSA_CLIENT_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest',
   ROSA_DOCS: 'https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html',
