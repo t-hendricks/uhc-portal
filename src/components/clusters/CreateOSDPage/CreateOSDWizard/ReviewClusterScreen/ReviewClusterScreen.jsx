@@ -95,26 +95,33 @@ function ReviewClusterScreen({
       </Bullseye>
     );
   }
+
+  const listOptions = {
+    // default vertical good for narrow screens, horizontal clearer when we have the space.
+    orientation: {
+      sm: 'horizontal',
+    },
+  };
   return (
     <div className="ocm-create-osd-review-screen">
       <Title headingLevel="h2">
         Review your dedicated cluster
       </Title>
       <Title headingLevel="h3">Billing Model</Title>
-      <DescriptionList isHorizontal>
+      <DescriptionList {...listOptions}>
         {clusterSpecDescriptionItem({ name: 'billing_model', formValues })}
         {clusterSpecDescriptionItem({ name: 'byoc', formValues })}
       </DescriptionList>
       <Title headingLevel="h3">
         Cluster settings
       </Title>
-      <DescriptionList isHorizontal>
+      <DescriptionList {...listOptions}>
         {clusterSettingsFields.map(name => clusterSpecDescriptionItem({ name, formValues }))}
       </DescriptionList>
       <Title headingLevel="h3">
         Networking
       </Title>
-      <DescriptionList isHorizontal>
+      <DescriptionList {...listOptions}>
         {clusterSpecDescriptionItem({ name: 'network_configuration_toggle', formValues })}
         { formValues.network_configuration_toggle === 'advanced' && (
           <>
@@ -129,7 +136,7 @@ function ReviewClusterScreen({
       <Title headingLevel="h3">
         Default machine pool
       </Title>
-      <DescriptionList isHorizontal>
+      <DescriptionList {...listOptions}>
         {clusterSpecDescriptionItem({ name: 'machine_type', formValues })}
         {autoscalingEnabled
           ? clusterSpecDescriptionItem({ name: 'min_replicas', formValues })
@@ -141,7 +148,7 @@ function ReviewClusterScreen({
       <Title headingLevel="h3">
         Updates
       </Title>
-      <DescriptionList isHorizontal>
+      <DescriptionList {...listOptions}>
         {clusterSpecDescriptionItem({ name: 'upgrade_policy', formValues })}
         {formValues.upgrade_policy === 'automatic' && clusterSpecDescriptionItem({ name: 'automatic_upgrade_schedule', formValues })}
         {clusterSpecDescriptionItem({ name: 'node_drain_grace_period', formValues })}
