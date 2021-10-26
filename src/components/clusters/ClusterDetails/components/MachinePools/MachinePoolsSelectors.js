@@ -71,9 +71,13 @@ const canAutoScaleSelector = (state, product) => product === normalizedProducts.
     || (product === normalizedProducts.OSD && hasClusterLevelAutoscaleCapability(state))
     || (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
 
+const canUseSpotInstances = (state, product) => product === normalizedProducts.ROSA
+  || (product === normalizedProducts.OSD && state.clusters.details?.cluster?.ccs?.enabled);
+
 export {
   hasMachinePoolsQuotaSelector,
   hasOrgLevelAutoscaleCapability,
   canAutoScaleOnCreateSelector,
   canAutoScaleSelector,
+  canUseSpotInstances,
 };

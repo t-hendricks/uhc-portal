@@ -38,6 +38,7 @@ describe('<EditLabelsModal />', () => {
     pristine: true,
     invalid: false,
     clusterId: 'test-id',
+    selectedMachinePoolId: 'mp-with-labels',
   };
 
   const wrapper = shallow(<EditLabelsModal {...props} />);
