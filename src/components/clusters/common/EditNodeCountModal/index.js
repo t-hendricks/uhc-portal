@@ -64,6 +64,7 @@ const mapStateToProps = (state) => {
           value: machinePool.id,
           machineType: machinePool.instance_type,
           nodes: machinePool.replicas,
+          aws: machinePool?.aws,
         })),
       ],
     },

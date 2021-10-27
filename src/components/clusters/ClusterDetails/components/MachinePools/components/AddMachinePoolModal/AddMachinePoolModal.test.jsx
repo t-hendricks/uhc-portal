@@ -46,6 +46,8 @@ describe('<AddMachinePoolModal />', () => {
       canAutoScale
       autoscalingEnabled
       change={change}
+      canUseSpotInstances={false}
+      useSpotInstances={false}
     />,
   );
   it('renders correctly', () => {

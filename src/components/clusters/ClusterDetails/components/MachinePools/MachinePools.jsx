@@ -170,7 +170,14 @@ class MachinePools extends React.Component {
         {
           cells: [
             machinePool.id,
-            machinePool.instance_type,
+            {
+              title: (
+                <>
+                  {machinePool.instance_type}
+                  {machinePool.aws && <Label variant="outline" className="ocm-c-machine-pools__spot-label">Spot</Label> }
+                </>
+              ),
+            },
             machinePool.availability_zones?.join(', '),
             { title: nodes },
             autoscalingEnabled ? 'Enabled' : 'Disabled',

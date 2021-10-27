@@ -79,7 +79,11 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
             Object {
               "cells": Array [
                 "some-id",
-                "m5.xlarge",
+                Object {
+                  "title": <React.Fragment>
+                    m5.xlarge
+                  </React.Fragment>,
+                },
                 "us-east-1",
                 Object {
                   "title": "1",
@@ -99,7 +103,11 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
             Object {
               "cells": Array [
                 "mp-autoscaling",
-                "m5.xlarge",
+                Object {
+                  "title": <React.Fragment>
+                    m5.xlarge
+                  </React.Fragment>,
+                },
                 "us-east-1a",
                 Object {
                   "title": "Min: 1, Max: 2",
@@ -310,7 +318,11 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 "some-id",
-                "m5.xlarge",
+                Object {
+                  "title": <React.Fragment>
+                    m5.xlarge
+                  </React.Fragment>,
+                },
                 "us-east-1",
                 Object {
                   "title": "1",
@@ -330,7 +342,11 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 "mp-with-labels-and-taints",
-                "m5.xlarge",
+                Object {
+                  "title": <React.Fragment>
+                    m5.xlarge
+                  </React.Fragment>,
+                },
                 "us-east-1a",
                 Object {
                   "title": "1",
@@ -419,7 +435,11 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 "mp-with-label",
-                "m5.xlarge",
+                Object {
+                  "title": <React.Fragment>
+                    m5.xlarge
+                  </React.Fragment>,
+                },
                 "us-east-1a",
                 Object {
                   "title": "1",
@@ -472,7 +492,11 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 "mp-with-taints",
-                "m5.xlarge",
+                Object {
+                  "title": <React.Fragment>
+                    m5.xlarge
+                  </React.Fragment>,
+                },
                 "us-east-1a",
                 Object {
                   "title": "1",
@@ -542,7 +566,11 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
             Object {
               "cells": Array [
                 "mp-with-no-labels-no-taints",
-                "m5.xlarge",
+                Object {
+                  "title": <React.Fragment>
+                    m5.xlarge
+                  </React.Fragment>,
+                },
                 "us-east-1a",
                 Object {
                   "title": "1",
@@ -653,7 +681,11 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
             Object {
               "cells": Array [
                 "some-id",
-                "m5.xlarge",
+                Object {
+                  "title": <React.Fragment>
+                    m5.xlarge
+                  </React.Fragment>,
+                },
                 "us-east-1",
                 Object {
                   "title": "1",
@@ -762,7 +794,11 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
             Object {
               "cells": Array [
                 "some-id",
-                "m5.xlarge",
+                Object {
+                  "title": <React.Fragment>
+                    m5.xlarge
+                  </React.Fragment>,
+                },
                 "us-east-1",
                 Object {
                   "title": "1",

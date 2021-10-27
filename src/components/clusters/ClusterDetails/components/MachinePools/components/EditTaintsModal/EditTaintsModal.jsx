@@ -8,6 +8,7 @@ import {
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import EditMachinePoolAlert from '../EditMachinePoolAlert';
+import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../SpotInstanceHelper';
 
 import { ReduxFormDropdown, ReduxFormTaints } from '../../../../../../common/ReduxFormComponents';
 
@@ -60,6 +61,7 @@ class EditTaintsModal extends Component {
       handleSubmit,
       editTaintsResponse,
       pristine,
+      selectedMachinePoolId,
     } = this.props;
 
     const error = editTaintsResponse.error ? (
@@ -100,6 +102,14 @@ class EditTaintsModal extends Component {
               <GridItem span={12}>
                 <FieldArray name="taints" component={ReduxFormTaints} isEditing />
               </GridItem>
+              {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList)
+              && (
+                <>
+                  <GridItem span={12}>
+                    <SpotInstanceInfoAlert />
+                  </GridItem>
+                </>
+              )}
             </Grid>
           </Form>
         </>
@@ -119,6 +129,7 @@ EditTaintsModal.propTypes = {
   change: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
+  selectedMachinePoolId: PropTypes.string.isRequired,
 };
 
 export default EditTaintsModal;

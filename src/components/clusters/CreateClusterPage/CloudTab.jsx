@@ -226,7 +226,14 @@ const managedServices = (hasQuota, trialEnabled) => {
       'Flexible hourly billing',
       (
         <>
-          <Button component="a" href={links.AZURE} variant="secondary" target="_blank" rel="noopener noreferrer">
+          <Button
+            component="a"
+            href={links.AZURE}
+            variant="secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="get-started-button"
+          >
             Try it on Azure
           </Button>
         </>
@@ -277,7 +284,14 @@ const managedServices = (hasQuota, trialEnabled) => {
       'Flexible hourly billing',
       (
         <>
-          <Button component="a" href={links.IBM_CLOUD} variant="secondary" target="_blank" rel="noopener noreferrer">
+          <Button
+            component="a"
+            href={links.IBM_CLOUD}
+            variant="secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="get-started-button"
+          >
             Try it on IBM
           </Button>
         </>
@@ -328,8 +342,12 @@ const managedServices = (hasQuota, trialEnabled) => {
       'Flexible hourly billing',
       (
         <>
-          <Button component="a" href={links.AWS} rel="noopener noreferrer" variant="secondary">
-            Try it on AWS
+          <Button
+            component={props => <Link {...props} to="/create/rosa/welcome" />}
+            variant="secondary"
+            className="get-started-button"
+          >
+            Create cluster
           </Button>
         </>
       ),
@@ -349,7 +367,7 @@ const managedServices = (hasQuota, trialEnabled) => {
               Hosted on AWS.
             </StackItem>
             <StackItem>
-              <a href={links.AWS_LEARN_MORE} target="_blank" rel="noopener noreferrer">
+              <a href={links.AWS} target="_blank" rel="noopener noreferrer">
                 Learn more about Red Hat OpenShift Service on AWS
                 {' '}
                 <ArrowRightIcon />
@@ -383,7 +401,7 @@ const runItYourself = () => {
   const columns = ['Cloud provider', 'Installation options'];
   const rows = [
     [
-      <><Link to="/install/aws">AWS</Link></>,
+      <><Link to="/install/aws">AWS (x86_64)</Link></>,
       'Full stack automation and pre-existing infrastructure',
     ],
     [
@@ -402,8 +420,8 @@ const runItYourself = () => {
       'Full stack automation and pre-existing infrastructure',
     ],
     [
-      <><Link to="/install/metal">Platform agnostic</Link></>,
-      'Full stack automation and pre-existing infrastructure',
+      <><Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link></>,
+      'Pre-existing infrastructure',
     ],
   ];
   return (
