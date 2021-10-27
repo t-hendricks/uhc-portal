@@ -49,6 +49,7 @@ describe('<EditTaintsModal />', () => {
     reset,
     pristine: true,
     clusterId: 'test-id',
+    selectedMachinePoolId: 'mp-withot-taints',
   };
 
   const EditTaintsModalWithLabelswrapper = shallow(<EditTaintsModal {...props} />);

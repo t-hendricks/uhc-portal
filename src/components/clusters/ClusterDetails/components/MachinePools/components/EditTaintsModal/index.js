@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import { reduxForm, formValueSelector } from 'redux-form';
 
 import EditTaintsModal from './EditTaintsModal';
 import {
@@ -17,8 +17,11 @@ const reduxFormConfig = {
 
 const reduxFormEditTaints = reduxForm(reduxFormConfig)(EditTaintsModal);
 
+const valueSelector = formValueSelector('editTaints');
+
 const mapStateToProps = state => ({
   machinePoolsList: state.machinePools.getMachinePools,
+  selectedMachinePoolId: valueSelector(state, 'machinePoolId') || state.modal.data.machinePool?.id,
   editTaintsResponse: state.machinePools.scaleMachinePoolResponse,
   initialValues: {
     taints: state.modal.data.machinePool?.taints || [{ effect: 'NoSchedule' }],

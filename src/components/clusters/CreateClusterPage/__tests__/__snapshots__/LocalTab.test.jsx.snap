@@ -2,152 +2,119 @@
 
 exports[`<LocalTab /> renders correctly 1`] = `
 <Fragment>
-  <PageSection
-    className="ocm-instructions-crc__card"
-  >
-    <Stack
-      className="download-instructions header"
+  <PageSection>
+    <Split
       hasGutter={true}
     >
-      <StackItem>
-        <Title
-          className="ocm-ocp-sandbox-title"
-          headingLevel="h2"
-        >
-          Red Hat CodeReady Containers
-        </Title>
+      <Title
+        headingLevel="h2"
+      >
+        Red Hat CodeReady Containers
+      </Title>
+      <SplitItem>
         <Label
           variant="outline"
         >
           local sandbox
         </Label>
-      </StackItem>
-      <StackItem>
+      </SplitItem>
+    </Split>
+    <TextContent>
+      <Text
+        component="p"
+      >
         Create a minimal cluster on your desktop/laptop for local development and testing.
-      </StackItem>
-      <StackItem>
+      </Text>
+      <Text
+        className="ocm-secondary-text"
+        component="p"
+      >
+        <b>
+          Note: 
+        </b>
+        Your CodeReady installation won't appear in the OpenShift Cluster Manager unless you enable cluster monitoring and telemetry.
+      </Text>
+    </TextContent>
+    <Divider
+      className="pf-u-mt-lg pf-u-mb-xl"
+    />
+    <Instructions>
+      <Instruction>
         <Text
-          className="ocm-sandbox-graytext"
+          component="h3"
+        >
+          Download what you need to get started
+        </Text>
+        <Text
+          component="h4"
+        >
+          CodeReady Containers
+        </Text>
+        <DownloadAndOSSelection
+          channel="stable"
+          pendoID="/"
+          token={Object {}}
+          tool="crc"
+        />
+        <Text
+          component="h3"
+        >
+          Pull secret
+        </Text>
+        <PullSecretSection
+          pendoID="/"
+          token={Object {}}
+        />
+      </Instruction>
+      <Instruction>
+        <Text
+          component="h3"
+        >
+          Follow the documentation to install CodeReady containers
+        </Text>
+        <Text
           component="p"
         >
-          <b>
-            Note: 
-          </b>
-          Your CodeReady installation won't appear in the OpenShift Cluster Manager unless you enable cluster monitoring and telemetry.
+          Run
+           
+          <code>
+            crc setup
+          </code>
+           
+          to set up your host operating system for the CodeReady Containers virtual machine.
         </Text>
-      </StackItem>
-    </Stack>
-    <Divider />
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+        <Text
+          component="p"
+        >
+          Then, run
+           
+          <code>
+            crc start
+          </code>
+           
+          to create a minimal OpenShift 4 cluster on your computer.
+        </Text>
+        <Text
+          component="p"
+        >
+          <a
+            href="https://access.redhat.com/documentation/en-us/red_hat_codeready_containers"
+            onClick={[Function]}
+            rel="noreferrer noopener"
+            target="_blank"
+            variant="link"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Download what you need to get started
-              </Text>
-              <Text
-                component="h3"
-              >
-                CodeReady Containers
-              </Text>
-              <DownloadAndOSSelection
-                channel="stable"
-                pendoID="/"
-                token={Object {}}
-                tool="crc"
-              />
-              <Text
-                component="h3"
-              >
-                Pull secret
-              </Text>
-              <PullSecretSection
-                pendoID="/"
-                token={Object {}}
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the documentation to install CodeReady containers
-              </Text>
-              <Text
-                component="p"
-              >
-                Run
-                 
-                <code>
-                  crc setup
-                </code>
-                 
-                to set up your host operating system for the CodeReady Containers virtual machine.
-              </Text>
-              <Text
-                component="p"
-              >
-                Then, run
-                 
-                <code>
-                  crc start
-                </code>
-                 
-                to create a minimal OpenShift 4 cluster on your computer.
-              </Text>
-            </TextContent>
-            <a
-              href="https://access.redhat.com/documentation/en-us/red_hat_codeready_containers"
-              onClick={[Function]}
-              rel="noreferrer noopener"
-              target="_blank"
-              variant="link"
-            >
-              View the CodeReady Containers Getting started guide
-               
-              <ExternalLinkAltIcon
-                color="#0066cc"
-                noVerticalAlign={false}
-                size="sm"
-              />
-            </a>
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            View the CodeReady Containers Getting started guide
+             
+            <ExternalLinkAltIcon
+              color="#0066cc"
+              noVerticalAlign={false}
+              size="sm"
+            />
+          </a>
+        </Text>
+      </Instruction>
+    </Instructions>
   </PageSection>
 </Fragment>
 `;

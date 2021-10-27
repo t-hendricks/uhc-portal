@@ -55,6 +55,7 @@ import ConnectedInstallRHVUPI from '../clusters/install/InstallRHVUPI';
 import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
 import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
 import InstallVSphere from '../clusters/install/InstallVSphere';
+import ConnectedInstallPlatformAgnostic from '../clusters/install/InstallPlatformAgnostic';
 import ConnectedInstallPreRelease from '../clusters/install/InstallPreRelease';
 import ConnectedInstallPullSecret from '../clusters/install/InstallPullSecret';
 import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
@@ -78,6 +79,7 @@ import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
 import ConnectedInstallAwsARM from '../clusters/install/InstallAwsARM';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
+import CreateROSAWelcome from '../clusters/CreateROSAWelcome';
 
 const { AssistedUiRouter } = OCM;
 
@@ -152,6 +154,7 @@ function Router({ history }) {
             <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMPreRelease} />
             <Route path="/install/power/user-provisioned" component={ConnectedInstallPower} />
             <Route path="/install/power/pre-release" component={ConnectedInstallPowerPreRelease} />
+            <Route path="/install/platform-agnostic" component={ConnectedInstallPlatformAgnostic} />
             <Route path="/install/pre-release" component={ConnectedInstallPreRelease} />
             <Route path="/install/pull-secret" component={ConnectedInstallPullSecret} />
             <Route path="/install/azure/aro-provisioned" component={ConnectedInstallPullSecretAzure} />
@@ -175,6 +178,7 @@ function Router({ history }) {
             <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
+            <TermsGuardedRoute path="/create/rosa/welcome" history={history} render={() => <CreateROSAWelcome />} />
             <Route path="/create" component={CreateClusterPage} />
             <Route path="/details/s/:subscriptionID/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
             <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />

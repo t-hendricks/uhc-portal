@@ -356,7 +356,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 }
 
-.pf-c-tabs__item-text > #monitoring-issues-icon, 
+.pf-c-tabs__item-text > #monitoring-issues-icon,
 .pf-c-tabs__item-text > #insights-issues-icon  {
   margin-left: 5px;
 }
@@ -613,7 +613,7 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
       position: relative;
       padding-left: 10px;
       // change to inline display, so the fields do not take the whole line.
-      // the tooltip can be nicely displayed side by side. 
+      // the tooltip can be nicely displayed side by side.
       display: inline-block;
       .pf-c-radio:not(:last-child) {
         margin-bottom: var(--pf-global--spacer--sm);
@@ -690,4 +690,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .ins-c-empty-state__unavailable .pf-c-empty-state__icon {
   color: var(--pf-global--danger-color--100);
+}
+
+.ocm-secondary-text {
+  color: var(--pf-global--Color--200);
 }

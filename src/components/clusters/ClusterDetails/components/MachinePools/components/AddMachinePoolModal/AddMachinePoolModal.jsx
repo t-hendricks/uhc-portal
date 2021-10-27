@@ -11,6 +11,7 @@ import ErrorBox from '../../../../../../common/ErrorBox';
 import ScaleSection from '../../../../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/ScaleSection';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { checkMachinePoolName } from '../../../../../../../common/validators';
+import CostSavingsSection from './CostSavingsSection';
 
 class AddMachinePoolModal extends Component {
   state = {
@@ -63,6 +64,10 @@ class AddMachinePoolModal extends Component {
       change,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
+      canUseSpotInstances,
+      useSpotInstances,
+      spotInstancePricing,
+      spotInstanceMaxHourlyPrice,
     } = this.props;
 
     const { machineType } = this.state;
@@ -124,6 +129,18 @@ class AddMachinePoolModal extends Component {
                 autoScaleMaxNodesValue={autoScaleMaxNodesValue}
                 billingModel={billingModel}
               />
+              {/* Cost savings */}
+              { canUseSpotInstances
+              && (
+                <>
+                  <CostSavingsSection
+                    useSpotInstances={useSpotInstances}
+                    spotInstancePricing={spotInstancePricing}
+                    spotInstanceMaxHourlyPrice={spotInstanceMaxHourlyPrice}
+                    change={change}
+                  />
+                </>
+              )}
             </Grid>
           </Form>
         </>
@@ -149,12 +166,18 @@ AddMachinePoolModal.propTypes = {
   change: PropTypes.func.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
   autoScaleMaxNodesValue: PropTypes.string,
+  canUseSpotInstances: PropTypes.bool.isRequired,
+  useSpotInstances: PropTypes.bool.isRequired,
+  spotInstancePricing: PropTypes.string,
+  spotInstanceMaxHourlyPrice: PropTypes.number,
 };
 
 AddMachinePoolModal.defaultProps = {
   addMachinePoolResponse: {},
   autoScaleMinNodesValue: '0',
   autoScaleMaxNodesValue: '0',
+  spotInstancePricing: 'onDemand',
+  spotInstanceMaxHourlyPrice: 0.00,
 };
 
 export default AddMachinePoolModal;

@@ -30,6 +30,7 @@ const mapStateToProps = (state) => {
     machinePoolsList: state.machinePools.getMachinePools,
     editLabelsResponse: state.machinePools.scaleMachinePoolResponse,
     tags: valueSelector(state, 'labels') || parseLabels(currentLabels),
+    selectedMachinePoolId: valueSelector(state, 'machinePoolId') || state.modal.data.machinePool?.id,
     initialValues: {
       labels: parseLabels(currentLabels),
       machinePoolId: state.modal.data.machinePool?.id,

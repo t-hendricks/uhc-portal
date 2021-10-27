@@ -57,10 +57,10 @@ const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 
 const AWS_KMS_SERVICE_ACCOUNT_REGEX = /^arn:aws:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
-// A valid label key must consist of alphanumeric characters, '-', '_'
+// A valid label key must consist of alphanumeric characters, '-', '_', '/'
 // or '.', and must start and end with an alphanumeric character. e.g. 'MyName', 'my.name',
-// or '123-abc'
-const LABEL_KEY_REGEX = /^([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]$/;
+// '123-abc', or 'my-label/is-called'
+const LABEL_KEY_REGEX = /^([A-Za-z0-9][-A-Za-z0-9_./]*)?[A-Za-z0-9]$/;
 
 // A valid label value must be an empty string or consist of alphanumeric characters, '-', '_'
 // or '.', and must start and end with an alphanumeric character. e.g. 'MyValue', or 'my_value',
@@ -931,7 +931,7 @@ const validateHTPasswdUsername = (username) => {
 
 const validateLabelKey = (key) => {
   if (!LABEL_KEY_REGEX.test(key)) {
-    return 'A valid label key must consist of alphanumeric characters, \'-\', \'_\' or \'.\', and must start and end with an alphanumeric character.';
+    return 'A valid label key must consist of alphanumeric characters, \'-\', \'_\', \'/\' or \'.\', and must start and end with an alphanumeric character.';
   }
   return undefined;
 };

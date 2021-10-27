@@ -219,6 +219,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   "Flexible hourly billing",
                   <React.Fragment>
                     <Button
+                      className="get-started-button"
                       component="a"
                       href="https://azure.microsoft.com/en-us/services/openshift"
                       rel="noopener noreferrer"
@@ -285,6 +286,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   "Flexible hourly billing",
                   <React.Fragment>
                     <Button
+                      className="get-started-button"
                       component="a"
                       href="https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift"
                       rel="noopener noreferrer"
@@ -340,7 +342,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   </React.Fragment>,
                   <React.Fragment>
                     <a
-                      href="https://console.aws.amazon.com/rosa/home"
+                      href="https://cloud.redhat.com/products/amazon-openshift"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -351,12 +353,11 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   "Flexible hourly billing",
                   <React.Fragment>
                     <Button
-                      component="a"
-                      href="https://console.aws.amazon.com/rosa/home"
-                      rel="noopener noreferrer"
+                      className="get-started-button"
+                      component={[Function]}
                       variant="secondary"
                     >
-                      Try it on AWS
+                      Create cluster
                     </Button>
                   </React.Fragment>,
                 ],
@@ -375,7 +376,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://aws.amazon.com/rosa/"
+                          href="https://cloud.redhat.com/products/amazon-openshift"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -447,7 +448,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   <Link
                     to="/install/aws"
                   >
-                    AWS
+                    AWS (x86_64)
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
@@ -487,12 +488,12 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/metal"
+                    to="/install/platform-agnostic"
                   >
-                    Platform agnostic
+                    Platform agnostic (x86_64)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Pre-existing infrastructure",
               ],
             ]
           }
@@ -727,6 +728,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   "Flexible hourly billing",
                   <React.Fragment>
                     <Button
+                      className="get-started-button"
                       component="a"
                       href="https://azure.microsoft.com/en-us/services/openshift"
                       rel="noopener noreferrer"
@@ -793,6 +795,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   "Flexible hourly billing",
                   <React.Fragment>
                     <Button
+                      className="get-started-button"
                       component="a"
                       href="https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift"
                       rel="noopener noreferrer"
@@ -848,7 +851,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   </React.Fragment>,
                   <React.Fragment>
                     <a
-                      href="https://console.aws.amazon.com/rosa/home"
+                      href="https://cloud.redhat.com/products/amazon-openshift"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -859,12 +862,11 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   "Flexible hourly billing",
                   <React.Fragment>
                     <Button
-                      component="a"
-                      href="https://console.aws.amazon.com/rosa/home"
-                      rel="noopener noreferrer"
+                      className="get-started-button"
+                      component={[Function]}
                       variant="secondary"
                     >
-                      Try it on AWS
+                      Create cluster
                     </Button>
                   </React.Fragment>,
                 ],
@@ -883,7 +885,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://aws.amazon.com/rosa/"
+                          href="https://cloud.redhat.com/products/amazon-openshift"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -955,7 +957,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   <Link
                     to="/install/aws"
                   >
-                    AWS
+                    AWS (x86_64)
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
@@ -995,12 +997,12 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/metal"
+                    to="/install/platform-agnostic"
                   >
-                    Platform agnostic
+                    Platform agnostic (x86_64)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Pre-existing infrastructure",
               ],
             ]
           }
@@ -1174,6 +1176,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   "Flexible hourly billing",
                   <React.Fragment>
                     <Button
+                      className="get-started-button"
                       component="a"
                       href="https://azure.microsoft.com/en-us/services/openshift"
                       rel="noopener noreferrer"
@@ -1240,6 +1243,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   "Flexible hourly billing",
                   <React.Fragment>
                     <Button
+                      className="get-started-button"
                       component="a"
                       href="https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift"
                       rel="noopener noreferrer"
@@ -1295,7 +1299,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   </React.Fragment>,
                   <React.Fragment>
                     <a
-                      href="https://console.aws.amazon.com/rosa/home"
+                      href="https://cloud.redhat.com/products/amazon-openshift"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -1306,12 +1310,11 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   "Flexible hourly billing",
                   <React.Fragment>
                     <Button
-                      component="a"
-                      href="https://console.aws.amazon.com/rosa/home"
-                      rel="noopener noreferrer"
+                      className="get-started-button"
+                      component={[Function]}
                       variant="secondary"
                     >
-                      Try it on AWS
+                      Create cluster
                     </Button>
                   </React.Fragment>,
                 ],
@@ -1330,7 +1333,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://aws.amazon.com/rosa/"
+                          href="https://cloud.redhat.com/products/amazon-openshift"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -1402,7 +1405,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   <Link
                     to="/install/aws"
                   >
-                    AWS
+                    AWS (x86_64)
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
@@ -1442,12 +1445,12 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/metal"
+                    to="/install/platform-agnostic"
                   >
-                    Platform agnostic
+                    Platform agnostic (x86_64)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Pre-existing infrastructure",
               ],
             ]
           }

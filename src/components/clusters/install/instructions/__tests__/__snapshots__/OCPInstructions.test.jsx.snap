@@ -2,1448 +2,655 @@
 
 exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="AWS"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="AWS"
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="AWS"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-account.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="AWS"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-account.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="AWS"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="AWS"
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="AWS"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-user-infra.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="AWS"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-user-infra.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="Azure"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="Azure"
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="Azure"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-default.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Azure"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-default.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="preRelease"
+            cloudProviderID="Azure"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="preRelease"
-              cloudProviderID="Azure"
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="Azure"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
-                docURL="https://github.com/openshift/installer/blob/master/docs/user/azure/install_upi.md"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Azure"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
+            docURL="https://github.com/openshift/installer/blob/master/docs/user/azure/install_upi.md"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="Bare Metal"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="Bare Metal"
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="Bare Metal"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Bare Metal"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="Bare Metal"
+            displayRHCOSSection={true}
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="Bare Metal"
-              displayRHCOSSection={true}
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="Bare Metal"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Bare Metal"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="GCP"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="GCP"
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="GCP"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-account.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="GCP"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-account.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="GCP"
+            displayRHCOSSection={true}
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="GCP"
-              displayRHCOSSection={true}
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="GCP"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-user-infra.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="GCP"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-user-infra.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="IBM-Z"
+            displayRHCOSSection={true}
+            isBMIPI={false}
+            pendoID="/"
+            preReleasePageLink="/install/ibmz/pre-release"
+            token={Object {}}
+            tool="s390x-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="IBM-Z"
+            customizations=""
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_z/installing-ibm-z.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`Every OCP instruction page should render:  Platform Agnostic 1`] = `
+<Fragment>
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="Platform Agnostic"
+            displayRHCOSSection={true}
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="IBM-Z"
-              displayRHCOSSection={true}
-              isBMIPI={false}
-              pendoID="/"
-              preReleasePageLink="/install/ibmz/pre-release"
-              token={Object {}}
-              tool="s390x-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="IBM-Z"
-                customizations=""
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_z/installing-ibm-z.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Platform Agnostic"
+            customizations=""
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_platform_agnostic/installing-platform-agnostic.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  Power 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="Power"
+            displayRHCOSSection={true}
+            isBMIPI={false}
+            pendoID="/"
+            preReleasePageLink="/install/power/pre-release"
+            token={Object {}}
+            tool="ppc64le-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="Power"
-              displayRHCOSSection={true}
-              isBMIPI={false}
-              pendoID="/"
-              preReleasePageLink="/install/power/pre-release"
-              token={Object {}}
-              tool="ppc64le-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="Power"
-                customizations=""
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_power/installing-ibm-power.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Power"
+            customizations=""
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_power/installing-ibm-power.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-ipi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="Red Hat OpenStack Platform"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="Red Hat OpenStack Platform"
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="Red Hat OpenStack Platform"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Red Hat OpenStack Platform"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-upi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="Red Hat OpenStack Platform"
+            displayRHCOSSection={true}
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="Red Hat OpenStack Platform"
-              displayRHCOSSection={true}
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="Red Hat OpenStack Platform"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-user.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Red Hat OpenStack Platform"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-user.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="Red Hat Virutalization"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="Red Hat Virutalization"
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="Red Hat Virutalization"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-default.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Red Hat Virutalization"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-default.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="Red Hat Virutalization"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="Red Hat Virutalization"
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="Red Hat Virutalization"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-user-infra.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Red Hat Virutalization"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-user-infra.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="VMware vSphere"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="VMware vSphere"
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="VMware vSphere"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="VMware vSphere"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;
 
 exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
 <Fragment>
-  <Card
-    className="ocm-ocp-instructions__card"
-  >
-    <Stack>
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="VMware vSphere"
+            displayRHCOSSection={true}
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
           >
-            <Title
-              headingLevel="h1"
-            >
-              1
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <DownloadsAndPullSecretSection
-              channel="stable"
-              cloudProviderID="VMware vSphere"
-              displayRHCOSSection={true}
-              isBMIPI={false}
-              pendoID="/"
-              token={Object {}}
-              tool="x86_64-openshift-install"
-            />
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              2
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <TextContent>
-              <Text
-                component="h2"
-              >
-                Follow the instructions to configure your environment and install your cluster
-              </Text>
-              <GetStarted
-                cloudProviderID="VMware vSphere"
-                customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
-                docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html"
-                isBMIPI={false}
-                pendoID="/"
-              />
-            </TextContent>
-          </SplitItem>
-        </Split>
-      </StackItem>
-      <Divider />
-      <StackItem>
-        <Split>
-          <SplitItem
-            className="step-number"
-          >
-            <Title
-              headingLevel="h1"
-            >
-              3
-            </Title>
-          </SplitItem>
-          <SplitItem
-            className="download-instructions"
-            isFilled={true}
-          >
-            <SubscriptionAndSupport />
-          </SplitItem>
-        </Split>
-      </StackItem>
-    </Stack>
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="VMware vSphere"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
   </Card>
 </Fragment>
 `;

@@ -105,7 +105,7 @@ const links = {
   INSTALL_GCPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html`,
   INSTALL_GCPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra`,
   INSTALL_GCP_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-customizations.html`,
-  RHCOS_GCPUPI_TAR_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-4.5.6-x86_64-gcp.x86_64.tar.gz`,
+  RHCOS_GCPUPI_TAR_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-gcp.x86_64.tar.gz`,
 
   INSTALL_OSPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-installer-custom.html`,
   INSTALL_OSPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-user.html`,
@@ -132,6 +132,13 @@ const links = {
   INSTALL_RHVIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-default.html`,
   INSTALL_RHV_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-customizations.html`,
   INSTALL_RHVUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_rhv/installing-rhv-user-infra.html`,
+
+  INSTALL_GENERIC_GETTING_STARTED: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
+  INSTALL_GENERIC_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html#creating-machines-platform-agnostic`,
+  RHCOS_GENERIC_ISO_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live.x86_64.iso`,
+  RHCOS_GENERIC_KERNEL_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live-kernel-x86_64`,
+  RHCOS_GENERIC_INITRAMFS_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live-initramfs.x86_64.img`,
+  RHCOS_GENERIC_ROOTFS_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live-rootfs.x86_64.img`,
 
   INSTALL_PRE_RELEASE_BUG_LIST_45: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.5.0',
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
@@ -162,7 +169,7 @@ const links = {
   OPM_LINUX_ARM: `${MIRROR_CLIENTS_STABLE_ARM}opm-linux.tar.gz`,
   OPM_MAC_X86: `${MIRROR_CLIENTS_STABLE}opm-mac.tar.gz`,
   OPM_WINDOWS: `${MIRROR_CLIENTS_STABLE}opm-windows.tar.gz`,
-  OPM_DOCS: `${DOCS_BASE}/cli_reference/opm-cli.html`,
+  OPM_DOCS: 'https://docs.openshift.com/container-platform/4.9/cli_reference/opm/cli-opm-install.html',
 
   ROSA_CLIENT_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest',
   ROSA_DOCS: 'https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html',

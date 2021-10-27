@@ -1573,7 +1573,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 Create and maintain catalogs of Operators from a list of bundles with the Operator Package Manager.
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/latest/cli_reference/opm-cli.html"
+                  href="https://docs.openshift.com/container-platform/4.9/cli_reference/opm/cli-opm-install.html"
                 >
                   Learn more
                 </ExternalLink>
