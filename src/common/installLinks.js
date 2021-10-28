@@ -14,6 +14,7 @@ const MIRROR_ODO_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients
 const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
+const MIRROR_RHCOS_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/latest';
 const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest';
 
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
@@ -105,6 +106,12 @@ const links = {
   RHCOS_POWER_INITRAMFS: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-initramfs.ppc64le.img`,
   RHCOS_POWER_KERNEL: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-kernel-ppc64le`,
   RHCOS_POWER_ROOTFS: `${MIRROR_RHCOS_LATEST_PPC}/rhcos-live-rootfs.ppc64le.img`,
+
+  RHCOS_ARM_ISO: `${MIRROR_RHCOS_LATEST_ARM}/rhcos-live.aarch64.iso`,
+  RHCOS_ARM_INITRAMFS: `${MIRROR_RHCOS_LATEST_ARM}/rhcos-live-initramfs.aarch64.img`,
+  RHCOS_ARM_KERNEL: `${MIRROR_RHCOS_LATEST_ARM}/rhcos-live-kernel-aarch64`,
+  RHCOS_ARM_ROOTFS: `${MIRROR_RHCOS_LATEST_ARM}/rhcos-live-rootfs.aarch64.img`,
+  RHCOS_ARM_RAW: `${MIRROR_RHCOS_LATEST_ARM}/rhcos-metal.aarch64.raw.gz`,
 
   // TODO remove once Tokens uses DownloadAndOSSelection for direct downloads
   OCM_CLI_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
