@@ -1,0 +1,14 @@
+{
+  "kind": "KeyRingList",
+  "page": 1,
+  "size": 2,
+  "total": 2,
+  "items": [
+    {
+      "name": "jsafrane-test"
+    },
+    {
+      "name": "jspeed-test"
+    }
+  ]
+}
