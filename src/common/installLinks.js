@@ -461,6 +461,15 @@ const urlsSelector = (githubReleases) => {
           [operatingSystems.mac]: `${base}/ocm-darwin-amd64`,
           [operatingSystems.windows]: `${base}/ocm-windows-amd64`,
         },
+        [architectures.s390x]: {
+          [operatingSystems.linux]: `${base}/ocm-linux-s390x`,
+        },
+        [architectures.ppc]: {
+          [operatingSystems.linux]: `${base}/ocm-linux-ppc64le`,
+        },
+        [architectures.arm]: {
+          [operatingSystems.linux]: `${base}/ocm-linux-arm64`,
+        },
       },
     };
   }
