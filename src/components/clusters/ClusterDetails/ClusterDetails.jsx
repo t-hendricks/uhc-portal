@@ -53,6 +53,7 @@ const { HostsClusterDetailTab, canAddHost } = OCM;
 class ClusterDetails extends Component {
   state = {
     selectedTab: '',
+    refreshEvent: null,
   };
 
   constructor(props) {
@@ -229,6 +230,8 @@ class ClusterDetails extends Component {
       const subscriptionID = clusterDetails.cluster?.subscription?.id;
       getOnDemandMetrics(subscriptionID);
     }
+
+    this.setState({ refreshEvent: { type: clicked } });
   }
 
   fetchSupportData() {
@@ -279,7 +282,7 @@ class ClusterDetails extends Component {
       assistedInstallerEnabled,
       userAccess,
     } = this.props;
-    const { selectedTab } = this.state;
+    const { selectedTab, refreshEvent } = this.state;
 
     const { cluster } = clusterDetails;
 
@@ -351,8 +354,7 @@ class ClusterDetails extends Component {
     const consoleURL = get(cluster, 'console.url');
     const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster
       && !isUninstalledAICluster(cluster);
-    const displayAccessControlTab = cluster.managed && !!consoleURL
-      && (isClusterReady || clusterHibernating) && !isArchived;
+    const displayAccessControlTab = !isArchived;
     const cloudProvider = get(cluster, 'cloud_provider.id');
     const displayNetworkingTab = (isClusterReady || isClusterUpdating || clusterHibernating)
       && cluster.managed && !!get(cluster, 'api.url')
@@ -465,6 +467,7 @@ class ClusterDetails extends Component {
                 clusterConsoleURL={consoleURL}
                 cloudProvider={get(cluster, 'cloud_provider.id')}
                 history={history}
+                refreshEvent={refreshEvent}
               />
             </ErrorBoundary>
           </TabContent>

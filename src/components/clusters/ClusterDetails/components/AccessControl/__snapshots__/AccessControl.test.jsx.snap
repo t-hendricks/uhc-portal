@@ -1,31 +1,93 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<AccessControl /> should render 1`] = `
-<div
-  className="cluster-details-user-tab-contents"
->
-  <Connect(IDPSection)
-    canEdit={true}
-    clusterConsoleURL="https://console-openshift-console.apps.example.com"
-    clusterHibernating={false}
-    clusterID="fake id"
-    isReadOnly={false}
-  />
-  <Connect(UsersSection)
-    cluster={
-      Object {
-        "canEdit": true,
-        "id": "fake id",
-      }
-    }
-    clusterHibernating={false}
-    isReadOnly={false}
-  />
-  <Connect(NetworkSelfServiceSection)
-    canEdit={true}
-    clusterHibernating={false}
-    clusterID="fake id"
-    isReadOnly={false}
-  />
-</div>
+<Card>
+  <CardBody
+    className=""
+    id="cluster-details-access-control-tab-contents"
+  >
+    <Tabs
+      activeKey={0}
+      className=""
+      component="div"
+      isBox={false}
+      isFilled={false}
+      isSecondary={false}
+      isVertical={true}
+      leftScrollAriaLabel="Scroll left"
+      mountOnEnter={false}
+      onSelect={[Function]}
+      ouiaSafe={true}
+      rightScrollAriaLabel="Scroll right"
+      unmountOnExit={false}
+      variant="default"
+    >
+      <Tab
+        eventKey={0}
+        title={
+          <TabTitleText>
+            OCM Roles and Access
+          </TabTitleText>
+        }
+      >
+        <Connect(OCMRolesSection)
+          refreshEvent={null}
+        />
+      </Tab>
+      <Tab
+        eventKey={1}
+        isHidden={false}
+        title={
+          <TabTitleText>
+            Cluster Roles and Access
+          </TabTitleText>
+        }
+      >
+        <Connect(UsersSection)
+          cluster={
+            Object {
+              "canEdit": true,
+              "id": "fake id",
+            }
+          }
+          clusterHibernating={false}
+          isReadOnly={false}
+        />
+      </Tab>
+      <Tab
+        eventKey={2}
+        isHidden={false}
+        title={
+          <TabTitleText>
+            Identity providers
+          </TabTitleText>
+        }
+      >
+        <Connect(IDPSection)
+          canEdit={true}
+          clusterConsoleURL="https://console-openshift-console.apps.example.com"
+          clusterHibernating={false}
+          clusterID="fake id"
+          isReadOnly={false}
+        />
+      </Tab>
+      <Tab
+        eventKey={3}
+        isHidden={false}
+        title={
+          <TabTitleText>
+            AWS infrastructure access
+          </TabTitleText>
+        }
+      >
+        <Connect(NetworkSelfServiceSection)
+          canEdit={true}
+          clusterHibernating={false}
+          clusterID="fake id"
+          isReadOnly={false}
+        />
+      </Tab>
+    </Tabs>
+  </CardBody>
+</Card>
 `;

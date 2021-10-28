@@ -341,7 +341,7 @@ class MachinePools extends React.Component {
       'This operation is not available while cluster is hibernating'
     );
     const canNotEditReason = !cluster.canEdit && (
-      'You do not have permission to add a machine pool. Only cluster owners and organization administrators can add machine pools.'
+      'You do not have permission to add a machine pool. Only cluster owners, cluster editors, and organization administrators can add machine pools.'
     );
     const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
 
