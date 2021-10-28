@@ -116,6 +116,11 @@ const getSupportCases = subscriptionID => apiRequest({
   url: `/api/accounts_mgmt/v1/subscriptions/${subscriptionID}/support_cases`,
 });
 
+const createRosaEntitlement = () => apiRequest({
+  method: 'post',
+  url: '/api/accounts_mgmt/v1/self_entitlement/rosa',
+});
+
 function getRequest(pathParams, params = {}) {
   const type = pathParams[0];
   let url;
@@ -143,6 +148,7 @@ const accountsService = {
   getRequest,
   getSupportCases,
   fetchSubscriptionByExternalId,
+  createRosaEntitlement,
 };
 
 export default accountsService;
