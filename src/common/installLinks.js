@@ -1,5 +1,5 @@
 const MIRROR_BUTANE_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest';
-const MIRROR_CLIENTS_STABLE_X86 = 'https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/';
+const MIRROR_CLIENTS_STABLE_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/';
@@ -9,12 +9,12 @@ const MIRROR_CLIENTS_LATEST_PRE_PPC = 'https://mirror.openshift.com/pub/openshif
 const MIRROR_CLIENTS_LATEST_PRE_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/';
 const MIRROR_COREOS_INSTALLER_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest';
 const MIRROR_CRC_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest';
-const MIRROR_HELM_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/helm/latest';
+const MIRROR_HELM_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest';
 const MIRROR_ODO_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest';
 const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
-const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest';
+const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest';
 
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';

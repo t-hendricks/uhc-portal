@@ -70,7 +70,7 @@ exports[`<TokensROSA /> Renders loading screen 1`] = `
                   Download and install the
                    
                   <ExternalLink
-                    href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest"
+                    href="https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest"
                     noIcon={true}
                   >
                     rosa command-line tool
@@ -393,7 +393,7 @@ exports[`<TokensROSA /> Renders token 1`] = `
                   Download and install the
                    
                   <ExternalLink
-                    href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/rosa/latest"
+                    href="https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest"
                     noIcon={true}
                   >
                     rosa command-line tool
