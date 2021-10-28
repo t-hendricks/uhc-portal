@@ -31,6 +31,7 @@ import { subscriptionSettingsReducer } from './subscriptionSettingsReducer';
 import { subscriptionReleasedReducer } from '../../components/clusters/common/TransferClusterOwnershipDialog/subscriptionReleasedReducer';
 import { NetworkingReducer } from '../../components/clusters/ClusterDetails/components/Networking/NetworkingReducer';
 import supportStatusReducer from '../../components/clusters/ClusterDetails/components/Overview/SupportStatusLabel/supportStatusReducer';
+import entitlementConfigReducer from './entitlementConfigReducer';
 import clusterUpgrades from '../../components/clusters/common/Upgrades/clusterUpgradeReducer';
 import machinePools from '../../components/clusters/ClusterDetails/components/MachinePools/MachinePoolsReducer';
 import githubReducer from './githubReducer';
@@ -69,6 +70,7 @@ const reducers = {
   cost: costReducer,
   dashboards: dashboardsReducer,
   supportStatus: supportStatusReducer,
+  entitlementConfig: entitlementConfigReducer,
   features: featuresReducer,
   clusterUpgrades,
   apiError: apiErrorReducer,
