@@ -4,38 +4,44 @@ exports[`<ReleaseChannel /> should render 1`] = `
 <ReleaseChannel
   channel="stable-4.6"
 >
-  <dt
-    className="pf-c-description-list__term pf-u-mt-md"
-  >
-    stable-4.6
-  </dt>
-  <dd
-    className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
-  >
-    <Level>
-      <div
-        className="pf-l-level"
+  <ReleaseChannelName>
+    <dt
+      className="pf-c-description-list__term pf-u-mt-md"
+    >
+      stable-4.6
+    </dt>
+  </ReleaseChannelName>
+  <ReleaseChannelDescription>
+    <dd
+      className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+    >
+      <Level
+        className="ocm-l-ocp-releases__channel-detail-level"
       >
-        <LevelItem>
-          <div>
-            Latest version
-             
-            <ExternalLink
-              href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html#ocp-4-6-12"
-              noIcon={true}
-            >
-              <a
+        <div
+          className="pf-l-level ocm-l-ocp-releases__channel-detail-level"
+        >
+          <LevelItem>
+            <div>
+              Latest version
+               
+              <ExternalLink
                 href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html#ocp-4-6-12"
-                rel="noreferrer noopener"
-                target="_blank"
+                noIcon={true}
               >
-                4.6.12
-              </a>
-            </ExternalLink>
-          </div>
-        </LevelItem>
-      </div>
-    </Level>
-  </dd>
+                <a
+                  href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html#ocp-4-6-12"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  4.6.12
+                </a>
+              </ExternalLink>
+            </div>
+          </LevelItem>
+        </div>
+      </Level>
+    </dd>
+  </ReleaseChannelDescription>
 </ReleaseChannel>
 `;

@@ -380,16 +380,16 @@ exports[`<Releases /> should render 1`] = `
                                                 fast-4.8
                                               </dt>
                                             </mockConstructor>
-                                            <dt
-                                              className="pf-c-description-list__term pf-u-mt-md"
+                                            <mockConstructor
+                                              channel="eus-4.8"
+                                              status="Full Support"
                                             >
-                                              -
-                                            </dt>
-                                            <dd
-                                              className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
-                                            >
-                                              No EUS channel in 4.8
-                                            </dd>
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                eus-4.8
+                                              </dt>
+                                            </mockConstructor>
                                             <mockConstructor
                                               channel="candidate-4.8"
                                             >
@@ -484,16 +484,28 @@ exports[`<Releases /> should render 1`] = `
                                                 fast-4.7
                                               </dt>
                                             </mockConstructor>
-                                            <dt
-                                              className="pf-c-description-list__term pf-u-mt-md"
-                                            >
-                                              -
-                                            </dt>
-                                            <dd
-                                              className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
-                                            >
-                                              No EUS channel in 4.7
-                                            </dd>
+                                            <ReleaseChannelName>
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                -
+                                              </dt>
+                                            </ReleaseChannelName>
+                                            <ReleaseChannelDescription>
+                                              <dd
+                                                className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+                                              >
+                                                <Level
+                                                  className="ocm-l-ocp-releases__channel-detail-level"
+                                                >
+                                                  <div
+                                                    className="pf-l-level ocm-l-ocp-releases__channel-detail-level"
+                                                  >
+                                                    No 4.7 EUS channel
+                                                  </div>
+                                                </Level>
+                                              </dd>
+                                            </ReleaseChannelDescription>
                                             <mockConstructor
                                               channel="candidate-4.7"
                                             >
@@ -692,16 +704,28 @@ exports[`<Releases /> should render 1`] = `
                                                 fast-4.5
                                               </dt>
                                             </mockConstructor>
-                                            <dt
-                                              className="pf-c-description-list__term pf-u-mt-md"
-                                            >
-                                              -
-                                            </dt>
-                                            <dd
-                                              className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
-                                            >
-                                              No EUS channel in 4.5
-                                            </dd>
+                                            <ReleaseChannelName>
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                -
+                                              </dt>
+                                            </ReleaseChannelName>
+                                            <ReleaseChannelDescription>
+                                              <dd
+                                                className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+                                              >
+                                                <Level
+                                                  className="ocm-l-ocp-releases__channel-detail-level"
+                                                >
+                                                  <div
+                                                    className="pf-l-level ocm-l-ocp-releases__channel-detail-level"
+                                                  >
+                                                    No 4.5 EUS channel
+                                                  </div>
+                                                </Level>
+                                              </dd>
+                                            </ReleaseChannelDescription>
                                             <mockConstructor
                                               channel="candidate-4.5"
                                             >
@@ -796,16 +820,28 @@ exports[`<Releases /> should render 1`] = `
                                                 fast-4.4
                                               </dt>
                                             </mockConstructor>
-                                            <dt
-                                              className="pf-c-description-list__term pf-u-mt-md"
-                                            >
-                                              -
-                                            </dt>
-                                            <dd
-                                              className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
-                                            >
-                                              No EUS channel in 4.4
-                                            </dd>
+                                            <ReleaseChannelName>
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                -
+                                              </dt>
+                                            </ReleaseChannelName>
+                                            <ReleaseChannelDescription>
+                                              <dd
+                                                className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+                                              >
+                                                <Level
+                                                  className="ocm-l-ocp-releases__channel-detail-level"
+                                                >
+                                                  <div
+                                                    className="pf-l-level ocm-l-ocp-releases__channel-detail-level"
+                                                  >
+                                                    No 4.4 EUS channel
+                                                  </div>
+                                                </Level>
+                                              </dd>
+                                            </ReleaseChannelDescription>
                                             <mockConstructor
                                               channel="candidate-4.4"
                                             >
@@ -900,16 +936,28 @@ exports[`<Releases /> should render 1`] = `
                                                 fast-4.3
                                               </dt>
                                             </mockConstructor>
-                                            <dt
-                                              className="pf-c-description-list__term pf-u-mt-md"
-                                            >
-                                              -
-                                            </dt>
-                                            <dd
-                                              className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
-                                            >
-                                              No EUS channel in 4.3
-                                            </dd>
+                                            <ReleaseChannelName>
+                                              <dt
+                                                className="pf-c-description-list__term pf-u-mt-md"
+                                              >
+                                                -
+                                              </dt>
+                                            </ReleaseChannelName>
+                                            <ReleaseChannelDescription>
+                                              <dd
+                                                className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail"
+                                              >
+                                                <Level
+                                                  className="ocm-l-ocp-releases__channel-detail-level"
+                                                >
+                                                  <div
+                                                    className="pf-l-level ocm-l-ocp-releases__channel-detail-level"
+                                                  >
+                                                    No 4.3 EUS channel
+                                                  </div>
+                                                </Level>
+                                              </dd>
+                                            </ReleaseChannelDescription>
                                             <mockConstructor
                                               channel="candidate-4.3"
                                             >
