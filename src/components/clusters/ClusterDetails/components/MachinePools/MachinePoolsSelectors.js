@@ -71,8 +71,12 @@ const canAutoScaleSelector = (state, product) => product === normalizedProducts.
     || (product === normalizedProducts.OSD && hasClusterLevelAutoscaleCapability(state))
     || (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
 
-const canUseSpotInstances = (state, product) => product === normalizedProducts.ROSA
-  || (product === normalizedProducts.OSD && state.clusters.details?.cluster?.ccs?.enabled);
+const canUseSpotInstances = (state, product) => {
+  const { cluster } = state.clusters.details;
+  const cloudProviderID = cluster.cloud_provider?.id;
+  return cloudProviderID === 'aws' && (product === normalizedProducts.ROSA
+    || (product === normalizedProducts.OSD && state.clusters.details?.cluster?.ccs?.enabled));
+};
 
 export {
   hasMachinePoolsQuotaSelector,
