@@ -74,9 +74,9 @@ function OCMRolesSection({
         // switch back from the skeletonRow
         updatedRows[pendingRowIndex].setIsPending(false);
       }
-      setPendingRowIndex(null);
       setRows(updatedRows);
     }
+    setPendingRowIndex(null);
   };
 
   // handle mounted and unmounted
@@ -245,19 +245,11 @@ function OCMRolesSection({
   };
 
   const handleDialogSubmit = (row, username, roleID) => {
+    clearPendingRow();
     if (row.isCreating) {
-      // push the new row to the bottom
-      clearPendingRow();
-      const updatedRows = rows.slice();
-      row.setIsPending(true);
-      updatedRows.push(row);
-      setRows(updatedRows);
-      setPendingRowIndex(row.rowIdx);
       grantOCMRole(subscription.id, username, roleID);
     } else {
       // TODO OCM RBAC phase 2: this could be handled by two APIs - delete then add.
-      clearPendingRow();
-      showPendingRow(row.rowIdx);
       editOCMRole(subscription.id, row.id, roleID);
     }
   };
