@@ -1,6 +1,6 @@
 {
   "_meta_": {
-    "_inject": {
+    "inject": {
       "delay": "3s",
       "ams_error": "11"
     }
