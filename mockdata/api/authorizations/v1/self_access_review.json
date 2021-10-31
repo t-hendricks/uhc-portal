@@ -1,9 +1,45 @@
-{
-  "account_id": "string",
-  "organization_id": "string",
-  "cluster_id": "string",
-  "subscription_id": "string",
-  "resource_type": "string",
-  "action": "get",
-  "allowed": true
-}
+[
+  {
+    "_meta_": {
+      "match": {
+        "request_body": {
+          "action": "create",
+          "resource_type": "SubscriptionRoleBinding"
+        }
+      }
+    },
+    "account_id": "string",
+    "organization_id": "string",
+    "cluster_id": "string",
+    "subscription_id": "string",
+    "resource_type": "string",
+    "action": "create",
+    "allowed": false
+  },
+  {
+    "_meta_": {
+      "match": {
+        "request_body": {
+          "action": "update",
+          "resource_type": "Subscription"
+        }
+      }
+    },
+    "account_id": "string",
+    "organization_id": "string",
+    "cluster_id": "string",
+    "subscription_id": "string",
+    "resource_type": "string",
+    "action": "update",
+    "allowed": true
+  },
+  {
+    "account_id": "string",
+    "organization_id": "string",
+    "cluster_id": "string",
+    "subscription_id": "string",
+    "resource_type": "string",
+    "action": "get",
+    "allowed": true
+  }
+]

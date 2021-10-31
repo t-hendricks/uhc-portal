@@ -3,6 +3,8 @@ import http.server
 import urllib.parse
 import os.path
 import sys
+import json
+import time
 
 def output_line_buffering():
     """Force line-buffering of output. Useful under `concurrently`."""
@@ -23,6 +25,33 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     print('Accessing ' + path)
     return path
 
+
+  def handle_request(self):
+    path = self.translate_path(self.path)
+    if os.path.isdir(path):
+      return http.server.SimpleHTTPRequestHandler.do_GET(self)
+
+    try:
+      f = open(path, 'r')
+    except OSError:
+      self.send_error(404, "File not found")
+      return
+  
+    try:
+      response = self.match(f)
+      response = self.inject(response)
+      if '_meta_' in response:
+        del response['_meta_']
+      if 'kind' in response and response['kind'] == 'Error':
+        self.send_response(500, None)
+      else:
+        self.send_response(200, None)
+      self.end_headers()
+      self.wfile.write(json.dumps(response).encode('utf-8'))
+    finally:
+      f.close()
+
+
   def do_GET(self):
     parts = urllib.parse.urlparse(self.path)
     params = urllib.parse.parse_qs(parts.query)
@@ -39,7 +68,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(b'{"content": ""}')
         return
 
-    return http.server.SimpleHTTPRequestHandler.do_GET(self)
+    return self.handle_request()
 
   def end_headers(self):
     """ override end_headers to append headers to every request """
@@ -57,11 +86,106 @@ class Handler(http.server.SimpleHTTPRequestHandler):
       self.send_response(200, "ok")
       self.end_headers()
 
+
+  # override the reponse with delay or errors
+  def inject(self, response):
+    if '_meta_' not in response or 'inject' not in response['_meta_']:
+      return response
+
+    for injectType, injectCtx in response['_meta_']['inject'].items():
+      injectFunc = getattr(self, f'inject_{injectType}')
+      response = injectFunc(injectCtx, response)
+
+    return response
+
+
+  def inject_delay(self, duration, response):
+    if duration.endswith('s'):
+      dur = int(duration.rstrip('s'))
+    elif duration.endswith('m'):
+      dur = int(duration.rstrip('m')) * 60
+    elif duration.endswith('h'):
+      dur = int(duration.rstrip('h')) * 3600
+    else:
+      dur = 0
+    time.sleep(dur)
+    return response
+
+
+  def inject_ams_error(self, errID, response):
+    res = {
+      "id": str(errID),
+      "kind": "Error",
+      "href": f"/api/accounts_mgmt/v1/errors/{errID}",
+      "code": f"ACCT-MGMT-{errID}",
+      "reason": "Error calling OCM Account Manager",
+      "operation_id": "021187a5-5650-41ed-9027-27d6e9ed9075"
+    }
+    if '_meta_' in response:
+      res['_meta_'] = response['_meta_']
+    return res
+
+
+  # a file can contain an array of responses,
+  # return the 1st matched response by the specified rules. 
+  def match(self, file):
+    responses = json.load(file)
+
+    # if the file contains a single response, use it
+    if not isinstance(responses, list) or len(responses) == 1:   
+      return responses[0] if isinstance(responses, list) else responses
+
+    # get request body if it exists
+    self.request_body = {}
+    try:
+      payloadSize = int(self.headers.get('Content-Length'))
+      payload = self.rfile.read(payloadSize)
+      self.request_body = json.loads(payload.decode('utf-8'))
+    except Exception:
+      pass
+
+    # return the 1st matched response
+    for res in responses:
+      # missing is a match
+      if '_meta_' not in res or 'match' not in res['_meta_']:
+        return res
+      else:
+        rules = res['_meta_']['match']
+        matchedAllRules = True
+        for matchType, matchCtx in rules.items():
+          matchFunc = getattr(self, f'match_{matchType}')
+          if not matchFunc(matchCtx):
+            matchedAllRules = False
+            break
+        if matchedAllRules:
+          return res          
+      
+    # return the 1st if none matches
+    return responses[0]
+
+
+  def match_request_body(self, expected):
+    for key, val in expected.items():
+      if key not in self.request_body or self.request_body[key] != val:
+        return False
+    return True
+
+
+  def match_method(self, expected):
+    return self.command == expected
+
+
   def do_POST(self):
-    return self.do_GET()
+    return self.handle_request()
+
 
   def do_PUT(self):
-      return self.do_GET()
+    return self.handle_request()
+
+
+  def do_DELETE(self):
+    return self.handle_request()
+
 
 def main():
     output_line_buffering()
