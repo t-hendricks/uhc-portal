@@ -216,7 +216,7 @@ function OCMRolesSection({
         id="ocm-roles-section-role"
         bodyContent={(
           <p>
-            The OpenShift Cluster Manager role that was granted to this user.
+            The OpenShift Cluster Manager role that is granted to this user.
           </p>
         )}
       >

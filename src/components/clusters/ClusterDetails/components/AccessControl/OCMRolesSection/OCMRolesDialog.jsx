@@ -57,8 +57,9 @@ function OCMRolesDialog({
         setAPIErrorMsg('This Red Hat login is not part of your organization.');
       } else {
         const errMsg = grantOCMRoleResponse.errorMessage || 'Unknow Error';
+        const newAPIErrorMsg = errMsg.split(/\r?\n/).pop();
         // use the shorten message if it is in the form "ACCT-MGMT-XX:\nXXX"
-        setAPIErrorMsg(errMsg.split(/\r?\n/).pop());
+        setAPIErrorMsg(newAPIErrorMsg.endsWith('.') ? newAPIErrorMsg : `${newAPIErrorMsg}.`);
       }
       setIsPrimaryDisabled(false);
     }
