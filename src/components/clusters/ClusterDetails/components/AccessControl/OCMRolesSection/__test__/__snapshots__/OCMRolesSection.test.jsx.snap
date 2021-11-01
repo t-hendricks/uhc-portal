@@ -1264,7 +1264,7 @@ exports[` 1`] = `
                                                     aria-label="Role"
                                                     bodyContent={
                                                       <p>
-                                                        The OpenShift Cluster Manager role that was granted to this user.
+                                                        The OpenShift Cluster Manager role that is granted to this user.
                                                       </p>
                                                     }
                                                     id="ocm-roles-section-role"
@@ -1328,7 +1328,7 @@ exports[` 1`] = `
                                                               id="popover-ocm-roles-section-role-body"
                                                             >
                                                               <p>
-                                                                The OpenShift Cluster Manager role that was granted to this user.
+                                                                The OpenShift Cluster Manager role that is granted to this user.
                                                               </p>
                                                             </PopoverBody>
                                                           </PopoverContent>
@@ -3344,7 +3344,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                     aria-label="Role"
                                                     bodyContent={
                                                       <p>
-                                                        The OpenShift Cluster Manager role that was granted to this user.
+                                                        The OpenShift Cluster Manager role that is granted to this user.
                                                       </p>
                                                     }
                                                     id="ocm-roles-section-role"
@@ -3408,7 +3408,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                               id="popover-ocm-roles-section-role-body"
                                                             >
                                                               <p>
-                                                                The OpenShift Cluster Manager role that was granted to this user.
+                                                                The OpenShift Cluster Manager role that is granted to this user.
                                                               </p>
                                                             </PopoverBody>
                                                           </PopoverContent>
