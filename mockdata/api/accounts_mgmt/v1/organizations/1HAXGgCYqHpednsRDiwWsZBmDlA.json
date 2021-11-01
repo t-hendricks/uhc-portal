@@ -6,5 +6,37 @@
   "external_id": "11009103",
   "ebs_account_id": "5910538",
   "created_at": "2019-02-14T12:03:02.538815Z",
-  "updated_at": "2019-05-02T12:00:35.11577Z"
+  "updated_at": "2019-05-02T12:00:35.11577Z",
+  "capabilities": [
+    {
+      "name": "capability.cluster.subscribed_osd_marketplace",
+      "value": "true",
+      "inherited": false
+    },
+    {
+      "name": "capability.cluster.subscribed_ocp",
+      "value": "true",
+      "inherited": false
+    },
+    {
+      "name": "capability.organization.allow_set_upgrade_channel_group",
+      "value": "true",
+      "inherited": false
+    },
+    {
+      "name": "capability.account.create_moa_clusters",
+      "value": "true",
+      "inherited": false
+    },
+    {
+      "name": "capability.cluster.autoscale_clusters",
+      "value": "true",
+      "inherited": false
+    },
+    {
+      "name": "capability.organization.hibernate_cluster",
+      "value": "true",
+      "inherited": false
+    }
+  ]
 }

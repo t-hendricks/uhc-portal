@@ -69,7 +69,7 @@ fi
 request "" "/api/accounts_mgmt/v1/current_account"
 
 org_href=$(jq .organization.href  "mockdata/api/accounts_mgmt/v1/current_account".json --raw-output)
-request "" "$org_href"
+request "" "$org_href" --parameter=fetchCapabilities=true
 request "" "$org_href/quota_cost" --parameter=fetchRelatedResources=true
 
 # Overwrite with more details.
