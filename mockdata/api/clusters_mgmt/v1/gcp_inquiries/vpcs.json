@@ -1,0 +1,230 @@
+{
+  "kind": "VPCList",
+  "page": 1,
+  "size": 57,
+  "total": 57,
+  "items": [
+    {
+      "name": "ak466-gk6h8-network"
+    },
+    {
+      "name": "alukiano-w7699-network"
+    },
+    {
+      "name": "anbhat-afrovn-m6j2r-network"
+    },
+    {
+      "name": "anbhat-lb-c4zkx-network"
+    },
+    {
+      "name": "arum-79mq9-network"
+    },
+    {
+      "name": "buids-9zw5d-network"
+    },
+    {
+      "name": "build-7gwtr-network"
+    },
+    {
+      "name": "crc-gcp-tes-c6dbh-network",
+      "subnets": [
+         "crc-gcp-tes-c6dbh-master-subnet",
+         "crc-gcp-tes-c6dbh-worker-subnet"
+      ]
+    },
+    {
+      "name": "default"
+    },
+    {
+      "name": "default-e2e"
+    },
+    {
+      "name": "default-k8s",
+      "subnets": [
+         "default-k8s"
+      ]
+    },
+    {
+      "name": "edge-sites-testing-gmtzp-network"
+    },
+    {
+      "name": "fpetkovski-46-mvqxc-network"
+    },
+    {
+      "name": "gyan-wc266-network"
+    },
+    {
+      "name": "hippo-zxfmp-network"
+    },
+    {
+      "name": "isim-dev-lr7td-network"
+    },
+    {
+      "name": "jcaamano-hl5sj-network"
+    },
+    {
+      "name": "jcaamano-mtu-change-slxw4-network"
+    },
+    {
+      "name": "jcaamano-mtu-set-4gp87-network"
+    },
+    {
+      "name": "jcaamano-mtu-test-mgbhz-network"
+    },
+    {
+      "name": "jeder-vpc-native",
+      "subnets": [
+         "jeder-vpc-native"
+      ]
+    },
+    {
+      "name": "jenkins-route-zlh86-network"
+    },
+    {
+      "name": "jit-cluster-5gr66-network"
+    },
+    {
+      "name": "jkyros-test1",
+      "subnets": [
+         "jkyros-test-1"
+      ]
+    },
+    {
+      "name": "jmencak-5nfwn-network"
+    },
+    {
+      "name": "melbeher-101-j42m8-network"
+    },
+    {
+      "name": "melbeher-104-jjqcm-network"
+    },
+    {
+      "name": "mentenza-internal-vpc"
+    },
+    {
+      "name": "mfedosin-hfwbc-network",
+      "subnets": [
+         "mfedosin-hfwbc-master-subnet",
+         "mfedosin-hfwbc-worker-subnet"
+      ]
+    },
+    {
+      "name": "mfedosinup-s8pvg-network",
+      "subnets": [
+         "mfedosinup-s8pvg-worker-subnet",
+         "mfedosinup-s8pvg-master-subnet"
+      ]
+    },
+    {
+      "name": "miabbott475-62n7p-network"
+    },
+    {
+      "name": "mmahmoud-gcp-n2lqh-network"
+    },
+    {
+      "name": "mmahmoud-gcp1-5xm8w-network"
+    },
+    {
+      "name": "mshitrit-gcp-ck7gx-network"
+    },
+    {
+      "name": "mshitrit1-2vcsd-network"
+    },
+    {
+      "name": "mspreitzer-hm9mx-network"
+    },
+    {
+      "name": "nsimha-test-1-sd8x8-network",
+      "subnets": [
+         "nsimha-test-1-sd8x8-master-subnet",
+         "nsimha-test-1-sd8x8-worker-subnet"
+      ]
+    },
+    {
+      "name": "nsimha-test-2-blmlz-network",
+      "subnets": [
+         "nsimha-test-2-blmlz-master-subnet",
+         "nsimha-test-2-blmlz-worker-subnet"
+      ]
+    },
+    {
+      "name": "ocp4-libvirt-dev",
+      "subnets": [
+         "ocp4-libvirt-dev"
+      ]
+    },
+    {
+      "name": "ovsdb-zwlm4-network"
+    },
+    {
+      "name": "pdiak-10-28-2021-vpbrx-network",
+      "subnets": [
+         "pdiak-10-28-2021-vpbrx-master-subnet",
+         "pdiak-10-28-2021-vpbrx-worker-subnet"
+      ]
+    },
+    {
+      "name": "pehunt-3-5tqvk-network"
+    },
+    {
+      "name": "prkumar-test",
+      "subnets": [
+         "prkumar-test"
+      ]
+    },
+    {
+      "name": "rc48-ds26f-network"
+    },
+    {
+      "name": "rcarrillocruz-test-lvhtb-network"
+    },
+    {
+      "name": "rocket-tocket-tw7w5-network",
+      "subnets": [
+         "rocket-tocket-tw7w5-worker-subnet",
+         "rocket-tocket-tw7w5-master-subnet"
+      ]
+    },
+    {
+      "name": "smeoe-b2qlg-network",
+      "subnets": [
+         "smeoe-b2qlg-worker-subnet",
+         "smeoe-b2qlg-master-subnet"
+      ]
+    },
+    {
+      "name": "sstuchly-gpu-test-clu-rrjxk-network"
+    },
+    {
+      "name": "test-crc-gcp-d5fwn-network"
+    },
+    {
+      "name": "testclusthh1-mdsk5-network"
+    },
+    {
+      "name": "testoperator-wkgsq-network"
+    },
+    {
+      "name": "tkashem48-sg9dh-network"
+    },
+    {
+      "name": "vb354-6qczt-network"
+    },
+    {
+      "name": "vbobade-230321-d2mm9-network"
+    },
+    {
+      "name": "vbobade-240212-g767r-network"
+    },
+    {
+      "name": "walid490922fora2-w4xxg-network"
+    },
+    {
+      "name": "yanir1-flv5s-network",
+      "subnets": [
+         "yanir1-flv5s-worker-subnet",
+         "yanir1-flv5s-master-subnet"
+      ]
+    }
+  ]
+}

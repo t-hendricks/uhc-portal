@@ -62,7 +62,7 @@ UI. For this purpose we’ve created a basic mock server that sends mock
 data. It doesn’t support all actions the real backend supports, but it
 should allow you to run the UI and test basic read-only functionality.
 
-To configure the mock server with insights proxy, run `yarn insights-proxy-setup`
+To configure the mock server with insights proxy, run `make insights-proxy-setup`
 then use `yarn startmock` to use the mock server
 
 ### Preparing Data for Mock Backend
