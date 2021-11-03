@@ -80,6 +80,7 @@ import Releases from '../releases/index';
 import ConnectedInstallAwsARM from '../clusters/install/InstallAwsARM';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import CreateROSAWelcome from '../clusters/CreateROSAWelcome';
+import EntitlementConfig from '../common/EntitlementConfig/index';
 
 const { AssistedUiRouter } = OCM;
 
@@ -117,12 +118,22 @@ function Router({ history }) {
             <TermsGuardedRoute
               path="/token/rosa/show"
               history={history}
-              render={() => <TokensROSA show />}
+              render={() => (
+                <>
+                  <TokensROSA show />
+                  <EntitlementConfig />
+                </>
+              )}
             />
             <TermsGuardedRoute
               path="/token/rosa"
               history={history}
-              render={() => <TokensROSA show={false} showPath="/token/rosa/show" />}
+              render={() => (
+                <>
+                  <TokensROSA show={false} showPath="/token/rosa/show" />
+                  <EntitlementConfig />
+                </>
+              )}
             />
             <Route path="/token/show" render={() => <Tokens show />} />
             <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />

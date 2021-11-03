@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import semver from 'semver';
-import { Divider, Level, LevelItem } from '@patternfly/react-core';
+import { Divider, LevelItem } from '@patternfly/react-core';
 
 import getOCPReleaseChannel from '../../services/releaseChannelService';
 import ExternalLink from '../common/ExternalLink';
@@ -9,6 +9,8 @@ import PopoverHint from '../common/PopoverHint';
 import getCandidateChannelLink from './getCandidateChannelLink';
 import getReleaseNotesLink from './getReleaseNotesLink';
 import SupportStatus from '../common/SupportStatus';
+import ReleaseChannelName from './ReleaseChannelName';
+import ReleaseChannelDescription from './ReleaseChannelDescription';
 
 const ReleaseChannel = ({ channel, status }) => {
   const [latestVersion, setLatestVersion] = React.useState('');
@@ -34,7 +36,7 @@ const ReleaseChannel = ({ channel, status }) => {
 
   return (
     <>
-      <dt className="pf-c-description-list__term pf-u-mt-md">
+      <ReleaseChannelName>
         {isCandidate && (<Divider className="ocm-l-ocp-releases__divider pf-u-my-lg" />)}
         {channel}
         {isCandidate && (
@@ -59,27 +61,25 @@ const ReleaseChannel = ({ channel, status }) => {
             )}
           />
         )}
-      </dt>
-      <dd className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail">
-        <Level>
-          {latestVersion && (
-            <LevelItem>
-              Latest version
-              {' '}
-              {releaseNotesLink ? (
-                <ExternalLink href={releaseNotesLink} noIcon>
-                  {latestVersion}
-                </ExternalLink>
-              ) : (
-                latestVersion
-              )}
-            </LevelItem>
-          )}
-          {status && (
-            <SupportStatus status={status} />
-          )}
-        </Level>
-      </dd>
+      </ReleaseChannelName>
+      <ReleaseChannelDescription>
+        {latestVersion && (
+          <LevelItem>
+            Latest version
+            {' '}
+            {releaseNotesLink ? (
+              <ExternalLink href={releaseNotesLink} noIcon>
+                {latestVersion}
+              </ExternalLink>
+            ) : (
+              latestVersion
+            )}
+          </LevelItem>
+        )}
+        {status && (
+          <SupportStatus status={status} />
+        )}
+      </ReleaseChannelDescription>
     </>
   );
 };

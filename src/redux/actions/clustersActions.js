@@ -332,6 +332,8 @@ const fetchClusters = params => (dispatch, getState) => dispatch({
 
 const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   let canEdit;
+  let canEditOCMRoles;
+  let canViewOCMRoles;
   const subscription = await accountsService.getSubscription(subscriptionID);
   subscription.data = normalizeSubscription(subscription.data);
 
@@ -339,6 +341,12 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
     await authorizationsService.selfAccessReview(
       { action: 'update', resource_type: 'Subscription', subscription_id: subscriptionID },
     ).then((response) => { canEdit = response.data.allowed; });
+    await authorizationsService.selfAccessReview(
+      { action: 'create', resource_type: 'SubscriptionRoleBinding', subscription_id: subscriptionID },
+    ).then((response) => { canEditOCMRoles = response.data.allowed; });
+    await authorizationsService.selfAccessReview(
+      { action: 'get', resource_type: 'SubscriptionRoleBinding', subscription_id: subscriptionID },
+    ).then((response) => { canViewOCMRoles = response.data.allowed; });
   }
 
   if (subscription.data.managed
@@ -350,6 +358,8 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
     );
 
     cluster.data.canEdit = canEdit;
+    cluster.data.canEditOCMRoles = canEditOCMRoles;
+    cluster.data.canViewOCMRoles = canViewOCMRoles;
     cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
     if (subscription.data.metrics !== undefined) {
       [cluster.data.metrics] = subscription.data.metrics; // take metrics from AMS (even for OSD)
@@ -382,6 +392,8 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   }
 
   cluster.data.canEdit = canEdit;
+  cluster.data.canEditOCMRoles = canEditOCMRoles;
+  cluster.data.canViewOCMRoles = canViewOCMRoles;
   cluster.data.canDelete = false; // OCP clusters can't be deleted
   cluster.data.subscription = subscription.data;
   return cluster;

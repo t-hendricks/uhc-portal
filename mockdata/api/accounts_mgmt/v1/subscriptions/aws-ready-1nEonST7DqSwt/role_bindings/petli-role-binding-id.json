@@ -1,0 +1,8 @@
+{
+  "_meta_": {
+    "inject": {
+      "delay": "3s",
+      "ams_error": "11"
+    }
+  }
+}

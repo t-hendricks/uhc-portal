@@ -251,7 +251,7 @@ class EditSubscriptionSettingsFields extends Component {
     if (value > MAX_VAL) {
       return {
         isValid: false,
-        errorMsg: `${systemUnits} value must be a integer number no larger than ${MAX_VAL}.`,
+        errorMsg: `${systemUnits} value must be an integer number no larger than ${MAX_VAL}.`,
       };
     }
 

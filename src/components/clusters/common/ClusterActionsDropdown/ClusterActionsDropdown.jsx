@@ -70,7 +70,7 @@ class ClusterActionsDropdown extends React.Component {
     if (disabled) {
       return (
         <Tooltip
-          content="You do not have permission to make changes in this cluster. Only cluster owners and organization administrators can make these changes."
+          content="You do not have permission to make changes in this cluster. Only cluster owners, cluster editors, and organization administrators can make these changes."
           position="bottom"
         >
           {dropdown}
