@@ -136,8 +136,6 @@ function BillingModelSection({
     );
   }
 
-  const showSubscriptionType = subscriptionOptions.length > 1;
-
   return (
     <>
       { isWizard && (
@@ -158,7 +156,6 @@ function BillingModelSection({
       )}
       <GridItem span={12}>
         <Stack hasGutter>
-          {showSubscriptionType && (
           <StackItem>
             <Title headingLevel="h3">Subscription type:</Title>
             <FormGroup
@@ -178,7 +175,6 @@ function BillingModelSection({
               />
             </FormGroup>
           </StackItem>
-          )}
           <StackItem>
             <Title headingLevel="h3">Infrastructure type:</Title>
             <FormGroup
