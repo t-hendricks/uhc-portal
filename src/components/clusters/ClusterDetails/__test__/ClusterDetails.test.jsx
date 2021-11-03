@@ -138,9 +138,8 @@ describe('<ClusterDetails />', () => {
         .toBeCalledWith(fixtures.AROClusterDetails.cluster.subscription.id);
     });
 
-    it('it should hide 2 tabs', () => {
+    it('it should hide 1 tab', () => {
       expect(wrapper.find('TabsRow').props().displayMonitoringTab).toBe(false);
-      expect(wrapper.find('TabsRow').props().displayInsightsTab).toBe(false);
     });
   });
 
