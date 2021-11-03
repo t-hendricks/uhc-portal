@@ -38,7 +38,7 @@ const mapStateToProps = (state, ownProps) => {
     isCCSCredentialsValidationNeeded: isCCSCredentialsValidationNeeded(state, valueSelector),
     ccsValidationPending: ccsCredentialsValidityResponse.pending && valueSelector(state, 'byoc') === 'true',
     cloudProviderID: valueSelector(state, 'cloud_provider'),
-    gcpCredentials: valueSelector(state, 'gcp_service_account'),
+    gcpCredentialsJSON: valueSelector(state, 'gcp_service_account'),
     awsAccountID: valueSelector(state, 'account_id'),
     awsAccessKey: valueSelector(state, 'access_key_id'),
     awsSecretKey: valueSelector(state, 'secret_access_key'),
