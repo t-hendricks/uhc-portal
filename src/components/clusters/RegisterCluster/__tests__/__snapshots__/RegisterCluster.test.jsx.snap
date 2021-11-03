@@ -36,7 +36,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
               <Text
                 component="p"
               >
-                Register clusters that are not connected to OpenShift Cluster Manager. Existing cluster owners or admins can edit existing cluster subscriptions from the cluster details page.
+                Register clusters that are not connected to OpenShift Cluster Manager. Existing cluster owners, cluster editors, or admins can edit existing cluster subscriptions from the cluster details page.
               </Text>
             </TextContent>
             <Form
@@ -156,7 +156,7 @@ exports[`<RegisterCluster /> renders correctly when user can't subscribe ocp 1`]
               <Text
                 component="p"
               >
-                Register clusters that are not connected to OpenShift Cluster Manager. Existing cluster owners or admins can edit existing cluster subscriptions from the cluster details page.
+                Register clusters that are not connected to OpenShift Cluster Manager. Existing cluster owners, cluster editors, or admins can edit existing cluster subscriptions from the cluster details page.
               </Text>
             </TextContent>
             <Form

@@ -15,11 +15,14 @@ import {
 } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
+import semver from 'semver';
 
 import getReleaseNotesLink from './getReleaseNotesLink';
 import ExternalLink from '../common/ExternalLink';
 import getOCPLifeCycleStatus from '../../services/productLifeCycleService';
 import ReleaseChannel from './ReleaseChannel';
+import ReleaseChannelName from './ReleaseChannelName';
+import ReleaseChannelDescription from './ReleaseChannelDescription';
 import './Releases.scss';
 
 const Releases = () => {
@@ -40,7 +43,12 @@ const Releases = () => {
   const allVersions = statusData[0]?.versions;
   const filteredVersions = allVersions?.filter(version => !version.name.includes('EUS'));
   const versionsToDisplay = filteredVersions?.splice(0, 6);
-  const hasEUSChannel = versionName => allVersions?.find(v => v.name.includes(`${versionName} EUS`));
+  const hasEUSChannel = (versionName) => {
+    const parsed = semver.coerce(versionName);
+    const { minor } = parsed;
+    return minor > 5 && minor % 2 === 0;
+  };
+  const hasEUSLifeCycle = versionName => allVersions?.find(v => v.name.includes(`${versionName} EUS`));
   const latestVersion = versionsToDisplay ? versionsToDisplay[0]?.name : '4.7';
   const renderProductName = versionName => (
     <>
@@ -134,14 +142,18 @@ const Releases = () => {
                               {hasEUSChannel(version.name) ? (
                                 <ReleaseChannel
                                   channel={`eus-${version.name}`}
-                                  status={hasEUSChannel(version.name)?.type}
+                                  status={
+                                    hasEUSLifeCycle(version.name)
+                                      ? hasEUSLifeCycle(version.name)?.type
+                                      : version.type
+                                  }
                                 />
                               ) : (
                                 <>
-                                  <dt className="pf-c-description-list__term pf-u-mt-md">-</dt>
-                                  <dd className="pf-c-description-list__description ocm-l-ocp-releases__channel-detail">
-                                    {`No EUS channel in ${version.name}`}
-                                  </dd>
+                                  <ReleaseChannelName>-</ReleaseChannelName>
+                                  <ReleaseChannelDescription>
+                                    {`No ${version.name} EUS channel`}
+                                  </ReleaseChannelDescription>
                                 </>
                               )}
                               <ReleaseChannel channel={`candidate-${version.name}`} />

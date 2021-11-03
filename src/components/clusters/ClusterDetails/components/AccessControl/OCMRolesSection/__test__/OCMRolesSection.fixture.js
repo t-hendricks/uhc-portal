@@ -1,0 +1,97 @@
+const OCMRoles = {
+  fulfilled: true,
+  data: {
+    kind: 'RoleBindingList',
+    page: 1,
+    size: 3,
+    total: 3,
+    items: [
+      {
+        id: '1Ta2R08vrZ2ZZ9fjzH5GCa5XGtL',
+        kind: 'RoleBinding',
+        href: '/api/accounts_mgmt/v1/subscriptions/1kZocg1yV75YxwMX9cwGWGrIwdW/role_bindings/1Ta2R08vrZ2ZZ9fjzH5GCa5XGtL',
+        type: 'Subscription',
+        account_username: 'Doris Hudson',
+        account_email: '***REMOVED***',
+        subscription: {
+          kind: 'Subscription',
+        },
+        account: {
+          id: '1Ta2R4957S9M0Vk5IdEQJPG3L0N',
+          kind: 'Account',
+          href: '/api/accounts_mgmt/v1/accounts/1Ta2R4957S9M0Vk5IdEQJPG3L0N',
+        },
+        organization: {
+          kind: 'Organization',
+        },
+        role: {
+          id: 'ClusterEditor',
+          kind: 'Role',
+          href: '/api/accounts_mgmt/v1/roles/ClusterEditor',
+        },
+        created_at: '2019-11-13T22:24:33.905824Z',
+        updated_at: '2019-11-13T22:24:33.905824Z',
+      },
+      {
+        id: '1Ta2R7zu46GNLswW7DXhLSWjkyY',
+        kind: 'RoleBinding',
+        href: '/api/accounts_mgmt/v1/subscriptions/1kZocg1yV75YxwMX9cwGWGrIwdW/role_bindings/1Ta2R7zu46GNLswW7DXhLSWjkyY',
+        type: 'Subscription',
+        account_username: 'Jak Valdez',
+        account_email: '***REMOVED***',
+        subscription: {
+          kind: 'Subscription',
+        },
+        account: {
+          id: '1Ta2R4957S9M0Vk5IdEQJPG3L0N',
+          kind: 'Account',
+          href: '/api/accounts_mgmt/v1/accounts/1Ta2R4957S9M0Vk5IdEQJPG3L0N',
+        },
+        organization: {
+          id: '1Ta2R5bhEXrMKLrrSLh88w8XF8p',
+          kind: 'Organization',
+          href: '/api/accounts_mgmt/v1/organizations/1Ta2R5bhEXrMKLrrSLh88w8XF8p',
+        },
+        role: {
+          id: 'ClusterEditor',
+          kind: 'Role',
+          href: '/api/accounts_mgmt/v1/roles/ClusterEditor',
+        },
+        created_at: '2019-11-13T22:24:34.648644Z',
+        updated_at: '2019-11-13T22:24:34.648644Z',
+      },
+      {
+        id: '1Te8dnJht1MhbR3Hvw9xblk0GOB',
+        kind: 'RoleBinding',
+        href: '/api/accounts_mgmt/v1/subscriptions/1kZocg1yV75YxwMX9cwGWGrIwdW/role_bindings/1Te8dnJht1MhbR3Hvw9xblk0GOB',
+        type: 'Subscription',
+        account_username: 'Olive1',
+        account_email: '***REMOVED***',
+        subscription: {
+          id: '1Te8doEd56x1L5r6iMZRyAxDnzA',
+          kind: 'Subscription',
+          href: '/api/accounts_mgmt/v1/subscriptions/1Te8doEd56x1L5r6iMZRyAxDnzA',
+        },
+        account: {
+          id: '1CzKMWTzDbeN7jOMmO5Ar1Y3Ai1',
+          kind: 'Account',
+          href: '/api/accounts_mgmt/v1/accounts/1CzKMWTzDbeN7jOMmO5Ar1Y3Ai1',
+        },
+        organization: {
+          kind: 'Organization',
+        },
+        role: {
+          id: 'ClusterEditor',
+          kind: 'Role',
+          href: '/api/accounts_mgmt/v1/roles/ClusterEditor',
+        },
+        created_at: '2019-11-15T09:14:50.644431Z',
+        updated_at: '2019-11-15T09:14:50.644431Z',
+      },
+    ],
+  },
+};
+
+export default OCMRoles;
+
+export { OCMRoles };

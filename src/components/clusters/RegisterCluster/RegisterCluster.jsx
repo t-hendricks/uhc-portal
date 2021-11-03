@@ -120,7 +120,7 @@ class RegisterCluster extends React.Component {
       />
     );
 
-    const topText = 'Register clusters that are not connected to OpenShift Cluster Manager. Existing cluster owners or admins can edit existing cluster subscriptions from the cluster details page.';
+    const topText = 'Register clusters that are not connected to OpenShift Cluster Manager. Existing cluster owners, cluster editors, or admins can edit existing cluster subscriptions from the cluster details page.';
 
     if (quotaResponse.error) {
       return (
