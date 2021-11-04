@@ -6,6 +6,7 @@ import { isHibernating } from './clusterStates';
 import links from '../../../common/installLinks';
 import getClusterName from '../../../common/getClusterName';
 import modals from '../../common/Modal/modals';
+import { subscriptionStatuses } from '../../../common/subscriptionTypes';
 
 const ClusterUpdateLink = ({
   cluster,
@@ -16,6 +17,7 @@ const ClusterUpdateLink = ({
   // eslint-disable-next-line camelcase
   const osdUpgradeAvailable = cluster.managed && cluster.version?.available_upgrades?.length > 0
                               && cluster.openshift_version && !hideOSDUpdates;
+  const isStale = cluster?.subscription?.status === subscriptionStatuses.STALE;
 
   // Show which version the cluster is currently updating to
   if (upgrade?.state === 'running' && upgrade?.version && (cluster.version?.raw_id !== upgrade.version)) {
@@ -28,11 +30,19 @@ const ClusterUpdateLink = ({
     );
   }
 
-  // Only show Update tooltip/link for OCP clusters that have available updates
-  // or OSD clusters when the feature toggle is enabled
-  if ((cluster.managed
-        && (!cluster.canEdit || !osdUpgradeAvailable || isHibernating(cluster.state)))
-      || (!cluster.managed && !upgrade.available)) {
+  // Only show Update tooltip/link for OSD clusters when the feature toggle is enabled
+  // or OCP clusters that have available updates
+  if ((
+    cluster.managed
+    && (
+      !cluster.canEdit || !osdUpgradeAvailable || isHibernating(cluster.state) || isStale
+    )
+  ) || (
+    !cluster.managed
+    && (
+      !upgrade.available || isStale
+    )
+  )) {
     return null;
   }
 
