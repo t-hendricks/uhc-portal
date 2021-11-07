@@ -147,13 +147,19 @@ const reviewValues = {
     title: 'Compute node range',
     valueTransform: (value, allValues) => (
       <>
-        <span>Minimum nodes per zone:</span>
+        <span>
+          Minimum nodes
+          {allValues.multi_az === 'true' ? ' per zone' : ''}
+          :
+        </span>
         {' '}
         {value}
         <span className="pf-u-ml-lg">
-          Maximum nodes per zone:
-          {' '}
+          Maximum nodes
+          {allValues.multi_az === 'true' ? ' per zone' : ''}
+          :
         </span>
+        {' '}
         {allValues.max_replicas}
       </>
     ),
