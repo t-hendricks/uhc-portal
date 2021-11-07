@@ -320,6 +320,7 @@ const rowsByCategory = {
   INSTALLATION: [
     tools.X86INSTALLER, tools.IBMZINSTALLER, tools.PPCINSTALLER, tools.ARMINSTALLER, tools.CRC,
   ],
+  RHCOS: [tools.BUTANE, tools.COREOS_INSTALLER],
   TOKENS: [expandKeys.PULL_SECRET, expandKeys.TOKEN_OCM],
 };
 rowsByCategory.ALL = [].concat(...Object.values(rowsByCategory));
@@ -666,6 +667,48 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
   );
 };
 
+const rhcosRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
+  const commonProps = {
+    expanded, setExpanded, selections, setSelections, toolRefs, urls,
+  };
+  return (
+    <>
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.BUTANE}
+        channel={channels.STABLE}
+        name="Butane config transpiler CLI"
+        description={(
+          <TextContent>
+            <Text>
+              Write and validate machine configs in a convenient short-hand syntax
+              with the Butane config transpiler CLI tool.
+              {' '}
+              <ExternalLink href={links.BUTANE_DOCS}>Learn more</ExternalLink>
+            </Text>
+          </TextContent>
+        )}
+      />
+
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.COREOS_INSTALLER}
+        channel={channels.STABLE}
+        name="CoreOS Installer CLI"
+        description={(
+          <TextContent>
+            <Text>
+              Download and install RHCOS disk images with the coreos-installer CLI tool.
+              {' '}
+              <ExternalLink href={links.COREOS_INSTALLER_DOCS}>Learn more</ExternalLink>
+            </Text>
+          </TextContent>
+        )}
+      />
+    </>
+  );
+};
+
 // TODO: is this useful?
 const TokensHeadings = () => (
   <Thead>
@@ -946,6 +989,22 @@ class DownloadsPage extends React.Component {
               <TableComposable aria-label="OpenShift installation table">
                 <ColumnHeadings />
                 {installationRows(expanded, this.setExpanded, selections, this.setSelections,
+                  this.toolRefs, urls)}
+              </TableComposable>
+            </DownloadsSection>
+
+            <DownloadsSection
+              selectedCategory={selectedCategory}
+              category="RHCOS"
+              description={(
+                <Text>
+                  Customize Red Hat Enterprise Linux CoreOS (RHCOS) nodes with these tools.
+                </Text>
+              )}
+            >
+              <TableComposable aria-label="RHCOS downloads table">
+                <ColumnHeadings />
+                {rhcosRows(expanded, this.setExpanded, selections, this.setSelections,
                   this.toolRefs, urls)}
               </TableComposable>
             </DownloadsSection>
