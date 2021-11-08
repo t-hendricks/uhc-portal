@@ -32,22 +32,22 @@ export const setReportDetails = report => ({
   payload: report,
 });
 
-export const fetchReportDetails = (clusterId, ruleId, errorKey, isOSD) => dispatch => dispatch({
+export const fetchReportDetails = (clusterId, ruleId, errorKey, isManaged) => dispatch => dispatch({
   type: GET_REPORT_DETAILS,
-  payload: insightsService.getReportDetails(clusterId, ruleId, errorKey, isOSD),
+  payload: insightsService.getReportDetails(clusterId, ruleId, errorKey, isManaged),
 });
 
-const fetchSingleClusterInsights = (clusterId, isOSD) => insightsService
-  .getClusterInsights(clusterId, isOSD)
+const fetchSingleClusterInsights = (clusterId, isManaged) => insightsService
+  .getClusterInsights(clusterId, isManaged)
   .then(response => ({
     insightsData: get(response, 'data.report', {}),
     clusterId,
     status: response.status,
   }));
 
-export const fetchClusterInsights = (clusterId, isOSD) => dispatch => dispatch({
+export const fetchClusterInsights = (clusterId, isManaged) => dispatch => dispatch({
   type: GET_CLUSTER_INSIGHTS,
-  payload: fetchSingleClusterInsights(clusterId, isOSD),
+  payload: fetchSingleClusterInsights(clusterId, isManaged),
   meta: {
     clusterId,
   },

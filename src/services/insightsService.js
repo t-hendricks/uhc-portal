@@ -21,9 +21,11 @@ const resetVoteOnRuleInsights = (clusterId, ruleId, errorKey) => insightsAPIRequ
   url: `/clusters/${clusterId}/rules/${ruleId}/error_key/${errorKey}/reset_vote`,
 });
 
-const getClusterInsights = (clusterId, isOSD) => insightsAPIRequest({
+/* osd_eligible set to true returns only rules that are
+dedicated for managed (not only OSD) clusters */
+const getClusterInsights = (clusterId, isManaged) => insightsAPIRequest({
   method: 'get',
-  url: `/clusters/${clusterId}/report?osd_eligible=${isOSD}&get_disabled=true`,
+  url: `/clusters/${clusterId}/report?osd_eligible=${isManaged}&get_disabled=true`,
 });
 
 const disableRuleInsights = (clusterId, ruleId, errorKey) => insightsAPIRequest({

@@ -135,14 +135,14 @@ class InsightsRuleDetails extends Component {
     }
   }
 
-  fetchDetailsAndInsightsData(subscriptionID, externalId, reportId, errorKey, isOSD) {
+  fetchDetailsAndInsightsData(subscriptionID, externalId, reportId, errorKey, isManaged) {
     const {
       fetchClusterDetails,
       fetchReportData,
     } = this.props;
     fetchClusterDetails(subscriptionID);
     if (externalId) {
-      fetchReportData(externalId, reportId, errorKey, isOSD);
+      fetchReportData(externalId, reportId, errorKey, isManaged);
     }
   }
 
