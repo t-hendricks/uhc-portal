@@ -35,6 +35,18 @@ const PFmapper = {
   FlexModifiers: 'FlexUtils',
   ListComponent: 'List',
   OrderType: 'List',
+  SelectVariant: 'Select',
+  ButtonVariant: 'Button',
+  ProgressSize: 'Progress',
+  ModalVariant: 'Modal',
+  AlertVariant: 'Alert',
+  clipboardCopyFunc: 'ClipboardCopy',
+  TextInputTypes: 'TextInput',
+  ProgressVariant: 'Progress',
+  ProgressMeasureLocation: 'Progress',
+  ButtonType: 'Button',
+  TitleSizes: 'Title',
+  PageSectionVariants: 'PageSection',
 };
 
 const FECMapper = {
@@ -60,6 +72,7 @@ module.exports = {
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-transform-object-assign',
     '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-transform-modules-commonjs',
     [
       'transform-imports',
       {
