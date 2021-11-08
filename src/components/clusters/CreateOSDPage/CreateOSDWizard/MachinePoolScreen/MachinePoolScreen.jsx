@@ -24,7 +24,7 @@ function DefaultMachinePoolScreen({
   billingModel,
 }) {
   return (
-    <Form onSubmit={() => false}>
+    <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Grid>
         <GridItem span={12}>
           <Title headingLevel="h2">

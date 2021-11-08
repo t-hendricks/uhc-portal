@@ -33,7 +33,7 @@ function ClusterSettingsScreen({
   change,
 }) {
   return (
-    <Form onSubmit={() => false}>
+    <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Grid hasGutter>
         <GridItem>
           <Title headingLevel="h3">Cluster details</Title>
