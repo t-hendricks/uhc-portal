@@ -32,7 +32,7 @@ class NetworkScreen extends React.Component {
     const isGCP = cloudProviderID === 'gcp';
 
     return (
-      <Form onSubmit={() => false}>
+      <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
         <Grid hasGutter>
           <NetworkingSection
             mode={networkingMode}
