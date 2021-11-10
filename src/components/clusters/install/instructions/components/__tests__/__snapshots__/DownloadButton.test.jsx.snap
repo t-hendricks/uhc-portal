@@ -6,7 +6,7 @@ exports[`DownloadButton renders correctly 1`] = `
   component="a"
   disabled={false}
   download={true}
-  href="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz"
+  href="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz"
   onClick={[Function]}
   variant="secondary"
 >

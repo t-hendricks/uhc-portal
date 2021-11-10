@@ -10,6 +10,7 @@ export const downloadsCategoryTitles = {
   CLI: 'Command-line interface (CLI) tools',
   DEV: 'Developer tools',
   INSTALLATION: 'OpenShift installation',
+  RHCOS: 'RHCOS management tools',
   TOKENS: 'Tokens',
 };
 
@@ -19,7 +20,7 @@ const DownloadsCategoryDropdown = ({ selectedCategory, setCategory }) => (
     value={selectedCategory}
     onChange={setCategory}
   >
-    {['ALL', 'CLI', 'DEV', 'INSTALLATION', 'TOKENS'].map(key => (
+    {['ALL', 'CLI', 'DEV', 'INSTALLATION', 'RHCOS', 'TOKENS'].map(key => (
       <FormSelectOption key={key} value={key} label={downloadsCategoryTitles[key]} />
     ))}
   </FormSelect>

@@ -1,6 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<ClusterUpdateLink /> renders null for OCP when cluster.subscription.status === Stale 1`] = `""`;
+
 exports[`<ClusterUpdateLink /> renders null for OCP when no upgrades are available 1`] = `""`;
+
+exports[`<ClusterUpdateLink /> renders null for OSD when cluster.subscription.status === Stale 1`] = `""`;
 
 exports[`<ClusterUpdateLink /> shows previous and next version numbers when an upgrade is running 1`] = `
 <span>

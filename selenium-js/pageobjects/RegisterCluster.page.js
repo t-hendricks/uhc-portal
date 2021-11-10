@@ -16,9 +16,9 @@ class RegisterCluster extends Page {
 
   get displayNameError() { return $('input#display_name ~ div.pf-m-error'); }
 
-  get submitButton() { return $('button.pf-c-button.pf-m-primary'); }
+  get submitButton() { return $('article#register-cluster button.pf-c-button.pf-m-primary'); }
 
-  get cancelButton() { return $('button.pf-c-button.pf-m-secondary'); }
+  get cancelButton() { return $('article#register-cluster button.pf-c-button.pf-m-secondary'); }
 
   async isRegisterClusterPage() {
     const URL = await browser.getUrl();

@@ -292,6 +292,28 @@ const listGCPVPCs = (credentials, region) => apiRequest({
   },
 });
 
+/** Possible location values depend on region,
+ *  see comma-separated kms_location_id from getCloudProviders().
+ */
+const listGCPKeyRings = (credentials, location) => apiRequest({
+  method: 'post',
+  url: '/api/clusters_mgmt/v1/gcp_inquiries/key_rings',
+  data: {
+    gcp: credentials,
+    key_location: location,
+  },
+});
+
+const listGCPKeys = (credentials, location, ring) => apiRequest({
+  method: 'post',
+  url: '/api/clusters_mgmt/v1/gcp_inquiries/encryption_keys',
+  data: {
+    gcp: credentials,
+    key_location: location,
+    key_ring_name: ring,
+  },
+});
+
 const listAWSRegions = (accountID, accessKey, secretKey) => apiRequest({
   method: 'post',
   url: '/api/clusters_mgmt/v1/aws_inquiries/regions',
@@ -355,6 +377,8 @@ export {
   deleteUpgradeSchedule,
   patchUpgradeSchedule,
   listGCPVPCs,
+  listGCPKeyRings,
+  listGCPKeys,
   listAWSRegions,
 };
 

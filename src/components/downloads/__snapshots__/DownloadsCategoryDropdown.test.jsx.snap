@@ -34,6 +34,11 @@ exports[`<DownloadsCategoryDropdown /> should render 1`] = `
     value="INSTALLATION"
   />
   <FormSelectOption
+    key="RHCOS"
+    label="RHCOS management tools"
+    value="RHCOS"
+  />
+  <FormSelectOption
     key="TOKENS"
     label="Tokens"
     value="TOKENS"

@@ -349,8 +349,8 @@ class ClusterDetails extends Component {
     const isPrivateCluster = cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
     const displayAddOnsTab = !isClusterInstalling && !isClusterPending && !isClusterWaiting
       && cluster.managed && !isArchived;
-    const displayInsightsTab = !isArchived && !isAROCluster
-      && !isUninstalledAICluster(cluster);
+      // "Insights Advisor" tab
+    const displayInsightsTab = !isArchived && !isUninstalledAICluster(cluster);
     const consoleURL = get(cluster, 'console.url');
     const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster
       && !isUninstalledAICluster(cluster);

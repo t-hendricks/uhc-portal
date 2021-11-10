@@ -15,7 +15,7 @@ import GCPByocFields from './GCPByocFields';
 
 function ClusterSettingsScreen({ isByoc, cloudProviderID, ccsCredentialsValidityResponse }) {
   return (
-    <Form onSubmit={() => false}>
+    <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Title headingLevel="h3">
         Select a cloud provider
       </Title>

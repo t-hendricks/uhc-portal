@@ -53,7 +53,7 @@ class CreateOSDCluster extends Page {
 
   get clusterNameInputError() { return $('input#name ~ div.pf-m-error'); }
 
-  get primaryButton() { return $('button.pf-c-button.pf-m-primary'); }
+  get primaryButton() { return $('.osd-wizard button.pf-c-button.pf-m-primary'); }
 }
 
 export default new CreateOSDCluster();

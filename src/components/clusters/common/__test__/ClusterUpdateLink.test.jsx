@@ -19,6 +19,44 @@ describe('<ClusterUpdateLink />', () => {
     expect(wrapper).toMatchObject({});
   });
 
+  it('renders null for OCP when cluster.subscription.status === Stale', () => {
+    const cluster = {
+      managed: false,
+      metrics: {
+        upgrade: {
+          available: true,
+        },
+      },
+      subscription: {
+        status: 'Stale',
+      },
+    };
+    const wrapper = shallow(<ClusterUpdateLink
+      cluster={cluster}
+    />);
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper).toMatchObject({});
+  });
+
+  it('renders null for OSD when cluster.subscription.status === Stale', () => {
+    const cluster = {
+      managed: true,
+      metrics: {
+        upgrade: {
+          available: true,
+        },
+      },
+      subscription: {
+        status: 'Stale',
+      },
+    };
+    const wrapper = shallow(<ClusterUpdateLink
+      cluster={cluster}
+    />);
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper).toMatchObject({});
+  });
+
   it('shows previous and next version numbers when an upgrade is running', () => {
     const cluster = {
       openshift_version: 'some-old-version',
