@@ -242,7 +242,7 @@ const instructionsMapping = {
         {
           buttonText: 'Download RHCOS ISO',
           name: 'OCP-Download-RHCOS-ISO',
-          url: links.RHCOS_POWER_ISO_PPC,
+          url: links.RHCOS_POWER_ISO,
         },
         {
           buttonText: 'Download RHCOS initramfs',

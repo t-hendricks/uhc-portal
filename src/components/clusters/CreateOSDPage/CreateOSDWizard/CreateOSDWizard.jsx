@@ -127,7 +127,7 @@ class CreateOSDWizard extends React.Component {
       isCCSCredentialsValidationNeeded,
       cloudProviderID,
       getGCPCloudProviderVPCs,
-      gcpCredentials,
+      gcpCredentialsJSON,
       awsAccountID,
       awsAccessKey,
       awsSecretKey,
@@ -328,7 +328,7 @@ class CreateOSDWizard extends React.Component {
                     isDisabled={!isValid || ccsValidationPending}
                     onClick={() => {
                       if (cloudProviderID === 'gcp') {
-                        getGCPCloudProviderVPCs(gcpCredentials);
+                        getGCPCloudProviderVPCs(gcpCredentialsJSON);
                       } else {
                         getAWSCloudProviderRegions(awsAccountID, awsAccessKey, awsSecretKey);
                       }
@@ -402,7 +402,7 @@ CreateOSDWizard.propTypes = {
 
   // for the /create/osdtrial url
   product: PropTypes.string,
-  gcpCredentials: PropTypes.string,
+  gcpCredentialsJSON: PropTypes.string,
 };
 
 export default CreateOSDWizard;

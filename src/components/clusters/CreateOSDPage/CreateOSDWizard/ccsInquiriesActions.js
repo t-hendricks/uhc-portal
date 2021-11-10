@@ -1,41 +1,70 @@
 import pick from 'lodash/pick';
-import { listGCPVPCs, listAWSRegions } from '../../../../services/clusterService';
+import {
+  listGCPVPCs, listGCPKeyRings, listGCPKeys, listAWSRegions,
+} from '../../../../services/clusterService';
 
 export const VALIDATE_CLOUD_PROVIDER_CREDENTIALS = 'GET_CCS_CLOUD_PROVIDER_VPCS';
+export const LIST_GCP_KEY_RINGS = 'LIST_GCP_KEY_RINGS';
+export const LIST_GCP_KEYS = 'LIST_GCP_KEYS';
 export const CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES = 'CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES';
 
-export const getGCPCloudProviderVPCs = gcpCredentials => dispatch => dispatch({
+// Made async to ease handling of JSON SyntaxError as action rejection.
+const credentialsFromJSON = async (gcpCredentialsJSON) => {
+  const parsedCredentials = JSON.parse(gcpCredentialsJSON);
+  return pick(parsedCredentials, [
+    'type',
+    'project_id',
+    'private_key_id',
+    'private_key',
+    'client_email',
+    'client_id',
+    'auth_uri',
+    'token_uri',
+    'auth_provider_x509_cert_url',
+    'client_x509_cert_url',
+  ]);
+};
+
+export const getGCPCloudProviderVPCs = gcpCredentialsJSON => ({
   type: VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
-  payload: () => {
-    const parsedCredentials = JSON.parse(gcpCredentials);
-    const sanitizedCredentials = pick(parsedCredentials, [
-      'type',
-      'project_id',
-      'private_key_id',
-      'private_key',
-      'client_email',
-      'client_id',
-      'auth_uri',
-      'token_uri',
-      'auth_provider_x509_cert_url',
-      'client_x509_cert_url',
-    ]);
-    return listGCPVPCs(sanitizedCredentials, 'us-east1').then(
-      // return both response and credentials string.
-      // credential string can be used to check if we need to query again.
-      response => ({ response, credentials: gcpCredentials, cloudProvider: 'gcp' }),
-    );
+  payload: () => credentialsFromJSON(gcpCredentialsJSON)
+    .then(creds => listGCPVPCs(creds, 'us-east1')),
+  // parameters can be used to check if we need to query again.
+  meta: { credentials: gcpCredentialsJSON, cloudProvider: 'gcp' },
+});
+
+export const getAWSCloudProviderRegions = (accountID, accessKey, secretKey) => ({
+  type: VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
+  payload: listAWSRegions(accountID, accessKey, secretKey),
+  meta: {
+    credentials: `${accountID}/${accessKey}/${secretKey}`,
+    cloudProvider: 'aws',
   },
 });
 
-export const getAWSCloudProviderRegions = (accountID,
-  accessKey, secretKey) => dispatch => dispatch({
-  type: VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
-  payload: listAWSRegions(accountID, accessKey, secretKey).then(response => ({
-    response,
-    credentials: `${accountID}/${accessKey}/${secretKey}`,
-    cloudProvider: 'aws',
-  })),
+export const getGCPKeyRings = (gcpCredentialsJSON, keyLocation) => ({
+  type: LIST_GCP_KEY_RINGS,
+  payload: () => credentialsFromJSON(gcpCredentialsJSON)
+    .then(creds => listGCPKeyRings(creds, keyLocation)),
+  // parameters can be used to check if we need to query again.
+  meta: {
+    credentials: gcpCredentialsJSON,
+    keyLocation,
+    cloudProvider: 'gcp',
+  },
+});
+
+export const getGCPKeys = (gcpCredentialsJSON, keyLocation, keyRing) => ({
+  type: LIST_GCP_KEYS,
+  payload: () => credentialsFromJSON(gcpCredentialsJSON)
+    .then(creds => listGCPKeys(creds, keyLocation, keyRing)),
+  // parameters can be used to check if we need to query again.
+  meta: {
+    credentials: gcpCredentialsJSON,
+    keyLocation,
+    keyRing,
+    cloudProvider: 'gcp',
+  },
 });
 
 export const clearAllCloudProviderInquiries = () => ({

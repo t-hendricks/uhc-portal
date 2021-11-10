@@ -272,7 +272,7 @@ exports[`DownloadAndOSSelection oc renders correctly 1`] = `
       <DownloadButton
         disabled={false}
         tool="oc"
-        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz"
+        url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz"
       />
     </GridItem>
   </Grid>
@@ -531,7 +531,7 @@ exports[`DownloadAndOSSelection with error should render 1`] = `
       <DownloadButton
         disabled={true}
         tool="x86_64-openshift-install"
-        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-install-linux.tar.gz"
+        url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz"
       />
     </GridItem>
   </Grid>
@@ -614,7 +614,7 @@ exports[`DownloadAndOSSelection x86_64-openshift-install renders correctly 1`] =
       <DownloadButton
         disabled={false}
         tool="x86_64-openshift-install"
-        url="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-install-linux.tar.gz"
+        url="https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz"
       />
     </GridItem>
   </Grid>

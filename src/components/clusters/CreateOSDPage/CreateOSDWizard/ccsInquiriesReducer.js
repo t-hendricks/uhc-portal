@@ -6,13 +6,31 @@ import {
 import { getErrorState } from '../../../../common/errors';
 import {
   VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
+  LIST_GCP_KEY_RINGS,
+  LIST_GCP_KEYS,
   CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES,
 } from './ccsInquiriesActions';
 
 const initialState = {
   ccsCredentialsValidity: {
     ...baseRequestState,
+    cloudProvider: undefined,
     credentials: undefined,
+  },
+  gcpKeyRings: {
+    ...baseRequestState,
+    cloudProvider: undefined,
+    credentials: undefined,
+    keyLocation: undefined,
+    data: undefined,
+  },
+  gcpKeys: {
+    ...baseRequestState,
+    cloudProvider: undefined,
+    credentials: undefined,
+    keyLocation: undefined,
+    keyRing: undefined,
+    data: undefined,
   },
 };
 
@@ -28,16 +46,69 @@ function ccsInquiriesReducer(state = initialState, action) {
         draft.ccsCredentialsValidity = {
           ...initialState.ccsCredentialsValidity,
           fulfilled: true,
-          credentials: action.payload?.credentials,
-          cloudProvider: action.payload?.cloudProvider,
+          credentials: action.meta?.credentials,
+          cloudProvider: action.meta?.cloudProvider,
         };
         break;
       case REJECTED_ACTION(VALIDATE_CLOUD_PROVIDER_CREDENTIALS):
         draft.ccsCredentialsValidity = {
-          ...initialState,
+          ...initialState.ccsCredentialsValidity,
           ...getErrorState(action),
+          credentials: action.meta?.credentials,
+          cloudProvider: action.meta?.cloudProvider,
         };
         break;
+
+      case PENDING_ACTION(LIST_GCP_KEY_RINGS):
+        draft.gcpKeyRings.pending = true;
+        break;
+      case FULFILLED_ACTION(LIST_GCP_KEY_RINGS):
+        draft.gcpKeyRings = {
+          ...initialState.gcpKeyRings,
+          fulfilled: true,
+          cloudProvider: action.meta?.cloudProvider,
+          credentials: action.meta?.credentials,
+          keyLocation: action.meta?.keyLocation,
+          data: action.payload.data,
+        };
+        break;
+      case REJECTED_ACTION(LIST_GCP_KEY_RINGS):
+        draft.gcpKeyRings = {
+          ...initialState.gcpKeyRings,
+          ...getErrorState(action),
+          cloudProvider: action.meta?.cloudProvider,
+          credentials: action.meta?.credentials,
+          keyLocation: action.meta?.keyLocation,
+          data: action.payload?.data,
+        };
+        break;
+
+      case PENDING_ACTION(LIST_GCP_KEYS):
+        draft.gcpKeys.pending = true;
+        break;
+      case FULFILLED_ACTION(LIST_GCP_KEYS):
+        draft.gcpKeys = {
+          ...initialState.gcpKeys,
+          fulfilled: true,
+          cloudProvider: action.meta?.cloudProvider,
+          credentials: action.meta?.credentials,
+          keyLocation: action.meta?.keyLocation,
+          keyRing: action.meta?.keyRing,
+          data: action.payload.data,
+        };
+        break;
+      case REJECTED_ACTION(LIST_GCP_KEYS):
+        draft.gcpKeys = {
+          ...initialState.gcpKeys,
+          ...getErrorState(action),
+          cloudProvider: action.meta?.cloudProvider,
+          credentials: action.meta?.credentials,
+          keyLocation: action.meta?.keyLocation,
+          keyRing: action.meta?.keyRing,
+          data: action.payload.data,
+        };
+        break;
+
       case CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES:
         return { ...initialState };
     }

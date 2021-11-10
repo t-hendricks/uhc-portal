@@ -11,7 +11,7 @@ import UpgradeSettingsFields from '../../../common/Upgrades/UpgradeSettingsField
 
 function UpdatesScreen({ isAutomaticUpgrade, change }) {
   return (
-    <Form onSubmit={() => false}>
+    <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Grid hasGutter>
         <GridItem span={12}>
           <Title headingLevel="h3">Cluster updates</Title>

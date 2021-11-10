@@ -1,29 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, FieldArray } from 'redux-form';
 import {
-  FormGroup,
   Grid,
   GridItem,
-  ExpandableSection,
   Title,
   Form,
   Text,
-  Alert,
 } from '@patternfly/react-core';
-
-import MachineTypeSelection from '../../CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection';
-
-import { ReduxFormKeyValueList } from '../../../../common/ReduxFormComponents';
-import NodeCountInput from '../../../common/NodeCountInput';
 import { normalizedProducts, billingModels } from '../../../../../common/subscriptionTypes';
-import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
-
-import PopoverHint from '../../../../common/PopoverHint';
-import { required } from '../../../../../common/validators';
-import ExternalLink from '../../../../common/ExternalLink';
-
-import AutoScaleSection from '../../CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleSection';
+import ScaleSection from '../../CreateOSDForm/FormSections/ScaleSection/ScaleSection';
 
 function DefaultMachinePoolScreen({
   isByoc,
@@ -39,7 +24,7 @@ function DefaultMachinePoolScreen({
   billingModel,
 }) {
   return (
-    <Form onSubmit={() => false}>
+    <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Grid>
         <GridItem span={12}>
           <Title headingLevel="h2">
@@ -53,90 +38,22 @@ function DefaultMachinePoolScreen({
           </Text>
         </GridItem>
         <GridItem sm={12} md={5} lg={4}>
-          <FormGroup
-            label="Worker node instance type"
-            isRequired
-            fieldId="node_type"
-            labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
-          >
-            <Field
-              component={MachineTypeSelection}
-              name="machine_type"
-              validate={required}
-              isMultiAz={isMultiAz}
-              isBYOC={isByoc}
-              cloudProviderID={cloudProviderID}
-              product={product}
-              billingModel={billingModel}
-              isMachinePool={false}
-            />
-          </FormGroup>
+          <ScaleSection
+            isBYOC={isByoc}
+            isMultiAz={isMultiAz}
+            machineType={machineType}
+            handleMachineTypesChange={(_, value) => change('machine_type', value)}
+            cloudProviderID={cloudProviderID}
+            product={product}
+            canAutoScale={canAutoScale}
+            autoscalingEnabled={autoscalingEnabled}
+            change={change}
+            autoScaleMinNodesValue={autoScaleMinNodesValue}
+            autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+            billingModel={billingModel}
+            showStorageAndLoadBalancers={false}
+          />
         </GridItem>
-        <GridItem md={7} lg={8} />
-        {canAutoScale
-          && (
-            <>
-              <GridItem sm={12} md={5} lg={4}>
-                <AutoScaleSection
-                  autoscalingEnabled={autoscalingEnabled}
-                  isMultiAz={isMultiAz}
-                  change={change}
-                  autoScaleMinNodesValue={autoScaleMinNodesValue}
-                  autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-                  product={product}
-                  isBYOC={isByoc}
-                  isDefaultMachinePool
-                />
-                {!autoscalingEnabled && (
-                <>
-                  <Field
-                    component={NodeCountInput}
-                    name="nodes_compute"
-                    label={isMultiAz ? 'Worker node count (per zone)' : 'Worker node count'}
-                    isMultiAz={isMultiAz}
-                    isByoc={isByoc}
-                    machineType={machineType}
-                    extendedHelpText={(
-                      <>
-                        {constants.computeNodeCountHint}
-                        {' '}
-                        <ExternalLink href="https://www.openshift.com/products/dedicated/service-definition#compute-instances">Learn more about worker node count</ExternalLink>
-                      </>
-              )}
-                    cloudProviderID={cloudProviderID}
-                    product={product}
-                    billingModel={billingModel}
-                  />
-                </>
-                )}
-              </GridItem>
-              <GridItem md={7} lg={8} />
-            </>
-          )}
-        <ExpandableSection
-          toggleText="Edit node labels"
-        >
-          <Grid>
-            <GridItem className="pf-u-mb-md">
-              <Title headingLevel="h3">Node labels</Title>
-            </GridItem>
-            <GridItem sm={12} md={5} lg={4}>
-              <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
-            </GridItem>
-            <GridItem span={10}>
-              <Alert
-                id="node-labels-alert"
-                variant="info"
-                isInline
-                title="Node labels cannot be edited after cluster creation"
-              >
-                The node labels in the default machine pool cannot be changed
-                after creating the cluster. Other machine pools can be added
-                to the cluster with additional labels.
-              </Alert>
-            </GridItem>
-          </Grid>
-        </ExpandableSection>
       </Grid>
     </Form>
   );

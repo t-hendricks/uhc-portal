@@ -17,7 +17,7 @@ describe('Register cluster flow', async () => {
 
   it('navigate to register cluster (wide window)', async () => {
     await ClusterListPage.navigateToRegisterCluster({ wide: true });
-    expect(await RegisterClusterPage.isRegisterClusterPage()).toBeTruthy();
+    await browser.waitUntil(RegisterClusterPage.isRegisterClusterPage);
   });
 
   it('shows an error when cluster ID is not valid', async () => {
@@ -53,7 +53,7 @@ describe('Register cluster flow', async () => {
 
   it('creates a new cluster and redirects to its details page', async () => {
     await ClusterListPage.navigateToRegisterCluster({ wide: true });
-    expect(await RegisterClusterPage.isRegisterClusterPage()).toBeTruthy();
+    await browser.waitUntil(RegisterClusterPage.isRegisterClusterPage);
 
     const clusterID = v4();
     clusterName = `selenium-${clusterID}`;
@@ -114,8 +114,7 @@ describe('Register cluster flow', async () => {
     await browser.setWindowSize(800, height);
 
     await ClusterListPage.navigateToRegisterCluster({ wide: false });
-    expect(await RegisterClusterPage.isRegisterClusterPage())
-      .toBeTruthy();
+    await browser.waitUntil(RegisterClusterPage.isRegisterClusterPage);
 
     // Restore window size
     await browser.setWindowSize(width, height);

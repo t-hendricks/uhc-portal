@@ -74,9 +74,6 @@ function ReviewClusterScreen({
     'enable_user_workload_monitoring',
     'etcd_encryption',
     isByoc && 'customer_managed_key',
-    'machine_type',
-    canAutoScale && 'autoscalingEnabled',
-    'nodes_compute',
   ].filter(Boolean);
   if (isPending) {
     return (
@@ -120,6 +117,18 @@ function ReviewClusterScreen({
         {clusterSettingsFields.map(name => clusterSpecDescriptionItem({ name, formValues }))}
       </DescriptionList>
       <Title headingLevel="h3">
+        Default machine pool
+      </Title>
+      <DescriptionList {...listOptions}>
+        {clusterSpecDescriptionItem({ name: 'machine_type', formValues })}
+        {canAutoScale && clusterSpecDescriptionItem({ name: 'autoscalingEnabled', formValues })}
+        {autoscalingEnabled
+          ? clusterSpecDescriptionItem({ name: 'min_replicas', formValues })
+          : clusterSpecDescriptionItem({ name: 'nodes_compute', formValues })}
+        {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0]))
+        && clusterSpecDescriptionItem({ name: 'node_labels', formValues })}
+      </DescriptionList>
+      <Title headingLevel="h3">
         Networking
       </Title>
       <DescriptionList {...listOptions}>
@@ -133,18 +142,6 @@ function ReviewClusterScreen({
             {clusterSpecDescriptionItem({ name: 'cluster_privacy', formValues })}
           </>
         )}
-      </DescriptionList>
-      <Title headingLevel="h3">
-        Default machine pool
-      </Title>
-      <DescriptionList {...listOptions}>
-        {clusterSpecDescriptionItem({ name: 'machine_type', formValues })}
-        {autoscalingEnabled
-          ? clusterSpecDescriptionItem({ name: 'min_replicas', formValues })
-          : clusterSpecDescriptionItem({ name: 'nodes_compute', formValues })}
-        {autoscalingEnabled
-        && !(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0]))
-        && clusterSpecDescriptionItem({ name: 'node_labels', formValues })}
       </DescriptionList>
       <Title headingLevel="h3">
         Updates
