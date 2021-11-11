@@ -57,7 +57,15 @@ else
   request "" "$cluster_href/logs/install"
   request "" "$cluster_href/logs/uninstall"
   request "" "$cluster_href/addon_inquiries"
-  request "" "$cluster_href/upgrade_policies"
+
+  request "" "$cluster_href/upgrade_policies" --parameter="search=upgrade_type='OSD'"
+  cat "mockdata/$cluster_href/upgrade_policies.json" |
+    jq '.items[].href' --raw-output |
+    while read -r policy_href; do
+      request "  " "$policy_href/state"
+      # Not currently queried by UI, would duplicate upgrade_policies.json and be a chore to maintain.
+      #request "  " "$policy_href"
+    done
 
   subscription_href="$(jq .subscription.href "mockdata/$cluster_href".json --raw-output)"
   request "" "$subscription_href" --parameter=fetchAccounts=true --parameter=fetchCpuAndSocket=true --parameter=fetchCapabilities=true
