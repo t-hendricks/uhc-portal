@@ -1,0 +1,11 @@
+{
+  "kind": "ClusterStatus",
+  "id": "aws-manual-update-1odatpd4g9s48",
+  "href": "/api/clusters_mgmt/v1/clusters/aws-manual-update-1odatpd4g9s48/status",
+  "state": "ready",
+  "description": "Cluster is installing",
+  "dns_ready": true,
+  "oidc_ready": false,
+  "provision_error_message": "",
+  "provision_error_code": ""
+}
