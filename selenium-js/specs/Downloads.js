@@ -57,20 +57,20 @@ describe('Downloads page', async () => {
       'x86_64', 'aarch64', 'ppc64le', 's390x',
     ]);
     const href = await Downloads.downloadHref('(odo)');
-    expect(href).toEqual('https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64');
+    expect(href).toEqual('https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz');
 
     const architectures = await Downloads.architectureDropdown('(odo)');
     architectures.selectByVisibleText('ppc64le');
     await browser.waitUntil(async () => (
       (await Downloads.downloadHref('(odo)'))
-      === 'https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le'
+      === 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz'
     ));
 
     // Only x86 available for Mac.
     await OSes.selectByVisibleText('MacOS');
     await browser.waitUntil(async () => (
       (await Downloads.downloadHref('(odo)'))
-      === 'https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64'
+      === 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz'
     ));
     expect(await Downloads.architectureDropdown('(odo)')).toHaveAttr('disabled', true);
     expect(await Downloads.allArchitectureOptions('(odo)')).toEqual([
