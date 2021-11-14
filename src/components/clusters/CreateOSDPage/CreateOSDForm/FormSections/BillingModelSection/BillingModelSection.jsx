@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Field } from 'redux-form';
 
 import {
+  Button,
   FormGroup,
   GridItem,
+  Popover,
+  PopoverPosition,
   Stack,
   StackItem,
   Text,
   Title,
 } from '@patternfly/react-core';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import ExternalLink from '../../../../../common/ExternalLink';
@@ -44,12 +47,41 @@ function BillingModelSection({
     <p>
       Use
       {' '}
-      <Link to="/quota/resource-limits">
+      <ExternalLink href="https://marketplace.redhat.com" noIcon>
         Red Hat Marketplace
-      </Link>
+      </ExternalLink>
       {' '}
       to subscribe and pay based on the services you use
     </p>
+  );
+
+  const marketplaceDisabledDescription = (
+    <>
+      {marketplaceQuotaDescription}
+      <p>
+        <Popover
+          position={PopoverPosition.right}
+          headerContent="On-demand subscription"
+          bodyContent={(
+            <>
+              <p>Billing based on cluster consumption and charged via Red Hat Marketplace.</p>
+              <p>
+                <ExternalLink href="https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated">
+                  Purchase this option
+                </ExternalLink>
+              </p>
+            </>
+          )}
+          aria-label="help"
+        >
+          <Button variant="link">
+            <OutlinedQuestionCircleIcon />
+            {' '}
+            How can I purchase a subscription via Marketplace?
+          </Button>
+        </Popover>
+      </p>
+    </>
   );
 
   const trialDescription = (
@@ -73,7 +105,7 @@ function BillingModelSection({
   // Also, if the selected default billing model is disabled
   // Default to marketplace
   if ((!showOSDTrial || defaultBillingModel === STANDARD)
-  && hasMarketplaceQuota && !hasStandardOSDQuota && hasMarketplaceSubscription) {
+    && hasMarketplaceQuota && !hasStandardOSDQuota && hasMarketplaceSubscription) {
     defaultBillingModel = billingModels.MARKETPLACE;
   }
 
@@ -125,22 +157,20 @@ function BillingModelSection({
     );
   }
 
-  if (hasMarketplaceQuota) {
-    subscriptionOptions.push(
-      {
-        disabled: !hasMarketplaceSubscription,
-        value: billingModels.MARKETPLACE,
-        label: 'On-demand: Flexible usage billed through the Red Hat Marketplace',
-        description: marketplaceQuotaDescription,
-      },
-    );
-  }
-
-  const showSubscriptionType = subscriptionOptions.length > 1;
+  const marketplaceDisabled = !(hasMarketplaceQuota && hasMarketplaceSubscription);
+  subscriptionOptions.push(
+    {
+      disabled: marketplaceDisabled,
+      value: billingModels.MARKETPLACE,
+      label: 'On-demand: Flexible usage billed through the Red Hat Marketplace',
+      description: marketplaceDisabled
+        ? marketplaceDisabledDescription : marketplaceQuotaDescription,
+    },
+  );
 
   return (
     <>
-      { isWizard && (
+      {isWizard && (
         <>
           <GridItem span={8}>
             <Title headingLevel="h2">Welcome to Red Hat OpenShift Dedicated</Title>
@@ -158,7 +188,6 @@ function BillingModelSection({
       )}
       <GridItem span={12}>
         <Stack hasGutter>
-          {showSubscriptionType && (
           <StackItem>
             <Title headingLevel="h3">Subscription type:</Title>
             <FormGroup
@@ -178,7 +207,6 @@ function BillingModelSection({
               />
             </FormGroup>
           </StackItem>
-          )}
           <StackItem>
             <Title headingLevel="h3">Infrastructure type:</Title>
             <FormGroup
@@ -186,7 +214,7 @@ function BillingModelSection({
               fieldId="byoc"
               className="sub-infra-billing-model"
             >
-              { isWizard
+              {isWizard
                 ? (
                   <Field
                     component={RadioButtons}
