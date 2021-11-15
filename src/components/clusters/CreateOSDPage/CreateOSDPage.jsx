@@ -25,6 +25,7 @@ import Breadcrumbs from '../../common/Breadcrumbs';
 import CreateOSDForm from './CreateOSDForm';
 import './CreateOSDPage.scss';
 import Unavailable from '../../common/Unavailable';
+import DebugClusterRequest from './DebugClusterRequest';
 
 class CreateOSDPage extends React.Component {
   state = {
@@ -318,6 +319,9 @@ class CreateOSDPage extends React.Component {
                     getMarketplaceQuota={this.getMarketplaceQuota}
                   />
                   {/* Form footer */}
+                  {config.fakeOSD && (
+                    <DebugClusterRequest product={product} cloudProviderID={cloudProviderID} />
+                  )}
                   <GridItem>
                     <Split hasGutter className="create-osd-form-button-split">
                       <SplitItem>
