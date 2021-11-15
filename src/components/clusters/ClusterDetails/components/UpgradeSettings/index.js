@@ -12,7 +12,10 @@ import { openModal } from '../../../../common/Modal/ModalActions';
 
 const reduxFormConfig = {
   form: 'ClusterUpgradeSettings',
+  // This form serves for both display of current state and editing.
+  // For display, reset the form upon changes in initialValues.
   enableReinitialize: true,
+  // TODO: do we want keepDirtyOnReinitialize: true ?
 };
 
 const reduxFormUpgradeSettingsTab = reduxForm(reduxFormConfig)(UpgradeSettingsTab);
