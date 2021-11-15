@@ -228,6 +228,9 @@ class MachinePools extends React.Component {
         </>
       );
 
+      const awsSpotInstance = machinePool?.aws?.spot_market_options;
+      const awsPrice = awsSpotInstance?.max_price ? `Maximum hourly price: ${awsSpotInstance?.max_price}` : 'On-Demand';
+
       const expandableRowContent = (
         <>
           {labelsList && (
@@ -243,6 +246,12 @@ class MachinePools extends React.Component {
             </>
           )}
           {autoScaling}
+          {awsSpotInstance && (
+            <>
+              <Title headingLevel="h4" className={cx('pf-u-mb-sm', labelsList && 'pf-u-mt-lg')}>Spot Instance Pricing</Title>
+              {awsPrice}
+            </>
+          )}
         </>
       );
 
@@ -260,7 +269,7 @@ class MachinePools extends React.Component {
 
     // row is expandable if autoscaling enabled, or it has lables, or taints
     const isExpandable = (machinePool = {}) => !isEmpty(machinePool.labels)
-    || machinePool.taints?.length > 0 || machinePool.autoscaling;
+    || machinePool.taints?.length > 0 || machinePool.autoscaling || machinePool.aws;
 
     const isDefaultExpandable = isExpandable(defaultMachinePool);
 
