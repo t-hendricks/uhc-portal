@@ -1,0 +1,14 @@
+{
+  "kind": "GroupList",
+  "href": "/api/clusters_mgmt/v1/clusters/aws-manual-update-1odatpd4g9s48/groups",
+  "page": 1,
+  "size": 1,
+  "total": 1,
+  "items": [
+    {
+      "kind": "Group",
+      "href": "/api/clusters_mgmt/v1/clusters/aws-manual-update-1odatpd4g9s48/groups/dedicated-admins",
+      "id": "dedicated-admins"
+    }
+  ]
+}

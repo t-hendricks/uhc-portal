@@ -10,7 +10,7 @@ const MIRROR_CLIENTS_LATEST_PRE_ARM = 'https://mirror.openshift.com/pub/openshif
 const MIRROR_COREOS_INSTALLER_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest';
 const MIRROR_CRC_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest';
 const MIRROR_HELM_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest';
-const MIRROR_ODO_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest';
+const MIRROR_ODO_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest';
 const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
@@ -372,18 +372,18 @@ const urls = {
   [tools.ODO]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-amd64`,
-        [operatingSystems.mac]: `${MIRROR_ODO_LATEST}/odo-darwin-amd64`,
-        [operatingSystems.windows]: `${MIRROR_ODO_LATEST}/odo-windows-amd64.exe`,
+        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_ODO_LATEST}/odo-darwin-amd64.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_ODO_LATEST}/odo-windows-amd64.exe.zip`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-arm64`,
+        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-arm64.tar.gz`,
       },
       [architectures.s390x]: {
-        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-s390x`,
+        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-s390x.tar.gz`,
       },
       [architectures.ppc]: {
-        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-ppc64le`,
+        [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-ppc64le.tar.gz`,
       },
     },
   },

@@ -20,7 +20,6 @@ function UpdatesScreen({ isAutomaticUpgrade, change }) {
           isAutomatic={isAutomaticUpgrade}
           change={change}
           initialSceduleValue="0 0 * * 0"
-          isWizard
         />
       </Grid>
     </Form>

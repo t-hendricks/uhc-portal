@@ -1,0 +1,6 @@
+{
+  "kind": "UpgradePolicyState",
+  "href": "/api/clusters_mgmt/v1/clusters/aws-manual-update-1odatpd4g9s48/upgrade_policies/3dddbd2d-42ea-11ec-a757-0a580a811511/state",
+  "value": "scheduled",
+  "description": "Upgrade scheduled."
+}

@@ -14,7 +14,7 @@ import PodDistruptionBudgetGraceSelect from './PodDistruptionBudgetGraceSelect';
 import './UpgradeSettingsFields.scss';
 
 function UpgradeSettingsFields({
-  isDisabled, isAutomatic, showDivider, change, initialSceduleValue, isWizard,
+  isDisabled, isAutomatic, showDivider, change, initialSceduleValue,
 }) {
   return (
     <>
@@ -65,7 +65,7 @@ function UpgradeSettingsFields({
             },
           ]}
           defaultValue="manual"
-          disableDefaultValueHandling={isWizard}
+          disableDefaultValueHandling // interferes with enableReinitialize.
         />
       </GridItem>
       {showDivider && <Divider />}
@@ -94,7 +94,6 @@ UpgradeSettingsFields.propTypes = {
   showDivider: PropTypes.bool,
   change: PropTypes.func,
   initialSceduleValue: PropTypes.string,
-  isWizard: PropTypes.bool,
 };
 
 export default UpgradeSettingsFields;

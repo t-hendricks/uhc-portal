@@ -293,18 +293,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -637,18 +637,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -972,18 +972,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -1333,18 +1333,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -1668,18 +1668,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -2003,18 +2003,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -2348,18 +2348,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -2719,18 +2719,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -3060,18 +3060,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -3401,18 +3401,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -3748,18 +3748,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -4088,18 +4088,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -4432,18 +4432,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },
@@ -4761,18 +4761,18 @@ exports[`<DownloadsPage> renders 1`] = `
                 "odo": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-arm64",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
                     },
                     "ppc": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
                     },
                     "s390x": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-s390x",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
                     },
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-linux-amd64",
-                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64",
-                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
                     },
                   },
                 },

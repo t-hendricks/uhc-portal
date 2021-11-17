@@ -1,0 +1,18 @@
+{
+  "kind": "UpgradePolicyList",
+  "page": 1,
+  "size": 1,
+  "total": 1,
+  "items": [
+    {
+      "kind": "UpgradePolicy",
+      "id": "3dddbd2d-42ea-11ec-a757-0a580a811511",
+      "href": "/api/clusters_mgmt/v1/clusters/aws-manual-update-1odatpd4g9s48/upgrade_policies/3dddbd2d-42ea-11ec-a757-0a580a811511",
+      "schedule_type": "manual",
+      "upgrade_type": "OSD",
+      "version": "4.7.1",
+      "next_run": "2021-11-11T14:00:00Z",
+      "cluster_id": "aws-manual-update-1odatpd4g9s48"
+    }
+  ]
+}
