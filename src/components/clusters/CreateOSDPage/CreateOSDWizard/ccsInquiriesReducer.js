@@ -8,6 +8,7 @@ import {
   VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
   LIST_GCP_KEY_RINGS,
   LIST_GCP_KEYS,
+  LIST_GCP_VPCS,
   CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES,
 } from './ccsInquiriesActions';
 
@@ -30,6 +31,13 @@ const initialState = {
     credentials: undefined,
     keyLocation: undefined,
     keyRing: undefined,
+    data: undefined,
+  },
+  gcpVPCs: {
+    ...baseRequestState,
+    cloudProvider: undefined,
+    credentials: undefined,
+    region: undefined,
     data: undefined,
   },
 };
@@ -106,6 +114,30 @@ function ccsInquiriesReducer(state = initialState, action) {
           keyLocation: action.meta?.keyLocation,
           keyRing: action.meta?.keyRing,
           data: action.payload.data,
+        };
+        break;
+
+      case PENDING_ACTION(LIST_GCP_VPCS):
+        draft.gcpVPCs.pending = true;
+        break;
+      case FULFILLED_ACTION(LIST_GCP_VPCS):
+        draft.gcpVPCs = {
+          ...initialState.gcpVPCs,
+          fulfilled: true,
+          credentials: action.meta?.credentials,
+          cloudProvider: action.meta?.cloudProvider,
+          region: action.meta?.region,
+          data: action.payload.data,
+        };
+        break;
+      case REJECTED_ACTION(LIST_GCP_VPCS):
+        draft.gcpVPCs = {
+          ...initialState.gcpVPCs,
+          ...getErrorState(action),
+          credentials: action.meta?.credentials,
+          cloudProvider: action.meta?.cloudProvider,
+          region: action.meta?.region,
+          data: action.payload?.data,
         };
         break;
 

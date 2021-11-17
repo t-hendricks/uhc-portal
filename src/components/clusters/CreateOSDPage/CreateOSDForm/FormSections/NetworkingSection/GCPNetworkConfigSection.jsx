@@ -1,48 +1,58 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   GridItem,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { required, validateGCPSubnet } from '../../../../../../common/validators';
+import GCPVPCName from '../../../CreateOSDWizard/NetworkScreen/GCPVPCName';
+import GCPVPCSubnet from '../../../CreateOSDWizard/NetworkScreen/GCPVPCSubnet';
 
-import { validateGCPSubnet } from '../../../../../../common/validators';
-
-function GCPNetworkConfigSection() {
+function GCPNetworkConfigSection({ isWizard }) {
   return (
     <>
       <GridItem sm={12} md={3}>
         <Field
-          component={ReduxVerticalFormGroup}
+          component={isWizard ? GCPVPCName : ReduxVerticalFormGroup}
           name="vpc_name"
           type="text"
-          validate={validateGCPSubnet}
+          validate={isWizard ? required : validateGCPSubnet}
           label="Existing VPC name"
-          placeholder="VPC Name"
+          placeholder={isWizard ? 'Select VPC name' : 'VPC name'}
+          emptyPlaceholder="No existing VPCs"
         />
       </GridItem>
       <GridItem sm={12} md={3}>
         <Field
-          component={ReduxVerticalFormGroup}
+          component={isWizard ? GCPVPCSubnet : ReduxVerticalFormGroup}
           name="control_plane_subnet"
           type="text"
-          validate={validateGCPSubnet}
+          validate={isWizard ? required : validateGCPSubnet}
           label="Control plane subnet name"
-          placeholder="Subnet name"
+          placeholder={isWizard ? 'Select subnet name' : 'Subnet name'}
+          emptyPlaceholder="No subnet names"
         />
       </GridItem>
       <GridItem sm={12} md={3}>
         <Field
-          component={ReduxVerticalFormGroup}
+          component={isWizard ? GCPVPCSubnet : ReduxVerticalFormGroup}
           name="compute_subnet"
           type="text"
-          validate={validateGCPSubnet}
-          label="Compute Subnet name"
-          placeholder="Subnet name"
+          validate={isWizard ? required : validateGCPSubnet}
+          label="Compute subnet name"
+          placeholder={isWizard ? 'Select subnet name' : 'Subnet name'}
+          emptyPlaceholder="No subnet names"
         />
       </GridItem>
     </>
   );
 }
+
+GCPNetworkConfigSection.propTypes = {
+  isWizard: PropTypes.bool,
+};
 
 export default GCPNetworkConfigSection;
