@@ -68,6 +68,8 @@ chmod u=r,g=,o= key
 rm --force hostkey
 echo "${PUSH_HOSTKEY}" > hostkey
 
+git --version
+ssh -V
 # The version of `git` in the Jenkins slave is 1.18, and it doesn't support the
 # `GIT_SSH_COMMAND` environment variable, it only suppors `GIT_SSH`. So we need
 # to generate a script that wraps the original `ssh` command and adds the
