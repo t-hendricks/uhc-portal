@@ -1,0 +1,6 @@
+{
+  "kind": "UpgradePolicyState",
+  "href": "/api/clusters_mgmt/v1/clusters/aws-auto-update-1odatpd4g9s48/upgrade_policies/9b36bde7-42eb-11ec-9cf2-0a580a810573/state",
+  "value": "pending",
+  "description": "Upgrade policy defined, pending scheduling."
+}

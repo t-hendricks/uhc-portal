@@ -1,0 +1,239 @@
+{
+  "alerts": [
+    {
+      "severity": "info",
+      "name": "UpdateAvailable"
+    },
+    {
+      "severity": "none",
+      "name": "Watchdog"
+    }
+  ],
+  "nodes": [],
+  "cluster_operators": [
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "authentication",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "baremetal",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "cloud-credential",
+      "condition": "available",
+      "reason": "",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "cluster-autoscaler",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "config-operator",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "console",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "csi-snapshot-controller",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "dns",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "etcd",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "image-registry",
+      "condition": "available",
+      "reason": "Ready",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "ingress",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "insights",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "kube-apiserver",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "kube-controller-manager",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "kube-scheduler",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "kube-storage-version-migrator",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "machine-api",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "machine-approver",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "machine-config",
+      "condition": "available",
+      "reason": "",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "marketplace",
+      "condition": "available",
+      "reason": "OperatorAvailable",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "monitoring",
+      "condition": "available",
+      "reason": "RollOutDone",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "network",
+      "condition": "available",
+      "reason": "",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "node-tuning",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "openshift-apiserver",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "openshift-controller-manager",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "openshift-samples",
+      "condition": "available",
+      "reason": "",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "operator-lifecycle-manager",
+      "condition": "available",
+      "reason": "",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "operator-lifecycle-manager-catalog",
+      "condition": "available",
+      "reason": "",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "operator-lifecycle-manager-packageserver",
+      "condition": "available",
+      "reason": "",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "service-ca",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "storage",
+      "condition": "available",
+      "reason": "AsExpected",
+      "version": "4.7.0"
+    },
+    {
+      "time": "2021-11-11T12:24:47Z",
+      "name": "version",
+      "condition": "available",
+      "reason": "",
+      "version": ""
+    }
+  ]
+}

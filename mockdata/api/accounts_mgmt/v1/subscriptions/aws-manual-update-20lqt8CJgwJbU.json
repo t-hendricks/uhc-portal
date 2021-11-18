@@ -1,0 +1,159 @@
+{
+  "id": "aws-manual-update-20lqt8CJgwJbU",
+  "kind": "Subscription",
+  "href": "/api/accounts_mgmt/v1/subscriptions/aws-manual-update-20lqt8CJgwJbU",
+  "plan": {
+    "id": "OSD",
+    "kind": "Plan",
+    "href": "/api/accounts_mgmt/v1/plans/OSD",
+    "type": "OSD"
+  },
+  "cluster_id": "aws-manual-update-1odatpd4g9s48",
+  "external_cluster_id": "aws-manual-update-aws-auto-update-f8ead1de-1286-4d32-b510-c3e594754df7",
+  "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
+  "last_telemetry_date": "2021-11-11T12:14:15.733101Z",
+  "created_at": "2021-11-11T11:22:13.149658Z",
+  "updated_at": "2021-11-11T12:14:15.73448Z",
+  "support_level": "Premium",
+  "cpu_total": 8,
+  "socket_total": 4,
+  "display_name": "aws-manual-update",
+  "creator": {
+    "id": "1N2ZckjW5J1xDPju7Rc3uBDEqgu",
+    "kind": "Account",
+    "href": "/api/accounts_mgmt/v1/accounts/1N2ZckjW5J1xDPju7Rc3uBDEqgu",
+    "name": "Beni Paskin-Cherniavsky",
+    "username": "bpaskinc.openshift",
+    "email": "***REMOVED***"
+  },
+  "managed": true,
+  "status": "Active",
+  "provenance": "Provisioning",
+  "last_reconcile_date": "0001-01-01T00:00:00Z",
+  "console_url": "https://console-openshift-console.apps.cben-upgrades3.97hq.s1.devshift.org",
+  "capabilities": [
+    {
+      "name": "capability.cluster.subscribed_ocp",
+      "value": "true",
+      "inherited": true
+    },
+    {
+      "name": "capability.cluster.autoscale_clusters",
+      "value": "true",
+      "inherited": true
+    }
+  ],
+  "last_released_at": "0001-01-01T00:00:00Z",
+  "metrics": [
+    {
+      "health_state": "healthy",
+      "query_timestamp": "2021-11-11T12:20:02Z",
+      "memory": {
+        "updated_timestamp": "2021-11-11T12:20:04.399Z",
+        "used": {
+          "value": 46355120128,
+          "unit": "B"
+        },
+        "total": {
+          "value": 231751446528,
+          "unit": "B"
+        }
+      },
+      "cpu": {
+        "updated_timestamp": "2021-11-11T12:20:03.209Z",
+        "used": {
+          "value": 3.821619047619044,
+          "unit": ""
+        },
+        "total": {
+          "value": 48,
+          "unit": ""
+        }
+      },
+      "sockets": {
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": ""
+        },
+        "total": {
+          "value": 0,
+          "unit": ""
+        }
+      },
+      "compute_nodes_memory": {
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": "B"
+        },
+        "total": {
+          "value": 132071620608,
+          "unit": "B"
+        }
+      },
+      "compute_nodes_cpu": {
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": ""
+        },
+        "total": {
+          "value": 24,
+          "unit": ""
+        }
+      },
+      "compute_nodes_sockets": {
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": ""
+        },
+        "total": {
+          "value": 0,
+          "unit": ""
+        }
+      },
+      "storage": {
+        "updated_timestamp": "0001-01-01T00:00:00Z",
+        "used": {
+          "value": 0,
+          "unit": "B"
+        },
+        "total": {
+          "value": 0,
+          "unit": "B"
+        }
+      },
+      "nodes": {
+        "total": 9,
+        "master": 3,
+        "infra": 2,
+        "compute": 4
+      },
+      "operating_system": "",
+      "upgrade": {
+        "updated_timestamp": "2021-11-11T12:20:03.952Z",
+        "available": true
+      },
+      "state": "ready",
+      "state_description": "",
+      "openshift_version": "4.7.0",
+      "cloud_provider": "aws",
+      "region": "ap-south-1",
+      "console_url": "https://console-openshift-console.apps.cben-upgrades3.97hq.s1.devshift.org",
+      "critical_alerts_firing": 0,
+      "operators_condition_failing": 0,
+      "subscription_cpu_total": 8,
+      "subscription_socket_total": 4,
+      "subscription_obligation_exists": 3,
+      "cluster_type": "",
+      "non_virt_nodes": 0
+    }
+  ],
+  "cloud_provider_id": "aws",
+  "region_id": "ap-south-1",
+  "cluster_billing_model": "standard",
+  "trial_end_date": "0001-01-01T00:00:00Z",
+  "billing_expiration_date": "0001-01-01T00:00:00Z"
+}
