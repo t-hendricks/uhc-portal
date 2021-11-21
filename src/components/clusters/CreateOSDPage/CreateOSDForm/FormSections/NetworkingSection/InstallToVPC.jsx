@@ -12,7 +12,7 @@ import ExternalLink from '../../../../../common/ExternalLink';
 import GCPNetworkConfigSection from './GCPNetworkConfigSection';
 
 function InstallToVPC({
-  selectedRegion, isMultiAz, selected, cloudProviderID,
+  selectedRegion, isMultiAz, selected, cloudProviderID, isWizard,
 }) {
   return (
     <>
@@ -75,7 +75,7 @@ function InstallToVPC({
                 with a control plane subnet and compute subnet.
               </GridItem>
 
-              <GCPNetworkConfigSection />
+              <GCPNetworkConfigSection isWizard={isWizard} />
 
             </>
           )
@@ -89,6 +89,7 @@ InstallToVPC.propTypes = {
   isMultiAz: PropTypes.bool,
   selected: PropTypes.bool,
   cloudProviderID: PropTypes.string,
+  isWizard: PropTypes.bool,
 };
 
 export default InstallToVPC;
