@@ -64,6 +64,9 @@ module.exports = {
         'last 2 edge versions',
         'last 2 safari versions',
       ],
+      // As of Nov 2021, we have Node 12 in CI.  Most people have newer (14-16) locally,
+      // could use 'current' but prefer testing exactly same code locally as on CI.
+      node: '12',
     },
   }], '@babel/preset-react'],
   plugins: [
