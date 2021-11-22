@@ -35,7 +35,7 @@ trap 'yarn stop-insights-proxy' EXIT
 
 # bash doesn't trap signals while a foreground command is running.
 # Running in background + wait allows the trap to work.
-sudo run/podman-or-docker.sh run \
+run/podman-or-docker.sh run \
                       --rm --name insightsproxy \
                       --add-host qa.foo.redhat.com:127.0.0.1 \
                       --add-host prod.foo.redhat.com:127.0.0.1 \
