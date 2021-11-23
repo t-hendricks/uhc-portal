@@ -142,9 +142,9 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
     key="1.menu.adminconsole"
     title="Open console"
     tooltip={
-      <span>
+      <React.Fragment>
         This cluster is hibernating; resume cluster in order to perform actions
-      </span>
+      </React.Fragment>
     }
     tooltipProps={
       Object {
@@ -168,9 +168,9 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
     key="1.menu.scalecluster"
     title="Edit load balancers and persistent storage"
     tooltip={
-      <span>
+      <React.Fragment>
         This cluster is hibernating; resume cluster in order to perform actions
-      </span>
+      </React.Fragment>
     }
     tooltipProps={
       Object {
@@ -186,9 +186,9 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
     key="1.menu.editnodecount"
     title="Edit node count"
     tooltip={
-      <span>
+      <React.Fragment>
         This cluster is hibernating; resume cluster in order to perform actions
-      </span>
+      </React.Fragment>
     }
     tooltipProps={
       Object {
@@ -212,9 +212,9 @@ exports[`Cluster Actions Dropdown Items cluster state hibernating should render 
     key="1.menu.deletecluster"
     title="Delete cluster"
     tooltip={
-      <span>
+      <React.Fragment>
         This cluster is hibernating; resume cluster in order to perform actions
-      </span>
+      </React.Fragment>
     }
     tooltipProps={
       Object {
