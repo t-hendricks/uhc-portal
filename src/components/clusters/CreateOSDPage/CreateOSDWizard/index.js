@@ -70,7 +70,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   getPersistentStorage: () => dispatch(getPersistentStorageValues()),
   getLoadBalancers: () => dispatch(getLoadBalancerValues()),
 
-  getGCPCloudProviderVPCs: credentials => dispatch(getGCPCloudProviderVPCs(credentials)),
+  getGCPCloudProviderVPCs: (type, credentials, region) => dispatch(
+    getGCPCloudProviderVPCs(type, credentials, region),
+  ),
   getAWSCloudProviderRegions: (accountID, accessKey, secretKey) => dispatch(
     getAWSCloudProviderRegions(accountID, accessKey, secretKey),
   ),

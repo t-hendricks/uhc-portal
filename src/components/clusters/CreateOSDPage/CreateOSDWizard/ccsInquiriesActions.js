@@ -3,7 +3,8 @@ import {
   listGCPVPCs, listGCPKeyRings, listGCPKeys, listAWSRegions,
 } from '../../../../services/clusterService';
 
-export const VALIDATE_CLOUD_PROVIDER_CREDENTIALS = 'GET_CCS_CLOUD_PROVIDER_VPCS';
+export const VALIDATE_CLOUD_PROVIDER_CREDENTIALS = 'VALIDATE_CLOUD_PROVIDER_CREDENTIALS';
+export const LIST_GCP_VPCS = 'LIST_GCP_VPCS';
 export const LIST_GCP_KEY_RINGS = 'LIST_GCP_KEY_RINGS';
 export const LIST_GCP_KEYS = 'LIST_GCP_KEYS';
 export const CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES = 'CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES';
@@ -25,12 +26,12 @@ const credentialsFromJSON = async (gcpCredentialsJSON) => {
   ]);
 };
 
-export const getGCPCloudProviderVPCs = gcpCredentialsJSON => ({
-  type: VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
+export const getGCPCloudProviderVPCs = (type, gcpCredentialsJSON, region) => ({
+  type,
   payload: () => credentialsFromJSON(gcpCredentialsJSON)
-    .then(creds => listGCPVPCs(creds, 'us-east1')),
+    .then(creds => listGCPVPCs(creds, region)),
   // parameters can be used to check if we need to query again.
-  meta: { credentials: gcpCredentialsJSON, cloudProvider: 'gcp' },
+  meta: { credentials: gcpCredentialsJSON, cloudProvider: 'gcp', region },
 });
 
 export const getAWSCloudProviderRegions = (accountID, accessKey, secretKey) => ({

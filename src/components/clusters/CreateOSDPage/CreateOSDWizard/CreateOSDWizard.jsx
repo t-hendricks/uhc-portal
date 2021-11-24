@@ -31,6 +31,7 @@ import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
 
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
+import { VALIDATE_CLOUD_PROVIDER_CREDENTIALS } from './ccsInquiriesActions';
 
 import './createOSDWizard.scss';
 
@@ -328,7 +329,8 @@ class CreateOSDWizard extends React.Component {
                     isDisabled={!isValid || ccsValidationPending}
                     onClick={() => {
                       if (cloudProviderID === 'gcp') {
-                        getGCPCloudProviderVPCs(gcpCredentialsJSON);
+                        // hard code region since we're just validating credentials
+                        getGCPCloudProviderVPCs(VALIDATE_CLOUD_PROVIDER_CREDENTIALS, gcpCredentialsJSON, 'us-east1');
                       } else {
                         getAWSCloudProviderRegions(awsAccountID, awsAccessKey, awsSecretKey);
                       }
