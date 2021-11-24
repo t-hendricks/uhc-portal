@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Alert, AlertActionCloseButton } from '@patternfly/react-core';
 
 const AlertToast = () => (
@@ -12,7 +13,6 @@ const AlertToast = () => (
       actionClose={<AlertActionCloseButton />}
     />
   </>
-
 );
 
 export default AlertToast;

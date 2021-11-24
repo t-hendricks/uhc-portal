@@ -22,7 +22,7 @@ import { setReportDetails } from './InsightsActions';
 import OnRuleDisableFeedbackModal from './OnRuleDisableFeedbackModal';
 import { labelBorderColor } from './InsightsSelectors';
 import { INSIGHTS_RULE_CATEGORIES } from './InsightsConstants';
-import AlertToast from './AlertToasts';
+import AlertToast from './AlertToast';
 
 const dataSortMapping = {
   Description: (a, b) => a.description.localeCompare(b.description),
@@ -266,7 +266,6 @@ class InsightsTable extends React.Component {
       /* eslint-disable-next-line camelcase */
       <RowWrapper {...props} ouiaId={getShownDataForRow(props.rowProps.rowIndex)?.rule_id} />
     );
-    console.log(this.props.insightsData);
 
     return (
       <div id="cluster-insights-table">
@@ -394,8 +393,8 @@ class InsightsTable extends React.Component {
               emptyStateIcon={EmptyTableIcon}
             />
             <OnRuleDisableFeedbackModal />
-            {this.ruleIsToggled ? <AlertToast /> : null}
           </CardBody>
+          {this.ruleIsToggled ? <AlertToast /> : null}
         </Card>
       </div>
     );
