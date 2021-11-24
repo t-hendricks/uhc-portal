@@ -7,7 +7,7 @@ $pf-global--enable-reset: false;
 $pf-global--disable-fontawesome: true;
 $pf-global--font-path: "~@patternfly/patternfly/assets/fonts/";
 
-@import "~openshift-assisted-ui-lib/dist/index.css";
+@import "~openshift-assisted-ui-lib/index.css";
 @import "~react-datepicker/dist/react-datepicker.css";
 
 body {
