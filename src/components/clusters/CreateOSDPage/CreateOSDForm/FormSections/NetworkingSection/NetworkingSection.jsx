@@ -138,6 +138,7 @@ function NetworkingSection({
             isMultiAz={isMultiAz}
             selected={installToVPCSelected}
             cloudProviderID={cloudProviderID}
+            isWizard={isWizard}
           />
         )
       }
@@ -299,6 +300,7 @@ function NetworkingSection({
 
 NetworkingSection.defaultProps = {
   isCCS: false,
+  isWizard: false,
 };
 
 NetworkingSection.propTypes = {

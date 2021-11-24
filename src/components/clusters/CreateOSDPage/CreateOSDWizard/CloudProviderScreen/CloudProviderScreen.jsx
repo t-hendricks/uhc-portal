@@ -27,13 +27,16 @@ function ClusterSettingsScreen({ isByoc, cloudProviderID, ccsCredentialsValidity
       { isByoc && cloudProviderID && (
         cloudProviderID === 'aws' ? <AWSByocFields isValidating={ccsCredentialsValidityResponse.pending} /> : <GCPByocFields isValidating={ccsCredentialsValidityResponse.pending} />
       )}
-      { isByoc && ccsCredentialsValidityResponse.error && (
-        <Alert variant="danger" isInline title={`${cloudProviderID.toUpperCase()} wasn't able to verify your credentials`}>
-          Verify that your entered
-          {' '}
-          {cloudProviderID === 'aws' ? 'access keys match the access keys provided in your AWS account.' : 'service account details are correct'}
-        </Alert>
-      )}
+      {isByoc
+        && ccsCredentialsValidityResponse.error
+        && ccsCredentialsValidityResponse.cloudProvider === cloudProviderID
+        && (
+          <Alert variant="danger" isInline title={`${cloudProviderID.toUpperCase()} wasn't able to verify your credentials`}>
+            Verify that your entered
+            {' '}
+            {cloudProviderID === 'aws' ? 'access keys match the access keys provided in your AWS account.' : 'service account details are correct'}
+          </Alert>
+        )}
     </Form>
   );
 }
@@ -44,6 +47,7 @@ ClusterSettingsScreen.propTypes = {
   ccsCredentialsValidityResponse: PropTypes.shape({
     pending: PropTypes.bool,
     error: PropTypes.bool,
+    cloudProvider: PropTypes.string,
   }),
 };
 
