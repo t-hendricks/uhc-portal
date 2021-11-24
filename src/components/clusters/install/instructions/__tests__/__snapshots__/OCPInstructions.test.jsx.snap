@@ -76,6 +76,44 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
 </Fragment>
 `;
 
+exports[`Every OCP instruction page should render:  Alibaba 1`] = `
+<Fragment>
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="Alibaba"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
+          >
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Alibaba"
+            customizations=""
+            docURL="https://docs.openshift.com/container-platform/latest/installing/"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
 exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
 <Fragment>
   <Card>

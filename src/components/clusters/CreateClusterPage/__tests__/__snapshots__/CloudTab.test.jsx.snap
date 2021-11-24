@@ -446,6 +446,16 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    to="/install/alibaba/installer-provisioned"
+                  >
+                    Alibaba
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/aws"
                   >
                     AWS (x86_64)
@@ -955,6 +965,16 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    to="/install/alibaba/installer-provisioned"
+                  >
+                    Alibaba
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/aws"
                   >
                     AWS (x86_64)
@@ -1400,6 +1420,16 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           rowLabeledBy="simple-node"
           rows={
             Array [
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/alibaba/installer-provisioned"
+                  >
+                    Alibaba
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
               Array [
                 <React.Fragment>
                   <Link
