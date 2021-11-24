@@ -86,7 +86,6 @@ export class InstructionsAwsARM extends Component {
                   <DownloadsAndPullSecretSection
                     token={token}
                     showPreReleaseDocs
-                    showPreReleasePageLink
                     tool={tools.ARMINSTALLER}
                     channel={channels.STABLE}
                     preReleaseDocsLink={links.AWS_ARM_DOCS}

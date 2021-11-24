@@ -26,6 +26,7 @@ const OCPInstructions = (props) => {
     showPreReleaseDocs,
     preReleasePageLink,
     isBMIPI,
+    showPreReleasePageLink,
   } = props;
   const pendoID = window.location.pathname;
   const cloudProviders = [
@@ -58,6 +59,7 @@ const OCPInstructions = (props) => {
                 tool={installer}
                 channel={channel}
                 isBMIPI={isBMIPI}
+                showPreReleasePageLink={showPreReleasePageLink}
               />
             </Instruction>
             <Instruction>
@@ -91,6 +93,7 @@ OCPInstructions.propTypes = {
   preReleasePageLink: PropTypes.string,
   customizations: PropTypes.string,
   isBMIPI: PropTypes.bool,
+  showPreReleasePageLink: PropTypes.bool,
 };
 
 OCPInstructions.defaultProps = {
