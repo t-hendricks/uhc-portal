@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Alert, Button } from '@patternfly/react-core';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import { normalizedProducts, subscriptionSupportLevels, subscriptionStatuses } from '../../../../common/subscriptionTypes';
 import getClusterName from '../../../../common/getClusterName';
-import getClusterEvaluationExpiresInDays from '../../../../common/getClusterEvaluationExpiresInDays';
 import {
   getSubscriptionLastReconciledDate,
 } from '../clusterDetailsHelper';
@@ -31,7 +31,6 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
 
   const salesURL = 'https://www.redhat.com/en/contact';
   const lastReconcileDate = getSubscriptionLastReconciledDate(subscription);
-  const evaluationExpiresStr = getClusterEvaluationExpiresInDays(cluster);
   const clusterName = getClusterName(cluster);
 
   const lastChecked = lastReconcileDate
@@ -94,10 +93,11 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
     );
   }
   return (
-    <Alert className="subscription-settings compliancy-alert" isInline variant="warning" title={`Your OpenShift evaluation expires in ${evaluationExpiresStr}`}>
+    <Alert className="subscription-settings compliancy-alert" isInline variant="warning" title="OpenShift evaluation expiration date">
       {lastChecked}
       <p>
-        {`Your 60-day OpenShift evaluation expires in ${evaluationExpiresStr}. `}
+        Your OpenShift evaluation will be expired at&nbsp;
+        <DateFormat date={subscription.eval_expiration_date} type="onlyDate" />
         {cluster.canEdit ? textForUsersCanEdit : textForUsersCanNotEdit}
       </p>
     </Alert>

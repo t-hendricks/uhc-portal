@@ -4,11 +4,14 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 1`] = `
 <Alert
   className="subscription-settings compliancy-alert"
   isInline={true}
-  title="Your OpenShift evaluation expires in < 1 day"
+  title="OpenShift evaluation expiration date"
   variant="warning"
 >
   <p>
-    Your 60-day OpenShift evaluation expires in &lt; 1 day. 
+    Your OpenShift evaluation will be expired at 
+    <DateFormat
+      type="onlyDate"
+    />
     <a
       href="https://www.redhat.com/en/contact"
       rel="noreferrer noopener"
@@ -25,11 +28,14 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 2`] = `
 <Alert
   className="subscription-settings compliancy-alert"
   isInline={true}
-  title="Your OpenShift evaluation expires in < 1 day"
+  title="OpenShift evaluation expiration date"
   variant="warning"
 >
   <p>
-    Your 60-day OpenShift evaluation expires in &lt; 1 day. 
+    Your OpenShift evaluation will be expired at 
+    <DateFormat
+      type="onlyDate"
+    />
     The cluster owner or an organization administrator can edit subscription settings for non-evaluation use.
   </p>
 </Alert>
