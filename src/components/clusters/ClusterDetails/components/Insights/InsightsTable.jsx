@@ -22,7 +22,6 @@ import { setReportDetails } from './InsightsActions';
 import OnRuleDisableFeedbackModal from './OnRuleDisableFeedbackModal';
 import { labelBorderColor } from './InsightsSelectors';
 import { INSIGHTS_RULE_CATEGORIES } from './InsightsConstants';
-import AlertToast from './AlertToast';
 
 const dataSortMapping = {
   Description: (a, b) => a.description.localeCompare(b.description),
@@ -116,12 +115,14 @@ class InsightsTable extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { insightsData } = this.props;
+    const { insightsData, addNotification } = this.props;
     if (insightsData && prevProps.insightsData !== insightsData) {
       this.fetchData({ filterValues: this.state.filters });
-      this.ruleIsToggled = true;
-    } else {
-      this.ruleIsToggled = false;
+      addNotification({
+        title: 'Recommendation sucessfully ',
+        variant: 'success',
+        dismissable: true,
+      });
     }
   }
 
@@ -394,7 +395,6 @@ class InsightsTable extends React.Component {
             />
             <OnRuleDisableFeedbackModal />
           </CardBody>
-          {this.ruleIsToggled ? <AlertToast /> : null}
         </Card>
       </div>
     );
@@ -412,6 +412,7 @@ InsightsTable.propTypes = {
   insightsData: PropTypes.object.isRequired,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
+  addNotification: PropTypes.func,
 };
 
 export default InsightsTable;
