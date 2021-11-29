@@ -1,28 +1,9 @@
-.flat-radio-buttons-flex-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
-  flex-direction: row;
-  >button, >div {
-    max-width: 320px;
-    margin: 1em;
-  }
-  >div {
-    width: 100%;
-  }
-}
-
 .pf-c-button.ocm-flat-radio-button {
-  &.pf-m-tertiary::after { // specific selector to override PF4 button
-    border-width: var(--pf-global--BorderWidth--sm);
-    border-color: var(--pf-global--Color--100);
-  }
-  text-align: left;
-  width: 100%;
   color: var(--pf-global--Color--100);
-  h4 {
-    margin-bottom: 0;
-  }
+  padding-bottom: var(--pf-global--spacer--md);
+  padding-top: var(--pf-global--spacer--md);
+  text-align: left;
+  white-space: normal;
 
   &:hover, &.selected {
     // hover+selected colors
@@ -30,24 +11,24 @@
       border-color: var(--pf-global--active-color--100);
       border-width: var(--pf-global--BorderWidth--md);
     }
-    .ocm-flat-button-icon svg, h4 {
+    h4 {
       color: var(--pf-global--active-color--100);
+    }
+  }
+
+  &.pf-m-aria-disabled {
+    background-color: var(--pf-global--disabled-color--200);
+    // no border for disabled
+    &.pf-m-tertiary::after {
+      border-width: 0 !important;
+    }
+    h4 {
+      color: var(--pf-global--Color--100);
     }
   }
 
   &.selected.pf-m-tertiary::after {
     // wider border for selected
     border-width: var(--pf-global--BorderWidth--lg);
-  }
-
-  &:disabled {
-    // disabled styles
-    .pf-l-split, .ocm-flat-button-icon svg, h4.pf-c-title {
-      color: var(--pf-global--disabled-color--100);
-    }
-    &.pf-m-tertiary::after {
-      border-width: 0;
-    }
-    background-color: var(--pf-global--disabled-color--200);
   }
 }
