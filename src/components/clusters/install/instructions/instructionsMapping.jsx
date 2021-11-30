@@ -295,14 +295,12 @@ const instructionsMapping = {
     ipi: {
       docURL: links.INSTALL_RHVIPI_GETTING_STARTED,
       title: 'Install OpenShift on Red Hat Virtualization with installer-provisioned infrastructure',
-      showPreReleasePageLink: false,
       installer: tools.X86INSTALLER,
       channel: channels.STABLE,
     },
     upi: {
       docURL: links.INSTALL_RHVUPI_GETTING_STARTED,
       title: 'Install OpenShift on Red Hat Virtualization with user-provisioned infrastructure',
-      showPreReleasePageLink: false,
       installer: tools.X86INSTALLER,
       channel: channels.STABLE,
     },
