@@ -8,7 +8,7 @@ import {
   AnalysisInProgressMessage,
   ErrorMessage,
 } from './EmptyTableMessage';
-import InsightsTable from './redux';
+import InsightsTable from './InsightsTable';
 import './index.scss';
 
 const Insights = ({
