@@ -276,7 +276,7 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('does not display ccs_only machine types, only machines with quota', () => {
-        const types = wrapper.find('FlatRadioButton').getElements().map(e => e.key);
+        const types = wrapper.find('SelectOption').getElements().map(e => e.key);
         expect(types).not.toContain('m5.12xlarge');
         expect(types).not.toContain('g4dn.2xlarge');
       });
