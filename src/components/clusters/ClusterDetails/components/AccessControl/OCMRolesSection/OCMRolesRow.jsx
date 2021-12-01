@@ -18,9 +18,9 @@ class OCMRolesRow {
   constructor(data = null, rowIdx = -1) {
     this.data = data;
     this.id = get(this.data, 'id', '');
-    this.usernameValue = get(this.data, 'account_username', '');
+    this.usernameValue = get(this.data, 'account.username', '');
     this.roleValue = get(this.data, 'role.id', '');
-    this.email = get(this.data, 'account_email', '');
+    this.email = get(this.data, 'account.email', '');
     this.rowIdx = rowIdx;
 
     // whether it is creating a new row

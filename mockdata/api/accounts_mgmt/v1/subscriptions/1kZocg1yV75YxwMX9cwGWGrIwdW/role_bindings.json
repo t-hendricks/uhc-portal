@@ -12,12 +12,12 @@
       "subscription": {
         "kind": "Subscription"
       },
-      "account_username": "Doris Hudson",
-      "account_email": "***REMOVED***",
       "account": {
         "id": "1Ta2R4957S9M0Vk5IdEQJPG3L0N",
         "kind": "Account",
-        "href": "/api/accounts_mgmt/v1/accounts/1Ta2R4957S9M0Vk5IdEQJPG3L0N"
+        "href": "/api/accounts_mgmt/v1/accounts/1Ta2R4957S9M0Vk5IdEQJPG3L0N",
+        "username": "Doris Hudson",
+        "email": "***REMOVED***"
       },
       "organization": {
         "kind": "Organization"
@@ -38,12 +38,12 @@
       "subscription": {
         "kind": "Subscription"
       },
-      "account_username": "Jak Valdez",
-      "account_email": "***REMOVED***",
       "account": {
         "id": "1Ta2R4957S9M0Vk5IdEQJPG3L0N",
         "kind": "Account",
-        "href": "/api/accounts_mgmt/v1/accounts/1Ta2R4957S9M0Vk5IdEQJPG3L0N"
+        "href": "/api/accounts_mgmt/v1/accounts/1Ta2R4957S9M0Vk5IdEQJPG3L0N",
+        "username": "Jak Valdez",
+        "email": "***REMOVED***"
       },
       "organization": {
         "id": "1Ta2R5bhEXrMKLrrSLh88w8XF8p",
@@ -68,12 +68,12 @@
         "kind": "Subscription",
         "href": "/api/accounts_mgmt/v1/subscriptions/1Te8doEd56x1L5r6iMZRyAxDnzA"
       },
-      "account_username": "Olive1",
-      "account_email": "***REMOVED***",
       "account": {
         "id": "1CzKMWTzDbeN7jOMmO5Ar1Y3Ai1",
         "kind": "Account",
-        "href": "/api/accounts_mgmt/v1/accounts/1CzKMWTzDbeN7jOMmO5Ar1Y3Ai1"
+        "href": "/api/accounts_mgmt/v1/accounts/1CzKMWTzDbeN7jOMmO5Ar1Y3Ai1",
+        "username": "Olive1",
+        "email": "***REMOVED***"
       },
       "organization": {
         "kind": "Organization"
