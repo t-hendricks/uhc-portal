@@ -48,7 +48,7 @@ exports[`<DynamicSelect> error, touched: shows error 1`] = `
   >
     <FormSelectOption
       isDisabled={true}
-      label=""
+      label="Must select bar first"
       value=""
     />
   </FormSelect>
@@ -75,7 +75,7 @@ exports[`<DynamicSelect> error, untouched: no error 1`] = `
   >
     <FormSelectOption
       isDisabled={true}
-      label=""
+      label="Must select bar first"
       value=""
     />
   </FormSelect>
@@ -219,7 +219,7 @@ exports[`<DynamicSelect> without dependencies: blank 1`] = `
   >
     <FormSelectOption
       isDisabled={true}
-      label=""
+      label="Must select bar first"
       value=""
     />
   </FormSelect>
