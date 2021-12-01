@@ -14,6 +14,9 @@ import {
 } from '@patternfly/react-core';
 
 import reviewValues from './reviewValues';
+import DebugClusterRequest from '../../DebugClusterRequest';
+import config from '../../../../../config';
+
 import './ReviewClusterScreen.scss';
 
 function clusterSpecDescriptionItem({ name, formValues }) {
@@ -151,6 +154,8 @@ function ReviewClusterScreen({
         {formValues.upgrade_policy === 'automatic' && clusterSpecDescriptionItem({ name: 'automatic_upgrade_schedule', formValues })}
         {clusterSpecDescriptionItem({ name: 'node_drain_grace_period', formValues })}
       </DescriptionList>
+
+      {config.fakeOSD && <DebugClusterRequest />}
     </div>
   );
 }
