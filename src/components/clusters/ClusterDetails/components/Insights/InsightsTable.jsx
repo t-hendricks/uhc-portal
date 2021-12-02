@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import {
   Button, Card, CardBody, EmptyStateIcon, Label, Stack, StackItem,
 } from '@patternfly/react-core';
-import { connect } from 'react-redux';
-import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { cellWidth, RowWrapper } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import RuleTable from '@redhat-cloud-services/rule-components/RuleTable/RuleTable';
@@ -35,10 +33,6 @@ const sortMultiplier = {
   asc: 1,
   desc: -1,
 };
-
-const mapDispatchToProps = dispatch => ({
-  addNotification: data => dispatch(addNotification(data)),
-});
 
 const groupsFilter = groups => ({ onChange, value, ...props } = { onChange: () => undefined }) => ({
   ...props,
@@ -121,11 +115,12 @@ class InsightsTable extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { insightsData } = this.props;
+    const { insightsData, addNotificationToaster } = this.props;
     if (insightsData && prevProps.insightsData !== insightsData) {
       this.fetchData({ filterValues: this.state.filters });
-      addNotification({
-        title: 'Recommendation sucessfully ',
+      addNotificationToaster({
+        title: 'Recommendation bla bla bla',
+        description: 'WAHAHA',
         variant: 'success',
         dismissable: true,
       });
@@ -418,7 +413,7 @@ InsightsTable.propTypes = {
   insightsData: PropTypes.object.isRequired,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
-  addNotification: PropTypes.func,
+  addNotificationToaster: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(InsightsTable);
+export default InsightsTable;
