@@ -70,6 +70,7 @@ class DynamicSelect extends React.Component {
       helperText,
       placeholder,
       emptyPlaceholder,
+      noDependenciesPlaceholder,
       requestErrorTitle,
     } = this.props;
     const show = matchesDependencies && requestStatus.fulfilled;
@@ -96,7 +97,7 @@ class DynamicSelect extends React.Component {
       );
     } else {
       options = (
-        <FormSelectOption isDisabled value="" label="" />
+        <FormSelectOption isDisabled value="" label={noDependenciesPlaceholder} />
       );
     }
 
@@ -137,6 +138,7 @@ DynamicSelect.propTypes = {
   helperText: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
   emptyPlaceholder: PropTypes.string.isRequired,
+  noDependenciesPlaceholder: PropTypes.string,
   requestErrorTitle: PropTypes.string.isRequired,
   hasDependencies: PropTypes.bool.isRequired,
   matchesDependencies: PropTypes.bool.isRequired,

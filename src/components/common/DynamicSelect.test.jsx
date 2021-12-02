@@ -24,6 +24,7 @@ describe('<DynamicSelect>', () => {
       label: 'Label',
       placeholder: 'Select foo',
       emptyPlaceholder: 'No foos',
+      noDependenciesPlaceholder: 'Must select bar first',
       requestErrorTitle: 'Failed listing foos',
       hasDependencies: true,
       matchesDependencies: true,
@@ -41,7 +42,7 @@ describe('<DynamicSelect>', () => {
       <DynamicSelect {...baseProps} hasDependencies={false} />,
     );
     expect(select).toMatchSnapshot('blank');
-    expect(select.find('FormSelectOption').at(0).props().label).toEqual('');
+    expect(select.find('FormSelectOption').at(0).props().label).toEqual('Must select bar first');
     expect(loadData).not.toBeCalled();
   });
 
@@ -123,6 +124,6 @@ describe('<DynamicSelect>', () => {
     select.setProps({
       input: { value: '', onChange },
     });
-    expect(select.find('FormSelectOption').at(0).props().label).toEqual('');
+    expect(select.find('FormSelectOption').at(0).props().label).toEqual('Must select bar first');
   });
 });
