@@ -398,8 +398,12 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: 16px;
 }
 
-.pf-c-radio.radio-az-disabled {
+.pf-c-radio.radio-az {
+  display: inline-block;
   width: 120px;
+  .pf-c-radio__label {
+    padding-left: 6px;
+  }
 }
 
 .flex-container {

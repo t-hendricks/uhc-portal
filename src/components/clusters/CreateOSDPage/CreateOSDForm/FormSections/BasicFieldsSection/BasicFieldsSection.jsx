@@ -123,7 +123,7 @@ function BasicFieldsSection({
             >
               <Field
                 component={RadioButtons}
-                className={!hasSingleAzQuota || !hasMultiAzQuota ? 'radio-az-disabled' : null}
+                className="radio-az"
                 name="multi_az"
                 disabled={pending}
                 onChange={handleMultiAZChange}
