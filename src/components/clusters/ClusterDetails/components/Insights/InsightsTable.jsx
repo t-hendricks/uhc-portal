@@ -8,6 +8,7 @@ import { cellWidth, RowWrapper } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import RuleTable from '@redhat-cloud-services/rule-components/RuleTable/RuleTable';
 import ReportDetails from '@redhat-cloud-services/rule-components/ReportDetails';
+
 import {
   descriptionFilter,
   totalRiskFilter,
@@ -115,12 +116,13 @@ class InsightsTable extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { insightsData, addNotificationToaster } = this.props;
+    const { insightsData } = this.props;
+    const { addNotification } = this.props;
     if (insightsData && prevProps.insightsData !== insightsData) {
       this.fetchData({ filterValues: this.state.filters });
-      addNotificationToaster({
-        title: 'Recommendation bla bla bla',
-        description: 'WAHAHA',
+      debugger;
+      addNotification({
+        title: 'Recommendation',
         variant: 'success',
         dismissable: true,
       });
@@ -413,7 +415,7 @@ InsightsTable.propTypes = {
   insightsData: PropTypes.object.isRequired,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
-  addNotificationToaster: PropTypes.func.isRequired,
+  addNotification: PropTypes.func.isRequired,
 };
 
 export default InsightsTable;

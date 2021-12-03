@@ -115,7 +115,11 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   getSupportCases: supportActions.getSupportCases,
   getSchedules,
   getUserAccess,
-  addNotificationToaster: data => addNotification(data),
+  addNotification: data => addNotification(data),
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
+
+export const X = () => {
+  console.log(addNotification);
+};
