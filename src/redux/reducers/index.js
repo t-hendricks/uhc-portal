@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { connectRouter } from 'connected-react-router';
 
-import notifications from '@redhat-cloud-services/frontend-components-notifications/redux/actions/notifications';
+import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { clustersReducer } from './clustersReducer';
 import { clusterLogReducer } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogReducer';
 import { deleteClusterDialogReducer } from '../../components/clusters/common/DeleteClusterDialog/DeleteClusterDialogReducer';
@@ -62,7 +62,7 @@ const reducers = {
   persistentStorageValues: persistentStorageReducer,
   loadBalancerValues: loadBalancersReducer,
   clusterLogs: clusterLogReducer,
-  notifications,
+  notifications: { notificationsReducer },
   networkSelfService: NetworkSelfServiceReducer,
   subscriptionSettings: subscriptionSettingsReducer,
   subscriptionReleased: subscriptionReleasedReducer,

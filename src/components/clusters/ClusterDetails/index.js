@@ -119,7 +119,3 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
-
-export const X = () => {
-  console.log(addNotification);
-};

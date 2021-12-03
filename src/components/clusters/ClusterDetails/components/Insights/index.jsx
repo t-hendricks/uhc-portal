@@ -46,7 +46,7 @@ const Insights = ({
       insightsData={insightsData}
       enableRule={enableRule}
       openModal={openModal}
-      addNotifiction={addNotification}
+      addNotification={addNotification}
     />
   );
 };

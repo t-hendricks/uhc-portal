@@ -48,7 +48,6 @@ import AddNotificationContactDialog
   from './components/Support/components/AddNotificationContactDialog';
 import UpgradeSettingsTab from './components/UpgradeSettings';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
-import { X } from './index.js';
 
 const { HostsClusterDetailTab, canAddHost } = OCM;
 class ClusterDetails extends Component {
@@ -374,7 +373,6 @@ class ClusterDetails extends Component {
     const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit && !isArchived;
     const displayAddAssistedHosts = assistedInstallerEnabled && canAddHost({ cluster })
       && !isArchived;
-    console.log(X);
 
     return (
       <>

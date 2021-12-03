@@ -8,7 +8,6 @@ import { cellWidth, RowWrapper } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import RuleTable from '@redhat-cloud-services/rule-components/RuleTable/RuleTable';
 import ReportDetails from '@redhat-cloud-services/rule-components/ReportDetails';
-
 import {
   descriptionFilter,
   totalRiskFilter,
@@ -120,7 +119,6 @@ class InsightsTable extends React.Component {
     const { addNotification } = this.props;
     if (insightsData && prevProps.insightsData !== insightsData) {
       this.fetchData({ filterValues: this.state.filters });
-      debugger;
       addNotification({
         title: 'Recommendation',
         variant: 'success',

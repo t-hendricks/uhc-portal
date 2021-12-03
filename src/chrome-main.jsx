@@ -94,7 +94,7 @@ class AppEntry extends React.Component {
     if (ready) {
       return (
         <Provider store={store}>
-          <NotificationPortal store={store} />
+          <NotificationPortal />
           <BrowserRouter basename={getBaseName()}>
             <App />
           </BrowserRouter>
