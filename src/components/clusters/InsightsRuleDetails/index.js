@@ -35,7 +35,7 @@ const mapDispatchToProps = {
   clearGlobalError,
   setGlobalError,
   voteOnRule: voteOnRuleInsights,
-  addNotification: data => addNotification(data),
+  addNotification,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(InsightsRuleDetails);

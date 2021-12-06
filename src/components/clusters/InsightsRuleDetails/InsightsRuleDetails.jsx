@@ -295,13 +295,23 @@ class InsightsRuleDetails extends Component {
                       variant="link"
                       isInline
                       onClick={() => {
-                        enableRule(externalId, currentRuleId, errorKey, true, isManagedCluster);
-                        addNotification({
-                          title: 'Recommendation successfully enabled',
-                          variant: 'success',
-                          dismissable: true,
-                          dismissDelay: 4000,
-                        });
+                        Promise.all([
+                          enableRule(externalId, currentRuleId, errorKey, true, isManagedCluster),
+                        ])
+                          .then(addNotification({
+                            title: 'Recommendation successfully enabled',
+                            variant: 'success',
+                            dismissable: true,
+                            dismissDelay: 4000,
+                          }))
+                          .catch((error) => {
+                            addNotification({
+                              title: `${error}`,
+                              variant: 'danger',
+                              dismissable: true,
+                              dismissDelay: 4000,
+                            });
+                          });
                       }}
                     >
                       Enable recommendation

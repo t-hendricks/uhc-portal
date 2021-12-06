@@ -28,7 +28,7 @@ const mapDispatchToProps = {
   ),
   hideWindow: () => closeModal(),
   disableRule: disableRuleInsights,
-  addNotification: data => addNotification(data),
+  addNotification,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnRuleDisableFeedbackModal);
