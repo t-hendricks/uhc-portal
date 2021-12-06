@@ -62,7 +62,7 @@ const reducers = {
   persistentStorageValues: persistentStorageReducer,
   loadBalancerValues: loadBalancersReducer,
   clusterLogs: clusterLogReducer,
-  notifications: { notificationsReducer },
+  notifications: notificationsReducer,
   networkSelfService: NetworkSelfServiceReducer,
   subscriptionSettings: subscriptionSettingsReducer,
   subscriptionReleased: subscriptionReleasedReducer,

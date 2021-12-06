@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import InsightsRuleDetails from './InsightsRuleDetails';
 import { modalActions } from '../../common/Modal/ModalActions';
 
@@ -35,6 +35,7 @@ const mapDispatchToProps = {
   clearGlobalError,
   setGlobalError,
   voteOnRule: voteOnRuleInsights,
+  addNotification: data => addNotification(data),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(InsightsRuleDetails);
