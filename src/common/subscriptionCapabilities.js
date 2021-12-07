@@ -15,6 +15,7 @@ const subscriptionCapabilities = {
   SUBSCRIBED_OCP_MARKETPLACE: 'capability.cluster.subscribed_ocp_marketplace',
   BARE_METAL_INSTALLER_ADMIN: 'capability.account.bare_metal_installer_admin',
   RELEASE_OCP_CLUSTERS: 'capability.cluster.release_ocp_clusters',
+  CREATE_GCP_NON_CCS_CLUSTER: 'capability.organization.create_gcp_non_ccs_cluster',
 };
 
 const hasCapability = (subscription, name) => {
