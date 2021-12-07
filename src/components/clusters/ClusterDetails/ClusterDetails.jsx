@@ -48,6 +48,7 @@ import AddNotificationContactDialog
   from './components/Support/components/AddNotificationContactDialog';
 import UpgradeSettingsTab from './components/UpgradeSettings';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
+import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
 
 const { HostsClusterDetailTab, canAddHost } = OCM;
 class ClusterDetails extends Component {
@@ -301,7 +302,9 @@ class ClusterDetails extends Component {
       </>
     );
 
-    if (isPending) {
+    // organization.details is required by canCreateGCPNonCCSCluster below
+    // and must be loaded so the Networking tab displays properly
+    if (isPending || !organization.fulfilled) {
       return (
         <div id="clusterdetails-content">
           <div className="cluster-loading-container">
@@ -347,6 +350,10 @@ class ClusterDetails extends Component {
     const isClusterUpdating = cluster.state === clusterStates.UPDATING;
     const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
     const isPrivateCluster = cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
+    const canCreateGCPNonCCSCluster = hasCapability(
+      organization.details,
+      subscriptionCapabilities.CREATE_GCP_NON_CCS_CLUSTER,
+    );
     const displayAddOnsTab = !isClusterInstalling && !isClusterPending && !isClusterWaiting
       && cluster.managed && !isArchived;
       // "Insights Advisor" tab
@@ -357,9 +364,12 @@ class ClusterDetails extends Component {
     const displayAccessControlTab = !isArchived;
     const cloudProvider = get(cluster, 'cloud_provider.id');
     const displayNetworkingTab = (isClusterReady || isClusterUpdating || clusterHibernating)
-      && cluster.managed && !!get(cluster, 'api.url')
-      && ((cloudProvider === 'aws' && !isPrivateCluster)
-      || (cloudProvider === 'gcp' && get(cluster, 'ccs.enabled')))
+      && cluster.managed
+      && !!get(cluster, 'api.url')
+      && (
+        (cloudProvider === 'aws' && !isPrivateCluster)
+        || (cloudProvider === 'gcp' && (get(cluster, 'ccs.enabled') || canCreateGCPNonCCSCluster))
+      )
       && !isArchived;
     const displayMachinePoolsTab = cluster.managed
       && (isClusterReady || clusterHibernating)
