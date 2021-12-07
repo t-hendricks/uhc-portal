@@ -32,7 +32,21 @@ exports[`<KMSKeyLocationComboBox /> when location needs to be fetched renders co
     isDisabled={false}
     isRequired={false}
     onBlur={[Function]}
-    onChange={[Function]}
+    onChange={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            undefined,
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      }
+    }
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"

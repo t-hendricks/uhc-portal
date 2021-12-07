@@ -13,7 +13,7 @@ import CloudProviderSelectionField from '../CloudProviderSelectionField';
 import AWSByocFields from './AWSByocFields';
 import GCPByocFields from './GCPByocFields';
 
-function ClusterSettingsScreen({ isByoc, cloudProviderID, ccsCredentialsValidityResponse }) {
+function CloudProviderScreen({ isByoc, cloudProviderID, ccsCredentialsValidityResponse }) {
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Title headingLevel="h3">
@@ -41,7 +41,7 @@ function ClusterSettingsScreen({ isByoc, cloudProviderID, ccsCredentialsValidity
   );
 }
 
-ClusterSettingsScreen.propTypes = {
+CloudProviderScreen.propTypes = {
   isByoc: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   ccsCredentialsValidityResponse: PropTypes.shape({
@@ -51,4 +51,4 @@ ClusterSettingsScreen.propTypes = {
   }),
 };
 
-export default ClusterSettingsScreen;
+export default CloudProviderScreen;

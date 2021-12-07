@@ -1,8 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import {
-  Split, SplitItem, Title,
-} from '@patternfly/react-core';
+import { Title } from '@patternfly/react-core';
 import PropTypes from 'prop-types';
 
 import './FlatRadioButton.scss';
@@ -17,7 +15,6 @@ function FlatRadioButton({
   onChange,
   titleText,
   secondaryText,
-  icon,
   extraClass,
   ...extraProps
 }) {
@@ -36,23 +33,13 @@ function FlatRadioButton({
       variant="tertiary"
       {...extraProps}
     >
-      <Split hasGutter>
-        {icon && (
-          <SplitItem className="ocm-flat-button-icon">
-            {icon}
-          </SplitItem>
-        )}
-        <SplitItem isFilled>
-          <Title headingLevel="h4" size="lg">{titleText}</Title>
-          {secondaryText && secondaryText}
-        </SplitItem>
-      </Split>
+      <Title headingLevel="h4" size="lg">{titleText}</Title>
+      {secondaryText && secondaryText}
     </ButtonWithTooltip>
   );
 }
 
 FlatRadioButton.propTypes = {
-  icon: PropTypes.node,
   isSelected: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   secondaryText: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
