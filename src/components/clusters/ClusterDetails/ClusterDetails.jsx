@@ -282,6 +282,7 @@ class ClusterDetails extends Component {
       initTabOpen,
       assistedInstallerEnabled,
       userAccess,
+      addNotification,
     } = this.props;
     const { selectedTab, refreshEvent } = this.state;
 
@@ -528,6 +529,7 @@ class ClusterDetails extends Component {
                   enableRule(cluster.external_id, ruleId, errorKey, false, isManagedSubscription);
                 }}
                 openModal={openModal}
+                addNotification={addNotification}
               />
             </ErrorBoundary>
           </TabContent>
@@ -667,6 +669,7 @@ ClusterDetails.propTypes = {
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
   }).isRequired,
+  addNotification: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {

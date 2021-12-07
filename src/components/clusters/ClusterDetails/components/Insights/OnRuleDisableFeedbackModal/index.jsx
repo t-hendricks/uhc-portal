@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
 import { closeModal } from '../../../../../common/Modal/ModalActions';
 import { disableRuleInsights, sendFeedbackOnRuleDisableInsights } from '../InsightsActions';
@@ -27,6 +28,7 @@ const mapDispatchToProps = {
   ),
   hideWindow: () => closeModal(),
   disableRule: disableRuleInsights,
+  addNotification,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnRuleDisableFeedbackModal);

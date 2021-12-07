@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import get from 'lodash/get';
 
 import { push } from 'connected-react-router';
+import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux';
 
 import ClusterDetails from './ClusterDetails';
 import { fetchClusterDetails, invalidateClusters } from '../../../redux/actions/clustersActions';
@@ -114,6 +115,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   getSupportCases: supportActions.getSupportCases,
   getSchedules,
   getUserAccess,
+  addNotification,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);
