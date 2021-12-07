@@ -365,23 +365,24 @@ class InsightsTable extends React.Component {
 
                 return [{
                   title: `${disabled ? 'Enable' : 'Disable'} recommendation`,
-                  onClick: () => {
+                  onClick: async () => {
                     if (disabled) {
-                      Promise.all([enableRule(ruleId, errorKey)])
-                        .then(addNotification({
+                      try {
+                        await enableRule(ruleId, errorKey);
+                        addNotification({
                           title: 'Recommendation successfully enabled',
                           variant: 'success',
                           dismissable: true,
                           dismissDelay: 4000,
-                        }))
-                        .catch((error) => {
-                          addNotification({
-                            title: `${error}`,
-                            variant: 'danger',
-                            dismissable: true,
-                            dismissDelay: 4000,
-                          });
                         });
+                      } catch (error) {
+                        addNotification({
+                          title: `${error}`,
+                          variant: 'danger',
+                          dismissable: true,
+                          dismissDelay: 4000,
+                        });
+                      }
                     } else {
                       this.onRuleDisable(ruleId, errorKey);
                     }
