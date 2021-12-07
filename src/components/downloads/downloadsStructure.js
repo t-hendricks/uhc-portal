@@ -31,6 +31,11 @@ export const downloadsCategories = [
     ],
   },
   {
+    key: 'DISCONNECTED_INSTALLATION',
+    title: 'OpenShift disconnected installation tools',
+    tools: [tools.MIRROR_REGISTRY],
+  },
+  {
     key: 'RHCOS',
     title: 'RHCOS management tools',
     tools: [tools.BUTANE, tools.COREOS_INSTALLER],

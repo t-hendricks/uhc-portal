@@ -21,6 +21,7 @@ const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/latest';
 const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest';
+const MIRROR_MIRROR_REGISTRY_STABLE = 'https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0';
 
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
@@ -144,6 +145,8 @@ const links = {
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
   // TODO OCM RBAC phase 2: update this link once the new chapter is there.
   OCM_DOCS_ROLES_AND_ACCESS: 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/index',
+
+  INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/installing/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
@@ -167,6 +170,7 @@ const tools = {
   RHCOS: 'rhcos',
   RHOAS: 'rhoas',
   ROSA: 'rosa',
+  MIRROR_REGISTRY: 'mirror-registry',
 };
 
 const channels = {
@@ -458,6 +462,14 @@ const urls = {
       },
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_OSDK_LATEST_PPC}/operator-sdk-linux-ppc64le.tar.gz`,
+      },
+    },
+  },
+
+  [tools.MIRROR_REGISTRY]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_STABLE}/mirror-registry.tar.gz`,
       },
     },
   },
