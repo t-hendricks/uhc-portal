@@ -5,33 +5,17 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { validateGCPEncryptionKeys, validateGCPKMSServiceAccount } from '../../../../../../common/validators';
+import { required, validateGCPKMSServiceAccount } from '../../../../../../common/validators';
 import { constants } from '../../CreateOSDFormConstants';
 
 import PopoverHint from '../../../../../common/PopoverHint';
 import KMSKeyLocationComboBox from './KMSKeyLocationComboBox';
+import KMSKeyRingSelect from './KMSKeyRingSelect';
+import KMSKeySelect from './KMSKeySelect';
 
 function GCPCustomerManagedEncryption({ selectedRegion }) {
   return (
     <>
-      <GridItem sm={12} md={5} lg={4}>
-        <Field
-          component={ReduxVerticalFormGroup}
-          name="key_ring"
-          type="text"
-          label="Key ring"
-          placeholder="Key ring name"
-          validate={validateGCPEncryptionKeys}
-          helpText="A key ring organizes keys in a specific Google Cloud location."
-          extendedHelpText={(
-            <>
-              {constants.keyRing}
-            </>
-            )}
-          showHelpTextOnError={false}
-        />
-      </GridItem>
-      <GridItem md={7} lg={8} />
       <GridItem sm={12} md={5} lg={4}>
         <FormGroup
           label="Key ring location"
@@ -47,24 +31,42 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
         </FormGroup>
       </GridItem>
       <GridItem md={7} lg={8} />
+
       <GridItem sm={12} md={5} lg={4}>
         <Field
-          component={ReduxVerticalFormGroup}
-          name="key_name"
-          type="text"
-          label="Key name"
-          placeholder="Key name"
-          validate={validateGCPEncryptionKeys}
-          helpText="Name of the key in the keyring."
-          extendedHelpText={(
-            <>
-              {constants.keyName}
-            </>
-            )}
-          showHelpTextOnError={false}
+          component={KMSKeyRingSelect}
+          name="key_ring"
+          label="Key ring"
+          labelIcon={<PopoverHint hint={constants.keyRing} />}
+          helperText="A key ring organizes keys in a specific Google Cloud location."
+          noDependenciesPlaceholder="Enter GCP credentials first"
+          emptyPlaceholder="No key rings"
+          placeholder="Select key ring"
+          requestErrorTitle="Error listing key rings using your GCP credentials"
+          validate={required}
+          isRequired
+          className="pf-c-form-control"
         />
       </GridItem>
       <GridItem md={7} lg={8} />
+
+      <GridItem sm={12} md={5} lg={4}>
+        <Field
+          component={KMSKeySelect}
+          name="key_name"
+          label="Key name"
+          labelIcon={<PopoverHint hint={constants.keyName} />}
+          helperText="Name of the key in the keyring."
+          emptyPlaceholder="No keys"
+          placeholder="Select key"
+          requestErrorTitle="Error listing keys using your GCP credentials"
+          validate={required}
+          isRequired
+          className="pf-c-form-control"
+        />
+      </GridItem>
+      <GridItem md={7} lg={8} />
+
       <GridItem sm={12} md={5} lg={4}>
         <Field
           component={ReduxVerticalFormGroup}
@@ -78,7 +80,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
             <>
               {constants.kmsserviceAccount}
             </>
-            )}
+          )}
           showHelpTextOnError={false}
         />
       </GridItem>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Flex } from '@patternfly/react-core';
 import FlatRadioButton from '../../../../../common/FlatRadioButton';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
 import { billingModelConstants } from '../../CreateOSDFormConstants';
@@ -19,7 +20,12 @@ function BillingModelRadioButtons({
     customerCloudSubscriptionText,
   } = billingModelConstants;
   return (
-    <div id="byoc" className="flat-radio-buttons-flex-container">
+    <Flex
+      direction={{ default: 'column', md: 'row' }}
+      shrink={{ md: 'shrink' }}
+      flexWrap={{ md: 'nowrap' }}
+      className="pf-u-my-md"
+    >
       <FlatRadioButton
         id={standard.toLowerCase()}
         value="false"
@@ -38,7 +44,7 @@ function BillingModelRadioButtons({
         onChange={onChange}
         disableReason={isBYOCQuotaDisabled && noQuotaTooltip}
       />
-    </div>
+    </Flex>
   );
 }
 
