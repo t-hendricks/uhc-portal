@@ -26,14 +26,14 @@ class GCPVPCName extends React.Component {
   loadIfNeeded = () => {
     const {
       gcpVPCs,
-      gcpCredentialsJSON,
+      credentials,
       region,
       hasDependencies,
       matchesDependencies,
       getGCPCloudProviderVPCs,
     } = this.props;
     if (hasDependencies && !matchesDependencies && !gcpVPCs.pending) {
-      getGCPCloudProviderVPCs(LIST_GCP_VPCS, gcpCredentialsJSON, region);
+      getGCPCloudProviderVPCs(LIST_GCP_VPCS, credentials, region);
     }
   }
 
@@ -131,7 +131,7 @@ GCPVPCName.propTypes = {
   emptyPlaceholder: PropTypes.string.isRequired,
   // redux-form metadata like error or active states
   meta: PropTypes.object.isRequired,
-  gcpCredentialsJSON: PropTypes.string.isRequired,
+  credentials: PropTypes.string.isRequired,
   region: PropTypes.string.isRequired,
   hasDependencies: PropTypes.bool.isRequired,
   matchesDependencies: PropTypes.bool.isRequired,

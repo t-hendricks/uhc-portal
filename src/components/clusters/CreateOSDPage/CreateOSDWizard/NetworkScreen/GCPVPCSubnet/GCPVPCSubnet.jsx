@@ -119,7 +119,6 @@ GCPVPCSubnet.propTypes = {
   emptyPlaceholder: PropTypes.string.isRequired,
   // redux-form metadata like error or active states
   meta: PropTypes.object.isRequired,
-  gcpCredentialsJSON: PropTypes.string.isRequired,
   region: PropTypes.string.isRequired,
   vpcName: PropTypes.string.isRequired,
   hasDependencies: PropTypes.bool.isRequired,

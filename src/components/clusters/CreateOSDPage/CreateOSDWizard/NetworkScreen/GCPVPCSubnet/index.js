@@ -1,25 +1,28 @@
+import isEqual from 'lodash/isEqual';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
 import { getGCPCloudProviderVPCs } from '../../ccsInquiriesActions';
+import ccsCredentialsSelector from '../../credentialsSelector';
 
 import GCPVPCSubnet from './GCPVPCSubnet';
 
 const mapStateToProps = (state) => {
   const { gcpVPCs } = state.ccsInquiries;
   const valueSelector = formValueSelector('CreateCluster');
-  const gcpCredentialsJSON = valueSelector(state, 'gcp_service_account');
+  const credentials = ccsCredentialsSelector(state);
   const region = valueSelector(state, 'region');
   const vpcName = valueSelector(state, 'vpc_name');
-  const hasDependencies = !!(gcpCredentialsJSON && region && vpcName);
+  const hasDependencies = !!(credentials && region && vpcName);
   const matchesDependencies = (
     gcpVPCs.cloudProvider === 'gcp'
-    && gcpVPCs.credentials === gcpCredentialsJSON
+    && isEqual(gcpVPCs.credentials, credentials)
     && gcpVPCs.region === region
+    // TODO: && === vpcName missing here?
   );
   return ({
     gcpVPCs,
-    gcpCredentialsJSON,
+    credentials,
     region,
     vpcName,
     hasDependencies,
