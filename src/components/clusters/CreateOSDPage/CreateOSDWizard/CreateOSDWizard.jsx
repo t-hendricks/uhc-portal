@@ -127,11 +127,8 @@ class CreateOSDWizard extends React.Component {
       ccsValidationPending,
       isCCSCredentialsValidationNeeded,
       cloudProviderID,
+      ccsCredentials,
       getGCPCloudProviderVPCs,
-      gcpCredentialsJSON,
-      awsAccountID,
-      awsAccessKey,
-      awsSecretKey,
       getAWSCloudProviderRegions,
     } = this.props;
 
@@ -330,9 +327,9 @@ class CreateOSDWizard extends React.Component {
                     onClick={() => {
                       if (cloudProviderID === 'gcp') {
                         // hard code region since we're just validating credentials
-                        getGCPCloudProviderVPCs(VALIDATE_CLOUD_PROVIDER_CREDENTIALS, gcpCredentialsJSON, 'us-east1');
+                        getGCPCloudProviderVPCs(VALIDATE_CLOUD_PROVIDER_CREDENTIALS, ccsCredentials, 'us-east1');
                       } else {
-                        getAWSCloudProviderRegions(awsAccountID, awsAccessKey, awsSecretKey);
+                        getAWSCloudProviderRegions(ccsCredentials);
                       }
                     }}
                     isLoading={ccsValidationPending}
@@ -361,9 +358,7 @@ CreateOSDWizard.propTypes = {
   isCCSCredentialsValidationNeeded: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isErrorModalOpen: PropTypes.bool,
-  awsAccountID: PropTypes.string,
-  awsAccessKey: PropTypes.string,
-  awsSecretKey: PropTypes.string,
+  ccsCredentials: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
   createClusterResponse: PropTypes.shape({
     fulfilled: PropTypes.bool,
@@ -404,7 +399,6 @@ CreateOSDWizard.propTypes = {
 
   // for the /create/osdtrial url
   product: PropTypes.string,
-  gcpCredentialsJSON: PropTypes.string,
 };
 
 export default CreateOSDWizard;

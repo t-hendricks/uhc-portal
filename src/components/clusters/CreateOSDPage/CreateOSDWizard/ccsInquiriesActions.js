@@ -34,11 +34,15 @@ export const getGCPCloudProviderVPCs = (type, gcpCredentialsJSON, region) => ({
   meta: { credentials: gcpCredentialsJSON, cloudProvider: 'gcp', region },
 });
 
-export const getAWSCloudProviderRegions = (accountID, accessKey, secretKey) => ({
+/**
+ * Validate AWS credentials.
+ * @param {*} awsCredentials { accountID, accessKey, secretKey } object
+ */
+export const getAWSCloudProviderRegions = awsCredentials => ({
   type: VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
-  payload: listAWSRegions(accountID, accessKey, secretKey),
+  payload: listAWSRegions(awsCredentials),
   meta: {
-    credentials: `${accountID}/${accessKey}/${secretKey}`,
+    credentials: awsCredentials,
     cloudProvider: 'aws',
   },
 });

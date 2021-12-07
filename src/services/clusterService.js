@@ -314,15 +314,15 @@ const listGCPKeys = (credentials, location, ring) => apiRequest({
   },
 });
 
-const listAWSRegions = (accountID, accessKey, secretKey) => apiRequest({
+/**
+ * List AWS regions for given CCS account.
+ * @param {*} credentials { accountID, accessKey, secretKey } object
+ */
+const listAWSRegions = credentials => apiRequest({
   method: 'post',
   url: '/api/clusters_mgmt/v1/aws_inquiries/regions',
   data: {
-    aws: {
-      account_id: accountID,
-      access_key_id: accessKey,
-      secret_access_key: secretKey,
-    },
+    aws: credentials,
   },
 });
 
