@@ -3,22 +3,23 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
 import { getGCPCloudProviderVPCs } from '../../ccsInquiriesActions';
+import ccsCredentialsSelector from '../../credentialsSelector';
 
 import GCPVPCName from './GCPVPCName';
 
 const mapStateToProps = (state) => {
-  const { gcpVPCs } = state.ccsInquiries;
+  const { vpcs } = state.ccsInquiries;
   const valueSelector = formValueSelector('CreateCluster');
   const credentials = ccsCredentialsSelector(state);
   const region = valueSelector(state, 'region');
   const hasDependencies = !!(credentials && region);
   const matchesDependencies = (
-    gcpVPCs.cloudProvider === 'gcp'
-    && isEqual(gcpVPCs.credentials, credentials)
-    && gcpVPCs.region === region
+    vpcs.cloudProvider === 'gcp'
+    && isEqual(vpcs.credentials, credentials)
+    && vpcs.region === region
   );
   return ({
-    gcpVPCs,
+    vpcs,
     credentials,
     region,
     hasDependencies,

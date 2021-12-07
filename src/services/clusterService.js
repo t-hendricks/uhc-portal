@@ -281,6 +281,21 @@ const upgradeTrialCluster = (clusterID, params) => apiRequest({
   data: params,
 });
 
+/**
+ * List AWS VPCs for given CCS account.
+ * @param {*} credentials { accountID, accessKey, secretKey } object
+ */
+const listAWSVPCs = (credentials, region) => apiRequest({
+  method: 'post',
+  url: '/api/clusters_mgmt/v1/aws_inquiries/vpcs',
+  data: {
+    aws: credentials,
+    region: {
+      id: region,
+    },
+  },
+});
+
 const listGCPVPCs = (credentials, region) => apiRequest({
   method: 'post',
   url: '/api/clusters_mgmt/v1/gcp_inquiries/vpcs',
@@ -376,6 +391,7 @@ export {
   getUpgradeScheduleState,
   deleteUpgradeSchedule,
   patchUpgradeSchedule,
+  listAWSVPCs,
   listGCPVPCs,
   listGCPKeyRings,
   listGCPKeys,
