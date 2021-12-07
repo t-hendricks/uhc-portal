@@ -18,17 +18,17 @@ import {
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
 
-import Breadcrumbs from '../../common/Breadcrumbs';
-import ExternalLink from '../../common/ExternalLink';
-import { scrollToTop } from '../../../common/helpers';
-import { tools, channels } from '../../../common/installLinks';
-import Instruction from '../../common/Instruction';
-import InstructionCommand from '../../common/InstructionCommand';
-import Instructions from '../../common/Instructions';
-import PageTitle from '../../common/PageTitle';
-import links from '../CreateClusterPage/CreateClusterConsts';
-import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
-import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
+import Breadcrumbs from '../../../common/Breadcrumbs';
+import ExternalLink from '../../../common/ExternalLink';
+import { scrollToTop } from '../../../../common/helpers';
+import { tools, channels } from '../../../../common/installLinks';
+import Instruction from '../../../common/Instruction';
+import InstructionCommand from '../../../common/InstructionCommand';
+import Instructions from '../../../common/Instructions';
+import PageTitle from '../../../common/PageTitle';
+import links from '../../CreateClusterPage/CreateClusterConsts';
+import DownloadAndOSSelection from '../../install/instructions/components/DownloadAndOSSelection';
+import TokenErrorAlert from '../../install/instructions/components/TokenErrorAlert';
 
 const CreateROSAWelcome = ({ getAuthToken, token }) => {
   const name = 'Red Hat OpenShift Service on AWS';

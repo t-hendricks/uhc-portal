@@ -40,6 +40,7 @@ import ocmRolesReducer from '../../components/clusters/ClusterDetails/components
 
 import featuresReducer from './featuresReducer';
 import apiErrorReducer from '../../components/App/ApiError/ApiErrorReducer';
+import rosaReducer from '../../components/clusters/CreateROSAPage/CreateROSAWizard/rosaReducer';
 
 const reducers = {
   clusters: clustersReducer,
@@ -79,6 +80,7 @@ const reducers = {
   githubReleases: githubReducer,
   ccsInquiries: ccsInquiriesReducer,
   ocmRoles: ocmRolesReducer,
+  rosaReducer,
 };
 
 const reduxReducers = history => combineReducers({

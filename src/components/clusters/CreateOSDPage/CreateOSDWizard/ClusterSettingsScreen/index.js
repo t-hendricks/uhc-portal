@@ -9,7 +9,7 @@ import ClusterSettingsScreen from './ClusterSettingsScreen';
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
-  const cloudProviderID = valueSelector(state, 'cloud_provider');
+  const cloudProviderID = ownProps.cloudProviderID || valueSelector(state, 'cloud_provider');
   const isMultiAz = valueSelector(state, 'multi_az') === 'true';
   const isByoc = valueSelector(state, 'byoc') === 'true';
   const product = ownProps.product || valueSelector(state, 'product');

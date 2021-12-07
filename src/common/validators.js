@@ -67,6 +67,8 @@ const LABEL_KEY_REGEX = /^([A-Za-z0-9][-A-Za-z0-9_./]*)?[A-Za-z0-9]$/;
 // or '12345'
 const LABEL_VALUE_REGEX = /^(([A-Za-z09][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$/;
 
+const MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH = 32;
+
 // Function to validate that a field is mandatory, i.e. must be a non whitespace string
 const required = value => (value && value.trim() ? undefined : 'Field is required');
 
@@ -132,6 +134,20 @@ const checkObjectName = (value, objectName, maxLen) => {
 const checkClusterName = value => checkObjectName(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
 
 const checkMachinePoolName = value => checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
+
+const checkCustomOperatorRolesPrefix = (value) => {
+  const label = 'Custom operator roles prefix';
+  if (!value) {
+    return undefined;
+  }
+  if (!DNS_LABEL_REGEXP.test(value)) {
+    return `${label} '${value}' isn't valid, must consist of lower-case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character. For example, 'my-name', or 'abc-123'.`;
+  }
+  if (value.length > MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH) {
+    return `${label} may not exceed ${MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.`;
+  }
+  return undefined;
+};
 
 // Function to validate that the github team is formatted: <org/team>
 const checkGithubTeams = (value) => {
@@ -963,6 +979,7 @@ const validators = {
   checkDisconnectedSockets,
   checkDisconnectedMemCapacity,
   checkDisconnectedNodeCount,
+  checkCustomOperatorRolesPrefix,
   AWS_MACHINE_CIDR_MIN,
   AWS_MACHINE_CIDR_MAX_SINGLE_AZ,
   AWS_MACHINE_CIDR_MAX_MULTI_AZ,
@@ -971,6 +988,7 @@ const validators = {
   POD_NODES_MIN,
   HOST_PREFIX_MIN,
   HOST_PREFIX_MAX,
+  MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH,
 };
 
 export {

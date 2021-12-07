@@ -184,7 +184,7 @@ const activeSubscriptionsTable = (hasOSDQuota, osdTrialEnabled) => {
   );
 };
 
-const managedServices = (hasQuota, trialEnabled) => {
+const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
   const [openRows, setOpenRows] = useState([]);
   const onCollapse = (e, rowKey, open) => {
     if (open) {
@@ -343,7 +343,7 @@ const managedServices = (hasQuota, trialEnabled) => {
       (
         <>
           <Button
-            component={props => <Link {...props} to="/create/rosa/welcome" />}
+            component={props => <Link {...props} to={`/create/rosa/${rosaCreationWizardFeature ? 'wizard' : 'welcome'}`} />}
             variant="secondary"
             className="get-started-button"
           >
@@ -437,7 +437,7 @@ const runItYourself = () => {
   );
 };
 
-const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
+const CloudTab = ({ hasOSDQuota, rosaCreationWizardFeature, trialEnabled }) => (
   <>
     {
     (hasOSDQuota || trialEnabled) && (
@@ -471,7 +471,7 @@ const CloudTab = ({ hasOSDQuota, trialEnabled }) => (
         </StackItem>
         <StackItem>
           Create clusters in the cloud using a managed service.
-          {managedServices(hasOSDQuota, trialEnabled)}
+          {managedServices(hasOSDQuota, rosaCreationWizardFeature, trialEnabled)}
         </StackItem>
       </Stack>
     </PageSection>
@@ -496,4 +496,5 @@ export default CloudTab;
 CloudTab.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
   trialEnabled: PropTypes.bool.isRequired,
+  rosaCreationWizardFeature: PropTypes.bool.isRequired,
 };
