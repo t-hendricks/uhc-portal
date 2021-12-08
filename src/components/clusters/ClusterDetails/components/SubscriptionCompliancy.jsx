@@ -96,8 +96,9 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
     <Alert className="subscription-settings compliancy-alert" isInline variant="warning" title="OpenShift evaluation expiration date">
       {lastChecked}
       <p>
-        Your OpenShift evaluation will be expired at&nbsp;
+        Your OpenShift evaluation will expire at&nbsp;
         <DateFormat date={subscription.eval_expiration_date} type="onlyDate" />
+        .&nbsp;
         {cluster.canEdit ? textForUsersCanEdit : textForUsersCanNotEdit}
       </p>
     </Alert>

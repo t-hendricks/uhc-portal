@@ -8,10 +8,11 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 1`] = `
   variant="warning"
 >
   <p>
-    Your OpenShift evaluation will be expired at 
+    Your OpenShift evaluation will expire at 
     <DateFormat
       type="onlyDate"
     />
+    . 
     <a
       href="https://www.redhat.com/en/contact"
       rel="noreferrer noopener"
@@ -32,10 +33,11 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 2`] = `
   variant="warning"
 >
   <p>
-    Your OpenShift evaluation will be expired at 
+    Your OpenShift evaluation will expire at 
     <DateFormat
       type="onlyDate"
     />
+    . 
     The cluster owner or an organization administrator can edit subscription settings for non-evaluation use.
   </p>
 </Alert>
