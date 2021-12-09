@@ -48,8 +48,8 @@ class OnRuleDisableFeedbackModal extends React.Component {
     const { feedback } = this.state;
 
     try {
-      await disableRule(clusterId, ruleId, errorKey, isRuleDetailsPage, isManagedCluster);
       await sendFeedback(clusterId, ruleId, errorKey, feedback);
+      await disableRule(clusterId, ruleId, errorKey, isRuleDetailsPage, isManagedCluster);
       addNotification({
         title: 'Recommendation successfully disabled',
         variant: 'success',
