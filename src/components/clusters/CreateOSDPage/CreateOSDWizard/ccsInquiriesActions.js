@@ -1,10 +1,10 @@
 import pick from 'lodash/pick';
 import {
-  listGCPVPCs, listGCPKeyRings, listGCPKeys, listAWSRegions,
+  listAWSVPCs, listGCPVPCs, listGCPKeyRings, listGCPKeys, listAWSRegions,
 } from '../../../../services/clusterService';
 
 export const VALIDATE_CLOUD_PROVIDER_CREDENTIALS = 'VALIDATE_CLOUD_PROVIDER_CREDENTIALS';
-export const LIST_GCP_VPCS = 'LIST_GCP_VPCS';
+export const LIST_VPCS = 'LIST_VPCS';
 export const LIST_GCP_KEY_RINGS = 'LIST_GCP_KEY_RINGS';
 export const LIST_GCP_KEYS = 'LIST_GCP_KEYS';
 export const CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES = 'CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES';
@@ -26,6 +26,21 @@ const credentialsFromJSON = async (gcpCredentialsJSON) => {
   ]);
 };
 
+/**
+ * List AWS VPCs for given CCS account.
+ * @param {*} awsCredentials { accountID, accessKey, secretKey } object
+ */
+export const getAWSCloudProviderVPCs = (awsCredentials, region) => ({
+  type: LIST_VPCS,
+  payload: listAWSVPCs(awsCredentials, region),
+  // parameters can be used to check if we need to query again.
+  meta: {
+    credentials: awsCredentials,
+    cloudProvider: 'aws',
+    region,
+  },
+});
+
 export const getGCPCloudProviderVPCs = (type, gcpCredentialsJSON, region) => ({
   type,
   payload: () => credentialsFromJSON(gcpCredentialsJSON)
@@ -34,11 +49,15 @@ export const getGCPCloudProviderVPCs = (type, gcpCredentialsJSON, region) => ({
   meta: { credentials: gcpCredentialsJSON, cloudProvider: 'gcp', region },
 });
 
-export const getAWSCloudProviderRegions = (accountID, accessKey, secretKey) => ({
+/**
+ * Validate AWS credentials.
+ * @param {*} awsCredentials { accountID, accessKey, secretKey } object
+ */
+export const getAWSCloudProviderRegions = awsCredentials => ({
   type: VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
-  payload: listAWSRegions(accountID, accessKey, secretKey),
+  payload: listAWSRegions(awsCredentials),
   meta: {
-    credentials: `${accountID}/${accessKey}/${secretKey}`,
+    credentials: awsCredentials,
     cloudProvider: 'aws',
   },
 });

@@ -17,6 +17,7 @@ import {
   hasManagedQuotaSelector,
 } from '../../common/quotaSelectors';
 import isCCSCredentialsValidationNeeded from './isCCSCredentialsValidationNeeded';
+import ccsCredentialsSelector from './credentialsSelector';
 import { getGCPCloudProviderVPCs, getAWSCloudProviderRegions } from './ccsInquiriesActions';
 
 import submitOSDRequest from '../submitOSDRequest';
@@ -35,13 +36,10 @@ const mapStateToProps = (state, ownProps) => {
   return ({
     isValid: isValid('CreateCluster')(state),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
-    isCCSCredentialsValidationNeeded: isCCSCredentialsValidationNeeded(state, valueSelector),
+    ccsCredentials: ccsCredentialsSelector(state),
+    isCCSCredentialsValidationNeeded: isCCSCredentialsValidationNeeded(state),
     ccsValidationPending: ccsCredentialsValidityResponse.pending && valueSelector(state, 'byoc') === 'true',
     cloudProviderID: valueSelector(state, 'cloud_provider'),
-    gcpCredentialsJSON: valueSelector(state, 'gcp_service_account'),
-    awsAccountID: valueSelector(state, 'account_id'),
-    awsAccessKey: valueSelector(state, 'access_key_id'),
-    awsSecretKey: valueSelector(state, 'secret_access_key'),
 
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
@@ -73,8 +71,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   getGCPCloudProviderVPCs: (type, credentials, region) => dispatch(
     getGCPCloudProviderVPCs(type, credentials, region),
   ),
-  getAWSCloudProviderRegions: (accountID, accessKey, secretKey) => dispatch(
-    getAWSCloudProviderRegions(accountID, accessKey, secretKey),
+  getAWSCloudProviderRegions: credentials => dispatch(
+    getAWSCloudProviderRegions(credentials),
   ),
 });
 

@@ -20,14 +20,14 @@ class GCPVPCSubnet extends React.Component {
   }
 
   getVPCSubnets = () => {
-    const { gcpVPCs, vpcName } = this.props;
-    const selectedVPC = gcpVPCs?.data?.items?.find(item => item.name === vpcName);
+    const { vpcs, vpcName } = this.props;
+    const selectedVPC = vpcs?.data?.items?.find(item => item.name === vpcName);
     return selectedVPC?.subnets || [];
   };
 
   currentValueIrrelevant = () => {
     const {
-      hasDependencies, matchesDependencies, gcpVPCs, input,
+      hasDependencies, matchesDependencies, vpcs, input,
     } = this.props;
     if (!input.value) {
       // Blank/placeholder always legitimate.
@@ -37,7 +37,7 @@ class GCPVPCSubnet extends React.Component {
       // Can't make request.
       return true;
     }
-    if (matchesDependencies && gcpVPCs.fulfilled) {
+    if (matchesDependencies && vpcs.fulfilled) {
       // Made request and current value is no longer valid.
       const items = this.getVPCSubnets();
       return !items.some(item => item === input.value);
@@ -47,7 +47,7 @@ class GCPVPCSubnet extends React.Component {
 
   render() {
     const {
-      gcpVPCs,
+      vpcs,
       matchesDependencies,
       input,
       label,
@@ -55,7 +55,7 @@ class GCPVPCSubnet extends React.Component {
       emptyPlaceholder,
       meta,
     } = this.props;
-    const show = matchesDependencies && gcpVPCs.fulfilled;
+    const show = matchesDependencies && vpcs.fulfilled;
     const items = this.getVPCSubnets();
 
     let options;
@@ -74,7 +74,7 @@ class GCPVPCSubnet extends React.Component {
           <FormSelectOption isDisabled isPlaceholder value="" label={emptyPlaceholder} />
         );
       }
-    } else if (gcpVPCs.pending) {
+    } else if (vpcs.pending) {
       options = (
         <FormSelectOption isDisabled value="" label="Loading..." />
       );
@@ -95,7 +95,7 @@ class GCPVPCSubnet extends React.Component {
         helperTextInvalid={meta.error}
         fieldId={input.name}
       >
-        {matchesDependencies && gcpVPCs.error && (
+        {matchesDependencies && vpcs.error && (
           <Alert variant="danger" isInline title="Failed to list existing VPC subnets using your GCP credentials">
             Verify that your entered service account details are correct
           </Alert>
@@ -119,12 +119,11 @@ GCPVPCSubnet.propTypes = {
   emptyPlaceholder: PropTypes.string.isRequired,
   // redux-form metadata like error or active states
   meta: PropTypes.object.isRequired,
-  gcpCredentialsJSON: PropTypes.string.isRequired,
   region: PropTypes.string.isRequired,
   vpcName: PropTypes.string.isRequired,
   hasDependencies: PropTypes.bool.isRequired,
   matchesDependencies: PropTypes.bool.isRequired,
-  gcpVPCs: PropTypes.object.isRequired,
+  vpcs: PropTypes.object.isRequired,
   getGCPCloudProviderVPCs: PropTypes.func.isRequired,
 };
 
