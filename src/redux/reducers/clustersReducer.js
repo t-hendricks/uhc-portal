@@ -49,6 +49,10 @@ const initialState = {
     ...baseState,
     status: {},
   },
+  clusterVersions: {
+    ...baseState,
+    versions: [],
+  },
   details: {
     ...baseState,
     cluster: emptyCluster,
@@ -78,6 +82,19 @@ const initialState = {
     cluster: emptyCluster,
   },
 };
+
+function filterAndSortClusterVersions(versions) {
+  const now = Date.now();
+  const filteredVersions = versions.filter((version) => {
+    if (!version.end_of_life_timestamp) {
+      return true;
+    }
+    const eolTimestamp = new Date(version.end_of_life_timestamp);
+    return eolTimestamp > now;
+  });
+  // descending version numbers
+  return filteredVersions.sort((a, b) => ((a.raw_id < b.raw_id) ? 1 : -1));
+}
 
 function clustersReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
@@ -356,6 +373,27 @@ function clustersReducer(state = initialState, action) {
           ...initialState.clusterStatus,
           fulfilled: true,
           status: action.payload.data,
+        };
+        break;
+
+      // GET_CLUSTER_VERSIONS
+      case REJECTED_ACTION(clustersConstants.GET_CLUSTER_VERSIONS):
+        draft.clusterVersions = {
+          ...initialState.clusterVersions,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.GET_CLUSTER_VERSIONS):
+        draft.clusterVersions = {
+          ...initialState.clusterVersions,
+          pending: true,
+        };
+        break;
+      case FULFILLED_ACTION(clustersConstants.GET_CLUSTER_VERSIONS):
+        draft.clusterVersions = {
+          ...initialState.clusterVersions,
+          fulfilled: true,
+          versions: filterAndSortClusterVersions(action.payload.data.items),
         };
         break;
 

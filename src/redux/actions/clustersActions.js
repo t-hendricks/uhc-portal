@@ -420,6 +420,11 @@ const getClusterStatus = clusterID => dispatch => dispatch({
   payload: clusterService.getClusterStatus(clusterID),
 });
 
+const getClusterVersions = () => dispatch => dispatch({
+  type: clustersConstants.GET_CLUSTER_VERSIONS,
+  payload: clusterService.getClusterVersions(),
+});
+
 const clustersActions = {
   clearClusterResponse,
   createCluster,
@@ -435,6 +440,7 @@ const clustersActions = {
   archiveCluster,
   unarchiveCluster,
   getClusterStatus,
+  getClusterVersions,
 };
 
 export {

@@ -70,7 +70,7 @@ function ReviewClusterScreen({
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
   const clusterSettingsFields = [
-    'cloud_provider', 'name', 'region', 'multi_az',
+    'cloud_provider', 'name', 'cluster_version', 'region', 'multi_az',
     !isByoc && 'persistent_storage',
     !isByoc && 'load_balancers',
     isByoc && isAWS && 'disable_scp_checks',

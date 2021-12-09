@@ -168,6 +168,15 @@ const deleteClusterAddOn = (clusterID, addOnID) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`,
 });
 
+const getClusterVersions = () => apiRequest({
+  method: 'get',
+  url: '/api/clusters_mgmt/v1/versions/',
+  params: {
+    order: 'end_of_life_timestamp desc',
+    search: "enabled='t'",
+  },
+});
+
 const getRoles = () => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/aws_infrastructure_access_roles/?search=state=\'valid\'',
@@ -354,6 +363,7 @@ const clusterService = {
   getStorageQuotaValues,
   getLoadBalancerQuotaValues,
   getRoles,
+  getClusterVersions,
   getGrants,
   addGrant,
   deleteGrant,
