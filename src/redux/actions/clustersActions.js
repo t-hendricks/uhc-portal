@@ -40,22 +40,19 @@ const invalidateClusters = () => dispatch => dispatch({
   type: INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
 });
 
-const createClusterAndUpgradeSchedule = async (cluster, upgradeSettings, dispatch) => {
+const createClusterAndUpgradeSchedule = async (cluster, upgradeSchedule, dispatch) => {
   const clusterResponse = await clusterService.postNewCluster(cluster);
-  if (upgradeSettings && upgradeSettings.upgrade_policy === 'automatic') {
+  if (upgradeSchedule) {
     const clusterID = clusterResponse.data.id;
-    dispatch(postSchedule(clusterID, {
-      schedule_type: 'automatic',
-      schedule: upgradeSettings.automatic_upgrade_schedule,
-    }));
+    dispatch(postSchedule(clusterID, upgradeSchedule));
   }
   invalidateClusters()(dispatch);
   return clusterResponse;
 };
 
-const createCluster = (params, upgradeSettings) => dispatch => dispatch({
+const createCluster = (params, upgradeSchedule) => dispatch => dispatch({
   type: clustersConstants.CREATE_CLUSTER,
-  payload: createClusterAndUpgradeSchedule(params, upgradeSettings, dispatch),
+  payload: createClusterAndUpgradeSchedule(params, upgradeSchedule, dispatch),
 });
 
 const registerClusterAndUpdateSubscription = async (

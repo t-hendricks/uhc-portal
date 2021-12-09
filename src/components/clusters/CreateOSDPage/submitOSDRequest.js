@@ -6,10 +6,12 @@ import config from '../../../config';
 import { createCluster } from '../../../redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '../../../common/helpers';
 
-const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) => {
+export const createClusterRequest = ({ cloudProviderID, product }, formData) => {
   const isMultiAz = formData.multi_az === 'true';
   // in non-wizard, cloudProviderID is supplied as a parameter. in the wizard, it's in the form.
   const actualCloudProviderID = cloudProviderID || formData.cloud_provider;
+  const actualProduct = product || formData.product;
+
   const clusterRequest = {
     name: formData.name,
     region: {
@@ -21,6 +23,9 @@ const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) 
       },
     },
     managed: true,
+    product: {
+      id: actualProduct.toLowerCase(),
+    },
     cloud_provider: {
       id: actualCloudProviderID,
     },
@@ -57,15 +62,6 @@ const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) 
 
   if (!isEmpty(parsedLabels)) {
     clusterRequest.nodes.compute_labels = parseReduxFormKeyValueList(formData.node_labels);
-  }
-  if (formData.product) {
-    clusterRequest.product = {
-      id: formData.product.toLowerCase(),
-    };
-  } else if (product) {
-    clusterRequest.product = {
-      id: product.toLowerCase(),
-    };
   }
   if (config.fakeOSD) {
     clusterRequest.properties = { fake_cluster: 'true' };
@@ -171,11 +167,21 @@ const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) 
       value: parseFloat(formData.persistent_storage),
     };
   }
-  dispatch(createCluster(clusterRequest,
-    {
-      upgrade_policy: formData.upgrade_policy,
-      automatic_upgrade_schedule: formData.automatic_upgrade_schedule,
-    }));
+  return clusterRequest;
+};
+
+export const upgradeScheduleRequest = formData => (
+  formData.upgrade_policy === 'manual' ? null : {
+    schedule_type: formData.upgrade_policy,
+    schedule: formData.automatic_upgrade_schedule,
+  }
+);
+
+// Returning a function that takes (formData) is convenient for redux-form `onSubmit` prop.
+const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) => {
+  const clusterRequest = createClusterRequest({ cloudProviderID, product }, formData);
+  const upgradeSchedule = upgradeScheduleRequest(formData);
+  dispatch(createCluster(clusterRequest, upgradeSchedule));
 };
 
 export default submitOSDRequest;

@@ -78,7 +78,6 @@ exports[`InstallAwsARM renders correctly 1`] = `
               preReleaseDocsLink="https://github.com/openshift/ocp-on-arm/blob/main/README.md"
               preReleasePageLink="/install/arm/pre-release"
               showPreReleaseDocs={true}
-              showPreReleasePageLink={true}
               token={Object {}}
               tool="aarch64-openshift-install"
             />

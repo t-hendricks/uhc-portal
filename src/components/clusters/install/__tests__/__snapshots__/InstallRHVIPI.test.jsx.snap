@@ -35,7 +35,6 @@ exports[`InstallRHVIPI renders correctly 1`] = `
       docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-default.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
-      showPreReleasePageLink={false}
       title="Install OpenShift on Red Hat Virtualization with installer-provisioned infrastructure"
       token={Object {}}
     />

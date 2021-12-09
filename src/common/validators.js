@@ -844,19 +844,6 @@ const validateGCPSubnet = (value) => {
   return undefined;
 };
 
-const validateGCPEncryptionKeys = (value) => {
-  if (!value) {
-    return 'Field is required.';
-  }
-  if (/\s/.test(value)) {
-    return 'Field must not contain whitespaces.';
-  }
-  if (/[^a-zA-Z0-9-_]/.test(value)) {
-    return 'Field should contain only letters, numbers , underscores (_) and hyphens (-).';
-  }
-  return undefined;
-};
-
 const validateGCPKMSServiceAccount = (value) => {
   if (!value) {
     return 'Field is required.';
@@ -1015,7 +1002,6 @@ export {
   validateUniqueAZ,
   validateValueNotPlaceholder,
   validateGCPSubnet,
-  validateGCPEncryptionKeys,
   validateGCPKMSServiceAccount,
   validateAWSKMSKeyARN,
   validateHTPasswdPassword,
