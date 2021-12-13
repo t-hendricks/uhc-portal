@@ -1,14 +1,16 @@
-import apiRequest from './apiRequest';
+import { OCM } from 'openshift-assisted-ui-lib';
 
-const getAIClusters = () => apiRequest({
-  method: 'get',
-  url: '/api/assisted-install/v1/clusters',
-});
+const {
+  Services: {
+    APIs: {
+      ClustersAPI,
+    },
+  },
+} = OCM;
 
-const getAICluster = clusterID => apiRequest({
-  method: 'get',
-  url: `/api/assisted-install/v1/clusters/${clusterID}`,
-});
+const getAIClusters = ClustersAPI.list;
+
+const getAICluster = ClustersAPI.get;
 
 const assistedService = {
   getAIClusters,
