@@ -869,27 +869,43 @@ class DownloadsPage extends React.Component {
   }
 
   setCategory = (selectedCategory) => {
+    const { expanded } = this.state;
     this.setState({ selectedCategory });
+    this.updateURL(selectedCategory, expanded);
   }
 
   setExpanded = (expanded) => {
+    const { selectedCategory } = this.state;
     this.setState({ expanded });
-
-    // "Advertise" link targets by setting #tool-foo URL when single item selected.
-    const expandedKeys = Object.keys(expanded).filter(k => expanded[k]);
-    if (expandedKeys.length === 1) {
-      const hash = `#${rowId(expandedKeys[0])}`;
-      const { location, history } = this.props;
-      if (hash !== location.hash) {
-        // pushState/replaceState API never trigger `hashchange` event,
-        // avoiding undesired effects like scrolling.
-        history.replace({ ...location, hash });
-      }
-    }
+    this.updateURL(selectedCategory, expanded);
   }
 
   setSelections = (selections) => {
     this.setState({ selections });
+  }
+
+  /** "Advertise" link targets by setting #tool-foo URL.
+   *
+   * Takes new state as params because this.state is unreliable after setState().
+   * @param selectedCategory string - current/new category.
+   * @param expanded - { key: bool } current/new expanded.
+   */
+  updateURL = (selectedCategory, expanded) => {
+    let lastExpanded = null;
+    const shownKeys = downloadsCategories.find(c => c.key === selectedCategory).tools;
+    shownKeys.forEach((key) => {
+      if (expanded[key]) {
+        lastExpanded = key;
+      }
+    });
+
+    const hash = lastExpanded ? `#${rowId(lastExpanded)}` : '';
+    const { location, history } = this.props;
+    if (hash !== location.hash) {
+      // pushState/replaceState API never trigger `hashchange` event,
+      // avoiding undesired effects like scrolling.
+      history.replace({ ...location, hash });
+    }
   }
 
   focusRowByHash = () => {
@@ -928,9 +944,9 @@ class DownloadsPage extends React.Component {
     const willExpandAll = !allExpanded;
 
     const expandCollapseAll = () => {
-      this.setState(produce((draft) => {
+      this.setExpanded(produce(expanded, (draft) => {
         shownKeys.forEach((key) => {
-          draft.expanded[key] = willExpandAll;
+          draft[key] = willExpandAll;
         });
       }));
     };
