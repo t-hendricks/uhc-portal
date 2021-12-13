@@ -13,6 +13,7 @@ import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/Re
 import validators from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '../NetworkingSection/AvailabilityZoneSelection';
+import VersionSelection from './VersionSelection';
 
 function BasicFieldsSection({
   pending,
@@ -20,6 +21,7 @@ function BasicFieldsSection({
   showAvailability,
   cloudProviderID,
   isBYOC,
+  isRosa,
   isMultiAz,
   hasSingleAzQuota,
   hasMultiAzQuota,
@@ -89,6 +91,20 @@ function BasicFieldsSection({
         </>
       )}
 
+      {/* Cluster Versions */}
+      <>
+        <GridItem sm={12} md={5} lg={4}>
+          <Field
+            component={VersionSelection}
+            name="cluster_version"
+            label="Version"
+            isRequired
+            isRosa={isRosa}
+          />
+        </GridItem>
+        <GridItem md={7} lg={8} />
+      </>
+
       {/* Region */}
       <GridItem sm={12} md={5} lg={4}>
         <FormGroup
@@ -123,7 +139,7 @@ function BasicFieldsSection({
             >
               <Field
                 component={RadioButtons}
-                className={!hasSingleAzQuota || !hasMultiAzQuota ? 'radio-az-disabled' : null}
+                className="radio-az"
                 name="multi_az"
                 disabled={pending}
                 onChange={handleMultiAZChange}
@@ -162,6 +178,7 @@ BasicFieldsSection.propTypes = {
   change: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   isBYOC: PropTypes.bool.isRequired,
+  isRosa: PropTypes.bool.isRequired,
   hasSingleAzQuota: PropTypes.bool.isRequired,
   hasMultiAzQuota: PropTypes.bool.isRequired,
   isWizard: PropTypes.bool,

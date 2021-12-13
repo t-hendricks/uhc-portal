@@ -21,6 +21,7 @@ import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitorin
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 
 import BasicFieldsSection from '../../CreateOSDForm/FormSections/BasicFieldsSection';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 function ClusterSettingsScreen({
   isByoc,
@@ -32,6 +33,7 @@ function ClusterSettingsScreen({
   billingModel,
   change,
 }) {
+  const isRosa = product === normalizedProducts.ROSA;
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Grid hasGutter>
@@ -42,6 +44,7 @@ function ClusterSettingsScreen({
         /* TODO move some props to index.js */
           cloudProviderID={cloudProviderID}
           isBYOC={isByoc}
+          isRosa={isRosa}
           isMultiAz={isMultiAz}
           showAvailability
           change={change}
@@ -49,7 +52,7 @@ function ClusterSettingsScreen({
           billingModel={billingModel}
           isWizard
         />
-        { !isByoc && (
+        { !isByoc && !isRosa && (
           <>
             <GridItem sm={12} md={5} lg={4}>
               <FormGroup
