@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Button, ExpandableSection } from '@patternfly/react-core';
 import { ExpandIcon } from '@patternfly/react-icons';
 import cx from 'classnames';
+import screenfull from 'screenfull';
 import { metricsStatusMessages } from '../../../../common/ResourceUsage/ResourceUsage.consts';
 import clusterStates from '../../../../common/clusterStates';
 
@@ -27,7 +28,9 @@ class LogWindow extends React.Component {
       this.update();
       this.updateTimer = window.setInterval(this.update, 2000);
     }
-    document.addEventListener('fullscreenchange', this.onFullscreenChange);
+    if (screenfull.isEnabled) {
+      screenfull.on('change', this.onFullscreenChange);
+    }
     document.addEventListener('visibilitychange', this.onVisibilityChange);
     this.isPageVisible = document.visibilityState === 'visible';
   }
@@ -79,11 +82,13 @@ class LogWindow extends React.Component {
     if (this.updateTimer !== null) {
       window.clearInterval(this.updateTimer);
     }
-    document.removeEventListener('fullscreenchange', this.onFullscreenChange);
+    if (screenfull.isEnabled) {
+      screenfull.off('change', this.onFullscreenChange);
+    }
     document.removeEventListener('visibilitychange', this.onVisibilityChange);
     clearLogs();
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
+    if (screenfull.isFullscreen) {
+      screenfull.exit();
     }
   }
 
@@ -129,7 +134,7 @@ class LogWindow extends React.Component {
 
   onFullscreenChange = () => {
     const { userScrolled } = this.state;
-    const isFullScreen = !!document.fullscreenElement;
+    const isFullScreen = screenfull.isFullscreen;
     this.setState({ isFullScreen });
     if (!userScrolled) {
       this.scrollToEnd();
@@ -170,9 +175,9 @@ class LogWindow extends React.Component {
 
   fullScreen = () => {
     const { userScrolled } = this.state;
-    if (!document.fullscreenElement) {
+    if (!screenfull.isFullscreen) {
       const card = this.cardRef.current;
-      card.requestFullscreen().then(() => {
+      screenfull.request(card).then(() => {
         if (!userScrolled) {
           // scroll to end if userScrolled was false *before* the fullscreen transition
           // with timeout to allow slower browsers to complete the fullscreen transition.
@@ -180,9 +185,10 @@ class LogWindow extends React.Component {
             this.scrollToEnd();
           }, 100);
         }
+        this.setState({ isFullScreen: true });
       });
     } else {
-      document.exitFullscreen().then(() => {
+      screenfull.exit().then(() => {
         this.setState({ isFullScreen: false });
       });
     }
@@ -211,14 +217,18 @@ class LogWindow extends React.Component {
     }
 
     const view = (
-      <div id="log-window-container" className={cx(isFullScreen && 'pf-c-card__body')} ref={this.cardRef}>
-        { !!totalLines && (
+      <div
+        className={
+          cx('log-window-container', !!totalLines && 'log-window-container--with-lines')
+        }
+        ref={this.cardRef}
+      >
+        { !!totalLines && screenfull.isEnabled && (
         <div className="logview-buttons">
           <Button
             onClick={this.fullScreen}
             variant="link"
             icon={<ExpandIcon />}
-            isDisabled={!totalLines || !document.fullscreenEnabled}
           >
             { isFullScreen ? 'Exit full screen' : 'Full screen' }
           </Button>
@@ -234,9 +244,7 @@ class LogWindow extends React.Component {
             <div className="log-window__body">
               <div className="log-window__scroll-pane" ref={this.logPaneRef} onScroll={this.onScroll}>
                 <div className="log-window__contents">
-                  <div className="log-window__contents__text">
-                    {lines || ''}
-                  </div>
+                  {lines || ''}
                 </div>
               </div>
             </div>
