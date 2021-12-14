@@ -42,6 +42,8 @@ function ClusterUtilizationChart(props) {
           labels={({ datum }) => datum.x || null}
           height={185}
           width={185}
+          subTitlePosition="bottom"
+          padding={{ bottom: 24 }}
         >
           {baseDonutUtilization()}
         </ChartDonutThreshold>
