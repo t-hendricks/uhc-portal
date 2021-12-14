@@ -691,6 +691,9 @@ const validateARN = (value) => {
   if (!value) {
     return 'Field is required';
   }
+  if (/\s/.test(value)) {
+    return 'Value must not contain whitespaces.';
+  }
   if (!AWS_ARN_REGEX.test(value)) {
     return 'ARN value should be in the format arn:aws:iam::123456789012:user/name.';
   }
