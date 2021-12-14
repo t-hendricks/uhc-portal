@@ -9,7 +9,7 @@ import { constants } from '../../CreateOSDFormConstants';
 function AWSCustomerManagedEncryption() {
   return (
     <>
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
           name="kms_key_arn"
@@ -28,7 +28,7 @@ function AWSCustomerManagedEncryption() {
           showHelpTextOnError={false}
         />
       </GridItem>
-      <GridItem md={7} lg={8} />
+      <GridItem md={6} />
     </>
   );
 }

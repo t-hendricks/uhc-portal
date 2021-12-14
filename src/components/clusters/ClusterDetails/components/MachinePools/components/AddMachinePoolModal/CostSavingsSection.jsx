@@ -29,7 +29,7 @@ class CostSavingSection extends React.Component {
     return (
       <>
         <GridItem lg={6} />
-        <GridItem span={12} id="costsavings">
+        <GridItem id="costsavings">
           <FormGroup
             fieldId="costsavings"
             label="Cost saving"
@@ -45,7 +45,7 @@ class CostSavingSection extends React.Component {
         <GridItem lg={6} />
         { useSpotInstances && (
           <>
-            <GridItem span={12}>
+            <GridItem>
               <Field
                 component={RadioButtons}
                 className="ocm-c-cost-savings-price-radios"
@@ -111,7 +111,7 @@ class CostSavingSection extends React.Component {
               />
             </GridItem>
             <GridItem lg={6} />
-            <GridItem span={12}>
+            <GridItem>
               <Alert
                 className="bottom-alert"
                 variant="warning"

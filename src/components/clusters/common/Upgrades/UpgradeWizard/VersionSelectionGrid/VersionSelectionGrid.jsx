@@ -108,7 +108,7 @@ class VersionSelectionGrid extends React.Component {
               this.recommendedCards(latestInCurrMinor, latestVersion)
             }
             {otherVersions.length > 0 && (
-            <GridItem span={12}>
+            <GridItem>
               <Divider />
             </GridItem>
             )}

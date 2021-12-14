@@ -54,7 +54,7 @@ function ClusterSettingsScreen({
         />
         { !isByoc && !isRosa && (
           <>
-            <GridItem sm={12} md={5} lg={4}>
+            <GridItem md={6}>
               <FormGroup
                 label="Persistent storage"
                 fieldId="persistent_storage"
@@ -72,8 +72,8 @@ function ClusterSettingsScreen({
                 />
               </FormGroup>
             </GridItem>
-            <GridItem md={7} lg={8} />
-            <GridItem sm={12} md={5} lg={4}>
+            <GridItem md={6} />
+            <GridItem md={6}>
               <FormGroup
                 label="Load balancers"
                 fieldId="load_balancers"
@@ -94,7 +94,7 @@ function ClusterSettingsScreen({
           </>
         )}
         <UserWorkloadMonitoringSection parent="create" disableUVM={false} />
-        <GridItem span={12}>
+        <GridItem>
           <Title headingLevel="h3">Encryption</Title>
         </GridItem>
         <FormGroup

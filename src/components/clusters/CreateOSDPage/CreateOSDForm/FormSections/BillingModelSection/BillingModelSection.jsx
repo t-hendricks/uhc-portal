@@ -173,7 +173,7 @@ function BillingModelSection({
       {isWizard && (
         <>
           <GridItem span={8}>
-            <Title headingLevel="h2">Welcome to Red Hat OpenShift Dedicated</Title>
+            <Title headingLevel="h2" className="pf-u-pb-md">Welcome to Red Hat OpenShift Dedicated</Title>
             <Text component="p" id="welcome-osd-text">
               Reduce operational complexity and focus on building applications
               that add more value to your business with Red Hat OpenShift Dedicated,
@@ -186,7 +186,7 @@ function BillingModelSection({
           </GridItem>
         </>
       )}
-      <GridItem span={12}>
+      <GridItem>
         <Stack hasGutter>
           <StackItem>
             <Title headingLevel="h3">Subscription type:</Title>

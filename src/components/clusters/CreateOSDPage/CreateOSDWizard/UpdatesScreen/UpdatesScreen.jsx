@@ -13,7 +13,7 @@ function UpdatesScreen({ isAutomaticUpgrade, change }) {
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Grid hasGutter>
-        <GridItem span={12}>
+        <GridItem>
           <Title headingLevel="h3">Cluster updates</Title>
         </GridItem>
         <UpgradeSettingsFields

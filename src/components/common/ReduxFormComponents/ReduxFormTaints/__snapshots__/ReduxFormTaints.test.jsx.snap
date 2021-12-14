@@ -58,9 +58,7 @@ exports[`<ReduxFormKeyValueList /> should render when there is no input - initia
       variant="link"
     />
   </GridItem>
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Button
       className="reduxFormKeyValueList-addBtn"
       icon={
@@ -177,9 +175,7 @@ exports[`<ReduxFormKeyValueList /> should render with input 1`] = `
       variant="link"
     />
   </GridItem>
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Button
       className="reduxFormKeyValueList-addBtn"
       icon={
@@ -288,9 +284,7 @@ exports[`<ReduxFormTaints /> should render when there is no input - initial rede
       variant="link"
     />
   </GridItem>
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Button
       className="reduxFormKeyValueList-addBtn pf-u-mb-lg"
       icon={
@@ -463,9 +457,7 @@ exports[`<ReduxFormTaints /> should render with input 1`] = `
       variant="link"
     />
   </GridItem>
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Button
       className="reduxFormKeyValueList-addBtn pf-u-mb-lg"
       icon={

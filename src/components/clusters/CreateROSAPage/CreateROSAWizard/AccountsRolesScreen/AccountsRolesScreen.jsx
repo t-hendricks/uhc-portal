@@ -78,7 +78,7 @@ function AccountsRolesScreen({
             <img src={AWSLogo} className="ocm-c-wizard-intro-image-bottom" aria-hidden="true" alt="" />
           </GridItem>
         </GridItem>
-        <GridItem span={12}>
+        <GridItem>
           <Prerequisites initiallyExpanded={!hasAWSAccount} />
         </GridItem>
         <GridItem span={8}>

@@ -426,10 +426,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin: 20px;
 }
 
-.ocm-page{
-  margin: 24px;
-}
-
 .infra-card, a.infra-card, .ocm-page a.infra-card {
   padding: 20px;
   display: flex;
@@ -598,10 +594,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   overflow: visible;
 }
 
-.pf-c-form__group .pf-c-radio__input {
-  margin-top: -3px;
-}
-
 // add some space between the text input label and the help icon
 .pf-c-form__group-label .text-input-tootip-icon {
   margin-left: 5px;
@@ -709,12 +701,8 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 }
 
 .radio-button.pf-c-radio {
-  align-items: start;
-  margin-bottom: var(--pf-global--spacer--form-element);
+  margin-bottom: var(--pf-global--spacer--lg);
 
-  input.pf-c-radio__input {
-    margin-top: 4px;
-  }
   label > .radio-helptext {
     font-size: var(--pf-global--FontSize--sm);
   }

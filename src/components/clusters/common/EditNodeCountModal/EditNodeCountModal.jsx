@@ -173,7 +173,7 @@ class EditNodeCountModal extends Component {
               {canAutoScale
                 && (
                   <>
-                    <GridItem span={12}>
+                    <GridItem>
                       <AutoScaleSection
                         autoscalingEnabled={autoscalingEnabled}
                         isMultiAz={isMultiAz}
@@ -215,7 +215,7 @@ class EditNodeCountModal extends Component {
               && (
                 <>
                   <GridItem span={7} />
-                  <GridItem span={12}>
+                  <GridItem>
                     <SpotInstanceInfoAlert />
                   </GridItem>
                 </>

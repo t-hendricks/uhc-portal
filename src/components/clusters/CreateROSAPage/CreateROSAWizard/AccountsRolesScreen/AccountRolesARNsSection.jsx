@@ -100,12 +100,12 @@ function AccountRolesARNsSection({
 
   return (
     <>
-      <GridItem span={12} />
-      <GridItem span={12}>
+      <GridItem />
+      <GridItem>
         <Title headingLevel="h3">Account roles</Title>
       </GridItem>
       {!hasAccountRoles && (
-      <GridItem span={12}>
+      <GridItem>
         <Alert
           isInline
           variant="info"
@@ -145,7 +145,7 @@ function AccountRolesARNsSection({
             </Text>
           </GridItem>
           <GridItem span={4} />
-          <GridItem span={12} />
+          <GridItem />
           <Field
             component={ReduxFormDropdown}
             name="installer_role_arn"
