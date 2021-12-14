@@ -440,6 +440,7 @@ test('Field is valid number of compute nodes for disconnected cluster', () => {
 test('Field is a valid ARN', () => {
   expect(validateARN('arn:aws:iam::012345678901:user/richard')).toBe(undefined);
   expect(validateARN('arn:aws:iam::012345678901:group/sda')).toBe(undefined);
+  expect(validateARN('arn:aws:iam::012345678901:group/s da')).toBe('Value must not contain whitespaces.');
   expect(validateARN('arn:aws:iam::0123456789:user/richard')).toBe('ARN value should be in the format arn:aws:iam::123456789012:user/name.');
   expect(validateARN('arn:aws:iam:0123456789:user/richard')).toBe('ARN value should be in the format arn:aws:iam::123456789012:user/name.');
   expect(validateARN('0123456789:user/richard')).toBe('ARN value should be in the format arn:aws:iam::123456789012:user/name.');
