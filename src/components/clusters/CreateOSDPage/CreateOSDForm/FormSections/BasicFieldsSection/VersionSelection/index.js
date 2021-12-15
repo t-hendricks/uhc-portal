@@ -5,12 +5,12 @@ import VersionSelection from './VersionSelection';
 import { clustersActions } from '../../../../../../../redux/actions/clustersActions';
 
 const mapDispatchToProps = dispatch => ({
-  getClusterVersions: () => dispatch(clustersActions.getClusterVersions()),
+  getInstallableVersions: () => dispatch(clustersActions.getInstallableVersions()),
 });
 
 const mapStateToProps = (state) => {
   const { clusterVersions } = get(state, 'clusters', {});
-  return { getClusterVersionsResponse: clusterVersions };
+  return { getInstallableVersionsResponse: clusterVersions };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VersionSelection);

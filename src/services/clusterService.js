@@ -168,12 +168,15 @@ const deleteClusterAddOn = (clusterID, addOnID) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`,
 });
 
-const getClusterVersions = () => apiRequest({
+const getInstallableVersions = () => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/versions/',
   params: {
     order: 'end_of_life_timestamp desc',
-    search: "enabled='t'",
+    // Internal users can test other channels via `ocm` CLI, no UI needed.
+    // For external users, make sure we only offer stable channel.
+    search: "enabled='t' AND channel_group='stable'",
+    size: -1,
   },
 });
 
@@ -378,7 +381,7 @@ const clusterService = {
   getStorageQuotaValues,
   getLoadBalancerQuotaValues,
   getRoles,
-  getClusterVersions,
+  getInstallableVersions,
   getGrants,
   addGrant,
   deleteGrant,
