@@ -14,37 +14,36 @@ function VersionSelection({
   isDisabled,
   label,
   meta: { error, touched },
-  getClusterVersions,
-  getClusterVersionsResponse,
+  getInstallableVersions,
+  getInstallableVersionsResponse,
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [clusterVersions, setClusterVersions] = useState([]);
-  const [clusterVersionsErrorBox, setClusterVersionsErrorBox] = useState(null);
+  const [versions, setVersions] = useState([]);
+  const [versionsErrorBox, setVersionsErrorBox] = useState(null);
 
   useEffect(() => {
-    if (!getClusterVersionsResponse || (!getClusterVersionsResponse.pending
-      && !getClusterVersionsResponse.fulfilled)) {
-      getClusterVersions();
-    } else if (getClusterVersionsResponse.pending) {
-      setClusterVersionsErrorBox(null);
-    } else if (getClusterVersionsResponse.fulfilled) {
-      const versions = get(getClusterVersionsResponse, 'versions', []);
-      setClusterVersions(versions);
-      setClusterVersionsErrorBox(null);
-    } else if (getClusterVersionsResponse.error) {
+    if (!getInstallableVersionsResponse || (!getInstallableVersionsResponse.pending
+      && !getInstallableVersionsResponse.fulfilled)) {
+      getInstallableVersions();
+    } else if (getInstallableVersionsResponse.pending) {
+      setVersionsErrorBox(null);
+    } else if (getInstallableVersionsResponse.fulfilled) {
+      setVersions(get(getInstallableVersionsResponse, 'versions', []));
+      setVersionsErrorBox(null);
+    } else if (getInstallableVersionsResponse.error) {
       // display error
-      setClusterVersionsErrorBox(<ErrorBox
+      setVersionsErrorBox(<ErrorBox
         message="Error getting cluster versions"
-        response={getClusterVersionsResponse}
+        response={getInstallableVersionsResponse}
       />);
     }
-  }, [getClusterVersionsResponse]);
+  }, [getInstallableVersionsResponse]);
 
   useEffect(() => {
-    if (clusterVersions.length && !input.value) {
-      input.onChange(clusterVersions[0]); // default to first version in list
+    if (versions.length && !input.value) {
+      input.onChange(versions[0]); // default to first version in list
     }
-  }, [clusterVersions, input]);
+  }, [versions, input]);
 
   const onToggle = (toggleOpenValue) => {
     setIsOpen(toggleOpenValue);
@@ -52,17 +51,17 @@ function VersionSelection({
 
   const onSelect = (_, selection) => {
     setIsOpen(false);
-    input.onChange(clusterVersions.find(version => version.raw_id === selection));
+    input.onChange(versions.find(version => version.raw_id === selection));
   };
 
   const getSelection = () => {
-    const selectedVersion = clusterVersions.find(version => get(input, 'value.raw_id') === version.raw_id);
+    const selectedVersion = versions.find(version => get(input, 'value.raw_id') === version.raw_id);
     return selectedVersion ? selectedVersion.raw_id : '';
   };
 
   return (
     <>
-      { clusterVersionsErrorBox }
+      { versionsErrorBox }
       <FormGroup
         {...input}
         label={label}
@@ -78,7 +77,7 @@ function VersionSelection({
           onSelect={onSelect}
           isDisabled={isDisabled}
         >
-          {clusterVersions.map(version => (
+          {versions.map(version => (
             <SelectOption
               className="pf-c-dropdown__menu-item"
               isSelected={input.value.raw_id === version.raw_id}
@@ -102,8 +101,8 @@ VersionSelection.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
   }),
-  getClusterVersions: PropTypes.func.isRequired,
-  getClusterVersionsResponse: PropTypes.object.isRequired,
+  getInstallableVersions: PropTypes.func.isRequired,
+  getInstallableVersionsResponse: PropTypes.object.isRequired,
   initialValue: PropTypes.string,
   meta: PropTypes.shape({
     touched: PropTypes.bool,
