@@ -22,10 +22,7 @@ function VersionSelection({
   const [versionsErrorBox, setVersionsErrorBox] = useState(null);
 
   useEffect(() => {
-    if (!getInstallableVersionsResponse || (!getInstallableVersionsResponse.pending
-      && !getInstallableVersionsResponse.fulfilled)) {
-      getInstallableVersions();
-    } else if (getInstallableVersionsResponse.pending) {
+    if (getInstallableVersionsResponse.pending) {
       setVersionsErrorBox(null);
     } else if (getInstallableVersionsResponse.fulfilled) {
       setVersions(get(getInstallableVersionsResponse, 'versions', []));
@@ -36,6 +33,9 @@ function VersionSelection({
         message="Error getting cluster versions"
         response={getInstallableVersionsResponse}
       />);
+      setIsOpen(false);
+    } else { // First time.
+      getInstallableVersions();
     }
   }, [getInstallableVersionsResponse]);
 
@@ -47,6 +47,11 @@ function VersionSelection({
 
   const onToggle = (toggleOpenValue) => {
     setIsOpen(toggleOpenValue);
+    // In case of backend error, don't want infinite loop reloading,
+    // but allow manual reload by opening the dropdown.
+    if (toggleOpenValue && getInstallableVersionsResponse.error) {
+      getInstallableVersions();
+    }
   };
 
   const onSelect = (_, selection) => {
