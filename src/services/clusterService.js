@@ -173,7 +173,10 @@ const getClusterVersions = () => apiRequest({
   url: '/api/clusters_mgmt/v1/versions/',
   params: {
     order: 'end_of_life_timestamp desc',
-    search: "enabled='t'",
+    // Internal users can test other channels via `ocm` CLI, no UI needed.
+    // For external users, make sure we only offer stable channel.
+    search: "enabled='t' AND channel_group='stable'",
+    size: -1,
   },
 });
 
