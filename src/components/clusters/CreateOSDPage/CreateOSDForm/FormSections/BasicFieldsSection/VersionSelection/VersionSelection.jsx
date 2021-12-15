@@ -46,8 +46,8 @@ function VersionSelection({
     }
   }, [clusterVersions, input]);
 
-  const onToggle = (toogleOpenValue) => {
-    setIsOpen(toogleOpenValue);
+  const onToggle = (toggleOpenValue) => {
+    setIsOpen(toggleOpenValue);
   };
 
   const onSelect = (_, selection) => {
