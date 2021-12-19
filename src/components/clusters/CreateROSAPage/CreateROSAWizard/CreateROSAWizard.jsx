@@ -293,6 +293,7 @@ class CreateROSAWizard extends React.Component {
               navAriaLabel={`${ariaTitle} steps`}
               mainAriaLabel={`${ariaTitle} content`}
               steps={steps}
+              isNavExpandable
               onSave={onSubmit}
               onNext={this.onNext}
               onBack={this.onBack}
