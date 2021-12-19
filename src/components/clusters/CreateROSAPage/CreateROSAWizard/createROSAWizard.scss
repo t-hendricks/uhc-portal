@@ -1,0 +1,48 @@
+@import '~@patternfly/patternfly/sass-utilities/_all';
+
+.pf-c-wizard.rosa-wizard {
+  min-height: 60vh;
+  .pf-c-wizard__footer {
+    z-index: 0;
+  }
+  .ocm-c-wizard-intro-image-top {
+    width: 90px;
+    right: 46px;
+    top: 36px;
+    position: absolute;
+  }
+  .ocm-c-wizard-intro-image-bottom {
+    width: 90px;
+    right: 46px;
+    top: 121px;
+    position: absolute;
+  }
+  #node-labels-alert {
+    margin-top: var(--pf-global--spacer--md);
+  }
+}
+
+.ocm-c-wizard-alert-steps {
+  list-style: none;
+}
+
+.ocm-wizard-or-container {
+  display: flex;
+  justify-content: center;
+  p {
+    align-self: flex-end;
+  }
+  @media only screen and (max-width: $pf-global--breakpoint--md) {
+    justify-content: start;
+    margin-top: var(--pf-global--spacer--md);
+    margin-bottom: var(--pf-global--spacer--sm);
+  }
+}
+
+.ocm-role-indented-container {
+  border-left: 2px solid #ccc;
+  padding-top: var(--pf-global--spacer--lg);
+  padding-bottom: var(--pf-global--spacer--lg);
+  padding-left: var(--pf-global--spacer--lg);
+  padding-right: var(--pf-global--spacer--lg);
+}
