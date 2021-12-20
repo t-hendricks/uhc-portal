@@ -122,8 +122,8 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                     <Text component={TextVariants.p}>
                       If you haven’t done so already, visit
                       {' '}
-                      <ExternalLink href="https://console.aws.amazon.com/rosa">
-                        https://console.aws.amazon.com/rosa
+                      <ExternalLink href="https://console.aws.amazon.com/rosa/home">
+                        https://console.aws.amazon.com/rosa/home
                       </ExternalLink>
                       {' '}
                       to enable ROSA in your AWS account.
