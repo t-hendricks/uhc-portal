@@ -41,7 +41,9 @@ function VersionSelection({
 
   useEffect(() => {
     if (versions.length && !input.value) {
-      input.onChange(versions[0]); // default to first version in list
+      const defaultVersionIndex = versions.findIndex(version => version.default === true);
+      // default to version.default or first version in list
+      input.onChange(versions[defaultVersionIndex !== -1 ? defaultVersionIndex : 0]);
     }
   }, [versions, input]);
 

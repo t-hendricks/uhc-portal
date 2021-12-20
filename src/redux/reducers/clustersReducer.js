@@ -20,6 +20,7 @@ import {
   baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
+import { versionComparator } from '../../common/versionComparator';
 
 import { clustersConstants } from '../constants';
 
@@ -93,7 +94,7 @@ function filterAndSortClusterVersions(versions) {
     return eolTimestamp > now;
   });
   // descending version numbers
-  return filteredVersions.sort((a, b) => ((a.raw_id < b.raw_id) ? 1 : -1));
+  return filteredVersions.sort((e1, e2) => versionComparator(e2.raw_id, e1.raw_id));
 }
 
 function clustersReducer(state = initialState, action) {
