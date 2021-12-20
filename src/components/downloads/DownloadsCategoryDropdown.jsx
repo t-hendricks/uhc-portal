@@ -5,14 +5,7 @@ import {
   FormSelectOption,
 } from '@patternfly/react-core';
 
-export const downloadsCategoryTitles = {
-  ALL: 'All categories',
-  CLI: 'Command-line interface (CLI) tools',
-  DEV: 'Developer tools',
-  INSTALLATION: 'OpenShift installation',
-  RHCOS: 'RHCOS management tools',
-  TOKENS: 'Tokens',
-};
+import { downloadsCategories } from './downloadsStructure';
 
 const DownloadsCategoryDropdown = ({ selectedCategory, setCategory }) => (
   <FormSelect
@@ -20,13 +13,13 @@ const DownloadsCategoryDropdown = ({ selectedCategory, setCategory }) => (
     value={selectedCategory}
     onChange={setCategory}
   >
-    {['ALL', 'CLI', 'DEV', 'INSTALLATION', 'RHCOS', 'TOKENS'].map(key => (
-      <FormSelectOption key={key} value={key} label={downloadsCategoryTitles[key]} />
+    {downloadsCategories.map(c => (
+      <FormSelectOption key={c.key} value={c.key} label={c.title} />
     ))}
   </FormSelect>
 );
 DownloadsCategoryDropdown.propTypes = {
-  selectedCategory: PropTypes.oneOf(Object.keys(downloadsCategoryTitles)).isRequired,
+  selectedCategory: PropTypes.oneOf(downloadsCategories.map(c => c.key)).isRequired,
   setCategory: PropTypes.func.isRequired,
 };
 

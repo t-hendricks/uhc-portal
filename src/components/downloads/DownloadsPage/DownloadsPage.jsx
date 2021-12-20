@@ -38,6 +38,7 @@ import DevPreviewBadge from '../../common/DevPreviewBadge';
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
 import AlignRight from '../../common/AlignRight';
 import DownloadsCategoryDropdown from '../DownloadsCategoryDropdown';
+import { expandKeys, downloadsCategories } from '../downloadsStructure';
 import DownloadsSection from '../DownloadsSection';
 import DownloadPullSecret from '../DownloadPullSecret';
 import CopyPullSecret from '../CopyPullSecret';
@@ -216,14 +217,6 @@ export const downloadChoice = (
   };
 };
 
-/** Used to track row collapsed/expanded state, and also for URLs linking to specific row. */
-const expandKeys = {
-  ...tools,
-  // the rest should be distinct from `tools` keys.
-  PULL_SECRET: 'pull-secret',
-  TOKEN_OCM: 'ocm-api-token',
-};
-
 const rowId = expandKey => `tool-${expandKey}`;
 
 /** An expandable pair of table rows. */
@@ -314,16 +307,9 @@ ToolAndDescriptionRows.propTypes = {
   description: PropTypes.node,
 };
 
-const rowsByCategory = {
-  CLI: [tools.OC, tools.OCM, tools.ROSA, tools.KN],
-  DEV: [tools.ODO, tools.HELM, tools.OPM, tools.OPERATOR_SDK, tools.RHOAS],
-  INSTALLATION: [
-    tools.X86INSTALLER, tools.IBMZINSTALLER, tools.PPCINSTALLER, tools.ARMINSTALLER, tools.CRC,
-  ],
-  RHCOS: [tools.BUTANE, tools.COREOS_INSTALLER],
-  TOKENS: [expandKeys.PULL_SECRET, expandKeys.TOKEN_OCM],
-};
-rowsByCategory.ALL = [].concat(...Object.values(rowsByCategory));
+// TODO: changes in following functions have to be kept in sync with `downloadsCategories`.
+//   Can we stop encoding order here, e.g. return mapping from expandKeys to single rows,
+//   and use `downloadsCategories` as source of truth for what to show in what order?
 
 const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
   const commonProps = {
@@ -856,7 +842,7 @@ class DownloadsPage extends React.Component {
   }
 
   state = {
-    selectedCategory: 'ALL', // one of `downloadsCategoryTitles` keys
+    selectedCategory: 'ALL', // one of `downloadsCategories` key
     expanded: DownloadsPage.initialExpanded(), // { [tool]: isOpen }
     selections: {}, // { [tool]: {OS, architecture} }
   }
@@ -911,9 +897,9 @@ class DownloadsPage extends React.Component {
     const hash = location.hash.replace('#', '');
     const key = Object.values(expandKeys).find(k => rowId(k) === hash);
     if (key) {
-      // Expand to draw attention.
+      // Expand to draw attention.  setState() directly to bypass updateHash().
       const { expanded } = this.state;
-      this.setExpanded({ ...expanded, [key]: true });
+      this.setState({ expanded: { ...expanded, [key]: true } });
 
       const row = this.toolRefs[key]?.current;
       if (row) {
@@ -937,7 +923,7 @@ class DownloadsPage extends React.Component {
     const urls = urlsSelector(githubReleases);
 
     // Expand if at least one collapsed, collapse if all expanded.
-    const shownKeys = rowsByCategory[selectedCategory];
+    const shownKeys = downloadsCategories.find(c => c.key === selectedCategory).tools;
     const allExpanded = shownKeys.every(key => expanded[key]);
     const willExpandAll = !allExpanded;
 
