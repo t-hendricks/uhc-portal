@@ -278,6 +278,7 @@ class CreateOSDForm extends React.Component {
         />
         {/* Networking section */}
         <NetworkingSection
+          pending={pending}
           mode={mode}
           toggleNetwork={this.toggleNetwork}
           showClusterPrivacy={isAws || (isGCP && isBYOCForm)}

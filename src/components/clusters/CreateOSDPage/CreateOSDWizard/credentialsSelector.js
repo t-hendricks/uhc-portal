@@ -9,7 +9,7 @@ import { formValueSelector } from 'redux-form';
 
 const ccsCredentialsSelector = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
-  const cloudProviderID = valueSelector(state, 'cloud_provider');
+  const cloudProviderID = valueSelector(state, 'cloud_provider'); // TODO: ROSA has no such field!
   switch (cloudProviderID) {
     case 'gcp':
       return valueSelector(state, 'gcp_service_account');

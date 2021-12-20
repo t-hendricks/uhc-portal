@@ -4,8 +4,7 @@ import {
   Title,
   GridItem,
 } from '@patternfly/react-core';
-import { Field } from 'redux-form';
-import ReduxCheckbox from '../../../../../common/ReduxFormComponents/ReduxCheckbox';
+
 import SubnetFields from './SubnetFields';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
@@ -16,14 +15,6 @@ function InstallToVPC({
 }) {
   return (
     <>
-      <GridItem>
-        <Field
-          component={ReduxCheckbox}
-          name="install_to_vpc"
-          label="Install into an existing VPC"
-        />
-      </GridItem>
-
       {
           selected && cloudProviderID === 'aws' && (
             <>

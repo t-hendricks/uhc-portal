@@ -19,9 +19,11 @@ import { shouldRefetchQuota } from '../../../../common/helpers';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
 import MachinePoolScreen from '../../CreateOSDPage/CreateOSDWizard/MachinePoolScreen';
-import ReviewClusterScreen from './ReviewClusterScreen';
 import NetworkScreen from '../../CreateOSDPage/CreateOSDWizard/NetworkScreen';
+import VPCScreen from '../../CreateOSDPage/CreateOSDWizard/VPCScreen';
+import CIDRScreen from '../../CreateOSDPage/CreateOSDWizard/CIDRScreen';
 import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
+import ReviewClusterScreen from './ReviewClusterScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
 
@@ -86,6 +88,7 @@ class CreateROSAWizard extends React.Component {
       onSubmit,
       product,
       cloudProviderID,
+      installToVPCSelected,
       createClusterResponse,
       machineTypes,
       organization,
@@ -99,7 +102,7 @@ class CreateROSAWizard extends React.Component {
 
     const steps = [
       {
-        id: 1,
+        id: 10,
         name: 'Accounts and roles',
         component: (
           <ErrorBoundary>
@@ -112,21 +115,18 @@ class CreateROSAWizard extends React.Component {
         name: 'Cluster settings',
         steps: [
           {
-            id: 2,
+            id: 22,
             name: 'Details',
             component: (
               <ErrorBoundary>
-                <ClusterSettingsScreen
-                  cloudProviderID={cloudProviderID}
-                  product={product}
-                />
+                <ClusterSettingsScreen cloudProviderID={cloudProviderID} product={product} />
               </ErrorBoundary>
             ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 2,
+            canJumpTo: stepIdReached >= 22,
           },
           {
-            id: 3,
+            id: 23,
             name: 'Machine pool',
             component: (
               <ErrorBoundary>
@@ -134,31 +134,57 @@ class CreateROSAWizard extends React.Component {
               </ErrorBoundary>
             ),
             enableNext: true, // TODO isValid,
-            canJumpTo: stepIdReached >= 3,
+            canJumpTo: stepIdReached >= 23,
           },
         ],
         enableNext: isValid,
       },
       {
-        id: 4,
         name: 'Networking',
+        enableNext: isValid,
+        canJumpTo: stepIdReached >= 30,
         steps: [
           {
-            id: 5,
+            id: 31,
             name: 'Configuration',
             component: (
               <ErrorBoundary>
-                <NetworkScreen cloudProviderID={cloudProviderID} product={product} />
+                <NetworkScreen
+                  cloudProviderID={cloudProviderID}
+                  showClusterPrivacy
+                  showVPCCheckbox
+                />
               </ErrorBoundary>
             ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 5,
+            canJumpTo: stepIdReached >= 31,
           },
-        ],
-        enableNext: isValid,
+          installToVPCSelected && {
+            id: 32,
+            name: 'VPC settings',
+            component: (
+              <ErrorBoundary>
+                <VPCScreen cloudProviderID={cloudProviderID} />
+              </ErrorBoundary>
+            ),
+            enableNext: isValid,
+            canJumpTo: stepIdReached >= 32,
+          },
+          {
+            id: 33,
+            name: 'CIDR ranges',
+            component: (
+              <ErrorBoundary>
+                <CIDRScreen cloudProviderID={cloudProviderID} />
+              </ErrorBoundary>
+            ),
+            enableNext: isValid,
+            canJumpTo: stepIdReached >= 33,
+          },
+        ].filter(Boolean),
       },
       {
-        id: 6,
+        id: 40,
         name: 'Cluster updates',
         component: (
           <ErrorBoundary>
@@ -166,10 +192,10 @@ class CreateROSAWizard extends React.Component {
           </ErrorBoundary>
         ),
         enableNext: isValid,
-        canJumpTo: stepIdReached >= 6,
+        canJumpTo: stepIdReached >= 40,
       },
       {
-        id: 7,
+        id: 50,
         name: 'Cluster roles and policies',
         component: (
           <ErrorBoundary>
@@ -177,10 +203,10 @@ class CreateROSAWizard extends React.Component {
           </ErrorBoundary>
         ),
         enableNext: isValid,
-        canJumpTo: stepIdReached >= 7,
+        canJumpTo: stepIdReached >= 50,
       },
       {
-        id: 8,
+        id: 100,
         name: 'Review and create',
         component: (
           <ErrorBoundary>
@@ -189,7 +215,7 @@ class CreateROSAWizard extends React.Component {
         ),
         nextButtonText: 'Create cluster',
         enableNext: isValid && !createClusterResponse.pending,
-        canJumpTo: stepIdReached >= 8 && isValid,
+        canJumpTo: stepIdReached >= 100 && isValid,
       },
     ];
     const ariaTitle = 'Create ROSA cluster wizard';
@@ -317,6 +343,7 @@ CreateROSAWizard.propTypes = {
   isValid: PropTypes.bool,
   product: PropTypes.string,
   cloudProviderID: PropTypes.string,
+  installToVPCSelected: PropTypes.bool,
   isErrorModalOpen: PropTypes.bool,
 
   createClusterResponse: PropTypes.shape({
