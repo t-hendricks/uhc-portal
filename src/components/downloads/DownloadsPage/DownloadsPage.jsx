@@ -315,8 +315,8 @@ ToolAndDescriptionRows.propTypes = {
 };
 
 const rowsByCategory = {
-  CLI: [tools.OC, tools.OCM, tools.ROSA],
-  DEV: [tools.ODO, tools.HELM, tools.OPM, tools.RHOAS],
+  CLI: [tools.OC, tools.OCM, tools.ROSA, tools.KN],
+  DEV: [tools.ODO, tools.HELM, tools.OPM, tools.OPERATOR_SDK, tools.RHOAS],
   INSTALLATION: [
     tools.X86INSTALLER, tools.IBMZINSTALLER, tools.PPCINSTALLER, tools.ARMINSTALLER, tools.CRC,
   ],
@@ -409,6 +409,30 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
           </Text>
         )}
       />
+
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.KN}
+        channel={channels.STABLE}
+        name={(
+          <>
+            Knative command-line interface for OpenShift Serverless (
+            <code>kn</code>
+            )
+          </>
+        )}
+        description={(
+          <Text>
+            Interact with Knative components on OpenShift Container Platform with
+            the Knative client for OpenShift Serverless
+            {' '}
+            <code>kn</code>
+            .
+            {' '}
+            <ExternalLink href={links.KN_DOCS}>Learn more</ExternalLink>
+          </Text>
+        )}
+      />
     </>
   );
 };
@@ -481,6 +505,26 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             Operator Package Manager.
             {' '}
             <ExternalLink href={links.OPM_DOCS}>Learn more</ExternalLink>
+          </Text>
+        )}
+      />
+
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.OPERATOR_SDK}
+        channel={channels.STABLE}
+        name={(
+          <>
+            Operator SDK CLI (
+            <code>operator-sdk</code>
+            )
+          </>
+        )}
+        description={(
+          <Text>
+            Build, test, and deploy Operators with the Operator SDK CLI.
+            {' '}
+            <ExternalLink href={links.OSDK_DOCS}>Learn more</ExternalLink>
           </Text>
         )}
       />
