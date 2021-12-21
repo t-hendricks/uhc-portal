@@ -186,6 +186,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -289,6 +290,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -379,6 +381,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -417,6 +422,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -437,6 +445,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -581,6 +592,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -684,6 +696,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -774,6 +787,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -812,6 +828,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -832,6 +851,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -967,6 +989,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -1070,6 +1093,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -1160,6 +1184,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -1198,6 +1225,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -1218,6 +1248,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -1358,6 +1391,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -1461,6 +1495,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -1551,6 +1586,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -1589,6 +1627,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -1609,6 +1650,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -1770,6 +1814,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -1873,6 +1918,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -1963,6 +2009,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -2001,6 +2050,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -2021,6 +2073,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -2156,6 +2211,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -2259,6 +2315,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -2349,6 +2406,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -2387,6 +2447,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -2407,6 +2470,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -2542,6 +2608,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -2645,6 +2712,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -2735,6 +2803,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -2773,6 +2844,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -2793,6 +2867,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -2928,6 +3005,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -3031,6 +3109,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -3121,6 +3200,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -3159,6 +3241,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -3179,6 +3264,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -3324,6 +3412,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -3427,6 +3516,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -3517,6 +3607,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -3555,6 +3648,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -3575,6 +3671,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -3746,6 +3845,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -3849,6 +3949,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -3939,6 +4040,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -3977,6 +4081,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -3997,6 +4104,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -4138,6 +4248,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -4241,6 +4352,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -4331,6 +4443,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -4369,6 +4484,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -4389,6 +4507,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -4530,6 +4651,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -4633,6 +4755,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -4723,6 +4846,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -4761,6 +4887,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -4781,6 +4910,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -4928,6 +5060,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -5031,6 +5164,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -5121,6 +5255,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -5159,6 +5296,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -5179,6 +5319,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -5319,6 +5462,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -5422,6 +5566,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -5512,6 +5657,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -5550,6 +5698,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -5570,6 +5721,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -5714,6 +5868,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -5817,6 +5972,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -5907,6 +6063,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -5945,6 +6104,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -5965,6 +6127,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -6109,6 +6274,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -6212,6 +6378,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -6302,6 +6469,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -6340,6 +6510,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -6360,6 +6533,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
@@ -6489,6 +6665,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
                     },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
@@ -6592,6 +6769,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "preRelease": Object {
                     "arm": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
@@ -6682,6 +6860,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "ppc64le-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -6720,6 +6901,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "s390x-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "s390x": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                     },
@@ -6740,6 +6924,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "x86_64-openshift-install": Object {
                   "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
                     "x86": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",

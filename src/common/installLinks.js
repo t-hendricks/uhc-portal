@@ -225,6 +225,9 @@ const urls = {
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-client-linux.tar.gz`,
+        /*
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-client-mac-arm64.tar.gz`,
+        */
       },
     },
     [channels.PRE_RELEASE]: {
@@ -241,6 +244,7 @@ const urls = {
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-client-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-client-mac-arm64.tar.gz`,
       },
     },
   },
@@ -316,11 +320,19 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-linux.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-mac.tar.gz`,
       },
+      /*
+      [architectures.arm]: {
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}openshift-install-mac-arm64.tar.gz`,
+      },
+      */
     },
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-linux.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-mac.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_X86}openshift-install-mac-arm64.tar.gz`,
       },
     },
   },
@@ -333,6 +345,11 @@ const urls = {
       [architectures.s390x]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-linux.tar.gz`,
       },
+      /*
+      [architectures.arm]: {
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_IBMZ}openshift-install-mac-arm64.tar.gz`,
+      },
+      */
     },
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
@@ -341,6 +358,9 @@ const urls = {
       },
       [architectures.s390x]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-linux.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_IBMZ}openshift-install-mac-arm64.tar.gz`,
       },
     },
   },
@@ -353,6 +373,11 @@ const urls = {
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-linux.tar.gz`,
       },
+      /*
+      [architectures.arm]: {
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_PPC}openshift-install-mac-arm64.tar.gz`,
+      },
+      */
     },
     [channels.PRE_RELEASE]: {
       [architectures.x86]: {
@@ -361,6 +386,9 @@ const urls = {
       },
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-linux.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_PPC}openshift-install-mac-arm64.tar.gz`,
       },
     },
   },
@@ -372,6 +400,9 @@ const urls = {
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-install-linux.tar.gz`,
+        /*
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_ARM}openshift-install-mac-arm64.tar.gz`,
+        */
       },
     },
     [channels.PRE_RELEASE]: {
@@ -381,6 +412,7 @@ const urls = {
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-mac-arm64.tar.gz`,
       },
     },
   },
