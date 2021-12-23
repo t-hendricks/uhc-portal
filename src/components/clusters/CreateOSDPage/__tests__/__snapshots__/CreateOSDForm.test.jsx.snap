@@ -4,7 +4,7 @@ exports[`CreateOSDForm; should render 1`] = `
 <Fragment>
   <GridItem>
     <Title
-      headingLevel="h2"
+      headingLevel="h3"
     >
       Billing model
     </Title>
@@ -139,7 +139,7 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
 <Fragment>
   <GridItem>
     <Title
-      headingLevel="h2"
+      headingLevel="h3"
     >
       Billing model
     </Title>

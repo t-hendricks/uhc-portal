@@ -153,7 +153,7 @@ class CreateOSDForm extends React.Component {
       <>
         {/* Billing Model */}
         <GridItem>
-          <Title headingLevel="h2">Billing model</Title>
+          <Title headingLevel="h3">Billing model</Title>
         </GridItem>
         <BillingModelSection
           openModal={openModal}
