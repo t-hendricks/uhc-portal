@@ -14,6 +14,7 @@ import {
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
+import ErrorBoundary from '../../../App/ErrorBoundary';
 import PageTitle from '../../../common/PageTitle';
 import ErrorModal from '../../../common/ErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
@@ -140,9 +141,11 @@ class CreateOSDWizard extends React.Component {
         id: 1,
         name: 'Billing model',
         component: (
-          <Grid>
-            <BillingModelScreen isWizard isTrialDefault={isTrialDefault} />
-          </Grid>
+          <ErrorBoundary>
+            <Grid>
+              <BillingModelScreen isWizard isTrialDefault={isTrialDefault} />
+            </Grid>
+          </ErrorBoundary>
         ),
         enableNext: isValid,
       },
@@ -152,21 +155,33 @@ class CreateOSDWizard extends React.Component {
           {
             id: 2,
             name: 'Cloud provider',
-            component: <CloudProviderScreen />,
+            component: (
+              <ErrorBoundary>
+                <CloudProviderScreen />
+              </ErrorBoundary>
+            ),
             enableNext: isValid && !ccsValidationPending,
             canJumpTo: stepIdReached >= 2,
           },
           {
             id: 3,
             name: 'Cluster details',
-            component: <ClusterSettingsScreen isTrialDefault={isTrialDefault} />,
+            component: (
+              <ErrorBoundary>
+                <ClusterSettingsScreen isTrialDefault={isTrialDefault} />
+              </ErrorBoundary>
+            ),
             enableNext: isValid,
             canJumpTo: stepIdReached >= 3,
           },
           {
             id: 4,
             name: 'Machine pool',
-            component: <MachinePoolScreen isTrialDefault={isTrialDefault} />,
+            component: (
+              <ErrorBoundary>
+                <MachinePoolScreen isTrialDefault={isTrialDefault} />
+              </ErrorBoundary>
+            ),
             enableNext: isValid,
             canJumpTo: stepIdReached >= 4,
           },
@@ -176,21 +191,33 @@ class CreateOSDWizard extends React.Component {
       {
         id: 5,
         name: 'Networking',
-        component: <NetworkScreen isTrialDefault={isTrialDefault} />,
+        component: (
+          <ErrorBoundary>
+            <NetworkScreen isTrialDefault={isTrialDefault} />
+          </ErrorBoundary>
+        ),
         enableNext: isValid,
         canJumpTo: stepIdReached >= 5,
       },
       {
         id: 6,
         name: 'Updates',
-        component: <UpdatesScreen />,
+        component: (
+          <ErrorBoundary>
+            <UpdatesScreen />
+          </ErrorBoundary>
+        ),
         enableNext: isValid,
         canJumpTo: stepIdReached >= 6,
       },
       {
         id: 7,
         name: 'Review and create',
-        component: <ReviewClusterScreen isPending={createClusterResponse.pending} />,
+        component: (
+          <ErrorBoundary>
+            <ReviewClusterScreen isPending={createClusterResponse.pending} />
+          </ErrorBoundary>
+        ),
         nextButtonText: 'Create cluster',
         enableNext: isValid && !createClusterResponse.pending,
         canJumpTo: stepIdReached >= 7 && isValid,

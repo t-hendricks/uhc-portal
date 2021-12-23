@@ -28,6 +28,7 @@ import Unavailable from '../../../common/Unavailable';
 import './createROSAWizard.scss';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
+import ErrorBoundary from '../../../App/ErrorBoundary';
 
 class CreateROSAWizard extends React.Component {
   state = {
@@ -100,7 +101,11 @@ class CreateROSAWizard extends React.Component {
       {
         id: 1,
         name: 'Accounts and roles',
-        component: <AccountsRolesScreen />,
+        component: (
+          <ErrorBoundary>
+            <AccountsRolesScreen />
+          </ErrorBoundary>
+        ),
         enableNext: isValid,
       },
       {
@@ -109,17 +114,25 @@ class CreateROSAWizard extends React.Component {
           {
             id: 2,
             name: 'Details',
-            component: <ClusterSettingsScreen
-              cloudProviderID={cloudProviderID}
-              product={product}
-            />,
+            component: (
+              <ErrorBoundary>
+                <ClusterSettingsScreen
+                  cloudProviderID={cloudProviderID}
+                  product={product}
+                />
+              </ErrorBoundary>
+            ),
             enableNext: isValid,
             canJumpTo: stepIdReached >= 2,
           },
           {
             id: 3,
             name: 'Machine pool',
-            component: <MachinePoolScreen cloudProviderID={cloudProviderID} product={product} />,
+            component: (
+              <ErrorBoundary>
+                <MachinePoolScreen cloudProviderID={cloudProviderID} product={product} />
+              </ErrorBoundary>
+            ),
             enableNext: true, // TODO isValid,
             canJumpTo: stepIdReached >= 3,
           },
@@ -133,7 +146,11 @@ class CreateROSAWizard extends React.Component {
           {
             id: 5,
             name: 'Configuration',
-            component: <NetworkScreen cloudProviderID={cloudProviderID} product={product} />,
+            component: (
+              <ErrorBoundary>
+                <NetworkScreen cloudProviderID={cloudProviderID} product={product} />
+              </ErrorBoundary>
+            ),
             enableNext: isValid,
             canJumpTo: stepIdReached >= 5,
           },
@@ -143,21 +160,33 @@ class CreateROSAWizard extends React.Component {
       {
         id: 6,
         name: 'Cluster updates',
-        component: <UpdatesScreen />,
+        component: (
+          <ErrorBoundary>
+            <UpdatesScreen />
+          </ErrorBoundary>
+        ),
         enableNext: isValid,
         canJumpTo: stepIdReached >= 6,
       },
       {
         id: 7,
         name: 'Cluster roles and policies',
-        component: <ClusterRolesScreen />,
+        component: (
+          <ErrorBoundary>
+            <ClusterRolesScreen />
+          </ErrorBoundary>
+        ),
         enableNext: isValid,
         canJumpTo: stepIdReached >= 7,
       },
       {
         id: 8,
         name: 'Review and create',
-        component: <ReviewClusterScreen isPending={createClusterResponse.pending} />,
+        component: (
+          <ErrorBoundary>
+            <ReviewClusterScreen isPending={createClusterResponse.pending} />
+          </ErrorBoundary>
+        ),
         nextButtonText: 'Create cluster',
         enableNext: isValid && !createClusterResponse.pending,
         canJumpTo: stepIdReached >= 8 && isValid,
