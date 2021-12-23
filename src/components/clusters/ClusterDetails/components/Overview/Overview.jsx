@@ -153,7 +153,7 @@ class Overview extends React.Component {
 
     return (
       <Grid hasGutter>
-        <GridItem sm={12} xl2={showSidePanel ? 9 : 12}>
+        <GridItem xl2={showSidePanel ? 9 : 12}>
           <Grid hasGutter>
             { topCard }
             {showAssistedInstallerDetailCard && (
@@ -186,7 +186,7 @@ class Overview extends React.Component {
           </Grid>
         </GridItem>
         {showSidePanel && (
-          <GridItem sm={12} xl2={3}>
+          <GridItem xl2={3}>
             <Grid hasGutter>
               {showResourceUsage && (
               <GridItem sm={6} xl2={12}>
@@ -211,7 +211,7 @@ class Overview extends React.Component {
           </GridItem>
         )}
         {displayClusterLogs && (
-          <GridItem sm={12}>
+          <GridItem>
             <ClusterLogs externalClusterID={cluster.external_id} history={history} />
           </GridItem>
         )}

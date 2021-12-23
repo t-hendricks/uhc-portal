@@ -159,7 +159,7 @@ class RegisterCluster extends React.Component {
           <Card id="register-cluster">
             <CardBody>
               <Grid>
-                <GridItem sm={12} md={8} lg={8}>
+                <GridItem md={8}>
                   <TextContent id="register-cluster-top-text">
                     <Text component={TextVariants.p}>{topText}</Text>
                   </TextContent>

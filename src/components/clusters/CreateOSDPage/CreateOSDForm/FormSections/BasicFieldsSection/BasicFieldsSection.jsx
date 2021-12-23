@@ -59,7 +59,7 @@ function BasicFieldsSection({
   return (
     <>
       {/* cluster name */}
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
           name="name"
@@ -71,12 +71,12 @@ function BasicFieldsSection({
           extendedHelpText={constants.clusterNameHint}
         />
       </GridItem>
-      <GridItem md={7} lg={8} />
+      <GridItem md={6} />
 
       {/* Base DNS domain */}
       {showDNSBaseDomain && (
         <>
-          <GridItem sm={12} md={5} lg={4}>
+          <GridItem md={6}>
             <Field
               component={ReduxVerticalFormGroup}
               name="dns_base_domain"
@@ -87,13 +87,13 @@ function BasicFieldsSection({
               normalize={value => value.toLowerCase()}
             />
           </GridItem>
-          <GridItem md={7} lg={8} />
+          <GridItem md={6} />
         </>
       )}
 
       {/* Cluster Versions */}
       <>
-        <GridItem sm={12} md={5} lg={4}>
+        <GridItem md={6}>
           <Field
             component={VersionSelection}
             name="cluster_version"
@@ -102,11 +102,11 @@ function BasicFieldsSection({
             isRosa={isRosa}
           />
         </GridItem>
-        <GridItem md={7} lg={8} />
+        <GridItem md={6} />
       </>
 
       {/* Region */}
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem md={6}>
         <FormGroup
           label="Region"
           isRequired
@@ -125,21 +125,21 @@ function BasicFieldsSection({
           />
         </FormGroup>
       </GridItem>
-      <GridItem md={7} lg={8} />
+      <GridItem md={6} />
 
       {/* Availability */}
       {showAvailability && (
         <>
-          <GridItem sm={12} md={5} lg={4}>
+          <GridItem md={6}>
             <FormGroup
               label="Availability"
               isRequired
+              isInline
               fieldId="availability-toggle"
               labelIcon={<PopoverHint hint={constants.availabilityHint} />}
             >
               <Field
                 component={RadioButtons}
-                className="radio-az"
                 name="multi_az"
                 disabled={pending}
                 onChange={handleMultiAZChange}
@@ -162,7 +162,7 @@ function BasicFieldsSection({
               />
             </FormGroup>
           </GridItem>
-          <GridItem md={7} lg={8} />
+          <GridItem md={6} />
         </>
       )}
     </>

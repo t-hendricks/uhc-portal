@@ -31,7 +31,7 @@ class Prerequisites extends React.Component {
   render() {
     const { isExpanded } = this.state;
     return (
-      <GridItem span={12}>
+      <GridItem>
         <ExpandableSection className="prerequisites-expandable-section" isExpanded={isExpanded} onToggle={this.onToggle} toggleText="Prerequisites">
           <div className="prerequisites-section">
             <TextContent>

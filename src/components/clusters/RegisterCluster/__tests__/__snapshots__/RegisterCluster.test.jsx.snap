@@ -26,9 +26,7 @@ exports[`<RegisterCluster /> renders correctly 1`] = `
       <CardBody>
         <Grid>
           <GridItem
-            lg={8}
             md={8}
-            sm={12}
           >
             <TextContent
               id="register-cluster-top-text"
@@ -146,9 +144,7 @@ exports[`<RegisterCluster /> renders correctly when user can't subscribe ocp 1`]
       <CardBody>
         <Grid>
           <GridItem
-            lg={8}
             md={8}
-            sm={12}
           >
             <TextContent
               id="register-cluster-top-text"

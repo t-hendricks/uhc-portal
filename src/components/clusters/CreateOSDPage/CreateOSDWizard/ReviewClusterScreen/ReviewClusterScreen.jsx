@@ -105,7 +105,7 @@ function ReviewClusterScreen({
   };
   return (
     <div className="ocm-create-osd-review-screen">
-      <Title headingLevel="h2">
+      <Title headingLevel="h2" className="pf-u-pb-md">
         Review your dedicated cluster
       </Title>
       <Title headingLevel="h3">Billing Model</Title>

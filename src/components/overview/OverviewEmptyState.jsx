@@ -99,7 +99,7 @@ function OverviewEmptyState() {
         </Flex>
       </Flex>
       <Grid>
-        <GridItem span={12}>
+        <GridItem>
           <div id="dashboard-emptystate-osd" className="top-row pf-u-mt-lg">
             <Title headingLevel="h2" size="lg" className="card-title">Let Red Hat run it for you</Title>
             Red hat OpenShift Dedicated is a single-tenant, high availability Kubernetes clusters,

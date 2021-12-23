@@ -99,13 +99,13 @@ class EditTaintsModal extends Component {
                 />
               </GridItem>
               <GridItem span={7} />
-              <GridItem span={12}>
+              <GridItem>
                 <FieldArray name="taints" component={ReduxFormTaints} isEditing />
               </GridItem>
               {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList)
               && (
                 <>
-                  <GridItem span={12}>
+                  <GridItem>
                     <SpotInstanceInfoAlert />
                   </GridItem>
                 </>

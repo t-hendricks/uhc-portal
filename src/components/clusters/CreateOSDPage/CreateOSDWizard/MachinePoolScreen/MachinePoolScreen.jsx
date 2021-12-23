@@ -25,11 +25,13 @@ function DefaultMachinePoolScreen({
 }) {
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
-      <Grid>
-        <GridItem span={12}>
-          <Title headingLevel="h2">
+      <Grid hasGutter>
+        <GridItem>
+          <Title headingLevel="h3">
             Default machine pool
           </Title>
+        </GridItem>
+        <GridItem>
           <Text component="p">
             Select a compute node instance type and count for your default machine pool.
           </Text>
@@ -37,23 +39,21 @@ function DefaultMachinePoolScreen({
             After cluster creation, your selected default machine pool instance type is permanent.
           </Text>
         </GridItem>
-        <GridItem sm={12} md={5} lg={4}>
-          <ScaleSection
-            isBYOC={isByoc}
-            isMultiAz={isMultiAz}
-            machineType={machineType}
-            handleMachineTypesChange={(_, value) => change('machine_type', value)}
-            cloudProviderID={cloudProviderID}
-            product={product}
-            canAutoScale={canAutoScale}
-            autoscalingEnabled={autoscalingEnabled}
-            change={change}
-            autoScaleMinNodesValue={autoScaleMinNodesValue}
-            autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-            billingModel={billingModel}
-            showStorageAndLoadBalancers={false}
-          />
-        </GridItem>
+        <ScaleSection
+          isBYOC={isByoc}
+          isMultiAz={isMultiAz}
+          machineType={machineType}
+          handleMachineTypesChange={(_, value) => change('machine_type', value)}
+          cloudProviderID={cloudProviderID}
+          product={product}
+          canAutoScale={canAutoScale}
+          autoscalingEnabled={autoscalingEnabled}
+          change={change}
+          autoScaleMinNodesValue={autoScaleMinNodesValue}
+          autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+          billingModel={billingModel}
+          showStorageAndLoadBalancers={false}
+        />
       </Grid>
     </Form>
   );

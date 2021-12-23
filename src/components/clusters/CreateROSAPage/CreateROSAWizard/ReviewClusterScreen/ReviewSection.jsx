@@ -60,7 +60,7 @@ function ReviewSection({ initiallyExpanded, title, children = null }) {
   };
 
   return (
-    <GridItem span={12}>
+    <GridItem>
       <ExpandableSection className="review-screen-expandable-section" isExpanded={isExpanded} onToggle={onToggle} toggleText={title}>
         <DescriptionList isHorizontal>
           {children}

@@ -13,6 +13,7 @@ import {
   Split,
   SplitItem,
   PageSection,
+  PageSectionVariants,
   Banner,
 } from '@patternfly/react-core';
 import config from '../../../config';
@@ -52,7 +53,7 @@ class CreateOSDPage extends React.Component {
       cloudProviderID,
     } = this.props;
 
-    document.title = `Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager | OpenShift Dedicated on 
+    document.title = `Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager | OpenShift Dedicated on
     ${cloudProviderID.toUpperCase()}`;
 
     if (shouldRefetchQuota(organization)) {
@@ -282,73 +283,75 @@ class CreateOSDPage extends React.Component {
         <PageSection>
           <Card>
             <div className="ocm-page">
-              {creationErrorModal}
-              {/* Form */}
-              <Form onSubmit={handleSubmit}>
-                <Grid hasGutter>
-                  {config.fakeOSD && (
-                    <>
-                      <GridItem span={8}>
-                        <Banner variant="warning">
-                          On submit, a fake OSD cluster will be created.
-                        </Banner>
-                      </GridItem>
-                      <GridItem span={4} />
-                    </>
-                  )}
-                  <CreateOSDForm
-                    pending={createClusterResponse.pending}
-                    change={change}
-                    isBYOCModalOpen={isBYOCModalOpen}
-                    openModal={openModal}
-                    closeModal={closeModal}
-                    clustersQuota={clustersQuota}
-                    cloudProviderID={cloudProviderID}
-                    privateClusterSelected={privateClusterSelected}
-                    product={product}
-                    isAutomaticUpgrade={isAutomaticUpgrade}
-                    canEnableEtcdEncryption={canEnableEtcdEncryption}
-                    selectedRegion={selectedRegion}
-                    installToVPCSelected={installToVPCSelected}
-                    customerManagedEncryptionSelected={customerManagedEncryptionSelected}
-                    canAutoScale={canAutoScale}
-                    autoscalingEnabled={autoscalingEnabled}
-                    autoScaleMinNodesValue={autoScaleMinNodesValue}
-                    autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-                    billingModel={billingModel}
-                    getMarketplaceQuota={this.getMarketplaceQuota}
-                  />
-                  {/* Form footer */}
-                  {config.fakeOSD && (
-                    <DebugClusterRequest product={product} cloudProviderID={cloudProviderID} />
-                  )}
-                  <GridItem>
-                    <Split hasGutter className="create-osd-form-button-split">
-                      <SplitItem>
-                        <Button
-                          variant="primary"
-                          type="submit"
-                          onClick={handleSubmit}
-                          isDisabled={createClusterResponse.pending}
-                          isLoading={createClusterResponse.peneding}
-                        >
-                          Create cluster
-                        </Button>
-                      </SplitItem>
-                      <SplitItem>
-                        <Link to="/">
-                          <Button variant="secondary" isDisabled={createClusterResponse.pending}>
-                            Cancel
+              <PageSection variant={PageSectionVariants.light}>
+                {creationErrorModal}
+                {/* Form */}
+                <Form onSubmit={handleSubmit}>
+                  <Grid hasGutter>
+                    {config.fakeOSD && (
+                      <>
+                        <GridItem span={8}>
+                          <Banner variant="warning">
+                            On submit, a fake OSD cluster will be created.
+                          </Banner>
+                        </GridItem>
+                        <GridItem span={4} />
+                      </>
+                    )}
+                    <CreateOSDForm
+                      pending={createClusterResponse.pending}
+                      change={change}
+                      isBYOCModalOpen={isBYOCModalOpen}
+                      openModal={openModal}
+                      closeModal={closeModal}
+                      clustersQuota={clustersQuota}
+                      cloudProviderID={cloudProviderID}
+                      privateClusterSelected={privateClusterSelected}
+                      product={product}
+                      isAutomaticUpgrade={isAutomaticUpgrade}
+                      canEnableEtcdEncryption={canEnableEtcdEncryption}
+                      selectedRegion={selectedRegion}
+                      installToVPCSelected={installToVPCSelected}
+                      customerManagedEncryptionSelected={customerManagedEncryptionSelected}
+                      canAutoScale={canAutoScale}
+                      autoscalingEnabled={autoscalingEnabled}
+                      autoScaleMinNodesValue={autoScaleMinNodesValue}
+                      autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+                      billingModel={billingModel}
+                      getMarketplaceQuota={this.getMarketplaceQuota}
+                    />
+                    {/* Form footer */}
+                    {config.fakeOSD && (
+                      <DebugClusterRequest product={product} cloudProviderID={cloudProviderID} />
+                    )}
+                    <GridItem>
+                      <Split hasGutter className="create-osd-form-button-split">
+                        <SplitItem>
+                          <Button
+                            variant="primary"
+                            type="submit"
+                            onClick={handleSubmit}
+                            isDisabled={createClusterResponse.pending}
+                            isLoading={createClusterResponse.peneding}
+                          >
+                            Create cluster
                           </Button>
-                        </Link>
-                      </SplitItem>
-                      <SplitItem>
-                        {createClusterResponse.pending && (<div className="form-loading-text">Do not refresh this page. This request may take a moment...</div>)}
-                      </SplitItem>
-                    </Split>
-                  </GridItem>
-                </Grid>
-              </Form>
+                        </SplitItem>
+                        <SplitItem>
+                          <Link to="/">
+                            <Button variant="secondary" isDisabled={createClusterResponse.pending}>
+                              Cancel
+                            </Button>
+                          </Link>
+                        </SplitItem>
+                        <SplitItem>
+                          {createClusterResponse.pending && (<div className="form-loading-text">Do not refresh this page. This request may take a moment...</div>)}
+                        </SplitItem>
+                      </Split>
+                    </GridItem>
+                  </Grid>
+                </Form>
+              </PageSection>
             </div>
           </Card>
         </PageSection>

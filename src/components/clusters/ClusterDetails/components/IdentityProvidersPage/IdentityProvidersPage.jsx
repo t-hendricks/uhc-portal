@@ -187,7 +187,7 @@ class IdentityProvidersPage extends React.Component {
           <Card>
             <CardBody>
               <Grid>
-                <GridItem sm={12} md={8} lg={8}>
+                <GridItem md={8}>
                   { clusterIDPs.fulfilled
                     ? (
                       <IDPForm

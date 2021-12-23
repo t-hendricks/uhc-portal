@@ -92,7 +92,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
         </React.Fragment>
       );
     })}
-    <GridItem span={12}>
+    <GridItem>
       <Button
         onClick={() => fields.push({ id: getRandomID() })}
         icon={<PlusCircleIcon />}

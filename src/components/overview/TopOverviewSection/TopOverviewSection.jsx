@@ -39,7 +39,7 @@ const TopOverviewSection = ({
   if (isError) {
     return (
       <>
-        <GridItem md={3} sm={12}>
+        <GridItem md={3}>
           <Card className="ocm-overview-clusters__card">
             <CardTitle>
               Clusters
@@ -47,7 +47,7 @@ const TopOverviewSection = ({
             { errorBody }
           </Card>
         </GridItem>
-        <GridItem md={9} sm={12} rowSpan={2}>
+        <GridItem md={9} rowSpan={2}>
           <Card className="ocm-c-metrics-charts__card">
             <CardTitle>
               CPU and Memory utilization
@@ -55,7 +55,7 @@ const TopOverviewSection = ({
             { errorBody }
           </Card>
         </GridItem>
-        <GridItem md={3} sm={12}>
+        <GridItem md={3}>
           <ClustersWithIssuesCard
             isError={isError}
             totalUnhealthyClusters={totalUnhealthyClusters}
@@ -105,7 +105,7 @@ const TopOverviewSection = ({
 
   return (
     <>
-      <GridItem md={3} sm={12}>
+      <GridItem md={3}>
         <Link to="/" className="overview-clusters-link">
           <Card className="ocm-overview-clusters__card">
             <CardTitle>
@@ -121,7 +121,7 @@ const TopOverviewSection = ({
           </Card>
         </Link>
       </GridItem>
-      <GridItem md={9} rowSpan={2} sm={12}>
+      <GridItem md={9} rowSpan={2}>
         <Card className="ocm-c-metrics-charts__card">
           <CardTitle>
             CPU and Memory utilization
@@ -129,7 +129,7 @@ const TopOverviewSection = ({
           { resourceUsageBody }
         </Card>
       </GridItem>
-      <GridItem md={3} sm={12}>
+      <GridItem md={3}>
         <ClustersWithIssuesCard
           isError={isError}
           totalUnhealthyClusters={totalUnhealthyClusters}
