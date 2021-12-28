@@ -8213,10 +8213,10 @@ opener@^1.5.1:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
   integrity sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
 
-openshift-assisted-ui-lib@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-2.0.4.tgz#9a5cbdd270591496d1ede375f20db3a70872c182"
-  integrity sha512-k1JeqQdSbr0pTvTGUaQdIg1xePnb8ZS/DZFUW3/q4qBPLvnpBLiFpqqPj8kiMrToM4LeUfbrXY9yeJBA/dvDuQ==
+openshift-assisted-ui-lib@2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-2.0.5.tgz#482d8933e4aa354f0a694d35366d749d22d9d735"
+  integrity sha512-qHfdMcKK5XVyuiq/3HF5cbICpUrPZmhYoCRx78VnQWWae67BbIgM0KqekveyaG5jC232FhN2Ey8cTGpvsGMolQ==
   dependencies:
     axios-case-converter "^0.8.1"
     classnames "^2.3.1"
