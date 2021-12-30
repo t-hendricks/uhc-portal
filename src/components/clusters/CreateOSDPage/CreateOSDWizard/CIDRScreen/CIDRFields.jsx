@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
 import {
-  GridItem, Alert,
+  GridItem, Alert, List, ListItem,
 } from '@patternfly/react-core';
 
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
@@ -79,34 +79,34 @@ function CIDRFields({
     ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
     : validators.AWS_MACHINE_CIDR_MAX_SINGLE_AZ;
 
+  const privateRangesHint = cloudProviderID === 'gcp' ? (
+    <>
+      <br />
+      <span>
+        The address must be a private IPv4 address, belonging to one of the
+        following ranges:
+        <List>
+          <ListItem>10.0.0.0 – 10.255.255.255</ListItem>
+          <ListItem>172.16.0.0 – 172.31.255.255</ListItem>
+          <ListItem>192.168.0.0 – 192.168.255.255</ListItem>
+        </List>
+      </span>
+    </>
+  ) : null;
+
   return (
     <>
       <GridItem>
         <Alert
           id="advanced-networking-alert"
           isInline
-          variant="warning"
+          variant="info"
           title="CIDR ranges may not be changed once the cluster has been created."
         >
           Specify non-overlapping ranges for machine, service, and pod ranges.
           Each range should correspond to the first IP address in their subnet.
           The below values are safe defaults; however you must at least ensure that the
           Machine CIDR is valid for your chosen subnet(s).
-          {cloudProviderID === 'gcp'
-            && (
-              <>
-                <br />
-                <span>
-                  All addresses must be private IPv4 addresses, and belong to one of the
-                  following ranges:
-                  <ul>
-                    <li>10.0.0.0 – 10.255.255.255</li>
-                    <li>172.16.0.0 – 172.31.255.255</li>
-                    <li>192.168.0.0 – 192.168.255.255</li>
-                  </ul>
-                </span>
-              </>
-            )}
         </Alert>
       </GridItem>
       <GridItem md={6}>
@@ -119,7 +119,12 @@ function CIDRFields({
           validate={machineCidrValidators}
           disabled={disabled}
           helpText={cloudProviderID === 'aws' ? `Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.` : `Range must be private. Subnet mask must be at most /${validators.GCP_MACHINE_CIDR_MAX}.`}
-          extendedHelpText={constants.machineCIDRHint}
+          extendedHelpText={(
+            <>
+              {constants.machineCIDRHint}
+              {privateRangesHint}
+            </>
+          )}
           showHelpTextOnError={false}
         />
       </GridItem>
@@ -134,7 +139,12 @@ function CIDRFields({
           validate={serviceCidrValidators}
           disabled={disabled}
           helpText={cloudProviderID === 'aws' ? `Subnet mask must be at most /${validators.SERVICE_CIDR_MAX}.` : `Range must be private. Subnet mask must be at most /${validators.SERVICE_CIDR_MAX}.`}
-          extendedHelpText={constants.serviceCIDRHint}
+          extendedHelpText={(
+            <>
+              {constants.serviceCIDRHint}
+              {privateRangesHint}
+            </>
+          )}
           showHelpTextOnError={false}
         />
       </GridItem>
@@ -149,7 +159,12 @@ function CIDRFields({
           validate={podCidrValidators}
           disabled={disabled}
           helpText={cloudProviderID === 'aws' ? `Subnet mask must allow for at least ${validators.POD_NODES_MIN} nodes.` : `Range must be private. Subnet mask must allow for at least ${validators.POD_NODES_MIN} nodes.`}
-          extendedHelpText={constants.podCIDRHint}
+          extendedHelpText={(
+            <>
+              {constants.podCIDRHint}
+              {privateRangesHint}
+            </>
+          )}
           showHelpTextOnError={false}
         />
       </GridItem>
