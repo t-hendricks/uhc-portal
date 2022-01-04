@@ -15,6 +15,8 @@
 # limitations under the License.
 #
 
+# Based on https://github.com/RedHatInsights/insights-frontend-builder-common/blob/master/src/release.sh
+
 # This script builds the OCM portal code and pushes it to the Insights
 # deployment repositories. It is called via git hooks that trigger Jenkins jobs
 # when code is merged to the 'master', 'candidate' or ' stable' branches.
