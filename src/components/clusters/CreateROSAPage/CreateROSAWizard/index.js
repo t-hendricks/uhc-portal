@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import {
-  isValid, reset, getFormValues,
+  isValid, reset, formValueSelector, getFormValues,
 } from 'redux-form';
 import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
@@ -16,12 +16,14 @@ import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 const mapStateToProps = (state) => {
   const { organization } = state.userProfile;
+  const valueSelector = formValueSelector('CreateCluster');
 
   return ({
     product: normalizedProducts.ROSA,
     isValid: isValid('CreateCluster')(state),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'), // TODO: change 'osd' to 'rosa'
     cloudProviderID: 'aws',
+    installToVPCSelected: valueSelector(state, 'install_to_vpc'),
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
     organization,

@@ -33,13 +33,17 @@ const mapStateToProps = (state, ownProps) => {
   const product = selectedProduct || ownProps.product;
   const ccsCredentialsValidityResponse = state.ccsInquiries.ccsCredentialsValidity;
 
+  const isCCS = valueSelector(state, 'byoc') === 'true';
+
   return ({
     isValid: isValid('CreateCluster')(state),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     ccsCredentials: ccsCredentialsSelector(state),
+    isCCS,
     isCCSCredentialsValidationNeeded: isCCSCredentialsValidationNeeded(state),
-    ccsValidationPending: ccsCredentialsValidityResponse.pending && valueSelector(state, 'byoc') === 'true',
+    ccsValidationPending: ccsCredentialsValidityResponse.pending && isCCS,
     cloudProviderID: valueSelector(state, 'cloud_provider'),
+    installToVPCSelected: valueSelector(state, 'install_to_vpc'),
 
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,

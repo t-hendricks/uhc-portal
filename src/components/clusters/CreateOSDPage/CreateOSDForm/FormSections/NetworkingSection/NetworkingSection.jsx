@@ -6,8 +6,9 @@ import {
 } from '@patternfly/react-core';
 
 import { constants } from '../../CreateOSDFormConstants';
-import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import validators from '../../../../../../common/validators';
+import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
+import ReduxCheckbox from '../../../../../common/ReduxFormComponents/ReduxCheckbox';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import InstallToVPC from './InstallToVPC';
 
@@ -17,8 +18,6 @@ import {
   HOST_PREFIX_PLACEHOLDER,
   podCidrPlaceholder,
 } from './networkingPlaceholders';
-
-import './NetworkingSection.scss';
 
 const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
 const serviceDisjointSubnets = validators.disjointSubnets('network_service_cidr');
@@ -38,7 +37,6 @@ function NetworkingSection({
   isCCS,
   selectedRegion,
   installToVPCSelected,
-  isWizard,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -128,18 +126,25 @@ function NetworkingSection({
             ),
           }]}
           defaultValue="basic"
-          disableDefaultValueHandling={isWizard}
         />
       </FormGroup>
       {
         mode === 'advanced' && isCCS && (
-          <InstallToVPC
-            selectedRegion={selectedRegion}
-            isMultiAz={isMultiAz}
-            selected={installToVPCSelected}
-            cloudProviderID={cloudProviderID}
-            isWizard={isWizard}
-          />
+          <>
+            <GridItem>
+              <Field
+                component={ReduxCheckbox}
+                name="install_to_vpc"
+                label="Install into an existing VPC"
+              />
+            </GridItem>
+            <InstallToVPC
+              selectedRegion={selectedRegion}
+              isMultiAz={isMultiAz}
+              selected={installToVPCSelected}
+              cloudProviderID={cloudProviderID}
+            />
+          </>
         )
       }
       { mode === 'advanced'
@@ -299,11 +304,9 @@ function NetworkingSection({
 
 NetworkingSection.defaultProps = {
   isCCS: false,
-  isWizard: false,
 };
 
 NetworkingSection.propTypes = {
-  isWizard: PropTypes.bool,
   pending: PropTypes.bool,
   mode: PropTypes.string,
   toggleNetwork: PropTypes.func,

@@ -8,6 +8,8 @@ import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/Re
 import AvailabilityZoneSelection, { PLACEHOLDER_VALUE } from './AvailabilityZoneSelection';
 import { required, validateUniqueAZ, validateValueNotPlaceholder } from '../../../../../../common/validators';
 
+import './SubnetFields.scss';
+
 const SingleSubnetFieldsRow = ({
   showLabels = false,
   index,
