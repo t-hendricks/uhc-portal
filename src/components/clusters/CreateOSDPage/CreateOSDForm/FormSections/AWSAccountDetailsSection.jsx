@@ -11,7 +11,7 @@ import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox'
 function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
   return (
     <>
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
           name="account_id"
@@ -33,16 +33,16 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           isRequired
         />
       </GridItem>
-      <GridItem md={7} lg={8} />
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem md={6} />
+      <GridItem md={6}>
         <Title headingLevel="h4">AWS IAM user credentials</Title>
       </GridItem>
-      <GridItem sm={12} md={10} lg={8}>
+      <GridItem>
         { !isWizard && (
           <Alert className="bottom-alert" variant="warning" title={billingModelConstants.awsCredentialsWarning} isInline />
         )}
       </GridItem>
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
           name="access_key_id"
@@ -54,8 +54,8 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           isRequired
         />
       </GridItem>
-      <GridItem md={7} lg={8} />
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem md={6} />
+      <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
           name="secret_access_key"
@@ -67,7 +67,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           isRequired
         />
       </GridItem>
-      <GridItem md={7} lg={8} />
+      <GridItem md={6} />
       <GridItem>
         <Field
           component={ReduxCheckbox}

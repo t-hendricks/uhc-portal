@@ -14,7 +14,7 @@ import GCPVPCSubnet from '../../../CreateOSDWizard/NetworkScreen/GCPVPCSubnet';
 function GCPNetworkConfigSection({ isWizard }) {
   return (
     <>
-      <GridItem sm={12} md={3}>
+      <GridItem md={3}>
         <Field
           component={isWizard ? GCPVPCName : ReduxVerticalFormGroup}
           name="vpc_name"
@@ -25,7 +25,7 @@ function GCPNetworkConfigSection({ isWizard }) {
           emptyPlaceholder="No existing VPCs"
         />
       </GridItem>
-      <GridItem sm={12} md={3}>
+      <GridItem md={3}>
         <Field
           component={isWizard ? GCPVPCSubnet : ReduxVerticalFormGroup}
           name="control_plane_subnet"
@@ -36,7 +36,7 @@ function GCPNetworkConfigSection({ isWizard }) {
           emptyPlaceholder="No subnet names"
         />
       </GridItem>
-      <GridItem sm={12} md={3}>
+      <GridItem md={3}>
         <Field
           component={isWizard ? GCPVPCSubnet : ReduxVerticalFormGroup}
           name="compute_subnet"

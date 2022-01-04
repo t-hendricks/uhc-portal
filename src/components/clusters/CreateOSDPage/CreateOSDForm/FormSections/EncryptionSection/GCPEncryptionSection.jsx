@@ -16,7 +16,7 @@ import KMSKeySelect from './KMSKeySelect';
 function GCPCustomerManagedEncryption({ selectedRegion }) {
   return (
     <>
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem md={6}>
         <FormGroup
           label="Key ring location"
           fieldId="key_location"
@@ -30,9 +30,9 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           />
         </FormGroup>
       </GridItem>
-      <GridItem md={7} lg={8} />
+      <GridItem md={6} />
 
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem md={6}>
         <Field
           component={KMSKeyRingSelect}
           name="key_ring"
@@ -48,9 +48,9 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           className="pf-c-form-control"
         />
       </GridItem>
-      <GridItem md={7} lg={8} />
+      <GridItem md={6} />
 
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem md={6}>
         <Field
           component={KMSKeySelect}
           name="key_name"
@@ -65,9 +65,9 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           className="pf-c-form-control"
         />
       </GridItem>
-      <GridItem md={7} lg={8} />
+      <GridItem md={6} />
 
-      <GridItem sm={12} md={5} lg={4}>
+      <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
           name="kms_service_account"
@@ -84,7 +84,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           showHelpTextOnError={false}
         />
       </GridItem>
-      <GridItem md={7} lg={8} />
+      <GridItem md={6} />
     </>
   );
 }

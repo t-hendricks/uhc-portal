@@ -152,7 +152,7 @@ class Overview extends Component {
               usedMem={usedMem}
             />
             {totalConnectedClusters > 0 && (
-            <GridItem md={6} sm={12}>
+            <GridItem md={6}>
               <ClustersWithIssuesTableCard
                 unhealthyClusters={unhealthyClusters}
                 viewOptions={viewOptions}
@@ -160,13 +160,13 @@ class Overview extends Component {
             </GridItem>
             )}
             {showInsightsAdvisorWidget && (
-              <GridItem md={6} sm={12}>
+              <GridItem md={6}>
                 <InsightsAdvisorCard
                   overview={insightsOverview.overview}
                 />
               </GridItem>
             )}
-            <GridItem md={6} sm={12}>
+            <GridItem md={6}>
               <Card className="ocm-overview-clusters__card">
                 <CardTitle>
                   Telemetry
@@ -192,11 +192,11 @@ class Overview extends Component {
               </Card>
             </GridItem>
             {userAccess.fulfilled && userAccess.data !== undefined && userAccess.data === true && (
-              <GridItem md={6} sm={12}>
+              <GridItem md={6}>
                 <CostCard />
               </GridItem>
             )}
-            <GridItem md={6} sm={12}>
+            <GridItem md={6}>
               <Card className="ocm-overview-clusters__card">
                 <CardTitle>
                   Update status
@@ -223,7 +223,7 @@ class Overview extends Component {
                 </CardBody>
               </Card>
             </GridItem>
-            <GridItem span={12}>
+            <GridItem>
               <ExpiredTrialsCard />
             </GridItem>
           </Grid>

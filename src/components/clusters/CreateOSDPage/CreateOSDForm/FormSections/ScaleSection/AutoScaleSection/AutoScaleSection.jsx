@@ -191,7 +191,7 @@ class AutoScaleSection extends React.Component {
 
     return (
       <>
-        <GridItem span={12} id="autoscaling">
+        <GridItem id="autoscaling">
           <FormGroup
             fieldId="autoscaling"
             label="Autoscaling"

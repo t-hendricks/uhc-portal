@@ -36,6 +36,7 @@ import CreateClusterPage from '../clusters/CreateClusterPage';
 import RegisterCluster from '../clusters/RegisterCluster';
 import CreateOSDPage from '../clusters/CreateOSDPage';
 import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
+import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
 import InstallAWS from '../clusters/install/InstallAWS';
 import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
@@ -79,7 +80,7 @@ import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
 import ConnectedInstallAwsARM from '../clusters/install/InstallAwsARM';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
-import CreateROSAWelcome from '../clusters/CreateROSAWelcome';
+import CreateROSAWelcome from '../clusters/CreateROSAPage/CreateROSAWelcome';
 import EntitlementConfig from '../common/EntitlementConfig/index';
 
 const { AssistedUiRouter } = OCM;
@@ -190,6 +191,7 @@ function Router({ history }) {
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
             <TermsGuardedRoute path="/create/rosa/welcome" history={history} render={() => <CreateROSAWelcome />} />
+            <TermsGuardedRoute path="/create/rosa/wizard" history={history} render={() => <CreateROSAWizard product={normalizedProducts.OSD} />} />
             <Route path="/create" component={CreateClusterPage} />
             <Route path="/details/s/:subscriptionID/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
             <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />

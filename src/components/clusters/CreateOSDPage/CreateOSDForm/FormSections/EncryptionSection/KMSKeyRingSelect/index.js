@@ -1,19 +1,21 @@
+import isEqual from 'lodash/isEqual';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
 import { getGCPKeyRings } from '../../../../CreateOSDWizard/ccsInquiriesActions';
+import ccsCredentialsSelector from '../../../../CreateOSDWizard/credentialsSelector';
 
 import DynamicSelect from '../../../../../../common/DynamicSelect';
 
 const mapStateToProps = (state) => {
   const { gcpKeyRings } = state.ccsInquiries;
   const valueSelector = formValueSelector('CreateCluster');
-  const gcpCredentialsJSON = valueSelector(state, 'gcp_service_account');
+  const credentials = ccsCredentialsSelector(state);
   const keyLocation = valueSelector(state, 'key_location');
-  const hasDependencies = !!(gcpCredentialsJSON && keyLocation);
+  const hasDependencies = !!(credentials && keyLocation);
   const matchesDependencies = (
     gcpKeyRings.cloudProvider === 'gcp'
-    && gcpKeyRings.credentials === gcpCredentialsJSON
+    && isEqual(gcpKeyRings.credentials, credentials)
     && gcpKeyRings.keyLocation === keyLocation
   );
   return ({
@@ -30,10 +32,10 @@ const mapDispatchToProps = {
   loadData: () => (dispatch, getState) => {
     const state = getState();
     const valueSelector = formValueSelector('CreateCluster');
-    const gcpCredentialsJSON = valueSelector(state, 'gcp_service_account');
+    const credentials = ccsCredentialsSelector(state);
     const keyLocation = valueSelector(state, 'key_location');
 
-    dispatch(getGCPKeyRings(gcpCredentialsJSON, keyLocation));
+    dispatch(getGCPKeyRings(credentials, keyLocation));
   },
 };
 

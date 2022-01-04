@@ -42,9 +42,7 @@ exports[`<EditTaintsModal /> renders correctl 1`] = `
       <GridItem
         span={7}
       />
-      <GridItem
-        span={12}
-      >
+      <GridItem>
         <FieldArray
           component={[Function]}
           isEditing={true}

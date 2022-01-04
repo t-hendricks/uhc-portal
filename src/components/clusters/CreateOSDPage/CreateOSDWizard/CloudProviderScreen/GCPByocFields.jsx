@@ -13,17 +13,17 @@ import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpl
 function GCPByocFields({ isValidating }) {
   return (
     <>
-      <GridItem span={12}>
+      <GridItem>
         <Alert variant="info" isInline title="Customer cloud subscription">
           Provision your cluster in a Google Cloud Platform account owned by you or your company
           to leverage your existing relationship and
           pay Google Cloud Platform directly for public cloud costs.
         </Alert>
       </GridItem>
-      <GridItem span={12}>
+      <GridItem>
         <Title headingLevel="h3">GCP service account</Title>
       </GridItem>
-      <GridItem span={12}>
+      <GridItem>
         <ExpandableSection toggleText="Prerequisites">
           <TextContent>
             Successful cluster provisioning requires that:
@@ -57,7 +57,7 @@ function GCPByocFields({ isValidating }) {
           </TextContent>
         </ExpandableSection>
       </GridItem>
-      <GridItem sm={12} md={5}>
+      <GridItem md={5}>
         <Field
           component={ReduxFileUpload}
           validate={[required, validateGCPServiceAccount]}

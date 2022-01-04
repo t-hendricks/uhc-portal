@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { FormGroup, FormSelect, FormSelectOption } from '@patternfly/react-core';
+import PopoverHint from '../PopoverHint';
 
 class DropDownSelect extends React.Component {
   state = {
@@ -23,6 +24,8 @@ class DropDownSelect extends React.Component {
       input,
       disabled,
       isFormGroup,
+      isRequired,
+      extendedHelpText,
       ...extraProps
     } = this.props;
     const { value } = this.state;
@@ -52,6 +55,8 @@ class DropDownSelect extends React.Component {
         fieldId={input.name}
         label={label}
         validated={touched && error ? 'error' : null}
+        isRequired={isRequired}
+        labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
         helperText={helpText}
         helperTextInvalid={touched && error ? `${helpText} ${error}` : ''}
       >
@@ -79,6 +84,8 @@ DropDownSelect.propTypes = {
   }).isRequired,
   disabled: PropTypes.bool,
   isFormGroup: PropTypes.bool,
+  isRequired: PropTypes.bool,
+  extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };
 
 DropDownSelect.defaultProps = {

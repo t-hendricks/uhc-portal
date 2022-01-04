@@ -4,8 +4,6 @@ const row = {
     kind: 'RoleBinding',
     href: '/api/accounts_mgmt/v1/subscriptions/1kZocg1yV75YxwMX9cwGWGrIwdW/role_bindings/1Ta2R08vrZ2ZZ9fjzH5GCa5XGtL',
     type: 'RoleBinding',
-    account_username: 'Doris Hudson',
-    account_email: '***REMOVED***',
     subscription: {
       id: '1ysDo6YJwgOn30rquCQV78ZfaWr',
       kind: 'Subscription',
@@ -14,6 +12,8 @@ const row = {
       id: '1Ta2R4957S9M0Vk5IdEQJPG3L0N',
       kind: 'Account',
       href: '/api/accounts_mgmt/v1/accounts/1Ta2R4957S9M0Vk5IdEQJPG3L0N',
+      username: 'Doris Hudson',
+      email: '***REMOVED***',
     },
     organization: {
       kind: 'Organization',

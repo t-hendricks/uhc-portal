@@ -22,7 +22,7 @@
     "@redhat-cloud-services/frontend-components-notifications": "^3.1.0",
     "@redhat-cloud-services/frontend-components-utilities": "^3.1.1",
     "@redhat-cloud-services/rule-components": "^3.1.1",
-    "@reduxjs/toolkit": "^1.5.1",
+    "@reduxjs/toolkit": "^1.6.2",
     "@sentry/browser": "5.19.1",
     "@sentry/integrations": "^5.19.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
@@ -37,13 +37,13 @@
     "http-proxy-middleware": "^1.0.3",
     "i18next": "^20.4.0",
     "i18next-browser-languagedetector": "^6.1.2",
-    "immer": "^8.0.0",
+    "immer": "^9.0.6",
     "imports-loader": "^2.0.0",
     "jsonschema": "^1.2.10",
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "netmask": "^1.0.6",
-    "openshift-assisted-ui-lib": "2.0.4",
+    "openshift-assisted-ui-lib": "2.0.5",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
@@ -67,6 +67,7 @@
     "redux-promise-middleware": "^6.1.2",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "screenfull": "^5.2.0",
     "semver": "^7.3.4",
     "swr": "^0.5.6",
     "uuid": "^8.1.0",
@@ -129,7 +130,8 @@
     "yargs": "^15.0.0"
   },
   "resolutions": {
-    "is-in-subnet": "3.1.0"
+    "is-in-subnet": "3.1.0",
+    "jsprim": "1.4.2"
   },
   "jest": {
     "verbose": true,

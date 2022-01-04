@@ -16,6 +16,7 @@ const Insights = ({
   enableRule,
   cluster,
   openModal,
+  addNotification,
 }) => {
   const status = get(insightsData, 'status');
 
@@ -45,6 +46,7 @@ const Insights = ({
       insightsData={insightsData}
       enableRule={enableRule}
       openModal={openModal}
+      addNotification={addNotification}
     />
   );
 };
@@ -54,6 +56,7 @@ Insights.propTypes = {
   insightsData: PropTypes.object,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
+  addNotification: PropTypes.func.isRequired,
 };
 
 export default Insights;

@@ -55,6 +55,10 @@ const reviewValues = {
   name: {
     title: 'Cluster name',
   },
+  cluster_version: {
+    title: 'Version',
+    valueTransform: value => value.raw_id,
+  },
   region: {
     title: 'Region',
   },

@@ -1,13 +1,15 @@
 .ocm-upgrade-schedule-selection {
   padding-left: var(--pf-global--spacer--lg);
-  margin-bottom: var(--pf-global--spacer--sm);
+  margin-bottom: var(--pf-global--spacer--lg);
   .pf-c-select > ul {
     max-height: 300px;
     overflow-y: auto;
   }
 }
 .ocm-c-upgrade-policy-radios {
-  padding-bottom: var(--pf-global--spacer--sm);
+  .pf-c-radio {
+    margin-bottom: var(--pf-global--spacer--lg);
+  }
 }
 .ocm-c-upgrade-node-draining-title {
   margin-bottom: var(--pf-global--spacer--sm);
@@ -19,12 +21,15 @@
   font-weight: var(--pf-global--FontWeight--Normal);
 }
 
-.ocm-c-upgrades-pdb-select .pf-c-select { 
-    width: auto;
-    min-width: 150px;
-  > ul {
-    max-height: 300px;
-    overflow-y: auto;
+.ocm-c-upgrades-pdb-select {
+  margin-top: var(--pf-global--spacer--md);
+  .pf-c-select {
+      width: auto;
+      min-width: 150px;
+    > ul {
+      max-height: 300px;
+      overflow-y: auto;
+    }
   }
 }
 
@@ -32,8 +37,8 @@
   margin-top: var(--pf-global--spacer--lg);
   grid-gap: 24px;
 }
-  
- 
+
+
 .ocm-c-upgrade-monitoring-top{
   margin-top: var(--pf-global--spacer--sm);
 }

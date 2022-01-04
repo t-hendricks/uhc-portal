@@ -235,6 +235,7 @@ class InsightsTable extends React.Component {
       insightsData,
       enableRule,
       cluster,
+      addNotification,
     } = this.props;
 
     const {
@@ -364,9 +365,24 @@ class InsightsTable extends React.Component {
 
                 return [{
                   title: `${disabled ? 'Enable' : 'Disable'} recommendation`,
-                  onClick: () => {
+                  onClick: async () => {
                     if (disabled) {
-                      enableRule(ruleId, errorKey);
+                      try {
+                        await enableRule(ruleId, errorKey);
+                        addNotification({
+                          title: 'Recommendation successfully enabled',
+                          variant: 'success',
+                          dismissable: true,
+                          dismissDelay: 4000,
+                        });
+                      } catch (error) {
+                        addNotification({
+                          title: `${error}`,
+                          variant: 'danger',
+                          dismissable: true,
+                          dismissDelay: 4000,
+                        });
+                      }
                     } else {
                       this.onRuleDisable(ruleId, errorKey);
                     }
@@ -388,7 +404,7 @@ class InsightsTable extends React.Component {
               )}
               emptyStateIcon={EmptyTableIcon}
             />
-            <OnRuleDisableFeedbackModal />
+            <OnRuleDisableFeedbackModal addNotification={addNotification} />
           </CardBody>
         </Card>
       </div>
@@ -407,6 +423,7 @@ InsightsTable.propTypes = {
   insightsData: PropTypes.object.isRequired,
   enableRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
+  addNotification: PropTypes.func.isRequired,
 };
 
 export default InsightsTable;

@@ -10,10 +10,10 @@ import ExternalLink from '../../common/ExternalLink';
 import '../CreateOSDPage/CreateOSDForm/CreateOSDForm.scss';
 
 function UserWorkloadMonitoringSection({ parent, disableUVM }) {
-  const title = <Title headingLevel="h3" className="enableuwm"> Monitoring </Title>;
+  const title = <Title headingLevel="h3"> Monitoring </Title>;
   return (
     <>
-      {parent === 'create' ? <GridItem span={12}>{title}</GridItem> : title}
+      {parent === 'create' ? <GridItem>{title}</GridItem> : title}
       <FormGroup
         fieldId="enable_user_workload_monitoring"
         id="enable_user_workload_monitoring"

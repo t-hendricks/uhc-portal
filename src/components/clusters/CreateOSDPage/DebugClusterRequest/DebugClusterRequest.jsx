@@ -28,7 +28,7 @@ const DebugClusterRequest = ({ formValues, cloudProviderID, product }) => {
   }
 
   return (
-    <GridItem span={12}>
+    <GridItem>
       <Banner variant="info">
         <ExpandableSection toggleText="Debug: cluster request to be sent">
           <pre>

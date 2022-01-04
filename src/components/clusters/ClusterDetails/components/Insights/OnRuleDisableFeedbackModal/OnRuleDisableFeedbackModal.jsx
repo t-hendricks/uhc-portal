@@ -42,13 +42,28 @@ class OnRuleDisableFeedbackModal extends React.Component {
       isRuleDetailsPage,
       isManagedCluster,
       disableRule,
+      addNotification,
     } = this.props;
 
     const { feedback } = this.state;
 
-    await sendFeedback(clusterId, ruleId, errorKey, feedback);
-    await disableRule(clusterId, ruleId, errorKey, isRuleDetailsPage, isManagedCluster);
-
+    try {
+      await sendFeedback(clusterId, ruleId, errorKey, feedback);
+      await disableRule(clusterId, ruleId, errorKey, isRuleDetailsPage, isManagedCluster);
+      addNotification({
+        title: 'Recommendation successfully disabled',
+        variant: 'success',
+        dismissable: true,
+        dismissDelay: 4000,
+      });
+    } catch (error) {
+      addNotification({
+        title: `${error}`,
+        variant: 'danger',
+        dismissable: true,
+        dismissDelay: 4000,
+      });
+    }
     return true;
   };
 
@@ -120,6 +135,7 @@ OnRuleDisableFeedbackModal.propTypes = {
   disableRule: PropTypes.func.isRequired,
   isRuleDetailsPage: PropTypes.bool.isRequired,
   isManagedCluster: PropTypes.bool.isRequired,
+  addNotification: PropTypes.func.isRequired,
 };
 
 export default OnRuleDisableFeedbackModal;

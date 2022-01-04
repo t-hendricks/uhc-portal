@@ -1,38 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<InstallToVPC> renders correctly when checkbox is not selected 1`] = `
-<Fragment>
-  <GridItem>
-    <Field
-      component={[Function]}
-      label="Install into an existing VPC"
-      name="install_to_vpc"
-    />
-  </GridItem>
-</Fragment>
-`;
+exports[`<InstallToVPC> renders correctly when checkbox is not selected 1`] = `<Fragment />`;
 
-exports[`<InstallToVPC> renders correctly when checkbox is not selected 2`] = `
-<Fragment>
-  <GridItem>
-    <Field
-      component={[Function]}
-      label="Install into an existing VPC"
-      name="install_to_vpc"
-    />
-  </GridItem>
-</Fragment>
-`;
+exports[`<InstallToVPC> renders correctly when checkbox is not selected 2`] = `<Fragment />`;
 
 exports[`<InstallToVPC> renders correctly when checkbox is selected 1`] = `
 <Fragment>
-  <GridItem>
-    <Field
-      component={[Function]}
-      label="Install into an existing VPC"
-      name="install_to_vpc"
-    />
-  </GridItem>
   <GridItem>
     <Title
       headingLevel="h4"
@@ -62,13 +35,6 @@ exports[`<InstallToVPC> renders correctly when checkbox is selected 1`] = `
 
 exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
 <Fragment>
-  <GridItem>
-    <Field
-      component={[Function]}
-      label="Install into an existing VPC"
-      name="install_to_vpc"
-    />
-  </GridItem>
   <GridItem>
     <Title
       headingLevel="h4"
@@ -101,13 +67,6 @@ exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
 
 exports[`<InstallToVPC> renders correctly when selected for single AZ 1`] = `
 <Fragment>
-  <GridItem>
-    <Field
-      component={[Function]}
-      label="Install into an existing VPC"
-      name="install_to_vpc"
-    />
-  </GridItem>
   <GridItem>
     <Title
       headingLevel="h4"

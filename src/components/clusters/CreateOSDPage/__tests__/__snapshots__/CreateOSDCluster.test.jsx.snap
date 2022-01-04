@@ -67,100 +67,104 @@ exports[`CreateOSDCluster ManagedClusterForm should render managed form 1`] = `
       <div
         className="ocm-page"
       >
-        <Form
-          onSubmit={[MockFunction]}
+        <PageSection
+          variant="light"
         >
-          <Grid
-            hasGutter={true}
+          <Form
+            onSubmit={[MockFunction]}
           >
-            <CreateOSDForm
-              autoScaleMaxNodesValue="0"
-              autoScaleMinNodesValue="0"
-              autoscalingEnabled={false}
-              billingModel="standard"
-              canAutoScale={true}
-              change={[MockFunction]}
-              closeModal={[MockFunction]}
-              cloudProviderID="aws"
-              clustersQuota={
-                Object {
-                  "aws": Object {
-                    "byoc": Object {
-                      "multiAz": Object {
-                        "available": 5,
+            <Grid
+              hasGutter={true}
+            >
+              <CreateOSDForm
+                autoScaleMaxNodesValue="0"
+                autoScaleMinNodesValue="0"
+                autoscalingEnabled={false}
+                billingModel="standard"
+                canAutoScale={true}
+                change={[MockFunction]}
+                closeModal={[MockFunction]}
+                cloudProviderID="aws"
+                clustersQuota={
+                  Object {
+                    "aws": Object {
+                      "byoc": Object {
+                        "multiAz": Object {
+                          "available": 5,
+                        },
+                        "singleAz": Object {
+                          "available": 5,
+                        },
+                        "totalAvailable": 10,
                       },
-                      "singleAz": Object {
-                        "available": 5,
+                      "rhInfra": Object {
+                        "multiAz": Object {
+                          "available": 5,
+                        },
+                        "singleAz": Object {
+                          "available": 5,
+                        },
+                        "totalAvailable": 10,
                       },
-                      "totalAvailable": 10,
                     },
-                    "rhInfra": Object {
-                      "multiAz": Object {
-                        "available": 5,
+                    "gcp": Object {
+                      "rhInfra": Object {
+                        "multiAz": Object {
+                          "available": 5,
+                        },
+                        "singleAz": Object {
+                          "available": 5,
+                        },
+                        "totalAvailable": 10,
                       },
-                      "singleAz": Object {
-                        "available": 5,
-                      },
-                      "totalAvailable": 10,
                     },
-                  },
-                  "gcp": Object {
-                    "rhInfra": Object {
-                      "multiAz": Object {
-                        "available": 5,
-                      },
-                      "singleAz": Object {
-                        "available": 5,
-                      },
-                      "totalAvailable": 10,
-                    },
-                  },
-                  "hasAwsQuota": true,
-                  "hasGcpQuota": true,
-                  "hasMarketplaceProductQuota": false,
-                  "hasProductQuota": true,
-                  "hasStandardOSDQuota": true,
+                    "hasAwsQuota": true,
+                    "hasGcpQuota": true,
+                    "hasMarketplaceProductQuota": false,
+                    "hasProductQuota": true,
+                    "hasStandardOSDQuota": true,
+                  }
                 }
-              }
-              getMarketplaceQuota={[Function]}
-              isBYOCModalOpen={false}
-              openModal={[MockFunction]}
-              pending={false}
-              privateClusterSelected={false}
-              product="OSD"
-            />
-            <GridItem>
-              <Split
-                className="create-osd-form-button-split"
-                hasGutter={true}
-              >
-                <SplitItem>
-                  <Button
-                    isDisabled={false}
-                    onClick={[MockFunction]}
-                    type="submit"
-                    variant="primary"
-                  >
-                    Create cluster
-                  </Button>
-                </SplitItem>
-                <SplitItem>
-                  <Link
-                    to="/"
-                  >
+                getMarketplaceQuota={[Function]}
+                isBYOCModalOpen={false}
+                openModal={[MockFunction]}
+                pending={false}
+                privateClusterSelected={false}
+                product="OSD"
+              />
+              <GridItem>
+                <Split
+                  className="create-osd-form-button-split"
+                  hasGutter={true}
+                >
+                  <SplitItem>
                     <Button
                       isDisabled={false}
-                      variant="secondary"
+                      onClick={[MockFunction]}
+                      type="submit"
+                      variant="primary"
                     >
-                      Cancel
+                      Create cluster
                     </Button>
-                  </Link>
-                </SplitItem>
-                <SplitItem />
-              </Split>
-            </GridItem>
-          </Grid>
-        </Form>
+                  </SplitItem>
+                  <SplitItem>
+                    <Link
+                      to="/"
+                    >
+                      <Button
+                        isDisabled={false}
+                        variant="secondary"
+                      >
+                        Cancel
+                      </Button>
+                    </Link>
+                  </SplitItem>
+                  <SplitItem />
+                </Split>
+              </GridItem>
+            </Grid>
+          </Form>
+        </PageSection>
       </div>
     </Card>
   </PageSection>

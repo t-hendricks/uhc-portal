@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import {
-  Divider, Title, GridItem,
+  Divider, Title, GridItem, Alert, TextContent, TextVariants, Text,
 } from '@patternfly/react-core';
 
 import ExternalLink from '../../../common/ExternalLink';
@@ -18,7 +18,7 @@ function UpgradeSettingsFields({
 }) {
   return (
     <>
-      <GridItem span={12} className="ocm-c-upgrade-policy-radios">
+      <GridItem className="ocm-c-upgrade-policy-radios">
         <Field
           component={RadioButtons}
           name="upgrade_policy"
@@ -29,18 +29,6 @@ function UpgradeSettingsFields({
             }
           }}
           options={[
-            {
-              value: 'automatic',
-              label: 'Automatic',
-              description: 'Clusters will be automatically updated based on your defined day and start time when new versions are available',
-              extraField: isAutomatic && (
-              <Field
-                component={UpgradeScheduleSelection}
-                name="automatic_upgrade_schedule"
-                isDisabled={isDisabled}
-              />
-              ),
-            },
             {
               value: 'manual',
               label: 'Manual',
@@ -63,21 +51,43 @@ function UpgradeSettingsFields({
                 </>
               ),
             },
+            {
+              value: 'automatic',
+              label: 'Automatic',
+              description: 'Clusters will be automatically updated based on your defined day and start time when new versions are available',
+              extraField: isAutomatic && (
+              <Field
+                component={UpgradeScheduleSelection}
+                name="automatic_upgrade_schedule"
+                isDisabled={isDisabled}
+              />
+              ),
+            },
           ]}
           defaultValue="manual"
           disableDefaultValueHandling // interferes with enableReinitialize.
         />
+        <Alert
+          id="automatic-cluster-updates-alert"
+          isInline
+          variant="info"
+          title="Automatic updates occur when a new version becomes available at least two days prior to your selected start time."
+        />
       </GridItem>
       {showDivider && <Divider />}
-      <GridItem span={12}>
+      <GridItem>
         <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">Node draining</Title>
-        You may set a grace period for how long Pod Disruption Budget-protected workloads will
-        {' '}
-        be respected during updates. After this grace period, any workloads protected by
-        {' '}
-        Pod Disruption Budgets that have not been successfully drained from a node will be
-        {' '}
-        forcibly evicted.
+        <TextContent>
+          <Text component={TextVariants.p}>
+            You may set a grace period for how long Pod Disruption Budget-protected workloads will
+            {' '}
+            be respected during updates. After this grace period, any workloads protected by
+            {' '}
+            Pod Disruption Budgets that have not been successfully drained from a node will be
+            {' '}
+            forcibly evicted.
+          </Text>
+        </TextContent>
         <Field
           name="node_drain_grace_period"
           component={PodDistruptionBudgetGraceSelect}

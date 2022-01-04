@@ -63,7 +63,7 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = fa
         </React.Fragment>
       );
     })}
-    <GridItem span={12}>
+    <GridItem>
       <Button
         onClick={() => fields.push({ id: getRandomID(), effect: 'NoSchedule' })}
         icon={<PlusCircleIcon />}

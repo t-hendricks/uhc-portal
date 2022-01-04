@@ -104,13 +104,13 @@ class DownloadAndOSSelection extends React.Component {
       <>
         {isCRC && crcInstructionsMapping[OS]}
         <Grid hasGutter className="os-based-download">
-          <GridItem sm={12} md={3}>
+          <GridItem md={3}>
             {chooser.osDropdown}
           </GridItem>
-          <GridItem sm={12} md={4}>
+          <GridItem md={4}>
             {chooser.archDropdown}
           </GridItem>
-          <GridItem sm={12} md={5}>
+          <GridItem md={5}>
             {chooser.downloadButton}
           </GridItem>
         </Grid>

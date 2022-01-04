@@ -4,19 +4,20 @@ import get from 'lodash/get';
 import moment from 'moment';
 import { Popover, PopoverPosition, Button } from '@patternfly/react-core';
 import { ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
+import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 // eslint-disable-next-line camelcase
 import { global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
 import { subscriptionSupportLevels, normalizedProducts } from '../../../../common/subscriptionTypes';
-import getClusterEvaluationExpiresInDays from '../../../../common/getClusterEvaluationExpiresInDays';
 import { getTrialExpiresInDays, getTrialEndDate } from '../../../../common/getTrialExpiresDates';
 
 function ClusterCreatedIndicator({ cluster }) {
   const osdtrial = get(cluster, 'product.id') === normalizedProducts.OSDTrial;
   const managed = get(cluster, 'managed');
   const supportLevel = get(cluster, 'subscription.support_level');
+  const subscription = get(cluster, 'subscription');
 
   if (osdtrial) {
-    const trialExpiresStr = getTrialExpiresInDays(cluster);
+    const trialExpiresStr = getTrialExpiresInDays(cluster, true);
     const trialEndDate = getTrialEndDate(cluster);
     const bodyContent = (
       <>
@@ -34,7 +35,7 @@ function ClusterCreatedIndicator({ cluster }) {
     return (
       <Popover
         position={PopoverPosition.top}
-        aria-label="Sixty Day Trial"
+        aria-label="Trial Expiration date"
         bodyContent={bodyContent}
       >
         <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
@@ -57,7 +58,6 @@ function ClusterCreatedIndicator({ cluster }) {
   }
 
   // display error that it has expired
-  const evaluationExpiresStr = getClusterEvaluationExpiresInDays(cluster);
   if (supportLevel === subscriptionSupportLevels.NONE) {
     return (
       <Popover
@@ -71,16 +71,32 @@ function ClusterCreatedIndicator({ cluster }) {
       </Popover>
     );
   }
-
+  const OCPTrialExpiresStr = getTrialExpiresInDays(cluster, false);
+  const OCPTrialBodyContent = (
+    <>
+      <h1>
+        <strong>OCP Cluster</strong>
+      </h1>
+      <p>
+        Your OCP cluster will expire in&nbsp;
+        {OCPTrialExpiresStr}
+        &nbsp;on&nbsp;
+        <strong><DateFormat date={subscription.eval_expiration_date} type="onlyDate" /></strong>
+        &nbsp;once expired, your cluster will remain unsupported.
+      </p>
+    </>
+  );
   // display "xx days remaining" for grace period
   return (
     <Popover
       position={PopoverPosition.top}
-      bodyContent={`${evaluationExpiresStr} remaining`}
-      aria-label="Sixty Day Trial"
+      bodyContent={OCPTrialBodyContent}
+      aria-label="Trial Expiration date"
     >
       <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
-        60-day trial
+        {OCPTrialExpiresStr}
+        &nbsp;
+        left
       </Button>
     </Popover>
   );

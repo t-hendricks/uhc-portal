@@ -46,6 +46,10 @@ export const createClusterRequest = ({ cloudProviderID, product }, formData) => 
     clusterRequest.billing_model = 'standard';
   }
 
+  if (formData.cluster_version) {
+    clusterRequest.version = formData.cluster_version;
+  }
+
   if (formData.autoscalingEnabled) {
     const minNodes = parseInt(formData.min_replicas, 10);
     const maxNodes = parseInt(formData.max_replicas, 10);

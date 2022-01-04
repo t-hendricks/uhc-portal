@@ -4,7 +4,6 @@ exports[`<TopOverviewSection /> renders correctly 1`] = `
 <Fragment>
   <GridItem
     md={3}
-    sm={12}
   >
     <Link
       className="overview-clusters-link"
@@ -32,7 +31,6 @@ exports[`<TopOverviewSection /> renders correctly 1`] = `
   <GridItem
     md={9}
     rowSpan={2}
-    sm={12}
   >
     <Card
       className="ocm-c-metrics-charts__card"
@@ -72,7 +70,6 @@ exports[`<TopOverviewSection /> renders correctly 1`] = `
   </GridItem>
   <GridItem
     md={3}
-    sm={12}
   >
     <ClustersWithIssuesCard
       isError={false}

@@ -43,7 +43,7 @@ class ChangePrivacySettingsDialog extends React.Component {
                   It may take up to one hour for the settings to become effective.`;
     const learnMore = (
       <a
-        href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-aws-private-cluster.html"
+        href="https://docs.openshift.com/dedicated/osd_private_connections/private-cluster.html"
         target="_blank"
         rel="noopener noreferrer"
       >
