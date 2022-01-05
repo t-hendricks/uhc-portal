@@ -4,14 +4,17 @@ import {
   Title,
   GridItem,
 } from '@patternfly/react-core';
+import { Field } from 'redux-form';
 
 import SubnetFields from './SubnetFields';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 import GCPNetworkConfigSection from './GCPNetworkConfigSection';
+import ReduxCheckbox from '../../../../../common/ReduxFormComponents/ReduxCheckbox';
+import { constants } from '../../CreateOSDFormConstants';
 
 function InstallToVPC({
-  selectedRegion, isMultiAz, selected, cloudProviderID, isWizard,
+  selectedRegion, isMultiAz, selected, privateLinkSelected, cloudProviderID, isWizard,
 }) {
   return (
     <>
@@ -38,9 +41,22 @@ function InstallToVPC({
                 with a public and a private subnet for each availability zone that you want
                 the cluster installed into.
               </GridItem>
+              {!isWizard && (
+                <Field
+                  component={ReduxCheckbox}
+                  name="use_privatelink"
+                  label="Use a PrivateLink"
+                  helpText={(
+                    <>
+                      {constants.privateLinkHint}
+                    </>
+                  )}
+                />
+              )}
               <SubnetFields
                 isMultiAz={isMultiAz}
                 selectedRegion={selectedRegion}
+                privateLinkSelected={privateLinkSelected}
               />
             </>
           )
@@ -79,6 +95,7 @@ InstallToVPC.propTypes = {
   selectedRegion: PropTypes.string,
   isMultiAz: PropTypes.bool,
   selected: PropTypes.bool,
+  privateLinkSelected: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isWizard: PropTypes.bool,
 };

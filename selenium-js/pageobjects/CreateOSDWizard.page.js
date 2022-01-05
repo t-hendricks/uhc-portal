@@ -43,7 +43,15 @@ class CreateOSDCluster extends Page {
 
   get awsProvider() { return $('div[data-test-id="aws-provider-card"]'); }
 
+  get CCSRadiobutton() { return $('input#byoc-true'); }
+
   get CCSSelected() { return $("input:checked[name='byoc'][value='true']"); }
+
+  get awsAccountIDInput() { return $('input#account_id'); }
+
+  get awsAccessKeyInput() { return $('input#access_key_id'); }
+
+  get awsSecretAccessKeyInput() { return $('input#secret_access_key'); }
 
   get TrialSelected() { return $("input:checked[name='billing_model'][value='standard_trial']"); }
 
@@ -54,6 +62,14 @@ class CreateOSDCluster extends Page {
   get clusterNameInputError() { return $('input#name ~ div.pf-m-error'); }
 
   get primaryButton() { return $('.osd-wizard button.pf-c-button.pf-m-primary'); }
+
+  get publicClusterRadiobutton() { return $('input#cluster_privacy-external'); }
+
+  get privateClusterRadiobutton() { return $('input#cluster_privacy-internal'); }
+
+  get installIntoVPCCheckbox() { return $('input#install_to_vpc'); }
+
+  get usePrivateLinkCheckbox() { return $('input#use_privatelink'); }
 }
 
 export default new CreateOSDCluster();

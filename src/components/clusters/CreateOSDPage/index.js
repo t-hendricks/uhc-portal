@@ -67,6 +67,7 @@ const mapStateToProps = (state, ownProps) => {
     customerManagedEncryptionSelected,
     selectedRegion: valueSelector(state, 'region'),
     installToVPCSelected: valueSelector(state, 'install_to_vpc'),
+    privateLinkSelected: valueSelector(state, 'use_privatelink'),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
     isAutomaticUpgrade: valueSelector(state, 'upgrade_policy') === 'automatic',

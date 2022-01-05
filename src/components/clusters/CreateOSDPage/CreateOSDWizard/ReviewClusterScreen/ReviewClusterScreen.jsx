@@ -69,6 +69,7 @@ function ReviewClusterScreen({
 }) {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
+  const isGCP = formValues.cloud_provider === 'gcp';
   const clusterSettingsFields = [
     'cloud_provider', 'name', 'cluster_version', 'region', 'multi_az',
     !isByoc && 'persistent_storage',
@@ -135,16 +136,15 @@ function ReviewClusterScreen({
         Networking
       </Title>
       <DescriptionList {...listOptions}>
-        {clusterSpecDescriptionItem({ name: 'network_configuration_toggle', formValues })}
-        { formValues.network_configuration_toggle === 'advanced' && (
-          <>
-            {clusterSpecDescriptionItem({ name: 'network_machine_cidr', formValues })}
-            {clusterSpecDescriptionItem({ name: 'network_service_cidr', formValues })}
-            {clusterSpecDescriptionItem({ name: 'network_pod_cidr', formValues })}
-            {clusterSpecDescriptionItem({ name: 'network_host_prefix', formValues })}
-            {clusterSpecDescriptionItem({ name: 'cluster_privacy', formValues })}
-          </>
-        )}
+        {clusterSpecDescriptionItem({ name: 'cluster_privacy', formValues })}
+        {formValues.cluster_privacy === 'internal' && clusterSpecDescriptionItem({ name: 'use_privatelink', formValues })}
+        {clusterSpecDescriptionItem({ name: 'network_machine_cidr', formValues })}
+        {clusterSpecDescriptionItem({ name: 'network_service_cidr', formValues })}
+        {clusterSpecDescriptionItem({ name: 'network_pod_cidr', formValues })}
+        {clusterSpecDescriptionItem({ name: 'network_host_prefix', formValues })}
+        {formValues.install_to_vpc && clusterSpecDescriptionItem({ name: 'install_to_vpc', formValues })}
+        {formValues.install_to_vpc && isAWS && clusterSpecDescriptionItem({ name: 'aws_vpc', formValues })}
+        {formValues.install_to_vpc && isGCP && clusterSpecDescriptionItem({ name: 'gpc_vpc', formValues })}
       </DescriptionList>
       <Title headingLevel="h3">
         Updates

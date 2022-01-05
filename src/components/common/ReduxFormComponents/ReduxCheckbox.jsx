@@ -29,6 +29,7 @@ function ReduxCheckbox(props) {
     input,
     isSwitch = false,
     isHelperTextBeforeField = false,
+    helpText,
     extendedHelpText,
     ...extraProps // any extra props not specified above
   } = props;
@@ -46,6 +47,7 @@ function ReduxCheckbox(props) {
       fieldId={input.name}
       helperTextInvalid={helperTextInvalid()}
       isHelperTextBeforeField={isHelperTextBeforeField}
+      helperText={helpText}
       validated={touched && error ? 'error' : null}
     >
       <Split hasGutter>
@@ -78,6 +80,7 @@ ReduxCheckbox.propTypes = {
   isDisabled: PropTypes.bool,
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   isHelperTextBeforeField: PropTypes.bool,
+  helpText: PropTypes.string,
 };
 
 export default ReduxCheckbox;

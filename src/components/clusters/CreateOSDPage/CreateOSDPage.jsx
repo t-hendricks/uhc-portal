@@ -161,6 +161,7 @@ class CreateOSDPage extends React.Component {
       canEnableEtcdEncryption,
       selectedRegion,
       installToVPCSelected,
+      privateLinkSelected,
       canAutoScale,
       autoscalingEnabled,
       autoScaleMinNodesValue,
@@ -312,6 +313,7 @@ class CreateOSDPage extends React.Component {
                       canEnableEtcdEncryption={canEnableEtcdEncryption}
                       selectedRegion={selectedRegion}
                       installToVPCSelected={installToVPCSelected}
+                      privateLinkSelected={privateLinkSelected}
                       customerManagedEncryptionSelected={customerManagedEncryptionSelected}
                       canAutoScale={canAutoScale}
                       autoscalingEnabled={autoscalingEnabled}
@@ -415,6 +417,7 @@ CreateOSDPage.propTypes = {
   canEnableEtcdEncryption: PropTypes.bool,
   selectedRegion: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
+  privateLinkSelected: PropTypes.bool,
   canAutoScale: PropTypes.bool.isRequired,
   autoscalingEnabled: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,
