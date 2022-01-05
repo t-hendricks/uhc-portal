@@ -57,6 +57,17 @@ const reviewValues = {
   name: {
     title: 'Cluster name',
   },
+  operator_roles_name: {
+    title: 'Operator roles name',
+    valueTransform: (value, allValues) => {
+      // TODO: replace 'ManagedOpenShift' with backend api call/value: https://issues.redhat.com/browse/HAC-354
+      let opRolesName = `ManagedOpenShift-${allValues.name}`;
+      if (allValues.custom_operator_roles_prefix) {
+        opRolesName += `-${allValues.custom_operator_roles_prefix}`;
+      }
+      return opRolesName;
+    },
+  },
   cluster_version: {
     title: 'Version',
     valueTransform: value => value.raw_id,
@@ -304,6 +315,21 @@ const reviewValues = {
       internal: 'Private',
       undefined: 'Public',
     },
+  },
+  associated_aws_id: {
+    title: 'AWS account ID',
+  },
+  installer_role_arn: {
+    title: 'Installer role',
+  },
+  support_role_arn: {
+    title: 'Support Role ARN',
+  },
+  worker_role_arn: {
+    title: 'Worker role',
+  },
+  control_plane_role_arn: {
+    title: 'Control plane role',
   },
 };
 

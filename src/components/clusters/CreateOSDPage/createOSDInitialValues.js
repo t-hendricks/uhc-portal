@@ -1,7 +1,7 @@
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 
 const createOSDInitialValues = ({
-  cloudProviderID, isByoc, isMultiAz, isTrialDefault,
+  cloudProviderID, product, isByoc, isMultiAz, isTrialDefault,
 }) => {
   let defaultNodeCount;
   if (isByoc || isTrialDefault) {
@@ -31,7 +31,7 @@ const createOSDInitialValues = ({
     cluster_privacy: 'external',
     disable_scp_checks: false,
     billing_model: isTrialDefault ? 'standard-trial' : 'standard',
-    product: isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD,
+    product: product || (isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD),
   };
   if (cloudProviderID) {
     initialValues.region = cloudProviderID === 'aws' ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;
