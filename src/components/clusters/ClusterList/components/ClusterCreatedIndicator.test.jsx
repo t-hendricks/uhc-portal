@@ -6,12 +6,15 @@ import {
   subscriptionSettings,
 } from '../../../../common/subscriptionTypes';
 
-const { SUPPORT_LEVEL } = subscriptionSettings;
+const { SUPPORT_LEVEL, EVALUATION_EXPIRATION_DATE } = subscriptionSettings;
 
 describe('<ClusterCreatedIndicator />', () => {
   it('should not crash when the cluster has no subscription info', () => {
     const cluster = {
       managed: false,
+      subscription: {
+        [EVALUATION_EXPIRATION_DATE]: '2020-01-01T12:00:00Z',
+      },
     };
     const wrapper = shallow(<ClusterCreatedIndicator cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
@@ -54,7 +57,6 @@ describe('<ClusterCreatedIndicator />', () => {
     };
     const wrapper = shallow(<ClusterCreatedIndicator cluster={cluster} />);
     expect(wrapper.find('Popover').length).toEqual(1);
-    expect(wrapper.html()).toMatch(/60-day trial/);
   });
 
   it('should render when trial expires', () => {

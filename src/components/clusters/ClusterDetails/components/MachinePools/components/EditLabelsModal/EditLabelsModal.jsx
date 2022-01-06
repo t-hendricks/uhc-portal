@@ -103,7 +103,7 @@ class EditLabelsModal extends Component {
                 />
               </GridItem>
               <GridItem span={7} />
-              <GridItem span={12}>
+              <GridItem>
                 <p className="pf-u-mb-md">
                   Labels help you organize and select resources.
                   Adding labels below will let you query for objects
@@ -124,7 +124,7 @@ class EditLabelsModal extends Component {
                 <GridItem span={7} />
                 <Divider />
                 <GridItem span={7} />
-                <GridItem span={12}>
+                <GridItem>
                   <SpotInstanceInfoAlert />
                 </GridItem>
               </>

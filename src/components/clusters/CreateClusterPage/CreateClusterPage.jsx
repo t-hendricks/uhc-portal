@@ -56,6 +56,7 @@ class CreateCluster extends React.Component {
       const {
         hasOSDQuota,
         hasOSDTrialQuota,
+        rosaCreationWizardFeature,
         organization,
         token,
         assistedInstallerFeature,
@@ -128,6 +129,7 @@ class CreateCluster extends React.Component {
               <Tab eventKey={0} title={tabTitle(0)}>
                 <CloudTab
                   hasOSDQuota={hasOSDQuota}
+                  rosaCreationWizardFeature={rosaCreationWizardFeature}
                   trialEnabled={hasOSDTrialQuota && osdTrialFeature}
                 />
               </Tab>
@@ -155,6 +157,7 @@ CreateCluster.propTypes = {
   hasOSDQuota: PropTypes.bool.isRequired,
   hasOSDTrialQuota: PropTypes.bool.isRequired,
   osdTrialFeature: PropTypes.bool.isRequired,
+  rosaCreationWizardFeature: PropTypes.bool.isRequired,
   organization: PropTypes.shape({
     fulfilled: PropTypes.bool,
     error: PropTypes.bool,

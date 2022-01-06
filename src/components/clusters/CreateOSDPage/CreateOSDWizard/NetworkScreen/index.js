@@ -9,28 +9,22 @@ import NetworkScreen from './NetworkScreen';
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
-  const cloudProviderID = valueSelector(state, 'cloud_provider');
+  const cloudProviderID = ownProps.cloudProviderID || valueSelector(state, 'cloud_provider');
+  const isCCS = valueSelector(state, 'byoc') === 'true';
   const isMultiAz = valueSelector(state, 'multi_az') === 'true';
-  const isByoc = valueSelector(state, 'byoc') === 'true';
   const privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
-  const product = valueSelector(state, 'product');
-  const billingModel = valueSelector(state, 'billingModel');
   const selectedRegion = valueSelector(state, 'region');
-  const networkingMode = valueSelector(state, 'network_configuration_toggle');
-  const installToVPCSelected = valueSelector(state, 'install_to_vpc');
 
   return {
     cloudProviderID,
     isMultiAz,
     privateClusterSelected,
-    product,
-    billingModel,
-    isCCS: isByoc,
     selectedRegion,
-    networkingMode,
-    installToVPCSelected,
     initialValues: createOSDInitialValues({
-      cloudProviderID, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
+      cloudProviderID,
+      isMultiAz,
+      isByoc: isCCS,
+      isTrialDefault: ownProps.isTrialDefault,
     }),
   };
 };

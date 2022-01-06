@@ -2,9 +2,7 @@
 
 exports[`CreateOSDForm; should render 1`] = `
 <Fragment>
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Title
       headingLevel="h3"
     >
@@ -22,9 +20,7 @@ exports[`CreateOSDForm; should render 1`] = `
     toggleBYOCFields={[Function]}
     toggleSubscriptionBilling={[Function]}
   />
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Title
       headingLevel="h3"
     >
@@ -43,14 +39,14 @@ exports[`CreateOSDForm; should render 1`] = `
     showAvailability={true}
     showDNSBaseDomain={false}
   />
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Title
       headingLevel="h3"
     >
       Scale
     </Title>
+  </GridItem>
+  <GridItem>
     <p>
       The number and instance type of worker nodes in your cluster. After cluster creation you will be able to change the number of worker nodes in your cluster, but you will not be able to change the worker node instance type.
     </p>
@@ -74,15 +70,13 @@ exports[`CreateOSDForm; should render 1`] = `
     cloudProviderID="aws"
     isCCS={false}
     isMultiAz={false}
-    isWizard={false}
     mode="basic"
+    pending={false}
     privateClusterSelected={false}
     showClusterPrivacy={true}
     toggleNetwork={[Function]}
   />
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Title
       headingLevel="h3"
     >
@@ -115,9 +109,7 @@ exports[`CreateOSDForm; should render 1`] = `
       Provide an additional layer of data security to your cluster.
     </div>
   </FormGroup>
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Divider />
   </GridItem>
   <GridItem>
@@ -145,9 +137,7 @@ exports[`CreateOSDForm; should render 1`] = `
 
 exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
 <Fragment>
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Title
       headingLevel="h3"
     >
@@ -165,9 +155,7 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
     toggleBYOCFields={[Function]}
     toggleSubscriptionBilling={[Function]}
   />
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Title
       headingLevel="h3"
     >
@@ -186,14 +174,14 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
     showAvailability={true}
     showDNSBaseDomain={false}
   />
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Title
       headingLevel="h3"
     >
       Scale
     </Title>
+  </GridItem>
+  <GridItem>
     <p>
       The number and instance type of worker nodes in your cluster. After cluster creation you will be able to change the number of worker nodes in your cluster, but you will not be able to change the worker node instance type.
     </p>
@@ -217,15 +205,13 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
     cloudProviderID="aws"
     isCCS={false}
     isMultiAz={false}
-    isWizard={false}
     mode="basic"
+    pending={false}
     privateClusterSelected={false}
     showClusterPrivacy={true}
     toggleNetwork={[Function]}
   />
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Title
       headingLevel="h3"
     >
@@ -258,9 +244,7 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
       Provide an additional layer of data security to your cluster.
     </div>
   </FormGroup>
-  <GridItem
-    span={12}
-  >
+  <GridItem>
     <Divider />
   </GridItem>
   <GridItem>

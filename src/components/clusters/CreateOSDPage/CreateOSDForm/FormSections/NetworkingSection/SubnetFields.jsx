@@ -8,6 +8,8 @@ import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/Re
 import AvailabilityZoneSelection, { PLACEHOLDER_VALUE } from './AvailabilityZoneSelection';
 import { required, validateUniqueAZ, validateValueNotPlaceholder } from '../../../../../../common/validators';
 
+import './SubnetFields.scss';
+
 const SingleSubnetFieldsRow = ({
   showLabels = false,
   index,
@@ -22,7 +24,7 @@ const SingleSubnetFieldsRow = ({
 
   return (
     <>
-      <GridItem className="vpc-input-field" sm={12} md={3}>
+      <GridItem className="vpc-input-field" md={3}>
         <Field
           component={AvailabilityZoneSelection}
           name={`az_${index}`}
@@ -31,7 +33,7 @@ const SingleSubnetFieldsRow = ({
           region={selectedRegion}
         />
       </GridItem>
-      <GridItem sm={12} md={3}>
+      <GridItem md={3}>
         <Field
           component={ReduxVerticalFormGroup}
           name={`private_subnet_id_${index}`}
@@ -40,7 +42,7 @@ const SingleSubnetFieldsRow = ({
           validate={required}
         />
       </GridItem>
-      <GridItem sm={12} md={3}>
+      <GridItem md={3}>
         <Field
           component={ReduxVerticalFormGroup}
           name={`public_subnet_id_${index}`}
@@ -49,7 +51,7 @@ const SingleSubnetFieldsRow = ({
           validate={required}
         />
       </GridItem>
-      <GridItem sm={12} md={3} />
+      <GridItem md={3} />
     </>
   );
 };

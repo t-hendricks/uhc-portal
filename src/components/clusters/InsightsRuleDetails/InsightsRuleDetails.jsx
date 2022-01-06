@@ -154,6 +154,7 @@ class InsightsRuleDetails extends Component {
       match,
       setGlobalError,
       enableRule,
+      addNotification,
     } = this.props;
 
     const { cluster } = clusterDetails;
@@ -290,7 +291,29 @@ class InsightsRuleDetails extends Component {
                     </div>
                   </CardBody>
                   <CardFooter>
-                    <Button variant="link" isInline onClick={() => enableRule(externalId, currentRuleId, errorKey, true, isManagedCluster)}>
+                    <Button
+                      variant="link"
+                      isInline
+                      onClick={async () => {
+                        try {
+                          await
+                          enableRule(externalId, currentRuleId, errorKey, true, isManagedCluster);
+                          addNotification({
+                            title: 'Recommendation successfully enabled',
+                            variant: 'success',
+                            dismissable: true,
+                            dismissDelay: 4000,
+                          });
+                        } catch (error) {
+                          addNotification({
+                            title: `${error}`,
+                            variant: 'danger',
+                            dismissable: true,
+                            dismissDelay: 4000,
+                          });
+                        }
+                      }}
+                    >
                       Enable recommendation
                     </Button>
                   </CardFooter>
@@ -390,6 +413,7 @@ InsightsRuleDetails.propTypes = {
   }),
   voteOnRule: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
+  addNotification: PropTypes.func.isRequired,
 };
 
 InsightsRuleDetails.defaultProps = {

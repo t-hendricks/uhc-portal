@@ -124,6 +124,9 @@ const createRosaEntitlement = () => apiRequest({
 const getSubscriptionRoleBindings = subID => apiRequest({
   method: 'get',
   url: `/api/accounts_mgmt/v1/subscriptions/${subID}/role_bindings`,
+  params: {
+    fetchAccounts: true,
+  },
 });
 
 const createSubscriptionRoleBinding = (subID, username, roleID) => apiRequest({

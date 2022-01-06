@@ -38,9 +38,7 @@ exports[`<EditLabelsModal /> renders correctly 1`] = `
       <GridItem
         span={7}
       />
-      <GridItem
-        span={12}
-      >
+      <GridItem>
         <p
           className="pf-u-mb-md"
         >

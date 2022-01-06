@@ -205,7 +205,9 @@ class MachinePools extends React.Component {
 
       const taintsList = taints?.map(taint => (
         <React.Fragment key={`taint-${taint.key}`}>
-          <Label color="blue">{`${taint.key} = ${taint.value}:${taint.effect}`}</Label>
+          <Label color="blue" className="pf-c-label--break-word">
+            {`${taint.key} = ${taint.value}:${taint.effect}`}
+          </Label>
           {' '}
         </React.Fragment>
       ));

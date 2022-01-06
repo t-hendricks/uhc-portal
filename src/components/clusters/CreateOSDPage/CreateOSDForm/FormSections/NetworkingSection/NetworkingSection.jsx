@@ -6,8 +6,9 @@ import {
 } from '@patternfly/react-core';
 
 import { constants } from '../../CreateOSDFormConstants';
-import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import validators from '../../../../../../common/validators';
+import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
+import ReduxCheckbox from '../../../../../common/ReduxFormComponents/ReduxCheckbox';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import InstallToVPC from './InstallToVPC';
 
@@ -17,8 +18,6 @@ import {
   HOST_PREFIX_PLACEHOLDER,
   podCidrPlaceholder,
 } from './networkingPlaceholders';
-
-import './NetworkingSection.scss';
 
 const machineDisjointSubnets = validators.disjointSubnets('network_machine_cidr');
 const serviceDisjointSubnets = validators.disjointSubnets('network_service_cidr');
@@ -38,7 +37,6 @@ function NetworkingSection({
   isCCS,
   selectedRegion,
   installToVPCSelected,
-  isWizard,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -111,7 +109,7 @@ function NetworkingSection({
             label: (
               <>
                 Basic
-                <div className="radio-helptext">Creates a new VPC for your cluster using default values.</div>
+                <div className="pf-c-radio__description">Creates a new VPC for your cluster using default values.</div>
               </>),
           },
           {
@@ -120,7 +118,7 @@ function NetworkingSection({
             label: (
               <>
                 Advanced
-                <div className="radio-helptext">
+                <div className="pf-c-radio__description">
                   Choose this option if you will ever need direct,
                   private network connectivity to your cluster, e.g. VPN or VPC peering.
                 </div>
@@ -128,24 +126,31 @@ function NetworkingSection({
             ),
           }]}
           defaultValue="basic"
-          disableDefaultValueHandling={isWizard}
         />
       </FormGroup>
       {
         mode === 'advanced' && isCCS && (
-          <InstallToVPC
-            selectedRegion={selectedRegion}
-            isMultiAz={isMultiAz}
-            selected={installToVPCSelected}
-            cloudProviderID={cloudProviderID}
-            isWizard={isWizard}
-          />
+          <>
+            <GridItem>
+              <Field
+                component={ReduxCheckbox}
+                name="install_to_vpc"
+                label="Install into an existing VPC"
+              />
+            </GridItem>
+            <InstallToVPC
+              selectedRegion={selectedRegion}
+              isMultiAz={isMultiAz}
+              selected={installToVPCSelected}
+              cloudProviderID={cloudProviderID}
+            />
+          </>
         )
       }
       { mode === 'advanced'
         && (
           <>
-            <GridItem sm={12} md={10} lg={8}>
+            <GridItem>
               <Alert
                 id="advanced-networking-alert"
                 isInline
@@ -171,8 +176,7 @@ function NetworkingSection({
                  )}
               </Alert>
             </GridItem>
-            <GridItem md={2} lg={4} />
-            <GridItem sm={12} md={5} lg={4}>
+            <GridItem md={6}>
               <Field
                 component={ReduxVerticalFormGroup}
                 name="network_machine_cidr"
@@ -186,8 +190,8 @@ function NetworkingSection({
                 showHelpTextOnError={false}
               />
             </GridItem>
-            <GridItem md={7} lg={8} />
-            <GridItem sm={12} md={5} lg={4}>
+            <GridItem md={6} />
+            <GridItem md={6}>
               <Field
                 component={ReduxVerticalFormGroup}
                 name="network_service_cidr"
@@ -201,8 +205,8 @@ function NetworkingSection({
                 showHelpTextOnError={false}
               />
             </GridItem>
-            <GridItem md={7} lg={8} />
-            <GridItem sm={12} md={5} lg={4}>
+            <GridItem md={6} />
+            <GridItem md={6}>
               <Field
                 component={ReduxVerticalFormGroup}
                 name="network_pod_cidr"
@@ -216,8 +220,8 @@ function NetworkingSection({
                 showHelpTextOnError={false}
               />
             </GridItem>
-            <GridItem md={7} lg={8} />
-            <GridItem sm={12} md={5} lg={4}>
+            <GridItem md={6} />
+            <GridItem md={6}>
               <Field
                 component={ReduxVerticalFormGroup}
                 name="network_host_prefix"
@@ -235,10 +239,10 @@ function NetworkingSection({
             </GridItem>
             { showClusterPrivacy && (
               <>
-                <GridItem span={12}>
+                <GridItem>
                   <Title headingLevel="h4" size="xl" className="privacy-heading">Cluster privacy</Title>
                 </GridItem>
-                <GridItem span={8}>
+                <GridItem>
                   <p>
                     Clusters may be created initially with control plane API endpoint
                     and application routes being all public or all private.
@@ -256,7 +260,7 @@ function NetworkingSection({
                     label: (
                       <>
                         Public (recommended)
-                        <div className="radio-helptext">Control plane API endpoint and application routes are accessible from the internet.</div>
+                        <div className="pf-c-radio__description">Control plane API endpoint and application routes are accessible from the internet.</div>
                       </>),
                   },
                   {
@@ -265,7 +269,7 @@ function NetworkingSection({
                     label: (
                       <>
                         Private
-                        <div className="radio-helptext">
+                        <div className="pf-c-radio__description">
                           Control plane API endpoint and application routes are restricted to
                           direct, private connectivity.
                         </div>
@@ -275,7 +279,7 @@ function NetworkingSection({
                   defaultValue="external"
                 />
                 {privateClusterSelected && (
-                <GridItem sm={12} md={10} lg={8}>
+                <GridItem>
                   <Alert className="bottom-alert" variant="warning" isInline title="You will not be able to access your cluster until you edit network settings in your cloud provider.">
                     {cloudProviderID === 'aws'
                       && (
@@ -300,11 +304,9 @@ function NetworkingSection({
 
 NetworkingSection.defaultProps = {
   isCCS: false,
-  isWizard: false,
 };
 
 NetworkingSection.propTypes = {
-  isWizard: PropTypes.bool,
   pending: PropTypes.bool,
   mode: PropTypes.string,
   toggleNetwork: PropTypes.func,

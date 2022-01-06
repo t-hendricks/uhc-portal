@@ -6,7 +6,7 @@ import {
 
 import './DownloadsSection.scss';
 
-import { downloadsCategoryTitles } from './DownloadsCategoryDropdown';
+import { downloadsCategories } from './downloadsStructure';
 
 /**
  * Section with title and optional description, shown or hidden according to selectedCategory.
@@ -18,7 +18,7 @@ const DownloadsSection = ({
   <>
     <div className="downloads-section-header">
       <Title headingLevel="h2">
-        {downloadsCategoryTitles[category]}
+        {downloadsCategories.find(c => c.key === category).title}
       </Title>
       {/* Omit spacing between title & description when no description */}
       {description && (
@@ -32,7 +32,7 @@ const DownloadsSection = ({
   )
 );
 DownloadsSection.propTypes = {
-  selectedCategory: PropTypes.string.isRequired,
+  selectedCategory: PropTypes.oneOf(downloadsCategories.map(c => c.key)).isRequired,
   category: PropTypes.string.isRequired,
   description: PropTypes.node,
   children: PropTypes.node,

@@ -2,18 +2,35 @@ $color-log-window-body-bg: #030303;
 $color-log-window-header-bg: #72767b;
 $color-log-window-text: #f5f5f5;
 $font-family-log-window-body: var(--pf-global--FontFamily--monospace);
-$color-log-window-divider: $color-log-window-header-bg;
+$log-window-container-min-height: 25em;
 
-#log-window-container{
- background-color: #ffffff;
+.log-window-container {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+
+  &--with-lines:not(:fullscreen) {
+    height: $log-window-container-min-height;
+  }
+}
+
+// must be a separate rule in order to render correctly in Safari
+// for Safari 13
+.log-window-container:-webkit-full-screen {
+  height: 100%;
+  width: 100%;
+}
+
+// must be a separate rule in order to render correctly in Safari
+.log-window-container--with-lines:not(:-webkit-full-screen) {
+  height: $log-window-container-min-height;
 }
 
 .log-window {
   color: $color-log-window-text;
-  background-color: #ffffff;
-  height: 100%;
-  width: 100%;
-  float: left;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .log-window__header {
@@ -23,25 +40,29 @@ $color-log-window-divider: $color-log-window-header-bg;
 
 .log-window__body {
   background-color: $color-log-window-body-bg;
+  flex-grow: 1;
   font-family: $font-family-log-window-body;
+  position: relative;
 }
 
 .log-window__scroll-pane {
   overflow: auto;
   padding-top: 10px;
-  height: 20em;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
-.log-window__contents__text{
+.log-window__contents {
   padding-left: 10px;
   padding-right: 10px;
   white-space: pre;
-  width: 0;
 }
 
 .logview-buttons {
-  float: right;
-  padding-top: 0;
+  text-align: right;
 }
 
 #toggle-logs {
@@ -50,21 +71,4 @@ $color-log-window-divider: $color-log-window-header-bg;
 
 .logview-title {
   display: inline-block;
-}
-
-:fullscreen .log-window div.log-window__scroll-pane {
-  height: 89vh;
-}
-/* we need the prefixed :-webkit-full-screen to support some versions of Chrome,
- but because firefox wants the unprefixed version, it has to be its own selector
-and not a selector list.
-
-According to the spec: "a group of selectors containing an invalid selector is invalid."
-https://www.w3.org/TR/selectors-3/#Conformance
-*/
-:-webkit-full-screen .log-window div.log-window__scroll-pane {
-  height: 89vh;
-}
-:-moz-full-screen .log-window div.log-window__scroll-pane {
-  height: 89vh;
 }

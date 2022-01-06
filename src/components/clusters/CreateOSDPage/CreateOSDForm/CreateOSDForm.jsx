@@ -152,7 +152,7 @@ class CreateOSDForm extends React.Component {
     return (
       <>
         {/* Billing Model */}
-        <GridItem span={12}>
+        <GridItem>
           <Title headingLevel="h3">Billing model</Title>
         </GridItem>
         <BillingModelSection
@@ -178,16 +178,16 @@ class CreateOSDForm extends React.Component {
         {/* AWS account details */}
         { isAws && isBYOCForm && (
           <>
-            <GridItem span={12}>
+            <GridItem>
               <Title headingLevel="h3">AWS account details</Title>
             </GridItem>
-            <GridItem sm={12} md={5} lg={4}>
+            <GridItem md={6}>
               Before creating the cluster, review all the prerequisites in
               {' '}
               <ExternalLink href="https://www.openshift.com/dedicated/ccs">the documentation.</ExternalLink>
               {' '}
             </GridItem>
-            <GridItem md={7} lg={8} />
+            <GridItem md={6} />
             <AWSAccountDetailsSection pending={pending} />
           </>
         )}
@@ -195,10 +195,10 @@ class CreateOSDForm extends React.Component {
         {
           isGCP && isBYOCForm && (
             <>
-              <GridItem span={12}>
+              <GridItem>
                 <Title headingLevel="h3">GCP service account</Title>
               </GridItem>
-              <GridItem span={12}>
+              <GridItem>
                 <p>
                   In order to create a Customer Cloud Subscription cluster, you must have a Service
                   Account in GCP named
@@ -233,7 +233,7 @@ class CreateOSDForm extends React.Component {
         }
 
         {/* Basic fields - Cluster Details section */}
-        <GridItem span={12}>
+        <GridItem>
           <Title headingLevel="h3">Cluster details</Title>
         </GridItem>
         <BasicFieldsSection
@@ -251,8 +251,10 @@ class CreateOSDForm extends React.Component {
         />
 
         {/* Scale section */}
-        <GridItem span={12}>
+        <GridItem>
           <Title headingLevel="h3">Scale</Title>
+        </GridItem>
+        <GridItem>
           <p>
             The number and instance type of worker nodes in your cluster. After cluster creation
             you will be able to change the number of worker nodes in your cluster, but you will
@@ -276,6 +278,7 @@ class CreateOSDForm extends React.Component {
         />
         {/* Networking section */}
         <NetworkingSection
+          pending={pending}
           mode={mode}
           toggleNetwork={this.toggleNetwork}
           showClusterPrivacy={isAws || (isGCP && isBYOCForm)}
@@ -287,7 +290,7 @@ class CreateOSDForm extends React.Component {
           installToVPCSelected={installToVPCSelected}
         />
         {/* Encryption */}
-        <GridItem span={12}>
+        <GridItem>
           <Title headingLevel="h3">Encryption</Title>
         </GridItem>
         <FormGroup
@@ -315,7 +318,7 @@ class CreateOSDForm extends React.Component {
             cloudProviderID={cloudProviderID}
           />
         )}
-        <GridItem span={12}>
+        <GridItem>
           <Divider />
         </GridItem>
         <GridItem>

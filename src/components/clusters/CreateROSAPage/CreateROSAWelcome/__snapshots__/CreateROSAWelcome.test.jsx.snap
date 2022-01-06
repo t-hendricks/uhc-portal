@@ -119,9 +119,9 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                   If you haven’t done so already, visit
                    
                   <ExternalLink
-                    href="https://console.aws.amazon.com/rosa"
+                    href="https://console.aws.amazon.com/rosa/home"
                   >
-                    https://console.aws.amazon.com/rosa
+                    https://console.aws.amazon.com/rosa/home
                   </ExternalLink>
                    
                   to enable ROSA in your AWS account.

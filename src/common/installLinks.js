@@ -10,7 +10,12 @@ const MIRROR_CLIENTS_LATEST_PRE_ARM = 'https://mirror.openshift.com/pub/openshif
 const MIRROR_COREOS_INSTALLER_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest';
 const MIRROR_CRC_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest';
 const MIRROR_HELM_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest';
+const MIRROR_KN_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/serverless/latest';
 const MIRROR_ODO_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest';
+const MIRROR_OSDK_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/operator-sdk/latest';
+const MIRROR_OSDK_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/operator-sdk/latest';
+const MIRROR_OSDK_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/operator-sdk/latest';
+const MIRROR_OSDK_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/operator-sdk/latest';
 const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
@@ -121,9 +126,13 @@ const links = {
 
   HELM_DOCS: 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.8/html/building_applications/working-with-helm-charts',
 
+  KN_DOCS: `${DOCS_BASE}/cli_reference/kn-cli-tools.html`,
+
   ODO_DOCS: `${DOCS_BASE}/cli_reference/developer_cli_odo/understanding-odo.html`,
 
   OPM_DOCS: 'https://docs.openshift.com/container-platform/4.9/cli_reference/opm/cli-opm-install.html',
+
+  OSDK_DOCS: `${DOCS_BASE}/cli_reference/osdk/cli-osdk-install.html`,
 
   // TODO remove once TokensROSA uses DownloadAndOSSelection for direct downloads
   ROSA_CLIENT_LATEST: MIRROR_ROSA_LATEST,
@@ -150,9 +159,11 @@ const tools = {
   IBMZINSTALLER: 's390x-openshift-install',
   PPCINSTALLER: 'ppc64le-openshift-install',
   ARMINSTALLER: 'aarch64-openshift-install',
+  KN: 'kn',
   OCM: 'ocm',
   ODO: 'odo',
   OPM: 'opm',
+  OPERATOR_SDK: 'operator-sdk',
   RHCOS: 'rhcos',
   RHOAS: 'rhoas',
   ROSA: 'rosa',
@@ -369,6 +380,22 @@ const urls = {
     },
   },
 
+  [tools.KN]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_KN_LATEST}/kn-linux-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_KN_LATEST}/kn-macos-amd64.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_KN_LATEST}/kn-windows-amd64.zip`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_KN_LATEST}/kn-linux-s390x.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_KN_LATEST}/kn-linux-ppc64le.tar.gz`,
+      },
+    },
+  },
+
   [tools.ODO]: {
     [channels.STABLE]: {
       [architectures.x86]: {
@@ -413,6 +440,24 @@ const urls = {
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}opm-linux.tar.gz`,
+      },
+    },
+  },
+
+  [tools.OPERATOR_SDK]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_OSDK_LATEST_X86}/operator-sdk-linux-x86_64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_OSDK_LATEST_X86}/operator-sdk-darwin-x86_64.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_OSDK_LATEST_ARM}/operator-sdk-linux-aarch64.tar.gz`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_OSDK_LATEST_IBMZ}/operator-sdk-linux-s390x.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_OSDK_LATEST_PPC}/operator-sdk-linux-ppc64le.tar.gz`,
       },
     },
   },

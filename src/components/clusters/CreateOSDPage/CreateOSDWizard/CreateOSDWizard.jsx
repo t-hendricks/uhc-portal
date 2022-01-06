@@ -14,6 +14,7 @@ import {
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
+import ErrorBoundary from '../../../App/ErrorBoundary';
 import PageTitle from '../../../common/PageTitle';
 import ErrorModal from '../../../common/ErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
@@ -26,6 +27,8 @@ import ClusterSettingsScreen from './ClusterSettingsScreen';
 import MachinePoolScreen from './MachinePoolScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
 import NetworkScreen from './NetworkScreen';
+import VPCScreen from './VPCScreen';
+import CIDRScreen from './CIDRScreen';
 import UpdatesScreen from './UpdatesScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
@@ -125,27 +128,33 @@ class CreateOSDWizard extends React.Component {
       history,
       product, // for OSDTrial URL, prop from the router
       ccsValidationPending,
+      isCCS,
       isCCSCredentialsValidationNeeded,
       cloudProviderID,
+      ccsCredentials,
+      installToVPCSelected,
       getGCPCloudProviderVPCs,
-      gcpCredentialsJSON,
-      awsAccountID,
-      awsAccessKey,
-      awsSecretKey,
       getAWSCloudProviderRegions,
     } = this.props;
 
     const { stepIdReached, currentStep } = this.state;
     const isTrialDefault = product === normalizedProducts.OSDTrial;
 
+    const isAws = cloudProviderID === 'aws';
+    const isGCP = cloudProviderID === 'gcp';
+    const showClusterPrivacy = isAws || (isGCP && isCCS);
+    const showVPCCheckbox = isCCS;
+
     const steps = [
       {
-        id: 1,
+        id: 10,
         name: 'Billing model',
         component: (
-          <Grid>
-            <BillingModelScreen isWizard isTrialDefault={isTrialDefault} />
-          </Grid>
+          <ErrorBoundary>
+            <Grid>
+              <BillingModelScreen isWizard isTrialDefault={isTrialDefault} />
+            </Grid>
+          </ErrorBoundary>
         ),
         enableNext: isValid,
       },
@@ -153,50 +162,107 @@ class CreateOSDWizard extends React.Component {
         name: 'Cluster settings',
         steps: [
           {
-            id: 2,
+            id: 21,
             name: 'Cloud provider',
-            component: <CloudProviderScreen />,
+            component: (
+              <ErrorBoundary>
+                <CloudProviderScreen />
+              </ErrorBoundary>
+            ),
             enableNext: isValid && !ccsValidationPending,
-            canJumpTo: stepIdReached >= 2,
+            canJumpTo: stepIdReached >= 21,
           },
           {
-            id: 3,
-            name: 'Cluster details',
-            component: <ClusterSettingsScreen isTrialDefault={isTrialDefault} />,
+            id: 22,
+            name: 'Details',
+            component: (
+              <ErrorBoundary>
+                <ClusterSettingsScreen isTrialDefault={isTrialDefault} />
+              </ErrorBoundary>
+            ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 3,
+            canJumpTo: stepIdReached >= 22,
           },
           {
-            id: 4,
+            id: 23,
             name: 'Machine pool',
-            component: <MachinePoolScreen isTrialDefault={isTrialDefault} />,
+            component: (
+              <ErrorBoundary>
+                <MachinePoolScreen isTrialDefault={isTrialDefault} />
+              </ErrorBoundary>
+            ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 4,
+            canJumpTo: stepIdReached >= 23,
           },
         ],
         enableNext: isValid,
       },
       {
-        id: 5,
         name: 'Networking',
-        component: <NetworkScreen isTrialDefault={isTrialDefault} />,
         enableNext: isValid,
-        canJumpTo: stepIdReached >= 5,
+        canJumpTo: stepIdReached >= 30,
+        steps: [
+          (showClusterPrivacy || showVPCCheckbox) && {
+            id: 31,
+            name: 'Configuration',
+            component: (
+              <ErrorBoundary>
+                <NetworkScreen
+                  isTrialDefault={isTrialDefault}
+                  showClusterPrivacy={showClusterPrivacy}
+                  showVPCCheckbox={showVPCCheckbox}
+                />
+              </ErrorBoundary>
+            ),
+            enableNext: isValid,
+            canJumpTo: stepIdReached >= 31,
+          },
+          showVPCCheckbox && installToVPCSelected && {
+            id: 32,
+            name: 'VPC settings',
+            component: (
+              <ErrorBoundary>
+                <VPCScreen />
+              </ErrorBoundary>
+            ),
+            enableNext: isValid,
+            canJumpTo: stepIdReached >= 32,
+          },
+          {
+            id: 33,
+            name: 'CIDR ranges',
+            component: (
+              <ErrorBoundary>
+                <CIDRScreen />
+              </ErrorBoundary>
+            ),
+            enableNext: isValid,
+            canJumpTo: stepIdReached >= 33,
+          },
+        ].filter(Boolean),
       },
       {
-        id: 6,
-        name: 'Updates',
-        component: <UpdatesScreen />,
+        id: 40,
+        name: 'Cluster updates',
+        component: (
+          <ErrorBoundary>
+            <UpdatesScreen />
+          </ErrorBoundary>
+        ),
         enableNext: isValid,
-        canJumpTo: stepIdReached >= 6,
+        canJumpTo: stepIdReached >= 40,
       },
       {
-        id: 7,
+        id: 100,
         name: 'Review and create',
-        component: <ReviewClusterScreen isPending={createClusterResponse.pending} />,
+        component: (
+          <ErrorBoundary>
+            <ReviewClusterScreen isPending={createClusterResponse.pending} />
+          </ErrorBoundary>
+        ),
         nextButtonText: 'Create cluster',
         enableNext: isValid && !createClusterResponse.pending,
-        canJumpTo: stepIdReached >= 7 && isValid,
+        canJumpTo: stepIdReached >= 100 && isValid,
       },
     ];
     const ariaTitle = 'Create OpenShift Dedicated cluster wizard';
@@ -315,6 +381,7 @@ class CreateOSDWizard extends React.Component {
               navAriaLabel={`${ariaTitle} steps`}
               mainAriaLabel={`${ariaTitle} content`}
               steps={steps}
+              isNavExpandable
               onSave={onSubmit}
               onNext={this.onNext}
               onBack={this.onBack}
@@ -330,9 +397,9 @@ class CreateOSDWizard extends React.Component {
                     onClick={() => {
                       if (cloudProviderID === 'gcp') {
                         // hard code region since we're just validating credentials
-                        getGCPCloudProviderVPCs(VALIDATE_CLOUD_PROVIDER_CREDENTIALS, gcpCredentialsJSON, 'us-east1');
+                        getGCPCloudProviderVPCs(VALIDATE_CLOUD_PROVIDER_CREDENTIALS, ccsCredentials, 'us-east1');
                       } else {
-                        getAWSCloudProviderRegions(awsAccountID, awsAccessKey, awsSecretKey);
+                        getAWSCloudProviderRegions(ccsCredentials);
                       }
                     }}
                     isLoading={ccsValidationPending}
@@ -358,12 +425,12 @@ const requestStatePropTypes = PropTypes.shape({
 CreateOSDWizard.propTypes = {
   isValid: PropTypes.bool,
   ccsValidationPending: PropTypes.bool,
+  isCCS: PropTypes.bool,
   isCCSCredentialsValidationNeeded: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isErrorModalOpen: PropTypes.bool,
-  awsAccountID: PropTypes.string,
-  awsAccessKey: PropTypes.string,
-  awsSecretKey: PropTypes.string,
+  ccsCredentials: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  installToVPCSelected: PropTypes.bool,
 
   createClusterResponse: PropTypes.shape({
     fulfilled: PropTypes.bool,
@@ -404,7 +471,6 @@ CreateOSDWizard.propTypes = {
 
   // for the /create/osdtrial url
   product: PropTypes.string,
-  gcpCredentialsJSON: PropTypes.string,
 };
 
 export default CreateOSDWizard;

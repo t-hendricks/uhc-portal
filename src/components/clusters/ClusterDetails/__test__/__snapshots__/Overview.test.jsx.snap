@@ -5,7 +5,6 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
   hasGutter={true}
 >
   <GridItem
-    sm={12}
     xl2={9}
   >
     <Grid
@@ -522,7 +521,6 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
     </Grid>
   </GridItem>
   <GridItem
-    sm={12}
     xl2={3}
   >
     <Grid
@@ -590,9 +588,7 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
       </GridItem>
     </Grid>
   </GridItem>
-  <GridItem
-    sm={12}
-  >
+  <GridItem>
     <Connect(ClusterLogs)
       externalClusterID="9f50940b-fba8-4c59-9c6c-d64284a2beef"
       history={Object {}}
@@ -606,7 +602,6 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
   hasGutter={true}
 >
   <GridItem
-    sm={12}
     xl2={9}
   >
     <Grid
@@ -1125,7 +1120,6 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
     </Grid>
   </GridItem>
   <GridItem
-    sm={12}
     xl2={3}
   >
     <Grid
@@ -1253,9 +1247,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
       </GridItem>
     </Grid>
   </GridItem>
-  <GridItem
-    sm={12}
-  >
+  <GridItem>
     <Connect(ClusterLogs)
       externalClusterID="9f50940b-fba8-4c59-9c6c-d64284b2026d"
       history={Object {}}
@@ -1269,7 +1261,6 @@ exports[`<Overview /> for an OSD cluster should render 1`] = `
   hasGutter={true}
 >
   <GridItem
-    sm={12}
     xl2={12}
   >
     <Grid

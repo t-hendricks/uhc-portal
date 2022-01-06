@@ -11,8 +11,6 @@ const OCMRoles = {
         kind: 'RoleBinding',
         href: '/api/accounts_mgmt/v1/subscriptions/1kZocg1yV75YxwMX9cwGWGrIwdW/role_bindings/1Ta2R08vrZ2ZZ9fjzH5GCa5XGtL',
         type: 'Subscription',
-        account_username: 'Doris Hudson',
-        account_email: '***REMOVED***',
         subscription: {
           kind: 'Subscription',
         },
@@ -20,6 +18,8 @@ const OCMRoles = {
           id: '1Ta2R4957S9M0Vk5IdEQJPG3L0N',
           kind: 'Account',
           href: '/api/accounts_mgmt/v1/accounts/1Ta2R4957S9M0Vk5IdEQJPG3L0N',
+          username: 'Doris Hudson',
+          email: '***REMOVED***',
         },
         organization: {
           kind: 'Organization',
@@ -37,8 +37,6 @@ const OCMRoles = {
         kind: 'RoleBinding',
         href: '/api/accounts_mgmt/v1/subscriptions/1kZocg1yV75YxwMX9cwGWGrIwdW/role_bindings/1Ta2R7zu46GNLswW7DXhLSWjkyY',
         type: 'Subscription',
-        account_username: 'Jak Valdez',
-        account_email: '***REMOVED***',
         subscription: {
           kind: 'Subscription',
         },
@@ -46,6 +44,8 @@ const OCMRoles = {
           id: '1Ta2R4957S9M0Vk5IdEQJPG3L0N',
           kind: 'Account',
           href: '/api/accounts_mgmt/v1/accounts/1Ta2R4957S9M0Vk5IdEQJPG3L0N',
+          username: 'Jak Valdez',
+          email: '***REMOVED***',
         },
         organization: {
           id: '1Ta2R5bhEXrMKLrrSLh88w8XF8p',
@@ -65,8 +65,6 @@ const OCMRoles = {
         kind: 'RoleBinding',
         href: '/api/accounts_mgmt/v1/subscriptions/1kZocg1yV75YxwMX9cwGWGrIwdW/role_bindings/1Te8dnJht1MhbR3Hvw9xblk0GOB',
         type: 'Subscription',
-        account_username: 'Olive1',
-        account_email: '***REMOVED***',
         subscription: {
           id: '1Te8doEd56x1L5r6iMZRyAxDnzA',
           kind: 'Subscription',
@@ -76,6 +74,8 @@ const OCMRoles = {
           id: '1CzKMWTzDbeN7jOMmO5Ar1Y3Ai1',
           kind: 'Account',
           href: '/api/accounts_mgmt/v1/accounts/1CzKMWTzDbeN7jOMmO5Ar1Y3Ai1',
+          username: 'Olive1',
+          email: '***REMOVED***',
         },
         organization: {
           kind: 'Organization',

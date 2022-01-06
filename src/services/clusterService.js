@@ -168,6 +168,18 @@ const deleteClusterAddOn = (clusterID, addOnID) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`,
 });
 
+const getInstallableVersions = () => apiRequest({
+  method: 'get',
+  url: '/api/clusters_mgmt/v1/versions/',
+  params: {
+    order: 'end_of_life_timestamp desc',
+    // Internal users can test other channels via `ocm` CLI, no UI needed.
+    // For external users, make sure we only offer stable channel.
+    search: "enabled='t' AND channel_group='stable'",
+    size: -1,
+  },
+});
+
 const getRoles = () => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/aws_infrastructure_access_roles/?search=state=\'valid\'',
@@ -281,6 +293,21 @@ const upgradeTrialCluster = (clusterID, params) => apiRequest({
   data: params,
 });
 
+/**
+ * List AWS VPCs for given CCS account.
+ * @param {*} credentials { accountID, accessKey, secretKey } object
+ */
+const listAWSVPCs = (credentials, region) => apiRequest({
+  method: 'post',
+  url: '/api/clusters_mgmt/v1/aws_inquiries/vpcs',
+  data: {
+    aws: credentials,
+    region: {
+      id: region,
+    },
+  },
+});
+
 const listGCPVPCs = (credentials, region) => apiRequest({
   method: 'post',
   url: '/api/clusters_mgmt/v1/gcp_inquiries/vpcs',
@@ -314,15 +341,15 @@ const listGCPKeys = (credentials, location, ring) => apiRequest({
   },
 });
 
-const listAWSRegions = (accountID, accessKey, secretKey) => apiRequest({
+/**
+ * List AWS regions for given CCS account.
+ * @param {*} credentials { accountID, accessKey, secretKey } object
+ */
+const listAWSRegions = credentials => apiRequest({
   method: 'post',
   url: '/api/clusters_mgmt/v1/aws_inquiries/regions',
   data: {
-    aws: {
-      account_id: accountID,
-      access_key_id: accessKey,
-      secret_access_key: secretKey,
-    },
+    aws: credentials,
   },
 });
 
@@ -354,6 +381,7 @@ const clusterService = {
   getStorageQuotaValues,
   getLoadBalancerQuotaValues,
   getRoles,
+  getInstallableVersions,
   getGrants,
   addGrant,
   deleteGrant,
@@ -376,6 +404,7 @@ export {
   getUpgradeScheduleState,
   deleteUpgradeSchedule,
   patchUpgradeSchedule,
+  listAWSVPCs,
   listGCPVPCs,
   listGCPKeyRings,
   listGCPKeys,

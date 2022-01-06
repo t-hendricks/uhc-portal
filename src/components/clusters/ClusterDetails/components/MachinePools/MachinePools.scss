@@ -4,6 +4,10 @@
       margin-top: var(--pf-global--spacer--md);
     }
   }
+  .pf-c-label--break-word {
+    white-space: normal;
+    word-break: break-word;
+  }
   .pf-c-table__toggle {
     padding-top: 0;
   }

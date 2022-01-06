@@ -32,9 +32,7 @@ exports[`<IdentityProvidersPage /> renders correctly (Google IDP) 1`] = `
       <CardBody>
         <Grid>
           <GridItem
-            lg={8}
             md={8}
-            sm={12}
           >
             <IDPForm
               IDPList={

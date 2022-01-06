@@ -8,7 +8,6 @@ exports[`DownloadAndOSSelection aarch64-openshift-install renders correctly 1`] 
   >
     <GridItem
       md={3}
-      sm={12}
     >
       <FormSelect
         aria-label="Select OS dropdown"
@@ -42,7 +41,6 @@ exports[`DownloadAndOSSelection aarch64-openshift-install renders correctly 1`] 
     </GridItem>
     <GridItem
       md={4}
-      sm={12}
     >
       <FormSelect
         aria-label="Select architecture dropdown"
@@ -76,7 +74,6 @@ exports[`DownloadAndOSSelection aarch64-openshift-install renders correctly 1`] 
     </GridItem>
     <GridItem
       md={5}
-      sm={12}
     >
       <DownloadButton
         disabled={false}
@@ -96,7 +93,6 @@ exports[`DownloadAndOSSelection crc renders correctly 1`] = `
   >
     <GridItem
       md={3}
-      sm={12}
     >
       <FormSelect
         aria-label="Select OS dropdown"
@@ -135,7 +131,6 @@ exports[`DownloadAndOSSelection crc renders correctly 1`] = `
     </GridItem>
     <GridItem
       md={4}
-      sm={12}
     >
       <FormSelect
         aria-label="Select architecture dropdown"
@@ -164,7 +159,6 @@ exports[`DownloadAndOSSelection crc renders correctly 1`] = `
     </GridItem>
     <GridItem
       md={5}
-      sm={12}
     >
       <DownloadButton
         disabled={false}
@@ -184,7 +178,6 @@ exports[`DownloadAndOSSelection oc renders correctly 1`] = `
   >
     <GridItem
       md={3}
-      sm={12}
     >
       <FormSelect
         aria-label="Select OS dropdown"
@@ -223,7 +216,6 @@ exports[`DownloadAndOSSelection oc renders correctly 1`] = `
     </GridItem>
     <GridItem
       md={4}
-      sm={12}
     >
       <FormSelect
         aria-label="Select architecture dropdown"
@@ -267,7 +259,6 @@ exports[`DownloadAndOSSelection oc renders correctly 1`] = `
     </GridItem>
     <GridItem
       md={5}
-      sm={12}
     >
       <DownloadButton
         disabled={false}
@@ -287,7 +278,6 @@ exports[`DownloadAndOSSelection ppc64le-openshift-install renders correctly 1`] 
   >
     <GridItem
       md={3}
-      sm={12}
     >
       <FormSelect
         aria-label="Select OS dropdown"
@@ -321,7 +311,6 @@ exports[`DownloadAndOSSelection ppc64le-openshift-install renders correctly 1`] 
     </GridItem>
     <GridItem
       md={4}
-      sm={12}
     >
       <FormSelect
         aria-label="Select architecture dropdown"
@@ -355,7 +344,6 @@ exports[`DownloadAndOSSelection ppc64le-openshift-install renders correctly 1`] 
     </GridItem>
     <GridItem
       md={5}
-      sm={12}
     >
       <DownloadButton
         disabled={false}
@@ -375,7 +363,6 @@ exports[`DownloadAndOSSelection s390x-openshift-install renders correctly 1`] = 
   >
     <GridItem
       md={3}
-      sm={12}
     >
       <FormSelect
         aria-label="Select OS dropdown"
@@ -409,7 +396,6 @@ exports[`DownloadAndOSSelection s390x-openshift-install renders correctly 1`] = 
     </GridItem>
     <GridItem
       md={4}
-      sm={12}
     >
       <FormSelect
         aria-label="Select architecture dropdown"
@@ -443,7 +429,6 @@ exports[`DownloadAndOSSelection s390x-openshift-install renders correctly 1`] = 
     </GridItem>
     <GridItem
       md={5}
-      sm={12}
     >
       <DownloadButton
         disabled={false}
@@ -463,7 +448,6 @@ exports[`DownloadAndOSSelection with error should render 1`] = `
   >
     <GridItem
       md={3}
-      sm={12}
     >
       <FormSelect
         aria-label="Select OS dropdown"
@@ -497,7 +481,6 @@ exports[`DownloadAndOSSelection with error should render 1`] = `
     </GridItem>
     <GridItem
       md={4}
-      sm={12}
     >
       <FormSelect
         aria-label="Select architecture dropdown"
@@ -526,7 +509,6 @@ exports[`DownloadAndOSSelection with error should render 1`] = `
     </GridItem>
     <GridItem
       md={5}
-      sm={12}
     >
       <DownloadButton
         disabled={true}
@@ -546,7 +528,6 @@ exports[`DownloadAndOSSelection x86_64-openshift-install renders correctly 1`] =
   >
     <GridItem
       md={3}
-      sm={12}
     >
       <FormSelect
         aria-label="Select OS dropdown"
@@ -580,7 +561,6 @@ exports[`DownloadAndOSSelection x86_64-openshift-install renders correctly 1`] =
     </GridItem>
     <GridItem
       md={4}
-      sm={12}
     >
       <FormSelect
         aria-label="Select architecture dropdown"
@@ -609,7 +589,6 @@ exports[`DownloadAndOSSelection x86_64-openshift-install renders correctly 1`] =
     </GridItem>
     <GridItem
       md={5}
-      sm={12}
     >
       <DownloadButton
         disabled={false}

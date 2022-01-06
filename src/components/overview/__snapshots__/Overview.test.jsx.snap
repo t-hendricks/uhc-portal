@@ -41,7 +41,6 @@ exports[`<Overview /> renders correctly 1`] = `
       />
       <GridItem
         md={6}
-        sm={12}
       >
         <Connect(ClustersWithIssuesTableCard)
           unhealthyClusters={
@@ -187,7 +186,6 @@ exports[`<Overview /> renders correctly 1`] = `
       </GridItem>
       <GridItem
         md={6}
-        sm={12}
       >
         <Card
           className="ocm-overview-clusters__card"
@@ -209,7 +207,6 @@ exports[`<Overview /> renders correctly 1`] = `
       </GridItem>
       <GridItem
         md={6}
-        sm={12}
       >
         <Card
           className="ocm-overview-clusters__card"
@@ -229,9 +226,7 @@ exports[`<Overview /> renders correctly 1`] = `
           </CardBody>
         </Card>
       </GridItem>
-      <GridItem
-        span={12}
-      >
+      <GridItem>
         <Connect(ExpiredTrialsCard) />
       </GridItem>
     </Grid>

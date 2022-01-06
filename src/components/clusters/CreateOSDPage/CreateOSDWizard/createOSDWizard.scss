@@ -6,11 +6,18 @@
   .ocm-c-wizard-intro-image {
     height: 200px;
     width: 200px;
-    right: 0;
-    top: 0;
+    right: var(--pf-global--spacer--md);
+    top: var(--pf-global--spacer--xl);
     position: absolute;
+  }
+  .pf-c-wizard__main-body {
+    padding-bottom: var(--pf-global--spacer--sm);
+    padding-top: var(--pf-global--spacer--xl);
   }
   #node-labels-alert {
     margin-top: var(--pf-global--spacer--md);
+  }
+  .pf-l-grid.pf-m-gutter {
+    grid-gap: var(--pf-global--spacer--lg); // match --pf-c-form--GridGap 24px
   }
 }
