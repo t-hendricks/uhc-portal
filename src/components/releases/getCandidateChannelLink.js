@@ -1,7 +1,7 @@
 import semver from 'semver';
 import isEmpty from 'lodash/isEmpty';
 
-// example link: https://docs.openshift.com/container-platform/4.8/updating/updating-cluster-between-minor.html#candidate-4-8-channel
+// example link: https://docs.openshift.com/container-platform/4.8/updating/updating-cluster-within-minor.html#candidate-4-8-channel
 const getCandidateChannelLink = (version) => {
   const parsed = semver.coerce(version);
 
@@ -19,7 +19,12 @@ const getCandidateChannelLink = (version) => {
     return null;
   }
 
-  return `https://docs.openshift.com/container-platform/${major}.${minor}/updating/updating-cluster-between-minor.html#candidate-${major}-${minor}-channel`;
+  // docs changed the URL with 4.6+
+  const filename = minor < 6
+    ? `updating-cluster-between-minor.html#candidate-${major}-${minor}-channel`
+    : 'understanding-upgrade-channels-release.html#candidate-version-channel_understanding-upgrade-channels-releases';
+
+  return `https://docs.openshift.com/container-platform/${major}.${minor}/updating/${filename}`;
 };
 
 export default getCandidateChannelLink;

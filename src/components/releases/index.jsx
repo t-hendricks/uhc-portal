@@ -182,7 +182,7 @@ const Releases = () => {
                   </StackItem>
                   <StackItem>
                     <ExternalLink
-                      href={`https://docs.openshift.com/container-platform/${latestVersion}/updating/updating-cluster-between-minor.html`}
+                      href={`https://docs.openshift.com/container-platform/${latestVersion}/updating/understanding-upgrade-channels-release.html`}
                       noIcon
                     >
                       Learn more about updating channels
