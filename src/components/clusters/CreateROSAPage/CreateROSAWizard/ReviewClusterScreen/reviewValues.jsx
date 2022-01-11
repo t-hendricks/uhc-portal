@@ -170,13 +170,13 @@ const reviewValues = {
     valueTransform: labels => (
       <LabelGroup>
         {
-            // eslint-disable-next-line react/destructuring-assignment
-            labels.map(label => (
-              <Label color="blue">
-                {`${label.key} = ${label.value}`}
-              </Label>
-            ))
-          }
+          // eslint-disable-next-line react/destructuring-assignment
+          labels.map(label => (
+            <Label color="blue">
+              {`${label.key} = ${label.value}`}
+            </Label>
+          ))
+        }
       </LabelGroup>
     ),
   },

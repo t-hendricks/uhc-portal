@@ -76,8 +76,7 @@ function ReviewClusterScreen({
         {autoscalingEnabled
           ? ReviewItem({ name: 'min_replicas', formValues })
           : ReviewItem({ name: 'nodes_compute', formValues })}
-        {autoscalingEnabled
-        && !(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0]))
+        {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0]))
         && ReviewItem({ name: 'node_labels', formValues })}
       </ReviewSection>
       <ReviewSection title="Updates">
