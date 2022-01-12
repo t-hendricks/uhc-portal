@@ -1030,11 +1030,11 @@ exports[`<Releases /> should render 1`] = `
                               className="pf-l-stack__item"
                             >
                               <ExternalLink
-                                href="https://docs.openshift.com/container-platform/4.8/updating/updating-cluster-between-minor.html"
+                                href="https://docs.openshift.com/container-platform/4.8/updating/understanding-upgrade-channels-release.html"
                                 noIcon={true}
                               >
                                 <a
-                                  href="https://docs.openshift.com/container-platform/4.8/updating/updating-cluster-between-minor.html"
+                                  href="https://docs.openshift.com/container-platform/4.8/updating/understanding-upgrade-channels-release.html"
                                   rel="noreferrer noopener"
                                   target="_blank"
                                 >
