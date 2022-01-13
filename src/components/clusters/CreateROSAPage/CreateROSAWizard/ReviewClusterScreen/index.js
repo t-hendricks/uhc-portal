@@ -7,6 +7,7 @@ import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components
 
 const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
+  // TODO: better not rely on 'product' field, not selectable in ROSA
   const product = valueSelector(state, 'product');
   const canAutoScale = canAutoScaleOnCreateSelector(state, product);
   const autoscalingEnabled = canAutoScale && formValueSelector(state, 'autoscalingEnabled');

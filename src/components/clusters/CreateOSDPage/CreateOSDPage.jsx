@@ -324,6 +324,8 @@ class CreateOSDPage extends React.Component {
                     />
                     {/* Form footer */}
                     {config.fakeOSD && (
+                      // TODO: sync props with submitOSDRequest() call.
+                      //   Note mapStateToProps gives us product = selectedProduct || ownProps.product;
                       <DebugClusterRequest product={product} cloudProviderID={cloudProviderID} />
                     )}
                     <GridItem>

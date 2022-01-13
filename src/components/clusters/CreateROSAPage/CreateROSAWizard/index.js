@@ -35,6 +35,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: () => dispatch((_, getState) => {
     const formData = getFormValues('CreateCluster')(getState());
+    // TODO: `ownProps` is opaque - be explicit what we pass.
+    // TODO: Router gives us silly ownProps.product=OSD which we use here!
+    //   OTOH mapStateToProps hardcodes product=ROSA.
     return submitOSDRequest(dispatch, ownProps)(formData); // TODO: change to submitROSARequest(...
   }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),

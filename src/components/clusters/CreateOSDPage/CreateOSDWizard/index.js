@@ -60,6 +60,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: () => dispatch((_, getState) => {
     const formData = getFormValues('CreateCluster')(getState());
+    // TODO: passing product here is wrong, OSD/OSDTrial choice can be changed inside wizard.
+    // TODO: `ownProps` is opaque - be explicit what we pass.
     return submitOSDRequest(dispatch, ownProps)(formData);
   }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),

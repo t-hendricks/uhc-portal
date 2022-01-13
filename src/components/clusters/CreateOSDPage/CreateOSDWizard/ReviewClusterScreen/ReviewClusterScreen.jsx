@@ -157,7 +157,7 @@ function ReviewClusterScreen({
         {clusterSpecDescriptionItem({ name: 'node_drain_grace_period', formValues })}
       </DescriptionList>
 
-      {config.fakeOSD && <DebugClusterRequest />}
+      {config.fakeOSD && /* TODO: sync props with submitOSDRequest() call */ <DebugClusterRequest /> }
     </div>
   );
 }

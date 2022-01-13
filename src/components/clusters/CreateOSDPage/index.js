@@ -128,6 +128,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+  // TODO: passing ownProps.product here is wrong, OSD/OSDTrial choice can be changed inside wizard.
+  // Passing cloudProviderID is correct, but `ownProps` is opaque - be explicit what we pass.
   onSubmit: submitOSDRequest(dispatch, ownProps),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),

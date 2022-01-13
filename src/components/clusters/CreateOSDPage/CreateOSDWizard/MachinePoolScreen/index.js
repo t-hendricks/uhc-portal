@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
   const cloudProviderID = ownProps.cloudProviderID || valueSelector(state, 'cloud_provider');
   const isMultiAz = valueSelector(state, 'multi_az') === 'true';
   const isByoc = valueSelector(state, 'byoc') === 'true';
-  const product = ownProps.product || valueSelector(state, 'product');
+  const product = ownProps.product || valueSelector(state, 'product'); // TODO: field should override prop?
   const billingModel = valueSelector(state, 'billing_model');
   const machineType = valueSelector(state, 'machine_type');
 
