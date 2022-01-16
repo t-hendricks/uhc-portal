@@ -10,7 +10,7 @@ import GCPVPCSubnet from './GCPVPCSubnet';
 const mapStateToProps = (state) => {
   const { vpcs } = state.ccsInquiries;
   const valueSelector = formValueSelector('CreateCluster');
-  const credentials = ccsCredentialsSelector(state);
+  const credentials = ccsCredentialsSelector('gcp', state);
   const region = valueSelector(state, 'region');
   const vpcName = valueSelector(state, 'vpc_name');
   const hasDependencies = !!(credentials && region && vpcName);

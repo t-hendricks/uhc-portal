@@ -10,7 +10,7 @@ import GCPVPCName from './GCPVPCName';
 const mapStateToProps = (state) => {
   const { vpcs } = state.ccsInquiries;
   const valueSelector = formValueSelector('CreateCluster');
-  const credentials = ccsCredentialsSelector(state);
+  const credentials = ccsCredentialsSelector('gcp', state);
   const region = valueSelector(state, 'region');
   const hasDependencies = !!(credentials && region);
   const matchesDependencies = (

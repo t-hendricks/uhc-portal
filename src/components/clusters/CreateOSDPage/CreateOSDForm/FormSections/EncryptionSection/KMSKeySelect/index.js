@@ -10,7 +10,7 @@ import DynamicSelect from '../../../../../../common/DynamicSelect';
 const mapStateToProps = (state) => {
   const { gcpKeys } = state.ccsInquiries;
   const valueSelector = formValueSelector('CreateCluster');
-  const credentials = ccsCredentialsSelector(state);
+  const credentials = ccsCredentialsSelector('gcp', state);
   const keyLocation = valueSelector(state, 'key_location');
   const keyRing = valueSelector(state, 'key_ring');
   const hasDependencies = !!(credentials && keyLocation && keyRing);
@@ -34,7 +34,7 @@ const mapDispatchToProps = {
   loadData: () => (dispatch, getState) => {
     const state = getState();
     const valueSelector = formValueSelector('CreateCluster');
-    const credentials = ccsCredentialsSelector(state);
+    const credentials = ccsCredentialsSelector('gcp', state);
     const keyLocation = valueSelector(state, 'key_location');
     const keyRing = valueSelector(state, 'key_ring');
 
