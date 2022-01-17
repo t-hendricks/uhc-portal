@@ -62,6 +62,7 @@ function clusterSpecDescriptionItem({ name, formValues }) {
 }
 
 function ReviewClusterScreen({
+  clusterRequestParams,
   formValues,
   showVPCCheckbox,
   canAutoScale,
@@ -157,11 +158,12 @@ function ReviewClusterScreen({
         {clusterSpecDescriptionItem({ name: 'node_drain_grace_period', formValues })}
       </DescriptionList>
 
-      {config.fakeOSD && /* TODO: sync props with submitOSDRequest() call */ <DebugClusterRequest /> }
+      {config.fakeOSD && <DebugClusterRequest {...clusterRequestParams} /> }
     </div>
   );
 }
 ReviewClusterScreen.propTypes = {
+  clusterRequestParams: PropTypes.object.isRequired,
   formValues: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),
