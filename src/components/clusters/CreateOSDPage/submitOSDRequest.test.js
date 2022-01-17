@@ -282,7 +282,7 @@ describe('createClusterRequest', () => {
       //   because mapDispatchToProps takes the silly product=OSD passed by Router.
       const params = { product: normalizedProducts.OSD };
 
-      it('defaults', () => {
+      it.skip('defaults', () => {
         const data = {
           ...rosaFormData,
           billing_model: 'standard',
