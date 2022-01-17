@@ -1,5 +1,6 @@
 import { createClusterRequest } from './submitOSDRequest';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
+import { clusterRequestParams as formRequestParams } from '.';
 
 describe('createClusterRequest', () => {
   // These tests were captured from logging actual arguments passed to submitOSDRequest().
@@ -56,7 +57,7 @@ describe('createClusterRequest', () => {
     // Form doesn't have `cloud_provider` field, gets it as prop.
 
     describe('OSD button -> GCP', () => {
-      const params = { product: normalizedProducts.OSD, cloudProviderID: 'gcp' };
+      const params = { cloudProviderID: 'gcp' };
 
       it('rhInfra', () => {
         const data = {
@@ -109,7 +110,7 @@ describe('createClusterRequest', () => {
     });
 
     describe('OSD Trial button -> AWS', () => {
-      const params = { product: normalizedProducts.OSDTrial, cloudProviderID: 'aws' };
+      const params = { cloudProviderID: 'aws' };
 
       it('CCS', () => {
         const data = {
