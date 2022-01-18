@@ -283,6 +283,7 @@ class ClusterDetails extends Component {
       assistedInstallerEnabled,
       userAccess,
       addNotification,
+      gotRouters,
     } = this.props;
     const { selectedTab, refreshEvent } = this.state;
 
@@ -369,7 +370,7 @@ class ClusterDetails extends Component {
       && !!get(cluster, 'api.url')
       && (
         (cloudProvider === 'aws' && !isPrivateCluster)
-        || (cloudProvider === 'gcp' && (get(cluster, 'ccs.enabled') || canCreateGCPNonCCSCluster))
+        || (cloudProvider === 'gcp' && (get(cluster, 'ccs.enabled') || (gotRouters && canCreateGCPNonCCSCluster)))
       )
       && !isArchived;
     const displayMachinePoolsTab = cluster.managed
@@ -617,6 +618,7 @@ ClusterDetails.propTypes = {
   getUsers: PropTypes.func.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   cloudProviders: PropTypes.object.isRequired,
+  gotRouters: PropTypes.bool.isRequired,
   displayClusterLogs: PropTypes.bool.isRequired,
   openModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,

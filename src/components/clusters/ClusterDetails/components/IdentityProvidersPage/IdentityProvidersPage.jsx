@@ -268,7 +268,7 @@ IdentityProvidersPage.propTypes = {
     idpId: PropTypes.string,
     name: PropTypes.string,
   }).isRequired,
-  selectedIDP: PropTypes.oneOf(PropTypes.string, PropTypes.bool),
+  selectedIDP: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   pristine: PropTypes.bool.isRequired,
   invalid: PropTypes.bool.isRequired,
   HTPasswdPasswordErrors: PropTypes.object,

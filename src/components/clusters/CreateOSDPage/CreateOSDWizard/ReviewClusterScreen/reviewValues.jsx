@@ -176,7 +176,7 @@ const reviewValues = {
             // eslint-disable-next-line react/destructuring-assignment
             labels.map(label => (
               <Label color="blue">
-                {`${label.key} = ${label.value}`}
+                {`${label.key} = ${label.value || ''}`}
               </Label>
             ))
           }

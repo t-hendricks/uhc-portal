@@ -1,0 +1,1288 @@
+{
+  "kind": "VPCList",
+  "page": 1,
+  "size": 23,
+  "total": 23,
+  "items": [
+    {
+      "name": "vpc-08b6f0901ba35262d",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-09ad4ef49f2e29996",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-033df60271dd74464",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0110a5937da99ad57",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-00327948731118662",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-09404f4fc139bd94e",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0340b7737e5177b80",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0c8db4718922eeb5c",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-00b3753ab2dd892ac",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0735da52d658da28b",
+          "public": false,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0703ec90283d1fd6b",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-04d1bc84aeebd3201",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0cd4e17634ac86d86",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0c79e0e9acafedaef",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0ded5559672a92885",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-049b8a69488b31be4",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0c17300787ec127bc",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0f441a0356e421188",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0d6ba7bc01d802bb9",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0e22644561fd3111d",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0b36b900009b6844e",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-032c8646b165b26b9",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0c09b279124ad1be7",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-02bcde7885fb887fb",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        }
+      ]
+    },
+    {
+      "name": "vpc-03e6cd3f6ff4f5493",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-012cbfb08ebb59979",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0bed271463c72496a",
+          "public": false,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-02fb1e38241d55aba",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-098e9be3718da09e3",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-05a302c4badd8a861",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-042d56492b61d6b9c",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-009e51d0d5acc36bc",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0c990fe12e545575a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0205cfc4ac37a9385",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-00dacea14109ea606",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0cdcf0390fd90b8ac",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-019eda90fbeaa72f5",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0d4ee3ee653a75927",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0474cb6c500d9394e",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-06e616d37d5b3004e",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-00ca491f7c0eabac9",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-09c0331e2373465c5",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0ea68111aaef39a1f",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-06d8ab32c8cca5f09",
+          "public": false,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-060e3dad7c959c606",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-094f581b754824854",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-057ee36dc3c455221",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-04808bc15437c494a",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-010b8e2e6f9ec58a6",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0d464333077e6832c",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0446a0e6460d0e449",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0e4a15892dd384312",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-04953300da46f15ab",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0bda56fe775abe6e1",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0a210c6ec4e408bb5",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0dd6748ade9a53e26",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-068a9052cadf5d604",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-00566bea4f49b79c4",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-04b1c89804caeed27",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0056a73fa6cc1fcc7",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0c4fc4a9f4d04ac9f",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        }
+      ]
+    },
+    {
+      "name": "vpc-060fe87d8b0394a40",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0dc9c0b1ba3effc6e",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0aebe94da16322570",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-07809a36b8f0418bf",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0df249fd61eba6225",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0dd1bee51b8e66461",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0f65c3006116c25a1",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0203b3535a82d7bec",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0d21aacbdb8da3cf7",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0fd4049ec4645c35f",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-03325559867df42db",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0c273de8becc1f62b",
+          "public": false,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0c92b5618fa07c1ff",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        }
+      ]
+    },
+    {
+      "name": "vpc-00cfccbbbaceb89ca",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-07ee08fd53b6b7183",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0590610ddd80c005a",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0aee437e71303d0f6",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-035b08e904fb80a7e",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-036c5fc941537e170",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0ec60f2ecf9b85edc",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-029ec197ba924b94a",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-07b425ffa77c34847",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0fefe26ebdeb9273d",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-002ed077b35e91900",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0ffeacc22630e814c",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0538c5de4d415bf1a",
+          "public": false,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0d2ba7cb00dd74a9c",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0d672f0e9b14f8e35",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-076912c5e0b20195b",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-03b483720ce1a3330",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0b5461508793495fa",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-069bbc569314940c0",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0bed977497f3d78d9",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0810f4a325cd8019b",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-03af0776b5def3608",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-09554d6c6ca8d1cc0",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0d63ab7a70a130870",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        }
+      ]
+    },
+    {
+      "name": "vpc-06d556cf7e98d7862",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0156a092ebda1e992",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-023d544ff97cf1fb2",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-073ebb6e631a6e2ba",
+          "public": false,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0fddd8679a4be550a",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-01869f3c79c7e3b2c",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-08c9e104ddd62e976",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-027550a44983fd2a0",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0dbca755456a25fee",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0fffb71c1f073833b",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0a3c708a319d2f146",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-04679f26948a26c4c",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0d6995455b09bb035",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0d2fcf007dc55d871",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-04825a432556e0964",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-05e8202a6b9ebedd4",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0192d363b6b4659af",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0af59c7ac9f29c7e1",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0cb861eb6c1a77c9c",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0d34a60ba782da2e6",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0e6f3ece93a6d00b3",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-09b635a8d58a57ab2",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-089f06190870b8c76",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0b4a20cbaaee2dc3c",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        }
+      ]
+    },
+    {
+      "name": "vpc-091405e6e8f7904cd",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0fdb0b424e2d5c5c4",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0ac24503f30b38b1f",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0a5aea8760d8bc5f2",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-014dcf14215359565",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0e490ac49de4f45df",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0288a3ac7d0f443c6",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0d4796be14a76099c",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-00d2bb10e0f053f94",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0adaeed92a5a03aaf",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0f5b97b8ccc879b92",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        }
+      ]
+    },
+    {
+      "name": "vpc-05c0166a739c83db1",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-042baf4f3d9c9a1f1",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0bf40fc6f49f9dca2",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0ea994032e9bc74ac",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0b535f590c5d48ce4",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-029517caa1cc3b25b",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0bddde2b7e42c6eb7",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0db13bd57fbf442ef",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-093b6794a2772f39a",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-051402b3f6ed36e8e",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0b6ecc36b49ab6751",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-075dcbb28268ca9cf",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0251f013f950c6e20",
+          "public": false,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0b6173f055a9431b3",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0e502acc2914a151e",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        }
+      ]
+    },
+    {
+      "name": "vpc-00eeab6fd33fb9dc5",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-09ea72461ccf43e32",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0e484e294bf5f0c97",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-045baac13b3d04307",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0ce0dfa0e1f8974ef",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-07ae1bb354a5fa3c2",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0a332ab1b7d8e1ccc",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0b40f4541c224aedd",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0fc06179ea17f3b85",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-06246a69d1b86d932",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0e8a794a62e3521e4",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        }
+      ]
+    },
+    {
+      "name": "vpc-034d9be90a40974a4",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0dc7b0150a9019155",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-01ae89bdce9e72e49",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0bc21166404dc482c",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-028ed1468727ecb6a",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0f6c41a9e6f466011",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-05cffa9340882dfdb",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0ed479abe2c4e7669",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0860a1058f956cea5",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0fef0984cf4fd8175",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-01bd88604155a99b8",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0681b6c3444737a55",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0ec9fa1deee4ade5e",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-06a1013015fc88d29",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        }
+      ]
+    },
+    {
+      "name": "vpc-06c03c1d239049f03",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-03fbe15beac48a9d2",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0139c07fe718a1447",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0993790bedf44e2a4",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-08073facf639dc301",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-03b2ed1d9bf8e7bac",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-06d9b4f9defc70c55",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0ecb8b1bf18deb5d8",
+          "public": false,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-066f5a2a688c760dc",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0cde9f4ce5be8955e",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0e2d7b48bf15debcd",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0f2abb9fd066c5c16",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-066475ca333c2e995",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0438da6afd30075ae",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-069a043d5075c1ecb",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0e55711e3382574d2",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-003a7dd81c4b563cb",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0aa41a49a9f652773",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-06333b621e367ec3d",
+          "public": false,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0f9d0105c2eb0577d",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0653488c07514ac11",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0ecc141a3662da138",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0af9174e111033d37",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0a3cdb7fa1f19c359",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-066d4c8611f70f3cb",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0c396d626651e4b60",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0fe88b42769bcf567",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0350e94a9b6f865fc",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-042779e1ea3c37235",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0afc682f59ced448e",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0b32e17e74cd07a60",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-02098dcc6ef5763a9",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0c190df32f3483bb7",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0fcba56e074f110bf",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-0f4ee1964dac6a2b1",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-06266253a5ef0ff29",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-024e93d58a5ebf5ac",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0b19558c6f4810c3e",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-081bc6a1acebcb968",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0d39549dd49f8a6ac",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0890ef37f03f06f63",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-092f4f5f020bdcdd9",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-04d40ea785f03f847",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-05b84a7dee7167af8",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-06b6fd4bbddef85d2",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-063d97211db7ba800",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-02b8d5ee30eca8515",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-024c1392b278ad157",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0983a5c371e2e2350",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-06e12de84ba556417",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-073dcdad9f3b03e61",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0e5f4c99671d6319f",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-05d23cd62dd5b2bf1",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0b120f784b8545f6f",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-04d336754e397ddc9",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-050f3e217292d921b",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-05e0cf7978f511cf8",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0f8cf487cd2510630",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0a61483f6f82c5018",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        }
+      ]
+    },
+    {
+      "name": "vpc-0d97c920f6f952a8b",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0b72f684c5e1fba28",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0be6f44975ae600d8",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-04baa6524d3ac7754",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-05942f4f1b163f47d",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0d405d3985ec19111",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-0ba8cc28bfa0499a2",
+          "public": true,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-0febbeacfdb5f66c0",
+          "public": false,
+          "availability_zone": "us-east-1e"
+        },
+        {
+          "subnet_id": "subnet-057d7179000eeff68",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0cf3da83d7f7601dd",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-053c11ea3010db729",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0d21e50a816d2df06",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0082f61240a7e544c",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        }
+      ]
+    },
+    {
+      "name": "vpc-05bb9f093feffe176",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0189e68d3126435fb",
+          "public": false,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0bc67a95d23552433",
+          "public": false,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-07fd6fe3a0789240a",
+          "public": false,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-018df0e7ee6110ec5",
+          "public": true,
+          "availability_zone": "us-east-1f"
+        },
+        {
+          "subnet_id": "subnet-0c2880e587449df55",
+          "public": true,
+          "availability_zone": "us-east-1d"
+        },
+        {
+          "subnet_id": "subnet-0ee2165f95668817e",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-03914354426f784a3",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0e775749535c96a4a",
+          "public": false,
+          "availability_zone": "us-east-1c"
+        },
+        {
+          "subnet_id": "subnet-023ee91ccf254d51a",
+          "public": true,
+          "availability_zone": "us-east-1b"
+        },
+        {
+          "subnet_id": "subnet-045735ff73c9f01c6",
+          "public": true,
+          "availability_zone": "us-east-1c"
+        }
+      ]
+    }
+  ]
+}

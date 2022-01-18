@@ -363,7 +363,7 @@ class CreateOSDWizard extends React.Component {
     );
     const controlledFooter = isCCSCredentialsValidationNeeded
                              && !!cloudProviderID
-                             && currentStep === 2;
+                             && currentStep === 21;
 
     return (
       <>
