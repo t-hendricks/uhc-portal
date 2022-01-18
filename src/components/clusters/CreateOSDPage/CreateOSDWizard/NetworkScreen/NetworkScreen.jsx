@@ -90,7 +90,7 @@ function NetworkScreen(props) {
                   ),
                 },
               ]}
-              defaultValue={!privateClusterSelected ? 'external' : 'internal'}
+              disableDefaultValueHandling
             />
 
             {privateClusterSelected && (
