@@ -123,6 +123,7 @@ class CreateOSDForm extends React.Component {
       isAutomaticUpgrade,
       selectedRegion,
       installToVPCSelected,
+      privateLinkSelected,
       canAutoScale,
       autoscalingEnabled,
       autoScaleMinNodesValue,
@@ -288,6 +289,7 @@ class CreateOSDForm extends React.Component {
           selectedRegion={selectedRegion}
           isCCS={isBYOCForm}
           installToVPCSelected={installToVPCSelected}
+          privateLinkSelected={privateLinkSelected}
         />
         {/* Encryption */}
         <GridItem>
@@ -383,6 +385,7 @@ CreateOSDForm.propTypes = {
   customerManagedEncryptionSelected: PropTypes.bool,
   selectedRegion: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
+  privateLinkSelected: PropTypes.bool,
   canAutoScale: PropTypes.bool.isRequired,
   autoscalingEnabled: PropTypes.bool.isRequired,
   autoScaleMinNodesValue: PropTypes.string,

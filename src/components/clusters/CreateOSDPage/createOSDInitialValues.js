@@ -28,6 +28,7 @@ const createOSDInitialValues = ({
     aws_access_key_id: '',
     aws_secret_access_key: '',
     network_configuration_toggle: 'basic',
+    cluster_privacy: 'external',
     disable_scp_checks: false,
     billing_model: isTrialDefault ? 'standard-trial' : 'standard',
     product: isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD,

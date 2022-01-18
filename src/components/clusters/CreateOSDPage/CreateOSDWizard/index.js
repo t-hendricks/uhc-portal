@@ -45,7 +45,7 @@ const mapStateToProps = (state, ownProps) => {
     ccsValidationPending: ccsCredentialsValidityResponse.pending && isCCS,
     cloudProviderID,
     installToVPCSelected: valueSelector(state, 'install_to_vpc'),
-
+    privateLinkSelected: valueSelector(state, 'use_privatelink'),
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
     organization,

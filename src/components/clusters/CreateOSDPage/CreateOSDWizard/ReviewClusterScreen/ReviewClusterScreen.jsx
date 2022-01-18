@@ -63,12 +63,14 @@ function clusterSpecDescriptionItem({ name, formValues }) {
 
 function ReviewClusterScreen({
   formValues,
+  showVPCCheckbox,
   canAutoScale,
   autoscalingEnabled,
   isPending,
 }) {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
+  const isGCP = formValues.cloud_provider === 'gcp';
   const clusterSettingsFields = [
     'cloud_provider', 'name', 'cluster_version', 'region', 'multi_az',
     !isByoc && 'persistent_storage',
@@ -135,16 +137,16 @@ function ReviewClusterScreen({
         Networking
       </Title>
       <DescriptionList {...listOptions}>
-        {clusterSpecDescriptionItem({ name: 'network_configuration_toggle', formValues })}
-        { formValues.network_configuration_toggle === 'advanced' && (
-          <>
-            {clusterSpecDescriptionItem({ name: 'network_machine_cidr', formValues })}
-            {clusterSpecDescriptionItem({ name: 'network_service_cidr', formValues })}
-            {clusterSpecDescriptionItem({ name: 'network_pod_cidr', formValues })}
-            {clusterSpecDescriptionItem({ name: 'network_host_prefix', formValues })}
-            {clusterSpecDescriptionItem({ name: 'cluster_privacy', formValues })}
-          </>
-        )}
+        {clusterSpecDescriptionItem({ name: 'cluster_privacy', formValues })}
+        {showVPCCheckbox && clusterSpecDescriptionItem({ name: 'install_to_vpc', formValues })}
+        {showVPCCheckbox && formValues.cluster_privacy === 'internal'
+        && clusterSpecDescriptionItem({ name: 'use_privatelink', formValues })}
+        {showVPCCheckbox && formValues.install_to_vpc && isAWS && clusterSpecDescriptionItem({ name: 'aws_vpc', formValues })}
+        {showVPCCheckbox && formValues.install_to_vpc && isGCP && clusterSpecDescriptionItem({ name: 'gpc_vpc', formValues })}
+        {clusterSpecDescriptionItem({ name: 'network_machine_cidr', formValues })}
+        {clusterSpecDescriptionItem({ name: 'network_service_cidr', formValues })}
+        {clusterSpecDescriptionItem({ name: 'network_pod_cidr', formValues })}
+        {clusterSpecDescriptionItem({ name: 'network_host_prefix', formValues })}
       </DescriptionList>
       <Title headingLevel="h3">
         Updates
@@ -163,6 +165,7 @@ ReviewClusterScreen.propTypes = {
   formValues: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),
+  showVPCCheckbox: PropTypes.bool,
   isPending: PropTypes.bool,
   canAutoScale: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,

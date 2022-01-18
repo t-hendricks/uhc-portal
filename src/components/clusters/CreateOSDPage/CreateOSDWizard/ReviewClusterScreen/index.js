@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
   const autoscalingEnabled = canAutoScale && !!valueSelector(state, 'autoscalingEnabled');
   return {
     formValues: getFormValues('CreateCluster')(state),
+    showVPCCheckbox: valueSelector(state, 'byoc') === 'true',
     canAutoScale,
     autoscalingEnabled,
   };
