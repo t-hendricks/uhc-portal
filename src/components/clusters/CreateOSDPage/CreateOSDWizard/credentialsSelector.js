@@ -7,9 +7,8 @@ import { formValueSelector } from 'redux-form';
  *   Note that creation request puts more fields under 'aws' e.g. 'kms_key_arn'.
  */
 
-const ccsCredentialsSelector = (state) => {
+const ccsCredentialsSelector = (cloudProviderID, state) => {
   const valueSelector = formValueSelector('CreateCluster');
-  const cloudProviderID = valueSelector(state, 'cloud_provider'); // TODO: ROSA has no such field!
   switch (cloudProviderID) {
     case 'gcp':
       return valueSelector(state, 'gcp_service_account');

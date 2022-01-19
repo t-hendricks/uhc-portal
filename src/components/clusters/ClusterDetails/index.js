@@ -42,7 +42,7 @@ import { getUserAccess } from '../../../redux/actions/costActions';
 
 const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
-  const { cloudProviders } = state;
+  const { cloudProviders, clusterRouters } = state;
   const { errorCode } = state.clusterLogs.requestState;
   const { addOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
@@ -83,6 +83,7 @@ const mapStateToProps = (state, { location }) => {
     supportCases,
     assistedInstallerEnabled: state.features[ASSISTED_INSTALLER_FEATURE],
     userAccess: state.cost.userAccess,
+    gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
   });
 };
 
