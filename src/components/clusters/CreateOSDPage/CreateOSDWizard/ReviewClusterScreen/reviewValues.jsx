@@ -105,7 +105,7 @@ const reviewValues = {
     valueTransform: value => `${value} minutes`,
   },
   etcd_encryption: {
-    title: 'etcd encryption',
+    title: 'Additional etcd encryption',
     isBoolean: true,
     values: {
       true: 'Enabled',
