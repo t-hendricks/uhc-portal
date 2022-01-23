@@ -16,6 +16,7 @@ import AssociateAWSAccountModal from './AssociateAWSAccountModal';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import ErrorBox from '../../../../common/ErrorBox';
 import { required } from '../../../../../common/validators';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 function AccountsRolesScreen({
   change,
@@ -37,6 +38,12 @@ function AccountsRolesScreen({
   // TODO: remove mock - to show prerequisites expanded
   // const hasAWSAccount = false;
   const hasAWSAccount = AWSAccountIDs.length > 0;
+
+  // default product and cloud_provider form values
+  useEffect(() => {
+    change('cloud_provider', 'aws');
+    change('product', normalizedProducts.ROSA);
+  }, []);
 
   useEffect(() => {
     if (AWSAccountIDs.length === 1 || selectedAWSAccountID === undefined) {

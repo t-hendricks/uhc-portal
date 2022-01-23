@@ -93,7 +93,7 @@ function ScaleSection({
       {canAutoScale
         && (
           <>
-            <GridItem md={6}>
+            <GridItem md={12}>
               <AutoScaleSection
                 autoscalingEnabled={autoscalingEnabled}
                 isMultiAz={isMultiAz}
