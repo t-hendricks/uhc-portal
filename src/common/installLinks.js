@@ -23,7 +23,7 @@ const MIRROR_RHCOS_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/a
 const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest';
 
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/latest';
-const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated/4';
+const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 
 const OCM_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021';
 
@@ -36,7 +36,8 @@ const links = {
   UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating-cluster.html`,
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication/understanding-authentication.html`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
-  DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/administering_a_cluster/dedicated-admin-role.html`,
+  DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/4/administering_a_cluster/dedicated-admin-role.html`,
+  AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
