@@ -36,7 +36,7 @@ const links = {
   UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating-cluster.html`,
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication/understanding-authentication.html`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
-  DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/4/administering_a_cluster/dedicated-admin-role.html`,
+  DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/administering_a_cluster/osd-admin-roles.html`,
   AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
