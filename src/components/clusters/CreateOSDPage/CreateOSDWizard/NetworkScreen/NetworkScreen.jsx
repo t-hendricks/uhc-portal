@@ -105,7 +105,7 @@ function NetworkScreen(props) {
                     <span>
                       Follow the
                       {' '}
-                      <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-understanding-aws.html">
+                      <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/osd_private_connections/aws-private-connections.html">
                         documentation
                       </a>
                       {' '}
