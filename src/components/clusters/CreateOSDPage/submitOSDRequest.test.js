@@ -274,8 +274,8 @@ describe('createClusterRequest', () => {
 
   describe('CreateROSAWizard', () => {
     // ROSA wizard has no choice about `product` or `cloud_provider` or 'byoc'.
-    // Currently it has wrong `product` prop, wrong `product` & `byoc` fields, :-D
-    // The fields could be dropped, if we're careful about valueSelector() expecting them.
+    // For code uniformity, it initializes these fields in redux-form state
+    // (without registering them or connecting to an actual Field component).
 
     describe('ROSA button', () => {
       // TODO: OSD is what submit button actually passes,
@@ -286,8 +286,8 @@ describe('createClusterRequest', () => {
         const data = {
           ...rosaFormData,
           billing_model: 'standard',
-          // TODO: this is actual field value - createOSDInitialValues only does OSD/OSDTrial.
-          product: normalizedProducts.OSD,
+          product: normalizedProducts.ROSA,
+          cloud_provider: 'aws',
           // TODO: this is actual field value - we didn't pass isByoc.
           byoc: 'false',
         };
