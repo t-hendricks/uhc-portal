@@ -639,13 +639,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         {...commonProps}
         tool={tools.ARMINSTALLER}
         channel={channels.STABLE}
-        name={(
-          <>
-            OpenShift for ARM Installer
-            {' '}
-            <DevPreviewBadge />
-          </>
-        )}
+        name="OpenShift for ARM Installer"
         description={(
           <TextContent>
             <Text>
@@ -661,6 +655,9 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
               Learn how to deploy in
               {' '}
               <Link to="/install/aws/arm">AWS</Link>
+              , or in your
+              {' '}
+              <Link to="/install/arm">data center</Link>
               .
             </Text>
           </TextContent>

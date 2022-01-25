@@ -5095,6 +5095,13 @@ exports[`<DownloadsPage> renders 1`] = `
                   >
                     AWS
                   </Link>
+                  , or in your
+                   
+                  <Link
+                    to="/install/arm"
+                  >
+                    data center
+                  </Link>
                   .
                 </Text>
               </TextContent>
@@ -5124,13 +5131,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "x86_64-openshift-install": false,
               }
             }
-            name={
-              <React.Fragment>
-                OpenShift for ARM Installer
-                 
-                <DevPreviewBadge />
-              </React.Fragment>
-            }
+            name="OpenShift for ARM Installer"
             selections={Object {}}
             setExpanded={[Function]}
             setSelections={[Function]}
