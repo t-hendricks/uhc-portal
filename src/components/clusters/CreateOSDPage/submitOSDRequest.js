@@ -6,7 +6,7 @@ import config from '../../../config';
 import { createCluster } from '../../../redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '../../../common/helpers';
 
-export const createClusterRequest = ({ cloudProviderID, product }, formData) => {
+export const createClusterRequest = ({ isWizard, cloudProviderID, product }, formData) => {
   const isMultiAz = formData.multi_az === 'true';
   // See submitOSDRequest.test.js for when we get fields vs side params.
   // But to avoid bugs where we ignore user's choices, when both are present, the field should win.
@@ -83,8 +83,9 @@ export const createClusterRequest = ({ cloudProviderID, product }, formData) => 
       listening: formData.cluster_privacy,
     };
   }
-  const isInstallExistingVPC = formData.network_configuration_toggle === 'advanced' && formData.install_to_vpc;
   if (formData.byoc === 'true') {
+    const wasExistingVPCShown = isWizard || formData.network_configuration_toggle === 'advanced';
+    const isInstallExistingVPC = wasExistingVPCShown && formData.install_to_vpc;
     clusterRequest.ccs = {
       enabled: true,
     };
@@ -186,8 +187,8 @@ export const upgradeScheduleRequest = formData => (
 );
 
 // Returning a function that takes (formData) is convenient for redux-form `onSubmit` prop.
-const submitOSDRequest = (dispatch, { cloudProviderID, product }) => (formData) => {
-  const clusterRequest = createClusterRequest({ cloudProviderID, product }, formData);
+const submitOSDRequest = (dispatch, { isWizard, cloudProviderID, product }) => (formData) => {
+  const clusterRequest = createClusterRequest({ isWizard, cloudProviderID, product }, formData);
   const upgradeSchedule = upgradeScheduleRequest(formData);
   dispatch(createCluster(clusterRequest, upgradeSchedule));
 };
