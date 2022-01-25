@@ -1,5 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Every OCP instruction page should render:  AWS (ARM) 1`] = `
+<Fragment>
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            cloudProviderID="AWS (ARM)"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
+          >
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="AWS (ARM)"
+            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
 exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
 <Fragment>
   <Card>

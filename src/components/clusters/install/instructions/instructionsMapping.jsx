@@ -42,6 +42,18 @@ const instructionsMapping = {
     },
     getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propagate).',
   },
+  armaws: {
+    cloudProvider: 'AWS (ARM)',
+    customizations: links.INSTALL_AWS_CUSTOMIZATIONS,
+    ipi: {
+      title: 'Install OpenShift on AWS with installer-provisioned ARM infrastructure',
+      docURL: links.INSTALL_AWSIPI_DOCS_LANDING,
+      installer: tools.ARMINSTALLER,
+      channel: channels.STABLE,
+      preReleasePageLink: '/install/arm/pre-release',
+    },
+    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propagate).',
+  },
   gcp: {
     cloudProvider: 'GCP',
     customizations: links.INSTALL_GCP_CUSTOMIZATIONS,
