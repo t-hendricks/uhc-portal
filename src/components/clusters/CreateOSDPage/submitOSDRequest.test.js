@@ -278,18 +278,15 @@ describe('createClusterRequest', () => {
     // (without registering them or connecting to an actual Field component).
 
     describe('ROSA button', () => {
-      // TODO: OSD is what submit button actually passes,
-      //   because mapDispatchToProps takes the silly product=OSD passed by Router.
-      const params = { product: normalizedProducts.OSD };
+      const params = {};
 
-      it.skip('defaults', () => {
+      it('defaults', () => {
         const data = {
           ...rosaFormData,
           billing_model: 'standard',
           product: normalizedProducts.ROSA,
           cloud_provider: 'aws',
-          // TODO: this is actual field value - we didn't pass isByoc.
-          byoc: 'false',
+          byoc: 'true',
         };
         const request = createClusterRequest(params, data);
         expect(request.billing_model).toEqual('standard');

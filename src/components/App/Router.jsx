@@ -192,7 +192,7 @@ function Router({ history }) {
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
             <TermsGuardedRoute path="/create/rosa/welcome" history={history} render={() => <CreateROSAWelcome />} />
             {/* TODO: ROSA product is not OSD! */}
-            <TermsGuardedRoute path="/create/rosa/wizard" history={history} render={() => <CreateROSAWizard product={normalizedProducts.OSD} />} />
+            <TermsGuardedRoute path="/create/rosa/wizard" history={history} component={CreateROSAWizard} />
             <Route path="/create" component={CreateClusterPage} />
             <Route path="/details/s/:subscriptionID/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
             <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />

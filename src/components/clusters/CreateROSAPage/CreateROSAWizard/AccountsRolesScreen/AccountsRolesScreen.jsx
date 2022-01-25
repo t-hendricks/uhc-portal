@@ -43,6 +43,7 @@ function AccountsRolesScreen({
   useEffect(() => {
     change('cloud_provider', 'aws');
     change('product', normalizedProducts.ROSA);
+    change('byoc', 'true');
   }, []);
 
   useEffect(() => {
