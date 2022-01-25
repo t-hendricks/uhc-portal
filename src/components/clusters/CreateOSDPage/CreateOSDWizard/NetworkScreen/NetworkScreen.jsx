@@ -12,6 +12,8 @@ import { Field } from 'redux-form';
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
+import ExternalLink from '../../../../common/ExternalLink';
+import links from '../../../../../common/installLinks';
 
 function NetworkScreen(props) {
   const {
@@ -105,9 +107,9 @@ function NetworkScreen(props) {
                     <span>
                       Follow the
                       {' '}
-                      <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-understanding-aws.html">
+                      <ExternalLink href={links.AWS_PRIVATE_CONNECTIONS}>
                         documentation
-                      </a>
+                      </ExternalLink>
                       {' '}
                       for how to do that.
                     </span>
