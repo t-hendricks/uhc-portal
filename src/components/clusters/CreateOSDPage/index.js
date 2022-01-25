@@ -128,7 +128,11 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: submitOSDRequest(dispatch, ownProps),
+  onSubmit: submitOSDRequest(dispatch, {
+    // If changing these params, keep test & DebugClusterRequest props synced.
+    // `product` omitted — we get such prop but can be changed inside.
+    cloudProviderID: ownProps.cloudProviderID,
+  }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),
   openModal: (modalName) => { dispatch(openModal(modalName)); },

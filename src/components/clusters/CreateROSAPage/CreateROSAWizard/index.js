@@ -32,10 +32,10 @@ const mapStateToProps = (state) => {
   });
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   onSubmit: () => dispatch((_, getState) => {
     const formData = getFormValues('CreateCluster')(getState());
-    return submitOSDRequest(dispatch, ownProps)(formData); // TODO: change to submitROSARequest(...
+    return submitOSDRequest(dispatch, {})(formData); // TODO: change to submitROSARequest(...
   }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),

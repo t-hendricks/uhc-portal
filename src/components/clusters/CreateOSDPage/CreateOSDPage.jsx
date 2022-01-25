@@ -324,7 +324,7 @@ class CreateOSDPage extends React.Component {
                     />
                     {/* Form footer */}
                     {config.fakeOSD && (
-                      <DebugClusterRequest product={product} cloudProviderID={cloudProviderID} />
+                      <DebugClusterRequest cloudProviderID={cloudProviderID} />
                     )}
                     <GridItem>
                       <Split hasGutter className="create-osd-form-button-split">

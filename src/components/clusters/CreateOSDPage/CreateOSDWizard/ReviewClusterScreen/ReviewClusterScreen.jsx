@@ -17,6 +17,7 @@ import './ReviewClusterScreen.scss';
 import ReviewSection, { ReviewItem } from './ReviewSection';
 
 function ReviewClusterScreen({
+  clusterRequestParams,
   formValues,
   canAutoScale,
   autoscalingEnabled,
@@ -111,11 +112,12 @@ function ReviewClusterScreen({
         {ReviewItem({ name: 'node_drain_grace_period', formValues })}
       </ReviewSection>
 
-      {config.fakeOSD && <DebugClusterRequest />}
+      {config.fakeOSD && <DebugClusterRequest {...clusterRequestParams} /> }
     </div>
   );
 }
 ReviewClusterScreen.propTypes = {
+  clusterRequestParams: PropTypes.object.isRequired,
   formValues: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),

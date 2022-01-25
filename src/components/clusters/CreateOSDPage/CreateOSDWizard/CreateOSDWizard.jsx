@@ -259,7 +259,10 @@ class CreateOSDWizard extends React.Component {
         name: 'Review and create',
         component: (
           <ErrorBoundary>
-            <ReviewClusterScreen isPending={createClusterResponse.pending} />
+            <ReviewClusterScreen
+              isPending={createClusterResponse.pending}
+              clusterRequestParams={{}}
+            />
           </ErrorBoundary>
         ),
         nextButtonText: 'Create cluster',
