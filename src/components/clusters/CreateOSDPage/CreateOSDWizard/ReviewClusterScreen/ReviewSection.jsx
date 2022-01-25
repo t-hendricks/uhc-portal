@@ -59,10 +59,17 @@ function ReviewSection({ initiallyExpanded, title, children = null }) {
     setIsExpanded(toggleValue);
   };
 
+  const listOptions = {
+    // default vertical good for narrow screens, horizontal clearer when we have the space.
+    orientation: {
+      sm: 'horizontal',
+    },
+  };
+
   return (
     <GridItem>
       <ExpandableSection className="review-screen-expandable-section" isExpanded={isExpanded} onToggle={onToggle} toggleText={title}>
-        <DescriptionList isHorizontal>
+        <DescriptionList isHorizontal {...listOptions}>
           {children}
         </DescriptionList>
       </ExpandableSection>

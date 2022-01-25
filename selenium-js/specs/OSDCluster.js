@@ -192,14 +192,6 @@ describe('OSD cluster tests', async () => {
 
   // skip until we can figure out how to get thru web provider Validate credentials
   describe.skip('Test Networking InstallIntoVPC and PrivateLink checkboxes', async () => {
-    // used to verify AWS credentials
-    // browser.mock is not a function!
-    // const mocklistAWSRegions = await browser.mock('**/api/clusters_mgmt/v1/aws_inquiries/regions/', {
-    //  method: 'get',
-    // });
-    // mocklistAWSRegions.response({
-    //  statusCode: 200,
-    // });
     it('navigates to create AWS CCS cluster Networking screen', async () => {
       await GlobalNav.navigateTo('Clusters');
       await browser.waitUntil(ClusterListPage.isReady);

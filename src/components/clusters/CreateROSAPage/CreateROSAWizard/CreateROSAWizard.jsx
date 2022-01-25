@@ -23,7 +23,7 @@ import NetworkScreen from '../../CreateOSDPage/CreateOSDWizard/NetworkScreen';
 import VPCScreen from '../../CreateOSDPage/CreateOSDWizard/VPCScreen';
 import CIDRScreen from '../../CreateOSDPage/CreateOSDWizard/CIDRScreen';
 import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
-import ReviewClusterScreen from './ReviewClusterScreen';
+import ReviewClusterScreen from '../../CreateOSDPage/CreateOSDWizard/ReviewClusterScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
 
@@ -86,7 +86,6 @@ class CreateROSAWizard extends React.Component {
     const {
       isValid,
       onSubmit,
-      product,
       cloudProviderID,
       installToVPCSelected,
       createClusterResponse,
@@ -96,6 +95,7 @@ class CreateROSAWizard extends React.Component {
       resetResponse,
       hasProductQuota,
       history,
+      privateLinkSelected,
     } = this.props;
 
     const { stepIdReached } = this.state;
@@ -119,7 +119,7 @@ class CreateROSAWizard extends React.Component {
             name: 'Details',
             component: (
               <ErrorBoundary>
-                <ClusterSettingsScreen cloudProviderID={cloudProviderID} product={product} />
+                <ClusterSettingsScreen />
               </ErrorBoundary>
             ),
             enableNext: isValid,
@@ -130,7 +130,7 @@ class CreateROSAWizard extends React.Component {
             name: 'Machine pool',
             component: (
               <ErrorBoundary>
-                <MachinePoolScreen cloudProviderID={cloudProviderID} product={product} />
+                <MachinePoolScreen />
               </ErrorBoundary>
             ),
             enableNext: true, // TODO isValid,
@@ -153,6 +153,7 @@ class CreateROSAWizard extends React.Component {
                   cloudProviderID={cloudProviderID}
                   showClusterPrivacy
                   showVPCCheckbox
+                  privateLinkSelected={privateLinkSelected}
                 />
               </ErrorBoundary>
             ),
@@ -164,7 +165,7 @@ class CreateROSAWizard extends React.Component {
             name: 'VPC settings',
             component: (
               <ErrorBoundary>
-                <VPCScreen cloudProviderID={cloudProviderID} />
+                <VPCScreen privateLinkSelected={privateLinkSelected} />
               </ErrorBoundary>
             ),
             enableNext: isValid,
@@ -175,7 +176,7 @@ class CreateROSAWizard extends React.Component {
             name: 'CIDR ranges',
             component: (
               <ErrorBoundary>
-                <CIDRScreen cloudProviderID={cloudProviderID} />
+                <CIDRScreen />
               </ErrorBoundary>
             ),
             enableNext: isValid,
@@ -341,9 +342,9 @@ const requestStatePropTypes = PropTypes.shape({
 
 CreateROSAWizard.propTypes = {
   isValid: PropTypes.bool,
-  product: PropTypes.string,
   cloudProviderID: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
+  privateLinkSelected: PropTypes.bool,
   isErrorModalOpen: PropTypes.bool,
 
   createClusterResponse: PropTypes.shape({

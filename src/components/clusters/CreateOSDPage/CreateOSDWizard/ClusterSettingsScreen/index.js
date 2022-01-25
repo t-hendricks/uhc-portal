@@ -9,10 +9,10 @@ import ClusterSettingsScreen from './ClusterSettingsScreen';
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
-  const cloudProviderID = ownProps.cloudProviderID || valueSelector(state, 'cloud_provider');
+  const cloudProviderID = valueSelector(state, 'cloud_provider');
   const isMultiAz = valueSelector(state, 'multi_az') === 'true';
   const isByoc = valueSelector(state, 'byoc') === 'true';
-  const product = ownProps.product || valueSelector(state, 'product'); // TODO: field should override propl?
+  const product = valueSelector(state, 'product');
   const billingModel = valueSelector(state, 'billing_model');
   const customerManagedEncryptionSelected = valueSelector(state, 'customer_managed_key');
   const selectedRegion = valueSelector(state, 'region');
@@ -26,7 +26,7 @@ const mapStateToProps = (state, ownProps) => {
     customerManagedEncryptionSelected,
     selectedRegion,
     initialValues: createOSDInitialValues({
-      cloudProviderID, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
+      cloudProviderID, product, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
     }),
   };
 };
