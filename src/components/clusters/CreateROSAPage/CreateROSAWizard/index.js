@@ -35,7 +35,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   onSubmit: () => dispatch((_, getState) => {
     const formData = getFormValues('CreateCluster')(getState());
-    return submitOSDRequest(dispatch, {})(formData); // TODO: change to submitROSARequest(...
+    // If changing these params, keep test & DebugClusterRequest props synced.
+    const params = { isWizard: true };
+    return submitOSDRequest(dispatch, params)(formData); // TODO: change to submitROSARequest(...
   }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),

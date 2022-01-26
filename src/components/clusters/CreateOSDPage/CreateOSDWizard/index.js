@@ -61,7 +61,7 @@ const mapDispatchToProps = dispatch => ({
   onSubmit: () => dispatch((_, getState) => {
     const formData = getFormValues('CreateCluster')(getState());
     // If changing these params, keep test & DebugClusterRequest props synced.
-    const params = {};
+    const params = { isWizard: true };
     return submitOSDRequest(dispatch, params)(formData);
   }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
