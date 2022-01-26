@@ -34,6 +34,7 @@ const pendoEvents = {
   [tools.OPM]: 'Download-OPM-CLI',
   [tools.RHOAS]: 'Download-RHOAS-CLI',
   [tools.ROSA]: 'Download-ROSA-CLI',
+  [tools.MIRROR_REGISTRY]: 'Download-Mirror-Registry',
 };
 
 const DownloadButton = ({

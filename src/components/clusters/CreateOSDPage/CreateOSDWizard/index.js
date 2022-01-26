@@ -45,7 +45,7 @@ const mapStateToProps = (state, ownProps) => {
     ccsValidationPending: ccsCredentialsValidityResponse.pending && isCCS,
     cloudProviderID,
     installToVPCSelected: valueSelector(state, 'install_to_vpc'),
-
+    privateLinkSelected: valueSelector(state, 'use_privatelink'),
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
     organization,
@@ -57,10 +57,12 @@ const mapStateToProps = (state, ownProps) => {
   });
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   onSubmit: () => dispatch((_, getState) => {
     const formData = getFormValues('CreateCluster')(getState());
-    return submitOSDRequest(dispatch, ownProps)(formData);
+    // If changing these params, keep test & DebugClusterRequest props synced.
+    const params = {};
+    return submitOSDRequest(dispatch, params)(formData);
   }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),

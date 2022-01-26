@@ -4,11 +4,11 @@ import { formValueSelector } from 'redux-form';
 import wizardConnector from '../WizardConnector';
 import CIDRScreen from './CIDRScreen';
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
 
   return {
-    cloudProviderID: ownProps.cloudProviderID || valueSelector(state, 'cloud_provider'),
+    cloudProviderID: valueSelector(state, 'cloud_provider'),
     isMultiAz: valueSelector(state, 'multi_az') === 'true',
   };
 };

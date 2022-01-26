@@ -144,8 +144,26 @@ class AddOnsParametersModal extends Component {
     }
   };
 
-  fieldForParam = param => (
-    <>
+  fieldForParam = (param) => {
+    if (param.value_type && param.value_type === 'boolean') {
+      return (
+        <>
+          <Field
+            {...this.getFieldProps(param)}
+            key={param.id}
+            id={`field-addon-${param.id}`}
+            name={`parameters.${param.id}`}
+            label={param.name}
+            placeholder={this.getParamDefault(param)}
+            isRequired={param.required}
+            isDisabled={this.isFieldDisabled(param)}
+            validate={this.validationsForParameterField(param)}
+          />
+          <div className="ocm-c--reduxcheckbox-description">{this.getHelpText(param)}</div>
+        </>
+      );
+    }
+    return (
       <Field
         {...this.getFieldProps(param)}
         key={param.id}
@@ -158,11 +176,8 @@ class AddOnsParametersModal extends Component {
         helpText={this.getHelpText(param)}
         validate={this.validationsForParameterField(param)}
       />
-      {param.value_type && param.value_type === 'boolean' && (
-        <div className="ocm-c--reduxcheckbox-description">{this.getHelpText(param)}</div>
-      )}
-    </>
-  );
+    );
+  }
 
   render() {
     const {

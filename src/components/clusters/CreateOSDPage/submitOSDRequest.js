@@ -8,9 +8,10 @@ import { parseReduxFormKeyValueList } from '../../../common/helpers';
 
 export const createClusterRequest = ({ cloudProviderID, product }, formData) => {
   const isMultiAz = formData.multi_az === 'true';
-  // in non-wizard, cloudProviderID is supplied as a parameter. in the wizard, it's in the form.
-  const actualCloudProviderID = cloudProviderID || formData.cloud_provider;
-  const actualProduct = product || formData.product;
+  // See submitOSDRequest.test.js for when we get fields vs side params.
+  // But to avoid bugs where we ignore user's choices, when both are present, the field should win.
+  const actualCloudProviderID = formData.cloud_provider || cloudProviderID;
+  const actualProduct = formData.product || product;
 
   const clusterRequest = {
     name: formData.name,
@@ -93,6 +94,9 @@ export const createClusterRequest = ({ cloudProviderID, product }, formData) => 
         account_id: formData.account_id,
         secret_access_key: formData.secret_access_key,
       };
+      if (formData.use_privatelink) {
+        clusterRequest.aws.private_link = true;
+      }
       if (formData.customer_managed_key) {
         clusterRequest.aws.kms_key_arn = formData.kms_key_arn;
       }
