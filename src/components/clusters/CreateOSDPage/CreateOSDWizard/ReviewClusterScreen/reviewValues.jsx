@@ -1,5 +1,7 @@
 import React from 'react';
 import {
+  Grid,
+  GridItem,
   LabelGroup,
   Label,
 } from '@patternfly/react-core';
@@ -54,6 +56,17 @@ const reviewValues = {
   },
   name: {
     title: 'Cluster name',
+  },
+  operator_roles_name: {
+    title: 'Operator roles name',
+    valueTransform: (value, allValues) => {
+      // TODO: replace 'ManagedOpenShift' with backend api call/value: https://issues.redhat.com/browse/HAC-354
+      let opRolesName = `ManagedOpenShift-${allValues.name}`;
+      if (allValues.custom_operator_roles_prefix) {
+        opRolesName += `-${allValues.custom_operator_roles_prefix}`;
+      }
+      return opRolesName;
+    },
   },
   cluster_version: {
     title: 'Version',
@@ -183,6 +196,82 @@ const reviewValues = {
       </LabelGroup>
     ),
   },
+  install_to_vpc: {
+    title: 'Install into Existing VPC',
+    isBoolean: true,
+    values: {
+      true: 'Enabled',
+      false: 'Disabled',
+    },
+  },
+  use_privatelink: {
+    title: 'PrivateLink',
+    isBoolean: true,
+    values: {
+      true: 'Enabled',
+      false: 'Disabled',
+    },
+  },
+  aws_vpc: {
+    title: 'VPC subnet settings',
+    valueTransform: (value, allValues) => {
+      let vpcs = [
+        {
+          az: allValues.az_0,
+          privateSubnet: allValues.private_subnet_id_0,
+          publicSubnet: allValues.use_privatelink ? undefined : allValues.public_subnet_id_0,
+        },
+      ];
+      if (allValues.multi_az === 'true') {
+        vpcs = [
+          ...vpcs,
+          {
+            az: allValues.az_1,
+            privateSubnet: allValues.private_subnet_id_1,
+            publicSubnet: allValues.use_privatelink ? undefined : allValues.public_subnet_id_1,
+          },
+          {
+            az: allValues.az_2,
+            privateSubnet: allValues.private_subnet_id_2,
+            publicSubnet: allValues.use_privatelink ? undefined : allValues.public_subnet_id_2,
+          },
+        ];
+      }
+      return (
+        <Grid>
+          <GridItem md={3}><strong>Availability zone</strong></GridItem>
+          <GridItem md={3}><strong>Private subnet ID</strong></GridItem>
+          {!allValues.use_privatelink
+            ? <GridItem md={3}><strong>Public subnet ID</strong></GridItem>
+            : null}
+          <GridItem md={allValues.use_privatelink ? 6 : 3} />
+          {vpcs.map(vpc => (
+            <>
+              <GridItem md={3}>{vpc.az}</GridItem>
+              <GridItem md={3}>{vpc.privateSubnet}</GridItem>
+              {!allValues.use_privatelink ? <GridItem md={3}>{vpc.publicSubnet}</GridItem> : null}
+              <GridItem md={allValues.use_privatelink ? 6 : 3} />
+            </>
+          ))}
+        </Grid>
+      );
+    },
+  },
+  gpc_vpc: {
+    title: 'VPC subnet settings',
+    valueTransform: (value, allValues) => (
+      <Grid>
+        <GridItem md={3}><strong>Existing VPC name</strong></GridItem>
+        <GridItem md={3}><strong>Control plane subnet name</strong></GridItem>
+        <GridItem md={3}><strong>Compute subnet name</strong></GridItem>
+        <GridItem md={3} />
+        <GridItem md={3}>{allValues.vpc_name}</GridItem>
+        <GridItem md={3}>{allValues.control_plane_subnet}</GridItem>
+        <GridItem md={3}>{allValues.compute_subnet}</GridItem>
+        <GridItem md={3} />
+      </Grid>
+    ),
+  },
   network_machine_cidr: {
     title: 'Machine CIDR',
     valueTransform: (value) => {
@@ -226,6 +315,21 @@ const reviewValues = {
       internal: 'Private',
       undefined: 'Public',
     },
+  },
+  associated_aws_id: {
+    title: 'AWS account ID',
+  },
+  installer_role_arn: {
+    title: 'Installer role',
+  },
+  support_role_arn: {
+    title: 'Support Role ARN',
+  },
+  worker_role_arn: {
+    title: 'Worker role',
+  },
+  control_plane_role_arn: {
+    title: 'Control plane role',
   },
 };
 

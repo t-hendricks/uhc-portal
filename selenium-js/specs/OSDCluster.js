@@ -6,6 +6,8 @@ import ClusterDetailsPage from '../pageobjects/ClusterDetails.page';
 import GlobalNav from '../pageobjects/GlobalNav.page';
 import IdentityProviders from '../pageobjects/IdentityProviders.page';
 
+const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
+
 describe('OSD cluster tests', async () => {
   // eslint-disable-next-line no-undef
   before('should login successfully', async () => {
@@ -16,8 +18,6 @@ describe('OSD cluster tests', async () => {
     await browser.waitUntil(ClusterListPage.isReady);
     expect(await ClusterListPage.createClusterBtn).toExist();
   });
-
-  const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
 
   describe('Create OSD cluster on AWS flow', async () => {
     it('navigates to create OSD cluster', async () => {
@@ -187,6 +187,58 @@ describe('OSD cluster tests', async () => {
       await (await ClusterDetailsPage.saveNetworkingChangesModalConfirmBtn).click();
       expect(await ClusterDetailsPage.saveNetworkingChangesModal).not.toBeDisabled();
       expect(await ClusterDetailsPage.saveNetworkingChangesBtn).toBeDisabled();
+    });
+  });
+
+  // skip until we can figure out how to get thru web provider Validate credentials
+  describe.skip('Test Networking InstallIntoVPC and PrivateLink checkboxes', async () => {
+    it('navigates to create AWS CCS cluster Networking screen', async () => {
+      await GlobalNav.navigateTo('Clusters');
+      await browser.waitUntil(ClusterListPage.isReady);
+      expect(await ClusterListPage.createClusterBtn).toExist();
+      await (await ClusterListPage.createClusterBtn).click();
+      expect(await CreateClusterPage.isCreateClusterPage()).toBeTruthy();
+      await (await CreateClusterPage.createOSDClusterBtn).click();
+      expect(await CreateOSDWizardPage.isCreateOSDPage()).toBeTruthy();
+
+      expect(await CreateOSDWizardPage.isBillingModelScreen()).toBeTruthy();
+      await (await CreateOSDWizardPage.CCSRadiobutton).click();
+      await (await CreateOSDWizardPage.primaryButton).click();
+
+      expect(await CreateOSDWizardPage.isCloudProviderSelectionScreen()).toBeTruthy();
+      await (await CreateOSDWizardPage.awsProvider).click();
+      await (await CreateOSDWizardPage.awsAccountIDInput).setValue('123456789012');
+      await (await CreateOSDWizardPage.awsAccessKeyInput).setValue('a');
+      await (await CreateOSDWizardPage.awsSecretAccessKeyInput).setValue('a');
+      await (await CreateOSDWizardPage.primaryButton).click();
+
+      expect(await CreateOSDWizardPage.isClusterDetailsScreen()).toBeTruthy();
+      await (await CreateOSDWizardPage.clusterNameInput).setValue(clusterName);
+      await (await CreateOSDWizardPage.primaryButton).click();
+      expect(await CreateOSDWizardPage.isMachinePoolScreen()).toBeTruthy();
+      await (await CreateOSDWizardPage.primaryButton).click();
+    });
+
+    it('tests interactions of usePrivateLink and installIntoVPC checkboxes', async () => {
+      expect(await CreateOSDWizardPage.isNetworkingScreen()).toBeTruthy();
+      // switching to Private cluster, should display usePrivateLink checkbox
+      await (await CreateOSDWizardPage.privateClusterRadiobutton).click();
+      expect(await CreateOSDWizardPage.usePrivateLinkCheckbox).toBeDisplayed();
+      expect(await CreateOSDWizardPage.installIntoVPCCheckbox).not.toBeChecked();
+      expect(await CreateOSDWizardPage.installIntoVPCCheckbox).not.toBeDisabled();
+      // checking on UsePrivateLink should check/select and disable installIntoExistingVPC
+      await (await CreateOSDWizardPage.usePrivateLinkCheckbox).click();
+      expect(await CreateOSDWizardPage.installIntoVPCCheckbox).toBeChecked();
+      expect(await CreateOSDWizardPage.installIntoVPCCheckbox).toBeDisabled();
+      // switching back to Public cluster should hide and uncheck usePrivateLinkCheckbox
+      // and enable installIntoVPCCheckbox
+      await (await CreateOSDWizardPage.publicClusterRadiobutton).click();
+      expect(await CreateOSDWizardPage.usePrivateLinkCheckbox).not.toBeDisplayed();
+      expect(await CreateOSDWizardPage.usePrivateLinkCheckbox).not.toBeChecked();
+      expect(await CreateOSDWizardPage.installIntoVPCCheckbox).not.toBeDisabled();
+      // switching back to Private cluster should show unchecked usePrivateLinkCheckbox
+      expect(await CreateOSDWizardPage.usePrivateLinkCheckbox).toBeDisplayed();
+      expect(await CreateOSDWizardPage.usePrivateLinkCheckbox).not.toBeChecked();
     });
   });
 

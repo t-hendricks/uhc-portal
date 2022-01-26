@@ -15,6 +15,7 @@ const SingleSubnetFieldsRow = ({
   index,
   selectedRegion,
   isMultiAz,
+  privateLinkSelected,
 }) => {
   const azValidations = [
     isMultiAz && validateUniqueAZ,
@@ -42,16 +43,18 @@ const SingleSubnetFieldsRow = ({
           validate={required}
         />
       </GridItem>
-      <GridItem md={3}>
-        <Field
-          component={ReduxVerticalFormGroup}
-          name={`public_subnet_id_${index}`}
-          label={showLabels ? 'Public subnet ID' : null}
-          type="text"
-          validate={required}
-        />
-      </GridItem>
-      <GridItem md={3} />
+      {!privateLinkSelected && (
+        <GridItem md={3}>
+          <Field
+            component={ReduxVerticalFormGroup}
+            name={`public_subnet_id_${index}`}
+            label={showLabels ? 'Public subnet ID' : null}
+            type="text"
+            validate={required}
+          />
+        </GridItem>
+      )}
+      <GridItem md={privateLinkSelected ? 6 : 3} />
     </>
   );
 };
@@ -59,6 +62,7 @@ const SingleSubnetFieldsRow = ({
 const SubnetFields = ({
   selectedRegion,
   isMultiAz,
+  privateLinkSelected,
 }) => (
   <>
     <SingleSubnetFieldsRow
@@ -66,6 +70,7 @@ const SubnetFields = ({
       index={0}
       selectedRegion={selectedRegion}
       isMultiAz={isMultiAz}
+      privateLinkSelected={privateLinkSelected}
     />
     {
     isMultiAz && (
@@ -74,11 +79,13 @@ const SubnetFields = ({
           index={1}
           selectedRegion={selectedRegion}
           isMultiAz={isMultiAz}
+          privateLinkSelected={privateLinkSelected}
         />
         <SingleSubnetFieldsRow
           index={2}
           selectedRegion={selectedRegion}
           isMultiAz={isMultiAz}
+          privateLinkSelected={privateLinkSelected}
         />
       </>
     )
@@ -91,11 +98,13 @@ SingleSubnetFieldsRow.propTypes = {
   index: PropTypes.number,
   showLabels: PropTypes.bool,
   isMultiAz: PropTypes.bool,
+  privateLinkSelected: PropTypes.bool,
 };
 
 SubnetFields.propTypes = {
   selectedRegion: PropTypes.string,
   isMultiAz: PropTypes.bool,
+  privateLinkSelected: PropTypes.bool,
 };
 
 export { SingleSubnetFieldsRow };

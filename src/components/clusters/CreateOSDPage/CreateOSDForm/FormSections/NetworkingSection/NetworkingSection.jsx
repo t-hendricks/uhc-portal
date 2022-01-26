@@ -37,6 +37,7 @@ function NetworkingSection({
   isCCS,
   selectedRegion,
   installToVPCSelected,
+  privateLinkSelected,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -142,6 +143,7 @@ function NetworkingSection({
               selectedRegion={selectedRegion}
               isMultiAz={isMultiAz}
               selected={installToVPCSelected}
+              privateLinkSelected={privateLinkSelected}
               cloudProviderID={cloudProviderID}
             />
           </>
@@ -262,6 +264,7 @@ function NetworkingSection({
                         Public (recommended)
                         <div className="pf-c-radio__description">Control plane API endpoint and application routes are accessible from the internet.</div>
                       </>),
+                    disabled: privateLinkSelected,
                   },
                   {
                     value: 'internal',
@@ -276,7 +279,7 @@ function NetworkingSection({
                       </>
                     ),
                   }]}
-                  defaultValue="external"
+                  defaultValue={privateLinkSelected ? 'internal' : 'external'}
                 />
                 {privateClusterSelected && (
                 <GridItem>
@@ -317,6 +320,7 @@ NetworkingSection.propTypes = {
   isCCS: PropTypes.bool,
   selectedRegion: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
+  privateLinkSelected: PropTypes.bool,
 };
 
 export default NetworkingSection;

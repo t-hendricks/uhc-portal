@@ -20,4 +20,7 @@
   .pf-l-grid.pf-m-gutter {
     grid-gap: var(--pf-global--spacer--lg); // match --pf-c-form--GridGap 24px
   }
+  .pf-c-form__field-group {
+    border-top: 0;
+  }
 }

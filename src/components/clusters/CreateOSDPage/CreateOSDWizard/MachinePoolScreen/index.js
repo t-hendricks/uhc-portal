@@ -10,10 +10,10 @@ import createOSDInitialValues from '../../createOSDInitialValues';
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
-  const cloudProviderID = ownProps.cloudProviderID || valueSelector(state, 'cloud_provider');
+  const cloudProviderID = valueSelector(state, 'cloud_provider');
   const isMultiAz = valueSelector(state, 'multi_az') === 'true';
   const isByoc = valueSelector(state, 'byoc') === 'true';
-  const product = ownProps.product || valueSelector(state, 'product');
+  const product = valueSelector(state, 'product');
   const billingModel = valueSelector(state, 'billing_model');
   const machineType = valueSelector(state, 'machine_type');
 
@@ -29,7 +29,7 @@ const mapStateToProps = (state, ownProps) => {
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     initialValues: createOSDInitialValues({
-      cloudProviderID, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
+      cloudProviderID, product, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
     }),
   };
 };

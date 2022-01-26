@@ -58,6 +58,16 @@ exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
     </Title>
     To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availability zone that you want the cluster installed into.
   </GridItem>
+  <Field
+    component={[Function]}
+    helpText={
+      <React.Fragment>
+        To provide support, Red Hat Site Reliability Engineering (SRE) connects to the cluster using only AWS Private Link endpoints instead of public endpoints.  This option cannot be changed after a cluster is created.
+      </React.Fragment>
+    }
+    label="Use a PrivateLink"
+    name="use_privatelink"
+  />
   <SubnetFields
     isMultiAz={true}
     selectedRegion="us-east-1"
@@ -90,6 +100,16 @@ exports[`<InstallToVPC> renders correctly when selected for single AZ 1`] = `
     </Title>
     To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availability zone that you want the cluster installed into.
   </GridItem>
+  <Field
+    component={[Function]}
+    helpText={
+      <React.Fragment>
+        To provide support, Red Hat Site Reliability Engineering (SRE) connects to the cluster using only AWS Private Link endpoints instead of public endpoints.  This option cannot be changed after a cluster is created.
+      </React.Fragment>
+    }
+    label="Use a PrivateLink"
+    name="use_privatelink"
+  />
   <SubnetFields
     isMultiAz={false}
     selectedRegion="us-east-1"

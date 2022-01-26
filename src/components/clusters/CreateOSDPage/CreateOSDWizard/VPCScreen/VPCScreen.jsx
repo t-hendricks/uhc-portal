@@ -9,7 +9,9 @@ import {
 
 import InstallToVPC from '../../CreateOSDForm/FormSections/NetworkingSection/InstallToVPC';
 
-function VPCScreen({ cloudProviderID, isMultiAz, selectedRegion }) {
+function VPCScreen({
+  cloudProviderID, isMultiAz, selectedRegion, privateLinkSelected,
+}) {
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Grid hasGutter>
@@ -22,6 +24,7 @@ function VPCScreen({ cloudProviderID, isMultiAz, selectedRegion }) {
           isMultiAz={isMultiAz}
           selectedRegion={selectedRegion}
           selected
+          privateLinkSelected={privateLinkSelected}
           isWizard
         />
       </Grid>
@@ -33,6 +36,7 @@ VPCScreen.propTypes = {
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
   selectedRegion: PropTypes.string,
+  privateLinkSelected: PropTypes.bool,
 };
 
 export default VPCScreen;

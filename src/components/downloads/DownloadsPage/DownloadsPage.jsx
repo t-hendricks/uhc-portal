@@ -697,6 +697,41 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
   );
 };
 
+const disconnectedInstallationRows = (
+  expanded,
+  setExpanded,
+  selections,
+  setSelections,
+  toolRefs,
+  urls,
+) => {
+  const commonProps = {
+    expanded, setExpanded, selections, setSelections, toolRefs, urls,
+  };
+  return (
+    <ToolAndDescriptionRows
+      {...commonProps}
+      tool={tools.MIRROR_REGISTRY}
+      channel={channels.STABLE}
+      name="mirror registry for Red Hat OpenShift"
+      description={(
+        <TextContent>
+          <Text>
+            Download and install a local, minimal single instance deployment of Red Hat Quay to
+            aid bootstrapping the first disconnected cluster.
+            {' '}
+            <ExternalLink
+              href={links.INSTALL_MIRROR_REGISTRY_LEARN_MORE}
+            >
+              Learn more
+            </ExternalLink>
+          </Text>
+        </TextContent>
+      )}
+    />
+  );
+};
+
 const rhcosRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
   const commonProps = {
     expanded, setExpanded, selections, setSelections, toolRefs, urls,
@@ -1036,6 +1071,28 @@ class DownloadsPage extends React.Component {
                 <ColumnHeadings />
                 {installationRows(expanded, this.setExpanded, selections, this.setSelections,
                   this.toolRefs, urls)}
+              </TableComposable>
+            </DownloadsSection>
+
+            <DownloadsSection
+              selectedCategory={selectedCategory}
+              category="DISCONNECTED_INSTALLATION"
+              description={(
+                <Text>
+                  Utilities to simplify preparation of disconnected cluster installations.
+                </Text>
+              )}
+            >
+              <TableComposable aria-label="OpenShift disconnected installation tools table">
+                <ColumnHeadings />
+                {disconnectedInstallationRows(
+                  expanded,
+                  this.setExpanded,
+                  selections,
+                  this.setSelections,
+                  this.toolRefs,
+                  urls,
+                )}
               </TableComposable>
             </DownloadsSection>
 
