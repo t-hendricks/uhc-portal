@@ -28,10 +28,6 @@ const mapStateToProps = (state) => {
     selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
     getAWSAccountIDsResponse,
     getAWSAccountRolesARNsResponse,
-    // initialValues: {
-    //  associated_aws_id: '234564251',
-    //  installer_role_arn: 'arn:aws:iam::{account-id}:role/{installer-role-name}',
-    // },
   };
 };
 

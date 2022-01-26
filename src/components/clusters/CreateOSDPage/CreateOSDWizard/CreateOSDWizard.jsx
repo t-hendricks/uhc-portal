@@ -135,6 +135,7 @@ class CreateOSDWizard extends React.Component {
       installToVPCSelected,
       getGCPCloudProviderVPCs,
       getAWSCloudProviderRegions,
+      privateLinkSelected,
     } = this.props;
 
     const { stepIdReached, currentStep } = this.state;
@@ -211,6 +212,7 @@ class CreateOSDWizard extends React.Component {
                   isTrialDefault={isTrialDefault}
                   showClusterPrivacy={showClusterPrivacy}
                   showVPCCheckbox={showVPCCheckbox}
+                  privateLinkSelected={privateLinkSelected}
                 />
               </ErrorBoundary>
             ),
@@ -222,7 +224,7 @@ class CreateOSDWizard extends React.Component {
             name: 'VPC settings',
             component: (
               <ErrorBoundary>
-                <VPCScreen />
+                <VPCScreen privateLinkSelected={privateLinkSelected} />
               </ErrorBoundary>
             ),
             enableNext: isValid,
@@ -257,7 +259,10 @@ class CreateOSDWizard extends React.Component {
         name: 'Review and create',
         component: (
           <ErrorBoundary>
-            <ReviewClusterScreen isPending={createClusterResponse.pending} />
+            <ReviewClusterScreen
+              isPending={createClusterResponse.pending}
+              clusterRequestParams={{}}
+            />
           </ErrorBoundary>
         ),
         nextButtonText: 'Create cluster',
@@ -431,6 +436,7 @@ CreateOSDWizard.propTypes = {
   isErrorModalOpen: PropTypes.bool,
   ccsCredentials: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   installToVPCSelected: PropTypes.bool,
+  privateLinkSelected: PropTypes.bool,
 
   createClusterResponse: PropTypes.shape({
     fulfilled: PropTypes.bool,

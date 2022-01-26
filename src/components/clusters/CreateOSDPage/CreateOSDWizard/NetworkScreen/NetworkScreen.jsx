@@ -6,19 +6,36 @@ import {
   Grid,
   GridItem,
   Title,
-  Text,
+  Text, FormFieldGroup, FormGroup,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
+import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
+import ExternalLink from '../../../../common/ExternalLink';
+import links from '../../../../../common/installLinks';
 
 function NetworkScreen(props) {
   const {
+    change,
     privateClusterSelected,
     showClusterPrivacy,
     showVPCCheckbox,
     cloudProviderID,
+    privateLinkSelected,
   } = props;
+
+  const onClusterPrivacyChange = (_, value) => {
+    if (value === 'external') {
+      change('use_privatelink', false);
+    }
+  };
+
+  const onPrivateLinkChange = (checked) => {
+    if (checked) {
+      change('install_to_vpc', true);
+    }
+  };
 
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
@@ -48,6 +65,7 @@ function NetworkScreen(props) {
               component={RadioButtons}
               name="cluster_privacy"
               ariaLabel="Cluster privacy"
+              onChange={onClusterPrivacyChange}
               options={[
                 {
                   value: 'external',
@@ -74,9 +92,8 @@ function NetworkScreen(props) {
                   ),
                 },
               ]}
-              defaultValue="external"
+              disableDefaultValueHandling
             />
-            {/* TODO PrivateLink */}
 
             {privateClusterSelected && (
               <GridItem>
@@ -90,9 +107,9 @@ function NetworkScreen(props) {
                     <span>
                       Follow the
                       {' '}
-                      <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-understanding-aws.html">
+                      <ExternalLink href={links.AWS_PRIVATE_CONNECTIONS}>
                         documentation
-                      </a>
+                      </ExternalLink>
                       {' '}
                       for how to do that.
                     </span>
@@ -115,11 +132,31 @@ function NetworkScreen(props) {
               </Text>
             </GridItem>
             <GridItem>
-              <Field
-                component={ReduxCheckbox}
-                name="install_to_vpc"
-                label="Install into an existing VPC"
-              />
+              <FormGroup fieldId="install-to-vpc">
+                <Field
+                  component={ReduxCheckbox}
+                  name="install_to_vpc"
+                  label="Install into an existing VPC"
+                  isDisabled={privateLinkSelected && privateClusterSelected}
+                />
+                {privateClusterSelected && cloudProviderID === 'aws' && (
+                  <FormFieldGroup>
+                    <FormGroup>
+                      <Field
+                        component={ReduxCheckbox}
+                        name="use_privatelink"
+                        label="Use a PrivateLink"
+                        onChange={onPrivateLinkChange}
+                        helpText={(
+                          <>
+                            {constants.privateLinkHint}
+                          </>
+                        )}
+                      />
+                    </FormGroup>
+                  </FormFieldGroup>
+                )}
+              </FormGroup>
             </GridItem>
           </>
         )}
@@ -129,10 +166,12 @@ function NetworkScreen(props) {
 }
 
 NetworkScreen.propTypes = {
+  change: PropTypes.func.isRequired,
   privateClusterSelected: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   showClusterPrivacy: PropTypes.bool,
   showVPCCheckbox: PropTypes.bool,
+  privateLinkSelected: PropTypes.bool,
 };
 
 export default NetworkScreen;

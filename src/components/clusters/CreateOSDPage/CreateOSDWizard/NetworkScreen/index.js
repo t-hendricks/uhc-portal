@@ -9,7 +9,8 @@ import NetworkScreen from './NetworkScreen';
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('CreateCluster');
 
-  const cloudProviderID = ownProps.cloudProviderID || valueSelector(state, 'cloud_provider');
+  const cloudProviderID = valueSelector(state, 'cloud_provider');
+  const product = valueSelector(state, 'product');
   const isCCS = valueSelector(state, 'byoc') === 'true';
   const isMultiAz = valueSelector(state, 'multi_az') === 'true';
   const privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
@@ -22,6 +23,7 @@ const mapStateToProps = (state, ownProps) => {
     selectedRegion,
     initialValues: createOSDInitialValues({
       cloudProviderID,
+      product,
       isMultiAz,
       isByoc: isCCS,
       isTrialDefault: ownProps.isTrialDefault,

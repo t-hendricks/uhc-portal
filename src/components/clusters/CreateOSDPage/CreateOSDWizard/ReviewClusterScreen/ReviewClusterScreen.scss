@@ -14,4 +14,31 @@
   .pf-c-description-list__description .pf-c-description-list__text {
     color: var(--pf-global--Color--dark-200);
   }
+
+  .prerequisites-expandable-section .pf-c-expandable-section__content {
+    padding-left: 29px;
+  }
+
+  .review-screen-expandable-section {
+    margin-top: var(--pf-c-expandable-section__content--MarginTop);
+  }
+
+  .review-screen-expandable-section .pf-c-expandable-section__content {
+      padding-left: 29px;
+  }
+
+  .pf-c-expandable-section__toggle {
+     color: rgb(0, 0, 0);
+  }
+
+  .pf-c-expandable-section__toggle-text {
+    font-size: 18px;
+    font-weight: 502;
+    line-height: 27px;
+    /* TODO: why aren't these --pf-c-title vars not defined when inspecting in browser?
+    font-size: var(--pf-c-title--m-lg--FontSize);
+    font-weight: var(--pf-c-title--m-lg--FontWeight);
+    line-height: var(--pf-c-title--m-lg--LineHeight);
+     */
+  }
 }

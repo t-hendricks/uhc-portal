@@ -67,6 +67,7 @@ const mapStateToProps = (state, ownProps) => {
     customerManagedEncryptionSelected,
     selectedRegion: valueSelector(state, 'region'),
     installToVPCSelected: valueSelector(state, 'install_to_vpc'),
+    privateLinkSelected: valueSelector(state, 'use_privatelink'),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     isBYOCModalOpen: shouldShowModal(state, 'customer-cloud-subscription'),
     isAutomaticUpgrade: valueSelector(state, 'upgrade_policy') === 'automatic',
@@ -127,7 +128,11 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onSubmit: submitOSDRequest(dispatch, ownProps),
+  onSubmit: submitOSDRequest(dispatch, {
+    // If changing these params, keep test & DebugClusterRequest props synced.
+    // `product` omitted — we get such prop but can be changed inside.
+    cloudProviderID: ownProps.cloudProviderID,
+  }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),
   openModal: (modalName) => { dispatch(openModal(modalName)); },

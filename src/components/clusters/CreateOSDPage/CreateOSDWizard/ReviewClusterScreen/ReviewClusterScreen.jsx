@@ -2,10 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import {
-  DescriptionList,
-  DescriptionListTerm,
-  DescriptionListDescription,
-  DescriptionListGroup,
   Title,
   Bullseye,
   Stack,
@@ -13,55 +9,15 @@ import {
   Spinner,
 } from '@patternfly/react-core';
 
-import reviewValues from './reviewValues';
 import DebugClusterRequest from '../../DebugClusterRequest';
 import config from '../../../../../config';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 import './ReviewClusterScreen.scss';
-
-function clusterSpecDescriptionItem({ name, formValues }) {
-  const reviewValue = reviewValues[name];
-  let value = formValues[name];
-
-  if (!reviewValue) {
-    return (
-      <DescriptionListGroup>
-        <DescriptionListTerm>
-          {name}
-        </DescriptionListTerm>
-        <DescriptionListDescription>
-          {value}
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-    );
-  }
-
-  if (reviewValue.isBoolean && value === undefined) {
-    value = 'false';
-  }
-
-  let displayValue;
-  if (reviewValue.values && reviewValue.values[value]) {
-    displayValue = reviewValue.values[value];
-  } else if (reviewValue.valueTransform) {
-    displayValue = reviewValue.valueTransform(value, formValues);
-  } else {
-    displayValue = value;
-  }
-
-  return (
-    <DescriptionListGroup key={name}>
-      <DescriptionListTerm>
-        {reviewValue.title}
-      </DescriptionListTerm>
-      <DescriptionListDescription>
-        {displayValue}
-      </DescriptionListDescription>
-    </DescriptionListGroup>
-  );
-}
+import ReviewSection, { ReviewItem } from './ReviewSection';
 
 function ReviewClusterScreen({
+  clusterRequestParams,
   formValues,
   canAutoScale,
   autoscalingEnabled,
@@ -69,11 +25,16 @@ function ReviewClusterScreen({
 }) {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
+  const isGCP = formValues.cloud_provider === 'gcp';
+  const isROSA = formValues.product === normalizedProducts.ROSA;
+  const showVPCCheckbox = isROSA || isByoc;
   const clusterSettingsFields = [
-    'cloud_provider', 'name', 'cluster_version', 'region', 'multi_az',
-    !isByoc && 'persistent_storage',
-    !isByoc && 'load_balancers',
-    isByoc && isAWS && 'disable_scp_checks',
+    'cloud_provider', 'name',
+    isROSA && 'operator_roles_name',
+    'cluster_version', 'region', 'multi_az',
+    !isByoc && !isROSA && 'persistent_storage',
+    !isByoc && isROSA && 'load_balancers',
+    isByoc && isAWS && !isROSA && 'disable_scp_checks',
     'enable_user_workload_monitoring',
     'etcd_encryption',
     isByoc && 'customer_managed_key',
@@ -97,69 +58,66 @@ function ReviewClusterScreen({
     );
   }
 
-  const listOptions = {
-    // default vertical good for narrow screens, horizontal clearer when we have the space.
-    orientation: {
-      sm: 'horizontal',
-    },
-  };
   return (
     <div className="ocm-create-osd-review-screen">
       <Title headingLevel="h2" className="pf-u-pb-md">
-        Review your dedicated cluster
+        Review your
+        {' '}
+        {isROSA ? 'ROSA' : 'dedicated'}
+        {' '}
+        cluster
       </Title>
-      <Title headingLevel="h3">Billing Model</Title>
-      <DescriptionList {...listOptions}>
-        {clusterSpecDescriptionItem({ name: 'billing_model', formValues })}
-        {clusterSpecDescriptionItem({ name: 'byoc', formValues })}
-      </DescriptionList>
-      <Title headingLevel="h3">
-        Cluster settings
-      </Title>
-      <DescriptionList {...listOptions}>
-        {clusterSettingsFields.map(name => clusterSpecDescriptionItem({ name, formValues }))}
-      </DescriptionList>
-      <Title headingLevel="h3">
-        Default machine pool
-      </Title>
-      <DescriptionList {...listOptions}>
-        {clusterSpecDescriptionItem({ name: 'machine_type', formValues })}
-        {canAutoScale && clusterSpecDescriptionItem({ name: 'autoscalingEnabled', formValues })}
+      {isROSA && (
+        <ReviewSection title="Accounts and roles" initiallyExpanded={false}>
+          {ReviewItem({ name: 'associated_aws_id', formValues })}
+          {ReviewItem({ name: 'installer_role_arn', formValues })}
+          {ReviewItem({ name: 'support_role_arn', formValues })}
+          {ReviewItem({ name: 'control_plane_role_arn', formValues })}
+          {ReviewItem({ name: 'worker_role_arn', formValues })}
+        </ReviewSection>
+      )}
+      {!isROSA && (
+      <ReviewSection title="Billing Model">
+        {ReviewItem({ name: 'billing_model', formValues })}
+        {ReviewItem({ name: 'byoc', formValues })}
+      </ReviewSection>
+      )}
+      <ReviewSection title="Cluster settings">
+        {clusterSettingsFields.map(name => ReviewItem({ name, formValues }))}
+      </ReviewSection>
+      <ReviewSection title="Default machine pool">
+        {ReviewItem({ name: 'machine_type', formValues })}
+        {canAutoScale && ReviewItem({ name: 'autoscalingEnabled', formValues })}
         {autoscalingEnabled
-          ? clusterSpecDescriptionItem({ name: 'min_replicas', formValues })
-          : clusterSpecDescriptionItem({ name: 'nodes_compute', formValues })}
+          ? ReviewItem({ name: 'min_replicas', formValues })
+          : ReviewItem({ name: 'nodes_compute', formValues })}
         {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0]))
-        && clusterSpecDescriptionItem({ name: 'node_labels', formValues })}
-      </DescriptionList>
-      <Title headingLevel="h3">
-        Networking
-      </Title>
-      <DescriptionList {...listOptions}>
-        {clusterSpecDescriptionItem({ name: 'network_configuration_toggle', formValues })}
-        { formValues.network_configuration_toggle === 'advanced' && (
-          <>
-            {clusterSpecDescriptionItem({ name: 'network_machine_cidr', formValues })}
-            {clusterSpecDescriptionItem({ name: 'network_service_cidr', formValues })}
-            {clusterSpecDescriptionItem({ name: 'network_pod_cidr', formValues })}
-            {clusterSpecDescriptionItem({ name: 'network_host_prefix', formValues })}
-            {clusterSpecDescriptionItem({ name: 'cluster_privacy', formValues })}
-          </>
-        )}
-      </DescriptionList>
-      <Title headingLevel="h3">
-        Updates
-      </Title>
-      <DescriptionList {...listOptions}>
-        {clusterSpecDescriptionItem({ name: 'upgrade_policy', formValues })}
-        {formValues.upgrade_policy === 'automatic' && clusterSpecDescriptionItem({ name: 'automatic_upgrade_schedule', formValues })}
-        {clusterSpecDescriptionItem({ name: 'node_drain_grace_period', formValues })}
-      </DescriptionList>
+        && ReviewItem({ name: 'node_labels', formValues })}
+      </ReviewSection>
+      <ReviewSection title="Networking">
+        {ReviewItem({ name: 'cluster_privacy', formValues })}
+        {showVPCCheckbox && ReviewItem({ name: 'install_to_vpc', formValues })}
+        {showVPCCheckbox && formValues.cluster_privacy === 'internal' && formValues.install_to_vpc
+        && ReviewItem({ name: 'use_privatelink', formValues })}
+        {showVPCCheckbox && formValues.install_to_vpc && isAWS && ReviewItem({ name: 'aws_vpc', formValues })}
+        {showVPCCheckbox && formValues.install_to_vpc && isGCP && ReviewItem({ name: 'gpc_vpc', formValues })}
+        {ReviewItem({ name: 'network_machine_cidr', formValues })}
+        {ReviewItem({ name: 'network_service_cidr', formValues })}
+        {ReviewItem({ name: 'network_pod_cidr', formValues })}
+        {ReviewItem({ name: 'network_host_prefix', formValues })}
+      </ReviewSection>
+      <ReviewSection title="Updates">
+        {ReviewItem({ name: 'upgrade_policy', formValues })}
+        {formValues.upgrade_policy === 'automatic' && ReviewItem({ name: 'automatic_upgrade_schedule', formValues })}
+        {ReviewItem({ name: 'node_drain_grace_period', formValues })}
+      </ReviewSection>
 
-      {config.fakeOSD && <DebugClusterRequest />}
+      {config.fakeOSD && <DebugClusterRequest {...clusterRequestParams} /> }
     </div>
   );
 }
 ReviewClusterScreen.propTypes = {
+  clusterRequestParams: PropTypes.object.isRequired,
   formValues: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),
