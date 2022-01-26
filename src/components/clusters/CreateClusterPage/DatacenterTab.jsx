@@ -41,8 +41,9 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
             <TechPreviewBadge />
           </StackItem>
           <StackItem>
-            Create a cluster on bare metal following a guided installation
-            process to connect your hardware.
+            The easiest way to install OpenShift on your own infrastructure.
+            Preflight validations, smart defaults and a friendly user experience.
+            This method supports both x86-64 and arm64 CPU architectures.
           </StackItem>
           <StackItem>
             <Button component={Link} to="/assisted-installer/clusters/~new">
