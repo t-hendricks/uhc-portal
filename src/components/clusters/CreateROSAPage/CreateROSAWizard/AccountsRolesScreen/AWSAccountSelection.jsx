@@ -11,6 +11,7 @@ import {
 } from '@patternfly/react-core';
 import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
+import { loadOfflineToken } from '../../../../tokens/Tokens';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 
@@ -43,9 +44,34 @@ function AWSAccountSelection({
 
   const associateAWSAccountBtnRef = React.createRef();
 
+  const onLoad = (token) => {
+    debugger;
+    openAssociateAWSAccountModal(token);
+  };
+
+  const onError = (reason) => {
+    debugger;
+    if (reason === 'not available') {
+      window.localStorage.setItem('token-reload', 'true');
+      insights.chrome.auth.doOffline();
+    } else {
+      // open the modal anyways
+      openAssociateAWSAccountModal(reason);
+    }
+  };
+
+  useEffect(() => {
+    // in case we reloaded the page after loading the offline token, reopen the modal
+    if (window.localStorage.getItem('token-reload') === 'true') {
+      window.localStorage.removeItem('token-reload');
+      loadOfflineToken(onLoad);
+    }
+  }, []);
+
   useEffect(() => {
     // only scroll to associateAWSAccountBtn when no AWS account id selected
     if (isOpen === true && !selectedAWSAccountID && AWSAccountIDs.length === 0) {
+      debugger;
       associateAWSAccountBtnRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [isOpen, selectedAWSAccountID, AWSAccountIDs]);
@@ -55,13 +81,15 @@ function AWSAccountSelection({
   };
 
   const onSelect = (_, selection) => {
-    setIsOpen(false);
+    // setIsOpen(false);
     input.onChange(selection);
   };
 
   const onClick = () => {
-    setIsOpen(false);
-    openAssociateAWSAccountModal();
+    debugger;
+    // setIsOpen(false);
+    // will cause window reload on first time
+    loadOfflineToken(onLoad, onError);
   };
 
   const footer = () => (
@@ -69,7 +97,7 @@ function AWSAccountSelection({
       {AWSAccountIDs.length === 0 && (
       <NoAssociatedAWSAccounts />
       )}
-      <Button ref={associateAWSAccountBtnRef} variant="secondary" onClick={onClick}>Associate AWS account</Button>
+      <Button ref={associateAWSAccountBtnRef} variant="secondary" onClick={() => onClick()}>Are you not entertained?! Associate AWS account</Button>
     </>
   );
 

@@ -16,9 +16,14 @@ exports.config = {
   // according to your user and key information. However, if you are using a private Selenium
   // backend you should define the host address, port, and path here.
   //
-  hostname: 'localhost',
-  port: 4444,
-  path: '/wd/hub',
+  // hostname: 'localhost',
+  // port: 4444,
+  // path: '/wd/hub',
+  port: 9515, // default for ChromeDriver
+  path: '/',
+  services: ['chromedriver'],
+  chromeDriverArgs: ['--port=9515', '--url-base=\'/\''], // default for ChromeDriver
+  chromeDriverLogs: './',
   //
   // ==================
   // Specify Test Files
@@ -58,12 +63,14 @@ exports.config = {
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
   capabilities: [{
+
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
     // grid with only 5 firefox instances available you can make sure that not more than
     // 5 instances get started at a time.
     maxInstances: 1,
     //
-    browserName: process.env.BROWSER || 'firefox',
+   //  browserName: 'firefox',
+    browserName: 'chrome',
     acceptInsecureCerts: true,
     // If outputDir is provided WebdriverIO can capture driver session logs
     // it is possible to configure which logTypes to include/exclude.
@@ -230,20 +237,14 @@ exports.config = {
     if (passed) {
       return;
     }
-    const log = logger('afterTest');
-    if (process.env.SELENIUM_DEBUG === 'true') {
-      await browser.debug();
-    } else {
-      const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
-      const timestamp = new Date().toISOString();
-      const dir = 'run/output/embedded_files/';
-      const filepath = path.join(dir, `${timestamp}.${testName}.png`);
-      await util.promisify(fs.mkdir)(dir, { recursive: true });
-      await browser.saveScreenshot(filepath);
-      process.emit('test:screenshot', filepath);
-      log.error(`screenshot:\n  ${filepath}\n`);
-      log.info('Tip: to stop for interactive debugging, set SELENIUM_DEBUG=true env var');
-    }
+    const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
+    const timestamp = new Date().toISOString();
+    const dir = 'run/output/embedded_files/';
+    const filepath = path.join(dir, `${timestamp}.${testName}.png`);
+    await util.promisify(fs.mkdir)(dir, { recursive: true });
+    await browser.saveScreenshot(filepath);
+    process.emit('test:screenshot', filepath);
+    logger('afterTest screenshot').error(`\n  ${filepath}\n`);
   },
 
   /**

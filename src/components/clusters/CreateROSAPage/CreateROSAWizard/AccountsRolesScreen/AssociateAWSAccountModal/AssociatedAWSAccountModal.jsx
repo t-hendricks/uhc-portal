@@ -69,24 +69,29 @@ class AssociateAWSAccountWizard extends React.Component {
   }
 }
 
-function AssociatedAWSAccountModal({ closeModal, isOpen, isValid }) {
-  const [offlineAccessToken, setOfflineAccessToken] = React.useState('');
-  const onLoad = (token) => {
-    if (token) {
-      setOfflineAccessToken(token);
-    }
-  };
+function AssociatedAWSAccountModal({ closeModal, isOpen, isValid, token }) {
+  console.log(token);
+ if (isOpen) {
+   debugger;
+ }
+  // const [offlineAccessToken, setOfflineAccessToken] = React.useState('');
+  // const onLoad = (token) => {
+  //   if (token) {
+  //     setOfflineAccessToken(token);
+  //   }
+  // };
 
-  React.useLayoutEffect(() => {
-    loadOfflineToken(onLoad);
-  }, []);
+  // React.useLayoutEffect(() => {
+  //   loadOfflineToken(onLoad);
+  // }, []);
 
   return isOpen && (
     <Modal title="Associate AWS Account ID">
       <AssociateAWSAccountWizard
         isValid={isValid}
         closeModal={closeModal}
-        token={offlineAccessToken}
+        token={token}
+        // token={offlineAccessToken}
       />
     </Modal>
   );
