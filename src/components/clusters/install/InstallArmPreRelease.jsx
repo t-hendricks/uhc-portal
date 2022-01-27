@@ -11,7 +11,7 @@ import InstructionsPreRelease from './instructions/InstructionsPreRelease';
 import { scrollToTop } from '../../../common/helpers';
 import { tools } from '../../../common/installLinks';
 
-export class InstallARMPreRelease extends Component {
+export class InstallArmPreRelease extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | ARM | Experimental Developer Preview Builds';
@@ -42,11 +42,11 @@ export class InstallARMPreRelease extends Component {
   }
 }
 
-InstallARMPreRelease.propTypes = {
+InstallArmPreRelease.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallARMPreRelease);
+export default connect(mapStateToProps)(InstallArmPreRelease);

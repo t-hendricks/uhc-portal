@@ -64,7 +64,7 @@ import ConnectedInstallIBM from '../clusters/install/InstallIBM';
 import ConnectedInstallIBMPreRelease from '../clusters/install/InstallIBMPreRelease';
 import ConnectedInstallPower from '../clusters/install/InstallPower';
 import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
-import ConnectedInstallARMPreRelease from '../clusters/install/InstallARMPreRelease';
+import ConnectedInstallArmPreRelease from '../clusters/install/InstallArmPreRelease';
 import DownloadsPage from '../downloads/DownloadsPage';
 import Tokens from '../tokens/Tokens';
 import TokensROSA from '../tokens/TokensROSA';
@@ -143,7 +143,7 @@ function Router({ history }) {
             <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
 
             <Route path="/install/alibaba/installer-provisioned" component={ConnectedInstallAlibaba} />
-            <Route path="/install/arm/pre-release" component={ConnectedInstallARMPreRelease} />
+            <Route path="/install/arm/pre-release" component={ConnectedInstallArmPreRelease} />
             <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
             <Route path="/install/aws/arm" component={ConnectedInstallArmAWSIPI} />

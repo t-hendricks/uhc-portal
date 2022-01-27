@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InstallARMPreRelease renders correctly 1`] = `
+exports[`InstallArmPreRelease renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
