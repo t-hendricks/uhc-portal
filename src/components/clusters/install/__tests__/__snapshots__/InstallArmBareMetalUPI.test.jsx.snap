@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Arm BareMetal UPI install renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "ARM Bare Metal",
+              "path": "/install/arm",
+            },
+            Object {
+              "label": "User-provisioned infrastructure",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on ARM Bare Metal with user-provisioned infrastructure"
+  />
+  <PageSection>
+    <OCPInstructions
+      breadcrumbs={
+        <Breadcrumbs
+          path={
+            Array [
+              Object {
+                "label": "Clusters",
+              },
+              Object {
+                "label": "Create",
+                "path": "/create",
+              },
+              Object {
+                "label": "ARM Bare Metal",
+                "path": "/install/arm",
+              },
+              Object {
+                "label": "User-provisioned infrastructure",
+              },
+            ]
+          }
+        />
+      }
+      channel="stable"
+      cloudProviderID="armBareMetal"
+      customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+      displayRHCOSSection={true}
+      docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html"
+      installer="aarch64-openshift-install"
+      isBMIPI={false}
+      preReleasePageLink="/install/arm/pre-release"
+      rhcosAdditionalInstructions="Download the installer ISO image and the compressed metal RAW."
+      rhcosDownloads={
+        Array [
+          Object {
+            "buttonText": "Download RHCOS ISO",
+            "name": "OCP-Download-RHCOS-ISO",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live.aarch64.iso",
+          },
+          Object {
+            "buttonText": "Download RHCOS kernel",
+            "name": "OCP-Download-RHCOS-kernel",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-kernel-aarch64",
+          },
+          Object {
+            "buttonText": "Download RHCOS initramfs",
+            "name": "OCP-Download-RHCOS-initramfs",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-initramfs.aarch64.img",
+          },
+          Object {
+            "buttonText": "Download RHCOS rootfs",
+            "name": "OCP-Download-RHCOS-rootfs",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-rootfs.aarch64.img",
+          },
+        ]
+      }
+      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal"
+      title="Install OpenShift on ARM Bare Metal with user-provisioned infrastructure"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;

@@ -197,6 +197,43 @@ const instructionsMapping = {
       docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
     },
   },
+  armBareMetal: {
+    cloudProvider: 'ARM Bare Metal',
+    customizations: links.INSTALL_BAREMETAL_CUSTOMIZATIONS,
+    upi: {
+      title: 'Install OpenShift on ARM Bare Metal with user-provisioned infrastructure',
+      displayRHCOSSection: true,
+      rhcosLearnMoreURL: links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE,
+      rhcosDownloads:
+        [
+          {
+            buttonText: 'Download RHCOS ISO',
+            name: 'OCP-Download-RHCOS-ISO',
+            url: links.RHCOS_ARM_ISO,
+          },
+          {
+            buttonText: 'Download RHCOS kernel',
+            name: 'OCP-Download-RHCOS-kernel',
+            url: links.RHCOS_ARM_KERNEL,
+          },
+          {
+            buttonText: 'Download RHCOS initramfs',
+            name: 'OCP-Download-RHCOS-initramfs',
+            url: links.RHCOS_ARM_INITRAMFS,
+          },
+          {
+            buttonText: 'Download RHCOS rootfs',
+            name: 'OCP-Download-RHCOS-rootfs',
+            url: links.RHCOS_ARM_ROOTFS,
+          },
+        ],
+      rhcosAdditionalInstructions: 'Download the installer ISO image and the compressed metal RAW.',
+      installer: tools.ARMINSTALLER,
+      channel: channels.STABLE,
+      docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
+      preReleasePageLink: '/install/arm/pre-release',
+    },
+  },
   generic: {
     cloudProvider: 'Platform Agnostic',
     title: 'Install OpenShift on any x86_64 platform with user-provisioned infrastructure',

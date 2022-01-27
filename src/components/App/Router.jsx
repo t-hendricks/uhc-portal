@@ -76,6 +76,7 @@ import withFeatureGate from '../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE, OSD_CREATION_WIZARD_FEATURE } from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
+import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
@@ -146,6 +147,7 @@ function Router({ history }) {
             <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
             <Route path="/install/aws/arm" component={ConnectedInstallArmAWSIPI} />
+            <Route path="/install/arm" component={InstallArmBMUPI} />
             <Route path="/install/aws" component={InstallAWS} />
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
