@@ -20,7 +20,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
         />
       </StackItem>
       <StackItem>
-        The easiest way to install OpenShift on your own infrastructure. Preflight validations, smart defaults and a friendly user experience. This method supports both x86-64 and arm64 CPU architectures.
+        The easiest way to install OpenShift on your own infrastructure with step-by-step guidance, preflight validations, and smart defaults. This method supports both x86-64 and arm64 CPU architectures.
       </StackItem>
       <StackItem>
         <Button
