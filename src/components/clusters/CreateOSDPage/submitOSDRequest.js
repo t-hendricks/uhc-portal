@@ -72,16 +72,21 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
     clusterRequest.properties = { fake_cluster: 'true' };
   }
 
-  if (formData.network_configuration_toggle === 'advanced') {
+  if (isWizard || formData.network_configuration_toggle === 'advanced') {
     clusterRequest.network = {
       machine_cidr: formData.network_machine_cidr,
       service_cidr: formData.network_service_cidr,
       pod_cidr: formData.network_pod_cidr,
       host_prefix: parseInt(formData.network_host_prefix, 10),
     };
-    clusterRequest.api = {
-      listening: formData.cluster_privacy,
-    };
+
+    const wasClusterPrivacyShown = actualCloudProviderID === 'aws'
+                                || (actualCloudProviderID === 'gcp' && formData.byoc === 'true');
+    if (wasClusterPrivacyShown) {
+      clusterRequest.api = {
+        listening: formData.cluster_privacy,
+      };
+    }
   }
   if (formData.byoc === 'true') {
     const wasExistingVPCShown = isWizard || formData.network_configuration_toggle === 'advanced';
