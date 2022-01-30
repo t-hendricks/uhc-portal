@@ -261,7 +261,7 @@ class CreateOSDWizard extends React.Component {
           <ErrorBoundary>
             <ReviewClusterScreen
               isPending={createClusterResponse.pending}
-              clusterRequestParams={{}}
+              clusterRequestParams={{ isWizard: true }}
             />
           </ErrorBoundary>
         ),
