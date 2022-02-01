@@ -84,8 +84,8 @@ describe('createClusterRequest', () => {
         'subnet-00b3753ab2dd892ac',
         'subnet-0703ec90283d1fd6b',
         'subnet-0735da52d658da28b',
-        'subnet-09404f4fc139bd94e',
         'subnet-00327948731118662',
+        'subnet-09404f4fc139bd94e',
         'subnet-09ad4ef49f2e29996',
       ],
     );
