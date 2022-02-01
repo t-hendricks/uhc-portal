@@ -24,7 +24,7 @@ export const groupRulesByGroups = (data, groups) => groups
     (acc, { tags, title }) => ({
       ...acc,
       [title]: {
-        count: data.reduce((a, v) => (v.tags.filter(x => tags.includes(x)).length > 0
+        count: data.reduce((a, v) => (!v.disabled && v.tags.filter(x => tags.includes(x)).length > 0
           ? a + 1
           : a),
         0),
