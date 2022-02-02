@@ -23,11 +23,21 @@ function NetworkScreen(props) {
     showVPCCheckbox,
     cloudProviderID,
     privateLinkSelected,
+    forcePrivateLink,
   } = props;
+
+  const handleForcePrivateLink = () => {
+    change('install_to_vpc', true);
+    change('use_privatelink', true);
+  };
 
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
       change('use_privatelink', false);
+    } else if (value === 'internal') {
+      if (forcePrivateLink) {
+        handleForcePrivateLink();
+      }
     }
   };
 
@@ -36,6 +46,10 @@ function NetworkScreen(props) {
       change('install_to_vpc', true);
     }
   };
+
+  if (forcePrivateLink && privateClusterSelected && !privateLinkSelected) {
+    handleForcePrivateLink();
+  }
 
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
@@ -147,6 +161,7 @@ function NetworkScreen(props) {
                         name="use_privatelink"
                         label="Use a PrivateLink"
                         onChange={onPrivateLinkChange}
+                        isDisabled={forcePrivateLink && privateClusterSelected}
                         helpText={(
                           <>
                             {constants.privateLinkHint}
@@ -172,6 +187,7 @@ NetworkScreen.propTypes = {
   showClusterPrivacy: PropTypes.bool,
   showVPCCheckbox: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
+  forcePrivateLink: PropTypes.bool,
 };
 
 export default NetworkScreen;
