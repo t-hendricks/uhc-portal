@@ -461,7 +461,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   >
                     AWS (ARM)
                   </Link>
-                  <cl
+                  <Oa
                     position={1}
                   />
                 </React.Fragment>,
@@ -972,7 +972,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   >
                     AWS (ARM)
                   </Link>
-                  <cl
+                  <Oa
                     position={1}
                   />
                 </React.Fragment>,
@@ -1422,7 +1422,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   >
                     AWS (ARM)
                   </Link>
-                  <cl
+                  <Oa
                     position={1}
                   />
                 </React.Fragment>,

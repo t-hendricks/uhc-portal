@@ -76,7 +76,7 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                     ocm command-line tool
                   </ExternalLink>
                    
-                  <cl
+                  <Oa
                     position={1}
                   />
                 </ListItem>
@@ -403,7 +403,7 @@ exports[`<Tokens /> Renders token 1`] = `
                     ocm command-line tool
                   </ExternalLink>
                    
-                  <cl
+                  <Oa
                     position={1}
                   />
                 </ListItem>
