@@ -34,7 +34,8 @@ import ErrorBoundary from '../../../App/ErrorBoundary';
 
 class CreateROSAWizard extends React.Component {
   state = {
-    stepIdReached: 1,
+    // stepIdReached: 1,
+    stepIdReached: 1000,
   }
 
   componentDidMount() {
@@ -329,6 +330,7 @@ class CreateROSAWizard extends React.Component {
               onBack={this.onBack}
               onGoToStep={this.onGoToStep}
               onClose={() => history.push('/create/cloud')}
+              // startAtStep={3}
             />
           </div>
         </PageSection>
