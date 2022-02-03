@@ -140,6 +140,11 @@ const deleteSubscriptionRoleBinding = (subID, roleBindingID) => apiRequest({
   url: `/api/accounts_mgmt/v1/subscriptions/${subID}/role_bindings/${roleBindingID}`,
 });
 
+const getOrganizationLabels = organizationID => apiRequest({
+  method: 'get',
+  url: `/api/accounts_mgmt/v1/organizations/${organizationID}/labels`,
+});
+
 function getRequest(pathParams, params = {}) {
   const type = pathParams[0];
   let url;
@@ -171,6 +176,7 @@ const accountsService = {
   getSubscriptionRoleBindings,
   createSubscriptionRoleBinding,
   deleteSubscriptionRoleBinding,
+  getOrganizationLabels,
 };
 
 export default accountsService;
