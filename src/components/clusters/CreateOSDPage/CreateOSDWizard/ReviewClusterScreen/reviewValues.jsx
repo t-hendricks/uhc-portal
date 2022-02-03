@@ -102,10 +102,11 @@ const reviewValues = {
     },
   },
   upgrade_policy: {
-    title: 'Updates',
+    title: 'Update Strategy',
+    valueTransform: value => (value === 'manual' ? 'Individual updates' : 'Recurring updates'),
   },
   automatic_upgrade_schedule: {
-    title: 'Automatic upgrade schedule',
+    title: 'Recurring update schedule',
     valueTransform: (value) => {
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const hours = [...Array(24).keys()].map(hour => `${hour.toString().padStart(2, 0)}:00`);

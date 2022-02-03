@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Select, SelectOption, FormGroup, Grid, GridItem, Button,
+  Select, SelectOption, FormGroup, Grid, GridItem, Button, Alert,
 } from '@patternfly/react-core';
 import parseUpdateSchedule from './parseUpdateSchedule';
+import './UpgradeSettingsFields.scss';
 
 const VALID_SCHEDULE_REGEX = /00? [0-9][0-9]? \* \* ([0-6]|SUN|MON|TUE|WED|THU|FRI|SAT)/i;
 
@@ -63,17 +64,26 @@ class UpgradeScheduleSelection extends React.Component {
     const { isDisabled, input } = this.props;
     if (input.value && !VALID_SCHEDULE_REGEX.test(input.value)) {
       return (
-        <FormGroup
-          label="Preferred day and start time"
-          className="ocm-upgrade-schedule-selection"
-        >
-          This cluster has a custom schedule which can not be modified from this page.
-          {' '}
-          Use the API to set the schedule, or
-          {' '}
-          <Button variant="link" isInline onClick={() => input.onChange('')}>reset the schedule</Button>
-          .
-        </FormGroup>
+        <>
+          <Alert
+            id="automatic-cluster-updates-alert"
+            className="automatic-cluster-updates-alert"
+            isInline
+            variant="info"
+            title="Recurring updates occur when a new version becomes available at least two days prior to your selected start time."
+          />
+          <FormGroup
+            label="Select a day and start time"
+            className="ocm-upgrade-schedule-selection"
+          >
+            This cluster has a custom schedule which can not be modified from this page.
+            {' '}
+            Use the API to set the schedule, or
+            {' '}
+            <Button variant="link" isInline onClick={() => input.onChange('')}>reset the schedule</Button>
+            .
+          </FormGroup>
+        </>
       );
     }
     const [selectedHour, selectedDay] = this.parseCurrentValue();
@@ -94,41 +104,50 @@ class UpgradeScheduleSelection extends React.Component {
     };
 
     return (
-      <FormGroup
-        label="Preferred day and start time"
-        className="ocm-upgrade-schedule-selection"
-      >
-        <Grid hasGutter>
-          <GridItem sm={6} md={4}>
-            <Select
-              isOpen={daySelectOpen}
-              selections={selectedDay}
-              onToggle={this.toggleDaySelect}
-              onSelect={this.onDaySelect}
-              isDisabled={isDisabled}
-            >
-              <SelectOption isPlaceholder isDisabled value="">Select day</SelectOption>
-              {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, idx) => (
-                <SelectOption key={day} value={idx.toString()}>
-                  {day}
-                </SelectOption>
-              ))}
-            </Select>
-          </GridItem>
-          <GridItem sm={6} md={4}>
-            <Select
-              isOpen={timeSelectOpen}
-              selections={selectedHour}
-              onToggle={this.toggleHourSelect}
-              onSelect={this.onHourSelect}
-              isDisabled={isDisabled}
-            >
-              <SelectOption isPlaceholder isDisabled value="">Select hour</SelectOption>
-              {makeHourList()}
-            </Select>
-          </GridItem>
-        </Grid>
-      </FormGroup>
+      <>
+        <Alert
+          id="automatic-cluster-updates-alert"
+          className="automatic-cluster-updates-alert"
+          isInline
+          variant="info"
+          title="Recurring updates occur when a new version becomes available at least two days prior to your selected start time."
+        />
+        <FormGroup
+          label="Select a day and start time"
+          className="ocm-upgrade-schedule-selection"
+        >
+          <Grid hasGutter>
+            <GridItem sm={6} md={4}>
+              <Select
+                isOpen={daySelectOpen}
+                selections={selectedDay}
+                onToggle={this.toggleDaySelect}
+                onSelect={this.onDaySelect}
+                isDisabled={isDisabled}
+              >
+                <SelectOption isPlaceholder isDisabled value="">Select day</SelectOption>
+                {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, idx) => (
+                  <SelectOption key={day} value={idx.toString()}>
+                    {day}
+                  </SelectOption>
+                ))}
+              </Select>
+            </GridItem>
+            <GridItem sm={6} md={4}>
+              <Select
+                isOpen={timeSelectOpen}
+                selections={selectedHour}
+                onToggle={this.toggleHourSelect}
+                onSelect={this.onHourSelect}
+                isDisabled={isDisabled}
+              >
+                <SelectOption isPlaceholder isDisabled value="">Select hour</SelectOption>
+                {makeHourList()}
+              </Select>
+            </GridItem>
+          </Grid>
+        </FormGroup>
+      </>
     );
   }
 }
