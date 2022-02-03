@@ -155,6 +155,7 @@ class CreateROSAWizard extends React.Component {
                   showClusterPrivacy
                   showVPCCheckbox
                   privateLinkSelected={privateLinkSelected}
+                  forcePrivateLink
                 />
               </ErrorBoundary>
             ),
