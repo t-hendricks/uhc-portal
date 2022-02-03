@@ -46,6 +46,7 @@ class ClusterDetailsRedirector extends React.Component {
         const { reportId, errorKey } = match.params;
         return <Redirect to={`/details/s/${subscriptionIDResponse.id}/insights/${reportId}/${errorKey}${location.hash}`} />;
       }
+
       return <Redirect to={`/details/s/${subscriptionIDResponse.id}${location.hash}`} />;
     }
 
