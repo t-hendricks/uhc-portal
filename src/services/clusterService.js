@@ -353,6 +353,22 @@ const listAWSRegions = credentials => apiRequest({
   },
 });
 
+const getUpgradeGates = () => apiRequest({
+  method: 'get',
+  url: '/api/clusters_mgmt/v1/version_gates',
+});
+
+const getClusterGateAgreements = clusterId => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterId}/gate_agreements`,
+});
+
+const postClusterGateAgreement = (clusterId, gateId) => apiRequest({
+  method: 'post',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterId}/gate_agreements`,
+  data: { version_gate: { id: gateId } },
+});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -397,6 +413,9 @@ const clusterService = {
   scaleMachinePool,
   deleteMachinePool,
   upgradeTrialCluster,
+  getUpgradeGates,
+  getClusterGateAgreements,
+  postClusterGateAgreement,
 };
 export {
   postUpgradeSchedule,

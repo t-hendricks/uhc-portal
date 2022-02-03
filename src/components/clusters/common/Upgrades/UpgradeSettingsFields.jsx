@@ -14,6 +14,8 @@ import PodDistruptionBudgetGraceSelect from './PodDistruptionBudgetGraceSelect';
 import './UpgradeSettingsFields.scss';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
+import UpgradeAcknowledgeWarning from './UpgradeAcknowledge/UpgradeAcknowledgeWarning';
+
 function UpgradeSettingsFields({
   isDisabled, isAutomatic, showDivider, change, initialSceduleValue, product,
 }) {
@@ -64,17 +66,21 @@ function UpgradeSettingsFields({
                   when planning updates.
                 </>
               ),
+
             },
             {
               value: 'automatic',
               label: 'Recurring updates',
               description: 'The cluster will be automatically updated based on your preferred day and start time when new versions are available.',
               extraField: isAutomatic && (
-              <Field
-                component={UpgradeScheduleSelection}
-                name="automatic_upgrade_schedule"
-                isDisabled={isDisabled}
-              />
+                <>
+                  <UpgradeAcknowledgeWarning />
+                  <Field
+                    component={UpgradeScheduleSelection}
+                    name="automatic_upgrade_schedule"
+                    isDisabled={isDisabled}
+                  />
+                </>
               ),
             },
           ]}
@@ -84,7 +90,9 @@ function UpgradeSettingsFields({
       </GridItem>
       {showDivider && <Divider />}
       <GridItem>
-        <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">Node draining</Title>
+        <Title headingLevel="h4" className="ocm-c-upgrade-node-draining-title">
+          Node draining
+        </Title>
         <TextContent>
           <Text component={TextVariants.p}>
             You may set a grace period for how long Pod Disruption Budget-protected workloads will
@@ -113,6 +121,7 @@ UpgradeSettingsFields.propTypes = {
   change: PropTypes.func,
   product: PropTypes.string,
   initialSceduleValue: PropTypes.string,
+
 };
 
 export default UpgradeSettingsFields;
