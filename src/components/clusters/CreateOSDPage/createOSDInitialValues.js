@@ -1,5 +1,8 @@
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 
+export const AWS_DEFAULT_REGION = 'us-east-1';
+export const GCP_DEFAULT_REGION = 'us-east1';
+
 const createOSDInitialValues = ({
   cloudProviderID, product, isByoc, isMultiAz, isTrialDefault,
 }) => {
@@ -10,8 +13,6 @@ const createOSDInitialValues = ({
     defaultNodeCount = isMultiAz ? 9 : 4;
   }
 
-  const AWS_DEFAULT_REGION = 'us-east-1';
-  const GCP_DEFAULT_REGION = 'us-east1';
   const initialValues = {
     node_drain_grace_period: 60,
     upgrade_policy: 'manual',

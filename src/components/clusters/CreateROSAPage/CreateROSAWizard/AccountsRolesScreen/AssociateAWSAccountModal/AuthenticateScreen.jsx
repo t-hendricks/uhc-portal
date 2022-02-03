@@ -7,13 +7,15 @@ import {
   PageSection, Stack, StackItem,
   Text, TextContent, TextVariants, Title,
 } from '@patternfly/react-core';
+import PropTypes from 'prop-types';
 import ExternalLink from '../../../../../common/ExternalLink';
 import DownloadAndOSSelection
   from '../../../../install/instructions/components/DownloadAndOSSelection';
 import { channels, tools } from '../../../../../../common/installLinks';
 import InstructionCommand from '../../../../../common/InstructionCommand';
 
-function AuthenticateScreen() {
+function AuthenticateScreen({ token }) {
+  const loginCommand = `rosa login --token="${token}"`;
   return (
     <PageSection>
       <Stack hasGutter>
@@ -67,7 +69,7 @@ function AuthenticateScreen() {
               </TextContent>
               <br />
               <InstructionCommand textAriaLabel="Copyable ROSA login command">
-                rosa login --token ...
+                {loginCommand}
               </InstructionCommand>
             </CardBody>
           </Card>
@@ -76,5 +78,9 @@ function AuthenticateScreen() {
     </PageSection>
   );
 }
+
+AuthenticateScreen.propTypes = {
+  token: PropTypes.string,
+};
 
 export default AuthenticateScreen;

@@ -46,10 +46,10 @@ class MachineTypeSelection extends React.Component {
 
    componentDidMount() {
      const {
-       machineTypes, organization,
+       machineTypes, organization, input,
      } = this.props;
 
-     if (machineTypes.fulfilled && organization.fulfilled) {
+     if (!input.value && machineTypes.fulfilled && organization.fulfilled) {
        this.setDefaultValue();
      }
    }

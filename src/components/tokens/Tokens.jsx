@@ -20,6 +20,7 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { OCM } from 'openshift-assisted-ui-lib';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import {
@@ -41,8 +42,9 @@ import {
 import links from '../../common/installLinks';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
-import DevPreviewBadge from '../common/DevPreviewBadge';
 import './Tokens.scss';
+
+const { DeveloperPreview, PreviewBadgePosition } = OCM;
 
 /**
  * Generates a box for containing the value of a token.
@@ -134,6 +136,32 @@ const manageTokensCard = show => (
   </Card>
 );
 
+/**
+ * Tries to load the offline token, a full page refresh may occur
+ *
+ * @param {function(string):void} onLoad
+ * Callback after token load was attempted.
+ * The callback gets either the token or a failure reason string as a parameter.
+ */
+const loadOfflineToken = (onLoad) => {
+  insights.chrome.auth.getOfflineToken().then((response) => {
+    // eslint-disable-next-line no-console
+    console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
+    onLoad(response.data.refresh_token);
+  }).catch((reason) => {
+    if (reason === 'not available') {
+      // eslint-disable-next-line no-console
+      console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
+      insights.chrome.auth.doOffline();
+      onLoad();
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('Tokens: getOfflineToken failed =>', reason);
+      onLoad(reason);
+    }
+  });
+};
+
 class Tokens extends React.Component {
   state = {
     offlineAccessToken: null,
@@ -157,27 +185,15 @@ class Tokens extends React.Component {
     if (!blockedByTerms && show) {
       // eslint-disable-next-line no-console
       console.log('Tokens: componentDidMount, props =', this.props);
-      this.loadToken();
+      loadOfflineToken(this.onLoad);
     }
   }
 
-  loadToken = () => {
+  onLoad = (tokenOrFailureReason) => {
     const that = this;
-    insights.chrome.auth.getOfflineToken().then((response) => {
-      // eslint-disable-next-line no-console
-      console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
-      that.setState({ offlineAccessToken: response.data.refresh_token });
-    }).catch((reason) => {
-      if (reason === 'not available') {
-        // eslint-disable-next-line no-console
-        console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
-        insights.chrome.auth.doOffline();
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('Tokens: getOfflineToken failed =>', reason);
-        that.setState({ offlineAccessToken: reason });
-      }
-    });
+    if (tokenOrFailureReason) {
+      that.setState({ offlineAccessToken: tokenOrFailureReason });
+    }
   }
 
   // Some methods here don't use `this`, but we can't convert to Class.method() calls,
@@ -213,7 +229,7 @@ class Tokens extends React.Component {
       <>
         <ExternalLink href={links.OCM_CLI_LATEST} noIcon>ocm command-line tool</ExternalLink>
         {' '}
-        <DevPreviewBadge />
+        <DeveloperPreview position={PreviewBadgePosition.inline} />
       </>
     );
   }
@@ -266,7 +282,7 @@ class Tokens extends React.Component {
     const { show, showPath } = this.props;
     return show ? this.tokenDetails() : (
       <Link to={showPath}>
-        <Button variant="primary" onClick={this.loadToken}>
+        <Button variant="primary" onClick={() => loadOfflineToken(this.onLoad)}>
           Load token
         </Button>
       </Link>
@@ -327,4 +343,5 @@ export {
   snippetBox,
   tokenBox,
   manageTokensCard,
+  loadOfflineToken,
 };
