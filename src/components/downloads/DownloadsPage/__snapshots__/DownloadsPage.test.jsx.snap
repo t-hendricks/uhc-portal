@@ -504,7 +504,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 </code>
                 )
                  
-                <cl
+                <ml
                   position={1}
                 />
               </React.Fragment>
@@ -3249,7 +3249,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 </code>
                 )
                  
-                <cl
+                <ml
                   position={1}
                 />
               </React.Fragment>
@@ -4855,7 +4855,7 @@ exports[`<DownloadsPage> renders 1`] = `
               <React.Fragment>
                 OpenShift for ARM Installer
                  
-                <cl
+                <ml
                   position={1}
                 />
               </React.Fragment>
