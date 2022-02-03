@@ -9,10 +9,12 @@ import {
 import { createClusterRequest, upgradeScheduleRequest } from '../submitOSDRequest';
 
 /** Displays the to-be-sent requests - to be shown only in debug mode */
-const DebugClusterRequest = ({ formValues, cloudProviderID, product }) => {
+const DebugClusterRequest = ({
+  formValues, isWizard, cloudProviderID, product,
+}) => {
   let clusterRequest;
   try {
-    clusterRequest = createClusterRequest({ cloudProviderID, product }, formValues);
+    clusterRequest = createClusterRequest({ isWizard, cloudProviderID, product }, formValues);
   } catch (err) {
     clusterRequest = `error computing cluster request: ${err}`;
   }
@@ -46,6 +48,7 @@ const DebugClusterRequest = ({ formValues, cloudProviderID, product }) => {
 };
 DebugClusterRequest.propTypes = {
   formValues: PropTypes.object.isRequired,
+  isWizard: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   product: PropTypes.string,
 };

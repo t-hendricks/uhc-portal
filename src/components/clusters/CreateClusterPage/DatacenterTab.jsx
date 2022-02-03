@@ -9,7 +9,9 @@ import {
 } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
-import TechPreviewBadge from '../../common/TechPreviewBadge';
+import { OCM } from 'openshift-assisted-ui-lib';
+
+const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];
 const ocpTableRows = [
@@ -38,11 +40,13 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
             <Title headingLevel="h2" className="ocm-ocp-datacenter-title">
               Assisted Installer
             </Title>
-            <TechPreviewBadge />
+            <TechnologyPreview position={PreviewBadgePosition.inline} />
           </StackItem>
           <StackItem>
-            Create a cluster on bare metal following a guided installation
-            process to connect your hardware.
+            The easiest way to install OpenShift on your own infrastructure
+            with step-by-step guidance,
+            preflight validations, and smart defaults.
+            This method supports both x86-64 and arm64 CPU architectures.
           </StackItem>
           <StackItem>
             <Button component={Link} to="/assisted-installer/clusters/~new">
