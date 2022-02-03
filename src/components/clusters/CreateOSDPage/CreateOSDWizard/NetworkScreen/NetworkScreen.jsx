@@ -26,18 +26,9 @@ function NetworkScreen(props) {
     forcePrivateLink,
   } = props;
 
-  const handleForcePrivateLink = () => {
-    change('install_to_vpc', true);
-    change('use_privatelink', true);
-  };
-
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
       change('use_privatelink', false);
-    } else if (value === 'internal') {
-      if (forcePrivateLink) {
-        handleForcePrivateLink();
-      }
     }
   };
 
@@ -48,7 +39,8 @@ function NetworkScreen(props) {
   };
 
   if (forcePrivateLink && privateClusterSelected && !privateLinkSelected) {
-    handleForcePrivateLink();
+    change('install_to_vpc', true);
+    change('use_privatelink', true);
   }
 
   return (
