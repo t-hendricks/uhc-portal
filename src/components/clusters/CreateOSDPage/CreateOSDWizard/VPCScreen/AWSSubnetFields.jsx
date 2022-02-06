@@ -7,8 +7,13 @@ import { Field } from 'redux-form';
 
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import AvailabilityZoneSelection, { PLACEHOLDER_VALUE } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
-import { required, validateUniqueAZ, validateValueNotPlaceholder } from '../../../../../common/validators';
+import {
+  required, validateAWSSubnet, validateAWSSubnetIsPrivate, validateAWSSubnetIsPublic,
+  validateUniqueAZ, validateValueNotPlaceholder,
+} from '../../../../../common/validators';
+import ErrorBox from '../../../../common/ErrorBox';
 
+import { useAWSVPCInquiry } from './useVPCInquiry';
 import './AWSSubnetFields.scss';
 
 const SingleSubnetFieldsRow = ({
@@ -42,7 +47,7 @@ const SingleSubnetFieldsRow = ({
           label={showLabels ? 'Private subnet ID' : null}
           type="text"
           isRequired
-          validate={required}
+          validate={[required, validateAWSSubnet, validateAWSSubnetIsPrivate]}
         />
       </GridItem>
       {!privateLinkSelected && (
@@ -53,7 +58,7 @@ const SingleSubnetFieldsRow = ({
             label={showLabels ? 'Public subnet ID' : null}
             type="text"
             isRequired
-            validate={required}
+            validate={[required, validateAWSSubnet, validateAWSSubnetIsPublic]}
           />
         </GridItem>
       )}
@@ -66,17 +71,21 @@ const AWSSubnetFields = ({
   selectedRegion,
   isMultiAz,
   privateLinkSelected,
-}) => (
-  <>
-    <SingleSubnetFieldsRow
-      showLabels
-      index={0}
-      selectedRegion={selectedRegion}
-      isMultiAz={isMultiAz}
-      privateLinkSelected={privateLinkSelected}
-    />
-    {
-    isMultiAz && (
+}) => {
+  const vpcs = useAWSVPCInquiry();
+  return (
+    <>
+      {vpcs.error && (
+        <ErrorBox message="Failed to list existing VPCs, validations will be partial" response={vpcs} />
+      )}
+      <SingleSubnetFieldsRow
+        showLabels
+        index={0}
+        selectedRegion={selectedRegion}
+        isMultiAz={isMultiAz}
+        privateLinkSelected={privateLinkSelected}
+      />
+      {isMultiAz && (
       <>
         <SingleSubnetFieldsRow
           index={1}
@@ -91,10 +100,10 @@ const AWSSubnetFields = ({
           privateLinkSelected={privateLinkSelected}
         />
       </>
-    )
-  }
-  </>
-);
+      )}
+    </>
+  );
+};
 
 SingleSubnetFieldsRow.propTypes = {
   selectedRegion: PropTypes.string,
