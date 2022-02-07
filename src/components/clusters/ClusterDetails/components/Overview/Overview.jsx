@@ -25,10 +25,14 @@ import UninstallProgress from '../../../common/UninstallProgress';
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
 import CostBreakdownCard from './CostBreakdownCard';
 import isAssistedInstallSubscription, { isUninstalledAICluster } from '../../../../../common/isAssistedInstallerCluster';
+import withFeatureGate from '../../../../features/with-feature-gate';
+import { ASSISTED_INSTALLER_FEATURE } from '../../../../../redux/constants/featureConstants';
 
 import './Overview.scss';
 
 const { AssistedInstallerDetailCard } = OCM;
+const GatedAIDetailCard = withFeatureGate(AssistedInstallerDetailCard, ASSISTED_INSTALLER_FEATURE);
+
 class Overview extends React.Component {
   state = {
     showInstallSuccessAlert: false,
@@ -157,7 +161,7 @@ class Overview extends React.Component {
           <Grid hasGutter>
             { topCard }
             {showAssistedInstallerDetailCard && (
-            <AssistedInstallerDetailCard aiClusterId={cluster.aiCluster.id} />
+            <GatedAIDetailCard aiClusterId={cluster.aiCluster.id} />
             )}
             { (showResourceUsage && !showSidePanel) && resourceUsage}
             {showDetailsCard && (
