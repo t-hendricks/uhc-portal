@@ -41,6 +41,7 @@ const SingleSubnetFieldsRow = ({
           name={`private_subnet_id_${index}`}
           label={showLabels ? 'Private subnet ID' : null}
           type="text"
+          isRequired
           validate={required}
         />
       </GridItem>
@@ -51,6 +52,7 @@ const SingleSubnetFieldsRow = ({
             name={`public_subnet_id_${index}`}
             label={showLabels ? 'Public subnet ID' : null}
             type="text"
+            isRequired
             validate={required}
           />
         </GridItem>
