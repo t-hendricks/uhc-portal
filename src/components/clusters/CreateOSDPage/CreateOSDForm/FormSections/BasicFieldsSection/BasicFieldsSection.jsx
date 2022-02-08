@@ -54,6 +54,11 @@ function BasicFieldsSection({
     if (handleMultiAZChangeForOldForm) {
       handleMultiAZChangeForOldForm(value);
     }
+
+    // also reset autoscaling min/max nodes
+    // multiAz min is computeNodes/3, singleAz min is 2
+    change('min_replicas', isValueMultiAz ? '1' : '2');
+    change('max_replicas', '');
   };
 
   return (

@@ -4,7 +4,8 @@ import { normalizedProducts } from '../../../../../../../common/subscriptionType
 const getMinNodesAllowed = ({
   isDefaultMachinePool,
   product,
-  isBYOC, isMultiAz,
+  isBYOC,
+  isMultiAz,
   autoScaleMinNodesValue,
 }) => {
   let currMinNodes = parseInt(autoScaleMinNodesValue, 10) || 0;
