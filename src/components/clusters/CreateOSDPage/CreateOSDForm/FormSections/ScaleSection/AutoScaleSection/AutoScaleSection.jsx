@@ -174,7 +174,6 @@ class AutoScaleSection extends React.Component {
         limit="min"
         min={this.minNodes()}
         max={isMultiAz ? 60 : 180}
-        change={change}
       />
     );
 
@@ -190,7 +189,6 @@ class AutoScaleSection extends React.Component {
         limit="max"
         min={this.minNodes()}
         max={isMultiAz ? 60 : 180}
-        change={change}
       />
     );
 

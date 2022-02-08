@@ -12,10 +12,10 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
         <PopoverHint
           hint={
             <React.Fragment>
-              Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.
+              Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
-                href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
+                href="https://docs.openshift.com/rosa/nodes/nodes-about-autoscaling-nodes.html"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -37,6 +37,13 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
         <FormGroup
           className="autoscaling__nodes-formGroup"
           fieldId="nodes_min_multiAZ"
+          helperText={
+            <HelperText>
+              <HelperTextItem>
+                x 3 zones = 0
+              </HelperTextItem>
+            </HelperText>
+          }
           isRequired={true}
           label="Minimum nodes per zone"
         >
@@ -46,6 +53,8 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
             displayError={[Function]}
             hideError={[Function]}
             limit="min"
+            max={60}
+            min={0}
             name="min_replicas"
             type="text"
             validate={
@@ -55,15 +64,19 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
               ]
             }
           />
-          <span>
-            X 3 zones = 0
-          </span>
         </FormGroup>
       </SplitItem>
       <SplitItem>
         <FormGroup
           className="autoscaling__nodes-formGroup"
           fieldId="nodes_max_multiAZ"
+          helperText={
+            <HelperText>
+              <HelperTextItem>
+                x 3 zones = 0
+              </HelperTextItem>
+            </HelperText>
+          }
           isRequired={true}
           label="Maximum nodes per zone"
         >
@@ -73,6 +86,8 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
             displayError={[Function]}
             hideError={[Function]}
             limit="max"
+            max={60}
+            min={0}
             name="max_replicas"
             type="text"
             validate={
@@ -82,9 +97,6 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
               ]
             }
           />
-          <span>
-            X 3 zones = 0
-          </span>
         </FormGroup>
       </SplitItem>
     </Split>
@@ -104,10 +116,10 @@ exports[`<AutoScaleSection /> renders correctly when autoscale disabled 1`] = `
         <PopoverHint
           hint={
             <React.Fragment>
-              Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.
+              Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
-                href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
+                href="https://docs.openshift.com/rosa/nodes/nodes-about-autoscaling-nodes.html"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -137,10 +149,10 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
         <PopoverHint
           hint={
             <React.Fragment>
-              Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.
+              Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
-                href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
+                href="https://docs.openshift.com/rosa/nodes/nodes-about-autoscaling-nodes.html"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -172,6 +184,8 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
             displayError={[Function]}
             hideError={[Function]}
             limit="min"
+            max={180}
+            min={0}
             name="min_replicas"
             type="text"
             validate={
@@ -181,9 +195,11 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
               ]
             }
           />
-          <span>
-            minimum
-          </span>
+          <HelperText>
+            <HelperTextItem>
+              minimum
+            </HelperTextItem>
+          </HelperText>
         </SplitItem>
         <SplitItem
           className="autoscaling__nodes-formGroup"
@@ -194,6 +210,8 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
             displayError={[Function]}
             hideError={[Function]}
             limit="max"
+            max={180}
+            min={0}
             name="max_replicas"
             type="text"
             validate={
@@ -203,7 +221,11 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
               ]
             }
           />
-          maximum
+          <HelperText>
+            <HelperTextItem>
+              maximum
+            </HelperTextItem>
+          </HelperText>
         </SplitItem>
       </Split>
     </FormGroup>
