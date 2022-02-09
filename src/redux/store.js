@@ -21,6 +21,7 @@ const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['form'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reduxReducers(history));
@@ -32,7 +33,9 @@ const store = createStore(
     sentryMiddleware)),
 );
 
-const persistor = persistStore(store);
+const persistor = persistStore(store, {
+  manualPersist: true,
+});
 
 export {
   store as default, store, history, persistor,

@@ -96,12 +96,12 @@ class AppEntry extends React.Component {
     if (ready) {
       return (
         <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
+          {/* <PersistGate loading={null} persistor={persistor}> */}
             <NotificationPortal />
             <BrowserRouter basename={getBaseName()}>
               <App />
             </BrowserRouter>
-          </PersistGate>
+          {/* </PersistGate> */}
         </Provider>
       );
     }

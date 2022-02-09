@@ -32,6 +32,8 @@ import AccountsRolesScreen from './AccountsRolesScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
 import ErrorBoundary from '../../../App/ErrorBoundary';
 
+import { persistor } from '../../../../redux/store';
+
 class CreateROSAWizard extends React.Component {
   state = {
     stepIdReached: 1,
@@ -329,7 +331,11 @@ class CreateROSAWizard extends React.Component {
               onNext={this.onNext}
               onBack={this.onBack}
               onGoToStep={this.onGoToStep}
-              onClose={() => history.push('/create/cloud')}
+              onClose={() => {
+                debugger;
+                history.push('/create/cloud');
+                persistor.purge();
+              }}
             />
           </div>
         </PageSection>
