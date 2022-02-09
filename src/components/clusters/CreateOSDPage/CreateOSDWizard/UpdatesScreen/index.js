@@ -8,9 +8,11 @@ const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
 
   const isAutomaticUpgrade = valueSelector(state, 'upgrade_policy') === 'automatic';
+  const product = valueSelector(state, 'product');
 
   return {
     isAutomaticUpgrade,
+    product,
   };
 };
 

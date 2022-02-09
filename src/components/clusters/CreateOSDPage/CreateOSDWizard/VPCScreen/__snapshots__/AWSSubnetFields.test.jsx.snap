@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AWSSubnetFields /> should render 1`] = `
+<Fragment>
+  <SingleSubnetFieldsRow
+    index={0}
+    selectedRegion="fake-region"
+    showLabels={true}
+  />
+</Fragment>
+`;
