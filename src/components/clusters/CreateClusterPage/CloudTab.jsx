@@ -12,15 +12,13 @@ import {
 } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
-import { OCM } from 'openshift-assisted-ui-lib';
 
+import DevPreviewBadge from '../../common/DevPreviewBadge';
 import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
 import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
 import AWSLogo from '../../../styles/images/AWS.png';
 import links from './CreateClusterConsts';
-
-const { DeveloperPreview, PreviewBadgePosition } = OCM;
 
 const getColumns = () => ([
   {
@@ -412,7 +410,7 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/aws/arm" className="pf-u-mr-xs">AWS (ARM)</Link>
-        <DeveloperPreview position={PreviewBadgePosition.inline} />
+        <DevPreviewBadge />
       </>,
       'Full stack automation and pre-existing infrastructure',
     ],
