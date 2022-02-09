@@ -158,7 +158,6 @@ class AutoScaleSection extends React.Component {
       isMultiAz,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
-      change,
     } = this.props;
     const { minErrorMessage, maxErrorMessage } = this.state;
 
