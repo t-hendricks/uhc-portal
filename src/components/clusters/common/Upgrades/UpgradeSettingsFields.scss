@@ -38,7 +38,11 @@
   grid-gap: 24px;
 }
 
-
 .ocm-c-upgrade-monitoring-top{
   margin-top: var(--pf-global--spacer--sm);
+}
+
+.automatic-cluster-updates-alert{
+  margin-left: var(--pf-global--spacer--lg);
+  margin-bottom: var(--pf-global--spacer--lg);
 }

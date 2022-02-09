@@ -840,7 +840,7 @@ const validateUniqueAZ = (value, allValues, _, name) => {
   const otherAZFields = Object.keys(allValues).filter(fieldName => fieldName.startsWith('az_') && fieldName !== name);
   const otherAZValues = otherAZFields.map(fieldName => allValues[fieldName]);
   if (otherAZValues.includes(value)) {
-    return 'Each subnet should be in a different AZ.';
+    return 'Must select 3 different AZs.';
   }
   return undefined;
 };

@@ -7,6 +7,7 @@ import {
 import { Field } from 'redux-form';
 
 import SubnetFields from './SubnetFields';
+import AWSSubnetFields from '../../../CreateOSDWizard/VPCScreen/AWSSubnetFields';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 import GCPNetworkConfigSection from './GCPNetworkConfigSection';
@@ -41,23 +42,31 @@ function InstallToVPC({
                 with a public and a private subnet for each availability zone that you want
                 the cluster installed into.
               </GridItem>
-              {!isWizard && (
-                <Field
-                  component={ReduxCheckbox}
-                  name="use_privatelink"
-                  label="Use a PrivateLink"
-                  helpText={(
-                    <>
-                      {constants.privateLinkHint}
-                    </>
-                  )}
+              {isWizard ? (
+                <AWSSubnetFields
+                  isMultiAz={isMultiAz}
+                  selectedRegion={selectedRegion}
+                  privateLinkSelected={privateLinkSelected}
                 />
+              ) : (
+                <>
+                  <Field
+                    component={ReduxCheckbox}
+                    name="use_privatelink"
+                    label="Use a PrivateLink"
+                    helpText={(
+                      <>
+                        {constants.privateLinkHint}
+                      </>
+                  )}
+                  />
+                  <SubnetFields
+                    isMultiAz={isMultiAz}
+                    selectedRegion={selectedRegion}
+                    privateLinkSelected={privateLinkSelected}
+                  />
+                </>
               )}
-              <SubnetFields
-                isMultiAz={isMultiAz}
-                selectedRegion={selectedRegion}
-                privateLinkSelected={privateLinkSelected}
-              />
             </>
           )
         }

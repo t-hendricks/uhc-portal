@@ -517,19 +517,20 @@ test('GCP service account JSON', () => {
 });
 
 test('Unique AZs', () => {
-  const name = 'az_0';
-  let value = 'a';
   const AllValues = {
+    az_0: 'a',
     az_1: 'b',
     az_2: 'c',
   };
-  expect(validateUniqueAZ(value, AllValues, null, name)).toBe(undefined);
-  value = 'b';
-  expect(validateUniqueAZ(value, AllValues, null, name)).toBe('Each subnet should be in a different AZ.');
+  expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe(undefined);
+  AllValues.az_0 = 'b';
+  expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe('Must select 3 different AZs.');
+  expect(validateUniqueAZ(AllValues.az_1, AllValues, null, 'az_1')).toBe('Must select 3 different AZs.');
+  expect(validateUniqueAZ(AllValues.az_2, AllValues, null, 'az_2')).toBe(undefined);
   AllValues.az_1 = 'd';
-  expect(validateUniqueAZ(value, AllValues, null, name)).toBe(undefined);
-  value = 'd';
-  expect(validateUniqueAZ(value, AllValues, null, name)).toBe('Each subnet should be in a different AZ.');
+  expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe(undefined);
+  AllValues.az_0 = 'd';
+  expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe('Must select 3 different AZs.');
 });
 
 test('GCP Subnet', () => {
