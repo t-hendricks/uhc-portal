@@ -16,14 +16,9 @@ exports.config = {
   // according to your user and key information. However, if you are using a private Selenium
   // backend you should define the host address, port, and path here.
   //
-  // hostname: 'localhost',
-  // port: 4444,
-  // path: '/wd/hub',
-  port: 9515, // default for ChromeDriver
-  path: '/',
-  services: ['chromedriver'],
-  chromeDriverArgs: ['--port=9515', '--url-base=\'/\''], // default for ChromeDriver
-  chromeDriverLogs: './',
+  hostname: 'localhost',
+  port: 4444,
+  path: '/wd/hub',
   //
   // ==================
   // Specify Test Files
@@ -63,14 +58,12 @@ exports.config = {
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
   capabilities: [{
-
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
     // grid with only 5 firefox instances available you can make sure that not more than
     // 5 instances get started at a time.
     maxInstances: 1,
     //
-   //  browserName: 'firefox',
-    browserName: 'chrome',
+    browserName: process.env.BROWSER || 'firefox',
     acceptInsecureCerts: true,
     // If outputDir is provided WebdriverIO can capture driver session logs
     // it is possible to configure which logTypes to include/exclude.
@@ -233,10 +226,26 @@ exports.config = {
      * Function to be executed after a test (in Mocha/Jasmine).
      */
   afterTest: async (test, context, { error, result, duration, passed, retries }) => {
-    // if test passed, ignore, else take and save screenshot.
+    // if test passed, ignore, else debug / take and save screenshot.
     if (passed) {
       return;
     }
+
+    const log = logger('afterTest');
+
+    if (/not clickable.*because another element.*pendo.*obscures it/.test(error)) {
+      // If we got here, it ruined this run, but let's try make next runs pass.
+      const close = await $('._pendo-close-guide');
+      const exists = await close.isExisting();
+      log.error('Trying to close pendo guide, exists = ', exists);
+      if (exists) {
+        await close.click();
+      }
+    }
+
+    if (process.env.SELENIUM_DEBUG === 'true') {
+      await browser.debug();
+    } else {
     const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
     const timestamp = new Date().toISOString();
     const dir = 'run/output/embedded_files/';
@@ -244,7 +253,9 @@ exports.config = {
     await util.promisify(fs.mkdir)(dir, { recursive: true });
     await browser.saveScreenshot(filepath);
     process.emit('test:screenshot', filepath);
-    logger('afterTest screenshot').error(`\n  ${filepath}\n`);
+      log.error(`screenshot:\n  ${filepath}\n`);
+      log.info('Tip: to stop for interactive debugging, set SELENIUM_DEBUG=true env var');
+    }
   },
 
   /**

@@ -72,20 +72,26 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
     clusterRequest.properties = { fake_cluster: 'true' };
   }
 
-  if (formData.network_configuration_toggle === 'advanced') {
+  if (isWizard || formData.network_configuration_toggle === 'advanced') {
     clusterRequest.network = {
       machine_cidr: formData.network_machine_cidr,
       service_cidr: formData.network_service_cidr,
       pod_cidr: formData.network_pod_cidr,
       host_prefix: parseInt(formData.network_host_prefix, 10),
     };
-    clusterRequest.api = {
-      listening: formData.cluster_privacy,
-    };
+
+    const wasClusterPrivacyShown = actualCloudProviderID === 'aws'
+                                || (actualCloudProviderID === 'gcp' && formData.byoc === 'true');
+    if (wasClusterPrivacyShown) {
+      clusterRequest.api = {
+        listening: formData.cluster_privacy,
+      };
+    }
   }
   if (formData.byoc === 'true') {
     const wasExistingVPCShown = isWizard || formData.network_configuration_toggle === 'advanced';
     const isInstallExistingVPC = wasExistingVPCShown && formData.install_to_vpc;
+    const usePrivateLink = formData.use_privatelink;
     clusterRequest.ccs = {
       enabled: true,
     };
@@ -95,7 +101,8 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
         account_id: formData.account_id,
         secret_access_key: formData.secret_access_key,
       };
-      if (formData.use_privatelink) {
+
+      if (usePrivateLink) {
         clusterRequest.aws.private_link = true;
       }
       if (formData.customer_managed_key) {
@@ -103,16 +110,18 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
       }
       clusterRequest.ccs.disable_scp_checks = formData.disable_scp_checks;
       if (isInstallExistingVPC) {
-        let subnetIds = [
-          formData.private_subnet_id_0, formData.public_subnet_id_0,
-        ];
+        const subnetIds = [formData.private_subnet_id_0];
+        if (!usePrivateLink) {
+          subnetIds.push(formData.public_subnet_id_0);
+        }
 
         if (isMultiAz) {
-          subnetIds = [
-            ...subnetIds,
-            formData.private_subnet_id_1, formData.public_subnet_id_1,
-            formData.private_subnet_id_2, formData.public_subnet_id_2,
-          ];
+          subnetIds.push(formData.private_subnet_id_1);
+          subnetIds.push(formData.private_subnet_id_2);
+          if (!usePrivateLink) {
+            subnetIds.push(formData.public_subnet_id_1);
+            subnetIds.push(formData.public_subnet_id_2);
+          }
         }
         clusterRequest.aws.subnet_ids = subnetIds;
 

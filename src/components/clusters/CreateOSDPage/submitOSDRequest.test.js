@@ -84,8 +84,8 @@ describe('createClusterRequest', () => {
         'subnet-00b3753ab2dd892ac',
         'subnet-0703ec90283d1fd6b',
         'subnet-0735da52d658da28b',
-        'subnet-09404f4fc139bd94e',
         'subnet-00327948731118662',
+        'subnet-09404f4fc139bd94e',
         'subnet-09ad4ef49f2e29996',
       ],
     );
@@ -96,6 +96,18 @@ describe('createClusterRequest', () => {
         'us-east-1f',
       ],
     );
+  };
+
+  const CIDRData = {
+    network_machine_cidr: '10.1.128.0/17',
+    network_host_prefix: '24',
+  };
+
+  const expectCIDR = (request) => {
+    expect(request.network).toEqual({
+      machine_cidr: '10.1.128.0/17',
+      host_prefix: 24,
+    });
   };
 
   describe('CreateOSDForm', () => {
@@ -132,6 +144,7 @@ describe('createClusterRequest', () => {
           // CCS also lowers nodes_compute default, but not important for these tests.
           network_configuration_toggle: 'advanced',
           ...gcpVPCData,
+          ...CIDRData,
         };
         const request = createClusterRequest(params, data);
         expect(request.billing_model).toEqual('standard');
@@ -139,6 +152,7 @@ describe('createClusterRequest', () => {
         expect(request.cloud_provider.id).toEqual('gcp');
         expect(request.ccs.enabled).toEqual(true);
         expectGCPVPC(request);
+        expectCIDR(request);
       });
 
       it('select On-demand (Marketplace) billing, CCS', () => {
@@ -246,6 +260,7 @@ describe('createClusterRequest', () => {
           // CCS also lowers nodes_compute default, but not important for these tests.
           cloud_provider: 'aws',
           ...awsVPCData,
+          ...CIDRData,
         };
         const request = createClusterRequest(params, data);
         expect(request.billing_model).toEqual('standard');
@@ -253,6 +268,7 @@ describe('createClusterRequest', () => {
         expect(request.cloud_provider.id).toEqual('aws');
         expect(request.ccs.enabled).toEqual(true);
         expectAWSVPC(request);
+        expectCIDR(request);
       });
 
       it('select On-demand (Marketplace) billing, CCS, GCP', () => {
@@ -344,12 +360,14 @@ describe('createClusterRequest', () => {
           product: normalizedProducts.ROSA,
           cloud_provider: 'aws',
           byoc: 'true',
+          ...CIDRData,
         };
         const request = createClusterRequest(params, data);
         expect(request.billing_model).toEqual('standard');
         expect(request.product).toEqual({ id: 'rosa' });
         expect(request.cloud_provider.id).toEqual('aws');
         expect(request.ccs.enabled).toEqual(true);
+        expectCIDR(request);
       });
     });
   });

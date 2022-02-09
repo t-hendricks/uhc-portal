@@ -101,19 +101,44 @@ function ClusterSettingsScreen({
           fieldId="etcd_encryption"
           id="etcdEncryption"
         >
-          <Field
-            component={ReduxCheckbox}
-            name="etcd_encryption"
-            label="Enable etcd encryption"
-            extendedHelpText={(
-              <>
-                {constants.enableEtcdHint}
-                {' '}
-                <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
-              </>
-              )}
-          />
-          <div className="ocm-c--reduxcheckbox-description">Provide an additional layer of data security to your cluster.</div>
+          <Grid hasGutter>
+            <GridItem>
+              <Field
+                component={ReduxCheckbox}
+                name="etcd_encryption_at_rest"
+                label="Enable etcd storage encryption"
+                isChecked
+                isDisabled
+                extendedHelpText={(
+                  <>
+                    {constants.enableEtcdHint}
+                    {' '}
+                    <ExternalLink href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html">AWS</ExternalLink>
+                    {' '}
+                    |
+                    {' '}
+                    <ExternalLink href="https://cloud.google.com/storage/docs/encryption/default-keys">GCP</ExternalLink>
+                  </>
+                  )}
+              />
+              <div className="ocm-c--reduxcheckbox-description">Cloud storage is encrypted at rest.</div>
+            </GridItem>
+            <GridItem>
+              <Field
+                component={ReduxCheckbox}
+                name="etcd_encryption"
+                label="Enable additional etcd encryption"
+                extendedHelpText={(
+                  <>
+                    {constants.enableAdditionalEtcdHint}
+                    {' '}
+                    <ExternalLink href="https://docs.openshift.com/dedicated/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition">Learn more about etcd encryption</ExternalLink>
+                  </>
+                )}
+              />
+              <div className="ocm-c--reduxcheckbox-description">Additional encryption of Openshift and Kubernetes API resources.</div>
+            </GridItem>
+          </Grid>
         </FormGroup>
         {isByoc && (
           <CustomerManagedEncryptionSection
@@ -121,7 +146,6 @@ function ClusterSettingsScreen({
             selectedRegion={selectedRegion}
             cloudProviderID={cloudProviderID}
           />
-
         )}
       </Grid>
     </Form>

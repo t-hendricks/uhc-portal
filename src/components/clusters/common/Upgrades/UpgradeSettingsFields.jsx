@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import {
-  Divider, Title, GridItem, Alert, TextContent, TextVariants, Text,
+  Divider, Title, GridItem, TextContent, TextVariants, Text,
 } from '@patternfly/react-core';
 
 import ExternalLink from '../../../common/ExternalLink';
@@ -12,12 +12,29 @@ import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
 import UpgradeScheduleSelection from './UpgradeScheduleSelection';
 import PodDistruptionBudgetGraceSelect from './PodDistruptionBudgetGraceSelect';
 import './UpgradeSettingsFields.scss';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 function UpgradeSettingsFields({
-  isDisabled, isAutomatic, showDivider, change, initialSceduleValue,
+  isDisabled, isAutomatic, showDivider, change, initialSceduleValue, product,
 }) {
+  const isRosa = product === normalizedProducts.ROSA;
+  const osdLifeCycleLink = 'https://docs.openshift.com/dedicated/osd_policy/osd-life-cycle.html';
+  const rosaLifeCycleLink = 'https://docs.openshift.com/rosa/rosa_policy/rosa-life-cycle.html';
   return (
     <>
+      <GridItem>
+        <Text component="p">
+          Note: In the event of
+          {' '}
+          <ExternalLink href="https://access.redhat.com/security/updates/classification/#critical">Critical security concerns</ExternalLink>
+          {' '}
+          (CVEs) that significantly impact the security or stability of the cluster, updates may be
+          {' '}
+          automatically scheduled by Red Hat SRE to the latest z-stream version not impacted by the
+          {' '}
+          CVE within 48 hours after customer notifications.
+        </Text>
+      </GridItem>
       <GridItem className="ocm-c-upgrade-policy-radios">
         <Field
           component={RadioButtons}
@@ -31,30 +48,27 @@ function UpgradeSettingsFields({
           options={[
             {
               value: 'manual',
-              label: 'Manual',
+              label: 'Individual updates',
               description: (
                 <>
-                  You are responsible for updating your cluster.
+                  Schedule each update individually. Take into consideration end of life dates from
                   {' '}
-                  Note that if your cluster version falls more than 1 minor version behind
+                  the
                   {' '}
-                  the latest available, it will have SRE alerting disabled and will be
-                  unsupported until it's upgraded. See the
+                  <ExternalLink
+                    href={isRosa ? rosaLifeCycleLink : osdLifeCycleLink}
+                  >
+                    lifecycle policy
+                  </ExternalLink>
                   {' '}
-                  <ExternalLink href="https://access.redhat.com/support/policy/updates/openshift/dedicated">version support information</ExternalLink>
-                  .
-                  <p>
-                    Note: High and Critical security concerns (CVEs) will be automatically
-                    {' '}
-                    updated to the latest z-stream version not impacted by the CVE.
-                  </p>
+                  when planning updates.
                 </>
               ),
             },
             {
               value: 'automatic',
-              label: 'Automatic',
-              description: 'Clusters will be automatically updated based on your defined day and start time when new versions are available',
+              label: 'Recurring updates',
+              description: 'The cluster will be automatically updated based on your preferred day and start time when new versions are available.',
               extraField: isAutomatic && (
               <Field
                 component={UpgradeScheduleSelection}
@@ -66,12 +80,6 @@ function UpgradeSettingsFields({
           ]}
           defaultValue="manual"
           disableDefaultValueHandling // interferes with enableReinitialize.
-        />
-        <Alert
-          id="automatic-cluster-updates-alert"
-          isInline
-          variant="info"
-          title="Automatic updates occur when a new version becomes available at least two days prior to your selected start time."
         />
       </GridItem>
       {showDivider && <Divider />}
@@ -103,6 +111,7 @@ UpgradeSettingsFields.propTypes = {
   isDisabled: PropTypes.bool,
   showDivider: PropTypes.bool,
   change: PropTypes.func,
+  product: PropTypes.string,
   initialSceduleValue: PropTypes.string,
 };
 
