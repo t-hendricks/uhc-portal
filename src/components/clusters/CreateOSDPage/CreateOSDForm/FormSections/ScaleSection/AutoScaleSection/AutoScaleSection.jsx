@@ -13,6 +13,7 @@ import ExternalLink from '../../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../../common/PopoverHint';
 import { validateNumericInput, required } from '../../../../../../../common/validators';
 import { constants } from '../../../CreateOSDFormConstants';
+import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 
 class NodesInput extends React.Component {
   componentDidUpdate() {
@@ -158,6 +159,7 @@ class AutoScaleSection extends React.Component {
       isMultiAz,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
+      product,
     } = this.props;
     const { minErrorMessage, maxErrorMessage } = this.state;
 
@@ -261,6 +263,8 @@ class AutoScaleSection extends React.Component {
       </>
     );
 
+    const autoScalingUrl = product === normalizedProducts.ROSA ? 'https://docs.openshift.com/rosa/nodes/nodes-about-autoscaling-nodes.html' : 'https://docs.openshift.com/container-platform/4.9/machine_management/applying-autoscaling.html';
+
     return (
       <>
         <GridItem id="autoscaling">
@@ -273,7 +277,7 @@ class AutoScaleSection extends React.Component {
                   <>
                     {constants.autoscaleHint}
                     {' '}
-                    <ExternalLink href="https://docs.openshift.com/rosa/nodes/nodes-about-autoscaling-nodes.html">Learn more about autoscaling</ExternalLink>
+                    <ExternalLink href={autoScalingUrl}>Learn more about autoscaling</ExternalLink>
                   </>
                 )}
               />

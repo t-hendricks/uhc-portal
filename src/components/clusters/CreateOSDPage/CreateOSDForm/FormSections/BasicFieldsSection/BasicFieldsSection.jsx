@@ -56,8 +56,7 @@ function BasicFieldsSection({
     }
 
     // also reset autoscaling min/max nodes
-    // multiAz min is computeNodes/3, singleAz min is 2
-    change('min_replicas', isValueMultiAz ? '1' : '2');
+    change('min_replicas', isValueMultiAz ? `${Number.parseInt(computeNodes, 10) / 3}` : computeNodes);
     change('max_replicas', '');
   };
 
