@@ -504,9 +504,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 </code>
                 )
                  
-                <DeveloperPreview
-                  position={1}
-                />
+                <DevPreviewBadge />
               </React.Fragment>
             }
             selections={Object {}}
@@ -3249,9 +3247,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 </code>
                 )
                  
-                <DeveloperPreview
-                  position={1}
-                />
+                <DevPreviewBadge />
               </React.Fragment>
             }
             selections={Object {}}
@@ -4855,9 +4851,7 @@ exports[`<DownloadsPage> renders 1`] = `
               <React.Fragment>
                 OpenShift for ARM Installer
                  
-                <DeveloperPreview
-                  position={1}
-                />
+                <DevPreviewBadge />
               </React.Fragment>
             }
             selections={Object {}}
