@@ -26,7 +26,7 @@ const SingleSubnetFieldsRow = ({
 
   return (
     <>
-      <GridItem className="vpc-input-field" md={3}>
+      <GridItem className="vpc-input-field" md={4}>
         <Field
           component={AvailabilityZoneSelection}
           name={`az_${index}`}
@@ -35,27 +35,29 @@ const SingleSubnetFieldsRow = ({
           region={selectedRegion}
         />
       </GridItem>
-      <GridItem md={3}>
+      <GridItem md={4}>
         <Field
           component={ReduxVerticalFormGroup}
           name={`private_subnet_id_${index}`}
           label={showLabels ? 'Private subnet ID' : null}
           type="text"
+          isRequired
           validate={required}
         />
       </GridItem>
       {!privateLinkSelected && (
-        <GridItem md={3}>
+        <GridItem md={4}>
           <Field
             component={ReduxVerticalFormGroup}
             name={`public_subnet_id_${index}`}
             label={showLabels ? 'Public subnet ID' : null}
             type="text"
+            isRequired
             validate={required}
           />
         </GridItem>
       )}
-      <GridItem md={privateLinkSelected ? 6 : 3} />
+      {privateLinkSelected && <GridItem md={4} />}
     </>
   );
 };
