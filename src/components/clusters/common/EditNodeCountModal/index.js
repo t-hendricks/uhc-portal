@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import {
+  isValid, reduxForm, formValueSelector, reset, resetSection, initialValues,
+} from 'redux-form';
 import get from 'lodash/get';
 
 import EditNodeCountModal from './EditNodeCountModal';
@@ -49,6 +51,9 @@ const mapStateToProps = (state) => {
   }
 
   const commonProps = {
+    // initialValues,
+    resetSection: values => resetSection(reduxFormConfig.form, values),
+    isValid: isValid(reduxFormConfig.form)(state),
     clusterID: get(cluster, 'id', ''),
     machinePoolsList: {
       ...state.machinePools.getMachinePools,
@@ -175,6 +180,7 @@ const mapDispatchToProps = dispatch => ({
     }
   },
   getMachinePools: clusterID => dispatch(getMachinePools(clusterID)),
+  resetForm: () => dispatch(reset(reduxFormConfig.form)),
   resetScaleMachinePoolResponse: () => dispatch(clearScaleMachinePoolResponse()),
   resetScaleDefaultMachinePoolResponse: () => dispatch(clearClusterResponse()),
   resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse()),

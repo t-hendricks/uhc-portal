@@ -121,7 +121,7 @@ class CreateOSDWizard extends React.Component {
 
   render() {
     const {
-      isValid,
+      // isValid,
       onSubmit,
       createClusterResponse,
       machineTypes,
@@ -144,6 +144,8 @@ class CreateOSDWizard extends React.Component {
       getAWSCloudProviderRegions,
       privateLinkSelected,
     } = this.props;
+
+    const isValid = true;
 
     const { stepIdReached, currentStep } = this.state;
     const isTrialDefault = product === normalizedProducts.OSDTrial;
@@ -373,9 +375,10 @@ class CreateOSDWizard extends React.Component {
         resetResponse={resetResponse}
       />
     );
-    const controlledFooter = isCCSCredentialsValidationNeeded
-                             && !!cloudProviderID
-                             && currentStep === 21;
+    // const controlledFooter = isCCSCredentialsValidationNeeded
+    //                          && !!cloudProviderID
+    //                          && currentStep === 21;
+    const controlledFooter = false;
 
     return (
       <>

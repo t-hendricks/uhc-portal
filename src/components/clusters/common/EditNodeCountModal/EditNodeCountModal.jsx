@@ -69,6 +69,7 @@ class EditNodeCountModal extends Component {
   cancelEdit = () => {
     const { closeModal, change } = this.props;
     this.resetResponse();
+    this.onAutoScaleCheckboxChange(null, true);
 
     closeModal();
     change('machine_pool', '');
@@ -91,8 +92,22 @@ class EditNodeCountModal extends Component {
     resetGetMachinePoolsResponse();
   }
 
+  /**
+   * TODO: Set the form back to pristine if it's back to its original state?
+   */
+  onAutoScaleCheckboxChange = (checked, reset) => {
+    const { resetSection, initialValues: { autoscalingEnabled = false } } = this.props;
+    const unchanged = (!autoscalingEnabled && !checked) || (autoscalingEnabled && checked);
+    if (reset || unchanged) {
+      // reset
+      return resetSection('autoscalingEnabled', 'min_replicas', 'max_replicas');
+    }
+    return null;
+  };
+
   render() {
     const {
+      isValid,
       machinePoolsList,
       handleSubmit,
       isMultiAz,
@@ -152,7 +167,7 @@ class EditNodeCountModal extends Component {
         primaryText="Apply"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={this.cancelEdit}
-        isPrimaryDisabled={pending || pristine}
+        isPrimaryDisabled={pending || pristine || !isValid}
         isPending={pending}
         isSmall
       >
@@ -170,7 +185,7 @@ class EditNodeCountModal extends Component {
                 />
               </GridItem>
               <GridItem span={4} />
-              {canAutoScale
+              {(true || canAutoScale)
                 && (
                   <>
                     <GridItem>
@@ -183,6 +198,7 @@ class EditNodeCountModal extends Component {
                         product={product}
                         isBYOC={isByoc}
                         isDefaultMachinePool={machinePoolId === 'Default'}
+                        onChange={this.onAutoScaleCheckboxChange}
                       />
                     </GridItem>
                   </>
@@ -229,6 +245,7 @@ class EditNodeCountModal extends Component {
 }
 
 EditNodeCountModal.propTypes = {
+  isValid: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   resetScaleDefaultMachinePoolResponse: PropTypes.func.isRequired,
@@ -239,6 +256,7 @@ EditNodeCountModal.propTypes = {
   initialValues: PropTypes.shape({
     id: PropTypes.string,
     nodes_compute: PropTypes.number,
+    autoscalingEnabled: PropTypes.bool,
   }).isRequired,
   masterResizeAlertThreshold: PropTypes.number,
   organization: PropTypes.object.isRequired,
@@ -263,6 +281,7 @@ EditNodeCountModal.propTypes = {
   billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
   shouldDisplayClusterName: PropTypes.bool,
   clusterDisplayName: PropTypes.string,
+  resetSection: PropTypes.func.isRequired,
 };
 
 EditNodeCountModal.defaultProps = {

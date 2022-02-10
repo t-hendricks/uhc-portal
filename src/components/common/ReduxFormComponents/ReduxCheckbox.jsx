@@ -26,11 +26,12 @@ function ReduxCheckbox(props) {
   const {
     label,
     meta: { error, touched },
-    input,
+    input: { name, value, onChange, ...restInput },
     isSwitch = false,
     isHelperTextBeforeField = false,
     helpText,
     extendedHelpText,
+    onChange: onChangeProp,
     ...extraProps // any extra props not specified above
   } = props;
 
@@ -41,10 +42,17 @@ function ReduxCheckbox(props) {
     return '';
   };
 
+  const onChangeCallback = (event) => {
+    onChange(event);
+    if (onChangeProp) {
+      onChangeProp(event);
+    }
+  };
+
   const InputComponent = isSwitch ? Switch : Checkbox;
   return (
     <FormGroup
-      fieldId={input.name}
+      fieldId={name}
       helperTextInvalid={helperTextInvalid()}
       isHelperTextBeforeField={isHelperTextBeforeField}
       helperText={helpText}
@@ -53,11 +61,12 @@ function ReduxCheckbox(props) {
       <Split hasGutter>
         <SplitItem>
           <InputComponent
-            isChecked={!!input.value}
-            id={input.name}
-            {...input}
+            isChecked={!!value}
+            id={name}
+            {...restInput}
             {...extraProps}
             label={label}
+            onChange={onChangeCallback}
           />
         </SplitItem>
         {extendedHelpText && (
@@ -81,6 +90,7 @@ ReduxCheckbox.propTypes = {
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   isHelperTextBeforeField: PropTypes.bool,
   helpText: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 export default ReduxCheckbox;

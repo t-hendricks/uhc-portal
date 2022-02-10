@@ -122,7 +122,7 @@ class AddMachinePoolModal extends Component {
                 minNodes={0}
                 isMachinePool
                 inModal
-                canAutoScale={canAutoScale}
+                canAutoScale={true || canAutoScale}
                 autoscalingEnabled={autoscalingEnabled}
                 change={change}
                 autoScaleMinNodesValue={autoScaleMinNodesValue}
