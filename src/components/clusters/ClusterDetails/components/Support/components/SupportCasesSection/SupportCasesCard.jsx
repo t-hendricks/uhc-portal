@@ -26,6 +26,7 @@ class SupportCasesCard extends React.Component {
       supportCases,
       clusterUUID,
       product,
+      version,
       isDisabled = false,
     } = this.props;
 
@@ -38,7 +39,7 @@ class SupportCasesCard extends React.Component {
       { title: 'Status' },
     ];
 
-    const url = `https://access.redhat.com/support/cases/#/case/new?clusterId=${clusterUUID}&caseCreate=true`;
+    const url = `https://access.redhat.com/support/cases/#/case/new/open-case/describe-issue?clusterId=${clusterUUID}&caseCreate=true&product=${product}&version=${version}`;
 
     const supportCaseRow = (supportCase) => {
       const caseIdURL = `https://access.redhat.com/support/cases/#/case/${supportCase.caseID}`;
@@ -110,6 +111,7 @@ SupportCasesCard.propTypes = {
   subscriptionID: PropTypes.string.isRequired,
   clusterUUID: PropTypes.string.isRequired,
   product: PropTypes.string.isRequired,
+  version: PropTypes.string.isRequired,
   supportCases: PropTypes.object.isRequired,
   getSupportCases: PropTypes.func.isRequired,
   isDisabled: PropTypes.bool,

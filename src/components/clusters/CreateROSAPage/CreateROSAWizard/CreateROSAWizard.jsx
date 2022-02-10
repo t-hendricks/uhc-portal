@@ -154,6 +154,7 @@ class CreateROSAWizard extends React.Component {
                   showClusterPrivacy
                   showVPCCheckbox
                   privateLinkSelected={privateLinkSelected}
+                  forcePrivateLink
                 />
               </ErrorBoundary>
             ),
@@ -213,7 +214,7 @@ class CreateROSAWizard extends React.Component {
           <ErrorBoundary>
             <ReviewClusterScreen
               isPending={createClusterResponse.pending}
-              clusterRequestParams={{}}
+              clusterRequestParams={{ isWizard: true }}
             />
           </ErrorBoundary>
         ),

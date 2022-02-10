@@ -79,7 +79,8 @@ class CreateOSDWizard extends React.Component {
 
   componentDidUpdate(prevProps) {
     const {
-      createClusterResponse, isErrorModalOpen, openModal, isCCSCredentialsValidationNeeded,
+      createClusterResponse, isErrorModalOpen, openModal,
+      isCCSCredentialsValidationNeeded, cloudProviderID,
     } = this.props;
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
@@ -87,6 +88,12 @@ class CreateOSDWizard extends React.Component {
     if (isCCSCredentialsValidationNeeded && !prevProps.isCCSCredentialsValidationNeeded) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ stepIdReached: 2 }); // prevent going to next steps when validation is needed
+    }
+    if (cloudProviderID !== prevProps.cloudProviderID) {
+      // set [max] step reached to cloud providers step, to force users to go
+      // thru wizard again after changing cloud providers
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ stepIdReached: 21 });
     }
   }
 
@@ -261,7 +268,7 @@ class CreateOSDWizard extends React.Component {
           <ErrorBoundary>
             <ReviewClusterScreen
               isPending={createClusterResponse.pending}
-              clusterRequestParams={{}}
+              clusterRequestParams={{ isWizard: true }}
             />
           </ErrorBoundary>
         ),

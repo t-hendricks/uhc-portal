@@ -6,6 +6,7 @@ import Modal from '../../../../../common/Modal/Modal';
 import AuthenticateScreen from './AuthenticateScreen';
 import OCMRoleScreen from './OCMRoleScreen';
 import UserRoleScreen from './UserRoleScreen';
+import { loadOfflineToken } from '../../../../../tokens/Tokens';
 
 class AssociateAWSAccountWizard extends React.Component {
   state = {
@@ -21,12 +22,12 @@ class AssociateAWSAccountWizard extends React.Component {
 
   render() {
     const { stepIdReached } = this.state;
-    const { closeModal } = this.props;
+    const { closeModal, token } = this.props;
     const steps = [
       {
         id: 1,
         name: 'Authenticate',
-        component: <AuthenticateScreen />,
+        component: <AuthenticateScreen token={token} />,
       },
       {
         id: 2,
@@ -69,9 +70,24 @@ class AssociateAWSAccountWizard extends React.Component {
 }
 
 function AssociatedAWSAccountModal({ closeModal, isOpen, isValid }) {
+  const [offlineAccessToken, setOfflineAccessToken] = React.useState('');
+  const onLoad = (token) => {
+    if (token) {
+      setOfflineAccessToken(token);
+    }
+  };
+
+  React.useLayoutEffect(() => {
+    loadOfflineToken(onLoad);
+  }, []);
+
   return isOpen && (
     <Modal title="Associate AWS Account ID">
-      <AssociateAWSAccountWizard isValid={isValid} closeModal={closeModal} />
+      <AssociateAWSAccountWizard
+        isValid={isValid}
+        closeModal={closeModal}
+        token={offlineAccessToken}
+      />
     </Modal>
   );
 }
@@ -84,6 +100,7 @@ AssociatedAWSAccountModal.propTypes = {
 
 AssociateAWSAccountWizard.propTypes = {
   closeModal: PropTypes.func.isRequired,
+  token: PropTypes.string,
 };
 
 AssociatedAWSAccountModal.defaultProps = {

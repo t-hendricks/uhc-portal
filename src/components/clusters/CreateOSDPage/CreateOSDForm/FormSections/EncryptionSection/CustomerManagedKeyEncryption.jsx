@@ -14,7 +14,7 @@ function CustomerManagedEncryption({
 }) {
   const isGCP = cloudProviderID === 'gcp';
   const gcpDesc = 'Managed via Google Cloud Key Management Service. Used to store and generate encryption keys and encrypt your data.';
-  const awsDesc = 'Managed via Amazon EBS encryption. Used to store and generate encryption keys and encrypt your data.';
+  const awsDesc = 'Use your own AWS KMS keys to enable encryption of AWS EBS volumes for the cluster.';
 
   return (
     <>
@@ -25,7 +25,7 @@ function CustomerManagedEncryption({
         <Field
           component={ReduxCheckbox}
           name="customer_managed_key"
-          label="Customer-managed keys"
+          label="Encrypt persistent volumes with customer keys"
           extendedHelpText={(
             <>
               <Title headingLevel="h6" className="pf-u-mb-sm">
@@ -44,7 +44,7 @@ function CustomerManagedEncryption({
                 {isGCP ? (
                   'Learn all about Cloud KMS'
                 ) : (
-                  'Learn more'
+                  'Learn more about AWS EBS encryption'
                 )}
               </ExternalLink>
             </>
