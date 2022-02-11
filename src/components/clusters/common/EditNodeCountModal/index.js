@@ -51,7 +51,6 @@ const mapStateToProps = (state) => {
   }
 
   const commonProps = {
-    // initialValues,
     resetSection: values => resetSection(reduxFormConfig.form, values),
     isValid: isValid(reduxFormConfig.form)(state),
     clusterID: get(cluster, 'id', ''),
