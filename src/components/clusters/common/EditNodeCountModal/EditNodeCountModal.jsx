@@ -76,6 +76,19 @@ class EditNodeCountModal extends Component {
     change('nodes_compute', '');
   };
 
+  /**
+   * TODO: Set the form back to pristine if it's back to its original state?
+   */
+  onAutoScaleCheckboxChange = (checked, reset) => {
+    const { resetSection, initialValues: { autoscalingEnabled = false } } = this.props;
+    const unchanged = (!autoscalingEnabled && !checked) || (autoscalingEnabled && checked);
+    if (reset || unchanged) {
+      // reset
+      return resetSection('autoscalingEnabled', 'min_replicas', 'max_replicas');
+    }
+    return null;
+  };
+
   resetResponse() {
     const {
       resetScaleDefaultMachinePoolResponse,
@@ -91,19 +104,6 @@ class EditNodeCountModal extends Component {
     }
     resetGetMachinePoolsResponse();
   }
-
-  /**
-   * TODO: Set the form back to pristine if it's back to its original state?
-   */
-  onAutoScaleCheckboxChange = (checked, reset) => {
-    const { resetSection, initialValues: { autoscalingEnabled = false } } = this.props;
-    const unchanged = (!autoscalingEnabled && !checked) || (autoscalingEnabled && checked);
-    if (reset || unchanged) {
-      // reset
-      return resetSection('autoscalingEnabled', 'min_replicas', 'max_replicas');
-    }
-    return null;
-  };
 
   render() {
     const {

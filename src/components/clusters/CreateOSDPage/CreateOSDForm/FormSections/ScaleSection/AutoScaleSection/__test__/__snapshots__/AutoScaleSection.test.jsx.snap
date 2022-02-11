@@ -28,6 +28,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
       component={[Function]}
       label="Enable autoscaling"
       name="autoscalingEnabled"
+      onChange={[Function]}
     />
     <Split
       className="autoscaling__container"
@@ -61,6 +62,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
               Array [
                 [Function],
                 [Function],
+                [Function],
               ]
             }
           />
@@ -92,6 +94,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
             type="text"
             validate={
               Array [
+                [Function],
                 [Function],
                 [Function],
               ]
@@ -132,6 +135,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale disabled 1`] = `
       component={[Function]}
       label="Enable autoscaling"
       name="autoscalingEnabled"
+      onChange={[Function]}
     />
   </GridItem>
 </Fragment>
@@ -165,6 +169,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
       component={[Function]}
       label="Enable autoscaling"
       name="autoscalingEnabled"
+      onChange={[Function]}
     />
     <FormGroup
       className="autoscaling__container"
@@ -192,6 +197,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
               Array [
                 [Function],
                 [Function],
+                [Function],
               ]
             }
           />
@@ -216,6 +222,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
             type="text"
             validate={
               Array [
+                [Function],
                 [Function],
                 [Function],
               ]

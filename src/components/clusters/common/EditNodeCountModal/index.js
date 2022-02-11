@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import {
-  isValid, reduxForm, formValueSelector, reset, resetSection, initialValues,
+  isValid, reduxForm, formValueSelector, resetSection,
 } from 'redux-form';
 import get from 'lodash/get';
 
@@ -180,7 +180,6 @@ const mapDispatchToProps = dispatch => ({
     }
   },
   getMachinePools: clusterID => dispatch(getMachinePools(clusterID)),
-  resetForm: () => dispatch(reset(reduxFormConfig.form)),
   resetScaleMachinePoolResponse: () => dispatch(clearScaleMachinePoolResponse()),
   resetScaleDefaultMachinePoolResponse: () => dispatch(clearClusterResponse()),
   resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse()),

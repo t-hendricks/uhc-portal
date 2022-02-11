@@ -26,7 +26,9 @@ function ReduxCheckbox(props) {
   const {
     label,
     meta: { error, touched },
-    input: { name, value, onChange, ...restInput },
+    input: {
+      name, value, onChange, ...restInput
+    },
     isSwitch = false,
     isHelperTextBeforeField = false,
     helpText,
@@ -42,10 +44,10 @@ function ReduxCheckbox(props) {
     return '';
   };
 
-  const onChangeCallback = (event) => {
-    onChange(event);
+  const onChangeCallback = (checked) => {
+    onChange(checked);
     if (onChangeProp) {
-      onChangeProp(event);
+      onChangeProp(checked);
     }
   };
 

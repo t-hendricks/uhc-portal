@@ -14,7 +14,7 @@ import PopoverHint from '../../../../../../common/PopoverHint';
 import { validateNumericInput, required } from '../../../../../../../common/validators';
 import { constants } from '../../../CreateOSDFormConstants';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
-import { MAX_NODES } from '../../../../../common/NodeCountInput/NodeCountInput'
+import { MAX_NODES } from '../../../../../common/NodeCountInput/NodeCountInput';
 
 class NodesInput extends React.Component {
   componentDidUpdate() {
