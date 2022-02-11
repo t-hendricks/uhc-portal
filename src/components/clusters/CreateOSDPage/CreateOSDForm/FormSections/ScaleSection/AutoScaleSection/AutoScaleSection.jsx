@@ -123,10 +123,9 @@ class AutoScaleSection extends React.Component {
         isMultiAz,
         autoScaleMinNodesValue,
       });
+      // updates the min input value
       change('min_replicas', isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString());
-    }/* else if (prevProps.autoscalingEnabled && !autoscalingEnabled) {
-
-    }*/
+    }
   }
 
   displayError = (lim, validationMessage) => this.setState({ [`${lim}ErrorMessage`]: validationMessage });
@@ -135,10 +134,10 @@ class AutoScaleSection extends React.Component {
 
   minNodes = () => {
     const {
-      isDefaultMachinePool, product, isBYOC, isMultiAz, autoScaleMinNodesValue,
+      isDefaultMachinePool, product, isBYOC, isMultiAz,
     } = this.props;
     return getMinNodesAllowed({
-      isDefaultMachinePool, product, isBYOC, isMultiAz, autoScaleMinNodesValue,
+      isDefaultMachinePool, product, isBYOC, isMultiAz,
     }) / (isMultiAz ? 3 : 1);
   }
 
@@ -153,14 +152,17 @@ class AutoScaleSection extends React.Component {
     if (parseInt(val, 10) < parseInt(allValues.min_replicas, 10)) {
       return 'Max nodes cannot be less than min nodes.';
     }
-    return validateNumericInput(val);
+    return undefined;
   };
 
   validateMaxNodes = (val) => {
-    if (parseInt(val, 10) > MAX_NODES) {
-      return `Input cannot be more than ${MAX_NODES}.`;
-    }
-    return validateNumericInput(val);
+    const {
+      isMultiAz,
+    } = this.props;
+    return validateNumericInput(val, {
+      max: isMultiAz ? MAX_NODES / 3 : MAX_NODES,
+      allowZero: true,
+    });
   };
 
   onChange = (event) => {
@@ -179,7 +181,7 @@ class AutoScaleSection extends React.Component {
       product,
     } = this.props;
     const { minErrorMessage, maxErrorMessage } = this.state;
-    debugger;
+
     const minField = (
       <Field
         component={NodesInput}

@@ -185,7 +185,7 @@ class EditNodeCountModal extends Component {
                 />
               </GridItem>
               <GridItem span={4} />
-              {(true || canAutoScale)
+              {canAutoScale
                 && (
                   <>
                     <GridItem>
