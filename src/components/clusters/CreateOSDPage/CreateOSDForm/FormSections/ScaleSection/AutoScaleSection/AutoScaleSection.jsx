@@ -282,7 +282,7 @@ class AutoScaleSection extends React.Component {
       </>
     );
 
-    const autoScalingUrl = product === normalizedProducts.ROSA ? 'https://docs.openshift.com/rosa/nodes/nodes-about-autoscaling-nodes.html' : 'https://docs.openshift.com/container-platform/4.9/machine_management/applying-autoscaling.html';
+    const autoScalingUrl = product === normalizedProducts.ROSA ? 'https://docs.openshift.com/rosa/nodes/nodes-about-autoscaling-nodes.html' : 'https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html';
 
     return (
       <>
