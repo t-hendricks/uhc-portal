@@ -1,7 +1,37 @@
-const LIST_ASSOCIATED_AWS_IDS = 'LIST_AWS_IDS';
-const GET_AWS_ACCOUNT_ROLES_ARNS = 'GET_AWS_ACCOUNT_ROLES_ARNS';
-const CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE = 'CLEAR_GET_AWS_ACCOUNT_IDs_RESPONSE';
-const CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE = 'CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE';
+import {
+  LIST_ASSOCIATED_AWS_IDS,
+  GET_AWS_ACCOUNT_ROLES_ARNS,
+  CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE,
+  CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
+} from './rosaConstants';
+import { accountsService } from '../../../../services';
+
+export const getAWSIDsFromARNs = (arns) => {
+  // Ex: arns = ['arn:aws:iam::268733382466:role/ManagedOpenShift-OCM-Role-15212158', ...],
+  // '268733382466' above ^^ is an example AWS account ID
+  const ids = arns.map((arn) => {
+    const arnSegment = arn.substr(arn.indexOf('::') + 2);
+    return arnSegment.substr(0, arnSegment.indexOf(':'));
+  });
+  return [...new Set(ids)]; // convert to Set to remove duplicates, spread to convert back to array
+};
+
+export const getAWSAccountIDs = organizationID => dispatch => dispatch({
+  type: LIST_ASSOCIATED_AWS_IDS,
+  payload: accountsService.getOrganizationLabels(organizationID).then((response) => {
+    if (!response.data || !response.data.items) {
+      return [];
+    }
+    // "key": "sts_ocm_role",
+    // value is a comma separated list of ARNs:
+    // Ex: "value": "arn:aws:iam::268733382466:role/ManagedOpenShift-OCM-Role-15212158, ...",
+    const stsOCMRoleLabel = response.data.items.filter(label => label.key === 'sts_ocm_role');
+    const stsOCMRoleValue = stsOCMRoleLabel[0]?.value ?? '';
+    const arns = stsOCMRoleValue === '' ? [] : stsOCMRoleValue.split(',');
+    const awsAccountIDs = getAWSIDsFromARNs(arns);
+    return awsAccountIDs;
+  }),
+});
 
 export const getAWSAccountRolesARNs = awsAccountID => (dispatch) => {
   const accountRoles = { items: [] };
@@ -30,11 +60,6 @@ export const getAWSAccountRolesARNs = awsAccountID => (dispatch) => {
   });
 };
 
-export const getAWSAccountIDs = () => dispatch => dispatch({
-  type: LIST_ASSOCIATED_AWS_IDS,
-  payload: { data: ['123456789', '234564251', '3783563258'] },
-});
-
 export const clearGetAWSAccountIDsResponse = () => ({
   type: CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE,
 });
@@ -42,12 +67,3 @@ export const clearGetAWSAccountIDsResponse = () => ({
 export const clearGetAWSAccountRolesARNsResponse = () => ({
   type: CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
 });
-
-const rosaConstants = {
-  LIST_ASSOCIATED_AWS_IDS,
-  GET_AWS_ACCOUNT_ROLES_ARNS,
-  CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE,
-  CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
-};
-
-export default rosaConstants;
