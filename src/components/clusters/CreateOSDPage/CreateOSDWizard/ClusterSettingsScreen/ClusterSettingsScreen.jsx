@@ -113,7 +113,7 @@ function ClusterSettingsScreen({
                 variant="info"
                 title="The cloud storage for your cluster is encrypted at rest"
               >
-                <ExternalLink noIcon href={cloudProviderLearnLink()}>Learn more</ExternalLink>
+                <ExternalLink noIcon href={cloudProviderLearnLink}>Learn more</ExternalLink>
               </Alert>
             </GridItem>
             <GridItem>
