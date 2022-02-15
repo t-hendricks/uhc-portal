@@ -16,6 +16,23 @@ export const getAWSIDsFromARNs = (arns) => {
   return [...new Set(ids)]; // convert to Set to remove duplicates, spread to convert back to array
 };
 
+export const normalizeAWSAccountRoles = (accountRoles) => {
+  // Returns for Ex:
+  // [
+  //   { Installer: 'arn:..ManagedOpenShift-Installer-Role', ControlPlane: 'arn:...' ...},
+  //   { Installer: 'arn:..croche-test-Installer-Role', ControlPlane: 'arn:...' ...}
+  // ]
+  const AWSAccountRoles = [];
+  accountRoles.items.forEach((accountRole) => {
+    const roleObj = { prefix: accountRole.prefix };
+    accountRole?.items.forEach((arn) => {
+      roleObj[arn?.type] = arn?.arn;
+    });
+    AWSAccountRoles.push(roleObj);
+  });
+  return AWSAccountRoles;
+};
+
 export const getAWSAccountIDs = organizationID => dispatch => dispatch({
   type: LIST_ASSOCIATED_AWS_IDS,
   payload: accountsService.getOrganizationLabels(organizationID).then((response) => {
@@ -34,29 +51,15 @@ export const getAWSAccountIDs = organizationID => dispatch => dispatch({
 });
 
 export const getAWSAccountRolesARNs = awsAccountID => (dispatch) => {
-  const accountRoles = { items: [] };
-  // '123456789' 1 accountRoles
-  // '234564251' 0 accountRoles
-  // '3783563258' 2 accountRoles
-  if (awsAccountID !== '234564251') {
-    accountRoles.items.push({
-      installer: `arn:aws:iam::${awsAccountID}:role/Foo-Installer-Role`,
-      support: `arn:aws:iam::${awsAccountID}:role/Foo-Support-Role`,
-      instance_controlplane: `arn:aws:iam::${awsAccountID}:role/Foo-ControlPlane-Role`,
-      instance_worker: `arn:aws:iam::${awsAccountID}:role/Foo-Worker-Role`,
-    });
-  }
-  if (awsAccountID === '3783563258') {
-    accountRoles.items.push({
-      installer: `arn:aws:iam::${awsAccountID}:role/Bar-Installer-Role`,
-      support: `arn:aws:iam::${awsAccountID}:role/Bar-Support-Role`,
-      instance_controlplane: `arn:aws:iam::${awsAccountID}:role/Bar-ControlPlane-Role`,
-      instance_worker: `arn:aws:iam::${awsAccountID}:role/Bar-Worker-Role`,
-    });
-  }
+  const accountRoles = [];
   dispatch({
     type: GET_AWS_ACCOUNT_ROLES_ARNS,
-    payload: { data: accountRoles },
+    payload: accountsService.getAWSAccountARNs(awsAccountID).then((response) => {
+      if (!response.data || !response.data.items) {
+        return accountRoles;
+      }
+      return normalizeAWSAccountRoles(response.data);
+    }),
   });
 };
 

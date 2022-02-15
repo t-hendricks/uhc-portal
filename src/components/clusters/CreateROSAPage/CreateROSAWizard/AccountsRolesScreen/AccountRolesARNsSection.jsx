@@ -39,19 +39,11 @@ function AccountRolesARNsSection({
       change('worker_role_arn', selectedInstallerRole);
     } else {
       accountRoles.forEach((role) => {
-        if (role.installer === selectedInstallerRole) {
-          if (role.installer) {
-            change('installer_role_arn', role.installer);
-          }
-          if (role.support) {
-            change('support_role_arn', role.support);
-          }
-          if (role.instance_controlplane) {
-            change('control_plane_role_arn', role.instance_controlplane);
-          }
-          if (role.instance_worker) {
-            change('worker_role_arn', role.instance_worker);
-          }
+        if (role.Installer === selectedInstallerRole) {
+          change('installer_role_arn', role.Installer);
+          change('support_role_arn', role.Support);
+          change('control_plane_role_arn', role.ControlPlane);
+          change('worker_role_arn', role.Worker);
         }
       });
     }
@@ -62,12 +54,12 @@ function AccountRolesARNsSection({
     const installerOptions = [];
     accountRoles.forEach((role) => {
       installerOptions.push({
-        name: role.installer,
-        value: role.installer,
+        name: role.Installer,
+        value: role.Installer,
       });
     });
     if (accountRoles.length > 0) {
-      setSelectedInstallerRole(accountRoles[0].installer); // default to first installer role
+      setSelectedInstallerRole(accountRoles[0].Installer); // default to first installer role
     } else {
       installerOptions.push({
         name: NO_ROLE_DETECTED,
@@ -83,7 +75,7 @@ function AccountRolesARNsSection({
     if (!getAWSAccountRolesARNsResponse.pending && !getAWSAccountRolesARNsResponse.fulfilled) {
       getAWSAccountRolesARNs(selectedAWSAccountID);
     } else if (getAWSAccountRolesARNsResponse.fulfilled) {
-      const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data.items', []);
+      const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []);
       setAccountRoles(accountRolesARNs);
     }
   }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse]);

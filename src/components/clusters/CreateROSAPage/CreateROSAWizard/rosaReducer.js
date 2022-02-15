@@ -50,12 +50,19 @@ function rosaReducer(state = initialState, action) {
         draft.getAWSAccountRolesARNsResponse.pending = true;
         break;
 
-      // mock
-      case GET_AWS_ACCOUNT_ROLES_ARNS:
+      case FULFILLED_ACTION(GET_AWS_ACCOUNT_ROLES_ARNS):
         draft.getAWSAccountRolesARNsResponse = {
           ...baseRequestState,
           fulfilled: true,
-          data: action.payload.data,
+          data: action.payload,
+        };
+        break;
+
+      case REJECTED_ACTION(GET_AWS_ACCOUNT_ROLES_ARNS):
+        draft.getAWSAccountRolesARNsResponse = {
+          ...baseRequestState,
+          ...getErrorState(action),
+          data: {},
         };
         break;
 
