@@ -967,7 +967,23 @@ const validateHTPasswdUsername = (username) => {
   return undefined;
 };
 
-const validateLabelKey = (key) => {
+const shouldSkipLabelKeyValidation = (allValues) => {
+  const { node_labels: nodeLabels = [] } = allValues;
+  // filling the first and only label key/value pair is optional -it serves as a placeholder.
+  // if empty, it won't be taken into account in the request payload.
+  const [{ key: firstLabelKey, value: firstLabelValue }] = nodeLabels;
+  return (nodeLabels.length === 1 && !firstLabelKey && !firstLabelValue);
+};
+
+const validateLabelKey = (key, allValues) => {
+  if (shouldSkipLabelKeyValidation(allValues)) {
+    return undefined;
+  }
+
+  if (required(key)) {
+    return 'A valid label key must not be empty.';
+  }
+
   if (!LABEL_KEY_REGEX.test(key)) {
     return 'A valid label key must consist of alphanumeric characters, \'-\', \'_\', \'/\' or \'.\', and must start and end with an alphanumeric character.';
   }
