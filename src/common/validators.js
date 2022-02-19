@@ -943,7 +943,7 @@ const validateLabelKey = (key) => {
 };
 
 const validateLabelValue = (value) => {
-  if (!LABEL_VALUE_REGEX.test(value)) {
+  if (typeof value !== 'undefined' && !LABEL_VALUE_REGEX.test(value)) {
     return 'A valid label value must be an empty string or consist of alphanumeric characters, \'-\', \'_\' or \'.\', and must start and end with an alphanumeric character.';
   }
   return undefined;
