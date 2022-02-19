@@ -836,14 +836,46 @@ const validateGCPServiceAccount = (content) => {
   }
 };
 
-const validateUniqueAZ = (value, allValues, _, name) => {
-  const otherAZFields = Object.keys(allValues).filter(fieldName => fieldName.startsWith('az_') && fieldName !== name);
-  const otherAZValues = otherAZFields.map(fieldName => allValues[fieldName]);
-  if (otherAZValues.includes(value)) {
-    return 'Each subnet should be in a different AZ.';
+/**
+ * Creates a validation function for checking uniqueness within a collection of fields.
+ *
+ * @param error {string|Error} The error to return from the validation function,
+ * in case the validation fails.
+ * @param otherValuesSelector {function(string, object): (*[])} A function that
+ * selects the other fields (excluding the one currently under validation),
+ * and returns their values.
+ * It is passed two parameters; the `name` of the field currently under validation,
+ * and the `allValues` object.
+ *
+ * @returns {function(*, object, object, string): string|Error|undefined}
+ * A field-level validation function that checks uniqueness.
+ */
+const generateUniqueFieldValidator = (
+  error,
+  otherValuesSelector = () => {},
+) => (
+  value, allValues, _, name,
+) => {
+  const otherValues = otherValuesSelector(name, allValues) ?? [];
+  if (otherValues.includes(value)) {
+    return error;
   }
   return undefined;
 };
+
+const validateUniqueAZ = generateUniqueFieldValidator(
+  'Each subnet should be in a different AZ.',
+  (currentFieldName, allValues) => Object.entries(allValues)
+    .filter(([fieldKey]) => fieldKey.startsWith('az_') && fieldKey !== currentFieldName)
+    .map(([, fieldValue]) => fieldValue),
+);
+
+const validateUniqueNodeLabel = generateUniqueFieldValidator(
+  'Each label must have a different key.',
+  (currentFieldName, allValues) => Object.entries(allValues.node_labels)
+    .filter(([fieldKey]) => !currentFieldName.includes(`[${fieldKey}]`))
+    .map(([, fieldValue]) => fieldValue.key),
+);
 
 const validateValueNotPlaceholder = placeholder => value => (value !== placeholder ? undefined : 'Field is required');
 
@@ -1027,6 +1059,7 @@ export {
   validateAWSKMSKeyARN,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
+  validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,
 };
