@@ -141,10 +141,9 @@ function scrollToFirstError(errors) {
  *   => { foo: "bar", hello: "world" }
  * @param {Array} labelsFormData Array of key value parirs
  */
-const parseReduxFormKeyValueList = labelsFormData => Object.assign(
+const parseReduxFormKeyValueList = (labelsFormData = [{}]) => Object.assign(
   {},
-  ...(labelsFormData.map(label => label.key && label.value
-    && ({ [label.key]: label.value }))),
+  ...(labelsFormData.map(({ key, value }) => key && ({ [key]: value ?? '' }))),
 );
 
 /**
