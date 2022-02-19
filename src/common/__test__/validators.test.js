@@ -476,17 +476,17 @@ test('Field is a valid key value pair', () => {
 });
 
 test('Check machine pool labels', () => {
-  const blacklist = [
+  const blocklist = [
     'machine.openshift.io/cluster-api-machine-role=master',
     'machine.openshift.io/cluster-api-machine-role=infra',
     'machine.openshift.io/cluster-api-machine-type=master',
     'machine.openshift.io/cluster-api-machine-type=infra',
   ];
 
-  expect(checkMachinePoolLabels(blacklist[0])).toBe(`${blacklist[0]} is not a valid label`);
-  expect(checkMachinePoolLabels(blacklist[1])).toBe(`${blacklist[1]} is not a valid label`);
-  expect(checkMachinePoolLabels(blacklist[2])).toBe(`${blacklist[2]} is not a valid label`);
-  expect(checkMachinePoolLabels(blacklist[3])).toBe(`${blacklist[3]} is not a valid label`);
+  expect(checkMachinePoolLabels(blocklist[0])).toBe(`${blocklist[0]} is not a valid label`);
+  expect(checkMachinePoolLabels(blocklist[1])).toBe(`${blocklist[1]} is not a valid label`);
+  expect(checkMachinePoolLabels(blocklist[2])).toBe(`${blocklist[2]} is not a valid label`);
+  expect(checkMachinePoolLabels(blocklist[3])).toBe(`${blocklist[3]} is not a valid label`);
 });
 
 test('awsNumericAccountID', () => {
