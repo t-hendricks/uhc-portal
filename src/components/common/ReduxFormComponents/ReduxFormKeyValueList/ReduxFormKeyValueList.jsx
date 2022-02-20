@@ -72,7 +72,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
               type="text"
               component={LabelKey}
               index={index}
-              validate={[validateUniqueNodeLabel, validateLabelKey]}
+              validate={[validateLabelKey, validateUniqueNodeLabel]}
             />
           </GridItem>
           <GridItem span={4}>
