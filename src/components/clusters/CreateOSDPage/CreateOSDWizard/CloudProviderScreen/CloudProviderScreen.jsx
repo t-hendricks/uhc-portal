@@ -13,7 +13,9 @@ import CloudProviderSelectionField from '../CloudProviderSelectionField';
 import AWSByocFields from './AWSByocFields';
 import GCPByocFields from './GCPByocFields';
 
-function CloudProviderScreen({ isByoc, cloudProviderID, ccsCredentialsValidityResponse }) {
+function CloudProviderScreen({
+  isByoc, cloudProviderID, change, ccsCredentialsValidityResponse,
+}) {
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Title headingLevel="h3">
@@ -23,6 +25,7 @@ function CloudProviderScreen({ isByoc, cloudProviderID, ccsCredentialsValidityRe
         name="cloud_provider"
         component={CloudProviderSelectionField}
         validate={required}
+        change={change}
       />
       { isByoc && cloudProviderID && (
         cloudProviderID === 'aws' ? <AWSByocFields isValidating={ccsCredentialsValidityResponse.pending} /> : <GCPByocFields isValidating={ccsCredentialsValidityResponse.pending} />
@@ -44,6 +47,7 @@ function CloudProviderScreen({ isByoc, cloudProviderID, ccsCredentialsValidityRe
 CloudProviderScreen.propTypes = {
   isByoc: PropTypes.bool,
   cloudProviderID: PropTypes.string,
+  change: PropTypes.func.isRequired,
   ccsCredentialsValidityResponse: PropTypes.shape({
     pending: PropTypes.bool,
     error: PropTypes.bool,

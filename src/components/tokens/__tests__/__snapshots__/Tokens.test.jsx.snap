@@ -76,9 +76,7 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                     ocm command-line tool
                   </ExternalLink>
                    
-                  <cl
-                    position={1}
-                  />
+                  <DevPreviewBadge />
                 </ListItem>
                 <ListItem>
                   Copy and paste the authentication command in your terminal:
@@ -403,9 +401,7 @@ exports[`<Tokens /> Renders token 1`] = `
                     ocm command-line tool
                   </ExternalLink>
                    
-                  <cl
-                    position={1}
-                  />
+                  <DevPreviewBadge />
                 </ListItem>
                 <ListItem>
                   Copy and paste the authentication command in your terminal:

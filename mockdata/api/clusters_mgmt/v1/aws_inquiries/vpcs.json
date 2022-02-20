@@ -1,9 +1,18 @@
 {
   "kind": "VPCList",
   "page": 1,
-  "size": 23,
-  "total": 23,
+  "size": 25,
+  "total": 25,
   "items": [
+    {
+      "name": "test-backend-returning-empty-slice-as-null",
+      "DETAILS": "https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3486#note_3297600",
+      "aws_subnets": null
+    },
+    {
+      "name": "test-backend-returning-empty-slice-as-[]",
+      "aws_subnets": []
+    },
     {
       "name": "vpc-08b6f0901ba35262d",
       "aws_subnets": [

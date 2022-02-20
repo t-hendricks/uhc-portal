@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AWSSubnetFields /> multi AZ, private + public 1`] = `
+<Fragment>
+  <SingleSubnetFieldsRow
+    index={0}
+    isMultiAz={true}
+    privateLinkSelected={false}
+    selectedRegion="fake-region"
+    showLabels={true}
+  />
+  <SingleSubnetFieldsRow
+    index={1}
+    isMultiAz={true}
+    privateLinkSelected={false}
+    selectedRegion="fake-region"
+  />
+  <SingleSubnetFieldsRow
+    index={2}
+    isMultiAz={true}
+    privateLinkSelected={false}
+    selectedRegion="fake-region"
+  />
+</Fragment>
+`;
+
+exports[`<AWSSubnetFields /> multi AZ, private 1`] = `
+<Fragment>
+  <SingleSubnetFieldsRow
+    index={0}
+    isMultiAz={true}
+    privateLinkSelected={true}
+    selectedRegion="fake-region"
+    showLabels={true}
+  />
+  <SingleSubnetFieldsRow
+    index={1}
+    isMultiAz={true}
+    privateLinkSelected={true}
+    selectedRegion="fake-region"
+  />
+  <SingleSubnetFieldsRow
+    index={2}
+    isMultiAz={true}
+    privateLinkSelected={true}
+    selectedRegion="fake-region"
+  />
+</Fragment>
+`;
+
+exports[`<AWSSubnetFields /> single AZ, private + public 1`] = `
+<Fragment>
+  <SingleSubnetFieldsRow
+    index={0}
+    isMultiAz={false}
+    privateLinkSelected={false}
+    selectedRegion="fake-region"
+    showLabels={true}
+  />
+</Fragment>
+`;
+
+exports[`<AWSSubnetFields /> single AZ, private 1`] = `
+<Fragment>
+  <SingleSubnetFieldsRow
+    index={0}
+    isMultiAz={false}
+    privateLinkSelected={true}
+    selectedRegion="fake-region"
+    showLabels={true}
+  />
+</Fragment>
+`;

@@ -40,7 +40,7 @@ function OverviewEmptyState() {
               <CardBody>
                 Help developers simplify the process of delivering
                 code from development to production.
-                <a href="https://docs.openshift.com/container-platform/latest/serverless/serverless-getting-started.html" rel="noreferrer noopener" target="_blank">
+                <a href="https://docs.openshift.com/container-platform/latest/serverless/discover/about-serverless.html" rel="noreferrer noopener" target="_blank">
                   <Button variant="link" icon={<ArrowRightIcon />}>
                     Get started
                   </Button>
