@@ -165,13 +165,6 @@ class AutoScaleSection extends React.Component {
     });
   };
 
-  onChange = (event) => {
-    const { onChange } = this.props;
-    if (onChange) {
-      onChange(event);
-    }
-  }
-
   render() {
     const {
       autoscalingEnabled,
@@ -179,6 +172,7 @@ class AutoScaleSection extends React.Component {
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
       product,
+      onChange,
     } = this.props;
     const { minErrorMessage, maxErrorMessage } = this.state;
 
@@ -306,7 +300,7 @@ class AutoScaleSection extends React.Component {
             component={ReduxCheckbox}
             name="autoscalingEnabled"
             label="Enable autoscaling"
-            onChange={this.onChange}
+            onChange={onChange}
           />
           {autoscalingEnabled && (isMultiAz ? multiAzFormGroups : singleAzFormGroup)}
         </GridItem>
@@ -330,6 +324,7 @@ AutoScaleSection.propTypes = {
 AutoScaleSection.defaultProps = {
   autoScaleMinNodesValue: '0',
   autoScaleMaxNodesValue: '0',
+  onChange: () => {},
 };
 
 export default AutoScaleSection;

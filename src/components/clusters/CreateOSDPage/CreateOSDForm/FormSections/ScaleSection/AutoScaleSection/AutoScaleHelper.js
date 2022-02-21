@@ -25,4 +25,24 @@ const getMinNodesAllowed = ({
   return max([currMinNodes, minNodesAllowed]);
 };
 
+export const getNodesCount = (isBYOC, isMultiAz, asString) => {
+  let computeNodes;
+  if (isBYOC) {
+    computeNodes = isMultiAz ? 3 : 2;
+  } else {
+    computeNodes = isMultiAz ? 9 : 4;
+  }
+  return asString ? `${computeNodes}` : computeNodes;
+};
+
+export const getMinReplicasCount = (isBYOC, isMultiAz, asString) => {
+  let minReplicas;
+  if (isMultiAz) {
+    minReplicas = getNodesCount(isBYOC, isMultiAz) / 3;
+  } else {
+    minReplicas = getNodesCount(isBYOC, isMultiAz);
+  }
+  return asString ? `${minReplicas}` : minReplicas;
+};
+
 export default getMinNodesAllowed;

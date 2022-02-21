@@ -21,6 +21,7 @@ import {
 
 import { canAutoScaleSelector } from '../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import getClusterName from '../../../../common/getClusterName';
+import { getNodesCount } from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 
 const reduxFormConfig = {
   form: 'EditNodeCount',
@@ -106,10 +107,7 @@ const mapStateToProps = (state) => {
     });
   };
 
-  let initialValuesNodesCompute = isMultiAz ? 9 : 4;
-  if (commonProps.isByoc) {
-    initialValuesNodesCompute = isMultiAz ? 3 : 2;
-  }
+  const initialValuesNodesCompute = getNodesCount(commonProps.isByoc, isMultiAz);
 
   // Cluster's default machine pool case
   if (selectedMachinePool === 'Default') {

@@ -27,13 +27,12 @@ function ReduxCheckbox(props) {
     label,
     meta: { error, touched },
     input: {
-      name, value, onChange, ...restInput
+      name, value, ...restInput
     },
     isSwitch = false,
     isHelperTextBeforeField = false,
     helpText,
     extendedHelpText,
-    onChange: onChangeProp,
     ...extraProps // any extra props not specified above
   } = props;
 
@@ -42,13 +41,6 @@ function ReduxCheckbox(props) {
       return error;
     }
     return '';
-  };
-
-  const onChangeCallback = (checked) => {
-    onChange(checked);
-    if (onChangeProp) {
-      onChangeProp(checked);
-    }
   };
 
   const InputComponent = isSwitch ? Switch : Checkbox;
@@ -68,7 +60,6 @@ function ReduxCheckbox(props) {
             {...restInput}
             {...extraProps}
             label={label}
-            onChange={onChangeCallback}
           />
         </SplitItem>
         {extendedHelpText && (

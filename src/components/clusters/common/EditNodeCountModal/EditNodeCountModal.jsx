@@ -67,26 +67,11 @@ class EditNodeCountModal extends Component {
   };
 
   cancelEdit = () => {
-    const { closeModal, change } = this.props;
+    const { closeModal, resetSection } = this.props;
     this.resetResponse();
-    this.onAutoScaleCheckboxChange(null, true);
 
     closeModal();
-    change('machine_pool', '');
-    change('nodes_compute', '');
-  };
-
-  /**
-   * TODO: Set the form back to pristine if it's back to its original state?
-   */
-  onAutoScaleCheckboxChange = (checked, reset) => {
-    const { resetSection, initialValues: { autoscalingEnabled = false } } = this.props;
-    const unchanged = (!autoscalingEnabled && !checked) || (autoscalingEnabled && checked);
-    if (reset || unchanged) {
-      // reset
-      return resetSection('autoscalingEnabled', 'min_replicas', 'max_replicas');
-    }
-    return null;
+    resetSection('machine_pool', 'nodes_compute', 'autoscalingEnabled', 'min_replicas', 'max_replicas');
   };
 
   resetResponse() {
@@ -198,7 +183,6 @@ class EditNodeCountModal extends Component {
                         product={product}
                         isBYOC={isByoc}
                         isDefaultMachinePool={machinePoolId === 'Default'}
-                        onChange={this.onAutoScaleCheckboxChange}
                       />
                     </GridItem>
                   </>
