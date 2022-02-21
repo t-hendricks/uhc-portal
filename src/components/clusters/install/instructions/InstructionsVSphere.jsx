@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody, Title } from '@patternfly/react-core';
-import { UserIcon, SyncAltIcon } from '@patternfly/react-icons';
+import { UserIcon, ConnectedIcon, SyncAltIcon } from '@patternfly/react-icons';
 import CardBadge from '../../common/CardBadge';
 
 const InstructionsVSphere = () => (
@@ -11,6 +11,17 @@ const InstructionsVSphere = () => (
         VMware vSphere: Select an installation type
       </Title>
       <div className="flex-container">
+        <Link to="/assisted-installer/clusters/~new" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+          <CardBadge isDevPreview devPreviewText="Technology Preview" />
+          <CardBody className="ocm-c-ipi-upi-infra-card--body">
+            <ConnectedIcon
+              alt="Installer-Provisioned Infrastructure"
+            />
+            <Title headingLevel="h3" size="lg">Assisted Bare Metal Installer</Title>
+            {' '}
+            Install OpenShift on your own infrastructure with step-by-step guidance.
+          </CardBody>
+        </Link>
         <Link to="/install/vsphere/installer-provisioned" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isRecommened />
           <CardBody className="ocm-c-ipi-upi-infra-card--body">
