@@ -105,7 +105,7 @@ class CreateROSAWizard extends React.Component {
         name: 'Accounts and roles',
         component: (
           <ErrorBoundary>
-            <AccountsRolesScreen />
+            <AccountsRolesScreen organizationID={organization?.details?.id} />
           </ErrorBoundary>
         ),
         enableNext: isValid,
@@ -361,7 +361,12 @@ CreateROSAWizard.propTypes = {
     }),
   }),
   machineTypes: requestStatePropTypes,
-  organization: requestStatePropTypes,
+  organization: PropTypes.shape({
+    fulfilled: PropTypes.bool,
+    error: PropTypes.bool,
+    pending: PropTypes.bool,
+    details: { id: PropTypes.string },
+  }),
   cloudProviders: requestStatePropTypes,
 
   getMachineTypes: PropTypes.func,

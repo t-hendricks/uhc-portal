@@ -846,6 +846,75 @@ const validateUniqueAZ = (value, allValues, _, name) => {
 
 const validateValueNotPlaceholder = placeholder => value => (value !== placeholder ? undefined : 'Field is required');
 
+// AWS VPC validators expect the known vpcs to be passed as prop to the form —
+// specifically, the component wrappeed by reduxForm().
+//
+// (An alternative would be validator factories `vpcs => value => ...` but Field
+// unregisters and re-registers the field when `validate` prop changes, which would
+// happen constantly without careful memoization.)
+
+/** Finds all bySubnetID info hashes for AWS VPC subnet fields. */
+const awsVPCSubnetInfos = (allValues, vpcsBySubnetID) => {
+  const infos = [];
+  Object.entries(allValues).forEach(([fieldName, fieldValue]) => {
+    if (fieldName.match(/^(private|public)_subnet_id_/)) {
+      if (vpcsBySubnetID[fieldValue]) {
+        infos.push(vpcsBySubnetID[fieldValue]);
+      }
+    }
+  });
+  return infos;
+};
+
+const validateAWSSubnet = (value, allValues, formProps, name) => {
+  if (!value) {
+    return undefined;
+  }
+
+  const { vpcs, vpcsValid } = formProps;
+  if (vpcsValid) {
+    const subnetInfo = vpcs.data.bySubnetID[value];
+    if (!subnetInfo) {
+      return `No such subnet in region ${vpcs.region}.`;
+    }
+
+    const allInfos = awsVPCSubnetInfos(allValues, vpcs.data.bySubnetID);
+    const usedVPCs = new Set(allInfos.map(info => info.vpc_name));
+    if (usedVPCs.size > 1) {
+      return `All subnets must belong to the same VPC (provided subnet VPC: ${subnetInfo.vpc_name}).`;
+    }
+
+    // private_subnet_id_2, public_subnet_id_2 -> az_2.
+    const selectedAZ = allValues[`az_${name.split('_').pop()}`];
+    if (!!selectedAZ && subnetInfo.availability_zone !== selectedAZ) {
+      return `Provided subnet is from different AZ ${subnetInfo.availability_zone}.`;
+    }
+  }
+  return undefined;
+};
+
+const validateAWSSubnetIsPrivate = (value, allValues, formProps) => {
+  const { vpcs, vpcsValid } = formProps;
+  if (vpcsValid) {
+    const subnetInfo = vpcs.data.bySubnetID[value];
+    if (subnetInfo && subnetInfo.public) {
+      return 'Provided subnet is public, should be private.';
+    }
+  }
+  return undefined;
+};
+
+const validateAWSSubnetIsPublic = (value, allValues, formProps) => {
+  const { vpcs, vpcsValid } = formProps;
+  if (vpcsValid) {
+    const subnetInfo = vpcs.data.bySubnetID[value];
+    if (subnetInfo && !subnetInfo.public) {
+      return 'Provided subnet is private, should be public.';
+    }
+  }
+  return undefined;
+};
+
 const validateGCPSubnet = (value) => {
   if (!value) {
     return 'Field is required.';
@@ -1021,6 +1090,9 @@ export {
   checkLabels,
   validateUniqueAZ,
   validateValueNotPlaceholder,
+  validateAWSSubnet,
+  validateAWSSubnetIsPrivate,
+  validateAWSSubnetIsPublic,
   validateGCPSubnet,
   validateGCPKMSServiceAccount,
   validateAWSKMSKeyARN,

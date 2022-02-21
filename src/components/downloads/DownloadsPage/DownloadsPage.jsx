@@ -19,7 +19,6 @@ import {
 } from '@patternfly/react-table';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
-import { OCM } from 'openshift-assisted-ui-lib';
 
 import produce from 'immer';
 import { has, get } from 'lodash';
@@ -34,6 +33,7 @@ import links, {
   githubReleasesToFetch,
   urlsSelector,
 } from '../../../common/installLinks';
+import DevPreviewBadge from '../../common/DevPreviewBadge';
 
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
 import AlignRight from '../../common/AlignRight';
@@ -45,8 +45,6 @@ import CopyPullSecret from '../CopyPullSecret';
 
 import './DownloadsPage.scss';
 
-const { DeveloperPreview, PreviewBadgePosition } = OCM;
-
 const ColumnHeadings = () => (
   <Thead>
     <Tr>
@@ -54,7 +52,6 @@ const ColumnHeadings = () => (
       <Th width={40}>Name</Th>
       <Th width={20}>OS type</Th>
       <Th width={20}>Architecture type</Th>
-      <Th width={10} />
     </Tr>
   </Thead>
 );
@@ -272,10 +269,10 @@ const ToolAndDescriptionRows = ({
       toolRefs={toolRefs}
       expandKey={tool}
       cells={[
-        <Td dataLabel="Name">{name}</Td>,
+        <Td dataLabel="Name"><span>{name}</span></Td>,
         <Td dataLabel="OS">{chooser.osDropdown}</Td>,
         <Td dataLabel="Architecture">{chooser.archDropdown}</Td>,
-        <Td>
+        <Td dataLabel="">
           <AlignRight>
             {chooser.downloadButton}
             {' '}
@@ -355,7 +352,7 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             <code>ocm</code>
             )
             {' '}
-            <DeveloperPreview position={PreviewBadgePosition.inline} />
+            <DevPreviewBadge />
           </>
         )}
         description={(
@@ -527,7 +524,7 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             <code>rhoas</code>
             )
             {' '}
-            <DeveloperPreview position={PreviewBadgePosition.inline} />
+            <DevPreviewBadge />
           </>
         )}
         description={(
@@ -646,7 +643,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
           <>
             OpenShift for ARM Installer
             {' '}
-            <DeveloperPreview position={PreviewBadgePosition.inline} />
+            <DevPreviewBadge />
           </>
         )}
         description={(
