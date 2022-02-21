@@ -54,7 +54,9 @@ function AccountsRolesScreen({
   }, [AWSAccountIDs, selectedAWSAccountID]);
 
   useEffect(() => {
-    if (!getAWSAccountIDsResponse.pending && !getAWSAccountIDsResponse.fulfilled) {
+    if (!getAWSAccountIDsResponse.pending
+      && !getAWSAccountIDsResponse.fulfilled
+      && !getAWSAccountIDsResponse.error) {
       getAWSAccountIDs(organizationID);
     } else if (getAWSAccountIDsResponse.pending) {
       setAwsIDsErrorBox(null);

@@ -10,6 +10,7 @@ import './AccountsRolesScreen.scss';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { ReduxFormDropdown } from '../../../../common/ReduxFormComponents';
 import ExternalLink from '../../../../common/ExternalLink';
+import ErrorBox from '../../../../common/ErrorBox';
 import InstructionCommand from '../../../../common/InstructionCommand';
 
 function AccountRolesARNsSection({
@@ -24,6 +25,7 @@ function AccountRolesARNsSection({
   const [installerRoleOptions, setInstallerRoleOptions] = useState([]);
   const [selectedInstallerRole, setSelectedInstallerRole] = useState('');
   const [hasAccountRoles, setHasAccountRoles] = useState(false);
+  const [awsARNsErrorBox, setAwsARNsErrorBox] = useState(null);
 
   const NO_ROLE_DETECTED = 'No role detected';
 
@@ -72,11 +74,21 @@ function AccountRolesARNsSection({
   }, [accountRoles]);
 
   useEffect(() => {
-    if (!getAWSAccountRolesARNsResponse.pending && !getAWSAccountRolesARNsResponse.fulfilled) {
+    if (!getAWSAccountRolesARNsResponse.pending
+      && !getAWSAccountRolesARNsResponse.fulfilled
+      && !getAWSAccountRolesARNsResponse.error) {
       getAWSAccountRolesARNs(selectedAWSAccountID);
+    } else if (getAWSAccountRolesARNsResponse.pending) {
+      setAwsARNsErrorBox(null);
     } else if (getAWSAccountRolesARNsResponse.fulfilled) {
       const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []);
       setAccountRoles(accountRolesARNs);
+    } else if (getAWSAccountRolesARNsResponse.error) {
+      // display error
+      setAwsARNsErrorBox(<ErrorBox
+        message="Error getting AWS account ARNs"
+        response={getAWSAccountRolesARNsResponse}
+      />);
     }
   }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse]);
 
@@ -96,7 +108,12 @@ function AccountRolesARNsSection({
       <GridItem>
         <Title headingLevel="h3">Account roles</Title>
       </GridItem>
-      {!hasAccountRoles && (
+      {awsARNsErrorBox && (
+        <GridItem>
+          { awsARNsErrorBox }
+        </GridItem>
+      )}
+      {!hasAccountRoles && !awsARNsErrorBox && (
       <GridItem>
         <Alert
           isInline
@@ -121,6 +138,7 @@ function AccountRolesARNsSection({
         </Alert>
       </GridItem>
       )}
+      {!awsARNsErrorBox && (
       <GridItem span={6}>
         <ExpandableSection isExpanded={isExpanded} onToggle={onToggle} toggleText="Account roles ARNs">
           <GridItem span={8}>
@@ -182,6 +200,7 @@ function AccountRolesARNsSection({
           />
         </ExpandableSection>
       </GridItem>
+      )}
     </>
   );
 }
