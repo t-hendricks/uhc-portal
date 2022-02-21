@@ -258,7 +258,7 @@ const checkMachinePoolLabels = (input) => {
     return error;
   }
 
-  const blocklist = [
+  const invalidLabels = [
     'machine.openshift.io/cluster-api-machine-role=master',
     'machine.openshift.io/cluster-api-machine-role=infra',
     'machine.openshift.io/cluster-api-machine-type=master',
@@ -267,17 +267,17 @@ const checkMachinePoolLabels = (input) => {
 
   const labels = input.split(',');
   if (labels.length) {
-    let blocklistedInput;
+    let invalidLabel;
 
     if (labels.some((label) => {
-      if (blocklist.includes(label)) {
-        blocklistedInput = label;
+      if (invalidLabels.includes(label)) {
+        invalidLabel = label;
         return true;
       }
       return false;
     })
     ) {
-      return `${blocklistedInput} is not a valid label`;
+      return `${invalidLabel} is not a valid label`;
     }
   }
 
