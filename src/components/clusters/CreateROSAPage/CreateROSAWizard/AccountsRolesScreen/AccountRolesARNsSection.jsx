@@ -6,6 +6,7 @@ import {
   Alert, Button,
   ExpandableSection, GridItem, Text, TextVariants, Title,
 } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import './AccountsRolesScreen.scss';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { ReduxFormDropdown } from '../../../../common/ReduxFormComponents';
@@ -113,7 +114,7 @@ function AccountRolesARNsSection({
           { awsARNsErrorBox }
         </GridItem>
       )}
-      {!hasAccountRoles && !awsARNsErrorBox && (
+      {!getAWSAccountRolesARNsResponse.pending && !hasAccountRoles && !awsARNsErrorBox && (
       <GridItem>
         <Alert
           isInline
@@ -134,11 +135,17 @@ function AccountRolesARNsSection({
           {' '}
           ARN fields.
           <br />
-          <Button variant="secondary" onClick={() => {}}>Refresh to populate ARNs</Button>
+          <Button variant="secondary" onClick={() => { getAWSAccountRolesARNs(selectedAWSAccountID); }}>Refresh to populate ARNs</Button>
         </Alert>
       </GridItem>
       )}
-      {!awsARNsErrorBox && (
+      {getAWSAccountRolesARNsResponse.pending && (
+      <>
+        <div className="spinner-fit-container"><Spinner /></div>
+        <div className="spinner-loading-text">Loading account roles ARNs...</div>
+      </>
+      )}
+      {!awsARNsErrorBox && !getAWSAccountRolesARNsResponse.pending && (
       <GridItem span={6}>
         <ExpandableSection isExpanded={isExpanded} onToggle={onToggle} toggleText="Account roles ARNs">
           <GridItem span={8}>
