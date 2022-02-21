@@ -71,7 +71,7 @@ const LABEL_KEY_REGEX = /^([A-Za-z0-9][-A-Za-z0-9_./]*)?[A-Za-z0-9]$/;
  * or '12345'
  * @see https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set
  */
-const LABEL_VALUE_REGEX = /^(([A-Za-z09][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$/;
+const LABEL_VALUE_REGEX = /^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$/;
 
 const MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH = 32;
 
