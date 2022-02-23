@@ -6,6 +6,7 @@ import {
   GridItem,
   FormGroup,
   Form,
+  Alert,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
@@ -34,6 +35,10 @@ function ClusterSettingsScreen({
   change,
 }) {
   const isRosa = product === normalizedProducts.ROSA;
+  const cloudProviderLearnLink = cloudProviderID === 'aws'
+    ? 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html'
+    : 'https://cloud.google.com/storage/docs/encryption/default-keys';
+
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Grid hasGutter>
@@ -103,25 +108,13 @@ function ClusterSettingsScreen({
         >
           <Grid hasGutter>
             <GridItem>
-              <Field
-                component={ReduxCheckbox}
-                name="etcd_encryption_at_rest"
-                label="Enable etcd storage encryption"
-                isChecked
-                isDisabled
-                extendedHelpText={(
-                  <>
-                    {constants.enableEtcdHint}
-                    {' '}
-                    <ExternalLink href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html">AWS</ExternalLink>
-                    {' '}
-                    |
-                    {' '}
-                    <ExternalLink href="https://cloud.google.com/storage/docs/encryption/default-keys">GCP</ExternalLink>
-                  </>
-                  )}
-              />
-              <div className="ocm-c--reduxcheckbox-description">Cloud storage is encrypted at rest.</div>
+              <Alert
+                isInline
+                variant="info"
+                title="The cloud storage for your cluster is encrypted at rest"
+              >
+                <ExternalLink noIcon href={cloudProviderLearnLink}>Learn more</ExternalLink>
+              </Alert>
             </GridItem>
             <GridItem>
               <Field

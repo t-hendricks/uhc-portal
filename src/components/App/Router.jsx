@@ -185,8 +185,8 @@ function Router({ history }) {
             />
             <TermsGuardedRoute path="/create/osdtrial/aws" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="aws" product={normalizedProducts.OSDTrial} />} history={history} />
             <TermsGuardedRoute path="/create/osdtrial/gcp" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSDTrial} />} history={history} />
-            <Route path="/create/osdtrial" render={() => <GatedCreationWizard product={normalizedProducts.OSDTrial} />} />
-            <Route path="/create/osd" render={() => <GatedCreationWizard product={normalizedProducts.OSD} />} />
+            <TermsGuardedRoute path="/create/osdtrial" gobackPath="/create" render={() => <GatedCreationWizard product={normalizedProducts.OSDTrial} />} history={history} />
+            <TermsGuardedRoute path="/create/osd" gobackPath="/create" render={() => <GatedCreationWizard product={normalizedProducts.OSD} />} history={history} />
             <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
