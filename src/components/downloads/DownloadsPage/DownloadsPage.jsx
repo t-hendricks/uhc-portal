@@ -52,7 +52,6 @@ const ColumnHeadings = () => (
       <Th width={40}>Name</Th>
       <Th width={20}>OS type</Th>
       <Th width={20}>Architecture type</Th>
-      <Th width={10} />
     </Tr>
   </Thead>
 );
@@ -270,10 +269,10 @@ const ToolAndDescriptionRows = ({
       toolRefs={toolRefs}
       expandKey={tool}
       cells={[
-        <Td dataLabel="Name">{name}</Td>,
+        <Td dataLabel="Name"><span>{name}</span></Td>,
         <Td dataLabel="OS">{chooser.osDropdown}</Td>,
         <Td dataLabel="Architecture">{chooser.archDropdown}</Td>,
-        <Td>
+        <Td dataLabel="">
           <AlignRight>
             {chooser.downloadButton}
             {' '}

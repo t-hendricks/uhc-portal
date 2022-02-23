@@ -33,6 +33,7 @@ class AvailabilityZoneSelection extends React.Component {
         className="ocm-c-create-osd-az-select"
         validated={error ? 'error' : undefined}
         helperTextInvalid={touched && error}
+        isRequired
       >
         <Select
           isOpen={isOpen}

@@ -102,7 +102,7 @@ describe('Register cluster flow', async () => {
   });
 
   // Here we have a table of clusters, so there should be a kebab menu
-  it('navigate to register cluster (narrow window)', async () => {
+  it.skip('navigate to register cluster (narrow window)', async () => {
     const currentURL = await browser.getUrl();
     // Return to "Clusters" list
     await browser.url('/openshift');
