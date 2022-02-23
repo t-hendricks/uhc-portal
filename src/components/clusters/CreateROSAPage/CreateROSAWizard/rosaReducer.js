@@ -4,7 +4,12 @@ import {
   REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
 } from '../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../common/errors';
-import rosaConstants from './rosaActions';
+import {
+  LIST_ASSOCIATED_AWS_IDS,
+  GET_AWS_ACCOUNT_ROLES_ARNS,
+  CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE,
+  CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
+} from './rosaConstants';
 
 const initialState = {
   getAWSAccountIDsResponse: {
@@ -20,35 +25,20 @@ function rosaReducer(state = initialState, action) {
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
-      case PENDING_ACTION(rosaConstants.LIST_ASSOCIATED_AWS_IDS):
+      // LIST_ASSOCIATED_AWS_IDS
+      case PENDING_ACTION(LIST_ASSOCIATED_AWS_IDS):
         draft.getAWSAccountIDsResponse.pending = true;
         break;
 
-      case FULFILLED_ACTION(rosaConstants.LIST_ASSOCIATED_AWS_IDS):
+      case FULFILLED_ACTION(LIST_ASSOCIATED_AWS_IDS):
         draft.getAWSAccountIDsResponse = {
           ...baseRequestState,
           fulfilled: true,
-          data: action.payload.data,
+          data: action.payload,
         };
         break;
 
-      case rosaConstants.CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE:
-        draft.getAWSAccountIDsResponse = {
-          ...baseRequestState,
-          data: {},
-        };
-        break;
-
-      // mock
-      case rosaConstants.LIST_ASSOCIATED_AWS_IDS:
-        draft.getAWSAccountIDsResponse = {
-          ...baseRequestState,
-          fulfilled: true,
-          data: action.payload.data,
-        };
-        break;
-
-      case REJECTED_ACTION(rosaConstants.LIST_ASSOCIATED_AWS_IDS):
+      case REJECTED_ACTION(LIST_ASSOCIATED_AWS_IDS):
         draft.getAWSAccountIDsResponse = {
           ...baseRequestState,
           ...getErrorState(action),
@@ -56,12 +46,12 @@ function rosaReducer(state = initialState, action) {
         };
         break;
 
-      case PENDING_ACTION(rosaConstants.GET_AWS_ACCOUNT_ROLES_ARNS):
+      case PENDING_ACTION(GET_AWS_ACCOUNT_ROLES_ARNS):
         draft.getAWSAccountRolesARNsResponse.pending = true;
         break;
 
       // mock
-      case rosaConstants.GET_AWS_ACCOUNT_ROLES_ARNS:
+      case GET_AWS_ACCOUNT_ROLES_ARNS:
         draft.getAWSAccountRolesARNsResponse = {
           ...baseRequestState,
           fulfilled: true,
@@ -69,8 +59,15 @@ function rosaReducer(state = initialState, action) {
         };
         break;
 
-      case rosaConstants.CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE:
+      case CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE:
         draft.getAWSAccountRolesARNsResponse = {
+          ...baseRequestState,
+          data: {},
+        };
+        break;
+
+      case CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE:
+        draft.getAWSAccountIDsResponse = {
           ...baseRequestState,
           data: {},
         };

@@ -155,7 +155,7 @@ class UpgradeSettingsTab extends React.Component {
               {scheduledManualUpgrade && confirmationModalOpen && (
                 <Modal
                   variant="small"
-                  title="Automatic updates"
+                  title="Recurring updates"
                   isOpen
                   onClose={() => { this.closeConfirmationModal(); reset(); }}
                   actions={[
@@ -167,7 +167,9 @@ class UpgradeSettingsTab extends React.Component {
                     </Button>,
                   ]}
                 >
-                  By choosing automatic updates, your scheduled manual update will be cancelled.
+                  By choosing recurring updates, any individually scheduled update will be
+                  {' '}
+                  cancelled.
                   {' '}
                   Are you sure you want to continue?
                 </Modal>
