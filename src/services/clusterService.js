@@ -168,14 +168,14 @@ const deleteClusterAddOn = (clusterID, addOnID) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`,
 });
 
-const getInstallableVersions = () => apiRequest({
+const getInstallableVersions = isRosa => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/versions/',
   params: {
     order: 'end_of_life_timestamp desc',
     // Internal users can test other channels via `ocm` CLI, no UI needed.
     // For external users, make sure we only offer stable channel.
-    search: "enabled='t' AND channel_group='stable'",
+    search: `enabled='t' AND channel_group='stable' ${isRosa ? " AND rosa_enabled='t'" : ''}`,
     size: -1,
   },
 });
