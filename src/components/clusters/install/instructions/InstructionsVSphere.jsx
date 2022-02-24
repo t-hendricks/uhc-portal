@@ -11,13 +11,13 @@ const InstructionsVSphere = () => (
         VMware vSphere: Select an installation type
       </Title>
       <div className="flex-container">
-        <Link to="/assisted-installer/clusters/~new" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+        <Link data-testid="assisted-installer-vsphere-card" to="/assisted-installer/clusters/~new" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
           <CardBadge isDevPreview devPreviewText="Technology Preview" />
           <CardBody className="ocm-c-ipi-upi-infra-card--body">
             <ConnectedIcon
               alt="Installer-Provisioned Infrastructure"
             />
-            <Title headingLevel="h3" size="lg">Assisted Bare Metal Installer</Title>
+            <Title headingLevel="h3" size="lg">Assisted Installer</Title>
             {' '}
             Install OpenShift on your own infrastructure with step-by-step guidance.
           </CardBody>
