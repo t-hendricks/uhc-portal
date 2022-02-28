@@ -36,7 +36,20 @@ function ChartByRisks({ riskHits }) {
                 spaceItems={{ default: 'spaceItemsNone' }}
               >
                 <FlexItem className="ocm-insights--risk-item__count">
-                  <Title size="2xl" headingLevel="h1">{count}</Title>
+                  <Title size="2xl" headingLevel="h1">
+                    {
+                      // TODO: Remove APP_BETA flag when OCP Advisor is in non-beta
+                      APP_BETA
+                        ? (
+                          <a
+                            href={`${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor/recommendations?total_risk=${riskNumber}`}
+                          >
+                            {count}
+                          </a>
+                        )
+                        : count
+                    }
+                  </Title>
                 </FlexItem>
                 <FlexItem className="ocm-insights--risk-item__label">
                   {getSeverityName(riskNumber)}
