@@ -330,6 +330,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -736,6 +737,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -1133,6 +1135,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -1535,6 +1538,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -1958,6 +1962,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -2355,6 +2360,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -2752,6 +2758,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -3149,6 +3156,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -3556,6 +3564,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -3989,6 +3998,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -4392,6 +4402,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -4795,6 +4806,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -5204,6 +5216,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -5606,6 +5619,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -6012,6 +6026,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -6418,6 +6433,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
@@ -6809,6 +6825,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   "stable": Object {
                     "arm": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
                     },
                     "ppc": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",

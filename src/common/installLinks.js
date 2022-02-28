@@ -442,6 +442,7 @@ const urls = {
       },
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-arm64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_ODO_LATEST}/odo-darwin-arm64.tar.gz`,
       },
       [architectures.s390x]: {
         [operatingSystems.linux]: `${MIRROR_ODO_LATEST}/odo-linux-s390x.tar.gz`,
