@@ -69,14 +69,12 @@ function rosaReducer(state = initialState, action) {
       case CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE:
         draft.getAWSAccountRolesARNsResponse = {
           ...baseRequestState,
-          data: {},
         };
         break;
 
       case CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE:
         draft.getAWSAccountIDsResponse = {
           ...baseRequestState,
-          data: {},
         };
         break;
     }

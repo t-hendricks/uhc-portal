@@ -4,6 +4,7 @@ import { formValueSelector } from 'redux-form';
 import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import { openModal } from '../../../../common/Modal/ModalActions';
+import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 import {
   getAWSAccountIDs,
   clearGetAWSAccountIDsResponse,
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
 
   return {
+    isAssocAWSModalOpen: shouldShowModal(state, 'associate-aws-modal'),
     selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
     getAWSAccountIDsResponse,
     getAWSAccountRolesARNsResponse,

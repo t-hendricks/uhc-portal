@@ -29,15 +29,16 @@ function AccountsRolesScreen({
   getAWSAccountRolesARNs,
   getAWSAccountRolesARNsResponse,
   clearGetAWSAccountRolesARNsResponse,
+  clearGetAWSAccountIDsResponse,
+  isAssocAWSModalOpen,
 }) {
   const longName = 'Red Hat OpenShift Service on AWS (ROSA)';
   const title = `Welcome to ${longName} `;
 
   const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
+  const [wasAssocAWSModalOpen, setWasAssocAWSModalOpen] = useState(false);
 
-  // TODO: remove mock - to show prerequisites expanded
-  // const hasAWSAccount = false;
   const hasAWSAccount = AWSAccountIDs.length > 0;
 
   // default product and cloud_provider form values
@@ -46,6 +47,16 @@ function AccountsRolesScreen({
     change('product', normalizedProducts.ROSA);
     change('byoc', 'true');
   }, []);
+
+  useEffect(() => {
+    if (isAssocAWSModalOpen) {
+      setWasAssocAWSModalOpen(true);
+    } else if (wasAssocAWSModalOpen) {
+      clearGetAWSAccountIDsResponse();
+      getAWSAccountIDs(organizationID);
+      setWasAssocAWSModalOpen(false);
+    }
+  }, [isAssocAWSModalOpen, wasAssocAWSModalOpen]);
 
   useEffect(() => {
     if (AWSAccountIDs.length === 1 || selectedAWSAccountID === undefined) {
@@ -158,7 +169,9 @@ AccountsRolesScreen.propTypes = {
   openAssociateAWSAccountModal: PropTypes.func.isRequired,
   getAWSAccountRolesARNs: PropTypes.func.isRequired,
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
+  clearGetAWSAccountIDsResponse: PropTypes.func.isRequired,
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
+  isAssocAWSModalOpen: PropTypes.bool.isRequired,
   organizationID: PropTypes.string.isRequired,
   initialValues: PropTypes.shape({
     associated_aws_id: PropTypes.string,
