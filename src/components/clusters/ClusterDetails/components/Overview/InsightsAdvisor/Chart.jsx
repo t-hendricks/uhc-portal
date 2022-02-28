@@ -3,10 +3,15 @@ import { ChartDonut, ChartLegend } from '@patternfly/react-charts';
 import PropTypes from 'prop-types';
 
 import {
-  riskLabels, chartColorScale, InsightsLegendIconComponent, InsightsTitleComponent,
+  riskLabels,
+  chartColorScale,
+  InsightsLegendIconComponent,
+  InsightsTitleComponent,
+  InsightsSubtitleComponent,
+  InsightsLabelComponent,
 } from './InsightsAdvisorHelpers';
 
-const Chart = ({ entries, issueCount }) => (
+const Chart = ({ entries, issueCount, externalId }) => (
   <ChartDonut
     data={entries.map(([k, v]) => ({
       label: `${riskLabels[k]} ${v}`,
@@ -14,13 +19,15 @@ const Chart = ({ entries, issueCount }) => (
       y: v,
     }))}
     title={`${issueCount}`}
+    titleComponent={<InsightsTitleComponent />}
     subTitle={`Total ${issueCount === 1 ? 'issue' : 'issues'}`}
+    subTitleComponent={<InsightsSubtitleComponent externalId={externalId} />}
     legendData={entries.map(([k, v]) => ({ name: `${v} ${riskLabels[k]}` }))}
     legendOrientation="vertical"
     legendPosition="right"
     constrainToVisibleArea
     width={350}
-    height={180}
+    height={200}
     colorScale={chartColorScale}
     legendComponent={(
       <ChartLegend
@@ -29,16 +36,17 @@ const Chart = ({ entries, issueCount }) => (
           id: k,
           value: v,
         }))}
-        labelComponent={<InsightsTitleComponent />}
+        labelComponent={<InsightsLabelComponent externalId={externalId} />}
         dataComponent={<InsightsLegendIconComponent />}
-        x={210}
+        x={200}
       />
     )}
+    radius={80}
     padAngle={0}
     padding={{
       bottom: 0,
-      left: 20,
-      right: 150, // Adjusted to accommodate legend
+      left: 10,
+      right: 170, // Adjusted to accommodate legend
       top: 20,
     }}
 
@@ -50,4 +58,5 @@ export default Chart;
 Chart.propTypes = {
   entries: PropTypes.array.isRequired,
   issueCount: PropTypes.number.isRequired,
+  externalId: PropTypes.string.isRequired,
 };

@@ -201,7 +201,10 @@ class Overview extends React.Component {
               <GridItem sm={6} xl2={12}>
                 <Card className="ocm-c-overview-advisor--card" ouiaId="insightsAdvisor">
                   <CardBody>
-                    <InsightsAdvisor insightsData={insightsData} />
+                    <InsightsAdvisor
+                      insightsData={insightsData}
+                      externalId={cluster?.external_id}
+                    />
                   </CardBody>
                 </Card>
               </GridItem>
