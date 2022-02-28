@@ -35,7 +35,7 @@ exports[`<InsightsAdvisor /> should render the chart 1`] = `
       },
     ]
   }
-  height={180}
+  height={200}
   legendComponent={
     <ChartLegend
       data={
@@ -63,8 +63,12 @@ exports[`<InsightsAdvisor /> should render the chart 1`] = `
         ]
       }
       dataComponent={<InsightsLegendIconComponent />}
-      labelComponent={<InsightsTitleComponent />}
-      x={210}
+      labelComponent={
+        <InsightsLabelComponent
+          externalId="foo-bar"
+        />
+      }
+      x={200}
     />
   }
   legendData={
@@ -89,13 +93,20 @@ exports[`<InsightsAdvisor /> should render the chart 1`] = `
   padding={
     Object {
       "bottom": 0,
-      "left": 20,
-      "right": 150,
+      "left": 10,
+      "right": 170,
       "top": 20,
     }
   }
+  radius={80}
   subTitle="Total issues"
+  subTitleComponent={
+    <InsightsSubtitleComponent
+      externalId="foo-bar"
+    />
+  }
   title="3"
+  titleComponent={<InsightsTitleComponent />}
   width={350}
 />
 `;
@@ -134,6 +145,7 @@ exports[`<InsightsAdvisor /> should render the widget 1`] = `
           ],
         ]
       }
+      externalId="foo-bar"
       issueCount={1}
     />
   </FlexItem>

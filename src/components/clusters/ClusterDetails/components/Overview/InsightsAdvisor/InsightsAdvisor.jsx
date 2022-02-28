@@ -8,7 +8,7 @@ import Chart from './Chart';
 
 import './InsightsAdvisor.scss';
 
-const InsightsAdvisor = ({ insightsData }) => {
+const InsightsAdvisor = ({ insightsData, externalId }) => {
   const filteredData = insightsData.data
     ? insightsData.data.filter(val => !val.disabled)
     : [];
@@ -23,7 +23,7 @@ const InsightsAdvisor = ({ insightsData }) => {
         <InfoPopover />
       </FlexItem>
       <FlexItem>
-        <Chart entries={entries} issueCount={filteredData.length} />
+        <Chart entries={entries} issueCount={filteredData.length} externalId={externalId} />
       </FlexItem>
     </Flex>
   );
@@ -31,6 +31,8 @@ const InsightsAdvisor = ({ insightsData }) => {
 
 InsightsAdvisor.propTypes = {
   insightsData: PropTypes.object,
+  // external id is always available when insights data got 200 and the widget is thus rendered
+  externalId: PropTypes.string.isRequired,
 };
 
 export default InsightsAdvisor;
