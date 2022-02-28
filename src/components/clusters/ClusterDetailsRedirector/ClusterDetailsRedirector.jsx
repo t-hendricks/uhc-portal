@@ -21,7 +21,6 @@ class ClusterDetailsRedirector extends React.Component {
       setGlobalError,
       match,
       location,
-      isInsightsRuleDetails,
     } = this.props;
 
     if (subscriptionIDResponse.error) {
@@ -42,11 +41,6 @@ class ClusterDetailsRedirector extends React.Component {
       return (<Unavailable message="Error retrieving cluster details" response={subscriptionIDResponse} />);
     }
     if (subscriptionIDResponse.fulfilled) {
-      if (isInsightsRuleDetails) {
-        const { reportId, errorKey } = match.params;
-        return <Redirect to={`/details/s/${subscriptionIDResponse.id}/insights/${reportId}/${errorKey}${location.hash}`} />;
-      }
-
       return <Redirect to={`/details/s/${subscriptionIDResponse.id}${location.hash}`} />;
     }
 
@@ -68,7 +62,6 @@ ClusterDetailsRedirector.propTypes = {
   fetchSubscriptionIDForCluster: PropTypes.func.isRequired,
   clearSubscriptionIDForCluster: PropTypes.func.isRequired,
   setGlobalError: PropTypes.func.isRequired,
-  isInsightsRuleDetails: PropTypes.bool,
   subscriptionIDResponse: PropTypes.shape({
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
