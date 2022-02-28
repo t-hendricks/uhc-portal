@@ -25,7 +25,7 @@ const resetVoteOnRuleInsights = (clusterId, ruleId, errorKey) => insightsAPIRequ
 dedicated for managed (not only OSD) clusters */
 const getClusterInsights = (clusterId, isManaged) => insightsAPIRequest({
   method: 'get',
-  url: `/clusters/${clusterId}/report?osd_eligible=${isManaged}&get_disabled=true`,
+  url: `/clusters/${clusterId}/report?osd_eligible=${isManaged}&get_disabled=false`,
 });
 
 const disableRuleInsights = (clusterId, ruleId, errorKey) => insightsAPIRequest({
