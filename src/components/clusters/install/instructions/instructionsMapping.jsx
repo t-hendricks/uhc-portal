@@ -78,6 +78,13 @@ const instructionsMapping = {
     },
     getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through Azure but it will take some time for the DNS to propagate).',
   },
+  ibmCloud: {
+    cloudProvider: 'IBM Cloud',
+    title: 'Install OpenShift on IBM Cloud with installer-provisioned infrastructure',
+    docURL: links.INSTALL_IBM_CLOUD_GETTING_STARTED,
+    installer: tools.X86INSTALLER,
+    channel: channels.STABLE,
+  },
   ibmz: {
     cloudProvider: 'IBM-Z',
     title: 'Install OpenShift on IBM Z with user-provisioned infrastructure',

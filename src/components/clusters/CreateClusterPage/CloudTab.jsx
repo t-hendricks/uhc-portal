@@ -423,6 +423,10 @@ const runItYourself = () => {
       'Full stack automation and pre-existing infrastructure',
     ],
     [
+      <><Link to="/install/ibm-cloud">IBM Cloud</Link></>,
+      'Full stack automation and pre-existing infrastructure',
+    ],
+    [
       <><Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link></>,
       'Pre-existing infrastructure',
     ],

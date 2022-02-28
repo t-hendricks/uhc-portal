@@ -33,6 +33,7 @@ const OCPInstructions = (props) => {
     'aws',
     'azure',
     'gcp',
+    'ibm',
   ];
   const getStartedTitleText = cloudProviders.indexOf(cloudProviderID) === -1
     ? 'Follow the instructions to configure your environment and install your cluster'
