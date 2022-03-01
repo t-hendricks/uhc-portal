@@ -41,7 +41,7 @@ class NodesInput extends React.Component {
     this.updateReduxField(Number(event.target.value));
   };
 
-  onMinus = () => {
+  onButtonPress = (plus) => {
     const {
       min,
       max,
@@ -49,6 +49,7 @@ class NodesInput extends React.Component {
         value,
       },
     } = this.props;
+    // base cases
     if (Number.isNaN(parseInt(value, 10))) {
       // empty field, then pressing the minus button
       return this.updateReduxField(min);
@@ -61,35 +62,19 @@ class NodesInput extends React.Component {
       // user entered a value greater than max, then pressing the minus button
       return this.updateReduxField(max);
     }
-    // value is >= min, then pressing the minus button
-    const newValue = (parseInt(value, 10)) - 1;
-    return this.updateReduxField(newValue);
-  };
 
-  onPlus = () => {
-    const {
-      min,
-      max,
-      input: {
-        value,
-      },
-    } = this.props;
-    if (Number.isNaN(parseInt(value, 10))) {
-      // empty field, then pressing the plus button
-      return this.updateReduxField(min + 1);
+    // normal cases
+    if (plus) {
+      // user pressed the plus button
+      return this.updateReduxField((parseInt(value, 10)) + 1);
     }
-    if (parseInt(value, 10) < min) {
-      // user entered a value that is less than min, then pressing the plus button
-      return this.updateReduxField(min);
-    }
-    if (parseInt(value, 10) > max) {
-      // user entered a value greater than max, then pressing the plus button
-      return this.updateReduxField(max);
-    }
-    // value <= max
-    const newValue = (parseInt(value, 10)) + 1;
-    return this.updateReduxField(newValue);
-  };
+    // user pressed the minus button
+    return this.updateReduxField((parseInt(value, 10)) - 1);
+  }
+
+  onMinus = () => this.onButtonPress(false);
+
+  onPlus = () => this.onButtonPress(true);
 
   render() {
     const {
