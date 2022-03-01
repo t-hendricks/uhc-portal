@@ -82,7 +82,6 @@ import ConnectedInstallAwsARM from '../clusters/install/InstallAwsARM';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import CreateROSAWelcome from '../clusters/CreateROSAPage/CreateROSAWelcome';
 import EntitlementConfig from '../common/EntitlementConfig/index';
-import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 
 const { AssistedUiRouter } = OCM;
 
@@ -93,29 +92,6 @@ const GatedMetalInstall = withFeatureGate(
 const GatedCreationWizard = withFeatureGate(
   CreateOSDWizard, OSD_CREATION_WIZARD_FEATURE, CloudProviderSelection,
 );
-
-const ClusterDetailsComponent = ({ withSubscriptionId, ...props }) => {
-  const {
-    location: { hash },
-  } = props;
-
-  /* This guarantees that the old links to OCM will redirect to OCP Advisor
-     instead of the deprecated Insights Advisor tab */
-  if (APP_BETA && hash === '#insights') {
-    // Redirect to OCP Advisor (OpenShift Insights)
-    return <InsightsAdvisorRedirector {...props} />;
-  }
-  return withSubscriptionId ? (
-    <ClusterDetails {...props} />
-  ) : (
-    <ClusterDetailsRedirector {...props} />
-  );
-};
-
-ClusterDetailsComponent.propTypes = {
-  withSubscriptionId: PropTypes.bool,
-  location: PropTypes.shape({ hash: PropTypes.string }),
-};
 
 function Router({ history }) {
   return (
@@ -218,22 +194,12 @@ function Router({ history }) {
             {/* TODO: ROSA product is not OSD! */}
             <TermsGuardedRoute path="/create/rosa/wizard" history={history} component={CreateROSAWizard} />
             <Route path="/create" component={CreateClusterPage} />
-            <Route
-              path="/details/s/:id/insights/:reportId/:errorKey"
-              component={APP_BETA
-                ? InsightsAdvisorRedirector
-                : InsightsRuleDetails}
-            />
+            <Route path="/details/s/:subscriptionID/insights/:reportId/:errorKey" component={InsightsRuleDetails} />
             <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />
             <Route path="/details/s/:id/edit-idp/:idpName" render={({ match }) => <IdentityProvidersPage isEditForm match={match} />} />
-            <Route path="/details/s/:id" component={props => <ClusterDetailsComponent withSubscriptionId {...props} />} />
-            <Route
-              path="/details/:id/insights/:reportId/:errorKey"
-              component={props => (APP_BETA
-                ? <InsightsAdvisorRedirector {...props} />
-                : <ClusterDetailsRedirector isInsightsRuleDetails {...props} />)}
-            />
-            <Route path="/details/:id" component={ClusterDetailsComponent} />
+            <Route path="/details/s/:id" component={ClusterDetails} />
+            <Route path="/details/:id/insights/:reportId/:errorKey" render={props => <ClusterDetailsRedirector isInsightsRuleDetails {...props} />} />
+            <Route path="/details/:id" component={ClusterDetailsRedirector} />
             <Route path="/register" component={RegisterCluster} />
             <Route path="/quota/resource-limits" render={props => <Quota marketplace {...props} />} />
             <Route path="/quota" render={props => <Quota {...props} />} />
