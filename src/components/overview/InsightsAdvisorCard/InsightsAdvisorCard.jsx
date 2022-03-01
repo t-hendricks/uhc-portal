@@ -18,12 +18,18 @@ const InsightsAdvisorCard = ({ overview }) => (
         <>
           <ChartByRisks riskHits={overview.hit_by_risk} />
           <ChartByGroups tagHits={overview.hit_by_tag} groups={INSIGHTS_RULE_CATEGORIES} />
+          {
+          // TODO: Remove APP_BETA flag when OCP Advisor is in non-beta
+          APP_BETA
+          && (
           <a
             href={`${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor`}
             style={{ marginTop: '1rem' }}
           >
             View more in Insights Advisor
           </a>
+          )
+          }
         </>
       )}
     </CardBody>
