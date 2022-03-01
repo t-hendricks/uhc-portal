@@ -44,30 +44,50 @@ class NodesInput extends React.Component {
   onMinus = () => {
     const {
       min,
+      max,
       input: {
         value,
       },
     } = this.props;
-    if (parseInt(value, 10) === Number.isNaN || parseInt(value, 10) < min) {
-      // user got here by entering a value that is less than min, then pressing the minus button
+    if (Number.isNaN(parseInt(value, 10))) {
+      // empty field, then pressing the minus button
       return this.updateReduxField(min);
     }
-    const newValue = (parseInt(value, 10) || (min + 1)) - 1;
+    if (parseInt(value, 10) < min) {
+      // user entered a value that is less than min, then pressing the minus button
+      return this.updateReduxField(min);
+    }
+    if (parseInt(value, 10) > max) {
+      // user entered a value greater than max, then pressing the minus button
+      return this.updateReduxField(max);
+    }
+    // value is >= min, then pressing the minus button
+    const newValue = (parseInt(value, 10)) - 1;
     return this.updateReduxField(newValue);
   };
 
   onPlus = () => {
     const {
-      min, input: {
+      min,
+      max,
+      input: {
         value,
       },
     } = this.props;
-    if (parseInt(value, 10) === Number.isNaN || parseInt(value, 10) > MAX_NODES) {
-      // user got here by entering a value that is greater than MAX_NODES,
-      // then pressing the plus button
-      return this.updateReduxField(MAX_NODES);
+    if (Number.isNaN(parseInt(value, 10))) {
+      // empty field, then pressing the plus button
+      return this.updateReduxField(min + 1);
     }
-    const newValue = (parseInt(value, 10) || min) + 1;
+    if (parseInt(value, 10) < min) {
+      // user entered a value that is less than min, then pressing the plus button
+      return this.updateReduxField(min);
+    }
+    if (parseInt(value, 10) > max) {
+      // user entered a value greater than max, then pressing the plus button
+      return this.updateReduxField(max);
+    }
+    // value <= max
+    const newValue = (parseInt(value, 10)) + 1;
     return this.updateReduxField(newValue);
   };
 
@@ -142,7 +162,7 @@ class AutoScaleSection extends React.Component {
   }
 
   validateMinNodes = (val) => {
-    const minNodesAllowed = this.minNodes(val);
+    const minNodesAllowed = this.minNodes();
     return validateNumericInput(
       val, { min: minNodesAllowed, allowZero: true },
     );
