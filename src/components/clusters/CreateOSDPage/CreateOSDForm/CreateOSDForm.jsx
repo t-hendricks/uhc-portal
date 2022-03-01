@@ -12,6 +12,7 @@ import BasicFieldsSection from './FormSections/BasicFieldsSection';
 import AWSAccountDetailsSection from './FormSections/AWSAccountDetailsSection';
 import NetworkingSection from './FormSections/NetworkingSection/NetworkingSection';
 import ScaleSection from './FormSections/ScaleSection/ScaleSection';
+import { getNodesCount, getMinReplicasCount } from './FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import CustomerManagedEncryption from './FormSections/EncryptionSection/CustomerManagedKeyEncryption';
 import { constants } from './CreateOSDFormConstants';
 
@@ -34,25 +35,29 @@ class CreateOSDForm extends React.Component {
     mode: 'basic',
   };
 
-  toggleBYOCFields = (_, value) => {
-    const { openModal, change } = this.props;
+  updateNodes = (isBYOC) => {
+    const { change } = this.props;
     const { isMultiAz } = this.state;
+    change('nodes_compute', getNodesCount(isBYOC, isMultiAz, true));
+    change('min_replicas', getMinReplicasCount(isBYOC, isMultiAz, true));
+    change('max_replicas', '');
+  };
+
+  toggleBYOCFields = (_, value) => {
+    const { openModal } = this.props;
 
     if (value === 'true') {
       openModal('customer-cloud-subscription');
     } else {
-      change('nodes_compute', isMultiAz ? '9' : '4');
+      this.updateNodes(false);
       this.setState({ byocSelected: false });
     }
   };
 
   closeBYOCModal = () => {
-    const { closeModal, change } = this.props;
-    const { isMultiAz } = this.state;
-    const computeNodes = isMultiAz ? '3' : '2';
-
+    const { closeModal } = this.props;
+    this.updateNodes(true);
     this.setState({ byocSelected: true });
-    change('nodes_compute', computeNodes);
     closeModal();
   }
 
