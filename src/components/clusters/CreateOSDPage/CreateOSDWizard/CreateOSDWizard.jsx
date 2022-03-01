@@ -28,6 +28,7 @@ import MachinePoolScreen from './MachinePoolScreen';
 import ReviewClusterScreen from './ReviewClusterScreen';
 import NetworkScreen from './NetworkScreen';
 import VPCScreen from './VPCScreen';
+import ClusterProxyScreen from './ClusterProxyScreen';
 import CIDRScreen from './CIDRScreen';
 import UpdatesScreen from './UpdatesScreen';
 import config from '../../../../config';
@@ -143,6 +144,7 @@ class CreateOSDWizard extends React.Component {
       getGCPCloudProviderVPCs,
       getAWSCloudProviderRegions,
       privateLinkSelected,
+      configureProxySelected,
     } = this.props;
 
     const { stepIdReached, currentStep } = this.state;
@@ -166,45 +168,45 @@ class CreateOSDWizard extends React.Component {
         ),
         enableNext: isValid,
       },
-      {
-        name: 'Cluster settings',
-        steps: [
-          {
-            id: 21,
-            name: 'Cloud provider',
-            component: (
-              <ErrorBoundary>
-                <CloudProviderScreen />
-              </ErrorBoundary>
-            ),
-            enableNext: isValid && !ccsValidationPending,
-            canJumpTo: stepIdReached >= 21,
-          },
-          {
-            id: 22,
-            name: 'Details',
-            component: (
-              <ErrorBoundary>
-                <ClusterSettingsScreen isTrialDefault={isTrialDefault} />
-              </ErrorBoundary>
-            ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 22,
-          },
-          {
-            id: 23,
-            name: 'Machine pool',
-            component: (
-              <ErrorBoundary>
-                <MachinePoolScreen isTrialDefault={isTrialDefault} />
-              </ErrorBoundary>
-            ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 23,
-          },
-        ],
-        enableNext: isValid,
-      },
+      // {
+      //   name: 'Cluster settings',
+      //   steps: [
+      //     {
+      //       id: 21,
+      //       name: 'Cloud provider',
+      //       component: (
+      //         <ErrorBoundary>
+      //           <CloudProviderScreen />
+      //         </ErrorBoundary>
+      //       ),
+      //       enableNext: true, // isValid && !ccsValidationPending,
+      //       canJumpTo: stepIdReached >= 21,
+      //     },
+      //     {
+      //       id: 22,
+      //       name: 'Details',
+      //       component: (
+      //         <ErrorBoundary>
+      //           <ClusterSettingsScreen isTrialDefault={isTrialDefault} />
+      //         </ErrorBoundary>
+      //       ),
+      //       enableNext: isValid,
+      //       canJumpTo: stepIdReached >= 22,
+      //     },
+      //     {
+      //       id: 23,
+      //       name: 'Machine pool',
+      //       component: (
+      //         <ErrorBoundary>
+      //           <MachinePoolScreen isTrialDefault={isTrialDefault} />
+      //         </ErrorBoundary>
+      //       ),
+      //       enableNext: isValid,
+      //       canJumpTo: stepIdReached >= 23,
+      //     },
+      //   ],
+      //   enableNext: isValid,
+      // },
       {
         name: 'Networking',
         enableNext: isValid,
@@ -237,8 +239,19 @@ class CreateOSDWizard extends React.Component {
             enableNext: isValid,
             canJumpTo: stepIdReached >= 32,
           },
-          {
+          showVPCCheckbox && configureProxySelected && {
             id: 33,
+            name: 'Cluster-wide proxy',
+            component: (
+              <ErrorBoundary>
+                <ClusterProxyScreen />
+              </ErrorBoundary>
+            ),
+            enableNext: isValid,
+            canJumpTo: stepIdReached >= 33,
+          },
+          {
+            id: 34,
             name: 'CIDR ranges',
             component: (
               <ErrorBoundary>
@@ -246,7 +259,7 @@ class CreateOSDWizard extends React.Component {
               </ErrorBoundary>
             ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 33,
+            canJumpTo: stepIdReached >= 34,
           },
         ].filter(Boolean),
       },
@@ -444,6 +457,7 @@ CreateOSDWizard.propTypes = {
   ccsCredentials: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   installToVPCSelected: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
+  configureProxySelected: PropTypes.bool,
 
   createClusterResponse: PropTypes.shape({
     fulfilled: PropTypes.bool,

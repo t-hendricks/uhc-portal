@@ -19,12 +19,19 @@ function NetworkScreen(props) {
   const {
     change,
     privateClusterSelected,
-    showClusterPrivacy,
+    // showClusterPrivacy,
     showVPCCheckbox,
-    cloudProviderID,
+    // cloudProviderID,
     privateLinkSelected,
     forcePrivateLink,
+    configureProxySelected,
   } = props;
+
+  console.log(`privateLinkSelected: ${privateLinkSelected}`);
+  console.log(`configureProxySelected: ${configureProxySelected}`);
+
+  const showClusterPrivacy = true;
+  const cloudProviderID = 'aws';
 
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
@@ -41,6 +48,13 @@ function NetworkScreen(props) {
   if (forcePrivateLink && privateClusterSelected && !privateLinkSelected) {
     change('install_to_vpc', true);
     change('use_privatelink', true);
+  }
+
+  const onClusterProxyChange = (checked) => {
+    change('configure_proxy', checked);
+    if (checked) {
+      change('install_to_vpc', true);
+    }
   }
 
   return (
@@ -143,26 +157,39 @@ function NetworkScreen(props) {
                   component={ReduxCheckbox}
                   name="install_to_vpc"
                   label="Install into an existing VPC"
-                  isDisabled={privateLinkSelected && privateClusterSelected}
+                  isDisabled={(privateLinkSelected && privateClusterSelected || configureProxySelected)}
                 />
-                {privateClusterSelected && cloudProviderID === 'aws' && (
-                  <FormFieldGroup>
-                    <FormGroup>
-                      <Field
-                        component={ReduxCheckbox}
-                        name="use_privatelink"
-                        label="Use a PrivateLink"
-                        onChange={onPrivateLinkChange}
-                        isDisabled={forcePrivateLink && privateClusterSelected}
-                        helpText={(
-                          <>
-                            {constants.privateLinkHint}
-                          </>
-                        )}
-                      />
-                    </FormGroup>
-                  </FormFieldGroup>
-                )}
+                <FormFieldGroup>
+                  {privateClusterSelected && cloudProviderID === 'aws' && (
+                  <FormGroup>
+                    <Field
+                      component={ReduxCheckbox}
+                      name="use_privatelink"
+                      label="Use a PrivateLink"
+                      onChange={onPrivateLinkChange}
+                      isDisabled={forcePrivateLink && privateClusterSelected}
+                      helpText={(
+                        <>
+                          {constants.privateLinkHint}
+                        </>
+                      )}
+                    />
+                  </FormGroup>
+                  )}
+                  <FormGroup>
+                    <Field
+                      component={ReduxCheckbox}
+                      name="configure_cluster_proxy"
+                      label="Configure a cluster-wide proxy"
+                      onChange={onClusterProxyChange}
+                      helpText={(
+                        <>
+                          {constants.clusterProxyHint}
+                        </>
+                      )}
+                    />
+                  </FormGroup>
+                </FormFieldGroup>
               </FormGroup>
             </GridItem>
           </>
@@ -180,6 +207,7 @@ NetworkScreen.propTypes = {
   showVPCCheckbox: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
   forcePrivateLink: PropTypes.bool,
+  configureProxySelected: PropTypes.bool,
 };
 
 export default NetworkScreen;
