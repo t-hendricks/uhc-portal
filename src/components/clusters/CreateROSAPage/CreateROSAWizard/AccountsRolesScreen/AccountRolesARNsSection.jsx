@@ -140,14 +140,14 @@ function AccountRolesARNsSection({
       </GridItem>
       )}
       {getAWSAccountRolesARNsResponse.pending && (
-      <>
+      <GridItem>
         <div className="spinner-fit-container"><Spinner /></div>
         <div className="spinner-loading-text">Loading account roles ARNs...</div>
-      </>
+      </GridItem>
       )}
-      {!awsARNsErrorBox && !getAWSAccountRolesARNsResponse.pending && (
+      {!getAWSAccountRolesARNsResponse.pending && (
       <GridItem span={6}>
-        <ExpandableSection isExpanded={isExpanded} onToggle={onToggle} toggleText="Account roles ARNs">
+        <ExpandableSection isExpanded={awsARNsErrorBox ? false : isExpanded} onToggle={onToggle} toggleText="Account roles ARNs">
           <GridItem span={8}>
             <Text component={TextVariants.p}>
               The following roles were detected in your AWS account.
