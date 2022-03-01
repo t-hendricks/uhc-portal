@@ -360,7 +360,7 @@ class ClusterDetails extends Component {
       && cluster.managed && !isArchived;
       // "Insights Advisor" tab
       // TODO: remove the tab and the related code properly
-    const displayInsightsTab = false;
+    const displayInsightsTab = !APP_BETA && (!isArchived && !isUninstalledAICluster(cluster));
     const consoleURL = get(cluster, 'console.url');
     const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster
       && !isUninstalledAICluster(cluster);

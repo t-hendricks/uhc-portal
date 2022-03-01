@@ -31,6 +31,7 @@ import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import ClusterDetails from '../clusters/ClusterDetails';
 import ClusterDetailsRedirector from '../clusters/ClusterDetailsRedirector';
+import InsightsRuleDetails from '../clusters/InsightsRuleDetails';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import RegisterCluster from '../clusters/RegisterCluster';
 import CreateOSDPage from '../clusters/CreateOSDPage';
@@ -100,7 +101,7 @@ const ClusterDetailsComponent = ({ withSubscriptionId, ...props }) => {
 
   /* This guarantees that the old links to OCM will redirect to OCP Advisor
      instead of the deprecated Insights Advisor tab */
-  if (hash === '#insights') {
+  if (APP_BETA && hash === '#insights') {
     // Redirect to OCP Advisor (OpenShift Insights)
     return <InsightsAdvisorRedirector {...props} />;
   }
@@ -217,11 +218,21 @@ function Router({ history }) {
             {/* TODO: ROSA product is not OSD! */}
             <TermsGuardedRoute path="/create/rosa/wizard" history={history} component={CreateROSAWizard} />
             <Route path="/create" component={CreateClusterPage} />
-            <Route path="/details/s/:id/insights/:reportId/:errorKey" component={InsightsAdvisorRedirector} />
+            <Route
+              path="/details/s/:id/insights/:reportId/:errorKey"
+              component={APP_BETA
+                ? InsightsAdvisorRedirector
+                : InsightsRuleDetails}
+            />
             <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />
             <Route path="/details/s/:id/edit-idp/:idpName" render={({ match }) => <IdentityProvidersPage isEditForm match={match} />} />
             <Route path="/details/s/:id" component={props => <ClusterDetailsComponent withSubscriptionId {...props} />} />
-            <Route path="/details/:id/insights/:reportId/:errorKey" component={InsightsAdvisorRedirector} />
+            <Route
+              path="/details/:id/insights/:reportId/:errorKey"
+              component={props => (APP_BETA
+                ? <InsightsAdvisorRedirector {...props} />
+                : <ClusterDetailsRedirector isInsightsRuleDetails {...props} />)}
+            />
             <Route path="/details/:id" component={ClusterDetailsComponent} />
             <Route path="/register" component={RegisterCluster} />
             <Route path="/quota/resource-limits" render={props => <Quota marketplace {...props} />} />
