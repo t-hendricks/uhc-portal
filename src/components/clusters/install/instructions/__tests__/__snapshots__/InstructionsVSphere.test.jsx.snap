@@ -16,6 +16,34 @@ exports[`VSphere instructions renders correctly 1`] = `
     >
       <Link
         className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
+        data-testid="assisted-installer-vsphere-card"
+        to="/assisted-installer/clusters/~new"
+      >
+        <CardBadge
+          devPreviewText="Technology Preview"
+          isDevPreview={true}
+        />
+        <CardBody
+          className="ocm-c-ipi-upi-infra-card--body"
+        >
+          <ConnectedIcon
+            alt="Installer-Provisioned Infrastructure"
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+          <Title
+            headingLevel="h3"
+            size="lg"
+          >
+            Assisted Installer
+          </Title>
+           
+          Install OpenShift on your own infrastructure with step-by-step guidance.
+        </CardBody>
+      </Link>
+      <Link
+        className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
         to="/install/vsphere/installer-provisioned"
       >
         <CardBadge

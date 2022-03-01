@@ -666,7 +666,6 @@ const validateNumericInput = (
   if (!input) {
     return undefined; // accept empty input. Further validation done according to field
   }
-
   const value = Number(input);
   if (Number.isNaN(value)) {
     return 'Input must be a number.';

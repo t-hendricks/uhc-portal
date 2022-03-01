@@ -13,7 +13,7 @@ import { noQuotaTooltip } from '../../../../common/helpers';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { availableNodesFromQuota } from '../quotaSelectors';
 
-const MAX_NODES = 180;
+export const MAX_NODES = 180;
 
 class NodeCountInput extends React.Component {
   componentDidUpdate() {

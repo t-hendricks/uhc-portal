@@ -15,8 +15,7 @@ const mapStateToProps = (state) => {
   return ({
     subscriptionID: cluster.subscription?.id,
     clusterUUID: cluster.external_id,
-    product: cluster.product?.id,
-    version: cluster.version?.raw_id,
+    product: cluster.subscription?.plan?.type,
     supportCases,
   });
 };
