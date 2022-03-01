@@ -22,7 +22,7 @@ import links from './CreateClusterConsts';
 
 const getColumns = () => ([
   {
-    title: null,
+    title: '',
     cellFormatters: [expandable],
     transforms: [cellWidth(10)],
   },
@@ -391,7 +391,7 @@ const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
     <Table
       aria-label="Managed services table"
       rows={rows}
-      cells={getColumns(openRows.length === 0)}
+      cells={getColumns()}
       onCollapse={onCollapse}
     >
       <TableHeader />

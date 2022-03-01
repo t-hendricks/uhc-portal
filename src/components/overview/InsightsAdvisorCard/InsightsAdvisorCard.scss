@@ -30,6 +30,16 @@ $groups-chart-max-width: 500px;
         }
       }
     }
+
+    .enabled-link {
+      fill: var(--pf-global--link--Color) !important;
+      cursor: pointer;
+
+      &:hover {
+        fill: var(--pf-global--link--Color--hover) !important;
+        text-decoration: underline;
+      }
+    }
   }
 
   &--groups-chart {

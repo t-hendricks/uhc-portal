@@ -3,6 +3,7 @@
 exports[`<EditNodeCountModal /> renders correctly 1`] = `
 <Modal
   className="edit-cluster-modal edit-cluster-modal-rhinfra"
+  isPrimaryDisabled={true}
   isSmall={true}
   onClose={[Function]}
   onPrimaryClick={[MockFunction]}

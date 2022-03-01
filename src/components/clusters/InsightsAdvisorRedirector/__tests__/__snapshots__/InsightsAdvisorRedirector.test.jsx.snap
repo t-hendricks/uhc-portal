@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`no external ID available should render a redirect to / 1`] = `
+<Redirect
+  to="/"
+/>
+`;
+
+exports[`on error should render a redirect to / 1`] = `
+<Redirect
+  to="/"
+/>
+`;

@@ -12,7 +12,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
         <PopoverHint
           hint={
             <React.Fragment>
-              Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.
+              Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
                 href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
@@ -28,6 +28,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
       component={[Function]}
       label="Enable autoscaling"
       name="autoscalingEnabled"
+      onChange={[Function]}
     />
     <Split
       className="autoscaling__container"
@@ -37,6 +38,13 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
         <FormGroup
           className="autoscaling__nodes-formGroup"
           fieldId="nodes_min_multiAZ"
+          helperText={
+            <HelperText>
+              <HelperTextItem>
+                x 3 zones = 0
+              </HelperTextItem>
+            </HelperText>
+          }
           isRequired={true}
           label="Minimum nodes per zone"
         >
@@ -46,24 +54,31 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
             displayError={[Function]}
             hideError={[Function]}
             limit="min"
+            max={60}
+            min={0}
             name="min_replicas"
             type="text"
             validate={
               Array [
                 [Function],
                 [Function],
+                [Function],
               ]
             }
           />
-          <span>
-            X 3 zones = 0
-          </span>
         </FormGroup>
       </SplitItem>
       <SplitItem>
         <FormGroup
           className="autoscaling__nodes-formGroup"
           fieldId="nodes_max_multiAZ"
+          helperText={
+            <HelperText>
+              <HelperTextItem>
+                x 3 zones = 0
+              </HelperTextItem>
+            </HelperText>
+          }
           isRequired={true}
           label="Maximum nodes per zone"
         >
@@ -73,18 +88,18 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
             displayError={[Function]}
             hideError={[Function]}
             limit="max"
+            max={60}
+            min={0}
             name="max_replicas"
             type="text"
             validate={
               Array [
                 [Function],
                 [Function],
+                [Function],
               ]
             }
           />
-          <span>
-            X 3 zones = 0
-          </span>
         </FormGroup>
       </SplitItem>
     </Split>
@@ -104,7 +119,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale disabled 1`] = `
         <PopoverHint
           hint={
             <React.Fragment>
-              Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.
+              Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
                 href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
@@ -120,6 +135,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale disabled 1`] = `
       component={[Function]}
       label="Enable autoscaling"
       name="autoscalingEnabled"
+      onChange={[Function]}
     />
   </GridItem>
 </Fragment>
@@ -137,7 +153,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
         <PopoverHint
           hint={
             <React.Fragment>
-              Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.
+              Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
                 href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
@@ -153,6 +169,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
       component={[Function]}
       label="Enable autoscaling"
       name="autoscalingEnabled"
+      onChange={[Function]}
     />
     <FormGroup
       className="autoscaling__container"
@@ -172,18 +189,23 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
             displayError={[Function]}
             hideError={[Function]}
             limit="min"
+            max={180}
+            min={0}
             name="min_replicas"
             type="text"
             validate={
               Array [
                 [Function],
                 [Function],
+                [Function],
               ]
             }
           />
-          <span>
-            minimum
-          </span>
+          <HelperText>
+            <HelperTextItem>
+              minimum
+            </HelperTextItem>
+          </HelperText>
         </SplitItem>
         <SplitItem
           className="autoscaling__nodes-formGroup"
@@ -194,16 +216,23 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
             displayError={[Function]}
             hideError={[Function]}
             limit="max"
+            max={180}
+            min={0}
             name="max_replicas"
             type="text"
             validate={
               Array [
                 [Function],
                 [Function],
+                [Function],
               ]
             }
           />
-          maximum
+          <HelperText>
+            <HelperTextItem>
+              maximum
+            </HelperTextItem>
+          </HelperText>
         </SplitItem>
       </Split>
     </FormGroup>

@@ -67,12 +67,11 @@ class EditNodeCountModal extends Component {
   };
 
   cancelEdit = () => {
-    const { closeModal, change } = this.props;
+    const { closeModal, resetSection } = this.props;
     this.resetResponse();
 
     closeModal();
-    change('machine_pool', '');
-    change('nodes_compute', '');
+    resetSection('machine_pool', 'nodes_compute', 'autoscalingEnabled', 'min_replicas', 'max_replicas');
   };
 
   resetResponse() {
@@ -93,6 +92,7 @@ class EditNodeCountModal extends Component {
 
   render() {
     const {
+      isValid,
       machinePoolsList,
       handleSubmit,
       isMultiAz,
@@ -152,7 +152,7 @@ class EditNodeCountModal extends Component {
         primaryText="Apply"
         onPrimaryClick={handleSubmit}
         onSecondaryClick={this.cancelEdit}
-        isPrimaryDisabled={pending || pristine}
+        isPrimaryDisabled={pending || pristine || !isValid}
         isPending={pending}
         isSmall
       >
@@ -229,6 +229,7 @@ class EditNodeCountModal extends Component {
 }
 
 EditNodeCountModal.propTypes = {
+  isValid: PropTypes.bool,
   closeModal: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   resetScaleDefaultMachinePoolResponse: PropTypes.func.isRequired,
@@ -239,6 +240,7 @@ EditNodeCountModal.propTypes = {
   initialValues: PropTypes.shape({
     id: PropTypes.string,
     nodes_compute: PropTypes.number,
+    autoscalingEnabled: PropTypes.bool,
   }).isRequired,
   masterResizeAlertThreshold: PropTypes.number,
   organization: PropTypes.object.isRequired,
@@ -263,6 +265,7 @@ EditNodeCountModal.propTypes = {
   billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
   shouldDisplayClusterName: PropTypes.bool,
   clusterDisplayName: PropTypes.string,
+  resetSection: PropTypes.func.isRequired,
 };
 
 EditNodeCountModal.defaultProps = {
