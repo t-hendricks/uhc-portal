@@ -51,15 +51,15 @@ class NodesInput extends React.Component {
     } = this.props;
     // base cases
     if (Number.isNaN(parseInt(value, 10))) {
-      // empty field, then pressing the minus button
+      // empty field, then pressing a button
       return this.updateReduxField(min);
     }
     if (parseInt(value, 10) < min) {
-      // user entered a value that is less than min, then pressing the minus button
+      // user entered a value that is less than min, then pressing a button
       return this.updateReduxField(min);
     }
     if (parseInt(value, 10) > max) {
-      // user entered a value greater than max, then pressing the minus button
+      // user entered a value greater than max, then pressing a button
       return this.updateReduxField(max);
     }
 
