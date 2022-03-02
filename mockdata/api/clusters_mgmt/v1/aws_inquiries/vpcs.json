@@ -1,13 +1,45 @@
 {
   "kind": "VPCList",
   "page": 1,
-  "size": 25,
-  "total": 25,
+  "size": 28,
+  "total": 28,
   "items": [
+    {
+      "name": "SDA-5333-test-new-API-returning-both-name-and-id",
+      "id": "vpc-0d5c8e4d499be6630",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-0d3a4a32658ee415a",
+          "name": "sda-ocp-410-n7d9b-private-us-east-1a",
+          "public": false,
+          "availability_zone": "us-east-1a"
+        },
+        {
+          "subnet_id": "subnet-0642920375bc95fe2",
+          "name": "sda-ocp-410-n7d9b-public-us-east-1a",
+          "public": true,
+          "availability_zone": "us-east-1a"
+        }
+      ]
+    },
+    {
+      "id": "SDA-5333-test-new-API-returning-only-id-for-VPC-without-Name-tag",
+      "aws_subnets": [
+        {
+          "subnet_id": "subnet-id-without-Name",
+          "public": false,
+          "availability_zone": "us-west-1a"
+        }
+      ]
+    },
     {
       "name": "test-backend-returning-empty-slice-as-null",
       "DETAILS": "https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3486#note_3297600",
       "aws_subnets": null
+    },
+    {
+      "name": "test-backend-omitting-empty-slice",
+      "DETAILS": "https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3852#note_3668342"
     },
     {
       "name": "test-backend-returning-empty-slice-as-[]",

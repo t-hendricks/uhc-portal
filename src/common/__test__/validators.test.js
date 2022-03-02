@@ -587,11 +587,17 @@ describe('AWS Subnet', () => {
       public_subnet_id_0: 'subnet-0c2880e587449df55',
     };
     expect(validate(values2)).toBe(undefined);
-    const values = { ...goodValues, private_subnet_id_0: 'subnet-0189e68d3126435fb' };
+    const values = {
+      private_subnet_id_0: 'subnet-0189e68d3126435fb', // From 3 different VPCs.
+      private_subnet_id_1: 'subnet-0d3a4a32658ee415a',
+      private_subnet_id_2: 'subnet-id-without-Name',
+    };
     expect(validateAWSSubnet(values.private_subnet_id_0, values, formProps, 'private_subnet_id_0'))
       .toContain('vpc-05bb9f093feffe176');
-    expect(validateAWSSubnet(values.public_subnet_id_0, values, formProps, 'public_subnet_id_0'))
-      .toContain('vpc-08b6f0901ba35262d');
+    expect(validateAWSSubnet(values.private_subnet_id_1, values, formProps, 'private_subnet_id_1'))
+      .toContain('SDA-5333-test-new-API-returning-both-name-and-id');
+    expect(validateAWSSubnet(values.private_subnet_id_2, values, formProps, 'private_subnet_id_2'))
+      .toContain('SDA-5333-test-new-API-returning-only-id-for-VPC-without-Name-tag');
   });
 
   test('AZ matching', () => {
