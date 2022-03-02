@@ -7,13 +7,18 @@ import { DateFormat } from '@redhat-cloud-services/frontend-components/DateForma
 import modals from '../../../../common/Modal/modals';
 import VersionSelectionGrid from './VersionSelectionGrid';
 import UpgradeTimeSelection from './UpgradeTimeSelection';
+import UpgradeAcknowledgeStep from '../UpgradeAcknowledge/UpgradeAcknowledgeStep';
 import FinishedStep from './FinishedStep';
 import './UpgradeWizard.scss';
+
+import clusterService from '../../../../../services/clusterService';
 
 class UpgradeWizard extends React.Component {
   state = {
     selectedVersion: undefined,
     upgradeTimestamp: undefined,
+    requireAcknowledgement: false,
+    acknowledged: false,
     scheduleType: 'now',
   }
 
@@ -30,26 +35,46 @@ class UpgradeWizard extends React.Component {
     closeModal();
   }
 
-  selectVersion = version => this.setState({ selectedVersion: version });
+  selectVersion = (version) => {
+    const {
+      getUnMetClusterAcknowledgements,
+    } = this.props;
+    const requireAcknowledgement = getUnMetClusterAcknowledgements(version).length > 0;
+    this.setState({ selectedVersion: version, requireAcknowledgement });
+  }
 
   setSchedule = ({ timestamp, type }) => this.setState({
     upgradeTimestamp: timestamp, scheduleType: type,
   });
 
   onNext = (newStep) => {
-    const { clusterDetails, postSchedule } = this.props;
+    const {
+      clusterDetails, postSchedule, getUnMetClusterAcknowledgements, setGate,
+    } = this.props;
     const { selectedVersion, scheduleType, upgradeTimestamp } = this.state;
     const MINUTES_IN_MS = 1000 * 60;
     if (newStep.id === 'finish') {
       const nextRun = scheduleType === 'now'
         ? new Date(new Date().getTime() + 6 * MINUTES_IN_MS).toISOString()
         : upgradeTimestamp;
-      postSchedule(clusterDetails.cluster.id, {
-        schedule_type: 'manual',
-        upgrade_type: 'OSD',
-        next_run: nextRun,
-        version: selectedVersion,
-      });
+
+      const promises = getUnMetClusterAcknowledgements(selectedVersion)
+        .map(upgradeGate => (
+          clusterService.postClusterGateAgreement(clusterDetails.cluster.id, upgradeGate.id)
+            .then(() => {
+              setGate(upgradeGate.id);
+            })
+        ));
+
+      Promise.all(promises)
+        .then(() => {
+          postSchedule(clusterDetails.cluster.id, {
+            schedule_type: 'manual',
+            upgrade_type: 'OSD',
+            next_run: nextRun,
+            version: selectedVersion,
+          });
+        });
     }
   }
 
@@ -59,17 +84,20 @@ class UpgradeWizard extends React.Component {
       upgradeScheduleRequest,
       clusterDetails,
       subscriptionID,
+      getUnMetClusterAcknowledgements,
     } = this.props;
     const {
       selectedVersion,
       upgradeTimestamp,
       scheduleType,
+      requireAcknowledgement,
+      acknowledged,
     } = this.state;
     const { cluster } = clusterDetails;
     const isPending = (clusterDetails.pending && !clusterDetails.fulfilled)
-                      || cluster?.subscription.id !== subscriptionID;
+      || cluster?.subscription.id !== subscriptionID;
 
-    const gotAllDetails = selectedVersion && (upgradeTimestamp || scheduleType === 'now');
+    const gotAllDetails = selectedVersion && (upgradeTimestamp || scheduleType === 'now') && ((requireAcknowledgement && acknowledged) || !requireAcknowledgement);
 
     const steps = [
       {
@@ -85,10 +113,24 @@ class UpgradeWizard extends React.Component {
               clusterChannel={cluster.version.channel_group}
               selected={selectedVersion}
               onSelect={this.selectVersion}
+              getUnMetClusterAcknowledgements={getUnMetClusterAcknowledgements}
             />
           ),
         enableNext: !!selectedVersion,
       },
+      ...(selectedVersion && requireAcknowledgement ? [{
+        id: 'acknowledge_upgrade',
+        name: 'Administrator acknowledgement',
+        component: (<UpgradeAcknowledgeStep
+          confirmed={(isConfirmed) => { this.setState({ acknowledged: isConfirmed }); }}
+          unmetAcknowledgements={getUnMetClusterAcknowledgements(selectedVersion)}
+          fromVersion={clusterDetails.cluster.openshift_version}
+          toVersion={selectedVersion}
+          initiallyConfirmed={acknowledged}
+        />),
+        canJumpTo: !!selectedVersion,
+        enableNext: gotAllDetails,
+      }] : []),
       {
         id: 'schedule-upgrade',
         name: 'Schedule update',
@@ -98,7 +140,7 @@ class UpgradeWizard extends React.Component {
             timestamp={upgradeTimestamp}
             type={scheduleType}
           />),
-        canJumpTo: !!selectedVersion,
+        canJumpTo: !!selectedVersion && (!requireAcknowledgement || acknowledged),
         enableNext: gotAllDetails,
       },
       {
@@ -118,6 +160,17 @@ class UpgradeWizard extends React.Component {
                   {selectedVersion}
                 </dd>
               </div>
+              {requireAcknowledgement ? (
+                <div>
+                  <dt>
+                    Administrator acknowledgement
+                  </dt>
+                  <dd>
+                    {acknowledged ? 'Approved' : 'Not approved'}
+                  </dd>
+                </div>
+              ) : null}
+
               <dt>Scheduled</dt>
               <dd>
                 {scheduleType === 'now'
@@ -190,6 +243,8 @@ UpgradeWizard.propTypes = {
       }),
     }),
   }),
+  getUnMetClusterAcknowledgements: PropTypes.func,
+  setGate: PropTypes.func,
 };
 
 UpgradeWizard.modalName = modals.UPGRADE_WIZARD;
