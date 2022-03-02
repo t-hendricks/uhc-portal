@@ -74,10 +74,10 @@ class InsightsRuleDetails extends Component {
     } = this.props;
     const isManagedCluster = clusterDetails?.cluster?.subscription?.managed || false;
     const externalId = clusterDetails?.cluster?.external_id || '';
-    const { id, errorKey, reportId } = match.params;
+    const { subscriptionID, errorKey, reportId } = match.params;
     const reportIdModified = reportId.replace(/\|/g, '.');
 
-    if (get(clusterDetails, 'cluster.subscription.id') === id) {
+    if (get(clusterDetails, 'cluster.subscription.id') === subscriptionID) {
       const clusterName = getClusterName(clusterDetails.cluster);
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
     }
@@ -122,11 +122,11 @@ class InsightsRuleDetails extends Component {
     } = this.props;
     const isManagedCluster = clusterDetails?.cluster?.subscription?.managed || false;
     const externalId = clusterDetails?.cluster?.external_id || '';
-    const { id, errorKey, reportId } = match.params;
+    const { subscriptionID, errorKey, reportId } = match.params;
     const reportIdModified = reportId.replace(/\|/g, '.');
-    if (isValid(id)) {
+    if (isValid(subscriptionID)) {
       this.fetchDetailsAndInsightsData(
-        id,
+        subscriptionID,
         externalId,
         reportIdModified,
         errorKey,
@@ -161,7 +161,7 @@ class InsightsRuleDetails extends Component {
     const isManagedCluster = cluster?.subscription?.managed || false;
     const externalId = cluster?.external_id || '';
     const { errorKey } = match.params;
-    const requestedSubscriptionID = match.params.id;
+    const requestedSubscriptionID = match.params.subscriptionID;
     const requestedReportID = match.params.reportId.replace(/\|/g, '.');
 
     // If the ClusterDetails screen is loaded once for one cluster, and then again for another,
