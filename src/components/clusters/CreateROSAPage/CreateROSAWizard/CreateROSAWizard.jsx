@@ -97,7 +97,6 @@ class CreateROSAWizard extends React.Component {
       history,
       privateLinkSelected,
     } = this.props;
-
     const { stepIdReached } = this.state;
 
     const steps = [
@@ -133,7 +132,7 @@ class CreateROSAWizard extends React.Component {
                 <MachinePoolScreen />
               </ErrorBoundary>
             ),
-            enableNext: true, // TODO isValid,
+            enableNext: isValid,
             canJumpTo: stepIdReached >= 23,
           },
         ],

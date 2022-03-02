@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
+import {
+  isValid, reduxForm, formValueSelector, resetSection,
+} from 'redux-form';
 import get from 'lodash/get';
 
 import EditNodeCountModal from './EditNodeCountModal';
@@ -19,6 +21,7 @@ import {
 
 import { canAutoScaleSelector } from '../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
 import getClusterName from '../../../../common/getClusterName';
+import { getNodesCount } from '../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 
 const reduxFormConfig = {
   form: 'EditNodeCount',
@@ -49,6 +52,8 @@ const mapStateToProps = (state) => {
   }
 
   const commonProps = {
+    resetSection: values => resetSection(reduxFormConfig.form, values),
+    isValid: isValid(reduxFormConfig.form)(state),
     clusterID: get(cluster, 'id', ''),
     machinePoolsList: {
       ...state.machinePools.getMachinePools,
@@ -102,10 +107,7 @@ const mapStateToProps = (state) => {
     });
   };
 
-  let initialValuesNodesCompute = isMultiAz ? 9 : 4;
-  if (commonProps.isByoc) {
-    initialValuesNodesCompute = isMultiAz ? 3 : 2;
-  }
+  const initialValuesNodesCompute = getNodesCount(commonProps.isByoc, isMultiAz);
 
   // Cluster's default machine pool case
   if (selectedMachinePool === 'Default') {
