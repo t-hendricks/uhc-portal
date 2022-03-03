@@ -330,7 +330,7 @@ exports[`Every OCP instruction page should render:  IBM Cloud 1`] = `
           <GetStarted
             cloudProviderID="IBM Cloud"
             customizations=""
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_cloud/install-ibm-cloud-installation-workflow.html"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html"
             isBMIPI={false}
             pendoID="/"
           />
