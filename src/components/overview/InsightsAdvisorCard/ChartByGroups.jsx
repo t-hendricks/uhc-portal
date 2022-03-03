@@ -18,23 +18,19 @@ const TitleComponent = ({
 }) => {
   const entity = data[index];
   const { name, count, tags } = entity;
-  // TODO: Remove APP_BETA flag when OCP Advisor is in non-beta
+
   return (
     <text x={x} y={y} style={style} dy={5}>
       <tspan x={x} y={y}>
         {name}
         :
         {' '}
-        {APP_BETA
-          ? (
-            <a
-              href={`${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor/recommendations?category=${categoryMapping[tags]}`}
-              className="enabled-link"
-            >
-              {count}
-            </a>
-          )
-          : count}
+        <a
+          href={`${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor/recommendations?category=${categoryMapping[tags]}`}
+          className="enabled-link"
+        >
+          {count}
+        </a>
       </tspan>
     </text>
   );

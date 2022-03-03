@@ -41,26 +41,14 @@ const InsightsLabelComponent = ({ style, ...props }) => {
   const { datum, externalId } = props;
   const link = `${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor/clusters/${externalId}?total_risk=${datum.id}`;
 
-  // TODO: Remove APP_BETA flag when OCP Advisor is in non-beta
-  return (APP_BETA
-    ? (
-      <a
-        href={link}
-      >
-        <ChartLabel
-          {...props}
-          style={{ ...style, fontSize: 15 }}
-          className={(externalId && datum.value > 0) ? 'ocm-c-overview-advisor--enabled-link' : 'ocm-c-overview-advisor--disabled-link'}
-        />
-      </a>
-    )
-    : (
+  return (
+    <a href={link}>
       <ChartLabel
         {...props}
+        style={{ ...style, fontSize: 15 }}
         className={(externalId && datum.value > 0) ? 'ocm-c-overview-advisor--enabled-link' : 'ocm-c-overview-advisor--disabled-link'}
-        events={datum.value > 0 ? { onClick: () => { window.location.hash = '#insights'; } } : {}}
       />
-    )
+    </a>
   );
 };
 
@@ -73,17 +61,10 @@ const InsightsLegendIconComponent = ({ x, y, datum }) => {
 const InsightsSubtitleComponent = ({ externalId, style, ...props }) => {
   const link = `${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor/clusters/${externalId}`;
 
-  // TODO: Remove APP_BETA flag when OCP Advisor is in non-beta
   return (
-    APP_BETA
-      ? (
-        <a
-          href={link}
-        >
-          <ChartLabel {...props} style={{ ...style, fontSize: 15 }} dy={5} className="ocm-c-overview-advisor--enabled-link" />
-        </a>
-      ) : <ChartLabel {...props} style={{ ...style, fontSize: 15 }} dy={5} />
-
+    <a href={link}>
+      <ChartLabel {...props} style={{ ...style, fontSize: 15 }} dy={5} className="ocm-c-overview-advisor--enabled-link" />
+    </a>
   );
 };
 
