@@ -426,9 +426,9 @@ const getClusterStatus = clusterID => dispatch => dispatch({
   payload: clusterService.getClusterStatus(clusterID),
 });
 
-const getInstallableVersions = () => dispatch => dispatch({
+const getInstallableVersions = isRosa => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTER_VERSIONS,
-  payload: clusterService.getInstallableVersions(),
+  payload: clusterService.getInstallableVersions(isRosa),
 });
 
 const clustersActions = {
