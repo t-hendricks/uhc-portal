@@ -1187,6 +1187,7 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
         >
           <CardBody>
             <InsightsAdvisor
+              externalId="9f50940b-fba8-4c59-9c6c-d64284b2026d"
               insightsData={
                 Object {
                   "data": Array [

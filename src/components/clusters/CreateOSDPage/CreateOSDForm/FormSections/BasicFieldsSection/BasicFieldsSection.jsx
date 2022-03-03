@@ -14,6 +14,7 @@ import validators from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '../NetworkingSection/AvailabilityZoneSelection';
 import VersionSelection from './VersionSelection';
+import { getNodesCount, getMinReplicasCount } from '../ScaleSection/AutoScaleSection/AutoScaleHelper';
 
 function BasicFieldsSection({
   pending,
@@ -45,12 +46,9 @@ function BasicFieldsSection({
   const handleMultiAZChange = (_, value) => {
     // when multiAz changes, reset node count
     const isValueMultiAz = value === 'true';
-    let computeNodes = isValueMultiAz ? '9' : '4';
-
-    if (isBYOC) {
-      computeNodes = isValueMultiAz ? '3' : '2';
-    }
-    change('nodes_compute', computeNodes);
+    change('nodes_compute', getNodesCount(isBYOC, isValueMultiAz, true));
+    change('min_replicas', getMinReplicasCount(isBYOC, isValueMultiAz, true));
+    change('max_replicas', '');
     if (handleMultiAZChangeForOldForm) {
       handleMultiAZChangeForOldForm(value);
     }

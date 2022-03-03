@@ -4,7 +4,8 @@ import { normalizedProducts } from '../../../../../../../common/subscriptionType
 const getMinNodesAllowed = ({
   isDefaultMachinePool,
   product,
-  isBYOC, isMultiAz,
+  isBYOC,
+  isMultiAz,
   autoScaleMinNodesValue,
 }) => {
   let currMinNodes = parseInt(autoScaleMinNodesValue, 10) || 0;
@@ -22,6 +23,26 @@ const getMinNodesAllowed = ({
     minNodesAllowed = 0;
   }
   return max([currMinNodes, minNodesAllowed]);
+};
+
+export const getNodesCount = (isBYOC, isMultiAz, asString) => {
+  let computeNodes;
+  if (isBYOC) {
+    computeNodes = isMultiAz ? 3 : 2;
+  } else {
+    computeNodes = isMultiAz ? 9 : 4;
+  }
+  return asString ? `${computeNodes}` : computeNodes;
+};
+
+export const getMinReplicasCount = (isBYOC, isMultiAz, asString) => {
+  let minReplicas;
+  if (isMultiAz) {
+    minReplicas = getNodesCount(isBYOC, isMultiAz) / 3;
+  } else {
+    minReplicas = getNodesCount(isBYOC, isMultiAz);
+  }
+  return asString ? `${minReplicas}` : minReplicas;
 };
 
 export default getMinNodesAllowed;

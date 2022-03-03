@@ -22,6 +22,7 @@ const mapStateToProps = (state, ownProps) => {
     isWizard: true,
     byocSelected: isByoc,
     billingModel,
+    isMultiAz,
   };
 };
 
