@@ -7,10 +7,12 @@ import {
   getToVersionFromState,
   getClusterAcks,
   getIsManual,
+  getClusterOpenShiftVersion,
 } from '../UpgradeAcknowledgeSelectors';
 
 const mapStateToProps = state => ({
   clusterId: getClusterIdFromState(state),
+  openshiftVersion: getClusterOpenShiftVersion(state),
   fromVersion: getFromVersionFromState(state),
   toVersion: getToVersionFromState(state),
   isManual: getIsManual(state),

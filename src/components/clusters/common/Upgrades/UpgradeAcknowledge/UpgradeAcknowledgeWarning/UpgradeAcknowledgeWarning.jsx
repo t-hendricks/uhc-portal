@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -13,7 +12,16 @@ import './UpgradeAcknowledgeWarning.scss';
 
 const UpgradeAcknowledgeWarning = (props) => {
   const {
-    openModal, toVersion, fromVersion, clusterId, getAcks, isPlain, isManual, isInfo, showConfirm,
+    openModal,
+    toVersion,
+    fromVersion,
+    clusterId,
+    getAcks,
+    isPlain,
+    isManual,
+    isInfo,
+    showConfirm,
+    openshiftVersion,
   } = props;
 
   const handleButtonClick = () => {
@@ -28,7 +36,7 @@ const UpgradeAcknowledgeWarning = (props) => {
 
   const infoTitle = `Administrator acknowledgement is required before updating from ${fromVersion} to ${toVersion}`;
 
-  if (!clusterId) {
+  if (!clusterId || !openshiftVersion) {
     return null;
   }
 
@@ -86,10 +94,11 @@ const UpgradeAcknowledgeWarning = (props) => {
 
 UpgradeAcknowledgeWarning.propTypes = {
   isPlain: PropTypes.bool, // Show alert with approval button without background
-  showConfirm: PropTypes.bool, // If there are saved acknowledgements AND no needed acknowledgements, then show info confirm message
-  isInfo: PropTypes.bool, // If on manual mode AND there are needed acknowledgements, show the alert as information text
+  showConfirm: PropTypes.bool, // If saved acks AND no needed acks, then show info confirm message
+  isInfo: PropTypes.bool, // If manual  AND  needed acks, show the alert as information text
   openModal: PropTypes.func,
   clusterId: PropTypes.string,
+  openshiftVersion: PropTypes.string,
   fromVersion: PropTypes.func,
   toVersion: PropTypes.func,
   getAcks: PropTypes.array,

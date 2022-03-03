@@ -18,6 +18,7 @@ describe('<UpgradeAcknowledgeWarning>', () => {
         fromVersion="4.8.10"
         toVersion="4.9.11"
         getAcks={[unMetAcks, metAcks]}
+        openshiftVersion="my.openshift.version"
       />,
     );
   });
@@ -25,6 +26,13 @@ describe('<UpgradeAcknowledgeWarning>', () => {
   it('Displays nothing if cluster id is unknown', () => {
     wrapper.setProps({
       clusterId: undefined,
+    });
+    expect(wrapper.isEmptyRender()).toBe(true);
+  });
+
+  it('Displays nothing if openshiftVersion is unknown', () => {
+    wrapper.setProps({
+      openshiftVersion: undefined,
     });
     expect(wrapper.isEmptyRender()).toBe(true);
   });

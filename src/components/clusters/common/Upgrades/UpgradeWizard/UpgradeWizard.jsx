@@ -63,10 +63,12 @@ class UpgradeWizard extends React.Component {
           clusterService.postClusterGateAgreement(clusterDetails.cluster.id, upgradeGate.id)
             .then(() => {
               setGate(upgradeGate.id);
+            }).catch(() => {
+              // let pass through - will be caught when user tries to post schedule
             })
         ));
 
-      Promise.all(promises)
+      Promise.allSettled(promises)
         .then(() => {
           postSchedule(clusterDetails.cluster.id, {
             schedule_type: 'manual',
