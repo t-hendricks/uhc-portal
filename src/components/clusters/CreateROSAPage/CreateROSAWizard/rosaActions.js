@@ -1,8 +1,10 @@
 import {
   LIST_ASSOCIATED_AWS_IDS,
   GET_AWS_ACCOUNT_ROLES_ARNS,
+  GET_OCM_ROLE,
   CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE,
   CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
+  CLEAR_GET_OCM_ROLE_RESPONSE,
 } from './rosaConstants';
 import { accountsService } from '../../../../services';
 
@@ -61,10 +63,21 @@ export const getAWSAccountRolesARNs = awsAccountID => (dispatch) => {
   });
 };
 
+export const getOCMRole = awsAccountID => (dispatch) => {
+  dispatch({
+    type: GET_OCM_ROLE,
+    payload: accountsService.getOCMRole(awsAccountID).then(response => response?.data),
+  });
+};
+
 export const clearGetAWSAccountIDsResponse = () => ({
   type: CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE,
 });
 
 export const clearGetAWSAccountRolesARNsResponse = () => ({
   type: CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
+});
+
+export const clearGetOcmRoleResponse = () => ({
+  type: CLEAR_GET_OCM_ROLE_RESPONSE,
 });

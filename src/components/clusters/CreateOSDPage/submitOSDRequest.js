@@ -108,7 +108,20 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
               master_role_arn: formData.control_plane_role_arn,
               worker_role_arn: formData.worker_role_arn,
             },
+            operator_role_prefix: `${formData.name}-${formData.custom_operator_roles_prefix}`,
           },
+        };
+        // auto mode
+        if (formData.rosa_roles_provider_creation_mode === 'auto') {
+          clusterRequest.aws.sts = {
+            ...clusterRequest.aws.sts,
+            auto_mode: true,
+          };
+        }
+        // rosa creator arn
+        clusterRequest.properties = {
+          ...clusterRequest.properties,
+          rosa_creator_arn: formData.rosa_creator_arn,
         };
       } else {
         // AWS CCS credentials

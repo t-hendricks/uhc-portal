@@ -7,8 +7,10 @@ import { getErrorState } from '../../../../common/errors';
 import {
   LIST_ASSOCIATED_AWS_IDS,
   GET_AWS_ACCOUNT_ROLES_ARNS,
+  GET_OCM_ROLE,
   CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE,
   CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
+  CLEAR_GET_OCM_ROLE_RESPONSE,
 } from './rosaConstants';
 
 const initialState = {
@@ -16,6 +18,9 @@ const initialState = {
     ...baseRequestState,
   },
   getAWSAccountRolesARNsResponse: {
+    ...baseRequestState,
+  },
+  getOCMRoleResponse: {
     ...baseRequestState,
   },
 };
@@ -46,6 +51,7 @@ function rosaReducer(state = initialState, action) {
         };
         break;
 
+      // GET_AWS_ACCOUNT_ROLES_ARNS
       case PENDING_ACTION(GET_AWS_ACCOUNT_ROLES_ARNS):
         draft.getAWSAccountRolesARNsResponse.pending = true;
         break;
@@ -66,6 +72,28 @@ function rosaReducer(state = initialState, action) {
         };
         break;
 
+      // GET_OCM_ROLE
+      case PENDING_ACTION(GET_OCM_ROLE):
+        draft.getOCMRoleResponse.pending = true;
+        break;
+
+      case FULFILLED_ACTION(GET_OCM_ROLE):
+        draft.getOCMRoleResponse = {
+          ...baseRequestState,
+          fulfilled: true,
+          data: action.payload,
+        };
+        break;
+
+      case REJECTED_ACTION(GET_OCM_ROLE):
+        draft.getOCMRoleResponse = {
+          ...baseRequestState,
+          ...getErrorState(action),
+          data: {},
+        };
+        break;
+
+      // CLEARs
       case CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE:
         draft.getAWSAccountRolesARNsResponse = {
           ...baseRequestState,
@@ -75,6 +103,13 @@ function rosaReducer(state = initialState, action) {
       case CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE:
         draft.getAWSAccountIDsResponse = {
           ...baseRequestState,
+        };
+        break;
+
+      case CLEAR_GET_OCM_ROLE_RESPONSE:
+        draft.getOCMRoleResponse = {
+          ...baseRequestState,
+          data: {},
         };
         break;
     }

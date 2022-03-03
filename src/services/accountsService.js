@@ -151,6 +151,12 @@ const getAWSAccountARNs = awsAccountID => apiRequest({
   url: '/api/clusters_mgmt/v1/aws_inquiries/sts_account_roles',
 });
 
+const getOCMRole = awsAccountID => apiRequest({
+  method: 'post',
+  data: { account_id: awsAccountID },
+  url: '/api/clusters_mgmt/v1/aws_inquiries/sts_ocm_role',
+});
+
 function getRequest(pathParams, params = {}) {
   const type = pathParams[0];
   let url;
@@ -184,6 +190,7 @@ const accountsService = {
   deleteSubscriptionRoleBinding,
   getOrganizationLabels,
   getAWSAccountARNs,
+  getOCMRole,
 };
 
 export default accountsService;
