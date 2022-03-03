@@ -147,7 +147,7 @@ function AccountRolesARNsSection({
       )}
       {!getAWSAccountRolesARNsResponse.pending && (
       <GridItem span={6}>
-        <ExpandableSection isExpanded={awsARNsErrorBox ? false : isExpanded} onToggle={onToggle} toggleText="Account roles ARNs">
+        <ExpandableSection isExpanded={!awsARNsErrorBox && isExpanded} onToggle={onToggle} toggleText="Account roles ARNs">
           <GridItem span={8}>
             <Text component={TextVariants.p}>
               The following roles were detected in your AWS account.

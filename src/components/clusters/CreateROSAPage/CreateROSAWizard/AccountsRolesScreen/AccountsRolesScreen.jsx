@@ -30,14 +30,12 @@ function AccountsRolesScreen({
   getAWSAccountRolesARNsResponse,
   clearGetAWSAccountRolesARNsResponse,
   clearGetAWSAccountIDsResponse,
-  isAssocAWSModalOpen,
 }) {
   const longName = 'Red Hat OpenShift Service on AWS (ROSA)';
   const title = `Welcome to ${longName} `;
 
   const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
-  const [wasAssocAWSModalOpen, setWasAssocAWSModalOpen] = useState(false);
 
   const hasAWSAccount = AWSAccountIDs.length > 0;
 
@@ -49,27 +47,13 @@ function AccountsRolesScreen({
   }, []);
 
   useEffect(() => {
-    if (isAssocAWSModalOpen) {
-      setWasAssocAWSModalOpen(true);
-    } else if (wasAssocAWSModalOpen) {
-      clearGetAWSAccountIDsResponse();
-      getAWSAccountIDs(organizationID);
-      setWasAssocAWSModalOpen(false);
-    }
-  }, [isAssocAWSModalOpen, wasAssocAWSModalOpen]);
-
-  useEffect(() => {
     if (AWSAccountIDs.length === 1 || selectedAWSAccountID === undefined) {
       change('associated_aws_id', AWSAccountIDs[0]); // default to first available aws account
     }
   }, [AWSAccountIDs, selectedAWSAccountID]);
 
   useEffect(() => {
-    if (!getAWSAccountIDsResponse.pending
-      && !getAWSAccountIDsResponse.fulfilled
-      && !getAWSAccountIDsResponse.error) {
-      getAWSAccountIDs(organizationID);
-    } else if (getAWSAccountIDsResponse.pending) {
+    if (getAWSAccountIDsResponse.pending) {
       setAwsIDsErrorBox(null);
     } else if (getAWSAccountIDsResponse.fulfilled) {
       const awsIDs = get(getAWSAccountIDsResponse, 'data', []);
@@ -81,8 +65,15 @@ function AccountsRolesScreen({
         message="Error getting associated AWS account id(s)"
         response={getAWSAccountIDsResponse}
       />);
+    } else {
+      getAWSAccountIDs(organizationID); // <--- moved from above
     }
   }, [getAWSAccountIDsResponse]);
+
+  const onModalClose = () => {
+    clearGetAWSAccountIDsResponse();
+    getAWSAccountIDs(organizationID);
+  };
 
   return (
     <Form onSubmit={() => false}>
@@ -156,7 +147,7 @@ function AccountsRolesScreen({
         />
         )}
       </Grid>
-      <AssociateAWSAccountModal />
+      <AssociateAWSAccountModal onClose={onModalClose} />
     </Form>
   );
 }
@@ -171,7 +162,6 @@ AccountsRolesScreen.propTypes = {
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
   clearGetAWSAccountIDsResponse: PropTypes.func.isRequired,
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
-  isAssocAWSModalOpen: PropTypes.bool.isRequired,
   organizationID: PropTypes.string.isRequired,
   initialValues: PropTypes.shape({
     associated_aws_id: PropTypes.string,

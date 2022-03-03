@@ -16,22 +16,20 @@ export const getAWSIDsFromARNs = (arns) => {
   return [...new Set(ids)]; // convert to Set to remove duplicates, spread to convert back to array
 };
 
-export const normalizeAWSAccountRoles = (accountRoles) => {
-  // Returns for Ex:
-  // [
-  //   { Installer: 'arn:..ManagedOpenShift-Installer-Role', ControlPlane: 'arn:...' ...},
-  //   { Installer: 'arn:..croche-test-Installer-Role', ControlPlane: 'arn:...' ...}
-  // ]
-  const AWSAccountRoles = [];
-  accountRoles.items.forEach((accountRole) => {
-    const roleObj = { prefix: accountRole.prefix };
-    accountRole?.items.forEach((arn) => {
-      roleObj[arn?.type] = arn?.arn;
-    });
-    AWSAccountRoles.push(roleObj);
-  });
-  return AWSAccountRoles;
-};
+/** Converts accountRoles object into an array of ARNs
+ * @param accountRoles object: https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3486
+ * @returns
+ * [
+ *   { Installer: 'arn:..ManagedOpenShift-Installer-Role', ControlPlane: 'arn:...' ...},
+ *   { Installer: 'arn:..croche-test-Installer-Role', ControlPlane: 'arn:...' ...}
+ * ]
+ */
+export const normalizeAWSAccountRoles = accountRoles => (accountRoles?.items || [])
+  .map(accountRole => (accountRole?.items || []).reduce((roleObj, { type, arn }) => ({
+    ...roleObj,
+    [type]: arn,
+  }),
+  { prefix: accountRole.prefix }));
 
 export const getAWSAccountIDs = organizationID => dispatch => dispatch({
   type: LIST_ASSOCIATED_AWS_IDS,

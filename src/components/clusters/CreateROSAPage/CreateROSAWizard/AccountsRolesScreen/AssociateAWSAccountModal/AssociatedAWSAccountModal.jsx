@@ -22,7 +22,7 @@ class AssociateAWSAccountWizard extends React.Component {
 
   render() {
     const { stepIdReached } = this.state;
-    const { closeModal, token } = this.props;
+    const { closeModal, token, onClose } = this.props;
     const steps = [
       {
         id: 1,
@@ -50,6 +50,13 @@ class AssociateAWSAccountWizard extends React.Component {
       },
     ];
 
+    const handleClose = () => {
+      closeModal();
+      if (onClose) {
+        onClose();
+      }
+    };
+
     return (
       <>
         <Wizard
@@ -58,18 +65,20 @@ class AssociateAWSAccountWizard extends React.Component {
           className="ocm-upgrade-wizard"
           isOpen
           steps={steps}
-          onSave={closeModal}
+          onSave={handleClose}
           onNext={this.onNext}
           onBack={this.onBack}
           onGoToStep={this.onGoToStep}
-          onClose={closeModal}
+          onClose={handleClose}
         />
       </>
     );
   }
 }
 
-function AssociatedAWSAccountModal({ closeModal, isOpen, isValid }) {
+function AssociatedAWSAccountModal({
+  closeModal, isOpen, isValid, onClose,
+}) {
   const [offlineAccessToken, setOfflineAccessToken] = React.useState('');
   const onLoad = (token) => {
     if (token) {
@@ -87,6 +96,7 @@ function AssociatedAWSAccountModal({ closeModal, isOpen, isValid }) {
         isValid={isValid}
         closeModal={closeModal}
         token={offlineAccessToken}
+        onClose={onClose}
       />
     </Modal>
   );
@@ -94,12 +104,14 @@ function AssociatedAWSAccountModal({ closeModal, isOpen, isValid }) {
 
 AssociatedAWSAccountModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   isOpen: PropTypes.bool,
   isValid: PropTypes.bool,
 };
 
 AssociateAWSAccountWizard.propTypes = {
   closeModal: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   token: PropTypes.string,
 };
 
