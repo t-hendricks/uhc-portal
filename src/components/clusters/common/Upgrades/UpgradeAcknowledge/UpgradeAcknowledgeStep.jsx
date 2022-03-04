@@ -83,13 +83,13 @@ const UpgradeAcknowledgeStep = (props) => {
           >
             <FormGroup
               label={(
-                <>
+                <span className="ocm-upgrade-ack-modal_text-input-label">
                   Confirm the above by typing
                   {' '}
                   <strong>{ackWord}</strong>
                   {' '}
                   below:
-                </>
+                </span>
               )}
               isRequired
               fieldId="upgradeAcknowledgementModalText"
