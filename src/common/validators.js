@@ -4,6 +4,8 @@ import cidrTools from 'cidr-tools';
 import { Validator, ValidationError } from 'jsonschema';
 import { indexOf } from 'lodash';
 
+const pem = require('pem');
+
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
 const DNS_LABEL_REGEXP = /^[a-z]([-a-z0-9]*[a-z0-9])?$/;
@@ -341,6 +343,56 @@ const RHIT_PRINCIPAL_PATTERN = /^[^"$<> ^|%\\(),=;~:/*\r\n]*$/;
 const validateRHITUsername = (username) => {
   const valid = RHIT_PRINCIPAL_PATTERN.test(username);
   return valid ? undefined : 'Username includes illegal symbols';
+};
+
+const validateUrl = (value, protocol = 'http') => {
+  if (!value) {
+    return undefined;
+  }
+  let protocolArr = protocol;
+  if (typeof protocol === 'string') {
+    protocolArr = [protocol];
+  }
+  try {
+    // eslint-disable-next-line no-new
+    new URL(value);
+  } catch (error) {
+    return 'Invalid URL';
+  } finally {
+    const valueStart = value.substring(0, value.indexOf('://'));
+    if (!protocolArr.includes(valueStart)) {
+      const protocolStr = protocolArr.map(p => `${p}://`).join(', ');
+      // eslint-disable-next-line no-unsafe-finally
+      return `The URL should include the scheme prefix (${protocolStr})`;
+    }
+  }
+  return undefined;
+};
+
+const validateCA = (value) => {
+  // debugger;
+  if (!value) {
+    return undefined;
+  }
+  // checkCertificate
+  // pem.verifySigningChain(value, null, (err, valid) => {
+  //   debugger;
+  //   if (err) {
+  //     return err;
+  //     // return 'Invalid CA certificate';
+  //   }
+  //   if (!valid) {
+  //     return 'Invalid CA certificate';
+  //   }
+  //   return undefined;
+  // });
+  if (!value.trim().startsWith('-----BEGIN CERTIFICATE-----')) {
+    return 'Invalid certificate';
+  }
+  if (!value.trim().endsWith('-----END CERTIFICATE-----')) {
+    return 'Invalid certificate';
+  }
+  return undefined;
 };
 
 // Function to validate the cluster console URL
@@ -1071,6 +1123,8 @@ export {
   checkClusterDisplayName,
   checkUserID,
   validateRHITUsername,
+  validateUrl,
+  validateCA,
   checkClusterConsoleURL,
   checkOpenIDIssuer,
   validateNumericInput,

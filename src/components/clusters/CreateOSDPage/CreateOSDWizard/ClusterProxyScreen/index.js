@@ -8,9 +8,10 @@ const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
 
   return {
-    cloudProviderID: valueSelector(state, 'cloud_provider'),
-    isMultiAz: valueSelector(state, 'multi_az') === 'true',
-    selectedRegion: valueSelector(state, 'region'),
+    product: valueSelector(state, 'product'),
+    httpProxyUrl: valueSelector(state, 'http_proxy_url'),
+    httpsProxyUrl: valueSelector(state, 'https_proxy_url'),
+    additionalTrustBundle: valueSelector(state, 'additional_trust_bundle'),
   };
 };
 

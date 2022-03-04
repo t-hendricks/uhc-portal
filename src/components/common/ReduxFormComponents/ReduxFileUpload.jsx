@@ -9,6 +9,27 @@ class ReduxFileUpload extends React.Component {
     filename: '',
   };
 
+  componentDidMount() {
+    // added because the FileUpload component does not forward additional props
+    // like placeholder and onBlur to the TextArea
+    // https://github.com/patternfly/patternfly-react/issues/7004
+    const { placeholder, input: { name } } = this.props;
+    document.getElementById(name).addEventListener('blur', this.onTextAreaBlur);
+    if (placeholder) {
+      document.getElementById(name).setAttribute('placeholder', placeholder);
+    }
+  }
+
+  componentWillUnmount() {
+    const { input: { name } } = this.props;
+    document.getElementById(name).removeEventListener('blur', this.onTextAreaBlur);
+  }
+
+  onTextAreaBlur = (event) => {
+    const { input: { onBlur } } = this.props;
+    onBlur(event);
+  };
+
   handleFileChange = (value, _, e) => {
     const { input } = this.props;
     if (e.target.files) {
@@ -30,9 +51,10 @@ class ReduxFileUpload extends React.Component {
     const {
       helpText,
       meta: { error, dirty, touched },
-      input,
+      input: { name, value },
       isRequired,
       label,
+      extendedHelpTitle,
       extendedHelpText,
     } = this.props;
     const {
@@ -48,20 +70,22 @@ class ReduxFileUpload extends React.Component {
 
     return (
       <FormGroup
-        fieldId={input.name}
+        fieldId={name}
         helperText={helpText}
         helperTextInvalid={helperTextInvalid()}
         validated={(dirty || touched) && error ? 'error' : 'default'}
         label={label}
-        labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
+        labelIcon={extendedHelpText && (
+          <PopoverHint title={extendedHelpTitle} hint={extendedHelpText} />
+        )}
         isRequired={isRequired}
       >
         <FileUpload
           allowEditingUploadedText
           isDragActive
-          id={input.name}
+          id={name}
           type="text"
-          value={input.value}
+          value={value}
           filename={filename}
           onChange={this.handleFileChange}
           validated={(dirty || touched) && error ? 'error' : 'default'}
@@ -78,6 +102,7 @@ ReduxFileUpload.defaultProps = {
 
 ReduxFileUpload.propTypes = {
   helpText: PropTypes.string,
+  extendedHelpTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   input: PropTypes.object.isRequired,
   meta: PropTypes.object.isRequired,
