@@ -1,12 +1,11 @@
 .ocm-upgrade-ack-modal{
-  // h2{
-  //   font-weight: var(--pf-global--FontWeight--bold);
-  //   font-size: var(--pf-global--FontSize--lg);
-  // }
-  
   p{
     font-size: var(--pf-global--FontSize--sm);
     margin-top: var(--pf-global--spacer--sm);
     margin-bottom: var(--pf-global--spacer--sm);
+  }
+  .ocm-upgrade-ack-modal_text-input-label{
+    font-size: var(--pf-global--FontSize--md);
+    font-weight: var(--pf-global--FontWeight--normal);
   }
 }

@@ -326,7 +326,9 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                   fieldId="upgradeAcknowledgementModalText"
                   isRequired={true}
                   label={
-                    <React.Fragment>
+                    <span
+                      className="ocm-upgrade-ack-modal_text-input-label"
+                    >
                       Confirm the above by typing
                        
                       <strong>
@@ -334,7 +336,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                       </strong>
                        
                       below:
-                    </React.Fragment>
+                    </span>
                   }
                 >
                   <div
@@ -350,13 +352,17 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                         <span
                           className="pf-c-form__label-text"
                         >
-                          Confirm the above by typing
-                           
-                          <strong>
-                            Acknowledge
-                          </strong>
-                           
-                          below:
+                          <span
+                            className="ocm-upgrade-ack-modal_text-input-label"
+                          >
+                            Confirm the above by typing
+                             
+                            <strong>
+                              Acknowledge
+                            </strong>
+                             
+                            below:
+                          </span>
                         </span>
                         <span
                           aria-hidden="true"
