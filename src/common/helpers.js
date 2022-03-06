@@ -136,14 +136,21 @@ function scrollToFirstError(errors) {
 }
 
 /**
- * Converts redux form structure to the structure expected by ocm api
- * [{ key: "foo", value: "bar" },{ key: "hello", value: "world" }]
- *   => { foo: "bar", hello: "world" }
+ * Converts redux form structure to the structure expected by OCM API.
+ * pairs with missing keys are omitted.
+ *
+ * @example
+ * parseReduxFormKeyValueList([
+ *  { key: "foo", value: "bar" },
+ *  { key: "hello", value: "world" },
+ *  { key: undefined, value: "wat" },
+ * ]) // => { foo: "bar", hello: "world" }
  * @param {Array} [labelsFormData=[{}]] Array of key value pairs
  */
-const parseReduxFormKeyValueList = (labelsFormData = [{}]) => Object.assign(
-  {},
-  ...(labelsFormData.map(({ key, value }) => key && ({ [key]: value ?? '' }))),
+const parseReduxFormKeyValueList = (labelsFormData = [{}]) => Object.fromEntries(
+  labelsFormData
+    .filter(({ key }) => typeof key !== 'undefined')
+    .map(({ key, value }) => [key, value ?? '']),
 );
 
 /**
