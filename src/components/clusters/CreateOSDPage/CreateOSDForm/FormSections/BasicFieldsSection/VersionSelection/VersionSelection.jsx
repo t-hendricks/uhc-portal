@@ -10,6 +10,7 @@ import {
 import ErrorBox from '../../../../../../common/ErrorBox';
 
 function VersionSelection({
+  isRosa,
   input,
   isDisabled,
   label,
@@ -35,7 +36,7 @@ function VersionSelection({
       />);
       setIsOpen(false);
     } else { // First time.
-      getInstallableVersions();
+      getInstallableVersions(isRosa);
     }
   }, [getInstallableVersionsResponse]);
 
@@ -52,7 +53,7 @@ function VersionSelection({
     // In case of backend error, don't want infinite loop reloading,
     // but allow manual reload by opening the dropdown.
     if (toggleOpenValue && getInstallableVersionsResponse.error) {
-      getInstallableVersions();
+      getInstallableVersions(isRosa);
     }
   };
 
@@ -108,6 +109,7 @@ VersionSelection.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
   }),
+  isRosa: PropTypes.bool,
   getInstallableVersions: PropTypes.func.isRequired,
   getInstallableVersionsResponse: PropTypes.object.isRequired,
   initialValue: PropTypes.string,

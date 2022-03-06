@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import InsightsAdvisorCard from './InsightsAdvisorCard';
+import { categoryMapping } from './ChartByGroups';
 
 const initialState = {
   overview: {
@@ -67,8 +68,6 @@ describe('<InsightsAdvisorCard />', () => {
       expect(wrapper.find('ChartByGroups')).toHaveLength(1);
     });
 
-    /** TODO: Uncomment when OCP Advisor is in non-beta
-
     it('renders single "View more" link to OCP Advisor', () => {
       const link = wrapper.find('a[href="http://localhost/openshift/insights/advisor"]');
       expect(link).toHaveLength(1);
@@ -98,6 +97,5 @@ describe('<InsightsAdvisorCard />', () => {
         },
       );
     });
-    */
   });
 });
