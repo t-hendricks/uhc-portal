@@ -1043,7 +1043,7 @@ const validateHTPasswdUsername = (username) => {
 };
 
 const shouldSkipLabelKeyValidation = (allValues) => {
-  const { node_labels: nodeLabels = [] } = allValues;
+  const nodeLabels = allValues?.node_labels ?? [{}];
   // filling the first and only label key/value pair is optional -it serves as a placeholder.
   // if empty, it won't be taken into account in the request payload.
   const [{ key: firstLabelKey, value: firstLabelValue }] = nodeLabels;
