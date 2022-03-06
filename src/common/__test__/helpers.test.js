@@ -34,10 +34,15 @@ describe('parseReduxFormKeyValueList', () => {
     expect(parseReduxFormKeyValueList(reduxFormInput)).toEqual(expected);
   });
 
-  it('returns an empty object', () => {
+  it('returns an empty object when pairs are empty', () => {
     const reduxFormInput = [{}, {}, {}];
     const expected = {};
     expect(parseReduxFormKeyValueList(reduxFormInput)).toEqual(expected);
+  });
+
+  it('returns an empty object when input is missing', () => {
+    const expected = {};
+    expect(parseReduxFormKeyValueList()).toEqual(expected);
   });
 });
 
