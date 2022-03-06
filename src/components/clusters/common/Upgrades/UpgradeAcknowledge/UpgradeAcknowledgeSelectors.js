@@ -5,6 +5,7 @@ const splitMajorMinor = version => version.split('.').map(num => parseInt(num, 1
 const isSTSCluster = state => state.clusters.details.cluster.aws?.sts?.role_arn && state.clusters.details.cluster.aws?.sts?.role_arn !== '';
 
 export const getClusterIdFromState = state => state.clusters?.details?.cluster?.id;
+export const getClusterOpenShiftVersion = state => state.clusters?.details?.cluster?.openshift_version;
 export const getFromVersionFromState = state => state.clusters.details.cluster.version?.raw_id || null;
 export const getToVersionFromState = (state) => {
   if (!state.clusters.details.cluster.version?.available_upgrades || state.clusters.details.cluster.version?.available_upgrades.length === 0) {
