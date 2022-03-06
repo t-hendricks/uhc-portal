@@ -139,7 +139,7 @@ function scrollToFirstError(errors) {
  * Converts redux form structure to the structure expected by ocm api
  * [{ key: "foo", value: "bar" },{ key: "hello", value: "world" }]
  *   => { foo: "bar", hello: "world" }
- * @param {Array} labelsFormData Array of key value parirs
+ * @param {Array} [labelsFormData=[{}]] Array of key value pairs
  */
 const parseReduxFormKeyValueList = (labelsFormData = [{}]) => Object.assign(
   {},
