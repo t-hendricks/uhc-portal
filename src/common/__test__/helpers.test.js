@@ -22,9 +22,15 @@ describe('parseReduxFormKeyValueList', () => {
     expect(parseReduxFormKeyValueList(reduxFormInput)).toEqual(expected);
   });
 
-  it('returns only non empty pairs', () => {
-    const reduxFormInput = [{ key: 'foo', value: 'bar' }, { key: undefined, value: 'world' }, { key: 'hello', undefined: 'world' }];
+  it('only returns pairs with non empty keys', () => {
+    const reduxFormInput = [{ key: 'foo', value: 'bar' }, { key: undefined, value: 'world' }];
     const expected = { foo: 'bar' };
+    expect(parseReduxFormKeyValueList(reduxFormInput)).toEqual(expected);
+  });
+
+  it('returns empty values as empty strings', () => {
+    const reduxFormInput = [{ key: 'foo', value: 'bar' }, { key: 'hello', undefined: 'world' }];
+    const expected = { foo: 'bar', hello: '' };
     expect(parseReduxFormKeyValueList(reduxFormInput)).toEqual(expected);
   });
 
