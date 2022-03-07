@@ -64,6 +64,17 @@ describe('<UpgradeAcknowledgeWarning>', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('Hide infoCircle if isManual but has a scheduled upgrade', () => {
+    wrapper.setProps({
+      isManual: true,
+      isInfo: true,
+      getAcks: [unMetAcks, []],
+      hasScheduledManual: true,
+    });
+    expect(wrapper.find('[data-testid="infoMessageUnmetAcks"]')).toHaveLength(0);
+    expect(wrapper).toMatchSnapshot();
+  });
+
   it('Display empty fragment if isManual AND if is not Info', () => {
     wrapper.setProps({
       isManual: true,

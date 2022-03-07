@@ -59,6 +59,8 @@ exports[`<UpgradeAcknowledgeWarning> Display infoCircle if isManual AND if is In
 </Fragment>
 `;
 
+exports[`<UpgradeAcknowledgeWarning> Hide infoCircle if isManual but has a scheduled upgrade 1`] = `<Fragment />`;
+
 exports[`<UpgradeAcknowledgeWarning> Set correct info when opening modal 1`] = `
 <Fragment>
   <Connect(UpgradeAcknowledgeModal)
