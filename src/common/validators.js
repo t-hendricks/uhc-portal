@@ -4,8 +4,6 @@ import cidrTools from 'cidr-tools';
 import { Validator, ValidationError } from 'jsonschema';
 import { indexOf } from 'lodash';
 
-const pem = require('pem');
-
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
 const DNS_LABEL_REGEXP = /^[a-z]([-a-z0-9]*[a-z0-9])?$/;
@@ -370,26 +368,13 @@ const validateUrl = (value, protocol = 'http') => {
 };
 
 const validateCA = (value) => {
-  // debugger;
   if (!value) {
     return undefined;
   }
-  // checkCertificate
-  // pem.verifySigningChain(value, null, (err, valid) => {
-  //   debugger;
-  //   if (err) {
-  //     return err;
-  //     // return 'Invalid CA certificate';
-  //   }
-  //   if (!valid) {
-  //     return 'Invalid CA certificate';
-  //   }
-  //   return undefined;
-  // });
-  if (!value.trim().startsWith('-----BEGIN CERTIFICATE-----')) {
+  if (!value.startsWith('-----BEGIN CERTIFICATE-----')) {
     return 'Invalid certificate';
   }
-  if (!value.trim().endsWith('-----END CERTIFICATE-----')) {
+  if (!value.endsWith('-----END CERTIFICATE-----')) {
     return 'Invalid certificate';
   }
   return undefined;

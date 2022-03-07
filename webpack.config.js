@@ -23,7 +23,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ReplaceWebpackPlugin = require('html-replace-webpack-plugin');
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const ChunkMapperPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/chunk-mapper');
 const FederationPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/federated-modules');
 const { insights } = require('./package.json');
@@ -85,10 +84,6 @@ module.exports = async (_env, argv) => {
       new HtmlWebpackPlugin({
         template: 'src/index.html',
       }),
-      new NodePolyfillPlugin(),
-      // new webpack.ProvidePlugin({
-      //   process: 'process/browser',
-      // }),
       new webpack.DefinePlugin({
         APP_BETA: betaMode,
         APP_DEVMODE: devMode,
@@ -209,14 +204,7 @@ module.exports = async (_env, argv) => {
       modules: [srcDir, modDir],
       // For react-markdown#unified#vfile
       fallback: {
-        // path: require.resolve('path-browserify'),
-        // crypto: require.resolve('crypto-browserify'),
-        // stream: require.resolve('stream-browserify'),
-        // // process: require.resolve('process/browser'),
-        fs: require.resolve('browserify-fs'),
-        // util: false,
-        net: false,
-        child_process: false,
+        path: require.resolve("path-browserify"),
       },
     },
 
