@@ -8,6 +8,7 @@ import {
   getClusterAcks,
   getIsManual,
   getClusterOpenShiftVersion,
+  getHasScheduledManual,
 } from '../UpgradeAcknowledgeSelectors';
 
 const mapStateToProps = state => ({
@@ -17,6 +18,7 @@ const mapStateToProps = state => ({
   toVersion: getToVersionFromState(state),
   isManual: getIsManual(state),
   getAcks: getClusterAcks(state),
+  hasScheduledManual: getHasScheduledManual(state),
 });
 
 const mapDispatchToProps = {

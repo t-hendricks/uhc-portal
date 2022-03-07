@@ -65,3 +65,6 @@ export const getClusterUnMetClusterAcks = (state, upgradeVersion) => {
 };
 
 export const getHasUnMetClusterAcks = (state, upgradeVersion) => getClusterUnMetClusterAcks(state, upgradeVersion).length > 0;
+
+export const getHasScheduledManual = state => getIsManual(state)
+&& state.clusterUpgrades.schedules.items.some(schedule => schedule.version !== getFromVersionFromState(state));

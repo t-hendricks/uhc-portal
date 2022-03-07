@@ -22,6 +22,7 @@ const UpgradeAcknowledgeWarning = (props) => {
     isInfo,
     showConfirm,
     openshiftVersion,
+    hasScheduledManual,
   } = props;
 
   const handleButtonClick = () => {
@@ -44,7 +45,7 @@ const UpgradeAcknowledgeWarning = (props) => {
 
   return (
     <>
-      {clusterUnmetAcks.length > 0 && isManual && isInfo ? (
+      {clusterUnmetAcks.length > 0 && isManual && isInfo && !hasScheduledManual ? (
         <div className="ocm-upgrade-additional-versions-available" data-testid="infoMessageUnmetAcks">
           <InfoCircleIcon />
           {' '}
@@ -96,6 +97,7 @@ UpgradeAcknowledgeWarning.propTypes = {
   isPlain: PropTypes.bool, // Show alert with approval button without background
   showConfirm: PropTypes.bool, // If saved acks AND no needed acks, then show info confirm message
   isInfo: PropTypes.bool, // If manual  AND  needed acks, show the alert as information text
+  hasScheduledManual: PropTypes.bool, // if manual and there are scheduled update
   openModal: PropTypes.func,
   clusterId: PropTypes.string,
   openshiftVersion: PropTypes.string,
