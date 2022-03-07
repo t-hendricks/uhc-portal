@@ -44,7 +44,6 @@ const links = {
 
   INSTALL_DOCS_ENTRY: `${DOCS_BASE}/installing/index.html`,
 
-  // TODO: verify correct URL
   INSTALL_ALIBABAIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_alibaba/installing-alibaba-customizations.html`,
 
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
