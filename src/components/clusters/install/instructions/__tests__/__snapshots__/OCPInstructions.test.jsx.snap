@@ -100,7 +100,7 @@ exports[`Every OCP instruction page should render:  Alibaba 1`] = `
           <GetStarted
             cloudProviderID="Alibaba"
             customizations=""
-            docURL="https://docs.openshift.com/container-platform/latest/installing/"
+            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_alibaba/installing-alibaba-customizations.html"
             isBMIPI={false}
             pendoID="/"
           />
