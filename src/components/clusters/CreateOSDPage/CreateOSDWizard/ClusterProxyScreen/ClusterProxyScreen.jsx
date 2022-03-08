@@ -28,19 +28,22 @@ import {
   TRUST_BUNDLE_PLACEHOLDER,
 } from '../../CreateOSDForm/FormSections/NetworkingSection/networkingPlaceholders';
 
+import { MAX_FILE_SIZE, ACCEPT } from '../../../ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
+
 function ClusterProxyScreen({
   product,
   httpProxyUrl,
   httpsProxyUrl,
   additionalTrustBundle,
+  sendError,
 }) {
   const [anyTouched, setAnyTouched] = React.useState(false);
-  // const [hasValue, setHasValue] = React.useState(false);
   const configureProxyUrl = product === normalizedProducts.ROSA
     ? 'https://docs.openshift.com/rosa/networking/configuring-cluster-wide-proxy.html'
     : 'https://docs.openshift.com/dedicated/networking/configuring-cluster-wide-proxy.html';
 
-  const onTouched = (event, newValue, previousValue, name) => {
+  const onTouched = () => {
+    // this lets us know that one of the fields was touched
     if (!anyTouched) {
       setAnyTouched(true);
     }
@@ -81,6 +84,10 @@ function ClusterProxyScreen({
       )}
     />
   );
+
+  const onFileRejected = () => {
+    sendError();
+  };
 
   return (
     <Form
@@ -144,9 +151,15 @@ function ClusterProxyScreen({
             label="Additional trust bundle"
             placeholder={TRUST_BUNDLE_PLACEHOLDER}
             extendedHelpTitle="Additional trust bundle"
-            extendedHelpText="An additional trust bundle is a PEM-encoded X.509 certificate bundle that will be added to the nodes' trusted certificate store."
+            extendedHelpText="An additional trust bundle is a PEM encoded X.509 certificate bundle that will be added to the nodes' trusted certificate store."
             validate={[validateCA, validateAtLeastOne]}
             onBlur={onTouched}
+            dropzoneProps={{
+              accept: ACCEPT,
+              maxSize: MAX_FILE_SIZE,
+              onDropRejected: onFileRejected,
+            }}
+            helpText="Upload or paste a PEM encoded X.509 certificate."
           />
         </GridItem>
         <GridItem sm={0} md={2} xl2={4} />
@@ -163,6 +176,7 @@ ClusterProxyScreen.propTypes = {
   httpProxyUrl: PropTypes.string,
   httpsProxyUrl: PropTypes.string,
   additionalTrustBundle: PropTypes.string,
+  sendError: PropTypes.func,
 };
 
 export default ClusterProxyScreen;

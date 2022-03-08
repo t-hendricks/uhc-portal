@@ -168,45 +168,45 @@ class CreateOSDWizard extends React.Component {
         ),
         enableNext: isValid,
       },
-      {
-        name: 'Cluster settings',
-        steps: [
-          {
-            id: 21,
-            name: 'Cloud provider',
-            component: (
-              <ErrorBoundary>
-                <CloudProviderScreen />
-              </ErrorBoundary>
-            ),
-            enableNext: true, // isValid && !ccsValidationPending,
-            canJumpTo: stepIdReached >= 21,
-          },
-          {
-            id: 22,
-            name: 'Details',
-            component: (
-              <ErrorBoundary>
-                <ClusterSettingsScreen isTrialDefault={isTrialDefault} />
-              </ErrorBoundary>
-            ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 22,
-          },
-          {
-            id: 23,
-            name: 'Machine pool',
-            component: (
-              <ErrorBoundary>
-                <MachinePoolScreen isTrialDefault={isTrialDefault} />
-              </ErrorBoundary>
-            ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 23,
-          },
-        ],
-        enableNext: isValid,
-      },
+      // {
+      //   name: 'Cluster settings',
+      //   steps: [
+      //     {
+      //       id: 21,
+      //       name: 'Cloud provider',
+      //       component: (
+      //         <ErrorBoundary>
+      //           <CloudProviderScreen />
+      //         </ErrorBoundary>
+      //       ),
+      //       enableNext: true, // isValid && !ccsValidationPending,
+      //       canJumpTo: stepIdReached >= 21,
+      //     },
+      //     {
+      //       id: 22,
+      //       name: 'Details',
+      //       component: (
+      //         <ErrorBoundary>
+      //           <ClusterSettingsScreen isTrialDefault={isTrialDefault} />
+      //         </ErrorBoundary>
+      //       ),
+      //       enableNext: isValid,
+      //       canJumpTo: stepIdReached >= 22,
+      //     },
+      //     {
+      //       id: 23,
+      //       name: 'Machine pool',
+      //       component: (
+      //         <ErrorBoundary>
+      //           <MachinePoolScreen isTrialDefault={isTrialDefault} />
+      //         </ErrorBoundary>
+      //       ),
+      //       enableNext: isValid,
+      //       canJumpTo: stepIdReached >= 23,
+      //     },
+      //   ],
+      //   enableNext: isValid,
+      // },
       {
         name: 'Networking',
         enableNext: isValid,

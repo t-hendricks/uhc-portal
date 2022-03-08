@@ -47,6 +47,21 @@ class ReduxFileUpload extends React.Component {
     }
   }
 
+  handleFileRejected = (rejectedFiles, event) => {
+    const {
+      input: { onBlur }, dropzoneProps,
+    } = this.props;
+    // makes the input touched so that the validation error message is displayed
+    onBlur();
+    if (dropzoneProps && dropzoneProps.onDropRejected) {
+      dropzoneProps.onDropRejected(rejectedFiles, event);
+    }
+  };
+
+  handleClear = () => {
+    this.setState({ filename: '' });
+  };
+
   render() {
     const {
       helpText,
@@ -56,23 +71,26 @@ class ReduxFileUpload extends React.Component {
       label,
       extendedHelpTitle,
       extendedHelpText,
+      dropzoneProps,
     } = this.props;
     const {
       filename,
     } = this.state;
 
-    const helperTextInvalid = () => {
+    const helperTextInvalidText = () => {
       if ((dirty || touched) && error) {
         return error;
       }
       return '';
     };
+    const asd = FileUpload;
+    debugger;
 
     return (
       <FormGroup
         fieldId={name}
         helperText={helpText}
-        helperTextInvalid={helperTextInvalid()}
+        helperTextInvalid={helperTextInvalidText()}
         validated={(dirty || touched) && error ? 'error' : 'default'}
         label={label}
         labelIcon={extendedHelpText && (
@@ -89,6 +107,11 @@ class ReduxFileUpload extends React.Component {
           filename={filename}
           onChange={this.handleFileChange}
           validated={(dirty || touched) && error ? 'error' : 'default'}
+          onClearClick={this.handleClear}
+          dropzoneProps={{
+            ...dropzoneProps,
+            onDropRejected: this.handleFileRejected,
+          }}
         />
       </FormGroup>
     );
@@ -108,6 +131,8 @@ ReduxFileUpload.propTypes = {
   meta: PropTypes.object.isRequired,
   isRequired: PropTypes.bool,
   label: PropTypes.string,
+  placeholder: PropTypes.string,
+  dropzoneProps: PropTypes.object,
 };
 
 export default ReduxFileUpload;

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
+import { formValueSelector, change } from 'redux-form';
 
 import wizardConnector from '../WizardConnector';
 import ClusterProxyScreen from './ClusterProxyScreen';
@@ -15,4 +15,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(wizardConnector(ClusterProxyScreen));
+const mapDispatchToProps = dispatch => ({
+  sendError: () => {
+    // 'invalid file' is a magic string that triggers a validation error
+    // in src/common/validators.js validateCA function
+    dispatch(change('CreateCluster', 'additional_trust_bundle', 'invalid file'));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(wizardConnector(ClusterProxyScreen));
