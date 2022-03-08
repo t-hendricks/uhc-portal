@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UpgradeAcknowledgeLink> should show link if has unmet acknowledgements 1`] = `
+<Link
+  className="ocm-upgrade-approval__required-link"
+  to="/details/myClusterId#updateSettings"
+>
+  <ExclamationTriangleIcon
+    color="#f0ab00"
+    noVerticalAlign={false}
+    size="sm"
+  />
+  <span
+    className="pf-u-screen-reader"
+  >
+    Warning
+  </span>
+   
+  Approval required
+</Link>
+`;

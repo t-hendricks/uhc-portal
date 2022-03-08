@@ -39,7 +39,7 @@ class VersionSelectionGrid extends React.Component {
   }
 
   recommendedCards(latestInCurrMinor, latestVersion) {
-    const { selected } = this.props;
+    const { selected, getUnMetClusterAcknowledgements } = this.props;
     const latestVersionParts = versionRegEx.exec(latestVersion).groups;
     return (
       <>
@@ -52,6 +52,7 @@ class VersionSelectionGrid extends React.Component {
                     version={latestInCurrMinor}
                     onKeyDown={this.onKeyDown}
                     onClick={this.onClick}
+                    getUnMetClusterAcknowledgements={getUnMetClusterAcknowledgements}
                   >
                     The latest on your current minor version.
                   </VersionCard>
@@ -67,6 +68,7 @@ class VersionSelectionGrid extends React.Component {
                     version={latestVersion}
                     onKeyDown={this.onKeyDown}
                     onClick={this.onClick}
+                    getUnMetClusterAcknowledgements={getUnMetClusterAcknowledgements}
                   >
                     Start taking advantage of the new features
                     {' '}
@@ -82,7 +84,9 @@ class VersionSelectionGrid extends React.Component {
   }
 
   render() {
-    const { availableUpgrades, clusterVersion, selected } = this.props;
+    const {
+      availableUpgrades, clusterVersion, selected, getUnMetClusterAcknowledgements,
+    } = this.props;
 
     const latestVersion = last(availableUpgrades);
     const clusterVersionParts = versionRegEx.exec(clusterVersion).groups;
@@ -119,6 +123,7 @@ class VersionSelectionGrid extends React.Component {
                   onKeyDown={this.onKeyDown}
                   onClick={this.onClick}
                   isSelected={selected === upgradeVersion}
+                  getUnMetClusterAcknowledgements={getUnMetClusterAcknowledgements}
                 />
               </GridItem>
             ))}
@@ -135,6 +140,7 @@ VersionSelectionGrid.propTypes = {
   availableUpgrades: PropTypes.arrayOf(PropTypes.string),
   onSelect: PropTypes.func.isRequired,
   selected: PropTypes.string,
+  getUnMetClusterAcknowledgements: PropTypes.func,
 };
 
 export default VersionSelectionGrid;

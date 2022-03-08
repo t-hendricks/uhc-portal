@@ -11,6 +11,7 @@ import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import SupportStatusLabel from '../SupportStatusLabel';
 import ClusterUpdateLink from '../../../../common/ClusterUpdateLink';
 import UpgradeStatus from '../../../../common/Upgrades/UpgradeStatus';
+import UpgradeAcknowledgeLink from '../../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeLink';
 
 class ClusterVersionInfo extends React.Component {
   state = {
@@ -64,6 +65,8 @@ class ClusterVersionInfo extends React.Component {
                 openModal={openModal}
                 hideOSDUpdates={!!scheduledUpdate}
               />
+              { scheduledUpdate && scheduledUpdate.schedule_type === 'automatic' && !isUpgrading
+                ? (<UpgradeAcknowledgeLink clusterId={cluster.id} />) : null}
             </dd>
           </Flex>
           { scheduledUpdate && scheduledUpdate.schedule_type === 'manual' && (

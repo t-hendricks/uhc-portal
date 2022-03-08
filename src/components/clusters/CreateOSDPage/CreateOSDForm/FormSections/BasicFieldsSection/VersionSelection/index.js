@@ -5,7 +5,7 @@ import VersionSelection from './VersionSelection';
 import { clustersActions } from '../../../../../../../redux/actions/clustersActions';
 
 const mapDispatchToProps = dispatch => ({
-  getInstallableVersions: () => dispatch(clustersActions.getInstallableVersions()),
+  getInstallableVersions: isRosa => dispatch(clustersActions.getInstallableVersions(isRosa)),
 });
 
 const mapStateToProps = (state) => {

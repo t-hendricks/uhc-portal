@@ -919,9 +919,10 @@ const validateAWSSubnet = (value, allValues, formProps, name) => {
     }
 
     const allInfos = awsVPCSubnetInfos(allValues, vpcs.data.bySubnetID);
-    const usedVPCs = new Set(allInfos.map(info => info.vpc_name));
+    const usedVPCs = new Set(allInfos.map(info => info.vpc_id));
     if (usedVPCs.size > 1) {
-      return `All subnets must belong to the same VPC (provided subnet VPC: ${subnetInfo.vpc_name}).`;
+      const vpc = subnetInfo.vpc_name || subnetInfo.vpc_id; // prefer Name tag, not always available
+      return `All subnets must belong to the same VPC (provided subnet VPC: ${vpc}).`;
     }
 
     // private_subnet_id_2, public_subnet_id_2 -> az_2.

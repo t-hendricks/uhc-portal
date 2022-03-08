@@ -119,8 +119,8 @@ describe('<ClusterDetails />', () => {
         .toBeCalledWith(fixtures.OCPClusterDetails.cluster.subscription.id);
     });
 
-    it('should show Insights Advisor tab', () => {
-      expect(wrapper.find('TabsRow').props().displayInsightsTab).toBe(true);
+    it('should not show Insights Advisor tab', () => {
+      expect(wrapper.find('TabsRow').props().displayInsightsTab).toBe(false);
     });
   });
 
