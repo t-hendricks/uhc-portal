@@ -30,6 +30,8 @@ const parseEnvQueryParam = () => {
     const [key, val] = queryString.split('=');
     if (key === 'env' && !!configs[val]) {
       ret = val;
+    } else if (key === 'env' && val === 'mockdata' && !!configs.mockserver) {
+      ret = 'mockserver';
     }
   });
   return ret;
