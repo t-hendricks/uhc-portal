@@ -1,6 +1,15 @@
 /* eslint-disable max-len */
 
-const splitMajorMinor = version => version.split('.').map(num => parseInt(num, 10)); // returns [major, minor]
+const splitMajorMinor = (version) => {
+  let versionArray = [];
+  try {
+    versionArray = version.split('.').map(num => parseInt(num, 10));
+  } catch (error) {
+    return [];
+  }
+
+  return versionArray;
+};
 
 const isSTSCluster = state => state.clusters.details.cluster.aws?.sts?.role_arn && state.clusters.details.cluster.aws?.sts?.role_arn !== '';
 
@@ -34,11 +43,18 @@ export const getClusterAcks = (state, upgradeVersion) => {
   const [toMajor, toMinor] = splitMajorMinor(toVersion);
   const [fromMajor, fromMinor] = splitMajorMinor(fromVersion);
 
+  if (!toMajor || !toMinor || !fromMajor || !fromMinor) {
+    return [[], []];
+  }
+
   const possibleGates = upgradeGates.filter((gate) => {
     if (gate.sts_only && !isSTSCluster(state)) {
       return false;
     }
     const [gateMajor, gateMinor] = splitMajorMinor(gate.version_raw_id_prefix);
+    if (!gateMajor || !gateMinor) {
+      return false;
+    }
     return (gateMajor > fromMajor && gateMajor <= toMajor) || (gateMajor === fromMajor && gateMinor > fromMinor && gateMinor <= toMinor);
   });
 
