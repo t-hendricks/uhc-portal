@@ -367,18 +367,12 @@ const validateUrl = (value, protocol = 'http') => {
   return undefined;
 };
 
-const validateCA = (value, allValues, props, name) => {
+const validateCA = (value) => {
   if (!value) {
     return undefined;
   }
   if (value === 'invalid file') {
     return 'Must be a PEM encoded X.509 file (.pem, .crt, .ca, .cert) and no larger than 4 MB';
-  }
-  if (!value.startsWith('-----BEGIN CERTIFICATE-----')) {
-    return 'Invalid certificate';
-  }
-  if (!value.endsWith('-----END CERTIFICATE-----')) {
-    return 'Invalid certificate';
   }
   return undefined;
 };

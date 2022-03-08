@@ -19,19 +19,13 @@ function NetworkScreen(props) {
   const {
     change,
     privateClusterSelected,
-    // showClusterPrivacy,
+    showClusterPrivacy,
     showVPCCheckbox,
-    // cloudProviderID,
+    cloudProviderID,
     privateLinkSelected,
     forcePrivateLink,
     configureProxySelected,
   } = props;
-
-  console.log(`privateLinkSelected: ${privateLinkSelected}`);
-  console.log(`configureProxySelected: ${configureProxySelected}`);
-
-  const showClusterPrivacy = true;
-  const cloudProviderID = 'aws';
 
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
@@ -55,7 +49,9 @@ function NetworkScreen(props) {
     if (checked) {
       change('install_to_vpc', true);
     }
-  }
+  };
+
+  const privateLinkAndClusterSelected = privateLinkSelected && privateClusterSelected;
 
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
@@ -157,7 +153,7 @@ function NetworkScreen(props) {
                   component={ReduxCheckbox}
                   name="install_to_vpc"
                   label="Install into an existing VPC"
-                  isDisabled={(privateLinkSelected && privateClusterSelected || configureProxySelected)}
+                  isDisabled={(privateLinkAndClusterSelected || configureProxySelected)}
                 />
                 <FormFieldGroup>
                   {privateClusterSelected && cloudProviderID === 'aws' && (

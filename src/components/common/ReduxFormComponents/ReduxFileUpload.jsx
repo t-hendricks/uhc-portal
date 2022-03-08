@@ -83,8 +83,6 @@ class ReduxFileUpload extends React.Component {
       }
       return '';
     };
-    const asd = FileUpload;
-    debugger;
 
     return (
       <FormGroup
