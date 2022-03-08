@@ -96,11 +96,27 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
       enabled: true,
     };
     if (actualCloudProviderID === 'aws') {
-      clusterRequest.aws = {
-        access_key_id: formData.access_key_id,
-        account_id: formData.account_id,
-        secret_access_key: formData.secret_access_key,
-      };
+      if (actualProduct === 'ROSA') {
+        // STS credentials
+        clusterRequest.aws = {
+          account_id: formData.associated_aws_id,
+          sts: {
+            role_arn: formData.installer_role_arn,
+            support_role_arn: formData.support_role_arn,
+            instance_iam_roles: {
+              master_role_arn: formData.control_plane_role_arn,
+              worker_role_arn: formData.worker_role_arn,
+            },
+          },
+        };
+      } else {
+        // AWS CCS credentials
+        clusterRequest.aws = {
+          access_key_id: formData.access_key_id,
+          account_id: formData.account_id,
+          secret_access_key: formData.secret_access_key,
+        };
+      }
 
       if (usePrivateLink) {
         clusterRequest.aws.private_link = true;
