@@ -1,5 +1,5 @@
 { 
-  "apiGateway": "https://$SELF_PATH$/openshift_api",
-  "insightsGateway": "https://$SELF_PATH$/openshift_api/api",
+  "apiGateway": "https://$SELF_PATH$/mockdata",
+  "insightsGateway": "https://$SELF_PATH$/mockdata/api",
   "showOldMetrics": true
 }

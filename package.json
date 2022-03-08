@@ -162,7 +162,8 @@
   "scripts": {
     "build": "webpack $(run/progress-flag-if-tty.sh)",
     "start": "webpack serve $(run/progress-flag-if-tty.sh) --env noproxy api-env=staging",
-    "startmock": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server --env api-env=mockserver' 'mockdata/mockserver.py' 'yarn insights-proxy'",
+    "start2": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND --prefix-colors=cyan,reset 'yarn dev-server --env noproxy api-env=staging' 'mockdata/mockserver.py'",
+    "startmock": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server-for-mock' 'mockdata/mockserver.py' 'yarn insights-proxy'",
     "dev-server": "webpack serve $(run/progress-flag-if-tty.sh)",
     "dev-server-for-mock": "webpack serve $(run/progress-flag-if-tty.sh) --env api-env=mockserver",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",

@@ -51,7 +51,7 @@ yarn build
 
 For a first time setup, run `make dev-env-setup`. This will ask for your `sudo` password, to add some entries to `/etc/hosts`
 
-After initial setup, run `yarn start`.
+After initial setup, run `yarn start2`.
 
 The UI will be available at https://prod.foo.redhat.com:1337/openshift/
 
@@ -62,10 +62,25 @@ UI. For this purpose we’ve created a basic mock server that sends mock
 data. It doesn’t support all actions the real backend supports, but it
 should allow you to run the UI and test basic read-only functionality.
 
-To configure the mock server with insights proxy, run `make insights-proxy-setup`
-then use `yarn startmock` to use the mock server
+* If you used bare `yarn start`, also start `mockdata/mockserver.py` in separate terminal.
+
+* If you used `yarn start2`, mockserver is already running.
+
+* (deprecated) To configure the mock server with insights proxy, run
+  `make insights-proxy-setup` then use `yarn startmock` to use the mock server.
+
+In all cases, you can switch between real backends and mockserver at any time by
+appending `?env=staging` / `?env=production` / `?env=mockserver` to URL.
 
 ### Preparing Data for Mock Backend
+
+To capture data from a real cluster, run:
+
+```
+mockdata/record-real-cluster.sh $CLUSTER_SERVICE_ID
+```
+
+(as more APIs get added, the script may need additions...)
 
 The mock backend serves the data stored in the files under the `mockdata/api` directory. There's an one-to-one mapping between API requests and the files. For example, for the request `GET /api/clusters_mgmt/v1/clusters`, the mock backend serves the file `api/clusters/mgmt/v1/clusters.json`.
 
