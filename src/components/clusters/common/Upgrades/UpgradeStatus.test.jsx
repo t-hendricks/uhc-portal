@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import UpgradeStatus from './UpgradeStatus';
-import UpdateGraph from './UpdateGraph/UpdateGraph';
 
 const schedule = {
   version: '1.2.4',
@@ -152,49 +151,6 @@ describe('<UpgradeStatus />', () => {
       });
       expect(wrapper.find('DateFormat').length).toEqual(0);
       expect(wrapper).toMatchSnapshot();
-    });
-  });
-
-  describe('correct updateVersion is sent to UpdateGraph', () => {
-    let wrapper;
-    beforeEach(() => {
-      wrapper = shallow(
-        <UpgradeStatus
-          clusterID="fake"
-          availableUpgrades={['1.2.4', '1.2.5', '1.3.2']}
-          canEdit
-          clusterVersion="1.2.3"
-          clusterVersionRawID="1.2.3"
-          scheduledUpgrade={{
-            ...schedule,
-            schedule_type: 'automatic',
-            version: '1.2.5',
-          }}
-          onCancelClick={() => { }}
-          openModal={() => { }}
-        />,
-      );
-    });
-    it('latest patch/z version is shown for automatic', () => {
-      expect(wrapper.find(UpdateGraph).props().updateVersion).toEqual('1.2.5');
-    });
-
-    it('latest minor/y version is shown for manual - unscheduled upgrade', () => {
-      wrapper.setProps({
-        scheduledUpgrade: undefined,
-      });
-      expect(wrapper.find(UpdateGraph).props().updateVersion).toEqual('1.3.2');
-    });
-
-    it('upgrade version is shown for manual - scheduled upgrade', () => {
-      wrapper.setProps({
-        scheduledUpgrade: {
-          ...schedule,
-          schedule_type: 'manual',
-          version: '1.2.5',
-        },
-      });
-      expect(wrapper.find(UpdateGraph).props().updateVersion).toEqual('1.2.5');
     });
   });
 
