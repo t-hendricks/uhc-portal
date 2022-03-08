@@ -36,7 +36,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     try:
       f = open(path, 'r')
     except OSError:
-      self.send_error(404, "File not found")
+      self.send_error(404, "File not found: %s" % path)
       return
   
     try:
