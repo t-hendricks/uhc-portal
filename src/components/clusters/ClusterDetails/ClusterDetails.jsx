@@ -359,7 +359,8 @@ class ClusterDetails extends Component {
     const displayAddOnsTab = !isClusterInstalling && !isClusterPending && !isClusterWaiting
       && cluster.managed && !isArchived;
       // "Insights Advisor" tab
-    const displayInsightsTab = !isArchived && !isUninstalledAICluster(cluster);
+      // TODO: remove the tab and the related code properly
+    const displayInsightsTab = false;
     const consoleURL = get(cluster, 'console.url');
     const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster
       && !isUninstalledAICluster(cluster);
