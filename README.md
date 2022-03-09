@@ -327,9 +327,23 @@ which tool containers will be updated/run.
 
 # Deploying
 
-The staging and production OCM sites are deployed into the Insights
-enviroments using the `push_to_insights.sh` script. This script is
+Each of the consoledot environments has a "beta" version; their original goal
+was running same app code + beta insights-chrome code.
+For OCM we're somewhat misusing prod-beta to also run different app code:
+
+| uhc-portal branch | deployed env                                         | insights-chrome | default backend |
+|-------------------|------------------------------------------------------|-----------------|-----------------|
+| `master`          | https://qaprodauth.console.redhat.com/beta/openshift | next version    | staging         |
+| `master`          | https://qaprodauth.console.redhat.com/openshift      | stable version  | staging         |
+| `candidate`       | https://console.redhat.com/beta/openshift            | next version    | production      |
+| `stable`          | https://console.redhat.com/openshift                 | stable version  | production      |
+
+On every update to the above branches, the code gets deployed into the relevant
+enviroment(s) using the `push_to_insights.sh` script. This script is
 called via git hooks. See the script for more details.
+
+So for a regular weekly deploy, we open an merge request master -> candidate,
+followed by candidate -> stable.
 
 Use `./deploy_info.js` script to check which versions are now deployed.
 If you want to monitor/debug the deploy jobs, `./deploy_info.js --json`
