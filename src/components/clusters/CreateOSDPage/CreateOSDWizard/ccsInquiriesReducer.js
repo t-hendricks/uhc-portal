@@ -50,14 +50,21 @@ export const initialState = {
  *   { name, aws_subnets: [ { subnet_id, public, availability_zone }, ...] },
  *   ...
  * ]
- * @returns { [subnet_id]: { vpc_name, subnet_id, public, availability_zone } }
+ * @returns { [subnet_id]: { vpc_id, vpc_name, subnet_id, name, public, availability_zone } }
  */
 const indexAWSVPCs = (vpcsData) => {
   const bySubnetID = {};
   vpcsData.items.forEach((vpcItem) => {
+    let vpcId = vpcItem.id;
+    let vpcName = vpcItem.name;
+    if (!vpcItem.id) {
+      // Compatibility to older API returning only id, in `name` field.
+      vpcId = vpcItem.name;
+      vpcName = undefined;
+    }
     // Work around backend currently returning empty aws_subnets as null.
     (vpcItem.aws_subnets || []).forEach((subnet) => {
-      bySubnetID[subnet.subnet_id] = { ...subnet, vpc_name: vpcItem.name };
+      bySubnetID[subnet.subnet_id] = { ...subnet, vpc_id: vpcId, vpc_name: vpcName };
     });
   });
   return bySubnetID;

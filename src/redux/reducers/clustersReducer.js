@@ -82,6 +82,10 @@ const initialState = {
     ...baseState,
     cluster: emptyCluster,
   },
+  upgradeGates: {
+    ...baseState,
+    gates: [],
+  },
 };
 
 function filterAndSortClusterVersions(versions) {
@@ -396,6 +400,29 @@ function clustersReducer(state = initialState, action) {
           fulfilled: true,
           versions: filterAndSortClusterVersions(action.payload.data.items),
         };
+        break;
+
+      case REJECTED_ACTION(clustersConstants.GET_UPGRADE_GATES):
+        draft.upgradeGates = {
+          ...initialState.upgradeGates,
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(clustersConstants.GET_UPGRADE_GATES):
+        draft.upgradeGates.pending = true;
+        break;
+
+      case FULFILLED_ACTION(clustersConstants.GET_UPGRADE_GATES):
+        draft.upgradeGates = {
+          gates: action.payload,
+          fulfilled: true,
+        };
+        break;
+
+      case clustersConstants.SET_CLUSTER_UPGRADE_GATE:
+        draft.details.cluster.upgradeGates = [
+          ...state.details.cluster.upgradeGates, { version_gate: { id: action.payload } },
+        ];
         break;
 
       default:

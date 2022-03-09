@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<VersionSelectionGrid /> should render correctly 1`] = `
+<Fragment>
+  <Title
+    className="version-select-step-title"
+    headingLevel="h3"
+    size="lg"
+  >
+    Select version
+  </Title>
+  <div
+    id="version-grid-wrapper"
+  >
+    <Grid
+      className="version-selection-grid"
+      hasGutter={true}
+    >
+      <GridItem
+        span={6}
+      >
+        <VersionCard
+          getUnMetClusterAcknowledgements={[Function]}
+          isRecommended={true}
+          isSelected={false}
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          version="4.5.21"
+        >
+          The latest on your current minor version.
+        </VersionCard>
+      </GridItem>
+    </Grid>
+  </div>
+</Fragment>
+`;
