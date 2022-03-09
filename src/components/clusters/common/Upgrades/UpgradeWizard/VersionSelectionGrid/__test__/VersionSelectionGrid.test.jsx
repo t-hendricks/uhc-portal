@@ -66,8 +66,13 @@ describe('<VersionSelectionGrid />', () => {
         availableUpgrades={['4.5.21']}
         onSelect={onSelect}
         selected={undefined}
+        getUnMetClusterAcknowledgements={() => []}
       />,
     );
+  });
+
+  it('should render correctly', () => {
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('should have recommended card for the latest version only and nothing more', () => {

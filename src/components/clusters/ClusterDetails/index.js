@@ -40,6 +40,9 @@ import { ASSISTED_INSTALLER_FEATURE } from '../../../redux/constants/featureCons
 import supportActions from './components/Support/SupportActions';
 import { getUserAccess } from '../../../redux/actions/costActions';
 
+import { getUpgradeGates } from '../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
+import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
+
 const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
   const { cloudProviders, clusterRouters } = state;
@@ -84,6 +87,7 @@ const mapStateToProps = (state, { location }) => {
     assistedInstallerEnabled: state.features[ASSISTED_INSTALLER_FEATURE],
     userAccess: state.cost.userAccess,
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
+    upgradeGates: getUpgradeGates(state),
   });
 };
 
@@ -117,6 +121,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   getSchedules,
   getUserAccess,
   addNotification,
+  fetchUpgradeGates,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

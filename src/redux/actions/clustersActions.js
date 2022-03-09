@@ -331,6 +331,7 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   let canEdit;
   let canEditOCMRoles;
   let canViewOCMRoles;
+
   const subscription = await accountsService.getSubscription(subscriptionID);
   subscription.data = normalizeSubscription(subscription.data);
 
@@ -350,6 +351,11 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
     && subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
     const cluster = await clusterService.getClusterDetails(subscription.data.cluster_id);
     cluster.data = normalizeCluster(cluster.data);
+
+    const upgradeGates = await clusterService
+      .getClusterGateAgreements(subscription.data.cluster_id);
+
+    cluster.data.upgradeGates = upgradeGates.data?.items || [];
     const canDeleteAccessReviewResponse = await authorizationsService.selfAccessReview(
       { action: 'delete', resource_type: 'Cluster', cluster_id: subscription.data.cluster_id },
     );
@@ -420,9 +426,9 @@ const getClusterStatus = clusterID => dispatch => dispatch({
   payload: clusterService.getClusterStatus(clusterID),
 });
 
-const getInstallableVersions = () => dispatch => dispatch({
+const getInstallableVersions = isRosa => dispatch => dispatch({
   type: clustersConstants.GET_CLUSTER_VERSIONS,
-  payload: clusterService.getInstallableVersions(),
+  payload: clusterService.getInstallableVersions(isRosa),
 });
 
 const clustersActions = {

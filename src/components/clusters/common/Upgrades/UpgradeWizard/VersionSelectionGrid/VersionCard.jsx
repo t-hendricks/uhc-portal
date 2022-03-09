@@ -9,8 +9,9 @@ import {
   Split,
   SplitItem,
   Button,
+  Tooltip,
 } from '@patternfly/react-core';
-import { StarIcon } from '@patternfly/react-icons';
+import { StarIcon, InfoCircleIcon } from '@patternfly/react-icons';
 import { versionRegEx } from '../../../../../../common/versionComparator';
 import ExternalLink from '../../../../../common/ExternalLink';
 
@@ -32,6 +33,14 @@ const getReleaseNotesLink = (version) => {
   );
 };
 
+const VersionAcknowledgementPopover = version => (
+  <Tooltip
+    content={`All clusters require an administrator acknowledgement before updating to OpenShift Container Platform ${version}`}
+  >
+    <Button variant="link" isInline><InfoCircleIcon /></Button>
+  </Tooltip>
+);
+
 const VersionCard = (props) => {
   const {
     isSelected,
@@ -40,7 +49,9 @@ const VersionCard = (props) => {
     onKeyDown,
     onClick,
     children,
+    getUnMetClusterAcknowledgements,
   } = props;
+
   return (
     <Card
       className="version-card"
@@ -55,6 +66,9 @@ const VersionCard = (props) => {
         <Split>
           <SplitItem>
             {version}
+            {' '}
+            {getUnMetClusterAcknowledgements(version).length > 0
+              ? VersionAcknowledgementPopover(version) : null}
           </SplitItem>
           <SplitItem isFilled />
           {isRecommended && (
@@ -85,6 +99,7 @@ VersionCard.propTypes = {
   onKeyDown: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node,
+  getUnMetClusterAcknowledgements: PropTypes.func,
 };
 
 VersionCard.defaultProps = {
