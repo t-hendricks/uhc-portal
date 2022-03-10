@@ -224,7 +224,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -631,7 +631,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -1029,7 +1029,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -1432,7 +1432,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -1856,7 +1856,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -2254,7 +2254,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -2652,7 +2652,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -3050,7 +3050,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -3458,7 +3458,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -3892,7 +3892,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -4296,7 +4296,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -4700,7 +4700,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -5110,7 +5110,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -5513,7 +5513,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -5920,7 +5920,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -6327,7 +6327,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -6719,7 +6719,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",

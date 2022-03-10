@@ -280,7 +280,7 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_COREOS_INSTALLER_LATEST}/coreos-installer_ppc64le`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: `${MIRROR_COREOS_INSTALLER_LATEST}/coreos-installer_aarch64`,
+        [operatingSystems.linux]: `${MIRROR_COREOS_INSTALLER_LATEST}/coreos-installer_arm64`,
       },
     },
   },
