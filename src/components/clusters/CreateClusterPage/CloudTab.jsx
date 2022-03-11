@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 
 import DevPreviewBadge from '../../common/DevPreviewBadge';
+import TechPreviewBadge from '../../common/TechPreviewBadge';
 import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
 import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
@@ -423,7 +424,10 @@ const runItYourself = () => {
       'Full stack automation and pre-existing infrastructure',
     ],
     [
-      <><Link to="/install/ibm-cloud">IBM Cloud</Link></>,
+      <>
+        <Link to="/install/ibm-cloud" className="pf-u-mr-xs">IBM Cloud</Link>
+        <TechPreviewBadge />
+      </>,
       'Full stack automation and pre-existing infrastructure',
     ],
     [
