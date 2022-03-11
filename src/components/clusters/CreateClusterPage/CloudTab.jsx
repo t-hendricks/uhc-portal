@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 
 import DevPreviewBadge from '../../common/DevPreviewBadge';
+import TechPreviewBadge from '../../common/TechPreviewBadge';
 import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
 import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
@@ -404,7 +405,10 @@ const runItYourself = () => {
   const columns = ['Cloud provider', 'Installation options'];
   const rows = [
     [
-      <><Link to="/install/alibaba/installer-provisioned">Alibaba</Link></>,
+      <>
+        <Link to="/install/alibaba/installer-provisioned" className="pf-u-mr-xs">Alibaba</Link>
+        <TechPreviewBadge />
+      </>,
       'Full stack automation and pre-existing infrastructure',
     ],
     [
