@@ -488,10 +488,12 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
                     to="/install/ibm-cloud"
                   >
                     IBM Cloud
                   </Link>
+                  <TechPreviewBadge />
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
               ],
@@ -1007,10 +1009,12 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
                     to="/install/ibm-cloud"
                   >
                     IBM Cloud
                   </Link>
+                  <TechPreviewBadge />
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
               ],
@@ -1465,10 +1469,12 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
                     to="/install/ibm-cloud"
                   >
                     IBM Cloud
                   </Link>
+                  <TechPreviewBadge />
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
               ],
