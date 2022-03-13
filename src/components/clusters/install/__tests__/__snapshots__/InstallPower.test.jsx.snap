@@ -39,22 +39,22 @@ exports[`InstallPower renders correctly 1`] = `
           Object {
             "buttonText": "Download RHCOS ISO",
             "name": "OCP-Download-RHCOS-ISO",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/rhcos-live.ppc64le.iso",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live.ppc64le.iso",
           },
           Object {
             "buttonText": "Download RHCOS initramfs",
             "name": "OCP-Download-RHCOS-initramfs",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/rhcos-live-initramfs.ppc64le.img",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-initramfs.ppc64le.img",
           },
           Object {
             "buttonText": "Download RHCOS kernel",
             "name": "OCP-Download-RHCOS-kernel",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/rhcos-live-kernel-ppc64le",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-kernel-ppc64le",
           },
           Object {
             "buttonText": "Download RHCOS rootfs",
             "name": "OCP-Download-RHCOS-rootfs",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest/rhcos-live-rootfs.ppc64le.img",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-rootfs.ppc64le.img",
           },
         ]
       }
