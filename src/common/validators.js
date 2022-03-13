@@ -57,15 +57,21 @@ const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 
 const AWS_KMS_SERVICE_ACCOUNT_REGEX = /^arn:aws:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
-// A valid label key must consist of alphanumeric characters, '-', '_', '/'
-// or '.', and must start and end with an alphanumeric character. e.g. 'MyName', 'my.name',
-// '123-abc', or 'my-label/is-called'
+/**
+ * A valid label key must consist of alphanumeric characters, '-', '_', '/'
+ * or '.', and must start and end with an alphanumeric character. e.g. 'MyName', 'my.name',
+ * '123-abc', or 'my-label/is-called'
+ * @see https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set
+ */
 const LABEL_KEY_REGEX = /^([A-Za-z0-9][-A-Za-z0-9_./]*)?[A-Za-z0-9]$/;
 
-// A valid label value must be an empty string or consist of alphanumeric characters, '-', '_'
-// or '.', and must start and end with an alphanumeric character. e.g. 'MyValue', or 'my_value',
-// or '12345'
-const LABEL_VALUE_REGEX = /^(([A-Za-z09][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$/;
+/**
+ * A valid label value must be an empty string or consist of alphanumeric characters, '-', '_'
+ * or '.', and must start and end with an alphanumeric character. e.g. 'MyValue', or 'my_value',
+ * or '12345'
+ * @see https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set
+ */
+const LABEL_VALUE_REGEX = /^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$/;
 
 const MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH = 32;
 
@@ -252,7 +258,7 @@ const checkMachinePoolLabels = (input) => {
     return error;
   }
 
-  const blacklist = [
+  const invalidLabels = [
     'machine.openshift.io/cluster-api-machine-role=master',
     'machine.openshift.io/cluster-api-machine-role=infra',
     'machine.openshift.io/cluster-api-machine-type=master',
@@ -261,17 +267,17 @@ const checkMachinePoolLabels = (input) => {
 
   const labels = input.split(',');
   if (labels.length) {
-    let blacklistedInput;
+    let invalidLabel;
 
     if (labels.some((label) => {
-      if (blacklist.includes(label)) {
-        blacklistedInput = label;
+      if (invalidLabels.includes(label)) {
+        invalidLabel = label;
         return true;
       }
       return false;
     })
     ) {
-      return `${blacklistedInput} is not a valid label`;
+      return `${invalidLabel} is not a valid label`;
     }
   }
 
@@ -835,14 +841,46 @@ const validateGCPServiceAccount = (content) => {
   }
 };
 
-const validateUniqueAZ = (value, allValues, _, name) => {
-  const otherAZFields = Object.keys(allValues).filter(fieldName => fieldName.startsWith('az_') && fieldName !== name);
-  const otherAZValues = otherAZFields.map(fieldName => allValues[fieldName]);
-  if (otherAZValues.includes(value)) {
-    return 'Must select 3 different AZs.';
+/**
+ * Creates a validation function for checking uniqueness within a collection of fields.
+ *
+ * @param error {string|Error} The error to return from the validation function,
+ * in case the validation fails.
+ * @param otherValuesSelector {function(string, object): (*[])} A function that
+ * selects the other fields (excluding the one currently under validation),
+ * and returns their values.
+ * It is passed two parameters; the `name` of the field currently under validation,
+ * and the `allValues` object.
+ *
+ * @returns {function(*, object, object, string): string|Error|undefined}
+ * A field-level validation function that checks uniqueness.
+ */
+const generateUniqueFieldValidator = (
+  error,
+  otherValuesSelector = () => {},
+) => (
+  value, allValues, _, name,
+) => {
+  const otherValues = otherValuesSelector(name, allValues) ?? [];
+  if (otherValues.includes(value)) {
+    return error;
   }
   return undefined;
 };
+
+const validateUniqueAZ = generateUniqueFieldValidator(
+  'Must select 3 different AZs.',
+  (currentFieldName, allValues) => Object.entries(allValues)
+    .filter(([fieldKey]) => fieldKey.startsWith('az_') && fieldKey !== currentFieldName)
+    .map(([, fieldValue]) => fieldValue),
+);
+
+const validateUniqueNodeLabel = generateUniqueFieldValidator(
+  'Each label must have a different key.',
+  (currentFieldName, allValues) => Object.entries(allValues.node_labels)
+    .filter(([fieldKey]) => !currentFieldName.includes(`[${fieldKey}]`))
+    .map(([, fieldValue]) => fieldValue.key),
+);
 
 const validateValueNotPlaceholder = placeholder => value => (value !== placeholder ? undefined : 'Field is required');
 
@@ -1004,7 +1042,23 @@ const validateHTPasswdUsername = (username) => {
   return undefined;
 };
 
-const validateLabelKey = (key) => {
+const shouldSkipLabelKeyValidation = (allValues) => {
+  const nodeLabels = allValues?.node_labels ?? [{}];
+  // filling the first and only label key/value pair is optional -it serves as a placeholder.
+  // if empty, it won't be taken into account in the request payload.
+  const [{ key: firstLabelKey, value: firstLabelValue }] = nodeLabels;
+  return (nodeLabels.length === 1 && !firstLabelKey && !firstLabelValue);
+};
+
+const validateLabelKey = (key, allValues) => {
+  if (shouldSkipLabelKeyValidation(allValues)) {
+    return undefined;
+  }
+
+  if (required(key)) {
+    return 'A valid label key must not be empty.';
+  }
+
   if (!LABEL_KEY_REGEX.test(key)) {
     return 'A valid label key must consist of alphanumeric characters, \'-\', \'_\', \'/\' or \'.\', and must start and end with an alphanumeric character.';
   }
@@ -1012,7 +1066,7 @@ const validateLabelKey = (key) => {
 };
 
 const validateLabelValue = (value) => {
-  if (!LABEL_VALUE_REGEX.test(value)) {
+  if (typeof value !== 'undefined' && !LABEL_VALUE_REGEX.test(value)) {
     return 'A valid label value must be an empty string or consist of alphanumeric characters, \'-\', \'_\' or \'.\', and must start and end with an alphanumeric character.';
   }
   return undefined;
@@ -1099,6 +1153,7 @@ export {
   validateAWSKMSKeyARN,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
+  validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,
 };
