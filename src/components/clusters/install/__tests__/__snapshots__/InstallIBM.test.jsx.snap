@@ -85,22 +85,22 @@ exports[`InstallIBM renders correctly 1`] = `
           Object {
             "buttonText": "Download RHCOS initramfs",
             "name": "OCP-Download-RHCOS-initramfs",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/rhcos-live-initramfs.s390x.img",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-initramfs.s390x.img",
           },
           Object {
             "buttonText": "Download RHCOS kernel",
             "name": "OCP-Download-RHCOS-kernel",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/rhcos-live-kernel-s390x",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-kernel-s390x",
           },
           Object {
             "buttonText": "Download RHCOS rootfs",
             "name": "OCP-Download-RHCOS-rootfs",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/rhcos-live-rootfs.s390x.img",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-rootfs.s390x.img",
           },
           Object {
             "buttonText": "Download QCOW2 image",
             "name": "OCP-Download-RHCOS-qcow2",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest/rhcos-qemu.s390x.qcow2.gz",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-qemu.s390x.qcow2.gz",
           },
         ]
       }
