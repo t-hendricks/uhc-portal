@@ -63,7 +63,7 @@ exports[`InstallOSPUPI renders correctly 1`] = `
           Object {
             "buttonText": "Download RHCOS QCOW",
             "name": "OCP-Download-RHCOS-QCOW",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-openstack.x86_64.qcow2.gz",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/rhcos-openstack.x86_64.qcow2.gz",
           },
         ]
       }
