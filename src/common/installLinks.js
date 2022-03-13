@@ -29,9 +29,6 @@ const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const OCM_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021';
 
 const links = {
-  AWS_ARM_GITHUB: 'https://github.com/openshift/ocp-on-arm',
-  AWS_ARM_DOCS: 'https://github.com/openshift/ocp-on-arm/blob/main/README.md',
-
   TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote_health_monitoring/about-remote-health-monitoring.html`,
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
   UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating-cluster.html`,
