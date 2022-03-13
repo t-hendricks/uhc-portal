@@ -89,6 +89,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -140,6 +141,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -318,6 +322,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -494,6 +505,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -547,6 +559,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -725,6 +740,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -894,6 +916,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -945,6 +968,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -1123,6 +1149,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -1297,6 +1330,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -1348,6 +1382,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -1526,6 +1563,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -1721,6 +1765,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -1772,6 +1817,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -1950,6 +1998,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -2119,6 +2174,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -2170,6 +2226,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -2348,6 +2407,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -2517,6 +2583,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -2568,6 +2635,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -2746,6 +2816,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -2915,6 +2992,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -2966,6 +3044,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -3144,6 +3225,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -3321,6 +3409,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -3374,6 +3463,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -3552,6 +3644,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -3765,6 +3864,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -3808,6 +3908,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -3986,6 +4089,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -4169,6 +4279,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -4212,6 +4323,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -4390,6 +4504,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -4573,6 +4694,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -4616,6 +4738,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -4794,6 +4919,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -4977,6 +5109,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -5026,6 +5159,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -5204,6 +5340,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -5378,6 +5521,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -5429,6 +5573,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -5607,6 +5754,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -5793,6 +5947,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -5836,6 +5991,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -6014,6 +6172,420 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                    },
+                  },
+                },
+                "ocm": Object {
+                  "stable": Object {
+                    "fallbackNavigateURL": "https://github.com/openshift-online/ocm-cli/releases/latest",
+                  },
+                },
+                "odo": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-arm64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-arm64.tar.gz",
+                    },
+                    "ppc": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz",
+                    },
+                    "s390x": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-s390x.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip",
+                    },
+                  },
+                },
+                "operator-sdk": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/operator-sdk/latest/operator-sdk-linux-aarch64.tar.gz",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/operator-sdk/latest/operator-sdk-linux-ppc64le.tar.gz",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/operator-sdk/latest/operator-sdk-linux-s390x.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/operator-sdk/latest/operator-sdk-linux-x86_64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/operator-sdk/latest/operator-sdk-darwin-x86_64.tar.gz",
+                    },
+                  },
+                },
+                "opm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/opm-linux.tar.gz",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/opm-linux.tar.gz",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/opm-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/opm-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/opm-mac.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/opm-windows.tar.gz",
+                    },
+                  },
+                },
+                "ppc64le-openshift-install": Object {
+                  "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "rhoas": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                    },
+                  },
+                },
+                "rosa": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest/rosa-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest/rosa-macosx.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest/rosa-windows.zip",
+                    },
+                  },
+                },
+                "s390x-openshift-install": Object {
+                  "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "x86_64-openshift-install": Object {
+                  "preRelease": Object {
+                    "arm": Object {
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+              }
+            }
+          />
+          <ToolAndDescriptionRows
+            channel="stable"
+            description={
+              <TextContent>
+                <Text>
+                  The "mirror" plugin for the OpenShift CLI client (oc) controls the process
+                   
+                  of mirroring all relevant container image for a full disconnected OpenShift
+                   
+                  installation in a central, declarative tool.
+                   
+                  <ExternalLink
+                    href="https://docs.openshift.com/container-platform/latest/installing/disconnected_install/installing-mirroring-disconnected.html"
+                  >
+                    Learn more
+                  </ExternalLink>
+                </Text>
+              </TextContent>
+            }
+            expanded={
+              Object {
+                "aarch64-openshift-install": false,
+                "butane": false,
+                "coreos-installer": false,
+                "crc": false,
+                "helm": false,
+                "kn": false,
+                "mirror-registry": false,
+                "oc": false,
+                "oc-mirror-plugin": false,
+                "ocm": false,
+                "ocm-api-token": false,
+                "odo": false,
+                "operator-sdk": false,
+                "opm": false,
+                "ppc64le-openshift-install": false,
+                "pull-secret": false,
+                "rhcos": false,
+                "rhoas": false,
+                "rosa": false,
+                "s390x-openshift-install": false,
+                "x86_64-openshift-install": false,
+              }
+            }
+            name="OpenShift Client (oc) mirror plugin"
+            selections={Object {}}
+            setExpanded={[Function]}
+            setSelections={[Function]}
+            tool="oc-mirror-plugin"
+            toolRefs={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "current": null,
+                },
+                "butane": Object {
+                  "current": null,
+                },
+                "coreos-installer": Object {
+                  "current": null,
+                },
+                "crc": Object {
+                  "current": null,
+                },
+                "helm": Object {
+                  "current": null,
+                },
+                "kn": Object {
+                  "current": null,
+                },
+                "mirror-registry": Object {
+                  "current": null,
+                },
+                "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
+                  "current": null,
+                },
+                "ocm": Object {
+                  "current": null,
+                },
+                "ocm-api-token": Object {
+                  "current": null,
+                },
+                "odo": Object {
+                  "current": null,
+                },
+                "operator-sdk": Object {
+                  "current": null,
+                },
+                "opm": Object {
+                  "current": null,
+                },
+                "ppc64le-openshift-install": Object {
+                  "current": null,
+                },
+                "pull-secret": Object {
+                  "current": null,
+                },
+                "rhcos": Object {
+                  "current": null,
+                },
+                "rhoas": Object {
+                  "current": null,
+                },
+                "rosa": Object {
+                  "current": null,
+                },
+                "s390x-openshift-install": Object {
+                  "current": null,
+                },
+                "x86_64-openshift-install": Object {
+                  "current": null,
+                },
+              }
+            }
+            urls={
+              Object {
+                "aarch64-openshift-install": Object {
+                  "preRelease": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac-arm64.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-install-mac.tar.gz",
+                    },
+                  },
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/openshift-install-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/openshift-install-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/openshift-install-mac.tar.gz",
+                    },
+                  },
+                },
+                "butane": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest/butane-aarch64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest/butane-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest/butane-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest/butane-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest/butane-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest/butane-windows-amd64.exe",
+                    },
+                  },
+                },
+                "coreos-installer": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_amd64",
+                    },
+                  },
+                },
+                "crc": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-amd64.pkg",
+                      "windows": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-windows-installer.zip",
+                    },
+                  },
+                },
+                "helm": Object {
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest/helm-linux-arm64",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest/helm-linux-ppc64le",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest/helm-linux-s390x",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest/helm-linux-amd64",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest/helm-darwin-amd64",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest/helm-windows-amd64.exe",
+                    },
+                  },
+                },
+                "kn": Object {
+                  "stable": Object {
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/serverless/latest/kn-linux-ppc64le.tar.gz",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/serverless/latest/kn-linux-s390x.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/serverless/latest/kn-linux-amd64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/serverless/latest/kn-macos-amd64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/serverless/latest/kn-windows-amd64.zip",
+                    },
+                  },
+                },
+                "mirror-registry": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                    },
+                  },
+                },
+                "oc": Object {
+                  "preRelease": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/openshift-client-mac-arm64.tar.gz",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-client-mac.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/openshift-client-windows.zip",
+                    },
+                  },
+                  "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/openshift-client-linux.tar.gz",
+                    },
+                    "ppc": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/openshift-client-linux.tar.gz",
+                    },
+                    "s390x": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/openshift-client-linux.tar.gz",
+                    },
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -6200,6 +6772,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -6243,6 +6816,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -6421,6 +6997,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -6592,6 +7175,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -6635,6 +7219,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -6719,7 +7306,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "coreos-installer": Object {
                   "stable": Object {
                     "arm": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_arm64",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_aarch64",
                     },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest/coreos-installer_ppc64le",
@@ -6813,6 +7400,13 @@ exports[`<DownloadsPage> renders 1`] = `
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz",
                       "mac": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-mac.tar.gz",
                       "windows": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip",
+                    },
+                  },
+                },
+                "oc-mirror-plugin": Object {
+                  "stable": Object {
+                    "x86": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -7046,6 +7640,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -7085,6 +7680,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {
@@ -7171,6 +7769,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "kn": false,
                 "mirror-registry": false,
                 "oc": false,
+                "oc-mirror-plugin": false,
                 "ocm": false,
                 "ocm-api-token": false,
                 "odo": false,
@@ -7210,6 +7809,9 @@ exports[`<DownloadsPage> renders 1`] = `
                   "current": null,
                 },
                 "oc": Object {
+                  "current": null,
+                },
+                "oc-mirror-plugin": Object {
                   "current": null,
                 },
                 "ocm": Object {

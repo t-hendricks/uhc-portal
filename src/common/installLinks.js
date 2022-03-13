@@ -151,6 +151,7 @@ const links = {
   OCM_DOCS_ROLES_AND_ACCESS: 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/index',
 
   INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/installing/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
+  INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-disconnected.html`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
@@ -175,6 +176,7 @@ const tools = {
   RHOAS: 'rhoas',
   ROSA: 'rosa',
   MIRROR_REGISTRY: 'mirror-registry',
+  OC_MIRROR_PLUGIN: 'oc-mirror-plugin',
 };
 
 const channels = {
@@ -507,6 +509,13 @@ const urls = {
     [channels.STABLE]: {
       [architectures.x86]: {
         [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_STABLE}/mirror-registry.tar.gz`,
+      },
+    },
+  },
+  [tools.OC_MIRROR_PLUGIN]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: 'https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz',
       },
     },
   },
