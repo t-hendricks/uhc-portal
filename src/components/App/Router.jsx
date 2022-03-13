@@ -35,6 +35,7 @@ import CreateOSDPage from '../clusters/CreateOSDPage';
 import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
 import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
+import ConnectedInstallArmAWSIPI from '../clusters/install/InstallArmAWSIPI';
 import InstallAWS from '../clusters/install/InstallAWS';
 import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
@@ -63,7 +64,7 @@ import ConnectedInstallIBM from '../clusters/install/InstallIBM';
 import ConnectedInstallIBMPreRelease from '../clusters/install/InstallIBMPreRelease';
 import ConnectedInstallPower from '../clusters/install/InstallPower';
 import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
-import ConnectedInstallARMPreRelease from '../clusters/install/InstallARMPreRelease';
+import ConnectedInstallArmPreRelease from '../clusters/install/InstallArmPreRelease';
 import DownloadsPage from '../downloads/DownloadsPage';
 import Tokens from '../tokens/Tokens';
 import TokensROSA from '../tokens/TokensROSA';
@@ -75,9 +76,9 @@ import withFeatureGate from '../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE, OSD_CREATION_WIZARD_FEATURE } from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
+import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
-import ConnectedInstallAwsARM from '../clusters/install/InstallAwsARM';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import CreateROSAWelcome from '../clusters/CreateROSAPage/CreateROSAWelcome';
 import EntitlementConfig from '../common/EntitlementConfig/index';
@@ -142,10 +143,11 @@ function Router({ history }) {
             <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
 
             <Route path="/install/alibaba/installer-provisioned" component={ConnectedInstallAlibaba} />
-            <Route path="/install/arm/pre-release" component={ConnectedInstallARMPreRelease} />
+            <Route path="/install/arm/pre-release" component={ConnectedInstallArmPreRelease} />
             <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
-            <Route path="/install/aws/arm" component={ConnectedInstallAwsARM} />
+            <Route path="/install/aws/arm" component={ConnectedInstallArmAWSIPI} />
+            <Route path="/install/arm" component={InstallArmBMUPI} />
             <Route path="/install/aws" component={InstallAWS} />
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />

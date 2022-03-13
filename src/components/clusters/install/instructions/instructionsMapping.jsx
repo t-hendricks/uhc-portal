@@ -42,6 +42,18 @@ const instructionsMapping = {
     },
     getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propagate).',
   },
+  armaws: {
+    cloudProvider: 'AWS (ARM)',
+    customizations: links.INSTALL_AWS_CUSTOMIZATIONS,
+    ipi: {
+      title: 'Install OpenShift on AWS with installer-provisioned ARM infrastructure',
+      docURL: links.INSTALL_AWSIPI_DOCS_LANDING,
+      installer: tools.ARMINSTALLER,
+      channel: channels.STABLE,
+      preReleasePageLink: '/install/arm/pre-release',
+    },
+    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propagate).',
+  },
   gcp: {
     cloudProvider: 'GCP',
     customizations: links.INSTALL_GCP_CUSTOMIZATIONS,
@@ -183,6 +195,43 @@ const instructionsMapping = {
       installer: tools.X86INSTALLER,
       channel: channels.STABLE,
       docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
+    },
+  },
+  armBareMetal: {
+    cloudProvider: 'ARM Bare Metal',
+    customizations: links.INSTALL_BAREMETAL_CUSTOMIZATIONS,
+    upi: {
+      title: 'Install OpenShift on ARM Bare Metal with user-provisioned infrastructure',
+      displayRHCOSSection: true,
+      rhcosLearnMoreURL: links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE,
+      rhcosDownloads:
+        [
+          {
+            buttonText: 'Download RHCOS ISO',
+            name: 'OCP-Download-RHCOS-ISO',
+            url: links.RHCOS_ARM_ISO,
+          },
+          {
+            buttonText: 'Download RHCOS kernel',
+            name: 'OCP-Download-RHCOS-kernel',
+            url: links.RHCOS_ARM_KERNEL,
+          },
+          {
+            buttonText: 'Download RHCOS initramfs',
+            name: 'OCP-Download-RHCOS-initramfs',
+            url: links.RHCOS_ARM_INITRAMFS,
+          },
+          {
+            buttonText: 'Download RHCOS rootfs',
+            name: 'OCP-Download-RHCOS-rootfs',
+            url: links.RHCOS_ARM_ROOTFS,
+          },
+        ],
+      rhcosAdditionalInstructions: 'Download the installer ISO image and the compressed metal RAW.',
+      installer: tools.ARMINSTALLER,
+      channel: channels.STABLE,
+      docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
+      preReleasePageLink: '/install/arm/pre-release',
     },
   },
   generic: {
