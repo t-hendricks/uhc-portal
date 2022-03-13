@@ -34,6 +34,7 @@ import RegisterCluster from '../clusters/RegisterCluster';
 import CreateOSDPage from '../clusters/CreateOSDPage';
 import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
+import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
 import InstallAWS from '../clusters/install/InstallAWS';
 import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
@@ -139,6 +140,7 @@ function Router({ history }) {
             <Route path="/token/show" render={() => <Tokens show />} />
             <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
 
+            <Route path="/install/alibaba/installer-provisioned" component={ConnectedInstallAlibaba} />
             <Route path="/install/arm/pre-release" component={ConnectedInstallARMPreRelease} />
             <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />

@@ -404,6 +404,10 @@ const runItYourself = () => {
   const columns = ['Cloud provider', 'Installation options'];
   const rows = [
     [
+      <><Link to="/install/alibaba/installer-provisioned">Alibaba</Link></>,
+      'Full stack automation and pre-existing infrastructure',
+    ],
+    [
       <><Link to="/install/aws">AWS (x86_64)</Link></>,
       'Full stack automation and pre-existing infrastructure',
     ],

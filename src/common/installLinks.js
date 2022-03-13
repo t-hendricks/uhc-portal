@@ -44,6 +44,8 @@ const links = {
 
   INSTALL_DOCS_ENTRY: `${DOCS_BASE}/installing/index.html`,
 
+  INSTALL_ALIBABAIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_alibaba/installing-alibaba-customizations.html`,
+
   INSTALL_AWSIPI_DOCS_LANDING: `${DOCS_BASE}/installing/installing_aws/installing-aws-account.html`,
   INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
   INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_aws/installing-aws-user-infra.html`,
