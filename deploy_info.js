@@ -166,7 +166,7 @@ const main = async () => {
       const cmd = [
         'env', 'GIT_PAGER=', 'git', 'log', ...envs.map(e => e.name),
         // Limit graph scope by omitting everything including 2 prod deploys ago.
-        '--not', 'live_stable~2', '--oneline', '--graph', '--merges',
+        '--not', 'live_stable~2', '--oneline', '--graph', '--merges', '--decorate', '--color=always',
       ];
       console.log(...cmd);
       console.log('');

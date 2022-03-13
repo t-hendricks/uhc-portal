@@ -36,10 +36,11 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
   }
 >
   <Grid
+    className="ocm-upgrade-ack-step"
     hasGutter={true}
   >
     <div
-      className="pf-l-grid pf-m-gutter"
+      className="pf-l-grid pf-m-gutter ocm-upgrade-ack-step"
     >
       <GridItem>
         <div
@@ -327,7 +328,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                   isRequired={true}
                   label={
                     <span
-                      className="ocm-upgrade-ack-modal_text-input-label"
+                      className="ocm-upgrade-ack-step_text-input-label"
                     >
                       Confirm the above by typing
                        
@@ -353,7 +354,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                           className="pf-c-form__label-text"
                         >
                           <span
-                            className="ocm-upgrade-ack-modal_text-input-label"
+                            className="ocm-upgrade-ack-step_text-input-label"
                           >
                             Confirm the above by typing
                              

@@ -16,10 +16,10 @@ const MIRROR_OSDK_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x8
 const MIRROR_OSDK_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/operator-sdk/latest';
 const MIRROR_OSDK_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/operator-sdk/latest';
 const MIRROR_OSDK_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/operator-sdk/latest';
-const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest';
-const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/latest';
-const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/latest';
-const MIRROR_RHCOS_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/latest';
+const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest';
+const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest';
+const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest';
+const MIRROR_RHCOS_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest';
 const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest';
 const MIRROR_MIRROR_REGISTRY_STABLE = 'https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0';
 
@@ -83,6 +83,7 @@ const links = {
   INSTALL_VSPHERE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html`,
   RHCOS_VSPHERE_OVA_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-vmware.x86_64.ova`,
 
+  INSTALL_IBM_CLOUD_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html`,
   INSTALL_IBMZ_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html`,
   INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm`,
   INSTALL_IBMZ_LEARN_MORE_ZVM: `${DOCS_BASE}/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z`,
@@ -150,6 +151,7 @@ const links = {
   OCM_DOCS_ROLES_AND_ACCESS: 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/index',
 
   INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/installing/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
+  INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-disconnected.html`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
@@ -174,6 +176,7 @@ const tools = {
   RHOAS: 'rhoas',
   ROSA: 'rosa',
   MIRROR_REGISTRY: 'mirror-registry',
+  OC_MIRROR_PLUGIN: 'oc-mirror-plugin',
 };
 
 const channels = {
@@ -282,7 +285,7 @@ const urls = {
         [operatingSystems.linux]: `${MIRROR_COREOS_INSTALLER_LATEST}/coreos-installer_ppc64le`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: `${MIRROR_COREOS_INSTALLER_LATEST}/coreos-installer_aarch64`,
+        [operatingSystems.linux]: `${MIRROR_COREOS_INSTALLER_LATEST}/coreos-installer_arm64`,
       },
     },
   },
@@ -506,6 +509,13 @@ const urls = {
     [channels.STABLE]: {
       [architectures.x86]: {
         [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_STABLE}/mirror-registry.tar.gz`,
+      },
+    },
+  },
+  [tools.OC_MIRROR_PLUGIN]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: 'https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz',
       },
     },
   },

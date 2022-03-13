@@ -500,6 +500,18 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
+                    to="/install/ibm-cloud"
+                  >
+                    IBM Cloud
+                  </Link>
+                  <TechPreviewBadge />
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/platform-agnostic"
                   >
                     Platform agnostic (x86_64)
@@ -1021,6 +1033,18 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
+                    to="/install/ibm-cloud"
+                  >
+                    IBM Cloud
+                  </Link>
+                  <TechPreviewBadge />
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/platform-agnostic"
                   >
                     Platform agnostic (x86_64)
@@ -1475,6 +1499,18 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   >
                     Google Cloud
                   </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    className="pf-u-mr-xs"
+                    to="/install/ibm-cloud"
+                  >
+                    IBM Cloud
+                  </Link>
+                  <TechPreviewBadge />
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
               ],
