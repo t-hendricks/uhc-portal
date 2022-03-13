@@ -41,6 +41,7 @@ import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
 import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallAzure from '../clusters/install/InstallAzure';
+import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
 import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
 import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
 import InstallGCP from '../clusters/install/InstallGCP';
@@ -161,6 +162,7 @@ function Router({ history }) {
             <Route path="/install/azure/installer-provisioned" component={ConnectedInstallAzureIPI} />
             <Route path="/install/azure/user-provisioned" component={ConnectedInstallAzureUPI} />
             <Route path="/install/azure" exact component={InstallAzure} />
+            <Route path="/install/azure-stack-hub/installer-provisioned" exact component={ConnectedInstallASHIPI} />
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />

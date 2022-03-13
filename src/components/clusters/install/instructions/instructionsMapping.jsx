@@ -104,6 +104,16 @@ const instructionsMapping = {
     installer: tools.X86INSTALLER,
     channel: channels.STABLE,
   },
+  ash: {
+    cloudProvider: 'Azure Stack Hub',
+    ipi: {
+      title: 'Install OpenShift on Azure Stack Hub with installer-provisioned infrastructure',
+      installer: tools.X86INSTALLER,
+      channel: channels.STABLE,
+      docURL: links.INSTALL_ASHIPI_GETTING_STARTED,
+    },
+    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through Azure Stack Hub but it will take some time for the DNS to propagate).',
+  },
   ibmz: {
     cloudProvider: 'IBM-Z',
     title: 'Install OpenShift on IBM Z with user-provisioned infrastructure',

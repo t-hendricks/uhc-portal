@@ -423,6 +423,10 @@ const runItYourself = () => {
       'Full stack automation and pre-existing infrastructure',
     ],
     [
+      <><Link to="/install/azure-stack-hub/installer-provisioned">Azure Stack Hub</Link></>,
+      'Full stack automation',
+    ],
+    [
       <><Link to="/install/gcp">Google Cloud</Link></>,
       'Full stack automation and pre-existing infrastructure',
     ],
