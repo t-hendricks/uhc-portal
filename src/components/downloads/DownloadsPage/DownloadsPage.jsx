@@ -585,6 +585,35 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
 
       <ToolAndDescriptionRows
         {...commonProps}
+        tool={tools.ARMINSTALLER}
+        channel={channels.STABLE}
+        name="OpenShift for ARM Installer"
+        description={(
+          <TextContent>
+            <Text>
+              Download and extract your operating system&apos;s installation program and
+              place the file in the directory where you&apos;ll store your configuration details.
+              Then, create clusters on supported ARM infrastructure using our
+              {' '}
+              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
+              {' '}
+              as a guide.
+            </Text>
+            <Text>
+              Learn how to deploy in
+              {' '}
+              <Link to="/install/aws/arm">AWS</Link>
+              , or in your
+              {' '}
+              <Link to="/install/arm">data center</Link>
+              .
+            </Text>
+          </TextContent>
+        )}
+      />
+
+      <ToolAndDescriptionRows
+        {...commonProps}
         tool={tools.IBMZINSTALLER}
         channel={channels.STABLE}
         name="OpenShift for IBM Z Installer"
@@ -629,35 +658,6 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
               Learn how to deploy in your
               {' '}
               <Link to="/install/power/user-provisioned">data center</Link>
-              .
-            </Text>
-          </TextContent>
-        )}
-      />
-
-      <ToolAndDescriptionRows
-        {...commonProps}
-        tool={tools.ARMINSTALLER}
-        channel={channels.STABLE}
-        name="OpenShift for ARM Installer"
-        description={(
-          <TextContent>
-            <Text>
-              Download and extract your operating system&apos;s installation program and
-              place the file in the directory where you&apos;ll store your configuration details.
-              Then, create clusters on supported ARM infrastructure using our
-              {' '}
-              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
-              {' '}
-              as a guide.
-            </Text>
-            <Text>
-              Learn how to deploy in
-              {' '}
-              <Link to="/install/aws/arm">AWS</Link>
-              , or in your
-              {' '}
-              <Link to="/install/arm">data center</Link>
               .
             </Text>
           </TextContent>
