@@ -125,7 +125,7 @@ exports[`<Users /> with users should render 1`] = `
                     For more information check the
                      
                     <a
-                      href="https://docs.openshift.com/container-platform/latest/authentication/understanding-authentication.html"
+                      href="https://docs.openshift.com/container-platform/4.10/authentication/understanding-authentication.html"
                     >
                       OpenShift 4 documentation
                     </a>
