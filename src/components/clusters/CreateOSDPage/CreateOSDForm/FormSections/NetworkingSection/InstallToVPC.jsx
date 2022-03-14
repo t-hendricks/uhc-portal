@@ -6,6 +6,7 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
+import links from '../../../../../../common/installLinks';
 import SubnetFields from './SubnetFields';
 import AWSSubnetFields from '../../../CreateOSDWizard/VPCScreen/AWSSubnetFields';
 import PopoverHint from '../../../../../common/PopoverHint';
@@ -33,7 +34,9 @@ function InstallToVPC({
                         Public subnets are associated with appropriate Ingress rules.
                         Private subnets need appropriate routes and tables.
                         {' '}
-                        <ExternalLink href="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-vpc.html">Learn more about installing into an existing VPC</ExternalLink>
+                        <ExternalLink href={links.INSTALL_AWS_VPC}>
+                          Learn more about installing into an existing VPC
+                        </ExternalLink>
                       </>
                   )}
                   />
@@ -82,7 +85,9 @@ function InstallToVPC({
                       <>
                         {'Your VPC must have control plane and compute subnets. The control plane subnet is where you deploy your control plane machines to. The compute subnet is where you deploy your compute machines to. '}
                         {' '}
-                        <ExternalLink href="https://docs.openshift.com/container-platform/4.6/installing/installing_gcp/installing-gcp-vpc.html">Learn more about installing into an existing VPC</ExternalLink>
+                        <ExternalLink href={links.INSTALL_GCP_VPC}>
+                          Learn more about installing into an existing VPC
+                        </ExternalLink>
                       </>
                   )}
                   />

@@ -17,6 +17,7 @@ import CustomerManagedEncryption from './FormSections/EncryptionSection/Customer
 import { constants } from './CreateOSDFormConstants';
 
 import UpgradeSettingsFields from '../../common/Upgrades/UpgradeSettingsFields';
+import links from '../../../../common/installLinks';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { required, validateGCPServiceAccount } from '../../../../common/validators';
 
@@ -312,7 +313,7 @@ class CreateOSDForm extends React.Component {
               <>
                 {constants.enableEtcdHint}
                 {' '}
-                <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
+                <ExternalLink href={links.ENCRYPTING_ETCD}>Learn more about etcd</ExternalLink>
               </>
               )}
           />
