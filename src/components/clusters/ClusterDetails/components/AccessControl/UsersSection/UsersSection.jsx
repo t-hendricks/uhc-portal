@@ -17,6 +17,7 @@ import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import links from '../../../../../../common/installLinks';
 import ErrorBox from '../../../../../common/ErrorBox';
+import ExternalLink from '../../../../../common/ExternalLink';
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';
 
 import AddUserDialog from './AddUserDialog';
@@ -153,8 +154,6 @@ class UsersSection extends React.Component {
       );
     }
 
-    const learnMoreLink = <a rel="noopener noreferrer" href={links.DEDICATED_ADMIN_ROLE} target="_blank">Learn more.</a>;
-
     const rows = hasUsers && clusterGroupUsers.users.map(userRow);
     const showSkeleton = !hasUsers && clusterGroupUsers.pending;
     const skeletonRow = {
@@ -213,7 +212,7 @@ class UsersSection extends React.Component {
           <p>
             Grant permission to manage this cluster to users defined in your identity provider.
             {' '}
-            {learnMoreLink}
+            <ExternalLink href={links.OSD_DEDICATED_ADMIN_ROLE}>Learn more.</ExternalLink>
           </p>
           { addUserResponse.error && (
             <ErrorBox message="Error adding user" response={addUserResponse} />
