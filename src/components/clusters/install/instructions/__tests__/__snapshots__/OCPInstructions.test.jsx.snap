@@ -36,14 +36,14 @@ exports[`Every OCP instruction page should render:  ARM Bare Metal 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  AWS (ARM) 1`] = `
+exports[`Every OCP instruction page should render:  AWS 1`] = `
 <Fragment>
   <Card>
     <CardBody>
       <Instructions>
         <Instruction>
           <DownloadsAndPullSecretSection
-            cloudProviderID="AWS (ARM)"
+            cloudProviderID="AWS"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -57,7 +57,7 @@ exports[`Every OCP instruction page should render:  AWS (ARM) 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="AWS (ARM)"
+            cloudProviderID="AWS"
             customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
             isBMIPI={false}
             pendoID="/"

@@ -43,7 +43,7 @@ const instructionsMapping = {
     getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propagate).',
   },
   armaws: {
-    cloudProvider: 'AWS (ARM)',
+    cloudProvider: 'AWS',
     customizations: links.INSTALL_AWS_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on AWS with installer-provisioned ARM infrastructure',
