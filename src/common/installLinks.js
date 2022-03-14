@@ -30,13 +30,30 @@ const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 const OCM_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022';
 
 const links = {
-  TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote_health_monitoring/about-remote-health-monitoring.html`,
-  SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
-  UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating-cluster.html`,
+  DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
+
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication/understanding-authentication.html`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
-  DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/administering_a_cluster/osd-admin-roles.html`,
-  AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
+  APPLYING_AUTOSCALING: `${DOCS_BASE}/machine_management/applying-autoscaling.html`,
+  AWS_SPOT_INSTANCES: `${DOCS_BASE}/machine_management/creating_machinesets/creating-machineset-aws.html#machineset-non-guaranteed-instance_creating-machineset-aws`,
+  ENCRYPTING_ETCD: `${DOCS_BASE}/security/encrypting-etcd.html`,
+  GETTING_SUPPORT: `${DOCS_BASE}/support/getting-support.html`,
+  TELEMETRY_INFORMATION: `${DOCS_BASE}/support/remote_health_monitoring/about-remote-health-monitoring.html`,
+  REMOTE_HEALTH_INSIGHTS: `${DOCS_BASE}/support/remote_health_monitoring/using-insights-to-identify-issues-with-your-cluster.html`,
+  UPDATING_CLUSTER: `${DOCS_BASE}/updating/updating-cluster.html`,
+  MIGRATING_FROM_3_TO_4: `${DOCS_BASE}/migrating_from_ocp_3_to_4/about-migrating-from-3-to-4.html`,
+  SERVERLESS_ABOUT: `${DOCS_BASE}/serverless/discover/about-serverless.html`,
+  SERVICE_MESH_ABOUT: `${DOCS_BASE}/service_mesh/v2x/ossm-architecture.html`,
+  VIRT_ABOUT: `${DOCS_BASE}/virt/about-virt.html`,
+
+  SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
+
+  OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/administering_a_cluster/osd-admin-roles.html`,
+  OSD_UNDERSTANDING_AWS: `${OSD_DOCS_BASE}/cloud_infrastructure_access/dedicated-understanding-aws.html`,
+  OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/osd_policy/osd-life-cycle.html`,
+  OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition`,
+  OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
+  OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/osd_private_connections/private-cluster.html`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
@@ -48,6 +65,7 @@ const links = {
   INSTALL_AWSIPI_DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
   INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_aws/installing-aws-user-infra.html`,
   INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html`,
+  INSTALL_AWS_VPC: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html`,
 
   INSTALL_AZUREUPI_GETTING_STARTED: 'https://github.com/openshift/installer/blob/master/docs/user/azure/install_upi.md',
   INSTALL_AZUREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-default.html`,
@@ -66,6 +84,7 @@ const links = {
   INSTALL_GCPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html`,
   INSTALL_GCPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra`,
   INSTALL_GCP_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-customizations.html`,
+  INSTALL_GCP_VPC: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-vpc.html`,
   RHCOS_GCPUPI_TAR_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-gcp.x86_64.tar.gz`,
 
   INSTALL_OSPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-installer-custom.html`,
@@ -139,7 +158,15 @@ const links = {
 
   // TODO remove once TokensROSA uses DownloadAndOSSelection for direct downloads
   ROSA_CLIENT_LATEST: MIRROR_ROSA_LATEST,
+  ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
+  ROSA_MONITORING: `${ROSA_DOCS_BASE}/monitoring/osd-understanding-the-monitoring-stack.html`,
+  ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/nodes/nodes-about-autoscaling-nodes.html`,
   ROSA_CLI_DOCS: `${ROSA_DOCS_BASE}/rosa_cli/rosa-get-started-cli.html`,
+  ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_getting_started/rosa-aws-prereqs.html`,
+  ROSA_INSTALLING: `${ROSA_DOCS_BASE}/rosa_getting_started/rosa-installing-rosa.html`,
+  ROSA_LIFE_CYCLE: `${ROSA_DOCS_BASE}/rosa_policy/rosa-life-cycle.html`,
+  ROSA_RESPONSIBILITY_MATRIX: `${ROSA_DOCS_BASE}/rosa_policy/rosa-policy-responsibility-matrix.html`,
+  ROSA_SERVICE_DEFINITION: `${ROSA_DOCS_BASE}/rosa_policy/rosa-service-definition.html`,
 
   BUTANE_DOCS: `${DOCS_BASE}/installing/install_config/installing-customizing.html`,
   COREOS_INSTALLER_DOCS: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
