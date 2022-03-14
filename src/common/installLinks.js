@@ -25,6 +25,7 @@ const MIRROR_MIRROR_REGISTRY_STABLE = 'https://developers.redhat.com/content-gat
 
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.10';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
+const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 
 const OCM_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022';
 
@@ -138,7 +139,7 @@ const links = {
 
   // TODO remove once TokensROSA uses DownloadAndOSSelection for direct downloads
   ROSA_CLIENT_LATEST: MIRROR_ROSA_LATEST,
-  ROSA_DOCS: 'https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html',
+  ROSA_CLI_DOCS: `${ROSA_DOCS_BASE}/rosa_cli/rosa-get-started-cli.html`,
 
   BUTANE_DOCS: `${DOCS_BASE}/installing/install_config/installing-customizing.html`,
   COREOS_INSTALLER_DOCS: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
