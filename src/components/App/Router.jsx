@@ -47,7 +47,7 @@ import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
 import InstallGCP from '../clusters/install/InstallGCP';
 import ConnectedInstallGCPIPI from '../clusters/install/InstallGCPIPI';
 import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
-import InstallIBMCloud from '../clusters/install/InstallIBMCloud';
+import ConnectedInstallIBMCloud from '../clusters/install/InstallIBMCloud';
 import InstallOSP from '../clusters/install/InstallOSP';
 import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
 import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
@@ -169,7 +169,7 @@ function Router({ history }) {
             <Route path="/install/vsphere" exact component={InstallVSphere} />
             <Route path="/install/vsphere/user-provisioned" component={ConnectedInstallVSphereUPI} />
             <Route path="/install/vsphere/installer-provisioned" component={ConnectedInstallVSphereIPI} />
-            <Route path="/install/ibm-cloud" component={InstallIBMCloud} />
+            <Route path="/install/ibm-cloud" component={ConnectedInstallIBMCloud} />
             <Route path="/install/ibmz/user-provisioned" component={ConnectedInstallIBM} />
             <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMPreRelease} />
             <Route path="/install/power/user-provisioned" component={ConnectedInstallPower} />
