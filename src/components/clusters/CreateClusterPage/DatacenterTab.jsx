@@ -17,6 +17,8 @@ const ocpTableRows = [
     'Full stack automation and pre-existing infrastructure'],
   [(<><Link to="/install/arm">Bare Metal (ARM)</Link></>),
     'Pre-existing infrastructure'],
+  [(<><Link to="/install/azure-stack-hub/installer-provisioned">Azure Stack Hub</Link></>),
+    'Full stack automation'],
   [(<><Link to="/install/ibmz/user-provisioned">IBM Z</Link></>),
     'Pre-existing infrastructure'],
   [(<><Link to="/install/power/user-provisioned">Power</Link></>),
