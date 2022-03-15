@@ -112,7 +112,6 @@ const instructionsMapping = {
       channel: channels.STABLE,
       docURL: links.INSTALL_ASHIPI_GETTING_STARTED,
     },
-    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through Azure Stack Hub but it will take some time for the DNS to propagate).',
   },
   ibmz: {
     cloudProvider: 'IBM-Z',
