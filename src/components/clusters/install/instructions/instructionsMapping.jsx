@@ -19,8 +19,8 @@ import links, { tools, channels } from '../../../../common/installLinks';
  */
 const instructionsMapping = {
   alibaba: {
-    cloudProvider: 'Alibaba',
-    title: 'Install OpenShift on Alibaba with installer-provisioned infrastructure',
+    cloudProvider: 'Alibaba Cloud',
+    title: 'Install OpenShift on Alibaba Cloud with installer-provisioned infrastructure',
     docURL: links.INSTALL_ALIBABAIPI_DOCS_LANDING,
     installer: tools.X86INSTALLER,
     channel: channels.STABLE,

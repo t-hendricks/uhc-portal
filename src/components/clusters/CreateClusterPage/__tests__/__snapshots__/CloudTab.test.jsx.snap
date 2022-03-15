@@ -449,7 +449,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                     className="pf-u-mr-xs"
                     to="/install/alibaba/installer-provisioned"
                   >
-                    Alibaba
+                    Alibaba Cloud
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
@@ -980,7 +980,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                     className="pf-u-mr-xs"
                     to="/install/alibaba/installer-provisioned"
                   >
-                    Alibaba
+                    Alibaba Cloud
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
@@ -1450,7 +1450,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                     className="pf-u-mr-xs"
                     to="/install/alibaba/installer-provisioned"
                   >
-                    Alibaba
+                    Alibaba Cloud
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,

@@ -405,7 +405,7 @@ const runItYourself = () => {
   const rows = [
     [
       <>
-        <Link to="/install/alibaba/installer-provisioned" className="pf-u-mr-xs">Alibaba</Link>
+        <Link to="/install/alibaba/installer-provisioned" className="pf-u-mr-xs">Alibaba Cloud</Link>
         <TechPreviewBadge />
       </>,
       'Full stack automation and pre-existing infrastructure',

@@ -148,7 +148,7 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  Alibaba 1`] = `
+exports[`Every OCP instruction page should render:  Alibaba Cloud 1`] = `
 <Fragment>
   <Card>
     <CardBody>
@@ -156,7 +156,7 @@ exports[`Every OCP instruction page should render:  Alibaba 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Alibaba"
+            cloudProviderID="Alibaba Cloud"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -170,7 +170,7 @@ exports[`Every OCP instruction page should render:  Alibaba 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="Alibaba"
+            cloudProviderID="Alibaba Cloud"
             customizations=""
             docURL="https://docs.openshift.com/container-platform/latest/installing/installing_alibaba/installing-alibaba-customizations.html"
             isBMIPI={false}
