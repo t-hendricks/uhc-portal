@@ -488,16 +488,6 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/azure-stack-hub/installer-provisioned"
-                  >
-                    Azure Stack Hub
-                  </Link>
-                </React.Fragment>,
-                "Full stack automation",
-              ],
-              Array [
-                <React.Fragment>
-                  <Link
                     to="/install/gcp"
                   >
                     Google Cloud
@@ -1029,16 +1019,6 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/azure-stack-hub/installer-provisioned"
-                  >
-                    Azure Stack Hub
-                  </Link>
-                </React.Fragment>,
-                "Full stack automation",
-              ],
-              Array [
-                <React.Fragment>
-                  <Link
                     to="/install/gcp"
                   >
                     Google Cloud
@@ -1505,16 +1485,6 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
-              ],
-              Array [
-                <React.Fragment>
-                  <Link
-                    to="/install/azure-stack-hub/installer-provisioned"
-                  >
-                    Azure Stack Hub
-                  </Link>
-                </React.Fragment>,
-                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
