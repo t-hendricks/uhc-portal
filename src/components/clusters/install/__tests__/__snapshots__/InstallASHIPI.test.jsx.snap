@@ -30,7 +30,7 @@ exports[`InstallASHIPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="ash"
-      docURL="https://docs.openshift.com/container-platform/latest/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html"
+      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
       title="Install OpenShift on Azure Stack Hub with installer-provisioned infrastructure"
