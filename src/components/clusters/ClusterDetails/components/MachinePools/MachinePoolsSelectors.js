@@ -24,7 +24,7 @@ const hasMachinePoolsQuotaSelector = (state) => {
       return false;
     }
 
-    const resourceName = machineType.resource_name;
+    const resourceName = machineType.generic_name;
 
     const quotaParams = {
       product: cluster?.subscription?.plan?.type,
