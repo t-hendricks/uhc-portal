@@ -22,7 +22,7 @@ exports[`Every OCP instruction page should render:  ARM Bare Metal 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="ARM Bare Metal"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -58,7 +58,7 @@ exports[`Every OCP instruction page should render:  AWS 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="AWS"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-customizations.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -95,8 +95,8 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="AWS"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-account.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-account.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -133,8 +133,8 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="AWS"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-user-infra.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-user-infra.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -172,7 +172,7 @@ exports[`Every OCP instruction page should render:  Alibaba Cloud 1`] = `
           <GetStarted
             cloudProviderID="Alibaba Cloud"
             customizations=""
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_alibaba/installing-alibaba-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_alibaba/installing-alibaba-customizations.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -245,8 +245,8 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="Azure"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-default.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_azure/installing-azure-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure/installing-azure-default.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -283,7 +283,7 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="Azure"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-customizations.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_azure/installing-azure-customizations.html"
             docURL="https://github.com/openshift/installer/blob/master/docs/user/azure/install_upi.md"
             isBMIPI={false}
             pendoID="/"
@@ -321,8 +321,8 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="Bare Metal"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -360,8 +360,8 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="Bare Metal"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -398,8 +398,8 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="GCP"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-account.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-account.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -437,8 +437,8 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="GCP"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_gcp/installing-gcp-user-infra.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-user-infra.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -476,7 +476,7 @@ exports[`Every OCP instruction page should render:  IBM Cloud 1`] = `
           <GetStarted
             cloudProviderID="IBM Cloud"
             customizations=""
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -516,7 +516,7 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
           <GetStarted
             cloudProviderID="IBM-Z"
             customizations=""
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_z/installing-ibm-z.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -555,7 +555,7 @@ exports[`Every OCP instruction page should render:  Platform Agnostic 1`] = `
           <GetStarted
             cloudProviderID="Platform Agnostic"
             customizations=""
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_platform_agnostic/installing-platform-agnostic.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_platform_agnostic/installing-platform-agnostic.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -595,7 +595,7 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
           <GetStarted
             cloudProviderID="Power"
             customizations=""
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_power/installing-ibm-power.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_power/installing-ibm-power.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -632,8 +632,8 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
           </Text>
           <GetStarted
             cloudProviderID="Red Hat OpenStack Platform"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-installer-custom.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-installer-custom.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -671,8 +671,8 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
           </Text>
           <GetStarted
             cloudProviderID="Red Hat OpenStack Platform"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-user.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-installer-custom.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-user.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -709,8 +709,8 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
           </Text>
           <GetStarted
             cloudProviderID="Red Hat Virutalization"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-default.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-default.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -747,8 +747,8 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
           </Text>
           <GetStarted
             cloudProviderID="Red Hat Virutalization"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_rhv/installing-rhv-user-infra.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-user-infra.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -785,8 +785,8 @@ exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="VMware vSphere"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -824,8 +824,8 @@ exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="VMware vSphere"
-            customizations="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/latest/installing/installing_vsphere/installing-vsphere.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere.html"
             isBMIPI={false}
             pendoID="/"
           />

@@ -29,7 +29,7 @@ exports[`InstallPower renders correctly 1`] = `
       cloudProvider="Power"
       cloudProviderID="power"
       displayRHCOSSection={true}
-      docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_power/installing-ibm-power.html"
+      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_power/installing-ibm-power.html"
       installer="ppc64le-openshift-install"
       isBMIPI={false}
       preReleasePageLink="/install/power/pre-release"
@@ -58,7 +58,7 @@ exports[`InstallPower renders correctly 1`] = `
           },
         ]
       }
-      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power"
+      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power"
       title="Install OpenShift on Power with user-provisioned infrastructure"
       token={Object {}}
     />

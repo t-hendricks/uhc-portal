@@ -1,8 +1,7 @@
 import React from 'react';
 import InfoCircleIcon from '@patternfly/react-icons/dist/js/icons/info-circle-icon';
+import links from '../../../../../../common/installLinks';
 import ExternalLink from '../../../../../common/ExternalLink';
-
-const spotInstanceDocUrl = 'https://docs.openshift.com/container-platform/4.8/machine_management/creating_machinesets/creating-machineset-aws.html#machineset-non-guaranteed-instance_creating-machineset-aws';
 
 const isMachinePoolUsingSpotInstances = (machinePoolId, machinePoolsList) => {
   const selectedMachinePool = machinePoolsList.data.find(
@@ -17,7 +16,7 @@ const SpotInstanceInfoAlert = () => (
     {' '}
     This machine pool is using
     {' '}
-    <ExternalLink href={spotInstanceDocUrl}>
+    <ExternalLink href={links.AWS_SPOT_INSTANCES}>
       Spot instances
     </ExternalLink>
     {' '}
@@ -25,4 +24,4 @@ const SpotInstanceInfoAlert = () => (
   </>
 );
 
-export { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances, spotInstanceDocUrl };
+export { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances };

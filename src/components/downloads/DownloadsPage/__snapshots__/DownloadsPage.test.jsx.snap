@@ -73,7 +73,7 @@ exports[`<DownloadsPage> renders 1`] = `
                  
                 <ExternalLink
                   ExternalLink={true}
-                  href="https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/getting-started-cli.html"
+                  href="https://docs.openshift.com/container-platform/4.10/cli_reference/openshift_cli/getting-started-cli.html"
                 >
                   Get started
                 </ExternalLink>
@@ -1314,7 +1314,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 .
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/latest/cli_reference/kn-cli-tools.html"
+                  href="https://docs.openshift.com/container-platform/4.10/cli_reference/kn-cli-tools.html"
                 >
                   Learn more
                 </ExternalLink>
@@ -1749,7 +1749,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 , a fast, iterative, and straightforward CLI tool for developers.
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/latest/cli_reference/developer_cli_odo/understanding-odo.html"
+                  href="https://docs.openshift.com/container-platform/4.10/cli_reference/developer_cli_odo/understanding-odo.html"
                 >
                   Learn more
                 </ExternalLink>
@@ -2158,7 +2158,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 Define, install, and upgrade application packages as Helm charts using Helm 3, a package manager for Kubernetes.
                  
                 <ExternalLink
-                  href="https://access.redhat.com/documentation/en-us/openshift_container_platform/4.8/html/building_applications/working-with-helm-charts"
+                  href="https://docs.openshift.com/container-platform/4.10/applications/working_with_helm_charts/understanding-helm.html"
                 >
                   Learn more
                 </ExternalLink>
@@ -2567,7 +2567,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 Create and maintain catalogs of Operators from a list of bundles with the Operator Package Manager.
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/4.9/cli_reference/opm/cli-opm-install.html"
+                  href="https://docs.openshift.com/container-platform/4.10/cli_reference/opm/cli-opm-install.html"
                 >
                   Learn more
                 </ExternalLink>
@@ -2976,7 +2976,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 Build, test, and deploy Operators with the Operator SDK CLI.
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/container-platform/latest/cli_reference/osdk/cli-osdk-install.html"
+                  href="https://docs.openshift.com/container-platform/4.10/cli_reference/osdk/cli-osdk-install.html"
                 >
                   Learn more
                 </ExternalLink>
@@ -3828,7 +3828,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported x86_64 infrastructure using our
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/latest/installing/index.html"
+                    href="https://docs.openshift.com/container-platform/4.10/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
@@ -4250,7 +4250,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported ARM infrastructure using our
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/latest/installing/index.html"
+                    href="https://docs.openshift.com/container-platform/4.10/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
@@ -4672,7 +4672,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported IBM Z infrastructure using our
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/latest/installing/index.html"
+                    href="https://docs.openshift.com/container-platform/4.10/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
@@ -5087,7 +5087,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported Power infrastructure using our
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/latest/installing/index.html"
+                    href="https://docs.openshift.com/container-platform/4.10/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
@@ -5931,7 +5931,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and install a local, minimal single instance deployment of Red Hat Quay to aid bootstrapping the first disconnected cluster.
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/latest/installing/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images"
+                    href="https://docs.openshift.com/container-platform/4.10/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images"
                   >
                     Learn more
                   </ExternalLink>
@@ -6338,7 +6338,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   installation in a central, declarative tool.
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/latest/installing/disconnected_install/installing-mirroring-disconnected.html"
+                    href="https://docs.openshift.com/container-platform/4.10/installing/disconnected_install/installing-mirroring-disconnected.html"
                   >
                     Learn more
                   </ExternalLink>
@@ -6756,7 +6756,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Write and validate machine configs in a convenient short-hand syntax with the Butane config transpiler CLI tool.
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/latest/installing/install_config/installing-customizing.html"
+                    href="https://docs.openshift.com/container-platform/4.10/installing/install_config/installing-customizing.html"
                   >
                     Learn more
                   </ExternalLink>
@@ -7159,7 +7159,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   Download and install RHCOS disk images with the coreos-installer CLI tool.
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/latest/installing/installing_platform_agnostic/installing-platform-agnostic.html"
+                    href="https://docs.openshift.com/container-platform/4.10/installing/installing_platform_agnostic/installing-platform-agnostic.html"
                   >
                     Learn more
                   </ExternalLink>
@@ -7622,7 +7622,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   or
                    
                   <ExternalLink
-                    href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets"
+                    href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets"
                   >
                     learn more about pull secrets
                   </ExternalLink>
