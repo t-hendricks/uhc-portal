@@ -291,7 +291,7 @@ function NetworkingSection({
                       <span>
                         Follow the
                         {' '}
-                        <ExternalLink href={links.OSD_UNDERSTANDING_AWS}>
+                        <ExternalLink href={links.OSD_AWS_PRIVATE_CONNECTIONS}>
                           documentation
                         </ExternalLink>
                         {' '}
