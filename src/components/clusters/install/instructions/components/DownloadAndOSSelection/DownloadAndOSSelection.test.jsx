@@ -12,6 +12,8 @@ const testtools = [
   tools.IBMZINSTALLER,
   tools.PPCINSTALLER,
   tools.ARMINSTALLER,
+  tools.OCM,
+  tools.ROSA,
 ];
 
 const token = { auths: { foo: 'bar' } };
