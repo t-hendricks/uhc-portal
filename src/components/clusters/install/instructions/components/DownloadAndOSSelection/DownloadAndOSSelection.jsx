@@ -7,17 +7,17 @@ import {
 } from '@patternfly/react-core';
 import { has, get } from 'lodash';
 
-import DownloadButton from './DownloadButton';
+import DownloadButton from '../DownloadButton';
 import {
-  urls, tools, channels, operatingSystems,
-} from '../../../../../common/installLinks';
+  tools, channels, operatingSystems, urlsSelector, githubReleasesToFetch,
+} from '../../../../../../common/installLinks';
 import {
   detectOS,
   initialSelection,
   architecturesForToolOS,
   operatingSystemDropdown,
   architectureDropdown,
-} from '../../../../downloads/DownloadsPage/DownloadsPage';
+} from '../../../../../downloads/DownloadsPage/DownloadsPage';
 
 const crcInstructionsMapping = {
   [operatingSystems.linux]: (
@@ -44,7 +44,7 @@ const crcInstructionsMapping = {
   ),
 };
 
-const toolRow = (selections, setSelections, tool, channel, token, pendoID) => {
+const toolRow = (selections, setSelections, urls, tool, channel, token, pendoID) => {
   const { OS, architecture } = (
     selections[tool] || initialSelection(urls, tool, channel, detectOS())
   );
@@ -82,6 +82,15 @@ class DownloadAndOSSelection extends React.Component {
     selections: {}, // { [tool]: { OS, architecture} }
   }
 
+  componentDidMount() {
+    const { githubReleases, getLatestRelease } = this.props;
+    githubReleasesToFetch.forEach((repo) => {
+      if (!githubReleases[repo].fulfilled) {
+        getLatestRelease(repo);
+      }
+    });
+  }
+
   setSelections = (selections) => {
     this.setState({ selections });
   }
@@ -92,13 +101,16 @@ class DownloadAndOSSelection extends React.Component {
       pendoID,
       tool,
       channel,
+      githubReleases,
     } = this.props;
     const { selections } = this.state;
+
+    const urls = urlsSelector(githubReleases);
 
     const OS = selections[tool]?.OS || detectOS();
     const isCRC = tool === tools.CRC;
 
-    const chooser = toolRow(selections, this.setSelections, tool, channel, token, pendoID);
+    const chooser = toolRow(selections, this.setSelections, urls, tool, channel, token, pendoID);
 
     return (
       <>
@@ -124,6 +136,8 @@ DownloadAndOSSelection.propTypes = {
   pendoID: PropTypes.string,
   tool: PropTypes.oneOf(Object.values(tools)).isRequired,
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
+  githubReleases: PropTypes.object.isRequired,
+  getLatestRelease: PropTypes.func.isRequired,
 };
 
 export default DownloadAndOSSelection;
