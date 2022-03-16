@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import ExternalLink from '../../../../../common/ExternalLink';
 import DownloadAndOSSelection
   from '../../../../install/instructions/components/DownloadAndOSSelection';
-import { channels, tools } from '../../../../../../common/installLinks';
+import links, { channels, tools } from '../../../../../../common/installLinks';
 import InstructionCommand from '../../../../../common/InstructionCommand';
 
 function AuthenticateScreen({ token }) {
@@ -32,9 +32,7 @@ function AuthenticateScreen({ token }) {
                   <strong>PATH</strong>
                   .
                   {' '}
-                  <ExternalLink
-                    href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-installing-rosa.html"
-                  >
+                  <ExternalLink href={links.ROSA_INSTALLING}>
                     Help
                   </ExternalLink>
                 </Text>

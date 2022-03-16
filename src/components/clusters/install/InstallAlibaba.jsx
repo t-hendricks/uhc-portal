@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {
+  PageSection,
+} from '@patternfly/react-core';
 
-import { PageSection } from '@patternfly/react-core';
 import Breadcrumbs from '../../common/Breadcrumbs';
+import { tollboothActions } from '../../../redux/actions';
+import { scrollToTop } from '../../../common/helpers';
+import instructionsMapping from './instructions/instructionsMapping';
+import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-import { tollboothActions } from '../../../redux/actions';
-import InstructionsPreRelease from './instructions/InstructionsPreRelease';
-import { scrollToTop } from '../../../common/helpers';
-import { tools } from '../../../common/installLinks';
-
-export class InstallARMPreRelease extends Component {
+export class InstallAlibaba extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | ARM | Experimental Developer Preview Builds';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Alibaba Cloud';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -26,27 +27,31 @@ export class InstallARMPreRelease extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'ARM Pre-Release Builds' },
+        { label: 'Alibaba Cloud' },
       ]}
       />
     );
 
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4 on ARM" breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.alibaba.title} breadcrumbs={breadcrumbs} />
         <PageSection>
-          <InstructionsPreRelease token={token} installer={tools.ARMINSTALLER} />
+          <OCPInstructions
+            token={token}
+            cloudProviderID="alibaba"
+            {...instructionsMapping.alibaba}
+          />
         </PageSection>
       </>
     );
   }
 }
 
-InstallARMPreRelease.propTypes = {
+InstallAlibaba.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallARMPreRelease);
+export default connect(mapStateToProps)(InstallAlibaba);

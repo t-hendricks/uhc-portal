@@ -94,6 +94,26 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    to="/install/arm"
+                  >
+                    Bare Metal (ARM)
+                  </Link>
+                </React.Fragment>,
+                "Pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/azure-stack-hub/installer-provisioned"
+                  >
+                    Azure Stack Hub
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/ibmz/user-provisioned"
                   >
                     IBM Z
@@ -215,6 +235,26 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/arm"
+                  >
+                    Bare Metal (ARM)
+                  </Link>
+                </React.Fragment>,
+                "Pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/azure-stack-hub/installer-provisioned"
+                  >
+                    Azure Stack Hub
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>

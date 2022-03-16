@@ -54,7 +54,7 @@ class TokensROSA extends Tokens {
 
   docsLink() {
     return (
-      <ExternalLink href={links.ROSA_DOCS} noIcon>
+      <ExternalLink href={links.ROSA_CLI_DOCS} noIcon>
         read more about setting up the rosa CLI
       </ExternalLink>
     );
