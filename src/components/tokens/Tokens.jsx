@@ -38,10 +38,11 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import links from '../../common/installLinks';
+import links, { tools, channels } from '../../common/installLinks';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
 import DevPreviewBadge from '../common/DevPreviewBadge';
+import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
 import './Tokens.scss';
 
 /**
@@ -167,6 +168,8 @@ class Tokens extends React.Component {
 
   commandName = 'ocm'
 
+  commandTool = tools.OCM
+
   // Should title or breadcrumbs differ for TokensROSA?
   // Maybe but but both pages show same API token, only instructions differ,
   // so should NOT say things like "rosa token" vs "ocm-cli token".
@@ -222,16 +225,6 @@ class Tokens extends React.Component {
     );
   }
 
-  downloadLink() {
-    return (
-      <>
-        <ExternalLink href={links.OCM_CLI_LATEST} noIcon>ocm command-line tool</ExternalLink>
-        {' '}
-        <DevPreviewBadge />
-      </>
-    );
-  }
-
   tokenDetails() {
     const { offlineAccessToken } = this.state;
 
@@ -244,13 +237,24 @@ class Tokens extends React.Component {
           <ListItem>
             Download and install the
             {' '}
-            {this.downloadLink()}
+            <code>{this.commandName}</code>
+            {' '}
+            command-line tool:
+            {' '}
+            {this.commandTool === tools.OCM && <DevPreviewBadge />}
+            <Text component="p" />
+            <DownloadAndOSSelection
+              tool={this.commandTool}
+              channel={channels.STABLE}
+            />
+            <Text component="p" />
           </ListItem>
           <ListItem>
             Copy and paste the authentication command in your terminal:
+            <Text component="p" />
+            {snippetBox(offlineAccessToken, this.commandName)}
           </ListItem>
         </List>
-        {snippetBox(offlineAccessToken, this.commandName)}
 
         <Title headingLevel="h3">Need help connecting with your offline token?</Title>
         <Text component="p">
