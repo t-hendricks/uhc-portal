@@ -49,7 +49,7 @@ const links = {
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
 
   OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/administering_a_cluster/osd-admin-roles.html`,
-  OSD_UNDERSTANDING_AWS: `${OSD_DOCS_BASE}/cloud_infrastructure_access/dedicated-understanding-aws.html`,
+  OSD_UNDERSTANDING_AWS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
   OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/osd_policy/osd-life-cycle.html`,
   OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition`,
   OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
