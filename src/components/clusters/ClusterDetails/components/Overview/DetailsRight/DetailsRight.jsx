@@ -10,6 +10,7 @@ import {
 } from '@patternfly/react-core';
 
 import { OCM } from 'openshift-assisted-ui-lib';
+import links from '../../../../../../common/installLinks';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
 import ClusterNetwork from '../ClusterNetwork';
 import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
@@ -230,7 +231,9 @@ function DetailsRight({
                       <>
                         {constants.autoscaleHint}
                         {' '}
-                        <ExternalLink href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html">Learn more about autoscaling</ExternalLink>
+                        <ExternalLink href={links.APPLYING_AUTOSCALING}>
+                          Learn more about autoscaling
+                        </ExternalLink>
                       </>
                     )}
                   />

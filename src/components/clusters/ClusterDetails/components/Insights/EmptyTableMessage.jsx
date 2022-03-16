@@ -17,6 +17,8 @@ import {
 } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 
+import links from '../../../../../common/installLinks';
+
 export const RemoteHealthPopover = ({ variant }) => (
   <Popover
     position="right"
@@ -31,9 +33,8 @@ export const RemoteHealthPopover = ({ variant }) => (
           This feature uses the Remote Health functionality of OpenShift Container Platform.
           For further details about Insights, see the
           {' '}
-          <a href="https://docs.openshift.com/container-platform/latest/support/getting-support.html">
-            OpenShift documentation.
-          </a>
+          <a href={links.GETTING_SUPPORT}>OpenShift documentation</a>
+          .
         </p>
       </>
     )}
@@ -103,9 +104,7 @@ export const NoRulesMessage = () => (
           functionality of OpenShift Container Platform. For further details about Insights,
           see the
           {' '}
-          <a href="https://docs.openshift.com/container-platform/latest/support/getting-support.html">
-            OpenShift documentation
-          </a>
+          <a href={links.GETTING_SUPPORT}>OpenShift documentation</a>
           .
         </>
 )

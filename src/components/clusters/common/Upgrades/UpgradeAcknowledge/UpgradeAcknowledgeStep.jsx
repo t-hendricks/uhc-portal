@@ -36,7 +36,7 @@ const UpgradeAcknowledgeStep = (props) => {
   }, [typedWord]);
 
   return (
-    <Grid hasGutter>
+    <Grid hasGutter className="ocm-upgrade-ack-step">
       <GridItem>
         <Title className="wizard-step-title" size="lg" headingLevel="h3">
           1. Review and prevent update issues
@@ -83,7 +83,7 @@ const UpgradeAcknowledgeStep = (props) => {
           >
             <FormGroup
               label={(
-                <span className="ocm-upgrade-ack-modal_text-input-label">
+                <span className="ocm-upgrade-ack-step_text-input-label">
                   Confirm the above by typing
                   {' '}
                   <strong>{ackWord}</strong>

@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     const parsedTaints = parseReduxFormTaints(formData.taints);
 
     if (!isEmpty(parsedLabels)) {
-      machinePoolRequest.labels = parseReduxFormKeyValueList(formData.node_labels);
+      machinePoolRequest.labels = parsedLabels;
     }
 
     if (parsedTaints.length > 0) {

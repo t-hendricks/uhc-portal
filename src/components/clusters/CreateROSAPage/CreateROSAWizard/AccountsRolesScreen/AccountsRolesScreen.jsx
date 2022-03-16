@@ -15,6 +15,7 @@ import ExternalLink from '../../../../common/ExternalLink';
 import AssociateAWSAccountModal from './AssociateAWSAccountModal';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import ErrorBox from '../../../../common/ErrorBox';
+import links from '../../../../../common/installLinks';
 import { required } from '../../../../../common/validators';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
@@ -123,7 +124,7 @@ function AccountsRolesScreen({
               <>
                 The associated AWS account id will be used for ...
                 {' '}
-                <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
+                <ExternalLink href={links.ENCRYPTING_ETCD}>Learn more about etcd</ExternalLink>
               </>
               )}
             AWSAccountIDs={AWSAccountIDs}

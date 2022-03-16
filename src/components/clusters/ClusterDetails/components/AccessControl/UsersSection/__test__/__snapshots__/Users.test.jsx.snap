@@ -13,13 +13,11 @@ exports[`<Users /> should render without users 1`] = `
     <p>
       Grant permission to manage this cluster to users defined in your identity provider.
        
-      <a
+      <ExternalLink
         href="https://docs.openshift.com/dedicated/administering_a_cluster/osd-admin-roles.html"
-        rel="noopener noreferrer"
-        target="_blank"
       >
         Learn more.
-      </a>
+      </ExternalLink>
     </p>
     <ButtonWithTooltip
       className="access-control-add"
@@ -63,13 +61,11 @@ exports[`<Users /> with users should render 1`] = `
     <p>
       Grant permission to manage this cluster to users defined in your identity provider.
        
-      <a
+      <ExternalLink
         href="https://docs.openshift.com/dedicated/administering_a_cluster/osd-admin-roles.html"
-        rel="noopener noreferrer"
-        target="_blank"
       >
         Learn more.
-      </a>
+      </ExternalLink>
     </p>
     <Table
       actions={
@@ -125,7 +121,7 @@ exports[`<Users /> with users should render 1`] = `
                     For more information check the
                      
                     <a
-                      href="https://docs.openshift.com/container-platform/latest/authentication/understanding-authentication.html"
+                      href="https://docs.openshift.com/container-platform/4.10/authentication/understanding-authentication.html"
                     >
                       OpenShift 4 documentation
                     </a>

@@ -53,9 +53,9 @@ exports[`BareMetal UPI install renders correctly 1`] = `
       }
       channel="stable"
       cloudProviderID="bareMetal"
-      customizations="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
       displayRHCOSSection={true}
-      docURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html"
+      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
       rhcosAdditionalInstructions="Download the installer ISO image and the compressed metal RAW."
@@ -73,7 +73,7 @@ exports[`BareMetal UPI install renders correctly 1`] = `
           },
         ]
       }
-      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal"
+      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal"
       title="Install OpenShift on Bare Metal with user-provisioned infrastructure"
       token={Object {}}
     />

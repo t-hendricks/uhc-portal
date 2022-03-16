@@ -10,7 +10,7 @@ import ReduxCheckbox from '../../../../../../common/ReduxFormComponents/ReduxChe
 import RadioButtons from '../../../../../../common/ReduxFormComponents/RadioButtons';
 import ExternalLink from '../../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../../common/PopoverHint';
-import { spotInstanceDocUrl } from '../SpotInstanceHelper';
+import links from '../../../../../../../common/installLinks';
 
 class CostSavingSection extends React.Component {
   state = {};
@@ -118,7 +118,7 @@ class CostSavingSection extends React.Component {
                 title="Your Spot Instance may be interrupted at any time. Use Spot Instances for workloads that can tolerate interruptions."
                 isInline
               >
-                <ExternalLink href={spotInstanceDocUrl}>
+                <ExternalLink href={links.AWS_SPOT_INSTANCES}>
                   Learn more about Spot instances
                 </ExternalLink>
               </Alert>
