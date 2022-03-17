@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallIBMCloud renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "IBM Cloud",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on IBM Cloud with installer-provisioned infrastructure"
+  />
+  <PageSection>
+    <OCPInstructions
+      channel="stable"
+      cloudProvider="IBM Cloud"
+      cloudProviderID="ibmCloud"
+      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html"
+      installer="x86_64-openshift-install"
+      isBMIPI={false}
+      title="Install OpenShift on IBM Cloud with installer-provisioned infrastructure"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;

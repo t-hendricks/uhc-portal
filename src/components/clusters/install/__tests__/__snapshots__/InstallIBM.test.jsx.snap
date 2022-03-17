@@ -29,7 +29,7 @@ exports[`InstallIBM renders correctly 1`] = `
       cloudProvider="IBM-Z"
       cloudProviderID="ibmz"
       displayRHCOSSection={true}
-      docURL="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_z/installing-ibm-z.html"
+      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z.html"
       installer="s390x-openshift-install"
       isBMIPI={false}
       preReleasePageLink="/install/ibmz/pre-release"
@@ -43,7 +43,7 @@ exports[`InstallIBM renders correctly 1`] = `
                
               <Text
                 component="a"
-                href="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z"
+                href="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z"
                 rel="noreferrer noopener"
                 target="_blank"
               >
@@ -62,7 +62,7 @@ exports[`InstallIBM renders correctly 1`] = `
                
               <Text
                 component="a"
-                href="https://docs.openshift.com/container-platform/latest/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm"
+                href="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm"
                 rel="noreferrer noopener"
                 target="_blank"
               >

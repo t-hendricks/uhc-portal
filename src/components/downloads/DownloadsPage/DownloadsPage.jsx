@@ -388,7 +388,7 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             Manage your Red Hat OpenShift Service on AWS (ROSA) clusters
             from the command line using the ROSA client for OCM and AWS APIs.
             {' '}
-            <ExternalLink href={links.ROSA_DOCS}>
+            <ExternalLink href={links.ROSA_CLI_DOCS}>
               Get started
             </ExternalLink>
           </Text>

@@ -6,7 +6,9 @@ import {
 } from '@patternfly/react-core';
 
 import { constants } from '../../CreateOSDFormConstants';
+import links from '../../../../../../common/installLinks';
 import validators from '../../../../../../common/validators';
+import ExternalLink from '../../../../../common/ExternalLink';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import ReduxCheckbox from '../../../../../common/ReduxFormComponents/ReduxCheckbox';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -289,7 +291,9 @@ function NetworkingSection({
                       <span>
                         Follow the
                         {' '}
-                        <a rel="noreferrer noopener" target="_blank" href="https://docs.openshift.com/dedicated/4/cloud_infrastructure_access/dedicated-understanding-aws.html">documentation</a>
+                        <ExternalLink href={links.OSD_AWS_PRIVATE_CONNECTIONS}>
+                          documentation
+                        </ExternalLink>
                         {' '}
                         for how to do that.
                       </span>

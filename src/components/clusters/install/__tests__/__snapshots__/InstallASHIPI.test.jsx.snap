@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InstallAzureIPI renders correctly 1`] = `
+exports[`InstallASHIPI renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
@@ -15,8 +15,7 @@ exports[`InstallAzureIPI renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "Microsoft Azure",
-              "path": "/install/azure",
+              "label": "Microsoft Azure Stack Hub",
             },
             Object {
               "label": "Installer-provisioned infrastructure",
@@ -25,17 +24,16 @@ exports[`InstallAzureIPI renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift on Azure with installer-provisioned infrastructure"
+    title="Install OpenShift on Azure Stack Hub with installer-provisioned infrastructure"
   />
   <PageSection>
     <OCPInstructions
       channel="stable"
-      cloudProviderID="azure"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_azure/installing-azure-customizations.html"
-      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure/installing-azure-default.html"
+      cloudProviderID="ash"
+      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
-      title="Install OpenShift on Azure with installer-provisioned infrastructure"
+      title="Install OpenShift on Azure Stack Hub with installer-provisioned infrastructure"
       token={Object {}}
     />
   </PageSection>

@@ -41,12 +41,13 @@ import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
 import InstallBareMetal from '../clusters/install/InstallBareMetal';
 import InstallAzure from '../clusters/install/InstallAzure';
+import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
 import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
 import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
 import InstallGCP from '../clusters/install/InstallGCP';
 import ConnectedInstallGCPIPI from '../clusters/install/InstallGCPIPI';
 import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
-import InstallIBMCloud from '../clusters/install/InstallIBMCloud';
+import ConnectedInstallIBMCloud from '../clusters/install/InstallIBMCloud';
 import InstallOSP from '../clusters/install/InstallOSP';
 import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
 import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
@@ -161,13 +162,14 @@ function Router({ history }) {
             <Route path="/install/azure/installer-provisioned" component={ConnectedInstallAzureIPI} />
             <Route path="/install/azure/user-provisioned" component={ConnectedInstallAzureUPI} />
             <Route path="/install/azure" exact component={InstallAzure} />
+            <Route path="/install/azure-stack-hub/installer-provisioned" exact component={ConnectedInstallASHIPI} />
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
             <Route path="/install/vsphere" exact component={InstallVSphere} />
             <Route path="/install/vsphere/user-provisioned" component={ConnectedInstallVSphereUPI} />
             <Route path="/install/vsphere/installer-provisioned" component={ConnectedInstallVSphereIPI} />
-            <Route path="/install/ibm-cloud" component={InstallIBMCloud} />
+            <Route path="/install/ibm-cloud" component={ConnectedInstallIBMCloud} />
             <Route path="/install/ibmz/user-provisioned" component={ConnectedInstallIBM} />
             <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMPreRelease} />
             <Route path="/install/power/user-provisioned" component={ConnectedInstallPower} />

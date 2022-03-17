@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import {
   PageSection,
 } from '@patternfly/react-core';
-
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { tollboothActions } from '../../../redux/actions';
 import { scrollToTop } from '../../../common/helpers';
@@ -12,10 +11,10 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-export class InstallAlibaba extends Component {
+export class InstallASHIPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Alibaba Cloud';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Stack Hub Installer-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -27,19 +26,20 @@ export class InstallAlibaba extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'Alibaba Cloud' },
+        { label: 'Microsoft Azure Stack Hub' /* , path: '/install/azure-stack-hub' */ },
+        { label: 'Installer-provisioned infrastructure' },
       ]}
       />
     );
 
     return (
       <>
-        <PageTitle title={instructionsMapping.alibaba.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.ash.ipi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProviderID="alibaba"
-            {...instructionsMapping.alibaba}
+            cloudProviderID="ash"
+            {...instructionsMapping.ash.ipi}
           />
         </PageSection>
       </>
@@ -47,11 +47,11 @@ export class InstallAlibaba extends Component {
   }
 }
 
-InstallAlibaba.propTypes = {
+InstallASHIPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallAlibaba);
+export default connect(mapStateToProps)(InstallASHIPI);

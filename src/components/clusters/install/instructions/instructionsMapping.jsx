@@ -19,8 +19,8 @@ import links, { tools, channels } from '../../../../common/installLinks';
  */
 const instructionsMapping = {
   alibaba: {
-    cloudProvider: 'Alibaba',
-    title: 'Install OpenShift on Alibaba with installer-provisioned infrastructure',
+    cloudProvider: 'Alibaba Cloud',
+    title: 'Install OpenShift on Alibaba Cloud with installer-provisioned infrastructure',
     docURL: links.INSTALL_ALIBABAIPI_DOCS_LANDING,
     installer: tools.X86INSTALLER,
     channel: channels.STABLE,
@@ -103,6 +103,15 @@ const instructionsMapping = {
     docURL: links.INSTALL_IBM_CLOUD_GETTING_STARTED,
     installer: tools.X86INSTALLER,
     channel: channels.STABLE,
+  },
+  ash: {
+    cloudProvider: 'Azure Stack Hub',
+    ipi: {
+      title: 'Install OpenShift on Azure Stack Hub with installer-provisioned infrastructure',
+      installer: tools.X86INSTALLER,
+      channel: channels.STABLE,
+      docURL: links.INSTALL_ASHIPI_GETTING_STARTED,
+    },
   },
   ibmz: {
     cloudProvider: 'IBM-Z',
