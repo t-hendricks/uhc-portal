@@ -286,7 +286,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -704,7 +704,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -1113,7 +1113,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -1527,7 +1527,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -1962,7 +1962,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -2371,7 +2371,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -2780,7 +2780,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -3189,7 +3189,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -3608,7 +3608,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -4053,7 +4053,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -4475,7 +4475,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -4890,7 +4890,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -5305,7 +5305,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -5719,7 +5719,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -6137,7 +6137,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -6544,7 +6544,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -6962,7 +6962,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
@@ -7365,7 +7365,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "mirror-registry": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0/mirror-registry.tar.gz",
+                      "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest/mirror-registry.tar.gz",
                     },
                   },
                 },
