@@ -95,9 +95,26 @@ $ocm-c-marketing-banner--breakpoint-map: build-breakpoint-map();
         --ocm-c-marketing-banner--m-graphic-right--GridTemplateColumns
       );
     }
+  }
 
-    @media screen and (min-width: $pf-global--breakpoint--sm) and (max-width: $pf-global--breakpoint--md) {
-      --ocm-c-marketing-banner--before--Offset--left: 200px;
+  &[class*="pf-m-light-"].pf-c-page__main-section {
+    .pf-c-button.pf-m-primary {
+      color: white;
+      background-color: #{$pf-color-blue-400};
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: white;
+        background-color: #{$pf-color-blue-500};
+      }
+    }
+
+    .pf-c-button.pf-m-secondary,
+    .pf-c-button.pf-m-tertiary {
+      &::after {
+        border: 0;
+      }
     }
   }
 }
