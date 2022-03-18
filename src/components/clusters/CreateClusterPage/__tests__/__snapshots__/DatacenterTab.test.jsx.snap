@@ -109,7 +109,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
                     Azure Stack Hub
                   </Link>
                 </React.Fragment>,
-                "Full stack automation",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
@@ -254,7 +254,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
                     Azure Stack Hub
                   </Link>
                 </React.Fragment>,
-                "Full stack automation",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
