@@ -96,7 +96,7 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                 Before getting started, please review the prerequisites found in the documentation at
                  
                 <ExternalLink
-                  href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html"
+                  href="https://docs.openshift.com/rosa/rosa_planning/rosa-aws-prereqs.html"
                 >
                   AWS Prerequisites for ROSA
                 </ExternalLink>
@@ -150,7 +150,7 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                   .
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-installing-rosa.html"
+                    href="https://docs.openshift.com/rosa/rosa_getting_started/rosa_getting_started_iam/rosa-installing-rosa.html"
                   >
                     Help
                   </ExternalLink>
@@ -352,7 +352,7 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                   , view the
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/rosa/rosa_policy/rosa-service-definition.html"
+                    href="https://docs.openshift.com/rosa/rosa_architecture/rosa-service-definition.html"
                   >
                     ROSA Service Definition
                   </ExternalLink>
@@ -360,7 +360,7 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                   or
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/rosa/rosa_policy/rosa-policy-responsibility-matrix.html"
+                    href="https://docs.openshift.com/rosa/rosa_architecture/rosa-policy-responsibility-matrix.html"
                   >
                     Responsibility Assignment Matrix
                   </ExternalLink>
