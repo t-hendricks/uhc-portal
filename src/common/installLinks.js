@@ -21,7 +21,7 @@ const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest';
 const MIRROR_RHCOS_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest';
 const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest';
-const MIRROR_MIRROR_REGISTRY_STABLE = 'https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0';
+const MIRROR_MIRROR_REGISTRY_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
 
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.10';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
@@ -535,7 +535,7 @@ const urls = {
   [tools.MIRROR_REGISTRY]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_STABLE}/mirror-registry.tar.gz`,
+        [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_LATEST}/mirror-registry.tar.gz`,
       },
     },
   },
