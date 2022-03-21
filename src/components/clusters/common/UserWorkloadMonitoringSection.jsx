@@ -4,6 +4,7 @@ import {
   FormGroup, GridItem, Title,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
+import links from '../../../common/installLinks';
 import ReduxCheckbox from '../../common/ReduxFormComponents/ReduxCheckbox';
 import { constants } from '../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../common/ExternalLink';
@@ -27,7 +28,7 @@ function UserWorkloadMonitoringSection({ parent, disableUVM }) {
             <>
               {constants.enableUserWorkloadMonitoringHelp}
               {' '}
-              <ExternalLink href="https://docs.openshift.com/rosa/monitoring/osd-understanding-the-monitoring-stack.html">Learn more</ExternalLink>
+              <ExternalLink href={links.ROSA_MONITORING}>Learn more</ExternalLink>
             </>
                 )}
         />

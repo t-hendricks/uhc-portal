@@ -52,7 +52,7 @@ describe('OSD cluster tests', async () => {
       expect(CreateOSDWizardPage.clusterNameInputError).toHaveText('Cluster name is required.');
     });
 
-    it('creates an OSD cluster and navigates to its details page', async () => {
+    it('fills OSD wizard but does not really create an OSD cluster', async () => {
       await (await CreateOSDWizardPage.clusterNameInput).setValue(clusterName);
       expect(CreateOSDWizardPage.clusterNameInputError).not.toExist();
 
@@ -66,7 +66,7 @@ describe('OSD cluster tests', async () => {
       await (await CreateOSDWizardPage.primaryButton).click();
       expect(await CreateOSDWizardPage.isReviewScreen()).toBeTruthy();
 
-      // TODO disabled because fake clusters get stuck a lot
+      // TODO actual creation disabled because fake clusters get stuck a lot
       /*
       await (await CreateOSDWizardPage.primaryButton).click();
 
@@ -242,7 +242,9 @@ describe('OSD cluster tests', async () => {
     });
   });
 
-  after.skip('Finally, delete the cluster created', async () => {
+  // TODO see above - actual creation disabled because fake clusters get stuck a lot
+  /*
+  after('Finally, delete the cluster created', async () => {
     await browser.waitUntil(
       async () => ((await ClusterDetailsPage.actionsDropdownToggle).isClickable()),
       { timeout: 1 * 60 * 1000 },
@@ -253,6 +255,7 @@ describe('OSD cluster tests', async () => {
     await (await ClusterDetailsPage.deleteClusterDialogConfirm).click();
     await browser.waitUntil(ClusterListPage.isClusterListPage);
   }).timeout(8 * 60 * 1000);
+  */
 });
 
 describe('OSD Trial cluster tests', async () => {

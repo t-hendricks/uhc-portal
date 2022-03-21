@@ -4,6 +4,7 @@ import { HelpIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_Color_dark_200 } from '@patternfly/react-tokens';
 
+import links from '../../../common/installLinks';
 import ExternalLink from '../../common/ExternalLink';
 
 const InfoPopover = () => (
@@ -23,7 +24,7 @@ const InfoPopover = () => (
           This feature uses the Remote Health functionality of OpenShift Container Platform.
           For further details about Insights, see the
           {' '}
-          <ExternalLink href="https://docs.openshift.com/container-platform/latest/support/remote_health_monitoring/using-insights-to-identify-issues-with-your-cluster.html">
+          <ExternalLink href={links.REMOTE_HEALTH_INSIGHTS}>
             OpenShift documentation
           </ExternalLink>
           .

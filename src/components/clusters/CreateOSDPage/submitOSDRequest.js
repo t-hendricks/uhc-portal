@@ -63,11 +63,11 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
     clusterRequest.nodes.compute = parseInt(formData.nodes_compute, 10);
   }
 
-  const parsedLabels = parseReduxFormKeyValueList(formData.node_labels || [{}]);
-
+  const parsedLabels = parseReduxFormKeyValueList(formData.node_labels);
   if (!isEmpty(parsedLabels)) {
-    clusterRequest.nodes.compute_labels = parseReduxFormKeyValueList(formData.node_labels);
+    clusterRequest.nodes.compute_labels = parsedLabels;
   }
+
   if (config.fakeOSD) {
     clusterRequest.properties = { fake_cluster: 'true' };
   }

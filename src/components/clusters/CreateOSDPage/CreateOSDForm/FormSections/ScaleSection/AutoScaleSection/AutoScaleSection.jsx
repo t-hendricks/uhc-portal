@@ -11,6 +11,7 @@ import getMinNodesAllowed from './AutoScaleHelper';
 import ReduxCheckbox from '../../../../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../../common/PopoverHint';
+import links from '../../../../../../../common/installLinks';
 import { validateNumericInput, required } from '../../../../../../../common/validators';
 import { constants } from '../../../CreateOSDFormConstants';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
@@ -281,7 +282,8 @@ class AutoScaleSection extends React.Component {
       </>
     );
 
-    const autoScalingUrl = product === normalizedProducts.ROSA ? 'https://docs.openshift.com/rosa/nodes/nodes-about-autoscaling-nodes.html' : 'https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html';
+    const autoScalingUrl = product === normalizedProducts.ROSA ? links.ROSA_AUTOSCALING
+      : links.APPLYING_AUTOSCALING;
 
     return (
       <>

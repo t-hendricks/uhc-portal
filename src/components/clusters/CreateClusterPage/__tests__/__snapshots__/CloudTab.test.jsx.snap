@@ -446,6 +446,18 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
+                    to="/install/alibaba/installer-provisioned"
+                  >
+                    Alibaba Cloud
+                  </Link>
+                  <TechPreviewBadge />
+                </React.Fragment>,
+                "Full stack automation",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/aws"
                   >
                     AWS (x86_64)
@@ -456,14 +468,12 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    className="pf-u-mr-xs"
                     to="/install/aws/arm"
                   >
                     AWS (ARM)
                   </Link>
-                  <DevPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -484,6 +494,18 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    className="pf-u-mr-xs"
+                    to="/install/ibm-cloud"
+                  >
+                    IBM Cloud
+                  </Link>
+                  <TechPreviewBadge />
+                </React.Fragment>,
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -955,6 +977,18 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
+                    to="/install/alibaba/installer-provisioned"
+                  >
+                    Alibaba Cloud
+                  </Link>
+                  <TechPreviewBadge />
+                </React.Fragment>,
+                "Full stack automation",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/aws"
                   >
                     AWS (x86_64)
@@ -965,14 +999,12 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    className="pf-u-mr-xs"
                     to="/install/aws/arm"
                   >
                     AWS (ARM)
                   </Link>
-                  <DevPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -993,6 +1025,18 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    className="pf-u-mr-xs"
+                    to="/install/ibm-cloud"
+                  >
+                    IBM Cloud
+                  </Link>
+                  <TechPreviewBadge />
+                </React.Fragment>,
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -1403,6 +1447,18 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
+                    to="/install/alibaba/installer-provisioned"
+                  >
+                    Alibaba Cloud
+                  </Link>
+                  <TechPreviewBadge />
+                </React.Fragment>,
+                "Full stack automation",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/aws"
                   >
                     AWS (x86_64)
@@ -1413,14 +1469,12 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    className="pf-u-mr-xs"
                     to="/install/aws/arm"
                   >
                     AWS (ARM)
                   </Link>
-                  <DevPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -1441,6 +1495,18 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    className="pf-u-mr-xs"
+                    to="/install/ibm-cloud"
+                  >
+                    IBM Cloud
+                  </Link>
+                  <TechPreviewBadge />
+                </React.Fragment>,
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>

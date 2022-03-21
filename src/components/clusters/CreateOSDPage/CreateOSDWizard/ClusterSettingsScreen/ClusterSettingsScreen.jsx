@@ -22,6 +22,7 @@ import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitorin
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 
 import BasicFieldsSection from '../../CreateOSDForm/FormSections/BasicFieldsSection';
+import links from '../../../../../common/installLinks';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 function ClusterSettingsScreen({
@@ -125,7 +126,9 @@ function ClusterSettingsScreen({
                   <>
                     {constants.enableAdditionalEtcdHint}
                     {' '}
-                    <ExternalLink href="https://docs.openshift.com/dedicated/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition">Learn more about etcd encryption</ExternalLink>
+                    <ExternalLink href={links.OSD_ETCD_ENCRYPTION}>
+                      Learn more about etcd encryption
+                    </ExternalLink>
                   </>
                 )}
               />

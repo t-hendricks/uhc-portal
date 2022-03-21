@@ -31,8 +31,10 @@ const OCPInstructions = (props) => {
   const pendoID = window.location.pathname;
   const cloudProviders = [
     'aws',
+    'armaws',
     'azure',
     'gcp',
+    'ibmCloud',
   ];
   const getStartedTitleText = cloudProviders.indexOf(cloudProviderID) === -1
     ? 'Follow the instructions to configure your environment and install your cluster'

@@ -192,4 +192,28 @@ describe('Upgrade Acknowledge Selectors', () => {
 
     expect(met).toEqual([{ version_gate: { id: '3' } }, { version_gate: { id: '6' } }, { version_gate: { id: '9' } }]);
   });
+
+  it('fail gracefully if from version is unknown', () => {
+    state.clusters.details.cluster.version.raw_id = '';
+    expect(getClusterAcks(state)).toEqual([[], []]);
+    state.clusters.details.cluster.version.raw_id = undefined;
+    expect(getClusterAcks(state)).toEqual([[], []]);
+  });
+  it('fail gracefully if to version is unknown', () => {
+    state.clusters.details.cluster.version.available_upgrades = [];
+    expect(getClusterAcks(state)).toEqual([[], []]);
+    state.clusters.details.cluster.version.available_upgrades = undefined;
+    expect(getClusterAcks(state)).toEqual([[], []]);
+  });
+  it('fail gracefully if gate version is unknown', () => {
+    state.clusters.upgradeGates.gates[0].version_raw_id_prefix = '';
+    expect(getClusterAcks(state)).toEqual([[{
+      id: '2',
+      version_raw_id_prefix: '4.3',
+      title: 'upgrade to 4.3',
+      sts_only: false,
+    }], [
+      { version_gate: { id: '3' } },
+    ]]);
+  });
 });
