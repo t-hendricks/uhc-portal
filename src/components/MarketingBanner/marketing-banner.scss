@@ -66,12 +66,15 @@ $ocm-c-marketing-banner--breakpoint-map: build-breakpoint-map();
         margin-left: var(--ocm-c-marketing-banner--before--Offset--left);
         background-image: url("../../styles/images/Headers-Red_Hat-ClusterManager-O2.svg");
         background-size: var(--ocm-c-marketing-banner--before--BackgroundSize);
-        background-position-x: 600px;
         background-position-y: -200px;
         opacity: var(--ocm-c-marketing-banner--before--Opacity);
 
-        @media screen and (min-width: $pf-global--breakpoint--md) {
+        @media screen and (min-width: 768px) {
           grid-area: graphic;
+          background-position-x: 600px;
+        }
+        @media screen and (max-width: 768px) {
+          background-position-x: 800px !important;
         }
       }
     }

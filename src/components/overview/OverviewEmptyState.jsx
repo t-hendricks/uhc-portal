@@ -30,7 +30,6 @@ function OverviewEmptyState() {
         graphicRight
         dark1000
         fullBleed
-        isWidthLimited
         style={{
           '--ocm-c-marketing-banner--graphic--width-on-md': '200px',
           '--ocm-c-marketing-banner--graphic--width-on-xl': '400px',
