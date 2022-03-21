@@ -40,8 +40,10 @@ import InstallAWS from '../clusters/install/InstallAWS';
 import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
 import InstallBareMetal from '../clusters/install/InstallBareMetal';
-import InstallAzure from '../clusters/install/InstallAzure';
+import InstallASH from '../clusters/install/InstallASH';
 import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
+import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
+import InstallAzure from '../clusters/install/InstallAzure';
 import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
 import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
 import InstallGCP from '../clusters/install/InstallGCP';
@@ -163,6 +165,8 @@ function Router({ history }) {
             <Route path="/install/azure/user-provisioned" component={ConnectedInstallAzureUPI} />
             <Route path="/install/azure" exact component={InstallAzure} />
             <Route path="/install/azure-stack-hub/installer-provisioned" exact component={ConnectedInstallASHIPI} />
+            <Route path="/install/azure-stack-hub/user-provisioned" exact component={ConnectedInstallASHUPI} />
+            <Route path="/install/azure-stack-hub" exact component={InstallASH} />
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />

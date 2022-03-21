@@ -186,13 +186,14 @@ exports[`Every OCP instruction page should render:  Alibaba Cloud 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  Azure Stack Hub 1`] = `
+exports[`Every OCP instruction page should render:  Azure Stack Hub-ipi 1`] = `
 <Fragment>
   <Card>
     <CardBody>
       <Instructions>
         <Instruction>
           <DownloadsAndPullSecretSection
+            channel="stable"
             cloudProviderID="Azure Stack Hub"
             isBMIPI={false}
             pendoID="/"
@@ -208,7 +209,47 @@ exports[`Every OCP instruction page should render:  Azure Stack Hub 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="Azure Stack Hub"
-            customizations=""
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-network-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`Every OCP instruction page should render:  Azure Stack Hub-upi 1`] = `
+<Fragment>
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="Azure Stack Hub"
+            displayRHCOSSection={true}
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
+          >
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="Azure Stack Hub"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-network-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html"
             isBMIPI={false}
             pendoID="/"
           />

@@ -106,11 +106,27 @@ const instructionsMapping = {
   },
   ash: {
     cloudProvider: 'Azure Stack Hub',
+    customizations: links.INSTALL_ASH_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on Azure Stack Hub with installer-provisioned infrastructure',
       installer: tools.X86INSTALLER,
       channel: channels.STABLE,
       docURL: links.INSTALL_ASHIPI_GETTING_STARTED,
+    },
+    upi: {
+      title: 'Install OpenShift on Azure Stack Hub with user-provisioned infrastructure',
+      displayRHCOSSection: true,
+      rhcosLearnMoreURL: links.INSTALL_ASHUPI_RHCOS_LEARN_MORE,
+      rhcosDownloads: [
+        {
+          buttonText: 'Download RHCOS VHD',
+          name: 'OCP-Download-RHCOS-VHD',
+          url: links.RHCOS_ASHUPI_VHD_X86,
+        },
+      ],
+      installer: tools.X86INSTALLER,
+      channel: channels.STABLE,
+      docURL: links.INSTALL_ASHUPI_GETTING_STARTED,
     },
   },
   ibmz: {

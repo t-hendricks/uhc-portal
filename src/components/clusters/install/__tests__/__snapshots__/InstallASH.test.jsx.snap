@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallASH renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "Microsoft Azure Stack Hub",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift Container Platform 4"
+  />
+  <PageSection>
+    <InstructionsASH />
+  </PageSection>
+</Fragment>
+`;
