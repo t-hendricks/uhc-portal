@@ -408,7 +408,7 @@ const runItYourself = () => {
         <Link to="/install/alibaba/installer-provisioned" className="pf-u-mr-xs">Alibaba Cloud</Link>
         <TechPreviewBadge />
       </>,
-      'Full stack automation and pre-existing infrastructure',
+      'Full stack automation',
     ],
     [
       <><Link to="/install/aws">AWS (x86_64)</Link></>,
@@ -431,7 +431,7 @@ const runItYourself = () => {
         <Link to="/install/ibm-cloud" className="pf-u-mr-xs">IBM Cloud</Link>
         <TechPreviewBadge />
       </>,
-      'Full stack automation and pre-existing infrastructure',
+      'Full stack automation',
     ],
     [
       <><Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link></>,

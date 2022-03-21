@@ -453,7 +453,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -505,7 +505,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -984,7 +984,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -1036,7 +1036,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -1454,7 +1454,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -1506,7 +1506,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>

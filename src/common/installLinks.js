@@ -21,7 +21,7 @@ const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest';
 const MIRROR_RHCOS_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest';
 const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest';
-const MIRROR_MIRROR_REGISTRY_STABLE = 'https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/mirror-registry/1.0';
+const MIRROR_MIRROR_REGISTRY_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
 
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.10';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
@@ -161,14 +161,14 @@ const links = {
   // TODO remove once TokensROSA uses DownloadAndOSSelection for direct downloads
   ROSA_CLIENT_LATEST: MIRROR_ROSA_LATEST,
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
-  ROSA_MONITORING: `${ROSA_DOCS_BASE}/monitoring/osd-understanding-the-monitoring-stack.html`,
-  ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/nodes/nodes-about-autoscaling-nodes.html`,
+  ROSA_MONITORING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_monitoring/rosa-understanding-the-monitoring-stack.html`,
+  ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,
   ROSA_CLI_DOCS: `${ROSA_DOCS_BASE}/rosa_cli/rosa-get-started-cli.html`,
-  ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_getting_started/rosa-aws-prereqs.html`,
-  ROSA_INSTALLING: `${ROSA_DOCS_BASE}/rosa_getting_started/rosa-installing-rosa.html`,
-  ROSA_LIFE_CYCLE: `${ROSA_DOCS_BASE}/rosa_policy/rosa-life-cycle.html`,
-  ROSA_RESPONSIBILITY_MATRIX: `${ROSA_DOCS_BASE}/rosa_policy/rosa-policy-responsibility-matrix.html`,
-  ROSA_SERVICE_DEFINITION: `${ROSA_DOCS_BASE}/rosa_policy/rosa-service-definition.html`,
+  ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-aws-prereqs.html`,
+  ROSA_INSTALLING: `${ROSA_DOCS_BASE}/rosa_getting_started/rosa_getting_started_iam/rosa-installing-rosa.html`,
+  ROSA_LIFE_CYCLE: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-life-cycle.html`,
+  ROSA_RESPONSIBILITY_MATRIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-policy-responsibility-matrix.html`,
+  ROSA_SERVICE_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-service-definition.html`,
 
   BUTANE_DOCS: `${DOCS_BASE}/installing/install_config/installing-customizing.html`,
   COREOS_INSTALLER_DOCS: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
@@ -535,7 +535,7 @@ const urls = {
   [tools.MIRROR_REGISTRY]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_STABLE}/mirror-registry.tar.gz`,
+        [operatingSystems.linux]: `${MIRROR_MIRROR_REGISTRY_LATEST}/mirror-registry.tar.gz`,
       },
     },
   },
