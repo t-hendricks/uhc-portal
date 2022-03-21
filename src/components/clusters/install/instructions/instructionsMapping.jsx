@@ -246,7 +246,7 @@ const instructionsMapping = {
             url: links.RHCOS_ARM_ROOTFS,
           },
         ],
-      rhcosAdditionalInstructions: 'Download the installer ISO image and the compressed metal RAW.',
+      rhcosAdditionalInstructions: 'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
       installer: tools.ARMINSTALLER,
       channel: channels.STABLE,
       docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
