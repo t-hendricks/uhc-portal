@@ -16,6 +16,21 @@ export const getAWSIDsFromARNs = (arns) => {
   return [...new Set(ids)]; // convert to Set to remove duplicates, spread to convert back to array
 };
 
+/** Converts accountRoles object into an array of ARNs
+ * @param accountRoles object: https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3486
+ * @returns
+ * [
+ *   { Installer: 'arn:..ManagedOpenShift-Installer-Role', ControlPlane: 'arn:...' ...},
+ *   { Installer: 'arn:..croche-test-Installer-Role', ControlPlane: 'arn:...' ...}
+ * ]
+ */
+export const normalizeAWSAccountRoles = accountRoles => (accountRoles?.items || [])
+  .map(accountRole => (accountRole?.items || []).reduce((roleObj, { type, arn }) => ({
+    ...roleObj,
+    [type]: arn,
+  }),
+  { prefix: accountRole.prefix }));
+
 export const getAWSAccountIDs = organizationID => dispatch => dispatch({
   type: LIST_ASSOCIATED_AWS_IDS,
   payload: accountsService.getOrganizationLabels(organizationID).then((response) => {
@@ -34,29 +49,15 @@ export const getAWSAccountIDs = organizationID => dispatch => dispatch({
 });
 
 export const getAWSAccountRolesARNs = awsAccountID => (dispatch) => {
-  const accountRoles = { items: [] };
-  // '123456789' 1 accountRoles
-  // '234564251' 0 accountRoles
-  // '3783563258' 2 accountRoles
-  if (awsAccountID !== '234564251') {
-    accountRoles.items.push({
-      installer: `arn:aws:iam::${awsAccountID}:role/Foo-Installer-Role`,
-      support: `arn:aws:iam::${awsAccountID}:role/Foo-Support-Role`,
-      instance_controlplane: `arn:aws:iam::${awsAccountID}:role/Foo-ControlPlane-Role`,
-      instance_worker: `arn:aws:iam::${awsAccountID}:role/Foo-Worker-Role`,
-    });
-  }
-  if (awsAccountID === '3783563258') {
-    accountRoles.items.push({
-      installer: `arn:aws:iam::${awsAccountID}:role/Bar-Installer-Role`,
-      support: `arn:aws:iam::${awsAccountID}:role/Bar-Support-Role`,
-      instance_controlplane: `arn:aws:iam::${awsAccountID}:role/Bar-ControlPlane-Role`,
-      instance_worker: `arn:aws:iam::${awsAccountID}:role/Bar-Worker-Role`,
-    });
-  }
+  const accountRoles = [];
   dispatch({
     type: GET_AWS_ACCOUNT_ROLES_ARNS,
-    payload: { data: accountRoles },
+    payload: accountsService.getAWSAccountARNs(awsAccountID).then((response) => {
+      if (!response.data || !response.data.items) {
+        return accountRoles;
+      }
+      return normalizeAWSAccountRoles(response.data);
+    }),
   });
 };
 

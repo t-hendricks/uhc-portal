@@ -4,6 +4,7 @@ import { formValueSelector } from 'redux-form';
 import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import { openModal } from '../../../../common/Modal/ModalActions';
+
 import {
   getAWSAccountIDs,
   clearGetAWSAccountIDsResponse,

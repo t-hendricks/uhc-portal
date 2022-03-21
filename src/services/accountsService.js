@@ -145,6 +145,12 @@ const getOrganizationLabels = organizationID => apiRequest({
   url: `/api/accounts_mgmt/v1/organizations/${organizationID}/labels`,
 });
 
+const getAWSAccountARNs = awsAccountID => apiRequest({
+  method: 'post',
+  data: { account_id: awsAccountID },
+  url: '/api/clusters_mgmt/v1/aws_inquiries/sts_account_roles',
+});
+
 function getRequest(pathParams, params = {}) {
   const type = pathParams[0];
   let url;
@@ -177,6 +183,7 @@ const accountsService = {
   createSubscriptionRoleBinding,
   deleteSubscriptionRoleBinding,
   getOrganizationLabels,
+  getAWSAccountARNs,
 };
 
 export default accountsService;
