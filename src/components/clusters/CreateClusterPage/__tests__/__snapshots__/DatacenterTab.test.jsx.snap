@@ -15,9 +15,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
         >
           Assisted Installer
         </Title>
-        <TechnologyPreview
-          position={1}
-        />
+        <TechPreviewBadge />
       </StackItem>
       <StackItem>
         The easiest way to install OpenShift on your own infrastructure with step-by-step guidance, preflight validations, and smart defaults. This method supports both x86-64 and arm64 CPU architectures.
@@ -89,6 +87,26 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
                     to="/install/metal"
                   >
                     Bare Metal (x86_64)
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/arm"
+                  >
+                    Bare Metal (ARM)
+                  </Link>
+                </React.Fragment>,
+                "Pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/azure-stack-hub/installer-provisioned"
+                  >
+                    Azure Stack Hub
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
@@ -214,6 +232,26 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
                     to="/install/metal"
                   >
                     Bare Metal (x86_64)
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/arm"
+                  >
+                    Bare Metal (ARM)
+                  </Link>
+                </React.Fragment>,
+                "Pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/azure-stack-hub/installer-provisioned"
+                  >
+                    Azure Stack Hub
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",

@@ -99,7 +99,6 @@ class CreateROSAWizard extends React.Component {
       history,
       privateLinkSelected,
     } = this.props;
-
     const { stepIdReached } = this.state;
 
     const steps = [
@@ -108,7 +107,7 @@ class CreateROSAWizard extends React.Component {
         name: 'Accounts and roles',
         component: (
           <ErrorBoundary>
-            <AccountsRolesScreen />
+            <AccountsRolesScreen organizationID={organization?.details?.id} />
           </ErrorBoundary>
         ),
         enableNext: isValid,
@@ -135,7 +134,7 @@ class CreateROSAWizard extends React.Component {
                 <MachinePoolScreen />
               </ErrorBoundary>
             ),
-            enableNext: true, // TODO isValid,
+            enableNext: isValid,
             canJumpTo: stepIdReached >= 23,
           },
         ],
@@ -368,7 +367,12 @@ CreateROSAWizard.propTypes = {
     }),
   }),
   machineTypes: requestStatePropTypes,
-  organization: requestStatePropTypes,
+  organization: PropTypes.shape({
+    fulfilled: PropTypes.bool,
+    error: PropTypes.bool,
+    pending: PropTypes.bool,
+    details: { id: PropTypes.string },
+  }),
   cloudProviders: requestStatePropTypes,
 
   getMachineTypes: PropTypes.func,

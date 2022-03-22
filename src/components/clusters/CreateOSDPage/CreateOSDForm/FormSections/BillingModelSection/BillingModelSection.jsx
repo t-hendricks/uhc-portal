@@ -23,6 +23,7 @@ import { normalizedProducts, billingModels } from '../../../../../../common/subs
 import CreateOSDWizardIntro from '../../../../../../styles/images/CreateOSDWizard-intro.png';
 
 import BillingModelRadioButtons from './BillingModelRadioButtons';
+import { getNodesCount, getMinReplicasCount } from '../ScaleSection/AutoScaleSection/AutoScaleHelper';
 
 function BillingModelSection({
   hasBYOCquota,
@@ -40,6 +41,7 @@ function BillingModelSection({
   billingModel,
   isWizard,
   change,
+  isMultiAz,
 }) {
   const { STANDARD } = billingModels;
 
@@ -134,6 +136,13 @@ function BillingModelSection({
     if (toggleSubscriptionBilling) {
       toggleSubscriptionBilling(_, value);
     }
+  };
+
+  const onWizardBYOCToggle = (_, value) => {
+    const isBYOC = value === 'true';
+    change('nodes_compute', getNodesCount(isBYOC, isMultiAz, true));
+    change('min_replicas', getMinReplicasCount(isBYOC, isMultiAz, true));
+    change('max_replicas', '');
   };
 
   const subscriptionOptions = [
@@ -234,7 +243,7 @@ function BillingModelSection({
                       value: 'false',
                       disabled: isRhInfraQuotaDisabled,
                     }]}
-                    onChange={toggleBYOCFields}
+                    onChange={onWizardBYOCToggle}
                   />
                 )
                 : (
@@ -271,6 +280,7 @@ BillingModelSection.propTypes = {
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
   isWizard: PropTypes.bool,
   change: PropTypes.func.isRequired,
+  isMultiAz: PropTypes.bool,
 };
 
 export default BillingModelSection;

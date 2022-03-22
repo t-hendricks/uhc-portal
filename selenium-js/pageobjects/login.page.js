@@ -34,6 +34,7 @@ class LoginPage extends Page {
     await (await this.btnSubmit).click();
     await browser.waitUntil(async () => !await this.isLoginPage(), { timeoutMsg: 'Login failed: did not redirect after timeout' });
     await this.closePendoIfShowing();
+    await this.closeCookieConsentIfShowing();
   }
 
   async closePendoIfShowing() {
@@ -44,6 +45,22 @@ class LoginPage extends Page {
       // eslint-disable-next-line no-console
       console.log("Trying to close pendo guide");
       await close.click();
+    }
+  }
+
+  get cookieConsent() { return $('//*[@id="truste-consent-track"][contains(., "cookies")]'); }
+
+  async closeCookieConsentIfShowing() {
+    // Consent footer added in https://github.com/RedHatInsights/insights-chrome/pull/1734
+    const footer = await this.cookieConsent;
+    // TODO: Is there a race condition? In practice the footer appears before OCM content loads.
+    if (await footer.isExisting()) {
+      console.log("Trying to close cookie consent");
+      const close = await footer.$('button#truste-consent-button');
+      await close.click();
+      // Have to wait for fade-out animation before page is interactable.
+      // The elements remain but become display: none;
+      browser.waitUntil(async () => await !footer.isDisplayed());
     }
   }
 

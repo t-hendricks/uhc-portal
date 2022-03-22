@@ -30,6 +30,13 @@ class SupportCasesCard extends React.Component {
       isDisabled = false,
     } = this.props;
 
+    const productMap = {
+      OSD: 'OpenShift Dedicated',
+      ROSA: 'Red Hat OpenShift Service on AWS',
+      ARO: 'OpenShift Managed (Azure)',
+      OCP: 'OpenShift Container Platform',
+    };
+
     const columns = [
       { title: 'Case ID' },
       { title: 'Issue summary' },
@@ -39,7 +46,12 @@ class SupportCasesCard extends React.Component {
       { title: 'Status' },
     ];
 
-    const url = `https://access.redhat.com/support/cases/#/case/new/open-case/describe-issue?clusterId=${clusterUUID}&caseCreate=true&product=${product}&version=${version}`;
+    let openshiftVersion = version;
+    if (product !== 'OCP') {
+      openshiftVersion = encodeURIComponent(productMap[product]);
+    }
+
+    const url = `https://access.redhat.com/support/cases/#/case/new/open-case/describe-issue?clusterId=${clusterUUID}&caseCreate=true&product=${encodeURIComponent(productMap[product])}&version=${openshiftVersion}`;
 
     const supportCaseRow = (supportCase) => {
       const caseIdURL = `https://access.redhat.com/support/cases/#/case/${supportCase.caseID}`;
@@ -111,7 +123,7 @@ SupportCasesCard.propTypes = {
   subscriptionID: PropTypes.string.isRequired,
   clusterUUID: PropTypes.string.isRequired,
   product: PropTypes.string.isRequired,
-  version: PropTypes.string.isRequired,
+  version: PropTypes.object.isRequired,
   supportCases: PropTypes.object.isRequired,
   getSupportCases: PropTypes.func.isRequired,
   isDisabled: PropTypes.bool,

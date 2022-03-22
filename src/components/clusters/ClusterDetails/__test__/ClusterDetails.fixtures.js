@@ -42,6 +42,7 @@ const funcs = () => ({
   getSupportCases: jest.fn(),
   getSchedules: jest.fn(),
   getUserAccess: jest.fn(),
+  fetchUpgradeGates: jest.fn(),
 });
 
 const clusterDetails = {
@@ -1028,6 +1029,7 @@ const fixtures = {
   hasIssues: false,
   hasIssuesInsights: false,
   userAccess,
+  upgradeGates: [],
 };
 
 export { funcs };

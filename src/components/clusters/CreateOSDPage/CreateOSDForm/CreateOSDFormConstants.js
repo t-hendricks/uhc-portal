@@ -23,9 +23,8 @@ const constants = {
   bypassSCPChecksHint: `Some AWS Service Control Policies will cause installation to fail even if
     the credentials have the correct permissions. Disabling SCP checks allows installation to proceed.
     The SCP will still be enforced even if the checks are bypassed.`,
-  enableEtcdHint: 'When you enable etcd encryption, encryption keys are created. These keys are rotated on a weekly basis.',
   enableAdditionalEtcdHint: 'When you enable additional etcd encryption, encryption keys are created. These keys are rotated on a weekly basis.',
-  autoscaleHint: 'Autoscaling automatically adds and removes nodes from the cluster based on resource requiremnts.',
+  autoscaleHint: 'Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.',
   keyRing: 'A key ring organizes keys in a specific Google Cloud location and allows you to manage access control on groups of keys.',
   keyName: 'A cryptographic key is a resource that is used for encrypting and decrypting data or for producing and verifying digital signatures',
   keylocation: 'A key location represent the geographical regions where a Cloud KMS resource is stored and can be accessed.',
@@ -38,7 +37,7 @@ const constants = {
   amazonEBSTitle: 'Amazon EBS encryption',
   amazonEBS: 'Provide your own AWS KMS key ARN for encryption of EBS resources associated with your EC2 instances.',
   awsKeyARN: 'The key ARN is the Amazon Resource Name (ARN) of a CMK. It is a unique, fully qualified identifier for the CMK. A key ARN includes the AWS account, Region, and the key ID.',
-  privateLinkHint: 'To provide support, Red Hat Site Reliability Engineering (SRE) connects to the cluster using only AWS Private Link endpoints instead of public endpoints.  This option cannot be changed after a cluster is created.',
+  privateLinkHint: 'To provide support, Red Hat Site Reliability Engineering (SRE) connects to the cluster using only AWS PrivateLink endpoints instead of public endpoints.  This option cannot be changed after a cluster is created.',
 };
 
 const billingModelConstants = {

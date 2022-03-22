@@ -19,12 +19,17 @@ import validators, {
   validateServiceAccountObject,
   validateUniqueAZ,
   validateNumericInput,
+  validateAWSSubnet,
+  validateAWSSubnetIsPrivate,
+  validateAWSSubnetIsPublic,
   validateGCPSubnet,
   validateGCPKMSServiceAccount,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
 } from '../validators';
 import fixtures from './validators.fixtures';
+import awsVPCs from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
+import { processAWSVPCs } from '../../components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesReducer';
 
 test('Field is required', () => {
   expect(required()).toBe('Field is required');
@@ -476,17 +481,17 @@ test('Field is a valid key value pair', () => {
 });
 
 test('Check machine pool labels', () => {
-  const blacklist = [
+  const invalidLabels = [
     'machine.openshift.io/cluster-api-machine-role=master',
     'machine.openshift.io/cluster-api-machine-role=infra',
     'machine.openshift.io/cluster-api-machine-type=master',
     'machine.openshift.io/cluster-api-machine-type=infra',
   ];
 
-  expect(checkMachinePoolLabels(blacklist[0])).toBe(`${blacklist[0]} is not a valid label`);
-  expect(checkMachinePoolLabels(blacklist[1])).toBe(`${blacklist[1]} is not a valid label`);
-  expect(checkMachinePoolLabels(blacklist[2])).toBe(`${blacklist[2]} is not a valid label`);
-  expect(checkMachinePoolLabels(blacklist[3])).toBe(`${blacklist[3]} is not a valid label`);
+  expect(checkMachinePoolLabels(invalidLabels[0])).toBe(`${invalidLabels[0]} is not a valid label`);
+  expect(checkMachinePoolLabels(invalidLabels[1])).toBe(`${invalidLabels[1]} is not a valid label`);
+  expect(checkMachinePoolLabels(invalidLabels[2])).toBe(`${invalidLabels[2]} is not a valid label`);
+  expect(checkMachinePoolLabels(invalidLabels[3])).toBe(`${invalidLabels[3]} is not a valid label`);
 });
 
 test('awsNumericAccountID', () => {
@@ -516,21 +521,93 @@ test('GCP service account JSON', () => {
   });
 });
 
-test('Unique AZs', () => {
-  const AllValues = {
-    az_0: 'a',
-    az_1: 'b',
-    az_2: 'c',
+describe('AWS Subnet', () => {
+  test('Unique AZs', () => {
+    const AllValues = {
+      az_0: 'a',
+      az_1: 'b',
+      az_2: 'c',
+    };
+    expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe(undefined);
+    AllValues.az_0 = 'b';
+    expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe('Must select 3 different AZs.');
+    expect(validateUniqueAZ(AllValues.az_1, AllValues, null, 'az_1')).toBe('Must select 3 different AZs.');
+    expect(validateUniqueAZ(AllValues.az_2, AllValues, null, 'az_2')).toBe(undefined);
+    AllValues.az_1 = 'd';
+    expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe(undefined);
+    AllValues.az_0 = 'd';
+    expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe('Must select 3 different AZs.');
+  });
+
+  const formProps = { vpcs: { fulfilled: true, data: processAWSVPCs(awsVPCs) }, vpcsValid: true };
+  const goodValues = {
+    az_0: 'us-east-1d',
+    private_subnet_id_0: 'subnet-00b3753ab2dd892ac', // All from vpc-08b6f0901ba35262d.
+    public_subnet_id_0: 'subnet-0703ec90283d1fd6b',
+    az_1: 'us-east-1e',
+    private_subnet_id_1: 'subnet-0735da52d658da28b',
+    public_subnet_id_1: 'subnet-09404f4fc139bd94e',
+    az_2: 'us-east-1f',
+    private_subnet_id_2: 'subnet-00327948731118662',
+    public_subnet_id_2: 'subnet-09ad4ef49f2e29996',
   };
-  expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe(undefined);
-  AllValues.az_0 = 'b';
-  expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe('Must select 3 different AZs.');
-  expect(validateUniqueAZ(AllValues.az_1, AllValues, null, 'az_1')).toBe('Must select 3 different AZs.');
-  expect(validateUniqueAZ(AllValues.az_2, AllValues, null, 'az_2')).toBe(undefined);
-  AllValues.az_1 = 'd';
-  expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe(undefined);
-  AllValues.az_0 = 'd';
-  expect(validateUniqueAZ(AllValues.az_0, AllValues, null, 'az_0')).toBe('Must select 3 different AZs.');
+
+  test('private/public', () => {
+    const validatePP = allValues => (
+      validateAWSSubnetIsPrivate(allValues.private_subnet_id_0, allValues, formProps, 'private_subnet_id_0')
+      || validateAWSSubnetIsPrivate(allValues.private_subnet_id_1, allValues, formProps, 'private_subnet_id_1')
+      || validateAWSSubnetIsPrivate(allValues.private_subnet_id_2, allValues, formProps, 'private_subnet_id_2')
+      || validateAWSSubnetIsPublic(allValues.public_subnet_id_0, allValues, formProps, 'public_subnet_id_0')
+      || validateAWSSubnetIsPublic(allValues.public_subnet_id_1, allValues, formProps, 'public_subnet_id_1')
+      || validateAWSSubnetIsPublic(allValues.public_subnet_id_2, allValues, formProps, 'public_subnet_id_2')
+    );
+    expect(validatePP(goodValues)).toBe(undefined);
+    const publicValues = { ...goodValues, private_subnet_id_1: goodValues.public_subnet_id_2 };
+    expect(validatePP(publicValues)).toBe('Provided subnet is public, should be private.');
+    const privateValues = { ...goodValues, public_subnet_id_1: goodValues.private_subnet_id_2 };
+    expect(validatePP(privateValues)).toBe('Provided subnet is private, should be public.');
+  });
+
+  const validate = allValues => (
+    validateAWSSubnet(allValues.private_subnet_id_0, allValues, formProps, 'private_subnet_id_0')
+    || validateAWSSubnet(allValues.private_subnet_id_1, allValues, formProps, 'private_subnet_id_1')
+    || validateAWSSubnet(allValues.private_subnet_id_2, allValues, formProps, 'private_subnet_id_2')
+    || validateAWSSubnet(allValues.public_subnet_id_0, allValues, formProps, 'public_subnet_id_0')
+    || validateAWSSubnet(allValues.public_subnet_id_1, allValues, formProps, 'public_subnet_id_1')
+    || validateAWSSubnet(allValues.public_subnet_id_2, allValues, formProps, 'public_subnet_id_2')
+  );
+
+  test('unknown subnet', () => {
+    expect(validate({ ...goodValues, private_subnet_id_1: 'nnn' })).toContain('No such subnet');
+  });
+
+  test('same VPC', () => {
+    const values2 = {
+      private_subnet_id_0: 'subnet-0189e68d3126435fb', // Both from vpc-05bb9f093feffe176.
+      public_subnet_id_0: 'subnet-0c2880e587449df55',
+    };
+    expect(validate(values2)).toBe(undefined);
+    const values = {
+      private_subnet_id_0: 'subnet-0189e68d3126435fb', // From 3 different VPCs.
+      private_subnet_id_1: 'subnet-0d3a4a32658ee415a',
+      private_subnet_id_2: 'subnet-id-without-Name',
+    };
+    expect(validateAWSSubnet(values.private_subnet_id_0, values, formProps, 'private_subnet_id_0'))
+      .toContain('vpc-05bb9f093feffe176');
+    expect(validateAWSSubnet(values.private_subnet_id_1, values, formProps, 'private_subnet_id_1'))
+      .toContain('SDA-5333-test-new-API-returning-both-name-and-id');
+    expect(validateAWSSubnet(values.private_subnet_id_2, values, formProps, 'private_subnet_id_2'))
+      .toContain('SDA-5333-test-new-API-returning-only-id-for-VPC-without-Name-tag');
+  });
+
+  test('AZ matching', () => {
+    expect(validate(goodValues)).toBe(undefined);
+    const values1 = { ...goodValues, private_subnet_id_2: goodValues.private_subnet_id_1 };
+    expect(validate(values1)).toContain('us-east-1e');
+    const values2 = { ...goodValues, public_subnet_id_0: goodValues.public_subnet_id_2 };
+    expect(validate(values2)).toContain('us-east-1f');
+    expect(validate({ ...values2, az_0: '' })).toBe(undefined);
+  });
 });
 
 test('GCP Subnet', () => {

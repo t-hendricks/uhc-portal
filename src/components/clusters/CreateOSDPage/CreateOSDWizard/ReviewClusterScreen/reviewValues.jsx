@@ -127,7 +127,7 @@ const reviewValues = {
     },
   },
   customer_managed_key: {
-    title: 'Customer-managed keys',
+    title: 'Encrypt volumes with customer keys',
     isBoolean: true,
     values: {
       true: 'Enabled',

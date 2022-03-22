@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history';
 import { notificationsMiddleware } from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
 
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage
 
 import { reduxReducers } from './reducers';
 import sentryMiddleware from './sentryMiddleware';
@@ -33,7 +33,14 @@ const store = createStore(
     sentryMiddleware)),
 );
 
+const serialize = (data) => {
+  debugger;
+  return window.localStorage.getItem('token-reload') === 'true' ? JSON.stringify(data) : '';
+};
+
+const tokenReload = window.localStorage.getItem('token-reload') === 'true';
 const persistor = persistStore(store, {
+  serialize,
   manualPersist: true,
 });
 

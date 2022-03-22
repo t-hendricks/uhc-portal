@@ -1,0 +1,28 @@
+{
+  "kind": "VersionGateAgreementList",
+  "page": 1,
+  "size": 1,
+  "total": 1,
+  "items": [
+    {
+      "kind": "VersionGateAgreement",
+      "id": "231e1e30-9b11-11ec-9e37-0a580a8309f5",
+      "href": "/api/clusters_mgmt/v1/clusters/aws-manual-update-1odatpd4g9s48/gate_agreements/231e1e30-9b11-11ec-9e37-0a580a8309f5",
+      "version_gate": {
+        "kind": "VersionGate",
+        "id": "d6015d79-98a2-11ec-a445-0a580a820d8e",
+        "href": "/api/clusters_mgmt/v1/version_gates/d6015d79-98a2-11ec-a445-0a580a820d8e",
+        "version_raw_id_prefix": "4.9",
+        "label": "api.openshift.com/gate-ocp",
+        "value": "4.9",
+        "warning_message": "To prevent an outage on your cluster, review any APIs in use that will be removed, and migrate them to the appropriate new API version. Failure to evaluate and migrate components affected by this update can cause some types of workloads to stop functioning.",
+        "description": "OpenShift removes several Kubernetes APIs in OpenShift 4.9.",
+        "documentation_url": "https://access.redhat.com/solutions/6657541",
+        "sts_only": false,
+        "creation_timestamp": "2022-02-28T14:29:28.418035Z"
+      },
+      "creation_timestamp": "2022-03-03T16:44:04.756844Z"
+    }
+  ]
+}
+

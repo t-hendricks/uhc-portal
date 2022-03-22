@@ -67,7 +67,15 @@ class AppEntry extends React.Component {
         config.fetchConfig()
           .then(() => {
             store.dispatch(detectFeatures());
-            this.setState({ ready: true });
+            const tokenReload = window.localStorage.getItem('token-reload') === 'true';
+            if (!tokenReload) {
+              // flush any existing data
+              persistor.pause();
+              persistor.purge().then((value) => {
+                debugger;
+                this.setState({ ready: true });
+              });
+            }
             if (!config.override && config.configData.sentryDSN) {
               Sentry.init({
                 dsn: config.configData.sentryDSN,
@@ -94,14 +102,19 @@ class AppEntry extends React.Component {
   render() {
     const { ready } = this.state;
     if (ready) {
+      const content = (
+        <>
+          <NotificationPortal />
+          <BrowserRouter basename={getBaseName()}>
+            <App />
+          </BrowserRouter>
+        </>
+      );
       return (
         <Provider store={store}>
-          {/* <PersistGate loading={null} persistor={persistor}> */}
-            <NotificationPortal />
-            <BrowserRouter basename={getBaseName()}>
-              <App />
-            </BrowserRouter>
-          {/* </PersistGate> */}
+          <PersistGate loading="LOADING" persistor={persistor}>
+            {content}
+          </PersistGate>
         </Provider>
       );
     }

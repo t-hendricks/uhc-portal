@@ -7,9 +7,11 @@ import {
   Select, SelectOption,
   FormGroup,
 } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../../../common/ErrorBox';
 
 function VersionSelection({
+  isRosa,
   input,
   isDisabled,
   label,
@@ -35,7 +37,7 @@ function VersionSelection({
       />);
       setIsOpen(false);
     } else { // First time.
-      getInstallableVersions();
+      getInstallableVersions(isRosa);
     }
   }, [getInstallableVersionsResponse]);
 
@@ -52,7 +54,7 @@ function VersionSelection({
     // In case of backend error, don't want infinite loop reloading,
     // but allow manual reload by opening the dropdown.
     if (toggleOpenValue && getInstallableVersionsResponse.error) {
-      getInstallableVersions();
+      getInstallableVersions(isRosa);
     }
   };
 
@@ -68,7 +70,6 @@ function VersionSelection({
 
   return (
     <>
-      { versionsErrorBox }
       <FormGroup
         {...input}
         label={label}
@@ -76,26 +77,37 @@ function VersionSelection({
         helperTextInvalid={touched && error}
         isRequired
       >
-        <Select
-          label={label}
-          isOpen={isOpen}
-          selections={getSelection()}
-          onToggle={onToggle}
-          onSelect={onSelect}
-          isDisabled={isDisabled}
-        >
-          {versions.map(version => (
-            <SelectOption
-              className="pf-c-dropdown__menu-item"
-              isSelected={input.value.raw_id === version.raw_id}
-              value={version.raw_id}
-              formValue={version.raw_id}
-              key={version.id}
-            >
-              {`${version.raw_id}`}
-            </SelectOption>
-          ))}
-        </Select>
+        {getInstallableVersionsResponse.error && (
+          { versionsErrorBox }
+        )}
+        {getInstallableVersions.pending && (
+          <>
+            <div className="spinner-fit-container"><Spinner /></div>
+            <div className="spinner-loading-text">Loading...</div>
+          </>
+        )}
+        {getInstallableVersionsResponse.fulfilled && (
+          <Select
+            label={label}
+            isOpen={isOpen}
+            selections={getSelection()}
+            onToggle={onToggle}
+            onSelect={onSelect}
+            isDisabled={isDisabled}
+          >
+            {versions.map(version => (
+              <SelectOption
+                className="pf-c-dropdown__menu-item"
+                isSelected={input.value.raw_id === version.raw_id}
+                value={version.raw_id}
+                formValue={version.raw_id}
+                key={version.id}
+              >
+                {`${version.raw_id}`}
+              </SelectOption>
+            ))}
+          </Select>
+        )}
       </FormGroup>
     </>
   );
@@ -108,6 +120,7 @@ VersionSelection.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
   }),
+  isRosa: PropTypes.bool,
   getInstallableVersions: PropTypes.func.isRequired,
   getInstallableVersionsResponse: PropTypes.object.isRequired,
   initialValue: PropTypes.string,

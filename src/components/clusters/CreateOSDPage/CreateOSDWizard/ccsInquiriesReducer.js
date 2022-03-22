@@ -12,7 +12,7 @@ import {
   CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES,
 } from './ccsInquiriesActions';
 
-const initialState = {
+export const initialState = {
   ccsCredentialsValidity: {
     ...baseRequestState,
     cloudProvider: undefined,
@@ -38,9 +38,40 @@ const initialState = {
     cloudProvider: undefined,
     credentials: undefined,
     region: undefined,
-    data: undefined,
+    data: {
+      bySubnetID: {},
+    },
   },
 };
+
+/**
+ * Indexes AWS VPC subnet details by subnet_id.
+ * @param vpcsData - contains items: [
+ *   { name, aws_subnets: [ { subnet_id, public, availability_zone }, ...] },
+ *   ...
+ * ]
+ * @returns { [subnet_id]: { vpc_id, vpc_name, subnet_id, name, public, availability_zone } }
+ */
+const indexAWSVPCs = (vpcsData) => {
+  const bySubnetID = {};
+  vpcsData.items.forEach((vpcItem) => {
+    let vpcId = vpcItem.id;
+    let vpcName = vpcItem.name;
+    if (!vpcItem.id) {
+      // Compatibility to older API returning only id, in `name` field.
+      vpcId = vpcItem.name;
+      vpcName = undefined;
+    }
+    // Work around backend currently returning empty aws_subnets as null.
+    (vpcItem.aws_subnets || []).forEach((subnet) => {
+      bySubnetID[subnet.subnet_id] = { ...subnet, vpc_id: vpcId, vpc_name: vpcName };
+    });
+  });
+  return bySubnetID;
+};
+
+/** Enriches response with .bySubnetID entry. */
+export const processAWSVPCs = vpcsData => ({ ...vpcsData, bySubnetID: indexAWSVPCs(vpcsData) });
 
 function ccsInquiriesReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return
@@ -120,16 +151,21 @@ function ccsInquiriesReducer(state = initialState, action) {
       case PENDING_ACTION(LIST_VPCS):
         draft.vpcs.pending = true;
         break;
-      case FULFILLED_ACTION(LIST_VPCS):
+      case FULFILLED_ACTION(LIST_VPCS): {
+        let { data } = action.payload;
+        if (action.meta?.cloudProvider === 'aws') {
+          data = processAWSVPCs(data);
+        }
         draft.vpcs = {
           ...initialState.vpcs,
           fulfilled: true,
           credentials: action.meta?.credentials,
           cloudProvider: action.meta?.cloudProvider,
           region: action.meta?.region,
-          data: action.payload.data,
+          data,
         };
         break;
+      }
       case REJECTED_ACTION(LIST_VPCS):
         draft.vpcs = {
           ...initialState.vpcs,
@@ -148,7 +184,5 @@ function ccsInquiriesReducer(state = initialState, action) {
 }
 
 ccsInquiriesReducer.initialState = initialState;
-
-export { initialState };
 
 export default ccsInquiriesReducer;

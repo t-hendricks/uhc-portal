@@ -57,6 +57,7 @@ else
   request "" "$cluster_href/logs/install"
   request "" "$cluster_href/logs/uninstall"
   request "" "$cluster_href/addon_inquiries"
+  request "" "$cluster_href/gate_agreements"
 
   request "" "$cluster_href/upgrade_policies" --parameter="search=upgrade_type='OSD'"
   cat "mockdata/$cluster_href/upgrade_policies.json" |
@@ -79,6 +80,8 @@ request "" "/api/accounts_mgmt/v1/current_account"
 org_href=$(jq .organization.href  "mockdata/api/accounts_mgmt/v1/current_account".json --raw-output)
 request "" "$org_href" --parameter=fetchCapabilities=true
 request "" "$org_href/quota_cost" --parameter=fetchRelatedResources=true
+
+request "" "/api/clusters_mgmt/v1/version_gates"
 
 # Overwrite with more details.
 request "" "/api/clusters_mgmt/v1/cloud_providers" --parameter=size=-1 --parameter=fetchRegions=true

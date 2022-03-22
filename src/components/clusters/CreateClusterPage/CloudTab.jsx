@@ -12,19 +12,17 @@ import {
 } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
-import { OCM } from 'openshift-assisted-ui-lib';
 
+import TechPreviewBadge from '../../common/TechPreviewBadge';
 import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
 import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
 import AWSLogo from '../../../styles/images/AWS.png';
 import links from './CreateClusterConsts';
 
-const { DeveloperPreview, PreviewBadgePosition } = OCM;
-
 const getColumns = () => ([
   {
-    title: null,
+    title: '',
     cellFormatters: [expandable],
     transforms: [cellWidth(10)],
   },
@@ -393,7 +391,7 @@ const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
     <Table
       aria-label="Managed services table"
       rows={rows}
-      cells={getColumns(openRows.length === 0)}
+      cells={getColumns()}
       onCollapse={onCollapse}
     >
       <TableHeader />
@@ -406,15 +404,19 @@ const runItYourself = () => {
   const columns = ['Cloud provider', 'Installation options'];
   const rows = [
     [
+      <>
+        <Link to="/install/alibaba/installer-provisioned" className="pf-u-mr-xs">Alibaba Cloud</Link>
+        <TechPreviewBadge />
+      </>,
+      'Full stack automation',
+    ],
+    [
       <><Link to="/install/aws">AWS (x86_64)</Link></>,
       'Full stack automation and pre-existing infrastructure',
     ],
     [
-      <>
-        <Link to="/install/aws/arm" className="pf-u-mr-xs">AWS (ARM)</Link>
-        <DeveloperPreview position={PreviewBadgePosition.inline} />
-      </>,
-      'Full stack automation and pre-existing infrastructure',
+      <><Link to="/install/aws/arm">AWS (ARM)</Link></>,
+      'Full stack automation',
     ],
     [
       <><Link to="/install/azure">Azure</Link></>,
@@ -423,6 +425,13 @@ const runItYourself = () => {
     [
       <><Link to="/install/gcp">Google Cloud</Link></>,
       'Full stack automation and pre-existing infrastructure',
+    ],
+    [
+      <>
+        <Link to="/install/ibm-cloud" className="pf-u-mr-xs">IBM Cloud</Link>
+        <TechPreviewBadge />
+      </>,
+      'Full stack automation',
     ],
     [
       <><Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link></>,

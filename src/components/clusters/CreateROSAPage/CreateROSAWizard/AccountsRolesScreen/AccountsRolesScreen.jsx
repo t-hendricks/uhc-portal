@@ -15,11 +15,13 @@ import ExternalLink from '../../../../common/ExternalLink';
 import AssociateAWSAccountModal from './AssociateAWSAccountModal';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import ErrorBox from '../../../../common/ErrorBox';
+import links from '../../../../../common/installLinks';
 import { required } from '../../../../../common/validators';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 function AccountsRolesScreen({
   change,
+  organizationID,
   selectedAWSAccountID,
   openAssociateAWSAccountModal,
   // initialValues,
@@ -54,7 +56,7 @@ function AccountsRolesScreen({
 
   useEffect(() => {
     if (!getAWSAccountIDsResponse.pending && !getAWSAccountIDsResponse.fulfilled) {
-      getAWSAccountIDs(); // TODO: remove mock - comment out to show 'no accounts found' msg
+      getAWSAccountIDs(organizationID);
     } else if (getAWSAccountIDsResponse.pending) {
       setAwsIDsErrorBox(null);
     } else if (getAWSAccountIDsResponse.fulfilled) {
@@ -122,7 +124,7 @@ function AccountsRolesScreen({
               <>
                 The associated AWS account id will be used for ...
                 {' '}
-                <ExternalLink href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html">Learn more about etcd</ExternalLink>
+                <ExternalLink href={links.ENCRYPTING_ETCD}>Learn more about etcd</ExternalLink>
               </>
               )}
             AWSAccountIDs={AWSAccountIDs}
@@ -156,6 +158,7 @@ AccountsRolesScreen.propTypes = {
   getAWSAccountRolesARNs: PropTypes.func.isRequired,
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
+  organizationID: PropTypes.string.isRequired,
   initialValues: PropTypes.shape({
     associated_aws_id: PropTypes.string,
     installer_role_arn: PropTypes.string,

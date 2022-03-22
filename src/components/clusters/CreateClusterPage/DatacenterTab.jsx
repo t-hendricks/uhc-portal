@@ -9,13 +9,15 @@ import {
 } from '@patternfly/react-core';
 import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
-import { OCM } from 'openshift-assisted-ui-lib';
-
-const { TechnologyPreview, PreviewBadgePosition } = OCM;
+import TechPreviewBadge from '../../common/TechPreviewBadge';
 
 const ocpTableColumns = ['Infrastructure provider', 'Installation options'];
 const ocpTableRows = [
   [(<><Link to="/install/metal">Bare Metal (x86_64)</Link></>),
+    'Full stack automation and pre-existing infrastructure'],
+  [(<><Link to="/install/arm">Bare Metal (ARM)</Link></>),
+    'Pre-existing infrastructure'],
+  [(<><Link to="/install/azure-stack-hub/installer-provisioned">Azure Stack Hub</Link></>),
     'Full stack automation and pre-existing infrastructure'],
   [(<><Link to="/install/ibmz/user-provisioned">IBM Z</Link></>),
     'Pre-existing infrastructure'],
@@ -40,7 +42,7 @@ const DatacenterTab = ({ assistedInstallerFeature }) => (
             <Title headingLevel="h2" className="ocm-ocp-datacenter-title">
               Assisted Installer
             </Title>
-            <TechnologyPreview position={PreviewBadgePosition.inline} />
+            <TechPreviewBadge />
           </StackItem>
           <StackItem>
             The easiest way to install OpenShift on your own infrastructure

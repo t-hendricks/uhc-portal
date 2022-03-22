@@ -3,6 +3,7 @@
 exports[`<AvailabilityZoneSelection /> should render 1`] = `
 <FormGroup
   className="ocm-c-create-osd-az-select"
+  isRequired={true}
   label="some label"
   onChange={[MockFunction]}
   value=""

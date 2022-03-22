@@ -13,6 +13,8 @@ import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
 import { loadOfflineToken } from '../../../../tokens/Tokens';
 
+import { persistor } from '../../../../../redux/store';
+
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 
 function NoAssociatedAWSAccounts() {
@@ -52,7 +54,14 @@ function AWSAccountSelection({
   const onError = (reason) => {
     debugger;
     if (reason === 'not available') {
+      // set token-reload to true, so that on reload we know to restore previously entered data
       window.localStorage.setItem('token-reload', 'true');
+      // persistor.flush().then((value) => {
+      //   debugger;
+      //   // will cause reload of page
+      //   insights.chrome.auth.doOffline();
+      // });
+      persistor.persist();
       insights.chrome.auth.doOffline();
     } else {
       // open the modal anyways
@@ -64,7 +73,10 @@ function AWSAccountSelection({
     // in case we reloaded the page after loading the offline token, reopen the modal
     if (window.localStorage.getItem('token-reload') === 'true') {
       window.localStorage.removeItem('token-reload');
-      loadOfflineToken(onLoad);
+      persistor.purge().then((value) => {
+        debugger;
+        loadOfflineToken(onLoad);
+      });
     }
   }, []);
 

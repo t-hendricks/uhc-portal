@@ -51,7 +51,7 @@ const emptyState = [{
   heightAuto: true,
   cells: [
     {
-      props: { colSpan: 8 },
+      props: { colSpan: 8, dataLabel: null },
       title: (
         <Bullseye>
           <EmptyState variant={EmptyStateVariant.small}>

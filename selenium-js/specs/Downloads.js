@@ -66,11 +66,11 @@ describe('Downloads page', async () => {
       === 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz'
     ));
 
-    // Only x86 available for Mac.
-    await OSes.selectByVisibleText('MacOS');
+    // Only x86 available for Windows.
+    await OSes.selectByVisibleText('Windows');
     await browser.waitUntil(async () => (
       (await Downloads.downloadHref('(odo)'))
-      === 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-darwin-amd64.tar.gz'
+      === 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip'
     ));
     expect(await Downloads.architectureDropdown('(odo)')).toHaveAttr('disabled', true);
     expect(await Downloads.allArchitectureOptions('(odo)')).toEqual([

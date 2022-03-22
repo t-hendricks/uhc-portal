@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UpgradeAcknowledgeWarning> Display alert if is not manual 1`] = `
+<Fragment>
+  <Connect(UpgradeAcknowledgeModal)
+    clusterId="myClusterId"
+  />
+  <Alert
+    actionLinks={
+      <React.Fragment>
+        <AlertActionLink
+          onClick={[Function]}
+        >
+          Provide approval
+        </AlertActionLink>
+      </React.Fragment>
+    }
+    className="automatic-cluster-updates-alert"
+    data-testid="alertMessageUnmetAcks"
+    id="upgrade-ack-alert"
+    isInline={true}
+    isPlain={false}
+    title="Administrator acknowledgement is required before updating from 4.8.10 to 4.9.11"
+    variant="warning"
+  />
+</Fragment>
+`;
+
+exports[`<UpgradeAcknowledgeWarning> Display confirmation if there is only clusterMetAcks 1`] = `
+<Fragment>
+  <div
+    className="ocm-upgrade-additional-versions-available"
+    data-testid="confirmAckReceived"
+  >
+    <InfoCircleIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+    Administrator acknowledgement was received.
+  </div>
+</Fragment>
+`;
+
+exports[`<UpgradeAcknowledgeWarning> Display infoCircle if isManual AND if is Info 1`] = `
+<Fragment>
+  <div
+    className="ocm-upgrade-additional-versions-available"
+    data-testid="infoMessageUnmetAcks"
+  >
+    <InfoCircleIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+     
+    Administrator acknowledgement is required before updating from 4.8.10 to 4.9.11
+  </div>
+</Fragment>
+`;
+
+exports[`<UpgradeAcknowledgeWarning> Hide infoCircle if isManual but has a scheduled upgrade 1`] = `<Fragment />`;
+
+exports[`<UpgradeAcknowledgeWarning> Set correct info when opening modal 1`] = `
+<Fragment>
+  <Connect(UpgradeAcknowledgeModal)
+    clusterId="myClusterId"
+  />
+  <Alert
+    actionLinks={null}
+    className=""
+    data-testid="alertMessageUnmetAcks"
+    id="upgrade-ack-alert"
+    isInline={true}
+    isPlain={true}
+    title="Administrator acknowledgement is required before updating from 4.8.10 to 4.9.11"
+    variant="warning"
+  />
+  <Button
+    className="ocm-upgrade-approval__provide-button"
+    onClick={[Function]}
+    variant="secondary"
+  >
+    Provide approval
+  </Button>
+</Fragment>
+`;

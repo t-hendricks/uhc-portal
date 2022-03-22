@@ -4,6 +4,7 @@ import {
   EmptyState, EmptyStateBody, EmptyStateIcon, Title,
 } from '@patternfly/react-core';
 
+import links from '../../../common/installLinks';
 import ExternalLink from '../../common/ExternalLink';
 
 const AdvisorEmptyState = () => (
@@ -16,7 +17,7 @@ const AdvisorEmptyState = () => (
       This feature uses the Remote Health functionality of
       OpenShift Container Platform. For further details about Insights, see the
       {' '}
-      <ExternalLink href="https://docs.openshift.com/container-platform/latest/support/remote_health_monitoring/using-insights-to-identify-issues-with-your-cluster.html">
+      <ExternalLink href={links.REMOTE_HEALTH_INSIGHTS}>
         OpenShift documentation
       </ExternalLink>
       .

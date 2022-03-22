@@ -19,7 +19,6 @@ import {
 } from '@patternfly/react-table';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
-import { OCM } from 'openshift-assisted-ui-lib';
 
 import produce from 'immer';
 import { has, get } from 'lodash';
@@ -34,6 +33,7 @@ import links, {
   githubReleasesToFetch,
   urlsSelector,
 } from '../../../common/installLinks';
+import DevPreviewBadge from '../../common/DevPreviewBadge';
 
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
 import AlignRight from '../../common/AlignRight';
@@ -45,8 +45,6 @@ import CopyPullSecret from '../CopyPullSecret';
 
 import './DownloadsPage.scss';
 
-const { DeveloperPreview, PreviewBadgePosition } = OCM;
-
 const ColumnHeadings = () => (
   <Thead>
     <Tr>
@@ -54,7 +52,6 @@ const ColumnHeadings = () => (
       <Th width={40}>Name</Th>
       <Th width={20}>OS type</Th>
       <Th width={20}>Architecture type</Th>
-      <Th width={10} />
     </Tr>
   </Thead>
 );
@@ -272,10 +269,10 @@ const ToolAndDescriptionRows = ({
       toolRefs={toolRefs}
       expandKey={tool}
       cells={[
-        <Td dataLabel="Name">{name}</Td>,
+        <Td dataLabel="Name"><span>{name}</span></Td>,
         <Td dataLabel="OS">{chooser.osDropdown}</Td>,
         <Td dataLabel="Architecture">{chooser.archDropdown}</Td>,
-        <Td>
+        <Td dataLabel="">
           <AlignRight>
             {chooser.downloadButton}
             {' '}
@@ -355,7 +352,7 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             <code>ocm</code>
             )
             {' '}
-            <DeveloperPreview position={PreviewBadgePosition.inline} />
+            <DevPreviewBadge />
           </>
         )}
         description={(
@@ -391,7 +388,7 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             Manage your Red Hat OpenShift Service on AWS (ROSA) clusters
             from the command line using the ROSA client for OCM and AWS APIs.
             {' '}
-            <ExternalLink href={links.ROSA_DOCS}>
+            <ExternalLink href={links.ROSA_CLI_DOCS}>
               Get started
             </ExternalLink>
           </Text>
@@ -527,7 +524,7 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             <code>rhoas</code>
             )
             {' '}
-            <DeveloperPreview position={PreviewBadgePosition.inline} />
+            <DevPreviewBadge />
           </>
         )}
         description={(
@@ -588,6 +585,35 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
 
       <ToolAndDescriptionRows
         {...commonProps}
+        tool={tools.ARMINSTALLER}
+        channel={channels.STABLE}
+        name="OpenShift for ARM Installer"
+        description={(
+          <TextContent>
+            <Text>
+              Download and extract your operating system&apos;s installation program and
+              place the file in the directory where you&apos;ll store your configuration details.
+              Then, create clusters on supported ARM infrastructure using our
+              {' '}
+              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
+              {' '}
+              as a guide.
+            </Text>
+            <Text>
+              Learn how to deploy in
+              {' '}
+              <Link to="/install/aws/arm">AWS</Link>
+              , or in your
+              {' '}
+              <Link to="/install/arm">data center</Link>
+              .
+            </Text>
+          </TextContent>
+        )}
+      />
+
+      <ToolAndDescriptionRows
+        {...commonProps}
         tool={tools.IBMZINSTALLER}
         channel={channels.STABLE}
         name="OpenShift for IBM Z Installer"
@@ -640,38 +666,6 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
 
       <ToolAndDescriptionRows
         {...commonProps}
-        tool={tools.ARMINSTALLER}
-        channel={channels.STABLE}
-        name={(
-          <>
-            OpenShift for ARM Installer
-            {' '}
-            <DeveloperPreview position={PreviewBadgePosition.inline} />
-          </>
-        )}
-        description={(
-          <TextContent>
-            <Text>
-              Download and extract your operating system&apos;s installation program and
-              place the file in the directory where you&apos;ll store your configuration details.
-              Then, create clusters on supported ARM infrastructure using our
-              {' '}
-              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
-              {' '}
-              as a guide.
-            </Text>
-            <Text>
-              Learn how to deploy in
-              {' '}
-              <Link to="/install/aws/arm">AWS</Link>
-              .
-            </Text>
-          </TextContent>
-        )}
-      />
-
-      <ToolAndDescriptionRows
-        {...commonProps}
         tool={tools.CRC}
         channel={channels.STABLE}
         name={(
@@ -711,26 +705,51 @@ const disconnectedInstallationRows = (
     expanded, setExpanded, selections, setSelections, toolRefs, urls,
   };
   return (
-    <ToolAndDescriptionRows
-      {...commonProps}
-      tool={tools.MIRROR_REGISTRY}
-      channel={channels.STABLE}
-      name="mirror registry for Red Hat OpenShift"
-      description={(
-        <TextContent>
-          <Text>
-            Download and install a local, minimal single instance deployment of Red Hat Quay to
-            aid bootstrapping the first disconnected cluster.
-            {' '}
-            <ExternalLink
-              href={links.INSTALL_MIRROR_REGISTRY_LEARN_MORE}
-            >
-              Learn more
-            </ExternalLink>
-          </Text>
-        </TextContent>
-      )}
-    />
+    <>
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.MIRROR_REGISTRY}
+        channel={channels.STABLE}
+        name="mirror registry for Red Hat OpenShift"
+        description={(
+          <TextContent>
+            <Text>
+              Download and install a local, minimal single instance deployment of Red Hat Quay to
+              aid bootstrapping the first disconnected cluster.
+              {' '}
+              <ExternalLink
+                href={links.INSTALL_MIRROR_REGISTRY_LEARN_MORE}
+              >
+                Learn more
+              </ExternalLink>
+            </Text>
+          </TextContent>
+        )}
+      />
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.OC_MIRROR_PLUGIN}
+        channel={channels.STABLE}
+        name="OpenShift Client (oc) mirror plugin"
+        description={(
+          <TextContent>
+            <Text>
+              The &quot;mirror&quot; plugin for the OpenShift CLI client (oc) controls the process
+              {' '}
+              of mirroring all relevant container image for a full disconnected OpenShift
+              {' '}
+              installation in a central, declarative tool.
+              {' '}
+              <ExternalLink
+                href={links.INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE}
+              >
+                Learn more
+              </ExternalLink>
+            </Text>
+          </TextContent>
+        )}
+      />
+    </>
   );
 };
 

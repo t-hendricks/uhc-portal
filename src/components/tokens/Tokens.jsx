@@ -20,7 +20,6 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { OCM } from 'openshift-assisted-ui-lib';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import {
@@ -42,9 +41,8 @@ import {
 import links from '../../common/installLinks';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
+import DevPreviewBadge from '../common/DevPreviewBadge';
 import './Tokens.scss';
-
-const { DeveloperPreview, PreviewBadgePosition } = OCM;
 
 /**
  * Generates a box for containing the value of a token.
@@ -238,7 +236,7 @@ class Tokens extends React.Component {
       <>
         <ExternalLink href={links.OCM_CLI_LATEST} noIcon>ocm command-line tool</ExternalLink>
         {' '}
-        <DeveloperPreview position={PreviewBadgePosition.inline} />
+        <DevPreviewBadge />
       </>
     );
   }

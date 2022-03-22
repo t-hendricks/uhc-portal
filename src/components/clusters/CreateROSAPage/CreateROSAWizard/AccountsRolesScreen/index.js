@@ -12,7 +12,7 @@ import {
 
 const mapDispatchToProps = dispatch => ({
   openAssociateAWSAccountModal: token => dispatch(openModal('associate-aws-modal', token)),
-  getAWSAccountIDs: () => dispatch(getAWSAccountIDs()),
+  getAWSAccountIDs: organizationID => dispatch(getAWSAccountIDs(organizationID)),
   getAWSAccountRolesARNs: awsAccountID => dispatch(
     getAWSAccountRolesARNs(awsAccountID),
   ),

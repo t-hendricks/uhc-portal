@@ -8,6 +8,8 @@ import OCMRoleScreen from './OCMRoleScreen';
 import UserRoleScreen from './UserRoleScreen';
 import { loadOfflineToken } from '../../../../../tokens/Tokens';
 
+import { persistor } from '../../../../../../redux/store';
+
 class AssociateAWSAccountWizard extends React.Component {
   state = {
     stepIdReached: 1,
@@ -73,6 +75,9 @@ function AssociatedAWSAccountModal({ closeModal, isOpen, isValid, token }) {
   console.log(token);
  if (isOpen) {
    debugger;
+ } else {
+   // closing the modal
+   persistor.purge();
  }
   // const [offlineAccessToken, setOfflineAccessToken] = React.useState('');
   // const onLoad = (token) => {

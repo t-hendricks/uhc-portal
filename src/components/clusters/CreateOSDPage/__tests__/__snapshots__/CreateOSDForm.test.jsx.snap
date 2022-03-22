@@ -91,10 +91,9 @@ exports[`CreateOSDForm; should render 1`] = `
       component={[Function]}
       extendedHelpText={
         <React.Fragment>
-          When you enable etcd encryption, encryption keys are created. These keys are rotated on a weekly basis.
            
           <ExternalLink
-            href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html"
+            href="https://docs.openshift.com/container-platform/4.10/security/encrypting-etcd.html"
           >
             Learn more about etcd
           </ExternalLink>
@@ -226,10 +225,9 @@ exports[`CreateOSDForm; should render OSDTrial with availability zone 1`] = `
       component={[Function]}
       extendedHelpText={
         <React.Fragment>
-          When you enable etcd encryption, encryption keys are created. These keys are rotated on a weekly basis.
            
           <ExternalLink
-            href="https://docs.openshift.com/container-platform/latest/security/encrypting-etcd.html"
+            href="https://docs.openshift.com/container-platform/4.10/security/encrypting-etcd.html"
           >
             Learn more about etcd
           </ExternalLink>

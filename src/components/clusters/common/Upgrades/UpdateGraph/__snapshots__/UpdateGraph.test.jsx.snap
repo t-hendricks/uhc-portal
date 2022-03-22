@@ -25,6 +25,11 @@ exports[`<UpdateGraph /> should render 1`] = `
       </GraphLine>
     </GraphPath>
   </GraphContainer>
+  <Connect(UpgradeAcknowledgeWarning)
+    isInfo={true}
+    isPlain={true}
+    showConfirm={true}
+  />
 </div>
 `;
 
@@ -63,6 +68,11 @@ exports[`<UpdateGraph /> should render when additional versions are available 1`
     />
     Additional versions available between 1.2.3 and 1.2.4
   </div>
+  <Connect(UpgradeAcknowledgeWarning)
+    isInfo={true}
+    isPlain={true}
+    showConfirm={true}
+  />
 </div>
 `;
 
@@ -84,5 +94,10 @@ exports[`<UpdateGraph /> should render with no updates available 1`] = `
       </GraphLine>
     </GraphPath>
   </GraphContainer>
+  <Connect(UpgradeAcknowledgeWarning)
+    isInfo={true}
+    isPlain={true}
+    showConfirm={true}
+  />
 </div>
 `;

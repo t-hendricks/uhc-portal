@@ -33,7 +33,7 @@ export const downloadsCategories = [
   {
     key: 'DISCONNECTED_INSTALLATION',
     title: 'OpenShift disconnected installation tools',
-    tools: [tools.MIRROR_REGISTRY],
+    tools: [tools.MIRROR_REGISTRY, tools.OC_MIRROR_PLUGIN],
   },
   {
     key: 'RHCOS',

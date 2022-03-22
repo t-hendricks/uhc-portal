@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  TextInput, FormGroup, GridItem, Split, SplitItem,
+  NumberInput, FormGroup, GridItem, Split, SplitItem, HelperText, HelperTextItem,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
@@ -11,8 +11,11 @@ import getMinNodesAllowed from './AutoScaleHelper';
 import ReduxCheckbox from '../../../../../../common/ReduxFormComponents/ReduxCheckbox';
 import ExternalLink from '../../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../../common/PopoverHint';
+import links from '../../../../../../../common/installLinks';
 import { validateNumericInput, required } from '../../../../../../../common/validators';
 import { constants } from '../../../CreateOSDFormConstants';
+import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
+import { MAX_NODES } from '../../../../../common/NodeCountInput/NodeCountInput';
 
 class NodesInput extends React.Component {
   componentDidUpdate() {
@@ -26,13 +29,68 @@ class NodesInput extends React.Component {
     }
   }
 
+  updateReduxField = (value) => {
+    const {
+      input: { onBlur, onChange },
+    } = this.props;
+    onChange(`${value}`);
+    // informs redux-form that the input has been touched
+    onBlur();
+  };
+
+  onChange = (event) => {
+    this.updateReduxField(Number(event.target.value));
+  };
+
+  onButtonPress = (plus) => {
+    const {
+      min,
+      max,
+      input: {
+        value,
+      },
+    } = this.props;
+    // base cases
+    if (Number.isNaN(parseInt(value, 10))) {
+      // empty field, then pressing the minus button
+      return this.updateReduxField(min);
+    }
+    if (parseInt(value, 10) < min) {
+      // user entered a value that is less than min, then pressing the minus button
+      return this.updateReduxField(min);
+    }
+    if (parseInt(value, 10) > max) {
+      // user entered a value greater than max, then pressing the minus button
+      return this.updateReduxField(max);
+    }
+
+    // normal cases
+    if (plus) {
+      // user pressed the plus button
+      return this.updateReduxField((parseInt(value, 10)) + 1);
+    }
+    // user pressed the minus button
+    return this.updateReduxField((parseInt(value, 10)) - 1);
+  }
+
+  onMinus = () => this.onButtonPress(false);
+
+  onPlus = () => this.onButtonPress(true);
+
   render() {
-    const { input, meta: { touched, error }, ariaLabel } = this.props;
+    const {
+      input: { value }, ariaLabel, min, max,
+    } = this.props;
     return (
-      <TextInput
-        aria-label={ariaLabel}
-        validated={touched && error ? 'error' : 'default'}
-        {...input}
+      <NumberInput
+        value={parseInt(value, 10)}
+        min={min}
+        max={max}
+        onMinus={this.onMinus}
+        onChange={this.onChange}
+        onPlus={this.onPlus}
+        inputAriaLabel={ariaLabel}
+        widthChars={4}
       />
     );
   }
@@ -48,6 +106,8 @@ NodesInput.propTypes = {
   displayError: PropTypes.func.isRequired,
   hideError: PropTypes.func.isRequired,
   limit: PropTypes.string.isRequired,
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
 };
 
 class AutoScaleSection extends React.Component {
@@ -69,31 +129,46 @@ class AutoScaleSection extends React.Component {
         isMultiAz,
         autoScaleMinNodesValue,
       });
+      // updates the min input value
       change('min_replicas', isMultiAz ? (minAllowed / 3).toString() : minAllowed.toString());
     }
   }
 
-  displayError = (lim, vaildationMessage) => this.setState({ [`${lim}ErrorMessage`]: vaildationMessage });
+  displayError = (lim, validationMessage) => this.setState({ [`${lim}ErrorMessage`]: validationMessage });
 
   hideError = lim => this.setState({ [`${lim}ErrorMessage`]: undefined });
 
-  validateMinNodes = (val) => {
+  minNodes = () => {
     const {
       isDefaultMachinePool, product, isBYOC, isMultiAz,
     } = this.props;
-    const minNodesAllowed = getMinNodesAllowed({
-      val, isDefaultMachinePool, product, isBYOC, isMultiAz,
-    });
+    return getMinNodesAllowed({
+      isDefaultMachinePool, product, isBYOC, isMultiAz,
+    }) / (isMultiAz ? 3 : 1);
+  }
+
+  validateMinNodes = (val) => {
+    const minNodesAllowed = this.minNodes();
     return validateNumericInput(
-      val, { min: isMultiAz ? minNodesAllowed / 3 : minNodesAllowed, allowZero: true },
+      val, { min: minNodesAllowed, allowZero: true },
     );
   }
 
-  validateMaxNodes = (val, allValues) => {
+  validateMaxLessMinNodes = (val, allValues) => {
     if (parseInt(val, 10) < parseInt(allValues.min_replicas, 10)) {
       return 'Max nodes cannot be less than min nodes.';
     }
-    return validateNumericInput(val);
+    return undefined;
+  };
+
+  validateMaxNodes = (val) => {
+    const {
+      isMultiAz,
+    } = this.props;
+    return validateNumericInput(val, {
+      max: isMultiAz ? MAX_NODES / 3 : MAX_NODES,
+      allowZero: true,
+    });
   };
 
   render() {
@@ -102,6 +177,8 @@ class AutoScaleSection extends React.Component {
       isMultiAz,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
+      product,
+      onChange,
     } = this.props;
     const { minErrorMessage, maxErrorMessage } = this.state;
 
@@ -111,10 +188,12 @@ class AutoScaleSection extends React.Component {
         name="min_replicas"
         type="text"
         ariaLabel="Minimum nodes"
-        validate={[this.validateMinNodes, required]}
+        validate={[this.validateMinNodes, this.validateMaxNodes, required]}
         displayError={this.displayError}
         hideError={this.hideError}
         limit="min"
+        min={this.minNodes()}
+        max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
       />
     );
 
@@ -124,15 +203,17 @@ class AutoScaleSection extends React.Component {
         name="max_replicas"
         type="text"
         ariaLabel="Maximum nodes"
-        validate={[this.validateMaxNodes, required]}
+        validate={[this.validateMaxLessMinNodes, this.validateMaxNodes, required]}
         displayError={this.displayError}
         hideError={this.hideError}
         limit="max"
+        min={this.minNodes()}
+        max={isMultiAz ? MAX_NODES / 3 : MAX_NODES}
       />
     );
 
-    const minError = minErrorMessage && (<div className="pf-c-form__helper-text pf-m-error">{minErrorMessage}</div>);
-    const maxError = maxErrorMessage && (<div className="pf-c-form__helper-text pf-m-error">{maxErrorMessage}</div>);
+    const errorText = message => <HelperTextItem variant="error" hasIcon>{message}</HelperTextItem>;
+    const helpText = message => <HelperTextItem>{message}</HelperTextItem>;
 
     const multiAzFormGroups = (
       <>
@@ -143,10 +224,14 @@ class AutoScaleSection extends React.Component {
               isRequired
               fieldId="nodes_min_multiAZ"
               className="autoscaling__nodes-formGroup"
+              helperText={(
+                <HelperText>
+                  {helpText(`x 3 zones = ${(parseInt(autoScaleMinNodesValue, 10) * 3)}`)}
+                  {minErrorMessage && errorText(minErrorMessage)}
+                </HelperText>
+              )}
             >
               {minField}
-              <span>{`X 3 zones = ${(parseInt(autoScaleMinNodesValue, 10) * 3)}`}</span>
-              {minError}
             </FormGroup>
           </SplitItem>
           <SplitItem>
@@ -155,10 +240,14 @@ class AutoScaleSection extends React.Component {
               isRequired
               fieldId="nodes_max_multiAZ"
               className="autoscaling__nodes-formGroup"
+              helperText={(
+                <HelperText>
+                  {helpText(`x 3 zones = ${(parseInt(autoScaleMaxNodesValue, 10) * 3)}`)}
+                  {maxErrorMessage && errorText(maxErrorMessage)}
+                </HelperText>
+              )}
             >
               {maxField}
-              <span>{`X 3 zones = ${(autoScaleMaxNodesValue * 3).toString()}`}</span>
-              {maxError}
             </FormGroup>
           </SplitItem>
         </Split>
@@ -176,18 +265,25 @@ class AutoScaleSection extends React.Component {
           <Split hasGutter>
             <SplitItem className="autoscaling__nodes-formGroup">
               {minField}
-              <span>minimum</span>
-              {minError}
+              <HelperText>
+                {helpText('minimum')}
+                {minErrorMessage && errorText(minErrorMessage)}
+              </HelperText>
             </SplitItem>
             <SplitItem className="autoscaling__nodes-formGroup">
               {maxField}
-              maximum
-              {maxError}
+              <HelperText>
+                {helpText('maximum')}
+                {maxErrorMessage && errorText(maxErrorMessage)}
+              </HelperText>
             </SplitItem>
           </Split>
         </FormGroup>
       </>
     );
+
+    const autoScalingUrl = product === normalizedProducts.ROSA ? links.ROSA_AUTOSCALING
+      : links.APPLYING_AUTOSCALING;
 
     return (
       <>
@@ -201,7 +297,7 @@ class AutoScaleSection extends React.Component {
                   <>
                     {constants.autoscaleHint}
                     {' '}
-                    <ExternalLink href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html">Learn more about autoscaling</ExternalLink>
+                    <ExternalLink href={autoScalingUrl}>Learn more about autoscaling</ExternalLink>
                   </>
                 )}
               />
@@ -211,6 +307,7 @@ class AutoScaleSection extends React.Component {
             component={ReduxCheckbox}
             name="autoscalingEnabled"
             label="Enable autoscaling"
+            onChange={onChange}
           />
           {autoscalingEnabled && (isMultiAz ? multiAzFormGroups : singleAzFormGroup)}
         </GridItem>
@@ -228,11 +325,13 @@ AutoScaleSection.propTypes = {
   isBYOC: PropTypes.bool.isRequired,
   isDefaultMachinePool: PropTypes.bool.isRequired,
   change: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
 };
 
 AutoScaleSection.defaultProps = {
   autoScaleMinNodesValue: '0',
   autoScaleMaxNodesValue: '0',
+  onChange: () => {},
 };
 
 export default AutoScaleSection;
