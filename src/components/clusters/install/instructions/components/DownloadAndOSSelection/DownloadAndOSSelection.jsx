@@ -5,18 +5,13 @@ import {
   GridItem,
   Text,
 } from '@patternfly/react-core';
-import { has, get } from 'lodash';
 
-import DownloadButton from '../DownloadButton';
 import {
   tools, channels, operatingSystems, urlsSelector, githubReleasesToFetch,
 } from '../../../../../../common/installLinks';
 import {
   detectOS,
-  initialSelection,
-  architecturesForToolOS,
-  operatingSystemDropdown,
-  architectureDropdown,
+  downloadChoice,
 } from '../../../../../downloads/DownloadsPage/DownloadsPage';
 
 const crcInstructionsMapping = {
@@ -42,39 +37,6 @@ const crcInstructionsMapping = {
       installer. Opening the installer will automatically start a step-by-step installation guide.
     </Text>
   ),
-};
-
-const toolRow = (selections, setSelections, urls, tool, channel, token, pendoID) => {
-  const { OS, architecture } = (
-    selections[tool] || initialSelection(urls, tool, channel, detectOS())
-  );
-  // Callbacks for dropdowns:
-  const onChangeOS = (newOS) => {
-    let newArchitecture = architecture;
-    // Invalidate arch selection if not compatible
-    if (!has(urls, [tool, channel, architecture, newOS])) {
-      const optionsForOS = architecturesForToolOS(urls, tool, channel, newOS);
-      newArchitecture = optionsForOS.length > 1 ? 'select' : optionsForOS[0].value;
-    }
-    setSelections({ ...selections, [tool]: { OS: newOS, architecture: newArchitecture } });
-  };
-  const onChangeArchitecture = (newArchitecture) => {
-    setSelections({ ...selections, [tool]: { OS, architecture: newArchitecture } });
-  };
-
-  const url = get(urls, [tool, channel, architecture, OS]);
-  return {
-    osDropdown: operatingSystemDropdown(urls, tool, channel, OS, onChangeOS),
-    archDropdown: architectureDropdown(urls, tool, channel, OS, architecture, onChangeArchitecture),
-    downloadButton: (
-      <DownloadButton
-        url={url}
-        tool={tool}
-        disabled={!!token.error}
-        pendoID={pendoID}
-      />
-    ),
-  };
 };
 
 class DownloadAndOSSelection extends React.Component {
@@ -110,7 +72,8 @@ class DownloadAndOSSelection extends React.Component {
     const OS = selections[tool]?.OS || detectOS();
     const isCRC = tool === tools.CRC;
 
-    const chooser = toolRow(selections, this.setSelections, urls, tool, channel, token, pendoID);
+    const chooser = downloadChoice(selections, this.setSelections, urls, tool, channel, token,
+      { pendoID });
 
     return (
       <>
