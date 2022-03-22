@@ -10,7 +10,8 @@ import {
 import PopoverHint from '../../../../../common/PopoverHint';
 import './CAUpload.scss';
 
-const MAX_FILE_SIZE = 4000000; // 4MB
+export const MAX_FILE_SIZE = 4000000; // 4MB
+export const ACCEPT = '.pem,.crt,.ca,.cert,application/x-pem-file,application/x-x509-ca-cert,text/plain';
 
 // To be used inside redux-form Field component.
 class CAUpload extends React.Component {
@@ -108,7 +109,7 @@ class CAUpload extends React.Component {
               type="file"
               onChange={this.fileUpload}
               disabled={isDisabled}
-              accept=".pem,.crt,.ca,.cert,application/x-pem-file,application/x-x509-ca-cert,text/plain"
+              accept={ACCEPT}
             />
             Browse&hellip;
           </span>

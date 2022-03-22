@@ -20,6 +20,7 @@ const mapStateToProps = (state, ownProps) => {
     cloudProviderID,
     isMultiAz,
     privateClusterSelected,
+    configureProxySelected: valueSelector(state, 'configure_proxy'),
     selectedRegion,
     initialValues: createOSDInitialValues({
       cloudProviderID,

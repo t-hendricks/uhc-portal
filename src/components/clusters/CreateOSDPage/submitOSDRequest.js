@@ -91,6 +91,7 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
   if (formData.byoc === 'true') {
     const wasExistingVPCShown = isWizard || formData.network_configuration_toggle === 'advanced';
     const isInstallExistingVPC = wasExistingVPCShown && formData.install_to_vpc;
+    const configureProxySelected = formData.configure_proxy === true;
     const usePrivateLink = formData.use_privatelink;
     clusterRequest.ccs = {
       enabled: true,
@@ -187,6 +188,22 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
           key_location: formData.key_location,
           kms_key_service_account: formData.kms_service_account,
         };
+      }
+    }
+    // byoc && vpc && configure proxy
+    if (isInstallExistingVPC && configureProxySelected) {
+      const proxy = {};
+      if (formData.http_proxy_url) {
+        proxy.http_proxy = formData.http_proxy_url;
+      }
+      if (formData.https_proxy_url) {
+        proxy.https_proxy = formData.https_proxy_url;
+      }
+      if (Object.keys(proxy).length !== 0) {
+        clusterRequest.proxy = proxy;
+      }
+      if (formData.additional_trust_bundle) {
+        clusterRequest.additional_trust_bundle = formData.additional_trust_bundle;
       }
     }
   } else {
