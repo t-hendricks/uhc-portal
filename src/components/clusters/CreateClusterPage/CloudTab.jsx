@@ -343,10 +343,7 @@ const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
       (
         <>
           <Button
-            // TODO: uncomment below when ready to expose Rosa wizard in staging
-            // component={props => <Link {...props} to={`/create/rosa/${rosaCreationWizardFeature
-            // ? 'wizard' : 'welcome'}`} />}
-            component={props => <Link {...props} to="/create/rosa/welcome" />}
+            component={props => <Link {...props} to={`/create/rosa/${rosaCreationWizardFeature ? 'wizard' : 'welcome'}`} />}
             variant="secondary"
             className="get-started-button"
           >
