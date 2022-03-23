@@ -5,8 +5,8 @@ import { routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import { notificationsMiddleware } from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
 
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage
+import { persistStore, persistReducer, createTransform } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import { reduxReducers } from './reducers';
 import sentryMiddleware from './sentryMiddleware';
@@ -18,13 +18,40 @@ const defaultOptions = {
 const history = createBrowserHistory();
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const persistConfig = {
-  key: 'root',
+/**
+ * We use redux-persist to save the "form" store to local storage when the ROSA
+ * "Associate AWS Account" modal is opened since it will cause a window reload,
+ * and we want to preserve already entered data
+ */
+const restoreStateOnTokenReload = createTransform(
+  // gets called right before state is persisted
+  (inboundState) => {
+    const tokenReload = window.localStorage.getItem('token-reload') === 'true';
+    if (tokenReload) {
+      return { ...inboundState };
+    };
+    return {};
+  },
+  // gets called right before state is rehydrated
+  (outboundState) => {
+    const tokenReload = window.localStorage.getItem('token-reload') === 'true';
+    if (tokenReload) {
+      return outboundState;
+    }
+    return {};
+  },
+  // define which reducers this transform gets called for.
+  { whitelist: ['form'] },
+);
+
+const persistReducerConfig = {
+  key: 'form',
   storage,
   whitelist: ['form'],
+  transforms: [restoreStateOnTokenReload],
 };
 
-const persistedReducer = persistReducer(persistConfig, reduxReducers(history));
+const persistedReducer = persistReducer(persistReducerConfig, reduxReducers(history));
 
 const store = createStore(
   persistedReducer,
@@ -33,16 +60,7 @@ const store = createStore(
     sentryMiddleware)),
 );
 
-const serialize = (data) => {
-  debugger;
-  return window.localStorage.getItem('token-reload') === 'true' ? JSON.stringify(data) : '';
-};
-
-const tokenReload = window.localStorage.getItem('token-reload') === 'true';
-const persistor = persistStore(store, {
-  serialize,
-  manualPersist: true,
-});
+const persistor = persistStore(store);
 
 export {
   store as default, store, history, persistor,

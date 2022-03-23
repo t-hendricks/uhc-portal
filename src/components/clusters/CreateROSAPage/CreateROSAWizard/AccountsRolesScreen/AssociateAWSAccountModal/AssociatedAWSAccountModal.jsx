@@ -6,9 +6,6 @@ import Modal from '../../../../../common/Modal/Modal';
 import AuthenticateScreen from './AuthenticateScreen';
 import OCMRoleScreen from './OCMRoleScreen';
 import UserRoleScreen from './UserRoleScreen';
-import { loadOfflineToken } from '../../../../../tokens/Tokens';
-
-import { persistor } from '../../../../../../redux/store';
 
 class AssociateAWSAccountWizard extends React.Component {
   state = {
@@ -71,32 +68,15 @@ class AssociateAWSAccountWizard extends React.Component {
   }
 }
 
-function AssociatedAWSAccountModal({ closeModal, isOpen, isValid, token }) {
-  console.log(token);
- if (isOpen) {
-   debugger;
- } else {
-   // closing the modal
-   persistor.purge();
- }
-  // const [offlineAccessToken, setOfflineAccessToken] = React.useState('');
-  // const onLoad = (token) => {
-  //   if (token) {
-  //     setOfflineAccessToken(token);
-  //   }
-  // };
-
-  // React.useLayoutEffect(() => {
-  //   loadOfflineToken(onLoad);
-  // }, []);
-
+function AssociatedAWSAccountModal({
+  closeModal, isOpen, isValid, token,
+}) {
   return isOpen && (
     <Modal title="Associate AWS Account ID">
       <AssociateAWSAccountWizard
         isValid={isValid}
         closeModal={closeModal}
         token={token}
-        // token={offlineAccessToken}
       />
     </Modal>
   );
@@ -106,6 +86,7 @@ AssociatedAWSAccountModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
   isValid: PropTypes.bool,
+  token: PropTypes.string,
 };
 
 AssociateAWSAccountWizard.propTypes = {

@@ -11,6 +11,8 @@ import {
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
+import { PersistGate } from 'redux-persist/integration/react';
+
 import PageTitle from '../../../common/PageTitle';
 import ErrorModal from '../../../common/ErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
@@ -320,22 +322,22 @@ class CreateROSAWizard extends React.Component {
           )}
           <div className="ocm-page">
             {creationErrorModal}
-            <Wizard
-              className="rosa-wizard"
-              navAriaLabel={`${ariaTitle} steps`}
-              mainAriaLabel={`${ariaTitle} content`}
-              steps={steps}
-              isNavExpandable
-              onSave={onSubmit}
-              onNext={this.onNext}
-              onBack={this.onBack}
-              onGoToStep={this.onGoToStep}
-              onClose={() => {
-                debugger;
-                history.push('/create/cloud');
-                persistor.purge();
-              }}
-            />
+            <PersistGate persistor={persistor}>
+              <Wizard
+                className="rosa-wizard"
+                navAriaLabel={`${ariaTitle} steps`}
+                mainAriaLabel={`${ariaTitle} content`}
+                steps={steps}
+                isNavExpandable
+                onSave={onSubmit}
+                onNext={this.onNext}
+                onBack={this.onBack}
+                onGoToStep={this.onGoToStep}
+                onClose={() => {
+                  history.push('/create/cloud');
+                }}
+              />
+            </PersistGate>
           </div>
         </PageSection>
       </>

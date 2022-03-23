@@ -47,22 +47,16 @@ function AWSAccountSelection({
   const associateAWSAccountBtnRef = React.createRef();
 
   const onLoad = (token) => {
-    debugger;
     openAssociateAWSAccountModal(token);
   };
 
   const onError = (reason) => {
-    debugger;
     if (reason === 'not available') {
       // set token-reload to true, so that on reload we know to restore previously entered data
       window.localStorage.setItem('token-reload', 'true');
-      // persistor.flush().then((value) => {
-      //   debugger;
-      //   // will cause reload of page
-      //   insights.chrome.auth.doOffline();
-      // });
-      persistor.persist();
-      insights.chrome.auth.doOffline();
+      persistor.flush().then(() => {
+        insights.chrome.auth.doOffline();
+      });
     } else {
       // open the modal anyways
       openAssociateAWSAccountModal(reason);
@@ -73,17 +67,13 @@ function AWSAccountSelection({
     // in case we reloaded the page after loading the offline token, reopen the modal
     if (window.localStorage.getItem('token-reload') === 'true') {
       window.localStorage.removeItem('token-reload');
-      persistor.purge().then((value) => {
-        debugger;
-        loadOfflineToken(onLoad);
-      });
+      loadOfflineToken(onLoad);
     }
   }, []);
 
   useEffect(() => {
     // only scroll to associateAWSAccountBtn when no AWS account id selected
     if (isOpen === true && !selectedAWSAccountID && AWSAccountIDs.length === 0) {
-      debugger;
       associateAWSAccountBtnRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [isOpen, selectedAWSAccountID, AWSAccountIDs]);
@@ -98,8 +88,6 @@ function AWSAccountSelection({
   };
 
   const onClick = () => {
-    debugger;
-    // setIsOpen(false);
     // will cause window reload on first time
     loadOfflineToken(onLoad, onError);
   };

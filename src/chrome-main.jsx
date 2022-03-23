@@ -18,8 +18,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
 
-import { PersistGate } from 'redux-persist/integration/react';
-
 import * as Sentry from '@sentry/browser';
 import { SessionTiming } from '@sentry/integrations';
 
@@ -33,7 +31,7 @@ import getBaseName from './common/getBaseName';
 import { userInfoResponse } from './redux/actions/userActions';
 import { detectFeatures } from './redux/actions/featureActions';
 
-import { store, persistor } from './redux/store';
+import { store } from './redux/store';
 import { authInterceptor } from './services/apiRequest';
 
 import App from './components/App/App';
@@ -67,15 +65,7 @@ class AppEntry extends React.Component {
         config.fetchConfig()
           .then(() => {
             store.dispatch(detectFeatures());
-            const tokenReload = window.localStorage.getItem('token-reload') === 'true';
-            if (!tokenReload) {
-              // flush any existing data
-              persistor.pause();
-              persistor.purge().then((value) => {
-                debugger;
-                this.setState({ ready: true });
-              });
-            }
+            this.setState({ ready: true });
             if (!config.override && config.configData.sentryDSN) {
               Sentry.init({
                 dsn: config.configData.sentryDSN,
@@ -102,19 +92,12 @@ class AppEntry extends React.Component {
   render() {
     const { ready } = this.state;
     if (ready) {
-      const content = (
-        <>
+      return (
+        <Provider store={store}>
           <NotificationPortal />
           <BrowserRouter basename={getBaseName()}>
             <App />
           </BrowserRouter>
-        </>
-      );
-      return (
-        <Provider store={store}>
-          <PersistGate loading="LOADING" persistor={persistor}>
-            {content}
-          </PersistGate>
         </Provider>
       );
     }
