@@ -43,31 +43,33 @@ const useMediaQuery = (query) => {
   return match;
 };
 
+const dropdownCreateCluster = (
+  <DropdownItem component="button" key="createcluster" data-testid="create-cluster-item">
+    <Link to="/create" className="pf-c-dropdown__menu-item">
+      Create cluster
+    </Link>
+  </DropdownItem>
+);
+
 const dropdownRegisterCluster = (
   <DropdownItem component="button" key="registercluster" data-testid="register-cluster-item">
-    <div>
-      <Link to="/register" className="pf-c-dropdown__menu-item">
-        Register disconnected cluster
-      </Link>
-    </div>
+    <Link to="/register" className="pf-c-dropdown__menu-item">
+      Register disconnected cluster
+    </Link>
   </DropdownItem>
 );
 const dropdownArchived = (
   <DropdownItem component="button" key="archived">
-    <div>
-      <Link to="archived" className="pf-c-dropdown__menu-item">
-        View cluster archives
-      </Link>
-    </div>
+    <Link to="archived" className="pf-c-dropdown__menu-item">
+      View cluster archives
+    </Link>
   </DropdownItem>
 );
 const dropdownAssisteInstaller = (
   <DropdownItem component="button" key="assistedinstaller">
-    <div>
-      <Link to="/assisted-installer" className="pf-c-dropdown__menu-item">
-        Assisted Installer clusters
-      </Link>
-    </div>
+    <Link to="/assisted-installer" className="pf-c-dropdown__menu-item">
+      Assisted Installer clusters
+    </Link>
   </DropdownItem>
 );
 const toolbarCreateCluster = (
@@ -99,12 +101,14 @@ const useItems = (aiEnabled) => {
   const toolbarItems = [];
   const dropdownItems = [];
 
-  toolbarItems.push(toolbarCreateCluster);
   if (wide) {
+    toolbarItems.push(toolbarCreateCluster);
     toolbarItems.push(toolbarRegisterCluster);
   } else {
+    dropdownItems.push(dropdownCreateCluster);
     dropdownItems.push(dropdownRegisterCluster);
   }
+
   dropdownItems.push(dropdownArchived);
 
   if (aiEnabled) {
