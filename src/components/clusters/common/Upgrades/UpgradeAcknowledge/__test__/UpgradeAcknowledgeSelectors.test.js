@@ -56,12 +56,12 @@ describe('Upgrade Acknowledge Selectors', () => {
     };
   });
 
-  it('getToVersionFromState returns last in available upgrades', () => {
+  it('getToVersionFromState returns last in available upgrades, if not scheduled updates', () => {
     state = { clusters: { details: { cluster: { version: { available_upgrades: ['1.2.3', '3.4.5', '1.1.1'] } } } } };
     expect(getToVersionFromState(state)).toEqual('1.1.1');
   });
 
-  it('getToVersionFromState returns null if versions not available', () => {
+  it('getToVersionFromState returns null if versions not available and no scheduled updates', () => {
     state = { clusters: { details: { cluster: { version: { available_upgrades: [] } } } } };
     expect(getToVersionFromState(state)).toBeNull();
 
@@ -70,6 +70,14 @@ describe('Upgrade Acknowledge Selectors', () => {
 
     state = { clusters: { details: { cluster: {} } } };
     expect(getToVersionFromState(state)).toBeNull();
+  });
+
+  it('getToVersionFromState gets version of scheduled update if available', () => {
+    state = {
+      clusters: { details: { cluster: { version: { available_upgrades: ['1.2.3', '3.4.5', '1.1.1'] } } } },
+      clusterUpgrades: { schedules: { items: [{ version: '2.2.2' }] } },
+    };
+    expect(getToVersionFromState(state)).toEqual('2.2.2');
   });
 
   it('getClusterAcks returns empty if cluster id is unavailable', () => {

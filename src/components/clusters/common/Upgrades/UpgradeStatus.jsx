@@ -19,9 +19,20 @@ function UpgradeStatus({
   openModal,
 }) {
   const hasAvailableUpgrades = availableUpgrades.length > 0;
-  const latestAvailable = hasAvailableUpgrades
-    ? availableUpgrades[availableUpgrades.length - 1] : undefined;
+
   const isManualUpgradeScheduled = scheduledUpgrade && scheduledUpgrade.schedule_type === 'manual';
+
+  const updateVersion = () => {
+    if (scheduledUpgrade?.version) {
+      return scheduledUpgrade.version;
+    }
+    if (!availableUpgrades || availableUpgrades.length === 0) {
+      return undefined;
+    }
+
+    return availableUpgrades[availableUpgrades.length - 1];
+  };
+
   const upgradeState = scheduledUpgrade && scheduledUpgrade.state?.value;
   const canCancel = isManualUpgradeScheduled
                     && canEdit
@@ -73,7 +84,7 @@ function UpgradeStatus({
         {upgradeStateIcon()}
         <UpdateGraph
           currentVersion={clusterVersionRawID}
-          updateVersion={isManualUpgradeScheduled ? scheduledUpgrade.version : latestAvailable}
+          updateVersion={updateVersion()}
           hasMore={!isManualUpgradeScheduled && availableUpgrades.length > 1}
         />
 
