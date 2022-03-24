@@ -13,11 +13,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   closeModal: () => dispatch(closeModal()),
-  submit: () => {
-    // dispatch(addGrant(ownProps.clusterID, role, arn));
-    // eslint-disable-next-line no-console
-    console.log('submitted new associated aws account');
-  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssociateAWSAccountModal);

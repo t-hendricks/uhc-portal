@@ -27,6 +27,8 @@ import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
  *                   or when `values` has no entry for the provided value. optional.
  *  isBoolean - when set to `true`, value `undefined` will be treated as `false`,
  *             to match the behaviour of a boolean field.
+ *  isMonospace - when set to `true`, value will be shown in monospace font.
+ *  isOptional - when set to `true`, the field will only be shown when the value is not falsy.
  * }
  */
 const reviewValues = {
@@ -272,6 +274,27 @@ const reviewValues = {
         <GridItem md={3} />
       </Grid>
     ),
+  },
+  configure_proxy: {
+    title: 'Cluster-wide proxy',
+    isBoolean: true,
+    values: {
+      true: 'Enabled',
+      false: 'Disabled',
+    },
+  },
+  http_proxy_url: {
+    title: 'HTTP proxy URL',
+    isOptional: true,
+  },
+  https_proxy_url: {
+    title: 'HTTPS proxy URL',
+    isOptional: true,
+  },
+  additional_trust_bundle: {
+    title: 'Additional trust bundle',
+    isMonospace: true,
+    isOptional: true,
   },
   network_machine_cidr: {
     title: 'Machine CIDR',

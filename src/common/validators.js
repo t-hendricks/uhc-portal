@@ -349,6 +349,40 @@ const validateRHITUsername = (username) => {
   return valid ? undefined : 'Username includes illegal symbols';
 };
 
+const validateUrl = (value, protocol = 'http') => {
+  if (!value) {
+    return undefined;
+  }
+  let protocolArr = protocol;
+  if (typeof protocol === 'string') {
+    protocolArr = [protocol];
+  }
+  try {
+    // eslint-disable-next-line no-new
+    new URL(value);
+  } catch (error) {
+    return 'Invalid URL';
+  } finally {
+    const valueStart = value.substring(0, value.indexOf('://'));
+    if (!protocolArr.includes(valueStart)) {
+      const protocolStr = protocolArr.map(p => `${p}://`).join(', ');
+      // eslint-disable-next-line no-unsafe-finally
+      return `The URL should include the scheme prefix (${protocolStr})`;
+    }
+  }
+  return undefined;
+};
+
+const validateCA = (value) => {
+  if (!value) {
+    return undefined;
+  }
+  if (value === 'invalid file') {
+    return 'Must be a PEM encoded X.509 file (.pem, .crt, .ca, .cert) and no larger than 4 MB';
+  }
+  return undefined;
+};
+
 // Function to validate the cluster console URL
 const checkClusterConsoleURL = (value, isRequired) => {
   if (!value) {
@@ -1126,6 +1160,8 @@ export {
   checkClusterDisplayName,
   checkUserID,
   validateRHITUsername,
+  validateUrl,
+  validateCA,
   checkClusterConsoleURL,
   checkOpenIDIssuer,
   validateNumericInput,
