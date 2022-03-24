@@ -76,13 +76,14 @@ class AssociateAWSAccountWizard extends React.Component {
 }
 
 function AssociatedAWSAccountModal({
-  closeModal, isOpen, isValid, token,
+  closeModal, isOpen, isValid, onClose, token,
 }) {
   return isOpen && (
     <Modal title="Associate AWS Account ID">
       <AssociateAWSAccountWizard
         isValid={isValid}
         closeModal={closeModal}
+        onClose={onClose}
         token={token}
       />
     </Modal>

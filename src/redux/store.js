@@ -29,7 +29,7 @@ const restoreStateOnTokenReload = createTransform(
     const tokenReload = window.localStorage.getItem('token-reload') === 'true';
     if (tokenReload) {
       return { ...inboundState };
-    };
+    }
     return {};
   },
   // gets called right before state is rehydrated

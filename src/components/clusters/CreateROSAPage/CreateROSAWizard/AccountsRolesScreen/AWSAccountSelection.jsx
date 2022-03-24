@@ -68,7 +68,7 @@ function AWSAccountSelection({
     // in case we reloaded the page after loading the offline token, reopen the modal
     if (window.localStorage.getItem('token-reload') === 'true') {
       window.localStorage.removeItem('token-reload');
-      loadOfflineToken(onLoad);
+      loadOfflineToken(onLoad, onError);
     }
   }, []);
 
