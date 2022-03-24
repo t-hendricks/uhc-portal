@@ -77,13 +77,6 @@ function rosaReducer(state = initialState, action) {
           ...baseRequestState,
         };
         break;
-
-      case CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE:
-        draft.getAWSAccountIDsResponse = {
-          ...baseRequestState,
-          data: {},
-        };
-        break;
     }
   });
 }

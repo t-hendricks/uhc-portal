@@ -140,7 +140,7 @@ const manageTokensCard = show => (
  * @param {function(string):void} onLoad
  * Callback after token load was attempted.
  * The callback gets the token or a failure reason string as a parameter.
- * 
+ *
  * @param {function(string):void} onError
  * Callback after token load encountered an error.
  * The callback gets the failure reason string as a parameter.

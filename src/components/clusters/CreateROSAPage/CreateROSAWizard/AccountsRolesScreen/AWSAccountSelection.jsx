@@ -54,6 +54,7 @@ function AWSAccountSelection({
     if (reason === 'not available') {
       // set token-reload to true, so that on reload we know to restore previously entered data
       window.localStorage.setItem('token-reload', 'true');
+      // write state to localStorage
       persistor.flush().then(() => {
         insights.chrome.auth.doOffline();
       });
@@ -83,11 +84,12 @@ function AWSAccountSelection({
   };
 
   const onSelect = (_, selection) => {
-    // setIsOpen(false);
+    setIsOpen(false);
     input.onChange(selection);
   };
 
   const onClick = () => {
+    setIsOpen(false);
     // will cause window reload on first time
     loadOfflineToken(onLoad, onError);
   };
@@ -97,7 +99,7 @@ function AWSAccountSelection({
       {AWSAccountIDs.length === 0 && (
       <NoAssociatedAWSAccounts />
       )}
-      <Button ref={associateAWSAccountBtnRef} variant="secondary" onClick={() => onClick()}>Are you not entertained?! Associate AWS account</Button>
+      <Button ref={associateAWSAccountBtnRef} variant="secondary" onClick={onClick}>Associate AWS account</Button>
     </>
   );
 
