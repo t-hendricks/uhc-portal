@@ -141,8 +141,6 @@ const links = {
   RHCOS_ARM_ROOTFS: `${MIRROR_RHCOS_LATEST_ARM}/rhcos-live-rootfs.aarch64.img`,
   RHCOS_ARM_RAW: `${MIRROR_RHCOS_LATEST_ARM}/rhcos-metal.aarch64.raw.gz`,
 
-  // TODO remove once Tokens uses DownloadAndOSSelection for direct downloads
-  OCM_CLI_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
   OCM_CLI_DOCS: 'https://access.redhat.com/articles/6114701',
 
   RHOAS_CLI_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047',
@@ -157,8 +155,6 @@ const links = {
 
   OSDK_DOCS: `${DOCS_BASE}/cli_reference/osdk/cli-osdk-install.html`,
 
-  // TODO remove once TokensROSA uses DownloadAndOSSelection for direct downloads
-  ROSA_CLIENT_LATEST: MIRROR_ROSA_LATEST,
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
   ROSA_MONITORING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_monitoring/rosa-understanding-the-monitoring-stack.html`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,

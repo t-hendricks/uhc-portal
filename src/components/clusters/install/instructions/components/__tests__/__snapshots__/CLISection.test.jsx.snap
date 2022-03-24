@@ -13,7 +13,7 @@ exports[`CLISection renders correctly 1`] = `
     .
   </Text>
   <div>
-    <DownloadAndOSSelection
+    <Connect(DownloadAndOSSelection)
       channel="stable"
       token={
         Object {
