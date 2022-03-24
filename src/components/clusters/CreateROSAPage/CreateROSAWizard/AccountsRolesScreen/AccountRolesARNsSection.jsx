@@ -4,7 +4,7 @@ import get from 'lodash/get';
 import { Field } from 'redux-form';
 import {
   Alert, Button,
-  ExpandableSection, GridItem, Text, TextVariants, Title,
+  ExpandableSection, GridItem, Text, TextVariants, Title, Flex,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import './AccountsRolesScreen.scss';
@@ -147,77 +147,82 @@ function AccountRolesARNsSection({
       </GridItem>
       )}
       {!getAWSAccountRolesARNsResponse.pending && (
-        <>
-          <GridItem span={6}>
-            <ExpandableSection isExpanded={!awsARNsErrorBox && isExpanded} onToggle={onToggle} toggleText="Account roles ARNs ">
-              <GridItem span={8}>
-                <Text component={TextVariants.p}>
-                  The following roles were detected in your AWS account.
-                  {' '}
-                  <br />
-                  <ExternalLink href="">
-                    Learn more about account roles
-                  </ExternalLink>
-                  .
-                  <br />
-                  <br />
-                </Text>
-              </GridItem>
-              <GridItem span={4} />
-              <GridItem />
-              <Field
-                component={ReduxFormDropdown}
-                name="installer_role_arn"
-                label="Installer role"
-                type="text"
-                options={installerRoleOptions}
-                onChange={handInstallerRoleChange}
-                isDisabled={!hasAccountRoles || accountRoles.length === 1}
-                validate={installerRoleARNRequired}
-                isRequired
-                extendedHelpText="Something..."
-              />
-              <br />
-              <Field
-                component={ReduxVerticalFormGroup}
-                name="support_role_arn"
-                label="Support Role"
-                type="text"
-                isRequired
-                extendedHelpText="Something..."
-                isDisabled
-              />
-              <br />
-              <Field
-                component={ReduxVerticalFormGroup}
-                name="worker_role_arn"
-                label="Worker role"
-                type="text"
-                isRequired
-                extendedHelpText="Something..."
-                isDisabled
-              />
-              <br />
-              <Field
-                component={ReduxVerticalFormGroup}
-                name="control_plane_role_arn"
-                label="Control plane role"
-                type="text"
-                isRequired
-                extendedHelpText="Something..."
-                isDisabled
-              />
-            </ExpandableSection>
-          </GridItem>
-          {hasAccountRoles && (
-            <GridItem span={6} className="arns-detected-status">
-              <CheckIcon className="status-icon success small" />
-              <Text component={TextVariants.small}>
-                ARNs detected successfully
+        <GridItem span={6}>
+          <ExpandableSection
+            isExpanded={!awsARNsErrorBox && isExpanded}
+            onToggle={onToggle}
+            className="arns-expand-section"
+            toggleText={(
+              <Flex className="arns-expand-section__toggle-text" alignItems={{ default: 'alignItemsCenter' }} flexWrap={{ default: 'nowrap' }}>
+                <span>Account roles ARNs</span>
+                <div>
+                  <CheckIcon className="status-icon success small" />
+                  <Text component={TextVariants.small}>
+                    ARNs detected successfully
+                  </Text>
+                </div>
+              </Flex>
+            )}
+          >
+            <GridItem span={8}>
+              <Text component={TextVariants.p}>
+                The following roles were detected in your AWS account.
+                {' '}
+                <br />
+                <ExternalLink href="">
+                  Learn more about account roles
+                </ExternalLink>
+                .
+                <br />
+                <br />
               </Text>
             </GridItem>
-          )}
-        </>
+            <GridItem span={4} />
+            <GridItem />
+            <Field
+              component={ReduxFormDropdown}
+              name="installer_role_arn"
+              label="Installer role"
+              type="text"
+              options={installerRoleOptions}
+              onChange={handInstallerRoleChange}
+              isDisabled={!hasAccountRoles || accountRoles.length === 1}
+              validate={installerRoleARNRequired}
+              isRequired
+              extendedHelpText="Something..."
+            />
+            <br />
+            <Field
+              component={ReduxVerticalFormGroup}
+              name="support_role_arn"
+              label="Support Role"
+              type="text"
+              isRequired
+              extendedHelpText="Something..."
+              isDisabled
+            />
+            <br />
+            <Field
+              component={ReduxVerticalFormGroup}
+              name="worker_role_arn"
+              label="Worker role"
+              type="text"
+              isRequired
+              extendedHelpText="Something..."
+              isDisabled
+            />
+            <br />
+            <Field
+              component={ReduxVerticalFormGroup}
+              name="control_plane_role_arn"
+              label="Control plane role"
+              type="text"
+              isRequired
+              extendedHelpText="Something..."
+              isDisabled
+            />
+          </ExpandableSection>
+        </GridItem>
       )}
     </>
   );
