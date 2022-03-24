@@ -183,7 +183,7 @@ class Tokens extends React.Component {
     if (!blockedByTerms && show) {
       // eslint-disable-next-line no-console
       console.log('Tokens: componentDidMount, props =', this.props);
-      loadOfflineToken(this.onLoad);
+      loadOfflineToken(this.onLoad, this.onError);
     }
   }
 
