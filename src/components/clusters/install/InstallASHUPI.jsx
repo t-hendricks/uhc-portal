@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {
   PageSection,
 } from '@patternfly/react-core';
+
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { tollboothActions } from '../../../redux/actions';
 import { scrollToTop } from '../../../common/helpers';
@@ -11,10 +12,10 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-export class InstallASHIPI extends Component {
+export class InstallASHUPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Stack Hub Installer-Provisioned Infrastructure';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Stack Hub User-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -27,20 +28,20 @@ export class InstallASHIPI extends Component {
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
         { label: 'Microsoft Azure Stack Hub', path: '/install/azure-stack-hub' },
-        { label: 'Installer-provisioned infrastructure' },
+        { label: 'User-provisioned infrastructure' },
       ]}
       />
     );
 
     return (
       <>
-        <PageTitle title={instructionsMapping.ash.ipi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.ash.upi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
             cloudProviderID="ash"
             customizations={instructionsMapping.ash.customizations}
-            {...instructionsMapping.ash.ipi}
+            {...instructionsMapping.ash.upi}
           />
         </PageSection>
       </>
@@ -48,11 +49,11 @@ export class InstallASHIPI extends Component {
   }
 }
 
-InstallASHIPI.propTypes = {
+InstallASHUPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallASHIPI);
+export default connect(mapStateToProps)(InstallASHUPI);
