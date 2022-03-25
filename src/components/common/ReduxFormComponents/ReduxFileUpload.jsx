@@ -22,7 +22,7 @@ class ReduxFileUpload extends React.Component {
 
   componentWillUnmount() {
     const { input: { name } } = this.props;
-    document.getElementById(name).removeEventListener('blur', this.onTextAreaBlur);
+    document.getElementById(name)?.removeEventListener('blur', this.onTextAreaBlur);
   }
 
   onTextAreaBlur = (event) => {
