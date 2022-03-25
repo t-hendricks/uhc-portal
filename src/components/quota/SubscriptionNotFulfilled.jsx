@@ -65,7 +65,7 @@ function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
       text: (
         <p>
           <a
-            href="https://www.openshift.com/products/dedicated/contact/"
+            href="https://cloud.redhat.com/products/dedicated/contact/"
             rel="noreferrer noopener"
             target="_blank"
           >

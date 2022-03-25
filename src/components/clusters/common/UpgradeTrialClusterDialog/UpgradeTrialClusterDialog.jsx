@@ -94,7 +94,7 @@ class UpgradeTrialClusterDialog extends Component {
     const marketplaceQuotaEnabled = availableQuota.MARKETPLACE;
     const button = {
       primaryText: 'Contact sales',
-      onPrimaryClick: () => this.buttonLinkClick('https://www.openshift.com/products/dedicated/contact/'),
+      onPrimaryClick: () => this.buttonLinkClick('https://cloud.redhat.com/products/dedicated/contact/'),
     };
 
     if (availableQuota.STANDARD && !availableQuota.MARKETPLACE) {
