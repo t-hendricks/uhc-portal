@@ -10,6 +10,8 @@ import {
   PageSection,
 } from '@patternfly/react-core';
 import { overrideErrorMessage, BANNED_USER_CODE } from '../../common/errors';
+import links from '../../common/installLinks';
+import ExternalLink from '../common/ExternalLink';
 
 function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
   const getEmptyState = (title, text, button) => (
@@ -90,13 +92,9 @@ function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
             </Button>
           </p>
           <br />
-          <a
-            href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions"
-            rel="noreferrer noopener"
-            target="_blank"
-          >
+          <ExternalLink href={links.OCM_DOCS_SUBSCRIPTIONS}>
             Learn more
-          </a>
+          </ExternalLink>
         </p>
       ),
     },
