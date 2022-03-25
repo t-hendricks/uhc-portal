@@ -45,7 +45,7 @@ exports[`InstallASHUPI renders correctly 1`] = `
           },
         ]
       }
-      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html#installation-azure-user-infra-uploading-rhcos_installing-azure-user-infra"
+      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html#installation-azure-user-infra-uploading-rhcos_installing-azure-stack-hub-user-infra"
       title="Install OpenShift on Azure Stack Hub with user-provisioned infrastructure"
       token={Object {}}
     />
