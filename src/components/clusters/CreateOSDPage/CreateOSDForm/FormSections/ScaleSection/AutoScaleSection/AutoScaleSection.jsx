@@ -79,7 +79,7 @@ class NodesInput extends React.Component {
 
   render() {
     const {
-      input: { value }, ariaLabel, min, max,
+      input: { value, onBlur }, ariaLabel, min, max,
     } = this.props;
     return (
       <NumberInput
@@ -91,6 +91,15 @@ class NodesInput extends React.Component {
         onPlus={this.onPlus}
         inputAriaLabel={ariaLabel}
         widthChars={4}
+        inputProps={{
+          onBlur: (e) => {
+            // strips unnecessary leading zeros
+            // https://issues.redhat.com/browse/HAC-830
+            // eslint-disable-next-line no-param-reassign
+            e.target.value = Number(e.target.value).toString();
+            onBlur(e);
+          },
+        }}
       />
     );
   }
@@ -215,18 +224,19 @@ class AutoScaleSection extends React.Component {
     const errorText = message => <HelperTextItem variant="error" hasIcon>{message}</HelperTextItem>;
     const helpText = message => <HelperTextItem>{message}</HelperTextItem>;
 
-    const multiAzFormGroups = (
+    const azFormGroups = (
       <>
         <Split hasGutter className="autoscaling__container">
           <SplitItem>
             <FormGroup
               label="Minimum nodes per zone"
               isRequired
-              fieldId="nodes_min_multiAZ"
+              fieldId="nodes_min"
               className="autoscaling__nodes-formGroup"
               helperText={(
                 <HelperText>
-                  {helpText(`x 3 zones = ${(parseInt(autoScaleMinNodesValue, 10) * 3)}`)}
+                  {isMultiAz && helpText(`x 3 zones = ${(parseInt(autoScaleMinNodesValue, 10) * 3)}`)}
+                  {!isMultiAz && helpText('minimum')}
                   {minErrorMessage && errorText(minErrorMessage)}
                 </HelperText>
               )}
@@ -238,11 +248,12 @@ class AutoScaleSection extends React.Component {
             <FormGroup
               label="Maximum nodes per zone"
               isRequired
-              fieldId="nodes_max_multiAZ"
+              fieldId="nodes_max"
               className="autoscaling__nodes-formGroup"
               helperText={(
                 <HelperText>
-                  {helpText(`x 3 zones = ${(parseInt(autoScaleMaxNodesValue, 10) * 3)}`)}
+                  {isMultiAz && helpText(`x 3 zones = ${(parseInt(autoScaleMaxNodesValue, 10) * 3)}`)}
+                  {!isMultiAz && helpText('maximum')}
                   {maxErrorMessage && errorText(maxErrorMessage)}
                 </HelperText>
               )}
@@ -251,34 +262,6 @@ class AutoScaleSection extends React.Component {
             </FormGroup>
           </SplitItem>
         </Split>
-      </>
-    );
-
-    const singleAzFormGroup = (
-      <>
-        <FormGroup
-          label="Minimum and maximum node count"
-          isRequired
-          fieldId="nodes_limit"
-          className="autoscaling__container"
-        >
-          <Split hasGutter>
-            <SplitItem className="autoscaling__nodes-formGroup">
-              {minField}
-              <HelperText>
-                {helpText('minimum')}
-                {minErrorMessage && errorText(minErrorMessage)}
-              </HelperText>
-            </SplitItem>
-            <SplitItem className="autoscaling__nodes-formGroup">
-              {maxField}
-              <HelperText>
-                {helpText('maximum')}
-                {maxErrorMessage && errorText(maxErrorMessage)}
-              </HelperText>
-            </SplitItem>
-          </Split>
-        </FormGroup>
       </>
     );
 
@@ -309,7 +292,7 @@ class AutoScaleSection extends React.Component {
             label="Enable autoscaling"
             onChange={onChange}
           />
-          {autoscalingEnabled && (isMultiAz ? multiAzFormGroups : singleAzFormGroup)}
+          {autoscalingEnabled && azFormGroups}
         </GridItem>
       </>
     );
