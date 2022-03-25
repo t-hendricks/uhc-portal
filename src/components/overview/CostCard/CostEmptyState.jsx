@@ -4,8 +4,7 @@ import {
 } from '@patternfly/react-core';
 import CostIcon from './CostIcon';
 import ExternalLink from '../../common/ExternalLink';
-
-const DOC_URL = 'https://access.redhat.com/documentation/en-us/cost_management_service/2021/html/getting_started_with_cost_management/assembly-adding-openshift-container-platform-source';
+import links from '../../../common/installLinks';
 
 const CostEmptyState = () => (
   <EmptyState variant={EmptyStateVariant.large} className="pf-m-redhat-font">
@@ -18,7 +17,7 @@ const CostEmptyState = () => (
       your pods by cluster, node, project, or labels.
     </EmptyStateBody>
     <EmptyStateSecondaryActions>
-      <ExternalLink href={DOC_URL}>
+      <ExternalLink href={links.COSTMGMT_ADDING_OCP}>
         Add an OpenShift cluster to Cost Management
       </ExternalLink>
     </EmptyStateSecondaryActions>
