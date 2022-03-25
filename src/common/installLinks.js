@@ -27,11 +27,18 @@ const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.10';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 
+const COSTMGMT_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/cost_management_service/2022';
 const OCM_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022';
 
 const links = {
   DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
 
+  IDP_HTPASSWD: `${DOCS_BASE}/authentication/identity_providers/configuring-htpasswd-identity-provider.html`,
+  IDP_LDAP: `${DOCS_BASE}/authentication/identity_providers/configuring-ldap-identity-provider.html`,
+  IDP_GITHUB: `${DOCS_BASE}/authentication/identity_providers/configuring-github-identity-provider.html`,
+  IDP_GITLAB: `${DOCS_BASE}/authentication/identity_providers/configuring-gitlab-identity-provider.html`,
+  IDP_GOOGLE: `${DOCS_BASE}/authentication/identity_providers/configuring-google-identity-provider.html`,
+  IDP_OPENID: `${DOCS_BASE}/authentication/identity_providers/configuring-oidc-identity-provider.html`,
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication/understanding-authentication.html`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
   APPLYING_AUTOSCALING: `${DOCS_BASE}/machine_management/applying-autoscaling.html`,
@@ -159,6 +166,13 @@ const links = {
 
   OSDK_DOCS: `${DOCS_BASE}/cli_reference/osdk/cli-osdk-install.html`,
 
+  BUTANE_DOCS: `${DOCS_BASE}/installing/install_config/installing-customizing.html`,
+
+  COREOS_INSTALLER_DOCS: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
+
+  INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
+  INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-disconnected.html`,
+
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
   ROSA_MONITORING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_monitoring/rosa-understanding-the-monitoring-stack.html`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,
@@ -169,15 +183,13 @@ const links = {
   ROSA_RESPONSIBILITY_MATRIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-policy-responsibility-matrix.html`,
   ROSA_SERVICE_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-service-definition.html`,
 
-  BUTANE_DOCS: `${DOCS_BASE}/installing/install_config/installing-customizing.html`,
-  COREOS_INSTALLER_DOCS: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
-
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
   // TODO OCM RBAC phase 2: update this link once the new chapter is there.
   OCM_DOCS_ROLES_AND_ACCESS: `${OCM_DOCS_BASE}/html/managing_clusters/index`,
+  OCM_DOCS_SUBSCRIPTIONS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-cluster-subscriptions`,
+  OCM_DOCS_UPGRADING_OSD_TRIAL: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-cluster-subscriptions#upgrading-osd-trial-cluster_assembly-cluster-subscriptions`,
 
-  INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
-  INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-disconnected.html`,
+  COSTMGMT_ADDING_OCP: `${COSTMGMT_DOCS_BASE}/html/adding_an_openshift_container_platform_source_to_cost_management/assembly-adding-openshift-container-platform-source`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
