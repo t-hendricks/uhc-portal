@@ -155,12 +155,14 @@ function AccountRolesARNsSection({
             toggleText={(
               <Flex className="arns-expand-section__toggle-text" alignItems={{ default: 'alignItemsCenter' }} flexWrap={{ default: 'nowrap' }}>
                 <span>Account roles ARNs</span>
-                <div>
-                  <CheckIcon className="status-icon success small" />
-                  <Text component={TextVariants.small}>
-                    ARNs detected successfully
-                  </Text>
-                </div>
+                {hasAccountRoles && (
+                  <div>
+                    <CheckIcon className="status-icon success small" />
+                    <Text component={TextVariants.small}>
+                      ARNs detected successfully
+                    </Text>
+                  </div>
+                )}
               </Flex>
             )}
           >
