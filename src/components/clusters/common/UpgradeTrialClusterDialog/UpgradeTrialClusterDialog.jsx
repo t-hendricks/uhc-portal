@@ -10,6 +10,7 @@ import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
 import { getResourceName } from '../../../../redux/actions/machineTypesActions';
+import links from '../../../../common/installLinks';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../quotaSelectors';
 import './UpgradeTrialClusterDialog.scss';
@@ -191,7 +192,7 @@ class UpgradeTrialClusterDialog extends Component {
             Convert this trial cluster to a fully supported OpenShift Dedicated cluster.
             <br />
             <br />
-            <ExternalLink href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html-single/managing_clusters/index#upgrading-osd-trial-cluster_assembly-cluster-subscriptions">
+            <ExternalLink href={links.OCM_DOCS_UPGRADING_OSD_TRIAL}>
               Learn more
             </ExternalLink>
             {noQuota && (
