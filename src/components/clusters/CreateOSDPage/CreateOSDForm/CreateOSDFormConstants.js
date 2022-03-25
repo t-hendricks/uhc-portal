@@ -46,8 +46,6 @@ const billingModelConstants = {
   customerCloudSubscription: 'Customer cloud subscription',
   standardText: 'Deploy in cloud provider accounts owned by Red Hat.',
   customerCloudSubscriptionText: 'Leverage your existing cloud provider discounts and settings.',
-  resourceRequirementsLink: 'https://www.openshift.com/dedicated/ccs',
-  scpDocumentationLink: 'https://www.openshift.com/dedicated/ccs',
   awsCredentialsWarning: 'Revoking these credentials in AWS will result in a loss of access to any cluster created with these credentials.',
 };
 

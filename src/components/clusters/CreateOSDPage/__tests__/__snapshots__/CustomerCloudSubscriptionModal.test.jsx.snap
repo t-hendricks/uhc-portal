@@ -26,13 +26,12 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
       <ListItem>
         Your AWS account has the necessary limits to support the desired cluster size.
          
-        <a
-          href="https://www.openshift.com/dedicated/ccs"
-          rel="noreferrer noopener"
-          target="_blank"
+        <ExternalLink
+          href="https://docs.openshift.com/dedicated/osd_planning/aws-ccs.html#aws-limits_aws-ccs"
+          noIcon={true}
         >
-           See resource requirements.
-        </a>
+          See resource requirements.
+        </ExternalLink>
          
       </ListItem>
       <ListItem>
@@ -41,27 +40,25 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
       <ListItem>
         An Organization Service Control Policy (SCP) is set up according to the
          
-        <a
-          href="https://www.openshift.com/dedicated/ccs"
-          rel="noreferrer noopener"
-          target="_blank"
+        <ExternalLink
+          href="https://docs.openshift.com/dedicated/osd_planning/aws-ccs.html#ccs-aws-scp_aws-ccs"
+          noIcon={true}
         >
-           
-          documentation.
-        </a>
+          documentation
+        </ExternalLink>
+        .
       </ListItem>
     </List>
   </TextContent>
   <TextContent>
     It is also recommended that you have at least Business Support from AWS. Refer to the
      
-    <a
-      href="https://www.openshift.com/dedicated/ccs"
-      rel="noreferrer noopener"
-      target="_blank"
+    <ExternalLink
+      href="https://docs.openshift.com/dedicated/osd_planning/aws-ccs.html"
+      noIcon={true}
     >
       documentation
-    </a>
+    </ExternalLink>
      
     for more detail around the requirements for customer cloud subscription.
   </TextContent>
@@ -94,13 +91,11 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
       <ListItem>
         Your Google Cloud account has the necessary resource quotas and limits to support the desired cluster size.
          
-        <a
-          href="https://www.openshift.com/dedicated/ccs"
-          rel="noreferrer noopener"
-          target="_blank"
+        <ExternalLink
+          href="https://docs.openshift.com/dedicated/osd_planning/gcp-ccs.html#gcp-limits_gcp-ccs"
         >
           See resource requirements.
-        </a>
+        </ExternalLink>
          
       </ListItem>
       <ListItem>
@@ -136,13 +131,12 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
   <TextContent>
     It is also recommended that you have at least Production support from GCP. To prevent potential conflicts, we also recommend that you have no other resources provisioned in the project prior to provisioning OpenShift Dedicated. Refer to
      
-    <a
-      href="https://www.openshift.com/dedicated/ccs"
-      rel="noreferrer noopener"
-      target="_blank"
+    <ExternalLink
+      href="https://docs.openshift.com/dedicated/osd_planning/gcp-ccs.html"
+      noIcon={true}
     >
       the documentation
-    </a>
+    </ExternalLink>
      
     for more detail around the requirements for customer cloud subscription.
   </TextContent>

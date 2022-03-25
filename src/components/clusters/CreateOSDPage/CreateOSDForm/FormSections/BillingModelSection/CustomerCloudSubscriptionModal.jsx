@@ -8,7 +8,8 @@ import {
   TextContent,
 } from '@patternfly/react-core';
 
-import { billingModelConstants } from '../../CreateOSDFormConstants';
+import links from '../../../../../../common/installLinks';
+import ExternalLink from '../../../../../common/ExternalLink';
 import Modal from '../../../../../common/Modal/Modal';
 
 const contentByCloudProvider = (cloudProviderID) => {
@@ -30,7 +31,9 @@ const contentByCloudProvider = (cloudProviderID) => {
               Your AWS account has the necessary limits to support the desired
               cluster size.
               {' '}
-              <a href={billingModelConstants.resourceRequirementsLink} rel="noreferrer noopener" target="_blank"> See resource requirements.</a>
+              <ExternalLink noIcon href={links.OSD_CCS_AWS_LIMITS}>
+                See resource requirements.
+              </ExternalLink>
               {' '}
             </ListItem>
             <ListItem>
@@ -39,17 +42,15 @@ const contentByCloudProvider = (cloudProviderID) => {
             <ListItem>
               An Organization Service Control Policy (SCP) is set up according to the
               {' '}
-              <a href={billingModelConstants.scpDocumentationLink} rel="noreferrer noopener" target="_blank">
-                {' '}
-                documentation.
-              </a>
+              <ExternalLink noIcon href={links.OSD_CCS_AWS_SCP}>documentation</ExternalLink>
+              .
             </ListItem>
           </List>
         </TextContent>
         <TextContent>
           It is also recommended that you have at least Business Support from AWS. Refer to the
           {' '}
-          <a href={billingModelConstants.scpDocumentationLink} rel="noreferrer noopener" target="_blank">documentation</a>
+          <ExternalLink noIcon href={links.OSD_CCS_AWS}>documentation</ExternalLink>
           {' '}
           for more detail around the requirements for customer cloud
           subscription.
@@ -73,7 +74,7 @@ const contentByCloudProvider = (cloudProviderID) => {
             Your Google Cloud account has the necessary resource quotas and limits to support
             the desired cluster size.
             {' '}
-            <a href="https://www.openshift.com/dedicated/ccs" rel="noreferrer noopener" target="_blank">See resource requirements.</a>
+            <ExternalLink href={links.OSD_CCS_GCP_LIMITS}>See resource requirements.</ExternalLink>
             {' '}
           </ListItem>
           <ListItem>
@@ -96,7 +97,7 @@ const contentByCloudProvider = (cloudProviderID) => {
         provisioned in the project prior to provisioning OpenShift Dedicated.
         Refer to
         {' '}
-        <a href="https://www.openshift.com/dedicated/ccs" rel="noreferrer noopener" target="_blank">the documentation</a>
+        <ExternalLink noIcon href={links.OSD_CCS_GCP}>the documentation</ExternalLink>
         {' '}
         for more detail around the requirements for
         customer cloud subscription.
