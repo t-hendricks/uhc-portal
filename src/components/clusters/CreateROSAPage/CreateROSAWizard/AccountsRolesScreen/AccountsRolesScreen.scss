@@ -16,10 +16,22 @@
   }
 }
 
-.arns-detected-status {
-  position: relative;
-  left: -446px;
-  top: 6px;
+.arns-expand-section {
+  .pf-c-expandable-section__toggle-text {
+    cursor: default;
+  }
+
+  &__toggle-text {
+    span {
+      cursor: pointer;
+    }
+
+    div {
+      pointer-events: none;
+      color: black;
+      white-space: nowrap;
+    }
+  }
 }
 
 .status-icon.success.small {
