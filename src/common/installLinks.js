@@ -72,7 +72,7 @@ const links = {
 
   INSTALL_ASHIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html`,
   INSTALL_ASHUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html`,
-  INSTALL_ASHUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html#installation-azure-user-infra-uploading-rhcos_installing-azure-user-infra`,
+  INSTALL_ASHUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html#installation-azure-user-infra-uploading-rhcos_installing-azure-stack-hub-user-infra`,
   INSTALL_ASH_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-network-customizations.html`,
   RHCOS_ASHUPI_VHD_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-azurestack.x86_64.vhd.gz`,
 
