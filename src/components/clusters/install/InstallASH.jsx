@@ -4,7 +4,7 @@ import { PageSection } from '@patternfly/react-core';
 
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../../common/Breadcrumbs';
-import InstructionsASH from './instructions/InstructionsASH';
+import InstructionsChooser from './instructions/InstructionsChooser';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallASH extends Component {
@@ -27,7 +27,11 @@ class InstallASH extends Component {
       <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection>
-          <InstructionsASH />
+          <InstructionsChooser
+            cloudName="Azure Stack Hub"
+            ipiPageLink="/install/azure-stack-hub/installer-provisioned"
+            upiPageLink="/install/azure-stack-hub/user-provisioned"
+          />
         </PageSection>
       </>
     );

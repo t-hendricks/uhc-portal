@@ -24,7 +24,11 @@ exports[`InstallASH renders correctly 1`] = `
     title="Install OpenShift Container Platform 4"
   />
   <PageSection>
-    <InstructionsASH />
+    <InstructionsChooser
+      cloudName="Azure Stack Hub"
+      ipiPageLink="/install/azure-stack-hub/installer-provisioned"
+      upiPageLink="/install/azure-stack-hub/user-provisioned"
+    />
   </PageSection>
 </Fragment>
 `;

@@ -24,7 +24,12 @@ exports[`InstallVSphere renders correctly 1`] = `
     title="Install OpenShift Container Platform 4"
   />
   <PageSection>
-    <InstructionsVSphere />
+    <InstructionsChooser
+      cloudName="VMware vSphere"
+      ipiPageLink="/install/vsphere/installer-provisioned"
+      showAI={true}
+      upiPageLink="/install/vsphere/user-provisioned"
+    />
   </PageSection>
 </Fragment>
 `;
