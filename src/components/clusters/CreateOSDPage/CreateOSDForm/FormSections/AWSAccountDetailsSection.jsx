@@ -60,7 +60,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           component={ReduxVerticalFormGroup}
           name="secret_access_key"
           label="AWS secret access key"
-          type="text"
+          type="password"
           validate={required}
           disabled={pending || isValidating}
           helpText={isValidating ? 'Validating...' : ''}
