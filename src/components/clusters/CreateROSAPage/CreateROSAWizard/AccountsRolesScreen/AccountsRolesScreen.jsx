@@ -24,7 +24,6 @@ function AccountsRolesScreen({
   organizationID,
   selectedAWSAccountID,
   openAssociateAWSAccountModal,
-  // initialValues,
   getAWSAccountIDs,
   getAWSAccountIDsResponse,
   getAWSAccountRolesARNs,
@@ -47,11 +46,12 @@ function AccountsRolesScreen({
     change('byoc', 'true');
   }, []);
 
+  // default to first available aws account
   useEffect(() => {
-    if (AWSAccountIDs.length === 1 || selectedAWSAccountID === undefined) {
-      change('associated_aws_id', AWSAccountIDs[0]); // default to first available aws account
+    if (!selectedAWSAccountID && hasAWSAccount) {
+      change('associated_aws_id', AWSAccountIDs[0]);
     }
-  }, [AWSAccountIDs, selectedAWSAccountID]);
+  }, [hasAWSAccount, selectedAWSAccountID]);
 
   useEffect(() => {
     if (getAWSAccountIDsResponse.pending) {
