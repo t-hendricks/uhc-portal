@@ -229,7 +229,7 @@ class AutoScaleSection extends React.Component {
         <Split hasGutter className="autoscaling__container">
           <SplitItem>
             <FormGroup
-              label="Minimum nodes per zone"
+              label={isMultiAz ? 'Minimum nodes per zone' : 'Minimum node count'}
               isRequired
               fieldId="nodes_min"
               className="autoscaling__nodes-formGroup"
@@ -246,7 +246,7 @@ class AutoScaleSection extends React.Component {
           </SplitItem>
           <SplitItem>
             <FormGroup
-              label="Maximum nodes per zone"
+              label={isMultiAz ? 'Maximum nodes per zone' : 'Maximum node count'}
               isRequired
               fieldId="nodes_max"
               className="autoscaling__nodes-formGroup"

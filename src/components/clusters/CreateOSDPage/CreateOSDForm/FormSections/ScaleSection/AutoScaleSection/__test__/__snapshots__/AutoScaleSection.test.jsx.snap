@@ -187,7 +187,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
             </HelperText>
           }
           isRequired={true}
-          label="Minimum nodes per zone"
+          label="Minimum node count"
         >
           <Field
             ariaLabel="Minimum nodes"
@@ -221,7 +221,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
             </HelperText>
           }
           isRequired={true}
-          label="Maximum nodes per zone"
+          label="Maximum node count"
         >
           <Field
             ariaLabel="Maximum nodes"
