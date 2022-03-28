@@ -31,6 +31,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
             </>
         )}
           isRequired
+          data-hj-suppress
         />
       </GridItem>
       <GridItem md={6} />
@@ -52,6 +53,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           disabled={pending || isValidating}
           helpText={isValidating ? 'Validating...' : ''}
           isRequired
+          data-hj-suppress
         />
       </GridItem>
       <GridItem md={6} />
