@@ -212,7 +212,12 @@ class AutoScaleSection extends React.Component {
         name="max_replicas"
         type="text"
         ariaLabel="Maximum nodes"
-        validate={[this.validateMaxLessMinNodes, this.validateMaxNodes, required]}
+        validate={[
+          this.validateMinNodes,
+          this.validateMaxLessMinNodes,
+          this.validateMaxNodes,
+          required,
+        ]}
         displayError={this.displayError}
         hideError={this.hideError}
         limit="max"

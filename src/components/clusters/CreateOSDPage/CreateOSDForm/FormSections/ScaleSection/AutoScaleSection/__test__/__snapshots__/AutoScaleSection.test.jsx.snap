@@ -97,6 +97,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
                 [Function],
                 [Function],
                 [Function],
+                [Function],
               ]
             }
           />
@@ -235,6 +236,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
             type="text"
             validate={
               Array [
+                [Function],
                 [Function],
                 [Function],
                 [Function],
