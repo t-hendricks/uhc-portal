@@ -209,7 +209,6 @@ NetworkScreen.propTypes = {
   privateLinkSelected: PropTypes.bool,
   forcePrivateLink: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
-  product: PropTypes.string,
   isByoc: PropTypes.bool,
 };
 
