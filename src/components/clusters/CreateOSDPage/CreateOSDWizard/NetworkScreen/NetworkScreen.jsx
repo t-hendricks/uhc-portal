@@ -14,6 +14,7 @@ import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../../../common/ExternalLink';
 import links from '../../../../../common/installLinks';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 function NetworkScreen(props) {
   const {
@@ -25,7 +26,12 @@ function NetworkScreen(props) {
     privateLinkSelected,
     forcePrivateLink,
     configureProxySelected,
+    product,
   } = props;
+
+  const { OSD, OSDTrial } = normalizedProducts;
+
+  const showConfigureProxy = product === OSD || product === OSDTrial;
 
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
@@ -172,6 +178,7 @@ function NetworkScreen(props) {
                     />
                   </FormGroup>
                   )}
+                  {showConfigureProxy && (
                   <FormGroup>
                     <Field
                       component={ReduxCheckbox}
@@ -185,6 +192,7 @@ function NetworkScreen(props) {
                       )}
                     />
                   </FormGroup>
+                  )}
                 </FormFieldGroup>
               </FormGroup>
             </GridItem>
@@ -204,6 +212,7 @@ NetworkScreen.propTypes = {
   privateLinkSelected: PropTypes.bool,
   forcePrivateLink: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
+  product: PropTypes.string,
 };
 
 export default NetworkScreen;
