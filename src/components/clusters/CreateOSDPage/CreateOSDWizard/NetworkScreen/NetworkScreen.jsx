@@ -27,11 +27,12 @@ function NetworkScreen(props) {
     forcePrivateLink,
     configureProxySelected,
     product,
+    isByoc,
   } = props;
 
   const { OSD, OSDTrial } = normalizedProducts;
 
-  const showConfigureProxy = product === OSD || product === OSDTrial;
+  const showConfigureProxy = isByoc && (product === OSD || product === OSDTrial);
 
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
@@ -213,6 +214,7 @@ NetworkScreen.propTypes = {
   forcePrivateLink: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
   product: PropTypes.string,
+  isByoc: PropTypes.bool,
 };
 
 export default NetworkScreen;
