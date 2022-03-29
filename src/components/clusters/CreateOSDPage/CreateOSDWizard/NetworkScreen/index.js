@@ -22,6 +22,8 @@ const mapStateToProps = (state, ownProps) => {
     privateClusterSelected,
     configureProxySelected: valueSelector(state, 'configure_proxy'),
     selectedRegion,
+    product,
+    isByoc: isCCS,
     initialValues: createOSDInitialValues({
       cloudProviderID,
       product,
