@@ -23,6 +23,7 @@ import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSe
 import MachinePoolScreen from '../../CreateOSDPage/CreateOSDWizard/MachinePoolScreen';
 import NetworkScreen from '../../CreateOSDPage/CreateOSDWizard/NetworkScreen';
 import VPCScreen from '../../CreateOSDPage/CreateOSDWizard/VPCScreen';
+import ClusterProxyScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterProxyScreen';
 import CIDRScreen from '../../CreateOSDPage/CreateOSDWizard/CIDRScreen';
 import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
 import ReviewClusterScreen from '../../CreateOSDPage/CreateOSDWizard/ReviewClusterScreen';
@@ -100,6 +101,7 @@ class CreateROSAWizard extends React.Component {
       hasProductQuota,
       history,
       privateLinkSelected,
+      configureProxySelected,
     } = this.props;
     const { stepIdReached } = this.state;
 
@@ -175,8 +177,19 @@ class CreateROSAWizard extends React.Component {
             enableNext: isValid,
             canJumpTo: stepIdReached >= 32,
           },
-          {
+          configureProxySelected && {
             id: 33,
+            name: 'Cluster-wide proxy',
+            component: (
+              <ErrorBoundary>
+                <ClusterProxyScreen />
+              </ErrorBoundary>
+            ),
+            enableNext: isValid,
+            canJumpTo: stepIdReached >= 33,
+          },
+          {
+            id: 34,
             name: 'CIDR ranges',
             component: (
               <ErrorBoundary>
@@ -184,7 +197,7 @@ class CreateROSAWizard extends React.Component {
               </ErrorBoundary>
             ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 33,
+            canJumpTo: stepIdReached >= 34,
           },
         ].filter(Boolean),
       },
@@ -356,6 +369,7 @@ CreateROSAWizard.propTypes = {
   cloudProviderID: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
+  configureProxySelected: PropTypes.bool,
   isErrorModalOpen: PropTypes.bool,
 
   createClusterResponse: PropTypes.shape({
