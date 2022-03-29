@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 
 import fetch from 'node-fetch';
+import ProgressBar from 'progress';
 
 import { getFlatUrls } from '../src/common/installLinks.mjs';
 
 const urls = await getFlatUrls();
 const statusByUrl = {};
+const bar = new ProgressBar(':bar', { total: urls.length, clear: true });
+
 await Promise.all(urls.map(async (url) => {
   if (url.startsWith('mailto:')) {
     statusByUrl[url] = 'not checked'
@@ -25,6 +28,7 @@ await Promise.all(urls.map(async (url) => {
       statusByUrl[url] = e.toString();
     }
   }
+  bar.tick();
 }));
 
 let countGood = 0;
