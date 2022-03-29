@@ -61,14 +61,7 @@ const reviewValues = {
   },
   operator_roles_name: {
     title: 'Operator roles name',
-    valueTransform: (value, allValues) => {
-      // TODO: replace 'ManagedOpenShift' with backend api call/value: https://issues.redhat.com/browse/HAC-354
-      let opRolesName = `ManagedOpenShift-${allValues.name}`;
-      if (allValues.custom_operator_roles_prefix) {
-        opRolesName += `-${allValues.custom_operator_roles_prefix}`;
-      }
-      return opRolesName;
-    },
+    valueTransform: (value, allValues) => `${allValues.name}-${allValues.custom_operator_roles_prefix}`,
   },
   cluster_version: {
     title: 'Version',
