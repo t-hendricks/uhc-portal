@@ -12,7 +12,7 @@ import {
 } from '../rosaActions';
 
 const mapDispatchToProps = dispatch => ({
-  openAssociateAWSAccountModal: () => dispatch(openModal('associate-aws-modal')),
+  openAssociateAWSAccountModal: token => dispatch(openModal('associate-aws-modal', token)),
   getAWSAccountIDs: organizationID => dispatch(getAWSAccountIDs(organizationID)),
   getAWSAccountRolesARNs: awsAccountID => dispatch(
     getAWSAccountRolesARNs(awsAccountID),

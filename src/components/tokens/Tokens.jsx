@@ -140,23 +140,20 @@ const manageTokensCard = show => (
  *
  * @param {function(string):void} onLoad
  * Callback after token load was attempted.
- * The callback gets either the token or a failure reason string as a parameter.
+ * The callback gets the token or a failure reason string as a parameter.
+ *
+ * @param {function(string):void} onError
+ * Callback after token load encountered an error.
+ * The callback gets the failure reason string as a parameter.
  */
-const loadOfflineToken = (onLoad) => {
+const loadOfflineToken = (onLoad, onError) => {
   insights.chrome.auth.getOfflineToken().then((response) => {
     // eslint-disable-next-line no-console
     console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
     onLoad(response.data.refresh_token);
   }).catch((reason) => {
-    if (reason === 'not available') {
-      // eslint-disable-next-line no-console
-      console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
-      insights.chrome.auth.doOffline();
-      onLoad();
-    } else {
-      // eslint-disable-next-line no-console
-      console.log('Tokens: getOfflineToken failed =>', reason);
-      onLoad(reason);
+    if (onError) {
+      onError(reason);
     }
   });
 };
@@ -186,7 +183,7 @@ class Tokens extends React.Component {
     if (!blockedByTerms && show) {
       // eslint-disable-next-line no-console
       console.log('Tokens: componentDidMount, props =', this.props);
-      loadOfflineToken(this.onLoad);
+      loadOfflineToken(this.onLoad, this.onError);
     }
   }
 
@@ -194,6 +191,18 @@ class Tokens extends React.Component {
     const that = this;
     if (tokenOrFailureReason) {
       that.setState({ offlineAccessToken: tokenOrFailureReason });
+    }
+  }
+
+  onError = (reason) => {
+    if (reason === 'not available') {
+      // eslint-disable-next-line no-console
+      console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
+      insights.chrome.auth.doOffline();
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('Tokens: getOfflineToken failed =>', reason);
+      this.onLoad(reason);
     }
   }
 

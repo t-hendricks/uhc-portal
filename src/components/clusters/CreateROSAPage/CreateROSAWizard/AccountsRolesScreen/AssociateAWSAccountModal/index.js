@@ -8,6 +8,7 @@ import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
 const mapStateToProps = state => ({
   isOpen: shouldShowModal(state, 'associate-aws-modal'),
   isValid: isValid('CreateCluster')(state),
+  token: state.modal.data,
 });
 
 const mapDispatchToProps = dispatch => ({

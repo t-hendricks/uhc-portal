@@ -11,6 +11,9 @@ import {
 } from '@patternfly/react-core';
 import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
+import { loadOfflineToken } from '../../../../tokens/Tokens';
+
+import { persistor } from '../../../../../redux/store';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 
@@ -43,6 +46,32 @@ function AWSAccountSelection({
 
   const associateAWSAccountBtnRef = React.createRef();
 
+  const onLoad = (token) => {
+    openAssociateAWSAccountModal(token);
+  };
+
+  const onError = (reason) => {
+    if (reason === 'not available') {
+      // set token-reload to true, so that on reload we know to restore previously entered data
+      window.localStorage.setItem('token-reload', 'true');
+      // write state to localStorage
+      persistor.flush().then(() => {
+        insights.chrome.auth.doOffline();
+      });
+    } else {
+      // open the modal anyways
+      openAssociateAWSAccountModal(reason);
+    }
+  };
+
+  useEffect(() => {
+    // in case we reloaded the page after loading the offline token, reopen the modal
+    if (window.localStorage.getItem('token-reload') === 'true') {
+      window.localStorage.removeItem('token-reload');
+      loadOfflineToken(onLoad, onError);
+    }
+  }, []);
+
   useEffect(() => {
     // only scroll to associateAWSAccountBtn when no AWS account id selected
     if (isOpen === true && !selectedAWSAccountID && AWSAccountIDs.length === 0) {
@@ -61,7 +90,8 @@ function AWSAccountSelection({
 
   const onClick = () => {
     setIsOpen(false);
-    openAssociateAWSAccountModal();
+    // will cause window reload on first time
+    loadOfflineToken(onLoad, onError);
   };
 
   const footer = () => (
