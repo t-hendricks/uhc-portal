@@ -17,7 +17,7 @@ import CustomerManagedEncryption from './FormSections/EncryptionSection/Customer
 import { constants } from './CreateOSDFormConstants';
 
 import UpgradeSettingsFields from '../../common/Upgrades/UpgradeSettingsFields';
-import links from '../../../../common/installLinks';
+import links from '../../../../common/installLinks.mjs';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { required, validateGCPServiceAccount } from '../../../../common/validators';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { channels } from '../../../../../../common/installLinks';
+import { channels } from '../../../../../../common/installLinks.mjs';
 import CLISection from '../CLISection';
 
 describe('CLISection', () => {

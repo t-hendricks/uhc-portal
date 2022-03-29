@@ -3,7 +3,7 @@ import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import {
   List, ListItem, Text,
 } from '@patternfly/react-core';
-import links, { tools, channels } from '../../../../common/installLinks';
+import links, { tools, channels } from '../../../../common/installLinks.mjs';
 
 /**
  * RHCOS Downloads structure

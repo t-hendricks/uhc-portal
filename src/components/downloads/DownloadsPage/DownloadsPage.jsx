@@ -32,7 +32,7 @@ import links, {
   architectureOptions,
   githubReleasesToFetch,
   urlsSelector,
-} from '../../../common/installLinks';
+} from '../../../common/installLinks.mjs';
 import DevPreviewBadge from '../../common/DevPreviewBadge';
 
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';

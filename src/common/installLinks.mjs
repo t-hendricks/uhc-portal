@@ -1,3 +1,5 @@
+// This module has .mjs extension to simplify importing from NodeJS scripts.
+
 const MIRROR_BUTANE_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest';
 const MIRROR_CLIENTS_STABLE_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';

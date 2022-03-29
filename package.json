@@ -143,7 +143,7 @@
       "<rootDir>/src/setupTests.js"
     ],
     "transform": {
-      "^.+\\.jsx?$": "babel-jest"
+      "^.+\\.(js|jsx|mjs)$": "babel-jest"
     },
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!(react-monaco-editor|monaco-editor|lodash-es|openshift-assisted-ui-lib)/)"

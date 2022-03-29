@@ -4,7 +4,7 @@ import {
 } from '@patternfly/react-core';
 import CostIcon from './CostIcon';
 import ExternalLink from '../../common/ExternalLink';
-import links from '../../../common/installLinks';
+import links from '../../../common/installLinks.mjs';
 
 const CostEmptyState = () => (
   <EmptyState variant={EmptyStateVariant.large} className="pf-m-redhat-font">

@@ -15,7 +15,7 @@ import ExternalLink from '../../../../common/ExternalLink';
 import AssociateAWSAccountModal from './AssociateAWSAccountModal';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import ErrorBox from '../../../../common/ErrorBox';
-import links from '../../../../../common/installLinks';
+import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 

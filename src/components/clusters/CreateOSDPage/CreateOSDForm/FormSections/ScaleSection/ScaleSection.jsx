@@ -14,7 +14,7 @@ import { ReduxFormKeyValueList, ReduxFormTaints } from '../../../../../common/Re
 import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../../common/LoadBalancersDropdown';
 import NodeCountInput from '../../../../common/NodeCountInput';
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../../common/installLinks.mjs';
 import { normalizedProducts, billingModels } from '../../../../../../common/subscriptionTypes';
 import { constants } from '../../CreateOSDFormConstants';
 

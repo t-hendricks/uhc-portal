@@ -22,7 +22,7 @@ import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitorin
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 
 import BasicFieldsSection from '../../CreateOSDForm/FormSections/BasicFieldsSection';
-import links from '../../../../../common/installLinks';
+import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 function ClusterSettingsScreen({
