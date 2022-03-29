@@ -10,11 +10,12 @@ import {
   TabTitleText,
   Tabs,
 } from '@patternfly/react-core';
-import CloudFormationTab from './CloudFormationTab';
+// import CloudFormationTab from './CloudFormationTab';
+import AWSCLITab from './AWSCLITab';
 import ROSACLITab from './ROSACLITab';
 
 function ActionRequiredModal({ cluster, isOpen, onClose }) {
-  const [activeTab, setActiveTab] = React.useState(0);
+  const [activeTab, setActiveTab] = React.useState(1);
   return (
     <Modal
       title="Action required to continue installation"
@@ -41,10 +42,17 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
             onSelect={(_, tab) => setActiveTab(tab)}
             isBox
           >
+            {/* Hide the CloudFormation tab until the templates are published to a URL.
             <Tab
               eventKey={0}
               title={<TabTitleText>AWS CloudFormation</TabTitleText>}
               tabContentId="cloudformation"
+            />
+            */}
+            <Tab
+              eventKey={1}
+              title={<TabTitleText>AWS CLI</TabTitleText>}
+              tabContentId="aws-cli"
             />
             <Tab
               eventKey={2}
@@ -54,6 +62,7 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
           </Tabs>
         </StackItem>
         <StackItem>
+          {/* Hide the CloudFormation tab until the templates are published to a URL.
           <TabContent
             key={0}
             eventKey={0}
@@ -63,7 +72,16 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
           >
             <CloudFormationTab cluster={cluster} />
           </TabContent>
-          {/* TODO: Add aws CLI tab */}
+          */}
+          <TabContent
+            key={1}
+            eventKey={1}
+            id="aws-cli"
+            activeKey={activeTab}
+            hidden={activeTab !== 1}
+          >
+            <AWSCLITab cluster={cluster} />
+          </TabContent>
           <TabContent
             key={2}
             eventKey={2}

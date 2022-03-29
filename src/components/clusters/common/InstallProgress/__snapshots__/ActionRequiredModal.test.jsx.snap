@@ -41,8 +41,9 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
     </StackItem>
     <StackItem>
       <Tabs
-        activeKey={0}
+        activeKey={1}
         component="div"
+        hasBorderBottom={true}
         isBox={true}
         isFilled={false}
         isSecondary={false}
@@ -57,11 +58,11 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
         variant="default"
       >
         <Tab
-          eventKey={0}
-          tabContentId="cloudformation"
+          eventKey={1}
+          tabContentId="aws-cli"
           title={
             <TabTitleText>
-              AWS CloudFormation
+              AWS CLI
             </TabTitleText>
           }
         />
@@ -78,13 +79,13 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
     </StackItem>
     <StackItem>
       <ForwardRef
-        activeKey={0}
-        eventKey={0}
+        activeKey={1}
+        eventKey={1}
         hidden={false}
-        id="cloudformation"
-        key="0"
+        id="aws-cli"
+        key="1"
       >
-        <CloudFormationTab
+        <AWSCLITab
           cluster={
             Object {
               "activity_timestamp": "2021-01-11T11:55:29Z",
@@ -459,7 +460,7 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
         />
       </ForwardRef>
       <ForwardRef
-        activeKey={0}
+        activeKey={1}
         eventKey={2}
         hidden={true}
         id="rosa-cli"
