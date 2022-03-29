@@ -541,7 +541,7 @@ const urls = {
   [tools.OC_MIRROR_PLUGIN]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: 'https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz',
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}oc-mirror.tar.gz`,
       },
     },
   },
