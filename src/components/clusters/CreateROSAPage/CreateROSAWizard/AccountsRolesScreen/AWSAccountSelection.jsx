@@ -75,7 +75,6 @@ function AWSAccountSelection({
 
   return (
     <FormGroup
-      {...input}
       label={label}
       labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
       validated={error ? 'error' : undefined}
@@ -83,6 +82,7 @@ function AWSAccountSelection({
       isRequired
     >
       <Select
+        {...input}
         label={label}
         labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
         isOpen={isOpen}
