@@ -152,14 +152,6 @@ const getldapca = (formData) => {
   return formData.ldap_ca;
 };
 
-const IDPDocBase = 'https://access.redhat.com/documentation/en-us/openshift_container_platform/4.8/html/authentication_and_authorization/configuring-identity-providers';
-const LDAPDocLink = `${IDPDocBase}#configuring-ldap-identity-provider`;
-const GithubDocLink = `${IDPDocBase}#configuring-github-identity-provider`;
-const GoogleDocLink = `${IDPDocBase}#configuring-google-identity-provider`;
-const OpenIDDocLink = `${IDPDocBase}#configuring-oidc-identity-provider`;
-const GitlabDocLink = `${IDPDocBase}#configuring-gitlab-identity-provider`;
-const HTPasswdDocLink = `${IDPDocBase}#configuring-htpasswd-identity-provider`;
-
 const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({
     client_id: formData.client_id.trim(),
@@ -396,12 +388,6 @@ export {
   mappingMethods,
   IDPformValues,
   mappingMethodsformValues,
-  LDAPDocLink,
-  GithubDocLink,
-  OpenIDDocLink,
-  GoogleDocLink,
-  GitlabDocLink,
-  HTPasswdDocLink,
   generateIDPName,
   IDPObjectNames,
   getldapAttributes,

@@ -13,6 +13,7 @@ import {
 
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { ReduxFormRadioGroup } from '../../../common/ReduxFormComponents';
+import links from '../../../../common/installLinks';
 import {
   subscriptionSettings,
   subscriptionSupportLevels,
@@ -366,7 +367,7 @@ class EditSubscriptionSettingsFields extends Component {
         isInline
         title={billingModelAlertText}
       >
-        <a href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions" target="_blank" rel="noreferrer noopener">
+        <a href={links.OCM_DOCS_SUBSCRIPTIONS} target="_blank" rel="noreferrer noopener">
           Learn more about subscriptions
           {' '}
           <ExternalLinkAltIcon color="#0066cc" size="sm" />

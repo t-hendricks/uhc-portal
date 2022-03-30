@@ -106,7 +106,7 @@ function OverviewEmptyState() {
             Red hat OpenShift Dedicated is a single-tenant, high availability Kubernetes clusters,
             managed by Red Hat on Amazon Web Services or Google Cloud Platform.
             <a
-              href="https://www.openshift.com/products/dedicated/contact/"
+              href="https://cloud.redhat.com/products/dedicated/contact/"
               rel="noreferrer noopener"
               target="_blank"
               id="request-information-btn"
@@ -125,8 +125,8 @@ function OverviewEmptyState() {
           <Title headingLevel="h2" size="lg" className="pf-u-ml-lg pf-u-mb-md">Other resources</Title>
           <List>
             <ListItem><a href={links.DOCS_ENTRY} rel="noreferrer noopener" target="_blank">Official documents</a></ListItem>
-            <ListItem><a href="https://www.openshift.com/blog" rel="noreferrer noopener" target="_blank">Blog</a></ListItem>
-            <ListItem><a href="https://learn.openshift.com/" rel="noreferrer noopener" target="_blank">Tutorials with live playgrounds!</a></ListItem>
+            <ListItem><a href="https://cloud.redhat.com/blog" rel="noreferrer noopener" target="_blank">Blog</a></ListItem>
+            <ListItem><a href="https://developers.redhat.com/learn/openshift" rel="noreferrer noopener" target="_blank">Tutorials with live playgrounds!</a></ListItem>
             <ListItem><a href="https://www.twitch.tv/redhatopenshift" rel="noreferrer noopener" target="_blank">Twitch</a></ListItem>
           </List>
         </div>

@@ -3,8 +3,8 @@ import React from 'react';
 import {
   Alert, GridItem, ExpandableSection, TextContent, Title,
 } from '@patternfly/react-core';
+import links from '../../../../../common/installLinks';
 import ExternalLink from '../../../../common/ExternalLink';
-import { billingModelConstants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import AWSAccountDetailsSection from '../../CreateOSDForm/FormSections/AWSAccountDetailsSection';
 
 function AWSByocFields({ isValidating }) {
@@ -28,7 +28,7 @@ function AWSByocFields({ isValidating }) {
                 Your AWS account has the necessary limits to support your desired cluster size
                 according to the
                 {' '}
-                <ExternalLink noIcon href={billingModelConstants.resourceRequirementsLink}>
+                <ExternalLink noIcon href={links.OSD_CCS_AWS_LIMITS}>
                   cluster resource requirements
                 </ExternalLink>
                 .
@@ -48,7 +48,9 @@ function AWSByocFields({ isValidating }) {
             Business Support for AWS is also recommended.
             For more guidance, see the
             {' '}
-            <ExternalLink href="https://www.openshift.com/dedicated/ccs">customer cloud subscription requirements</ExternalLink>
+            <ExternalLink href={links.OSD_CCS_AWS}>
+              customer cloud subscription requirements
+            </ExternalLink>
             .
           </TextContent>
         </ExpandableSection>
