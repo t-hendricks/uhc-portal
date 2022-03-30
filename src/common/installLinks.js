@@ -161,7 +161,7 @@ const links = {
 
   OCM_CLI_DOCS: 'https://access.redhat.com/articles/6114701',
 
-  RHOAS_CLI_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047',
+  RHOAS_CLI_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/88e1487a-2a14-4b35-85b9-a7a2d67a37f3',
 
   HELM_DOCS: `${DOCS_BASE}/applications/working_with_helm_charts/understanding-helm.html`,
 
