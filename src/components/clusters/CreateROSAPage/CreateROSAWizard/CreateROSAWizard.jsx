@@ -27,7 +27,7 @@ import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
 import ReviewClusterScreen from '../../CreateOSDPage/CreateOSDWizard/ReviewClusterScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
-import LeaveClusterModal from '../../common/LeaveClusterModal';
+import LeaveCreateClusterModal from '../../common/LeaveCreateClusterModal';
 
 import './createROSAWizard.scss';
 import AccountsRolesScreen from './AccountsRolesScreen';
@@ -339,7 +339,7 @@ class CreateROSAWizard extends React.Component {
             </PersistGate>
           </div>
         </PageSection>
-        <LeaveClusterModal
+        <LeaveCreateClusterModal
           isOpen={isLeaveClusterModalOpen}
           onSubmit={() => history.push('/create/cloud')}
           onCancel={() => this.setState({ isLeaveClusterModalOpen: false })}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 
-function LeaveClusterModal({ isOpen, onSubmit, onCancel }) {
+function LeaveCreateClusterModal({ isOpen, onSubmit, onCancel }) {
   const actions = [
     <Button
       key="leave"
@@ -34,10 +34,10 @@ function LeaveClusterModal({ isOpen, onSubmit, onCancel }) {
   );
 }
 
-LeaveClusterModal.propTypes = {
+LeaveCreateClusterModal.propTypes = {
   isOpen: PropTypes.bool,
   onSubmit: PropTypes.func,
   onCancel: PropTypes.func,
 };
 
-export default LeaveClusterModal;
+export default LeaveCreateClusterModal;
