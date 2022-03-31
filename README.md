@@ -47,30 +47,53 @@ yarn install
 yarn build
 ```
 
+# Insights "chrome"
+
+As all apps under console.redhat.com, our app uses
+[insights-chrome](https://github.com/RedHatInsights/insights-chrome).
+(The term "chrome" refers to it being responsible for header & menu
+around the main content, no relation to Google Chrome.)
+
+It’s not a regular build dependency but is injected by CDN using [Edge
+Side Includes](https://en.wikipedia.org/wiki/Edge_Side_Includes) tags.
+
+To mimic this, as well as resulting URL structure, in development we 
+have two solutions:
+
+- `yarn start` uses `noproxy` param to `webpack.config.js` which "cheats":
+  it fetches the 2 ESI snippets once and inlines them in index.html at
+  _build time_ (being a single-page app, we only need them in index.html).
+  Such a build is OK for local dev but not for long-lived deploys.
+
+- [insights-proxy](https://github.com/RedHatInsights/insights-proxy) is a
+  heavier solution interpretting ESI on-the-fly, as the CDN would.
+  Details below.
+
 # Running locally
 
 For a first time setup, run `make dev-env-setup`. This will ask for your `sudo` password, to add some entries to `/etc/hosts`
 
-After initial setup, run `yarn start2`.
+After initial setup, run `yarn install && yarn start`.
 
 The UI will be available at https://prod.foo.redhat.com:1337/openshift/
+
+By default UI will use a real staging backend.
+You can switch between real backends and mockserver (see below) at any time by
+appending `?env=staging` / `?env=production` / `?env=mockdata` URL param.
+(`src/config/` directory contains some more options but they might not work.)
 
 ## Running Without a Real Backend (mock backend)
 
 Sometimes the backend might be broken, but you still want to develop the
-UI. For this purpose we’ve created a basic mock server that sends mock
+UI. Sometimes you want full control over responses UI is getting.
+For this purpose we’ve created a basic mock server that sends mock
 data. It doesn’t support all actions the real backend supports, but it
 should allow you to run the UI and test basic read-only functionality.
 
-* If you used bare `yarn start`, also start `mockdata/mockserver.py` in separate terminal.
+Both `yarn start` and `yarn start-with-proxy` run `mockdata/mockserver.py`
+in the background and arrange its proxying such that UI will access if given
+`?env=mockdata` (synonim `?env=mockserver`) URL param.
 
-* If you used `yarn start2`, mockserver is already running.
-
-* (deprecated) To configure the mock server with insights proxy, run
-  `make insights-proxy-setup` then use `yarn startmock` to use the mock server.
-
-In all cases, you can switch between real backends and mockserver at any time by
-appending `?env=staging` / `?env=production` / `?env=mockserver` to URL.
 
 ### Preparing Data for Mock Backend
 
@@ -302,19 +325,7 @@ proxies:
 That will forward requests starting with `/api/clusters_mgmt/` to your
 local clusters service, and the rest to the staging environment.
 
-
-## Insights "chrome" proxy
-
-As all apps under console.redhat.com, our app uses
-[insights-chrome](https://github.com/RedHatInsights/insights-chrome).
-(The term "chrome" refers to it being responsible for header & menu
-around the main content, no relation to Google Chrome.)
-
-It’s not a regular build dependency but is injected by CDN using [Edge
-Side Includes](https://en.wikipedia.org/wiki/Edge_Side_Includes) tags.
-To mimic this, as well as resulting URL structure, in development we
-have to use
-[insights-proxy](https://github.com/RedHatInsights/insights-proxy).
+## Running insights-proxy
 
 `make insights-proxy-setup` will autimatically clone/pull insights-proxy
 under `run/insights-proxy` subdirectory and perform its setup
@@ -332,6 +343,15 @@ which waits for a backend to be serving (might not work otherwise), then
 runs an `insightsproxy` container with our `profiles/local-frontend.js`
 config, passing API requests to the backend (or mock server) described
 above.
+
+But more conveniently, use this to launch webpack-dev-server, mockserver.py,
+and insights-proxy together:
+
+    $ yarn start-with-proxy
+
+This behaves similarly to `yarn start` — by default you'll access
+real staging backed, but can override by appending `?env=staging` /
+`?env=production` / `?env=mockdata` URL param.
 
 You may set `RUNNER=podman` or `RUNNER=docker` env var to choose with
 which tool containers will be updated/run.

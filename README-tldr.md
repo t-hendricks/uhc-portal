@@ -6,17 +6,23 @@ Run `make dev-env-setup`.  Note this will use `sudo` to add lines to your `/etc/
 ## Development environment
 
 ```sh
-yarn build && yarn start2
+yarn install && yarn start
 ```
 
-By default proxied to a real backend (staging), append `?env=mockserver` to use static files from `mockdata/` dir.
+### Heavier alternative: Running with insights proxy
 
-### Alternative: Running with insights proxy
+```sh
+make insights-proxy-setup && yarn install && yarn start-with-proxy
+```
 
-See full readme file for detailed instructions.
 ## => Accessing the UI
 
-With any of the above options, UI will be served at https://prod.foo.redhat.com:1337/openshift/
+With any of the above options, UI will be served at https://prod.foo.redhat.com:1337/openshift/, and mockserver will run in the background.
+
+By default UI will use a real staging backend.
+You can override by appending to URL `?env=production`, `?env=staging` or `?env=mockdata` (to use static files from `mockdata/` dir).
+
+With all backends, login uses production SSO.
 
 ## Merge Request Review
 
