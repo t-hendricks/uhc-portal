@@ -36,7 +36,7 @@ import ErrorBoundary from '../../../App/ErrorBoundary';
 
 import { persistor } from '../../../../redux/store';
 
-class CreateROSAWizard extends React.Component {
+class CreateROSAWizardInternal extends React.Component {
   state = {
     stepIdReached: 1,
     isLeaveClusterModalOpen: false,
@@ -349,6 +349,24 @@ class CreateROSAWizard extends React.Component {
   }
 }
 
+function CreateROSAWizard(props) {
+  const { getIsTouched } = props;
+  const isFormTouched = getIsTouched();
+
+  // Trigger default browser confirmation dialogs when the form has been touched.
+  React.useEffect(() => {
+    if (isFormTouched) {
+      window.onbeforeunload = () => true;
+    } else {
+      window.onbeforeunload = null;
+    }
+  }, [isFormTouched]);
+
+  return (
+    <CreateROSAWizardInternal {...props} />
+  );
+}
+
 const requestStatePropTypes = PropTypes.shape({
   fulfilled: PropTypes.bool,
   error: PropTypes.bool,
@@ -356,6 +374,10 @@ const requestStatePropTypes = PropTypes.shape({
 });
 
 CreateROSAWizard.propTypes = {
+  getIsTouched: PropTypes.func,
+};
+
+CreateROSAWizardInternal.propTypes = {
   isValid: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
