@@ -76,7 +76,11 @@ import Quota from '../quota';
 import Insights from './Insights';
 import CloudProviderSelection from '../clusters/CreateOSDPage/CloudProviderSelection';
 import withFeatureGate from '../features/with-feature-gate';
-import { ASSISTED_INSTALLER_FEATURE, OSD_CREATION_WIZARD_FEATURE } from '../../redux/constants/featureConstants';
+import {
+  ASSISTED_INSTALLER_FEATURE,
+  OSD_CREATION_WIZARD_FEATURE,
+  ROSA_CREATION_WIZARD_FEATURE,
+} from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
@@ -97,6 +101,10 @@ const GatedMetalInstall = withFeatureGate(
 );
 const GatedCreationWizard = withFeatureGate(
   CreateOSDWizard, OSD_CREATION_WIZARD_FEATURE, CloudProviderSelection,
+);
+
+const GatedRosaCreationWizard = withFeatureGate(
+  CreateROSAWizard, ROSA_CREATION_WIZARD_FEATURE, CreateROSAWelcome,
 );
 
 function Router({ history }) {
@@ -204,7 +212,7 @@ function Router({ history }) {
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
             <TermsGuardedRoute path="/create/rosa/welcome" history={history} render={() => <CreateROSAWelcome />} />
             {/* TODO: ROSA product is not OSD! */}
-            <TermsGuardedRoute path="/create/rosa/wizard" history={history} component={CreateROSAWizard} />
+            <TermsGuardedRoute path="/create/rosa/wizard" history={history} component={GatedRosaCreationWizard} />
             <Route path="/create" component={CreateClusterPage} />
             <Route path="/details/s/:id/insights/:reportId/:errorKey" component={InsightsAdvisorRedirector} />
             <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />
