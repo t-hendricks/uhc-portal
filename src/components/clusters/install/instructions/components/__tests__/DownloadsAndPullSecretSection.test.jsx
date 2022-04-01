@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { tools, channels } from '../../../../../../common/installLinks';
+import { tools, channels } from '../../../../../../common/installLinks.mjs';
 import DownloadsAndPullSecretSection from '../DownloadsAndPullSecretSection';
 
 describe('DownloadsAndPullSecretSection', () => {

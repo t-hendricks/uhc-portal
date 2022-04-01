@@ -1,3 +1,5 @@
+// This module has .mjs extension to simplify importing from NodeJS scripts.
+
 const MIRROR_BUTANE_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest';
 const MIRROR_CLIENTS_STABLE_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
@@ -160,8 +162,10 @@ const links = {
   RHCOS_ARM_RAW: `${MIRROR_RHCOS_LATEST_ARM}/rhcos-metal.aarch64.raw.gz`,
 
   OCM_CLI_DOCS: 'https://access.redhat.com/articles/6114701',
+  OCM_CLI_RELEASES_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
 
   RHOAS_CLI_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/88e1487a-2a14-4b35-85b9-a7a2d67a37f3',
+  RHOAS_CLI_RELEASES_LATEST: 'https://github.com/redhat-developer/app-services-cli/releases/latest',
 
   HELM_DOCS: `${DOCS_BASE}/applications/working_with_helm_charts/understanding-helm.html`,
 
@@ -586,12 +590,12 @@ const urlsSelector = (githubReleases) => {
     ...urls,
     [tools.OCM]: {
       [channels.STABLE]: {
-        fallbackNavigateURL: 'https://github.com/openshift-online/ocm-cli/releases/latest',
+        fallbackNavigateURL: links.OCM_CLI_RELEASES_LATEST,
       },
     },
     [tools.RHOAS]: {
       [channels.STABLE]: {
-        fallbackNavigateURL: 'https://github.com/redhat-developer/app-services-cli/releases/latest',
+        fallbackNavigateURL: links.RHOAS_CLI_RELEASES_LATEST,
       },
     },
   };
@@ -639,6 +643,16 @@ const urlsSelector = (githubReleases) => {
   return result;
 };
 
+/** Useful for scripted checking of "all" external links. */
+const getFlatUrls = async () => {
+  const urlSet = new Set([
+    ...Object.values(links),
+    ...Object.values(urls).flatMap(Object.values).flatMap(Object.values).flatMap(Object.values),
+    // TODO: include latest github releases?
+  ]);
+  return [...urlSet].sort();
+}
+
 export {
   architectures,
   architectureOptions,
@@ -649,5 +663,6 @@ export {
   urls,
   githubReleasesToFetch,
   urlsSelector,
+  getFlatUrls,
 };
 export default links;

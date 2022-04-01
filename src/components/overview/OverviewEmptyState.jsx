@@ -15,7 +15,7 @@ import {
 } from '@patternfly/react-core';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import './OverviewEmptyState.scss';
-import links from '../../common/installLinks';
+import links from '../../common/installLinks.mjs';
 
 // TODO this is from 2015 for openshift 3.x, there's likely a better video for users coming here...
 const VIDEO_URL = 'https://www.youtube.com/embed/D_Lj0rObunI';

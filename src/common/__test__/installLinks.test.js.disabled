@@ -1,5 +1,5 @@
 import axios from 'axios';
-import links, { channels, urls } from '../installLinks';
+import links, { channels, urls } from '../installLinks.mjs';
 
 const IGNORE_LINKS = [
   'INSTALL_PRE_RELEASE_FEEDBACK_MAILTO', // mailto link, can't be verified

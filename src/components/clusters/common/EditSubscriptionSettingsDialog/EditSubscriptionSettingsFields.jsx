@@ -13,7 +13,7 @@ import {
 
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { ReduxFormRadioGroup } from '../../../common/ReduxFormComponents';
-import links from '../../../../common/installLinks';
+import links from '../../../../common/installLinks.mjs';
 import {
   subscriptionSettings,
   subscriptionSupportLevels,

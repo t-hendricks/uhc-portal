@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { tools, channels } from '../../../../../../common/installLinks';
+import { tools, channels } from '../../../../../../common/installLinks.mjs';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
 
 // only a subset of installLinks.tools are used with DownloadAndOSSelection

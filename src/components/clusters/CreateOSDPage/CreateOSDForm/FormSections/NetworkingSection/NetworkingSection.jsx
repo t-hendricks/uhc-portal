@@ -6,7 +6,7 @@ import {
 } from '@patternfly/react-core';
 
 import { constants } from '../../CreateOSDFormConstants';
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../../common/installLinks.mjs';
 import validators from '../../../../../../common/validators';
 import ExternalLink from '../../../../../common/ExternalLink';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';

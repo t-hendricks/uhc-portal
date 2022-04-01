@@ -38,7 +38,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import links, { tools, channels } from '../../common/installLinks';
+import links, { tools, channels } from '../../common/installLinks.mjs';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
 import DevPreviewBadge from '../common/DevPreviewBadge';
