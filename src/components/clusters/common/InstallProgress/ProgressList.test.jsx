@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import ProgressList from './ProgressList';
 import clusterStates from '../clusterStates';
+import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 describe('<ProgressList />', () => {
@@ -21,6 +22,19 @@ describe('<ProgressList />', () => {
     dns_ready: true,
   };
 
+  const rosaManualMode = {
+    ...fixtures.clusterDetails.cluster,
+    product: {
+      id: normalizedProducts.ROSA,
+    },
+    aws: {
+      sts: {
+        auto_mode: false,
+      },
+    },
+    state: clusterStates.WAITING,
+  };
+
   let wrapper;
   beforeEach(() => {
     wrapper = shallow(
@@ -37,6 +51,10 @@ describe('<ProgressList />', () => {
   });
   it('should render when second step completed', () => {
     wrapper.setProps({ cluster: secondStepCompleted });
+    expect(wrapper).toMatchSnapshot();
+  });
+  it('should render for ROSA manual mode', () => {
+    wrapper.setProps({ cluster: rosaManualMode });
     expect(wrapper).toMatchSnapshot();
   });
 });
