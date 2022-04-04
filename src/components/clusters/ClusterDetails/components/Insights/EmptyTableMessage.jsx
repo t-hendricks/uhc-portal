@@ -17,7 +17,7 @@ import {
 } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 
-import links from '../../../../../common/installLinks';
+import links from '../../../../../common/installLinks.mjs';
 
 export const RemoteHealthPopover = ({ variant }) => (
   <Popover

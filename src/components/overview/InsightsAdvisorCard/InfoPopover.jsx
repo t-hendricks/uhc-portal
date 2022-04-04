@@ -4,7 +4,7 @@ import { HelpIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_Color_dark_200 } from '@patternfly/react-tokens';
 
-import links from '../../../common/installLinks';
+import links from '../../../common/installLinks.mjs';
 import ExternalLink from '../../common/ExternalLink';
 
 const InfoPopover = () => (

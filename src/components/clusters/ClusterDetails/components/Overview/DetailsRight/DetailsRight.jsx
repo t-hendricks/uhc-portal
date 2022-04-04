@@ -10,7 +10,7 @@ import {
 } from '@patternfly/react-core';
 
 import { OCM } from 'openshift-assisted-ui-lib';
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
 import ClusterNetwork from '../ClusterNetwork';
 import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';

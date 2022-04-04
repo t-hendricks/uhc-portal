@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Title, Flex, FlexItem } from '@patternfly/react-core';
-import { ChartPie, ChartLegend } from '@patternfly/react-charts';
+import { ChartPie, ChartLegend, ChartLabel } from '@patternfly/react-charts';
 import { groupTagHitsByGroups } from '../overviewHelpers';
 
 export const categoryMapping = {
@@ -46,6 +46,7 @@ TitleComponent.propTypes = {
 
 const ChartByGroups = ({ tagHits, groups }) => {
   const groupedRulesByGroups = groupTagHitsByGroups(tagHits, [...groups]);
+  const totalHits = Object.values(groupedRulesByGroups).reduce((acc, { count }) => acc + count, 0);
 
   return (
     <Flex className="ocm-insights--groups-chart" direction={{ default: 'column' }}>
@@ -56,6 +57,13 @@ const ChartByGroups = ({ tagHits, groups }) => {
       </FlexItem>
       <FlexItem>
         <ChartPie
+          labelComponent={(
+            <ChartLabel
+              textAnchor="middle"
+              style={{ fill: 'white', fontSize: 10 }}
+            />
+          )}
+          labelRadius={25}
           ariaTitle="Categories statistics"
           constrainToVisibleArea
           data={Object.entries(groupedRulesByGroups)
@@ -68,7 +76,7 @@ const ChartByGroups = ({ tagHits, groups }) => {
             right: 300, // Adjusted to accommodate legend
             top: 10,
           }}
-          labels={({ datum }) => `${datum.x}: ${datum.y}`}
+          labels={({ datum }) => (datum.y === 0 ? '' : `${(datum.y / totalHits).toFixed(2) * 100}%`)}
           legendData={
             Object.entries(groupedRulesByGroups)
               .map(([title, { count, tags }]) => ({

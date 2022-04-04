@@ -15,7 +15,7 @@ import ExternalLink from '../../../../common/ExternalLink';
 import AssociateAWSAccountModal from './AssociateAWSAccountModal';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import ErrorBox from '../../../../common/ErrorBox';
-import links from '../../../../../common/installLinks';
+import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
@@ -24,12 +24,12 @@ function AccountsRolesScreen({
   organizationID,
   selectedAWSAccountID,
   openAssociateAWSAccountModal,
-  // initialValues,
   getAWSAccountIDs,
   getAWSAccountIDsResponse,
   getAWSAccountRolesARNs,
   getAWSAccountRolesARNsResponse,
   clearGetAWSAccountRolesARNsResponse,
+  clearGetAWSAccountIDsResponse,
 }) {
   const longName = 'Red Hat OpenShift Service on AWS (ROSA)';
   const title = `Welcome to ${longName} `;
@@ -37,8 +37,6 @@ function AccountsRolesScreen({
   const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
 
-  // TODO: remove mock - to show prerequisites expanded
-  // const hasAWSAccount = false;
   const hasAWSAccount = AWSAccountIDs.length > 0;
 
   // default product and cloud_provider form values
@@ -48,16 +46,15 @@ function AccountsRolesScreen({
     change('byoc', 'true');
   }, []);
 
+  // default to first available aws account
   useEffect(() => {
-    if (AWSAccountIDs.length === 1 || selectedAWSAccountID === undefined) {
-      change('associated_aws_id', AWSAccountIDs[0]); // default to first available aws account
+    if (!selectedAWSAccountID && hasAWSAccount) {
+      change('associated_aws_id', AWSAccountIDs[0]);
     }
-  }, [AWSAccountIDs, selectedAWSAccountID]);
+  }, [hasAWSAccount, selectedAWSAccountID]);
 
   useEffect(() => {
-    if (!getAWSAccountIDsResponse.pending && !getAWSAccountIDsResponse.fulfilled) {
-      getAWSAccountIDs(organizationID);
-    } else if (getAWSAccountIDsResponse.pending) {
+    if (getAWSAccountIDsResponse.pending) {
       setAwsIDsErrorBox(null);
     } else if (getAWSAccountIDsResponse.fulfilled) {
       const awsIDs = get(getAWSAccountIDsResponse, 'data', []);
@@ -69,8 +66,15 @@ function AccountsRolesScreen({
         message="Error getting associated AWS account id(s)"
         response={getAWSAccountIDsResponse}
       />);
+    } else {
+      getAWSAccountIDs(organizationID); // <--- moved from above
     }
   }, [getAWSAccountIDsResponse]);
+
+  const onModalClose = () => {
+    clearGetAWSAccountIDsResponse();
+    getAWSAccountIDs(organizationID);
+  };
 
   return (
     <Form onSubmit={() => false}>
@@ -144,7 +148,7 @@ function AccountsRolesScreen({
         />
         )}
       </Grid>
-      <AssociateAWSAccountModal />
+      <AssociateAWSAccountModal onClose={onModalClose} />
     </Form>
   );
 }
@@ -157,6 +161,7 @@ AccountsRolesScreen.propTypes = {
   openAssociateAWSAccountModal: PropTypes.func.isRequired,
   getAWSAccountRolesARNs: PropTypes.func.isRequired,
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
+  clearGetAWSAccountIDsResponse: PropTypes.func.isRequired,
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
   organizationID: PropTypes.string.isRequired,
   initialValues: PropTypes.shape({

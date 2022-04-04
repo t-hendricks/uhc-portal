@@ -6,7 +6,6 @@ import Modal from '../../../../../common/Modal/Modal';
 import AuthenticateScreen from './AuthenticateScreen';
 import OCMRoleScreen from './OCMRoleScreen';
 import UserRoleScreen from './UserRoleScreen';
-import { loadOfflineToken } from '../../../../../tokens/Tokens';
 
 class AssociateAWSAccountWizard extends React.Component {
   state = {
@@ -22,7 +21,7 @@ class AssociateAWSAccountWizard extends React.Component {
 
   render() {
     const { stepIdReached } = this.state;
-    const { closeModal, token } = this.props;
+    const { closeModal, token, onClose } = this.props;
     const steps = [
       {
         id: 1,
@@ -50,6 +49,13 @@ class AssociateAWSAccountWizard extends React.Component {
       },
     ];
 
+    const handleClose = () => {
+      closeModal();
+      if (onClose) {
+        onClose();
+      }
+    };
+
     return (
       <>
         <Wizard
@@ -58,35 +64,27 @@ class AssociateAWSAccountWizard extends React.Component {
           className="ocm-upgrade-wizard"
           isOpen
           steps={steps}
-          onSave={closeModal}
+          onSave={handleClose}
           onNext={this.onNext}
           onBack={this.onBack}
           onGoToStep={this.onGoToStep}
-          onClose={closeModal}
+          onClose={handleClose}
         />
       </>
     );
   }
 }
 
-function AssociatedAWSAccountModal({ closeModal, isOpen, isValid }) {
-  const [offlineAccessToken, setOfflineAccessToken] = React.useState('');
-  const onLoad = (token) => {
-    if (token) {
-      setOfflineAccessToken(token);
-    }
-  };
-
-  React.useLayoutEffect(() => {
-    loadOfflineToken(onLoad);
-  }, []);
-
+function AssociatedAWSAccountModal({
+  closeModal, isOpen, isValid, onClose, token,
+}) {
   return isOpen && (
     <Modal title="Associate AWS Account ID">
       <AssociateAWSAccountWizard
         isValid={isValid}
         closeModal={closeModal}
-        token={offlineAccessToken}
+        onClose={onClose}
+        token={token}
       />
     </Modal>
   );
@@ -94,12 +92,15 @@ function AssociatedAWSAccountModal({ closeModal, isOpen, isValid }) {
 
 AssociatedAWSAccountModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   isOpen: PropTypes.bool,
   isValid: PropTypes.bool,
+  token: PropTypes.string,
 };
 
 AssociateAWSAccountWizard.propTypes = {
   closeModal: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
   token: PropTypes.string,
 };
 

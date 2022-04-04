@@ -24,7 +24,11 @@ exports[`InstallRHV renders correctly 1`] = `
     title="Install OpenShift Container Platform 4"
   />
   <PageSection>
-    <InstructionsRHV />
+    <InstructionsChooser
+      cloudName="Red Hat Virtualization"
+      ipiPageLink="/install/rhv/installer-provisioned"
+      upiPageLink="/install/rhv/user-provisioned"
+    />
   </PageSection>
 </Fragment>
 `;

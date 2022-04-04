@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import { Redirect } from 'react-router';
 
 import {
@@ -10,6 +9,8 @@ import {
 } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
+
+import { PersistGate } from 'redux-persist/integration/react';
 
 import PageTitle from '../../../common/PageTitle';
 import ErrorModal from '../../../common/ErrorModal';
@@ -26,15 +27,19 @@ import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
 import ReviewClusterScreen from '../../CreateOSDPage/CreateOSDWizard/ReviewClusterScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
+import LeaveCreateClusterModal from '../../common/LeaveCreateClusterModal';
 
 import './createROSAWizard.scss';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
 import ErrorBoundary from '../../../App/ErrorBoundary';
 
+import { persistor } from '../../../../redux/store';
+
 class CreateROSAWizard extends React.Component {
   state = {
     stepIdReached: 1,
+    isLeaveClusterModalOpen: false,
   }
 
   componentDidMount() {
@@ -97,7 +102,7 @@ class CreateROSAWizard extends React.Component {
       history,
       privateLinkSelected,
     } = this.props;
-    const { stepIdReached } = this.state;
+    const { stepIdReached, isLeaveClusterModalOpen } = this.state;
 
     const steps = [
       {
@@ -318,20 +323,27 @@ class CreateROSAWizard extends React.Component {
           )}
           <div className="ocm-page">
             {creationErrorModal}
-            <Wizard
-              className="rosa-wizard"
-              navAriaLabel={`${ariaTitle} steps`}
-              mainAriaLabel={`${ariaTitle} content`}
-              steps={steps}
-              isNavExpandable
-              onSave={onSubmit}
-              onNext={this.onNext}
-              onBack={this.onBack}
-              onGoToStep={this.onGoToStep}
-              onClose={() => history.push('/create/cloud')}
-            />
+            <PersistGate persistor={persistor}>
+              <Wizard
+                className="rosa-wizard"
+                navAriaLabel={`${ariaTitle} steps`}
+                mainAriaLabel={`${ariaTitle} content`}
+                steps={steps}
+                isNavExpandable
+                onSave={onSubmit}
+                onNext={this.onNext}
+                onBack={this.onBack}
+                onGoToStep={this.onGoToStep}
+                onClose={() => this.setState({ isLeaveClusterModalOpen: true })}
+              />
+            </PersistGate>
           </div>
         </PageSection>
+        <LeaveCreateClusterModal
+          isOpen={isLeaveClusterModalOpen}
+          onSubmit={() => history.push('/create/cloud')}
+          onCancel={() => this.setState({ isLeaveClusterModalOpen: false })}
+        />
       </>
     );
   }

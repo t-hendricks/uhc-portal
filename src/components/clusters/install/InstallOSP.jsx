@@ -4,7 +4,7 @@ import { PageSection } from '@patternfly/react-core';
 
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../../common/Breadcrumbs';
-import InstructionsOSP from './instructions/InstructionsOSP';
+import InstructionsChooser from './instructions/InstructionsChooser';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallOSP extends Component {
@@ -27,7 +27,11 @@ class InstallOSP extends Component {
       <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection>
-          <InstructionsOSP />
+          <InstructionsChooser
+            cloudName="OpenStack"
+            ipiPageLink="/install/openstack/installer-provisioned"
+            upiPageLink="/install/openstack/user-provisioned"
+          />
         </PageSection>
       </>
     );

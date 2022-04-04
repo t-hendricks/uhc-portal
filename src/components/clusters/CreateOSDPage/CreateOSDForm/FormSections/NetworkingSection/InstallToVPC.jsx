@@ -6,7 +6,7 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../../common/installLinks.mjs';
 import SubnetFields from './SubnetFields';
 import AWSSubnetFields from '../../../CreateOSDWizard/VPCScreen/AWSSubnetFields';
 import PopoverHint from '../../../../../common/PopoverHint';

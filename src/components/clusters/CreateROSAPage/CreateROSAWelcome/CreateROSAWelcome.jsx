@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 import ExternalLink from '../../../common/ExternalLink';
 import { scrollToTop } from '../../../../common/helpers';
-import installLinks, { tools, channels } from '../../../../common/installLinks';
+import installLinks, { tools, channels } from '../../../../common/installLinks.mjs';
 import Instruction from '../../../common/Instruction';
 import InstructionCommand from '../../../common/InstructionCommand';
 import Instructions from '../../../common/Instructions';

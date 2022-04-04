@@ -14,7 +14,7 @@ exports[`<Quota /> OSDSubscriptionCard Empty should render empty OSD quota summa
     <EmptyStateBody>
       <p>
         <a
-          href="https://www.openshift.com/products/dedicated/contact/"
+          href="https://cloud.redhat.com/products/dedicated/contact/"
           rel="noreferrer noopener"
           target="_blank"
         >

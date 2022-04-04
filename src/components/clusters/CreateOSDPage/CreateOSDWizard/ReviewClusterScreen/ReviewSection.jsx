@@ -23,6 +23,10 @@ export const ReviewItem = ({ name, formValues }) => {
     );
   }
 
+  if (reviewValue.isOptional && !value) {
+    return null;
+  }
+
   if (reviewValue.isBoolean && value === undefined) {
     value = 'false';
   }
@@ -42,7 +46,9 @@ export const ReviewItem = ({ name, formValues }) => {
         {reviewValue.title}
       </DescriptionListTerm>
       <DescriptionListDescription>
-        {displayValue}
+        {reviewValue.isMonospace ? (
+          <pre>{displayValue}</pre>
+        ) : displayValue}
       </DescriptionListDescription>
     </DescriptionListGroup>
   );

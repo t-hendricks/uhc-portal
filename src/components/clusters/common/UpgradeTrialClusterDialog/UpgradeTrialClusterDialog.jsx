@@ -10,6 +10,7 @@ import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
 import { getResourceName } from '../../../../redux/actions/machineTypesActions';
+import links from '../../../../common/installLinks.mjs';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../quotaSelectors';
 import './UpgradeTrialClusterDialog.scss';
@@ -93,7 +94,7 @@ class UpgradeTrialClusterDialog extends Component {
     const marketplaceQuotaEnabled = availableQuota.MARKETPLACE;
     const button = {
       primaryText: 'Contact sales',
-      onPrimaryClick: () => this.buttonLinkClick('https://www.openshift.com/products/dedicated/contact/'),
+      onPrimaryClick: () => this.buttonLinkClick('https://cloud.redhat.com/products/dedicated/contact/'),
     };
 
     if (availableQuota.STANDARD && !availableQuota.MARKETPLACE) {
@@ -191,7 +192,7 @@ class UpgradeTrialClusterDialog extends Component {
             Convert this trial cluster to a fully supported OpenShift Dedicated cluster.
             <br />
             <br />
-            <ExternalLink href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html-single/managing_clusters/index#upgrading-osd-trial-cluster_assembly-cluster-subscriptions">
+            <ExternalLink href={links.OCM_DOCS_UPGRADING_OSD_TRIAL}>
               Learn more
             </ExternalLink>
             {noQuota && (

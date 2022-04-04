@@ -46,6 +46,7 @@ const mapStateToProps = (state, ownProps) => {
     cloudProviderID,
     installToVPCSelected: valueSelector(state, 'install_to_vpc'),
     privateLinkSelected: valueSelector(state, 'use_privatelink'),
+    configureProxySelected: valueSelector(state, 'configure_proxy'),
     createClusterResponse: state.clusters.createdCluster,
     machineTypes: state.machineTypes,
     organization,

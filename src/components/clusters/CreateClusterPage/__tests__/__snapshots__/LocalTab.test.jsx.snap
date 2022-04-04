@@ -50,7 +50,7 @@ exports[`<LocalTab /> renders correctly 1`] = `
         >
           CodeReady Containers
         </Text>
-        <DownloadAndOSSelection
+        <Connect(DownloadAndOSSelection)
           channel="stable"
           pendoID="/"
           token={Object {}}
