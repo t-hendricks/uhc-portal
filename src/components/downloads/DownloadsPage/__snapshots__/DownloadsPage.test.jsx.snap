@@ -328,7 +328,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -746,7 +746,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -1155,7 +1155,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -1569,7 +1569,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -2004,7 +2004,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -2413,7 +2413,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -2822,7 +2822,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -3231,7 +3231,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -3392,7 +3392,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 </Text>
                 <Text>
                   <ExternalLink
-                    href="https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047"
+                    href="https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/88e1487a-2a14-4b35-85b9-a7a2d67a37f3"
                   >
                     Get started
                   </ExternalLink>
@@ -3650,7 +3650,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -4095,7 +4095,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -4517,7 +4517,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -4932,7 +4932,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -5347,7 +5347,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -5761,7 +5761,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -6179,7 +6179,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -6586,7 +6586,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -7004,7 +7004,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },
@@ -7407,7 +7407,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 "oc-mirror-plugin": Object {
                   "stable": Object {
                     "x86": Object {
-                      "linux": "https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz",
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/oc-mirror.tar.gz",
                     },
                   },
                 },

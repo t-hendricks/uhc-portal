@@ -8,7 +8,7 @@ import {
 import Modal from '../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ExternalLink from '../../../../../common/ExternalLink';
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../../common/installLinks.mjs';
 import { checkUserID } from '../../../../../../common/validators';
 
 const initialState = {

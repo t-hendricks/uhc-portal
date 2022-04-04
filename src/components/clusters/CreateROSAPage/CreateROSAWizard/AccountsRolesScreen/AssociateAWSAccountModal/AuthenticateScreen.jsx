@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import ExternalLink from '../../../../../common/ExternalLink';
 import DownloadAndOSSelection
   from '../../../../install/instructions/components/DownloadAndOSSelection';
-import links, { channels, tools } from '../../../../../../common/installLinks';
+import links, { channels, tools } from '../../../../../../common/installLinks.mjs';
 import InstructionCommand from '../../../../../common/InstructionCommand';
 
 function AuthenticateScreen({ token }) {

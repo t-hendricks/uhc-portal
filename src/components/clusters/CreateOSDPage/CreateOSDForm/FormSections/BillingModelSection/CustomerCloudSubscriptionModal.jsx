@@ -8,7 +8,7 @@ import {
   TextContent,
 } from '@patternfly/react-core';
 
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../../common/installLinks.mjs';
 import ExternalLink from '../../../../../common/ExternalLink';
 import Modal from '../../../../../common/Modal/Modal';
 

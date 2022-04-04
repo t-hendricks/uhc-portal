@@ -13,7 +13,7 @@ import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../../../common/ExternalLink';
-import links from '../../../../../common/installLinks';
+import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 function NetworkScreen(props) {

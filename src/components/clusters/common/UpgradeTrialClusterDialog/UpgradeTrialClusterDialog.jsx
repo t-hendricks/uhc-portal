@@ -10,7 +10,7 @@ import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
 import { getResourceName } from '../../../../redux/actions/machineTypesActions';
-import links from '../../../../common/installLinks';
+import links from '../../../../common/installLinks.mjs';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../quotaSelectors';
 import './UpgradeTrialClusterDialog.scss';

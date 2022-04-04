@@ -10,7 +10,7 @@ import {
   PageSection,
 } from '@patternfly/react-core';
 import { overrideErrorMessage, BANNED_USER_CODE } from '../../common/errors';
-import links from '../../common/installLinks';
+import links from '../../common/installLinks.mjs';
 import ExternalLink from '../common/ExternalLink';
 
 function SubscriptionNotFulfilled({ data, refresh, marketplace }) {

@@ -5,7 +5,7 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
-import links from '../../../../../common/installLinks';
+import links from '../../../../../common/installLinks.mjs';
 import { required, validateGCPServiceAccount } from '../../../../../common/validators';
 
 import ExternalLink from '../../../../common/ExternalLink';

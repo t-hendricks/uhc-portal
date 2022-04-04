@@ -8,7 +8,7 @@ import {
 import ErrorBox from '../../../../../common/ErrorBox';
 
 import { ReduxVerticalFormGroup, ReduxFormDropdown } from '../../../../../common/ReduxFormComponents';
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../../common/installLinks.mjs';
 import { checkIdentityProviderName } from '../../../../../../common/validators';
 
 import {
