@@ -12,7 +12,7 @@ import Instruction from '../../../common/Instruction';
 import Instructions from '../../../common/Instructions';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import instructionsMapping from './instructionsMapping';
-import { tools, channels } from '../../../../common/installLinks';
+import { tools, channels } from '../../../../common/installLinks.mjs';
 
 const OCPInstructions = (props) => {
   const {

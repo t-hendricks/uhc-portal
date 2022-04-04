@@ -13,7 +13,7 @@ import {
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
 import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
-import links, { tools, channels } from '../../../common/installLinks';
+import links, { tools, channels } from '../../../common/installLinks.mjs';
 import Instruction from '../../common/Instruction';
 import Instructions from '../../common/Instructions';
 import PullSecretSection from '../install/instructions/components/PullSecretSection';

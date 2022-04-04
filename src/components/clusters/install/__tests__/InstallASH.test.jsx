@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import InstructionsAWS from '../InstructionsAWS';
+import InstallASH from '../InstallASH';
 
-describe('AWS instructions', () => {
+describe('InstallASH', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(<InstructionsAWS />);
+    const wrapper = shallow(<InstallASH />);
     expect(wrapper).toMatchSnapshot();
   });
 });

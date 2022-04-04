@@ -14,6 +14,7 @@ import { ReduxFormKeyValueList, ReduxFormTaints } from '../../../../../common/Re
 import PersistentStorageDropdown from '../../../../common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '../../../../common/LoadBalancersDropdown';
 import NodeCountInput from '../../../../common/NodeCountInput';
+import links from '../../../../../../common/installLinks.mjs';
 import { normalizedProducts, billingModels } from '../../../../../../common/subscriptionTypes';
 import { constants } from '../../CreateOSDFormConstants';
 
@@ -124,7 +125,9 @@ function ScaleSection({
                 <>
                   {constants.computeNodeCountHint}
                   {' '}
-                  <ExternalLink href="https://www.openshift.com/products/dedicated/service-definition#compute-instances">Learn more about worker node count</ExternalLink>
+                  <ExternalLink href={links.OSD_SERVICE_DEFINITION_COMPUTE}>
+                    Learn more about worker node count
+                  </ExternalLink>
                 </>
               )}
               cloudProviderID={cloudProviderID}

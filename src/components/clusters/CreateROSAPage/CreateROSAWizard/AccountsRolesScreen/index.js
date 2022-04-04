@@ -4,6 +4,7 @@ import { formValueSelector } from 'redux-form';
 import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import { openModal } from '../../../../common/Modal/ModalActions';
+
 import {
   getAWSAccountIDs,
   clearGetAWSAccountIDsResponse,
@@ -11,7 +12,7 @@ import {
 } from '../rosaActions';
 
 const mapDispatchToProps = dispatch => ({
-  openAssociateAWSAccountModal: () => dispatch(openModal('associate-aws-modal')),
+  openAssociateAWSAccountModal: token => dispatch(openModal('associate-aws-modal', token)),
   getAWSAccountIDs: organizationID => dispatch(getAWSAccountIDs(organizationID)),
   getAWSAccountRolesARNs: awsAccountID => dispatch(
     getAWSAccountRolesARNs(awsAccountID),

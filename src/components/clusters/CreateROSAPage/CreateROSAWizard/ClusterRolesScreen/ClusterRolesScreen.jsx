@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+
 import {
   Alert,
   Button,
@@ -16,25 +18,71 @@ import {
 } from '@patternfly/react-core';
 
 import ExternalLink from '../../../../common/ExternalLink';
+import ErrorBox from '../../../../common/ErrorBox';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../../common/validators';
 
-function ClusterRolesScreen() {
-  const onRoleModeChange = (_, value) => {
-    // eslint-disable-next-line no-console
-    console.log('value', value);
+function ClusterRolesScreen({
+  change,
+  awsAccountID,
+  customOperatorRolesPrefix,
+  getOCMRole,
+  getOCMRoleResponse,
+  clearGetOcmRoleResponse,
+}) {
+  const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
+  const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
+
+  const getRandomOperatorRolesPrefix = () => {
+    // random 4 alphanumeric hash
+    const prefixArray = Math.random().toString(36).substr(2, 4).split('');
+    // cannot start with a number
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)];
+    prefixArray[0] = randomCharacter;
+    return prefixArray.join('');
   };
+
+  // default custom_operator_roles_prefix to random 4 char hash, user can change
+  // tried using initValues in the index, but was getting reload errors
+  useEffect(() => {
+    if (!customOperatorRolesPrefix) {
+      change('custom_operator_roles_prefix', getRandomOperatorRolesPrefix());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (getOCMRoleResponse.pending) {
+      setGetOCMRoleErrorBox(null);
+    } else if (getOCMRoleResponse.fulfilled) {
+      change('rosa_creator_arn', getOCMRoleResponse.data?.arn);
+      const isAdmin = getOCMRoleResponse.data?.isAdmin;
+      setIsAutoModeAvailable(isAdmin);
+      setGetOCMRoleErrorBox(null);
+    } else if (getOCMRoleResponse.error) {
+      // display error
+      setGetOCMRoleErrorBox(<ErrorBox
+        message="Error getting OCM role to determine administrator role"
+        response={getOCMRoleResponse}
+      />);
+    } else {
+      getOCMRole(awsAccountID);
+    }
+  }, [getOCMRoleResponse]);
+
+  const handleRefresh = () => {
+    clearGetOcmRoleResponse();
+    getOCMRole(awsAccountID);
+  };
+
   const roleModes = {
     MANUAL: 'manual',
     AUTO: 'auto',
   };
-  // temp hard code this value
-  const isAutoModeAvailable = false;
   const roleModeOptions = [
     {
-      // disabled: someCondition,
       value: roleModes.MANUAL,
       label: 'Manual',
       description: 'Manual mode will offer three options to generate the necessary roles and policies for your cluster operators and the necessary OIDC provider: Cloudformation, ROSA CLI commands, or, AWS CLI commands. Exercise one of those options after cluster review in order for your cluster to complete installation.',
@@ -71,8 +119,6 @@ function ClusterRolesScreen() {
               <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
                 <TextListItem className="pf-u-mb-sm">
                   <Text component={TextVariants.p} className="pf-u-mb-sm">
-                    <strong>Step 1:</strong>
-                    {' '}
                     Create the Admin OCM role using the following command in the ROSA CLI.
                   </Text>
                   <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role command">
@@ -81,29 +127,29 @@ function ClusterRolesScreen() {
                 </TextListItem>
                 <TextListItem className="pf-u-mb-sm">
                   <Text component={TextVariants.p} className="pf-u-mb-sm">
-                    <strong>Step 2:</strong>
-                    {' '}
-                    Associate the OCM role with the AWS account using the following command in the
-                    ROSA CLI.
+                    {/* eslint-disable-next-line max-len */}
+                    If not yet linked, run the following command to associate the OCM role with your AWS account.
                   </Text>
                   <InstructionCommand textAriaLabel="Copyable ROSA link ocm-role command">
-                    rosa link ocm-role --arn &lt;arn&gt;
+                    rosa link ocm-role &lt;arn&gt;
                   </InstructionCommand>
                 </TextListItem>
                 <TextListItem>
                   <Text component={TextVariants.p} className="pf-u-mb-sm">
-                    <strong>Step 3:</strong>
-                    {' '}
                     After running the command you may need to refresh using the button below to
                     enable auto mode.
                   </Text>
-                  {/* TODO: add correct refresh action */}
-                  <Button onClick={() => console.log('refresh')} variant="secondary">
+                  <Button onClick={handleRefresh} variant="secondary">
                     Refresh to enable auto mode
                   </Button>
                 </TextListItem>
               </TextList>
             </Alert>
+          </GridItem>
+        )}
+        {getOCMRoleErrorBox && (
+          <GridItem>
+            { getOCMRoleErrorBox }
           </GridItem>
         )}
         <GridItem xl2={8}>
@@ -113,10 +159,9 @@ function ClusterRolesScreen() {
           >
             <Field
               component={RadioButtons}
-              name="role_mode"
+              name="rosa_roles_provider_creation_mode"
               className="radio-button"
-              // disabled={pending}
-              onChange={onRoleModeChange}
+              disabled={getOCMRoleResponse.pending}
               options={roleModeOptions}
               defaultValue={roleModes.MANUAL}
             />
@@ -151,6 +196,12 @@ function ClusterRolesScreen() {
 }
 
 ClusterRolesScreen.propTypes = {
+  change: PropTypes.func,
+  awsAccountID: PropTypes.string,
+  customOperatorRolesPrefix: PropTypes.string,
+  getOCMRole: PropTypes.func.isRequired,
+  getOCMRoleResponse: PropTypes.func.isRequired,
+  clearGetOcmRoleResponse: PropTypes.func.isRequired,
 };
 
 export default ClusterRolesScreen;

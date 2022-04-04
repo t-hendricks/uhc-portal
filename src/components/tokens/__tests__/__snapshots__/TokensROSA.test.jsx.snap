@@ -69,21 +69,34 @@ exports[`<TokensROSA /> Renders loading screen 1`] = `
                 <ListItem>
                   Download and install the
                    
-                  <ExternalLink
-                    href="https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest"
-                    noIcon={true}
-                  >
-                    rosa command-line tool
-                  </ExternalLink>
+                  <code>
+                    rosa
+                  </code>
+                   
+                  command-line tool:
+                   
+                  <Text
+                    component="p"
+                  />
+                  <Connect(DownloadAndOSSelection)
+                    channel="stable"
+                    tool="rosa"
+                  />
+                  <Text
+                    component="p"
+                  />
                 </ListItem>
                 <ListItem>
                   Copy and paste the authentication command in your terminal:
+                  <Text
+                    component="p"
+                  />
+                  <Skeleton
+                    isDark={false}
+                    size="md"
+                  />
                 </ListItem>
               </List>
-              <Skeleton
-                isDark={false}
-                size="md"
-              />
               <Title
                 headingLevel="h3"
               >
@@ -392,21 +405,34 @@ exports[`<TokensROSA /> Renders token 1`] = `
                 <ListItem>
                   Download and install the
                    
-                  <ExternalLink
-                    href="https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest"
-                    noIcon={true}
-                  >
-                    rosa command-line tool
-                  </ExternalLink>
+                  <code>
+                    rosa
+                  </code>
+                   
+                  command-line tool:
+                   
+                  <Text
+                    component="p"
+                  />
+                  <Connect(DownloadAndOSSelection)
+                    channel="stable"
+                    tool="rosa"
+                  />
+                  <Text
+                    component="p"
+                  />
                 </ListItem>
                 <ListItem>
                   Copy and paste the authentication command in your terminal:
+                  <Text
+                    component="p"
+                  />
+                  <Skeleton
+                    isDark={false}
+                    size="md"
+                  />
                 </ListItem>
               </List>
-              <Skeleton
-                isDark={false}
-                size="md"
-              />
               <Title
                 headingLevel="h3"
               >

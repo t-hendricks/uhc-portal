@@ -12,7 +12,7 @@ import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
 import UpgradeScheduleSelection from './UpgradeScheduleSelection';
 import PodDistruptionBudgetGraceSelect from './PodDistruptionBudgetGraceSelect';
 import './UpgradeSettingsFields.scss';
-import links from '../../../../common/installLinks';
+import links from '../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 import UpgradeAcknowledgeWarning from './UpgradeAcknowledge/UpgradeAcknowledgeWarning';

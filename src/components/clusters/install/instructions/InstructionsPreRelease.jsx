@@ -14,7 +14,7 @@ import {
 } from '@patternfly/react-core';
 import { CodeIcon } from '@patternfly/react-icons';
 
-import links, { tools, channels } from '../../../../common/installLinks';
+import links, { tools, channels } from '../../../../common/installLinks.mjs';
 import TelemetryDisclaimer from './components/TelemetryDisclaimer';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';

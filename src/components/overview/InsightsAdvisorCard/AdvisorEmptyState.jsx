@@ -4,7 +4,7 @@ import {
   EmptyState, EmptyStateBody, EmptyStateIcon, Title,
 } from '@patternfly/react-core';
 
-import links from '../../../common/installLinks';
+import links from '../../../common/installLinks.mjs';
 import ExternalLink from '../../common/ExternalLink';
 
 const AdvisorEmptyState = () => (

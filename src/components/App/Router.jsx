@@ -40,8 +40,10 @@ import InstallAWS from '../clusters/install/InstallAWS';
 import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
 import InstallBareMetal from '../clusters/install/InstallBareMetal';
-import InstallAzure from '../clusters/install/InstallAzure';
+import InstallASH from '../clusters/install/InstallASH';
 import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
+import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
+import InstallAzure from '../clusters/install/InstallAzure';
 import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
 import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
 import InstallGCP from '../clusters/install/InstallGCP';
@@ -74,7 +76,11 @@ import Quota from '../quota';
 import Insights from './Insights';
 import CloudProviderSelection from '../clusters/CreateOSDPage/CloudProviderSelection';
 import withFeatureGate from '../features/with-feature-gate';
-import { ASSISTED_INSTALLER_FEATURE, OSD_CREATION_WIZARD_FEATURE } from '../../redux/constants/featureConstants';
+import {
+  ASSISTED_INSTALLER_FEATURE,
+  OSD_CREATION_WIZARD_FEATURE,
+  ROSA_CREATION_WIZARD_FEATURE,
+} from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
@@ -95,6 +101,10 @@ const GatedMetalInstall = withFeatureGate(
 );
 const GatedCreationWizard = withFeatureGate(
   CreateOSDWizard, OSD_CREATION_WIZARD_FEATURE, CloudProviderSelection,
+);
+
+const GatedRosaCreationWizard = withFeatureGate(
+  CreateROSAWizard, ROSA_CREATION_WIZARD_FEATURE, CreateROSAWelcome,
 );
 
 function Router({ history }) {
@@ -163,6 +173,8 @@ function Router({ history }) {
             <Route path="/install/azure/user-provisioned" component={ConnectedInstallAzureUPI} />
             <Route path="/install/azure" exact component={InstallAzure} />
             <Route path="/install/azure-stack-hub/installer-provisioned" exact component={ConnectedInstallASHIPI} />
+            <Route path="/install/azure-stack-hub/user-provisioned" exact component={ConnectedInstallASHUPI} />
+            <Route path="/install/azure-stack-hub" exact component={InstallASH} />
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
@@ -200,7 +212,7 @@ function Router({ history }) {
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
             <TermsGuardedRoute path="/create/rosa/welcome" history={history} render={() => <CreateROSAWelcome />} />
             {/* TODO: ROSA product is not OSD! */}
-            <TermsGuardedRoute path="/create/rosa/wizard" history={history} component={CreateROSAWizard} />
+            <TermsGuardedRoute path="/create/rosa/wizard" history={history} component={GatedRosaCreationWizard} />
             <Route path="/create" component={CreateClusterPage} />
             <Route path="/details/s/:id/insights/:reportId/:errorKey" component={InsightsAdvisorRedirector} />
             <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />

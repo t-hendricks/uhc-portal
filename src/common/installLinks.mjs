@@ -1,3 +1,5 @@
+// This module has .mjs extension to simplify importing from NodeJS scripts.
+
 const MIRROR_BUTANE_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest';
 const MIRROR_CLIENTS_STABLE_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
@@ -27,11 +29,18 @@ const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.10';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 
+const COSTMGMT_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/cost_management_service/2022';
 const OCM_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022';
 
 const links = {
   DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
 
+  IDP_HTPASSWD: `${DOCS_BASE}/authentication/identity_providers/configuring-htpasswd-identity-provider.html`,
+  IDP_LDAP: `${DOCS_BASE}/authentication/identity_providers/configuring-ldap-identity-provider.html`,
+  IDP_GITHUB: `${DOCS_BASE}/authentication/identity_providers/configuring-github-identity-provider.html`,
+  IDP_GITLAB: `${DOCS_BASE}/authentication/identity_providers/configuring-gitlab-identity-provider.html`,
+  IDP_GOOGLE: `${DOCS_BASE}/authentication/identity_providers/configuring-google-identity-provider.html`,
+  IDP_OPENID: `${DOCS_BASE}/authentication/identity_providers/configuring-oidc-identity-provider.html`,
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication/understanding-authentication.html`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
   APPLYING_AUTOSCALING: `${DOCS_BASE}/machine_management/applying-autoscaling.html`,
@@ -49,8 +58,14 @@ const links = {
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
 
   OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/administering_a_cluster/osd-admin-roles.html`,
-  OSD_UNDERSTANDING_AWS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
+  OSD_CCS_AWS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html`,
+  OSD_CCS_AWS_LIMITS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#aws-limits_aws-ccs`,
+  OSD_CCS_AWS_SCP: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#ccs-aws-scp_aws-ccs`,
+  OSD_CCS_GCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html`,
+  OSD_CCS_GCP_LIMITS: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#gcp-limits_gcp-ccs`,
+  OSD_CCS_GCP_SCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#ccs-gcp-customer-procedure_gcp-ccs`,
   OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/osd_policy/osd-life-cycle.html`,
+  OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/osd_policy/osd-service-definition.html#compute_osd-service-definition`,
   OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition`,
   OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
   OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/osd_private_connections/private-cluster.html`,
@@ -72,6 +87,10 @@ const links = {
   INSTALL_AZURE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure/installing-azure-customizations.html`,
 
   INSTALL_ASHIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html`,
+  INSTALL_ASHUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html`,
+  INSTALL_ASHUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html#installation-azure-user-infra-uploading-rhcos_installing-azure-stack-hub-user-infra`,
+  INSTALL_ASH_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-network-customizations.html`,
+  RHCOS_ASHUPI_VHD_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-azurestack.x86_64.vhd.gz`,
 
   INSTALL_BAREMETAL_UPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal/installing-bare-metal.html`,
   INSTALL_BAREMETAL_IPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html`,
@@ -142,11 +161,11 @@ const links = {
   RHCOS_ARM_ROOTFS: `${MIRROR_RHCOS_LATEST_ARM}/rhcos-live-rootfs.aarch64.img`,
   RHCOS_ARM_RAW: `${MIRROR_RHCOS_LATEST_ARM}/rhcos-metal.aarch64.raw.gz`,
 
-  // TODO remove once Tokens uses DownloadAndOSSelection for direct downloads
-  OCM_CLI_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
   OCM_CLI_DOCS: 'https://access.redhat.com/articles/6114701',
+  OCM_CLI_RELEASES_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
 
-  RHOAS_CLI_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/f520e427-cad2-40ce-823d-96234ccbc047',
+  RHOAS_CLI_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/88e1487a-2a14-4b35-85b9-a7a2d67a37f3',
+  RHOAS_CLI_RELEASES_LATEST: 'https://github.com/redhat-developer/app-services-cli/releases/latest',
 
   HELM_DOCS: `${DOCS_BASE}/applications/working_with_helm_charts/understanding-helm.html`,
 
@@ -158,8 +177,13 @@ const links = {
 
   OSDK_DOCS: `${DOCS_BASE}/cli_reference/osdk/cli-osdk-install.html`,
 
-  // TODO remove once TokensROSA uses DownloadAndOSSelection for direct downloads
-  ROSA_CLIENT_LATEST: MIRROR_ROSA_LATEST,
+  BUTANE_DOCS: `${DOCS_BASE}/installing/install_config/installing-customizing.html`,
+
+  COREOS_INSTALLER_DOCS: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
+
+  INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
+  INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-disconnected.html`,
+
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
   ROSA_MONITORING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_monitoring/rosa-understanding-the-monitoring-stack.html`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,
@@ -170,15 +194,13 @@ const links = {
   ROSA_RESPONSIBILITY_MATRIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-policy-responsibility-matrix.html`,
   ROSA_SERVICE_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-service-definition.html`,
 
-  BUTANE_DOCS: `${DOCS_BASE}/installing/install_config/installing-customizing.html`,
-  COREOS_INSTALLER_DOCS: `${DOCS_BASE}/installing/installing_platform_agnostic/installing-platform-agnostic.html`,
-
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
   // TODO OCM RBAC phase 2: update this link once the new chapter is there.
   OCM_DOCS_ROLES_AND_ACCESS: `${OCM_DOCS_BASE}/html/managing_clusters/index`,
+  OCM_DOCS_SUBSCRIPTIONS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-cluster-subscriptions`,
+  OCM_DOCS_UPGRADING_OSD_TRIAL: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-cluster-subscriptions#upgrading-osd-trial-cluster_assembly-cluster-subscriptions`,
 
-  INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
-  INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-disconnected.html`,
+  COSTMGMT_ADDING_OCP: `${COSTMGMT_DOCS_BASE}/html/adding_an_openshift_container_platform_source_to_cost_management/assembly-adding-openshift-container-platform-source`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
@@ -542,7 +564,7 @@ const urls = {
   [tools.OC_MIRROR_PLUGIN]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: 'https://mirror.openshift.com/pub/openshift-v4/amd64/clients/ocp-dev-preview/pre-release/oc-mirror.tar.gz',
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}oc-mirror.tar.gz`,
       },
     },
   },
@@ -568,12 +590,12 @@ const urlsSelector = (githubReleases) => {
     ...urls,
     [tools.OCM]: {
       [channels.STABLE]: {
-        fallbackNavigateURL: 'https://github.com/openshift-online/ocm-cli/releases/latest',
+        fallbackNavigateURL: links.OCM_CLI_RELEASES_LATEST,
       },
     },
     [tools.RHOAS]: {
       [channels.STABLE]: {
-        fallbackNavigateURL: 'https://github.com/redhat-developer/app-services-cli/releases/latest',
+        fallbackNavigateURL: links.RHOAS_CLI_RELEASES_LATEST,
       },
     },
   };
@@ -621,6 +643,16 @@ const urlsSelector = (githubReleases) => {
   return result;
 };
 
+/** Useful for scripted checking of "all" external links. */
+const getFlatUrls = async () => {
+  const urlSet = new Set([
+    ...Object.values(links),
+    ...Object.values(urls).flatMap(Object.values).flatMap(Object.values).flatMap(Object.values),
+    // TODO: include latest github releases?
+  ]);
+  return [...urlSet].sort();
+}
+
 export {
   architectures,
   architectureOptions,
@@ -631,5 +663,6 @@ export {
   urls,
   githubReleasesToFetch,
   urlsSelector,
+  getFlatUrls,
 };
 export default links;

@@ -6,7 +6,7 @@ import {
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { scrollToTop } from '../../../common/helpers';
 import PageTitle from '../../common/PageTitle';
-import InstructionsBM from './instructions/InstructionsBareMetal';
+import InstructionsChooser from './instructions/InstructionsChooser';
 
 class InstallBareMetal extends Component {
   componentDidMount() {
@@ -28,7 +28,12 @@ class InstallBareMetal extends Component {
       <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection>
-          <InstructionsBM />
+          <InstructionsChooser
+            cloudName="Bare Metal"
+            showAI
+            ipiPageLink="/install/metal/installer-provisioned"
+            upiPageLink="/install/metal/user-provisioned"
+          />
         </PageSection>
       </>
     );

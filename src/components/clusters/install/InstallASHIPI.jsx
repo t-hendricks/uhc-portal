@@ -26,7 +26,7 @@ export class InstallASHIPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'Microsoft Azure Stack Hub' /* , path: '/install/azure-stack-hub' */ },
+        { label: 'Microsoft Azure Stack Hub', path: '/install/azure-stack-hub' },
         { label: 'Installer-provisioned infrastructure' },
       ]}
       />
@@ -39,6 +39,7 @@ export class InstallASHIPI extends Component {
           <OCPInstructions
             token={token}
             cloudProviderID="ash"
+            customizations={instructionsMapping.ash.customizations}
             {...instructionsMapping.ash.ipi}
           />
         </PageSection>
