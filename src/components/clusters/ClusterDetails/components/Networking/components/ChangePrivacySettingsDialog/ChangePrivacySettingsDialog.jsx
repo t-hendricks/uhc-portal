@@ -4,7 +4,7 @@ import {
   Form, Alert, Stack, StackItem,
 } from '@patternfly/react-core';
 
-import links from '../../../../../../../common/installLinks';
+import links from '../../../../../../../common/installLinks.mjs';
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 

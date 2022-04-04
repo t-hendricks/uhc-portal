@@ -8,6 +8,7 @@ import {
 import ErrorBox from '../../../../../common/ErrorBox';
 
 import { ReduxVerticalFormGroup, ReduxFormDropdown } from '../../../../../common/ReduxFormComponents';
+import links from '../../../../../../common/installLinks.mjs';
 import { checkIdentityProviderName } from '../../../../../../common/validators';
 
 import {
@@ -25,12 +26,6 @@ import {
   mappingMethods,
   IDPformValues,
   mappingMethodsformValues,
-  LDAPDocLink,
-  GithubDocLink,
-  OpenIDDocLink,
-  GoogleDocLink,
-  GitlabDocLink,
-  HTPasswdDocLink,
   getOauthCallbackURL,
   IDPNeedsOAuthURL,
   generateIDPName,
@@ -129,12 +124,12 @@ class IDPForm extends React.Component {
     };
 
     const providerDocumentationLink = {
-      LDAPIdentityProvider: LDAPDocLink,
-      OpenIDIdentityProvider: OpenIDDocLink,
-      GithubIdentityProvider: GithubDocLink,
-      GoogleIdentityProvider: GoogleDocLink,
-      GitlabIdentityProvider: GitlabDocLink,
-      HTPasswdIdentityProvider: HTPasswdDocLink,
+      LDAPIdentityProvider: links.IDP_LDAP,
+      OpenIDIdentityProvider: links.IDP_OPENID,
+      GithubIdentityProvider: links.IDP_GITHUB,
+      GoogleIdentityProvider: links.IDP_GOOGLE,
+      GitlabIdentityProvider: links.IDP_GITLAB,
+      HTPasswdIdentityProvider: links.IDP_HTPASSWD,
     };
 
     const SelectedProviderRequiredFields = providersRequiredFields[selectedIDP];
@@ -155,7 +150,7 @@ class IDPForm extends React.Component {
               and troubleshoot it. If this user needs elevated permissions,
               add it to an
               {' '}
-              <ExternalLink href="https://access.redhat.com/documentation/en-us/openshift_dedicated/4/html/administering_a_cluster/dedicated-administrator-role#dedicated-admin-granting-permissions_dedicated-administrator">
+              <ExternalLink href={links.OSD_DEDICATED_ADMIN_ROLE}>
                 administrative group
               </ExternalLink>
               {' '}

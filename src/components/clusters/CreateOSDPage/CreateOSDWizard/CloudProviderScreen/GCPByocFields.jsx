@@ -5,6 +5,7 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
+import links from '../../../../../common/installLinks.mjs';
 import { required, validateGCPServiceAccount } from '../../../../../common/validators';
 
 import ExternalLink from '../../../../common/ExternalLink';
@@ -32,7 +33,9 @@ function GCPByocFields({ isValidating }) {
                 Your Google Cloud account has the necessary resource quotas and
                 limits to support your desired cluster size according to the
                 {' '}
-                <ExternalLink noIcon href="https://www.openshift.com/dedicated/ccs">cluster resource requirements</ExternalLink>
+                <ExternalLink noIcon href={links.OSD_CCS_GCP_LIMITS}>
+                  cluster resource requirements
+                </ExternalLink>
               </li>
               <li>
                 An IAM Service account called osd-ccs-admin exists
@@ -53,7 +56,10 @@ function GCPByocFields({ isValidating }) {
             provisioned in the project prior to provisioning OpenShift Dedicated.
             For more guidance, see the
             {' '}
-            <ExternalLink noIcon href="https://www.openshift.com/dedicated/ccs">customer cloud subscription requirements.</ExternalLink>
+            <ExternalLink noIcon href={links.OSD_CCS_GCP}>
+              customer cloud subscription requirements
+            </ExternalLink>
+            .
           </TextContent>
         </ExpandableSection>
       </GridItem>

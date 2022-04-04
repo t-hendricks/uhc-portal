@@ -4,7 +4,7 @@ import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import {
   Stack, StackItem, Text,
 } from '@patternfly/react-core';
-import { tools } from '../../../../../../common/installLinks';
+import { tools } from '../../../../../../common/installLinks.mjs';
 import instructionsMapping from '../../instructionsMapping';
 import RHCOSDownloadAndSelect from './RHCOSDownloadAndSelect';
 import DownloadButton from '../DownloadButton';

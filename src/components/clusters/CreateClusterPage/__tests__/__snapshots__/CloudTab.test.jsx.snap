@@ -81,7 +81,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   },
                   <React.Fragment>
                     <a
-                      href="https://www.openshift.com/products/dedicated/"
+                      href="https://cloud.redhat.com/products/dedicated/"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -453,7 +453,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -505,7 +505,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -612,7 +612,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   },
                   <React.Fragment>
                     <a
-                      href="https://www.openshift.com/products/dedicated/"
+                      href="https://cloud.redhat.com/products/dedicated/"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -984,7 +984,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -1036,7 +1036,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -1143,7 +1143,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   },
                   <React.Fragment>
                     <a
-                      href="https://www.openshift.com/products/dedicated/"
+                      href="https://cloud.redhat.com/products/dedicated/"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -1155,7 +1155,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   <React.Fragment>
                     <Button
                       component="a"
-                      href="https://www.openshift.com/products/dedicated/"
+                      href="https://cloud.redhat.com/products/dedicated/"
                       rel="noopener noreferrer"
                       target="_blank"
                       variant="secondary"
@@ -1179,7 +1179,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                       </StackItem>
                       <StackItem>
                         <a
-                          href="https://www.openshift.com/products/dedicated/"
+                          href="https://cloud.redhat.com/products/dedicated/"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -1454,7 +1454,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -1506,7 +1506,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   </Link>
                   <TechPreviewBadge />
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>

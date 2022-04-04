@@ -24,7 +24,12 @@ exports[`BareMetal install renders correctly 1`] = `
     title="Install OpenShift Container Platform 4"
   />
   <PageSection>
-    <InstructionsBareMetal />
+    <InstructionsChooser
+      cloudName="Bare Metal"
+      ipiPageLink="/install/metal/installer-provisioned"
+      showAI={true}
+      upiPageLink="/install/metal/user-provisioned"
+    />
   </PageSection>
 </Fragment>
 `;

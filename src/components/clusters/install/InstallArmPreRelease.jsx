@@ -9,7 +9,7 @@ import PageTitle from '../../common/PageTitle';
 import { tollboothActions } from '../../../redux/actions';
 import InstructionsPreRelease from './instructions/InstructionsPreRelease';
 import { scrollToTop } from '../../../common/helpers';
-import { tools } from '../../../common/installLinks';
+import { tools } from '../../../common/installLinks.mjs';
 
 export class InstallArmPreRelease extends Component {
   componentDidMount() {

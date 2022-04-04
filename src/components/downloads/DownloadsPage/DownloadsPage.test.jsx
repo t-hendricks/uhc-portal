@@ -10,14 +10,14 @@ import DownloadsPage, {
 } from './DownloadsPage';
 import {
   tools, channels, operatingSystems, architectures, urls,
-} from '../../../common/installLinks';
+} from '../../../common/installLinks.mjs';
 
 const { linux, mac, windows } = operatingSystems;
 const {
   arm, ppc, s390x, x86,
 } = architectures;
 
-// These tests depend on installLinks.js data.
+// These tests depend on installLinks.mjs data.
 describe('allOperatingSystemsForTool', () => {
   it('excludes Windows for installer', () => {
     const values = allOperatingSystemsForTool(urls, tools.X86INSTALLER,

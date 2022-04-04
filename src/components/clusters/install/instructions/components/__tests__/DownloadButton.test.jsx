@@ -8,7 +8,7 @@ import {
   operatingSystems,
   tools,
   channels,
-} from '../../../../../../common/installLinks';
+} from '../../../../../../common/installLinks.mjs';
 import DownloadButton from '../DownloadButton';
 
 describe('DownloadButton', () => {

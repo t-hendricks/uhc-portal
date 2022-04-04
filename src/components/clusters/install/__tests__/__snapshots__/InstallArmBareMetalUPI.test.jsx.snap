@@ -59,7 +59,7 @@ exports[`Arm BareMetal UPI install renders correctly 1`] = `
       installer="aarch64-openshift-install"
       isBMIPI={false}
       preReleasePageLink="/install/arm/pre-release"
-      rhcosAdditionalInstructions="Download the installer ISO image and the compressed metal RAW."
+      rhcosAdditionalInstructions="Download the installer ISO image, or the kernel, initramfs, and rootfs."
       rhcosDownloads={
         Array [
           Object {

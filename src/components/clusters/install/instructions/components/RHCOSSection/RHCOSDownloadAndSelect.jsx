@@ -6,7 +6,7 @@ import {
   Split,
   SplitItem,
 } from '@patternfly/react-core';
-import { architectureOptions, tools } from '../../../../../../common/installLinks';
+import { architectureOptions, tools } from '../../../../../../common/installLinks.mjs';
 import DownloadButton from '../DownloadButton';
 
 class RHCOSDownloadAndSelect extends React.Component {

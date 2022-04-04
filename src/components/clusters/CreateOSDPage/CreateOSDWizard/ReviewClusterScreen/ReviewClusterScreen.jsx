@@ -22,6 +22,8 @@ function ReviewClusterScreen({
   canAutoScale,
   autoscalingEnabled,
   isPending,
+  installToVPCSelected,
+  configureProxySelected,
 }) {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
@@ -101,6 +103,10 @@ function ReviewClusterScreen({
         && ReviewItem({ name: 'use_privatelink', formValues })}
         {showVPCCheckbox && formValues.install_to_vpc && isAWS && ReviewItem({ name: 'aws_vpc', formValues })}
         {showVPCCheckbox && formValues.install_to_vpc && isGCP && ReviewItem({ name: 'gpc_vpc', formValues })}
+        {installToVPCSelected && ReviewItem({ name: 'configure_proxy', formValues })}
+        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'http_proxy_url', formValues })}
+        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'https_proxy_url', formValues })}
+        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'additional_trust_bundle', formValues })}
         {ReviewItem({ name: 'network_machine_cidr', formValues })}
         {ReviewItem({ name: 'network_service_cidr', formValues })}
         {ReviewItem({ name: 'network_pod_cidr', formValues })}
@@ -124,6 +130,8 @@ ReviewClusterScreen.propTypes = {
   isPending: PropTypes.bool,
   canAutoScale: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
+  installToVPCSelected: PropTypes.bool,
+  configureProxySelected: PropTypes.bool,
 };
 
 export default ReviewClusterScreen;

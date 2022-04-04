@@ -343,10 +343,7 @@ const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
       (
         <>
           <Button
-            // TODO: uncomment below when ready to expose Rosa wizard in staging
-            // component={props => <Link {...props} to={`/create/rosa/${rosaCreationWizardFeature
-            // ? 'wizard' : 'welcome'}`} />}
-            component={props => <Link {...props} to="/create/rosa/welcome" />}
+            component={props => <Link {...props} to={`/create/rosa/${rosaCreationWizardFeature ? 'wizard' : 'welcome'}`} />}
             variant="secondary"
             className="get-started-button"
           >
@@ -408,7 +405,7 @@ const runItYourself = () => {
         <Link to="/install/alibaba/installer-provisioned" className="pf-u-mr-xs">Alibaba Cloud</Link>
         <TechPreviewBadge />
       </>,
-      'Full stack automation and pre-existing infrastructure',
+      'Full stack automation',
     ],
     [
       <><Link to="/install/aws">AWS (x86_64)</Link></>,
@@ -431,7 +428,7 @@ const runItYourself = () => {
         <Link to="/install/ibm-cloud" className="pf-u-mr-xs">IBM Cloud</Link>
         <TechPreviewBadge />
       </>,
-      'Full stack automation and pre-existing infrastructure',
+      'Full stack automation',
     ],
     [
       <><Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link></>,

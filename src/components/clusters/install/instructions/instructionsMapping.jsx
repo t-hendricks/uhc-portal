@@ -3,7 +3,7 @@ import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import {
   List, ListItem, Text,
 } from '@patternfly/react-core';
-import links, { tools, channels } from '../../../../common/installLinks';
+import links, { tools, channels } from '../../../../common/installLinks.mjs';
 
 /**
  * RHCOS Downloads structure
@@ -106,11 +106,27 @@ const instructionsMapping = {
   },
   ash: {
     cloudProvider: 'Azure Stack Hub',
+    customizations: links.INSTALL_ASH_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on Azure Stack Hub with installer-provisioned infrastructure',
       installer: tools.X86INSTALLER,
       channel: channels.STABLE,
       docURL: links.INSTALL_ASHIPI_GETTING_STARTED,
+    },
+    upi: {
+      title: 'Install OpenShift on Azure Stack Hub with user-provisioned infrastructure',
+      displayRHCOSSection: true,
+      rhcosLearnMoreURL: links.INSTALL_ASHUPI_RHCOS_LEARN_MORE,
+      rhcosDownloads: [
+        {
+          buttonText: 'Download RHCOS VHD',
+          name: 'OCP-Download-RHCOS-VHD',
+          url: links.RHCOS_ASHUPI_VHD_X86,
+        },
+      ],
+      installer: tools.X86INSTALLER,
+      channel: channels.STABLE,
+      docURL: links.INSTALL_ASHUPI_GETTING_STARTED,
     },
   },
   ibmz: {
@@ -192,15 +208,25 @@ const instructionsMapping = {
           {
             buttonText: 'Download RHCOS ISO',
             name: 'OCP-Download-RHCOS-ISO',
-            url: links.RHCOS_BAREMETAL_ISO_X86,
+            url: links.RHCOS_GENERIC_ISO_X86,
           },
           {
-            buttonText: 'Download RHCOS RAW',
-            name: 'OCP-Download-RHCOS-RAW',
-            url: links.RHCOS_BAREMETAL_RAW_X86,
+            buttonText: 'Download RHCOS kernel',
+            name: 'OCP-Download-RHCOS-kernel',
+            url: links.RHCOS_GENERIC_KERNEL_X86,
+          },
+          {
+            buttonText: 'Download RHCOS initramfs',
+            name: 'OCP-Download-RHCOS-initramfs',
+            url: links.RHCOS_GENERIC_INITRAMFS_X86,
+          },
+          {
+            buttonText: 'Download RHCOS rootfs',
+            name: 'OCP-Download-RHCOS-rootfs',
+            url: links.RHCOS_GENERIC_ROOTFS_X86,
           },
         ],
-      rhcosAdditionalInstructions: 'Download the installer ISO image and the compressed metal RAW.',
+      rhcosAdditionalInstructions: 'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
       installer: tools.X86INSTALLER,
       channel: channels.STABLE,
       docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
@@ -236,7 +262,7 @@ const instructionsMapping = {
             url: links.RHCOS_ARM_ROOTFS,
           },
         ],
-      rhcosAdditionalInstructions: 'Download the installer ISO image and the compressed metal RAW.',
+      rhcosAdditionalInstructions: 'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
       installer: tools.ARMINSTALLER,
       channel: channels.STABLE,
       docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,

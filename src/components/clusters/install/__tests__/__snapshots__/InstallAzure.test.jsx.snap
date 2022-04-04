@@ -24,7 +24,11 @@ exports[`InstallAzure renders correctly 1`] = `
     title="Install OpenShift Container Platform 4"
   />
   <PageSection>
-    <InstructionsAzure />
+    <InstructionsChooser
+      cloudName="Azure"
+      ipiPageLink="/install/azure/installer-provisioned"
+      upiPageLink="/install/azure/user-provisioned"
+    />
   </PageSection>
 </Fragment>
 `;

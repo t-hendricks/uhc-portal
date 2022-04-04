@@ -1,8 +1,10 @@
 import {
   LIST_ASSOCIATED_AWS_IDS,
   GET_AWS_ACCOUNT_ROLES_ARNS,
+  GET_OCM_ROLE,
   CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE,
   CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
+  CLEAR_GET_OCM_ROLE_RESPONSE,
 } from './rosaConstants';
 import { accountsService } from '../../../../services';
 
@@ -15,6 +17,21 @@ export const getAWSIDsFromARNs = (arns) => {
   });
   return [...new Set(ids)]; // convert to Set to remove duplicates, spread to convert back to array
 };
+
+/** Converts accountRoles object into an array of ARNs
+ * @param accountRoles object: https://gitlab.cee.redhat.com/service/uhc-clusters-service/-/merge_requests/3486
+ * @returns
+ * [
+ *   { Installer: 'arn:..ManagedOpenShift-Installer-Role', ControlPlane: 'arn:...' ...},
+ *   { Installer: 'arn:..croche-test-Installer-Role', ControlPlane: 'arn:...' ...}
+ * ]
+ */
+export const normalizeAWSAccountRoles = accountRoles => (accountRoles?.items || [])
+  .map(accountRole => (accountRole?.items || []).reduce((roleObj, { type, arn }) => ({
+    ...roleObj,
+    [type]: arn,
+  }),
+  { prefix: accountRole.prefix }));
 
 export const getAWSAccountIDs = organizationID => dispatch => dispatch({
   type: LIST_ASSOCIATED_AWS_IDS,
@@ -34,29 +51,22 @@ export const getAWSAccountIDs = organizationID => dispatch => dispatch({
 });
 
 export const getAWSAccountRolesARNs = awsAccountID => (dispatch) => {
-  const accountRoles = { items: [] };
-  // '123456789' 1 accountRoles
-  // '234564251' 0 accountRoles
-  // '3783563258' 2 accountRoles
-  if (awsAccountID !== '234564251') {
-    accountRoles.items.push({
-      installer: `arn:aws:iam::${awsAccountID}:role/Foo-Installer-Role`,
-      support: `arn:aws:iam::${awsAccountID}:role/Foo-Support-Role`,
-      instance_controlplane: `arn:aws:iam::${awsAccountID}:role/Foo-ControlPlane-Role`,
-      instance_worker: `arn:aws:iam::${awsAccountID}:role/Foo-Worker-Role`,
-    });
-  }
-  if (awsAccountID === '3783563258') {
-    accountRoles.items.push({
-      installer: `arn:aws:iam::${awsAccountID}:role/Bar-Installer-Role`,
-      support: `arn:aws:iam::${awsAccountID}:role/Bar-Support-Role`,
-      instance_controlplane: `arn:aws:iam::${awsAccountID}:role/Bar-ControlPlane-Role`,
-      instance_worker: `arn:aws:iam::${awsAccountID}:role/Bar-Worker-Role`,
-    });
-  }
+  const accountRoles = [];
   dispatch({
     type: GET_AWS_ACCOUNT_ROLES_ARNS,
-    payload: { data: accountRoles },
+    payload: accountsService.getAWSAccountARNs(awsAccountID).then((response) => {
+      if (!response.data || !response.data.items) {
+        return accountRoles;
+      }
+      return normalizeAWSAccountRoles(response.data);
+    }),
+  });
+};
+
+export const getOCMRole = awsAccountID => (dispatch) => {
+  dispatch({
+    type: GET_OCM_ROLE,
+    payload: accountsService.getOCMRole(awsAccountID).then(response => response?.data),
   });
 };
 
@@ -66,4 +76,8 @@ export const clearGetAWSAccountIDsResponse = () => ({
 
 export const clearGetAWSAccountRolesARNsResponse = () => ({
   type: CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
+});
+
+export const clearGetOcmRoleResponse = () => ({
+  type: CLEAR_GET_OCM_ROLE_RESPONSE,
 });

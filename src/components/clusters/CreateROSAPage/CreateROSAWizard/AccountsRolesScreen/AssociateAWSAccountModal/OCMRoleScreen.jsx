@@ -33,7 +33,7 @@ function OCMRoleScreen() {
                   Create OpenShift Cluster Manager role
                 </Title>
                 <Title headingLevel="h3">
-                  Step 1: Create OCM role
+                  Create OCM role
                 </Title>
                 <Text component={TextVariants.p}>
                   Run one of the following two commands to create an OCM role. View required AWS policy permissions for the
@@ -86,15 +86,15 @@ function OCMRoleScreen() {
                   </GridItem>
                 </Grid>
                 <Title headingLevel="h3">
-                  Step 2: Associate the OCM role with AWS account
+                  Make sure to associate the OCM role with your red hat account
                 </Title>
                 <Text component={TextVariants.p}>
-                  Run the following command to associate the OCM role with your AWS account.
+                  If not yet linked, run the following command to associate the OCM role with your AWS account.
                 </Text>
                 <Grid className="ocm-role-indented-container">
                   <GridItem>
                     <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn">
-                      rosa link ocm-role --arn &#x3c;arn&#x3e;
+                      rosa link ocm-role &#x3c;arn&#x3e;
                     </InstructionCommand>
                   </GridItem>
                 </Grid>

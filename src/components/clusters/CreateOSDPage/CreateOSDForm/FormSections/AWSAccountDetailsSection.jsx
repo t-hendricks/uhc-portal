@@ -31,6 +31,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
             </>
         )}
           isRequired
+          data-hj-suppress
         />
       </GridItem>
       <GridItem md={6} />
@@ -52,6 +53,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           disabled={pending || isValidating}
           helpText={isValidating ? 'Validating...' : ''}
           isRequired
+          data-hj-suppress
         />
       </GridItem>
       <GridItem md={6} />
@@ -60,7 +62,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           component={ReduxVerticalFormGroup}
           name="secret_access_key"
           label="AWS secret access key"
-          type="text"
+          type="password"
           validate={required}
           disabled={pending || isValidating}
           helpText={isValidating ? 'Validating...' : ''}
