@@ -144,7 +144,7 @@ const checkMachinePoolName = value => checkObjectName(value, 'Machine pool', MAX
 const checkCustomOperatorRolesPrefix = (value) => {
   const label = 'Custom operator roles prefix';
   if (!value) {
-    return undefined;
+    return `${label} is required.`;
   }
   if (!DNS_LABEL_REGEXP.test(value)) {
     return `${label} '${value}' isn't valid, must consist of lower-case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character. For example, 'my-name', or 'abc-123'.`;
@@ -347,6 +347,40 @@ const RHIT_PRINCIPAL_PATTERN = /^[^"$<> ^|%\\(),=;~:/*\r\n]*$/;
 const validateRHITUsername = (username) => {
   const valid = RHIT_PRINCIPAL_PATTERN.test(username);
   return valid ? undefined : 'Username includes illegal symbols';
+};
+
+const validateUrl = (value, protocol = 'http') => {
+  if (!value) {
+    return undefined;
+  }
+  let protocolArr = protocol;
+  if (typeof protocol === 'string') {
+    protocolArr = [protocol];
+  }
+  try {
+    // eslint-disable-next-line no-new
+    new URL(value);
+  } catch (error) {
+    return 'Invalid URL';
+  } finally {
+    const valueStart = value.substring(0, value.indexOf('://'));
+    if (!protocolArr.includes(valueStart)) {
+      const protocolStr = protocolArr.map(p => `${p}://`).join(', ');
+      // eslint-disable-next-line no-unsafe-finally
+      return `The URL should include the scheme prefix (${protocolStr})`;
+    }
+  }
+  return undefined;
+};
+
+const validateCA = (value) => {
+  if (!value) {
+    return undefined;
+  }
+  if (value === 'invalid file') {
+    return 'Must be a PEM encoded X.509 file (.pem, .crt, .ca, .cert) and no larger than 4 MB';
+  }
+  return undefined;
 };
 
 // Function to validate the cluster console URL
@@ -1126,6 +1160,8 @@ export {
   checkClusterDisplayName,
   checkUserID,
   validateRHITUsername,
+  validateUrl,
+  validateCA,
   checkClusterConsoleURL,
   checkOpenIDIssuer,
   validateNumericInput,

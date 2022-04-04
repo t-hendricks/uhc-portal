@@ -4,7 +4,7 @@ import { PageSection } from '@patternfly/react-core';
 import PageTitle from '../../common/PageTitle';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
-import InstructionsGCP from './instructions/InstructionsGCP';
+import InstructionsChooser from './instructions/InstructionsChooser';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallGCP extends Component {
@@ -27,7 +27,11 @@ class InstallGCP extends Component {
       <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection>
-          <InstructionsGCP />
+          <InstructionsChooser
+            cloudName="GCP"
+            ipiPageLink="/install/gcp/installer-provisioned"
+            upiPageLink="/install/gcp/user-provisioned"
+          />
         </PageSection>
       </>
     );

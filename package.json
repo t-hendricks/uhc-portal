@@ -64,6 +64,7 @@
     "react-tagsinput": "3.19.x",
     "redux": "^4.0.5",
     "redux-form": "^8.3.6",
+    "redux-persist": "^6.0.0",
     "redux-promise-middleware": "^6.1.2",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
@@ -119,6 +120,7 @@
     "node-fetch": "^2.6.1",
     "null-loader": "^4.0.1",
     "porty": "^3.1.1",
+    "progress": "^2.0.3",
     "sass": "^1.34.0",
     "sass-loader": "^9.0.0",
     "url-loader": "^3.0.0",
@@ -142,7 +144,7 @@
       "<rootDir>/src/setupTests.js"
     ],
     "transform": {
-      "^.+\\.jsx?$": "babel-jest"
+      "^.+\\.(js|jsx|mjs)$": "babel-jest"
     },
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!(react-monaco-editor|monaco-editor|lodash-es|openshift-assisted-ui-lib)/)"

@@ -69,23 +69,35 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                 <ListItem>
                   Download and install the
                    
-                  <ExternalLink
-                    href="https://github.com/openshift-online/ocm-cli/releases/latest"
-                    noIcon={true}
-                  >
-                    ocm command-line tool
-                  </ExternalLink>
+                  <code>
+                    ocm
+                  </code>
+                   
+                  command-line tool:
                    
                   <DevPreviewBadge />
+                  <Text
+                    component="p"
+                  />
+                  <Connect(DownloadAndOSSelection)
+                    channel="stable"
+                    tool="ocm"
+                  />
+                  <Text
+                    component="p"
+                  />
                 </ListItem>
                 <ListItem>
                   Copy and paste the authentication command in your terminal:
+                  <Text
+                    component="p"
+                  />
+                  <Skeleton
+                    isDark={false}
+                    size="md"
+                  />
                 </ListItem>
               </List>
-              <Skeleton
-                isDark={false}
-                size="md"
-              />
               <Title
                 headingLevel="h3"
               >
@@ -394,23 +406,35 @@ exports[`<Tokens /> Renders token 1`] = `
                 <ListItem>
                   Download and install the
                    
-                  <ExternalLink
-                    href="https://github.com/openshift-online/ocm-cli/releases/latest"
-                    noIcon={true}
-                  >
-                    ocm command-line tool
-                  </ExternalLink>
+                  <code>
+                    ocm
+                  </code>
+                   
+                  command-line tool:
                    
                   <DevPreviewBadge />
+                  <Text
+                    component="p"
+                  />
+                  <Connect(DownloadAndOSSelection)
+                    channel="stable"
+                    tool="ocm"
+                  />
+                  <Text
+                    component="p"
+                  />
                 </ListItem>
                 <ListItem>
                   Copy and paste the authentication command in your terminal:
+                  <Text
+                    component="p"
+                  />
+                  <Skeleton
+                    isDark={false}
+                    size="md"
+                  />
                 </ListItem>
               </List>
-              <Skeleton
-                isDark={false}
-                size="md"
-              />
               <Title
                 headingLevel="h3"
               >

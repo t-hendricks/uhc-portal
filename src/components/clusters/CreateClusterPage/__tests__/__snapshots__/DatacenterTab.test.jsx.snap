@@ -104,7 +104,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/azure-stack-hub/installer-provisioned"
+                    to="/install/azure-stack-hub"
                   >
                     Azure Stack Hub
                   </Link>
@@ -249,7 +249,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/azure-stack-hub/installer-provisioned"
+                    to="/install/azure-stack-hub"
                   >
                     Azure Stack Hub
                   </Link>

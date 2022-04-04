@@ -47,6 +47,7 @@ const PFmapper = {
   ButtonType: 'Button',
   TitleSizes: 'Title',
   PageSectionVariants: 'PageSection',
+  PaginationVariant: 'Pagination',
 };
 
 const FECMapper = {

@@ -4,7 +4,7 @@ import {
   FormGroup, GridItem, Title,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-import links from '../../../common/installLinks';
+import links from '../../../common/installLinks.mjs';
 import ReduxCheckbox from '../../common/ReduxFormComponents/ReduxCheckbox';
 import { constants } from '../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../common/ExternalLink';

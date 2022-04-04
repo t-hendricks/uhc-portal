@@ -5,19 +5,14 @@ import {
   GridItem,
   Text,
 } from '@patternfly/react-core';
-import { has, get } from 'lodash';
 
-import DownloadButton from './DownloadButton';
 import {
-  urls, tools, channels, operatingSystems,
-} from '../../../../../common/installLinks';
+  tools, channels, operatingSystems, urlsSelector, githubReleasesToFetch,
+} from '../../../../../../common/installLinks.mjs';
 import {
   detectOS,
-  initialSelection,
-  architecturesForToolOS,
-  operatingSystemDropdown,
-  architectureDropdown,
-} from '../../../../downloads/DownloadsPage/DownloadsPage';
+  downloadChoice,
+} from '../../../../../downloads/DownloadsPage/DownloadsPage';
 
 const crcInstructionsMapping = {
   [operatingSystems.linux]: (
@@ -44,42 +39,18 @@ const crcInstructionsMapping = {
   ),
 };
 
-const toolRow = (selections, setSelections, tool, channel, token, pendoID) => {
-  const { OS, architecture } = (
-    selections[tool] || initialSelection(urls, tool, channel, detectOS())
-  );
-  // Callbacks for dropdowns:
-  const onChangeOS = (newOS) => {
-    let newArchitecture = architecture;
-    // Invalidate arch selection if not compatible
-    if (!has(urls, [tool, channel, architecture, newOS])) {
-      const optionsForOS = architecturesForToolOS(urls, tool, channel, newOS);
-      newArchitecture = optionsForOS.length > 1 ? 'select' : optionsForOS[0].value;
-    }
-    setSelections({ ...selections, [tool]: { OS: newOS, architecture: newArchitecture } });
-  };
-  const onChangeArchitecture = (newArchitecture) => {
-    setSelections({ ...selections, [tool]: { OS, architecture: newArchitecture } });
-  };
-
-  const url = get(urls, [tool, channel, architecture, OS]);
-  return {
-    osDropdown: operatingSystemDropdown(urls, tool, channel, OS, onChangeOS),
-    archDropdown: architectureDropdown(urls, tool, channel, OS, architecture, onChangeArchitecture),
-    downloadButton: (
-      <DownloadButton
-        url={url}
-        tool={tool}
-        disabled={!!token.error}
-        pendoID={pendoID}
-      />
-    ),
-  };
-};
-
 class DownloadAndOSSelection extends React.Component {
   state = {
     selections: {}, // { [tool]: { OS, architecture} }
+  }
+
+  componentDidMount() {
+    const { githubReleases, getLatestRelease } = this.props;
+    githubReleasesToFetch.forEach((repo) => {
+      if (!githubReleases[repo].fulfilled) {
+        getLatestRelease(repo);
+      }
+    });
   }
 
   setSelections = (selections) => {
@@ -92,13 +63,17 @@ class DownloadAndOSSelection extends React.Component {
       pendoID,
       tool,
       channel,
+      githubReleases,
     } = this.props;
     const { selections } = this.state;
+
+    const urls = urlsSelector(githubReleases);
 
     const OS = selections[tool]?.OS || detectOS();
     const isCRC = tool === tools.CRC;
 
-    const chooser = toolRow(selections, this.setSelections, tool, channel, token, pendoID);
+    const chooser = downloadChoice(selections, this.setSelections, urls, tool, channel, token,
+      { pendoID });
 
     return (
       <>
@@ -124,6 +99,8 @@ DownloadAndOSSelection.propTypes = {
   pendoID: PropTypes.string,
   tool: PropTypes.oneOf(Object.values(tools)).isRequired,
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
+  githubReleases: PropTypes.object.isRequired,
+  getLatestRelease: PropTypes.func.isRequired,
 };
 
 export default DownloadAndOSSelection;

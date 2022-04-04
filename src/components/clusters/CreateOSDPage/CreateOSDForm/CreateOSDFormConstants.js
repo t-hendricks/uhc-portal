@@ -38,6 +38,7 @@ const constants = {
   amazonEBS: 'Provide your own AWS KMS key ARN for encryption of EBS resources associated with your EC2 instances.',
   awsKeyARN: 'The key ARN is the Amazon Resource Name (ARN) of a CMK. It is a unique, fully qualified identifier for the CMK. A key ARN includes the AWS account, Region, and the key ID.',
   privateLinkHint: 'To provide support, Red Hat Site Reliability Engineering (SRE) connects to the cluster using only AWS PrivateLink endpoints instead of public endpoints.  This option cannot be changed after a cluster is created.',
+  clusterProxyHint: 'Enable an HTTP or HTTPS proxy to deny direct access to the Internet from your cluster.',
 };
 
 const billingModelConstants = {
@@ -45,8 +46,6 @@ const billingModelConstants = {
   customerCloudSubscription: 'Customer cloud subscription',
   standardText: 'Deploy in cloud provider accounts owned by Red Hat.',
   customerCloudSubscriptionText: 'Leverage your existing cloud provider discounts and settings.',
-  resourceRequirementsLink: 'https://www.openshift.com/dedicated/ccs',
-  scpDocumentationLink: 'https://www.openshift.com/dedicated/ccs',
   awsCredentialsWarning: 'Revoking these credentials in AWS will result in a loss of access to any cluster created with these credentials.',
 };
 

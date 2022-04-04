@@ -158,7 +158,7 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                 <Text
                   component="p"
                 >
-                  <DownloadAndOSSelection
+                  <Connect(DownloadAndOSSelection)
                     channel="stable"
                     pendoID="/"
                     token={

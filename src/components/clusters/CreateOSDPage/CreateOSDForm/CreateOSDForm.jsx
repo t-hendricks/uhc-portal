@@ -17,7 +17,7 @@ import CustomerManagedEncryption from './FormSections/EncryptionSection/Customer
 import { constants } from './CreateOSDFormConstants';
 
 import UpgradeSettingsFields from '../../common/Upgrades/UpgradeSettingsFields';
-import links from '../../../../common/installLinks';
+import links from '../../../../common/installLinks.mjs';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { required, validateGCPServiceAccount } from '../../../../common/validators';
 
@@ -191,7 +191,7 @@ class CreateOSDForm extends React.Component {
             <GridItem md={6}>
               Before creating the cluster, review all the prerequisites in
               {' '}
-              <ExternalLink href="https://www.openshift.com/dedicated/ccs">the documentation.</ExternalLink>
+              <ExternalLink href={links.OSD_CCS_AWS}>the documentation.</ExternalLink>
               {' '}
             </GridItem>
             <GridItem md={6} />
@@ -214,7 +214,7 @@ class CreateOSDForm extends React.Component {
                   {' '}
                   that meets
                   {' '}
-                  <ExternalLink href="https://www.openshift.com/dedicated/ccs">these requirements.</ExternalLink>
+                  <ExternalLink href={links.OSD_CCS_GCP_SCP}>these requirements.</ExternalLink>
                   {' '}
                   Create a key for that service account, export to a file named
                   {' '}

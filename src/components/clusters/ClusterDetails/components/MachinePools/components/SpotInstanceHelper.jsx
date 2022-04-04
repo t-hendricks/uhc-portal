@@ -1,6 +1,6 @@
 import React from 'react';
 import InfoCircleIcon from '@patternfly/react-icons/dist/js/icons/info-circle-icon';
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../../common/installLinks.mjs';
 import ExternalLink from '../../../../../common/ExternalLink';
 
 const isMachinePoolUsingSpotInstances = (machinePoolId, machinePoolsList) => {

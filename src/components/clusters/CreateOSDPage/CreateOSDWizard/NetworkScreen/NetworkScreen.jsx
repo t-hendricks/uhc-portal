@@ -13,7 +13,8 @@ import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../../../common/ExternalLink';
-import links from '../../../../../common/installLinks';
+import links from '../../../../../common/installLinks.mjs';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 function NetworkScreen(props) {
   const {
@@ -24,7 +25,14 @@ function NetworkScreen(props) {
     cloudProviderID,
     privateLinkSelected,
     forcePrivateLink,
+    configureProxySelected,
+    product,
+    isByoc,
   } = props;
+
+  const { OSD, OSDTrial } = normalizedProducts;
+
+  const showConfigureProxy = isByoc && (product === OSD || product === OSDTrial);
 
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
@@ -42,6 +50,15 @@ function NetworkScreen(props) {
     change('install_to_vpc', true);
     change('use_privatelink', true);
   }
+
+  const onClusterProxyChange = (checked) => {
+    change('configure_proxy', checked);
+    if (checked) {
+      change('install_to_vpc', true);
+    }
+  };
+
+  const privateLinkAndClusterSelected = privateLinkSelected && privateClusterSelected;
 
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
@@ -143,26 +160,41 @@ function NetworkScreen(props) {
                   component={ReduxCheckbox}
                   name="install_to_vpc"
                   label="Install into an existing VPC"
-                  isDisabled={privateLinkSelected && privateClusterSelected}
+                  isDisabled={(privateLinkAndClusterSelected || configureProxySelected)}
                 />
-                {privateClusterSelected && cloudProviderID === 'aws' && (
-                  <FormFieldGroup>
-                    <FormGroup>
-                      <Field
-                        component={ReduxCheckbox}
-                        name="use_privatelink"
-                        label="Use a PrivateLink"
-                        onChange={onPrivateLinkChange}
-                        isDisabled={forcePrivateLink && privateClusterSelected}
-                        helpText={(
-                          <>
-                            {constants.privateLinkHint}
-                          </>
-                        )}
-                      />
-                    </FormGroup>
-                  </FormFieldGroup>
-                )}
+                <FormFieldGroup>
+                  {privateClusterSelected && cloudProviderID === 'aws' && (
+                  <FormGroup>
+                    <Field
+                      component={ReduxCheckbox}
+                      name="use_privatelink"
+                      label="Use a PrivateLink"
+                      onChange={onPrivateLinkChange}
+                      isDisabled={forcePrivateLink && privateClusterSelected}
+                      helpText={(
+                        <>
+                          {constants.privateLinkHint}
+                        </>
+                      )}
+                    />
+                  </FormGroup>
+                  )}
+                  {showConfigureProxy && (
+                  <FormGroup>
+                    <Field
+                      component={ReduxCheckbox}
+                      name="configure_cluster_proxy"
+                      label="Configure a cluster-wide proxy"
+                      onChange={onClusterProxyChange}
+                      helpText={(
+                        <>
+                          {constants.clusterProxyHint}
+                        </>
+                      )}
+                    />
+                  </FormGroup>
+                  )}
+                </FormFieldGroup>
               </FormGroup>
             </GridItem>
           </>
@@ -180,6 +212,9 @@ NetworkScreen.propTypes = {
   showVPCCheckbox: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
   forcePrivateLink: PropTypes.bool,
+  configureProxySelected: PropTypes.bool,
+  product: PropTypes.string,
+  isByoc: PropTypes.bool,
 };
 
 export default NetworkScreen;

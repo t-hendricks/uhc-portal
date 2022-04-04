@@ -26,7 +26,7 @@ import {
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../../common/installLinks.mjs';
 import {
   IDPTypeNames, getOauthCallbackURL, IDPNeedsOAuthURL, IDPformValues,
 } from '../../IdentityProvidersPage/IdentityProvidersHelper';
