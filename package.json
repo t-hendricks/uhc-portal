@@ -42,7 +42,6 @@
     "jsonschema": "^1.2.10",
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
-    "netmask": "^1.0.6",
     "openshift-assisted-ui-lib": "2.3.5",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
@@ -133,7 +132,8 @@
   },
   "resolutions": {
     "is-in-subnet": "3.1.0",
-    "jsprim": "1.4.2"
+    "jsprim": "1.4.2",
+    "multicast-dns":"7.2.3"
   },
   "jest": {
     "verbose": true,
