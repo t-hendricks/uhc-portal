@@ -293,7 +293,7 @@ class Tokens extends React.Component {
     const { show, showPath } = this.props;
     return show ? this.tokenDetails() : (
       <Link to={showPath}>
-        <Button variant="primary" onClick={() => loadOfflineToken(this.onLoad)}>
+        <Button variant="primary" onClick={() => loadOfflineToken(this.onLoad, this.onError)}>
           Load token
         </Button>
       </Link>
