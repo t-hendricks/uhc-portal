@@ -25,7 +25,6 @@ import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import { viewConstants } from '../../../redux/constants';
 import {
-  enableRuleInsights,
   fetchClusterInsights,
 } from './components/Insights/InsightsActions';
 import { getMachinePools, clearGetMachinePoolsResponse } from './components/MachinePools/MachinePoolsActions';
@@ -94,7 +93,6 @@ const mapStateToProps = (state, { location }) => {
 const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   fetchDetails: fetchClusterDetails,
   fetchClusterInsights,
-  enableRule: enableRuleInsights,
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getOrganizationAndQuota: userActions.getOrganizationAndQuota,
   invalidateClusters,
