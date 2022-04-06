@@ -86,7 +86,7 @@ function OCMRoleScreen() {
                   </GridItem>
                 </Grid>
                 <Title headingLevel="h3">
-                  Make sure to associate the OCM role with your red hat account
+                  Make sure to associate the OCM role with your red hat organization
                 </Title>
                 <Text component={TextVariants.p}>
                   If not yet linked, run the following command to associate the OCM role with your AWS account.

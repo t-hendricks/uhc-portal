@@ -55,7 +55,7 @@ function UserRoleScreen() {
                   </GridItem>
                 </Grid>
                 <Title headingLevel="h3">
-                  Make sure to associate the OCM role with your red hat account
+                  Make sure to associate the User role with your red hat account
                 </Title>
                 <Text component={TextVariants.p}>
                   {/* eslint-disable-next-line max-len */}
