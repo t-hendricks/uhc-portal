@@ -104,26 +104,6 @@ describe('<ClusterDetails />', () => {
     });
   });
 
-  describe('OCP cluster', () => {
-    const functions = funcs();
-    const props = {
-      ...fixtures,
-      ...functions,
-      clusterDetails: { ...fixtures.OCPClusterDetails },
-      hasIssuesInsights: true,
-    };
-    const wrapper = shallow(<ClusterDetails {...props} />);
-
-    it('should get on-demand metrics', () => {
-      expect(functions.getOnDemandMetrics)
-        .toBeCalledWith(fixtures.OCPClusterDetails.cluster.subscription.id);
-    });
-
-    it('should not show Insights Advisor tab', () => {
-      expect(wrapper.find('TabsRow').props().displayInsightsTab).toBe(false);
-    });
-  });
-
   describe('ARO cluster', () => {
     const functions = funcs();
     const props = {
@@ -274,7 +254,6 @@ describe('<ClusterDetails />', () => {
       expect(osdWrapper.find('TabsRow').props().displayAccessControlTab).toBe(false);
       expect(osdWrapper.find('TabsRow').props().displayAddOnsTab).toBe(false);
       expect(osdWrapper.find('TabsRow').props().displayNetworkingTab).toBe(false);
-      expect(osdWrapper.find('TabsRow').props().displayInsightsTab).toBe(false);
       expect(osdWrapper.find('TabsRow').props().displayMachinePoolsTab).toBe(false);
       expect(osdWrapper.find('TabsRow').props().displayUpgradeSettingsTab).toBe(false);
       expect(osdWrapper.find('TabsRow').props().displayAddAssistedHosts).toBe(false);
@@ -314,7 +293,6 @@ describe('<ClusterDetails />', () => {
       expect(ocpWrapper.find('TabsRow').props().displayAccessControlTab).toBe(false);
       expect(ocpWrapper.find('TabsRow').props().displayAddOnsTab).toBe(false);
       expect(ocpWrapper.find('TabsRow').props().displayNetworkingTab).toBe(false);
-      expect(ocpWrapper.find('TabsRow').props().displayInsightsTab).toBe(false);
       expect(ocpWrapper.find('TabsRow').props().displayMachinePoolsTab).toBe(false);
       expect(ocpWrapper.find('TabsRow').props().displayUpgradeSettingsTab).toBe(false);
       expect(ocpWrapper.find('TabsRow').props().displayAddAssistedHosts).toBe(false);
