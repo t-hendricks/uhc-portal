@@ -17,6 +17,7 @@ import ErrorModal from '../../../common/ErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
 import { shouldRefetchQuota } from '../../../../common/helpers';
+import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
 import MachinePoolScreen from '../../CreateOSDPage/CreateOSDWizard/MachinePoolScreen';
@@ -27,7 +28,7 @@ import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
 import ReviewClusterScreen from '../../CreateOSDPage/CreateOSDWizard/ReviewClusterScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
-import LeaveCreateClusterModal from '../../common/LeaveCreateClusterModal';
+import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
 
 import './createROSAWizard.scss';
 import AccountsRolesScreen from './AccountsRolesScreen';
@@ -39,7 +40,6 @@ import { persistor } from '../../../../redux/store';
 class CreateROSAWizardInternal extends React.Component {
   state = {
     stepIdReached: 1,
-    isLeaveClusterModalOpen: false,
   }
 
   componentDidMount() {
@@ -102,7 +102,7 @@ class CreateROSAWizardInternal extends React.Component {
       history,
       privateLinkSelected,
     } = this.props;
-    const { stepIdReached, isLeaveClusterModalOpen } = this.state;
+    const { stepIdReached } = this.state;
 
     const steps = [
       {
@@ -334,16 +334,11 @@ class CreateROSAWizardInternal extends React.Component {
                 onNext={this.onNext}
                 onBack={this.onBack}
                 onGoToStep={this.onGoToStep}
-                onClose={() => this.setState({ isLeaveClusterModalOpen: true })}
+                onClose={() => history.push('/')}
               />
             </PersistGate>
           </div>
         </PageSection>
-        <LeaveCreateClusterModal
-          isOpen={isLeaveClusterModalOpen}
-          onSubmit={() => history.push('/create/cloud')}
-          onCancel={() => this.setState({ isLeaveClusterModalOpen: false })}
-        />
       </>
     );
   }
@@ -353,17 +348,13 @@ function CreateROSAWizard(props) {
   const { getIsTouched } = props;
   const isFormTouched = getIsTouched();
 
-  // Trigger default browser confirmation dialogs when the form has been touched.
-  React.useEffect(() => {
-    if (isFormTouched) {
-      window.onbeforeunload = () => true;
-    } else {
-      window.onbeforeunload = null;
-    }
-  }, [isFormTouched]);
+  usePreventBrowserNav(isFormTouched);
 
   return (
-    <CreateROSAWizardInternal {...props} />
+    <>
+      <CreateROSAWizardInternal {...props} />
+      <LeaveCreateClusterPrompt when={isFormTouched} />
+    </>
   );
 }
 
