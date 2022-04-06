@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import {
-  isValid, reset, formValueSelector, getFormValues, getFormMeta,
+  isValid, reset, formValueSelector, getFormValues,
 } from 'redux-form';
 import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
@@ -29,12 +29,6 @@ const mapStateToProps = (state) => {
     organization,
     cloudProviders: state.cloudProviders,
     hasProductQuota: hasManagedQuotaSelector(state, normalizedProducts.ROSA),
-    getIsTouched: () => {
-      // Metadata is only updated when the user interacts with the form,
-      // so it is used here to indicate a touched state.
-      const formMeta = getFormMeta('CreateCluster')(state);
-      return Object.keys(formMeta).length > 0;
-    },
   });
 };
 

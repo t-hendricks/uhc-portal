@@ -345,15 +345,12 @@ class CreateROSAWizardInternal extends React.Component {
 }
 
 function CreateROSAWizard(props) {
-  const { getIsTouched } = props;
-  const isFormTouched = getIsTouched();
-
-  usePreventBrowserNav(isFormTouched);
+  usePreventBrowserNav();
 
   return (
     <>
       <CreateROSAWizardInternal {...props} />
-      <LeaveCreateClusterPrompt when={isFormTouched} />
+      <LeaveCreateClusterPrompt />
     </>
   );
 }
@@ -363,10 +360,6 @@ const requestStatePropTypes = PropTypes.shape({
   error: PropTypes.bool,
   pending: PropTypes.bool,
 });
-
-CreateROSAWizard.propTypes = {
-  getIsTouched: PropTypes.func,
-};
 
 CreateROSAWizardInternal.propTypes = {
   isValid: PropTypes.bool,

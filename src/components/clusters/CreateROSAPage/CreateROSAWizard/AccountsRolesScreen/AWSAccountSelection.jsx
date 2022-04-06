@@ -92,6 +92,9 @@ function AWSAccountSelection({
     setIsOpen(false);
     // will cause window reload on first time
     loadOfflineToken(onLoad, onError);
+
+    // Reset window onbeforeunload event so a browser confirmation dialog do not appear.
+    window.onbeforeunload = null;
   };
 
   const footer = () => (

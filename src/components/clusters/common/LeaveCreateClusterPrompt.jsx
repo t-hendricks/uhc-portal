@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 
-function LeaveCreateClusterPrompt({ when }) {
+function LeaveCreateClusterPrompt({ when = true }) {
   const history = useHistory();
   const unblockHistory = () => history.block(() => {});
 

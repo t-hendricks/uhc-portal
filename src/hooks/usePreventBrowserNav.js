@@ -5,9 +5,9 @@ import React from 'react';
  * is to be unloaded and show browser prompts when that condition is true.
  * https://github.com/remix-run/history/blob/main/docs/blocking-transitions.md#caveats
  *
- * @param {Boolean} when condition in which the confirmation dialog should appear.
+ * @param {Boolean} when condition in which the confirmation dialog should appear. Defaults to true.
  */
-function usePreventBrowserNav(when) {
+function usePreventBrowserNav(when = true) {
   // Trigger browser confirmation dialogs when the form has been touched.
   React.useEffect(() => {
     if (when) {
