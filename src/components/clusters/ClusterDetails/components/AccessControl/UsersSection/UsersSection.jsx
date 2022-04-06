@@ -15,7 +15,7 @@ import {
 
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../../common/installLinks.mjs';
 import ErrorBox from '../../../../../common/ErrorBox';
 import ExternalLink from '../../../../../common/ExternalLink';
 import ButtonWithTooltip from '../../../../../common/ButtonWithTooltip';

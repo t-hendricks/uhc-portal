@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import { Redirect } from 'react-router';
 
 import {
@@ -29,6 +28,7 @@ import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
 import ReviewClusterScreen from '../../CreateOSDPage/CreateOSDWizard/ReviewClusterScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
+import LeaveCreateClusterModal from '../../common/LeaveCreateClusterModal';
 
 import './createROSAWizard.scss';
 import AccountsRolesScreen from './AccountsRolesScreen';
@@ -40,6 +40,7 @@ import { persistor } from '../../../../redux/store';
 class CreateROSAWizard extends React.Component {
   state = {
     stepIdReached: 1,
+    isLeaveClusterModalOpen: false,
   }
 
   componentDidMount() {
@@ -103,7 +104,7 @@ class CreateROSAWizard extends React.Component {
       privateLinkSelected,
       configureProxySelected,
     } = this.props;
-    const { stepIdReached } = this.state;
+    const { stepIdReached, isLeaveClusterModalOpen } = this.state;
 
     const steps = [
       {
@@ -158,6 +159,7 @@ class CreateROSAWizard extends React.Component {
                   cloudProviderID={cloudProviderID}
                   showClusterPrivacy
                   showVPCCheckbox
+                  showClusterWideProxyCheckbox
                   privateLinkSelected={privateLinkSelected}
                   forcePrivateLink
                 />
@@ -346,13 +348,16 @@ class CreateROSAWizard extends React.Component {
                 onNext={this.onNext}
                 onBack={this.onBack}
                 onGoToStep={this.onGoToStep}
-                onClose={() => {
-                  history.push('/create/cloud');
-                }}
+                onClose={() => this.setState({ isLeaveClusterModalOpen: true })}
               />
             </PersistGate>
           </div>
         </PageSection>
+        <LeaveCreateClusterModal
+          isOpen={isLeaveClusterModalOpen}
+          onSubmit={() => history.push('/create/cloud')}
+          onCancel={() => this.setState({ isLeaveClusterModalOpen: false })}
+        />
       </>
     );
   }

@@ -5,7 +5,7 @@ import {
 
 import PropTypes from 'prop-types';
 import DownloadAndOSSelection from './DownloadAndOSSelection';
-import { tools, channels } from '../../../../../common/installLinks';
+import { tools, channels } from '../../../../../common/installLinks.mjs';
 
 const CLISection = ({
   token, pendoID, channel, isBMIPI = false,

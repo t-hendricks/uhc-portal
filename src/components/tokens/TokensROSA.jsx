@@ -24,7 +24,7 @@ import {
 } from '@patternfly/react-core';
 import ExternalLink from '../common/ExternalLink';
 import Tokens from './Tokens';
-import links, { tools } from '../../common/installLinks';
+import links, { tools } from '../../common/installLinks.mjs';
 
 // The <TokensROSA> component inherits from the <Tokens> component. This may
 // cause breakage if ever we change the <Tokens> component heavily, but in the

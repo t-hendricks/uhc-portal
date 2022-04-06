@@ -13,7 +13,8 @@ import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../../../common/ExternalLink';
-import links from '../../../../../common/installLinks';
+import links from '../../../../../common/installLinks.mjs';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 function NetworkScreen(props) {
   const {
@@ -21,14 +22,21 @@ function NetworkScreen(props) {
     privateClusterSelected,
     showClusterPrivacy,
     showVPCCheckbox,
+    showClusterWideProxyCheckbox,
     cloudProviderID,
     privateLinkSelected,
     forcePrivateLink,
     configureProxySelected,
     isByoc,
+    product,
   } = props;
 
-  const showConfigureProxy = isByoc;
+  const { OSD, OSDTrial } = normalizedProducts;
+  const isByocOSD = isByoc && [OSD, OSDTrial].includes(product);
+  // show only if the product is ROSA with VPC or BYOC/CCS OSD with VPC
+  // Do not need to check for VPC here, since checking the "Configure a cluster-wide proxy" checkbox
+  // automatically checks the "Install into an existing VPC" checkbox in the UI
+  const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
 
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
@@ -206,10 +214,12 @@ NetworkScreen.propTypes = {
   cloudProviderID: PropTypes.string,
   showClusterPrivacy: PropTypes.bool,
   showVPCCheckbox: PropTypes.bool,
+  showClusterWideProxyCheckbox: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
   forcePrivateLink: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
   isByoc: PropTypes.bool,
+  product: PropTypes.string,
 };
 
 export default NetworkScreen;

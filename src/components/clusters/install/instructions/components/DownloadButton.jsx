@@ -5,7 +5,7 @@ import {
 } from '@patternfly/react-core';
 
 import { trackPendo } from '../../../../../common/helpers';
-import { tools } from '../../../../../common/installLinks';
+import { tools } from '../../../../../common/installLinks.mjs';
 
 const texts = {
   [tools.CRC]: 'Download CodeReady Containers',

@@ -8,7 +8,7 @@ import {
 
 import {
   tools, channels, operatingSystems, urlsSelector, githubReleasesToFetch,
-} from '../../../../../../common/installLinks';
+} from '../../../../../../common/installLinks.mjs';
 import {
   detectOS,
   downloadChoice,

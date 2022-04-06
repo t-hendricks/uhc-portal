@@ -3,7 +3,7 @@ import {
   Alert,
 } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
-import links from '../../../../../common/installLinks';
+import links from '../../../../../common/installLinks.mjs';
 
 function EvaluationAlert() {
   const title = 'New clusters are automatically registered with a 60-day evaluation subscription.';

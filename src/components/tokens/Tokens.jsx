@@ -38,7 +38,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import links, { tools, channels } from '../../common/installLinks';
+import links, { tools, channels } from '../../common/installLinks.mjs';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
 import DevPreviewBadge from '../common/DevPreviewBadge';
@@ -293,7 +293,7 @@ class Tokens extends React.Component {
     const { show, showPath } = this.props;
     return show ? this.tokenDetails() : (
       <Link to={showPath}>
-        <Button variant="primary" onClick={() => loadOfflineToken(this.onLoad)}>
+        <Button variant="primary" onClick={() => loadOfflineToken(this.onLoad, this.onError)}>
           Load token
         </Button>
       </Link>

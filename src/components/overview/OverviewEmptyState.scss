@@ -1,3 +1,44 @@
+@import '~@patternfly/patternfly/sass-utilities/_all';
+
+$ocm-c-marketing-banner--breakpoint-map: build-breakpoint-map();
+
+.ocm-c-marketing-banner {
+  --ocm-m-marketing-page--RowGap: var(--pf-global--spacer--xl);
+  --ocm-m-marketing-page--ColumnGap: var(--pf-global--spacer--xl);
+  --ocm-m-marketing-page--section--PaddingTop: var(--pf-global--spacer--xl);
+  --ocm-m-marketing-page--section--PaddingRight: var(--pf-global--spacer--2xl);
+  --ocm-m-marketing-page--section--PaddingBottom: var(--pf-global--spacer--xl);
+  --ocm-m-marketing-page--section--PaddingLeft: var(--pf-global--spacer--2xl);
+
+  .ocm-l-autofit {
+    --ocm-l-autofit--m-gutter--RowGap: var(--ins-m-marketing-page--RowGap);
+    --ocm-l-autofit--m-gutter--ColumnGap: var(--ins-m-marketing-page--ColumnGap);
+  }
+
+  .pf-c-page__main-section {
+    --pf-c-page__main-section--PaddingTop: var(--ins-m-marketing-page--section--PaddingTop);
+    --pf-c-page__main-section--PaddingRight: var(--ins-m-marketing-page--section--PaddingRight);
+    --pf-c-page__main-section--PaddingBottom: var(--ins-m-marketing-page--section--PaddingBottom);
+    --pf-c-page__main-section--PaddingLeft: var(--ins-m-marketing-page--section--PaddingLeft);
+  }
+
+  .ocm-c-marketing-banner {
+    --ocm-c-marketing-banner--PaddingTop: var(--pf-global--spacer--2xl);
+    --ocm-c-marketing-banner--PaddingBottom: var(--pf-global--spacer--2xl);
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .pf-l-grid {
+    --pf-l-grid--m-gutter--GridGap: var(--pf-global--spacer--xl);
+  }
+}
+
+
+
 .dashboard-emptystate-card .pf-c-card__body {
   a {
     display: block;
@@ -39,46 +80,6 @@
       @media (min-width: 1023px) {
       margin-right: var(--pf-global--spacer--lg);
     }
-  }
-}
-
-#overview-emptystate-bg-img-container {
-  margin-top: calc(var(--pf-c-page__main-section--PaddingTop) * -1);
-  margin-right: calc(var(--pf-c-page__main-section--PaddingRight) * -1);
-  margin-left: calc(var(--pf-c-page__main-section--PaddingLeft) * -1);
-  height: 418px;
-  background: url('../../styles/images/Headers-Red_Hat-ClusterManager-O2.svg');
-  background-position-x: right;
-  background-repeat: no-repeat;
-  background-color: black;
-  h1 {
-    top: 25%;
-    position: relative;
-    color: #fff;
-  }
-  h2 {
-    top: 35%;
-    position: relative;
-    color: #f0f0f0;
-  }
-  a {
-    top: 45%;
-    position: relative;
-    display: block;
-    text-decoration: none;
-  }
-  span {
-    background-color: #fff;
-    color: #000000;
-    font-size: var(--pf-global--FontSize--md);
-    font-weight: 700;
-    width: 250px;
-    height: 72px;
-    padding-top: var(--pf-global--spacer--md);
-    padding-bottom: var(--pf-global--spacer--md);
-    padding-right: var(--pf-global--spacer--lg);
-    padding-left: var(--pf-global--spacer--lg);
-    border-radius: 4px;
   }
 }
 

@@ -10,7 +10,7 @@ import ReduxCheckbox from '../../../../../../common/ReduxFormComponents/ReduxChe
 import RadioButtons from '../../../../../../common/ReduxFormComponents/RadioButtons';
 import ExternalLink from '../../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../../common/PopoverHint';
-import links from '../../../../../../../common/installLinks';
+import links from '../../../../../../../common/installLinks.mjs';
 
 class CostSavingSection extends React.Component {
   state = {};
