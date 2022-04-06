@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 
 import {
   Alert,
@@ -31,6 +32,7 @@ function ClusterRolesScreen({
   getOCMRole,
   getOCMRoleResponse,
   clearGetOcmRoleResponse,
+  clusterName,
 }) {
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
@@ -77,10 +79,50 @@ function ClusterRolesScreen({
     getOCMRole(awsAccountID);
   };
 
+  const EnableAutoModeTip = (
+    <Alert
+      className="pf-u-ml-lg"
+      variant="info"
+      isInline
+      isExpandable
+      title="If you would like to enable auto mode, expand the alert and follow the steps below."
+    >
+      <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
+        <TextListItem className="pf-u-mb-sm">
+          <Text component={TextVariants.p} className="pf-u-mb-sm">
+            Create the Admin OCM role using the following command in the ROSA CLI.
+          </Text>
+          <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role command">
+            rosa create ocm-role --admin
+          </InstructionCommand>
+        </TextListItem>
+        <TextListItem className="pf-u-mb-sm">
+          <Text component={TextVariants.p} className="pf-u-mb-sm">
+            {/* eslint-disable-next-line max-len */}
+            If not yet linked, run the following command to associate the OCM role with your AWS account.
+          </Text>
+          <InstructionCommand textAriaLabel="Copyable ROSA link ocm-role command">
+            rosa link ocm-role &lt;arn&gt;
+          </InstructionCommand>
+        </TextListItem>
+        <TextListItem>
+          <Text component={TextVariants.p} className="pf-u-mb-sm">
+            After running the command, you may need to refresh using the button below to
+            enable auto mode.
+          </Text>
+          <Button onClick={handleRefresh} variant="secondary">
+            Refresh to enable auto mode
+          </Button>
+        </TextListItem>
+      </TextList>
+    </Alert>
+  );
+
   const roleModes = {
     MANUAL: 'manual',
     AUTO: 'auto',
   };
+
   const roleModeOptions = [
     {
       value: roleModes.MANUAL,
@@ -92,6 +134,7 @@ function ClusterRolesScreen({
       value: roleModes.AUTO,
       label: 'Auto',
       description: 'Auto mode will immediately create the necessary cluster operator roles and OIDC provider. This mode requires that you provided an admin privileged role.',
+      extraField: getOCMRoleResponse.fulfilled && !isAutoModeAvailable && EnableAutoModeTip,
     },
   ];
   return (
@@ -108,65 +151,34 @@ function ClusterRolesScreen({
             <ExternalLink href="#">Learn more about ROSA roles.</ExternalLink>
           </Text>
         </GridItem>
-        {!isAutoModeAvailable && (
-          <GridItem xl2={8}>
-            <Alert
-              variant="info"
-              isInline
-              isExpandable
-              title="If you would like to enable auto mode expand the alert and follow the steps below."
-            >
-              <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
-                <TextListItem className="pf-u-mb-sm">
-                  <Text component={TextVariants.p} className="pf-u-mb-sm">
-                    Create the Admin OCM role using the following command in the ROSA CLI.
-                  </Text>
-                  <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role command">
-                    rosa create ocm-role --admin
-                  </InstructionCommand>
-                </TextListItem>
-                <TextListItem className="pf-u-mb-sm">
-                  <Text component={TextVariants.p} className="pf-u-mb-sm">
-                    {/* eslint-disable-next-line max-len */}
-                    If not yet linked, run the following command to associate the OCM role with your AWS account.
-                  </Text>
-                  <InstructionCommand textAriaLabel="Copyable ROSA link ocm-role command">
-                    rosa link ocm-role &lt;arn&gt;
-                  </InstructionCommand>
-                </TextListItem>
-                <TextListItem>
-                  <Text component={TextVariants.p} className="pf-u-mb-sm">
-                    After running the command you may need to refresh using the button below to
-                    enable auto mode.
-                  </Text>
-                  <Button onClick={handleRefresh} variant="secondary">
-                    Refresh to enable auto mode
-                  </Button>
-                </TextListItem>
-              </TextList>
-            </Alert>
-          </GridItem>
-        )}
         {getOCMRoleErrorBox && (
           <GridItem>
             { getOCMRoleErrorBox }
           </GridItem>
         )}
-        <GridItem xl2={8}>
-          <FormGroup
-            isRequired
-            fieldId="role_mode"
-          >
-            <Field
-              component={RadioButtons}
-              name="rosa_roles_provider_creation_mode"
-              className="radio-button"
-              disabled={getOCMRoleResponse.pending}
-              options={roleModeOptions}
-              defaultValue={roleModes.MANUAL}
-            />
-          </FormGroup>
-        </GridItem>
+        {getOCMRoleResponse.pending && (
+          <GridItem>
+            <div className="spinner-fit-container"><Spinner /></div>
+            <div className="spinner-loading-text pf-u-ml-xl">Checking for admin OCM role...</div>
+          </GridItem>
+        )}
+        {getOCMRoleResponse.fulfilled && (
+          <GridItem xl2={10}>
+            <FormGroup
+              isRequired
+              fieldId="role_mode"
+            >
+              <Field
+                component={RadioButtons}
+                name="rosa_roles_provider_creation_mode"
+                className="radio-button"
+                disabled={getOCMRoleResponse.pending}
+                options={roleModeOptions}
+                defaultValue={roleModes.MANUAL}
+              />
+            </FormGroup>
+          </GridItem>
+        )}
         <GridItem>
           <Title headingLevel="h3">Name operator roles</Title>
         </GridItem>
@@ -176,12 +188,13 @@ function ClusterRolesScreen({
             Optionally add a prefix to this naming scheme.
           </Text>
         </GridItem>
-        <GridItem md={6} xl2={5}>
+        <GridItem md={4} xl2={3}>
           <Field
             component={ReduxVerticalFormGroup}
             name="custom_operator_roles_prefix"
             label="Custom operator roles prefix"
             type="text"
+            inputPrefix={`${clusterName}-`}
             validate={validators.checkCustomOperatorRolesPrefix}
             // disabled={pending}
             helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.`}
@@ -202,6 +215,7 @@ ClusterRolesScreen.propTypes = {
   getOCMRole: PropTypes.func.isRequired,
   getOCMRoleResponse: PropTypes.func.isRequired,
   clearGetOcmRoleResponse: PropTypes.func.isRequired,
+  clusterName: PropTypes.string,
 };
 
 export default ClusterRolesScreen;
