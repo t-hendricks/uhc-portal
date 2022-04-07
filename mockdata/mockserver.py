@@ -21,7 +21,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     # But our APIs generally treat 'foos/?...' same as 'foos?...',
     # and we prefer 'foos.json' files to ugly 'foos/.json', so strip it.
     path = super().translate_path(path).rstrip('/') + '.json'
-    path = path.replace('/openshift_api', '')
+    # Strip prefixes here because wasn't sure how to strip them with insights-proxy.
+    path = path.replace('mockdata/openshift_api', 'mockdata')
+    path = path.replace('mockdata/mockdata', 'mockdata')
     print('Accessing ' + path)
     return path
 
@@ -34,7 +36,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     try:
       f = open(path, 'r')
     except OSError:
-      self.send_error(404, "File not found")
+      self.send_error(404, "File not found: %s" % path)
       return
   
     try:
