@@ -163,7 +163,7 @@ class CreateOSDWizardInternal extends React.Component {
         component: (
           <ErrorBoundary>
             <Grid>
-              <BillingModelScreen isWizard isTrialDefault={isTrialDefault} />
+              <BillingModelScreen isTrialDefault={isTrialDefault} />
             </Grid>
           </ErrorBoundary>
         ),

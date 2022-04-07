@@ -12,18 +12,19 @@ import {
 
 import BillingModelSection from './BillingModelSection';
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
 
-  const { cloudProviderID, isWizard } = ownProps;
   const { STANDARD, MARKETPLACE } = billingModels;
   const { OSD, OSDTrial } = normalizedProducts;
 
   const product = valueSelector(state, 'product');
 
-  const queryCloudProvider = isWizard ? 'any' : cloudProviderID;
-
   const quotaQuery = params => availableQuota(state.userProfile.organization.quotaList, params) > 0;
+
+  // calculate marketplace quota for OSD even if OSDTrial was selected
+  // since there is no OSDTrial on RHM
+  const productForMarketplace = OSD;
 
   return {
     product,
@@ -37,17 +38,9 @@ const mapStateToProps = (state, ownProps) => {
       product: OSD,
       billingModel: STANDARD,
     }),
-    hasMarketplaceQuota: quotaQuery({
-      resourceType: quotaTypes.CLUSTER,
-      // calculate marketplace quota for OSD even if OSDTrial was selected
-      // since there is no OSDTrial on RHM
-      product: OSD,
-      billingModel: MARKETPLACE,
-    }),
     hasBYOCquota: quotaQuery(
       {
         resourceType: quotaTypes.CLUSTER,
-        cloudProviderID: queryCloudProvider,
         billingModel: STANDARD,
         product,
         isBYOC: true,
@@ -56,27 +49,30 @@ const mapStateToProps = (state, ownProps) => {
     hasRhInfraQuota: quotaQuery(
       {
         resourceType: quotaTypes.CLUSTER,
-        cloudProviderID: queryCloudProvider,
         billingModel: STANDARD,
         product,
         isBYOC: false,
       },
     ),
+
+    hasMarketplaceQuota: quotaQuery({
+      resourceType: quotaTypes.CLUSTER,
+      product: productForMarketplace,
+      billingModel: MARKETPLACE,
+    }),
     hasMarketplaceBYOCQuota: quotaQuery(
       {
         resourceType: quotaTypes.CLUSTER,
-        cloudProviderID: queryCloudProvider,
         billingModel: MARKETPLACE,
-        product: OSD,
+        product: productForMarketplace,
         isBYOC: true,
       },
     ),
     hasMarketplaceRhInfraQuota: quotaQuery(
       {
         resourceType: quotaTypes.CLUSTER,
-        cloudProviderID: queryCloudProvider,
         billingModel: MARKETPLACE,
-        product: OSD,
+        product: productForMarketplace,
         isBYOC: false,
       },
     ),

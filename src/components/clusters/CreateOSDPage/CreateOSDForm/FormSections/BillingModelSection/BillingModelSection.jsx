@@ -22,7 +22,6 @@ import { normalizedProducts, billingModels } from '../../../../../../common/subs
 
 import CreateOSDWizardIntro from '../../../../../../styles/images/CreateOSDWizard-intro.png';
 
-import BillingModelRadioButtons from './BillingModelRadioButtons';
 import { getNodesCount, getMinReplicasCount } from '../ScaleSection/AutoScaleSection/AutoScaleHelper';
 
 function BillingModelSection({
@@ -32,14 +31,11 @@ function BillingModelSection({
   hasMarketplaceBYOCQuota,
   hasMarketplaceRhInfraQuota,
   hasMarketplaceQuota,
-  toggleBYOCFields,
-  byocSelected = false,
   showOSDTrial,
   pending,
   toggleSubscriptionBilling,
   product,
   billingModel,
-  isWizard,
   change,
   isMultiAz,
 }) {
@@ -101,13 +97,11 @@ function BillingModelSection({
     defaultBillingModel = 'standard-trial';
   }
 
-  const hasMarketplaceSubscription = hasMarketplaceBYOCQuota || hasMarketplaceRhInfraQuota;
-
   // Select marketplace billing if user only has marketplace quota
   // Also, if the selected default billing model is disabled
   // Default to marketplace
   if ((!showOSDTrial || defaultBillingModel === STANDARD)
-    && hasMarketplaceQuota && !hasStandardOSDQuota && hasMarketplaceSubscription) {
+    && hasMarketplaceQuota && !hasStandardOSDQuota) {
     defaultBillingModel = billingModels.MARKETPLACE;
   }
 
@@ -125,12 +119,12 @@ function BillingModelSection({
     let selectedProduct;
     if (value === 'standard-trial') {
       selectedProduct = normalizedProducts.OSDTrial;
-      if (isWizard) {
-        // Wizard has no byoc modal so this change must happen here
-        change('byoc', 'true');
-      }
+      // Trial only allows CCS.
+      change('byoc', 'true');
     } else {
       selectedProduct = normalizedProducts.OSD;
+      // This case also forces byoc=true, which happens elsewhere.
+      // TODO: unify both to one place.
     }
     change('product', selectedProduct);
     if (toggleSubscriptionBilling) {
@@ -166,7 +160,7 @@ function BillingModelSection({
     );
   }
 
-  const marketplaceDisabled = !(hasMarketplaceQuota && hasMarketplaceSubscription);
+  const marketplaceDisabled = !(hasMarketplaceQuota && hasMarketplaceQuota);
   subscriptionOptions.push(
     {
       disabled: marketplaceDisabled,
@@ -179,22 +173,18 @@ function BillingModelSection({
 
   return (
     <>
-      {isWizard && (
-        <>
-          <GridItem span={8}>
-            <Title headingLevel="h2" className="pf-u-pb-md">Welcome to Red Hat OpenShift Dedicated</Title>
-            <Text component="p" id="welcome-osd-text">
-              Reduce operational complexity and focus on building applications
-              that add more value to your business with Red Hat OpenShift Dedicated,
-              a fully managed service of Red Hat OpenShift on
-              Amazon Web Services (AWS) and Google Cloud.
-            </Text>
-          </GridItem>
-          <GridItem span={4}>
-            <img src={CreateOSDWizardIntro} className="ocm-c-wizard-intro-image" aria-hidden="true" alt="" />
-          </GridItem>
-        </>
-      )}
+      <GridItem span={8}>
+        <Title headingLevel="h2" className="pf-u-pb-md">Welcome to Red Hat OpenShift Dedicated</Title>
+        <Text component="p" id="welcome-osd-text">
+          Reduce operational complexity and focus on building applications
+          that add more value to your business with Red Hat OpenShift Dedicated,
+          a fully managed service of Red Hat OpenShift on
+          Amazon Web Services (AWS) and Google Cloud.
+        </Text>
+      </GridItem>
+      <GridItem span={4}>
+        <img src={CreateOSDWizardIntro} className="ocm-c-wizard-intro-image" aria-hidden="true" alt="" />
+      </GridItem>
       <GridItem>
         <Stack hasGutter>
           <StackItem>
@@ -212,7 +202,7 @@ function BillingModelSection({
                 onChange={onBillingModelChange}
                 options={subscriptionOptions}
                 defaultValue={defaultBillingModel}
-                disableDefaultValueHandling={isWizard}
+                disableDefaultValueHandling
               />
             </FormGroup>
           </StackItem>
@@ -223,39 +213,26 @@ function BillingModelSection({
               fieldId="byoc"
               className="sub-infra-billing-model"
             >
-              {isWizard
-                ? (
-                  <Field
-                    component={RadioButtons}
-                    name="byoc"
-                    className="radio-button"
-                    defaultValue={!isRhInfraQuotaDisabled ? 'false' : 'true'}
-                    disableDefaultValueHandling
-                    options={[{
-                      label: 'Customer cloud subscription',
-                      description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',
-                      value: 'true',
-                      disabled: isBYOCQuotaDisabled,
-                    },
-                    {
-                      label: 'Red Hat cloud account',
-                      description: 'Deploy in cloud provider accounts owned by Red Hat',
-                      value: 'false',
-                      disabled: isRhInfraQuotaDisabled,
-                    }]}
-                    onChange={onWizardBYOCToggle}
-                  />
-                )
-                : (
-                  <Field
-                    component={BillingModelRadioButtons}
-                    name="byoc"
-                    isBYOCQuotaDisabled={isBYOCQuotaDisabled}
-                    isRhInfraQuotaDisabled={isRhInfraQuotaDisabled}
-                    byocSelected={byocSelected}
-                    onChange={toggleBYOCFields}
-                  />
-                )}
+              <Field
+                component={RadioButtons}
+                name="byoc"
+                className="radio-button"
+                defaultValue={!isRhInfraQuotaDisabled ? 'false' : 'true'}
+                disableDefaultValueHandling
+                options={[{
+                  label: 'Customer cloud subscription',
+                  description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',
+                  value: 'true',
+                  disabled: isBYOCQuotaDisabled,
+                },
+                {
+                  label: 'Red Hat cloud account',
+                  description: 'Deploy in cloud provider accounts owned by Red Hat',
+                  value: 'false',
+                  disabled: isRhInfraQuotaDisabled,
+                }]}
+                onChange={onWizardBYOCToggle}
+              />
             </FormGroup>
           </StackItem>
         </Stack>
@@ -271,14 +248,11 @@ BillingModelSection.propTypes = {
   hasMarketplaceQuota: PropTypes.bool,
   hasMarketplaceBYOCQuota: PropTypes.bool,
   hasMarketplaceRhInfraQuota: PropTypes.bool,
-  toggleBYOCFields: PropTypes.func,
-  byocSelected: PropTypes.bool,
   showOSDTrial: PropTypes.bool,
   pending: PropTypes.bool,
   toggleSubscriptionBilling: PropTypes.func,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
-  isWizard: PropTypes.bool,
   change: PropTypes.func.isRequired,
   isMultiAz: PropTypes.bool,
 };
