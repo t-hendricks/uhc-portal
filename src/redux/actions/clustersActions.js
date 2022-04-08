@@ -302,14 +302,13 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
       const subscriptionIds = [];
       if (aiMergeListsFeatureFlag) {
         subscriptionMap.forEach(({ subscription }) => {
-          if (isAISubscriptionWithoutMetrics(subscription)) {
+          if (isAssistedInstallSubscription(subscription)) {
             subscriptionIds.push(subscription.id);
           }
         });
       }
 
       // Performing a batch request to obtain the AI clusters data.
-      // In reality we only want to retrieve their status, and only for uninstalled clusters.
       const aiClustersRequest = subscriptionIds.length === 0 ? Promise.resolve({ data: [] }) : assistedService.getAIClustersBySubscription(subscriptionIds);
       return aiClustersRequest.then((res) => {
         const aiClusters = res.data || [];
