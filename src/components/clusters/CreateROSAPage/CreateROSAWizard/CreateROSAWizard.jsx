@@ -17,6 +17,7 @@ import ErrorModal from '../../../common/ErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
 import { shouldRefetchQuota } from '../../../../common/helpers';
+import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
 import MachinePoolScreen from '../../CreateOSDPage/CreateOSDWizard/MachinePoolScreen';
@@ -28,7 +29,7 @@ import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
 import ReviewClusterScreen from '../../CreateOSDPage/CreateOSDWizard/ReviewClusterScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
-import LeaveCreateClusterModal from '../../common/LeaveCreateClusterModal';
+import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
 
 import './createROSAWizard.scss';
 import AccountsRolesScreen from './AccountsRolesScreen';
@@ -37,10 +38,9 @@ import ErrorBoundary from '../../../App/ErrorBoundary';
 
 import { persistor } from '../../../../redux/store';
 
-class CreateROSAWizard extends React.Component {
+class CreateROSAWizardInternal extends React.Component {
   state = {
     stepIdReached: 1,
-    isLeaveClusterModalOpen: false,
   }
 
   componentDidMount() {
@@ -104,7 +104,7 @@ class CreateROSAWizard extends React.Component {
       privateLinkSelected,
       configureProxySelected,
     } = this.props;
-    const { stepIdReached, isLeaveClusterModalOpen } = this.state;
+    const { stepIdReached } = this.state;
 
     const steps = [
       {
@@ -348,19 +348,25 @@ class CreateROSAWizard extends React.Component {
                 onNext={this.onNext}
                 onBack={this.onBack}
                 onGoToStep={this.onGoToStep}
-                onClose={() => this.setState({ isLeaveClusterModalOpen: true })}
+                onClose={() => history.push('/')}
               />
             </PersistGate>
           </div>
         </PageSection>
-        <LeaveCreateClusterModal
-          isOpen={isLeaveClusterModalOpen}
-          onSubmit={() => history.push('/create/cloud')}
-          onCancel={() => this.setState({ isLeaveClusterModalOpen: false })}
-        />
       </>
     );
   }
+}
+
+function CreateROSAWizard(props) {
+  usePreventBrowserNav();
+
+  return (
+    <>
+      <CreateROSAWizardInternal {...props} />
+      <LeaveCreateClusterPrompt />
+    </>
+  );
 }
 
 const requestStatePropTypes = PropTypes.shape({
@@ -369,7 +375,7 @@ const requestStatePropTypes = PropTypes.shape({
   pending: PropTypes.bool,
 });
 
-CreateROSAWizard.propTypes = {
+CreateROSAWizardInternal.propTypes = {
   isValid: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   installToVPCSelected: PropTypes.bool,

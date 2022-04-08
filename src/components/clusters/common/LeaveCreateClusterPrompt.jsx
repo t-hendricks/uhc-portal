@@ -1,0 +1,70 @@
+import React from 'react';
+import { useHistory } from 'react-router';
+import PropTypes from 'prop-types';
+import { Modal, ModalVariant, Button } from '@patternfly/react-core';
+
+function LeaveCreateClusterPrompt({ when = true }) {
+  const history = useHistory();
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [destinationPath, setDestinationPath] = React.useState('');
+
+  React.useEffect(() => {
+    let unblock;
+
+    if (when && !isOpen) {
+      // Open the prompt and capture the destination path meant to navigate to so that
+      // if the user decides to leave, we send them to the intended route.
+      unblock = history.block((location, action) => {
+        // Return to the original URL within the browser history.
+        if (action === 'POP') {
+          window.history.forward();
+        }
+
+        setDestinationPath(location.pathname);
+        setIsOpen(true);
+        return 'true';
+      });
+    } else {
+      unblock?.();
+    }
+
+    return () => {
+      unblock?.();
+    };
+  }, [history, isOpen, when]);
+
+  return isOpen ? (
+    <Modal
+      variant={ModalVariant.small}
+      title="Leave create cluster?"
+      titleIconVariant="warning"
+      isOpen={isOpen}
+      onClose={() => setIsOpen(false)}
+      actions={[
+        <Button
+          key="leave"
+          variant="primary"
+          onClick={() => history.push(destinationPath)}
+        >
+          Yes, leave
+        </Button>,
+        <Button
+          key="stay"
+          variant="link"
+          onClick={() => setIsOpen(false)}
+        >
+          No, stay
+        </Button>,
+      ]}
+    >
+      All data entered will be lost
+    </Modal>
+  ) : null;
+}
+
+LeaveCreateClusterPrompt.propTypes = {
+  /* Used to control when nav away prompt is shown. */
+  when: PropTypes.bool,
+};
+
+export default LeaveCreateClusterPrompt;
