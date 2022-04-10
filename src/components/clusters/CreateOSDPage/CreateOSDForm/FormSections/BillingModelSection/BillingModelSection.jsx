@@ -24,6 +24,8 @@ import CreateOSDWizardIntro from '../../../../../../styles/images/CreateOSDWizar
 
 import { getNodesCount, getMinReplicasCount } from '../ScaleSection/AutoScaleSection/AutoScaleHelper';
 
+import './BillingModelSection.scss';
+
 function BillingModelSection({
   hasBYOCquota,
   hasRhInfraQuota,
