@@ -9,22 +9,28 @@ import { detectOS, architecturesForToolOS } from '../../../downloads/DownloadsPa
 
 function DownloadOcCliButton() {
   // Determine the latest stable release URL for the OC CLI.
-  const githubReleases = useSelector(state => state.githubReleases);
+  const githubReleases = useSelector(state => state.githubReleases) || {};
   const urls = urlsSelector(githubReleases);
   const detectedOs = detectOS();
-  const [{ value: detectedOsArchitecture }] = architecturesForToolOS(
+  const osArchitectures = architecturesForToolOS(
     urls,
     tools.OC,
     channels.STABLE,
     detectedOs,
   );
-  const href = urls[tools.OC][channels.STABLE][detectedOsArchitecture]?.[detectedOs];
+  let detectedOsArchitecture;
+  let href;
 
-  return (
+  if (osArchitectures?.length === 1) {
+    detectedOsArchitecture = osArchitectures[0].value;
+    href = urls[tools.OC][channels.STABLE][detectedOsArchitecture][detectedOs];
+  }
+
+  return href ? (
     <Button component="a" href={href} variant="link" icon={<DownloadIcon />} isInline>
       Download OC CLI
     </Button>
-  );
+  ) : null;
 }
 
 export default DownloadOcCliButton;

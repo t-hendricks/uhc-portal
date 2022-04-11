@@ -84,6 +84,10 @@
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.10.5",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/user-event": "^14.0.4",
     "@wdio/cli": "^6.3.3",
     "@wdio/local-runner": "^6.3.3",
     "@wdio/logger": "^6.7.3",
@@ -101,6 +105,7 @@
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-standard": "^16.0.0",
     "eslint-config-standard-react": "^11.0.1",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-node": "^11.1.0",
@@ -151,7 +156,8 @@
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js"
+      "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js",
+      "^@testUtils": "<rootDir>/src/testUtils.jsx"
     },
     "globals": {
       "APP_DEVMODE": false,
