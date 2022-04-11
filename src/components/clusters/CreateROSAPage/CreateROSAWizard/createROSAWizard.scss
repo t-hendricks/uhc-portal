@@ -49,3 +49,9 @@
   padding-left: var(--pf-global--spacer--lg);
   padding-right: var(--pf-global--spacer--lg);
 }
+
+.ocm-roles-prefix__preview {
+  display: flex;
+  align-items: center;
+  padding-bottom: var(--pf-global--spacer--sm);
+}

@@ -37,24 +37,6 @@ function ClusterRolesScreen({
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
 
-  const getRandomOperatorRolesPrefix = () => {
-    // random 4 alphanumeric hash
-    const prefixArray = Math.random().toString(36).substr(2, 4).split('');
-    // cannot start with a number
-    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)];
-    prefixArray[0] = randomCharacter;
-    return prefixArray.join('');
-  };
-
-  // default custom_operator_roles_prefix to random 4 char hash, user can change
-  // tried using initValues in the index, but was getting reload errors
-  useEffect(() => {
-    if (!customOperatorRolesPrefix) {
-      change('custom_operator_roles_prefix', getRandomOperatorRolesPrefix());
-    }
-  }, []);
-
   useEffect(() => {
     if (getOCMRoleResponse.pending) {
       setGetOCMRoleErrorBox(null);
@@ -98,8 +80,9 @@ function ClusterRolesScreen({
         </TextListItem>
         <TextListItem className="pf-u-mb-sm">
           <Text component={TextVariants.p} className="pf-u-mb-sm">
-            {/* eslint-disable-next-line max-len */}
-            If not yet linked, run the following command to associate the OCM role with your AWS account.
+            If not yet linked, run the following command to associate the OCM role with your AWS
+            {' '}
+            account.
           </Text>
           <InstructionCommand textAriaLabel="Copyable ROSA link ocm-role command">
             rosa link ocm-role &lt;arn&gt;
@@ -163,7 +146,7 @@ function ClusterRolesScreen({
           </GridItem>
         )}
         {getOCMRoleResponse.fulfilled && (
-          <GridItem xl2={10}>
+          <GridItem span={10}>
             <FormGroup
               isRequired
               fieldId="role_mode"
@@ -188,20 +171,25 @@ function ClusterRolesScreen({
             Optionally add a prefix to this naming scheme.
           </Text>
         </GridItem>
-        <GridItem md={4} xl2={3}>
+        <GridItem span={4}>
           <Field
             component={ReduxVerticalFormGroup}
             name="custom_operator_roles_prefix"
             label="Custom operator roles prefix"
             type="text"
-            inputPrefix={`${clusterName}-`}
             validate={validators.checkCustomOperatorRolesPrefix}
-            // disabled={pending}
-            helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.`}
+            helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  If not provided, a default hash will be generated.`}
             // TODO: add correct popover text
             extendedHelpText="TBD"
             showHelpTextOnError={false}
           />
+        </GridItem>
+        <GridItem span={8} className="ocm-roles-prefix__preview">
+          <Text component={TextVariants.small} className="ocm-secondary-text">
+            Preview:
+            {' '}
+            <em>{`${clusterName}-${customOperatorRolesPrefix || '<hash>'}`}</em>
+          </Text>
         </GridItem>
       </Grid>
     </Form>
