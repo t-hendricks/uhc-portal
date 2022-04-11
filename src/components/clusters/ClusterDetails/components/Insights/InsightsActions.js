@@ -40,7 +40,7 @@ export const fetchClusterInsights = (clusterId, isManaged) => dispatch => dispat
 const fetchClusterIds = orgId => accountsService.getSubscriptions({
   page_size: -1,
   fields: 'external_cluster_id',
-  filter: `organization_id = '${orgId}' and status NOT IN ('Deprovisioned', 'Archived')`,
+  filter: `organization_id = '${orgId}' AND status NOT IN ('Deprovisioned', 'Archived') AND external_cluster_id <> ''`,
 });
 
 export const fetchOrganizationInsights = orgId => dispatch => dispatch({
