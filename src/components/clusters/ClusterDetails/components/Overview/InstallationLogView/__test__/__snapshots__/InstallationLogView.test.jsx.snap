@@ -10,7 +10,9 @@ exports[`<InstallationLogView /> should render with logs 1`] = `
 <div
   className="log-window-container"
 >
-  <p>
+  <p
+    className="pf-u-mt-sm"
+  >
     Cluster installation has started. Installation log will appear here once it becomes available.
   </p>
 </div>
@@ -20,7 +22,9 @@ exports[`<InstallationLogView /> should stop the timer when recieving 403 error 
 <div
   className="log-window-container"
 >
-  <p>
+  <p
+    className="pf-u-mt-sm"
+  >
     This cluster is installing so some data might not be available. This may take a few minutes.
   </p>
 </div>
@@ -30,7 +34,9 @@ exports[`<InstallationLogView /> without logs should render 1`] = `
 <div
   className="log-window-container"
 >
-  <p>
+  <p
+    className="pf-u-mt-sm"
+  >
     Cluster installation has started. Installation log will appear here once it becomes available.
   </p>
 </div>

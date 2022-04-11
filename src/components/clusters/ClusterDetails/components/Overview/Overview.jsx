@@ -119,6 +119,7 @@ class Overview extends React.Component {
           <InstallProgress cluster={cluster}>
             <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
             <InstallationLogView
+              isExpandable
               cluster={cluster}
             />
           </InstallProgress>

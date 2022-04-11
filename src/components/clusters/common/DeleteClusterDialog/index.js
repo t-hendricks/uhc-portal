@@ -16,4 +16,10 @@ const mapDispatchToProps = {
   close: () => closeModal('delete-cluster'),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeleteClusterDialog);
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+  ...stateProps,
+  ...dispatchProps,
+  ...ownProps,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(DeleteClusterDialog);
