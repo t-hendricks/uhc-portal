@@ -69,6 +69,7 @@ const links = {
   OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition`,
   OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
   OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/osd_private_connections/private-cluster.html`,
+  OSD_CLUSTER_WIDE_PROXY: `${OSD_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
@@ -193,6 +194,7 @@ const links = {
   ROSA_LIFE_CYCLE: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-life-cycle.html`,
   ROSA_RESPONSIBILITY_MATRIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-policy-responsibility-matrix.html`,
   ROSA_SERVICE_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html`,
+  ROSA_CLUSTER_WIDE_PROXY: `${ROSA_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
 
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
   // TODO OCM RBAC phase 2: update this link once the new chapter is there.
