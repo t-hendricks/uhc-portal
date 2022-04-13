@@ -6,7 +6,7 @@ set -e -u -o pipefail
 cd "$(dirname "$0")"
 
 echo Waiting on selenium browser...
-yarn wait-on http-get://localhost:4444/wd/hub
+yarn wait-on http-get://localhost:4444/wd/hub/status
 
 # Default must match selenium-browser.sh
 BROWSER="${BROWSER:-firefox}"
