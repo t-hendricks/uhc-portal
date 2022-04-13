@@ -176,10 +176,11 @@
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
     "lint": "eslint src --ext js,jsx",
     "test": "jest --env=jsdom",
+    "selenium-with-vnc": "concurrently --kill-others --success=first --names=BROWSER,TEST --prefix-colors=magenta,red --handle-input --default-input-target=TEST 'yarn selenium-browser' 'yarn selenium-test'",
+    "selenium-with-chromedriver": "concurrently --kill-others --success=first --names=BROWSER,TEST --prefix-colors=magenta,red --handle-input --default-input-target=TEST 'chromedriver --port=4444 --url-base=/wd/hub --verbose' 'env BROWSER=chrome yarn selenium-test'",
     "selenium-browser": "run/selenium-browser.sh",
     "selenium-test": "run/selenium-test.sh",
-    "e2e-test": "make node_modules && yarn build && yarn e2e-test-run",
-    "e2e-test-run": "concurrently --kill-others --success=first --prefix=name --names=SERVER,BROWSER,TEST --prefix-colors=cyan,green,magenta,red --handle-input --default-input-target=TEST 'env WEBPACK_WATCH=false webpack serve --env api-env=staging' 'yarn start' 'yarn selenium-browser' 'yarn selenium-test'",
+    "e2e-test": "concurrently --kill-others --success=first --raw --handle-input 'yarn selenium-with-vnc' 'env WEBPACK_WATCH=false yarn start'",
     "selenium-viewer": "wait-on tcp:5900 && vinagre --file=run/selenium.vnc",
     "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh rm --force browser; pkill --full 'concurrently.*SERVER(prevent self match){0},INSIGHTS'; true"
   },
