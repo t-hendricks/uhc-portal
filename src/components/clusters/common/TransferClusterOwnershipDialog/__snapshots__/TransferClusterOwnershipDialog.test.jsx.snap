@@ -89,7 +89,7 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                     aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
-                    data-ouia-component-id="OUIA-Generated-Button-plain-5"
+                    data-ouia-component-id="OUIA-Generated-Modal-large-5-ModalBoxCloseButton"
                     data-ouia-component-type="PF4/Button"
                     data-ouia-safe="true"
                     type="button"
@@ -322,11 +322,13 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                     >
                       <ModalBoxCloseButton
                         onClose={[Function]}
+                        ouiaId="OUIA-Generated-Modal-large-5"
                       >
                         <Button
                           aria-label="Close"
                           className=""
                           onClick={[Function]}
+                          ouiaId="OUIA-Generated-Modal-large-5-ModalBoxCloseButton"
                           variant="plain"
                         >
                           <ButtonBase
@@ -334,13 +336,14 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                             className=""
                             innerRef={null}
                             onClick={[Function]}
+                            ouiaId="OUIA-Generated-Modal-large-5-ModalBoxCloseButton"
                             variant="plain"
                           >
                             <button
                               aria-disabled={false}
                               aria-label="Close"
                               className="pf-c-button pf-m-plain"
-                              data-ouia-component-id="OUIA-Generated-Button-plain-5"
+                              data-ouia-component-id="OUIA-Generated-Modal-large-5-ModalBoxCloseButton"
                               data-ouia-component-type="PF4/Button"
                               data-ouia-safe={true}
                               disabled={false}
@@ -688,7 +691,7 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                     aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
-                    data-ouia-component-id="OUIA-Generated-Button-plain-1"
+                    data-ouia-component-id="OUIA-Generated-Modal-large-1-ModalBoxCloseButton"
                     data-ouia-component-type="PF4/Button"
                     data-ouia-safe="true"
                     type="button"
@@ -921,11 +924,13 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                     >
                       <ModalBoxCloseButton
                         onClose={[Function]}
+                        ouiaId="OUIA-Generated-Modal-large-1"
                       >
                         <Button
                           aria-label="Close"
                           className=""
                           onClick={[Function]}
+                          ouiaId="OUIA-Generated-Modal-large-1-ModalBoxCloseButton"
                           variant="plain"
                         >
                           <ButtonBase
@@ -933,13 +938,14 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                             className=""
                             innerRef={null}
                             onClick={[Function]}
+                            ouiaId="OUIA-Generated-Modal-large-1-ModalBoxCloseButton"
                             variant="plain"
                           >
                             <button
                               aria-disabled={false}
                               aria-label="Close"
                               className="pf-c-button pf-m-plain"
-                              data-ouia-component-id="OUIA-Generated-Button-plain-1"
+                              data-ouia-component-id="OUIA-Generated-Modal-large-1-ModalBoxCloseButton"
                               data-ouia-component-type="PF4/Button"
                               data-ouia-safe={true}
                               disabled={false}
@@ -1287,7 +1293,7 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                     aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
-                    data-ouia-component-id="OUIA-Generated-Button-plain-3"
+                    data-ouia-component-id="OUIA-Generated-Modal-large-3-ModalBoxCloseButton"
                     data-ouia-component-type="PF4/Button"
                     data-ouia-safe="true"
                     type="button"
@@ -1511,11 +1517,13 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                     >
                       <ModalBoxCloseButton
                         onClose={[Function]}
+                        ouiaId="OUIA-Generated-Modal-large-3"
                       >
                         <Button
                           aria-label="Close"
                           className=""
                           onClick={[Function]}
+                          ouiaId="OUIA-Generated-Modal-large-3-ModalBoxCloseButton"
                           variant="plain"
                         >
                           <ButtonBase
@@ -1523,13 +1531,14 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                             className=""
                             innerRef={null}
                             onClick={[Function]}
+                            ouiaId="OUIA-Generated-Modal-large-3-ModalBoxCloseButton"
                             variant="plain"
                           >
                             <button
                               aria-disabled={false}
                               aria-label="Close"
                               className="pf-c-button pf-m-plain"
-                              data-ouia-component-id="OUIA-Generated-Button-plain-3"
+                              data-ouia-component-id="OUIA-Generated-Modal-large-3-ModalBoxCloseButton"
                               data-ouia-component-type="PF4/Button"
                               data-ouia-safe={true}
                               disabled={false}
@@ -1862,7 +1871,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                     aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
-                    data-ouia-component-id="OUIA-Generated-Button-plain-4"
+                    data-ouia-component-id="OUIA-Generated-Modal-large-4-ModalBoxCloseButton"
                     data-ouia-component-type="PF4/Button"
                     data-ouia-safe="true"
                     type="button"
@@ -2141,11 +2150,13 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                     >
                       <ModalBoxCloseButton
                         onClose={[Function]}
+                        ouiaId="OUIA-Generated-Modal-large-4"
                       >
                         <Button
                           aria-label="Close"
                           className=""
                           onClick={[Function]}
+                          ouiaId="OUIA-Generated-Modal-large-4-ModalBoxCloseButton"
                           variant="plain"
                         >
                           <ButtonBase
@@ -2153,13 +2164,14 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                             className=""
                             innerRef={null}
                             onClick={[Function]}
+                            ouiaId="OUIA-Generated-Modal-large-4-ModalBoxCloseButton"
                             variant="plain"
                           >
                             <button
                               aria-disabled={false}
                               aria-label="Close"
                               className="pf-c-button pf-m-plain"
-                              data-ouia-component-id="OUIA-Generated-Button-plain-4"
+                              data-ouia-component-id="OUIA-Generated-Modal-large-4-ModalBoxCloseButton"
                               data-ouia-component-type="PF4/Button"
                               data-ouia-safe={true}
                               disabled={false}

@@ -2,27 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   ClipboardCopy,
-  DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
-  DescriptionListDescription,
-  Spinner,
+  ProgressStepper,
+  ProgressStep,
 } from '@patternfly/react-core';
-import CheckCircleIcon from '@patternfly/react-icons/dist/js/icons/check-circle-icon';
-import PedningIcon from '@patternfly/react-icons/dist/js/icons/pending-icon';
 import UnknownIcon from '@patternfly/react-icons/dist/js/icons/unknown-icon';
 
 // eslint-disable-next-line camelcase
-import { global_success_color_100 } from '@patternfly/react-tokens';
 import './ProgressList.scss';
 import clusterStates from '../clusterStates';
 
 function ProgressList({ cluster }) {
   const getProgressData = () => {
-    const pending = { icon: <PedningIcon className="icon-space-right" />, text: 'Pending' };
-    const completed = { icon: <CheckCircleIcon className="icon-space-right" color={global_success_color_100.value} />, text: 'Completed' };
+    const pending = { text: 'Pending', variant: 'pending' };
+    const completed = { variant: 'success', text: 'Completed' };
     const unknown = { icon: <UnknownIcon className="icon-space-right" />, text: 'Unknown' };
-    const inProgressIcon = <Spinner className="icon-space-right" size="sm" />;
 
     // first step in progress
     if (cluster.state === clusterStates.PENDING || cluster.state === clusterStates.WAITING) {
@@ -37,7 +30,7 @@ function ProgressList({ cluster }) {
         );
       }
       return {
-        awsAccountSetup: { icon: inProgressIcon, text: pendingText },
+        awsAccountSetup: { variant: 'info', text: pendingText, isCurrent: true },
         DNSSetup: pending,
         clusterInstallation: pending,
       };
@@ -48,7 +41,7 @@ function ProgressList({ cluster }) {
       if (!cluster.status.dns_ready) {
         return {
           awsAccountSetup: completed,
-          DNSSetup: pending,
+          DNSSetup: { variant: 'info', text: 'Setting up DNS', isCurrent: true },
           clusterInstallation: pending,
         };
       }
@@ -56,7 +49,7 @@ function ProgressList({ cluster }) {
       return {
         awsAccountSetup: completed,
         DNSSetup: completed,
-        clusterInstallation: { icon: inProgressIcon, text: 'Installing cluster' },
+        clusterInstallation: { variant: 'info', text: 'Installing cluster', isCurrent: true },
       };
     }
     return {
@@ -69,29 +62,38 @@ function ProgressList({ cluster }) {
   const progressData = getProgressData();
 
   return (
-    <DescriptionList>
-      <DescriptionListGroup>
-        <DescriptionListTerm>Account setup</DescriptionListTerm>
-        <DescriptionListDescription>
-          {progressData.awsAccountSetup.icon}
-          {progressData.awsAccountSetup.text}
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-      <DescriptionListGroup>
-        <DescriptionListTerm>DNS setup</DescriptionListTerm>
-        <DescriptionListDescription>
-          {progressData.DNSSetup.icon}
-          {progressData.DNSSetup.text}
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-      <DescriptionListGroup>
-        <DescriptionListTerm>Cluster installation</DescriptionListTerm>
-        <DescriptionListDescription>
-          {progressData.clusterInstallation.icon}
-          {progressData.clusterInstallation.text}
-        </DescriptionListDescription>
-      </DescriptionListGroup>
-    </DescriptionList>
+    <ProgressStepper>
+      <ProgressStep
+        variant={progressData.awsAccountSetup.variant}
+        icon={progressData.awsAccountSetup.icon}
+        isCurrent={progressData.awsAccountSetup.isCurrent}
+        description={progressData.awsAccountSetup.text}
+        id="awsAccountSetup"
+        titleId="awsAccountSetup-title"
+      >
+        Account setup
+      </ProgressStep>
+      <ProgressStep
+        variant={progressData.DNSSetup.variant}
+        icon={progressData.DNSSetup.icon}
+        isCurrent={progressData.DNSSetup.isCurrent}
+        description={progressData.DNSSetup.text}
+        id="DNSSetup"
+        titleId="DNSSetup-title"
+      >
+        DNS setup
+      </ProgressStep>
+      <ProgressStep
+        variant={progressData.clusterInstallation.variant}
+        icon={progressData.clusterInstallation.icon}
+        isCurrent={progressData.clusterInstallation.isCurrent}
+        description={progressData.clusterInstallation.text}
+        id="clusterInstallation"
+        titleId="clusterInstallation-title"
+      >
+        Cluster installation
+      </ProgressStep>
+    </ProgressStepper>
   );
 }
 

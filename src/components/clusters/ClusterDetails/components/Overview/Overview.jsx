@@ -108,6 +108,7 @@ class Overview extends React.Component {
         <UninstallProgress cluster={cluster}>
           <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
           <InstallationLogView
+            className="pf-u-mt-lg"
             cluster={cluster}
           />
         </UninstallProgress>
@@ -119,6 +120,7 @@ class Overview extends React.Component {
           <InstallProgress cluster={cluster}>
             <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
             <InstallationLogView
+              className="pf-u-mt-lg"
               cluster={cluster}
             />
           </InstallProgress>

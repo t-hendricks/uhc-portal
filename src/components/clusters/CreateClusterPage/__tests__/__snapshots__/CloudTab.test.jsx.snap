@@ -19,6 +19,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
         <Table
           aria-label="Managed subscriptions"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -56,11 +57,14 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             ]
           }
           className="managed-subscriptions"
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           ouiaSafe={true}
@@ -110,7 +114,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
         <Link
           to="/quota"
@@ -147,6 +151,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
         <Table
           aria-label="Managed services table"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -184,11 +189,14 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             ]
           }
           className=""
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           onCollapse={[Function]}
@@ -401,7 +409,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
       </StackItem>
     </Stack>
@@ -422,6 +430,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
         <Table
           aria-label="Run it yourself"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -431,11 +440,14 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             ]
           }
           className="run-it-yourself"
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           ouiaSafe={true}
@@ -523,7 +535,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
       </StackItem>
     </Stack>
@@ -550,6 +562,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
         <Table
           aria-label="Managed subscriptions"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -587,11 +600,14 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             ]
           }
           className="managed-subscriptions"
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           ouiaSafe={true}
@@ -641,7 +657,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
         <Link
           to="/quota"
@@ -678,6 +694,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
         <Table
           aria-label="Managed services table"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -715,11 +732,14 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             ]
           }
           className=""
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           onCollapse={[Function]}
@@ -932,7 +952,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
       </StackItem>
     </Stack>
@@ -953,6 +973,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
         <Table
           aria-label="Run it yourself"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -962,11 +983,14 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             ]
           }
           className="run-it-yourself"
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           ouiaSafe={true}
@@ -1054,7 +1078,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
       </StackItem>
     </Stack>
@@ -1080,6 +1104,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
         <Table
           aria-label="Managed services table"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -1117,11 +1142,14 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             ]
           }
           className=""
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           onCollapse={[Function]}
@@ -1402,7 +1430,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
       </StackItem>
     </Stack>
@@ -1423,6 +1451,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
         <Table
           aria-label="Run it yourself"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -1432,11 +1461,14 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
             ]
           }
           className="run-it-yourself"
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           ouiaSafe={true}
@@ -1524,7 +1556,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
       </StackItem>
     </Stack>

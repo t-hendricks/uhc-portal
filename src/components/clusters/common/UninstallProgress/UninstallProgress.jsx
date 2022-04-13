@@ -6,25 +6,18 @@ import {
   Card,
   CardTitle,
   CardBody,
-  DescriptionList,
-  DescriptionListTerm,
-  DescriptionListGroup,
-  DescriptionListDescription,
   List,
   ListItem,
-  Spinner,
   Popover,
   Title,
+  ProgressStepper,
+  ProgressStep,
 } from '@patternfly/react-core';
 
 import {
-  CheckCircleIcon,
   ExclamationCircleIcon,
-  PendingIcon,
 } from '@patternfly/react-icons';
 
-// eslint-disable-next-line camelcase
-import { global_success_color_100 } from '@patternfly/react-tokens';
 import AddOnsConstants from '../../ClusterDetails/components/AddOns/AddOnsConstants';
 
 import './UninstallProgress.scss';
@@ -132,7 +125,7 @@ class UninstallProgress extends React.Component {
             {' '}
             add-on failed to uninstall
           </div>
-                                    )}
+        )}
       >
         <Button isInline variant="link">Failed</Button>
       </Popover>
@@ -191,9 +184,9 @@ class UninstallProgress extends React.Component {
 
     // get current progress data
     const getProgressData = () => {
-      const pending = { icon: <PendingIcon className="uninstall-progress-list--icon-space-right" />, text: 'Pending' };
-      const completed = { icon: <CheckCircleIcon className="uninstall-progress-list--icon-space-right" color={global_success_color_100.value} />, text: 'Completed' };
-      const inProgress = { icon: <Spinner className="uninstall-progress-list--icon-space-right" size="sm" />, text: 'Uninstalling' };
+      const pending = { variant: 'pending', text: 'Pending' };
+      const completed = { variant: 'success', text: 'Completed' };
+      const inProgress = { variant: 'info', text: 'Uninstalling', isCurrent: true };
 
       const hasAddOns = ((blockingAddons.length !== 0) && (clusterAddOns.items.length !== 0));
       if (!hasAddOns || !anyAddonsNotDeleted) {
@@ -235,22 +228,28 @@ class UninstallProgress extends React.Component {
         </CardTitle>
         <CardBody>
           {children && children[0]}
-          <DescriptionList className="uninstall-progress-list--description-list">
-            <DescriptionListGroup>
-              <DescriptionListTerm>Add-on uninstallation</DescriptionListTerm>
-              <DescriptionListDescription>
-                {progressData.addOnCleanUp.icon}
-                {progressData.addOnCleanUp.text}
-              </DescriptionListDescription>
-            </DescriptionListGroup>
-            <DescriptionListGroup>
-              <DescriptionListTerm>Cluster uninstallation</DescriptionListTerm>
-              <DescriptionListDescription>
-                {progressData.clusterUninstall.icon}
-                {progressData.clusterUninstall.text}
-              </DescriptionListDescription>
-            </DescriptionListGroup>
-          </DescriptionList>
+          <ProgressStepper>
+            <ProgressStep
+              variant={progressData.addOnCleanUp.variant}
+              icon={progressData.addOnCleanUp.icon}
+              isCurrent={progressData.addOnCleanUp.isCurrent}
+              description={progressData.addOnCleanUp.text}
+              id="addOnCleanUp"
+              titleId="addOnCleanUp-title"
+            >
+              Add-on uninstallation
+            </ProgressStep>
+            <ProgressStep
+              variant={progressData.clusterUninstall.variant}
+              icon={progressData.clusterUninstall.icon}
+              isCurrent={progressData.clusterUninstall.isCurrent}
+              description={progressData.clusterUninstall.text}
+              id="clusterUninstall"
+              titleId="clusterUninstall-title"
+            >
+              Cluster uninstallation
+            </ProgressStep>
+          </ProgressStepper>
           {children && children[1]}
         </CardBody>
       </Card>

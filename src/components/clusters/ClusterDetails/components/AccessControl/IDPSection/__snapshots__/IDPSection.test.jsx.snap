@@ -323,6 +323,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
           areActionsDisabled={[Function]}
           aria-label="Identity Providers"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -348,11 +349,14 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
             ]
           }
           className=""
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           ouiaSafe={true}
@@ -402,7 +406,7 @@ exports[`<IDPSection /> should render (with IDPs) 1`] = `
           variant="compact"
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
       </StackItem>
     </Stack>

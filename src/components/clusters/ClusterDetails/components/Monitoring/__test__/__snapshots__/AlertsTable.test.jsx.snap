@@ -18,6 +18,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
 <Table
   aria-label="alerts"
   borders={false}
+  canCollapseAll={false}
   canSelectAll={true}
   canSortFavorites={true}
   cells={
@@ -31,11 +32,14 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
     ]
   }
   className=""
+  collapseAllAriaLabel=""
   contentId="expanded-content"
   dropdownDirection="down"
   dropdownPosition="right"
   expandId="expandable-toggle"
   gridBreakPoint="grid-md"
+  isHeaderSelectDisabled={false}
+  isNested={false}
   isStickyHeader={false}
   isTreeTable={false}
   ouiaSafe={true}
@@ -169,7 +173,7 @@ exports[`<AlertsTable /> should render table when there are alerts 1`] = `
   variant="compact"
 >
   <TableHeader />
-  <Component />
+  <TableBody />
 </Table>
 `;
 
@@ -177,6 +181,7 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
 <Table
   aria-label="alerts"
   borders={false}
+  canCollapseAll={false}
   canSelectAll={true}
   canSortFavorites={true}
   cells={
@@ -190,11 +195,14 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
     ]
   }
   className=""
+  collapseAllAriaLabel=""
   contentId="expanded-content"
   dropdownDirection="down"
   dropdownPosition="right"
   expandId="expandable-toggle"
   gridBreakPoint="grid-md"
+  isHeaderSelectDisabled={false}
+  isNested={false}
   isStickyHeader={false}
   isTreeTable={false}
   ouiaSafe={true}
@@ -364,6 +372,6 @@ exports[`<AlertsTable /> should render table with links there are alerts and a c
   variant="compact"
 >
   <TableHeader />
-  <Component />
+  <TableBody />
 </Table>
 `;

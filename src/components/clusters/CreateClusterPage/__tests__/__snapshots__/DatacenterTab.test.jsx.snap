@@ -60,6 +60,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
         <Table
           aria-label="Installation options table"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -69,11 +70,14 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
             ]
           }
           className="install-options-table"
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           ouiaSafe={true}
@@ -177,7 +181,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
       </StackItem>
     </Stack>
@@ -205,6 +209,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
         <Table
           aria-label="Installation options table"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -214,11 +219,14 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
             ]
           }
           className="install-options-table"
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           ouiaSafe={true}
@@ -322,7 +330,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
       </StackItem>
     </Stack>
