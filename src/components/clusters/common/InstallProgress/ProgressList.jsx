@@ -13,7 +13,7 @@ import clusterStates from '../clusterStates';
 
 function ProgressList({ cluster }) {
   const getProgressData = () => {
-    const pending = { text: 'Pending', variant: 'pending' };
+    const pending = { variant: 'pending', text: 'Pending' };
     const completed = { variant: 'success', text: 'Completed' };
     const unknown = { icon: <UnknownIcon className="icon-space-right" />, text: 'Unknown' };
 
