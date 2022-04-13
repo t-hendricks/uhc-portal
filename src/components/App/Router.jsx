@@ -31,7 +31,6 @@ import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import RegisterCluster from '../clusters/RegisterCluster';
-import CreateOSDPage from '../clusters/CreateOSDPage';
 import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
 import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
@@ -74,11 +73,9 @@ import TokensROSA from '../tokens/TokensROSA';
 import NotFoundError from './NotFoundError';
 import Quota from '../quota';
 import Insights from './Insights';
-import CloudProviderSelection from '../clusters/CreateOSDPage/CloudProviderSelection';
 import withFeatureGate from '../features/with-feature-gate';
 import {
   ASSISTED_INSTALLER_FEATURE,
-  OSD_CREATION_WIZARD_FEATURE,
   ROSA_CREATION_WIZARD_FEATURE,
 } from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
@@ -98,9 +95,6 @@ const { AssistedUiRouter } = OCM;
 const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
   InstallBareMetal, ASSISTED_INSTALLER_FEATURE, InstallBMUPI, InstallBMIPI,
-);
-const GatedCreationWizard = withFeatureGate(
-  CreateOSDWizard, OSD_CREATION_WIZARD_FEATURE, CloudProviderSelection,
 );
 
 const GatedRosaCreationWizard = withFeatureGate(
@@ -191,22 +185,12 @@ function Router({ history }) {
             <Route path="/install/pull-secret" component={ConnectedInstallPullSecret} />
             <Route path="/install/azure/aro-provisioned" component={ConnectedInstallPullSecretAzure} />
             <Redirect from="/install" to="/create" />
-            <TermsGuardedRoute
-              path="/create/osd/aws"
-              gobackPath="/create/osd"
-              history={history}
-              render={() => <CreateOSDPage cloudProviderID="aws" product={normalizedProducts.OSD} />}
-            />
-            <TermsGuardedRoute
-              path="/create/osd/gcp"
-              gobackPath="/create/osd"
-              history={history}
-              render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSD} />}
-            />
-            <TermsGuardedRoute path="/create/osdtrial/aws" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="aws" product={normalizedProducts.OSDTrial} />} history={history} />
-            <TermsGuardedRoute path="/create/osdtrial/gcp" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSDTrial} />} history={history} />
-            <TermsGuardedRoute path="/create/osdtrial" gobackPath="/create" render={() => <GatedCreationWizard product={normalizedProducts.OSDTrial} />} history={history} />
-            <TermsGuardedRoute path="/create/osd" gobackPath="/create" render={() => <GatedCreationWizard product={normalizedProducts.OSD} />} history={history} />
+            <Redirect from="/create/osd/aws" to="/create/osd" />
+            <Redirect from="/create/osd/gcp" to="/create/osd" />
+            <Redirect from="/create/osdtrial/aws" to="/create/osdtrial" />
+            <Redirect from="/create/osdtrial/gcp" to="/create/osdtrial" />
+            <TermsGuardedRoute path="/create/osdtrial" gobackPath="/create" render={() => <CreateOSDWizard product={normalizedProducts.OSDTrial} />} history={history} />
+            <TermsGuardedRoute path="/create/osd" gobackPath="/create" render={() => <CreateOSDWizard product={normalizedProducts.OSD} />} history={history} />
             <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />

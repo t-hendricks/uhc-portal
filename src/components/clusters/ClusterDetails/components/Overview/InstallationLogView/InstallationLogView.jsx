@@ -196,7 +196,7 @@ class LogWindow extends React.Component {
 
   render() {
     const {
-      lines, len, errorCode, cluster, isExpandable, className,
+      lines, len, errorCode, cluster, isExpandable,
     } = this.props;
     const { userScrolled, isFullScreen, isExpanded } = this.state;
     const totalLines = lines ? len - 1 : 0;
@@ -219,7 +219,7 @@ class LogWindow extends React.Component {
     const view = (
       <div
         className={
-          cx('log-window-container', !!totalLines && 'log-window-container--with-lines', className)
+          cx('log-window-container', !!totalLines && 'log-window-container--with-lines')
         }
         ref={this.cardRef}
       >
@@ -251,7 +251,7 @@ class LogWindow extends React.Component {
           </div>
         ) : (
           cluster.state !== clusterStates.ERROR && (
-            <p>
+            <p className="pf-u-mt-sm">
               {message}
             </p>
           )
@@ -287,7 +287,6 @@ LogWindow.propTypes = {
     state: PropTypes.string,
   }),
   errorCode: PropTypes.number,
-  className: PropTypes.string,
 };
 
 export default LogWindow;
