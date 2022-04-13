@@ -20,6 +20,9 @@
   #node-labels-alert {
     margin-top: var(--pf-global--spacer--md);
   }
+  .pf-c-form__field-group {
+    border-top: 0;
+  }
 }
 
 .ocm-c-wizard-alert-steps {

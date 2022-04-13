@@ -42,8 +42,7 @@
     "jsonschema": "^1.2.10",
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
-    "netmask": "^1.0.6",
-    "openshift-assisted-ui-lib": "2.2.4",
+    "openshift-assisted-ui-lib": "2.3.7",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
@@ -133,7 +132,8 @@
   },
   "resolutions": {
     "is-in-subnet": "3.1.0",
-    "jsprim": "1.4.2"
+    "jsprim": "1.4.2",
+    "multicast-dns": "7.2.3"
   },
   "jest": {
     "verbose": true,
@@ -162,10 +162,9 @@
   },
   "scripts": {
     "build": "webpack $(run/progress-flag-if-tty.sh)",
-    "start": "webpack serve $(run/progress-flag-if-tty.sh) --env noproxy api-env=staging",
-    "startmock": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server --env api-env=mockserver' 'mockdata/mockserver.py' 'yarn insights-proxy'",
+    "start": "concurrently --kill-others --prefix=name --names=SERVER,MOCK --prefix-colors=cyan,reset 'yarn dev-server --env noproxy api-env=staging' 'mockdata/mockserver.py'",
+    "start-with-proxy": "concurrently --kill-others --prefix=name --names=SERVER,MOCK,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server --env api-env=staging' 'mockdata/mockserver.py' 'yarn insights-proxy'",
     "dev-server": "webpack serve $(run/progress-flag-if-tty.sh)",
-    "dev-server-for-mock": "webpack serve $(run/progress-flag-if-tty.sh) --env api-env=mockserver",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
     "lint": "eslint src --ext js,jsx",

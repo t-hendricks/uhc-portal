@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
+import { formValueSelector, touch } from 'redux-form';
 
 import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
 import AccountsRolesScreen from './AccountsRolesScreen';
@@ -19,6 +19,12 @@ const mapDispatchToProps = dispatch => ({
   ),
   clearGetAWSAccountIDsResponse: () => dispatch(clearGetAWSAccountIDsResponse()),
   clearGetAWSAccountRolesARNsResponse: () => dispatch(clearGetAWSAccountRolesARNsResponse()),
+  touchARNsFields: () => {
+    dispatch(touch('CreateCluster', 'installer_role_arn'));
+    dispatch(touch('CreateCluster', 'support_role_arn'));
+    dispatch(touch('CreateCluster', 'control_plane_role_arn'));
+    dispatch(touch('CreateCluster', 'worker_role_arn'));
+  },
 });
 
 const mapStateToProps = (state) => {

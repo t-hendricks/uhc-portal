@@ -22,17 +22,21 @@ function NetworkScreen(props) {
     privateClusterSelected,
     showClusterPrivacy,
     showVPCCheckbox,
+    showClusterWideProxyCheckbox,
     cloudProviderID,
     privateLinkSelected,
     forcePrivateLink,
     configureProxySelected,
-    product,
     isByoc,
+    product,
   } = props;
 
   const { OSD, OSDTrial } = normalizedProducts;
-
-  const showConfigureProxy = isByoc && (product === OSD || product === OSDTrial);
+  const isByocOSD = isByoc && [OSD, OSDTrial].includes(product);
+  // show only if the product is ROSA with VPC or BYOC/CCS OSD with VPC
+  // Do not need to check for VPC here, since checking the "Configure a cluster-wide proxy" checkbox
+  // automatically checks the "Install into an existing VPC" checkbox in the UI
+  const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
 
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
@@ -210,11 +214,12 @@ NetworkScreen.propTypes = {
   cloudProviderID: PropTypes.string,
   showClusterPrivacy: PropTypes.bool,
   showVPCCheckbox: PropTypes.bool,
+  showClusterWideProxyCheckbox: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
   forcePrivateLink: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
-  product: PropTypes.string,
   isByoc: PropTypes.bool,
+  product: PropTypes.string,
 };
 
 export default NetworkScreen;

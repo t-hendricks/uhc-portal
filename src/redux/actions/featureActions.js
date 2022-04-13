@@ -8,7 +8,6 @@ import {
   ASSISTED_INSTALLER_MERGE_LISTS_FEATURE,
   ASSISTED_INSTALLER_NETWORK_TYPE_SELECTION_FEATURE,
   ASSISTED_INSTALLER_PLATFORM_INTEGRATION_FEATURE,
-  OSD_CREATION_WIZARD_FEATURE,
   ROSA_CREATION_WIZARD_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
@@ -33,7 +32,6 @@ export const features = [
   getSimpleUnleashFeature('assisted-installer-merge-lists', ASSISTED_INSTALLER_MERGE_LISTS_FEATURE),
   getSimpleUnleashFeature('assisted-installer-network-type-selection', ASSISTED_INSTALLER_NETWORK_TYPE_SELECTION_FEATURE),
   getSimpleUnleashFeature('assisted-installer-platform-integration', ASSISTED_INSTALLER_PLATFORM_INTEGRATION_FEATURE),
-  getSimpleUnleashFeature('osd-creation-wizard', OSD_CREATION_WIZARD_FEATURE),
   getSimpleUnleashFeature('rosa-creation-wizard', ROSA_CREATION_WIZARD_FEATURE),
   {
     name: ASSISTED_INSTALLER_FEATURE,

@@ -63,7 +63,7 @@ function ClusterProxyScreen({
   const AtLeastOneAlert = (
     <Alert
       isInline
-      variant="danger"
+      variant="warning"
       title={(
         <span>
           {'Complete at least 1 of the fields above. If you don\'t want to set a cluster-wide proxy, disable this option in the '}

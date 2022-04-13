@@ -128,9 +128,7 @@ class Overview extends Component {
     // Revert to an "empty" state if there are no clusters to show.
     if (summaryDashboard.fulfilled && !totalClusters) {
       return (
-        <PageSection>
-          <OverviewEmptyState />
-        </PageSection>
+        <OverviewEmptyState />
       );
     }
 

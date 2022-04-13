@@ -12,34 +12,34 @@ exports[`<DeleteClusterDialog /> renders correctly 1`] = `
   primaryVariant="danger"
   title="Delete cluster"
 >
-  <p>
-    This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
-  </p>
-  <Form
-    onSubmit={[Function]}
+  <Flex
+    direction={
+      Object {
+        "default": "column",
+      }
+    }
   >
     <p>
-      Confirm deletion by typing
-       
-      <span
-        style={
-          Object {
-            "fontWeight": "bold",
-          }
-        }
-      >
-        fake-name
-      </span>
-       
-      below:
+      This action cannot be undone. It will uninstall the cluster, and all data will be deleted.
     </p>
-    <TextInput
-      aria-label="cluster name"
-      onChange={[Function]}
-      placeholder="Enter name"
-      type="text"
-      value=""
-    />
-  </Form>
+    <p>
+      Confirm deletion by typing 
+      <strong>
+        fake-name
+      </strong>
+       below:
+    </p>
+    <Form
+      onSubmit={[Function]}
+    >
+      <TextInput
+        aria-label="cluster name"
+        onChange={[Function]}
+        placeholder="Enter name"
+        type="text"
+        value=""
+      />
+    </Form>
+  </Flex>
 </Modal>
 `;

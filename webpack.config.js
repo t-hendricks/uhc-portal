@@ -212,20 +212,28 @@ module.exports = async (_env, argv) => {
       historyApiFallback: {
         index: `${publicPath}index.html`,
       },
-      proxy: noInsightsProxy ? {
-        // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
-        // proxy everything except our own app, mimicking insights-proxy behaviour
-        context: ['**', `!${publicPath}**`],
-        target: 'https://console.redhat.com',
-        // replace the "host" header's URL origin with the origin from the target URL
-        changeOrigin: true,
-        // change the "origin" header of the proxied request to avoid CORS
-        // many APIs do not allow the requests from the foreign origin
-        onProxyReq(request) {
-          request.setHeader('origin', 'https://console.redhat.com');
+      proxy: noInsightsProxy ? [
+        {
+          context: ['/mockdata'],
+          pathRewrite: { "^/mockdata": "" },
+          target: 'http://localhost:8010',
+          logLevel: 'info', // Less necessary because mockserver also logs.
         },
-        logLevel: 'debug',
-      } : undefined,
+        {
+          // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
+          // proxy everything except our own app, mimicking insights-proxy behaviour
+          context: ['**', `!${publicPath}**`, '!/mockdata'],
+          target: 'https://console.redhat.com',
+          // replace the "host" header's URL origin with the origin from the target URL
+          changeOrigin: true,
+          // change the "origin" header of the proxied request to avoid CORS
+          // many APIs do not allow the requests from the foreign origin
+          onProxyReq(request) {
+            request.setHeader('origin', 'https://console.redhat.com');
+          },
+          logLevel: 'debug',
+        },
+      ] : undefined,
       hot: false,
       port: noInsightsProxy ? 1337 : 8001,
       https: !!noInsightsProxy,
