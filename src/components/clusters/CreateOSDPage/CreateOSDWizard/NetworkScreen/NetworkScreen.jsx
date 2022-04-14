@@ -134,7 +134,7 @@ function NetworkScreen(props) {
                     <span>
                       Follow the
                       {' '}
-                      <ExternalLink href={links.AWS_PRIVATE_CONNECTIONS}>
+                      <ExternalLink href={links.OSD_AWS_PRIVATE_CONNECTIONS}>
                         documentation
                       </ExternalLink>
                       {' '}
