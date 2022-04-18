@@ -637,6 +637,10 @@ const urlsSelector = (githubReleases) => {
           [operatingSystems.mac]: `${base}/rhoas_${version}_macOS_amd64.tar.gz`,
           [operatingSystems.windows]: `${base}/rhoas_${version}_windows_amd64.zip`,
         },
+        [architectures.arm]: {
+          [operatingSystems.linux]: `${base}/rhoas_${version}_linux_arm64.tar.gz`,
+          [operatingSystems.mac]: `${base}/rhoas_${version}_macOS_arm64.tar.gz`,
+        },
       },
     };
   }

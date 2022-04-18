@@ -416,10 +416,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -834,10 +838,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -1243,10 +1251,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -1657,10 +1669,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -2092,10 +2108,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -2501,10 +2521,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -2910,10 +2934,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -3319,10 +3347,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -3738,10 +3770,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -4183,10 +4219,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -4605,10 +4645,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -5020,10 +5064,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -5435,10 +5483,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -5849,10 +5901,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -6267,10 +6323,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -6674,10 +6734,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -7092,10 +7156,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
@@ -7495,10 +7563,14 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "rhoas": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_arm64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_arm64.tar.gz",
+                    },
                     "x86": Object {
-                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_linux_amd64.tar.gz",
-                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_macOS_amd64.tar.gz",
-                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.25.0/rhoas_0.25.0_windows_amd64.zip",
+                      "linux": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_linux_amd64.tar.gz",
+                      "mac": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_macOS_amd64.tar.gz",
+                      "windows": "https://github.com/redhat-developer/app-services-cli/releases/download/v0.40.0/rhoas_0.40.0_windows_amd64.zip",
                     },
                   },
                 },
