@@ -20,6 +20,7 @@ import {
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
 import ExternalLink from '../../../../common/ExternalLink';
+import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 import {
@@ -38,8 +39,7 @@ function ClusterProxyScreen({
 }) {
   const [anyTouched, setAnyTouched] = React.useState(false);
   const configureProxyUrl = product === normalizedProducts.ROSA
-    ? 'https://docs.openshift.com/rosa/networking/configuring-cluster-wide-proxy.html'
-    : 'https://docs.openshift.com/dedicated/networking/configuring-cluster-wide-proxy.html';
+    ? links.ROSA_CLUSTER_WIDE_PROXY : links.OSD_CLUSTER_WIDE_PROXY;
 
   const onTouched = () => {
     // this lets us know that one of the fields was touched
