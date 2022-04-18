@@ -41,7 +41,7 @@ exports[`InstallASHUPI renders correctly 1`] = `
           Object {
             "buttonText": "Download RHCOS VHD",
             "name": "OCP-Download-RHCOS-VHD",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/rhcos-azurestack.x86_64.vhd.gz",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-azurestack.x86_64.vhd.gz",
           },
         ]
       }

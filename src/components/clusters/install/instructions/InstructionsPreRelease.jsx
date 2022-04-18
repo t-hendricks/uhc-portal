@@ -72,7 +72,6 @@ function InstructionsPreRelease({ token, installer }) {
           <Card className="ocm-c-pre-release-instructions__card">
             <CardBody className="ocm-c-pre-release-instructions__card--body">
               <DownloadsAndPullSecretSection
-                rhcosDownloadURL={links.INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_LATEST}
                 token={token}
                 showPreReleaseDocs
                 showPreReleasePageLink={false}

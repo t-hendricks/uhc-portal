@@ -41,7 +41,7 @@ exports[`InstallVSphereUPI renders correctly 1`] = `
           Object {
             "buttonText": "Download RHCOS OVA",
             "name": "OCP-Download-RHCOS-OVA",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/rhcos-vmware.x86_64.ova",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-vmware.x86_64.ova",
           },
         ]
       }

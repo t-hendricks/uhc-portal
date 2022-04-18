@@ -64,22 +64,22 @@ exports[`BareMetal UPI install renders correctly 1`] = `
           Object {
             "buttonText": "Download RHCOS ISO",
             "name": "OCP-Download-RHCOS-ISO",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/rhcos-live.x86_64.iso",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live.x86_64.iso",
           },
           Object {
             "buttonText": "Download RHCOS kernel",
             "name": "OCP-Download-RHCOS-kernel",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/rhcos-live-kernel-x86_64",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-kernel-x86_64",
           },
           Object {
             "buttonText": "Download RHCOS initramfs",
             "name": "OCP-Download-RHCOS-initramfs",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/rhcos-live-initramfs.x86_64.img",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-initramfs.x86_64.img",
           },
           Object {
             "buttonText": "Download RHCOS rootfs",
             "name": "OCP-Download-RHCOS-rootfs",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/rhcos-live-rootfs.x86_64.img",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-rootfs.x86_64.img",
           },
         ]
       }
