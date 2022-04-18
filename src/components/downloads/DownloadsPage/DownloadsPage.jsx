@@ -418,6 +418,29 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
           </Text>
         )}
       />
+
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.TKN}
+        channel={channels.STABLE}
+        name={(
+          <>
+            Tekton command-line interface for OpenShift Pipelines (
+            <code>tkn</code>
+            )
+          </>
+        )}
+        description={(
+          <Text>
+            Manage and interact with CI pipelines on OpenShift Container Platform
+            {' '}
+            with the Tekton CLI for OpenShift Pipelines.
+            {' '}
+            <ExternalLink href={links.TKN_DOCS}>Get started</ExternalLink>
+
+          </Text>
+        )}
+      />
     </>
   );
 };
