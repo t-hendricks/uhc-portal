@@ -229,7 +229,7 @@ const ExpandableRowPair = ({
   return (
     <Tbody isExpanded={isExpanded} ref={get(toolRefs, expandKey)}>
       <Tr>
-        <Td expand={{ isExpanded, onToggle }} />
+        <Td expand={{ isExpanded, onToggle, rowIndex: 0 }} />
         {cells}
       </Tr>
       <Tr isExpanded={isExpanded}>

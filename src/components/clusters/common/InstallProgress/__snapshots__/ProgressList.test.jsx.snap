@@ -1,18 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<ProgressList /> should render for ROSA manual mode 1`] = `
-<DescriptionList>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      Account setup
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <ExclamationTriangleIcon
-        className="icon-space-right"
-        color="#f0ab00"
-        noVerticalAlign={false}
-        size="sm"
-      />
+<ProgressStepper>
+  <ProgressStep
+    description={
       <ActionRequiredPopover
         cluster={
           Object {
@@ -380,170 +371,119 @@ exports[`<ProgressList /> should render for ROSA manual mode 1`] = `
           }
         }
       />
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      DNS setup
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <PendingIcon
-        className="icon-space-right"
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-      />
-      Pending
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      Cluster installation
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <PendingIcon
-        className="icon-space-right"
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-      />
-      Pending
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-</DescriptionList>
+    }
+    id="awsAccountSetup"
+    isCurrent={true}
+    titleId="awsAccountSetup-title"
+    variant="info"
+  >
+    Account setup
+  </ProgressStep>
+  <ProgressStep
+    description="Pending"
+    id="DNSSetup"
+    titleId="DNSSetup-title"
+    variant="pending"
+  >
+    DNS setup
+  </ProgressStep>
+  <ProgressStep
+    description="Pending"
+    id="clusterInstallation"
+    titleId="clusterInstallation-title"
+    variant="pending"
+  >
+    Cluster installation
+  </ProgressStep>
+</ProgressStepper>
 `;
 
 exports[`<ProgressList /> should render when first step completed 1`] = `
-<DescriptionList>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      Account setup
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <CheckCircleIcon
-        className="icon-space-right"
-        color="#3e8635"
-        noVerticalAlign={false}
-        size="sm"
-      />
-      Completed
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      DNS setup
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <CheckCircleIcon
-        className="icon-space-right"
-        color="#3e8635"
-        noVerticalAlign={false}
-        size="sm"
-      />
-      Completed
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      Cluster installation
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <Spinner
-        className="icon-space-right"
-        size="sm"
-      />
-      Installing cluster
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-</DescriptionList>
+<ProgressStepper>
+  <ProgressStep
+    description="Completed"
+    id="awsAccountSetup"
+    titleId="awsAccountSetup-title"
+    variant="success"
+  >
+    Account setup
+  </ProgressStep>
+  <ProgressStep
+    description="Completed"
+    id="DNSSetup"
+    titleId="DNSSetup-title"
+    variant="success"
+  >
+    DNS setup
+  </ProgressStep>
+  <ProgressStep
+    description="Installing cluster"
+    id="clusterInstallation"
+    isCurrent={true}
+    titleId="clusterInstallation-title"
+    variant="info"
+  >
+    Cluster installation
+  </ProgressStep>
+</ProgressStepper>
 `;
 
 exports[`<ProgressList /> should render when first step in progress 1`] = `
-<DescriptionList>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      Account setup
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <Spinner
-        className="icon-space-right"
-        size="sm"
-      />
-      Preparing account
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      DNS setup
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <PendingIcon
-        className="icon-space-right"
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-      />
-      Pending
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      Cluster installation
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <PendingIcon
-        className="icon-space-right"
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-      />
-      Pending
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-</DescriptionList>
+<ProgressStepper>
+  <ProgressStep
+    description="Preparing account"
+    id="awsAccountSetup"
+    isCurrent={true}
+    titleId="awsAccountSetup-title"
+    variant="info"
+  >
+    Account setup
+  </ProgressStep>
+  <ProgressStep
+    description="Pending"
+    id="DNSSetup"
+    titleId="DNSSetup-title"
+    variant="pending"
+  >
+    DNS setup
+  </ProgressStep>
+  <ProgressStep
+    description="Pending"
+    id="clusterInstallation"
+    titleId="clusterInstallation-title"
+    variant="pending"
+  >
+    Cluster installation
+  </ProgressStep>
+</ProgressStepper>
 `;
 
 exports[`<ProgressList /> should render when second step completed 1`] = `
-<DescriptionList>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      Account setup
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <CheckCircleIcon
-        className="icon-space-right"
-        color="#3e8635"
-        noVerticalAlign={false}
-        size="sm"
-      />
-      Completed
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      DNS setup
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <CheckCircleIcon
-        className="icon-space-right"
-        color="#3e8635"
-        noVerticalAlign={false}
-        size="sm"
-      />
-      Completed
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-  <DescriptionListGroup>
-    <DescriptionListTerm>
-      Cluster installation
-    </DescriptionListTerm>
-    <DescriptionListDescription>
-      <Spinner
-        className="icon-space-right"
-        size="sm"
-      />
-      Installing cluster
-    </DescriptionListDescription>
-  </DescriptionListGroup>
-</DescriptionList>
+<ProgressStepper>
+  <ProgressStep
+    description="Completed"
+    id="awsAccountSetup"
+    titleId="awsAccountSetup-title"
+    variant="success"
+  >
+    Account setup
+  </ProgressStep>
+  <ProgressStep
+    description="Completed"
+    id="DNSSetup"
+    titleId="DNSSetup-title"
+    variant="success"
+  >
+    DNS setup
+  </ProgressStep>
+  <ProgressStep
+    description="Installing cluster"
+    id="clusterInstallation"
+    isCurrent={true}
+    titleId="clusterInstallation-title"
+    variant="info"
+  >
+    Cluster installation
+  </ProgressStep>
+</ProgressStepper>
 `;

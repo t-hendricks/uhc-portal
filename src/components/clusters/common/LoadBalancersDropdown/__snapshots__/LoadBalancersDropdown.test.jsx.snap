@@ -20,6 +20,7 @@ exports[`<LoadBalancersDropdown /> when the load balancer list is available rend
   aria-label="Load Balancers"
   className="quota-dropdown"
   isDisabled={false}
+  isIconSprite={false}
   isRequired={false}
   onBlur={[Function]}
   onChange={[MockFunction]}

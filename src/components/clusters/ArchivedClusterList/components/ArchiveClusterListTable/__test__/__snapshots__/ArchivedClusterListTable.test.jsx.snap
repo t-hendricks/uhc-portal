@@ -3,6 +3,7 @@
 exports[`<ArchivedClusterListTable /> ArchivedClusterListTable should render 1`] = `
 <Table
   borders={true}
+  canCollapseAll={false}
   canSelectAll={true}
   canSortFavorites={true}
   cells={
@@ -36,11 +37,14 @@ exports[`<ArchivedClusterListTable /> ArchivedClusterListTable should render 1`]
     ]
   }
   className=""
+  collapseAllAriaLabel=""
   contentId="expanded-content"
   dropdownDirection="down"
   dropdownPosition="right"
   expandId="expandable-toggle"
   gridBreakPoint="grid-md"
+  isHeaderSelectDisabled={false}
+  isNested={false}
   isStickyHeader={false}
   isTreeTable={false}
   onSort={[Function]}
@@ -122,6 +126,6 @@ exports[`<ArchivedClusterListTable /> ArchivedClusterListTable should render 1`]
   variant={null}
 >
   <TableHeader />
-  <Component />
+  <TableBody />
 </Table>
 `;

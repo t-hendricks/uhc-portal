@@ -71,6 +71,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
               leftScrollAriaLabel="Scroll left"
               mountOnEnter={false}
               onSelect={[Function]}
+              onToggle={[Function]}
               ouiaSafe={true}
               rightScrollAriaLabel="Scroll right"
               unmountOnExit={false}

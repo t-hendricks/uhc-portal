@@ -8326,6 +8326,7 @@ exports[`<PersistentStorageDropdown /> when the storage list is available render
     aria-label="Persistent Storage"
     className="quota-dropdown"
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
     onChange={[MockFunction]}
