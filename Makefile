@@ -64,7 +64,7 @@ fmt:
 
 .PHONY: test
 test: node_modules
-	yarn test --no-cache
+	yarn test
 
 .PHONY: node_modules
 node_modules:
