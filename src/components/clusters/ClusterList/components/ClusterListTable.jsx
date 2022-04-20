@@ -16,12 +16,14 @@ import {
   SortByDirection,
   cellWidth,
 } from '@patternfly/react-table';
+import ExclamationTriangleIcon from '@patternfly/react-icons/dist/js/icons/exclamation-triangle-icon';
+import { global_warning_color_100 as warningColor } from '@patternfly/react-tokens';
 
 import { Link } from 'react-router-dom';
 import { OCM } from 'openshift-assisted-ui-lib';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
-import clusterStates, { getClusterStateAndDescription } from '../../common/clusterStates';
+import clusterStates, { getClusterStateAndDescription, isWaitingROSAManualMode } from '../../common/clusterStates';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 import getClusterName from '../../../../common/getClusterName';
@@ -29,6 +31,7 @@ import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActio
 import skeletonRows from '../../../common/SkeletonRows';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
+import ActionRequiredPopover from '../../common/InstallProgress/ActionRequiredPopover';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
@@ -109,6 +112,15 @@ function ClusterListTable(props) {
               </Button>
             </Popover>
           </span>
+        );
+      }
+      if (isWaitingROSAManualMode(cluster)) {
+        // Show a popover for manual creation of ROSA operator roles and OIDC provider.
+        return (
+          <ActionRequiredPopover
+            cluster={cluster}
+            icon={<ExclamationTriangleIcon color={warningColor.value} />}
+          />
         );
       }
       if (state === clusterStates.WAITING

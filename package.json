@@ -147,7 +147,7 @@
       "^.+\\.(js|jsx|mjs)$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(react-monaco-editor|monaco-editor|lodash-es|openshift-assisted-ui-lib)/)"
+      "<rootDir>/node_modules/(?!(@patternfly|react-monaco-editor|monaco-editor|lodash-es|openshift-assisted-ui-lib)/)"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",

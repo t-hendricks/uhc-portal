@@ -18,7 +18,7 @@ const MIRROR_OSDK_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x8
 const MIRROR_OSDK_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/operator-sdk/latest';
 const MIRROR_OSDK_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/operator-sdk/latest';
 const MIRROR_OSDK_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/operator-sdk/latest';
-const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest';
+const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest';
 const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest';
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest';
 const MIRROR_RHCOS_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest';
@@ -69,6 +69,7 @@ const links = {
   OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition`,
   OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
   OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/osd_private_connections/private-cluster.html`,
+  OSD_CLUSTER_WIDE_PROXY: `${OSD_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
@@ -144,7 +145,6 @@ const links = {
 
   INSTALL_PRE_RELEASE_BUG_LIST_45: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.5.0',
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
-  INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/pre-release/latest',
   INSTALL_PRE_RELEASE_FEEDBACK_MAILTO: 'mailto:***REMOVED***?subject=[dev preview build]',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/articles/4307871',
 
@@ -188,11 +188,12 @@ const links = {
   ROSA_MONITORING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_monitoring/rosa-understanding-the-monitoring-stack.html`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,
   ROSA_CLI_DOCS: `${ROSA_DOCS_BASE}/rosa_cli/rosa-get-started-cli.html`,
-  ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-aws-prereqs.html`,
-  ROSA_INSTALLING: `${ROSA_DOCS_BASE}/rosa_getting_started/rosa_getting_started_iam/rosa-installing-rosa.html`,
-  ROSA_LIFE_CYCLE: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-life-cycle.html`,
-  ROSA_RESPONSIBILITY_MATRIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-policy-responsibility-matrix.html`,
-  ROSA_SERVICE_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-service-definition.html`,
+  ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-aws-prereqs.html`,
+  ROSA_INSTALLING: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-installing-rosa.html`,
+  ROSA_LIFE_CYCLE: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-life-cycle.html`,
+  ROSA_RESPONSIBILITY_MATRIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-policy-responsibility-matrix.html`,
+  ROSA_SERVICE_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html`,
+  ROSA_CLUSTER_WIDE_PROXY: `${ROSA_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
 
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
   // TODO OCM RBAC phase 2: update this link once the new chapter is there.
@@ -635,6 +636,10 @@ const urlsSelector = (githubReleases) => {
           [operatingSystems.linux]: `${base}/rhoas_${version}_linux_amd64.tar.gz`,
           [operatingSystems.mac]: `${base}/rhoas_${version}_macOS_amd64.tar.gz`,
           [operatingSystems.windows]: `${base}/rhoas_${version}_windows_amd64.zip`,
+        },
+        [architectures.arm]: {
+          [operatingSystems.linux]: `${base}/rhoas_${version}_linux_arm64.tar.gz`,
+          [operatingSystems.mac]: `${base}/rhoas_${version}_macOS_arm64.tar.gz`,
         },
       },
     };

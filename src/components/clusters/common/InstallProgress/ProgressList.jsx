@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  ClipboardCopy,
   ProgressStepper,
   ProgressStep,
 } from '@patternfly/react-core';
 import UnknownIcon from '@patternfly/react-icons/dist/js/icons/unknown-icon';
 
-// eslint-disable-next-line camelcase
 import './ProgressList.scss';
-import clusterStates from '../clusterStates';
+import ActionRequiredPopover from './ActionRequiredPopover';
+import clusterStates, { isWaitingROSAManualMode } from '../clusterStates';
 
 function ProgressList({ cluster }) {
   const getProgressData = () => {
@@ -17,20 +16,19 @@ function ProgressList({ cluster }) {
     const completed = { variant: 'success', text: 'Completed' };
     const unknown = { icon: <UnknownIcon className="icon-space-right" />, text: 'Unknown' };
 
+    if (isWaitingROSAManualMode(cluster)) {
+      // Show a popover for manual creation of ROSA operator roles and OIDC provider.
+      return {
+        awsAccountSetup: { variant: 'info', text: <ActionRequiredPopover cluster={cluster} />, isCurrent: true },
+        DNSSetup: pending,
+        clusterInstallation: pending,
+      };
+    }
+
     // first step in progress
     if (cluster.state === clusterStates.PENDING || cluster.state === clusterStates.WAITING) {
-      let pendingText = 'Preparing account';
-      if (!cluster.status.oidc_ready && cluster?.aws?.sts?.oidc_endpoint_url) {
-        // Display OIDC endpoint URL but don't link to it
-        pendingText = (
-          <>
-            Waiting for OIDC configuration
-            <ClipboardCopy isReadOnly className="pf-u-mt-sm">{cluster.aws.sts.oidc_endpoint_url}</ClipboardCopy>
-          </>
-        );
-      }
       return {
-        awsAccountSetup: { variant: 'info', text: pendingText, isCurrent: true },
+        awsAccountSetup: { variant: 'info', text: 'Preparing account', isCurrent: true },
         DNSSetup: pending,
         clusterInstallation: pending,
       };

@@ -246,6 +246,10 @@ class CreateROSAWizardInternal extends React.Component {
     const orgWasFetched = !organization.pending && organization.fulfilled;
 
     if (createClusterResponse.fulfilled) {
+      // When a cluster is successfully created,
+      // unblock history in order to not show a confirmation prompt.
+      history.block(() => {});
+
       return (
         <Redirect to={`/details/s/${createClusterResponse.cluster.subscription.id}`} />
       );
@@ -417,6 +421,7 @@ CreateROSAWizardInternal.propTypes = {
   // for cancel button
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
+    block: PropTypes.func,
   }).isRequired,
 };
 
