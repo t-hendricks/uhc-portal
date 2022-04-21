@@ -7,7 +7,7 @@ import {
   Button, Alert, Split, SplitItem, Title,
 } from '@patternfly/react-core';
 
-import clusterStates from '../../common/clusterStates';
+import clusterStates, { isOffline } from '../../common/clusterStates';
 import modals from '../../../common/Modal/modals';
 import ClusterActionsDropdown from '../../common/ClusterActionsDropdown';
 import RefreshButton from '../../../common/RefreshButton/RefreshButton';
@@ -83,13 +83,7 @@ function ClusterDetailsTop(props) {
   );
 
   let launchConsole;
-  const disableConsoleOnStates = [
-    clusterStates.UNINSTALLING,
-    clusterStates.POWERING_DOWN,
-    clusterStates.RESUMING,
-    clusterStates.HIBERNATING,
-  ];
-  if (consoleURL && !disableConsoleOnStates.includes(cluster.state)) {
+  if (consoleURL && !isOffline(cluster.state)) {
     launchConsole = (
       <a href={consoleURL} target="_blank" rel="noopener noreferrer" className="pull-left">
         <Button variant="primary">Open console</Button>

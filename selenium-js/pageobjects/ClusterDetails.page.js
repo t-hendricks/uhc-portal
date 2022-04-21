@@ -109,7 +109,7 @@ class ClusterDetails extends Page {
 
   get networkingTabBtn() { return $('button[aria-controls="networkingTabContent"]'); }
 
-  routersCardxPath = '//div[contains(@class, "ocm-c-networking-edit-cluster-routers__card--body")]';
+  routersCardxPath = '//div[contains(@class, "ocm-c-networking-cluster-ingress__card--body")]';
 
   get routersCard() { return $(this.routersCardxPath); }
 
