@@ -40,7 +40,8 @@ import { persistor } from '../../../../redux/store';
 
 class CreateROSAWizardInternal extends React.Component {
   state = {
-    stepIdReached: 1,
+    stepIdReached: 10,
+    currentStepId: 10,
   }
 
   componentDidMount() {
@@ -86,7 +87,20 @@ class CreateROSAWizardInternal extends React.Component {
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
+    this.setState({ currentStepId: id });
   };
+
+  onGoToStep = ({ id }) => this.setState({ currentStepId: id });
+
+  onBack = ({ id }) => this.setState({ currentStepId: id });
+
+  canJumpTo = (id) => {
+    const { isValid } = this.props;
+    const { stepIdReached, currentStepId } = this.state;
+
+    // Allow step navigation forward when the current step is valid and backwards regardless.
+    return (stepIdReached >= id && isValid) || id <= currentStepId;
+  }
 
   render() {
     const {
@@ -104,7 +118,6 @@ class CreateROSAWizardInternal extends React.Component {
       privateLinkSelected,
       configureProxySelected,
     } = this.props;
-    const { stepIdReached } = this.state;
 
     const steps = [
       {
@@ -129,7 +142,7 @@ class CreateROSAWizardInternal extends React.Component {
               </ErrorBoundary>
             ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 22,
+            canJumpTo: this.canJumpTo(22),
           },
           {
             id: 23,
@@ -140,7 +153,7 @@ class CreateROSAWizardInternal extends React.Component {
               </ErrorBoundary>
             ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 23,
+            canJumpTo: this.canJumpTo(23),
           },
         ],
         enableNext: isValid,
@@ -148,7 +161,7 @@ class CreateROSAWizardInternal extends React.Component {
       {
         name: 'Networking',
         enableNext: isValid,
-        canJumpTo: stepIdReached >= 30,
+        canJumpTo: this.canJumpTo(30),
         steps: [
           {
             id: 31,
@@ -166,7 +179,7 @@ class CreateROSAWizardInternal extends React.Component {
               </ErrorBoundary>
             ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 31,
+            canJumpTo: this.canJumpTo(31),
           },
           installToVPCSelected && {
             id: 32,
@@ -177,7 +190,7 @@ class CreateROSAWizardInternal extends React.Component {
               </ErrorBoundary>
             ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 32,
+            canJumpTo: this.canJumpTo(32),
           },
           configureProxySelected && {
             id: 33,
@@ -188,7 +201,7 @@ class CreateROSAWizardInternal extends React.Component {
               </ErrorBoundary>
             ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 33,
+            canJumpTo: this.canJumpTo(33),
           },
           {
             id: 34,
@@ -199,23 +212,12 @@ class CreateROSAWizardInternal extends React.Component {
               </ErrorBoundary>
             ),
             enableNext: isValid,
-            canJumpTo: stepIdReached >= 34,
+            canJumpTo: this.canJumpTo(34),
           },
         ].filter(Boolean),
       },
       {
         id: 40,
-        name: 'Cluster updates',
-        component: (
-          <ErrorBoundary>
-            <UpdatesScreen />
-          </ErrorBoundary>
-        ),
-        enableNext: isValid,
-        canJumpTo: stepIdReached >= 40,
-      },
-      {
-        id: 50,
         name: 'Cluster roles and policies',
         component: (
           <ErrorBoundary>
@@ -223,7 +225,18 @@ class CreateROSAWizardInternal extends React.Component {
           </ErrorBoundary>
         ),
         enableNext: isValid,
-        canJumpTo: stepIdReached >= 50,
+        canJumpTo: this.canJumpTo(40),
+      },
+      {
+        id: 50,
+        name: 'Cluster updates',
+        component: (
+          <ErrorBoundary>
+            <UpdatesScreen />
+          </ErrorBoundary>
+        ),
+        enableNext: isValid,
+        canJumpTo: this.canJumpTo(50),
       },
       {
         id: 100,
@@ -238,7 +251,7 @@ class CreateROSAWizardInternal extends React.Component {
         ),
         nextButtonText: 'Create cluster',
         enableNext: isValid && !createClusterResponse.pending,
-        canJumpTo: stepIdReached >= 100 && isValid,
+        canJumpTo: this.canJumpTo(100),
       },
     ];
     const ariaTitle = 'Create ROSA cluster wizard';
