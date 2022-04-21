@@ -6,7 +6,9 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
   id="cl-details-top"
 >
   <Split>
-    <SplitItem>
+    <SplitItem
+      className="pf-u-pb-md"
+    >
       <Breadcrumbs
         path={
           Array [
