@@ -20,6 +20,7 @@ import ErrorModal from '../../../common/ErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
 import { shouldRefetchQuota } from '../../../../common/helpers';
+import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
 import BillingModelScreen from './BillingModelScreen';
 import CloudProviderScreen from './CloudProviderScreen';
@@ -33,13 +34,13 @@ import CIDRScreen from './CIDRScreen';
 import UpdatesScreen from './UpdatesScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
-
+import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import { VALIDATE_CLOUD_PROVIDER_CREDENTIALS } from './ccsInquiriesActions';
 
 import './createOSDWizard.scss';
 
-class CreateOSDWizard extends React.Component {
+class CreateOSDWizardInternal extends React.Component {
   state = {
     stepIdReached: 1,
     currentStep: 1,
@@ -295,6 +296,10 @@ class CreateOSDWizard extends React.Component {
     const orgWasFetched = !organization.pending && organization.fulfilled;
 
     if (createClusterResponse.fulfilled) {
+      // When a cluster is successfully created,
+      // unblock history in order to not show a confirmation prompt.
+      history.block(() => {});
+
       return (
         <Redirect to={`/details/s/${createClusterResponse.cluster.subscription.id}`} />
       );
@@ -441,13 +446,24 @@ class CreateOSDWizard extends React.Component {
   }
 }
 
+function CreateOSDWizard(props) {
+  usePreventBrowserNav();
+
+  return (
+    <>
+      <CreateOSDWizardInternal {...props} />
+      <LeaveCreateClusterPrompt />
+    </>
+  );
+}
+
 const requestStatePropTypes = PropTypes.shape({
   fulfilled: PropTypes.bool,
   error: PropTypes.bool,
   pending: PropTypes.bool,
 });
 
-CreateOSDWizard.propTypes = {
+CreateOSDWizardInternal.propTypes = {
   isValid: PropTypes.bool,
   ccsValidationPending: PropTypes.bool,
   isCCS: PropTypes.bool,
@@ -494,6 +510,7 @@ CreateOSDWizard.propTypes = {
   // for cancel button
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
+    block: PropTypes.func,
   }).isRequired,
 
   // for the /create/osdtrial url
