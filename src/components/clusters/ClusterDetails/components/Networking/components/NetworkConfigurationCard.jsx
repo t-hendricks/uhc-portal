@@ -17,7 +17,7 @@ function NetworkConfigurationCard({ network }) {
   return (
     <Card className="ocm-c-networking-network-configuration__card">
       <CardTitle>
-        Network configuration
+        CIDR ranges
       </CardTitle>
       <CardBody className="ocm-c-networking-network-configuration__card--body">
         <>

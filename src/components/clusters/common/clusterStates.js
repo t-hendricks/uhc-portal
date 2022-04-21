@@ -96,5 +96,12 @@ const isWaitingROSAManualMode = cluster => (
     && !cluster.aws.sts.auto_mode
 );
 
-export { getClusterStateAndDescription, isHibernating, isWaitingROSAManualMode };
+const isOffline = state => isHibernating(state) || state === clusterStates.UNINSTALLING;
+
+export {
+  getClusterStateAndDescription,
+  isHibernating,
+  isWaitingROSAManualMode,
+  isOffline,
+};
 export default clusterStates;
