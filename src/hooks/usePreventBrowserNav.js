@@ -8,10 +8,16 @@ import React from 'react';
  * @param {Boolean} when condition in which the confirmation dialog should appear. Defaults to true.
  */
 function usePreventBrowserNav(when = true) {
-  // Trigger browser confirmation dialogs when the form has been touched.
   React.useEffect(() => {
     if (when) {
-      window.onbeforeunload = () => true;
+      window.onbeforeunload = ({ target }) => {
+        // Don't trigger dialogs when elements with download attributes are clicked
+        if (!target.activeElement.hasAttribute('download')) {
+          return true;
+        }
+
+        return null;
+      };
     } else {
       window.onbeforeunload = null;
     }

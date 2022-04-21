@@ -45,6 +45,7 @@ function LeaveCreateClusterPrompt({ when = true }) {
           key="leave"
           variant="primary"
           onClick={() => history.push(destinationPath)}
+          data-testid="submit-button"
         >
           Yes, leave
         </Button>,
@@ -52,10 +53,12 @@ function LeaveCreateClusterPrompt({ when = true }) {
           key="stay"
           variant="link"
           onClick={() => setIsOpen(false)}
+          data-testid="cancel-button"
         >
           No, stay
         </Button>,
       ]}
+      data-testid="leave-cluster-modal"
     >
       All data entered will be lost
     </Modal>
