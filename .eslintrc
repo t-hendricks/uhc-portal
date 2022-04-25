@@ -15,7 +15,8 @@
           "**/*test.js*",
           "**/*.spec.js*",
           "selenium-js/**/*",
-          "webpack.config.js"
+          "webpack.config.js",
+          "src/testUtils.jsx"
         ]
       }
     ],
@@ -56,5 +57,12 @@
     "APP_API_ENV": "readonly",
     "APP_DEV_SERVER": "readonly",
     "OCM_SHOW_OLD_METRICS": "readonly"
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": [
+        ["@testUtils", "./src/testUtils.jsx"]
+      ]
+    }
   }
 }
