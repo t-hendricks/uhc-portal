@@ -183,7 +183,7 @@
     "selenium-test": "run/selenium-test.sh",
     "e2e-test": "concurrently --kill-others --success=first --raw --handle-input 'yarn selenium-with-vnc' 'env WEBPACK_WATCH=false yarn start'",
     "selenium-viewer": "wait-on tcp:5900 && vinagre --file=run/selenium.vnc",
-    "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh rm --force browser; pkill --full 'concurrently.*SERVER(prevent self match){0},INSIGHTS'; true"
+    "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh rm --force browser; pkill --full 'concurrently.*SERVER(prevent self match){0},MOCK'; pkill --full 'concurrently.*BROWSER(prevent self match){0},TEST'; true"
   },
   "insights": {
     "appname": "openshift"
