@@ -21,6 +21,7 @@ function CloudProviderSelectionField({
   const handleChange = (providerValue) => {
     change('region', providerValue === 'aws' ? osdInitialValues.AWS_DEFAULT_REGION : osdInitialValues.GCP_DEFAULT_REGION);
     change('machine_type', '');
+    change('acknowledge_prerequisites', false);
     onChange(providerValue);
   };
 
