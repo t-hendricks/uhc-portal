@@ -10,9 +10,11 @@ import React from 'react';
 function usePreventBrowserNav(when = true) {
   React.useEffect(() => {
     if (when) {
-      window.onbeforeunload = ({ target }) => {
+      window.onbeforeunload = (e) => {
+        // eslint-disable-next-line react/destructuring-assignment
+        const target = e?.target || {};
         // Don't trigger dialogs when elements with download attributes are clicked
-        if (!target.activeElement.hasAttribute('download')) {
+        if (!target.activeElement?.hasAttribute('download')) {
           return true;
         }
 

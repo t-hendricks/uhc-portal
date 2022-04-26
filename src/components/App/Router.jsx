@@ -80,6 +80,7 @@ import {
 } from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
+import InstallArmBareMetal from '../clusters/install/InstallArmBareMetal';
 import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
@@ -148,11 +149,12 @@ function Router({ history }) {
             <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
 
             <Route path="/install/alibaba/installer-provisioned" component={ConnectedInstallAlibaba} />
+            <Route path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
             <Route path="/install/arm/pre-release" component={ConnectedInstallArmPreRelease} />
+            <Route path="/install/arm" component={InstallArmBareMetal} />
             <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
             <Route path="/install/aws/arm" component={ConnectedInstallArmAWSIPI} />
-            <Route path="/install/arm" component={InstallArmBMUPI} />
             <Route path="/install/aws" component={InstallAWS} />
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
