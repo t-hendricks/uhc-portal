@@ -10,8 +10,8 @@ import { normalizedProducts } from '../../../../common/subscriptionTypes';
  */
 const ccsCredentialsSelector = (cloudProviderID, state) => {
   const valueSelector = formValueSelector('CreateCluster');
-  const productPlan = valueSelector(state, 'product');
-  const isROSA = productPlan === normalizedProducts.ROSA;
+  const product = valueSelector(state, 'product');
+  const isROSA = product === normalizedProducts.ROSA;
 
   switch (cloudProviderID) {
     case 'gcp':
