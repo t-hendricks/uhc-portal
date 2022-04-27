@@ -295,7 +295,21 @@ const upgradeTrialCluster = (clusterID, params) => apiRequest({
 
 /**
  * List AWS VPCs for given CCS account.
- * @param {*} credentials { accountID, accessKey, secretKey } object
+ *
+ * @param credentials {json} an object in the form:
+ * `{
+ *    account_id: string,
+ *    access_key_id: string,
+ *    secret_access_key: string,
+ *  }`
+ * or, when using STS, in the form:
+ * `{
+ *    account_id: string,
+ *    sts: {
+ *      role_arn: string
+ *    }
+ *  }`
+ * @param region {string} the region ID.
  */
 const listAWSVPCs = (credentials, region) => apiRequest({
   method: 'post',
