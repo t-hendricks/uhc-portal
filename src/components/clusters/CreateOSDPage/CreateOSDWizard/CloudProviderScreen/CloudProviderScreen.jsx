@@ -1,20 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Title,
-  Form,
-  Alert,
-} from '@patternfly/react-core';
+import { Title, Alert, Form } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-
-import { required } from '../../../../../common/validators';
 
 import CloudProviderSelectionField from '../CloudProviderSelectionField';
 import AWSByocFields from './AWSByocFields';
 import GCPByocFields from './GCPByocFields';
 
 function CloudProviderScreen({
-  isByoc, cloudProviderID, change, ccsCredentialsValidityResponse,
+  isByoc,
+  cloudProviderID,
+  change,
+  ccsCredentialsValidityResponse,
 }) {
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
@@ -24,11 +21,13 @@ function CloudProviderScreen({
       <Field
         name="cloud_provider"
         component={CloudProviderSelectionField}
-        validate={required}
+        validate={value => !value && 'Cloud provider is required.'}
         change={change}
       />
-      { isByoc && cloudProviderID && (
-        cloudProviderID === 'aws' ? <AWSByocFields isValidating={ccsCredentialsValidityResponse.pending} /> : <GCPByocFields isValidating={ccsCredentialsValidityResponse.pending} />
+      {isByoc && cloudProviderID && (
+        cloudProviderID === 'aws'
+          ? <AWSByocFields isValidating={ccsCredentialsValidityResponse.pending} />
+          : <GCPByocFields isValidating={ccsCredentialsValidityResponse.pending} />
       )}
       {isByoc
         && ccsCredentialsValidityResponse.error

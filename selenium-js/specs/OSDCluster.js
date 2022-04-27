@@ -11,7 +11,7 @@ const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
 
 describe('OSD cluster tests', async () => {
   // eslint-disable-next-line no-undef
-  before('should login successfully', async () => {
+  before(async () => {
     await LoginPage.open();
     await LoginPage.login();
 
@@ -29,16 +29,8 @@ describe('OSD cluster tests', async () => {
       expect(await CreateOSDWizardPage.fakeClusterBanner).toExist();
     });
 
-    it('disallows continuing without a cloud provider selected', async () => {
-      expect(await CreateOSDWizardPage.isBillingModelScreen()).toBeTruthy();
-      await (await CreateOSDWizardPage.primaryButton).click();
-
-      expect(await CreateOSDWizardPage.isCloudProviderSelectionScreen()).toBeTruthy();
-
-      expect(await (await CreateOSDWizardPage.primaryButton).isEnabled()).toBe(false);
-    });
-
     it('shows an error with invalid and empty names', async () => {
+      await (await CreateOSDWizardPage.primaryButton).click();
       await (await CreateOSDWizardPage.awsProvider).click();
       await (await CreateOSDWizardPage.primaryButton).click();
 

@@ -1,7 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import { GridItem, Alert, Title } from '@patternfly/react-core';
+import {
+  GridItem,
+  Alert,
+  Title,
+  Flex,
+} from '@patternfly/react-core';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { billingModelConstants, constants } from '../CreateOSDFormConstants';
 import { required, awsNumericAccountID } from '../../../../../common/validators';
@@ -10,7 +15,7 @@ import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox'
 
 function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
   return (
-    <>
+    <Flex direction={{ default: 'column' }}>
       <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
@@ -38,11 +43,11 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
       <GridItem md={6}>
         <Title headingLevel="h4">AWS IAM user credentials</Title>
       </GridItem>
-      <GridItem>
-        { !isWizard && (
+      {!isWizard && (
+        <GridItem>
           <Alert className="bottom-alert" variant="warning" title={billingModelConstants.awsCredentialsWarning} isInline />
-        )}
-      </GridItem>
+        </GridItem>
+      )}
       <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
@@ -78,7 +83,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           extendedHelpText={constants.bypassSCPChecksHint}
         />
       </GridItem>
-    </>
+    </Flex>
   );
 }
 

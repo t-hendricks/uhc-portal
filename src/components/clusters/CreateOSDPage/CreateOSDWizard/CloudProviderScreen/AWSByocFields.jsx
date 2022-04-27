@@ -1,8 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import {
-  Alert, GridItem, TextContent, Title, TextVariants, Text,
+  Alert,
+  GridItem,
+  Text,
+  TextVariants,
+  TextContent,
+  Title,
 } from '@patternfly/react-core';
+
 import links from '../../../../../common/installLinks.mjs';
 import ExternalLink from '../../../../common/ExternalLink';
 import AWSAccountDetailsSection from '../../CreateOSDForm/FormSections/AWSAccountDetailsSection';
