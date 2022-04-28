@@ -20,6 +20,9 @@
   #node-labels-alert {
     margin-top: var(--pf-global--spacer--md);
   }
+  .pf-c-form__field-group {
+    border-top: 0;
+  }
 }
 
 .ocm-c-wizard-alert-steps {
@@ -45,4 +48,10 @@
   padding-bottom: var(--pf-global--spacer--lg);
   padding-left: var(--pf-global--spacer--lg);
   padding-right: var(--pf-global--spacer--lg);
+}
+
+.ocm-roles-prefix__preview {
+  display: flex;
+  align-items: center;
+  padding-bottom: var(--pf-global--spacer--sm);
 }

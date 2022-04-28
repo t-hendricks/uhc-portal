@@ -119,7 +119,7 @@ describe('<DownloadsPage>', () => {
         'redhat-developer/app-services-cli': {
           fulfilled: true,
           data: {
-            tag_name: 'v0.25.0',
+            tag_name: 'v0.40.0',
             foo: 'bar',
           },
         },

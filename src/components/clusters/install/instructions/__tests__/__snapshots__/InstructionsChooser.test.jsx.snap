@@ -20,10 +20,6 @@ exports[`InstructionsChooser renders correctly with AI and UPI 1`] = `
           className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
           to="/assisted-installer/clusters/~new"
         >
-          <CardBadge
-            devPreviewText="Technology Preview"
-            isDevPreview={true}
-          />
           <CardBody
             className="ocm-c-ipi-upi-infra-card--body"
           >
@@ -94,10 +90,6 @@ exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
           className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
           to="/assisted-installer/clusters/~new"
         >
-          <CardBadge
-            devPreviewText="Technology Preview"
-            isDevPreview={true}
-          />
           <CardBody
             className="ocm-c-ipi-upi-infra-card--body"
           >

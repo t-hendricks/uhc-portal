@@ -52,7 +52,6 @@ class TabsRow extends React.Component {
       displayAccessControlTab,
       displayAddOnsTab,
       displayNetworkingTab,
-      displayInsightsTab,
       displaySupportTab,
       displayMachinePoolsTab,
       displayUpgradeSettingsTab,
@@ -63,12 +62,10 @@ class TabsRow extends React.Component {
       addOnsTabRef,
       networkingTabRef,
       supportTabRef,
-      insightsTabRef,
       machinePoolsTabRef,
       upgradeSettingsTabRef,
       addAssistedTabRef,
       hasIssues,
-      hasIssuesInsights,
     } = this.props;
     return [
       {
@@ -118,19 +115,6 @@ class TabsRow extends React.Component {
       },
       {
         key: 5,
-        title:
-  <>
-    <TabTitleText>Insights Advisor</TabTitleText>
-    {hasIssuesInsights
-      ? <TabTitleIcon id="insights-issues-icon"><ExclamationCircleIcon className="danger" /></TabTitleIcon> : ''}
-  </>,
-        contentId: 'insightsTabContent',
-        id: 'insights',
-        show: displayInsightsTab,
-        ref: insightsTabRef,
-      },
-      {
-        key: 6,
         title: 'Machine pools',
         contentId: 'machinePoolsTabContent',
         id: 'machinePools',
@@ -138,7 +122,7 @@ class TabsRow extends React.Component {
         ref: machinePoolsTabRef,
       },
       {
-        key: 7,
+        key: 6,
         title: 'Support',
         contentId: 'supportTabContent',
         id: 'support',
@@ -146,7 +130,7 @@ class TabsRow extends React.Component {
         ref: supportTabRef,
       },
       {
-        key: 8,
+        key: 7,
         title: 'Settings',
         contentId: 'upgradeSettingsTabContent',
         id: 'updateSettings',
@@ -154,7 +138,7 @@ class TabsRow extends React.Component {
         ref: upgradeSettingsTabRef,
       },
       {
-        key: 9,
+        key: 8,
         title: 'Add Hosts',
         contentId: 'addHostsContent',
         id: 'addAssistedHosts',
@@ -225,7 +209,6 @@ TabsRow.propTypes = {
   displayMonitoringTab: PropTypes.bool,
   displayAccessControlTab: PropTypes.bool,
   displayAddOnsTab: PropTypes.bool,
-  displayInsightsTab: PropTypes.bool,
   displayNetworkingTab: PropTypes.bool,
   displaySupportTab: PropTypes.bool,
   displayMachinePoolsTab: PropTypes.bool,
@@ -235,14 +218,12 @@ TabsRow.propTypes = {
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
   addOnsTabRef: PropTypes.object.isRequired,
-  insightsTabRef: PropTypes.object.isRequired,
   machinePoolsTabRef: PropTypes.object.isRequired,
   networkingTabRef: PropTypes.object.isRequired,
   supportTabRef: PropTypes.object.isRequired,
   upgradeSettingsTabRef: PropTypes.object.isRequired,
   addAssistedTabRef: PropTypes.object.isRequired,
   hasIssues: PropTypes.bool.isRequired,
-  hasIssuesInsights: PropTypes.bool.isRequired,
   initTabOpen: PropTypes.string,
   setOpenedTab: PropTypes.func.isRequired,
   onTabSelected: PropTypes.func.isRequired,
@@ -250,7 +231,6 @@ TabsRow.propTypes = {
 
 TabsRow.defaultProps = {
   displayMonitoringTab: true,
-  displayInsightsTab: false,
   displayAccessControlTab: false,
   displayAddOnsTab: false,
   displayNetworkingTab: false,

@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
   return ({
     awsAccountID: valueSelector(state, 'associated_aws_id'),
+    clusterName: valueSelector(state, 'name'),
     customOperatorRolesPrefix: valueSelector(state, 'custom_operator_roles_prefix'),
     getOCMRoleResponse,
   });

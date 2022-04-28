@@ -4,11 +4,10 @@ import get from 'lodash/get';
 import { Field } from 'redux-form';
 import {
   Alert, Button,
-  ExpandableSection, GridItem, Text, TextVariants, Title, Flex,
+  ExpandableSection, Grid, GridItem, Text, TextVariants, Title,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import './AccountsRolesScreen.scss';
-import { CheckIcon } from '@patternfly/react-icons';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { ReduxFormDropdown } from '../../../../common/ReduxFormComponents';
 import ExternalLink from '../../../../common/ExternalLink';
@@ -17,62 +16,66 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 
 function AccountRolesARNsSection({
   change,
+  touchARNsFields,
   selectedAWSAccountID,
   getAWSAccountRolesARNs,
   getAWSAccountRolesARNsResponse,
   clearGetAWSAccountRolesARNsResponse,
 }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
   const [installerRoleOptions, setInstallerRoleOptions] = useState([]);
   const [selectedInstallerRole, setSelectedInstallerRole] = useState('');
-  const [hasAccountRoles, setHasAccountRoles] = useState(false);
+  const [allARNsFound, setAllARNsFound] = useState(false);
   const [awsARNsErrorBox, setAwsARNsErrorBox] = useState(null);
 
   const NO_ROLE_DETECTED = 'No role detected';
+
+  useEffect(() => {
+    // this is required to show any validation error messages for the 4 disabled ARNs fields
+    touchARNsFields();
+  }, [touchARNsFields]);
 
   useEffect(() => {
     clearGetAWSAccountRolesARNsResponse();
   }, [selectedAWSAccountID]);
 
   useEffect(() => {
-    if (selectedInstallerRole === 'No role detected') {
-      change('installer_role_arn', selectedInstallerRole);
-      change('support_role_arn', selectedInstallerRole);
-      change('control_plane_role_arn', selectedInstallerRole);
-      change('worker_role_arn', selectedInstallerRole);
-    } else {
-      accountRoles.forEach((role) => {
-        if (role.Installer === selectedInstallerRole) {
-          change('installer_role_arn', role.Installer);
-          change('support_role_arn', role.Support);
-          change('control_plane_role_arn', role.ControlPlane);
-          change('worker_role_arn', role.Worker);
-        }
-      });
-    }
+    accountRoles.forEach((role) => {
+      if (role.Installer === selectedInstallerRole) {
+        setAllARNsFound(role.Installer && role.Support && role.ControlPlane && role.Worker);
+        change('installer_role_arn', role.Installer || NO_ROLE_DETECTED);
+        change('support_role_arn', role.Support || NO_ROLE_DETECTED);
+        change('control_plane_role_arn', role.ControlPlane || NO_ROLE_DETECTED);
+        change('worker_role_arn', role.Worker || NO_ROLE_DETECTED);
+      }
+    });
   }, [selectedInstallerRole]);
 
+  // update installer role dropdown everytime accountRoles change
   useEffect(() => {
-    setHasAccountRoles(accountRoles.length > 0);
     const installerOptions = [];
-    accountRoles.forEach((role) => {
-      installerOptions.push({
-        name: role.Installer,
-        value: role.Installer,
-      });
-    });
-    if (accountRoles.length > 0) {
-      setSelectedInstallerRole(accountRoles[0].Installer); // default to first installer role
-    } else {
+    if (accountRoles.length === 0) {
       installerOptions.push({
         name: NO_ROLE_DETECTED,
         value: NO_ROLE_DETECTED,
       });
+      change('installer_role_arn', NO_ROLE_DETECTED);
+      change('support_role_arn', NO_ROLE_DETECTED);
+      change('control_plane_role_arn', NO_ROLE_DETECTED);
+      change('worker_role_arn', NO_ROLE_DETECTED);
       setSelectedInstallerRole(NO_ROLE_DETECTED);
+      setAllARNsFound(false);
+    } else {
+      accountRoles.forEach((role) => {
+        installerOptions.push({
+          name: role.Installer,
+          value: role.Installer,
+        });
+      });
+      setSelectedInstallerRole(accountRoles[0].Installer); // default to first installer role
     }
     setInstallerRoleOptions(installerOptions);
-    setIsExpanded(accountRoles.length === 0 || installerOptions.length > 1);
   }, [accountRoles]);
 
   useEffect(() => {
@@ -102,7 +105,13 @@ function AccountRolesARNsSection({
     setSelectedInstallerRole(value);
   };
 
-  const installerRoleARNRequired = value => (value && value !== NO_ROLE_DETECTED ? undefined : 'Field is required');
+  const roleARNRequired = value => (value && value !== NO_ROLE_DETECTED ? undefined : 'ARN field is required.');
+
+  const refreshARNs = () => {
+    clearGetAWSAccountRolesARNsResponse();
+    setSelectedInstallerRole('');
+    getAWSAccountRolesARNs(selectedAWSAccountID);
+  };
 
   return (
     <>
@@ -115,28 +124,24 @@ function AccountRolesARNsSection({
           { awsARNsErrorBox }
         </GridItem>
       )}
-      {!getAWSAccountRolesARNsResponse.pending && !hasAccountRoles && !awsARNsErrorBox && (
+      {!getAWSAccountRolesARNsResponse.pending && !allARNsFound && !awsARNsErrorBox && (
       <GridItem>
         <Alert
           isInline
           variant="info"
-          title="Account roles were not detected. Follow the steps below to populate the ARN fields."
+          title="All account roles ARNs were not detected. Follow the steps below to populate the ARN fields."
         >
           <br />
-          <strong>Step 1:</strong>
-          {' '}
           Create the account roles using the following command in the ROSA CLI
           <InstructionCommand textAriaLabel="Copyable ROSA login command">
             rosa create account-roles
           </InstructionCommand>
           <br />
-          <strong>Step 2:</strong>
+          After running the command, you may need to refresh using the
           {' '}
-          After running the command you may need to refresh using the button below to populate the
+          <strong>Refresh ARNs</strong>
           {' '}
-          ARN fields.
-          <br />
-          <Button variant="secondary" onClick={() => { getAWSAccountRolesARNs(selectedAWSAccountID); }}>Refresh to populate ARNs</Button>
+          button below to populate the ARN fields.
         </Alert>
       </GridItem>
       )}
@@ -147,84 +152,77 @@ function AccountRolesARNsSection({
       </GridItem>
       )}
       {!getAWSAccountRolesARNsResponse.pending && (
-        <GridItem span={6}>
-          <ExpandableSection
-            isExpanded={!awsARNsErrorBox && isExpanded}
-            onToggle={onToggle}
-            className="arns-expand-section"
-            toggleText={(
-              <Flex className="arns-expand-section__toggle-text" alignItems={{ default: 'alignItemsCenter' }} flexWrap={{ default: 'nowrap' }}>
-                <span>Account roles ARNs</span>
-                {hasAccountRoles && (
-                  <div>
-                    <CheckIcon className="status-icon success small" />
-                    <Text component={TextVariants.small}>
-                      ARNs detected successfully
-                    </Text>
-                  </div>
-                )}
-              </Flex>
-            )}
-          >
+      <GridItem span={12}>
+        <ExpandableSection
+          isExpanded={!awsARNsErrorBox && isExpanded}
+          onToggle={onToggle}
+          toggleText="Account roles ARNs"
+        >
+          <Text component={TextVariants.p}>
+            The following roles were detected in your AWS account.
+            {' '}
+            <ExternalLink href="">
+              Learn more about account roles
+            </ExternalLink>
+            .
+          </Text>
+          <br />
+          <Button variant="secondary" onClick={refreshARNs}>Refresh ARNs</Button>
+          <br />
+          <br />
+          <Grid>
             <GridItem span={8}>
-              <Text component={TextVariants.p}>
-                The following roles were detected in your AWS account.
-                {' '}
-                <br />
-                <ExternalLink href="">
-                  Learn more about account roles
-                </ExternalLink>
-                .
-                <br />
-                <br />
-              </Text>
+              <Field
+                component={ReduxFormDropdown}
+                name="installer_role_arn"
+                label="Installer role"
+                type="text"
+                options={installerRoleOptions}
+                onChange={handInstallerRoleChange}
+                isDisabled={installerRoleOptions.length <= 1}
+                validate={roleARNRequired}
+                isRequired
+                helpText=""
+                extendedHelpText="Something..."
+              />
+              <br />
+              <Field
+                component={ReduxVerticalFormGroup}
+                name="support_role_arn"
+                label="Support Role"
+                type="text"
+                validate={roleARNRequired}
+                isRequired
+                extendedHelpText="Something..."
+                isDisabled
+              />
+              <br />
+              <Field
+                component={ReduxVerticalFormGroup}
+                name="worker_role_arn"
+                label="Worker role"
+                type="text"
+                validate={roleARNRequired}
+                isRequired
+                extendedHelpText="Something..."
+                isDisabled
+              />
+              <br />
+              <Field
+                component={ReduxVerticalFormGroup}
+                name="control_plane_role_arn"
+                label="Control plane role"
+                type="text"
+                validate={roleARNRequired}
+                isRequired
+                extendedHelpText="Something..."
+                isDisabled
+              />
             </GridItem>
-            <GridItem span={4} />
-            <GridItem />
-            <Field
-              component={ReduxFormDropdown}
-              name="installer_role_arn"
-              label="Installer role"
-              type="text"
-              options={installerRoleOptions}
-              onChange={handInstallerRoleChange}
-              isDisabled={!hasAccountRoles || accountRoles.length === 1}
-              validate={installerRoleARNRequired}
-              isRequired
-              extendedHelpText="Something..."
-            />
-            <br />
-            <Field
-              component={ReduxVerticalFormGroup}
-              name="support_role_arn"
-              label="Support Role"
-              type="text"
-              isRequired
-              extendedHelpText="Something..."
-              isDisabled
-            />
-            <br />
-            <Field
-              component={ReduxVerticalFormGroup}
-              name="worker_role_arn"
-              label="Worker role"
-              type="text"
-              isRequired
-              extendedHelpText="Something..."
-              isDisabled
-            />
-            <br />
-            <Field
-              component={ReduxVerticalFormGroup}
-              name="control_plane_role_arn"
-              label="Control plane role"
-              type="text"
-              isRequired
-              extendedHelpText="Something..."
-              isDisabled
-            />
-          </ExpandableSection>
-        </GridItem>
+          </Grid>
+          <GridItem span={4} />
+        </ExpandableSection>
+      </GridItem>
       )}
     </>
   );
@@ -232,6 +230,7 @@ function AccountRolesARNsSection({
 
 AccountRolesARNsSection.propTypes = {
   change: PropTypes.func,
+  touchARNsFields: PropTypes.func,
   selectedAWSAccountID: PropTypes.string,
   getAWSAccountRolesARNs: PropTypes.func.isRequired,
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,

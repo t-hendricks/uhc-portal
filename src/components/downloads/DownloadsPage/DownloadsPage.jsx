@@ -229,7 +229,7 @@ const ExpandableRowPair = ({
   return (
     <Tbody isExpanded={isExpanded} ref={get(toolRefs, expandKey)}>
       <Tr>
-        <Td expand={{ isExpanded, onToggle }} />
+        <Td expand={{ isExpanded, onToggle, rowIndex: 0 }} />
         {cells}
       </Tr>
       <Tr isExpanded={isExpanded}>
@@ -415,6 +415,29 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             .
             {' '}
             <ExternalLink href={links.KN_DOCS}>Learn more</ExternalLink>
+          </Text>
+        )}
+      />
+
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.TKN}
+        channel={channels.STABLE}
+        name={(
+          <>
+            Tekton command-line interface for OpenShift Pipelines (
+            <code>tkn</code>
+            )
+          </>
+        )}
+        description={(
+          <Text>
+            Manage and interact with CI pipelines on OpenShift Container Platform
+            {' '}
+            with the Tekton CLI for OpenShift Pipelines.
+            {' '}
+            <ExternalLink href={links.TKN_DOCS}>Get started</ExternalLink>
+
           </Text>
         )}
       />

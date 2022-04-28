@@ -5,6 +5,7 @@ exports[`<DownloadsCategoryDropdown /> should render 1`] = `
   aria-label="Select category"
   className=""
   isDisabled={false}
+  isIconSprite={false}
   isRequired={false}
   onBlur={[Function]}
   onChange={[Function]}
