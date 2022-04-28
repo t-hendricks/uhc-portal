@@ -233,8 +233,7 @@ module.exports = async (_env, argv) => {
       hot: false,
       port: noInsightsProxy ? 1337 : 8001,
       https: !!noInsightsProxy,
-      host: 'localhost',
-      webSocketServer: 'sockjs',
+      host: '0.0.0.0',
       allowedHosts: 'all',
     },
   };
