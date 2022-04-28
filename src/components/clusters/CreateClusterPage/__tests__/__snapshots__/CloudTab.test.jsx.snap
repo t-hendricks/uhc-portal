@@ -463,7 +463,9 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   >
                     Alibaba Cloud
                   </Link>
-                  <TechPreviewBadge />
+                  <TechnologyPreview
+                    position={1}
+                  />
                 </React.Fragment>,
                 "Full stack automation",
               ],
@@ -515,7 +517,9 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                   >
                     IBM Cloud
                   </Link>
-                  <TechPreviewBadge />
+                  <TechnologyPreview
+                    position={1}
+                  />
                 </React.Fragment>,
                 "Full stack automation",
               ],
@@ -1006,7 +1010,9 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   >
                     Alibaba Cloud
                   </Link>
-                  <TechPreviewBadge />
+                  <TechnologyPreview
+                    position={1}
+                  />
                 </React.Fragment>,
                 "Full stack automation",
               ],
@@ -1058,7 +1064,9 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                   >
                     IBM Cloud
                   </Link>
-                  <TechPreviewBadge />
+                  <TechnologyPreview
+                    position={1}
+                  />
                 </React.Fragment>,
                 "Full stack automation",
               ],
@@ -1484,7 +1492,9 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   >
                     Alibaba Cloud
                   </Link>
-                  <TechPreviewBadge />
+                  <TechnologyPreview
+                    position={1}
+                  />
                 </React.Fragment>,
                 "Full stack automation",
               ],
@@ -1536,7 +1546,9 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   >
                     IBM Cloud
                   </Link>
-                  <TechPreviewBadge />
+                  <TechnologyPreview
+                    position={1}
+                  />
                 </React.Fragment>,
                 "Full stack automation",
               ],
