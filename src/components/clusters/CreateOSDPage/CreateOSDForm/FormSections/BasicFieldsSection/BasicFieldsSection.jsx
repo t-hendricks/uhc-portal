@@ -57,6 +57,26 @@ function BasicFieldsSection({
     }
   };
 
+  const clusterNameHint = (
+    <TextContent>
+      <Text component={TextVariants.p}>
+        The cluster name is used to generate a subdomain on console.redhat.com.
+      </Text>
+      <Text component={TextVariants.p}>
+        Example:
+        {' '}
+        <strong>your-cluster-name</strong>
+        .console.redhat.com
+      </Text>
+      {/* todo - this addition is yet undecided - pending response from UXD */}
+      {/*
+      <Text component={TextVariants.p}>
+        You can configure Route 53 DNS options later in the cluster creation process.
+      </Text>
+      */}
+    </TextContent>
+  );
+
   return (
     <>
       {/* cluster name */}
@@ -69,25 +89,7 @@ function BasicFieldsSection({
           validate={validators.checkClusterName}
           disabled={pending}
           isRequired
-          extendedHelpText={(
-            <TextContent>
-              <Text component={TextVariants.p}>
-                The cluster name is used to generate a subdomain on console.redhat.com.
-              </Text>
-              <Text component={TextVariants.p}>
-                Example:
-                {' '}
-                <strong>your-cluster-name</strong>
-                .console.redhat.com
-              </Text>
-              {/* todo - this addition is yet undecided - pending response from UXD */}
-              {/*
-              <Text component={TextVariants.p}>
-                You can configure Route 53 DNS options later in the cluster creation process.
-              </Text>
-              */}
-            </TextContent>
-          )}
+          extendedHelpText={clusterNameHint}
         />
       </GridItem>
       <GridItem md={6} />
