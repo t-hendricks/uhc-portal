@@ -18,7 +18,7 @@ if (isDevOrStaging) {
 if (APP_DEV_SERVER) {
   // running in webpack dev server, add development configs
   configs.development = import(/* webpackMode: "eager" */ './config/development.json');
-  configs.mockserver = import(/* webpackMode: "eager" */ './config/mockserver.json');
+  configs.mockdata = import(/* webpackMode: "eager" */ './config/mockdata.json');
 }
 
 // select config according to the APP_API_ENV flag (see webpack.config.js)
@@ -30,6 +30,8 @@ const parseEnvQueryParam = () => {
     const [key, val] = queryString.split('=');
     if (key === 'env' && !!configs[val]) {
       ret = val;
+    } else if (key === 'env' && val === 'mockserver' && configs.mockdata) {
+      ret = 'mockdata';
     }
   });
   return ret;

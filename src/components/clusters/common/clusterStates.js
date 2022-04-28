@@ -1,6 +1,6 @@
 import get from 'lodash/get';
 import { OCM } from 'openshift-assisted-ui-lib';
-import { subscriptionStatuses } from '../../../common/subscriptionTypes';
+import { subscriptionStatuses, normalizedProducts } from '../../../common/subscriptionTypes';
 import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
 
 const clusterStates = {
@@ -87,5 +87,14 @@ const isHibernating = state => state === clusterStates.HIBERNATING
   || state === clusterStates.POWERING_DOWN
   || state === clusterStates.RESUMING;
 
-export { getClusterStateAndDescription, isHibernating };
+// Indicates that this is a ROSA cluster waiting for manual creation of OIDC
+// and operator roles.
+const isWaitingROSAManualMode = cluster => (
+  cluster.product.id === normalizedProducts.ROSA
+    && cluster.state === clusterStates.WAITING
+    && cluster.aws.sts
+    && !cluster.aws.sts.auto_mode
+);
+
+export { getClusterStateAndDescription, isHibernating, isWaitingROSAManualMode };
 export default clusterStates;

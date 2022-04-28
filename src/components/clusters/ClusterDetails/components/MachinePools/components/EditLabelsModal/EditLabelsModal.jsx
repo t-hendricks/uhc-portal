@@ -11,7 +11,6 @@ import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../SpotI
 
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
-import EditMachinePoolAlert from '../EditMachinePoolAlert';
 import { ReduxFormDropdown, ReduxFormTagsInput } from '../../../../../../common/ReduxFormComponents';
 
 class EditLabelsModal extends Component {
@@ -86,7 +85,6 @@ class EditLabelsModal extends Component {
         modalSize="medium"
       >
         <>
-          <EditMachinePoolAlert />
           {error}
           <Form onSubmit={handleSubmit}>
             <Grid hasGutter>

@@ -15,7 +15,6 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
         >
           Assisted Installer
         </Title>
-        <TechPreviewBadge />
       </StackItem>
       <StackItem>
         The easiest way to install OpenShift on your own infrastructure with step-by-step guidance, preflight validations, and smart defaults. This method supports both x86-64 and arm64 CPU architectures.
@@ -60,6 +59,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
         <Table
           aria-label="Installation options table"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -69,11 +69,14 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
             ]
           }
           className="install-options-table"
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           ouiaSafe={true}
@@ -177,7 +180,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
       </StackItem>
     </Stack>
@@ -205,6 +208,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
         <Table
           aria-label="Installation options table"
           borders={true}
+          canCollapseAll={false}
           canSelectAll={true}
           canSortFavorites={true}
           cells={
@@ -214,11 +218,14 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
             ]
           }
           className="install-options-table"
+          collapseAllAriaLabel=""
           contentId="expanded-content"
           dropdownDirection="down"
           dropdownPosition="right"
           expandId="expandable-toggle"
           gridBreakPoint="grid-md"
+          isHeaderSelectDisabled={false}
+          isNested={false}
           isStickyHeader={false}
           isTreeTable={false}
           ouiaSafe={true}
@@ -322,7 +329,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
           variant={null}
         >
           <TableHeader />
-          <Component />
+          <TableBody />
         </Table>
       </StackItem>
     </Stack>

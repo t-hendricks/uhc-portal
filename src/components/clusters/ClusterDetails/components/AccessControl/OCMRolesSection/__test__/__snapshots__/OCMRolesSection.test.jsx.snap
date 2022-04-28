@@ -357,6 +357,7 @@ exports[` 1`] = `
             areActionsDisabled={[Function]}
             aria-label="OCM Roles and Access"
             borders={true}
+            canCollapseAll={false}
             canSelectAll={true}
             canSortFavorites={true}
             cells={
@@ -376,11 +377,14 @@ exports[` 1`] = `
               ]
             }
             className=""
+            collapseAllAriaLabel=""
             contentId="expanded-content"
             dropdownDirection="down"
             dropdownPosition="right"
             expandId="expandable-toggle"
             gridBreakPoint="grid-md"
+            isHeaderSelectDisabled={false}
+            isNested={false}
             isStickyHeader={false}
             isTreeTable={false}
             ouiaSafe={true}
@@ -417,15 +421,19 @@ exports[` 1`] = `
                         },
                       ],
                       "actionsToggle": undefined,
+                      "allRowsExpanded": false,
                       "allRowsSelected": false,
                       "areActionsDisabled": [Function],
+                      "canCollapseAll": false,
                       "canSelectAll": true,
                       "canSortFavorites": true,
+                      "collapseAllAriaLabel": "",
                       "contentId": "expanded-content",
                       "dropdownDirection": "down",
                       "dropdownPosition": "right",
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
+                      "isHeaderSelectDisabled": false,
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -472,15 +480,19 @@ exports[` 1`] = `
                         },
                       ],
                       "actionsToggle": undefined,
+                      "allRowsExpanded": false,
                       "allRowsSelected": false,
                       "areActionsDisabled": [Function],
+                      "canCollapseAll": false,
                       "canSelectAll": true,
                       "canSortFavorites": true,
+                      "collapseAllAriaLabel": "",
                       "contentId": "expanded-content",
                       "dropdownDirection": "down",
                       "dropdownPosition": "right",
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
+                      "isHeaderSelectDisabled": false,
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -528,15 +540,19 @@ exports[` 1`] = `
                         },
                       ],
                       "actionsToggle": undefined,
+                      "allRowsExpanded": false,
                       "allRowsSelected": false,
                       "areActionsDisabled": [Function],
+                      "canCollapseAll": false,
                       "canSelectAll": true,
                       "canSortFavorites": true,
+                      "collapseAllAriaLabel": "",
                       "contentId": "expanded-content",
                       "dropdownDirection": "down",
                       "dropdownPosition": "right",
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
+                      "isHeaderSelectDisabled": false,
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -565,6 +581,7 @@ exports[` 1`] = `
                 ]
               }
               gridBreakPoint="grid-md"
+              isNested={false}
               isStickyHeader={false}
               isTreeTable={false}
               ouiaSafe={true}
@@ -588,6 +605,7 @@ exports[` 1`] = `
                 borders={true}
                 className=""
                 gridBreakPoint="grid-md"
+                isNested={false}
                 isStickyHeader={false}
                 isTreeTable={false}
                 ouiaSafe={true}
@@ -600,6 +618,7 @@ exports[` 1`] = `
                   className=""
                   gridBreakPoint="grid-md"
                   innerRef={null}
+                  isNested={false}
                   isStickyHeader={false}
                   isTreeTable={false}
                   ouiaSafe={true}
@@ -618,7 +637,7 @@ exports[` 1`] = `
                       <ContextHeader
                         headerRows={null}
                       >
-                        <Component
+                        <Header
                           className=""
                           headerRows={null}
                         >
@@ -647,15 +666,19 @@ exports[` 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -702,15 +725,19 @@ exports[` 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -758,15 +785,19 @@ exports[` 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -868,15 +899,19 @@ exports[` 1`] = `
                                               },
                                             ],
                                             "actionsToggle": undefined,
+                                            "allRowsExpanded": false,
                                             "allRowsSelected": false,
                                             "areActionsDisabled": [Function],
+                                            "canCollapseAll": false,
                                             "canSelectAll": true,
                                             "canSortFavorites": true,
+                                            "collapseAllAriaLabel": "",
                                             "contentId": "expanded-content",
                                             "dropdownDirection": "down",
                                             "dropdownPosition": "right",
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
+                                            "isHeaderSelectDisabled": false,
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -923,15 +958,19 @@ exports[` 1`] = `
                                               },
                                             ],
                                             "actionsToggle": undefined,
+                                            "allRowsExpanded": false,
                                             "allRowsSelected": false,
                                             "areActionsDisabled": [Function],
+                                            "canCollapseAll": false,
                                             "canSelectAll": true,
                                             "canSortFavorites": true,
+                                            "collapseAllAriaLabel": "",
                                             "contentId": "expanded-content",
                                             "dropdownDirection": "down",
                                             "dropdownPosition": "right",
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
+                                            "isHeaderSelectDisabled": false,
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -979,15 +1018,19 @@ exports[` 1`] = `
                                               },
                                             ],
                                             "actionsToggle": undefined,
+                                            "allRowsExpanded": false,
                                             "allRowsSelected": false,
                                             "areActionsDisabled": [Function],
+                                            "canCollapseAll": false,
                                             "canSelectAll": true,
                                             "canSortFavorites": true,
+                                            "collapseAllAriaLabel": "",
                                             "contentId": "expanded-content",
                                             "dropdownDirection": "down",
                                             "dropdownPosition": "right",
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
+                                            "isHeaderSelectDisabled": false,
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -1092,7 +1135,6 @@ exports[` 1`] = `
                                                       onDocumentClick={[Function]}
                                                       onDocumentKeyDown={[Function]}
                                                       onTriggerClick={[Function]}
-                                                      onTriggerEnter={[Function]}
                                                       placement="top"
                                                       popper={
                                                         <FocusTrap
@@ -1289,7 +1331,6 @@ exports[` 1`] = `
                                                       onDocumentClick={[Function]}
                                                       onDocumentKeyDown={[Function]}
                                                       onTriggerClick={[Function]}
-                                                      onTriggerEnter={[Function]}
                                                       placement="top"
                                                       popper={
                                                         <FocusTrap
@@ -1468,10 +1509,10 @@ exports[` 1`] = `
                               </TheadBase>
                             </Thead>
                           </BaseHeader>
-                        </Component>
+                        </Header>
                       </ContextHeader>
                     </TableHeader>
-                    <Component>
+                    <TableBody>
                       <ContextBody
                         className=""
                         headerData={
@@ -1497,15 +1538,19 @@ exports[` 1`] = `
                                   },
                                 ],
                                 "actionsToggle": undefined,
+                                "allRowsExpanded": false,
                                 "allRowsSelected": false,
                                 "areActionsDisabled": [Function],
+                                "canCollapseAll": false,
                                 "canSelectAll": true,
                                 "canSortFavorites": true,
+                                "collapseAllAriaLabel": "",
                                 "contentId": "expanded-content",
                                 "dropdownDirection": "down",
                                 "dropdownPosition": "right",
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
+                                "isHeaderSelectDisabled": false,
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -1552,15 +1597,19 @@ exports[` 1`] = `
                                   },
                                 ],
                                 "actionsToggle": undefined,
+                                "allRowsExpanded": false,
                                 "allRowsSelected": false,
                                 "areActionsDisabled": [Function],
+                                "canCollapseAll": false,
                                 "canSelectAll": true,
                                 "canSortFavorites": true,
+                                "collapseAllAriaLabel": "",
                                 "contentId": "expanded-content",
                                 "dropdownDirection": "down",
                                 "dropdownPosition": "right",
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
+                                "isHeaderSelectDisabled": false,
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -1608,15 +1657,19 @@ exports[` 1`] = `
                                   },
                                 ],
                                 "actionsToggle": undefined,
+                                "allRowsExpanded": false,
                                 "allRowsSelected": false,
                                 "areActionsDisabled": [Function],
+                                "canCollapseAll": false,
                                 "canSelectAll": true,
                                 "canSortFavorites": true,
+                                "collapseAllAriaLabel": "",
                                 "contentId": "expanded-content",
                                 "dropdownDirection": "down",
                                 "dropdownPosition": "right",
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
+                                "isHeaderSelectDisabled": false,
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -1650,7 +1703,7 @@ exports[` 1`] = `
                         rowKey="secretTableRowKeyId"
                         rows={Array []}
                       >
-                        <Component
+                        <Body
                           className=""
                           headerRows={null}
                           mappedRows={Array []}
@@ -1683,15 +1736,19 @@ exports[` 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -1738,15 +1795,19 @@ exports[` 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -1794,15 +1855,19 @@ exports[` 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -1880,9 +1945,9 @@ exports[` 1`] = `
                               </Tbody>
                             </BodyWrapper>
                           </BaseBody>
-                        </Component>
+                        </Body>
                       </ContextBody>
-                    </Component>
+                    </TableBody>
                   </table>
                 </TableComposableBase>
               </TableComposable>
@@ -2277,6 +2342,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
             areActionsDisabled={[Function]}
             aria-label="OCM Roles and Access"
             borders={true}
+            canCollapseAll={false}
             canSelectAll={true}
             canSortFavorites={true}
             cells={
@@ -2296,11 +2362,14 @@ exports[`<OCMRolesSection /> should render 1`] = `
               ]
             }
             className=""
+            collapseAllAriaLabel=""
             contentId="expanded-content"
             dropdownDirection="down"
             dropdownPosition="right"
             expandId="expandable-toggle"
             gridBreakPoint="grid-md"
+            isHeaderSelectDisabled={false}
+            isNested={false}
             isStickyHeader={false}
             isTreeTable={false}
             ouiaSafe={true}
@@ -2497,15 +2566,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                         },
                       ],
                       "actionsToggle": undefined,
+                      "allRowsExpanded": false,
                       "allRowsSelected": false,
                       "areActionsDisabled": [Function],
+                      "canCollapseAll": false,
                       "canSelectAll": true,
                       "canSortFavorites": true,
+                      "collapseAllAriaLabel": "",
                       "contentId": "expanded-content",
                       "dropdownDirection": "down",
                       "dropdownPosition": "right",
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
+                      "isHeaderSelectDisabled": false,
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -2552,15 +2625,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                         },
                       ],
                       "actionsToggle": undefined,
+                      "allRowsExpanded": false,
                       "allRowsSelected": false,
                       "areActionsDisabled": [Function],
+                      "canCollapseAll": false,
                       "canSelectAll": true,
                       "canSortFavorites": true,
+                      "collapseAllAriaLabel": "",
                       "contentId": "expanded-content",
                       "dropdownDirection": "down",
                       "dropdownPosition": "right",
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
+                      "isHeaderSelectDisabled": false,
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -2608,15 +2685,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                         },
                       ],
                       "actionsToggle": undefined,
+                      "allRowsExpanded": false,
                       "allRowsSelected": false,
                       "areActionsDisabled": [Function],
+                      "canCollapseAll": false,
                       "canSelectAll": true,
                       "canSortFavorites": true,
+                      "collapseAllAriaLabel": "",
                       "contentId": "expanded-content",
                       "dropdownDirection": "down",
                       "dropdownPosition": "right",
                       "expandId": "expandable-toggle",
                       "firstUserColumnIndex": 0,
+                      "isHeaderSelectDisabled": false,
                       "onCollapse": undefined,
                       "onExpand": undefined,
                       "onFavorite": undefined,
@@ -2645,6 +2726,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                 ]
               }
               gridBreakPoint="grid-md"
+              isNested={false}
               isStickyHeader={false}
               isTreeTable={false}
               ouiaSafe={true}
@@ -2668,6 +2750,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                 borders={true}
                 className=""
                 gridBreakPoint="grid-md"
+                isNested={false}
                 isStickyHeader={false}
                 isTreeTable={false}
                 ouiaSafe={true}
@@ -2680,6 +2763,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                   className=""
                   gridBreakPoint="grid-md"
                   innerRef={null}
+                  isNested={false}
                   isStickyHeader={false}
                   isTreeTable={false}
                   ouiaSafe={true}
@@ -2698,7 +2782,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                       <ContextHeader
                         headerRows={null}
                       >
-                        <Component
+                        <Header
                           className=""
                           headerRows={null}
                         >
@@ -2727,15 +2811,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -2782,15 +2870,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -2838,15 +2930,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -2948,15 +3044,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               },
                                             ],
                                             "actionsToggle": undefined,
+                                            "allRowsExpanded": false,
                                             "allRowsSelected": false,
                                             "areActionsDisabled": [Function],
+                                            "canCollapseAll": false,
                                             "canSelectAll": true,
                                             "canSortFavorites": true,
+                                            "collapseAllAriaLabel": "",
                                             "contentId": "expanded-content",
                                             "dropdownDirection": "down",
                                             "dropdownPosition": "right",
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
+                                            "isHeaderSelectDisabled": false,
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -3003,15 +3103,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               },
                                             ],
                                             "actionsToggle": undefined,
+                                            "allRowsExpanded": false,
                                             "allRowsSelected": false,
                                             "areActionsDisabled": [Function],
+                                            "canCollapseAll": false,
                                             "canSelectAll": true,
                                             "canSortFavorites": true,
+                                            "collapseAllAriaLabel": "",
                                             "contentId": "expanded-content",
                                             "dropdownDirection": "down",
                                             "dropdownPosition": "right",
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
+                                            "isHeaderSelectDisabled": false,
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -3059,15 +3163,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               },
                                             ],
                                             "actionsToggle": undefined,
+                                            "allRowsExpanded": false,
                                             "allRowsSelected": false,
                                             "areActionsDisabled": [Function],
+                                            "canCollapseAll": false,
                                             "canSelectAll": true,
                                             "canSortFavorites": true,
+                                            "collapseAllAriaLabel": "",
                                             "contentId": "expanded-content",
                                             "dropdownDirection": "down",
                                             "dropdownPosition": "right",
                                             "expandId": "expandable-toggle",
                                             "firstUserColumnIndex": 0,
+                                            "isHeaderSelectDisabled": false,
                                             "onCollapse": undefined,
                                             "onExpand": undefined,
                                             "onFavorite": undefined,
@@ -3172,7 +3280,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                       onDocumentClick={[Function]}
                                                       onDocumentKeyDown={[Function]}
                                                       onTriggerClick={[Function]}
-                                                      onTriggerEnter={[Function]}
                                                       placement="top"
                                                       popper={
                                                         <FocusTrap
@@ -3369,7 +3476,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                       onDocumentClick={[Function]}
                                                       onDocumentKeyDown={[Function]}
                                                       onTriggerClick={[Function]}
-                                                      onTriggerEnter={[Function]}
                                                       placement="top"
                                                       popper={
                                                         <FocusTrap
@@ -3548,10 +3654,10 @@ exports[`<OCMRolesSection /> should render 1`] = `
                               </TheadBase>
                             </Thead>
                           </BaseHeader>
-                        </Component>
+                        </Header>
                       </ContextHeader>
                     </TableHeader>
-                    <Component>
+                    <TableBody>
                       <ContextBody
                         className=""
                         headerData={
@@ -3577,15 +3683,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                   },
                                 ],
                                 "actionsToggle": undefined,
+                                "allRowsExpanded": false,
                                 "allRowsSelected": false,
                                 "areActionsDisabled": [Function],
+                                "canCollapseAll": false,
                                 "canSelectAll": true,
                                 "canSortFavorites": true,
+                                "collapseAllAriaLabel": "",
                                 "contentId": "expanded-content",
                                 "dropdownDirection": "down",
                                 "dropdownPosition": "right",
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
+                                "isHeaderSelectDisabled": false,
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -3632,15 +3742,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                   },
                                 ],
                                 "actionsToggle": undefined,
+                                "allRowsExpanded": false,
                                 "allRowsSelected": false,
                                 "areActionsDisabled": [Function],
+                                "canCollapseAll": false,
                                 "canSelectAll": true,
                                 "canSortFavorites": true,
+                                "collapseAllAriaLabel": "",
                                 "contentId": "expanded-content",
                                 "dropdownDirection": "down",
                                 "dropdownPosition": "right",
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
+                                "isHeaderSelectDisabled": false,
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -3688,15 +3802,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                   },
                                 ],
                                 "actionsToggle": undefined,
+                                "allRowsExpanded": false,
                                 "allRowsSelected": false,
                                 "areActionsDisabled": [Function],
+                                "canCollapseAll": false,
                                 "canSelectAll": true,
                                 "canSortFavorites": true,
+                                "collapseAllAriaLabel": "",
                                 "contentId": "expanded-content",
                                 "dropdownDirection": "down",
                                 "dropdownPosition": "right",
                                 "expandId": "expandable-toggle",
                                 "firstUserColumnIndex": 0,
+                                "isHeaderSelectDisabled": false,
                                 "onCollapse": undefined,
                                 "onExpand": undefined,
                                 "onFavorite": undefined,
@@ -3890,7 +4008,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                           ]
                         }
                       >
-                        <Component
+                        <Body
                           className=""
                           headerRows={null}
                           mappedRows={
@@ -4417,15 +4535,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -4472,15 +4594,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -4528,15 +4654,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                       },
                                     ],
                                     "actionsToggle": undefined,
+                                    "allRowsExpanded": false,
                                     "allRowsSelected": false,
                                     "areActionsDisabled": [Function],
+                                    "canCollapseAll": false,
                                     "canSelectAll": true,
                                     "canSortFavorites": true,
+                                    "collapseAllAriaLabel": "",
                                     "contentId": "expanded-content",
                                     "dropdownDirection": "down",
                                     "dropdownPosition": "right",
                                     "expandId": "expandable-toggle",
                                     "firstUserColumnIndex": 0,
+                                    "isHeaderSelectDisabled": false,
                                     "onCollapse": undefined,
                                     "onExpand": undefined,
                                     "onFavorite": undefined,
@@ -5375,15 +5505,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 },
                                               ],
                                               "actionsToggle": undefined,
+                                              "allRowsExpanded": false,
                                               "allRowsSelected": false,
                                               "areActionsDisabled": [Function],
+                                              "canCollapseAll": false,
                                               "canSelectAll": true,
                                               "canSortFavorites": true,
+                                              "collapseAllAriaLabel": "",
                                               "contentId": "expanded-content",
                                               "dropdownDirection": "down",
                                               "dropdownPosition": "right",
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
+                                              "isHeaderSelectDisabled": false,
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -5430,15 +5564,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 },
                                               ],
                                               "actionsToggle": undefined,
+                                              "allRowsExpanded": false,
                                               "allRowsSelected": false,
                                               "areActionsDisabled": [Function],
+                                              "canCollapseAll": false,
                                               "canSelectAll": true,
                                               "canSortFavorites": true,
+                                              "collapseAllAriaLabel": "",
                                               "contentId": "expanded-content",
                                               "dropdownDirection": "down",
                                               "dropdownPosition": "right",
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
+                                              "isHeaderSelectDisabled": false,
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -5486,15 +5624,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 },
                                               ],
                                               "actionsToggle": undefined,
+                                              "allRowsExpanded": false,
                                               "allRowsSelected": false,
                                               "areActionsDisabled": [Function],
+                                              "canCollapseAll": false,
                                               "canSelectAll": true,
                                               "canSortFavorites": true,
+                                              "collapseAllAriaLabel": "",
                                               "contentId": "expanded-content",
                                               "dropdownDirection": "down",
                                               "dropdownPosition": "right",
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
+                                              "isHeaderSelectDisabled": false,
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -5618,7 +5760,8 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                     >
                                       <RowWrapper
                                         className=""
-                                        onMouseDown={[Function]}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
                                         row={
                                           Object {
                                             "cellsData": Array [
@@ -5710,12 +5853,14 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                       >
                                         <Tr
                                           className=""
-                                          onMouseDown={[Function]}
+                                          onClick={[Function]}
+                                          onKeyDown={[Function]}
                                         >
                                           <TrBase
                                             className=""
                                             innerRef={null}
-                                            onMouseDown={[Function]}
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
                                           >
                                             <tr
                                               className=""
@@ -5723,7 +5868,8 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               data-ouia-component-type="PF4/TableRow"
                                               data-ouia-safe={true}
                                               hidden={false}
-                                              onMouseDown={[Function]}
+                                              onClick={[Function]}
+                                              onKeyDown={[Function]}
                                             >
                                               <BodyCell
                                                 data-key={0}
@@ -5807,9 +5953,17 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                           positionModifiers={
                                                             Object {
                                                               "bottom": "pf-m-bottom",
+                                                              "bottom-end": "pf-m-bottom-right",
+                                                              "bottom-start": "pf-m-bottom-left",
                                                               "left": "pf-m-left",
+                                                              "left-end": "pf-m-left-bottom",
+                                                              "left-start": "pf-m-left-top",
                                                               "right": "pf-m-right",
+                                                              "right-end": "pf-m-right-bottom",
+                                                              "right-start": "pf-m-right-top",
                                                               "top": "pf-m-top",
+                                                              "top-end": "pf-m-top-right",
+                                                              "top-start": "pf-m-top-left",
                                                             }
                                                           }
                                                           trigger={
@@ -5879,7 +6033,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 style={
                                                   Object {
                                                     "paddingRight": 0,
-                                                    "width": "auto",
                                                   }
                                                 }
                                               >
@@ -5892,7 +6045,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                   style={
                                                     Object {
                                                       "paddingRight": 0,
-                                                      "width": "auto",
                                                     }
                                                   }
                                                   textCenter={false}
@@ -5907,7 +6059,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                     style={
                                                       Object {
                                                         "paddingRight": 0,
-                                                        "width": "auto",
                                                       }
                                                     }
                                                     textCenter={false}
@@ -5920,7 +6071,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                       style={
                                                         Object {
                                                           "paddingRight": 0,
-                                                          "width": "auto",
                                                         }
                                                       }
                                                     >
@@ -5951,15 +6101,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                   },
                                                                 ],
                                                                 "actionsToggle": undefined,
+                                                                "allRowsExpanded": false,
                                                                 "allRowsSelected": false,
                                                                 "areActionsDisabled": [Function],
+                                                                "canCollapseAll": false,
                                                                 "canSelectAll": true,
                                                                 "canSortFavorites": true,
+                                                                "collapseAllAriaLabel": "",
                                                                 "contentId": "expanded-content",
                                                                 "dropdownDirection": "down",
                                                                 "dropdownPosition": "right",
                                                                 "expandId": "expandable-toggle",
                                                                 "firstUserColumnIndex": 0,
+                                                                "isHeaderSelectDisabled": false,
                                                                 "onCollapse": undefined,
                                                                 "onExpand": undefined,
                                                                 "onFavorite": undefined,
@@ -6127,6 +6281,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                             isGrouped={false}
                                                             isOpen={false}
                                                             isPlain={true}
+                                                            isText={false}
                                                             menuAppendTo="inline"
                                                             onSelect={[Function]}
                                                             position="right"
@@ -6150,6 +6305,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                 isDisabled={false}
                                                                 isOpen={false}
                                                                 isPlain={true}
+                                                                isText={false}
                                                                 key=".0"
                                                                 onEnter={[Function]}
                                                                 onToggle={[Function]}
@@ -6200,6 +6356,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                   isPlain={true}
                                                                   isPrimary={false}
                                                                   isSplitButton={false}
+                                                                  isText={false}
                                                                   onEnter={[Function]}
                                                                   onToggle={[Function]}
                                                                   parentRef={
@@ -6311,15 +6468,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 },
                                               ],
                                               "actionsToggle": undefined,
+                                              "allRowsExpanded": false,
                                               "allRowsSelected": false,
                                               "areActionsDisabled": [Function],
+                                              "canCollapseAll": false,
                                               "canSelectAll": true,
                                               "canSortFavorites": true,
+                                              "collapseAllAriaLabel": "",
                                               "contentId": "expanded-content",
                                               "dropdownDirection": "down",
                                               "dropdownPosition": "right",
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
+                                              "isHeaderSelectDisabled": false,
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -6366,15 +6527,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 },
                                               ],
                                               "actionsToggle": undefined,
+                                              "allRowsExpanded": false,
                                               "allRowsSelected": false,
                                               "areActionsDisabled": [Function],
+                                              "canCollapseAll": false,
                                               "canSelectAll": true,
                                               "canSortFavorites": true,
+                                              "collapseAllAriaLabel": "",
                                               "contentId": "expanded-content",
                                               "dropdownDirection": "down",
                                               "dropdownPosition": "right",
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
+                                              "isHeaderSelectDisabled": false,
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -6422,15 +6587,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 },
                                               ],
                                               "actionsToggle": undefined,
+                                              "allRowsExpanded": false,
                                               "allRowsSelected": false,
                                               "areActionsDisabled": [Function],
+                                              "canCollapseAll": false,
                                               "canSelectAll": true,
                                               "canSortFavorites": true,
+                                              "collapseAllAriaLabel": "",
                                               "contentId": "expanded-content",
                                               "dropdownDirection": "down",
                                               "dropdownPosition": "right",
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
+                                              "isHeaderSelectDisabled": false,
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -6556,7 +6725,8 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                     >
                                       <RowWrapper
                                         className=""
-                                        onMouseDown={[Function]}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
                                         row={
                                           Object {
                                             "cellsData": Array [
@@ -6650,12 +6820,14 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                       >
                                         <Tr
                                           className=""
-                                          onMouseDown={[Function]}
+                                          onClick={[Function]}
+                                          onKeyDown={[Function]}
                                         >
                                           <TrBase
                                             className=""
                                             innerRef={null}
-                                            onMouseDown={[Function]}
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
                                           >
                                             <tr
                                               className=""
@@ -6663,7 +6835,8 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               data-ouia-component-type="PF4/TableRow"
                                               data-ouia-safe={true}
                                               hidden={false}
-                                              onMouseDown={[Function]}
+                                              onClick={[Function]}
+                                              onKeyDown={[Function]}
                                             >
                                               <BodyCell
                                                 data-key={0}
@@ -6747,9 +6920,17 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                           positionModifiers={
                                                             Object {
                                                               "bottom": "pf-m-bottom",
+                                                              "bottom-end": "pf-m-bottom-right",
+                                                              "bottom-start": "pf-m-bottom-left",
                                                               "left": "pf-m-left",
+                                                              "left-end": "pf-m-left-bottom",
+                                                              "left-start": "pf-m-left-top",
                                                               "right": "pf-m-right",
+                                                              "right-end": "pf-m-right-bottom",
+                                                              "right-start": "pf-m-right-top",
                                                               "top": "pf-m-top",
+                                                              "top-end": "pf-m-top-right",
+                                                              "top-start": "pf-m-top-left",
                                                             }
                                                           }
                                                           trigger={
@@ -6819,7 +7000,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 style={
                                                   Object {
                                                     "paddingRight": 0,
-                                                    "width": "auto",
                                                   }
                                                 }
                                               >
@@ -6832,7 +7012,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                   style={
                                                     Object {
                                                       "paddingRight": 0,
-                                                      "width": "auto",
                                                     }
                                                   }
                                                   textCenter={false}
@@ -6847,7 +7026,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                     style={
                                                       Object {
                                                         "paddingRight": 0,
-                                                        "width": "auto",
                                                       }
                                                     }
                                                     textCenter={false}
@@ -6860,7 +7038,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                       style={
                                                         Object {
                                                           "paddingRight": 0,
-                                                          "width": "auto",
                                                         }
                                                       }
                                                     >
@@ -6891,15 +7068,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                   },
                                                                 ],
                                                                 "actionsToggle": undefined,
+                                                                "allRowsExpanded": false,
                                                                 "allRowsSelected": false,
                                                                 "areActionsDisabled": [Function],
+                                                                "canCollapseAll": false,
                                                                 "canSelectAll": true,
                                                                 "canSortFavorites": true,
+                                                                "collapseAllAriaLabel": "",
                                                                 "contentId": "expanded-content",
                                                                 "dropdownDirection": "down",
                                                                 "dropdownPosition": "right",
                                                                 "expandId": "expandable-toggle",
                                                                 "firstUserColumnIndex": 0,
+                                                                "isHeaderSelectDisabled": false,
                                                                 "onCollapse": undefined,
                                                                 "onExpand": undefined,
                                                                 "onFavorite": undefined,
@@ -7069,6 +7250,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                             isGrouped={false}
                                                             isOpen={false}
                                                             isPlain={true}
+                                                            isText={false}
                                                             menuAppendTo="inline"
                                                             onSelect={[Function]}
                                                             position="right"
@@ -7092,6 +7274,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                 isDisabled={false}
                                                                 isOpen={false}
                                                                 isPlain={true}
+                                                                isText={false}
                                                                 key=".0"
                                                                 onEnter={[Function]}
                                                                 onToggle={[Function]}
@@ -7142,6 +7325,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                   isPlain={true}
                                                                   isPrimary={false}
                                                                   isSplitButton={false}
+                                                                  isText={false}
                                                                   onEnter={[Function]}
                                                                   onToggle={[Function]}
                                                                   parentRef={
@@ -7253,15 +7437,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 },
                                               ],
                                               "actionsToggle": undefined,
+                                              "allRowsExpanded": false,
                                               "allRowsSelected": false,
                                               "areActionsDisabled": [Function],
+                                              "canCollapseAll": false,
                                               "canSelectAll": true,
                                               "canSortFavorites": true,
+                                              "collapseAllAriaLabel": "",
                                               "contentId": "expanded-content",
                                               "dropdownDirection": "down",
                                               "dropdownPosition": "right",
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
+                                              "isHeaderSelectDisabled": false,
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -7308,15 +7496,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 },
                                               ],
                                               "actionsToggle": undefined,
+                                              "allRowsExpanded": false,
                                               "allRowsSelected": false,
                                               "areActionsDisabled": [Function],
+                                              "canCollapseAll": false,
                                               "canSelectAll": true,
                                               "canSortFavorites": true,
+                                              "collapseAllAriaLabel": "",
                                               "contentId": "expanded-content",
                                               "dropdownDirection": "down",
                                               "dropdownPosition": "right",
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
+                                              "isHeaderSelectDisabled": false,
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -7364,15 +7556,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 },
                                               ],
                                               "actionsToggle": undefined,
+                                              "allRowsExpanded": false,
                                               "allRowsSelected": false,
                                               "areActionsDisabled": [Function],
+                                              "canCollapseAll": false,
                                               "canSelectAll": true,
                                               "canSortFavorites": true,
+                                              "collapseAllAriaLabel": "",
                                               "contentId": "expanded-content",
                                               "dropdownDirection": "down",
                                               "dropdownPosition": "right",
                                               "expandId": "expandable-toggle",
                                               "firstUserColumnIndex": 0,
+                                              "isHeaderSelectDisabled": false,
                                               "onCollapse": undefined,
                                               "onExpand": undefined,
                                               "onFavorite": undefined,
@@ -7498,7 +7694,8 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                     >
                                       <RowWrapper
                                         className=""
-                                        onMouseDown={[Function]}
+                                        onClick={[Function]}
+                                        onKeyDown={[Function]}
                                         row={
                                           Object {
                                             "cellsData": Array [
@@ -7592,12 +7789,14 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                       >
                                         <Tr
                                           className=""
-                                          onMouseDown={[Function]}
+                                          onClick={[Function]}
+                                          onKeyDown={[Function]}
                                         >
                                           <TrBase
                                             className=""
                                             innerRef={null}
-                                            onMouseDown={[Function]}
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
                                           >
                                             <tr
                                               className=""
@@ -7605,7 +7804,8 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                               data-ouia-component-type="PF4/TableRow"
                                               data-ouia-safe={true}
                                               hidden={false}
-                                              onMouseDown={[Function]}
+                                              onClick={[Function]}
+                                              onKeyDown={[Function]}
                                             >
                                               <BodyCell
                                                 data-key={0}
@@ -7689,9 +7889,17 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                           positionModifiers={
                                                             Object {
                                                               "bottom": "pf-m-bottom",
+                                                              "bottom-end": "pf-m-bottom-right",
+                                                              "bottom-start": "pf-m-bottom-left",
                                                               "left": "pf-m-left",
+                                                              "left-end": "pf-m-left-bottom",
+                                                              "left-start": "pf-m-left-top",
                                                               "right": "pf-m-right",
+                                                              "right-end": "pf-m-right-bottom",
+                                                              "right-start": "pf-m-right-top",
                                                               "top": "pf-m-top",
+                                                              "top-end": "pf-m-top-right",
+                                                              "top-start": "pf-m-top-left",
                                                             }
                                                           }
                                                           trigger={
@@ -7761,7 +7969,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                 style={
                                                   Object {
                                                     "paddingRight": 0,
-                                                    "width": "auto",
                                                   }
                                                 }
                                               >
@@ -7774,7 +7981,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                   style={
                                                     Object {
                                                       "paddingRight": 0,
-                                                      "width": "auto",
                                                     }
                                                   }
                                                   textCenter={false}
@@ -7789,7 +7995,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                     style={
                                                       Object {
                                                         "paddingRight": 0,
-                                                        "width": "auto",
                                                       }
                                                     }
                                                     textCenter={false}
@@ -7802,7 +8007,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                       style={
                                                         Object {
                                                           "paddingRight": 0,
-                                                          "width": "auto",
                                                         }
                                                       }
                                                     >
@@ -7833,15 +8037,19 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                   },
                                                                 ],
                                                                 "actionsToggle": undefined,
+                                                                "allRowsExpanded": false,
                                                                 "allRowsSelected": false,
                                                                 "areActionsDisabled": [Function],
+                                                                "canCollapseAll": false,
                                                                 "canSelectAll": true,
                                                                 "canSortFavorites": true,
+                                                                "collapseAllAriaLabel": "",
                                                                 "contentId": "expanded-content",
                                                                 "dropdownDirection": "down",
                                                                 "dropdownPosition": "right",
                                                                 "expandId": "expandable-toggle",
                                                                 "firstUserColumnIndex": 0,
+                                                                "isHeaderSelectDisabled": false,
                                                                 "onCollapse": undefined,
                                                                 "onExpand": undefined,
                                                                 "onFavorite": undefined,
@@ -8011,6 +8219,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                             isGrouped={false}
                                                             isOpen={false}
                                                             isPlain={true}
+                                                            isText={false}
                                                             menuAppendTo="inline"
                                                             onSelect={[Function]}
                                                             position="right"
@@ -8034,6 +8243,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                 isDisabled={false}
                                                                 isOpen={false}
                                                                 isPlain={true}
+                                                                isText={false}
                                                                 key=".0"
                                                                 onEnter={[Function]}
                                                                 onToggle={[Function]}
@@ -8084,6 +8294,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                                   isPlain={true}
                                                                   isPrimary={false}
                                                                   isSplitButton={false}
+                                                                  isText={false}
                                                                   onEnter={[Function]}
                                                                   onToggle={[Function]}
                                                                   parentRef={
@@ -8176,9 +8387,9 @@ exports[`<OCMRolesSection /> should render 1`] = `
                               </Tbody>
                             </BodyWrapper>
                           </BaseBody>
-                        </Component>
+                        </Body>
                       </ContextBody>
-                    </Component>
+                    </TableBody>
                   </table>
                 </TableComposableBase>
               </TableComposable>

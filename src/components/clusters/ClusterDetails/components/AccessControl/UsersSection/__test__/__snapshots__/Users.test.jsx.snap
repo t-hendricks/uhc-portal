@@ -80,6 +80,7 @@ exports[`<Users /> with users should render 1`] = `
       areActionsDisabled={[Function]}
       aria-label="Users"
       borders={true}
+      canCollapseAll={false}
       canSelectAll={true}
       canSortFavorites={true}
       cells={
@@ -146,11 +147,14 @@ exports[`<Users /> with users should render 1`] = `
         ]
       }
       className=""
+      collapseAllAriaLabel=""
       contentId="expanded-content"
       dropdownDirection="down"
       dropdownPosition="right"
       expandId="expandable-toggle"
       gridBreakPoint="grid-md"
+      isHeaderSelectDisabled={false}
+      isNested={false}
       isStickyHeader={false}
       isTreeTable={false}
       ouiaSafe={true}
@@ -192,7 +196,7 @@ exports[`<Users /> with users should render 1`] = `
       variant="compact"
     >
       <TableHeader />
-      <Component />
+      <TableBody />
     </Table>
     <ButtonWithTooltip
       className="access-control-add"

@@ -13,12 +13,13 @@ const MIRROR_COREOS_INSTALLER_LATEST = 'https://mirror.openshift.com/pub/openshi
 const MIRROR_CRC_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest';
 const MIRROR_HELM_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest';
 const MIRROR_KN_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/serverless/latest';
+const MIRROR_TKN_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest';
 const MIRROR_ODO_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest';
 const MIRROR_OSDK_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/operator-sdk/latest';
 const MIRROR_OSDK_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/operator-sdk/latest';
 const MIRROR_OSDK_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/operator-sdk/latest';
 const MIRROR_OSDK_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/operator-sdk/latest';
-const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest';
+const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest';
 const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest';
 const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest';
 const MIRROR_RHCOS_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest';
@@ -69,6 +70,7 @@ const links = {
   OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition`,
   OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
   OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/osd_private_connections/private-cluster.html`,
+  OSD_CLUSTER_WIDE_PROXY: `${OSD_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
@@ -144,7 +146,6 @@ const links = {
 
   INSTALL_PRE_RELEASE_BUG_LIST_45: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.5.0',
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
-  INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_LATEST: 'https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/pre-release/latest',
   INSTALL_PRE_RELEASE_FEEDBACK_MAILTO: 'mailto:***REMOVED***?subject=[dev preview build]',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/articles/4307871',
 
@@ -171,6 +172,8 @@ const links = {
 
   KN_DOCS: `${DOCS_BASE}/cli_reference/kn-cli-tools.html`,
 
+  TKN_DOCS: `${DOCS_BASE}/cli_reference/tkn_cli/installing-tkn.html#installing-tkn`,
+
   ODO_DOCS: `${DOCS_BASE}/cli_reference/developer_cli_odo/understanding-odo.html`,
 
   OPM_DOCS: `${DOCS_BASE}/cli_reference/opm/cli-opm-install.html`,
@@ -188,11 +191,12 @@ const links = {
   ROSA_MONITORING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_monitoring/rosa-understanding-the-monitoring-stack.html`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,
   ROSA_CLI_DOCS: `${ROSA_DOCS_BASE}/rosa_cli/rosa-get-started-cli.html`,
-  ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-aws-prereqs.html`,
-  ROSA_INSTALLING: `${ROSA_DOCS_BASE}/rosa_getting_started/rosa_getting_started_iam/rosa-installing-rosa.html`,
-  ROSA_LIFE_CYCLE: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-life-cycle.html`,
-  ROSA_RESPONSIBILITY_MATRIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-policy-responsibility-matrix.html`,
-  ROSA_SERVICE_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-service-definition.html`,
+  ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-aws-prereqs.html`,
+  ROSA_INSTALLING: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-installing-rosa.html`,
+  ROSA_LIFE_CYCLE: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-life-cycle.html`,
+  ROSA_RESPONSIBILITY_MATRIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-policy-responsibility-matrix.html`,
+  ROSA_SERVICE_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html`,
+  ROSA_CLUSTER_WIDE_PROXY: `${ROSA_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
 
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
   // TODO OCM RBAC phase 2: update this link once the new chapter is there.
@@ -226,6 +230,7 @@ const tools = {
   ROSA: 'rosa',
   MIRROR_REGISTRY: 'mirror-registry',
   OC_MIRROR_PLUGIN: 'oc-mirror-plugin',
+  TKN: 'tkn',
 };
 
 const channels = {
@@ -487,6 +492,22 @@ const urls = {
     },
   },
 
+  [tools.TKN]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_TKN_LATEST}/tkn-linux-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_TKN_LATEST}/tkn-macos-amd64.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_TKN_LATEST}/tkn-windows-amd64.zip`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_TKN_LATEST}/tkn-linux-s390x.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_TKN_LATEST}/tkn-linux-ppc64le.tar.gz`,
+      },
+    },
+  },
+
   [tools.ODO]: {
     [channels.STABLE]: {
       [architectures.x86]: {
@@ -636,6 +657,10 @@ const urlsSelector = (githubReleases) => {
           [operatingSystems.mac]: `${base}/rhoas_${version}_macOS_amd64.tar.gz`,
           [operatingSystems.windows]: `${base}/rhoas_${version}_windows_amd64.zip`,
         },
+        [architectures.arm]: {
+          [operatingSystems.linux]: `${base}/rhoas_${version}_linux_arm64.tar.gz`,
+          [operatingSystems.mac]: `${base}/rhoas_${version}_macOS_arm64.tar.gz`,
+        },
       },
     };
   }
@@ -651,7 +676,7 @@ const getFlatUrls = async () => {
     // TODO: include latest github releases?
   ]);
   return [...urlSet].sort();
-}
+};
 
 export {
   architectures,

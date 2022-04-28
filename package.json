@@ -10,13 +10,13 @@
   "dependencies": {
     "@axetroy/react-download": "^1.1.1",
     "@babel/eslint-parser": "^7.13.14",
-    "@patternfly/patternfly": "^4.125.3",
-    "@patternfly/react-charts": "^6.15.14",
-    "@patternfly/react-code-editor": "^4.3.22",
-    "@patternfly/react-core": "^4.157.3",
-    "@patternfly/react-icons": "^4.11.8",
-    "@patternfly/react-table": "^4.29.37",
-    "@patternfly/react-tokens": "^4.12.9",
+    "@patternfly/patternfly": "^4.185.1",
+    "@patternfly/react-charts": "^6.55.16",
+    "@patternfly/react-code-editor": "^4.43.16",
+    "@patternfly/react-core": "^4.202.16",
+    "@patternfly/react-icons": "^4.53.16",
+    "@patternfly/react-table": "^4.71.16",
+    "@patternfly/react-tokens": "^4.54.16",
     "@redhat-cloud-services/frontend-components": "^3.1.7",
     "@redhat-cloud-services/frontend-components-config-utilities": "^1.0.0",
     "@redhat-cloud-services/frontend-components-notifications": "^3.1.0",
@@ -42,7 +42,6 @@
     "jsonschema": "^1.2.10",
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
-    "netmask": "^1.0.6",
     "openshift-assisted-ui-lib": "2.3.7",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
@@ -85,6 +84,10 @@
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.10.5",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/user-event": "^14.0.4",
     "@wdio/cli": "^6.3.3",
     "@wdio/local-runner": "^6.3.3",
     "@wdio/logger": "^6.7.3",
@@ -102,6 +105,7 @@
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-standard": "^16.0.0",
     "eslint-config-standard-react": "^11.0.1",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-node": "^11.1.0",
@@ -133,7 +137,8 @@
   },
   "resolutions": {
     "is-in-subnet": "3.1.0",
-    "jsprim": "1.4.2"
+    "jsprim": "1.4.2",
+    "multicast-dns": "7.2.3"
   },
   "jest": {
     "verbose": true,
@@ -147,11 +152,12 @@
       "^.+\\.(js|jsx|mjs)$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(react-monaco-editor|monaco-editor|lodash-es|openshift-assisted-ui-lib)/)"
+      "<rootDir>/node_modules/(?!(@patternfly|react-monaco-editor|monaco-editor|lodash-es|openshift-assisted-ui-lib)/)"
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js"
+      "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js",
+      "^@testUtils": "<rootDir>/src/testUtils.jsx"
     },
     "globals": {
       "APP_DEVMODE": false,
@@ -162,10 +168,9 @@
   },
   "scripts": {
     "build": "webpack $(run/progress-flag-if-tty.sh)",
-    "start": "webpack serve $(run/progress-flag-if-tty.sh) --env noproxy api-env=staging",
-    "startmock": "concurrently --kill-others --prefix=name --names=SERVER,BACKEND,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server --env api-env=mockserver' 'mockdata/mockserver.py' 'yarn insights-proxy'",
+    "start": "concurrently --kill-others --prefix=name --names=SERVER,MOCK --prefix-colors=cyan,reset 'yarn dev-server --env noproxy api-env=staging' 'mockdata/mockserver.py'",
+    "start-with-proxy": "concurrently --kill-others --prefix=name --names=SERVER,MOCK,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server --env api-env=staging' 'mockdata/mockserver.py' 'yarn insights-proxy'",
     "dev-server": "webpack serve $(run/progress-flag-if-tty.sh)",
-    "dev-server-for-mock": "webpack serve $(run/progress-flag-if-tty.sh) --env api-env=mockserver",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
     "lint": "eslint src --ext js,jsx",

@@ -12,6 +12,7 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
       actionResolver={[Function]}
       aria-label="Clusters with issues"
       borders={true}
+      canCollapseAll={false}
       canSelectAll={true}
       canSortFavorites={true}
       cells={
@@ -31,11 +32,14 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
         ]
       }
       className="clusters-with-issues"
+      collapseAllAriaLabel=""
       contentId="expanded-content"
       dropdownDirection="down"
       dropdownPosition="right"
       expandId="expandable-toggle"
       gridBreakPoint="grid-md"
+      isHeaderSelectDisabled={false}
+      isNested={false}
       isStickyHeader={false}
       isTreeTable={false}
       ouiaSafe={true}
@@ -185,7 +189,7 @@ exports[`<ClustersWithIssuesTableCard /> renders correctly 1`] = `
       variant="compact"
     >
       <TableHeader />
-      <Component />
+      <TableBody />
     </Table>
     <Connect(ViewPaginationRow)
       currentPage={1}
