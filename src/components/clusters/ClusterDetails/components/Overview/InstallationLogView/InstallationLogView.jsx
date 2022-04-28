@@ -251,7 +251,7 @@ class LogWindow extends React.Component {
           </div>
         ) : (
           cluster.state !== clusterStates.ERROR && (
-            <p>
+            <p className="pf-u-mt-sm">
               {message}
             </p>
           )

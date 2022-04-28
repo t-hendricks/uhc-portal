@@ -144,7 +144,7 @@ const checkMachinePoolName = value => checkObjectName(value, 'Machine pool', MAX
 const checkCustomOperatorRolesPrefix = (value) => {
   const label = 'Custom operator roles prefix';
   if (!value) {
-    return `${label} is required.`;
+    return undefined;
   }
   if (!DNS_LABEL_REGEXP.test(value)) {
     return `${label} '${value}' isn't valid, must consist of lower-case alphanumeric characters or '-', start with an alphabetic character, and end with an alphanumeric character. For example, 'my-name', or 'abc-123'.`;

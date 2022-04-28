@@ -76,7 +76,7 @@ const ChartByGroups = ({ tagHits, groups }) => {
             right: 300, // Adjusted to accommodate legend
             top: 10,
           }}
-          labels={({ datum }) => (datum.y === 0 ? '' : `${(datum.y / totalHits).toFixed(2) * 100}%`)}
+          labels={({ datum }) => (parseInt(datum.y, 10) === 0 || totalHits === 0 ? '' : `${((parseInt(datum.y, 10) / totalHits) * 100).toFixed()}%`)}
           legendData={
             Object.entries(groupedRulesByGroups)
               .map(([title, { count, tags }]) => ({

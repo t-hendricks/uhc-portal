@@ -23,7 +23,6 @@ import { OCM } from 'openshift-assisted-ui-lib';
 import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
-import Insights from './components/Insights';
 import Monitoring from './components/Monitoring';
 import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
@@ -272,7 +271,6 @@ class ClusterDetails extends Component {
       setGlobalError,
       displayClusterLogs,
       insightsData,
-      enableRule,
       canSubscribeOCP,
       canTransferClusterOwnership,
       canHibernateCluster,
@@ -284,7 +282,6 @@ class ClusterDetails extends Component {
       initTabOpen,
       assistedInstallerEnabled,
       userAccess,
-      addNotification,
       gotRouters,
     } = this.props;
     const { selectedTab, refreshEvent } = this.state;
@@ -346,7 +343,6 @@ class ClusterDetails extends Component {
     const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
     const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
     const isManaged = cluster.managed;
-    const isManagedSubscription = cluster.subscription.managed;
     const isClusterWaiting = cluster.state === clusterStates.WAITING;
     const isClusterPending = cluster.state === clusterStates.PENDING;
     const isClusterInstalling = cluster.state === clusterStates.INSTALLING;
@@ -360,9 +356,6 @@ class ClusterDetails extends Component {
     );
     const displayAddOnsTab = !isClusterInstalling && !isClusterPending && !isClusterWaiting
       && cluster.managed && !isArchived;
-      // "Insights Advisor" tab
-      // TODO: remove the tab and the related code properly
-    const displayInsightsTab = false;
     const consoleURL = get(cluster, 'console.url');
     const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster
       && !isUninstalledAICluster(cluster);
@@ -413,7 +406,6 @@ class ClusterDetails extends Component {
               displayAccessControlTab={displayAccessControlTab}
               displayAddOnsTab={displayAddOnsTab}
               displayNetworkingTab={displayNetworkingTab}
-              displayInsightsTab={displayInsightsTab}
               displaySupportTab={displaySupportTab}
               displayMachinePoolsTab={displayMachinePoolsTab}
               displayUpgradeSettingsTab={displayUpgradeSettingsTab}
@@ -510,31 +502,6 @@ class ClusterDetails extends Component {
           >
             <ErrorBoundary>
               <Networking clusterID={cluster.id} refreshCluster={this.refresh} />
-            </ErrorBoundary>
-          </TabContent>
-          )}
-          {displayInsightsTab && (
-          <TabContent
-            eventKey={5}
-            id="insightsTabContent"
-            ref={this.insightsTabRef}
-            aria-label="Insights"
-            ouiaId="insightsTabContent"
-            hidden
-          >
-            <ErrorBoundary>
-              <Insights
-                cluster={cluster}
-                insightsData={insightsData[cluster.external_id]}
-                enableRule={(ruleId, errorKey) => {
-                  /*  Use `managed` field from the subscription object because
-                      it evaluates to true for ARO clusters (yet Advisor considers
-                      ARO clusters are managed) */
-                  enableRule(cluster.external_id, ruleId, errorKey, false, isManagedSubscription);
-                }}
-                openModal={openModal}
-                addNotification={addNotification}
-              />
             </ErrorBoundary>
           </TabContent>
           )}
@@ -651,7 +618,6 @@ ClusterDetails.propTypes = {
   getClusterHistory: PropTypes.func.isRequired,
   getMachinePools: PropTypes.func.isRequired,
   clearGetMachinePoolsResponse: PropTypes.func.isRequired,
-  enableRule: PropTypes.func.isRequired,
   setOpenedTab: PropTypes.func.isRequired,
   canSubscribeOCP: PropTypes.bool.isRequired,
   canTransferClusterOwnership: PropTypes.bool.isRequired,
@@ -674,7 +640,6 @@ ClusterDetails.propTypes = {
     pending: PropTypes.bool,
     fulfilled: PropTypes.bool,
   }).isRequired,
-  addNotification: PropTypes.func.isRequired,
   fetchUpgradeGates: PropTypes.func,
 };
 

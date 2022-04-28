@@ -13,6 +13,7 @@ exports[`<ErroBox /> should render expandable 1`] = `
     displaySize="default"
     isActive={false}
     isDetached={false}
+    isIndented={false}
     isWidthLimited={false}
     onToggle={[Function]}
     toggleText="Error details"

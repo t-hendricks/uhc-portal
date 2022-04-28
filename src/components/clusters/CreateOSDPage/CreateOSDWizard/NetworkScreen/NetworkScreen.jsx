@@ -6,7 +6,7 @@ import {
   Grid,
   GridItem,
   Title,
-  Text, FormFieldGroup, FormGroup,
+  Text, FormFieldGroup, FormGroup, Tooltip,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
@@ -22,17 +22,21 @@ function NetworkScreen(props) {
     privateClusterSelected,
     showClusterPrivacy,
     showVPCCheckbox,
+    showClusterWideProxyCheckbox,
     cloudProviderID,
     privateLinkSelected,
     forcePrivateLink,
     configureProxySelected,
-    product,
     isByoc,
+    product,
   } = props;
 
   const { OSD, OSDTrial } = normalizedProducts;
-
-  const showConfigureProxy = isByoc && (product === OSD || product === OSDTrial);
+  const isByocOSD = isByoc && [OSD, OSDTrial].includes(product);
+  // show only if the product is ROSA with VPC or BYOC/CCS OSD with VPC
+  // Do not need to check for VPC here, since checking the "Configure a cluster-wide proxy" checkbox
+  // automatically checks the "Install into an existing VPC" checkbox in the UI
+  const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
 
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
@@ -59,6 +63,14 @@ function NetworkScreen(props) {
   };
 
   const privateLinkAndClusterSelected = privateLinkSelected && privateClusterSelected;
+  const installToVPCCheckbox = (
+    <Field
+      component={ReduxCheckbox}
+      name="install_to_vpc"
+      label="Install into an existing VPC"
+      isDisabled={(privateLinkAndClusterSelected || configureProxySelected)}
+    />
+  );
 
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
@@ -130,7 +142,7 @@ function NetworkScreen(props) {
                     <span>
                       Follow the
                       {' '}
-                      <ExternalLink href={links.AWS_PRIVATE_CONNECTIONS}>
+                      <ExternalLink href={links.OSD_AWS_PRIVATE_CONNECTIONS}>
                         documentation
                       </ExternalLink>
                       {' '}
@@ -156,12 +168,21 @@ function NetworkScreen(props) {
             </GridItem>
             <GridItem>
               <FormGroup fieldId="install-to-vpc">
-                <Field
-                  component={ReduxCheckbox}
-                  name="install_to_vpc"
-                  label="Install into an existing VPC"
-                  isDisabled={(privateLinkAndClusterSelected || configureProxySelected)}
-                />
+                {privateClusterSelected ? (
+                  <Tooltip
+                    position="top-start"
+                    enableFlip
+                    content={(
+                      <p>
+                        Private clusters must be installed into an existing VPC
+                        {' '}
+                        using a PrivateLink.
+                      </p>
+                    )}
+                  >
+                    {installToVPCCheckbox}
+                  </Tooltip>
+                ) : installToVPCCheckbox}
                 <FormFieldGroup>
                   {privateClusterSelected && cloudProviderID === 'aws' && (
                   <FormGroup>
@@ -210,11 +231,12 @@ NetworkScreen.propTypes = {
   cloudProviderID: PropTypes.string,
   showClusterPrivacy: PropTypes.bool,
   showVPCCheckbox: PropTypes.bool,
+  showClusterWideProxyCheckbox: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
   forcePrivateLink: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
-  product: PropTypes.string,
   isByoc: PropTypes.bool,
+  product: PropTypes.string,
 };
 
 export default NetworkScreen;

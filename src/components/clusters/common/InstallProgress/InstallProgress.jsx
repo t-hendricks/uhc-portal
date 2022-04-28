@@ -7,16 +7,21 @@ import {
   CardBody,
   Title,
 } from '@patternfly/react-core';
-import ProgressList from './ProgressList';
+
 import clusterStates from '../clusterStates';
+import ProgressList from './ProgressList';
+import DownloadOcCliButton from './DownloadOcCliButton';
+import CancelClusterButton from './CancelClusterButton';
 
 function InstallProgress({ cluster, children }) {
   return (
     <Card>
       <CardTitle>
-        <Title headingLevel="h2" size="lg" className="card-title logview-title">
+        <Title headingLevel="h2" size="lg" className="card-title logview-title pf-u-mr-md">
           {cluster.state === clusterStates.UNINSTALLING ? 'Uninstallation logs' : 'Installing cluster'}
         </Title>
+        <CancelClusterButton cluster={cluster} />
+        <DownloadOcCliButton />
       </CardTitle>
       <CardBody>
         {children && children[0]}

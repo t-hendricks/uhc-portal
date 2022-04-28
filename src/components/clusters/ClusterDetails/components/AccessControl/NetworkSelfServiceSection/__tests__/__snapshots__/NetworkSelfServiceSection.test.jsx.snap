@@ -42,6 +42,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
         areActionsDisabled={[Function]}
         aria-label="Grants"
         borders={true}
+        canCollapseAll={false}
         canSelectAll={true}
         canSortFavorites={true}
         cells={
@@ -83,11 +84,14 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
           ]
         }
         className=""
+        collapseAllAriaLabel=""
         contentId="expanded-content"
         dropdownDirection="down"
         dropdownPosition="right"
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
+        isHeaderSelectDisabled={false}
+        isNested={false}
         isStickyHeader={false}
         isTreeTable={false}
         ouiaSafe={true}
@@ -179,7 +183,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
         variant="compact"
       >
         <TableHeader />
-        <Component />
+        <TableBody />
       </Table>
       <ButtonWithTooltip
         className="access-control-add"
@@ -236,6 +240,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant succeeds 1`] =
         areActionsDisabled={[Function]}
         aria-label="Grants"
         borders={true}
+        canCollapseAll={false}
         canSelectAll={true}
         canSortFavorites={true}
         cells={
@@ -277,11 +282,14 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant succeeds 1`] =
           ]
         }
         className=""
+        collapseAllAriaLabel=""
         contentId="expanded-content"
         dropdownDirection="down"
         dropdownPosition="right"
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
+        isHeaderSelectDisabled={false}
+        isNested={false}
         isStickyHeader={false}
         isTreeTable={false}
         ouiaSafe={true}
@@ -363,7 +371,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant succeeds 1`] =
         variant="compact"
       >
         <TableHeader />
-        <Component />
+        <TableBody />
       </Table>
       <ButtonWithTooltip
         className="access-control-add"
@@ -443,6 +451,7 @@ exports[`<NetworkSelfServiceSection /> should render with grants 1`] = `
         areActionsDisabled={[Function]}
         aria-label="Grants"
         borders={true}
+        canCollapseAll={false}
         canSelectAll={true}
         canSortFavorites={true}
         cells={
@@ -484,11 +493,14 @@ exports[`<NetworkSelfServiceSection /> should render with grants 1`] = `
           ]
         }
         className=""
+        collapseAllAriaLabel=""
         contentId="expanded-content"
         dropdownDirection="down"
         dropdownPosition="right"
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
+        isHeaderSelectDisabled={false}
+        isNested={false}
         isStickyHeader={false}
         isTreeTable={false}
         ouiaSafe={true}
@@ -570,7 +582,7 @@ exports[`<NetworkSelfServiceSection /> should render with grants 1`] = `
         variant="compact"
       >
         <TableHeader />
-        <Component />
+        <TableBody />
       </Table>
       <ButtonWithTooltip
         className="access-control-add"
