@@ -6,7 +6,7 @@ import {
   Grid,
   GridItem,
   Title,
-  Text, FormFieldGroup, FormGroup,
+  Text, FormFieldGroup, FormGroup, Tooltip,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
@@ -63,6 +63,14 @@ function NetworkScreen(props) {
   };
 
   const privateLinkAndClusterSelected = privateLinkSelected && privateClusterSelected;
+  const installToVPCCheckbox = (
+    <Field
+      component={ReduxCheckbox}
+      name="install_to_vpc"
+      label="Install into an existing VPC"
+      isDisabled={(privateLinkAndClusterSelected || configureProxySelected)}
+    />
+  );
 
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
@@ -160,12 +168,21 @@ function NetworkScreen(props) {
             </GridItem>
             <GridItem>
               <FormGroup fieldId="install-to-vpc">
-                <Field
-                  component={ReduxCheckbox}
-                  name="install_to_vpc"
-                  label="Install into an existing VPC"
-                  isDisabled={(privateLinkAndClusterSelected || configureProxySelected)}
-                />
+                {privateClusterSelected ? (
+                  <Tooltip
+                    position="top-start"
+                    enableFlip
+                    content={(
+                      <p>
+                        Private clusters must be installed into an existing VPC
+                        {' '}
+                        using a PrivateLink.
+                      </p>
+                    )}
+                  >
+                    {installToVPCCheckbox}
+                  </Tooltip>
+                ) : installToVPCCheckbox}
                 <FormFieldGroup>
                   {privateClusterSelected && cloudProviderID === 'aws' && (
                   <FormGroup>
