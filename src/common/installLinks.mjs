@@ -13,6 +13,7 @@ const MIRROR_COREOS_INSTALLER_LATEST = 'https://mirror.openshift.com/pub/openshi
 const MIRROR_CRC_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest';
 const MIRROR_HELM_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest';
 const MIRROR_KN_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/serverless/latest';
+const MIRROR_TKN_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest';
 const MIRROR_ODO_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest';
 const MIRROR_OSDK_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/operator-sdk/latest';
 const MIRROR_OSDK_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/operator-sdk/latest';
@@ -171,6 +172,8 @@ const links = {
 
   KN_DOCS: `${DOCS_BASE}/cli_reference/kn-cli-tools.html`,
 
+  TKN_DOCS: `${DOCS_BASE}/cli_reference/tkn_cli/installing-tkn.html#installing-tkn`,
+
   ODO_DOCS: `${DOCS_BASE}/cli_reference/developer_cli_odo/understanding-odo.html`,
 
   OPM_DOCS: `${DOCS_BASE}/cli_reference/opm/cli-opm-install.html`,
@@ -227,6 +230,7 @@ const tools = {
   ROSA: 'rosa',
   MIRROR_REGISTRY: 'mirror-registry',
   OC_MIRROR_PLUGIN: 'oc-mirror-plugin',
+  TKN: 'tkn',
 };
 
 const channels = {
@@ -488,6 +492,22 @@ const urls = {
     },
   },
 
+  [tools.TKN]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_TKN_LATEST}/tkn-linux-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_TKN_LATEST}/tkn-macos-amd64.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_TKN_LATEST}/tkn-windows-amd64.zip`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_TKN_LATEST}/tkn-linux-s390x.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_TKN_LATEST}/tkn-linux-ppc64le.tar.gz`,
+      },
+    },
+  },
+
   [tools.ODO]: {
     [channels.STABLE]: {
       [architectures.x86]: {
@@ -656,7 +676,7 @@ const getFlatUrls = async () => {
     // TODO: include latest github releases?
   ]);
   return [...urlSet].sort();
-}
+};
 
 export {
   architectures,
