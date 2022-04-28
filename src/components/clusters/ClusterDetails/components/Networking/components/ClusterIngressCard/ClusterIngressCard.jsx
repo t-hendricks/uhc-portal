@@ -147,9 +147,9 @@ class ClusterIngressCard extends React.Component {
                   >
                     {
                       Array.isArray(additionalRouterLabels) && (
-                        <LabelGroup>
+                        <LabelGroup isCompact>
                           {additionalRouterLabels.map(text => (
-                            <Label>{text}</Label>
+                            <Label isCompact color="blue">{text}</Label>
                           ))}
                         </LabelGroup>
                       )
