@@ -19,7 +19,7 @@ import PageTitle from '../../../common/PageTitle';
 import ErrorModal from '../../../common/ErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
-import { shouldRefetchQuota } from '../../../../common/helpers';
+import { shouldRefetchQuota, scrollToFirstError } from '../../../../common/helpers';
 import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
@@ -73,7 +73,10 @@ class CreateROSAWizardInternal extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {
-      createClusterResponse, isErrorModalOpen, openModal, isValid,
+      createClusterResponse,
+      isErrorModalOpen,
+      openModal,
+      isValid,
     } = this.props;
     const { currentStepId } = this.state;
 
@@ -132,6 +135,7 @@ class CreateROSAWizardInternal extends React.Component {
     // When errors exist, touch the fields with those errors to trigger validation.
     if (errorFieldNames?.length > 0 && !isCurrentStepValid) {
       touch(errorFieldNames);
+      scrollToFirstError(formErrors);
     } else {
       onNext();
     }
@@ -491,5 +495,7 @@ CreateROSAWizardInternal.propTypes = {
     block: PropTypes.func,
   }).isRequired,
 };
+
+CreateROSAWizard.propTypes = { ...CreateROSAWizardInternal.propTypes };
 
 export default CreateROSAWizard;

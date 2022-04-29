@@ -20,7 +20,7 @@ import PageTitle from '../../../common/PageTitle';
 import ErrorModal from '../../../common/ErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
-import { shouldRefetchQuota } from '../../../../common/helpers';
+import { shouldRefetchQuota, scrollToFirstError } from '../../../../common/helpers';
 import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
 import BillingModelScreen from './BillingModelScreen';
@@ -180,16 +180,15 @@ class CreateOSDWizardInternal extends React.Component {
     // When errors exist, touch the fields with those errors to trigger validation.
     if (errorFieldNames?.length > 0 && !isCurrentStepValid) {
       touch(errorFieldNames);
-    } else {
-      if (isCCSCredentialsValidationNeeded && cloudProviderID && currentStepId === 21) {
-        await this.getCloudProverInfo(cloudProviderID);
+      scrollToFirstError(formErrors);
+    } else if (isCCSCredentialsValidationNeeded && cloudProviderID && currentStepId === 21) {
+      await this.getCloudProverInfo(cloudProviderID);
 
-        // Only proceed to the next step if the validation is successful.
-        if (ccsCredentialsValidityResponse.fulfilled) {
-          onNext();
-        }
+      // Only proceed to the next step if the validation is successful.
+      if (ccsCredentialsValidityResponse.fulfilled) {
+        onNext();
       }
-
+    } else {
       // When no errors or validy checks are required, go to the next step.
       onNext();
     }
