@@ -3,29 +3,26 @@
 ## First time setup?
 Run `make dev-env-setup`.  Note this will use `sudo` to add lines to your `/etc/hosts`.
 
-## Development environment proxied to a real backend (staging)
+## Development environment
 
 ```sh
-yarn build && yarn start
+yarn install && yarn start
 ```
 
-### Alternative: Running with insights proxy
+### Heavier alternative: Running with insights proxy
 
-See full readme file for detailed instructions.
-
-## Development environment using the mock data server
-
-To start the "chromed environment" using the mock data server:
+```sh
+make insights-proxy-setup && yarn install && yarn start-with-proxy
 ```
-make && yarn build && yarn startmock
-```
-
-If you prefer running the components separately, follow the steps above, but instead of step 2, run `./mockdata/mockserver.py`.
-You can replace the backend while the app is running.
 
 ## => Accessing the UI
 
-With any of the above options, UI will be served at https://prod.foo.redhat.com:1337/openshift/
+With any of the above options, UI will be served at https://prod.foo.redhat.com:1337/openshift/, and mockserver will run in the background.
+
+By default UI will use a real staging backend.
+You can override by appending to URL `?env=production`, `?env=staging` or `?env=mockdata` (to use static files from `mockdata/` dir).
+
+With all backends, login uses production SSO.
 
 ## Merge Request Review
 

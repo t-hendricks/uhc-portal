@@ -30,6 +30,7 @@ exports[`<KMSKeyLocationComboBox /> when location needs to be fetched renders co
     aria-label="KMS location"
     className=""
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
     onChange={

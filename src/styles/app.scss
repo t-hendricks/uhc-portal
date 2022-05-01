@@ -312,19 +312,6 @@ p.notfound {
   padding-left: var(--pf-c-page__main-section--PaddingLeft);
 }
 
-#cl-details-top .pf-c-breadcrumb {
-  padding-bottom: 15px;
-
-  li {
-    display: inline-block;
-    overflow-x: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 350px;
-
-  }
-}
-
 #clusterdetails-content .container-fluid {
   padding-right: 0;
   padding-left: 0;
@@ -719,4 +706,13 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .ocm-secondary-text {
   color: var(--pf-global--Color--200);
+}
+
+$ocm-l-autofit--breakpoint-map: build-breakpoint-map();
+$ocm-c-width-limiter--breakpoint-map: build-breakpoint-map();
+
+.pf-c-page__main-section {
+    &.pf-m-dark-1000 {
+        --pf-c-page__main-section--BackgroundColor: var(--pf-global--palette--black-1000);
+    }
 }

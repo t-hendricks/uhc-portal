@@ -1,5 +1,0 @@
-{ 
-  "apiGateway": "https://$SELF_PATH$/openshift_api",
-  "insightsGateway": "https://$SELF_PATH$/openshift_api/api",
-  "showOldMetrics": true
-}

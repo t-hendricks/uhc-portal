@@ -27,8 +27,8 @@ describe('<UninstallProgress />', () => {
   });
 
   it('should be pending when an addon is ready', () => {
-    const DescriptionList = wrapper.find('DescriptionList').props();
-    expect(DescriptionList.children[0].props.children[1].props.children[1]).toEqual('Pending');
+    const ProgressStepper = wrapper.find('ProgressStepper').props();
+    expect(ProgressStepper.children[0].props.description).toEqual('Pending');
   });
 
   it('should be removing add-ons when an addon is deleting', () => {
@@ -37,8 +37,8 @@ describe('<UninstallProgress />', () => {
     wrapper.setProps({
       clusterAddOns: mockClusterAddOnsWithExternalResources,
     });
-    const DescriptionList = wrapper.find('DescriptionList').props();
-    expect(DescriptionList.children[0].props.children[1].props.children[1]).toEqual('Uninstalling');
+    const ProgressStepper = wrapper.find('ProgressStepper').props();
+    expect(ProgressStepper.children[0].props.description).toEqual('Uninstalling');
   });
 
   it('should be completed when addon is deleted', () => {
@@ -47,8 +47,8 @@ describe('<UninstallProgress />', () => {
     wrapper.setProps({
       clusterAddOns: mockClusterAddOnsWithExternalResources,
     });
-    const DescriptionList = wrapper.find('DescriptionList').props();
-    expect(DescriptionList.children[0].props.children[1].props.children[1]).toEqual('Completed');
+    const ProgressStepper = wrapper.find('ProgressStepper').props();
+    expect(ProgressStepper.children[0].props.description).toEqual('Completed');
   });
 
   it('should be completed when no addons installed', () => {
@@ -57,7 +57,7 @@ describe('<UninstallProgress />', () => {
         items: [],
       },
     });
-    const DescriptionList = wrapper.find('DescriptionList').props();
-    expect(DescriptionList.children[0].props.children[1].props.children[1]).toEqual('Completed');
+    const ProgressStepper = wrapper.find('ProgressStepper').props();
+    expect(ProgressStepper.children[0].props.description).toEqual('Completed');
   });
 });

@@ -95,7 +95,12 @@ class AppEntry extends React.Component {
       return (
         <Provider store={store}>
           <NotificationPortal />
-          <BrowserRouter basename={getBaseName()}>
+          <BrowserRouter
+            basename={getBaseName()}
+            getUserConfirmation={() => {
+              /* Block the default browser prompt (window.confirm). */
+            }}
+          >
             <App />
           </BrowserRouter>
         </Provider>

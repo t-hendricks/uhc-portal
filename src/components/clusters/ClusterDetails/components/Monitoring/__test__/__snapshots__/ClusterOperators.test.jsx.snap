@@ -4,6 +4,7 @@ exports[`<ClusterOperators /> should render 1`] = `
 <Table
   aria-label="operators"
   borders={false}
+  canCollapseAll={false}
   canSelectAll={true}
   canSortFavorites={true}
   cells={
@@ -20,11 +21,14 @@ exports[`<ClusterOperators /> should render 1`] = `
     ]
   }
   className=""
+  collapseAllAriaLabel=""
   contentId="expanded-content"
   dropdownDirection="down"
   dropdownPosition="right"
   expandId="expandable-toggle"
   gridBreakPoint="grid-md"
+  isHeaderSelectDisabled={false}
+  isNested={false}
   isStickyHeader={false}
   isTreeTable={false}
   ouiaSafe={true}
@@ -35,6 +39,6 @@ exports[`<ClusterOperators /> should render 1`] = `
   variant="compact"
 >
   <TableHeader />
-  <Component />
+  <TableBody />
 </Table>
 `;

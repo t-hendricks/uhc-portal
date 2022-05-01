@@ -21,6 +21,7 @@ import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 function AccountsRolesScreen({
   change,
+  touchARNsFields,
   organizationID,
   selectedAWSAccountID,
   openAssociateAWSAccountModal,
@@ -145,6 +146,7 @@ function AccountsRolesScreen({
           getAWSAccountRolesARNsResponse={getAWSAccountRolesARNsResponse}
           clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
           change={change}
+          touchARNsFields={touchARNsFields}
         />
         )}
       </Grid>
@@ -155,6 +157,7 @@ function AccountsRolesScreen({
 
 AccountsRolesScreen.propTypes = {
   change: PropTypes.func,
+  touchARNsFields: PropTypes.func,
   selectedAWSAccountID: PropTypes.string,
   getAWSAccountIDs: PropTypes.func.isRequired,
   getAWSAccountIDsResponse: PropTypes.object.isRequired,

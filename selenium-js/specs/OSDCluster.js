@@ -5,6 +5,7 @@ import CreateOSDWizardPage from '../pageobjects/CreateOSDWizard.page';
 import ClusterDetailsPage from '../pageobjects/ClusterDetails.page';
 import GlobalNav from '../pageobjects/GlobalNav.page';
 import IdentityProviders from '../pageobjects/IdentityProviders.page';
+import LeaveCreateClusterPrompt from '../pageobjects/LeaveCreateClusterPrompt';
 
 const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
 
@@ -262,6 +263,10 @@ describe('OSD Trial cluster tests', async () => {
   describe('View Create OSD Trial cluster page', async () => {
     it('navigates to create OSD Trial cluster and CCS is selected', async () => {
       await GlobalNav.navigateTo('Clusters');
+
+      await LeaveCreateClusterPrompt.waitForDisplayed();
+      await LeaveCreateClusterPrompt.submit();
+
       await browser.waitUntil(ClusterListPage.isReady);
       expect(await ClusterListPage.createClusterBtn).toExist();
 

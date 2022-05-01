@@ -394,6 +394,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                           id="upgradeAcknowledgementModalText"
                           innerRef={null}
                           isDisabled={false}
+                          isIconSprite={false}
                           isLeftTruncated={false}
                           isReadOnly={false}
                           isRequired={true}

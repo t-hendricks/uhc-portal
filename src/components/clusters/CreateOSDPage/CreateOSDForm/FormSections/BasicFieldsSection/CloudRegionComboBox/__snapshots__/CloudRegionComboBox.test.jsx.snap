@@ -103,6 +103,7 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
     aria-label="Region"
     className="cloud-region-combo-box"
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     onBlur={[Function]}
     onChange={[Function]}

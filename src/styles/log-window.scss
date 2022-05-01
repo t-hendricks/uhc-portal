@@ -66,6 +66,8 @@ $log-window-container-min-height: 25em;
 }
 
 #toggle-logs {
+  --pf-c-expandable-section__content--MarginTop: 0;
+
   padding-top: 10px;
 }
 

@@ -159,6 +159,7 @@ exports[`<Quota /> OSDSubscriptionTable should render 1`] = `
   <Table
     aria-label="Quota Table"
     borders={true}
+    canCollapseAll={false}
     canSelectAll={true}
     canSortFavorites={true}
     cells={
@@ -183,11 +184,14 @@ exports[`<Quota /> OSDSubscriptionTable should render 1`] = `
       ]
     }
     className=""
+    collapseAllAriaLabel=""
     contentId="expanded-content"
     dropdownDirection="down"
     dropdownPosition="right"
     expandId="expandable-toggle"
     gridBreakPoint="grid-md"
+    isHeaderSelectDisabled={false}
+    isNested={false}
     isStickyHeader={false}
     isTreeTable={false}
     ouiaSafe={true}
@@ -198,7 +202,7 @@ exports[`<Quota /> OSDSubscriptionTable should render 1`] = `
     variant={null}
   >
     <TableHeader />
-    <Component />
+    <TableBody />
   </Table>
 </Fragment>
 `;
