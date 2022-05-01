@@ -17,7 +17,7 @@
     "@patternfly/react-icons": "^4.53.16",
     "@patternfly/react-table": "^4.71.16",
     "@patternfly/react-tokens": "^4.54.16",
-    "@redhat-cloud-services/frontend-components": "^3.1.7",
+    "@redhat-cloud-services/frontend-components": "^3.8.11",
     "@redhat-cloud-services/frontend-components-config-utilities": "^1.0.0",
     "@redhat-cloud-services/frontend-components-notifications": "^3.1.0",
     "@redhat-cloud-services/frontend-components-utilities": "^3.1.1",
@@ -70,6 +70,7 @@
     "screenfull": "^5.2.0",
     "semver": "^7.3.4",
     "swr": "^0.5.6",
+    "url": "^0.11.0",
     "uuid": "^8.1.0",
     "yup": "^0.28.3"
   },
@@ -129,10 +130,10 @@
     "sass-loader": "^9.0.0",
     "url-loader": "^3.0.0",
     "wait-on": "^4.0.1",
-    "webpack": "^5.33.2",
-    "webpack-bundle-analyzer": "^3.8.0",
-    "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^4.0.0-beta.2",
+    "webpack": "^5.72.0",
+    "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1",
     "yargs": "^15.0.0"
   },
   "resolutions": {
@@ -169,7 +170,6 @@
   "scripts": {
     "build": "webpack $(run/progress-flag-if-tty.sh)",
     "start": "concurrently --kill-others --prefix=name --names=SERVER,MOCK --prefix-colors=cyan,reset 'yarn dev-server --env noproxy api-env=staging' 'mockdata/mockserver.py'",
-    "start-with-proxy": "concurrently --kill-others --prefix=name --names=SERVER,MOCK,INSIGHTS --prefix-colors=cyan,reset,green 'yarn dev-server --env api-env=staging' 'mockdata/mockserver.py' 'yarn insights-proxy'",
     "dev-server": "webpack serve $(run/progress-flag-if-tty.sh)",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",

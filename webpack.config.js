@@ -17,15 +17,15 @@ limitations under the License.
 const path = require('path');
 const webpack = require('webpack');
 const axios = require('axios').default;
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const ReplaceWebpackPlugin = require('html-replace-webpack-plugin');
 const ChunkMapperPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/chunk-mapper');
 const FederationPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/federated-modules');
 const { insights } = require('./package.json');
+
 const name = insights.appname;
 const moduleName = name.replace(/-(\w)/g, (_, match) => match.toUpperCase());
 const reactCSS = /@patternfly\/react-styles\/css/;
@@ -36,7 +36,7 @@ const outDir = path.resolve(__dirname, 'build', insights.appname);
 
 module.exports = async (_env, argv) => {
   const devMode = argv.mode !== 'production';
-  const betaMode = argv.env.beta == 'true';
+  const betaMode = argv.env.beta === 'true';
   const isDevServer = process.argv.includes('serve');
 
   // Select default API env based on argument if specified.
@@ -55,15 +55,11 @@ module.exports = async (_env, argv) => {
 
   const noInsightsProxy = argv.env.noproxy;
 
-  const getESISnippet = async (snippetPath) => {
-    if (!noInsightsProxy) {
-      return `<esi:include src="${snippetPath}" />`;
-    }
-    const result = await axios.get(`https://console.redhat.com/${snippetPath}`);
+  const getChromeTemplate = async () => {
+    const result = await axios.get(`https://console.redhat.com/${betaMode ? 'beta/' : ''}apps/chrome`);
     return result.data;
   };
-  const headSnippet = await getESISnippet(`/${appDeployment}/chrome/snippets/head.html`);
-  const bodySnippet = await getESISnippet(`/${appDeployment}/chrome/snippets/body.html`);
+  const chromeTemplate = await getChromeTemplate();
 
   return {
     mode: argv.mode || 'development',
@@ -82,7 +78,7 @@ module.exports = async (_env, argv) => {
         chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
       }),
       new HtmlWebpackPlugin({
-        template: 'src/index.html',
+        templateContent: chromeTemplate,
       }),
       new webpack.DefinePlugin({
         APP_BETA: betaMode,
@@ -94,18 +90,9 @@ module.exports = async (_env, argv) => {
       }),
       // For openshift-assisted-ui-lib
       new webpack.EnvironmentPlugin({
-        'REACT_APP_API_ROOT': '',
-        'REACT_APP_BUILD_MODE': argv.mode || 'development'
+        REACT_APP_API_ROOT: '',
+        REACT_APP_BUILD_MODE: argv.mode || 'development',
       }),
-      new ReplaceWebpackPlugin(
-        [{
-          pattern: '@@insights-esi-body@@',
-          replacement: bodySnippet,
-        }, {
-          pattern: '@@insights-esi-head@@',
-          replacement: headSnippet,
-        }],
-      ),
       new CopyWebpackPlugin({
         patterns: [
           { from: 'public', to: outDir, toType: 'dir' },
@@ -116,7 +103,7 @@ module.exports = async (_env, argv) => {
         moduleName,
         exposes: {
           './RootApp': path.resolve(srcDir, 'chrome-main.jsx'),
-        }
+        },
       }),
       new ChunkMapperPlugin({
         modules: [moduleName],
@@ -164,6 +151,7 @@ module.exports = async (_env, argv) => {
           use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
+          // eslint-disable-next-line max-len
           // Since we use Insights' upstream PatternFly, we're using null-loader to save about 1MB of CSS
           test: /\.css$/i,
           include: reactCSS,
@@ -204,7 +192,8 @@ module.exports = async (_env, argv) => {
       modules: [srcDir, modDir],
       // For react-markdown#unified#vfile
       fallback: {
-        path: require.resolve("path-browserify"),
+        path: require.resolve('path-browserify'),
+        url: require.resolve('url/'),
       },
     },
 
@@ -212,10 +201,17 @@ module.exports = async (_env, argv) => {
       historyApiFallback: {
         index: `${publicPath}index.html`,
       },
+      setupMiddlewares: (middlewares, devServer) => {
+        if (!devServer) {
+          throw new Error('webpack-dev-server is not defined');
+        }
+
+        return middlewares;
+      },
       proxy: noInsightsProxy ? [
         {
           context: ['/mockdata'],
-          pathRewrite: { "^/mockdata": "" },
+          pathRewrite: { '^/mockdata': '' },
           target: 'http://localhost:8010',
           logLevel: 'info', // Less necessary because mockserver also logs.
         },
@@ -237,9 +233,8 @@ module.exports = async (_env, argv) => {
       hot: false,
       port: noInsightsProxy ? 1337 : 8001,
       https: !!noInsightsProxy,
-      host: 'localhost',
-      firewall: false,
-      transportMode: 'sockjs'
+      host: '0.0.0.0',
+      allowedHosts: 'all',
     },
   };
 };
