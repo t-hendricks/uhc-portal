@@ -68,6 +68,7 @@ module.exports = async (_env, argv) => {
     output: {
       path: outDir,
       filename: 'bundle.[name].[contenthash].js',
+      hashFunction: "xxhash64", // default md4 not allowed on recent NodeJS/OpenSSL
       publicPath,
     },
     devtool: 'source-map',
