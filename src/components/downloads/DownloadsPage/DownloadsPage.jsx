@@ -693,7 +693,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         channel={channels.STABLE}
         name={(
           <>
-            CodeReady Containers (
+            OpenShift Local (
             <code>crc</code>
             )
           </>
@@ -701,7 +701,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         description={(
           <TextContent>
             <Text>
-              Download and open the CodeReady Containers file to automatically start
+              Download and open the OpenShift Local file to automatically start
               a step-by-step installation guide.
             </Text>
             <Text>
