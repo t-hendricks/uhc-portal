@@ -15,6 +15,7 @@ import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../../../common/ExternalLink';
 import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import { PLACEHOLDER_VALUE } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
 
 function NetworkScreen(props) {
   const {
@@ -29,6 +30,7 @@ function NetworkScreen(props) {
     configureProxySelected,
     isByoc,
     product,
+    formValues,
   } = props;
 
   const { OSD, OSDTrial } = normalizedProducts;
@@ -38,9 +40,27 @@ function NetworkScreen(props) {
   // automatically checks the "Install into an existing VPC" checkbox in the UI
   const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
 
+  const findSubnetData = () => {
+    const availabilityZones = [formValues.az_0, formValues.az_1, formValues.az_2];
+    const hasSubnets = Object.keys(formValues).some(
+      formValue => formValue.startsWith('public_subnet_id')
+      || formValue.startsWith('private_subnet_id'),
+    );
+
+    const noAvailZones = availabilityZones.every(
+      zone => zone === undefined
+      || zone === PLACEHOLDER_VALUE,
+    );
+
+    if (!hasSubnets && noAvailZones) {
+      change('install_to_vpc', false);
+    }
+  };
+
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
       change('use_privatelink', false);
+      findSubnetData();
     }
   };
 
@@ -237,6 +257,7 @@ NetworkScreen.propTypes = {
   configureProxySelected: PropTypes.bool,
   isByoc: PropTypes.bool,
   product: PropTypes.string,
+  formValues: PropTypes.object,
 };
 
 export default NetworkScreen;
