@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Popover } from '@patternfly/react-core';
+import { Button, Popover } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+
+import './PopoverHint.scss';
 
 const PopoverHint = ({
   title, hint, iconClassName, ...popoverProps
@@ -13,9 +15,16 @@ const PopoverHint = ({
       aria-label="help"
       {...popoverProps}
     >
-      <span className={iconClassName}>
-        <OutlinedQuestionCircleIcon />
-      </span>
+      <Button
+        className="popover-hint-button"
+        aria-label="More information"
+        variant="plain"
+      >
+        <span className={iconClassName}>
+          <OutlinedQuestionCircleIcon />
+        </span>
+      </Button>
+
     </Popover>
   </>
 );
