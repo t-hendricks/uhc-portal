@@ -1,13 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import {
-  FormGroup,
-  GridItem,
-  Text,
-  TextContent,
-  TextVariants,
-} from '@patternfly/react-core';
+import { FormGroup, GridItem } from '@patternfly/react-core';
 import CloudRegionComboBox from './CloudRegionComboBox';
 import { constants } from '../../CreateOSDFormConstants';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
@@ -57,26 +51,6 @@ function BasicFieldsSection({
     }
   };
 
-  const clusterNameHint = (
-    <TextContent>
-      <Text component={TextVariants.p}>
-        The cluster name is used to generate a subdomain on console.redhat.com.
-      </Text>
-      <Text component={TextVariants.p}>
-        Example:
-        {' '}
-        <strong>your-cluster-name</strong>
-        .console.redhat.com
-      </Text>
-      {/* todo - this addition is yet undecided - pending response from UXD */}
-      {/*
-      <Text component={TextVariants.p}>
-        You can configure Route 53 DNS options later in the cluster creation process.
-      </Text>
-      */}
-    </TextContent>
-  );
-
   return (
     <>
       {/* cluster name */}
@@ -89,7 +63,7 @@ function BasicFieldsSection({
           validate={validators.checkClusterName}
           disabled={pending}
           isRequired
-          extendedHelpText={clusterNameHint}
+          extendedHelpText={constants.clusterNameHint}
         />
       </GridItem>
       <GridItem md={6} />

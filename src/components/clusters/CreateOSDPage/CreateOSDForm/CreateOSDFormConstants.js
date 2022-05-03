@@ -1,4 +1,5 @@
 const constants = {
+  clusterNameHint: 'This name identifies your cluster in OpenShift Cluster Manager and forms part of the cluster console subdomain.',
   availabilityHint: 'Deploy to a single data center or to multiple data centers.',
   regionHint: 'The data center where your worker pool will be located.',
   persistentStorageHint: 'The storage quota set on the deployed cluster.',
