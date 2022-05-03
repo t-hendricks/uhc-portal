@@ -45,6 +45,8 @@ class CreateROSAWizardInternal extends React.Component {
   state = {
     stepIdReached: 10,
     currentStepId: 10,
+    // Dictionary of step IDs; { [stepId: number]: boolean },
+    // where entry values indicate the latest form validation state for those respective steps.
     validatedSteps: {},
   }
 

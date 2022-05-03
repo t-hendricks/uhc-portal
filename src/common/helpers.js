@@ -113,11 +113,13 @@ const scrollToFirstError = (formErrors) => {
     return;
   }
 
-  const [firstErrorFieldName] = errorFieldNames;
-  const input = document.querySelector(`[name^="${firstErrorFieldName}"`);
+  // Use all error field selectors, where the first matching element in the document is returned.
+  const input = document.querySelector(
+    errorFieldNames.map(fieldName => `[name="${fieldName}"]`).join(','),
+  );
 
-  input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  input.focus();
+  input?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  input?.focus();
 };
 
 /**

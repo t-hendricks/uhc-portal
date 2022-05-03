@@ -30,6 +30,7 @@ describe('OSD cluster tests', async () => {
     });
 
     it('shows an error with invalid and empty names', async () => {
+      expect(await CreateOSDWizardPage.isBillingModelScreen()).toBeTruthy();
       await (await CreateOSDWizardPage.primaryButton).click();
       await (await CreateOSDWizardPage.awsProvider).click();
       await (await CreateOSDWizardPage.primaryButton).click();

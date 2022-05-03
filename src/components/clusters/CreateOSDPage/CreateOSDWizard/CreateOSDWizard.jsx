@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import { Redirect } from 'react-router';
 
 import {
@@ -45,6 +44,8 @@ class CreateOSDWizardInternal extends React.Component {
   state = {
     stepIdReached: 10,
     currentStepId: 10,
+    // Dictionary of step IDs; { [stepId: number]: boolean },
+    // where entry values indicate the latest form validation state for those respective steps.
     validatedSteps: {},
   }
 
@@ -94,18 +95,35 @@ class CreateOSDWizardInternal extends React.Component {
       openModal,
       cloudProviderID,
       isValid,
+      isCCS,
     } = this.props;
-    const { currentStepId, stepIdReached } = this.state;
+    const { currentStepId, stepIdReached, validatedSteps } = this.state;
+    const hasInvalidCpStep = !validatedSteps[21];
 
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
     }
 
-    if (stepIdReached > 10 && cloudProviderID !== prevProps.cloudProviderID) {
-      // set [max] step reached to cloud providers step, to force users to go
-      // thru wizard again after changing cloud providers
+    // set [max] step reached to cloud providers step, to force users to go
+    // through the steps again after changing cloud providers or infra type is updated to CCS.
+    if (
+      (stepIdReached > 10 && cloudProviderID !== prevProps.cloudProviderID)
+      || (isCCS && isCCS !== prevProps.isCCS)
+    ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ stepIdReached: 21 });
+    }
+
+    // If the cloud provider step was invalid prior to updating the infra type to
+    // a RH cloud account, set step to be valid in the validatedSteps dictionary.
+    if (hasInvalidCpStep && (!isCCS && isCCS !== prevProps.isCCS)) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState(() => ({
+        validatedSteps: {
+          ...prevState.validatedSteps,
+          21: true,
+        },
+      }));
     }
 
     // Track validity of individual steps by id
@@ -169,7 +187,6 @@ class CreateOSDWizardInternal extends React.Component {
     const {
       touch,
       formErrors,
-      ccsCredentialsValidityResponse,
       isCCSCredentialsValidationNeeded,
       cloudProviderID,
     } = this.props;
@@ -182,12 +199,9 @@ class CreateOSDWizardInternal extends React.Component {
       touch(errorFieldNames);
       scrollToFirstError(formErrors);
     } else if (isCCSCredentialsValidationNeeded && cloudProviderID && currentStepId === 21) {
-      await this.getCloudProverInfo(cloudProviderID);
-
       // Only proceed to the next step if the validation is successful.
-      if (ccsCredentialsValidityResponse.fulfilled) {
-        onNext();
-      }
+      await this.getCloudProverInfo(cloudProviderID);
+      onNext();
     } else {
       // When no errors or validy checks are required, go to the next step.
       onNext();
@@ -335,7 +349,7 @@ class CreateOSDWizardInternal extends React.Component {
         canJumpTo: this.canJumpTo(40),
       },
       {
-        id: 100,
+        id: 50,
         name: 'Review and create',
         component: (
           <ErrorBoundary>
