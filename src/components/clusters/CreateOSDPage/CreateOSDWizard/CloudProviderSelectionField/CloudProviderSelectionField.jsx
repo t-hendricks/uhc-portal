@@ -24,40 +24,42 @@ function CloudProviderSelectionField({
     onChange(providerValue);
   };
 
-  const gcpCard = (
+  const gcpTile = (
     <Tile
-      className={getCardClass(hasGcpQuota, value === 'gcp')}
+      className={`${getCardClass(hasGcpQuota, value === 'gcp')} pf-u-mb-0`}
       onClick={() => hasGcpQuota && handleChange('gcp')}
       data-test-id="gcp-provider-card"
       title="Run on Google Cloud Platform"
       icon={<GCPLogo />}
       isDisplayLarge
       isStacked
+      isSelected={value === 'gcp'}
     />
   );
 
-  const awsCard = (
+  const awsTile = (
     <Tile
-      className={getCardClass(hasAwsQuota, value === 'aws')}
+      className={`${getCardClass(hasAwsQuota, value === 'aws')} pf-u-mb-0`}
       onClick={() => hasAwsQuota && handleChange('aws')}
       data-test-id="aws-provider-card"
       title="Run on Amazon Web Services"
       icon={<AWSLogo />}
       isDisplayLarge
       isStacked
+      isSelected={value === 'aws'}
     />
   );
 
   return (
     <div>
-      {hasAwsQuota ? awsCard : (
+      {hasAwsQuota ? awsTile : (
         <Tooltip content={noQuotaTooltip}>
-          {awsCard}
+          {awsTile}
         </Tooltip>
       )}
-      {hasGcpQuota ? gcpCard : (
+      {hasGcpQuota ? gcpTile : (
         <Tooltip content={noQuotaTooltip}>
-          {gcpCard}
+          {gcpTile}
         </Tooltip>
       )}
     </div>
