@@ -62,6 +62,7 @@ const links = {
   OSD_CCS_AWS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html`,
   OSD_CCS_AWS_LIMITS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#aws-limits_aws-ccs`,
   OSD_CCS_AWS_SCP: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#ccs-aws-scp_aws-ccs`,
+  OSD_CCS_AWS_CUSTOMER_REQ: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#ccs-aws-customer-requirements_aws-ccs`,
   OSD_CCS_GCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html`,
   OSD_CCS_GCP_LIMITS: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#gcp-limits_gcp-ccs`,
   OSD_CCS_GCP_SCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#ccs-gcp-customer-procedure_gcp-ccs`,

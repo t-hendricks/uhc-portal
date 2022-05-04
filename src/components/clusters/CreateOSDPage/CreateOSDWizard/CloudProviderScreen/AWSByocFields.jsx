@@ -65,7 +65,7 @@ function AWSByocFields({ isValidating }) {
               Business Support for AWS is also recommended.
               For more guidance, see the
               {' '}
-              <ExternalLink href={links.OSD_CCS_AWS}>
+              <ExternalLink href={links.OSD_CCS_AWS_CUSTOMER_REQ}>
                 customer cloud subscription requirements
               </ExternalLink>
               .

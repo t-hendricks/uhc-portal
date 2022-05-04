@@ -16,7 +16,6 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import ErrorBoundary from '../../../App/ErrorBoundary';
 import PageTitle from '../../../common/PageTitle';
-import ErrorModal from '../../../common/ErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
 import { shouldRefetchQuota, scrollToFirstError } from '../../../../common/helpers';
@@ -34,6 +33,7 @@ import CIDRScreen from './CIDRScreen';
 import UpdatesScreen from './UpdatesScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
+import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import { VALIDATE_CLOUD_PROVIDER_CREDENTIALS } from './ccsInquiriesActions';
@@ -218,7 +218,6 @@ class CreateOSDWizardInternal extends React.Component {
       loadBalancerValues,
       persistentStorageValues,
       isErrorModalOpen,
-      resetResponse,
       hasProductQuota,
       history,
       product, // for OSDTrial URL, prop from the router
@@ -455,14 +454,6 @@ class CreateOSDWizardInternal extends React.Component {
       );
     }
 
-    const creationErrorModal = isErrorModalOpen && (
-      <ErrorModal
-        title="Error creating cluster"
-        errorResponse={createClusterResponse}
-        resetResponse={resetResponse}
-      />
-    );
-
     const footer = (
       <WizardFooter>
         <WizardContext.Consumer>
@@ -512,7 +503,7 @@ class CreateOSDWizardInternal extends React.Component {
             </Banner>
           )}
           <div className="ocm-page">
-            {creationErrorModal}
+            {isErrorModalOpen && <CreateClusterErrorModal onRetry={onSubmit} />}
             <Wizard
               className="osd-wizard"
               navAriaLabel={`${ariaTitle} steps`}

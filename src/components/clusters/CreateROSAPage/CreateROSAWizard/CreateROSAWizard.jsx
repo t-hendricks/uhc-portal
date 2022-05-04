@@ -16,7 +16,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import PageTitle from '../../../common/PageTitle';
-import ErrorModal from '../../../common/ErrorModal';
+import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
 import { shouldRefetchQuota, scrollToFirstError } from '../../../../common/helpers';
@@ -152,7 +152,6 @@ class CreateROSAWizardInternal extends React.Component {
       machineTypes,
       organization,
       isErrorModalOpen,
-      resetResponse,
       hasProductQuota,
       history,
       privateLinkSelected,
@@ -364,14 +363,6 @@ class CreateROSAWizardInternal extends React.Component {
       );
     }
 
-    const creationErrorModal = isErrorModalOpen && (
-      <ErrorModal
-        title="Error creating cluster"
-        errorResponse={createClusterResponse}
-        resetResponse={resetResponse}
-      />
-    );
-
     const footer = (
       <WizardFooter>
         <WizardContext.Consumer>
@@ -411,7 +402,7 @@ class CreateROSAWizardInternal extends React.Component {
           </Banner>
           )}
           <div className="ocm-page">
-            {creationErrorModal}
+            {isErrorModalOpen && <CreateClusterErrorModal />}
             <PersistGate persistor={persistor}>
               <Wizard
                 className="rosa-wizard"

@@ -72,7 +72,7 @@ const mapDispatchToProps = dispatch => ({
   }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),
-  openModal: (modalName) => { dispatch(openModal(modalName)); },
+  openModal: modalName => dispatch(openModal(modalName)),
   closeModal: () => { dispatch(closeModal()); },
   touch: fieldNames => dispatch(touch('CreateCluster', ...fieldNames)),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
