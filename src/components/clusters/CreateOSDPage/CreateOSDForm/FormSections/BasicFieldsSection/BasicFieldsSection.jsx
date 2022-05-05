@@ -7,7 +7,8 @@ import { constants } from '../../CreateOSDFormConstants';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import validators from '../../../../../../common/validators';
+import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
+import validators, { clusterNameValidation } from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '../NetworkingSection/AvailabilityZoneSelection';
 import VersionSelection from './VersionSelection';
@@ -51,16 +52,21 @@ function BasicFieldsSection({
     }
   };
 
+  const reduxFormsClusterNameValidate = value => (
+    clusterNameValidation(value).find(validator => validator.validated === false)?.text
+  );
+
   return (
     <>
       {/* cluster name */}
       <GridItem md={6}>
         <Field
-          component={ReduxVerticalFormGroup}
+          component={ReduxRichInputField}
           name="name"
           label="Cluster name"
           type="text"
-          validate={validators.checkClusterName}
+          validate={reduxFormsClusterNameValidate}
+          validation={clusterNameValidation}
           disabled={pending}
           isRequired
           extendedHelpText={constants.clusterNameHint}
