@@ -3,14 +3,22 @@ import React from 'react';
 
 import {
   Card,
-  CardBody, Grid, GridItem,
-  PageSection, Stack, StackItem,
-  Text, TextContent, TextVariants, Title,
+  CardBody,
+  Grid,
+  GridItem,
+  PageSection,
+  Stack,
+  StackItem,
+  Text,
+  TextContent,
+  TextVariants,
+  Title,
+  Alert,
 } from '@patternfly/react-core';
-import InstructionCommand from '../../../../../common/InstructionCommand';
-import ExternalLink from '../../../../../common/ExternalLink';
-import PopoverHint from '../../../../../common/PopoverHint';
-import links from '../../../../../../common/installLinks.mjs';
+import InstructionCommand from '../../../../../../common/InstructionCommand';
+import ExternalLink from '../../../../../../common/ExternalLink';
+import PopoverHint from '../../../../../../common/PopoverHint';
+import links from '../../../../../../../common/installLinks.mjs';
 
 function OCMRoleScreen() {
   return (
@@ -103,6 +111,13 @@ function OCMRoleScreen() {
                     <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn">
                       rosa link ocm-role &#x3c;arn&#x3e;
                     </InstructionCommand>
+                    <Alert
+                      variant="info"
+                      isInline
+                      isPlain
+                      className="ocm-role-screen__link-role-alert"
+                      title="You must have organization administrator privileges to run this command. After you link the OCM role with your AWS account, it is visible for all users in the organization."
+                    />
                   </GridItem>
                 </Grid>
               </TextContent>
