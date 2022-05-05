@@ -77,7 +77,7 @@ function ClusterRolesScreen({
             {' '}
             Only one OCM role can be linked per Red Hat org.
             {' '}
-            <PopoverHint title="You may need to delete or unlink an existing not-admin ocm-role first before running the command to create an admin ocm-role." />
+            <PopoverHint title="If an OCM role with basic privileges exists in your account, you might need to delete or unlink the role before creating an OCM role with administrative privileges." />
           </Text>
           <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role command">
             rosa create ocm-role --admin
