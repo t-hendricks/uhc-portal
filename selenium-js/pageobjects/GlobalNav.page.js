@@ -12,6 +12,7 @@ class GlobalNav extends Page {
     }
 
     const link = await $(`//nav[@aria-label = "Insights Global Navigation"]//a[text() = "${text}"]`);
+    await link.scrollIntoView();
     await link.click();
   }
 }
