@@ -78,8 +78,8 @@ const MissingPrereqErrorModal = ({ onRetry, onClose }) => {
 };
 
 MissingPrereqErrorModal.propTypes = {
-  onRetry: PropTypes.func,
-  onClose: PropTypes.func,
+  onRetry: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default MissingPrereqErrorModal;
