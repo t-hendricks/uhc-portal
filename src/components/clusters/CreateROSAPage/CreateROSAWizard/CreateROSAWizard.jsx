@@ -128,7 +128,7 @@ class CreateROSAWizardInternal extends React.Component {
             <AccountsRolesScreen organizationID={organization?.details?.id} />
           </ErrorBoundary>
         ),
-        enableNext: true,
+        enableNext: isValid,
       },
       {
         name: 'Cluster settings',
@@ -141,7 +141,7 @@ class CreateROSAWizardInternal extends React.Component {
                 <ClusterSettingsScreen />
               </ErrorBoundary>
             ),
-            enableNext: true,
+            enableNext: isValid,
             canJumpTo: this.canJumpTo(22),
           },
           {
@@ -152,11 +152,11 @@ class CreateROSAWizardInternal extends React.Component {
                 <MachinePoolScreen />
               </ErrorBoundary>
             ),
-            enableNext: true,
+            enableNext: isValid,
             canJumpTo: this.canJumpTo(23),
           },
         ],
-        enableNext: true,
+        enableNext: isValid,
       },
       {
         name: 'Networking',
@@ -178,7 +178,7 @@ class CreateROSAWizardInternal extends React.Component {
                 />
               </ErrorBoundary>
             ),
-            enableNext: true,
+            enableNext: isValid,
             canJumpTo: this.canJumpTo(31),
           },
           installToVPCSelected && {
