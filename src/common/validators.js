@@ -85,6 +85,9 @@ const required = value => (value && value.trim() ? undefined : 'Field is require
 // Use with checkbox to ensure it is selected on a form, e.g. Ts&Cs agreement
 const requiredTrue = value => (value && value === true ? undefined : 'Field must be selected');
 
+// Function to validate that user has acknowledged prerequisites by clicking checkbox.
+const acknowledgePrerequisites = value => (value && value === true ? undefined : 'Please acknowledge that you have read and completed all prerequisites.');
+
 // Function to validate that the identity provider name field doesn't include whitespaces:
 const checkIdentityProviderName = (value) => {
   if (!value) {
@@ -1118,6 +1121,7 @@ const validateLabelValue = (value) => {
 
 const validators = {
   required,
+  acknowledgePrerequisites,
   checkIdentityProviderName,
   checkClusterUUID,
   checkClusterDisplayName,
@@ -1163,6 +1167,7 @@ const validators = {
 export {
   required,
   requiredTrue,
+  acknowledgePrerequisites,
   atLeastOneRequired,
   checkClusterUUID,
   checkIdentityProviderName,

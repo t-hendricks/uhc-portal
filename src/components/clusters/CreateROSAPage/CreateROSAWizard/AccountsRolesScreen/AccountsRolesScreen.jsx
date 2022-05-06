@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
 import {
-  Form, Grid, GridItem, Text, TextVariants, Title,
+  Form, Grid, GridItem, Text, TextContent, TextVariants, Title,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import AWSLogo from '../../../../../styles/images/AWS.png';
 import RedHat from '../../../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
-import Prerequisites from './Prerequisites';
+import Prerequisites from '../../../common/Prerequisites/Prerequisites';
 import AWSAccountSelection from './AWSAccountSelection';
 import ExternalLink from '../../../../common/ExternalLink';
 import AssociateAWSAccountModal from './AssociateAWSAccountModal';
@@ -94,7 +94,64 @@ function AccountsRolesScreen({
           </GridItem>
         </GridItem>
         <GridItem>
-          <Prerequisites initiallyExpanded={!hasAWSAccount} />
+          <Prerequisites initiallyExpanded={!hasAWSAccount} acknowledgementRequired>
+            <TextContent>
+              <Text component={TextVariants.p} className="ocm-secondary-text">
+                Before continuing, confirm that all prerequisites are met:
+              </Text>
+              <ul>
+                <li>
+                  <Text component={TextVariants.p} className="ocm-secondary-text">
+                    Completed the
+                    {' '}
+                    <ExternalLink noIcon href="">
+                      AWS prerequisites for ROSA with STS
+                    </ExternalLink>
+                    .
+                  </Text>
+                </li>
+                <li>
+                  <Text component={TextVariants.p} className="ocm-secondary-text">
+                    Ensure you have available
+                    {' '}
+                    <ExternalLink noIcon href="">
+                      AWS quota.
+                    </ExternalLink>
+                  </Text>
+                </li>
+                <li>
+                  <Text component={TextVariants.p} className="ocm-secondary-text">
+                    Enable the
+                    {' '}
+                    <ExternalLink noIcon href="">
+                      ROSA service in the AWS Console.
+                    </ExternalLink>
+                  </Text>
+                </li>
+                <li>
+                  <Text component={TextVariants.p} className="ocm-secondary-text">
+                    Install and configure the latest
+                    {' '}
+                    <ExternalLink noIcon href="">
+                      AWS
+                    </ExternalLink>
+                    ,
+                    {' '}
+                    <ExternalLink noIcon href="">
+                      ROSA
+                    </ExternalLink>
+                    , and
+                    {' '}
+                    <ExternalLink noIcon href="">
+                      oc
+                    </ExternalLink>
+                    {' '}
+                    CLIs on your workstation (recommended).
+                  </Text>
+                </li>
+              </ul>
+            </TextContent>
+          </Prerequisites>
         </GridItem>
         <GridItem span={8}>
           <Title headingLevel="h3">AWS account</Title>
