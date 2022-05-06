@@ -27,6 +27,7 @@ import validators, {
   validateHTPasswdPassword,
   validateHTPasswdUsername,
   clusterNameValidation,
+  checkCustomOperatorRolesPrefix,
 } from '../validators';
 import fixtures from './validators.fixtures';
 import awsVPCs from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
@@ -737,4 +738,11 @@ test('HTPasswd username', () => {
   expect(validateHTPasswdUsername('username%')).toBe('Username contains disallowed characters.');
   expect(validateHTPasswdUsername('username:')).toBe('Username contains disallowed characters.');
   expect(validateHTPasswdUsername('username/')).toBe('Username contains disallowed characters.');
+});
+
+test('Custom operator roles prefix', () => {
+  expect(checkCustomOperatorRolesPrefix('prefix1234')).toBeUndefined();
+  expect(checkCustomOperatorRolesPrefix('prefix%')).toContain('isn\'t valid, must consist of lower-case alphanumeric characters or');
+  expect(checkCustomOperatorRolesPrefix('a2345678901234567890123456789012')).toBeUndefined();
+  expect(checkCustomOperatorRolesPrefix('a23456789012345678901234567890123456')).toContain('may not exceed');
 });

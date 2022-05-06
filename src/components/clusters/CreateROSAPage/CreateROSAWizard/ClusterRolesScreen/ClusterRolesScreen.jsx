@@ -185,7 +185,8 @@ function ClusterRolesScreen({
             name="custom_operator_roles_prefix"
             label="Custom operator roles prefix"
             type="text"
-            validate={validators.checkCustomOperatorRolesPrefix}
+            // eslint-disable-next-line import/no-named-as-default-member
+            validate={value => validators.checkCustomOperatorRolesPrefix(`${clusterName}-${value}`)}
             helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  If not provided, a default hash will be generated.`}
             extendedHelpText={(
               <TextContent>
