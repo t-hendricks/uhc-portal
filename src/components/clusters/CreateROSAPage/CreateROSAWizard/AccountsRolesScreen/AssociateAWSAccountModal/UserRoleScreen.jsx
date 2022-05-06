@@ -9,6 +9,7 @@ import {
 import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 import InstructionCommand from '../../../../../common/InstructionCommand';
+import links from '../../../../../../common/installLinks.mjs';
 
 function UserRoleScreen() {
   return (
@@ -36,7 +37,7 @@ function UserRoleScreen() {
                   {/* eslint-disable-next-line max-len */}
                   Run the following command to create a user role. View required AWS policy permissions for the
                   {' '}
-                  <ExternalLink noIcon href="">user role</ExternalLink>
+                  <ExternalLink noIcon href={links.ROSA_AWS_ACCOUNT_ROLES}>user role</ExternalLink>
                   .
                 </Text>
                 <Grid className="ocm-role-indented-container">
@@ -47,7 +48,11 @@ function UserRoleScreen() {
                     </strong>
                     <PopoverHint
                       bodyContent="The user role is necessary to allow this interface to validate your user account and enable a trust with the OCM role."
-                      footerContent={(<ExternalLink href="">View the AWS policy permissions required by the user role.</ExternalLink>)}
+                      footerContent={(
+                        <ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>
+                          View the AWS policy permissions required by the user role.
+                        </ExternalLink>
+)}
                     />
                     <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
                       rosa create user-role
