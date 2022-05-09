@@ -40,6 +40,22 @@ function ClusterRolesScreen({
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
 
+  const createOperatorRolesHashPrefix = () => {
+    // random 4 alphanumeric hash
+    const prefixArray = Math.random().toString(36).substr(2, 4).split('');
+    // cannot start with a number
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)];
+    prefixArray[0] = randomCharacter;
+    return prefixArray.join('');
+  };
+
+  useEffect(() => {
+    if (!customOperatorRolesPrefix) {
+      change('custom_operator_roles_prefix', createOperatorRolesHashPrefix());
+    }
+  }, [customOperatorRolesPrefix]);
+
   useEffect(() => {
     if (getOCMRoleResponse.pending) {
       setGetOCMRoleErrorBox(null);
@@ -175,8 +191,11 @@ function ClusterRolesScreen({
         </GridItem>
         <GridItem>
           <Text component={TextVariants.p}>
-            The naming of your operator roles is derived from the name of your cluster.
-            Optionally add a prefix to this naming scheme.
+            To easily identify the Operator IAM roles for a cluster in your AWS account, the
+            {' '}
+            Operator role names are prefixed with your cluster name and a random 4-digit hash.
+            {' '}
+            You can optionally replace the hash by entering a custom prefix.
           </Text>
         </GridItem>
         <GridItem span={4}>
@@ -191,18 +210,17 @@ function ClusterRolesScreen({
             extendedHelpText={(
               <TextContent>
                 <Text component={TextVariants.p}>
-                  Assign a custom prefix to the cluster-specific Operator IAM roles to help separate
+                  You can specify a custom prefix for the cluster-specific Operator IAM roles to
                   {' '}
-                  your AWS roles and policies. The default is the name of the cluster and a 4-digit
+                  use.
                   {' '}
-                  random hash string. If provided, your custom prefix replaces the hash.
-                  {' '}
+                  <br />
                   See examples in
                   {' '}
+                  <ExternalLink href={links.ROSA_AWS_OPERATOR_ROLE_PREFIX}>
+                    Defining a custom Operator IAM role prefix
+                  </ExternalLink>
                 </Text>
-                <ExternalLink href={links.ROSA_AWS_OPERATOR_ROLE_PREFIX}>
-                  Defining a custom Operator IAM role prefix
-                </ExternalLink>
               </TextContent>
             )}
             showHelpTextOnError={false}
@@ -212,7 +230,7 @@ function ClusterRolesScreen({
           <Text component={TextVariants.small} className="ocm-secondary-text">
             Preview:
             {' '}
-            <em>{`${clusterName}-${customOperatorRolesPrefix || '<hash>'}`}</em>
+            <em>{`${clusterName}-${customOperatorRolesPrefix}`}</em>
           </Text>
         </GridItem>
       </Grid>
