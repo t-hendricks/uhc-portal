@@ -13,14 +13,15 @@ import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons
 import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '../NetworkingSection/AvailabilityZoneSelection';
 import VersionSelection from './VersionSelection';
 import { getNodesCount, getMinReplicasCount } from '../ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 function BasicFieldsSection({
   pending,
   showDNSBaseDomain,
   showAvailability,
+  product,
   cloudProviderID,
   isBYOC,
-  isRosa,
   isMultiAz,
   hasSingleAzQuota,
   hasMultiAzQuota,
@@ -100,7 +101,7 @@ function BasicFieldsSection({
             name="cluster_version"
             label="Version"
             isRequired
-            isRosa={isRosa}
+            isRosa={product === normalizedProducts.ROSA}
           />
         </GridItem>
         <GridItem md={6} />
@@ -172,6 +173,7 @@ function BasicFieldsSection({
 
 BasicFieldsSection.propTypes = {
   pending: PropTypes.bool,
+  product: PropTypes.string.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   showDNSBaseDomain: PropTypes.bool,
   showAvailability: PropTypes.bool,
@@ -179,7 +181,6 @@ BasicFieldsSection.propTypes = {
   change: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   isBYOC: PropTypes.bool.isRequired,
-  isRosa: PropTypes.bool.isRequired,
   hasSingleAzQuota: PropTypes.bool.isRequired,
   hasMultiAzQuota: PropTypes.bool.isRequired,
   isWizard: PropTypes.bool,
