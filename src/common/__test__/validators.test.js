@@ -26,6 +26,7 @@ import validators, {
   validateGCPKMSServiceAccount,
   validateHTPasswdPassword,
   validateHTPasswdUsername,
+  clusterNameValidation,
 } from '../validators';
 import fixtures from './validators.fixtures';
 import awsVPCs from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
@@ -47,10 +48,59 @@ test('Field is a valid identity provider name', () => {
 });
 
 test('Field is a valid cluster name', () => {
-  expect(validators.checkClusterName()).toBe('Cluster name is required.');
-  expect(validators.checkClusterName('foo.bar')).toBe('Cluster name \'foo.bar\' isn\'t valid, must consist of lower-case alphanumeric characters or \'-\', start with an alphabetic character, and end with an alphanumeric character. For example, \'my-name\', or \'abc-123\'.');
-  expect(validators.checkClusterName('foo'.repeat(34))).toBe('Cluster names may not exceed 15 characters.');
-  expect(validators.checkClusterName('foo')).toBe(undefined);
+  const numCharsMsg = '1 - 15 characters';
+  const alphanumericMsg = 'Consist of lower-case alphanumeric characters, or hyphen (-)';
+  const startCharMsg = 'Start with a lower-case alphabetic character';
+  const endCharMsg = 'End with a lower-case alphanumeric character';
+
+  expect(clusterNameValidation('')).toEqual([
+    { text: numCharsMsg, validated: false },
+    { text: alphanumericMsg, validated: false },
+    { text: startCharMsg, validated: false },
+    { text: endCharMsg, validated: false },
+  ]);
+
+  expect(clusterNameValidation(undefined)).toEqual([
+    { text: numCharsMsg, validated: false },
+    { text: alphanumericMsg, validated: false },
+    { text: startCharMsg, validated: false },
+    { text: endCharMsg, validated: false },
+  ]);
+
+  expect(clusterNameValidation('foo.bar')).toEqual([
+    { text: numCharsMsg, validated: true },
+    { text: alphanumericMsg, validated: false },
+    { text: startCharMsg, validated: true },
+    { text: endCharMsg, validated: true },
+  ]);
+
+  expect(clusterNameValidation('foobarfoobarfoobar')).toEqual([
+    { text: numCharsMsg, validated: false },
+    { text: alphanumericMsg, validated: true },
+    { text: startCharMsg, validated: true },
+    { text: endCharMsg, validated: true },
+  ]);
+
+  expect(clusterNameValidation('1foobar')).toEqual([
+    { text: numCharsMsg, validated: true },
+    { text: alphanumericMsg, validated: true },
+    { text: startCharMsg, validated: false },
+    { text: endCharMsg, validated: true },
+  ]);
+
+  expect(clusterNameValidation('foobar-')).toEqual([
+    { text: numCharsMsg, validated: true },
+    { text: alphanumericMsg, validated: true },
+    { text: startCharMsg, validated: true },
+    { text: endCharMsg, validated: false },
+  ]);
+
+  expect(clusterNameValidation('foo-1bar')).toEqual([
+    { text: numCharsMsg, validated: true },
+    { text: alphanumericMsg, validated: true },
+    { text: startCharMsg, validated: true },
+    { text: endCharMsg, validated: true },
+  ]);
 });
 
 test('Field is a valid UUID', () => {

@@ -10,6 +10,7 @@ import {
 import InstructionCommand from '../../../../../common/InstructionCommand';
 import ExternalLink from '../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../common/PopoverHint';
+import links from '../../../../../../common/installLinks.mjs';
 
 function OCMRoleScreen() {
   return (
@@ -23,7 +24,13 @@ function OCMRoleScreen() {
                   AWS account association
                 </Title>
                 <Text component={TextVariants.p}>
-                  Your ROSA cluster deployment from this interface uses AWS Secure Token Service for added security. As such, please prepare the following before proceeding. These steps are required and must be executed from a CLI, authenticated with both AWS and ROSA.
+                  ROSA cluster deployment uses the AWS Secure Token service for added security.
+                  {' '}
+                  Run the following required steps from a CLI authenticated with both AWS and ROSA.
+                  {' '}
+                  <ExternalLink href={links.ROSA_AWS_ACCOUNT_ASSOCIATION}>
+                    Learn more about account association
+                  </ExternalLink>
                 </Text>
               </TextContent>
             </CardBody>
@@ -38,13 +45,13 @@ function OCMRoleScreen() {
                 <Text component={TextVariants.p}>
                   Run one of the following two commands to create an OCM role. View required AWS policy permissions for the
                   {' '}
-                  <ExternalLink noIcon href="">
+                  <ExternalLink noIcon href={links.ROSA_AWS_ACCOUNT_ROLES}>
                     basic OCM role
                     {' '}
                   </ExternalLink>
                   and the
                   {' '}
-                  <ExternalLink noIcon href="">
+                  <ExternalLink noIcon href={links.ROSA_AWS_ACCOUNT_ROLES}>
                     admin OCM role
                   </ExternalLink>
                   .
@@ -59,7 +66,7 @@ function OCMRoleScreen() {
                       {' '}
                       <PopoverHint
                         bodyContent="The basic OCM role is necessary (one per Red Hat organization) to allow this interface to detect the presence of ROSA necessary AWS roles and policies."
-                        footerContent={(<ExternalLink href="">View AWS policy permissions required by the basic OCM role</ExternalLink>)}
+                        footerContent={(<ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>View AWS policy permissions required by the basic OCM role</ExternalLink>)}
                       />
                     </strong>
                     <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role">
@@ -77,7 +84,7 @@ function OCMRoleScreen() {
                       {' '}
                       <PopoverHint
                         bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually, during deployment."
-                        footerContent={(<ExternalLink href="">View the AWS policy permissions required by the admin OCM role.</ExternalLink>)}
+                        footerContent={(<ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>View the AWS policy permissions required by the admin OCM role.</ExternalLink>)}
                       />
                     </strong>
                     <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin">

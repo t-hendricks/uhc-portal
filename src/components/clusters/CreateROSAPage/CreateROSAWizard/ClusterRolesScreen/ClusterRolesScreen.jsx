@@ -24,6 +24,7 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../../common/validators';
+import PopoverHint from '../../../../common/PopoverHint';
 
 function ClusterRolesScreen({
   change,
@@ -73,6 +74,10 @@ function ClusterRolesScreen({
         <TextListItem className="pf-u-mb-sm">
           <Text component={TextVariants.p} className="pf-u-mb-sm">
             Create the Admin OCM role using the following command in the ROSA CLI.
+            {' '}
+            Only one OCM role can be linked per Red Hat org.
+            {' '}
+            <PopoverHint title="If an OCM role with basic privileges exists in your account, you might need to delete or unlink the role before creating an OCM role with administrative privileges." />
           </Text>
           <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role command">
             rosa create ocm-role --admin

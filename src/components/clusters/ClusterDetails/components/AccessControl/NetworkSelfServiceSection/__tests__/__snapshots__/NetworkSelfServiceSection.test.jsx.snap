@@ -390,19 +390,16 @@ exports[`<NetworkSelfServiceSection /> should render skeleton when pending and n
 <Card>
   <CardTitle>
     <Skeleton
-      isDark={false}
       size="md"
     />
   </CardTitle>
   <CardBody>
     <Skeleton
-      isDark={false}
       size="lg"
     />
   </CardBody>
   <CardFooter>
     <Skeleton
-      isDark={false}
       size="md"
     />
   </CardFooter>

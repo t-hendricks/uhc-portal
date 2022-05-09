@@ -20,6 +20,7 @@ import {
   Checkbox, FormGroup, Switch, Split, SplitItem,
 } from '@patternfly/react-core';
 import PopoverHint from '../PopoverHint';
+import './ReduxCheckbox.scss';
 
 // To be used inside redux-form Field component.
 function ReduxCheckbox(props) {
@@ -33,11 +34,13 @@ function ReduxCheckbox(props) {
     isHelperTextBeforeField = false,
     helpText,
     extendedHelpText,
+    isRequired = false,
+    showInitialValidationErrors = false,
     ...extraProps // any extra props not specified above
   } = props;
 
   const helperTextInvalid = () => {
-    if (touched && error) {
+    if ((touched || showInitialValidationErrors) && error) {
       return error;
     }
     return '';
@@ -50,18 +53,24 @@ function ReduxCheckbox(props) {
       helperTextInvalid={helperTextInvalid()}
       isHelperTextBeforeField={isHelperTextBeforeField}
       helperText={helpText}
-      validated={touched && error ? 'error' : null}
+      validated={(touched || showInitialValidationErrors) && error ? 'error' : null}
     >
       <Split hasGutter>
-        <SplitItem>
+        <SplitItem className={isRequired && 'pf-l-split__item-required'}>
           <InputComponent
             isChecked={!!value}
             id={name}
             {...restInput}
             {...extraProps}
             label={label}
+            required={isRequired}
           />
         </SplitItem>
+        {isRequired && (
+          <SplitItem>
+            <span className="pf-c-form__label-required redux-checkbox-required" aria-hidden="true">*</span>
+          </SplitItem>
+        )}
         {extendedHelpText && (
           <SplitItem>
             <PopoverHint hint={extendedHelpText} />
@@ -81,9 +90,13 @@ ReduxCheckbox.propTypes = {
   // plus other props to be passed to the field...
   isDisabled: PropTypes.bool,
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  isRequired: PropTypes.bool,
+  // show validation errors immediately, regardless of whether field has been touched or not
+  showInitialValidationErrors: PropTypes.bool,
   isHelperTextBeforeField: PropTypes.bool,
   helpText: PropTypes.string,
   onChange: PropTypes.func,
+  isFilled: PropTypes.bool,
 };
 
 export default ReduxCheckbox;
