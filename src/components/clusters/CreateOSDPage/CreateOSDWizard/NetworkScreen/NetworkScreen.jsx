@@ -40,7 +40,7 @@ function NetworkScreen(props) {
   // automatically checks the "Install into an existing VPC" checkbox in the UI
   const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
 
-  const findSubnetData = () => {
+  const shouldUncheckInstallToVPC = () => {
     const availabilityZones = [formValues.az_0, formValues.az_1, formValues.az_2];
     const hasSubnets = Object.keys(formValues).some(
       formValue => formValue.startsWith('public_subnet_id')
@@ -60,7 +60,7 @@ function NetworkScreen(props) {
   const onClusterPrivacyChange = (_, value) => {
     if (value === 'external') {
       change('use_privatelink', false);
-      findSubnetData();
+      shouldUncheckInstallToVPC();
     }
   };
 
