@@ -4,6 +4,7 @@ import {
   Alert,
   GridItem,
   Title,
+  Text,
   TextVariants,
   TextContent,
   Flex,
