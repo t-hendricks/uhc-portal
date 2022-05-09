@@ -2,22 +2,26 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Title, Button } from '@patternfly/react-core';
+import { Title, Button, WizardContext } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 import { global_danger_color_100 as ExclamationCircleColor } from '@patternfly/react-tokens';
 
-import links from '../../../common/installLinks.mjs';
 import Modal from '../../common/Modal/Modal';
 import { closeModal } from '../../common/Modal/ModalActions';
-import ExternalLink from '../../common/ExternalLink';
 
 const MissingPrereqErrorModal = ({ onRetry, onClose }) => {
+  const { goToStepById } = React.useContext(WizardContext);
   const dispatch = useDispatch();
   const title = 'Missing prerequisite';
 
   const close = () => {
     dispatch(closeModal());
     onClose();
+  };
+
+  const goToClusterProviderStep = () => {
+    goToStepById(21);
+    close();
   };
 
   return (
@@ -39,9 +43,20 @@ const MissingPrereqErrorModal = ({ onRetry, onClose }) => {
           onClick={onRetry}
           type="submit"
         >
-          Retry
+          Retry creating cluster
         </Button>,
-        <Button key="secondary" variant="secondary" onClick={close}>
+        <Button
+          key="prereq-guide"
+          variant="secondary"
+          onClick={goToClusterProviderStep}
+        >
+          Go back to prerequisites guide
+        </Button>,
+        <Button
+          key="secondary"
+          variant="secondary"
+          onClick={close}
+        >
           Cancel
         </Button>,
       ]}
@@ -64,14 +79,7 @@ const MissingPrereqErrorModal = ({ onRetry, onClose }) => {
       </p>
 
       <p className="pf-u-mt-md">
-        When the AIM user exists in your AWS account, retry to create your cluster.
-        {' '}
-        For more guidance, see the
-        {' '}
-        <ExternalLink href={links.OSD_CCS_AWS_CUSTOMER_REQ}>
-          customer cloud subscription requirements
-        </ExternalLink>
-        {' '}
+        Make sure the IAM user exists in your AWS account and try creating the cluster again.
       </p>
     </Modal>
   );

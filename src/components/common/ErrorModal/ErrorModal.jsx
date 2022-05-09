@@ -25,7 +25,7 @@ function ErrorModal({
           {' '}
           {title}
         </Title>
-        )}
+      )}
       primaryText="Close"
       onPrimaryClick={close}
       onClose={close}

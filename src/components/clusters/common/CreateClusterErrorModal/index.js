@@ -1,1 +1,1 @@
-export { default as CreateClusterErrorModal } from './CreateClusterErrorModal';
+export { default } from './CreateClusterErrorModal';

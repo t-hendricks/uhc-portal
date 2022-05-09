@@ -356,6 +356,7 @@ class CreateOSDWizardInternal extends React.Component {
               isPending={createClusterResponse.pending}
               clusterRequestParams={{ isWizard: true }}
             />
+            {isErrorModalOpen && <CreateClusterErrorModal onRetry={onSubmit} />}
           </ErrorBoundary>
         ),
         canJumpTo: this.canJumpTo(50),
@@ -503,7 +504,6 @@ class CreateOSDWizardInternal extends React.Component {
             </Banner>
           )}
           <div className="ocm-page">
-            {isErrorModalOpen && <CreateClusterErrorModal onRetry={onSubmit} />}
             <Wizard
               className="osd-wizard"
               navAriaLabel={`${ariaTitle} steps`}
