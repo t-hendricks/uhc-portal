@@ -1,7 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-  Alert, GridItem, TextContent, Title, TextVariants, Text,
+  Alert,
+  GridItem,
+  Title,
+  Text,
+  TextVariants,
+  TextContent,
+  Flex,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
@@ -14,7 +20,7 @@ import Prerequisites from '../../../common/Prerequisites/Prerequisites';
 
 function GCPByocFields({ isValidating }) {
   return (
-    <>
+    <Flex direction={{ default: 'column' }}>
       <GridItem>
         <Alert variant="info" isInline title="Customer cloud subscription">
           Provision your cluster in a Google Cloud Platform account owned by you or your company
@@ -99,7 +105,7 @@ function GCPByocFields({ isValidating }) {
           </>
         )}
       </GridItem>
-    </>
+    </Flex>
   );
 }
 

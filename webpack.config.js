@@ -61,6 +61,14 @@ module.exports = async (_env, argv) => {
   };
   const chromeTemplate = await getChromeTemplate();
 
+  // For hot reloads while developing, reset window's onbeforeunload event
+  // to prevent browser confirmation dialogs.
+  if (module.hot && typeof module.hot.dispose === 'function') {
+    module.hot.dispose(() => {
+      window.onbeforeunload = null;
+    });
+  }
+
   return {
     mode: argv.mode || 'development',
     entry,
