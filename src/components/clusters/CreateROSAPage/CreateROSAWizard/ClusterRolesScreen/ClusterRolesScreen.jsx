@@ -11,6 +11,7 @@ import {
   Grid,
   GridItem,
   Text,
+  TextContent,
   TextList,
   TextListItem,
   TextListVariants,
@@ -25,6 +26,7 @@ import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../../common/validators';
 import PopoverHint from '../../../../common/PopoverHint';
+import links from '../../../../../common/installLinks.mjs';
 
 function ClusterRolesScreen({
   change,
@@ -135,8 +137,9 @@ function ClusterRolesScreen({
           <Text component={TextVariants.p}>
             Choose the preferred mode for creating operator roles and OIDC provider.
             {' '}
-            {/* TODO:  add href */}
-            <ExternalLink href="#">Learn more about ROSA roles.</ExternalLink>
+            <ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>
+              Learn more about ROSA roles.
+            </ExternalLink>
           </Text>
         </GridItem>
         {getOCMRoleErrorBox && (
@@ -184,8 +187,23 @@ function ClusterRolesScreen({
             type="text"
             validate={validators.checkCustomOperatorRolesPrefix}
             helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  If not provided, a default hash will be generated.`}
-            // TODO: add correct popover text
-            extendedHelpText="TBD"
+            extendedHelpText={(
+              <TextContent>
+                <Text component={TextVariants.p}>
+                  Assign a custom prefix to the cluster-specific Operator IAM roles to help separate
+                  {' '}
+                  your AWS roles and policies. The default is the name of the cluster and a 4-digit
+                  {' '}
+                  random hash string. If provided, your custom prefix replaces the hash.
+                  {' '}
+                  See examples in
+                  {' '}
+                </Text>
+                <ExternalLink href={links.ROSA_AWS_OPERATOR_ROLE_PREFIX}>
+                  Defining a custom Operator IAM role prefix
+                </ExternalLink>
+              </TextContent>
+            )}
             showHelpTextOnError={false}
           />
         </GridItem>

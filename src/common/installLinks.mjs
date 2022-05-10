@@ -202,6 +202,7 @@ const links = {
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
   ROSA_AWS_SERVICE_QUOTAS: `${ROSA_DOCS_BASE}/rosa_getting_started/rosa-sts-required-aws-service-quotas.html`,
   ROSA_AWS_ACCOUNT_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-understanding-ocm-role_rosa-sts-about-iam-resources`,
+  ROSA_AWS_OPERATOR_ROLE_PREFIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-defining-an-operator-role-prefix_rosa-sts-about-iam-resources`,
   AWS_CONSOLE: 'https://console.aws.amazon.com/rosa/home',
   AWS_CLI: 'https://aws.amazon.com/cli/',
 
