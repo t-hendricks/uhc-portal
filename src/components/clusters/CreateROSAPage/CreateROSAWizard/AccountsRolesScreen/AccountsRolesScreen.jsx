@@ -93,7 +93,7 @@ function AccountsRolesScreen({
           </GridItem>
         </GridItem>
         <GridItem>
-          <Prerequisites initiallyExpanded={!hasAWSAccount} acknowledgementRequired>
+          <Prerequisites initiallyExpanded acknowledgementRequired>
             <TextContent>
               <Text component={TextVariants.p} className="ocm-secondary-text">
                 Before continuing, confirm that all prerequisites are met:
