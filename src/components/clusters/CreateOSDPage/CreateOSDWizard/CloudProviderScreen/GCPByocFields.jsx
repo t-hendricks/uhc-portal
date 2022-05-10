@@ -32,7 +32,7 @@ function GCPByocFields({ isValidating }) {
         <Title headingLevel="h3">GCP service account</Title>
       </GridItem>
       <GridItem>
-        <Prerequisites acknowledgementRequired>
+        <Prerequisites acknowledgementRequired initiallyExpanded>
           <TextContent>
             <Text component={TextVariants.p} className="ocm-secondary-text">
               Successful cluster provisioning requires that:
