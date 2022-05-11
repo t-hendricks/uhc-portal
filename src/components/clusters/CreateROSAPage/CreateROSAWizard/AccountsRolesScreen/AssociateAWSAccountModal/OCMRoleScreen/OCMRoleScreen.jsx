@@ -20,6 +20,8 @@ import ExternalLink from '../../../../../../common/ExternalLink';
 import PopoverHint from '../../../../../../common/PopoverHint';
 import links from '../../../../../../../common/installLinks.mjs';
 
+import './OCMRoleScreen.scss';
+
 function OCMRoleScreen() {
   return (
     <PageSection>
