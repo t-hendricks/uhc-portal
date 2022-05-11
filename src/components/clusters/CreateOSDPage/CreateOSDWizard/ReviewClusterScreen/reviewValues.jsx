@@ -60,8 +60,8 @@ const reviewValues = {
     title: 'Cluster name',
   },
   operator_roles_name: {
-    title: 'Operator roles name preview',
-    valueTransform: (value, allValues) => `${allValues.name}-${allValues.custom_operator_roles_prefix || '<hash>'}`,
+    title: 'Operator roles prefix preview',
+    valueTransform: (value, allValues) => `${allValues.name}-${allValues.custom_operator_roles_prefix}`,
   },
   cluster_version: {
     title: 'Version',

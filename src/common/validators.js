@@ -1192,6 +1192,7 @@ export {
   validateServiceAccountObject,
   checkMachinePoolName,
   checkMachinePoolLabels,
+  checkCustomOperatorRolesPrefix,
   checkLabels,
   validateUniqueAZ,
   validateValueNotPlaceholder,
