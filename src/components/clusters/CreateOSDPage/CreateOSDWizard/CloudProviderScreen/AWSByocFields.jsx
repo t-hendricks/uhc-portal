@@ -28,7 +28,7 @@ function AWSByocFields({ isValidating }) {
         <Title headingLevel="h3">AWS account details</Title>
       </GridItem>
       <GridItem>
-        <Prerequisites acknowledgementRequired>
+        <Prerequisites acknowledgementRequired initiallyExpanded>
           <TextContent>
             <Text component={TextVariants.p} className="ocm-secondary-text">
               Successful cluster provisioning requires that:
@@ -65,7 +65,7 @@ function AWSByocFields({ isValidating }) {
               Business Support for AWS is also recommended.
               For more guidance, see the
               {' '}
-              <ExternalLink href={links.OSD_CCS_AWS}>
+              <ExternalLink href={links.OSD_CCS_AWS_CUSTOMER_REQ}>
                 customer cloud subscription requirements
               </ExternalLink>
               .
