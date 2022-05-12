@@ -6,7 +6,7 @@ import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 function LeaveCreateClusterPrompt({ when = true }) {
   const history = useHistory();
   const [isOpen, setIsOpen] = React.useState(false);
-  const [destinationPath, setDestinationPath] = React.useState('');
+  const [destinationLocation, setDestinationLocation] = React.useState('');
 
   React.useEffect(() => {
     let unblock;
@@ -20,7 +20,7 @@ function LeaveCreateClusterPrompt({ when = true }) {
           window.history.forward();
         }
 
-        setDestinationPath(location.pathname);
+        setDestinationLocation(location);
         setIsOpen(true);
         return 'true';
       });
@@ -33,6 +33,11 @@ function LeaveCreateClusterPrompt({ when = true }) {
     };
   }, [history, isOpen, when]);
 
+  const onLeave = () => {
+    history.push(destinationLocation);
+    setIsOpen(false);
+  };
+
   return isOpen ? (
     <Modal
       variant={ModalVariant.small}
@@ -44,7 +49,7 @@ function LeaveCreateClusterPrompt({ when = true }) {
         <Button
           key="leave"
           variant="primary"
-          onClick={() => history.push(destinationPath)}
+          onClick={onLeave}
           data-testid="submit-button"
         >
           Yes, leave
