@@ -8,12 +8,12 @@ const {
   },
 } = OCM;
 
-const getAIClustersBySubscription = ClustersAPI.listBySubscriptionIds;
+const getAIClusters = ClustersAPI.list;
 
 const getAICluster = ClustersAPI.get;
 
 const assistedService = {
-  getAIClustersBySubscription,
+  getAIClusters,
   getAICluster,
 };
 
