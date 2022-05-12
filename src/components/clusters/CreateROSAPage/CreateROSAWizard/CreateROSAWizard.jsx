@@ -2,14 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Redirect } from 'react-router';
 
-import {
-  Banner,
-  Button,
-  Wizard,
-  WizardFooter,
-  WizardContext,
-  PageSection,
-} from '@patternfly/react-core';
+import { Banner, Wizard, PageSection } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
@@ -40,6 +33,7 @@ import ClusterRolesScreen from './ClusterRolesScreen';
 import ErrorBoundary from '../../../App/ErrorBoundary';
 
 import { persistor } from '../../../../redux/store';
+import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
 class CreateROSAWizardInternal extends React.Component {
   state = {
@@ -363,35 +357,6 @@ class CreateROSAWizardInternal extends React.Component {
       );
     }
 
-    const footer = (
-      <WizardFooter>
-        <WizardContext.Consumer>
-          {({
-            activeStep,
-            onNext,
-            onBack,
-            onClose,
-          }) => (
-            <>
-              {activeStep.name === 'Review and create'
-                ? <Button variant="primary" type="submit" onClick={onSubmit}>Create Cluster</Button>
-                : <Button variant="primary" type="submit" onClick={() => this.beforeOnNext(onNext)}>Next</Button>}
-              <Button
-                variant="secondary"
-                onClick={onBack}
-                {...activeStep.name === 'Accounts and roles' && { isDisabled: true }}
-              >
-                Back
-              </Button>
-              <Button variant="link" onClick={onClose}>
-                Cancel
-              </Button>
-            </>
-          )}
-        </WizardContext.Consumer>
-      </WizardFooter>
-    );
-
     return (
       <>
         {title}
@@ -414,7 +379,12 @@ class CreateROSAWizardInternal extends React.Component {
                 onBack={this.onBack}
                 onGoToStep={this.onGoToStep}
                 onClose={() => history.push('/')}
-                footer={footer}
+                footer={(
+                  <CreateRosaWizardFooter
+                    onSubmit={onSubmit}
+                    onBeforeNext={goToNext => this.beforeOnNext(goToNext)}
+                  />
+                )}
               />
             </PersistGate>
           </div>
