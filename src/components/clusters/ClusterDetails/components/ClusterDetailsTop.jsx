@@ -68,6 +68,7 @@ function ClusterDetailsTop(props) {
   const IdentityProvidersHint = () => (
     <Alert
       id="idpHint"
+      className="pf-u-mt-md"
       variant="warning"
       isInline
       title="Missing identity providers"

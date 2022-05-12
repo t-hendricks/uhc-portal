@@ -2,7 +2,7 @@
 
 exports[`<SubscriptionCompliancy /> should warn during evaluation period 1`] = `
 <Alert
-  className="subscription-settings compliancy-alert"
+  className="subscription-settings compliancy-alert pf-u-mt-md"
   isInline={true}
   title="OpenShift evaluation expiration date"
   variant="warning"
@@ -27,7 +27,7 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 1`] = `
 
 exports[`<SubscriptionCompliancy /> should warn during evaluation period 2`] = `
 <Alert
-  className="subscription-settings compliancy-alert"
+  className="subscription-settings compliancy-alert pf-u-mt-md"
   isInline={true}
   title="OpenShift evaluation expiration date"
   variant="warning"
@@ -45,13 +45,13 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 2`] = `
 
 exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] = `
 <Alert
-  className="subscription-settings compliancy-alert"
+  className="subscription-settings compliancy-alert pf-u-mt-md"
   isInline={true}
   title="Your 60-day OpenShift evaluation has expired"
   variant="danger"
 >
   <p>
-    Your cluster is not supported and you may stop receving updates.
+    Your cluster is not supported and you may stop receiving updates.
      
     <a
       href="https://www.redhat.com/en/contact"
@@ -76,13 +76,13 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] =
 
 exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 2`] = `
 <Alert
-  className="subscription-settings compliancy-alert"
+  className="subscription-settings compliancy-alert pf-u-mt-md"
   isInline={true}
   title="Your 60-day OpenShift evaluation has expired"
   variant="danger"
 >
   <p>
-    Your cluster is not supported and you may stop receving updates.
+    Your cluster is not supported and you may stop receiving updates.
      
     The cluster owner or an Organization Administrator can edit subscription settings for non-evaluation use.
   </p>
