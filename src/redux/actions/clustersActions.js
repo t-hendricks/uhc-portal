@@ -33,7 +33,7 @@ import {
   postSchedule,
 } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
 import { editSubscriptionSettings } from './subscriptionSettingsActions';
-import isAssistedInstallSubscription, { isAISubscriptionWithoutMetrics } from '../../common/isAssistedInstallerCluster';
+import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
 
 const invalidateClusters = () => dispatch => dispatch({
@@ -309,7 +309,9 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
       }
 
       // Performing a batch request to obtain the AI clusters data.
-      const aiClustersRequest = subscriptionIds.length === 0 ? Promise.resolve({ data: [] }) : assistedService.getAIClustersBySubscription(subscriptionIds);
+      const aiClustersRequest = subscriptionIds.length === 0
+        ? Promise.resolve({ data: [] })
+        : assistedService.getAIClustersBySubscription(subscriptionIds);
       return aiClustersRequest.then((res) => {
         const aiClusters = res.data || [];
         aiClusters.forEach((aiCluster) => {
@@ -321,7 +323,7 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
           }
         });
         return enrichForClusterService();
-      })
+      });
     });
 };
 

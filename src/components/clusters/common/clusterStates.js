@@ -1,7 +1,5 @@
 import get from 'lodash/get';
-import { OCM } from 'openshift-assisted-ui-lib';
 import { subscriptionStatuses, normalizedProducts } from '../../../common/subscriptionTypes';
-import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
 
 const clusterStates = {
   WAITING: 'waiting',
@@ -87,9 +85,9 @@ const isHibernating = state => state === clusterStates.HIBERNATING
 // and operator roles.
 const isWaitingROSAManualMode = cluster => (
   cluster.product.id === normalizedProducts.ROSA
-    && cluster.state === clusterStates.WAITING
-    && cluster.aws.sts
-    && !cluster.aws.sts.auto_mode
+  && cluster.state === clusterStates.WAITING
+  && cluster.aws.sts
+  && !cluster.aws.sts.auto_mode
 );
 
 export { getClusterStateAndDescription, isHibernating, isWaitingROSAManualMode };
