@@ -28,9 +28,15 @@ import validators from '../../../../../common/validators';
 import PopoverHint from '../../../../common/PopoverHint';
 import links from '../../../../../common/installLinks.mjs';
 
+const roleModes = {
+  MANUAL: 'manual',
+  AUTO: 'auto',
+};
+
 function ClusterRolesScreen({
   change,
   awsAccountID,
+  rosaCreationMode,
   customOperatorRolesPrefix,
   getOCMRole,
   getOCMRoleResponse,
@@ -57,6 +63,12 @@ function ClusterRolesScreen({
   }, [customOperatorRolesPrefix]);
 
   useEffect(() => {
+    if (!rosaCreationMode && getOCMRoleResponse.fulfilled) {
+      change('rosa_roles_provider_creation_mode', isAutoModeAvailable ? roleModes.AUTO : roleModes.MANUAL);
+    }
+  }, [rosaCreationMode, isAutoModeAvailable, getOCMRoleResponse.fulfilled]);
+
+  useEffect(() => {
     if (getOCMRoleResponse.pending) {
       setGetOCMRoleErrorBox(null);
     } else if (getOCMRoleResponse.fulfilled) {
@@ -77,6 +89,7 @@ function ClusterRolesScreen({
 
   const handleRefresh = () => {
     clearGetOcmRoleResponse();
+    change('rosa_roles_provider_creation_mode', undefined);
     getOCMRole(awsAccountID);
   };
 
@@ -123,11 +136,6 @@ function ClusterRolesScreen({
       </TextList>
     </Alert>
   );
-
-  const roleModes = {
-    MANUAL: 'manual',
-    AUTO: 'auto',
-  };
 
   const roleModeOptions = [
     {
@@ -181,7 +189,7 @@ function ClusterRolesScreen({
                 className="radio-button"
                 disabled={getOCMRoleResponse.pending}
                 options={roleModeOptions}
-                defaultValue={roleModes.MANUAL}
+                disableDefaultValueHandling
               />
             </FormGroup>
           </GridItem>
@@ -241,6 +249,7 @@ function ClusterRolesScreen({
 ClusterRolesScreen.propTypes = {
   change: PropTypes.func,
   awsAccountID: PropTypes.string,
+  rosaCreationMode: PropTypes.string,
   customOperatorRolesPrefix: PropTypes.string,
   getOCMRole: PropTypes.func.isRequired,
   getOCMRoleResponse: PropTypes.func.isRequired,
