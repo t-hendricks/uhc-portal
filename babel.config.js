@@ -1,3 +1,7 @@
+const pfReactIconsMapper = {
+  IconSize: '@patternfly/react-icons/dist/js/createIcon',
+};
+
 module.exports = {
   presets: [['@babel/preset-env', {
     targets: {
@@ -23,7 +27,7 @@ module.exports = {
       'transform-imports',
       {
         '@patternfly/react-icons': {
-          transform: importName => `@patternfly/react-icons/dist/js/icons/${importName
+          transform: importName => pfReactIconsMapper[importName] || `@patternfly/react-icons/dist/js/icons/${importName
             .split(/(?=[A-Z])/)
             .join('-')
             .toLowerCase()}`,
