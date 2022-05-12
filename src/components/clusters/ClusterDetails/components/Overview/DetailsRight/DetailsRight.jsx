@@ -8,8 +8,9 @@ import {
   DescriptionListDescription,
   Flex,
 } from '@patternfly/react-core';
-
 import { OCM } from 'openshift-assisted-ui-lib';
+
+import Timestamp from '../../../../../common/Timestamp';
 import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
 import ClusterNetwork from '../ClusterNetwork';
@@ -217,6 +218,23 @@ function DetailsRight({
               </DescriptionListGroup>
             </>
           )}
+        {cluster.aiCluster && (
+          <>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Created at</DescriptionListTerm>
+              <DescriptionListDescription>
+                <Timestamp value={get(cluster, 'creation_timestamp', 'N/A')} />
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Owner</DescriptionListTerm>
+              <DescriptionListDescription>
+                {get(cluster, 'subscription.creator.name') || get(cluster, 'subscription.creator.username', 'N/A')}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+
+        )}
         {/* Autoscaling */}
         {
           autoscaleEnabled
