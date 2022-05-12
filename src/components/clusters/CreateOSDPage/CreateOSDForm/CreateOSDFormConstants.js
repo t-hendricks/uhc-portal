@@ -1,6 +1,7 @@
 const constants = {
   clusterNameHint: 'This name identifies your cluster in OpenShift Cluster Manager and forms part of the cluster console subdomain.',
-  availabilityHint: 'Deploy to a single data center or to multiple data centers.',
+  availabilityHintSingleZone: 'Single zone clusters reside in a singular fault domain and lack the resilience of multi-zone clusters.',
+  availabilityHintMultiZone: 'Three availability zones provide resilience to cluster components evenly spread across fault domains.',
   regionHint: 'The data center where your worker pool will be located.',
   persistentStorageHint: 'The storage quota set on the deployed cluster.',
   loadBalancersHint: 'The load balancer quota set on the deployed cluster.',
