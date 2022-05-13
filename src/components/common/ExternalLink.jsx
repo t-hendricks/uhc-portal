@@ -7,13 +7,14 @@ const ExternalLink = ({
   children,
   noIcon,
   noTarget,
+  className,
 }) => {
   let target = '_blank';
   if (noTarget) {
     target = '';
   }
   return (
-    <a href={href} target={target} rel="noreferrer noopener">
+    <a href={href} target={target} rel="noreferrer noopener" className={className}>
       {children}
       {!noIcon && (
         <>
@@ -30,6 +31,7 @@ ExternalLink.propTypes = {
   children: PropTypes.node,
   noIcon: PropTypes.bool,
   noTarget: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default ExternalLink;
