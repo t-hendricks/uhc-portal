@@ -16,6 +16,7 @@ import getClusterName from '../../../../common/getClusterName';
 import { subscriptionStatuses, normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { isUninstalledAICluster } from '../../../../common/isAssistedInstallerCluster';
 import ExpirationAlert from './ExpirationAlert';
+import LimitedSupportAlert from './LimitedSupportAlert';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
 import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
@@ -214,6 +215,9 @@ function ClusterDetailsTop(props) {
         OSDRHMExpiration
       />
       )}
+
+      <LimitedSupportAlert limitedSupportReasons={cluster.limitedSupportReasons} />
+
       <SubscriptionCompliancy
         cluster={cluster}
         openModal={openModal}
