@@ -7,7 +7,7 @@ import {
 import UpgradeAcknowledgeStep from '../UpgradeAcknowledgeStep';
 import Modal from '../../../../../common/Modal/Modal';
 
-import clusterService from '../../../../../../services/clusterService';
+import clusterService, { patchUpgradeSchedule } from '../../../../../../services/clusterService';
 
 const UpgradeAcknowledgeModal = (props) => {
   const [pending, setPending] = useState(false);
@@ -18,7 +18,13 @@ const UpgradeAcknowledgeModal = (props) => {
   const [toVersion, setToVersion] = useState('');
 
   const {
-    modalData, closeModal, clusterId, setGate, isOpen,
+    modalData,
+    closeModal,
+    clusterId,
+    setGate,
+    isOpen,
+    automaticUpgradePolicyId,
+    setUpgradePolicy,
   } = props;
 
   useEffect(() => {
@@ -37,27 +43,43 @@ const UpgradeAcknowledgeModal = (props) => {
   const postClusterAcknowledge = async () => {
     setPending(true);
     setErrors([]);
-    const ids = unmetAcknowledgements.map(ack => ack.id);
-
-    const promises = ids.map(upgradeUpdateId => (
-      clusterService.postClusterGateAgreement(clusterId, upgradeUpdateId)
-        .then(() => {
-          setGate(upgradeUpdateId);
-        })
-        .catch(e => Promise.reject(e.response.data.reason))
-    ));
-
-    const response = await Promise.allSettled(promises);
 
     const foundErrors = [];
-    response.forEach((promise) => {
-      if (promise.status === 'rejected') {
-        foundErrors.push(promise.reason);
-        if (confirmed) {
-          setConfirmed(false);
-        }
+    if (automaticUpgradePolicyId) {
+      try {
+        const patchUpgradeScheduleResponse = await patchUpgradeSchedule(
+          clusterId,
+          automaticUpgradePolicyId,
+          { enable_minor_version_upgrades: true },
+        );
+        setUpgradePolicy(patchUpgradeScheduleResponse.data);
+      } catch (error) {
+        foundErrors.push(error.response.data.reason);
       }
-    });
+    }
+
+    if (foundErrors.length === 0) {
+      const ids = unmetAcknowledgements.map(ack => ack.id);
+
+      const promises = ids.map(upgradeUpdateId => (
+        clusterService.postClusterGateAgreement(clusterId, upgradeUpdateId)
+          .then(() => {
+            setGate(upgradeUpdateId);
+          })
+          .catch(e => Promise.reject(e.response.data.reason))
+      ));
+
+      const response = await Promise.allSettled(promises);
+
+      response.forEach((promise) => {
+        if (promise.status === 'rejected') {
+          foundErrors.push(promise.reason);
+          if (confirmed) {
+            setConfirmed(false);
+          }
+        }
+      });
+    }
 
     setPending(false);
     if (foundErrors.length === 0) {
@@ -82,7 +104,7 @@ const UpgradeAcknowledgeModal = (props) => {
       className="ocm-upgrade-ack-modal"
       modalSize={ModalVariant.medium}
     >
-      { errors.length === 0 ? (
+      {errors.length === 0 ? (
         <UpgradeAcknowledgeStep
           fromVersion={fromVersion}
           toVersion={toVersion}
@@ -101,9 +123,11 @@ const UpgradeAcknowledgeModal = (props) => {
 UpgradeAcknowledgeModal.propTypes = {
   closeModal: PropTypes.func,
   clusterId: PropTypes.string,
+  automaticUpgradePolicyId: PropTypes.string,
   isOpen: PropTypes.bool,
   modalData: PropTypes.shape,
   setGate: PropTypes.func,
+  setUpgradePolicy: PropTypes.func,
 };
 
 UpgradeAcknowledgeModal.defaultProps = {

@@ -23,6 +23,7 @@ const UpgradeAcknowledgeWarning = (props) => {
     showConfirm,
     openshiftVersion,
     hasScheduledManual,
+    isMinorVersionUpgradesEnabled,
   } = props;
 
   const handleButtonClick = () => {
@@ -42,6 +43,13 @@ const UpgradeAcknowledgeWarning = (props) => {
   }
 
   const [clusterUnmetAcks, clusterMetAcks] = getAcks;
+
+  const showConfirmMessage = (
+    showConfirm
+    && clusterUnmetAcks.length === 0
+    && ((isManual && clusterMetAcks.length > 0)
+      || (!isManual && isMinorVersionUpgradesEnabled))
+  );
 
   return (
     <>
@@ -83,7 +91,7 @@ const UpgradeAcknowledgeWarning = (props) => {
         </>
       ) : null}
 
-      {showConfirm && clusterMetAcks.length > 0 && clusterUnmetAcks.length === 0 ? (
+      {showConfirmMessage ? (
         <div className="ocm-upgrade-additional-versions-available" data-testid="confirmAckReceived">
           <InfoCircleIcon />
           Administrator acknowledgement was received.
@@ -105,6 +113,7 @@ UpgradeAcknowledgeWarning.propTypes = {
   toVersion: PropTypes.func,
   getAcks: PropTypes.array,
   isManual: PropTypes.bool,
+  isMinorVersionUpgradesEnabled: PropTypes.bool,
 };
 
 UpgradeAcknowledgeWarning.defaultProps = {

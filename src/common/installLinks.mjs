@@ -216,6 +216,8 @@ const links = {
   COSTMGMT_ADDING_OCP: `${COSTMGMT_DOCS_BASE}/html/adding_an_openshift_container_platform_source_to_cost_management/assembly-adding-openshift-container-platform-source`,
 
   FINDING_AWS_ACCOUNT_IDENTIFIERS: 'https://docs.aws.amazon.com/general/latest/gr/acct-identifiers.html',
+  OSD_Z_STREAM: `${OSD_DOCS_BASE}/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle`,
+  ROSA_Z_STREAM: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-life-cycle.html#rosa-patch-versions_rosa-life-cycle`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
