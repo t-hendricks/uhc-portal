@@ -64,7 +64,7 @@ function CloudProviderScreen({
             <Alert variant="danger" isInline title={`${cloudProviderId.toUpperCase()} wasn't able to verify your credentials`}>
               Verify that your entered
               {' '}
-              {cloudProviderId === 'aws' ? 'access keys match the access keys provided in your AWS account.' : 'service account details are correct'}
+              {cloudProviderId === 'aws' ? 'access keys match the access keys provided in your AWS account.' : 'service account details are correct.'}
             </Alert>
           )}
         </>

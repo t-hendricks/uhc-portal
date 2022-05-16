@@ -40,7 +40,7 @@ const contentByCloudProvider = (cloudProviderID) => {
               An IAM user called “osdCcsAdmin” exists with the AdministratorAccess policy.
             </ListItem>
             <ListItem>
-              An Organization Service Control Policy (SCP) is set up according to the
+              An Organization service control policy (SCP) is set up according to the
               {' '}
               <ExternalLink noIcon href={links.OSD_CCS_AWS_SCP}>documentation</ExternalLink>
               .
@@ -52,8 +52,8 @@ const contentByCloudProvider = (cloudProviderID) => {
           {' '}
           <ExternalLink noIcon href={links.OSD_CCS_AWS}>documentation</ExternalLink>
           {' '}
-          for more detail around the requirements for customer cloud
-          subscription.
+          for more detail around the requirements for Customer Cloud
+          Subscription.
         </TextContent>
       </>
     );
@@ -100,7 +100,7 @@ const contentByCloudProvider = (cloudProviderID) => {
         <ExternalLink noIcon href={links.OSD_CCS_GCP}>the documentation</ExternalLink>
         {' '}
         for more detail around the requirements for
-        customer cloud subscription.
+        Customer Cloud Subscription.
       </TextContent>
     </>
   );

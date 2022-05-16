@@ -68,7 +68,7 @@ function ScaleSection({
       {/* Instance type */}
       <GridItem md={6}>
         <FormGroup
-          label="Worker node instance type"
+          label="Compute node instance type"
           isRequired
           fieldId="node_type"
           labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
@@ -116,7 +116,7 @@ function ScaleSection({
             <Field
               component={NodeCountInput}
               name="nodes_compute"
-              label={isMultiAz ? 'Worker node count (per zone)' : 'Worker node count'}
+              label={isMultiAz ? 'Compute node count (per zone)' : 'Compute node count'}
               isMultiAz={isMultiAz}
               isByoc={isBYOC}
               machineType={machineType}
@@ -126,7 +126,7 @@ function ScaleSection({
                   {constants.computeNodeCountHint}
                   {' '}
                   <ExternalLink href={links.OSD_SERVICE_DEFINITION_COMPUTE}>
-                    Learn more about worker node count
+                    Learn more about compute node count
                   </ExternalLink>
                 </>
               )}
