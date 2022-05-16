@@ -6,7 +6,7 @@ const constants = {
   loadBalancersHint: 'The load balancer quota set on the deployed cluster.',
   computeNodeInstanceTypeHint: `The instance type for the worker nodes. Instance type
     determines the amount of memory and vCPU allocated to each worker node.`,
-  computeNodeCountHint: 'The number of worker nodes to provision per zone. The minimum number of worker nodes will vary depending on which features are enbled.',
+  computeNodeCountHint: 'The number of worker nodes to provision per zone. The minimum number of worker nodes will vary depending on which features are enabled.',
   machinePoolComputeNodeCountHint: 'The number of worker nodes to provision per zone.',
   machineCIDRHint: `A block of IP addresses used by the OpenShift Container Platform installation
     program while installing the cluster. The address block must not overlap with any other network
