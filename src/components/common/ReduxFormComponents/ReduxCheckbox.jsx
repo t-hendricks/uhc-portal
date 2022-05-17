@@ -60,6 +60,7 @@ function ReduxCheckbox(props) {
           <InputComponent
             isChecked={!!value}
             id={name}
+            name={name}
             {...restInput}
             {...extraProps}
             label={label}
