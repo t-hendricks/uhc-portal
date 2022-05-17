@@ -39,7 +39,7 @@ function AccountsRolesScreen({
   const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
 
-  const hasAWSAccount = AWSAccountIDs.length > 0;
+  const hasAWSAccounts = AWSAccountIDs.length > 0;
 
   // default product and cloud_provider form values
   useEffect(() => {
@@ -50,10 +50,10 @@ function AccountsRolesScreen({
 
   // default to first available aws account
   useEffect(() => {
-    if (!selectedAWSAccountID && hasAWSAccount) {
+    if (!selectedAWSAccountID && hasAWSAccounts) {
       change('associated_aws_id', AWSAccountIDs[0]);
     }
-  }, [hasAWSAccount, selectedAWSAccountID]);
+  }, [hasAWSAccounts, selectedAWSAccountID]);
 
   useEffect(() => {
     if (getAWSAccountIDsResponse.pending) {
@@ -69,7 +69,7 @@ function AccountsRolesScreen({
         response={getAWSAccountIDsResponse}
       />);
     } else {
-      getAWSAccountIDs(organizationID); // <--- moved from above
+      getAWSAccountIDs(organizationID);
     }
   }, [getAWSAccountIDsResponse]);
 
@@ -157,7 +157,7 @@ function AccountsRolesScreen({
           <Text component={TextVariants.p}>
             Use an AWS account that is linked to your account.
             {' '}
-            {!hasAWSAccount && 'Alternatively, create an AWS account and validate all prerequisites.'}
+            {!hasAWSAccounts && 'Alternatively, create an AWS account and validate all prerequisites.'}
           </Text>
         </GridItem>
         <GridItem span={4} />
