@@ -1,12 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import {
-  isValid,
-  reset,
-  formValueSelector,
-  getFormValues,
-  getFormSyncErrors,
-  touch,
+  isValid, reset, formValueSelector, getFormValues,
 } from 'redux-form';
 import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
@@ -46,8 +41,8 @@ const mapStateToProps = (state, ownProps) => {
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     ccsCredentials: ccsCredentialsSelector(cloudProviderID, state),
     isCCS,
-    ccsCredentialsValidityResponse,
     isCCSCredentialsValidationNeeded: isCCSCredentialsValidationNeeded(cloudProviderID, state),
+    ccsValidationPending: ccsCredentialsValidityResponse.pending && isCCS,
     cloudProviderID,
     installToVPCSelected: valueSelector(state, 'install_to_vpc'),
     privateLinkSelected: valueSelector(state, 'use_privatelink'),
@@ -58,8 +53,8 @@ const mapStateToProps = (state, ownProps) => {
     cloudProviders: state.cloudProviders,
     loadBalancerValues: state.loadBalancerValues,
     persistentStorageValues: state.persistentStorageValues,
+
     hasProductQuota: hasManagedQuotaSelector(state, product),
-    formErrors: getFormSyncErrors('CreateCluster')(state),
   });
 };
 
@@ -72,14 +67,15 @@ const mapDispatchToProps = dispatch => ({
   }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),
-  openModal: modalName => dispatch(openModal(modalName)),
+  openModal: (modalName) => { dispatch(openModal(modalName)); },
   closeModal: () => { dispatch(closeModal()); },
-  touch: fieldNames => dispatch(touch('CreateCluster', ...fieldNames)),
+
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes: () => dispatch(getMachineTypes()),
   getCloudProviders: () => dispatch(getCloudProviders()),
   getPersistentStorage: () => dispatch(getPersistentStorageValues()),
   getLoadBalancers: () => dispatch(getLoadBalancerValues()),
+
   getGCPCloudProviderVPCs: (type, credentials, region) => dispatch(
     getGCPCloudProviderVPCs(type, credentials, region),
   ),

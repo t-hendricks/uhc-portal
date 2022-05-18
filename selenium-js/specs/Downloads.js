@@ -3,8 +3,7 @@ import GlobalNav from '../pageobjects/GlobalNav.page';
 import Downloads from '../pageobjects/Downloads.page';
 
 describe('Downloads page', async () => {
-  // eslint-disable-next-line no-undef
-  before(async () => {
+  it('login and navigate to downloads', async () => {
     await LoginPage.open();
     await LoginPage.login();
     await GlobalNav.navigateTo('Downloads');
@@ -87,20 +86,20 @@ describe('Downloads page', async () => {
   it('selecting a category preserves OS & architecture of invisible sections', async () => {
     await (await Downloads.OSDropdown('Helm')).selectByVisibleText('Linux');
     await (await Downloads.architectureDropdown('Helm')).selectByVisibleText('s390x');
-    await (await Downloads.OSDropdown('OpenShift Local')).selectByVisibleText('Windows');
+    await (await Downloads.OSDropdown('CodeReady')).selectByVisibleText('Windows');
 
     await (await Downloads.categoryDropdown()).selectByVisibleText('Tokens');
     expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).not.toExist();
     expect(await Downloads.visibleRowContaining('Helm')).not.toExist();
-    expect(await Downloads.visibleRowContaining('OpenShift Local')).not.toExist();
+    expect(await Downloads.visibleRowContaining('CodeReady')).not.toExist();
 
     await (await Downloads.categoryDropdown()).selectByVisibleText('All categories');
     expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
     expect(await Downloads.visibleRowContaining('Helm')).toExist();
-    expect(await Downloads.visibleRowContaining('OpenShift Local')).toExist();
+    expect(await Downloads.visibleRowContaining('CodeReady')).toExist();
 
     expect(await Downloads.OSDropdown('Helm')).toHaveValue('linux');
     expect(await Downloads.architectureDropdown('Helm')).toHaveValue('s390x');
-    expect(await Downloads.OSDropdown('OpenShift Local')).toHaveValue('windows');
+    expect(await Downloads.OSDropdown('CodeReady')).toHaveValue('windows');
   });
 });

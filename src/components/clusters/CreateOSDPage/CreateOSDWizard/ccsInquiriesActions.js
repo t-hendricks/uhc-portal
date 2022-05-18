@@ -8,7 +8,6 @@ export const LIST_VPCS = 'LIST_VPCS';
 export const LIST_GCP_KEY_RINGS = 'LIST_GCP_KEY_RINGS';
 export const LIST_GCP_KEYS = 'LIST_GCP_KEYS';
 export const CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES = 'CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES';
-export const CLEAR_CCS_CREDENTIALS_INQUIRY = 'CLEAR_CCS_CREDENTIALS_INQUIRY';
 
 // Made async to ease handling of JSON SyntaxError as action rejection.
 const credentialsFromJSON = async (gcpCredentialsJSON) => {
@@ -90,8 +89,4 @@ export const getGCPKeys = (gcpCredentialsJSON, keyLocation, keyRing) => ({
 
 export const clearAllCloudProviderInquiries = () => ({
   type: CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES,
-});
-
-export const clearCcsCredientialsInquiry = () => ({
-  type: CLEAR_CCS_CREDENTIALS_INQUIRY,
 });

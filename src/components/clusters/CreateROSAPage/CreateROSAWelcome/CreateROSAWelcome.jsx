@@ -156,7 +156,7 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                     <Text component={TextVariants.p} className="ocm-secondary-text">
                       Note: If you haven’t done so already, also
                       {' '}
-                      <ExternalLink href={installLinks.AWS_CLI}>
+                      <ExternalLink href="https://aws.amazon.com/cli/">
                         install the AWS CLI
                       </ExternalLink>
                       {' '}

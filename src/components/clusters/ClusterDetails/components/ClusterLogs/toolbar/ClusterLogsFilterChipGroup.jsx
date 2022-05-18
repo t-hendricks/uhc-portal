@@ -9,10 +9,9 @@ import {
   Split,
   SplitItem,
 } from '@patternfly/react-core';
-
-import { SEVERITY_TYPES } from '../clusterLogConstants';
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
 import helpers from '../../../../../../common/helpers';
+import { SEVERITY_TYPES } from '../clusterLogConstants';
 
 const mapFilterGroup = (group, currentFilter, setFilter, history) => {
   const setFilterAndQueryParams = (key, value) => {

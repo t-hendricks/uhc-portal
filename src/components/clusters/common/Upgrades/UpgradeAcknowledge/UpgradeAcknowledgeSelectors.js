@@ -1,12 +1,13 @@
 /* eslint-disable max-len */
 
-export const splitMajorMinor = (version) => {
+const splitMajorMinor = (version) => {
   let versionArray = [];
   try {
     versionArray = version.split('.').map(num => parseInt(num, 10));
   } catch (error) {
     return [];
   }
+
   return versionArray;
 };
 
@@ -91,9 +92,4 @@ export const getClusterUnMetClusterAcks = (state, upgradeVersion) => {
 export const getHasUnMetClusterAcks = (state, upgradeVersion) => getClusterUnMetClusterAcks(state, upgradeVersion).length > 0;
 
 export const getHasScheduledManual = state => getIsManual(state)
-  && state.clusterUpgrades.schedules.items.some(schedule => schedule.version !== getFromVersionFromState(state));
-
-export const getAutomaticUpgradePolicyId = (state) => {
-  const automaticPolicy = state.clusterUpgrades.schedules.items.find(policy => policy.schedule_type === 'automatic');
-  return automaticPolicy?.id;
-};
+&& state.clusterUpgrades.schedules.items.some(schedule => schedule.version !== getFromVersionFromState(state));

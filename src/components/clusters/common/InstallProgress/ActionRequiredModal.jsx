@@ -31,12 +31,12 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
         <p>Copy and run the following commands:</p>
         <p>
           <ClipboardCopy isReadOnly>
-            {`rosa create operator-roles --interactive -c ${cluster.name}`}
+            {`rosa create operatorroles --mode manual -c ${cluster.name}`}
           </ClipboardCopy>
         </p>
         <p>
           <ClipboardCopy isReadOnly>
-            {`rosa create oidc-provider --interactive -c ${cluster.name}`}
+            {`rosa create oidcprovider --mode manual -c ${cluster.name}`}
           </ClipboardCopy>
         </p>
         <p>

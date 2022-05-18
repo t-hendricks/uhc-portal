@@ -50,6 +50,7 @@ function ClusterSettingsScreen({
         /* TODO move some props to index.js */
           cloudProviderID={cloudProviderID}
           isBYOC={isByoc}
+          isRosa={isRosa}
           isMultiAz={isMultiAz}
           showAvailability
           change={change}

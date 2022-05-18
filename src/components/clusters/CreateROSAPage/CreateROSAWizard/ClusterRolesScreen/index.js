@@ -16,7 +16,6 @@ const mapStateToProps = (state) => {
   return ({
     awsAccountID: valueSelector(state, 'associated_aws_id'),
     clusterName: valueSelector(state, 'name'),
-    rosaCreationMode: valueSelector(state, 'rosa_roles_provider_creation_mode'),
     customOperatorRolesPrefix: valueSelector(state, 'custom_operator_roles_prefix'),
     getOCMRoleResponse,
   });

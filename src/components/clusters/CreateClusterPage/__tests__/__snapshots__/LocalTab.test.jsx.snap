@@ -9,7 +9,7 @@ exports[`<LocalTab /> renders correctly 1`] = `
       <Title
         headingLevel="h2"
       >
-        Red Hat OpenShift Local
+        Red Hat CodeReady Containers
       </Title>
       <SplitItem>
         <Label
@@ -32,7 +32,7 @@ exports[`<LocalTab /> renders correctly 1`] = `
         <b>
           Note: 
         </b>
-        Your Openshift Local installation won't appear in the OpenShift Cluster Manager unless you enable cluster monitoring and telemetry.
+        Your CodeReady installation won't appear in the OpenShift Cluster Manager unless you enable cluster monitoring and telemetry.
       </Text>
     </TextContent>
     <Divider
@@ -48,7 +48,7 @@ exports[`<LocalTab /> renders correctly 1`] = `
         <Text
           component="h4"
         >
-          OpenShift Local
+          CodeReady Containers
         </Text>
         <Connect(DownloadAndOSSelection)
           channel="stable"
@@ -70,7 +70,7 @@ exports[`<LocalTab /> renders correctly 1`] = `
         <Text
           component="h3"
         >
-          Follow the documentation to install OpenShift Local
+          Follow the documentation to install CodeReady containers
         </Text>
         <Text
           component="p"
@@ -81,7 +81,7 @@ exports[`<LocalTab /> renders correctly 1`] = `
             crc setup
           </code>
            
-          to set up your host operating system for the OpenShift Local virtual machine.
+          to set up your host operating system for the CodeReady Containers virtual machine.
         </Text>
         <Text
           component="p"
@@ -98,13 +98,13 @@ exports[`<LocalTab /> renders correctly 1`] = `
           component="p"
         >
           <a
-            href="https://access.redhat.com/documentation/en-us/red_hat_openshift_local"
+            href="https://access.redhat.com/documentation/en-us/red_hat_codeready_containers"
             onClick={[Function]}
             rel="noreferrer noopener"
             target="_blank"
             variant="link"
           >
-            View the OpenShift Local Getting started guide
+            View the CodeReady Containers Getting started guide
              
             <ExternalLinkAltIcon
               color="#0066cc"

@@ -35,6 +35,7 @@ exports[`<SupportStatusLabel /> should render for every possible support status 
 exports[`<SupportStatusLabel /> should render skeleton when pending 1`] = `
 <Skeleton
   className="inline-skeleton"
+  isDark={false}
   size="sm"
 />
 `;

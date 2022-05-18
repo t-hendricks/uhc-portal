@@ -2,7 +2,6 @@
 
 exports[`<ErrorModal /> should render 1`] = `
 <Modal
-  aria-label="Error Modal"
   header={
     <Title
       headingLevel="h2"

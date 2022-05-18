@@ -1,27 +1,28 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import { FormGroup, GridItem } from '@patternfly/react-core';
+import {
+  FormGroup,
+  GridItem,
+} from '@patternfly/react-core';
 import CloudRegionComboBox from './CloudRegionComboBox';
 import { constants } from '../../CreateOSDFormConstants';
 import { noQuotaTooltip } from '../../../../../../common/helpers';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
-import validators, { clusterNameValidation } from '../../../../../../common/validators';
+import validators from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '../NetworkingSection/AvailabilityZoneSelection';
 import VersionSelection from './VersionSelection';
 import { getNodesCount, getMinReplicasCount } from '../ScaleSection/AutoScaleSection/AutoScaleHelper';
-import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 function BasicFieldsSection({
   pending,
   showDNSBaseDomain,
   showAvailability,
-  product,
   cloudProviderID,
   isBYOC,
+  isRosa,
   isMultiAz,
   hasSingleAzQuota,
   hasMultiAzQuota,
@@ -53,21 +54,16 @@ function BasicFieldsSection({
     }
   };
 
-  const reduxFormsClusterNameValidate = value => (
-    clusterNameValidation(value).find(validator => validator.validated === false)?.text
-  );
-
   return (
     <>
       {/* cluster name */}
       <GridItem md={6}>
         <Field
-          component={ReduxRichInputField}
+          component={ReduxVerticalFormGroup}
           name="name"
           label="Cluster name"
           type="text"
-          validate={reduxFormsClusterNameValidate}
-          validation={clusterNameValidation}
+          validate={validators.checkClusterName}
           disabled={pending}
           isRequired
           extendedHelpText={constants.clusterNameHint}
@@ -101,7 +97,7 @@ function BasicFieldsSection({
             name="cluster_version"
             label="Version"
             isRequired
-            isRosa={product === normalizedProducts.ROSA}
+            isRosa={isRosa}
           />
         </GridItem>
         <GridItem md={6} />
@@ -138,6 +134,7 @@ function BasicFieldsSection({
               isRequired
               isInline
               fieldId="availability-toggle"
+              labelIcon={<PopoverHint hint={constants.availabilityHint} />}
             >
               <Field
                 component={RadioButtons}
@@ -150,15 +147,12 @@ function BasicFieldsSection({
                     label: 'Single zone',
                     disabled: !hasSingleAzQuota,
                     tooltipText: singleAzTooltip,
-                    extendedHelpText: constants.availabilityHintSingleZone,
-
                   },
                   {
                     value: 'true',
                     label: 'Multizone',
                     disabled: !hasMultiAzQuota,
                     tooltipText: multiAzTooltip,
-                    extendedHelpText: constants.availabilityHintMultiZone,
                   },
                 ]}
                 defaultValue={hasSingleAzQuota ? 'false' : 'true'}
@@ -175,7 +169,6 @@ function BasicFieldsSection({
 
 BasicFieldsSection.propTypes = {
   pending: PropTypes.bool,
-  product: PropTypes.string.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   showDNSBaseDomain: PropTypes.bool,
   showAvailability: PropTypes.bool,
@@ -183,6 +176,7 @@ BasicFieldsSection.propTypes = {
   change: PropTypes.func.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
   isBYOC: PropTypes.bool.isRequired,
+  isRosa: PropTypes.bool.isRequired,
   hasSingleAzQuota: PropTypes.bool.isRequired,
   hasMultiAzQuota: PropTypes.bool.isRequired,
   isWizard: PropTypes.bool,

@@ -12,7 +12,6 @@ const GET_UPGRADE_SCHEDULES = 'GET_UPGRADE_SCHEDULES';
 const DELETE_UPGRADE_SCHEDULE = 'DELETE_UPGRADE_SCHEDULE';
 const CLEAR_DELETE_UPGRADE_SCHEDULE = 'CLEAR_DELETE_UPGRADE_SCHEDULE';
 const CLEAR_GET_UPGRADE_SCHEDULE = 'CLEAR_GET_UPGRADE_SCHEDULE';
-const SET_CLUSTER_UPGRADE_POLICY = 'SET_CLUSTER_UPGRADE_POLICY';
 
 const getSchedules = clusterID => dispatch => dispatch({
   type: GET_UPGRADE_SCHEDULES,
@@ -79,12 +78,6 @@ const clearSchedulesResponse = () => dispatch => dispatch({
   type: CLEAR_GET_UPGRADE_SCHEDULE,
 });
 
-const setAutomaticUpgradePolicy = upgradePolicy => (
-  {
-    type: SET_CLUSTER_UPGRADE_POLICY,
-    payload: upgradePolicy,
-  });
-
 export {
   POST_UPGRADE_SCHEDULE,
   CLEAR_POST_UPGRADE_SCHEDULE,
@@ -92,7 +85,6 @@ export {
   DELETE_UPGRADE_SCHEDULE,
   CLEAR_DELETE_UPGRADE_SCHEDULE,
   CLEAR_GET_UPGRADE_SCHEDULE,
-  SET_CLUSTER_UPGRADE_POLICY,
   postSchedule,
   editSchedule,
   getSchedules,
@@ -101,5 +93,4 @@ export {
   clearDeleteScheduleResponse,
   clearPostedUpgradeScheduleResponse,
   clearSchedulesResponse,
-  setAutomaticUpgradePolicy,
 };
