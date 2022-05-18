@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Radio, Tooltip } from '@patternfly/react-core';
+import {
+  Radio, Tooltip, Split, SplitItem,
+} from '@patternfly/react-core';
+import PopoverHint from '../PopoverHint';
 
 class RadioButtons extends React.Component {
   componentDidMount() {
@@ -61,9 +64,9 @@ class RadioButtons extends React.Component {
       <>
         {options.map((option) => {
           const button = (
-            <React.Fragment key={`${input.name}-${option.value}-fragment`}>
+            <SplitItem className="pf-u-mr-sm">
               <Radio
-                className={className}
+                className={className || ''}
                 isChecked={input.value === option.value}
                 key={`${input.name}-${option.value}`}
                 value={option.value}
@@ -76,16 +79,23 @@ class RadioButtons extends React.Component {
                 description={option.description}
               />
               {option.extraField ? option.extraField : null}
-            </React.Fragment>
+            </SplitItem>
           );
-          if (option.tooltipText) {
-            return (
-              <Tooltip content={option.tooltipText} position="right" key={`${input.name}-${option.value}-tooltip`}>
-                {button}
-              </Tooltip>
-            );
-          }
-          return button;
+
+          return (
+            <Split hasGutter key={`${input.name}-${option.value}-fragment`}>
+              {option.tooltipText ? (
+                <Tooltip content={option.tooltipText} position="right">
+                  {button}
+                </Tooltip>
+              ) : button }
+              {option.extendedHelpText ? (
+                <SplitItem>
+                  <PopoverHint hint={option.extendedHelpText} />
+                </SplitItem>
+              ) : null}
+            </Split>
+          );
         })}
       </>
     );
@@ -112,6 +122,7 @@ RadioButtons.propTypes = {
         disabled: PropTypes.bool,
         description: PropTypes.node,
         extraField: PropTypes.node,
+        extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
       },
     ),
   ).isRequired,

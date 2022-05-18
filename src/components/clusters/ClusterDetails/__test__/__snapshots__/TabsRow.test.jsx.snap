@@ -4,6 +4,7 @@ exports[`<TabsRow /> should hide monitoring and add-ons tabs if needed (eg. when
 <Tabs
   activeKey={0}
   component="div"
+  hasBorderBottom={true}
   isBox={false}
   isFilled={false}
   isSecondary={false}
@@ -35,6 +36,7 @@ exports[`<TabsRow /> should render 1`] = `
 <Tabs
   activeKey={0}
   component="div"
+  hasBorderBottom={true}
   isBox={false}
   isFilled={false}
   isSecondary={false}
@@ -87,6 +89,7 @@ exports[`<TabsRow /> should render monitoring tab with issues icon 1`] = `
 <Tabs
   activeKey={0}
   component="div"
+  hasBorderBottom={true}
   isBox={false}
   isFilled={false}
   isSecondary={false}

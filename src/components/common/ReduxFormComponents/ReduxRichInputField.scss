@@ -1,0 +1,45 @@
+
+  input.redux-rich-input-field, input.redux-rich-input-field[aria-invalid=true]{
+    background-image: none; // Hides default PatternFly icon
+  }
+  
+  input.redux-rich-input-field{
+    border-right:none;
+    border-bottom-width: var(--pf-c-form-control--invalid--BorderBottomWidth);
+    
+    &.redux-rich-input-field_not-valid{
+      border-bottom-color: var(--pf-global--danger-color--100);
+    }
+    &.redux-rich-input-field_valid{
+      border-bottom-color: var(--pf-global--success-color--100);
+    }
+    &.redux-rich-input-field_info{
+      border-bottom-color: var(--pf-global--info-color--100);
+    }
+  }
+
+  button.redux-rich-input-field-button{
+    &:after{
+      border-left:none;
+      border-bottom-width: var(--pf-c-button--m-control--hover--after--BorderBottomWidth);
+    }
+    &.redux-rich-input-field-button_not-valid:after{
+      border-bottom-color: var(--pf-global--danger-color--100);
+    }
+    &.redux-rich-input-field-button_valid:after{
+      border-bottom-color: var(--pf-global--success-color--100);
+    }
+    &.redux-rich-input-field-button_info:after{
+      border-bottom-color: var(--pf-global--info-color--100);
+    }
+    .redux-rich-input-field-icon_info{
+      color: var(--pf-global--info-color--100);
+    }
+    .redux-rich-input-field-icon_success{
+      color: var(--pf-global--success-color--100);
+    }
+    .redux-rich-input-field-icon_danger{
+      color: var(--pf-global--danger-color--100);
+    }
+  }
+  

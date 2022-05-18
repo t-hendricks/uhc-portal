@@ -55,7 +55,6 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                 Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
               </Text>
               <Skeleton
-                isDark={false}
                 size="md"
               />
               <Title
@@ -93,7 +92,6 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                     component="p"
                   />
                   <Skeleton
-                    isDark={false}
                     size="md"
                   />
                 </ListItem>
@@ -392,7 +390,6 @@ exports[`<Tokens /> Renders token 1`] = `
                 Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
               </Text>
               <Skeleton
-                isDark={false}
                 size="md"
               />
               <Title
@@ -430,7 +427,6 @@ exports[`<Tokens /> Renders token 1`] = `
                     component="p"
                   />
                   <Skeleton
-                    isDark={false}
                     size="md"
                   />
                 </ListItem>
