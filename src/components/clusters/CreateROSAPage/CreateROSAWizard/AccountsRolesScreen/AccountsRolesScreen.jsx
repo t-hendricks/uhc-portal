@@ -25,6 +25,7 @@ function AccountsRolesScreen({
   touchARNsFields,
   organizationID,
   selectedAWSAccountID,
+  selectedInstallerRoleARN,
   openAssociateAWSAccountModal,
   getAWSAccountIDs,
   getAWSAccountIDsResponse,
@@ -186,6 +187,7 @@ function AccountsRolesScreen({
         && (
         <AccountRolesARNsSection
           selectedAWSAccountID={selectedAWSAccountID}
+          selectedInstallerRoleARN={selectedInstallerRoleARN}
           getAWSAccountRolesARNs={getAWSAccountRolesARNs}
           getAWSAccountRolesARNsResponse={getAWSAccountRolesARNsResponse}
           clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
@@ -203,6 +205,7 @@ AccountsRolesScreen.propTypes = {
   change: PropTypes.func,
   touchARNsFields: PropTypes.func,
   selectedAWSAccountID: PropTypes.string,
+  selectedInstallerRoleARN: PropTypes.string,
   getAWSAccountIDs: PropTypes.func.isRequired,
   getAWSAccountIDsResponse: PropTypes.object.isRequired,
   openAssociateAWSAccountModal: PropTypes.func.isRequired,
