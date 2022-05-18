@@ -1,16 +1,23 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import { GridItem, Alert, Title } from '@patternfly/react-core';
+import {
+  GridItem,
+  Alert,
+  Title,
+  Flex,
+} from '@patternfly/react-core';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { billingModelConstants, constants } from '../CreateOSDFormConstants';
 import { required, awsNumericAccountID } from '../../../../../common/validators';
 import ExternalLink from '../../../../common/ExternalLink';
 import ReduxCheckbox from '../../../../common/ReduxFormComponents/ReduxCheckbox';
+import InstructionCommand from '../../../../common/InstructionCommand';
+import links from '../../../../../common/installLinks.mjs';
 
 function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
   return (
-    <>
+    <Flex direction={{ default: 'column' }}>
       <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
@@ -21,15 +28,21 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           disabled={pending}
           extendedHelpText={(
             <>
-              The 12 digits numeric identifier of your AWS account.
+              <p>
+                Find your 12-digit AWS account ID in the AWS
+                {' '}
+                console or by running this command in the AWS CLI:
+              </p>
               <br />
-              See
-              {' '}
-              <ExternalLink href="https://docs.aws.amazon.com/general/latest/gr/acct-identifiers.html">AWS documentation</ExternalLink>
-              {' '}
-              for more details.
+              <InstructionCommand textAriaLabel="Copyable AWS account ID command">
+                $ aws sts get-caller-identity
+              </InstructionCommand>
+              <br />
+              <ExternalLink href={links.FINDING_AWS_ACCOUNT_IDENTIFIERS}>
+                Finding your AWS account ID
+              </ExternalLink>
             </>
-        )}
+          )}
           isRequired
           data-hj-suppress
         />
@@ -38,11 +51,11 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
       <GridItem md={6}>
         <Title headingLevel="h4">AWS IAM user credentials</Title>
       </GridItem>
-      <GridItem>
-        { !isWizard && (
+      {!isWizard && (
+        <GridItem>
           <Alert className="bottom-alert" variant="warning" title={billingModelConstants.awsCredentialsWarning} isInline />
-        )}
-      </GridItem>
+        </GridItem>
+      )}
       <GridItem md={6}>
         <Field
           component={ReduxVerticalFormGroup}
@@ -78,7 +91,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           extendedHelpText={constants.bypassSCPChecksHint}
         />
       </GridItem>
-    </>
+    </Flex>
   );
 }
 

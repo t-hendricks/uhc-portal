@@ -14,6 +14,8 @@ import UserWorkloadMonitoringSection from '../../../common/UserWorkloadMonitorin
 import '../../../common/Upgrades/UpgradeSettingsFields.scss';
 import clusterStates from '../../../common/clusterStates';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
+import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgradeAlert';
+import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
 
 class UpgradeSettingsTab extends React.Component {
   state = { confirmationModalOpen: false }
@@ -100,8 +102,8 @@ class UpgradeSettingsTab extends React.Component {
                             && !scheduledUpgrade && !clusterHibernating;
 
     const isPending = upgradeScheduleRequest.pending
-                   || deleteScheduleRequest.pending
-                   || editClusterRequest.pending;
+      || deleteScheduleRequest.pending
+      || editClusterRequest.pending;
 
     const saveButton = (
       <ButtonWithTooltip
@@ -181,6 +183,9 @@ class UpgradeSettingsTab extends React.Component {
               {deleteScheduleRequest.error && (
                 <ErrorBox response={deleteScheduleRequest} message="Can't unschedule upgrade" />
               )}
+
+              <UpgradeAcknowledgeWarning />
+              <MinorVersionUpgradeAlert />
 
               <Form>
                 <Grid hasGutter>

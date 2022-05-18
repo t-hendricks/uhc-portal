@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MinorVersionUpgradeAlert > Correct data is shown for approved minor upgrade when minor upgrade is available 1`] = `
+<Alert
+  actionLinks={
+    <React.Fragment>
+      <AlertActionLink
+        onClick={[Function]}
+      >
+        Disallow this minor version update
+      </AlertActionLink>
+    </React.Fragment>
+  }
+  className="automatic-cluster-updates-alert"
+  customIcon={
+    <ArrowCircleUpIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+  }
+  isExpandable={true}
+  isInline={true}
+  title="Next minor version update allowed"
+>
+  <p
+    data-testid="minorVersionUpgradeAlertDisableMessage"
+  >
+    Your cluster will be updated to the newest minor version
+     
+    at the time you selected. Minor releases can include new Kubernetes
+     
+    versions or operating system capabilities, improved automation on IaaS
+     
+    providers, and other expanded features.
+  </p>
+</Alert>
+`;
+
+exports[`<MinorVersionUpgradeAlert > Correct data is shown for unapproved minor upgrade when minor upgrade is available 1`] = `
+<Alert
+  actionLinks={
+    <React.Fragment>
+      <AlertActionLink
+        onClick={[Function]}
+      >
+        Allow the next minor version update
+      </AlertActionLink>
+    </React.Fragment>
+  }
+  className="automatic-cluster-updates-alert"
+  customIcon={
+    <ArrowCircleUpIcon
+      color="currentColor"
+      noVerticalAlign={false}
+      size="sm"
+    />
+  }
+  isExpandable={true}
+  isInline={true}
+  title="New minor version available"
+>
+  <p
+    data-testid="minorVersionUpgradeAlertEnableMessage"
+  >
+    Allow your cluster to be updated to the newest minor version
+     
+    at the time you selected.
+     
+    <ExternalLink
+      href="https://docs.openshift.com/dedicated/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle"
+    >
+      Learn more about updates
+    </ExternalLink>
+  </p>
+</Alert>
+`;
+
+exports[`<MinorVersionUpgradeAlert > Error is shown if patch API call fails 1`] = `
+<MinorVersionUpgradeAlert
+  automaticUpgradePolicyId="myUpgradePolicyId"
+  clusterId="myClusterId"
+  hasUnmetUpgradeAcknowledge={false}
+  isAutomatic={true}
+  isMinorVersionUpgradesEnabled={false}
+  isNextMinorVersionAvailable={true}
+  setUpgradePolicy={[MockFunction]}
+>
+  <Alert
+    className="automatic-cluster-updates-alert"
+    isInline={true}
+    title="an error happened"
+    variant="danger"
+  >
+    <div
+      aria-label="Danger Alert"
+      className="pf-c-alert pf-m-inline pf-m-danger automatic-cluster-updates-alert"
+      data-ouia-component-id="OUIA-Generated-Alert-danger-1"
+      data-ouia-component-type="PF4/Alert"
+      data-ouia-safe={true}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <AlertIcon
+        variant="danger"
+      >
+        <div
+          className="pf-c-alert__icon"
+        >
+          <ExclamationCircleIcon
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          >
+            <svg
+              aria-hidden={true}
+              aria-labelledby={null}
+              fill="currentColor"
+              height="1em"
+              role="img"
+              style={
+                Object {
+                  "verticalAlign": "-0.125em",
+                }
+              }
+              viewBox="0 0 512 512"
+              width="1em"
+            >
+              <path
+                d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+              />
+            </svg>
+          </ExclamationCircleIcon>
+        </div>
+      </AlertIcon>
+      <h4
+        className="pf-c-alert__title"
+      >
+        <span
+          className="pf-u-screen-reader"
+        >
+          Danger alert:
+        </span>
+        an error happened
+      </h4>
+    </div>
+  </Alert>
+</MinorVersionUpgradeAlert>
+`;

@@ -17,6 +17,7 @@ const reduxFormConfig = {
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true, // TODO is this needed?
   enableReinitialize: true,
+  touchOnChange: true,
 };
 
 const wizardConnector = component => reduxForm(reduxFormConfig)(component);

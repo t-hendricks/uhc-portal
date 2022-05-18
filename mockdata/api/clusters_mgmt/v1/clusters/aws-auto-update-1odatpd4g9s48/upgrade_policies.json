@@ -13,7 +13,8 @@
       "upgrade_type": "OSD",
       "version": "4.7.36",
       "next_run": "2021-11-11T13:00:00Z",
-      "cluster_id": "aws-auto-update-1odatpd4g9s48"
+      "cluster_id": "aws-auto-update-1odatpd4g9s48",
+      "enable_minor_version_upgrades": true
     }
   ]
 }

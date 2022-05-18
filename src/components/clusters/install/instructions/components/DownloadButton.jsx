@@ -8,7 +8,7 @@ import { trackPendo } from '../../../../../common/helpers';
 import { tools } from '../../../../../common/installLinks.mjs';
 
 const texts = {
-  [tools.CRC]: 'Download CodeReady Containers',
+  [tools.CRC]: 'Download OpenShift Local',
   [tools.OC]: 'Download command-line tools',
   [tools.X86INSTALLER]: 'Download installer',
   [tools.IBMZINSTALLER]: 'Download installer',
