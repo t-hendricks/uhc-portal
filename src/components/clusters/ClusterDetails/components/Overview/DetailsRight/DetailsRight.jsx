@@ -127,7 +127,7 @@ function DetailsRight({
                 <span className="font-weight-normal"> (actual/desired)</span>
                 <PopoverHint
                   iconClassName="nodes-hint"
-                  hint="The actual number of worker (compute) nodes may not always match with the number of desired when the cluster is scaling."
+                  hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
                 />
               </DescriptionListTerm>
               <DescriptionListDescription>
@@ -160,7 +160,7 @@ function DetailsRight({
                   )}
                   <Flex>
                     <dt>
-                      Worker:
+                      Compute:
                       {' '}
                     </dt>
                     <dd>
@@ -206,7 +206,7 @@ function DetailsRight({
                     )}
                     <Flex>
                       <dt>
-                        Worker:
+                        Compute:
                         {' '}
                       </dt>
                       <dd>

@@ -131,7 +131,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => (
             variant="info"
             isInline
             isPlain
-            title="You must have organization administrator privileges to run this command. After you link the OCM role with your AWS account, it is visible for all users in the organization."
+            title="You must have Organization Administrator privileges to run this command. After you link the OCM role with your AWS account, it is visible for all users in the organization."
           />
         </div>
       </TextContent>

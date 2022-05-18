@@ -87,7 +87,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
         <Field
           component={ReduxCheckbox}
           name="disable_scp_checks"
-          label="Bypass AWS Service Control Policy (SCP) checks"
+          label="Bypass AWS service control policy (SCP) checks"
           extendedHelpText={constants.bypassSCPChecksHint}
         />
       </GridItem>

@@ -61,7 +61,7 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
            (actual/desired)
         </span>
         <PopoverHint
-          hint="The actual number of worker (compute) nodes may not always match with the number of desired when the cluster is scaling."
+          hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
           iconClassName="nodes-hint"
         />
       </DescriptionListTerm>
@@ -89,7 +89,7 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
           </Flex>
           <Flex>
             <dt>
-              Worker:
+              Compute:
                
             </dt>
             <dd>
@@ -532,7 +532,7 @@ exports[`<DetailsRight /> CCS clusters should not render storage quota 1`] = `
            (actual/desired)
         </span>
         <PopoverHint
-          hint="The actual number of worker (compute) nodes may not always match with the number of desired when the cluster is scaling."
+          hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
           iconClassName="nodes-hint"
         />
       </DescriptionListTerm>
@@ -560,7 +560,7 @@ exports[`<DetailsRight /> CCS clusters should not render storage quota 1`] = `
           </Flex>
           <Flex>
             <dt>
-              Worker:
+              Compute:
                
             </dt>
             <dd>
@@ -999,7 +999,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render desired nodes w
           </Flex>
           <Flex>
             <dt>
-              Worker:
+              Compute:
                
             </dt>
             <dd>
@@ -1405,7 +1405,7 @@ exports[`<DetailsRight /> Self Managed cluster should not render vcpu and memory
           </Flex>
           <Flex>
             <dt>
-              Worker:
+              Compute:
                
             </dt>
             <dd>
@@ -1683,7 +1683,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
           </Flex>
           <Flex>
             <dt>
-              Worker:
+              Compute:
                
             </dt>
             <dd>
@@ -1975,7 +1975,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
            (actual/desired)
         </span>
         <PopoverHint
-          hint="The actual number of worker (compute) nodes may not always match with the number of desired when the cluster is scaling."
+          hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
           iconClassName="nodes-hint"
         />
       </DescriptionListTerm>
@@ -2003,7 +2003,7 @@ exports[`<DetailsRight /> Self Managed cluster should render status correctly fo
           </Flex>
           <Flex>
             <dt>
-              Worker:
+              Compute:
                
             </dt>
             <dd>
@@ -2295,7 +2295,7 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
            (actual/desired)
         </span>
         <PopoverHint
-          hint="The actual number of worker (compute) nodes may not always match with the number of desired when the cluster is scaling."
+          hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
           iconClassName="nodes-hint"
         />
       </DescriptionListTerm>
@@ -2323,7 +2323,7 @@ exports[`<DetailsRight /> should render when autoscale disabled 1`] = `
           </Flex>
           <Flex>
             <dt>
-              Worker:
+              Compute:
                
             </dt>
             <dd>
@@ -2782,7 +2782,7 @@ exports[`<DetailsRight /> should render when autoscale enabled 1`] = `
           </Flex>
           <Flex>
             <dt>
-              Worker:
+              Compute:
                
             </dt>
             <dd>

@@ -36,7 +36,7 @@ const reviewValues = {
     title: 'Subscription type',
     values: {
       [billingModels.STANDARD]: 'Annual: Fixed capacity subscription from Red Hat',
-      [billingModels.MARKETPLACE]: 'On-demand: Flexible usage billed through the Red Hat Marketplace',
+      [billingModels.MARKETPLACE]: 'On-Demand: Flexible usage billed through the Red Hat Marketplace',
       'standard-trial': 'Free trial (upgradeable)',
     },
   },
@@ -49,7 +49,7 @@ const reviewValues = {
     },
   },
   disable_scp_checks: {
-    title: 'AWS Service Control Policy (SCP) checks',
+    title: 'AWS service control policy (SCP) checks',
     valueTransform: value => (value ? 'Disabled' : 'Enabled'),
   },
   cloud_provider: {
@@ -343,10 +343,10 @@ const reviewValues = {
     title: 'Installer role',
   },
   support_role_arn: {
-    title: 'Support Role ARN',
+    title: 'Support role ARN',
   },
   worker_role_arn: {
-    title: 'Worker role',
+    title: 'Compute role',
   },
   control_plane_role_arn: {
     title: 'Control plane role',

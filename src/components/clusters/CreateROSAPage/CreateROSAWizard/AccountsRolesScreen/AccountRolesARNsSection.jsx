@@ -190,7 +190,7 @@ function AccountRolesARNsSection({
               <Field
                 component={ReduxVerticalFormGroup}
                 name="support_role_arn"
-                label="Support Role"
+                label="Support role"
                 type="text"
                 validate={roleARNRequired}
                 isRequired
