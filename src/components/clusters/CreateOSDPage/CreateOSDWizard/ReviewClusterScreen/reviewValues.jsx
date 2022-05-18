@@ -59,9 +59,12 @@ const reviewValues = {
   name: {
     title: 'Cluster name',
   },
-  operator_roles_name: {
-    title: 'Operator roles name preview',
-    valueTransform: (value, allValues) => `${allValues.name}-${allValues.custom_operator_roles_prefix || '<hash>'}`,
+  rosa_roles_provider_creation_mode: {
+    title: 'Operator roles and OIDC provider mode',
+  },
+  custom_operator_roles_prefix: {
+    title: 'Operator roles prefix',
+    valueTransform: (value, allValues) => `${allValues.name}-${value}`,
   },
   cluster_version: {
     title: 'Version',

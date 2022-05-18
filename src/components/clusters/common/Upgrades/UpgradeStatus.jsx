@@ -21,17 +21,13 @@ function UpgradeStatus({
   const hasAvailableUpgrades = availableUpgrades.length > 0;
 
   const isManualUpgradeScheduled = scheduledUpgrade?.schedule_type === 'manual';
-  const isAutoUpdate = scheduledUpgrade?.schedule_type === 'automatic';
 
   const updateVersion = () => {
     if (scheduledUpgrade?.version) {
       return scheduledUpgrade.version;
     }
 
-    if (
-      (isAutoUpdate && !scheduledUpgrade?.version)
-      || (!availableUpgrades || availableUpgrades.length === 0)
-    ) {
+    if (!availableUpgrades || availableUpgrades.length === 0) {
       return undefined; // is up to date
     }
 

@@ -11,6 +11,7 @@ import {
   Grid,
   GridItem,
   Text,
+  TextContent,
   TextList,
   TextListItem,
   TextListVariants,
@@ -24,10 +25,18 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import validators from '../../../../../common/validators';
+import PopoverHint from '../../../../common/PopoverHint';
+import links from '../../../../../common/installLinks.mjs';
+
+const roleModes = {
+  MANUAL: 'manual',
+  AUTO: 'auto',
+};
 
 function ClusterRolesScreen({
   change,
   awsAccountID,
+  rosaCreationMode,
   customOperatorRolesPrefix,
   getOCMRole,
   getOCMRoleResponse,
@@ -36,6 +45,28 @@ function ClusterRolesScreen({
 }) {
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
+
+  const createOperatorRolesHashPrefix = () => {
+    // random 4 alphanumeric hash
+    const prefixArray = Math.random().toString(36).substr(2, 4).split('');
+    // cannot start with a number
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)];
+    prefixArray[0] = randomCharacter;
+    return prefixArray.join('');
+  };
+
+  useEffect(() => {
+    if (!customOperatorRolesPrefix) {
+      change('custom_operator_roles_prefix', createOperatorRolesHashPrefix());
+    }
+  }, [customOperatorRolesPrefix]);
+
+  useEffect(() => {
+    if (!rosaCreationMode && getOCMRoleResponse.fulfilled) {
+      change('rosa_roles_provider_creation_mode', isAutoModeAvailable ? roleModes.AUTO : roleModes.MANUAL);
+    }
+  }, [rosaCreationMode, isAutoModeAvailable, getOCMRoleResponse.fulfilled]);
 
   useEffect(() => {
     if (getOCMRoleResponse.pending) {
@@ -58,6 +89,7 @@ function ClusterRolesScreen({
 
   const handleRefresh = () => {
     clearGetOcmRoleResponse();
+    change('rosa_roles_provider_creation_mode', undefined);
     getOCMRole(awsAccountID);
   };
 
@@ -73,6 +105,10 @@ function ClusterRolesScreen({
         <TextListItem className="pf-u-mb-sm">
           <Text component={TextVariants.p} className="pf-u-mb-sm">
             Create the Admin OCM role using the following command in the ROSA CLI.
+            {' '}
+            Only one OCM role can be linked per Red Hat org.
+            {' '}
+            <PopoverHint title="If an OCM role with basic privileges exists in your account, you might need to delete or unlink the role before creating an OCM role with administrative privileges." />
           </Text>
           <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role command">
             rosa create ocm-role --admin
@@ -101,11 +137,6 @@ function ClusterRolesScreen({
     </Alert>
   );
 
-  const roleModes = {
-    MANUAL: 'manual',
-    AUTO: 'auto',
-  };
-
   const roleModeOptions = [
     {
       value: roleModes.MANUAL,
@@ -130,8 +161,9 @@ function ClusterRolesScreen({
           <Text component={TextVariants.p}>
             Choose the preferred mode for creating operator roles and OIDC provider.
             {' '}
-            {/* TODO:  add href */}
-            <ExternalLink href="#">Learn more about ROSA roles.</ExternalLink>
+            <ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>
+              Learn more about ROSA roles.
+            </ExternalLink>
           </Text>
         </GridItem>
         {getOCMRoleErrorBox && (
@@ -157,7 +189,7 @@ function ClusterRolesScreen({
                 className="radio-button"
                 disabled={getOCMRoleResponse.pending}
                 options={roleModeOptions}
-                defaultValue={roleModes.MANUAL}
+                disableDefaultValueHandling
               />
             </FormGroup>
           </GridItem>
@@ -167,8 +199,11 @@ function ClusterRolesScreen({
         </GridItem>
         <GridItem>
           <Text component={TextVariants.p}>
-            The naming of your operator roles is derived from the name of your cluster.
-            Optionally add a prefix to this naming scheme.
+            To easily identify the Operator IAM roles for a cluster in your AWS account, the
+            {' '}
+            Operator role names are prefixed with your cluster name and a random 4-digit hash.
+            {' '}
+            You can optionally replace the hash by entering a custom prefix.
           </Text>
         </GridItem>
         <GridItem span={4}>
@@ -177,10 +212,25 @@ function ClusterRolesScreen({
             name="custom_operator_roles_prefix"
             label="Custom operator roles prefix"
             type="text"
-            validate={validators.checkCustomOperatorRolesPrefix}
+            // eslint-disable-next-line import/no-named-as-default-member
+            validate={value => validators.checkCustomOperatorRolesPrefix(`${clusterName}-${value}`)}
             helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  If not provided, a default hash will be generated.`}
-            // TODO: add correct popover text
-            extendedHelpText="TBD"
+            extendedHelpText={(
+              <TextContent>
+                <Text component={TextVariants.p}>
+                  You can specify a custom prefix for the cluster-specific Operator IAM roles to
+                  {' '}
+                  use.
+                  {' '}
+                  <br />
+                  See examples in
+                  {' '}
+                  <ExternalLink href={links.ROSA_AWS_OPERATOR_ROLE_PREFIX}>
+                    Defining a custom Operator IAM role prefix
+                  </ExternalLink>
+                </Text>
+              </TextContent>
+            )}
             showHelpTextOnError={false}
           />
         </GridItem>
@@ -188,7 +238,7 @@ function ClusterRolesScreen({
           <Text component={TextVariants.small} className="ocm-secondary-text">
             Preview:
             {' '}
-            <em>{`${clusterName}-${customOperatorRolesPrefix || '<hash>'}`}</em>
+            <em>{`${clusterName}-${customOperatorRolesPrefix}`}</em>
           </Text>
         </GridItem>
       </Grid>
@@ -199,6 +249,7 @@ function ClusterRolesScreen({
 ClusterRolesScreen.propTypes = {
   change: PropTypes.func,
   awsAccountID: PropTypes.string,
+  rosaCreationMode: PropTypes.string,
   customOperatorRolesPrefix: PropTypes.string,
   getOCMRole: PropTypes.func.isRequired,
   getOCMRoleResponse: PropTypes.func.isRequired,
