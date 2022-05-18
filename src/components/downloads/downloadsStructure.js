@@ -16,7 +16,7 @@ export const downloadsCategories = [
   {
     key: 'CLI',
     title: 'Command-line interface (CLI) tools',
-    tools: [tools.OC, tools.OCM, tools.ROSA, tools.KN, tools.TKN],
+    tools: [tools.OC, tools.OCM, tools.ROSA, tools.KN],
   },
   {
     key: 'DEV',

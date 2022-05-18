@@ -56,7 +56,7 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
         toggleAriaLabel="Show content"
         variant="inline"
       >
-        rosa create operator-roles --interactive -c test-liza
+        rosa create operatorroles --mode manual -c test-liza
       </ClipboardCopy>
     </p>
     <p>
@@ -78,7 +78,7 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
         toggleAriaLabel="Show content"
         variant="inline"
       >
-        rosa create oidc-provider --interactive -c test-liza
+        rosa create oidcprovider --mode manual -c test-liza
       </ClipboardCopy>
     </p>
     <p>

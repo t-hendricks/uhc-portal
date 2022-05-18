@@ -15,6 +15,8 @@ import './UpgradeSettingsFields.scss';
 import links from '../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
+import UpgradeAcknowledgeWarning from './UpgradeAcknowledge/UpgradeAcknowledgeWarning';
+
 function UpgradeSettingsFields({
   isDisabled, isAutomatic, showDivider, change, initialSceduleValue, product,
 }) {
@@ -68,29 +70,10 @@ function UpgradeSettingsFields({
             {
               value: 'automatic',
               label: 'Recurring updates',
-              description: (
-                <>
-                  The cluster will be automatically updated based on your
-                  {' '}
-                  preferred day and start time when new patch updates
-                  {' '}
-                  (
-                  <ExternalLink
-                    href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}
-                  >
-                    z-stream
-                  </ExternalLink>
-                  )
-                  {' '}
-                  are available. When a new minor version is available,
-                  {' '}
-                  you'll be notified and must manually allow the cluster
-                  {' '}
-                  {' '}
-                  to update to the next minor version.
-                </>),
+              description: 'The cluster will be automatically updated based on your preferred day and start time when new versions are available.',
               extraField: isAutomatic && (
                 <>
+                  <UpgradeAcknowledgeWarning />
                   <Field
                     component={UpgradeScheduleSelection}
                     name="automatic_upgrade_schedule"

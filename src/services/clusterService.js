@@ -102,9 +102,6 @@ const deleteClusterGroupUser = (clusterID, groupID, userID) => apiRequest({
 const getMachineTypes = () => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/machine_types',
-  params: {
-    size: -1,
-  },
 });
 
 const getStorageQuotaValues = () => apiRequest({

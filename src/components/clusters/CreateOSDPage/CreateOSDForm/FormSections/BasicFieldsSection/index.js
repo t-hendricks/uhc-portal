@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { availableClustersFromQuota } from '../../../../common/quotaSelectors';
+import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import BasicFieldsSection from './BasicFieldsSection';
 
 const mapStateToProps = (state, ownProps) => {
@@ -8,12 +9,15 @@ const mapStateToProps = (state, ownProps) => {
     product, billingModel, cloudProviderID, isBYOC,
   } = ownProps;
 
+  // TODO: Hack!!! until we implement quotas for ROSA
+  const nonRosaProduct = product === normalizedProducts.ROSA ? normalizedProducts.OSD : product;
+
   return {
     hasSingleAzQuota: availableClustersFromQuota(quotaList, {
-      product, billingModel, cloudProviderID, isBYOC, isMultiAz: false,
+      nonRosaProduct, billingModel, cloudProviderID, isBYOC, isMultiAz: false,
     }) > 0,
     hasMultiAzQuota: availableClustersFromQuota(quotaList, {
-      product, billingModel, cloudProviderID, isBYOC, isMultiAz: true,
+      nonRosaProduct, billingModel, cloudProviderID, isBYOC, isMultiAz: true,
     }) > 0,
   };
 };

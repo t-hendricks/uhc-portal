@@ -73,13 +73,13 @@ function ClusterListTable(props) {
       </Link>
     );
 
-    const clusterStatus = () => {
+    const clusterState = getClusterStateAndDescription(cluster);
+    const icon = <ClusterStateIcon clusterState={clusterState.state || ''} animated={false} />;
+    const clusterStatus = (clusterStateAndDescription) => {
+      const { state, description } = clusterStateAndDescription;
       if (isAISubscriptionWithoutMetrics(cluster.subscription)) {
         return <AIClusterStatus status={cluster.state} className="clusterstate" />;
       }
-
-      const { state, description } = getClusterStateAndDescription(cluster);
-      const icon = <ClusterStateIcon clusterState={state || ''} animated={false} />;
       if (state === clusterStates.ERROR) {
         return (
           <span>
@@ -124,8 +124,8 @@ function ClusterListTable(props) {
         );
       }
       if (state === clusterStates.WAITING
-        || state === clusterStates.PENDING
-        || state === clusterStates.INSTALLING) {
+          || state === clusterStates.PENDING
+          || state === clusterStates.INSTALLING) {
         return (
           <Popover
             headerContent={<div>Installation status</div>}
@@ -163,7 +163,7 @@ function ClusterListTable(props) {
     return {
       cells: [
         { title: clusterName },
-        { title: clusterStatus() },
+        { title: clusterStatus(clusterState) },
         { title: <ClusterTypeLabel cluster={cluster} /> },
         { title: <ClusterCreatedIndicator cluster={cluster} /> },
         { title: clusterVersion },

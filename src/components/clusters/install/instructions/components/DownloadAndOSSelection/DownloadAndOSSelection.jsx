@@ -17,7 +17,7 @@ import {
 const crcInstructionsMapping = {
   [operatingSystems.linux]: (
     <Text>
-      Download and extract the OpenShift Local archive for your
+      Download and extract the CodeReady Containers archive for your
       operating system and place the binary in your
       {' '}
       <code>$PATH</code>
@@ -27,13 +27,13 @@ const crcInstructionsMapping = {
   ),
   [operatingSystems.mac]: (
     <Text>
-      Download and open the OpenShift Local file. Opening the file will automatically
+      Download and open the CodeReady Containers file. Opening the file will automatically
       start a step-by-step installation guide.
     </Text>
   ),
   [operatingSystems.windows]: (
     <Text>
-      Download and extract the OpenShift Local archive on your computer and open the
+      Download and extract the CodeReady Containers archive on your computer and open the
       installer. Opening the installer will automatically start a step-by-step installation guide.
     </Text>
   ),

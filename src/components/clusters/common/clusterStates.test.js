@@ -19,16 +19,17 @@ const mockCluster = (data) => {
 };
 
 describe('getClusterStateAndDescription', () => {
-  it('should not handle AssistedInstall states', () => {
+  it('should use AssistedInstall states', () => {
     const AIStatus = sample(keys(OCM.Constants.CLUSTER_STATUS_LABELS));
+    const planId = normalizedProducts.OCP_Assisted_Install;
     const cluster = mockCluster({
       status: AIStatus,
-      'subscription.plan.id': normalizedProducts.OCP_Assisted_Install,
+      'subscription.plan.id': planId,
       'subscription.plan.type': 'OCP',
-      'subscription.status': subscriptionStatuses.DISCONNECTED,
     });
     const result = getClusterStateAndDescription(cluster);
-    expect(result.description).toEqual('Disconnected');
+    const AIState = OCM.Constants.CLUSTER_STATUS_LABELS[AIStatus];
+    expect(result.state).toEqual(AIState);
   });
 
   it('should show OCP updating', () => {

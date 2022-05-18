@@ -6,8 +6,8 @@ import {
   Chip, ChipGroup, Button, Split, SplitItem,
 } from '@patternfly/react-core';
 
-import { productFilterOptions } from '../../../../../common/subscriptionTypes';
 import helpers from '../../../../../common/helpers';
+import { productFilterOptions } from '../../../../../common/subscriptionTypes';
 import { buildFilterURLParams } from '../../../../../common/queryHelpers';
 
 function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {

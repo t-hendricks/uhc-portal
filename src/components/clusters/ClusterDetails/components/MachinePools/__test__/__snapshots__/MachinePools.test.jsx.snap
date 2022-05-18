@@ -895,16 +895,19 @@ exports[`<MachinePools /> should render skeleton while fetching machine pools 1`
   <Card>
     <CardTitle>
       <Skeleton
+        isDark={false}
         size="lg"
       />
     </CardTitle>
     <CardBody>
       <Skeleton
+        isDark={false}
         size="lg"
       />
     </CardBody>
     <CardFooter>
       <Skeleton
+        isDark={false}
         size="lg"
       />
     </CardFooter>

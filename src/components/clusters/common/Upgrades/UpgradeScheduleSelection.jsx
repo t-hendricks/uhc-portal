@@ -67,11 +67,10 @@ class UpgradeScheduleSelection extends React.Component {
         <>
           <Alert
             id="automatic-cluster-updates-alert"
-            className="automatic-cluster-updates-alert inline-alert"
+            className="automatic-cluster-updates-alert"
             isInline
-            isPlain
             variant="info"
-            title="Recurring updates occur when a new patch (z-stream) update becomes available at least 2 days prior to your selected start time."
+            title="Recurring updates occur when a new version becomes available at least two days prior to your selected start time."
           />
           <FormGroup
             label="Select a day and start time"
@@ -108,11 +107,10 @@ class UpgradeScheduleSelection extends React.Component {
       <>
         <Alert
           id="automatic-cluster-updates-alert"
-          className="automatic-cluster-updates-alert inline-alert"
+          className="automatic-cluster-updates-alert"
           isInline
-          isPlain
           variant="info"
-          title="Recurring updates occur when a new patch (z-stream) update becomes available at least 2 days prior to your selected start time."
+          title="Recurring updates occur when a new version becomes available at least two days prior to your selected start time."
         />
         <FormGroup
           label="Select a day and start time"

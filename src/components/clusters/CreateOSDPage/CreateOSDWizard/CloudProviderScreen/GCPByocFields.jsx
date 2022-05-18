@@ -1,13 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-  Alert,
-  GridItem,
-  Title,
-  Text,
-  TextVariants,
-  TextContent,
-  Flex,
+  Alert, GridItem, ExpandableSection, TextContent, Title,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
@@ -16,11 +10,10 @@ import { required, validateGCPServiceAccount } from '../../../../../common/valid
 
 import ExternalLink from '../../../../common/ExternalLink';
 import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
-import Prerequisites from '../../../common/Prerequisites/Prerequisites';
 
 function GCPByocFields({ isValidating }) {
   return (
-    <Flex direction={{ default: 'column' }}>
+    <>
       <GridItem>
         <Alert variant="info" isInline title="Customer cloud subscription">
           Provision your cluster in a Google Cloud Platform account owned by you or your company
@@ -32,51 +25,43 @@ function GCPByocFields({ isValidating }) {
         <Title headingLevel="h3">GCP service account</Title>
       </GridItem>
       <GridItem>
-        <Prerequisites acknowledgementRequired initiallyExpanded>
+        <ExpandableSection toggleText="Prerequisites">
           <TextContent>
-            <Text component={TextVariants.p} className="ocm-secondary-text">
-              Successful cluster provisioning requires that:
-            </Text>
+            Successful cluster provisioning requires that:
             <ul>
               <li>
-                <Text component={TextVariants.p} className="ocm-secondary-text">
-                  Your Google Cloud account has the necessary resource quotas and
-                  limits to support your desired cluster size according to the
-                  {' '}
-                  <ExternalLink noIcon href={links.OSD_CCS_GCP_LIMITS}>
-                    cluster resource requirements
-                  </ExternalLink>
-                </Text>
+                Your Google Cloud account has the necessary resource quotas and
+                limits to support your desired cluster size according to the
+                {' '}
+                <ExternalLink noIcon href={links.OSD_CCS_GCP_LIMITS}>
+                  cluster resource requirements
+                </ExternalLink>
               </li>
               <li>
-                <Text component={TextVariants.p} className="ocm-secondary-text">
-                  An IAM Service account called osd-ccs-admin exists
-                  with the following roles attached:
-                </Text>
+                An IAM Service account called osd-ccs-admin exists
+                with the following roles attached:
                 <ul>
-                  <li><Text component={TextVariants.p} className="ocm-secondary-text">DNS Administrator</Text></li>
-                  <li><Text component={TextVariants.p} className="ocm-secondary-text">Organization Policy Viewer</Text></li>
-                  <li><Text component={TextVariants.p} className="ocm-secondary-text">Owner</Text></li>
-                  <li><Text component={TextVariants.p} className="ocm-secondary-text">Project IAM Admin</Text></li>
-                  <li><Text component={TextVariants.p} className="ocm-secondary-text">Service Management Administrator</Text></li>
-                  <li><Text component={TextVariants.p} className="ocm-secondary-text">Service Usage Admin</Text></li>
-                  <li><Text component={TextVariants.p} className="ocm-secondary-text">Storage Admin</Text></li>
+                  <li>DNS Administrator</li>
+                  <li>Organization Policy Viewer</li>
+                  <li>Owner</li>
+                  <li>Project IAM Admin</li>
+                  <li>Service Management Administrator</li>
+                  <li>Service Usage Admin</li>
+                  <li>Storage Admin</li>
                 </ul>
               </li>
             </ul>
-            <Text component={TextVariants.p} className="ocm-secondary-text">
-              Production Support from GCP is also recommended.
-              To prevent potential conflicts, we recommend that you have no other resources
-              provisioned in the project prior to provisioning OpenShift Dedicated.
-              For more guidance, see the
-              {' '}
-              <ExternalLink noIcon href={links.OSD_CCS_GCP}>
-                customer cloud subscription requirements
-              </ExternalLink>
-              .
-            </Text>
+            Production Support from GCP is also recommended.
+            To prevent potential conflicts, we recommend that you have no other resources
+            provisioned in the project prior to provisioning OpenShift Dedicated.
+            For more guidance, see the
+            {' '}
+            <ExternalLink noIcon href={links.OSD_CCS_GCP}>
+              customer cloud subscription requirements
+            </ExternalLink>
+            .
           </TextContent>
-        </Prerequisites>
+        </ExpandableSection>
       </GridItem>
       <GridItem md={5}>
         <Field
@@ -105,7 +90,7 @@ function GCPByocFields({ isValidating }) {
           </>
         )}
       </GridItem>
-    </Flex>
+    </>
   );
 }
 
