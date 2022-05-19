@@ -30,10 +30,8 @@ import { ASSISTED_INSTALLER_FEATURE } from '../../../../../redux/constants/featu
 
 import './Overview.scss';
 
-const { AssistedInstallerDetailCard, AssistedInstallerExtraDetailCard } = OCM;
+const { AssistedInstallerDetailCard } = OCM;
 const GatedAIDetailCard = withFeatureGate(AssistedInstallerDetailCard, ASSISTED_INSTALLER_FEATURE);
-const GatedAIExtraDetailCard = withFeatureGate(AssistedInstallerExtraDetailCard,
-  ASSISTED_INSTALLER_FEATURE);
 
 class Overview extends React.Component {
   state = {
@@ -176,7 +174,6 @@ class Overview extends React.Component {
                     <DetailsLeft
                       cluster={cluster}
                       cloudProviders={cloudProviders}
-                      showAssistedId={showAssistedInstallerDetailCard}
                     />
                   </GridItem>
                   <GridItem sm={6}>
@@ -185,9 +182,6 @@ class Overview extends React.Component {
                     />
                   </GridItem>
                 </Grid>
-                {showAssistedInstallerDetailCard && (
-                  <GatedAIExtraDetailCard />
-                )}
               </CardBody>
             </Card>
             )}
