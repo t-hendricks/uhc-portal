@@ -76,7 +76,6 @@ const UserRoleScreen = ({ hasAWSAccounts }) => (
           with your AWS account.
         </Text>
         <div className="ocm-instruction-block">
-          <strong>Associate AWS account</strong>
           <InstructionCommand textAriaLabel="Copyable ROSA link user-role --arn">
             {rosaCLICommand.linkUserRole}
           </InstructionCommand>
