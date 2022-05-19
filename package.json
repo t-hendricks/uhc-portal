@@ -98,6 +98,7 @@
     "babel-jest": "^26.0.0",
     "babel-loader": "^8.2.4",
     "babel-plugin-transform-imports": "^2.0.0",
+    "chromedriver": "latest",
     "concurrently": "^5.1.0",
     "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.1",
