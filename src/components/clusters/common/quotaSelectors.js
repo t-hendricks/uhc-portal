@@ -156,6 +156,7 @@ const queryFromCluster = cluster => (
   }
 );
 
+// TODO: special-case ROSA?
 const awsQuotaSelector = (state, product, billing = billingModels.STANDARD) => (
   get(state.userProfile.organization.quotaList, ['clustersQuota', billing, product, 'aws'])
 );

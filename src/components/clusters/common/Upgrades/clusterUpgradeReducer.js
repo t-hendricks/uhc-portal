@@ -27,7 +27,6 @@ import {
   CLEAR_DELETE_UPGRADE_SCHEDULE,
   CLEAR_POST_UPGRADE_SCHEDULE,
   CLEAR_GET_UPGRADE_SCHEDULE,
-  SET_CLUSTER_UPGRADE_POLICY,
 } from './clusterUpgradeActions';
 
 const initialState = {
@@ -115,19 +114,6 @@ function UpgradesRecuder(state = initialState, action) {
       case CLEAR_DELETE_UPGRADE_SCHEDULE:
         draft.deleteScheduleRequest = { ...initialState.deleteScheduleRequest };
         break;
-
-      case SET_CLUSTER_UPGRADE_POLICY: {
-        draft.schedules.items = state.schedules.items.map((schedule) => {
-          if (
-            schedule.cluster_id === action.payload.cluster_id
-            && schedule.schedule_type === action.payload.schedule_type
-          ) {
-            return action.payload;
-          }
-          return schedule;
-        });
-        break;
-      }
     }
   });
 }

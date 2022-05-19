@@ -13,11 +13,13 @@ import { PencilAltIcon, OutlinedQuestionCircleIcon } from '@patternfly/react-ico
 
 import { hasParameters, parameterAndValue } from '../AddOnsHelper';
 
+import AddOnsConstants from '../AddOnsConstants';
 import AddOnsParametersModal from '../AddOnsParametersModal';
 
 function AddOnsParameterList(props) {
   const {
     installedAddOn,
+    installedAddOnState,
     activeCard,
     activeCardID,
     cluster,
@@ -55,7 +57,8 @@ function AddOnsParameterList(props) {
             ouiaId={`update-addon-${activeCardID}`}
             variant="link"
             isDisabled={
-              !cluster.canEdit
+              installedAddOnState !== AddOnsConstants.INSTALLATION_STATE.READY
+              || !cluster.canEdit
             }
             icon={<PencilAltIcon className="ocm-addons-tab--configuration-title-icon" />}
             onClick={() => openModal('add-ons-parameters-modal', {
@@ -80,6 +83,7 @@ AddOnsParameterList.propTypes = {
   installedAddOn: PropTypes.object,
   activeCard: PropTypes.object,
   activeCardID: PropTypes.string,
+  installedAddOnState: PropTypes.string,
   cluster: PropTypes.object,
   openModal: PropTypes.func.isRequired,
 

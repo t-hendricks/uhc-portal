@@ -25,17 +25,24 @@ function ErrorModal({
           {' '}
           {title}
         </Title>
-      )}
+        )}
       primaryText="Close"
       onPrimaryClick={close}
       onClose={close}
       showClose={false}
       showSecondary={false}
-      aria-label={title}
     >
-      <p>{errorResponse.errorMessage}</p>
-      {errorDetails && <p>{errorDetails}</p>}
-      <p>{`Operation ID: ${errorResponse.operationID || 'N/A'}`}</p>
+      <p>
+        {errorResponse.errorMessage}
+      </p>
+      { errorDetails && (
+      <p>
+        { errorDetails }
+      </p>
+      )}
+      <p>
+        {`Operation ID: ${errorResponse.operationID || 'N/A'}`}
+      </p>
     </Modal>
   );
 }

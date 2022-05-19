@@ -21,46 +21,43 @@ function CloudProviderSelectionField({
   const handleChange = (providerValue) => {
     change('region', providerValue === 'aws' ? osdInitialValues.AWS_DEFAULT_REGION : osdInitialValues.GCP_DEFAULT_REGION);
     change('machine_type', '');
-    change('acknowledge_prerequisites', false);
     onChange(providerValue);
   };
 
-  const gcpTile = (
+  const gcpCard = (
     <Tile
-      className={`${getCardClass(hasGcpQuota, value === 'gcp')} pf-u-mb-0`}
+      className={getCardClass(hasGcpQuota, value === 'gcp')}
       onClick={() => hasGcpQuota && handleChange('gcp')}
       data-test-id="gcp-provider-card"
       title="Run on Google Cloud Platform"
       icon={<GCPLogo />}
       isDisplayLarge
       isStacked
-      isSelected={value === 'gcp'}
     />
   );
 
-  const awsTile = (
+  const awsCard = (
     <Tile
-      className={`${getCardClass(hasAwsQuota, value === 'aws')} pf-u-mb-0`}
+      className={getCardClass(hasAwsQuota, value === 'aws')}
       onClick={() => hasAwsQuota && handleChange('aws')}
       data-test-id="aws-provider-card"
       title="Run on Amazon Web Services"
       icon={<AWSLogo />}
       isDisplayLarge
       isStacked
-      isSelected={value === 'aws'}
     />
   );
 
   return (
     <div>
-      {hasAwsQuota ? awsTile : (
+      {hasAwsQuota ? awsCard : (
         <Tooltip content={noQuotaTooltip}>
-          {awsTile}
+          {awsCard}
         </Tooltip>
       )}
-      {hasGcpQuota ? gcpTile : (
+      {hasGcpQuota ? gcpCard : (
         <Tooltip content={noQuotaTooltip}>
-          {gcpTile}
+          {gcpCard}
         </Tooltip>
       )}
     </div>

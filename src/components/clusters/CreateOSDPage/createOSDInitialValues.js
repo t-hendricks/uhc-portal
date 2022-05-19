@@ -4,11 +4,7 @@ export const AWS_DEFAULT_REGION = 'us-east-1';
 export const GCP_DEFAULT_REGION = 'us-east1';
 
 const createOSDInitialValues = ({
-  cloudProviderID = 'aws',
-  product,
-  isByoc,
-  isMultiAz,
-  isTrialDefault,
+  cloudProviderID, product, isByoc, isMultiAz, isTrialDefault,
 }) => {
   let defaultNodeCount;
   if (isByoc || isTrialDefault) {
@@ -18,7 +14,6 @@ const createOSDInitialValues = ({
   }
 
   const initialValues = {
-    cloud_provider: cloudProviderID,
     node_drain_grace_period: 60,
     upgrade_policy: 'manual',
     automatic_upgrade_schedule: '0 0 * * 0',
@@ -39,7 +34,6 @@ const createOSDInitialValues = ({
     billing_model: isTrialDefault ? 'standard-trial' : 'standard',
     product: product || (isTrialDefault ? normalizedProducts.OSDTrial : normalizedProducts.OSD),
   };
-
   if (cloudProviderID) {
     initialValues.region = cloudProviderID === 'aws' ? AWS_DEFAULT_REGION : GCP_DEFAULT_REGION;
   }

@@ -21,9 +21,7 @@ class AssociateAWSAccountWizard extends React.Component {
 
   render() {
     const { stepIdReached } = this.state;
-    const {
-      closeModal, onClose, token, hasAWSAccounts,
-    } = this.props;
+    const { closeModal, token, onClose } = this.props;
     const steps = [
       {
         id: 1,
@@ -37,13 +35,13 @@ class AssociateAWSAccountWizard extends React.Component {
           {
             id: 3,
             name: 'OCM role',
-            component: <OCMRoleScreen hasAWSAccounts={hasAWSAccounts} />,
+            component: <OCMRoleScreen />,
             canJumpTo: stepIdReached >= 3,
           },
           {
             id: 4,
             name: 'User role',
-            component: <UserRoleScreen hasAWSAccounts={hasAWSAccounts} />,
+            component: <UserRoleScreen />,
             canJumpTo: stepIdReached >= 4,
             nextButtonText: 'Ok',
           },
@@ -59,29 +57,26 @@ class AssociateAWSAccountWizard extends React.Component {
     };
 
     return (
-      <Wizard
-        title="Associate AWS Account"
-        description="Link your AWS account to your Red Hat account."
-        className="rosa-wizard"
-        isOpen
-        steps={steps}
-        onSave={handleClose}
-        onNext={this.onNext}
-        onBack={this.onBack}
-        onGoToStep={this.onGoToStep}
-        onClose={handleClose}
-      />
+      <>
+        <Wizard
+          title="Associate AWS Account"
+          description="Link your AWS account to your Red Hat account."
+          className="ocm-upgrade-wizard"
+          isOpen
+          steps={steps}
+          onSave={handleClose}
+          onNext={this.onNext}
+          onBack={this.onBack}
+          onGoToStep={this.onGoToStep}
+          onClose={handleClose}
+        />
+      </>
     );
   }
 }
 
-function AssociateAWSAccountModal({
-  closeModal,
-  isOpen,
-  isValid,
-  onClose,
-  token,
-  hasAWSAccounts,
+function AssociatedAWSAccountModal({
+  closeModal, isOpen, isValid, onClose, token,
 }) {
   return isOpen && (
     <Modal title="Associate AWS Account ID">
@@ -90,30 +85,27 @@ function AssociateAWSAccountModal({
         closeModal={closeModal}
         onClose={onClose}
         token={token}
-        hasAWSAccounts={hasAWSAccounts}
       />
     </Modal>
   );
 }
 
-AssociateAWSAccountModal.propTypes = {
+AssociatedAWSAccountModal.propTypes = {
   closeModal: PropTypes.func.isRequired,
   onClose: PropTypes.func,
   isOpen: PropTypes.bool,
   isValid: PropTypes.bool,
   token: PropTypes.string,
-  hasAWSAccounts: PropTypes.string,
 };
 
 AssociateAWSAccountWizard.propTypes = {
   closeModal: PropTypes.func.isRequired,
   onClose: PropTypes.func,
   token: PropTypes.string,
-  hasAWSAccounts: PropTypes.string,
 };
 
-AssociateAWSAccountModal.defaultProps = {
+AssociatedAWSAccountModal.defaultProps = {
   isOpen: false,
 };
 
-export default AssociateAWSAccountModal;
+export default AssociatedAWSAccountModal;

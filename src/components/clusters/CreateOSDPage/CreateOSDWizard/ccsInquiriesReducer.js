@@ -10,7 +10,6 @@ import {
   LIST_GCP_KEYS,
   LIST_VPCS,
   CLEAR_ALL_CLOUD_PROVIDER_INQUIRIES,
-  CLEAR_CCS_CREDENTIALS_INQUIRY,
 } from './ccsInquiriesActions';
 
 export const initialState = {
@@ -98,13 +97,7 @@ function ccsInquiriesReducer(state = initialState, action) {
           cloudProvider: action.meta?.cloudProvider,
         };
         break;
-      case CLEAR_CCS_CREDENTIALS_INQUIRY:
-        return {
-          ...state,
-          ccsCredentialsValidity: {
-            ...initialState.ccsCredentialsValidity,
-          },
-        };
+
       case PENDING_ACTION(LIST_GCP_KEY_RINGS):
         draft.gcpKeyRings.pending = true;
         break;

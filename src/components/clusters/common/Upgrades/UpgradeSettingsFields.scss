@@ -43,9 +43,6 @@
 }
 
 .automatic-cluster-updates-alert{
- 
+  margin-left: var(--pf-global--spacer--lg);
   margin-bottom: var(--pf-global--spacer--lg);
-  &.inline-alert{
-     margin-left: var(--pf-global--spacer--lg);
-  }
 }

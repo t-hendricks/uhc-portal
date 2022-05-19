@@ -32,11 +32,7 @@ function NoAssociatedAWSAccounts() {
 }
 
 function AWSAccountSelection({
-  input: {
-    // Redux Form's onBlur interferes with Patternfly's Select footer onClick handlers.
-    onBlur: _onBlur,
-    ...inputProps
-  },
+  input,
   isDisabled,
   label,
   meta: { error, touched },
@@ -89,7 +85,7 @@ function AWSAccountSelection({
 
   const onSelect = (_, selection) => {
     setIsOpen(false);
-    inputProps.onChange(selection);
+    input.onChange(selection);
   };
 
   const onClick = () => {
@@ -101,7 +97,7 @@ function AWSAccountSelection({
     window.onbeforeunload = null;
   };
 
-  const footer = (
+  const footer = () => (
     <>
       {AWSAccountIDs.length === 0 && (
       <NoAssociatedAWSAccounts />
@@ -119,16 +115,16 @@ function AWSAccountSelection({
       isRequired
     >
       <Select
-        {...inputProps}
+        {...input}
         label={label}
         labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
         isOpen={isOpen}
-        selections={inputProps.value || initialValue || ''}
+        selections={input.value || initialValue || ''}
         onToggle={onToggle}
         onSelect={onSelect}
         isDisabled={isDisabled}
         placeholderText={AWS_ACCT_ID_PLACEHOLDER}
-        footer={footer}
+        footer={footer()}
       >
         {AWSAccountIDs.map(awsId => <SelectOption className="pf-c-dropdown__menu-item" key={awsId} value={awsId}>{`${awsId}`}</SelectOption>)}
       </Select>
@@ -142,12 +138,12 @@ AWSAccountSelection.propTypes = {
   input: PropTypes.shape({
     value: PropTypes.string,
     onChange: PropTypes.func,
-    onBlur: PropTypes.func,
   }),
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   AWSAccountIDs: PropTypes.arrayOf(PropTypes.string),
   selectedAWSAccountID: PropTypes.string,
   openAssociateAWSAccountModal: PropTypes.func.isRequired,
+  history: PropTypes.object,
   initialValue: PropTypes.string,
   meta: PropTypes.shape({
     touched: PropTypes.bool,

@@ -34,6 +34,13 @@ const processClusterQuota = (clustersQuota, item, resources) => {
     } = resource;
     const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
 
+    // TODO: Honor cost field, specifically cost=0.
+    // TODO: Split data structure by product (https://issues.redhat.com/browse/SDA-3231).
+    //       Until then, ignore ROSA to avoid collision with OSD CCS.
+    if (quotaProduct === normalizedProducts.ROSA) {
+      return;
+    }
+
     /* eslint-disable no-param-reassign */
     // Since quota can apply to either AWS or GCP, or "any", we compare an exact match or an
     // "any" match. If the quota applies to a specific cloud provider, we add it there. If it
@@ -89,6 +96,12 @@ const processNodeQuota = (nodesQuota, item, resources) => {
       billing_model: quotaBilling,
     } = resource;
     const infraCategory = resource.byoc === 'rhinfra' ? 'rhInfra' : resource.byoc;
+
+    // TODO: split data structure by product (https://issues.redhat.com/browse/SDA-3231).
+    //       Until then, ignore ROSA to avoid collision with OSD CCS.
+    if (quotaProduct === normalizedProducts.ROSA) {
+      return;
+    }
 
     /* eslint-disable no-param-reassign */
     Object.entries(quota).forEach(([billing, billingQuota]) => {

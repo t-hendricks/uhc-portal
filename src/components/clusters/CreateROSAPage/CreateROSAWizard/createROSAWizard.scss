@@ -23,13 +23,6 @@
   .pf-c-form__field-group {
     border-top: 0;
   }
-  .pf-c-content {
-    .pf-c-alert {
-      --pf-c-content--h4--MarginTop: 0;
-      --pf-c-content--h4--FontSize: var(--pf-c-alert__title--FontSize);
-      --pf-c-content--h4--FontWeight: var(--pf-c-alert__title--FontWeight);
-    }
-  }
 }
 
 .ocm-c-wizard-alert-steps {
@@ -49,12 +42,12 @@
   }
 }
 
-.ocm-instruction-block {
-  border-left:
-          var(--pf-global--BorderWidth--lg)
-          solid
-          var(--pf-global--BorderColor--100);
-  padding: var(--pf-global--spacer--lg);
+.ocm-role-indented-container {
+  border-left: 2px solid #ccc;
+  padding-top: var(--pf-global--spacer--lg);
+  padding-bottom: var(--pf-global--spacer--lg);
+  padding-left: var(--pf-global--spacer--lg);
+  padding-right: var(--pf-global--spacer--lg);
 }
 
 .ocm-roles-prefix__preview {
