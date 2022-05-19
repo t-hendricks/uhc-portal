@@ -825,6 +825,7 @@ const validateServiceAccountObject = (obj) => {
       client_email: {
         type: 'string',
         format: 'email',
+        pattern: '^osd-ccs-admin@([\\S]*)\\.iam\\.gserviceaccount\\.com$',
       },
       client_id: { // maybe numeric?
         type: 'string',
@@ -874,8 +875,10 @@ const validateGCPServiceAccount = (content) => {
       let errorMessage;
       if (e.property.startsWith('instance.')) {
         const errorFieldName = e.property.replace('instance.', '');
-        if (e.message.indexOf('does not match pattern') !== -1) {
-          errorMessage = `The field '${errorFieldName}' is not in the required format`;
+        if (errorFieldName === 'client_email' && e.instance.split[0] !== 'osd-ccs-admin') {
+          errorMessage = `The field '${errorFieldName}' requires a service account name of 'osd-ccs-admin'.`;
+        } else if (e.message.indexOf('does not match pattern') !== -1) {
+          errorMessage = `The field '${errorFieldName}' is not in the required format.`;
         } else {
           errorMessage = `The field '${errorFieldName}' ${e.message}`;
         }
