@@ -21,4 +21,4 @@ export BROWSER="${BROWSER:-firefox}"
 
 # JavaScript tests
 
-yarn run wdio --hostname="${TEST_SELENIUM_WD_HOSTNAME}" --port="${TEST_SELENIUM_WD_PORT}" ${WDIO_ARGS:-} "$@"
+yarn run wdio --hostname="${TEST_SELENIUM_WD_HOSTNAME}" --port="${TEST_SELENIUM_WD_PORT}" "$@"

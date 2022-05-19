@@ -211,8 +211,6 @@ You'll need credentials in environment variables - `TEST_SELENIUM_WITHQUOTA_PASS
 
 Optionally export `SELENIUM_DEBUG=true` environment variable if you want to stop on failure to let you debug (otherwise, it writes a screenshot file and moves on).
 
-Can set `WDIO_ARGS` to any arguments you want to pass to wdio e.g. `--watch --spec selenium-js/specs/Downloads.js`.
-
 Now you need to choose which WebDriver server to use:
 
 - Recommended: a local driver, that opens a browser window directly on your screen.
@@ -221,10 +219,20 @@ Now you need to choose which WebDriver server to use:
   ```
   This starts a selenium control server on port 4444, and runs the tests accordingly.
 
+  Extra argument will be passed on to `wdio` for example:
+  ```
+  yarn selenium-with-chromedriver --watch --spec selenium-js/specs/Downloads.js
+  ```
+
 - To use same browser as under CI, in a container:
 
   Optionally export `BROWSER=firefox` or `BROWSER=chrome`.  Run `yarn selenium-with-vnc`.
   This starts a selenium control server on port 4444, and VNC server on port 5900, and runs the tests.
+
+  Extra argument will be passed on to `wdio` for example:
+  ```
+  yarn selenium-with-vnc --watch --spec selenium-js/specs/Downloads.js
+  ```
 
   Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`.
   If you have Vinagre (`sudo dnf install vinagre`), simply run `yarn selenium-viewer` in another terminal.
