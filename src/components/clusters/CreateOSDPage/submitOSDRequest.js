@@ -6,16 +6,6 @@ import config from '../../../config';
 import { createCluster } from '../../../redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '../../../common/helpers';
 
-const createOperatorRolesHashPrefix = () => {
-  // random 4 alphanumeric hash
-  const prefixArray = Math.random().toString(36).substr(2, 4).split('');
-  // cannot start with a number
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)];
-  prefixArray[0] = randomCharacter;
-  return prefixArray.join('');
-};
-
 export const createClusterRequest = ({ isWizard, cloudProviderID, product }, formData) => {
   const isMultiAz = formData.multi_az === 'true';
   // See submitOSDRequest.test.js for when we get fields vs side params.
@@ -118,8 +108,7 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
               master_role_arn: formData.control_plane_role_arn,
               worker_role_arn: formData.worker_role_arn,
             },
-            operator_role_prefix: formData.custom_operator_roles_prefix
-              ?? createOperatorRolesHashPrefix(),
+            operator_role_prefix: `${formData.name}-${formData.custom_operator_roles_prefix}`,
           },
         };
         // auto mode

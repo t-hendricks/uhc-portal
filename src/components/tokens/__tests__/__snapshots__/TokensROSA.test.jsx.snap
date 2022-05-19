@@ -55,7 +55,6 @@ exports[`<TokensROSA /> Renders loading screen 1`] = `
                 Use this API token to authenticate against your Red Hat OpenShift Service on AWS account.
               </Text>
               <Skeleton
-                isDark={false}
                 size="md"
               />
               <Title
@@ -92,7 +91,6 @@ exports[`<TokensROSA /> Renders loading screen 1`] = `
                     component="p"
                   />
                   <Skeleton
-                    isDark={false}
                     size="md"
                   />
                 </ListItem>
@@ -391,7 +389,6 @@ exports[`<TokensROSA /> Renders token 1`] = `
                 Use this API token to authenticate against your Red Hat OpenShift Service on AWS account.
               </Text>
               <Skeleton
-                isDark={false}
                 size="md"
               />
               <Title
@@ -428,7 +425,6 @@ exports[`<TokensROSA /> Renders token 1`] = `
                     component="p"
                   />
                   <Skeleton
-                    isDark={false}
                     size="md"
                   />
                 </ListItem>

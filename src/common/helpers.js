@@ -103,37 +103,24 @@ const shouldRefetchQuota = (organization) => {
 };
 
 /**
- * Used for onSubmitFail in Redux Form config.
+ * Scroll to the first error found in formErrors.
+ * @param {Object} formErrors { [key: fieldName]: string }
  */
-function scrollToFirstError(errors) {
-  const errorNodeNames = Object.keys(errors);
-  if (!errorNodeNames.length) {
+const scrollToFirstError = (formErrors) => {
+  const errorFieldNames = Object.keys(formErrors);
+
+  if (!errorFieldNames?.length) {
     return;
   }
-  const errorNodes = errorNodeNames.map(name => (
-    document.querySelector(`[name^="${name}"`)
-  ));
-  const compare = (node1, node2) => {
-    const result = node1.compareDocumentPosition(node2);
-    switch (result) {
-      case (Node.DOCUMENT_POSITION_PRECEDING):
-        return 1;
-      case (Node.DOCUMENT_POSITION_FOLLOWING):
-        return -1;
-      default:
-        return 0;
-    }
-  };
-  let firstError = errorNodes[0];
-  if (errorNodes.length > 1) {
-    errorNodes.forEach((node) => {
-      if (compare(node, firstError) < 0) {
-        firstError = node;
-      }
-    });
-  }
-  setTimeout(() => firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }), 0);
-}
+
+  // Use all error field selectors, where the first matching element in the document is returned.
+  const input = document.querySelector(
+    errorFieldNames.map(fieldName => `[name="${fieldName}"]`).join(','),
+  );
+
+  input?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  input?.focus();
+};
 
 /**
  * Converts redux form structure to the structure expected by OCM API.

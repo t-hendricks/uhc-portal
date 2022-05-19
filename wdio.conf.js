@@ -1,6 +1,8 @@
+/* eslint-disable max-len */
 const path = require('path');
 const fs = require('fs');
 const util = require('util');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const logger = require('@wdio/logger').default;
 
 const { getAuthConfig } = require('./selenium-js/authConfig');
@@ -138,7 +140,6 @@ exports.config = {
   // see also: https://webdriver.io/docs/dot-reporter.html
   reporters: ['spec'],
 
-
   //
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
@@ -146,7 +147,7 @@ exports.config = {
     // Babel setup
     require: ['@babel/register'],
     ui: 'bdd',
-    timeout: Infinity, //60000,
+    timeout: Infinity, // 60000,
     bail: true,
   },
   //
@@ -190,8 +191,11 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
-  // before: function (capabilities, specs) {
-  // },
+  // eslint-disable-next-line no-unused-vars
+  before(capabilities, specs) {
+    // eslint-disable-next-line no-undef
+    browser.setWindowSize(1440, 900);
+  },
   /**
      * Runs before a WebdriverIO command gets executed.
      * @param {String} commandName hook command name
@@ -225,7 +229,10 @@ exports.config = {
   /**
      * Function to be executed after a test (in Mocha/Jasmine).
      */
-  afterTest: async (test, context, { error, result, duration, passed, retries }) => {
+  afterTest: async (test, context, {
+    // eslint-disable-next-line no-unused-vars
+    error, result, duration, passed, retries,
+  }) => {
     // if test passed, ignore, else debug / take and save screenshot.
     if (passed) {
       return;
@@ -235,6 +242,7 @@ exports.config = {
 
     if (/not clickable.*because another element.*pendo.*obscures it/.test(error)) {
       // If we got here, it ruined this run, but let's try make next runs pass.
+      // eslint-disable-next-line no-undef
       const close = await $('._pendo-close-guide');
       const exists = await close.isExisting();
       log.error('Trying to close pendo guide, exists = ', exists);
@@ -244,15 +252,17 @@ exports.config = {
     }
 
     if (process.env.SELENIUM_DEBUG === 'true') {
+      // eslint-disable-next-line no-undef
       await browser.debug();
     } else {
-    const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
-    const timestamp = new Date().toISOString();
-    const dir = 'run/output/embedded_files/';
-    const filepath = path.join(dir, `${timestamp}.${testName}.png`);
-    await util.promisify(fs.mkdir)(dir, { recursive: true });
-    await browser.saveScreenshot(filepath);
-    process.emit('test:screenshot', filepath);
+      const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
+      const timestamp = new Date().toISOString();
+      const dir = 'run/output/embedded_files/';
+      const filepath = path.join(dir, `${timestamp}.${testName}.png`);
+      await util.promisify(fs.mkdir)(dir, { recursive: true });
+      // eslint-disable-next-line no-undef
+      await browser.saveScreenshot(filepath);
+      process.emit('test:screenshot', filepath);
       log.error(`screenshot:\n  ${filepath}\n`);
       log.info('Tip: to stop for interactive debugging, set SELENIUM_DEBUG=true env var');
     }

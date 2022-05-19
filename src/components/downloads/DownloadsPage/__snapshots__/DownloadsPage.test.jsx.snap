@@ -6232,7 +6232,7 @@ exports[`<DownloadsPage> renders 1`] = `
             description={
               <TextContent>
                 <Text>
-                  Download and open the CodeReady Containers file to automatically start a step-by-step installation guide.
+                  Download and open the OpenShift Local file to automatically start a step-by-step installation guide.
                 </Text>
                 <Text>
                   <Link
@@ -6273,7 +6273,7 @@ exports[`<DownloadsPage> renders 1`] = `
             }
             name={
               <React.Fragment>
-                CodeReady Containers (
+                OpenShift Local (
                 <code>
                   crc
                 </code>
