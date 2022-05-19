@@ -26,7 +26,7 @@ import {
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
-import links from '../../../../../../common/installLinks';
+import links from '../../../../../../common/installLinks.mjs';
 import {
   IDPTypeNames, getOauthCallbackURL, IDPNeedsOAuthURL, IDPformValues,
 } from '../../IdentityProvidersPage/IdentityProvidersHelper';
@@ -97,7 +97,7 @@ class IDPSection extends React.Component {
 
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason = clusterHibernating && 'This operation is not available while cluster is hibernating';
-    const canNotEditReason = !canEdit && 'You do not have permission to add an identity provider. Only cluster owners, cluster editors, and organization administrators can add identity providers.';
+    const canNotEditReason = !canEdit && 'You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers.';
     const disableReason = readOnlyReason || hibernatingReason || canNotEditReason;
 
     const IDPDropdownOptions = Object.values(IDPTypeNames).map(idpName => (

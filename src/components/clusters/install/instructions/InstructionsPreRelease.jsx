@@ -14,7 +14,7 @@ import {
 } from '@patternfly/react-core';
 import { CodeIcon } from '@patternfly/react-icons';
 
-import links, { tools, channels } from '../../../../common/installLinks';
+import links, { tools, channels } from '../../../../common/installLinks.mjs';
 import TelemetryDisclaimer from './components/TelemetryDisclaimer';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
@@ -72,7 +72,6 @@ function InstructionsPreRelease({ token, installer }) {
           <Card className="ocm-c-pre-release-instructions__card">
             <CardBody className="ocm-c-pre-release-instructions__card--body">
               <DownloadsAndPullSecretSection
-                rhcosDownloadURL={links.INSTALL_PRE_RELEASE_DOWNLOAD_RHCOS_LATEST}
                 token={token}
                 showPreReleaseDocs
                 showPreReleasePageLink={false}

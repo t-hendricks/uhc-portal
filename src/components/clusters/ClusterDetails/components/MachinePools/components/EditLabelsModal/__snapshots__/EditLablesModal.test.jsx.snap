@@ -10,7 +10,6 @@ exports[`<EditLabelsModal /> renders correctly 1`] = `
   primaryText="Save"
   title="Edit labels"
 >
-  <EditMachinePoolAlert />
   <Form
     onSubmit={[MockFunction]}
   >

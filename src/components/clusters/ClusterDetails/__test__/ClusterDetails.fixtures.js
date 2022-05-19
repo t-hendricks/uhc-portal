@@ -1,5 +1,8 @@
 import produce from 'immer';
-import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
+import {
+  normalizedProducts,
+  billingModels,
+} from '../../../../common/subscriptionTypes';
 
 const match = { params: { id: '1msoogsgTLQ4PePjrTOt3UqvMzX' } };
 const funcs = () => ({
@@ -34,8 +37,6 @@ const funcs = () => ({
   getClusterRouters: jest.fn(),
   getMachinePools: jest.fn(),
   resetClusterHistory: jest.fn(),
-  enableRule: jest.fn(),
-  disableRule: jest.fn(),
   toggleSubscriptionReleased: jest.fn(),
   clearGetMachinePoolsResponse: jest.fn(),
   getNotificationContacts: jest.fn(),
@@ -83,9 +84,7 @@ const clusterDetails = {
       master: 3,
       infra: 2,
       compute: 4,
-      availability_zones: [
-        'us-east-1a',
-      ],
+      availability_zones: ['us-east-1a'],
       master_machine_type: {
         kind: 'MachineTypeLink',
         id: 'm5.xlarge',
@@ -288,7 +287,8 @@ const clusterDetails = {
       status: 'Active',
       provenance: 'Provisioning',
       last_reconcile_date: '0001-01-01T00:00:00Z',
-      console_url: 'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
+      console_url:
+        'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
       capabilities: [
         {
           name: 'capability.cluster.subscribed_ocp',
@@ -397,7 +397,8 @@ const clusterDetails = {
           open_shift_version: '4.6.8',
           cloud_provider: 'aws',
           region: 'us-east-1',
-          console_url: 'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
+          console_url:
+            'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
           critical_alerts_firing: 0,
           operators_condition_failing: 0,
           subscription_cpu_total: 8,
@@ -447,6 +448,14 @@ const RHMIClusterDetails = produce(CCSClusterDetails, (draft) => {
   };
 });
 
+const AIClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.aiCluster = { id: normalizedProducts.OCP_Assisted_Install };
+  draft.cluster.subscription.plan = {
+    id: normalizedProducts.OCP_Assisted_Install,
+    type: normalizedProducts.OCP,
+  };
+});
+
 const insightsData = {
   meta: {
     count: 1,
@@ -454,9 +463,11 @@ const insightsData = {
   },
   data: [
     {
-      rule_id: 'ccx_rules_ocp.external.rules.nodes_kubelet_version_check.report',
+      rule_id:
+        'ccx_rules_ocp.external.rules.nodes_kubelet_version_check.report',
       description: 'Some rule description',
-      details: 'Minimum resource requirements...\n\n[Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=qwerty#minimum-resource-requirements_installing-bare-metal). Anything else here... [Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=42), [Knowledge Article](https://access.redhat.com/solutions/4972291?test=qwerty#amazing), [not doc link](https://google.com/test)',
+      details:
+        'Minimum resource requirements...\n\n[Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=qwerty#minimum-resource-requirements_installing-bare-metal). Anything else here... [Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=42), [Knowledge Article](https://access.redhat.com/solutions/4972291?test=qwerty#amazing), [not doc link](https://google.com/test)',
       reason: '',
       resolution: '',
       created_at: '2020-02-03T08:25:00Z',
@@ -1012,6 +1023,7 @@ const fixtures = {
   RHMIClusterDetails,
   insightsData,
   OCPClusterDetails,
+  AIClusterDetails,
   AROClusterDetails,
   cloudProviders,
   clusterIdentityProviders,

@@ -5,12 +5,13 @@ import CreateOSDWizardPage from '../pageobjects/CreateOSDWizard.page';
 import ClusterDetailsPage from '../pageobjects/ClusterDetails.page';
 import GlobalNav from '../pageobjects/GlobalNav.page';
 import IdentityProviders from '../pageobjects/IdentityProviders.page';
+import LeaveCreateClusterPrompt from '../pageobjects/LeaveCreateClusterPrompt';
 
 const clusterName = `test-${Math.random().toString(36).substr(2, 10)}`;
 
 describe('OSD cluster tests', async () => {
   // eslint-disable-next-line no-undef
-  before('should login successfully', async () => {
+  before(async () => {
     await LoginPage.open();
     await LoginPage.login();
 
@@ -28,16 +29,9 @@ describe('OSD cluster tests', async () => {
       expect(await CreateOSDWizardPage.fakeClusterBanner).toExist();
     });
 
-    it('disallows continuing without a cloud provider selected', async () => {
+    it('shows an error with invalid and empty names', async () => {
       expect(await CreateOSDWizardPage.isBillingModelScreen()).toBeTruthy();
       await (await CreateOSDWizardPage.primaryButton).click();
-
-      expect(await CreateOSDWizardPage.isCloudProviderSelectionScreen()).toBeTruthy();
-
-      expect(await (await CreateOSDWizardPage.primaryButton).isEnabled()).toBe(false);
-    });
-
-    it('shows an error with invalid and empty names', async () => {
       await (await CreateOSDWizardPage.awsProvider).click();
       await (await CreateOSDWizardPage.primaryButton).click();
 
@@ -52,7 +46,7 @@ describe('OSD cluster tests', async () => {
       expect(CreateOSDWizardPage.clusterNameInputError).toHaveText('Cluster name is required.');
     });
 
-    it('creates an OSD cluster and navigates to its details page', async () => {
+    it('fills OSD wizard but does not really create an OSD cluster', async () => {
       await (await CreateOSDWizardPage.clusterNameInput).setValue(clusterName);
       expect(CreateOSDWizardPage.clusterNameInputError).not.toExist();
 
@@ -66,7 +60,7 @@ describe('OSD cluster tests', async () => {
       await (await CreateOSDWizardPage.primaryButton).click();
       expect(await CreateOSDWizardPage.isReviewScreen()).toBeTruthy();
 
-      // TODO disabled because fake clusters get stuck a lot
+      // TODO actual creation disabled because fake clusters get stuck a lot
       /*
       await (await CreateOSDWizardPage.primaryButton).click();
 
@@ -242,7 +236,9 @@ describe('OSD cluster tests', async () => {
     });
   });
 
-  after.skip('Finally, delete the cluster created', async () => {
+  // TODO see above - actual creation disabled because fake clusters get stuck a lot
+  /*
+  after('Finally, delete the cluster created', async () => {
     await browser.waitUntil(
       async () => ((await ClusterDetailsPage.actionsDropdownToggle).isClickable()),
       { timeout: 1 * 60 * 1000 },
@@ -253,12 +249,17 @@ describe('OSD cluster tests', async () => {
     await (await ClusterDetailsPage.deleteClusterDialogConfirm).click();
     await browser.waitUntil(ClusterListPage.isClusterListPage);
   }).timeout(8 * 60 * 1000);
+  */
 });
 
 describe('OSD Trial cluster tests', async () => {
   describe('View Create OSD Trial cluster page', async () => {
     it('navigates to create OSD Trial cluster and CCS is selected', async () => {
       await GlobalNav.navigateTo('Clusters');
+
+      await LeaveCreateClusterPrompt.waitForDisplayed();
+      await LeaveCreateClusterPrompt.submit();
+
       await browser.waitUntil(ClusterListPage.isReady);
       expect(await ClusterListPage.createClusterBtn).toExist();
 

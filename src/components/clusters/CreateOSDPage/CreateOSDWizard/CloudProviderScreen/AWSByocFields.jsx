@@ -1,11 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import {
-  Alert, GridItem, ExpandableSection, TextContent, Title,
+  Alert,
+  GridItem,
+  Text,
+  TextVariants,
+  TextContent,
+  Title,
 } from '@patternfly/react-core';
+
+import links from '../../../../../common/installLinks.mjs';
 import ExternalLink from '../../../../common/ExternalLink';
-import { billingModelConstants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import AWSAccountDetailsSection from '../../CreateOSDForm/FormSections/AWSAccountDetailsSection';
+import Prerequisites from '../../../common/Prerequisites/Prerequisites';
 
 function AWSByocFields({ isValidating }) {
   return (
@@ -20,38 +28,50 @@ function AWSByocFields({ isValidating }) {
         <Title headingLevel="h3">AWS account details</Title>
       </GridItem>
       <GridItem>
-        <ExpandableSection toggleText="Prerequisites">
+        <Prerequisites acknowledgementRequired initiallyExpanded>
           <TextContent>
-            Successful cluster provisioning requires that:
+            <Text component={TextVariants.p} className="ocm-secondary-text">
+              Successful cluster provisioning requires that:
+            </Text>
             <ul>
               <li>
-                Your AWS account has the necessary limits to support your desired cluster size
-                according to the
-                {' '}
-                <ExternalLink noIcon href={billingModelConstants.resourceRequirementsLink}>
-                  cluster resource requirements
-                </ExternalLink>
-                .
+                <Text component={TextVariants.p} className="ocm-secondary-text">
+                  Your AWS account has the necessary limits to support your desired cluster size
+                  according to the
+                  {' '}
+                  <ExternalLink noIcon href={links.OSD_CCS_AWS_LIMITS}>
+                    cluster resource requirements
+                  </ExternalLink>
+                  .
+                </Text>
               </li>
               <li>
-                An IAM user called
-                {' '}
-                <b>osdCcsAdmin</b>
-                {' '}
-                exists with the AdministratorAccess policy.
+                <Text component={TextVariants.p} className="ocm-secondary-text">
+                  An IAM user called
+                  {' '}
+                  <b>osdCcsAdmin</b>
+                  {' '}
+                  exists with the AdministratorAccess policy.
+                </Text>
               </li>
               <li>
-                An Organization Service Control Policy (SCP) is set up according
-                to the requirements for customer cloud subscriptions.
+                <Text component={TextVariants.p} className="ocm-secondary-text">
+                  An Organization service control policy (SCP) is set up according
+                  to the requirements for Customer Cloud Subscriptions.
+                </Text>
               </li>
             </ul>
-            Business Support for AWS is also recommended.
-            For more guidance, see the
-            {' '}
-            <ExternalLink href="https://www.openshift.com/dedicated/ccs">customer cloud subscription requirements</ExternalLink>
-            .
+            <Text component={TextVariants.p} className="ocm-secondary-text">
+              Business Support for AWS is also recommended.
+              For more guidance, see the
+              {' '}
+              <ExternalLink href={links.OSD_CCS_AWS_CUSTOMER_REQ}>
+                Customer Cloud Subscription requirements
+              </ExternalLink>
+              .
+            </Text>
           </TextContent>
-        </ExpandableSection>
+        </Prerequisites>
       </GridItem>
       <AWSAccountDetailsSection isWizard isValidating={isValidating} />
     </>

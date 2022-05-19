@@ -5,16 +5,17 @@ import {
 } from '@patternfly/react-core';
 
 import { trackPendo } from '../../../../../common/helpers';
-import { tools } from '../../../../../common/installLinks';
+import { tools } from '../../../../../common/installLinks.mjs';
 
 const texts = {
-  [tools.CRC]: 'Download CodeReady Containers',
+  [tools.CRC]: 'Download OpenShift Local',
   [tools.OC]: 'Download command-line tools',
   [tools.X86INSTALLER]: 'Download installer',
   [tools.IBMZINSTALLER]: 'Download installer',
   [tools.PPCINSTALLER]: 'Download installer',
   [tools.ARMINSTALLER]: 'Download installer',
-  [tools.ROSA]: 'Download command-line tools',
+  [tools.OCM]: 'Download ocm CLI',
+  [tools.ROSA]: 'Download rosa CLI',
 };
 
 const pendoEvents = {

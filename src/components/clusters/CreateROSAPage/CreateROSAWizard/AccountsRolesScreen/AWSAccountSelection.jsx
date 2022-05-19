@@ -11,6 +11,9 @@ import {
 } from '@patternfly/react-core';
 import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
+import { loadOfflineToken } from '../../../../tokens/Tokens';
+
+import { persistor } from '../../../../../redux/store';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 
@@ -29,7 +32,11 @@ function NoAssociatedAWSAccounts() {
 }
 
 function AWSAccountSelection({
-  input,
+  input: {
+    // Redux Form's onBlur interferes with Patternfly's Select footer onClick handlers.
+    onBlur: _onBlur,
+    ...inputProps
+  },
   isDisabled,
   label,
   meta: { error, touched },
@@ -42,6 +49,32 @@ function AWSAccountSelection({
   const [isOpen, setIsOpen] = useState(false);
 
   const associateAWSAccountBtnRef = React.createRef();
+
+  const onLoad = (token) => {
+    openAssociateAWSAccountModal(token);
+  };
+
+  const onError = (reason) => {
+    if (reason === 'not available') {
+      // set token-reload to true, so that on reload we know to restore previously entered data
+      window.localStorage.setItem('token-reload', 'true');
+      // write state to localStorage
+      persistor.flush().then(() => {
+        insights.chrome.auth.doOffline();
+      });
+    } else {
+      // open the modal anyways
+      openAssociateAWSAccountModal(reason);
+    }
+  };
+
+  useEffect(() => {
+    // in case we reloaded the page after loading the offline token, reopen the modal
+    if (window.localStorage.getItem('token-reload') === 'true') {
+      window.localStorage.removeItem('token-reload');
+      loadOfflineToken(onLoad, onError);
+    }
+  }, []);
 
   useEffect(() => {
     // only scroll to associateAWSAccountBtn when no AWS account id selected
@@ -56,15 +89,19 @@ function AWSAccountSelection({
 
   const onSelect = (_, selection) => {
     setIsOpen(false);
-    input.onChange(selection);
+    inputProps.onChange(selection);
   };
 
   const onClick = () => {
     setIsOpen(false);
-    openAssociateAWSAccountModal();
+    // will cause window reload on first time
+    loadOfflineToken(onLoad, onError);
+
+    // Reset window onbeforeunload event so a browser confirmation dialog do not appear.
+    window.onbeforeunload = null;
   };
 
-  const footer = () => (
+  const footer = (
     <>
       {AWSAccountIDs.length === 0 && (
       <NoAssociatedAWSAccounts />
@@ -75,7 +112,6 @@ function AWSAccountSelection({
 
   return (
     <FormGroup
-      {...input}
       label={label}
       labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
       validated={error ? 'error' : undefined}
@@ -83,15 +119,16 @@ function AWSAccountSelection({
       isRequired
     >
       <Select
+        {...inputProps}
         label={label}
         labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
         isOpen={isOpen}
-        selections={input.value || initialValue || ''}
+        selections={inputProps.value || initialValue || ''}
         onToggle={onToggle}
         onSelect={onSelect}
         isDisabled={isDisabled}
         placeholderText={AWS_ACCT_ID_PLACEHOLDER}
-        footer={footer()}
+        footer={footer}
       >
         {AWSAccountIDs.map(awsId => <SelectOption className="pf-c-dropdown__menu-item" key={awsId} value={awsId}>{`${awsId}`}</SelectOption>)}
       </Select>
@@ -105,12 +142,12 @@ AWSAccountSelection.propTypes = {
   input: PropTypes.shape({
     value: PropTypes.string,
     onChange: PropTypes.func,
+    onBlur: PropTypes.func,
   }),
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   AWSAccountIDs: PropTypes.arrayOf(PropTypes.string),
   selectedAWSAccountID: PropTypes.string,
   openAssociateAWSAccountModal: PropTypes.func.isRequired,
-  history: PropTypes.object,
   initialValue: PropTypes.string,
   meta: PropTypes.shape({
     touched: PropTypes.bool,

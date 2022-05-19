@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Popover } from '@patternfly/react-core';
 import { InfoCircleIcon, OutlinedArrowAltCircleUpIcon } from '@patternfly/react-icons';
 import { isHibernating } from './clusterStates';
-import links from '../../../common/installLinks';
+import links from '../../../common/installLinks.mjs';
 import getClusterName from '../../../common/getClusterName';
 import modals from '../../common/Modal/modals';
 import { subscriptionStatuses } from '../../../common/subscriptionTypes';
@@ -49,7 +49,7 @@ const ClusterUpdateLink = ({
   if (cluster.managed) {
     return (
       <Button
-        className="cluster-update-link"
+        className="cluster-update-link pf-u-mt-0"
         variant="link"
         onClick={() => openModal(modals.UPGRADE_WIZARD,
           {
@@ -67,7 +67,7 @@ const ClusterUpdateLink = ({
   if (cluster.console && cluster.console.url) {
     return (
       <a href={`${cluster.console.url}/settings/cluster`} target="_blank" rel="noopener noreferrer">
-        <Button className="cluster-update-link" variant="link" icon={<OutlinedArrowAltCircleUpIcon />}>
+        <Button className="cluster-update-link pf-u-mt-0" variant="link" icon={<OutlinedArrowAltCircleUpIcon />}>
           Update
         </Button>
       </a>
@@ -90,7 +90,7 @@ const ClusterUpdateLink = ({
         </div>
       )}
     >
-      <Button className="cluster-update-link" variant="link" icon={<InfoCircleIcon />}>
+      <Button className="cluster-update-link pf-u-mt-0" variant="link" icon={<InfoCircleIcon />}>
         Update
       </Button>
     </Popover>

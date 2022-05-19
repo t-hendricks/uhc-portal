@@ -13,6 +13,7 @@ import {
 
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { ReduxFormRadioGroup } from '../../../common/ReduxFormComponents';
+import links from '../../../../common/installLinks.mjs';
 import {
   subscriptionSettings,
   subscriptionSupportLevels,
@@ -75,7 +76,7 @@ const {
 const { DISCONNECTED } = subscriptionStatuses;
 
 const standardBillingModelLabel = 'Annual: Fixed capacity subscription from Red Hat';
-const marketplaceBillingModelLabel = 'On-demand (Hourly): Flexible usage billed through the Red Hat Marketplace';
+const marketplaceBillingModelLabel = 'On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace';
 
 const MIN_VAL = 1;
 const MAX_VAL = 999;
@@ -366,7 +367,7 @@ class EditSubscriptionSettingsFields extends Component {
         isInline
         title={billingModelAlertText}
       >
-        <a href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2021/html/managing_clusters/assembly-cluster-subscriptions" target="_blank" rel="noreferrer noopener">
+        <a href={links.OCM_DOCS_SUBSCRIPTIONS} target="_blank" rel="noreferrer noopener">
           Learn more about subscriptions
           {' '}
           <ExternalLinkAltIcon color="#0066cc" size="sm" />

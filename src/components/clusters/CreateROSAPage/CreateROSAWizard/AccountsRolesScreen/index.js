@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
+import { formValueSelector, touch } from 'redux-form';
 
 import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import { openModal } from '../../../../common/Modal/ModalActions';
+
 import {
   getAWSAccountIDs,
   clearGetAWSAccountIDsResponse,
@@ -11,13 +12,19 @@ import {
 } from '../rosaActions';
 
 const mapDispatchToProps = dispatch => ({
-  openAssociateAWSAccountModal: () => dispatch(openModal('associate-aws-modal')),
+  openAssociateAWSAccountModal: token => dispatch(openModal('associate-aws-modal', token)),
   getAWSAccountIDs: organizationID => dispatch(getAWSAccountIDs(organizationID)),
   getAWSAccountRolesARNs: awsAccountID => dispatch(
     getAWSAccountRolesARNs(awsAccountID),
   ),
   clearGetAWSAccountIDsResponse: () => dispatch(clearGetAWSAccountIDsResponse()),
   clearGetAWSAccountRolesARNsResponse: () => dispatch(clearGetAWSAccountRolesARNsResponse()),
+  touchARNsFields: () => {
+    dispatch(touch('CreateCluster', 'installer_role_arn'));
+    dispatch(touch('CreateCluster', 'support_role_arn'));
+    dispatch(touch('CreateCluster', 'control_plane_role_arn'));
+    dispatch(touch('CreateCluster', 'worker_role_arn'));
+  },
 });
 
 const mapStateToProps = (state) => {

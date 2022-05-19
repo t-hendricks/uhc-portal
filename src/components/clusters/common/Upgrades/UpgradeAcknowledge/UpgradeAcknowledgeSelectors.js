@@ -1,29 +1,37 @@
 /* eslint-disable max-len */
 
-const splitMajorMinor = (version) => {
+export const splitMajorMinor = (version) => {
   let versionArray = [];
   try {
     versionArray = version.split('.').map(num => parseInt(num, 10));
   } catch (error) {
     return [];
   }
-
   return versionArray;
 };
 
 const isSTSCluster = state => state.clusters.details.cluster.aws?.sts?.role_arn && state.clusters.details.cluster.aws?.sts?.role_arn !== '';
 
 export const getClusterIdFromState = state => state.clusters?.details?.cluster?.id;
+
 export const getClusterOpenShiftVersion = state => state.clusters?.details?.cluster?.openshift_version;
+
 export const getFromVersionFromState = state => state.clusters.details.cluster.version?.raw_id || null;
+
 export const getToVersionFromState = (state) => {
-  if (!state.clusters.details.cluster.version?.available_upgrades || state.clusters.details.cluster.version?.available_upgrades.length === 0) {
-    return null;
+  const scheduledUpdate = state.clusterUpgrades?.schedules?.items?.find(schedule => schedule.version && schedule.version !== getFromVersionFromState(state));
+  if (!scheduledUpdate) {
+    if (!state.clusters.details.cluster.version?.available_upgrades || state.clusters.details.cluster.version?.available_upgrades.length === 0) {
+      return null;
+    }
+    const versionArray = state.clusters.details.cluster.version.available_upgrades;
+    return versionArray[versionArray.length - 1];
   }
-  const versionArray = state.clusters.details.cluster.version.available_upgrades;
-  return versionArray[versionArray.length - 1];
+  return scheduledUpdate.version;
 };
+
 export const getIsManual = state => !state.clusterUpgrades.schedules.items.some(policy => policy.schedule_type === 'automatic');
+
 export const getModalDataFromState = state => state.modal.data;
 
 const getClusterMetAcks = state => state.clusters.details.cluster.upgradeGates || [];
@@ -83,4 +91,9 @@ export const getClusterUnMetClusterAcks = (state, upgradeVersion) => {
 export const getHasUnMetClusterAcks = (state, upgradeVersion) => getClusterUnMetClusterAcks(state, upgradeVersion).length > 0;
 
 export const getHasScheduledManual = state => getIsManual(state)
-&& state.clusterUpgrades.schedules.items.some(schedule => schedule.version !== getFromVersionFromState(state));
+  && state.clusterUpgrades.schedules.items.some(schedule => schedule.version !== getFromVersionFromState(state));
+
+export const getAutomaticUpgradePolicyId = (state) => {
+  const automaticPolicy = state.clusterUpgrades.schedules.items.find(policy => policy.schedule_type === 'automatic');
+  return automaticPolicy?.id;
+};

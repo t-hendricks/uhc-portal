@@ -110,7 +110,7 @@ class UpgradeWizard extends React.Component {
         )
           : (
             <VersionSelectionGrid
-              availableUpgrades={cluster.version.available_upgrades}
+              availableUpgrades={cluster.version?.available_upgrades}
               clusterVersion={cluster.openshift_version}
               clusterChannel={cluster.version.channel_group}
               selected={selectedVersion}

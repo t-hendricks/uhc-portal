@@ -1,40 +1,47 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import { Redirect } from 'react-router';
 
-import {
-  Banner,
-  Wizard,
-  PageSection,
-} from '@patternfly/react-core';
+import { Banner, Wizard, PageSection } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
+import { PersistGate } from 'redux-persist/integration/react';
+
 import PageTitle from '../../../common/PageTitle';
-import ErrorModal from '../../../common/ErrorModal';
+import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
-import { shouldRefetchQuota } from '../../../../common/helpers';
+import { shouldRefetchQuota, scrollToFirstError } from '../../../../common/helpers';
+import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
 import MachinePoolScreen from '../../CreateOSDPage/CreateOSDWizard/MachinePoolScreen';
 import NetworkScreen from '../../CreateOSDPage/CreateOSDWizard/NetworkScreen';
 import VPCScreen from '../../CreateOSDPage/CreateOSDWizard/VPCScreen';
+import ClusterProxyScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterProxyScreen';
 import CIDRScreen from '../../CreateOSDPage/CreateOSDWizard/CIDRScreen';
 import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
 import ReviewClusterScreen from '../../CreateOSDPage/CreateOSDWizard/ReviewClusterScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
+import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
 
 import './createROSAWizard.scss';
 import AccountsRolesScreen from './AccountsRolesScreen';
 import ClusterRolesScreen from './ClusterRolesScreen';
 import ErrorBoundary from '../../../App/ErrorBoundary';
 
-class CreateROSAWizard extends React.Component {
+import { persistor } from '../../../../redux/store';
+import CreateRosaWizardFooter from './CreateRosaWizardFooter';
+
+class CreateROSAWizardInternal extends React.Component {
   state = {
-    stepIdReached: 1,
+    stepIdReached: 10,
+    currentStepId: 10,
+    // Dictionary of step IDs; { [stepId: number]: boolean },
+    // where entry values indicate the latest form validation state for those respective steps.
+    validatedSteps: {},
   }
 
   componentDidMount() {
@@ -60,10 +67,26 @@ class CreateROSAWizard extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
     const {
-      createClusterResponse, isErrorModalOpen, openModal,
+      createClusterResponse,
+      isErrorModalOpen,
+      openModal,
+      isValid,
     } = this.props;
+    const { currentStepId } = this.state;
+
+    // Track validity of individual steps by id
+    if (isValid !== prevProps.isValid) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState(() => ({
+        validatedSteps: {
+          ...prevState.validatedSteps,
+          [currentStepId]: isValid,
+        },
+      }));
+    }
+
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
     }
@@ -80,11 +103,42 @@ class CreateROSAWizard extends React.Component {
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
+    this.setState({ currentStepId: id });
   };
+
+  onGoToStep = ({ id }) => this.setState({ currentStepId: id });
+
+  onBack = ({ id }) => this.setState({ currentStepId: id });
+
+  canJumpTo = (id) => {
+    const { stepIdReached, currentStepId, validatedSteps } = this.state;
+    const hasPrevStepError = Object.entries(validatedSteps).some((
+      [validatedStepId, isStepValid],
+    ) => (
+      isStepValid === false && validatedStepId < id
+    ));
+
+    // Allow step navigation forward when the current step is valid and backwards regardless.
+    return (stepIdReached >= id && !hasPrevStepError) || id <= currentStepId;
+  }
+
+  beforeOnNext = (onNext) => {
+    const { touch, formErrors } = this.props;
+    const { validatedSteps, currentStepId } = this.state;
+    const isCurrentStepValid = validatedSteps[currentStepId];
+    const errorFieldNames = Object.keys(formErrors);
+
+    // When errors exist, touch the fields with those errors to trigger validation.
+    if (errorFieldNames?.length > 0 && !isCurrentStepValid) {
+      touch(errorFieldNames);
+      scrollToFirstError(formErrors);
+    } else {
+      onNext();
+    }
+  }
 
   render() {
     const {
-      isValid,
       onSubmit,
       cloudProviderID,
       installToVPCSelected,
@@ -92,12 +146,11 @@ class CreateROSAWizard extends React.Component {
       machineTypes,
       organization,
       isErrorModalOpen,
-      resetResponse,
       hasProductQuota,
       history,
       privateLinkSelected,
+      configureProxySelected,
     } = this.props;
-    const { stepIdReached } = this.state;
 
     const steps = [
       {
@@ -108,21 +161,21 @@ class CreateROSAWizard extends React.Component {
             <AccountsRolesScreen organizationID={organization?.details?.id} />
           </ErrorBoundary>
         ),
-        enableNext: isValid,
+        canJumpTo: this.canJumpTo(10),
       },
       {
         name: 'Cluster settings',
+        canJumpTo: this.canJumpTo(20),
         steps: [
           {
-            id: 22,
+            id: 21,
             name: 'Details',
             component: (
               <ErrorBoundary>
                 <ClusterSettingsScreen />
               </ErrorBoundary>
             ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 22,
+            canJumpTo: this.canJumpTo(21),
           },
           {
             id: 23,
@@ -132,16 +185,13 @@ class CreateROSAWizard extends React.Component {
                 <MachinePoolScreen />
               </ErrorBoundary>
             ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 23,
+            canJumpTo: this.canJumpTo(22),
           },
         ],
-        enableNext: isValid,
       },
       {
         name: 'Networking',
-        enableNext: isValid,
-        canJumpTo: stepIdReached >= 30,
+        canJumpTo: this.canJumpTo(30),
         steps: [
           {
             id: 31,
@@ -152,13 +202,13 @@ class CreateROSAWizard extends React.Component {
                   cloudProviderID={cloudProviderID}
                   showClusterPrivacy
                   showVPCCheckbox
+                  showClusterWideProxyCheckbox
                   privateLinkSelected={privateLinkSelected}
                   forcePrivateLink
                 />
               </ErrorBoundary>
             ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 31,
+            canJumpTo: this.canJumpTo(31),
           },
           installToVPCSelected && {
             id: 32,
@@ -168,46 +218,52 @@ class CreateROSAWizard extends React.Component {
                 <VPCScreen privateLinkSelected={privateLinkSelected} />
               </ErrorBoundary>
             ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 32,
+            canJumpTo: this.canJumpTo(32),
+          },
+          configureProxySelected && {
+            id: 33,
+            name: 'Cluster-wide proxy',
+            component: (
+              <ErrorBoundary>
+                <ClusterProxyScreen />
+              </ErrorBoundary>
+            ),
+            canJumpTo: this.canJumpTo(33),
           },
           {
-            id: 33,
+            id: 34,
             name: 'CIDR ranges',
             component: (
               <ErrorBoundary>
                 <CIDRScreen />
               </ErrorBoundary>
             ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 33,
+            canJumpTo: this.canJumpTo(34),
           },
         ].filter(Boolean),
       },
       {
         id: 40,
-        name: 'Cluster updates',
-        component: (
-          <ErrorBoundary>
-            <UpdatesScreen />
-          </ErrorBoundary>
-        ),
-        enableNext: isValid,
-        canJumpTo: stepIdReached >= 40,
-      },
-      {
-        id: 50,
         name: 'Cluster roles and policies',
         component: (
           <ErrorBoundary>
             <ClusterRolesScreen />
           </ErrorBoundary>
         ),
-        enableNext: isValid,
-        canJumpTo: stepIdReached >= 50,
+        canJumpTo: this.canJumpTo(40),
       },
       {
-        id: 100,
+        id: 50,
+        name: 'Cluster updates',
+        component: (
+          <ErrorBoundary>
+            <UpdatesScreen />
+          </ErrorBoundary>
+        ),
+        canJumpTo: this.canJumpTo(50),
+      },
+      {
+        id: 60,
         name: 'Review and create',
         component: (
           <ErrorBoundary>
@@ -217,9 +273,7 @@ class CreateROSAWizard extends React.Component {
             />
           </ErrorBoundary>
         ),
-        nextButtonText: 'Create cluster',
-        enableNext: isValid && !createClusterResponse.pending,
-        canJumpTo: stepIdReached >= 100 && isValid,
+        canJumpTo: this.canJumpTo(60),
       },
     ];
     const ariaTitle = 'Create ROSA cluster wizard';
@@ -227,6 +281,10 @@ class CreateROSAWizard extends React.Component {
     const orgWasFetched = !organization.pending && organization.fulfilled;
 
     if (createClusterResponse.fulfilled) {
+      // When a cluster is successfully created,
+      // unblock history in order to not show a confirmation prompt.
+      history.block(() => {});
+
       return (
         <Redirect to={`/details/s/${createClusterResponse.cluster.subscription.id}`} />
       );
@@ -299,14 +357,6 @@ class CreateROSAWizard extends React.Component {
       );
     }
 
-    const creationErrorModal = isErrorModalOpen && (
-      <ErrorModal
-        title="Error creating cluster"
-        errorResponse={createClusterResponse}
-        resetResponse={resetResponse}
-      />
-    );
-
     return (
       <>
         {title}
@@ -317,24 +367,42 @@ class CreateROSAWizard extends React.Component {
           </Banner>
           )}
           <div className="ocm-page">
-            {creationErrorModal}
-            <Wizard
-              className="rosa-wizard"
-              navAriaLabel={`${ariaTitle} steps`}
-              mainAriaLabel={`${ariaTitle} content`}
-              steps={steps}
-              isNavExpandable
-              onSave={onSubmit}
-              onNext={this.onNext}
-              onBack={this.onBack}
-              onGoToStep={this.onGoToStep}
-              onClose={() => history.push('/create/cloud')}
-            />
+            {isErrorModalOpen && <CreateClusterErrorModal />}
+            <PersistGate persistor={persistor}>
+              <Wizard
+                className="rosa-wizard"
+                navAriaLabel={`${ariaTitle} steps`}
+                mainAriaLabel={`${ariaTitle} content`}
+                steps={steps}
+                isNavExpandable
+                onNext={this.onNext}
+                onBack={this.onBack}
+                onGoToStep={this.onGoToStep}
+                onClose={() => history.push('/')}
+                footer={(
+                  <CreateRosaWizardFooter
+                    onSubmit={onSubmit}
+                    onBeforeNext={goToNext => this.beforeOnNext(goToNext)}
+                  />
+                )}
+              />
+            </PersistGate>
           </div>
         </PageSection>
       </>
     );
   }
+}
+
+function CreateROSAWizard(props) {
+  usePreventBrowserNav();
+
+  return (
+    <>
+      <CreateROSAWizardInternal {...props} />
+      <LeaveCreateClusterPrompt />
+    </>
+  );
 }
 
 const requestStatePropTypes = PropTypes.shape({
@@ -343,11 +411,12 @@ const requestStatePropTypes = PropTypes.shape({
   pending: PropTypes.bool,
 });
 
-CreateROSAWizard.propTypes = {
+CreateROSAWizardInternal.propTypes = {
   isValid: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   installToVPCSelected: PropTypes.bool,
   privateLinkSelected: PropTypes.bool,
+  configureProxySelected: PropTypes.bool,
   isErrorModalOpen: PropTypes.bool,
 
   createClusterResponse: PropTypes.shape({
@@ -377,6 +446,8 @@ CreateROSAWizard.propTypes = {
   resetForm: PropTypes.func,
   openModal: PropTypes.func,
   onSubmit: PropTypes.func,
+  touch: PropTypes.func,
+  formErrors: PropTypes.object,
 
   // for "no quota" redirect
   hasProductQuota: PropTypes.bool,
@@ -384,7 +455,10 @@ CreateROSAWizard.propTypes = {
   // for cancel button
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
+    block: PropTypes.func,
   }).isRequired,
 };
+
+CreateROSAWizard.propTypes = { ...CreateROSAWizardInternal.propTypes };
 
 export default CreateROSAWizard;

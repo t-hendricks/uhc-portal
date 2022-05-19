@@ -8,8 +8,10 @@ import {
   DescriptionListDescription,
   Flex,
 } from '@patternfly/react-core';
-
 import { OCM } from 'openshift-assisted-ui-lib';
+
+import Timestamp from '../../../../../common/Timestamp';
+import links from '../../../../../../common/installLinks.mjs';
 import { isAISubscriptionWithoutMetrics } from '../../../../../../common/isAssistedInstallerCluster';
 import ClusterNetwork from '../ClusterNetwork';
 import { constants } from '../../../../CreateOSDPage/CreateOSDForm/CreateOSDFormConstants';
@@ -125,7 +127,7 @@ function DetailsRight({
                 <span className="font-weight-normal"> (actual/desired)</span>
                 <PopoverHint
                   iconClassName="nodes-hint"
-                  hint="The actual number of worker (compute) nodes may not always match with the number of desired when the cluster is scaling."
+                  hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
                 />
               </DescriptionListTerm>
               <DescriptionListDescription>
@@ -158,7 +160,7 @@ function DetailsRight({
                   )}
                   <Flex>
                     <dt>
-                      Worker:
+                      Compute:
                       {' '}
                     </dt>
                     <dd>
@@ -204,7 +206,7 @@ function DetailsRight({
                     )}
                     <Flex>
                       <dt>
-                        Worker:
+                        Compute:
                         {' '}
                       </dt>
                       <dd>
@@ -216,6 +218,23 @@ function DetailsRight({
               </DescriptionListGroup>
             </>
           )}
+        {cluster.aiCluster && (
+          <>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Created at</DescriptionListTerm>
+              <DescriptionListDescription>
+                <Timestamp value={get(cluster, 'creation_timestamp', 'N/A')} />
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Owner</DescriptionListTerm>
+              <DescriptionListDescription>
+                {get(cluster, 'subscription.creator.name') || get(cluster, 'subscription.creator.username', 'N/A')}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+
+        )}
         {/* Autoscaling */}
         {
           autoscaleEnabled
@@ -230,7 +249,9 @@ function DetailsRight({
                       <>
                         {constants.autoscaleHint}
                         {' '}
-                        <ExternalLink href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html">Learn more about autoscaling</ExternalLink>
+                        <ExternalLink href={links.APPLYING_AUTOSCALING}>
+                          Learn more about autoscaling
+                        </ExternalLink>
                       </>
                     )}
                   />

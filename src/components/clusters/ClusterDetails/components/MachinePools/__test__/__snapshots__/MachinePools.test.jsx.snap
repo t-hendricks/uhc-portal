@@ -23,6 +23,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
         areActionsDisabled={[Function]}
         aria-label="Machine pools"
         borders={true}
+        canCollapseAll={false}
         canSelectAll={true}
         canSortFavorites={true}
         cells={
@@ -63,11 +64,14 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
           ]
         }
         className=""
+        collapseAllAriaLabel=""
         contentId="expanded-content"
         dropdownDirection="down"
         dropdownPosition="right"
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
+        isHeaderSelectDisabled={false}
+        isNested={false}
         isStickyHeader={false}
         isTreeTable={false}
         onCollapse={[Function]}
@@ -234,7 +238,7 @@ exports[`<MachinePools /> renders with a machine pool with autosacaling enabled 
         variant={null}
       >
         <TableHeader />
-        <Component />
+        <TableBody />
       </Table>
     </CardBody>
   </Card>
@@ -264,6 +268,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
         areActionsDisabled={[Function]}
         aria-label="Machine pools"
         borders={true}
+        canCollapseAll={false}
         canSelectAll={true}
         canSortFavorites={true}
         cells={
@@ -304,11 +309,14 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
           ]
         }
         className=""
+        collapseAllAriaLabel=""
         contentId="expanded-content"
         dropdownDirection="down"
         dropdownPosition="right"
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
+        isHeaderSelectDisabled={false}
+        isNested={false}
         isStickyHeader={false}
         isTreeTable={false}
         onCollapse={[Function]}
@@ -601,7 +609,7 @@ exports[`<MachinePools /> renders with additional machine pools, some with label
         variant={null}
       >
         <TableHeader />
-        <Component />
+        <TableBody />
       </Table>
     </CardBody>
   </Card>
@@ -631,6 +639,7 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
         areActionsDisabled={[Function]}
         aria-label="Machine pools"
         borders={true}
+        canCollapseAll={false}
         canSelectAll={true}
         canSortFavorites={true}
         cells={
@@ -671,11 +680,14 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
           ]
         }
         className=""
+        collapseAllAriaLabel=""
         contentId="expanded-content"
         dropdownDirection="down"
         dropdownPosition="right"
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
+        isHeaderSelectDisabled={false}
+        isNested={false}
         isStickyHeader={false}
         isTreeTable={false}
         onCollapse={[Function]}
@@ -714,7 +726,7 @@ exports[`<MachinePools /> renders with the default machine pool 1`] = `
         variant={null}
       >
         <TableHeader />
-        <Component />
+        <TableBody />
       </Table>
     </CardBody>
   </Card>
@@ -744,6 +756,7 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
         areActionsDisabled={[Function]}
         aria-label="Machine pools"
         borders={true}
+        canCollapseAll={false}
         canSelectAll={true}
         canSortFavorites={true}
         cells={
@@ -784,11 +797,14 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
           ]
         }
         className=""
+        collapseAllAriaLabel=""
         contentId="expanded-content"
         dropdownDirection="down"
         dropdownPosition="right"
         expandId="expandable-toggle"
         gridBreakPoint="grid-md"
+        isHeaderSelectDisabled={false}
+        isNested={false}
         isStickyHeader={false}
         isTreeTable={false}
         onCollapse={[Function]}
@@ -867,7 +883,7 @@ exports[`<MachinePools /> renders with the default machine pool when it has labe
         variant={null}
       >
         <TableHeader />
-        <Component />
+        <TableBody />
       </Table>
     </CardBody>
   </Card>
@@ -879,19 +895,16 @@ exports[`<MachinePools /> should render skeleton while fetching machine pools 1`
   <Card>
     <CardTitle>
       <Skeleton
-        isDark={false}
         size="lg"
       />
     </CardTitle>
     <CardBody>
       <Skeleton
-        isDark={false}
         size="lg"
       />
     </CardBody>
     <CardFooter>
       <Skeleton
-        isDark={false}
         size="lg"
       />
     </CardFooter>

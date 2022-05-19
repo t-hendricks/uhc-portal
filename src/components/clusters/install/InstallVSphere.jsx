@@ -4,7 +4,7 @@ import { PageSection } from '@patternfly/react-core';
 
 import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../../common/Breadcrumbs';
-import InstructionsVSphere from './instructions/InstructionsVSphere';
+import InstructionsChooser from './instructions/InstructionsChooser';
 import { scrollToTop } from '../../../common/helpers';
 
 class InstallVSphere extends Component {
@@ -27,7 +27,12 @@ class InstallVSphere extends Component {
       <>
         <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection>
-          <InstructionsVSphere />
+          <InstructionsChooser
+            cloudName="VMware vSphere"
+            showAI
+            ipiPageLink="/install/vsphere/installer-provisioned"
+            upiPageLink="/install/vsphere/user-provisioned"
+          />
         </PageSection>
       </>
     );

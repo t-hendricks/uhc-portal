@@ -31,7 +31,6 @@ import ClustersList from '../clusters/ClusterList';
 import ArchivedClusterList from '../clusters/ArchivedClusterList';
 import CreateClusterPage from '../clusters/CreateClusterPage';
 import RegisterCluster from '../clusters/RegisterCluster';
-import CreateOSDPage from '../clusters/CreateOSDPage';
 import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
 import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
@@ -40,13 +39,16 @@ import InstallAWS from '../clusters/install/InstallAWS';
 import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
 import InstallBareMetal from '../clusters/install/InstallBareMetal';
+import InstallASH from '../clusters/install/InstallASH';
+import ConnectedInstallASHIPI from '../clusters/install/InstallASHIPI';
+import ConnectedInstallASHUPI from '../clusters/install/InstallASHUPI';
 import InstallAzure from '../clusters/install/InstallAzure';
 import ConnectedInstallAzureIPI from '../clusters/install/InstallAzureIPI';
 import ConnectedInstallAzureUPI from '../clusters/install/InstallAzureUPI';
 import InstallGCP from '../clusters/install/InstallGCP';
 import ConnectedInstallGCPIPI from '../clusters/install/InstallGCPIPI';
 import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
-import InstallIBMCloud from '../clusters/install/InstallIBMCloud';
+import ConnectedInstallIBMCloud from '../clusters/install/InstallIBMCloud';
 import InstallOSP from '../clusters/install/InstallOSP';
 import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
 import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
@@ -71,11 +73,14 @@ import TokensROSA from '../tokens/TokensROSA';
 import NotFoundError from './NotFoundError';
 import Quota from '../quota';
 import Insights from './Insights';
-import CloudProviderSelection from '../clusters/CreateOSDPage/CloudProviderSelection';
 import withFeatureGate from '../features/with-feature-gate';
-import { ASSISTED_INSTALLER_FEATURE, OSD_CREATION_WIZARD_FEATURE } from '../../redux/constants/featureConstants';
+import {
+  ASSISTED_INSTALLER_FEATURE,
+  ROSA_CREATION_WIZARD_FEATURE,
+} from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
+import InstallArmBareMetal from '../clusters/install/InstallArmBareMetal';
 import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
@@ -92,8 +97,9 @@ const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALL
 const GatedMetalInstall = withFeatureGate(
   InstallBareMetal, ASSISTED_INSTALLER_FEATURE, InstallBMUPI, InstallBMIPI,
 );
-const GatedCreationWizard = withFeatureGate(
-  CreateOSDWizard, OSD_CREATION_WIZARD_FEATURE, CloudProviderSelection,
+
+const GatedRosaCreationWizard = withFeatureGate(
+  CreateROSAWizard, ROSA_CREATION_WIZARD_FEATURE, CreateROSAWelcome,
 );
 
 function Router({ history }) {
@@ -143,11 +149,12 @@ function Router({ history }) {
             <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
 
             <Route path="/install/alibaba/installer-provisioned" component={ConnectedInstallAlibaba} />
+            <Route path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
             <Route path="/install/arm/pre-release" component={ConnectedInstallArmPreRelease} />
+            <Route path="/install/arm" component={InstallArmBareMetal} />
             <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
             <Route path="/install/aws/arm" component={ConnectedInstallArmAWSIPI} />
-            <Route path="/install/arm" component={InstallArmBMUPI} />
             <Route path="/install/aws" component={InstallAWS} />
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
@@ -161,13 +168,16 @@ function Router({ history }) {
             <Route path="/install/azure/installer-provisioned" component={ConnectedInstallAzureIPI} />
             <Route path="/install/azure/user-provisioned" component={ConnectedInstallAzureUPI} />
             <Route path="/install/azure" exact component={InstallAzure} />
+            <Route path="/install/azure-stack-hub/installer-provisioned" exact component={ConnectedInstallASHIPI} />
+            <Route path="/install/azure-stack-hub/user-provisioned" exact component={ConnectedInstallASHUPI} />
+            <Route path="/install/azure-stack-hub" exact component={InstallASH} />
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
             <Route path="/install/vsphere" exact component={InstallVSphere} />
             <Route path="/install/vsphere/user-provisioned" component={ConnectedInstallVSphereUPI} />
             <Route path="/install/vsphere/installer-provisioned" component={ConnectedInstallVSphereIPI} />
-            <Route path="/install/ibm-cloud" component={InstallIBMCloud} />
+            <Route path="/install/ibm-cloud" component={ConnectedInstallIBMCloud} />
             <Route path="/install/ibmz/user-provisioned" component={ConnectedInstallIBM} />
             <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMPreRelease} />
             <Route path="/install/power/user-provisioned" component={ConnectedInstallPower} />
@@ -177,28 +187,17 @@ function Router({ history }) {
             <Route path="/install/pull-secret" component={ConnectedInstallPullSecret} />
             <Route path="/install/azure/aro-provisioned" component={ConnectedInstallPullSecretAzure} />
             <Redirect from="/install" to="/create" />
-            <TermsGuardedRoute
-              path="/create/osd/aws"
-              gobackPath="/create/osd"
-              history={history}
-              render={() => <CreateOSDPage cloudProviderID="aws" product={normalizedProducts.OSD} />}
-            />
-            <TermsGuardedRoute
-              path="/create/osd/gcp"
-              gobackPath="/create/osd"
-              history={history}
-              render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSD} />}
-            />
-            <TermsGuardedRoute path="/create/osdtrial/aws" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="aws" product={normalizedProducts.OSDTrial} />} history={history} />
-            <TermsGuardedRoute path="/create/osdtrial/gcp" gobackPath="/create/osdtrial" render={() => <CreateOSDPage cloudProviderID="gcp" product={normalizedProducts.OSDTrial} />} history={history} />
-            <TermsGuardedRoute path="/create/osdtrial" gobackPath="/create" render={() => <GatedCreationWizard product={normalizedProducts.OSDTrial} />} history={history} />
-            <TermsGuardedRoute path="/create/osd" gobackPath="/create" render={() => <GatedCreationWizard product={normalizedProducts.OSD} />} history={history} />
+            <Redirect from="/create/osd/aws" to="/create/osd" />
+            <Redirect from="/create/osd/gcp" to="/create/osd" />
+            <Redirect from="/create/osdtrial/aws" to="/create/osdtrial" />
+            <Redirect from="/create/osdtrial/gcp" to="/create/osdtrial" />
+            <TermsGuardedRoute path="/create/osdtrial" gobackPath="/create" render={() => <CreateOSDWizard product={normalizedProducts.OSDTrial} />} history={history} />
+            <TermsGuardedRoute path="/create/osd" gobackPath="/create" render={() => <CreateOSDWizard product={normalizedProducts.OSD} />} history={history} />
             <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
             <TermsGuardedRoute path="/create/rosa/welcome" history={history} render={() => <CreateROSAWelcome />} />
-            {/* TODO: ROSA product is not OSD! */}
-            <TermsGuardedRoute path="/create/rosa/wizard" history={history} component={CreateROSAWizard} />
+            <TermsGuardedRoute path="/create/rosa/wizard" history={history} component={GatedRosaCreationWizard} />
             <Route path="/create" component={CreateClusterPage} />
             <Route path="/details/s/:id/insights/:reportId/:errorKey" component={InsightsAdvisorRedirector} />
             <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />

@@ -32,7 +32,7 @@ import links, {
   architectureOptions,
   githubReleasesToFetch,
   urlsSelector,
-} from '../../../common/installLinks';
+} from '../../../common/installLinks.mjs';
 import DevPreviewBadge from '../../common/DevPreviewBadge';
 
 import DownloadButton from '../../clusters/install/instructions/components/DownloadButton';
@@ -229,7 +229,7 @@ const ExpandableRowPair = ({
   return (
     <Tbody isExpanded={isExpanded} ref={get(toolRefs, expandKey)}>
       <Tr>
-        <Td expand={{ isExpanded, onToggle }} />
+        <Td expand={{ isExpanded, onToggle, rowIndex: 0 }} />
         {cells}
       </Tr>
       <Tr isExpanded={isExpanded}>
@@ -388,7 +388,7 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             Manage your Red Hat OpenShift Service on AWS (ROSA) clusters
             from the command line using the ROSA client for OCM and AWS APIs.
             {' '}
-            <ExternalLink href={links.ROSA_DOCS}>
+            <ExternalLink href={links.ROSA_CLI_DOCS}>
               Get started
             </ExternalLink>
           </Text>
@@ -415,6 +415,29 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
             .
             {' '}
             <ExternalLink href={links.KN_DOCS}>Learn more</ExternalLink>
+          </Text>
+        )}
+      />
+
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.TKN}
+        channel={channels.STABLE}
+        name={(
+          <>
+            Tekton command-line interface for OpenShift Pipelines (
+            <code>tkn</code>
+            )
+          </>
+        )}
+        description={(
+          <Text>
+            Manage and interact with CI pipelines on OpenShift Container Platform
+            {' '}
+            with the Tekton CLI for OpenShift Pipelines.
+            {' '}
+            <ExternalLink href={links.TKN_DOCS}>Get started</ExternalLink>
+
           </Text>
         )}
       />
@@ -670,7 +693,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         channel={channels.STABLE}
         name={(
           <>
-            CodeReady Containers (
+            OpenShift Local (
             <code>crc</code>
             )
           </>
@@ -678,7 +701,7 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         description={(
           <TextContent>
             <Text>
-              Download and open the CodeReady Containers file to automatically start
+              Download and open the OpenShift Local file to automatically start
               a step-by-step installation guide.
             </Text>
             <Text>

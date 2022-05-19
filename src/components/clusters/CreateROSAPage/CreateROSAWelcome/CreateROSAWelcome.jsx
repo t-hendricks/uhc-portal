@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 import ExternalLink from '../../../common/ExternalLink';
 import { scrollToTop } from '../../../../common/helpers';
-import { tools, channels } from '../../../../common/installLinks';
+import installLinks, { tools, channels } from '../../../../common/installLinks.mjs';
 import Instruction from '../../../common/Instruction';
 import InstructionCommand from '../../../common/InstructionCommand';
 import Instructions from '../../../common/Instructions';
@@ -101,7 +101,7 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                     Before getting started, please review the prerequisites found in the
                     documentation at
                     {' '}
-                    <ExternalLink href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-aws-prereqs.html">
+                    <ExternalLink href={installLinks.ROSA_AWS_PREREQUISITES}>
                       AWS Prerequisites for ROSA
                     </ExternalLink>
                     .
@@ -143,11 +143,7 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                       <strong>PATH</strong>
                       .
                       {' '}
-                      <ExternalLink
-                        href="https://docs.openshift.com/rosa/rosa_getting_started/rosa-installing-rosa.html"
-                      >
-                        Help
-                      </ExternalLink>
+                      <ExternalLink href={installLinks.ROSA_INSTALLING}>Help</ExternalLink>
                     </Text>
                     <Text component={TextVariants.p}>
                       <DownloadAndOSSelection
@@ -160,7 +156,7 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                     <Text component={TextVariants.p} className="ocm-secondary-text">
                       Note: If you haven’t done so already, also
                       {' '}
-                      <ExternalLink href="https://aws.amazon.com/cli/">
+                      <ExternalLink href={installLinks.AWS_CLI}>
                         install the AWS CLI
                       </ExternalLink>
                       {' '}
@@ -283,22 +279,18 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                       </ExternalLink>
                       , browse the
                       {' '}
-                      <ExternalLink href="https://docs.openshift.com/rosa/welcome/index.html">
+                      <ExternalLink href={installLinks.ROSA_DOCS_ENTRY}>
                         ROSA documentation
                       </ExternalLink>
                       , view the
                       {' '}
-                      <ExternalLink
-                        href="https://docs.openshift.com/rosa/rosa_policy/rosa-service-definition.html"
-                      >
+                      <ExternalLink href={installLinks.ROSA_SERVICE_DEFINITION}>
                         ROSA Service Definition
                       </ExternalLink>
                       {' '}
                       or
                       {' '}
-                      <ExternalLink
-                        href="https://docs.openshift.com/rosa/rosa_policy/rosa-policy-responsibility-matrix.html"
-                      >
+                      <ExternalLink href={installLinks.ROSA_RESPONSIBILITY_MATRIX}>
                         Responsibility Assignment Matrix
                       </ExternalLink>
                       .

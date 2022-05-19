@@ -6,9 +6,10 @@ exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
   label="compute nodes"
 >
   <FormSelect
-    aria-label="Worker nodes"
+    aria-label="Compute nodes"
     className="quota-dropdown"
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     name="compute-nodes"
     onBlur={[Function]}
@@ -28,7 +29,7 @@ exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
     × 3 zones =
      
      
-    worker nodes
+    compute nodes
   </span>
 </FormGroup>
 `;
@@ -39,9 +40,10 @@ exports[`<NodeCountInput> Multi AZ renders with some quota 1`] = `
   label="compute nodes"
 >
   <FormSelect
-    aria-label="Worker nodes"
+    aria-label="Compute nodes"
     className="quota-dropdown"
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     name="compute-nodes"
     onBlur={[Function]}
@@ -66,7 +68,7 @@ exports[`<NodeCountInput> Multi AZ renders with some quota 1`] = `
     × 3 zones =
      
      
-    worker nodes
+    compute nodes
   </span>
 </FormGroup>
 `;
@@ -77,9 +79,10 @@ exports[`<NodeCountInput> Single AZ BYOC and is editing a machine pool renders e
   label="compute nodes"
 >
   <FormSelect
-    aria-label="Worker nodes"
+    aria-label="Compute nodes"
     className="quota-dropdown"
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     name="compute-nodes"
     onBlur={[Function]}
@@ -104,9 +107,10 @@ exports[`<NodeCountInput> Single AZ BYOC and is editing cluster renders enabled 
   label="compute nodes"
 >
   <FormSelect
-    aria-label="Worker nodes"
+    aria-label="Compute nodes"
     className="quota-dropdown"
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     name="compute-nodes"
     onBlur={[Function]}
@@ -146,9 +150,10 @@ exports[`<NodeCountInput> Single AZ BYOC renders with quota granted but insuffic
   >
     <div>
       <FormSelect
-        aria-label="Worker nodes"
+        aria-label="Compute nodes"
         className="quota-dropdown"
         isDisabled={true}
+        isIconSprite={false}
         isRequired={false}
         name="compute-nodes"
         onBlur={[Function]}
@@ -175,9 +180,10 @@ exports[`<NodeCountInput> Single AZ renders with extremely high quota (should on
   label="compute nodes"
 >
   <FormSelect
-    aria-label="Worker nodes"
+    aria-label="Compute nodes"
     className="quota-dropdown"
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     name="compute-nodes"
     onBlur={[Function]}
@@ -1082,9 +1088,10 @@ exports[`<NodeCountInput> Single AZ renders with no quota 1`] = `
   label="compute nodes"
 >
   <FormSelect
-    aria-label="Worker nodes"
+    aria-label="Compute nodes"
     className="quota-dropdown"
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     name="compute-nodes"
     onBlur={[Function]}
@@ -1109,9 +1116,10 @@ exports[`<NodeCountInput> Single AZ renders with some quota 1`] = `
   label="compute nodes"
 >
   <FormSelect
-    aria-label="Worker nodes"
+    aria-label="Compute nodes"
     className="quota-dropdown"
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     name="compute-nodes"
     onBlur={[Function]}
@@ -1186,9 +1194,10 @@ exports[`<NodeCountInput> scaling dialog behavior multiAz renders with no quota 
   label="compute nodes"
 >
   <FormSelect
-    aria-label="Worker nodes"
+    aria-label="Compute nodes"
     className="quota-dropdown"
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     name="compute-nodes"
     onBlur={[Function]}
@@ -1213,7 +1222,7 @@ exports[`<NodeCountInput> scaling dialog behavior multiAz renders with no quota 
     × 3 zones =
      
      
-    worker nodes
+    compute nodes
   </span>
 </FormGroup>
 `;
@@ -1224,9 +1233,10 @@ exports[`<NodeCountInput> scaling dialog behavior singleAZ renders with no quota
   label="compute nodes"
 >
   <FormSelect
-    aria-label="Worker nodes"
+    aria-label="Compute nodes"
     className="quota-dropdown"
     isDisabled={false}
+    isIconSprite={false}
     isRequired={false}
     name="compute-nodes"
     onBlur={[Function]}

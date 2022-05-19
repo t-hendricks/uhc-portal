@@ -56,6 +56,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
             <Tabs
               activeKey={0}
               component="div"
+              hasBorderBottom={true}
               inset={
                 Object {
                   "2xl": "insetLg",
@@ -71,6 +72,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
               leftScrollAriaLabel="Scroll left"
               mountOnEnter={false}
               onSelect={[Function]}
+              onToggle={[Function]}
               ouiaSafe={true}
               rightScrollAriaLabel="Scroll right"
               unmountOnExit={false}

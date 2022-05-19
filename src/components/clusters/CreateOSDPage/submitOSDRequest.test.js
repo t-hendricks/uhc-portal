@@ -110,6 +110,8 @@ describe('createClusterRequest', () => {
     });
   };
 
+  // TODO: this can be removed, but some scenarios tested here e.g. gcpVPCData
+  //   are worth moving to wizards tests?
   describe('CreateOSDForm', () => {
     // Form gets `product` prop affecting *initial* values for several fields notably
     // `billing_model` & `product`.  The final choice is in the field.

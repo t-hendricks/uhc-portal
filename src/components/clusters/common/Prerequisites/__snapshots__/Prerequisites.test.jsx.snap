@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Prerequisites/> <Prerequisites initiallyExpanded="false" acknowledgementRequired="true"/> 1`] = `
+<Fragment>
+  <ExpandableSection
+    className="prerequisites-expandable-section"
+    contentId=""
+    displaySize="default"
+    isActive={false}
+    isDetached={false}
+    isExpanded={false}
+    isIndented={false}
+    isWidthLimited={false}
+    onToggle={[Function]}
+    toggleText="Prerequisites"
+    toggleTextCollapsed=""
+    toggleTextExpanded=""
+  >
+    <div
+      className="prerequisites-section"
+    >
+      <TextContent>
+        <Text
+          className="ocm-secondary-text"
+          component="p"
+        >
+          Before continuing, confirm that all prerequisites are met:
+        </Text>
+      </TextContent>
+    </div>
+  </ExpandableSection>
+  <AcknowledgePrerequisites />
+</Fragment>
+`;
+
+exports[`<Prerequisites/> <Prerequisites initiallyExpanded="true" acknowledgementRequired="false"/> 1`] = `
+<Prerequisites
+  initiallyExpanded={true}
+>
+  <ExpandableSection
+    className="prerequisites-expandable-section"
+    contentId=""
+    displaySize="default"
+    isActive={false}
+    isDetached={false}
+    isExpanded={true}
+    isIndented={false}
+    isWidthLimited={false}
+    onToggle={[Function]}
+    toggleText="Prerequisites"
+    toggleTextCollapsed=""
+    toggleTextExpanded=""
+  >
+    <div
+      className="pf-c-expandable-section pf-m-expanded prerequisites-expandable-section"
+    >
+      <button
+        aria-expanded={true}
+        className="pf-c-expandable-section__toggle"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="pf-c-expandable-section__toggle-icon"
+        >
+          <AngleRightIcon
+            aria-hidden={true}
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          >
+            <svg
+              aria-hidden={true}
+              aria-labelledby={null}
+              fill="currentColor"
+              height="1em"
+              role="img"
+              style={
+                Object {
+                  "verticalAlign": "-0.125em",
+                }
+              }
+              viewBox="0 0 256 512"
+              width="1em"
+            >
+              <path
+                d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
+              />
+            </svg>
+          </AngleRightIcon>
+        </span>
+        <span
+          className="pf-c-expandable-section__toggle-text"
+        >
+          Prerequisites
+        </span>
+      </button>
+      <div
+        className="pf-c-expandable-section__content"
+        hidden={false}
+        id=""
+      >
+        <div
+          className="prerequisites-section"
+        >
+          <TextContent>
+            <div
+              className="pf-c-content"
+            >
+              <Text
+                className="ocm-secondary-text"
+                component="p"
+              >
+                <p
+                  className="ocm-secondary-text"
+                  data-ouia-component-id="OUIA-Generated-Text-1"
+                  data-ouia-component-type="PF4/Text"
+                  data-ouia-safe={true}
+                  data-pf-content={true}
+                >
+                  Before continuing, confirm that all prerequisites are met:
+                </p>
+              </Text>
+            </div>
+          </TextContent>
+        </div>
+      </div>
+    </div>
+  </ExpandableSection>
+</Prerequisites>
+`;
+
+exports[`<Prerequisites/> <Prerequisites toggleText="Cluster Prerequisites"/> 1`] = `
+<Fragment>
+  <ExpandableSection
+    className="prerequisites-expandable-section"
+    contentId=""
+    displaySize="default"
+    isActive={false}
+    isDetached={false}
+    isExpanded={false}
+    isIndented={false}
+    isWidthLimited={false}
+    onToggle={[Function]}
+    toggleText="Cluster Prerequisites"
+    toggleTextCollapsed=""
+    toggleTextExpanded=""
+  >
+    <div
+      className="prerequisites-section"
+    />
+  </ExpandableSection>
+</Fragment>
+`;

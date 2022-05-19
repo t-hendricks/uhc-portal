@@ -15,7 +15,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
               Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
-                href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
+                href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -37,7 +37,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
       <SplitItem>
         <FormGroup
           className="autoscaling__nodes-formGroup"
-          fieldId="nodes_min_multiAZ"
+          fieldId="nodes_min"
           helperText={
             <HelperText>
               <HelperTextItem>
@@ -71,7 +71,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
       <SplitItem>
         <FormGroup
           className="autoscaling__nodes-formGroup"
-          fieldId="nodes_max_multiAZ"
+          fieldId="nodes_max"
           helperText={
             <HelperText>
               <HelperTextItem>
@@ -94,6 +94,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
             type="text"
             validate={
               Array [
+                [Function],
                 [Function],
                 [Function],
                 [Function],
@@ -122,7 +123,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale disabled 1`] = `
               Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
-                href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
+                href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -156,7 +157,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
               Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
-                href="https://docs.openshift.com/container-platform/latest/machine_management/applying-autoscaling.html"
+                href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -171,17 +172,23 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
       name="autoscalingEnabled"
       onChange={[Function]}
     />
-    <FormGroup
+    <Split
       className="autoscaling__container"
-      fieldId="nodes_limit"
-      isRequired={true}
-      label="Minimum and maximum node count"
+      hasGutter={true}
     >
-      <Split
-        hasGutter={true}
-      >
-        <SplitItem
+      <SplitItem>
+        <FormGroup
           className="autoscaling__nodes-formGroup"
+          fieldId="nodes_min"
+          helperText={
+            <HelperText>
+              <HelperTextItem>
+                minimum
+              </HelperTextItem>
+            </HelperText>
+          }
+          isRequired={true}
+          label="Minimum node count"
         >
           <Field
             ariaLabel="Minimum nodes"
@@ -201,14 +208,21 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
               ]
             }
           />
-          <HelperText>
-            <HelperTextItem>
-              minimum
-            </HelperTextItem>
-          </HelperText>
-        </SplitItem>
-        <SplitItem
+        </FormGroup>
+      </SplitItem>
+      <SplitItem>
+        <FormGroup
           className="autoscaling__nodes-formGroup"
+          fieldId="nodes_max"
+          helperText={
+            <HelperText>
+              <HelperTextItem>
+                maximum
+              </HelperTextItem>
+            </HelperText>
+          }
+          isRequired={true}
+          label="Maximum node count"
         >
           <Field
             ariaLabel="Maximum nodes"
@@ -225,17 +239,13 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
                 [Function],
                 [Function],
                 [Function],
+                [Function],
               ]
             }
           />
-          <HelperText>
-            <HelperTextItem>
-              maximum
-            </HelperTextItem>
-          </HelperText>
-        </SplitItem>
-      </Split>
-    </FormGroup>
+        </FormGroup>
+      </SplitItem>
+    </Split>
   </GridItem>
 </Fragment>
 `;

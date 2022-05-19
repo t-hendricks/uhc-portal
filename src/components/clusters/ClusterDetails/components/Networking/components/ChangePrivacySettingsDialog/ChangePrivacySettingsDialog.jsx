@@ -4,6 +4,7 @@ import {
   Form, Alert, Stack, StackItem,
 } from '@patternfly/react-core';
 
+import links from '../../../../../../../common/installLinks.mjs';
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
 
@@ -42,11 +43,7 @@ class ChangePrivacySettingsDialog extends React.Component {
     const text = `Changing the cluster's privacy settings may cause you to lose access to the cluster. Changes may be required in ${cloudProvider} to maintain access. 
                   It may take up to one hour for the settings to become effective.`;
     const learnMore = (
-      <a
-        href="https://docs.openshift.com/dedicated/osd_private_connections/private-cluster.html"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a href={links.OSD_PRIVATE_CLUSTER} target="_blank" rel="noopener noreferrer">
         Learn more
       </a>
     );

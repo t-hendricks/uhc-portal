@@ -12,16 +12,13 @@ import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
 import UpgradeScheduleSelection from './UpgradeScheduleSelection';
 import PodDistruptionBudgetGraceSelect from './PodDistruptionBudgetGraceSelect';
 import './UpgradeSettingsFields.scss';
+import links from '../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
-
-import UpgradeAcknowledgeWarning from './UpgradeAcknowledge/UpgradeAcknowledgeWarning';
 
 function UpgradeSettingsFields({
   isDisabled, isAutomatic, showDivider, change, initialSceduleValue, product,
 }) {
   const isRosa = product === normalizedProducts.ROSA;
-  const osdLifeCycleLink = 'https://docs.openshift.com/dedicated/osd_policy/osd-life-cycle.html';
-  const rosaLifeCycleLink = 'https://docs.openshift.com/rosa/rosa_policy/rosa-life-cycle.html';
   return (
     <>
       <GridItem>
@@ -58,7 +55,7 @@ function UpgradeSettingsFields({
                   the
                   {' '}
                   <ExternalLink
-                    href={isRosa ? rosaLifeCycleLink : osdLifeCycleLink}
+                    href={isRosa ? links.ROSA_LIFE_CYCLE : links.OSD_LIFE_CYCLE}
                   >
                     lifecycle policy
                   </ExternalLink>
@@ -71,10 +68,29 @@ function UpgradeSettingsFields({
             {
               value: 'automatic',
               label: 'Recurring updates',
-              description: 'The cluster will be automatically updated based on your preferred day and start time when new versions are available.',
+              description: (
+                <>
+                  The cluster will be automatically updated based on your
+                  {' '}
+                  preferred day and start time when new patch updates
+                  {' '}
+                  (
+                  <ExternalLink
+                    href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}
+                  >
+                    z-stream
+                  </ExternalLink>
+                  )
+                  {' '}
+                  are available. When a new minor version is available,
+                  {' '}
+                  you'll be notified and must manually allow the cluster
+                  {' '}
+                  {' '}
+                  to update to the next minor version.
+                </>),
               extraField: isAutomatic && (
                 <>
-                  <UpgradeAcknowledgeWarning />
                   <Field
                     component={UpgradeScheduleSelection}
                     name="automatic_upgrade_schedule"

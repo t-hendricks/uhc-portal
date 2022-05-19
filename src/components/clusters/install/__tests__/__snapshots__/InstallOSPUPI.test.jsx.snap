@@ -53,9 +53,9 @@ exports[`InstallOSPUPI renders correctly 1`] = `
       }
       channel="stable"
       cloudProviderID="openstack"
-      customizations="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-installer-custom.html"
+      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-installer-custom.html"
       displayRHCOSSection={true}
-      docURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-user.html"
+      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-user.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
       rhcosDownloads={
@@ -63,11 +63,11 @@ exports[`InstallOSPUPI renders correctly 1`] = `
           Object {
             "buttonText": "Download RHCOS QCOW",
             "name": "OCP-Download-RHCOS-QCOW",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/rhcos-openstack.x86_64.qcow2.gz",
+            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-openstack.x86_64.qcow2.gz",
           },
         ]
       }
-      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/latest/installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user"
+      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user"
       title="Install OpenShift on Red Hat OpenStack Platform with user-provisioned infrastructure"
       token={Object {}}
     />

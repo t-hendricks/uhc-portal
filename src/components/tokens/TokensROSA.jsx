@@ -24,13 +24,15 @@ import {
 } from '@patternfly/react-core';
 import ExternalLink from '../common/ExternalLink';
 import Tokens from './Tokens';
-import links from '../../common/installLinks';
+import links, { tools } from '../../common/installLinks.mjs';
 
 // The <TokensROSA> component inherits from the <Tokens> component. This may
 // cause breakage if ever we change the <Tokens> component heavily, but in the
 // meantime prevents unnecessary code duplication with minimal effort.
 class TokensROSA extends Tokens {
   commandName = 'rosa'
+
+  commandTool = tools.ROSA
 
   // Some methods here don't use `this`, but we can't convert to Class.method() calls,
   // wouldn't allow TokensROSA which inhertis from Tokens to override them.
@@ -54,16 +56,8 @@ class TokensROSA extends Tokens {
 
   docsLink() {
     return (
-      <ExternalLink href={links.ROSA_DOCS} noIcon>
+      <ExternalLink href={links.ROSA_CLI_DOCS} noIcon>
         read more about setting up the rosa CLI
-      </ExternalLink>
-    );
-  }
-
-  downloadLink() {
-    return (
-      <ExternalLink href={links.ROSA_CLIENT_LATEST} noIcon>
-        rosa command-line tool
       </ExternalLink>
     );
   }

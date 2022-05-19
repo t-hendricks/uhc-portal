@@ -13,7 +13,7 @@ import {
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
 import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
-import links, { tools, channels } from '../../../common/installLinks';
+import links, { tools, channels } from '../../../common/installLinks.mjs';
 import Instruction from '../../common/Instruction';
 import Instructions from '../../common/Instructions';
 import PullSecretSection from '../install/instructions/components/PullSecretSection';
@@ -27,7 +27,7 @@ const LocalTab = ({ token }) => (
     <PageSection>
       <Split hasGutter>
         <Title headingLevel="h2">
-          Red Hat CodeReady Containers
+          Red Hat OpenShift Local
         </Title>
         <SplitItem>
           <Label variant="outline">
@@ -41,7 +41,7 @@ const LocalTab = ({ token }) => (
         </Text>
         <Text component="p" className="ocm-secondary-text">
           <b>Note: </b>
-          Your CodeReady installation won&apos;t appear in the OpenShift Cluster Manager
+          Your Openshift Local installation won&apos;t appear in the OpenShift Cluster Manager
           unless you enable cluster monitoring and telemetry.
         </Text>
       </TextContent>
@@ -55,7 +55,7 @@ const LocalTab = ({ token }) => (
       <Instructions>
         <Instruction>
           <Text component="h3">Download what you need to get started</Text>
-          <Text component="h4">CodeReady Containers</Text>
+          <Text component="h4">OpenShift Local</Text>
           <DownloadAndOSSelection
             token={token}
             tool={tools.CRC}
@@ -67,15 +67,15 @@ const LocalTab = ({ token }) => (
         </Instruction>
         <Instruction>
           <Text component="h3">
-            Follow the documentation to install CodeReady containers
+            Follow the documentation to install OpenShift Local
           </Text>
           <Text component="p">
             Run
             {' '}
             <code>crc setup</code>
             {' '}
-            to set up your host operating system for the CodeReady
-            Containers virtual machine.
+            to set up your host operating system for the OpenShift
+            Local virtual machine.
           </Text>
           <Text component="p">
             Then, run
@@ -92,7 +92,7 @@ const LocalTab = ({ token }) => (
               variant="link"
               onClick={() => trackPendo('OCP-Download-OfficialDocumentation', pendoID)}
             >
-              View the CodeReady Containers Getting started guide
+              View the OpenShift Local Getting started guide
               {' '}
               <ExternalLinkAltIcon color="#0066cc" size="sm" />
             </a>

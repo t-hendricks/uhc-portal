@@ -15,7 +15,7 @@ import PageTitle from '../../common/PageTitle';
 export class InstallAlibaba extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Alibaba';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Alibaba Cloud';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -27,7 +27,7 @@ export class InstallAlibaba extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'Alibaba' },
+        { label: 'Alibaba Cloud' },
       ]}
       />
     );

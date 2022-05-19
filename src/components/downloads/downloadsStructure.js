@@ -1,4 +1,4 @@
-import { tools } from '../../common/installLinks';
+import { tools } from '../../common/installLinks.mjs';
 
 /** Used to track row collapsed/expanded state, and also for URLs linking to specific row. */
 export const expandKeys = {
@@ -16,7 +16,7 @@ export const downloadsCategories = [
   {
     key: 'CLI',
     title: 'Command-line interface (CLI) tools',
-    tools: [tools.OC, tools.OCM, tools.ROSA, tools.KN],
+    tools: [tools.OC, tools.OCM, tools.ROSA, tools.KN, tools.TKN],
   },
   {
     key: 'DEV',

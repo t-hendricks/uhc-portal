@@ -13,7 +13,7 @@ import DownloadAndOSSelection from './DownloadAndOSSelection';
 import CLISection from './CLISection';
 import RHCOSSection from './RHCOSSection/RHCOSSection';
 import DeveloperPreviewSection from './DeveloperPreviewSection';
-import links, { tools, channels } from '../../../../../common/installLinks';
+import links, { tools, channels } from '../../../../../common/installLinks.mjs';
 
 function DownloadsAndPullSecretSection({
   displayRHCOSSection = false,
