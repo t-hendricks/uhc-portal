@@ -16,6 +16,7 @@ const ExternalLink = ({
   return (
     <a href={href} target={target} rel="noreferrer noopener" className={className}>
       {children}
+      {noTarget ? null : (<span className="pf-u-screen-reader"> (new window or tab)</span>)}
       {!noIcon && (
         <>
           {' '}
