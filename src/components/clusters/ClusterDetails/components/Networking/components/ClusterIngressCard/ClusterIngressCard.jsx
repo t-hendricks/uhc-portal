@@ -43,7 +43,7 @@ class ClusterIngressCard extends React.Component {
       'This operation is not available while cluster is hibernating'
     );
     const canNotEditReason = !canEdit && (
-      'You do not have permission to edit routers. Only cluster owners, cluster editors, and organization administrators can edit routers.'
+      'You do not have permission to edit routers. Only cluster owners, cluster editors, and Organization Administrators can edit routers.'
     );
     return STSEnabledReason || readOnlyReason || hibernatingReason || canNotEditReason;
   }
