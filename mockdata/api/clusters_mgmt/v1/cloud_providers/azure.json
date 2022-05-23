@@ -1,0 +1,7 @@
+{
+  "kind": "CloudProvider",
+  "id": "azure",
+  "href": "/api/clusters_mgmt/v1/cloud_providers/azure",
+  "name": "azure",
+  "display_name": "Azure"
+}
