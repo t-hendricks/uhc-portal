@@ -32,7 +32,6 @@ function ReviewClusterScreen({
   const showVPCCheckbox = isROSA || isByoc;
   const clusterSettingsFields = [
     'cloud_provider', 'name',
-    isROSA && 'operator_roles_name',
     'cluster_version', 'region', 'multi_az',
     !isByoc && !isROSA && 'persistent_storage',
     !isByoc && isROSA && 'load_balancers',
@@ -112,6 +111,12 @@ function ReviewClusterScreen({
         {ReviewItem({ name: 'network_pod_cidr', formValues })}
         {ReviewItem({ name: 'network_host_prefix', formValues })}
       </ReviewSection>
+      {isROSA && (
+        <ReviewSection title="Cluster roles and policies">
+          {ReviewItem({ name: 'rosa_roles_provider_creation_mode', formValues })}
+          {ReviewItem({ name: 'custom_operator_roles_prefix', formValues })}
+        </ReviewSection>
+      )}
       <ReviewSection title="Updates">
         {ReviewItem({ name: 'upgrade_policy', formValues })}
         {formValues.upgrade_policy === 'automatic' && ReviewItem({ name: 'automatic_upgrade_schedule', formValues })}

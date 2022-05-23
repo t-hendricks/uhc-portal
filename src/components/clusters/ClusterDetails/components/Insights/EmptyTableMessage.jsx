@@ -163,7 +163,7 @@ export const ErrorMessage = () => {
       {' '}
       If the problem persists,
       {' '}
-      contact your organization administrator or visit our
+      contact your Organization Administrator or visit our
       {' '}
       <a target="_blank" rel="noopener noreferrer" href="https://status.redhat.com/">status page</a>
       {' '}

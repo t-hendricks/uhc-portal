@@ -61,7 +61,7 @@ function BillingModelSection({
       <p>
         <Popover
           position={PopoverPosition.right}
-          headerContent="On-demand subscription"
+          headerContent="On-Demand subscription"
           bodyContent={(
             <>
               <p>Billing based on cluster consumption and charged via Red Hat Marketplace.</p>
@@ -167,7 +167,7 @@ function BillingModelSection({
     {
       disabled: marketplaceDisabled,
       value: billingModels.MARKETPLACE,
-      label: 'On-demand: Flexible usage billed through the Red Hat Marketplace',
+      label: 'On-Demand: Flexible usage billed through the Red Hat Marketplace',
       description: marketplaceDisabled
         ? marketplaceDisabledDescription : marketplaceQuotaDescription,
     },

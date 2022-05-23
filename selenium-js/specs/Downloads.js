@@ -3,7 +3,8 @@ import GlobalNav from '../pageobjects/GlobalNav.page';
 import Downloads from '../pageobjects/Downloads.page';
 
 describe('Downloads page', async () => {
-  it('login and navigate to downloads', async () => {
+  // eslint-disable-next-line no-undef
+  before(async () => {
     await LoginPage.open();
     await LoginPage.login();
     await GlobalNav.navigateTo('Downloads');

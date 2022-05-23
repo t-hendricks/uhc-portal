@@ -62,6 +62,7 @@ const links = {
   OSD_CCS_AWS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html`,
   OSD_CCS_AWS_LIMITS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#aws-limits_aws-ccs`,
   OSD_CCS_AWS_SCP: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#ccs-aws-scp_aws-ccs`,
+  OSD_CCS_AWS_CUSTOMER_REQ: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#ccs-aws-customer-requirements_aws-ccs`,
   OSD_CCS_GCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html`,
   OSD_CCS_GCP_LIMITS: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#gcp-limits_gcp-ccs`,
   OSD_CCS_GCP_SCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#ccs-gcp-customer-procedure_gcp-ccs`,
@@ -200,8 +201,10 @@ const links = {
 
   ROSA_AWS_STS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html`,
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
+  ROSA_AWS_MULTIPLE_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-multiple-account_rosa-sts-aws-prereqs`,
   ROSA_AWS_SERVICE_QUOTAS: `${ROSA_DOCS_BASE}/rosa_getting_started/rosa-sts-required-aws-service-quotas.html`,
   ROSA_AWS_ACCOUNT_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-understanding-ocm-role_rosa-sts-about-iam-resources`,
+  ROSA_AWS_OPERATOR_ROLE_PREFIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-about-operator-role-prefixes_rosa-sts-about-iam-resources`,
   AWS_CONSOLE: 'https://console.aws.amazon.com/rosa/home',
   AWS_CLI: 'https://aws.amazon.com/cli/',
 
@@ -214,6 +217,8 @@ const links = {
   COSTMGMT_ADDING_OCP: `${COSTMGMT_DOCS_BASE}/html/adding_an_openshift_container_platform_source_to_cost_management/assembly-adding-openshift-container-platform-source`,
 
   FINDING_AWS_ACCOUNT_IDENTIFIERS: 'https://docs.aws.amazon.com/general/latest/gr/acct-identifiers.html',
+  OSD_Z_STREAM: `${OSD_DOCS_BASE}/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle`,
+  ROSA_Z_STREAM: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-life-cycle.html#rosa-patch-versions_rosa-life-cycle`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.

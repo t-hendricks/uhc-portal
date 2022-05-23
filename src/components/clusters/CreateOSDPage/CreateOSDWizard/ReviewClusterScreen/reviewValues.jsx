@@ -36,7 +36,7 @@ const reviewValues = {
     title: 'Subscription type',
     values: {
       [billingModels.STANDARD]: 'Annual: Fixed capacity subscription from Red Hat',
-      [billingModels.MARKETPLACE]: 'On-demand: Flexible usage billed through the Red Hat Marketplace',
+      [billingModels.MARKETPLACE]: 'On-Demand: Flexible usage billed through the Red Hat Marketplace',
       'standard-trial': 'Free trial (upgradeable)',
     },
   },
@@ -49,7 +49,7 @@ const reviewValues = {
     },
   },
   disable_scp_checks: {
-    title: 'AWS Service Control Policy (SCP) checks',
+    title: 'AWS service control policy (SCP) checks',
     valueTransform: value => (value ? 'Disabled' : 'Enabled'),
   },
   cloud_provider: {
@@ -59,9 +59,12 @@ const reviewValues = {
   name: {
     title: 'Cluster name',
   },
-  operator_roles_name: {
-    title: 'Operator roles name preview',
-    valueTransform: (value, allValues) => `${allValues.name}-${allValues.custom_operator_roles_prefix || '<hash>'}`,
+  rosa_roles_provider_creation_mode: {
+    title: 'Operator roles and OIDC provider mode',
+  },
+  custom_operator_roles_prefix: {
+    title: 'Operator roles prefix',
+    valueTransform: (value, allValues) => `${allValues.name}-${value}`,
   },
   cluster_version: {
     title: 'Version',
@@ -340,10 +343,10 @@ const reviewValues = {
     title: 'Installer role',
   },
   support_role_arn: {
-    title: 'Support Role ARN',
+    title: 'Support role ARN',
   },
   worker_role_arn: {
-    title: 'Worker role',
+    title: 'Compute role',
   },
   control_plane_role_arn: {
     title: 'Control plane role',

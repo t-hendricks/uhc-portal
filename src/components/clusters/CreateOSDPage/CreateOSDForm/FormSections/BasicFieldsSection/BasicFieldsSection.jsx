@@ -138,7 +138,6 @@ function BasicFieldsSection({
               isRequired
               isInline
               fieldId="availability-toggle"
-              labelIcon={<PopoverHint hint={constants.availabilityHint} />}
             >
               <Field
                 component={RadioButtons}
@@ -151,12 +150,15 @@ function BasicFieldsSection({
                     label: 'Single zone',
                     disabled: !hasSingleAzQuota,
                     tooltipText: singleAzTooltip,
+                    extendedHelpText: constants.availabilityHintSingleZone,
+
                   },
                   {
                     value: 'true',
                     label: 'Multizone',
                     disabled: !hasMultiAzQuota,
                     tooltipText: multiAzTooltip,
+                    extendedHelpText: constants.availabilityHintMultiZone,
                   },
                 ]}
                 defaultValue={hasSingleAzQuota ? 'false' : 'true'}

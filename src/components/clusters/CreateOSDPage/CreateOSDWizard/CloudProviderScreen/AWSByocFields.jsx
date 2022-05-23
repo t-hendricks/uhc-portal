@@ -1,8 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+
 import {
-  Alert, GridItem, TextContent, Title, TextVariants, Text,
+  Alert,
+  GridItem,
+  Text,
+  TextVariants,
+  TextContent,
+  Title,
 } from '@patternfly/react-core';
+
 import links from '../../../../../common/installLinks.mjs';
 import ExternalLink from '../../../../common/ExternalLink';
 import AWSAccountDetailsSection from '../../CreateOSDForm/FormSections/AWSAccountDetailsSection';
@@ -21,7 +28,7 @@ function AWSByocFields({ isValidating }) {
         <Title headingLevel="h3">AWS account details</Title>
       </GridItem>
       <GridItem>
-        <Prerequisites acknowledgementRequired>
+        <Prerequisites acknowledgementRequired initiallyExpanded>
           <TextContent>
             <Text component={TextVariants.p} className="ocm-secondary-text">
               Successful cluster provisioning requires that:
@@ -49,8 +56,8 @@ function AWSByocFields({ isValidating }) {
               </li>
               <li>
                 <Text component={TextVariants.p} className="ocm-secondary-text">
-                  An Organization Service Control Policy (SCP) is set up according
-                  to the requirements for customer cloud subscriptions.
+                  An Organization service control policy (SCP) is set up according
+                  to the requirements for Customer Cloud Subscriptions.
                 </Text>
               </li>
             </ul>
@@ -58,8 +65,8 @@ function AWSByocFields({ isValidating }) {
               Business Support for AWS is also recommended.
               For more guidance, see the
               {' '}
-              <ExternalLink href={links.OSD_CCS_AWS}>
-                customer cloud subscription requirements
+              <ExternalLink href={links.OSD_CCS_AWS_CUSTOMER_REQ}>
+                Customer Cloud Subscription requirements
               </ExternalLink>
               .
             </Text>

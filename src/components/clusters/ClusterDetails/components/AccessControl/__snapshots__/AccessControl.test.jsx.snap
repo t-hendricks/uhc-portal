@@ -10,6 +10,7 @@ exports[`<AccessControl /> should render 1`] = `
       activeKey={0}
       className=""
       component="div"
+      hasBorderBottom={true}
       isBox={false}
       isFilled={false}
       isSecondary={false}

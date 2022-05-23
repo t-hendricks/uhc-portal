@@ -33,7 +33,7 @@
     }
   },
   "gcp": {
-    "master_instance_type": "custom-4-16384",
+    "master_instance_type": "custom-8-32768",
     "compute_instance_type": "custom-4-16384",
     "infra_instance_type": "custom-4-32768-ext"
   }

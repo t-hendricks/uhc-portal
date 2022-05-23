@@ -19,18 +19,22 @@ function AccountRolesARNsSection({
   change,
   touchARNsFields,
   selectedAWSAccountID,
+  selectedInstallerRoleARN,
   getAWSAccountRolesARNs,
   getAWSAccountRolesARNsResponse,
   clearGetAWSAccountRolesARNsResponse,
 }) {
+  const NO_ROLE_DETECTED = 'No role detected';
+
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
-  const [installerRoleOptions, setInstallerRoleOptions] = useState([]);
-  const [selectedInstallerRole, setSelectedInstallerRole] = useState('');
+  const [installerRoleOptions, setInstallerRoleOptions] = useState([{
+    name: NO_ROLE_DETECTED,
+    value: NO_ROLE_DETECTED,
+  }]);
+  const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
   const [allARNsFound, setAllARNsFound] = useState(false);
   const [awsARNsErrorBox, setAwsARNsErrorBox] = useState(null);
-
-  const NO_ROLE_DETECTED = 'No role detected';
 
   useEffect(() => {
     // this is required to show any validation error messages for the 4 disabled ARNs fields
@@ -53,31 +57,26 @@ function AccountRolesARNsSection({
     });
   }, [selectedInstallerRole]);
 
-  // update installer role dropdown everytime accountRoles change
-  useEffect(() => {
-    const installerOptions = [];
-    if (accountRoles.length === 0) {
-      installerOptions.push({
-        name: NO_ROLE_DETECTED,
-        value: NO_ROLE_DETECTED,
-      });
+  const setSelectedInstallerRoleAndOptions = (accountRolesARNs) => {
+    if (accountRolesARNs.length === 0) {
       change('installer_role_arn', NO_ROLE_DETECTED);
       change('support_role_arn', NO_ROLE_DETECTED);
       change('control_plane_role_arn', NO_ROLE_DETECTED);
       change('worker_role_arn', NO_ROLE_DETECTED);
-      setSelectedInstallerRole(NO_ROLE_DETECTED);
       setAllARNsFound(false);
     } else {
-      accountRoles.forEach((role) => {
+      const installerOptions = [];
+      accountRolesARNs.forEach((role) => {
         installerOptions.push({
           name: role.Installer,
           value: role.Installer,
         });
       });
-      setSelectedInstallerRole(accountRoles[0].Installer); // default to first installer role
+      setInstallerRoleOptions(installerOptions);
+      // default to currently selected or first installer role
+      setSelectedInstallerRole(selectedInstallerRoleARN || accountRolesARNs[0].Installer);
     }
-    setInstallerRoleOptions(installerOptions);
-  }, [accountRoles]);
+  };
 
   useEffect(() => {
     if (!getAWSAccountRolesARNsResponse.pending
@@ -88,6 +87,7 @@ function AccountRolesARNsSection({
       setAwsARNsErrorBox(null);
     } else if (getAWSAccountRolesARNsResponse.fulfilled) {
       const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []);
+      setSelectedInstallerRoleAndOptions(accountRolesARNs);
       setAccountRoles(accountRolesARNs);
     } else if (getAWSAccountRolesARNsResponse.error) {
       // display error
@@ -190,7 +190,7 @@ function AccountRolesARNsSection({
               <Field
                 component={ReduxVerticalFormGroup}
                 name="support_role_arn"
-                label="Support Role"
+                label="Support role"
                 type="text"
                 validate={roleARNRequired}
                 isRequired
@@ -233,6 +233,7 @@ AccountRolesARNsSection.propTypes = {
   change: PropTypes.func,
   touchARNsFields: PropTypes.func,
   selectedAWSAccountID: PropTypes.string,
+  selectedInstallerRoleARN: PropTypes.string,
   getAWSAccountRolesARNs: PropTypes.func.isRequired,
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
