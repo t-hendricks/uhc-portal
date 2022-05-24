@@ -20,7 +20,7 @@ export const machineCategories = {
   GENERAL_PURPOSE: { name: 'general_purpose', label: 'General purpose' },
   MEMORY_OPTIMIZED: { name: 'memory_optimized', label: 'Memory optimized' },
   COMPUTE_OPTIMIZED: { name: 'compute_optimized', label: 'Compute optimized' },
-  ACCELERATED_COMPUTING: { name: 'accelerated_computing', label: 'Accelated computing' },
+  ACCELERATED_COMPUTING: { name: 'accelerated_computing', label: 'Accelerated computing' },
 };
 
 const machineTypeLabel = (machineType) => {
