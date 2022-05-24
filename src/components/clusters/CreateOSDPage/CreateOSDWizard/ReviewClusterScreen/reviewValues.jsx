@@ -64,7 +64,6 @@ const reviewValues = {
   },
   custom_operator_roles_prefix: {
     title: 'Operator roles prefix',
-    valueTransform: (value, allValues) => `${allValues.name}-${value}`,
   },
   cluster_version: {
     title: 'Version',

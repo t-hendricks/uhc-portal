@@ -28,6 +28,16 @@ import validators from '../../../../../common/validators';
 import PopoverHint from '../../../../common/PopoverHint';
 import links from '../../../../../common/installLinks.mjs';
 
+export const createOperatorRolesHashPrefix = () => {
+  // random 4 alphanumeric hash
+  const prefixArray = Math.random().toString(36).substr(2, 4).split('');
+  // cannot start with a number
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)];
+  prefixArray[0] = randomCharacter;
+  return prefixArray.join('');
+};
+
 const roleModes = {
   MANUAL: 'manual',
   AUTO: 'auto',
@@ -46,21 +56,11 @@ function ClusterRolesScreen({
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
 
-  const createOperatorRolesHashPrefix = () => {
-    // random 4 alphanumeric hash
-    const prefixArray = Math.random().toString(36).substr(2, 4).split('');
-    // cannot start with a number
-    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    const randomCharacter = alphabet[Math.floor(Math.random() * alphabet.length)];
-    prefixArray[0] = randomCharacter;
-    return prefixArray.join('');
-  };
-
   useEffect(() => {
     if (!customOperatorRolesPrefix) {
-      change('custom_operator_roles_prefix', createOperatorRolesHashPrefix());
+      change('custom_operator_roles_prefix', `${clusterName}-${createOperatorRolesHashPrefix()}`);
     }
-  }, [customOperatorRolesPrefix]);
+  }, [customOperatorRolesPrefix, clusterName]);
 
   useEffect(() => {
     if (!rosaCreationMode && getOCMRoleResponse.fulfilled) {
@@ -197,24 +197,24 @@ function ClusterRolesScreen({
         <GridItem>
           <Title headingLevel="h3">Name operator roles</Title>
         </GridItem>
-        <GridItem>
+        <GridItem span={10}>
           <Text component={TextVariants.p}>
             To easily identify the Operator IAM roles for a cluster in your AWS account, the
             {' '}
             Operator role names are prefixed with your cluster name and a random 4-digit hash.
             {' '}
-            You can optionally replace the hash by entering a custom prefix.
+            You can optionally replace this prefix.
           </Text>
         </GridItem>
-        <GridItem span={4}>
+        <GridItem span={6}>
           <Field
             component={ReduxVerticalFormGroup}
             name="custom_operator_roles_prefix"
             label="Custom operator roles prefix"
             type="text"
             // eslint-disable-next-line import/no-named-as-default-member
-            validate={value => validators.checkCustomOperatorRolesPrefix(`${clusterName}-${value}`)}
-            helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  If not provided, a default hash will be generated.`}
+            validate={validators.checkCustomOperatorRolesPrefix}
+            helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
             extendedHelpText={(
               <TextContent>
                 <Text component={TextVariants.p}>
@@ -233,13 +233,6 @@ function ClusterRolesScreen({
             )}
             showHelpTextOnError={false}
           />
-        </GridItem>
-        <GridItem span={8} className="ocm-roles-prefix__preview">
-          <Text component={TextVariants.small} className="ocm-secondary-text">
-            Preview:
-            {' '}
-            <em>{`${clusterName}-${customOperatorRolesPrefix}`}</em>
-          </Text>
         </GridItem>
       </Grid>
     </Form>
