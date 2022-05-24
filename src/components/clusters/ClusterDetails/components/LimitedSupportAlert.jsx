@@ -15,10 +15,10 @@ function LimitedSupportAlert({
   return (
     <Alert
       id="limited-support-alert"
-      variant="warning"
+      variant="danger"
       className="pf-u-mt-md"
       isInline
-      isExpandable
+      isExpandable={limitedSupportReasons.length > 1}
       title={title}
     >
       <List isPlain>

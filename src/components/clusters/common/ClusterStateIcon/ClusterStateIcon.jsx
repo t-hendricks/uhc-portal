@@ -12,11 +12,10 @@ import {
   FolderOpenIcon,
   AsleepIcon,
   NotStartedIcon,
-  ExclamationTriangleIcon,
 } from '@patternfly/react-icons';
 
 // eslint-disable-next-line camelcase
-import { global_danger_color_100, global_success_color_100, global_warning_color_100 } from '@patternfly/react-tokens';
+import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
 import { Spinner } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
 
@@ -29,7 +28,7 @@ function ClusterStateIcon(props) {
   };
 
   if (limitedSupport && clusterState !== clusterStates.ERROR) {
-    return <ExclamationTriangleIcon color={global_warning_color_100.value} {...iconProps} />;
+    return <ExclamationCircleIcon color={global_danger_color_100.value} {...iconProps} />;
   }
 
   switch (clusterState) {

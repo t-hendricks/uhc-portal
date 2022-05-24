@@ -188,6 +188,9 @@ function ClusterDetailsTop(props) {
           </span>
         </SplitItem>
       </Split>
+
+      <LimitedSupportAlert limitedSupportReasons={cluster.limitedSupportReasons} />
+
       {showIDPMessage && (
       <Split>
         <SplitItem isFilled>
@@ -215,8 +218,6 @@ function ClusterDetailsTop(props) {
         OSDRHMExpiration
       />
       )}
-
-      <LimitedSupportAlert limitedSupportReasons={cluster.limitedSupportReasons} />
 
       <SubscriptionCompliancy
         cluster={cluster}
