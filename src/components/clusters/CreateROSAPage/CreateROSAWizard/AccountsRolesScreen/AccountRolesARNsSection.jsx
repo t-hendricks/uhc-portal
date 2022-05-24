@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import semver from 'semver';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Field } from 'redux-form';
@@ -20,6 +21,7 @@ function AccountRolesARNsSection({
   touchARNsFields,
   selectedAWSAccountID,
   selectedInstallerRoleARN,
+  rosaMaxOSVersion,
   getAWSAccountRolesARNs,
   getAWSAccountRolesARNsResponse,
   clearGetAWSAccountRolesARNsResponse,
@@ -53,6 +55,7 @@ function AccountRolesARNsSection({
         change('support_role_arn', role.Support || NO_ROLE_DETECTED);
         change('control_plane_role_arn', role.ControlPlane || NO_ROLE_DETECTED);
         change('worker_role_arn', role.Worker || NO_ROLE_DETECTED);
+        change('rosa_max_os_version', semver.coerce(role.version));
       }
     });
   }, [selectedInstallerRole]);
@@ -220,6 +223,17 @@ function AccountRolesARNsSection({
                 isDisabled
               />
             </GridItem>
+            {rosaMaxOSVersion && (
+              <GridItem span={8}>
+                <br />
+                <Alert
+                  variant="info"
+                  isInline
+                  isPlain
+                  title={`The selected account-wide roles are compatible with OpenShift version ${rosaMaxOSVersion} and earlier.`}
+                />
+              </GridItem>
+            )}
           </Grid>
           <GridItem span={4} />
         </ExpandableSection>
@@ -234,6 +248,7 @@ AccountRolesARNsSection.propTypes = {
   touchARNsFields: PropTypes.func,
   selectedAWSAccountID: PropTypes.string,
   selectedInstallerRoleARN: PropTypes.string,
+  rosaMaxOSVersion: PropTypes.string,
   getAWSAccountRolesARNs: PropTypes.func.isRequired,
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,

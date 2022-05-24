@@ -26,6 +26,7 @@ function AccountsRolesScreen({
   organizationID,
   selectedAWSAccountID,
   selectedInstallerRoleARN,
+  rosaMaxOSVersion,
   openAssociateAWSAccountModal,
   getAWSAccountIDs,
   getAWSAccountIDsResponse,
@@ -188,6 +189,7 @@ function AccountsRolesScreen({
         <AccountRolesARNsSection
           selectedAWSAccountID={selectedAWSAccountID}
           selectedInstallerRoleARN={selectedInstallerRoleARN}
+          rosaMaxOSVersion={rosaMaxOSVersion}
           getAWSAccountRolesARNs={getAWSAccountRolesARNs}
           getAWSAccountRolesARNsResponse={getAWSAccountRolesARNsResponse}
           clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
@@ -218,6 +220,7 @@ AccountsRolesScreen.propTypes = {
     associated_aws_id: PropTypes.string,
     installer_role_arn: PropTypes.string,
   }).isRequired,
+  rosaMaxOSVersion: PropTypes.string,
 };
 
 export default AccountsRolesScreen;
