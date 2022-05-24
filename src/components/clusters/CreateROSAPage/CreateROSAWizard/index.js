@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import {
-  isValid, reset, formValueSelector, getFormValues,
+  isValid, reset, formValueSelector, getFormValues, touch, getFormSyncErrors,
 } from 'redux-form';
 import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
@@ -30,6 +30,7 @@ const mapStateToProps = (state) => {
     organization,
     cloudProviders: state.cloudProviders,
     hasProductQuota: hasManagedQuotaSelector(state, normalizedProducts.ROSA),
+    formErrors: getFormSyncErrors('CreateCluster')(state),
   });
 };
 
@@ -44,7 +45,7 @@ const mapDispatchToProps = dispatch => ({
   resetForm: () => dispatch(reset('CreateCluster')),
   openModal: (modalName) => { dispatch(openModal(modalName)); },
   closeModal: () => { dispatch(closeModal()); },
-
+  touch: fieldNames => dispatch(touch('CreateCluster', ...fieldNames)),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes: () => dispatch(getMachineTypes()),
   getCloudProviders: () => dispatch(getCloudProviders()),

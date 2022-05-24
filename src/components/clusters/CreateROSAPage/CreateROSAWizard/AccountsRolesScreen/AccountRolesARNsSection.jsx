@@ -13,6 +13,7 @@ import { ReduxFormDropdown } from '../../../../common/ReduxFormComponents';
 import ExternalLink from '../../../../common/ExternalLink';
 import ErrorBox from '../../../../common/ErrorBox';
 import InstructionCommand from '../../../../common/InstructionCommand';
+import links from '../../../../../common/installLinks.mjs';
 
 function AccountRolesARNsSection({
   change,
@@ -161,7 +162,7 @@ function AccountRolesARNsSection({
           <Text component={TextVariants.p}>
             The following roles were detected in your AWS account.
             {' '}
-            <ExternalLink href="">
+            <ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>
               Learn more about account roles
             </ExternalLink>
             .
@@ -183,7 +184,7 @@ function AccountRolesARNsSection({
                 validate={roleARNRequired}
                 isRequired
                 helpText=""
-                extendedHelpText="Something..."
+                extendedHelpText="An AWS Identity Access Management (IAM) role used by the ROSA installer."
               />
               <br />
               <Field
@@ -193,7 +194,7 @@ function AccountRolesARNsSection({
                 type="text"
                 validate={roleARNRequired}
                 isRequired
-                extendedHelpText="Something..."
+                extendedHelpText="An AWS Identity Access Management (IAM) role used by the Red Hat Site Reliability Engineering (SRE) support team."
                 isDisabled
               />
               <br />
@@ -204,7 +205,7 @@ function AccountRolesARNsSection({
                 type="text"
                 validate={roleARNRequired}
                 isRequired
-                extendedHelpText="Something..."
+                extendedHelpText="An AWS Identity Access Management (IAM) role used by the ROSA compute instances."
                 isDisabled
               />
               <br />
@@ -215,7 +216,7 @@ function AccountRolesARNsSection({
                 type="text"
                 validate={roleARNRequired}
                 isRequired
-                extendedHelpText="Something..."
+                extendedHelpText="An AWS Identity Access Management (IAM) role used by the ROSA control plane."
                 isDisabled
               />
             </GridItem>

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { formValueSelector } from 'redux-form';
+import { formValueSelector, getFormValues } from 'redux-form';
 
 import createOSDInitialValues from '../../createOSDInitialValues';
 
@@ -15,6 +15,7 @@ const mapStateToProps = (state, ownProps) => {
   const isMultiAz = valueSelector(state, 'multi_az') === 'true';
   const privateClusterSelected = valueSelector(state, 'cluster_privacy') === 'internal';
   const selectedRegion = valueSelector(state, 'region');
+  const formValues = getFormValues('CreateCluster')(state);
 
   return {
     cloudProviderID,
@@ -24,6 +25,7 @@ const mapStateToProps = (state, ownProps) => {
     selectedRegion,
     product,
     isByoc: isCCS,
+    formValues,
     initialValues: createOSDInitialValues({
       cloudProviderID,
       product,

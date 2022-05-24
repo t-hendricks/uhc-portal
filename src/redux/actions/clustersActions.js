@@ -356,6 +356,7 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
       .getClusterGateAgreements(subscription.data.cluster_id);
 
     cluster.data.upgradeGates = upgradeGates.data?.items || [];
+
     const canDeleteAccessReviewResponse = await authorizationsService.selfAccessReview(
       { action: 'delete', resource_type: 'Cluster', cluster_id: subscription.data.cluster_id },
     );

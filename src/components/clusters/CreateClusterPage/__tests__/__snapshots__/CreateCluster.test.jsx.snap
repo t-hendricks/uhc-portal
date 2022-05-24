@@ -55,6 +55,7 @@ exports[`<CreateClusterPage /> User with no quota should render 1`] = `
     <Tabs
       activeKey={0}
       component="div"
+      hasBorderBottom={true}
       isBox={false}
       isFilled={true}
       isSecondary={false}
@@ -161,6 +162,7 @@ exports[`<CreateClusterPage /> renders correctly 1`] = `
     <Tabs
       activeKey={0}
       component="div"
+      hasBorderBottom={true}
       isBox={false}
       isFilled={true}
       isSecondary={false}
@@ -267,6 +269,7 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs cloud tab 1`]
     <Tabs
       activeKey={0}
       component="div"
+      hasBorderBottom={true}
       isBox={false}
       isFilled={true}
       isSecondary={false}
@@ -373,6 +376,7 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs datacenter ta
     <Tabs
       activeKey={1}
       component="div"
+      hasBorderBottom={true}
       isBox={false}
       isFilled={true}
       isSecondary={false}
@@ -479,6 +483,7 @@ exports[`<CreateClusterPage /> renders correctly for specific tabs local tab 1`]
     <Tabs
       activeKey={2}
       component="div"
+      hasBorderBottom={true}
       isBox={false}
       isFilled={true}
       isSecondary={false}

@@ -4,19 +4,16 @@ exports[`<IDPSection /> should render (IDPs pending) 1`] = `
 <Card>
   <CardTitle>
     <Skeleton
-      isDark={false}
       size="md"
     />
   </CardTitle>
   <CardBody>
     <Skeleton
-      isDark={false}
       size="lg"
     />
   </CardBody>
   <CardFooter>
     <Skeleton
-      isDark={false}
       size="md"
     />
   </CardFooter>

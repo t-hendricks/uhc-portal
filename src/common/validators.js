@@ -7,6 +7,9 @@ import { indexOf } from 'lodash';
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
 const DNS_LABEL_REGEXP = /^[a-z]([-a-z0-9]*[a-z0-9])?$/;
+const DNS_ONLY_ALPHANUMERIC_HYPHEN = /^[-a-z0-9]+$/;
+const DNS_START_ALPHA = /^[a-z]/;
+const DNS_END_ALPHANUMERIC = /[a-z0-9]$/;
 
 // Regular expression used to check base DNS domains, based on RFC-1035
 const BASE_DOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?\.)+[a-z]([-a-z0-9]*[a-z0-9])?$/;
@@ -82,6 +85,9 @@ const required = value => (value && value.trim() ? undefined : 'Field is require
 // Use with checkbox to ensure it is selected on a form, e.g. Ts&Cs agreement
 const requiredTrue = value => (value && value === true ? undefined : 'Field must be selected');
 
+// Function to validate that user has acknowledged prerequisites by clicking checkbox.
+const acknowledgePrerequisites = value => (value && value === true ? undefined : 'Please acknowledge that you have read and completed all prerequisites.');
+
 // Function to validate that the identity provider name field doesn't include whitespaces:
 const checkIdentityProviderName = (value) => {
   if (!value) {
@@ -137,7 +143,14 @@ const checkObjectName = (value, objectName, maxLen) => {
   return undefined;
 };
 
-const checkClusterName = value => checkObjectName(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
+const checkObjectNameValidation = (value, objectName, maxLen) => [
+  { text: `1 - ${maxLen} characters`, validated: value?.length > 0 && value?.length <= maxLen },
+  { text: 'Consist of lower-case alphanumeric characters, or hyphen (-)', validated: !!value && DNS_ONLY_ALPHANUMERIC_HYPHEN.test(value) },
+  { text: 'Start with a lower-case alphabetic character', validated: !!value && DNS_START_ALPHA.test(value) },
+  { text: 'End with a lower-case alphanumeric character', validated: !!value && DNS_END_ALPHANUMERIC.test(value) },
+];
+
+const clusterNameValidation = value => checkObjectNameValidation(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
 
 const checkMachinePoolName = value => checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
 
@@ -1108,8 +1121,8 @@ const validateLabelValue = (value) => {
 
 const validators = {
   required,
+  acknowledgePrerequisites,
   checkIdentityProviderName,
-  checkClusterName,
   checkClusterUUID,
   checkClusterDisplayName,
   checkUserID,
@@ -1154,6 +1167,7 @@ const validators = {
 export {
   required,
   requiredTrue,
+  acknowledgePrerequisites,
   atLeastOneRequired,
   checkClusterUUID,
   checkIdentityProviderName,
@@ -1178,6 +1192,7 @@ export {
   validateServiceAccountObject,
   checkMachinePoolName,
   checkMachinePoolLabels,
+  checkCustomOperatorRolesPrefix,
   checkLabels,
   validateUniqueAZ,
   validateValueNotPlaceholder,
@@ -1192,6 +1207,7 @@ export {
   validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,
+  clusterNameValidation,
 };
 
 export default validators;

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import { Redirect } from 'react-router';
 
 import {
@@ -9,6 +8,7 @@ import {
   Grid,
   PageSection,
   WizardFooter,
+  WizardContext,
   Button,
 } from '@patternfly/react-core';
 
@@ -16,10 +16,9 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import ErrorBoundary from '../../../App/ErrorBoundary';
 import PageTitle from '../../../common/PageTitle';
-import ErrorModal from '../../../common/ErrorModal';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 
-import { shouldRefetchQuota } from '../../../../common/helpers';
+import { shouldRefetchQuota, scrollToFirstError } from '../../../../common/helpers';
 import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
 import BillingModelScreen from './BillingModelScreen';
@@ -34,6 +33,7 @@ import CIDRScreen from './CIDRScreen';
 import UpdatesScreen from './UpdatesScreen';
 import config from '../../../../config';
 import Unavailable from '../../../common/Unavailable';
+import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 import { VALIDATE_CLOUD_PROVIDER_CREDENTIALS } from './ccsInquiriesActions';
@@ -42,8 +42,11 @@ import './createOSDWizard.scss';
 
 class CreateOSDWizardInternal extends React.Component {
   state = {
-    stepIdReached: 1,
-    currentStep: 1,
+    stepIdReached: 10,
+    currentStepId: 10,
+    // Dictionary of step IDs; { [stepId: number]: boolean },
+    // where entry values indicate the latest form validation state for those respective steps.
+    validatedSteps: {},
   }
 
   componentDidMount() {
@@ -58,7 +61,13 @@ class CreateOSDWizardInternal extends React.Component {
       getCloudProviders,
       getLoadBalancers,
       getPersistentStorage,
+      resetForm,
     } = this.props;
+
+    /* Reset the form in the event the user had already loaded the ROSA wizard
+       and experienced form errors.
+     */
+    resetForm();
 
     document.title = 'Create an OpenShift Dedicated cluster | Red Hat OpenShift Cluster Manager';
 
@@ -79,23 +88,53 @@ class CreateOSDWizardInternal extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const {
-      createClusterResponse, isErrorModalOpen, openModal,
-      isCCSCredentialsValidationNeeded, cloudProviderID,
+      createClusterResponse,
+      isErrorModalOpen,
+      openModal,
+      cloudProviderID,
+      isValid,
+      isCCS,
     } = this.props;
+    const { currentStepId, stepIdReached, validatedSteps } = this.state;
+    const hasInvalidCpStep = !validatedSteps[21];
+
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
     }
-    if (isCCSCredentialsValidationNeeded && !prevProps.isCCSCredentialsValidationNeeded) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ stepIdReached: 2 }); // prevent going to next steps when validation is needed
-    }
-    if (cloudProviderID !== prevProps.cloudProviderID) {
-      // set [max] step reached to cloud providers step, to force users to go
-      // thru wizard again after changing cloud providers
+
+    // set [max] step reached to cloud providers step, to force users to go
+    // through the steps again after changing cloud providers or infra type is updated to CCS.
+    if (
+      (stepIdReached > 10 && cloudProviderID !== prevProps.cloudProviderID)
+      || (isCCS && isCCS !== prevProps.isCCS)
+    ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ stepIdReached: 21 });
+    }
+
+    // If the cloud provider step was invalid prior to updating the infra type to
+    // a RH cloud account, set step to be valid in the validatedSteps dictionary.
+    if (hasInvalidCpStep && (!isCCS && isCCS !== prevProps.isCCS)) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState(() => ({
+        validatedSteps: {
+          ...prevState.validatedSteps,
+          21: true,
+        },
+      }));
+    }
+
+    // Track validity of individual steps by id
+    if (isValid !== prevProps.isValid) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState(() => ({
+        validatedSteps: {
+          ...prevState.validatedSteps,
+          [currentStepId]: isValid,
+        },
+      }));
     }
   }
 
@@ -110,20 +149,67 @@ class CreateOSDWizardInternal extends React.Component {
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
-    this.setState({ currentStep: id });
+    this.setState({ currentStepId: id });
   };
 
   onGoToStep = ({ id }) => {
-    this.setState({ currentStep: id });
+    this.setState({ currentStepId: id });
   }
 
   onBack = ({ id }) => {
-    this.setState({ currentStep: id });
+    this.setState({ currentStepId: id });
+  }
+
+  canJumpTo = (id) => {
+    const { stepIdReached, currentStepId, validatedSteps } = this.state;
+    const hasPrevStepError = Object.entries(validatedSteps).some((
+      [validatedStepId, isStepValid],
+    ) => (
+      isStepValid === false && validatedStepId < id
+    ));
+
+    // Allow step navigation forward when the current step is valid and backwards regardless.
+    return (stepIdReached >= id && !hasPrevStepError) || id <= currentStepId;
+  }
+
+  getCloudProverInfo = (cloudProviderID) => {
+    const { ccsCredentials, getGCPCloudProviderVPCs, getAWSCloudProviderRegions } = this.props;
+
+    if (cloudProviderID === 'gcp') {
+      // hard code region since we're just validating credentials
+      return getGCPCloudProviderVPCs(VALIDATE_CLOUD_PROVIDER_CREDENTIALS, ccsCredentials, 'us-east1');
+    }
+
+    return getAWSCloudProviderRegions(ccsCredentials);
+  }
+
+  beforeOnNext = async (onNext) => {
+    const {
+      touch,
+      formErrors,
+      isCCSCredentialsValidationNeeded,
+      cloudProviderID,
+    } = this.props;
+    const { currentStepId, validatedSteps } = this.state;
+    const isCurrentStepValid = validatedSteps[currentStepId];
+    const errorFieldNames = Object.keys(formErrors);
+
+    // When errors exist, touch the fields with those errors to trigger validation.
+    if (errorFieldNames?.length > 0 && !isCurrentStepValid) {
+      touch(errorFieldNames);
+      scrollToFirstError(formErrors);
+    } else if (isCCSCredentialsValidationNeeded && cloudProviderID && currentStepId === 21) {
+      // Only proceed to the next step if the validation is successful.
+      await this.getCloudProverInfo(cloudProviderID);
+      onNext();
+    } else {
+      // When no errors or validy checks are required, go to the next step.
+      onNext();
+    }
   }
 
   render() {
     const {
-      isValid,
       onSubmit,
       createClusterResponse,
       machineTypes,
@@ -132,29 +218,24 @@ class CreateOSDWizardInternal extends React.Component {
       loadBalancerValues,
       persistentStorageValues,
       isErrorModalOpen,
-      resetResponse,
       hasProductQuota,
       history,
       product, // for OSDTrial URL, prop from the router
-      ccsValidationPending,
       isCCS,
-      isCCSCredentialsValidationNeeded,
       cloudProviderID,
-      ccsCredentials,
       installToVPCSelected,
-      getGCPCloudProviderVPCs,
-      getAWSCloudProviderRegions,
       privateLinkSelected,
       configureProxySelected,
+      ccsCredentialsValidityResponse,
     } = this.props;
 
-    const { stepIdReached, currentStep } = this.state;
     const isTrialDefault = product === normalizedProducts.OSDTrial;
 
     const isAws = cloudProviderID === 'aws';
     const isGCP = cloudProviderID === 'gcp';
     const showClusterPrivacy = isAws || (isGCP && isCCS);
     const showVPCCheckbox = isCCS;
+    const ccsValidationPending = ccsCredentialsValidityResponse?.pending;
 
     const steps = [
       {
@@ -167,10 +248,11 @@ class CreateOSDWizardInternal extends React.Component {
             </Grid>
           </ErrorBoundary>
         ),
-        enableNext: isValid,
+        canJumpTo: this.canJumpTo(10),
       },
       {
         name: 'Cluster settings',
+        canJumpTo: this.canJumpTo(20),
         steps: [
           {
             id: 21,
@@ -180,8 +262,7 @@ class CreateOSDWizardInternal extends React.Component {
                 <CloudProviderScreen />
               </ErrorBoundary>
             ),
-            enableNext: isValid && !ccsValidationPending,
-            canJumpTo: stepIdReached >= 21,
+            canJumpTo: this.canJumpTo(21),
           },
           {
             id: 22,
@@ -191,8 +272,7 @@ class CreateOSDWizardInternal extends React.Component {
                 <ClusterSettingsScreen isTrialDefault={isTrialDefault} />
               </ErrorBoundary>
             ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 22,
+            canJumpTo: this.canJumpTo(22),
           },
           {
             id: 23,
@@ -202,16 +282,13 @@ class CreateOSDWizardInternal extends React.Component {
                 <MachinePoolScreen isTrialDefault={isTrialDefault} />
               </ErrorBoundary>
             ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 23,
+            canJumpTo: this.canJumpTo(23),
           },
         ],
-        enableNext: isValid,
       },
       {
         name: 'Networking',
-        enableNext: isValid,
-        canJumpTo: stepIdReached >= 30,
+        canJumpTo: this.canJumpTo(30),
         steps: [
           (showClusterPrivacy || showVPCCheckbox) && {
             id: 31,
@@ -226,8 +303,7 @@ class CreateOSDWizardInternal extends React.Component {
                 />
               </ErrorBoundary>
             ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 31,
+            canJumpTo: this.canJumpTo(31),
           },
           showVPCCheckbox && installToVPCSelected && {
             id: 32,
@@ -237,8 +313,7 @@ class CreateOSDWizardInternal extends React.Component {
                 <VPCScreen privateLinkSelected={privateLinkSelected} />
               </ErrorBoundary>
             ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 32,
+            canJumpTo: this.canJumpTo(32),
           },
           showVPCCheckbox && configureProxySelected && {
             id: 33,
@@ -248,8 +323,7 @@ class CreateOSDWizardInternal extends React.Component {
                 <ClusterProxyScreen />
               </ErrorBoundary>
             ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 33,
+            canJumpTo: this.canJumpTo(33),
           },
           {
             id: 34,
@@ -259,8 +333,7 @@ class CreateOSDWizardInternal extends React.Component {
                 <CIDRScreen />
               </ErrorBoundary>
             ),
-            enableNext: isValid,
-            canJumpTo: stepIdReached >= 34,
+            canJumpTo: this.canJumpTo(34),
           },
         ].filter(Boolean),
       },
@@ -272,11 +345,10 @@ class CreateOSDWizardInternal extends React.Component {
             <UpdatesScreen />
           </ErrorBoundary>
         ),
-        enableNext: isValid,
-        canJumpTo: stepIdReached >= 40,
+        canJumpTo: this.canJumpTo(40),
       },
       {
-        id: 100,
+        id: 50,
         name: 'Review and create',
         component: (
           <ErrorBoundary>
@@ -284,11 +356,10 @@ class CreateOSDWizardInternal extends React.Component {
               isPending={createClusterResponse.pending}
               clusterRequestParams={{ isWizard: true }}
             />
+            {isErrorModalOpen && <CreateClusterErrorModal onRetry={onSubmit} />}
           </ErrorBoundary>
         ),
-        nextButtonText: 'Create cluster',
-        enableNext: isValid && !createClusterResponse.pending,
-        canJumpTo: stepIdReached >= 100 && isValid,
+        canJumpTo: this.canJumpTo(50),
       },
     ];
     const ariaTitle = 'Create OpenShift Dedicated cluster wizard';
@@ -384,60 +455,66 @@ class CreateOSDWizardInternal extends React.Component {
       );
     }
 
-    const creationErrorModal = isErrorModalOpen && (
-      <ErrorModal
-        title="Error creating cluster"
-        errorResponse={createClusterResponse}
-        resetResponse={resetResponse}
-      />
+    const footer = (
+      <WizardFooter>
+        <WizardContext.Consumer>
+          {({
+            activeStep,
+            onNext,
+            onBack,
+            onClose,
+          }) => (
+            <>
+              {activeStep.name === 'Review and create'
+                ? <Button variant="primary" type="submit" onClick={onSubmit}>Create Cluster</Button>
+                : (
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={() => this.beforeOnNext(onNext)}
+                    isLoading={ccsValidationPending}
+                    isDisabled={ccsValidationPending}
+                  >
+                    Next
+                  </Button>
+                )}
+              <Button
+                variant="secondary"
+                onClick={onBack}
+                {...activeStep.name === 'Billing model' && { isDisabled: true }}
+              >
+                Back
+              </Button>
+              <Button variant="link" onClick={onClose}>
+                Cancel
+              </Button>
+            </>
+          )}
+        </WizardContext.Consumer>
+      </WizardFooter>
     );
-    const controlledFooter = isCCSCredentialsValidationNeeded
-                             && !!cloudProviderID
-                             && currentStep === 21;
 
     return (
       <>
         {title}
         <PageSection>
           {config.fakeOSD && (
-          <Banner variant="warning">
-            On submit, a fake OSD cluster will be created.
-          </Banner>
+            <Banner variant="warning">
+              On submit, a fake OSD cluster will be created.
+            </Banner>
           )}
           <div className="ocm-page">
-            {creationErrorModal}
             <Wizard
               className="osd-wizard"
               navAriaLabel={`${ariaTitle} steps`}
               mainAriaLabel={`${ariaTitle} content`}
               steps={steps}
               isNavExpandable
-              onSave={onSubmit}
               onNext={this.onNext}
               onBack={this.onBack}
               onGoToStep={this.onGoToStep}
               onClose={() => history.push('/create/cloud')}
-              /* custom footer is needed to prevent advancing to the next screen
-                 before validating CCS credentials :( */
-              footer={controlledFooter ? (
-                <WizardFooter>
-                  <Button
-                    variant="primary"
-                    isDisabled={!isValid || ccsValidationPending}
-                    onClick={() => {
-                      if (cloudProviderID === 'gcp') {
-                        // hard code region since we're just validating credentials
-                        getGCPCloudProviderVPCs(VALIDATE_CLOUD_PROVIDER_CREDENTIALS, ccsCredentials, 'us-east1');
-                      } else {
-                        getAWSCloudProviderRegions(ccsCredentials);
-                      }
-                    }}
-                    isLoading={ccsValidationPending}
-                  >
-                    Validate
-                  </Button>
-                </WizardFooter>
-              ) : undefined}
+              footer={footer}
             />
           </div>
         </PageSection>
@@ -465,7 +542,7 @@ const requestStatePropTypes = PropTypes.shape({
 
 CreateOSDWizardInternal.propTypes = {
   isValid: PropTypes.bool,
-  ccsValidationPending: PropTypes.bool,
+  ccsCredentialsValidityResponse: PropTypes.object,
   isCCS: PropTypes.bool,
   isCCSCredentialsValidationNeeded: PropTypes.bool,
   cloudProviderID: PropTypes.string,
@@ -503,6 +580,8 @@ CreateOSDWizardInternal.propTypes = {
   resetForm: PropTypes.func,
   openModal: PropTypes.func,
   onSubmit: PropTypes.func,
+  touch: PropTypes.func,
+  formErrors: PropTypes.object,
 
   // for "no quota" redirect
   hasProductQuota: PropTypes.bool,
