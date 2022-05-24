@@ -2,31 +2,49 @@
 
 exports[`<RadioButtons /> should render - basic 1`] = `
 <Fragment>
-  <Radio
-    aria-label="Option 1"
-    className="test-classname"
-    id="test-radio-buttons-option-1"
-    isChecked={false}
-    isDisabled={false}
-    isValid={true}
-    key="test-radio-buttons-option-1"
-    label="Option 1"
-    name="test-radio-buttons"
-    onChange={[Function]}
-    value="option-1"
-  />
-  <Radio
-    aria-label="the default"
-    className="test-classname"
-    id="test-radio-buttons-test-default"
-    isChecked={false}
-    isDisabled={false}
-    isValid={true}
-    key="test-radio-buttons-test-default"
-    label="the default"
-    name="test-radio-buttons"
-    onChange={[Function]}
-    value="test-default"
-  />
+  <Split
+    hasGutter={true}
+    key="test-radio-buttons-option-1-fragment"
+  >
+    <SplitItem
+      className="pf-u-mr-sm"
+    >
+      <Radio
+        aria-label="Option 1"
+        className="test-classname"
+        id="test-radio-buttons-option-1"
+        isChecked={false}
+        isDisabled={false}
+        isValid={true}
+        key="test-radio-buttons-option-1"
+        label="Option 1"
+        name="test-radio-buttons"
+        onChange={[Function]}
+        value="option-1"
+      />
+    </SplitItem>
+  </Split>
+  <Split
+    hasGutter={true}
+    key="test-radio-buttons-test-default-fragment"
+  >
+    <SplitItem
+      className="pf-u-mr-sm"
+    >
+      <Radio
+        aria-label="the default"
+        className="test-classname"
+        id="test-radio-buttons-test-default"
+        isChecked={false}
+        isDisabled={false}
+        isValid={true}
+        key="test-radio-buttons-test-default"
+        label="the default"
+        name="test-radio-buttons"
+        onChange={[Function]}
+        value="test-default"
+      />
+    </SplitItem>
+  </Split>
 </Fragment>
 `;

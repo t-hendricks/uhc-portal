@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Title, Flex, FlexItem } from '@patternfly/react-core';
-import { ChartPie, ChartLegend, ChartLabel } from '@patternfly/react-charts';
+import {
+  Title, Flex, FlexItem, Tooltip,
+} from '@patternfly/react-core';
+import {
+  ChartPie, ChartLegend, ChartLabel,
+} from '@patternfly/react-charts';
+
 import { groupTagHitsByGroups } from '../overviewHelpers';
 
 export const categoryMapping = {
@@ -44,6 +49,23 @@ TitleComponent.propTypes = {
   style: PropTypes.object.isRequired,
 };
 
+const CustomLabel = ({ datum, ...rest }) => (
+  <Tooltip
+    content={(`${datum.x}: ${datum.y}`)}
+  >
+    <ChartLabel
+      {...rest}
+    />
+  </Tooltip>
+);
+
+CustomLabel.propTypes = {
+  datum: {
+    x: PropTypes.string.isRequired,
+    y: PropTypes.number.isRequired,
+  },
+};
+
 const ChartByGroups = ({ tagHits, groups }) => {
   const groupedRulesByGroups = groupTagHitsByGroups(tagHits, [...groups]);
   const totalHits = Object.values(groupedRulesByGroups).reduce((acc, { count }) => acc + count, 0);
@@ -57,11 +79,7 @@ const ChartByGroups = ({ tagHits, groups }) => {
       </FlexItem>
       <FlexItem>
         <ChartPie
-          labelComponent={(
-            <ChartLabel
-              textAnchor="middle"
-              style={{ fill: 'white', fontSize: 10 }}
-            />
+          labelComponent={(<CustomLabel textAnchor="middle" style={{ fill: 'white', fontSize: 10 }} />
           )}
           labelRadius={25}
           ariaTitle="Categories statistics"

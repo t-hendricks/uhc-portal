@@ -26,7 +26,7 @@ exports[`<UpgradeAcknowledgeWarning> Display alert if is not manual 1`] = `
 </Fragment>
 `;
 
-exports[`<UpgradeAcknowledgeWarning> Display confirmation if there is only clusterMetAcks 1`] = `
+exports[`<UpgradeAcknowledgeWarning> Display confirmation if there is only clusterMetAcks and is yStream approved 1`] = `
 <Fragment>
   <div
     className="ocm-upgrade-additional-versions-available"

@@ -1,13 +1,13 @@
 const constants = {
-  clusterNameHint: `The name of the cluster. This will be used when generating a sub-domain
-    for your cluster on openshiftapps.com.`,
-  availabilityHint: 'Deploy to a single data center or to multiple data centers.',
+  clusterNameHint: 'This name identifies your cluster in OpenShift Cluster Manager and forms part of the cluster console subdomain.',
+  availabilityHintSingleZone: 'Single zone clusters reside in a singular fault domain and lack the resilience of multi-zone clusters.',
+  availabilityHintMultiZone: 'Three availability zones provide resilience to cluster components evenly spread across fault domains.',
   regionHint: 'The data center where your worker pool will be located.',
   persistentStorageHint: 'The storage quota set on the deployed cluster.',
   loadBalancersHint: 'The load balancer quota set on the deployed cluster.',
   computeNodeInstanceTypeHint: `The instance type for the worker nodes. Instance type
     determines the amount of memory and vCPU allocated to each worker node.`,
-  computeNodeCountHint: 'The number of worker nodes to provision per zone. The minimum number of worker nodes will vary depending on which features are enbled.',
+  computeNodeCountHint: 'The number of worker nodes to provision per zone. The minimum number of worker nodes will vary depending on which features are enabled.',
   machinePoolComputeNodeCountHint: 'The number of worker nodes to provision per zone.',
   machineCIDRHint: `A block of IP addresses used by the OpenShift Container Platform installation
     program while installing the cluster. The address block must not overlap with any other network
