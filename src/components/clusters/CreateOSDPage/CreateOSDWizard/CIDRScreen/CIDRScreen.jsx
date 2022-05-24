@@ -9,7 +9,7 @@ import {
 
 import CIDRFields from './CIDRFields';
 
-function CIDRScreen({ cloudProviderID, isMultiAz }) {
+function CIDRScreen({ cloudProviderID, isMultiAz, installToVpcSelected }) {
   return (
     <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
       <Grid hasGutter>
@@ -20,6 +20,7 @@ function CIDRScreen({ cloudProviderID, isMultiAz }) {
         <CIDRFields
           cloudProviderID={cloudProviderID}
           isMultiAz={isMultiAz}
+          installToVpcSelected={installToVpcSelected}
         />
       </Grid>
     </Form>
@@ -29,6 +30,7 @@ function CIDRScreen({ cloudProviderID, isMultiAz }) {
 CIDRScreen.propTypes = {
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
+  installToVpcSelected: PropTypes.bool,
 };
 
 export default CIDRScreen;

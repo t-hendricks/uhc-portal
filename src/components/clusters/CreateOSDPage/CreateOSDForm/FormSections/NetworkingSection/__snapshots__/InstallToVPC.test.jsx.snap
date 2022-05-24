@@ -57,6 +57,12 @@ exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
       />
     </Title>
     To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availability zone that you want the cluster installed into.
+     
+    <ExternalLink
+      href="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc"
+    >
+      Learn all about VPC
+    </ExternalLink>
   </GridItem>
   <Field
     component={[Function]}
@@ -99,6 +105,12 @@ exports[`<InstallToVPC> renders correctly when selected for single AZ 1`] = `
       />
     </Title>
     To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availability zone that you want the cluster installed into.
+     
+    <ExternalLink
+      href="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc"
+    >
+      Learn all about VPC
+    </ExternalLink>
   </GridItem>
   <Field
     component={[Function]}
