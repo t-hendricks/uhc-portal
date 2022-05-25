@@ -75,7 +75,7 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
       hasGutter={true}
     >
       <StackItem>
-        The summary of all annual subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat. For on-demand resources, see
+        The summary of all annual subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat. For On-Demand resources, see
          
         <Link
           to="/quota/resource-limits"

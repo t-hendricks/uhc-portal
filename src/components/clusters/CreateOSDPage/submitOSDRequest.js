@@ -108,7 +108,7 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
               master_role_arn: formData.control_plane_role_arn,
               worker_role_arn: formData.worker_role_arn,
             },
-            operator_role_prefix: `${formData.name}-${formData.custom_operator_roles_prefix}`,
+            operator_role_prefix: formData.custom_operator_roles_prefix,
           },
         };
         // auto mode

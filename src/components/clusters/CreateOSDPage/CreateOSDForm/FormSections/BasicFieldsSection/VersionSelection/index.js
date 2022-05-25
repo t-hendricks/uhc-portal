@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { formValueSelector } from 'redux-form';
 import get from 'lodash/get';
 
 import VersionSelection from './VersionSelection';
@@ -10,7 +11,12 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = (state) => {
   const { clusterVersions } = get(state, 'clusters', {});
-  return { getInstallableVersionsResponse: clusterVersions };
+  const valueSelector = formValueSelector('CreateCluster');
+
+  return {
+    rosaMaxOSVersion: valueSelector(state, 'rosa_max_os_version'),
+    getInstallableVersionsResponse: clusterVersions,
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VersionSelection);

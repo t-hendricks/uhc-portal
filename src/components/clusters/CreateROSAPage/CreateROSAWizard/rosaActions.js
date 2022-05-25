@@ -27,11 +27,14 @@ export const getAWSIDsFromARNs = (arns) => {
  * ]
  */
 export const normalizeAWSAccountRoles = accountRoles => (accountRoles?.items || [])
-  .map(accountRole => (accountRole?.items || []).reduce((roleObj, { type, arn }) => ({
+  .map(accountRole => (accountRole?.items || []).reduce((roleObj, { type, arn, roleVersion }) => ({
     ...roleObj,
+    version: roleVersion,
     [type]: arn,
   }),
-  { prefix: accountRole.prefix }));
+  {
+    prefix: accountRole.prefix,
+  }));
 
 export const getAWSAccountIDs = organizationID => dispatch => dispatch({
   type: LIST_ASSOCIATED_AWS_IDS,

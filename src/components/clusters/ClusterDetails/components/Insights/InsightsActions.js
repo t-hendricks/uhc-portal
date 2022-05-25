@@ -19,7 +19,7 @@ import {
   GET_CLUSTER_INSIGHTS,
   GET_ORGANIZATION_INSIGHTS,
 } from './InsightsConstants';
-import { accountsService, insightsService } from '../../../../../services';
+import { insightsService } from '../../../../../services';
 
 const fetchSingleClusterInsights = (clusterId, isManaged) => insightsService
   .getClusterInsights(clusterId, isManaged)
@@ -37,20 +37,7 @@ export const fetchClusterInsights = (clusterId, isManaged) => dispatch => dispat
   },
 });
 
-const fetchClusterIds = orgId => accountsService.getSubscriptions({
-  page_size: -1,
-  fields: 'external_cluster_id',
-  filter: `organization_id = '${orgId}' AND status NOT IN ('Deprovisioned', 'Archived') AND external_cluster_id <> ''`,
-});
-
-export const fetchOrganizationInsights = orgId => dispatch => dispatch({
+export const fetchOrganizationInsights = () => dispatch => dispatch({
   type: GET_ORGANIZATION_INSIGHTS,
-  payload: fetchClusterIds(orgId).then((response) => {
-    const externalClusterIds = get(response, 'data.items', null);
-    if (!externalClusterIds) {
-      return Promise.reject();
-    }
-    return insightsService.getOrganizationInsights(externalClusterIds
-      .map(item => item.external_cluster_id).filter(Boolean));
-  }),
+  payload: insightsService.getOrganizationInsights(),
 });

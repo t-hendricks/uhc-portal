@@ -2,13 +2,13 @@ const constants = {
   clusterNameHint: 'This name identifies your cluster in OpenShift Cluster Manager and forms part of the cluster console subdomain.',
   availabilityHintSingleZone: 'Single zone clusters reside in a singular fault domain and lack the resilience of multi-zone clusters.',
   availabilityHintMultiZone: 'Three availability zones provide resilience to cluster components evenly spread across fault domains.',
-  regionHint: 'The data center where your worker pool will be located.',
+  regionHint: 'The data center where your compute pool will be located.',
   persistentStorageHint: 'The storage quota set on the deployed cluster.',
   loadBalancersHint: 'The load balancer quota set on the deployed cluster.',
-  computeNodeInstanceTypeHint: `The instance type for the worker nodes. Instance type
-    determines the amount of memory and vCPU allocated to each worker node.`,
-  computeNodeCountHint: 'The number of worker nodes to provision per zone. The minimum number of worker nodes will vary depending on which features are enabled.',
-  machinePoolComputeNodeCountHint: 'The number of worker nodes to provision per zone.',
+  computeNodeInstanceTypeHint: `The instance type for the compute nodes. Instance type
+    determines the amount of memory and vCPU allocated to each compute node.`,
+  computeNodeCountHint: 'The number of compute nodes to provision per zone. The minimum number of compute nodes will vary depending on which features are enabled.',
+  machinePoolComputeNodeCountHint: 'The number of compute nodes to provision per zone.',
   machineCIDRHint: `A block of IP addresses used by the OpenShift Container Platform installation
     program while installing the cluster. The address block must not overlap with any other network
     block.`,
@@ -20,7 +20,7 @@ const constants = {
   hostPrefixHint: `The subnet prefix length to assign to each individual node.  For example, if host
     prefix is set to /23, then each node is assigned a /23 subnet out of the given CIDR, allowing
     for 510 (2^(32 - 23) - 2) Pod IP addresses.`,
-  bypassSCPChecksHint: `Some AWS Service Control Policies will cause installation to fail even if
+  bypassSCPChecksHint: `Some AWS service control policies (SCP) will cause installation to fail even if
     the credentials have the correct permissions. Disabling SCP checks allows installation to proceed.
     The SCP will still be enforced even if the checks are bypassed.`,
   enableAdditionalEtcdHint: 'When you enable additional etcd encryption, encryption keys are created. These keys are rotated on a weekly basis.',
@@ -28,10 +28,10 @@ const constants = {
   keyRing: 'A key ring organizes keys in a specific Google Cloud location and allows you to manage access control on groups of keys.',
   keyName: 'A cryptographic key is a resource that is used for encrypting and decrypting data or for producing and verifying digital signatures',
   keylocation: 'A key location represent the geographical regions where a Cloud KMS resource is stored and can be accessed.',
-  kmsserviceAccount: 'Compute Engine default service account',
-  enableUserWorkloadMonitoringHint: 'Monitor your own projects in isolation from Red Hat Site Reliability Engineer (SRE) platform metrics',
-  enableUserWorkloadMonitoringHelp: 'This feature is enabled by default and provides monitoring for user-defined projects.'
-  + 'This includes metrics provided through service endpoints in user-defined projects as well as pods running in user-defined projects.',
+  kmsserviceAccount: 'Compute Engine default service account.',
+  enableUserWorkloadMonitoringHint: 'Monitor your own projects in isolation from Red Hat Site Reliability Engineer (SRE) platform metrics.',
+  enableUserWorkloadMonitoringHelp: `This feature is enabled by default and provides monitoring for user-defined projects. 
+ This includes metrics provided through service endpoints in user-defined projects as well as pods running in user-defined projects.`,
   cloudKMSTitle: 'Cloud Key Management Service',
   cloudKMS: 'Cloud KMS is a REST API that can use a key to encrypt, decrypt, or sign data such as secrets for storage.',
   amazonEBSTitle: 'Amazon EBS encryption',

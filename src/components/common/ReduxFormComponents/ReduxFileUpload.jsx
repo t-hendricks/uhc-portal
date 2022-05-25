@@ -100,6 +100,7 @@ class ReduxFileUpload extends React.Component {
           allowEditingUploadedText
           isDragActive
           id={name}
+          name={name}
           type="text"
           value={value}
           filename={filename}

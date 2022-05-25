@@ -29,6 +29,7 @@ function CIDRFields({
   disabled,
   cloudProviderID,
   isMultiAz,
+  installToVpcSelected,
 }) {
   const formatHostPrefix = (value) => {
     if (value && value.charAt(0) !== '/') {
@@ -118,7 +119,16 @@ function CIDRFields({
           type="text"
           validate={machineCidrValidators}
           disabled={disabled}
-          helpText={cloudProviderID === 'aws' ? `Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.` : `Range must be private. Subnet mask must be at most /${validators.GCP_MACHINE_CIDR_MAX}.`}
+          helpText={(
+            <div className="pf-c-form__helper-text">
+              {cloudProviderID === 'aws'
+                ? `Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.`
+                : `Range must be private. Subnet mask must be at most /${validators.GCP_MACHINE_CIDR_MAX}.`}
+              {installToVpcSelected && (
+                <Alert variant="info" isPlain isInline title="Ensure the Machine CIDR range matches the selected VPC subnets." />
+              )}
+            </div>
+          )}
           extendedHelpText={(
             <>
               {constants.machineCIDRHint}
@@ -193,6 +203,7 @@ CIDRFields.propTypes = {
   disabled: PropTypes.bool,
   cloudProviderID: PropTypes.string,
   isMultiAz: PropTypes.bool,
+  installToVpcSelected: PropTypes.bool,
 };
 
 export default CIDRFields;

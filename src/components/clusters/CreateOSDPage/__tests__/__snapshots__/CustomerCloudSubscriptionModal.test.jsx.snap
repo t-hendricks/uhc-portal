@@ -38,7 +38,7 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
         An IAM user called “osdCcsAdmin” exists with the AdministratorAccess policy.
       </ListItem>
       <ListItem>
-        An Organization Service Control Policy (SCP) is set up according to the
+        An Organization service control policy (SCP) is set up according to the
          
         <ExternalLink
           href="https://docs.openshift.com/dedicated/osd_planning/aws-ccs.html#ccs-aws-scp_aws-ccs"
@@ -60,7 +60,7 @@ exports[`Customer Cloud Subscription modal; should render for AWS 1`] = `
       documentation
     </ExternalLink>
      
-    for more detail around the requirements for customer cloud subscription.
+    for more detail around the requirements for Customer Cloud Subscription.
   </TextContent>
 </Modal>
 `;
@@ -138,7 +138,7 @@ exports[`Customer Cloud Subscription modal; should render for GCP 1`] = `
       the documentation
     </ExternalLink>
      
-    for more detail around the requirements for customer cloud subscription.
+    for more detail around the requirements for Customer Cloud Subscription.
   </TextContent>
 </Modal>
 `;

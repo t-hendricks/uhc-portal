@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Title,
   GridItem,
+  Alert,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
@@ -44,13 +45,24 @@ function InstallToVPC({
                 To install into an existing VPC you need to ensure that your VPC is configured
                 with a public and a private subnet for each availability zone that you want
                 the cluster installed into.
+                {' '}
+                <ExternalLink href={links.INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS}>
+                  Learn all about VPC
+                </ExternalLink>
               </GridItem>
               {isWizard ? (
-                <AWSSubnetFields
-                  isMultiAz={isMultiAz}
-                  selectedRegion={selectedRegion}
-                  privateLinkSelected={privateLinkSelected}
-                />
+                <>
+                  <Alert
+                    variant="info"
+                    isInline
+                    title="You will need to match these VPC subnets when you define the CIDR ranges."
+                  />
+                  <AWSSubnetFields
+                    isMultiAz={isMultiAz}
+                    selectedRegion={selectedRegion}
+                    privateLinkSelected={privateLinkSelected}
+                  />
+                </>
               ) : (
                 <>
                   <Field
