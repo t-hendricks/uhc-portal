@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
   return {
     cloudProviderID: valueSelector(state, 'cloud_provider'),
     isMultiAz: valueSelector(state, 'multi_az') === 'true',
+    installToVpcSelected: valueSelector(state, 'install_to_vpc'),
   };
 };
 

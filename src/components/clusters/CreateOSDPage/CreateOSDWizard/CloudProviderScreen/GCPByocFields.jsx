@@ -71,7 +71,7 @@ function GCPByocFields({ isValidating }) {
               For more guidance, see the
               {' '}
               <ExternalLink noIcon href={links.OSD_CCS_GCP}>
-                customer cloud subscription requirements
+                Customer Cloud Subscription requirements
               </ExternalLink>
               .
             </Text>

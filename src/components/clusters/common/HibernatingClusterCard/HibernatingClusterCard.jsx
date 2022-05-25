@@ -36,7 +36,7 @@ function HibernatingClusterCard({ cluster, openModal }) {
 
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
-  const canNotEditReason = !cluster.canEdit && 'You do not have permission to resume from hibernation. Only cluster owners, cluster editors, and organization administrators can change hibernation state.';
+  const canNotEditReason = !cluster.canEdit && 'You do not have permission to resume from hibernation. Only cluster owners, cluster editors, and Organization Administrators can change hibernation state.';
 
   switch (cluster.state) {
     case clusterStates.RESUMING:

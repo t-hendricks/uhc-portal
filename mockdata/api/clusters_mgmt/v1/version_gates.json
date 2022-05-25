@@ -1,9 +1,22 @@
 {
   "kind": "VersionGateList",
   "page": 1,
-  "size": 2,
-  "total": 2,
+  "size": 3,
+  "total": 3,
   "items": [
+    {
+      "kind": "VersionGate",
+      "id": "28dfd88b-a0db-11ec-b863-0a580a830470",
+      "href": "/api/clusters_mgmt/v1/version_gates/28dfd88b-a0db-11ec-b863-0a580a830470",
+      "version_raw_id_prefix": "4.10",
+      "label": "api.openshift.com/gate-sts",
+      "value": "4.10",
+      "warning_message": "STS roles must be updated with 4.10 permissions before the cluster can be updated to OpenShift 4.10. Failure to update the roles before cluster update will cause cluster control plane degradation.",
+      "description": "OpenShift STS clusters include new required cloud provider permissions in OpenShift 4.10.",
+      "documentation_url": "https://access.redhat.com/solutions/6808671",
+      "sts_only": true,
+      "creation_timestamp": "2022-03-11T01:32:48.568335Z"
+    },
     {
       "kind": "VersionGate",
       "id": "3ad7d804-98a3-11ec-b95a-0a580a800864",

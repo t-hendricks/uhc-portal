@@ -23,7 +23,7 @@ exports[`<HibernateClusterModal /> renders correctly 1`] = `
       </EmptyStateBody>
       <EmptyStateSecondaryActions>
         <ButtonWithTooltip
-          disableReason="You do not have permission to resume from hibernation. Only cluster owners, cluster editors, and organization administrators can change hibernation state."
+          disableReason="You do not have permission to resume from hibernation. Only cluster owners, cluster editors, and Organization Administrators can change hibernation state."
           onClick={[Function]}
           variant="link"
         >

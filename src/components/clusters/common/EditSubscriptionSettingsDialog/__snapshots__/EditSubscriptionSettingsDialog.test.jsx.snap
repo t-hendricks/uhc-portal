@@ -6286,7 +6286,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                               class="pf-c-radio__label"
                               for="cluster_billing_model:marketplace"
                             >
-                              On-demand (Hourly): Flexible usage billed through the Red Hat Marketplace
+                              On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace
                             </label>
                           </div>
                           
@@ -7155,7 +7155,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                         "value": "standard",
                                       },
                                       Object {
-                                        "label": "On-demand (Hourly): Flexible usage billed through the Red Hat Marketplace",
+                                        "label": "On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace",
                                         "value": "marketplace",
                                       },
                                     ]
@@ -7242,7 +7242,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                           isDisabled={false}
                                           isValid={true}
                                           key="cluster_billing_model:marketplace"
-                                          label="On-demand (Hourly): Flexible usage billed through the Red Hat Marketplace"
+                                          label="On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace"
                                           name="cluster_billing_model:marketplace"
                                           onChange={[Function]}
                                           value="marketplace"
@@ -7268,7 +7268,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                               className="pf-c-radio__label"
                                               htmlFor="cluster_billing_model:marketplace"
                                             >
-                                              On-demand (Hourly): Flexible usage billed through the Red Hat Marketplace
+                                              On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace
                                             </label>
                                           </div>
                                         </Radio>

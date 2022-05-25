@@ -13,10 +13,9 @@ const getClusterInsights = (clusterId, isManaged) => insightsAPIRequest({
   url: `/clusters/${clusterId}/report?osd_eligible=${isManaged}&get_disabled=false`,
 });
 
-const getOrganizationInsights = clusterIds => insightsAPIRequest({
-  method: 'post',
+const getOrganizationInsights = () => insightsAPIRequest({
+  method: 'get',
   url: '/org_overview',
-  data: { clusters: clusterIds },
 });
 
 const insigthsService = {

@@ -73,7 +73,7 @@ class OSDSubscriptionCard extends Component {
         Dedicated (On-Demand Limits)
       </Link>
     );
-    let subscriptionsDescription = 'The summary of all annual subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat. For on-demand resources, see';
+    let subscriptionsDescription = 'The summary of all annual subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat. For On-Demand resources, see';
     if (marketplace) {
       // add link
       subscriptionLink = (

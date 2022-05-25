@@ -33,6 +33,8 @@ const mapStateToProps = (state) => {
 
   return {
     selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
+    selectedInstallerRoleARN: valueSelector(state, 'installer_role_arn'),
+    rosaMaxOSVersion: valueSelector(state, 'rosa_max_os_version'),
     getAWSAccountIDsResponse,
     getAWSAccountRolesARNsResponse,
   };

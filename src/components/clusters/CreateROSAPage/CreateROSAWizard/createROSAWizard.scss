@@ -50,15 +50,9 @@
 }
 
 .ocm-instruction-block {
-  border-left:
+  border-inline-start:
           var(--pf-global--BorderWidth--lg)
           solid
           var(--pf-global--BorderColor--100);
   padding: var(--pf-global--spacer--lg);
-}
-
-.ocm-roles-prefix__preview {
-  display: flex;
-  align-items: center;
-  padding-bottom: var(--pf-global--spacer--sm);
 }

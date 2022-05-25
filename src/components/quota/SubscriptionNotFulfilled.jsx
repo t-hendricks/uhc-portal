@@ -77,7 +77,7 @@ function SubscriptionNotFulfilled({ data, refresh, marketplace }) {
       ),
     },
     osdmarketplace: {
-      emptyTitle: 'Marketplace on-demand subscriptions not detected',
+      emptyTitle: 'Marketplace On-Demand subscriptions not detected',
       errorTitle: 'Unable to retrieve quota information',
       text: (
         <p>
