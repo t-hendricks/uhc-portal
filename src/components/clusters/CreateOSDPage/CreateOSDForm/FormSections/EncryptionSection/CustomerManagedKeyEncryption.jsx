@@ -14,7 +14,7 @@ function CustomerManagedEncryption({
 }) {
   const isGCP = cloudProviderID === 'gcp';
   const gcpDesc = 'Managed via Google Cloud Key Management Service. Used to store and generate encryption keys and encrypt your data.';
-  const awsDesc = 'Use your own AWS KMS keys to enable encryption of AWS EBS volumes for the cluster.';
+  const awsDesc = 'Use a custom AWS KMS key for AWS EBS volume  encryption instead of your default AWS KMS key.';
 
   return (
     <>
