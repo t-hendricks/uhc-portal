@@ -68,7 +68,7 @@ exports[`<MinorVersionUpgradeAlert > Correct data is shown for unapproved minor 
     at the time you selected.
      
     <ExternalLink
-      href="https://docs.openshift.com/dedicated/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle"
+      href="https://docs.openshift.com/dedicated/osd_architecture/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle"
     >
       Learn more about updates
     </ExternalLink>

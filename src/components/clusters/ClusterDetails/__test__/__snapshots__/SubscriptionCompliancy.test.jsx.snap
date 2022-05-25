@@ -38,7 +38,7 @@ exports[`<SubscriptionCompliancy /> should warn during evaluation period 2`] = `
       type="onlyDate"
     />
     . 
-    The cluster owner or an organization administrator can edit subscription settings for non-evaluation use.
+    The cluster owner or an Organization Administrator can edit subscription settings for non-evaluation use.
   </p>
 </Alert>
 `;
@@ -84,7 +84,7 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 2`] =
   <p>
     Your cluster is not supported and you may stop receving updates.
      
-    The cluster owner or an organization administrator can edit subscription settings for non-evaluation use.
+    The cluster owner or an Organization Administrator can edit subscription settings for non-evaluation use.
   </p>
 </Alert>
 `;

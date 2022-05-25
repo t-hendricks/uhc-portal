@@ -56,8 +56,8 @@ function AWSByocFields({ isValidating }) {
               </li>
               <li>
                 <Text component={TextVariants.p} className="ocm-secondary-text">
-                  An Organization Service Control Policy (SCP) is set up according
-                  to the requirements for customer cloud subscriptions.
+                  An Organization service control policy (SCP) is set up according
+                  to the requirements for Customer Cloud Subscriptions.
                 </Text>
               </li>
             </ul>
@@ -66,7 +66,7 @@ function AWSByocFields({ isValidating }) {
               For more guidance, see the
               {' '}
               <ExternalLink href={links.OSD_CCS_AWS_CUSTOMER_REQ}>
-                customer cloud subscription requirements
+                Customer Cloud Subscription requirements
               </ExternalLink>
               .
             </Text>

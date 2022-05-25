@@ -58,7 +58,7 @@ const links = {
 
   SUBSCRIPTION_EVAL_INFORMATION: 'https://access.redhat.com/articles/4389911',
 
-  OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/administering_a_cluster/osd-admin-roles.html`,
+  OSD_DEDICATED_ADMIN_ROLE: `${OSD_DOCS_BASE}/osd_cluster_admin/osd-admin-roles.html`,
   OSD_CCS_AWS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html`,
   OSD_CCS_AWS_LIMITS: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#aws-limits_aws-ccs`,
   OSD_CCS_AWS_SCP: `${OSD_DOCS_BASE}/osd_planning/aws-ccs.html#ccs-aws-scp_aws-ccs`,
@@ -66,11 +66,12 @@ const links = {
   OSD_CCS_GCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html`,
   OSD_CCS_GCP_LIMITS: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#gcp-limits_gcp-ccs`,
   OSD_CCS_GCP_SCP: `${OSD_DOCS_BASE}/osd_planning/gcp-ccs.html#ccs-gcp-customer-procedure_gcp-ccs`,
-  OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/osd_policy/osd-life-cycle.html`,
-  OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/osd_policy/osd-service-definition.html#compute_osd-service-definition`,
-  OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition`,
-  OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_private_connections/aws-private-connections.html`,
-  OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/osd_private_connections/private-cluster.html`,
+  OSD_LIFE_CYCLE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html`,
+  OSD_Z_STREAM: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle`,
+  OSD_SERVICE_DEFINITION_COMPUTE: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#compute_osd-service-definition`,
+  OSD_ETCD_ENCRYPTION: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#etcd-encryption_osd-service-definition`,
+  OSD_AWS_PRIVATE_CONNECTIONS: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_private_connections/aws-private-connections.html`,
+  OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_private_connections/private-cluster.html`,
   OSD_CLUSTER_WIDE_PROXY: `${OSD_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
@@ -84,6 +85,7 @@ const links = {
   INSTALL_AWSUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_aws/installing-aws-user-infra.html`,
   INSTALL_AWS_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_aws/installing-aws-customizations.html`,
   INSTALL_AWS_VPC: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html`,
+  INSTALL_AWS_CUSTOM_VPC_REQUIREMENTS: `${DOCS_BASE}/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc`,
 
   INSTALL_AZUREUPI_GETTING_STARTED: 'https://github.com/openshift/installer/blob/master/docs/user/azure/install_upi.md',
   INSTALL_AZUREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-default.html`,
@@ -195,6 +197,7 @@ const links = {
   ROSA_AWS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-aws-prereqs.html`,
   ROSA_INSTALLING: `${ROSA_DOCS_BASE}/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-installing-rosa.html`,
   ROSA_LIFE_CYCLE: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-life-cycle.html`,
+  ROSA_Z_STREAM: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-life-cycle.html#rosa-patch-versions_rosa-life-cycle`,
   ROSA_RESPONSIBILITY_MATRIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-policy-responsibility-matrix.html`,
   ROSA_SERVICE_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html`,
   ROSA_CLUSTER_WIDE_PROXY: `${ROSA_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
@@ -202,9 +205,9 @@ const links = {
   ROSA_AWS_STS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html`,
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
   ROSA_AWS_MULTIPLE_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-multiple-account_rosa-sts-aws-prereqs`,
-  ROSA_AWS_SERVICE_QUOTAS: `${ROSA_DOCS_BASE}/rosa_getting_started/rosa-sts-required-aws-service-quotas.html`,
+  ROSA_AWS_SERVICE_QUOTAS: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-required-aws-service-quotas.html`,
   ROSA_AWS_ACCOUNT_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-understanding-ocm-role_rosa-sts-about-iam-resources`,
-  ROSA_AWS_OPERATOR_ROLE_PREFIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-defining-an-operator-role-prefix_rosa-sts-about-iam-resources`,
+  ROSA_AWS_OPERATOR_ROLE_PREFIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-about-operator-role-prefixes_rosa-sts-about-iam-resources`,
   AWS_CONSOLE: 'https://console.aws.amazon.com/rosa/home',
   AWS_CLI: 'https://aws.amazon.com/cli/',
 
@@ -217,8 +220,6 @@ const links = {
   COSTMGMT_ADDING_OCP: `${COSTMGMT_DOCS_BASE}/html/adding_an_openshift_container_platform_source_to_cost_management/assembly-adding-openshift-container-platform-source`,
 
   FINDING_AWS_ACCOUNT_IDENTIFIERS: 'https://docs.aws.amazon.com/general/latest/gr/acct-identifiers.html',
-  OSD_Z_STREAM: `${OSD_DOCS_BASE}/osd_policy/osd-life-cycle.html#rosa-patch-versions_osd-life-cycle`,
-  ROSA_Z_STREAM: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-life-cycle.html#rosa-patch-versions_rosa-life-cycle`,
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.

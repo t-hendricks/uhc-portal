@@ -176,7 +176,7 @@ class UsersSection extends React.Component {
 
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason = clusterHibernating && 'This operation is not available while cluster is hibernating';
-    const canNotEditReason = !cluster.canEdit && 'You do not have permission to add a user. Only cluster owners, cluster editors, and organization administrators can add users.';
+    const canNotEditReason = !cluster.canEdit && 'You do not have permission to add a user. Only cluster owners, cluster editors, and Organization Administrators can add users.';
     const disableReason = readOnlyReason || hibernatingReason || canNotEditReason;
 
     const addUserBtn = (

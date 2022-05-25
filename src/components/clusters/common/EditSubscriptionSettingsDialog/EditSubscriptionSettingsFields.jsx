@@ -76,7 +76,7 @@ const {
 const { DISCONNECTED } = subscriptionStatuses;
 
 const standardBillingModelLabel = 'Annual: Fixed capacity subscription from Red Hat';
-const marketplaceBillingModelLabel = 'On-demand (Hourly): Flexible usage billed through the Red Hat Marketplace';
+const marketplaceBillingModelLabel = 'On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace';
 
 const MIN_VAL = 1;
 const MAX_VAL = 999;
