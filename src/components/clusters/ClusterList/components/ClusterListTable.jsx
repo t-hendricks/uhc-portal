@@ -31,7 +31,7 @@ import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActio
 import skeletonRows from '../../../common/SkeletonRows';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
-import ActionRequiredPopover from '../../common/InstallProgress/ActionRequiredPopover';
+import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
@@ -117,7 +117,7 @@ function ClusterListTable(props) {
       if (isWaitingROSAManualMode(cluster)) {
         // Show a popover for manual creation of ROSA operator roles and OIDC provider.
         return (
-          <ActionRequiredPopover
+          <ActionRequiredLink
             cluster={cluster}
             icon={<ExclamationTriangleIcon color={warningColor.value} />}
           />
