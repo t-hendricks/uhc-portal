@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CloudFormationTab /> should render correctly 1`] = `
+<TextContent>
+  <p>
+    Copy and run the following commands:
+  </p>
+  <p>
+    <ClipboardCopy
+      additionalActions={null}
+      clickTip="Successfully copied to clipboard!"
+      entryDelay={300}
+      exitDelay={1600}
+      hoverTip="Copy to clipboard"
+      isCode={false}
+      isExpanded={false}
+      isReadOnly={true}
+      maxWidth="150px"
+      onChange={[Function]}
+      onCopy={[Function]}
+      position="top"
+      switchDelay={2000}
+      textAriaLabel="Copyable input"
+      toggleAriaLabel="Show content"
+      variant="inline"
+    >
+      aws cloudformation create-stack --stack-name operator-roles-1i4counta3holamvo1g5tp6n8p3a03bq --template-body file://templates/cloudformation/openshift_operator_roles.json --parameters ParameterKey=OIDCProviderARN,ParameterValue=arn:aws:iam::123456789012:oidc-provider/rh-oidc.s3.us-east-1.amazonaws.com/1ricsv5bio0domn5gofgaar07aifjpr0 ParameterKey=IssuerURL,ParameterValue=rh-oidc.s3.us-east-1.amazonaws.com/1ricsv5bio0domn5gofgaar07aifjpr0 ParameterKey=MachineAPIOperatorRoleName,ParameterValue=cluster-test-openshift-machine-api-aws-cloud-credentials ParameterKey=MachineAPIOperatorPolicyARN,ParameterValue=arn:aws:iam::123456789012:policy/ManagedOpenShift-openshift-machine-api-undefined --region us-east-1 --capabilities CAPABILITY_NAMED_IAM
+    </ClipboardCopy>
+  </p>
+  <p>
+    <ClipboardCopy
+      additionalActions={null}
+      clickTip="Successfully copied to clipboard!"
+      entryDelay={300}
+      exitDelay={1600}
+      hoverTip="Copy to clipboard"
+      isCode={false}
+      isExpanded={false}
+      isReadOnly={true}
+      maxWidth="150px"
+      onChange={[Function]}
+      onCopy={[Function]}
+      position="top"
+      switchDelay={2000}
+      textAriaLabel="Copyable input"
+      toggleAriaLabel="Show content"
+      variant="inline"
+    >
+      aws cloudformation create-stack --stack-name oidc-provider-1i4counta3holamvo1g5tp6n8p3a03bq --template-body file://templates/cloudformation/openshift_oidc_provider.json --parameters ParameterKey=IssuerURL,ParameterValue=https://rh-oidc.s3.us-east-1.amazonaws.com/1ricsv5bio0domn5gofgaar07aifjpr0 --region us-east-1
+    </ClipboardCopy>
+  </p>
+</TextContent>
+`;

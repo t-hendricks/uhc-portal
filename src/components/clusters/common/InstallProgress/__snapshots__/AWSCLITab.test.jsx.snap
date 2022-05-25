@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AWSCLITab /> should render correctly 1`] = `
+<Stack
+  hasGutter={true}
+>
+  <StackItem>
+    <TextContent>
+      <TextList
+        component="ol"
+      >
+        <TextListItem>
+          Download and extract the following .zip file.
+        </TextListItem>
+        <TextListItem>
+          In the AWS CLI, run the commands with the included policy files to create the operator roles and OIDC provider.
+        </TextListItem>
+      </TextList>
+      <Button
+        isDisabled={true}
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Preparing .zip
+      </Button>
+    </TextContent>
+  </StackItem>
+</Stack>
+`;
