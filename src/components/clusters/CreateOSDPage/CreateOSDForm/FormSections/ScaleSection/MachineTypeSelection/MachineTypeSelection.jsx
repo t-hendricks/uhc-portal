@@ -25,6 +25,9 @@ export const machineCategories = [
   { name: 'general_purpose', label: 'General purpose' },
   { name: 'memory_optimized', label: 'Memory optimized' },
   { name: 'compute_optimized', label: 'Compute optimized' },
+  { name: 'storage_optimized', label: 'Storage optimized' },
+  { name: 'network_optimized', label: 'Network optimized' },
+  { name: 'burstable', label: 'Burstable' },
   { name: 'accelerated_computing', label: 'Accelerated computing' },
 ];
 
@@ -45,56 +48,56 @@ const machineTypeLabel = (machineType) => {
 };
 
 class MachineTypeSelection extends React.Component {
-   state = {
-     isOpen: false,
-   };
+  state = {
+    isOpen: false,
+  };
 
-   componentDidMount() {
-     const {
-       machineTypes, organization, input,
-     } = this.props;
+  componentDidMount() {
+    const {
+      machineTypes, organization, input,
+    } = this.props;
 
-     if (!input.value && machineTypes.fulfilled && organization.fulfilled) {
-       this.setDefaultValue();
-     }
-   }
+    if (!input.value && machineTypes.fulfilled && organization.fulfilled) {
+      this.setDefaultValue();
+    }
+  }
 
-   componentDidUpdate() {
-     const { machineTypes, input } = this.props;
-     if (machineTypes.error || machineTypes.pending) {
-       // Don't let the user submit if we couldn't get machine types.
-       this.setInvalidValue();
-     }
+  componentDidUpdate() {
+    const { machineTypes, input } = this.props;
+    if (machineTypes.error || machineTypes.pending) {
+      // Don't let the user submit if we couldn't get machine types.
+      this.setInvalidValue();
+    }
 
-     if (!input.value && machineTypes.fulfilled) {
-       // we got the machine types, and the user hasn't selected one yet - set to default.
-       this.setDefaultValue();
-     }
+    if (!input.value && machineTypes.fulfilled) {
+      // we got the machine types, and the user hasn't selected one yet - set to default.
+      this.setDefaultValue();
+    }
 
-     // if some external param changed, like MultiAz, and we no longer have quota
-     // for the selected instance type, we need to revert to default.
-     if (input.value && !this.hasQuotaForType(input.value)) {
-       this.setDefaultValue();
-     }
-   }
+    // if some external param changed, like MultiAz, and we no longer have quota
+    // for the selected instance type, we need to revert to default.
+    if (input.value && !this.hasQuotaForType(input.value)) {
+      this.setDefaultValue();
+    }
+  }
 
-   setDefaultValue() {
-     // Find the first sortedMachineTypes we have quota for, and set it as default
-     const { sortedMachineTypes, input } = this.props;
-     if (sortedMachineTypes.length > 0) {
-       const defaultType = sortedMachineTypes.find(type => this.hasQuotaForType(type.id));
-       if (defaultType) {
-         input.onChange(defaultType.id);
-       }
-     }
-   }
+  setDefaultValue() {
+    // Find the first sortedMachineTypes we have quota for, and set it as default
+    const { sortedMachineTypes, input } = this.props;
+    if (sortedMachineTypes.length > 0) {
+      const defaultType = sortedMachineTypes.find(type => this.hasQuotaForType(type.id));
+      if (defaultType) {
+        input.onChange(defaultType.id);
+      }
+    }
+  }
 
-   setInvalidValue() {
-     // Tell redux form the current value of this field is empty.
-     // This will cause it to not pass validation if it is required.
-     const { input } = this.props;
-     input.onChange('');
-   }
+  setInvalidValue() {
+    // Tell redux form the current value of this field is empty.
+    // This will cause it to not pass validation if it is required.
+    const { input } = this.props;
+    input.onChange('');
+  }
 
   onToggle = (isOpen) => {
     this.setState({
