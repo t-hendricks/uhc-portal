@@ -16,12 +16,17 @@ import { noMachineTypes } from '../../../../../../../common/helpers';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../../../../../common/quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../../../../common/subscriptionTypes';
 
-export const machineCategories = {
-  GENERAL_PURPOSE: { name: 'general_purpose', label: 'General purpose' },
-  MEMORY_OPTIMIZED: { name: 'memory_optimized', label: 'Memory optimized' },
-  COMPUTE_OPTIMIZED: { name: 'compute_optimized', label: 'Compute optimized' },
-  ACCELERATED_COMPUTING: { name: 'accelerated_computing', label: 'Accelerated computing' },
-};
+/**
+ * Defines order and labels of groups to display to user.
+ * The `name` corresponds to `category` field in machine_types API,
+ * and to `generic_name` in quota_cost API.
+ */
+export const machineCategories = [
+  { name: 'general_purpose', label: 'General purpose' },
+  { name: 'memory_optimized', label: 'Memory optimized' },
+  { name: 'compute_optimized', label: 'Compute optimized' },
+  { name: 'accelerated_computing', label: 'Accelerated computing' },
+];
 
 const machineTypeLabel = (machineType) => {
   if (!machineType) {
@@ -30,7 +35,7 @@ const machineTypeLabel = (machineType) => {
   const humanizedMemory = humanizeValueWithUnit(machineType.memory.value,
     machineType.memory.unit);
   let label = `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
-  if (machineType.category === machineCategories.ACCELERATED_COMPUTING.name) {
+  if (machineType.category === 'accelerated_computing') {
     const numGPUsStr = machineType.name.match(/\d+ GPU[s]?/g);
     if (numGPUsStr) {
       label += ` (${numGPUsStr})`;
@@ -186,27 +191,24 @@ class MachineTypeSelection extends React.Component {
       );
     };
 
+    /**
+     * Partitions machine types by categories. Keeps relative order within each category.
+     * @param machines - Array of machine_types API items.
+     * @returns Array of [categoryLabel, categoryMachines] pairs.
+     *   Some may contain 0 machines.
+     */
     const groupedMachineTypes = (machines) => {
-      const machineGroups = {};
-      Object.values(machineCategories).forEach((category) => {
-        machineGroups[category.label] = [];
+      const machineGroups = [];
+      const byCategoryName = {};
+      machineCategories.forEach(({ name, label }) => {
+        const categoryMachines = [];
+        byCategoryName[name] = categoryMachines;
+        machineGroups.push([label, categoryMachines]);
       });
 
       machines.forEach((machineType) => {
-        switch (machineType.category) {
-          case machineCategories.MEMORY_OPTIMIZED.name:
-            machineGroups[machineCategories.MEMORY_OPTIMIZED.label].push(machineType);
-            return;
-          case machineCategories.COMPUTE_OPTIMIZED.name:
-            machineGroups[machineCategories.COMPUTE_OPTIMIZED.label].push(machineType);
-            return;
-          case machineCategories.GENERAL_PURPOSE.name:
-            machineGroups[machineCategories.GENERAL_PURPOSE.label].push(machineType);
-            break;
-          case machineCategories.ACCELERATED_COMPUTING.name:
-            machineGroups[machineCategories.ACCELERATED_COMPUTING.label].push(machineType);
-            break;
-          default:
+        if (byCategoryName[machineType.category]) {
+          byCategoryName[machineType.category].push(machineType);
         }
       });
 
@@ -215,11 +217,11 @@ class MachineTypeSelection extends React.Component {
 
     const groupedSelectItems = (machines) => {
       const machineGroups = groupedMachineTypes(machines);
-      const selectGroups = Object.keys(machineGroups).map((categoryLabel) => {
-        if (machineGroups[categoryLabel].length > 0) {
+      const selectGroups = machineGroups.map(([categoryLabel, categoryMachines]) => {
+        if (categoryMachines.length > 0) {
           return (
             <SelectGroup label={categoryLabel} key={categoryLabel}>
-              {machineGroups[categoryLabel].map(machineType => machineTypeSelectItem(machineType))}
+              {categoryMachines.map(machineType => machineTypeSelectItem(machineType))}
             </SelectGroup>
           );
         }
