@@ -9,7 +9,6 @@ import ExternalLink from '../../../common/ExternalLink';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
-import { getResourceName } from '../../../../redux/actions/machineTypesActions';
 import links from '../../../../common/installLinks.mjs';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../quotaSelectors';
@@ -64,7 +63,7 @@ class UpgradeTrialClusterDialog extends Component {
       return quota;
     }
 
-    const resourceName = getResourceName(machineTypesByID[machineTypeID]);
+    const resourceName = machineTypesByID[machineTypeID].generic_name;
     const cloudProviderID = get(cluster, 'cloud_provider.id');
 
     const quotaParams = {

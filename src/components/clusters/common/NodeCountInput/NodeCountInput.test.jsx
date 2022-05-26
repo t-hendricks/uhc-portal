@@ -11,7 +11,7 @@ const baseProps = {
   currentNodeCount: 4,
   quota: {},
   machineTypesByID: {
-    fake: { id: 'fake', resource_name: 'fake' },
+    fake: { id: 'fake', generic_name: 'fake' },
   },
   input: {
     name: 'compute-nodes',

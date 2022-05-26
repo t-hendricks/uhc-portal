@@ -96,7 +96,7 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
             Array [
               Array [
                 "cluster",
-                "gp.small",
+                "standard-4",
                 Object {
                   "title": "multizone",
                 },
@@ -113,7 +113,7 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
               ],
               Array [
                 "compute.node",
-                "gp.small",
+                "standard-4",
                 Object {
                   "title": "N/A",
                 },

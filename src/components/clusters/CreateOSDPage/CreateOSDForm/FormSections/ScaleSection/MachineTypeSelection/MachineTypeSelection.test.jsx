@@ -43,7 +43,7 @@ const machineTypesByID = {
       href: '/api/clusters_mgmt/v1/cloud_providers/aws',
     },
     ccs_only: false,
-    resource_name: 'gp.small',
+    generic_name: 'standard-4',
   },
   'm5.4xlarge': {
     kind: 'MachineType',
@@ -66,7 +66,7 @@ const machineTypesByID = {
       href: '/api/clusters_mgmt/v1/cloud_providers/aws',
     },
     ccs_only: false,
-    resource_name: 'gp.large',
+    generic_name: 'standard-16',
   },
   'm5.12xlarge': {
     kind: 'MachineType',
@@ -89,7 +89,7 @@ const machineTypesByID = {
       href: '/api/clusters_mgmt/v1/cloud_providers/aws',
     },
     ccs_only: true,
-    resource_name: 'gp.xxlarge',
+    generic_name: 'standard-48',
   },
   'g4dn.2xlarge': {
     kind: 'MachineType',
@@ -112,7 +112,7 @@ const machineTypesByID = {
       href: '/api/clusters_mgmt/v1/cloud_providers/aws',
     },
     ccs_only: true,
-    resource_name: 'gpu.medium',
+    generic_name: 't4-gpu-8',
   },
 };
 
