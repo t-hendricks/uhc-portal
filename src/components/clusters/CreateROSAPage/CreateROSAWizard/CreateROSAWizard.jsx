@@ -383,6 +383,7 @@ class CreateROSAWizardInternal extends React.Component {
                   <CreateRosaWizardFooter
                     onSubmit={onSubmit}
                     onBeforeNext={goToNext => this.beforeOnNext(goToNext)}
+                    isPending={createClusterResponse.pending}
                   />
                 )}
               />
