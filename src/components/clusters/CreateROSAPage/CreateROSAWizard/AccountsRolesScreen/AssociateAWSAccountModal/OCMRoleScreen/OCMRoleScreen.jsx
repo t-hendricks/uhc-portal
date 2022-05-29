@@ -80,11 +80,6 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => (
                 {' '}
                 <PopoverHint
                   bodyContent="The basic OCM role is necessary (one per Red Hat organization) to allow this interface to detect the presence of ROSA necessary AWS roles and policies."
-                  footerContent={(
-                    <ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>
-                      View AWS policy permissions required by the basic OCM role
-                    </ExternalLink>
-                  )}
                 />
               </strong>
               <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role">
@@ -102,11 +97,6 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => (
                 {' '}
                 <PopoverHint
                   bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually, during deployment."
-                  footerContent={(
-                    <ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>
-                      View the AWS policy permissions required by the admin OCM role.
-                    </ExternalLink>
-                  )}
                 />
               </strong>
               <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin">

@@ -57,11 +57,6 @@ const UserRoleScreen = ({ hasAWSAccounts }) => (
           </strong>
           <PopoverHint
             bodyContent="The user role is necessary to allow this interface to validate your user account and enable a trust with the OCM role."
-            footerContent={(
-              <ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>
-                View the AWS policy permissions required by the user role.
-              </ExternalLink>
-            )}
           />
           <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
             {rosaCLICommand.userRole}
