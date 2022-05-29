@@ -7,6 +7,18 @@ const logger = require('@wdio/logger').default;
 
 const { getAuthConfig } = require('./selenium-js/authConfig');
 
+const saveScreenshot = async (name) => {
+  const dir = 'run/output/embedded_files/';
+  await util.promisify(fs.mkdir)(dir, { recursive: true });
+
+  const timestamp = new Date().toISOString();
+  const filepath = path.join(dir, `${timestamp}.${name}.png`);
+  // eslint-disable-next-line no-undef
+  await browser.saveScreenshot(filepath);
+  process.emit('test:screenshot', filepath);
+  log.error(`screenshot:\n  ${filepath}\n`);
+};
+
 exports.config = {
   // =====================
   // Server Configurations
@@ -246,6 +258,7 @@ exports.config = {
       const close = await $('._pendo-close-guide');
       const exists = await close.isExisting();
       log.error('Trying to close pendo guide, exists = ', exists);
+      await saveScreenshot('before-closing-pendo');
       if (exists) {
         await close.click();
       }
@@ -256,14 +269,7 @@ exports.config = {
       await browser.debug();
     } else {
       const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
-      const timestamp = new Date().toISOString();
-      const dir = 'run/output/embedded_files/';
-      const filepath = path.join(dir, `${timestamp}.${testName}.png`);
-      await util.promisify(fs.mkdir)(dir, { recursive: true });
-      // eslint-disable-next-line no-undef
-      await browser.saveScreenshot(filepath);
-      process.emit('test:screenshot', filepath);
-      log.error(`screenshot:\n  ${filepath}\n`);
+      await saveScreenshot(testName);
       log.info('Tip: to stop for interactive debugging, set SELENIUM_DEBUG=true env var');
     }
   },
