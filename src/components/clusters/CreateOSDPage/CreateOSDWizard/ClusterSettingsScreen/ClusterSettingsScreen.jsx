@@ -111,9 +111,9 @@ function ClusterSettingsScreen({
               <Alert
                 isInline
                 variant="info"
-                title="The cloud storage for your cluster is encrypted at rest"
+                title="The cloud storage for your cluster is encrypted at rest."
               >
-                <ExternalLink noIcon href={cloudProviderLearnLink}>Learn more</ExternalLink>
+                <ExternalLink href={cloudProviderLearnLink}>Learn more</ExternalLink>
               </Alert>
             </GridItem>
             <GridItem>
