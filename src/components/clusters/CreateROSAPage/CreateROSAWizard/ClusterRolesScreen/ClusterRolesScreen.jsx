@@ -162,7 +162,7 @@ function ClusterRolesScreen({
             Choose the preferred mode for creating operator roles and OIDC provider.
             {' '}
             <ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>
-              Learn more about ROSA roles.
+              Learn more about ROSA roles
             </ExternalLink>
           </Text>
         </GridItem>
