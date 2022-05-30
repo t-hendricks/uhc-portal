@@ -131,7 +131,7 @@ function ClusterSettingsScreen({
                   </>
                 )}
               />
-              <div className="ocm-c--reduxcheckbox-description">Additional encryption of Openshift and Kubernetes API resources.</div>
+              <div className="ocm-c--reduxcheckbox-description">Additional encryption of OpenShift and Kubernetes API resources.</div>
             </GridItem>
           </Grid>
         </FormGroup>
