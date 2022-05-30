@@ -466,7 +466,7 @@ class CreateOSDWizardInternal extends React.Component {
           }) => (
             <>
               {activeStep.name === 'Review and create'
-                ? <Button variant="primary" type="submit" onClick={onSubmit}>Create Cluster</Button>
+                ? <Button variant="primary" type="submit" onClick={onSubmit}>Create cluster</Button>
                 : (
                   <Button
                     variant="primary"
