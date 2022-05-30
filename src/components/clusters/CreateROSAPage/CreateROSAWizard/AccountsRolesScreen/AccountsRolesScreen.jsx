@@ -103,7 +103,7 @@ function AccountsRolesScreen({
               <ul>
                 <li>
                   <Text component={TextVariants.p} className="ocm-secondary-text">
-                    Completed the
+                    Review and configure the
                     {' '}
                     <ExternalLink noIcon href={links.ROSA_AWS_STS_PREREQUISITES}>
                       AWS prerequisites for ROSA with STS
