@@ -19,7 +19,7 @@ const constants = {
     networks must not overlap.  Select address pools large enough to fit your anticipated workload.`,
   hostPrefixHint: `The subnet prefix length to assign to each individual node.  For example, if host
     prefix is set to /23, then each node is assigned a /23 subnet out of the given CIDR, allowing
-    for 510 (2^(32 - 23) - 2) Pod IP addresses.`,
+    for 510 (2^(32 - 23) - 2) pod IP addresses.`,
   bypassSCPChecksHint: `Some AWS service control policies (SCP) will cause installation to fail even if
     the credentials have the correct permissions. Disabling SCP checks allows installation to proceed.
     The SCP will still be enforced even if the checks are bypassed.`,
@@ -38,7 +38,7 @@ const constants = {
   amazonEBS: 'Provide your own AWS KMS key ARN for encryption of EBS resources associated with your EC2 instances.',
   awsKeyARN: 'The key ARN is the Amazon Resource Name (ARN) of a CMK. It is a unique, fully qualified identifier for the CMK. A key ARN includes the AWS account, Region, and the key ID.',
   privateLinkHint: 'To provide support, Red Hat Site Reliability Engineering (SRE) connects to the cluster using only AWS PrivateLink endpoints instead of public endpoints.  This option cannot be changed after a cluster is created.',
-  clusterProxyHint: 'Enable an HTTP or HTTPS proxy to deny direct access to the Internet from your cluster.',
+  clusterProxyHint: 'Enable an HTTP or HTTPS proxy to deny direct access to the internet from your cluster.',
 };
 
 const billingModelConstants = {
