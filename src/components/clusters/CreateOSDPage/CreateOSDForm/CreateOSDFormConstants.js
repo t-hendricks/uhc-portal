@@ -29,7 +29,7 @@ const constants = {
   keyName: 'A cryptographic key is a resource that is used for encrypting and decrypting data or for producing and verifying digital signatures',
   keylocation: 'A key location represent the geographical regions where a Cloud KMS resource is stored and can be accessed.',
   kmsserviceAccount: 'Compute Engine default service account.',
-  enableUserWorkloadMonitoringHint: 'Monitor your own projects in isolation from Red Hat Site Reliability Engineer (SRE) platform metrics.',
+  enableUserWorkloadMonitoringHint: 'Monitor your own projects in isolation from Red Hat Site Reliability Engineering (SRE) platform metrics.',
   enableUserWorkloadMonitoringHelp: `This feature is enabled by default and provides monitoring for user-defined projects. 
  This includes metrics provided through service endpoints in user-defined projects as well as pods running in user-defined projects.`,
   cloudKMSTitle: 'Cloud Key Management Service',
