@@ -96,7 +96,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => (
                 Admin OCM role
                 {' '}
                 <PopoverHint
-                  bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually, during deployment."
+                  bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually during deployment"
                 />
               </strong>
               <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin">
