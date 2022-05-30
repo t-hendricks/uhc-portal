@@ -56,14 +56,14 @@ const UserRoleScreen = ({ hasAWSAccounts }) => (
             {' '}
           </strong>
           <PopoverHint
-            bodyContent="The user role is necessary to allow this interface to validate your user account and enable a trust with the OCM role."
+            bodyContent="The user role is necessary to allow this interface to validate your user account and enable a trust with the OCM role"
           />
           <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
             {rosaCLICommand.userRole}
           </InstructionCommand>
         </div>
         <Title headingLevel="h3">
-          Make sure to associate the User role with your Red Hat account
+          Make sure to associate the user role with your Red Hat account
         </Title>
         <Text component={TextVariants.p}>
           If not yet linked, run the following command to associate the user role
