@@ -4,7 +4,7 @@
 
 set -e -u -o pipefail
 
-cd "$(dirname "$(dirname "$0")")"
+cd "$(dirname "$(dirname "$0")")"  # repo root directory (above run/ that contains this script)
 
 # If insights-proxy is already running, spandx will happily start on
 # next available port, despite us requesting specific SPANDX_PORT.
