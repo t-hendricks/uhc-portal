@@ -36,7 +36,7 @@ exports[`<OCMRolesDialog /> should render 1`] = `
                 <Text
                   component="p"
                 >
-                  Your Red Hat login is the username you use to access your Red Hat account.
+                  Your Red Hat login is the username you use to access your Red Hat user account.
                 </Text>
               </TextContent>
             }

@@ -1110,7 +1110,7 @@ exports[` 1`] = `
                                                     aria-label="Username"
                                                     bodyContent={
                                                       <p>
-                                                        The username is the Red Hat login that is used to access the Red Hat account.
+                                                        The username is the Red Hat login that is used to access the Red Hat user account.
                                                       </p>
                                                     }
                                                     id="ocm-roles-section-username"
@@ -1173,7 +1173,7 @@ exports[` 1`] = `
                                                               id="popover-ocm-roles-section-username-body"
                                                             >
                                                               <p>
-                                                                The username is the Red Hat login that is used to access the Red Hat account.
+                                                                The username is the Red Hat login that is used to access the Red Hat user account.
                                                               </p>
                                                             </PopoverBody>
                                                           </PopoverContent>
@@ -3255,7 +3255,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                     aria-label="Username"
                                                     bodyContent={
                                                       <p>
-                                                        The username is the Red Hat login that is used to access the Red Hat account.
+                                                        The username is the Red Hat login that is used to access the Red Hat user account.
                                                       </p>
                                                     }
                                                     id="ocm-roles-section-username"
@@ -3318,7 +3318,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                               id="popover-ocm-roles-section-username-body"
                                                             >
                                                               <p>
-                                                                The username is the Red Hat login that is used to access the Red Hat account.
+                                                                The username is the Red Hat login that is used to access the Red Hat user account.
                                                               </p>
                                                             </PopoverBody>
                                                           </PopoverContent>
