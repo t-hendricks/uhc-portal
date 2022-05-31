@@ -77,7 +77,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
               <DescriptionListGroup>
                 <DescriptionListTerm>Availability</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {cluster.multi_az ? 'Multi zone' : 'Single zone'}
+                  {cluster.multi_az ? 'Multi-zone' : 'Single zone'}
                 </DescriptionListDescription>
               </DescriptionListGroup>
             </>

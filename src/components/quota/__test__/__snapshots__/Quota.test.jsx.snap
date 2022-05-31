@@ -98,7 +98,7 @@ exports[`<Quota /> OSDSubscriptionCard should render 1`] = `
                 "cluster",
                 "standard-4",
                 Object {
-                  "title": "multi zone",
+                  "title": "multi-zone",
                 },
                 "Standard",
                 "OSD",

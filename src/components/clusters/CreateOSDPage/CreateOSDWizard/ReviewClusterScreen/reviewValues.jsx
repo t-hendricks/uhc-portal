@@ -76,7 +76,7 @@ const reviewValues = {
     title: 'Availability',
     isBoolean: true,
     values: {
-      true: 'Multi zone',
+      true: 'Multi-zone',
       false: 'Single zone',
     },
   },
