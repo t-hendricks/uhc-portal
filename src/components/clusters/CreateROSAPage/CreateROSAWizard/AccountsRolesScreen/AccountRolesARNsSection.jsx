@@ -230,7 +230,7 @@ function AccountRolesARNsSection({
                   variant="info"
                   isInline
                   isPlain
-                  title={`The selected account-wide roles are compatible with OpenShift version ${rosaMaxOSVersion} and earlier.`}
+                  title={`The selected account-wide roles are compatible with OpenShift version ${semver.major(rosaMaxOSVersion)}.${semver.minor(rosaMaxOSVersion)} and earlier.`}
                 />
               </GridItem>
             )}

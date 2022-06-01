@@ -354,7 +354,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Red Hat OpenShift Service on AWS
+                      Red Hat OpenShift Service on AWS (ROSA)
                     </a>
                   </React.Fragment>,
                   "Amazon Web Services",
@@ -363,7 +363,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                     <Button
                       className="get-started-button"
                       component={[Function]}
-                      variant="secondary"
+                      variant="primary"
                     >
                       Create cluster
                     </Button>
@@ -897,7 +897,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Red Hat OpenShift Service on AWS
+                      Red Hat OpenShift Service on AWS (ROSA)
                     </a>
                   </React.Fragment>,
                   "Amazon Web Services",
@@ -906,7 +906,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                     <Button
                       className="get-started-button"
                       component={[Function]}
-                      variant="secondary"
+                      variant="primary"
                     >
                       Create cluster
                     </Button>
@@ -1375,7 +1375,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Red Hat OpenShift Service on AWS
+                      Red Hat OpenShift Service on AWS (ROSA)
                     </a>
                   </React.Fragment>,
                   "Amazon Web Services",
@@ -1384,7 +1384,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                     <Button
                       className="get-started-button"
                       component={[Function]}
-                      variant="secondary"
+                      variant="primary"
                     >
                       Create cluster
                     </Button>

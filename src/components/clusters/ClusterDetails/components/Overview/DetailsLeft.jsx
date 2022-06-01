@@ -13,11 +13,14 @@ import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import BillingModelLabel from '../../../common/BillingModelLabel';
 import InfrastructureModelLabel from '../../../common/InfrastructureModelLabel';
 import ClusterVersionInfo from './ClusterVersionInfo';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 function DetailsLeft({ cluster, cloudProviders }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
   let cloudProvider;
   const region = get(cluster, 'region.id', 'N/A');
+  const planType = get(cluster, 'subscription.plan.type');
+  const isROSA = planType === normalizedProducts.ROSA;
 
   if (cloudProviderId && cloudProviders.fulfilled && cloudProviders.providers[cloudProviderId]) {
     cloudProvider = cloudProviders.providers[cloudProviderId].display_name || 'N/A';
@@ -48,19 +51,21 @@ function DetailsLeft({ cluster, cloudProviders }) {
             {region}
           </DescriptionListDescription>
         </DescriptionListGroup>
-        <DescriptionListGroup>
-          <DescriptionListTerm>Provider</DescriptionListTerm>
-          <DescriptionListDescription>
-            {cloudProvider}
-          </DescriptionListDescription>
-        </DescriptionListGroup>
+        {!isROSA && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>Provider</DescriptionListTerm>
+            <DescriptionListDescription>
+              {cloudProvider}
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
         {cluster.managed
           && (
             <>
               <DescriptionListGroup>
                 <DescriptionListTerm>Availability</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {cluster.multi_az ? 'Multizone' : 'Single zone'}
+                  {cluster.multi_az ? 'Multi-zone' : 'Single zone'}
                 </DescriptionListDescription>
               </DescriptionListGroup>
             </>
@@ -83,7 +88,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
             {get(cluster, 'subscription.creator.name') || get(cluster, 'subscription.creator.username', 'N/A')}
           </DescriptionListDescription>
         </DescriptionListGroup>
-        {cluster.managed && (
+        {cluster.managed && !isROSA && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>

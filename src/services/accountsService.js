@@ -157,6 +157,16 @@ const getOCMRole = awsAccountID => apiRequest({
   url: '/api/clusters_mgmt/v1/aws_inquiries/sts_ocm_role',
 });
 
+const getPolicies = () => apiRequest({
+  method: 'get',
+  url: '/api/clusters_mgmt/v1/aws_inquiries/sts_policies',
+});
+
+const getCredentialRequests = () => apiRequest({
+  method: 'get',
+  url: '/api/clusters_mgmt/v1/aws_inquiries/sts_credential_requests',
+});
+
 function getRequest(pathParams, params = {}) {
   const type = pathParams[0];
   let url;
@@ -191,6 +201,8 @@ const accountsService = {
   getOrganizationLabels,
   getAWSAccountARNs,
   getOCMRole,
+  getPolicies,
+  getCredentialRequests,
 };
 
 export default accountsService;

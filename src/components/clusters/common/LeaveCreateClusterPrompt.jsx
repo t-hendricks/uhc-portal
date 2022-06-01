@@ -65,7 +65,7 @@ function LeaveCreateClusterPrompt({ when = true }) {
       ]}
       data-testid="leave-cluster-modal"
     >
-      All data entered will be lost
+      All data entered will be lost.
     </Modal>
   ) : null;
 }

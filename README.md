@@ -203,43 +203,44 @@ For example, using this `inject`, it takes 1s for the request to return an AMS e
 To make it easier for developers to write tests, we've decided to switch to a javascript based testing framework - [webdriver.io](https://webdriver.io).
 
 wdio tests are stored in the `selenium-js/` directory. We use the "page objects" pattern, in `selenium-js/pageobjects` - these define selectors for various components.
-
 Test cases are in `selenium-js/specs`.
 
-Short version: Don’t need anything running, just `yarn e2e-test` will start all services, run test & kill all services.  However when developing, the below procedure allows much faster iterations.
+These instructions assume `yarn start` (or equivalent dev-env) is already running.  In another terminal:
 
-Long version: To run these tests, assuming `yarn start` (or equivalent dev-env) is already running, run the following in separate terminals.
+You'll need credentials in environment variables - `TEST_SELENIUM_WITHQUOTA_PASSWORD` and `TEST_SELENIUM_WITHQUOTA_USER` (ask team members).
 
- 1. You need _some_ WebDriver server running on localhost:4444.
+Optionally export `SELENIUM_DEBUG=true` environment variable if you want to stop on failure to let you debug (otherwise, it writes a screenshot file and moves on).
 
-    - To use same thing as under CI, in a container:
+Now you need to choose which WebDriver server to use:
 
-      Optionally export `BROWSER=firefox` or `BROWSER=chrome`.
-      Run `yarn selenium-browser`. This starts a selenium control server on port 4444, and VNC server on port 5900.
+- Recommended: a local driver, that opens a browser window directly on your screen.
+  ```
+  yarn selenium-with-chromedriver
+  ```
+  This starts a selenium control server on port 4444, and runs the tests accordingly.
 
-      Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`.
-      If you have Vinagre (`sudo dnf install vinagre`), simply run `yarn selenium-viewer`.
+  Extra argument will be passed on to `wdio` for example:
+  ```
+  yarn selenium-with-chromedriver --watch --spec selenium-js/specs/Downloads.js
+  ```
 
-      - Actually in CI we use run/selenium-pod.sh that starts containers differently to avoid port conflicts for parallel CI.
-        It also uses static nginx, which requires a full `yarn build` on every change — inconvenient for development.
+- To use same browser as under CI, in a container:
 
-    - Or get a local driver, that opens a browser window directly on your screen — no VNC needed!
-      For chrome: `sudo dnf install chromedriver` or `brew install --cask chromedriver`.
-      
-      Having that, run `chromedriver --port=4444 --url-base=/wd/hub --verbose`
+  Optionally export `BROWSER=firefox` or `BROWSER=chrome`.  Run `yarn selenium-with-vnc`.
+  This starts a selenium control server on port 4444, and VNC server on port 5900, and runs the tests.
 
-      See https://webdriver.io/docs/driverbinaries for some other options.
+  Extra argument will be passed on to `wdio` for example:
+  ```
+  yarn selenium-with-vnc --watch --spec selenium-js/specs/Downloads.js
+  ```
 
- 2. Export the credentials in environment variables - `TEST_SELENIUM_WITHQUOTA_PASSWORD` and `TEST_SELENIUM_WITHQUOTA_USER` (ask team members).
+  Optional: to observe/debug the test, connect a VNC viewer to `localhost`, password is `secret`.
+  If you have Vinagre (`sudo dnf install vinagre`), simply run `yarn selenium-viewer` in another terminal.
 
-    Optionally export `SELENIUM_DEBUG=true` environment variable if you want to stop on failure to let you debug (otherwise, it writes a screenshot file and moves on).
-
-    Optionally export `BROWSER=chrome` or similar — should match driver you're using.  
-    Run `yarn selenium-test`.  
-    Can pass wdio flags e.g. `yarn selenium-test --spec selenium-js/specs/Downloads.js`.
+  - Actually in CI we use run/selenium-pod.sh that starts containers differently to avoid port conflicts for parallel CI.
+    It also uses static nginx, which requires a full `yarn build` on every change — inconvenient for development.
 
 The yarn commands are defined in package.json "scripts" section, some running scripts from run/ directory.
-Both `selenium-test` and `selenium-viewer` will wait for the browser, so you can start them in any order.
 
 # Alternative option for running locally: insights-proxy
 

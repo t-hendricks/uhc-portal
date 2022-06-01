@@ -12,6 +12,8 @@ if [ -z "${TEST_SELENIUM_WITHQUOTA_PASSWORD}" ]; then
   exit 1
 fi
 
+cd "$(dirname "$(dirname "$0")")"  # repo root directory (above run/ that contains this script)
+
 # Check that the application has been built:
 if [ ! -d "build" ]; then
   echo "Directory 'build' doesn't exist. Has the application been built?"
@@ -200,6 +202,6 @@ if [ -z "${JENKINS_HOME}" ]; then
 fi
 
 # Run the tests:
-yarn run wdio \
-  --hostname "${browser_host}" \
-  --port "${browser_port}"
+export TEST_SELENIUM_WD_HOSTNAME="${browser_host}"
+export TEST_SELENIUM_WD_PORT="${browser_port}"
+run/selenium-test.sh

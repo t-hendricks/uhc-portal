@@ -36,6 +36,9 @@ mockdata/regenerate-clusters.json.sh # first because really fast
 
 node --version
 
+# In CI we use selenium-standalone containers, don't need local chromedriver
+export CHROMEDRIVER_SKIP_DOWNLOAD=true
+
 make \
   js-lint \
   app \
