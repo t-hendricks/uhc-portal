@@ -50,7 +50,8 @@ function VersionSelection({
     if (versions.length && !input.value?.raw_id) {
       const defaultVersionIndex = versions.findIndex(version => version.default === true);
       const defaultRosaVersionIndex = isRosa
-        && versions.findIndex(version => isValidRosaVersion(version.raw_id));
+        ? versions.findIndex(version => isValidRosaVersion(version.raw_id))
+        : -1;
       // default to max rosa version supported, version.default, or first version in list
       const versionIndex = defaultRosaVersionIndex !== -1
         ? defaultRosaVersionIndex
