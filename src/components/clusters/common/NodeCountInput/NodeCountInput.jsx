@@ -62,7 +62,7 @@ class NodeCountInput extends React.Component {
     if (!machineTypeResource) {
       return 0;
     }
-    const resourceName = machineTypeResource.resource_name;
+    const resourceName = machineTypeResource.generic_name;
 
     const quotaParams = {
       product,

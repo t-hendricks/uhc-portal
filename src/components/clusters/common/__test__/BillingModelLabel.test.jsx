@@ -22,10 +22,4 @@ describe('BillingModelLabel', () => {
     const wrapper = shallow(<BillingModelLabel cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
   });
-
-  it('for ROSA cluster', () => {
-    const { cluster } = fixtures.ROSAClusterDetails;
-    const wrapper = shallow(<BillingModelLabel cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
-  });
 });

@@ -334,7 +334,7 @@ const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
       (
         <>
           <a href={links.AWS} target="_blank" rel="noopener noreferrer">
-            Red Hat OpenShift Service on AWS
+            Red Hat OpenShift Service on AWS (ROSA)
           </a>
         </>
       ),
@@ -344,7 +344,7 @@ const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
         <>
           <Button
             component={props => <Link {...props} to={`/create/rosa/${rosaCreationWizardFeature ? 'wizard' : 'welcome'}`} />}
-            variant="secondary"
+            variant="primary"
             className="get-started-button"
           >
             Create cluster

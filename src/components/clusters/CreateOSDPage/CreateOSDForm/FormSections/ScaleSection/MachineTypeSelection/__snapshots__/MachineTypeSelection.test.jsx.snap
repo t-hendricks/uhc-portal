@@ -94,6 +94,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 8,
         },
+        "generic_name": "t4-gpu-8",
         "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
         "id": "g4dn.2xlarge",
         "kind": "MachineType",
@@ -102,7 +103,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 34359738368,
         },
         "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "resource_name": "gpu.medium",
         "size": "medium",
       },
       "m5.12xlarge": Object {
@@ -117,6 +117,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 48,
         },
+        "generic_name": "standard-48",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
         "id": "m5.12xlarge",
         "kind": "MachineType",
@@ -125,7 +126,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 206158430208,
         },
         "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xxlarge",
         "size": "xxlarge",
       },
       "m5.4xlarge": Object {
@@ -140,6 +140,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 16,
         },
+        "generic_name": "standard-16",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
         "id": "m5.4xlarge",
         "kind": "MachineType",
@@ -148,7 +149,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 68719476736,
         },
         "name": "m5.4xlarge - General Purpose",
-        "resource_name": "gp.large",
         "size": "large",
       },
       "m5.xlarge": Object {
@@ -163,6 +163,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 4,
         },
+        "generic_name": "standard-4",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
         "id": "m5.xlarge",
         "kind": "MachineType",
@@ -171,7 +172,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 17179869184,
         },
         "name": "m5.xlarge - General Purpose",
-        "resource_name": "gp.small",
         "size": "small",
       },
     }
@@ -1257,7 +1257,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               "byoc": Object {
                 "multiAz": Object {
                   "available": 20,
-                  "gp.small": 20,
+                  "standard-4": 20,
                 },
                 "singleAz": Object {
                   "available": 0,
@@ -1279,7 +1279,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               "byoc": Object {
                 "multiAz": Object {
                   "available": 20,
-                  "gp.small": 20,
+                  "standard-4": 20,
                 },
                 "singleAz": Object {
                   "available": 0,
@@ -1448,7 +1448,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               "cloud_provider": "any",
               "cost": 1,
               "product": "OSD",
-              "resource_name": "gp.small",
+              "resource_name": "standard-4",
               "resource_type": "cluster",
             },
           ],
@@ -1468,7 +1468,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               "cloud_provider": "any",
               "cost": 4,
               "product": "OSD",
-              "resource_name": "gp.small",
+              "resource_name": "standard-4",
               "resource_type": "compute.node",
             },
           ],
@@ -2228,7 +2228,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             "aws": Object {
               "byoc": Object {
                 "available": 0,
-                "gp.small": Object {
+                "standard-4": Object {
                   "available": 4,
                   "cost": 4,
                 },
@@ -2240,7 +2240,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             "gcp": Object {
               "byoc": Object {
                 "available": 0,
-                "gp.small": Object {
+                "standard-4": Object {
                   "available": 4,
                   "cost": 4,
                 },
@@ -2888,6 +2888,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 4,
         },
+        "generic_name": "standard-4",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
         "id": "m5.xlarge",
         "kind": "MachineType",
@@ -2896,7 +2897,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 17179869184,
         },
         "name": "m5.xlarge - General Purpose",
-        "resource_name": "gp.small",
         "size": "small",
       },
       Object {
@@ -2911,6 +2911,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 16,
         },
+        "generic_name": "standard-16",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
         "id": "m5.4xlarge",
         "kind": "MachineType",
@@ -2919,7 +2920,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 68719476736,
         },
         "name": "m5.4xlarge - General Purpose",
-        "resource_name": "gp.large",
         "size": "large",
       },
       Object {
@@ -2934,6 +2934,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 48,
         },
+        "generic_name": "standard-48",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
         "id": "m5.12xlarge",
         "kind": "MachineType",
@@ -2942,7 +2943,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 206158430208,
         },
         "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xxlarge",
         "size": "xxlarge",
       },
       Object {
@@ -2957,6 +2957,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 8,
         },
+        "generic_name": "t4-gpu-8",
         "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
         "id": "g4dn.2xlarge",
         "kind": "MachineType",
@@ -2965,7 +2966,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 34359738368,
         },
         "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "resource_name": "gpu.medium",
         "size": "medium",
       },
     ]
@@ -3025,6 +3025,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 8,
         },
+        "generic_name": "t4-gpu-8",
         "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
         "id": "g4dn.2xlarge",
         "kind": "MachineType",
@@ -3033,7 +3034,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 34359738368,
         },
         "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "resource_name": "gpu.medium",
         "size": "medium",
       },
       "m5.12xlarge": Object {
@@ -3048,6 +3048,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 48,
         },
+        "generic_name": "standard-48",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
         "id": "m5.12xlarge",
         "kind": "MachineType",
@@ -3056,7 +3057,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 206158430208,
         },
         "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xxlarge",
         "size": "xxlarge",
       },
       "m5.4xlarge": Object {
@@ -3071,6 +3071,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 16,
         },
+        "generic_name": "standard-16",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
         "id": "m5.4xlarge",
         "kind": "MachineType",
@@ -3079,7 +3080,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 68719476736,
         },
         "name": "m5.4xlarge - General Purpose",
-        "resource_name": "gp.large",
         "size": "large",
       },
       "m5.xlarge": Object {
@@ -3094,6 +3094,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 4,
         },
+        "generic_name": "standard-4",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
         "id": "m5.xlarge",
         "kind": "MachineType",
@@ -3102,7 +3103,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 17179869184,
         },
         "name": "m5.xlarge - General Purpose",
-        "resource_name": "gp.small",
         "size": "small",
       },
     }
@@ -4188,7 +4188,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               "byoc": Object {
                 "multiAz": Object {
                   "available": 20,
-                  "gp.small": 20,
+                  "standard-4": 20,
                 },
                 "singleAz": Object {
                   "available": 0,
@@ -4210,7 +4210,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               "byoc": Object {
                 "multiAz": Object {
                   "available": 20,
-                  "gp.small": 20,
+                  "standard-4": 20,
                 },
                 "singleAz": Object {
                   "available": 0,
@@ -4379,7 +4379,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               "cloud_provider": "any",
               "cost": 1,
               "product": "OSD",
-              "resource_name": "gp.small",
+              "resource_name": "standard-4",
               "resource_type": "cluster",
             },
           ],
@@ -4399,7 +4399,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
               "cloud_provider": "any",
               "cost": 4,
               "product": "OSD",
-              "resource_name": "gp.small",
+              "resource_name": "standard-4",
               "resource_type": "compute.node",
             },
           ],
@@ -5159,7 +5159,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             "aws": Object {
               "byoc": Object {
                 "available": 0,
-                "gp.small": Object {
+                "standard-4": Object {
                   "available": 520,
                   "cost": 4,
                 },
@@ -5171,7 +5171,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
             "gcp": Object {
               "byoc": Object {
                 "available": 0,
-                "gp.small": Object {
+                "standard-4": Object {
                   "available": 520,
                   "cost": 4,
                 },
@@ -5819,6 +5819,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 4,
         },
+        "generic_name": "standard-4",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
         "id": "m5.xlarge",
         "kind": "MachineType",
@@ -5827,7 +5828,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 17179869184,
         },
         "name": "m5.xlarge - General Purpose",
-        "resource_name": "gp.small",
         "size": "small",
       },
       Object {
@@ -5842,6 +5842,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 16,
         },
+        "generic_name": "standard-16",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
         "id": "m5.4xlarge",
         "kind": "MachineType",
@@ -5850,7 +5851,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 68719476736,
         },
         "name": "m5.4xlarge - General Purpose",
-        "resource_name": "gp.large",
         "size": "large",
       },
       Object {
@@ -5865,6 +5865,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 48,
         },
+        "generic_name": "standard-48",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
         "id": "m5.12xlarge",
         "kind": "MachineType",
@@ -5873,7 +5874,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 206158430208,
         },
         "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xxlarge",
         "size": "xxlarge",
       },
       Object {
@@ -5888,6 +5888,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "unit": "vCPU",
           "value": 8,
         },
+        "generic_name": "t4-gpu-8",
         "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
         "id": "g4dn.2xlarge",
         "kind": "MachineType",
@@ -5896,7 +5897,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
           "value": 34359738368,
         },
         "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "resource_name": "gpu.medium",
         "size": "medium",
       },
     ]
@@ -6240,6 +6240,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "vCPU",
           "value": 8,
         },
+        "generic_name": "t4-gpu-8",
         "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
         "id": "g4dn.2xlarge",
         "kind": "MachineType",
@@ -6248,7 +6249,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "value": 34359738368,
         },
         "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "resource_name": "gpu.medium",
         "size": "medium",
       },
       "m5.12xlarge": Object {
@@ -6263,6 +6263,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "vCPU",
           "value": 48,
         },
+        "generic_name": "standard-48",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
         "id": "m5.12xlarge",
         "kind": "MachineType",
@@ -6271,7 +6272,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "value": 206158430208,
         },
         "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xxlarge",
         "size": "xxlarge",
       },
       "m5.4xlarge": Object {
@@ -6286,6 +6286,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "vCPU",
           "value": 16,
         },
+        "generic_name": "standard-16",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
         "id": "m5.4xlarge",
         "kind": "MachineType",
@@ -6294,7 +6295,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "value": 68719476736,
         },
         "name": "m5.4xlarge - General Purpose",
-        "resource_name": "gp.large",
         "size": "large",
       },
       "m5.xlarge": Object {
@@ -6309,6 +6309,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "vCPU",
           "value": 4,
         },
+        "generic_name": "standard-4",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
         "id": "m5.xlarge",
         "kind": "MachineType",
@@ -6317,7 +6318,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "value": 17179869184,
         },
         "name": "m5.xlarge - General Purpose",
-        "resource_name": "gp.small",
         "size": "small",
       },
     }
@@ -7413,7 +7413,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               "rhInfra": Object {
                 "multiAz": Object {
                   "available": 17,
-                  "gp.small": 17,
+                  "standard-4": 17,
                 },
                 "singleAz": Object {
                   "available": 0,
@@ -7435,7 +7435,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               "rhInfra": Object {
                 "multiAz": Object {
                   "available": 17,
-                  "gp.small": 17,
+                  "standard-4": 17,
                 },
                 "singleAz": Object {
                   "available": 0,
@@ -7594,7 +7594,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               "cloud_provider": "any",
               "cost": 1,
               "product": "OSD",
-              "resource_name": "gp.small",
+              "resource_name": "standard-4",
               "resource_type": "cluster",
             },
           ],
@@ -7614,7 +7614,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               "cloud_provider": "any",
               "cost": 1,
               "product": "OSD",
-              "resource_name": "gp.small",
+              "resource_name": "standard-4",
               "resource_type": "compute.node",
             },
           ],
@@ -8377,7 +8377,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               },
               "rhInfra": Object {
                 "available": 0,
-                "gp.small": Object {
+                "standard-4": Object {
                   "available": 23,
                   "cost": 1,
                 },
@@ -8389,7 +8389,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
               },
               "rhInfra": Object {
                 "available": 0,
-                "gp.small": Object {
+                "standard-4": Object {
                   "available": 23,
                   "cost": 1,
                 },
@@ -9034,6 +9034,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "vCPU",
           "value": 4,
         },
+        "generic_name": "standard-4",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
         "id": "m5.xlarge",
         "kind": "MachineType",
@@ -9042,7 +9043,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "value": 17179869184,
         },
         "name": "m5.xlarge - General Purpose",
-        "resource_name": "gp.small",
         "size": "small",
       },
       Object {
@@ -9057,6 +9057,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "vCPU",
           "value": 16,
         },
+        "generic_name": "standard-16",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
         "id": "m5.4xlarge",
         "kind": "MachineType",
@@ -9065,7 +9066,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "value": 68719476736,
         },
         "name": "m5.4xlarge - General Purpose",
-        "resource_name": "gp.large",
         "size": "large",
       },
       Object {
@@ -9080,6 +9080,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "vCPU",
           "value": 48,
         },
+        "generic_name": "standard-48",
         "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
         "id": "m5.12xlarge",
         "kind": "MachineType",
@@ -9088,7 +9089,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "value": 206158430208,
         },
         "name": "m5.12xlarge - General purpose",
-        "resource_name": "gp.xxlarge",
         "size": "xxlarge",
       },
       Object {
@@ -9103,6 +9103,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "unit": "vCPU",
           "value": 8,
         },
+        "generic_name": "t4-gpu-8",
         "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
         "id": "g4dn.2xlarge",
         "kind": "MachineType",
@@ -9111,7 +9112,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
           "value": 34359738368,
         },
         "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "resource_name": "gpu.medium",
         "size": "medium",
       },
     ]

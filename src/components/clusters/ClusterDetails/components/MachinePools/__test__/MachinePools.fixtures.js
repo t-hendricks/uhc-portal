@@ -504,7 +504,7 @@ const baseState = {
             id: 'aws',
             href: '/api/clusters_mgmt/v1/cloud_providers/aws',
           },
-          resource_name: 'gp.small',
+          generic_name: 'standard-4',
         },
         {
           kind: 'MachineType',
@@ -526,7 +526,7 @@ const baseState = {
             id: 'aws',
             href: '/api/clusters_mgmt/v1/cloud_providers/aws',
           },
-          resource_name: 'gp.medium',
+          generic_name: 'standard-8',
         },
         {
           kind: 'MachineType',
@@ -548,7 +548,7 @@ const baseState = {
             id: 'aws',
             href: '/api/clusters_mgmt/v1/cloud_providers/aws',
           },
-          resource_name: 'gp.large',
+          generic_name: 'standard-16',
         },
         {
           kind: 'MachineType',
@@ -570,7 +570,7 @@ const baseState = {
             id: 'aws',
             href: '/api/clusters_mgmt/v1/cloud_providers/aws',
           },
-          resource_name: 'gp.xlarge',
+          generic_name: 'standard-32',
         },
         {
           kind: 'MachineType',
@@ -592,7 +592,7 @@ const baseState = {
             id: 'aws',
             href: '/api/clusters_mgmt/v1/cloud_providers/aws',
           },
-          resource_name: 'mem.small',
+          generic_name: 'highmem-4',
         },
         {
           kind: 'MachineType',
@@ -614,7 +614,7 @@ const baseState = {
             id: 'aws',
             href: '/api/clusters_mgmt/v1/cloud_providers/aws',
           },
-          resource_name: 'mem.medium',
+          generic_name: 'highmem-8',
         },
         {
           kind: 'MachineType',
@@ -636,7 +636,7 @@ const baseState = {
             id: 'aws',
             href: '/api/clusters_mgmt/v1/cloud_providers/aws',
           },
-          resource_name: 'mem.large',
+          generic_name: 'highmem-16',
         },
         {
           kind: 'MachineType',
@@ -658,7 +658,7 @@ const baseState = {
             id: 'aws',
             href: '/api/clusters_mgmt/v1/cloud_providers/aws',
           },
-          resource_name: 'cpu.medium',
+          generic_name: 'highcpu-8',
         },
         {
           kind: 'MachineType',
@@ -680,7 +680,7 @@ const baseState = {
             id: 'aws',
             href: '/api/clusters_mgmt/v1/cloud_providers/aws',
           },
-          resource_name: 'cpu.large',
+          generic_name: 'highcpu-16',
         },
       ],
       gcp: [
@@ -704,7 +704,7 @@ const baseState = {
             id: 'gcp',
             href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
           },
-          resource_name: 'mem.large',
+          generic_name: 'highmem-16',
         },
         {
           kind: 'MachineType',
@@ -726,7 +726,7 @@ const baseState = {
             id: 'gcp',
             href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
           },
-          resource_name: 'cpu.large',
+          generic_name: 'highcpu-16',
         },
         {
           kind: 'MachineType',
@@ -748,7 +748,7 @@ const baseState = {
             id: 'gcp',
             href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
           },
-          resource_name: 'gp.large',
+          generic_name: 'standard-16',
         },
         {
           kind: 'MachineType',
@@ -770,7 +770,7 @@ const baseState = {
             id: 'gcp',
             href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
           },
-          resource_name: 'gp.small',
+          generic_name: 'standard-4',
         },
         {
           kind: 'MachineType',
@@ -792,7 +792,7 @@ const baseState = {
             id: 'gcp',
             href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
           },
-          resource_name: 'mem.small',
+          generic_name: 'highmem-4',
         },
         {
           kind: 'MachineType',
@@ -814,7 +814,7 @@ const baseState = {
             id: 'gcp',
             href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
           },
-          resource_name: 'cpu.medium',
+          generic_name: 'highcpu-8',
         },
         {
           kind: 'MachineType',
@@ -836,7 +836,7 @@ const baseState = {
             id: 'gcp',
             href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
           },
-          resource_name: 'gp.medium',
+          generic_name: 'standard-8',
         },
         {
           kind: 'MachineType',
@@ -858,7 +858,7 @@ const baseState = {
             id: 'gcp',
             href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
           },
-          resource_name: 'mem.medium',
+          generic_name: 'highmem-8',
         },
       ],
     },
@@ -883,7 +883,7 @@ const baseState = {
           id: 'aws',
           href: '/api/clusters_mgmt/v1/cloud_providers/aws',
         },
-        resource_name: 'cpu.medium',
+        generic_name: 'highcpu-8',
       },
       'c5.4xlarge': {
         kind: 'MachineType',
@@ -905,7 +905,7 @@ const baseState = {
           id: 'aws',
           href: '/api/clusters_mgmt/v1/cloud_providers/aws',
         },
-        resource_name: 'cpu.large',
+        generic_name: 'highcpu-16',
       },
       'm5.2xlarge': {
         kind: 'MachineType',
@@ -927,7 +927,7 @@ const baseState = {
           id: 'aws',
           href: '/api/clusters_mgmt/v1/cloud_providers/aws',
         },
-        resource_name: 'gp.medium',
+        generic_name: 'standard-8',
       },
       'm5.4xlarge': {
         kind: 'MachineType',
@@ -949,7 +949,7 @@ const baseState = {
           id: 'aws',
           href: '/api/clusters_mgmt/v1/cloud_providers/aws',
         },
-        resource_name: 'gp.large',
+        generic_name: 'standard-16',
       },
       'm5.8xlarge': {
         kind: 'MachineType',
@@ -971,7 +971,7 @@ const baseState = {
           id: 'aws',
           href: '/api/clusters_mgmt/v1/cloud_providers/aws',
         },
-        resource_name: 'gp.xlarge',
+        generic_name: 'standard-32',
       },
       'm5.xlarge': {
         kind: 'MachineType',
@@ -993,7 +993,7 @@ const baseState = {
           id: 'aws',
           href: '/api/clusters_mgmt/v1/cloud_providers/aws',
         },
-        resource_name: 'gp.small',
+        generic_name: 'standard-4',
       },
       'r5.2xlarge': {
         kind: 'MachineType',
@@ -1015,7 +1015,7 @@ const baseState = {
           id: 'aws',
           href: '/api/clusters_mgmt/v1/cloud_providers/aws',
         },
-        resource_name: 'mem.medium',
+        generic_name: 'highmem-8',
       },
       'r5.4xlarge': {
         kind: 'MachineType',
@@ -1037,7 +1037,7 @@ const baseState = {
           id: 'aws',
           href: '/api/clusters_mgmt/v1/cloud_providers/aws',
         },
-        resource_name: 'mem.large',
+        generic_name: 'highmem-16',
       },
       'r5.xlarge': {
         kind: 'MachineType',
@@ -1059,7 +1059,7 @@ const baseState = {
           id: 'aws',
           href: '/api/clusters_mgmt/v1/cloud_providers/aws',
         },
-        resource_name: 'mem.small',
+        generic_name: 'highmem-4',
       },
       'custom-16-131072-ext': {
         kind: 'MachineType',
@@ -1081,7 +1081,7 @@ const baseState = {
           id: 'gcp',
           href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
         },
-        resource_name: 'mem.large',
+        generic_name: 'highmem-16',
       },
       'custom-16-32768': {
         kind: 'MachineType',
@@ -1103,7 +1103,7 @@ const baseState = {
           id: 'gcp',
           href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
         },
-        resource_name: 'cpu.large',
+        generic_name: 'highcpu-16',
       },
       'custom-16-65536': {
         kind: 'MachineType',
@@ -1125,7 +1125,7 @@ const baseState = {
           id: 'gcp',
           href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
         },
-        resource_name: 'gp.large',
+        generic_name: 'standard-16',
       },
       'custom-4-16384': {
         kind: 'MachineType',
@@ -1147,7 +1147,7 @@ const baseState = {
           id: 'gcp',
           href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
         },
-        resource_name: 'gp.small',
+        generic_name: 'standard-4',
       },
       'custom-4-32768-ext': {
         kind: 'MachineType',
@@ -1169,7 +1169,7 @@ const baseState = {
           id: 'gcp',
           href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
         },
-        resource_name: 'mem.small',
+        generic_name: 'highmem-4',
       },
       'custom-8-16384': {
         kind: 'MachineType',
@@ -1191,7 +1191,7 @@ const baseState = {
           id: 'gcp',
           href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
         },
-        resource_name: 'cpu.medium',
+        generic_name: 'highcpu-8',
       },
       'custom-8-32768': {
         kind: 'MachineType',
@@ -1213,7 +1213,7 @@ const baseState = {
           id: 'gcp',
           href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
         },
-        resource_name: 'gp.medium',
+        generic_name: 'standard-8',
       },
       'custom-8-65536-ext': {
         kind: 'MachineType',
@@ -1235,7 +1235,7 @@ const baseState = {
           id: 'gcp',
           href: '/api/clusters_mgmt/v1/cloud_providers/gcp',
         },
-        resource_name: 'mem.medium',
+        generic_name: 'highmem-8',
       },
     },
   },

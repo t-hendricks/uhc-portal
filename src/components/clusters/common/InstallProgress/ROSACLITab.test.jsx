@@ -1,16 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ActionRequiredModal from './ActionRequiredModal';
+import ROSACLITab from './ROSACLITab';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
-describe('<ActionRequiredModal />', () => {
+describe('<ROSACLITab />', () => {
   it('should render correctly', () => {
     const wrapper = shallow(
-      <ActionRequiredModal
-        cluster={fixtures.ROSAManualClusterDetails.cluster}
-        isOpen
-        onClose={() => {}}
-      />,
+      <ROSACLITab cluster={fixtures.ROSAManualClusterDetails.cluster} />,
     );
     expect(wrapper).toMatchSnapshot();
   });
