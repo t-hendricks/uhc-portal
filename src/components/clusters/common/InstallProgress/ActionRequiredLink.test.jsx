@@ -1,13 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ActionRequiredPopover from './ActionRequiredPopover';
+import ActionRequiredLink from './ActionRequiredLink';
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
-describe('<ActionRequiredPopover />', () => {
+describe('<ActionRequiredLink />', () => {
   let wrapper;
   beforeEach(() => {
     wrapper = shallow(
-      <ActionRequiredPopover cluster={fixtures.ROSAManualClusterDetails} />,
+      <ActionRequiredLink cluster={fixtures.ROSAManualClusterDetails} />,
     );
   });
 
