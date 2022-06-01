@@ -20,7 +20,7 @@ const CreateRosaWizardFooter = ({ onBeforeNext, onSubmit }) => {
         }) => (
           <>
             {activeStep.name === 'Review and create'
-              ? <Button variant="primary" type="submit" onClick={onSubmit}>Create Cluster</Button>
+              ? <Button variant="primary" type="submit" onClick={onSubmit}>Create cluster</Button>
               : (
                 <Button
                   variant="primary"

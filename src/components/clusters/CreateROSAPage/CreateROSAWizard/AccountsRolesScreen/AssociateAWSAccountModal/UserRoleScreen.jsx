@@ -25,10 +25,10 @@ const UserRoleScreen = ({ hasAWSAccounts }) => (
     <CardBody>
       <TextContent>
         <Title headingLevel="h2">
-          Create and link user role
+          Create and link a user role
         </Title>
         <Text component={TextVariants.p}>
-          The user role combined with the OCM role are required in order to deploy
+          The user role combined with the OCM role are required to deploy
           {' '}
           a ROSA cluster.
         </Text>
@@ -36,14 +36,14 @@ const UserRoleScreen = ({ hasAWSAccounts }) => (
     </CardBody>
     <CardBody>
       <Title headingLevel="h2">
-        Create user role
+        Create a user role
       </Title>
       {hasAWSAccounts && (
         <MultipleAccountsInfoBox />
       )}
       <TextContent>
         <Text component={TextVariants.p}>
-          Run the following command to create a user role. View required AWS policy
+          Run the following command to create a user role. View the required AWS policy
           {' '}
           permissions for the
           {' '}
@@ -56,19 +56,19 @@ const UserRoleScreen = ({ hasAWSAccounts }) => (
             {' '}
           </strong>
           <PopoverHint
-            bodyContent="The user role is necessary to allow this interface to validate your user account and enable a trust with the OCM role."
+            bodyContent="The user role is necessary to allow this interface to validate your user account and enable a trust with the OCM role"
           />
           <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
             {rosaCLICommand.userRole}
           </InstructionCommand>
         </div>
         <Title headingLevel="h3">
-          Make sure to associate the User role with your Red Hat account
+          Ensure that you associate the user role with your Red Hat user account
         </Title>
         <Text component={TextVariants.p}>
           If not yet linked, run the following command to associate the user role
           {' '}
-          with your AWS account.
+          with your Red Hat user account.
         </Text>
         <div className="ocm-instruction-block">
           <InstructionCommand textAriaLabel="Copyable ROSA link user-role --arn">

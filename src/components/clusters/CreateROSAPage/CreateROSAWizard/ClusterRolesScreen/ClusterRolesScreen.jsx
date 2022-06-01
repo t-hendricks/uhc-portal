@@ -159,10 +159,10 @@ function ClusterRolesScreen({
         </GridItem>
         <GridItem>
           <Text component={TextVariants.p}>
-            Choose the preferred mode for creating operator roles and OIDC provider.
+            Choose the preferred mode for creating the operator roles and OIDC provider.
             {' '}
             <ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>
-              Learn more about ROSA roles.
+              Learn more about ROSA roles
             </ExternalLink>
           </Text>
         </GridItem>
