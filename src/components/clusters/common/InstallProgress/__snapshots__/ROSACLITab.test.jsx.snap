@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ROSACLITab /> should render correctly 1`] = `
+<TextContent>
+  <p>
+    Copy and run the following commands:
+  </p>
+  <p>
+    <ClipboardCopy
+      additionalActions={null}
+      clickTip="Successfully copied to clipboard!"
+      entryDelay={300}
+      exitDelay={1600}
+      hoverTip="Copy to clipboard"
+      isCode={false}
+      isExpanded={false}
+      isReadOnly={true}
+      maxWidth="150px"
+      onChange={[Function]}
+      onCopy={[Function]}
+      position="top"
+      switchDelay={2000}
+      textAriaLabel="Copyable input"
+      toggleAriaLabel="Show content"
+      variant="inline"
+    >
+      rosa create operator-roles --interactive -c test-liza
+    </ClipboardCopy>
+  </p>
+  <p>
+    <ClipboardCopy
+      additionalActions={null}
+      clickTip="Successfully copied to clipboard!"
+      entryDelay={300}
+      exitDelay={1600}
+      hoverTip="Copy to clipboard"
+      isCode={false}
+      isExpanded={false}
+      isReadOnly={true}
+      maxWidth="150px"
+      onChange={[Function]}
+      onCopy={[Function]}
+      position="top"
+      switchDelay={2000}
+      textAriaLabel="Copyable input"
+      toggleAriaLabel="Show content"
+      variant="inline"
+    >
+      rosa create oidc-provider --interactive -c test-liza
+    </ClipboardCopy>
+  </p>
+</TextContent>
+`;

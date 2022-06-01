@@ -22,10 +22,4 @@ describe('InfrastructureModelLabel', () => {
     const wrapper = shallow(<InfrastructureModelLabel cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
   });
-
-  it('for ROSA cluster', () => {
-    const { cluster } = fixtures.ROSAClusterDetails;
-    const wrapper = shallow(<InfrastructureModelLabel cluster={cluster} />);
-    expect(wrapper).toMatchSnapshot();
-  });
 });

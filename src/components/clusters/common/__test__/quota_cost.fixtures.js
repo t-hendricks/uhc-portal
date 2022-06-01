@@ -12,7 +12,7 @@ export const dedicatedRhInfra = [
     related_resources: [
       {
         cloud_provider: 'any',
-        resource_name: 'gp.small',
+        resource_name: 'standard-4',
         resource_type: 'cluster',
         byoc: 'rhinfra',
         availability_zone_type: 'multi',
@@ -32,7 +32,7 @@ export const dedicatedRhInfra = [
     related_resources: [
       {
         cloud_provider: 'any',
-        resource_name: 'gp.small',
+        resource_name: 'standard-4',
         resource_type: 'compute.node',
         byoc: 'rhinfra',
         availability_zone_type: 'any',
@@ -55,7 +55,7 @@ export const dedicatedCCS = [
     related_resources: [
       {
         cloud_provider: 'any',
-        resource_name: 'gp.small',
+        resource_name: 'standard-4',
         resource_type: 'cluster',
         byoc: 'byoc',
         availability_zone_type: 'multi',
@@ -75,7 +75,7 @@ export const dedicatedCCS = [
     related_resources: [
       {
         cloud_provider: 'any',
-        resource_name: 'gp.small',
+        resource_name: 'standard-4',
         resource_type: 'compute.node',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -98,7 +98,7 @@ export const dedicatedCCSOneNodeRemaining = [
     related_resources: [
       {
         cloud_provider: 'any',
-        resource_name: 'gp.small',
+        resource_name: 'standard-4',
         resource_type: 'cluster',
         byoc: 'byoc',
         availability_zone_type: 'multi',
@@ -118,7 +118,7 @@ export const dedicatedCCSOneNodeRemaining = [
     related_resources: [
       {
         cloud_provider: 'any',
-        resource_name: 'gp.small',
+        resource_name: 'standard-4',
         resource_type: 'compute.node',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -141,7 +141,7 @@ export const dedicatedTrial = [
     related_resources: [
       {
         cloud_provider: 'any',
-        resource_name: 'cpu.large',
+        resource_name: 'highcpu-16',
         resource_type: 'compute.node',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -151,7 +151,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'cpu.medium',
+        resource_name: 'highcpu-8',
         resource_type: 'compute.node',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -161,7 +161,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'gp.large',
+        resource_name: 'standard-16',
         resource_type: 'compute.node',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -171,7 +171,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'gp.medium',
+        resource_name: 'standard-8',
         resource_type: 'compute.node',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -181,7 +181,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'gp.small',
+        resource_name: 'standard-4',
         resource_type: 'compute.node',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -191,7 +191,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'mem.large',
+        resource_name: 'highmem-16',
         resource_type: 'compute.node',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -201,7 +201,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'mem.medium',
+        resource_name: 'highmem-8',
         resource_type: 'compute.node',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -211,7 +211,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'mem.small',
+        resource_name: 'highmem-4',
         resource_type: 'compute.node',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -231,7 +231,7 @@ export const dedicatedTrial = [
     related_resources: [
       {
         cloud_provider: 'any',
-        resource_name: 'cpu.large',
+        resource_name: 'highcpu-16',
         resource_type: 'cluster',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -241,7 +241,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'cpu.medium',
+        resource_name: 'highcpu-8',
         resource_type: 'cluster',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -251,7 +251,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'gp.large',
+        resource_name: 'standard-16',
         resource_type: 'cluster',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -261,7 +261,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'gp.medium',
+        resource_name: 'standard-8',
         resource_type: 'cluster',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -271,7 +271,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'gp.small',
+        resource_name: 'standard-4',
         resource_type: 'cluster',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -281,7 +281,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'mem.large',
+        resource_name: 'highmem-4',
         resource_type: 'cluster',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -291,7 +291,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'mem.medium',
+        resource_name: 'highmem-8',
         resource_type: 'cluster',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -301,7 +301,7 @@ export const dedicatedTrial = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'mem.small',
+        resource_name: 'highmem-4',
         resource_type: 'cluster',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -324,7 +324,7 @@ export const unlimitedROSA = [
     related_resources: [
       {
         cloud_provider: 'aws',
-        resource_name: 'gp.small',
+        resource_name: 'standard-4',
         resource_type: 'cluster',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -344,7 +344,7 @@ export const unlimitedROSA = [
     related_resources: [
       {
         cloud_provider: 'aws',
-        resource_name: 'gp.small',
+        resource_name: 'standard-4',
         resource_type: 'compute.node',
         byoc: 'byoc',
         availability_zone_type: 'any',
@@ -579,7 +579,7 @@ export const negativeQuotaList = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'gp.small',
+        resource_name: 'standard-4',
         resource_type: 'cluster',
         byoc: 'rhinfra',
         availability_zone_type: 'single',
@@ -609,7 +609,7 @@ export const negativeQuotaList = [
       },
       {
         cloud_provider: 'any',
-        resource_name: 'gp.medium',
+        resource_name: 'standard-8',
         resource_type: 'cluster',
         byoc: 'rhinfra',
         availability_zone_type: 'single',

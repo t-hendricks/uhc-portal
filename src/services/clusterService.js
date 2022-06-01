@@ -386,6 +386,17 @@ const postClusterGateAgreement = (clusterId, gateId) => apiRequest({
   data: { version_gate: { id: gateId } },
 });
 
+const getOperatorRoleCommands = (awsAccountId, clusterId, installerRoleARN) => apiRequest({
+  method: 'post',
+  data: {
+    account_id: awsAccountId,
+    sts: {
+      role_arn: installerRoleARN,
+    },
+  },
+  url: `/api/clusters_mgmt/v1/clusters/${clusterId}/sts_commands`,
+});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -433,6 +444,7 @@ const clusterService = {
   getUpgradeGates,
   getClusterGateAgreements,
   postClusterGateAgreement,
+  getOperatorRoleCommands,
 };
 export {
   postUpgradeSchedule,

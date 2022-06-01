@@ -31,7 +31,8 @@ function ReviewClusterScreen({
   const isROSA = formValues.product === normalizedProducts.ROSA;
   const showVPCCheckbox = isROSA || isByoc;
   const clusterSettingsFields = [
-    'cloud_provider', 'name',
+    !isROSA && 'cloud_provider',
+    'name',
     'cluster_version', 'region', 'multi_az',
     !isByoc && !isROSA && 'persistent_storage',
     !isByoc && isROSA && 'load_balancers',

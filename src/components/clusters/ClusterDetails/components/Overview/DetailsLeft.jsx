@@ -13,6 +13,7 @@ import ClusterTypeLabel from '../../../common/ClusterTypeLabel';
 import BillingModelLabel from '../../../common/BillingModelLabel';
 import InfrastructureModelLabel from '../../../common/InfrastructureModelLabel';
 import ClusterVersionInfo from './ClusterVersionInfo';
+import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 const getIdFields = (cluster, showAssistedId) => {
   let label = 'Cluster ID';
@@ -28,6 +29,8 @@ const getIdFields = (cluster, showAssistedId) => {
 function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
   const region = get(cluster, 'region.id', 'N/A');
+  const planType = get(cluster, 'subscription.plan.type');
+  const isROSA = planType === normalizedProducts.ROSA;
 
   let cloudProvider;
   if (cloudProviderId && cloudProviders.fulfilled && cloudProviders.providers[cloudProviderId]) {
@@ -60,19 +63,21 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
             {region}
           </DescriptionListDescription>
         </DescriptionListGroup>
-        <DescriptionListGroup>
-          <DescriptionListTerm>Provider</DescriptionListTerm>
-          <DescriptionListDescription>
-            {cloudProvider}
-          </DescriptionListDescription>
-        </DescriptionListGroup>
+        {!isROSA && (
+          <DescriptionListGroup>
+            <DescriptionListTerm>Provider</DescriptionListTerm>
+            <DescriptionListDescription>
+              {cloudProvider}
+            </DescriptionListDescription>
+          </DescriptionListGroup>
+        )}
         {cluster.managed
           && (
             <>
               <DescriptionListGroup>
                 <DescriptionListTerm>Availability</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {cluster.multi_az ? 'Multizone' : 'Single zone'}
+                  {cluster.multi_az ? 'Multi-zone' : 'Single zone'}
                 </DescriptionListDescription>
               </DescriptionListGroup>
             </>
@@ -101,7 +106,7 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
           </>
         )}
 
-        {cluster.managed && (
+        {cluster.managed && !isROSA && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>

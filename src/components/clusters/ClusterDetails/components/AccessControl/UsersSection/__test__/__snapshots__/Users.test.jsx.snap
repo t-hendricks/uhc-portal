@@ -14,7 +14,7 @@ exports[`<Users /> should render without users 1`] = `
       Grant permission to manage this cluster to users defined in your identity provider.
        
       <ExternalLink
-        href="https://docs.openshift.com/dedicated/administering_a_cluster/osd-admin-roles.html"
+        href="https://docs.openshift.com/dedicated/osd_cluster_admin/osd-admin-roles.html"
       >
         Learn more.
       </ExternalLink>
@@ -62,7 +62,7 @@ exports[`<Users /> with users should render 1`] = `
       Grant permission to manage this cluster to users defined in your identity provider.
        
       <ExternalLink
-        href="https://docs.openshift.com/dedicated/administering_a_cluster/osd-admin-roles.html"
+        href="https://docs.openshift.com/dedicated/osd_cluster_admin/osd-admin-roles.html"
       >
         Learn more.
       </ExternalLink>

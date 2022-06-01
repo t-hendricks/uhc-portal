@@ -117,7 +117,7 @@ describe('quotaSelectors', () => {
   const paramsRhInfra = {
     product: normalizedProducts.OSD,
     cloudProviderID: 'aws',
-    resourceName: 'gp.small',
+    resourceName: 'standard-4',
     isMultiAz: true,
     isBYOC: false,
     billingModel: billingModels.STANDARD,
@@ -125,7 +125,7 @@ describe('quotaSelectors', () => {
   const paramsCCS = {
     product: normalizedProducts.OSD,
     cloudProviderID: 'aws',
-    resourceName: 'gp.small',
+    resourceName: 'standard-4',
     isMultiAz: true,
     isBYOC: true,
     billingModel: billingModels.STANDARD,
@@ -133,7 +133,7 @@ describe('quotaSelectors', () => {
   const paramsTrial = {
     product: normalizedProducts.OSDTrial,
     cloudProviderID: 'aws',
-    resourceName: 'gp.small',
+    resourceName: 'standard-4',
     isMultiAz: true,
     isBYOC: true,
     billingModel: billingModels.STANDARD,

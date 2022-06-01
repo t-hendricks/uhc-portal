@@ -55,7 +55,7 @@ function ClusterTypeLabel({ cluster }) {
 ClusterTypeLabel.propTypes = {
   cluster: PropTypes.shape({
     product: PropTypes.shape({
-      id: PropTypes.oneOf(Object.values(normalizedProducts)).isRequired,
+      type: PropTypes.oneOf(Object.values(normalizedProducts)).isRequired,
     }),
   }),
 };

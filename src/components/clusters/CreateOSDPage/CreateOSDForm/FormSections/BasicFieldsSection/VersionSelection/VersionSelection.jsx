@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
+import semver from 'semver';
 import {
   Select, SelectOption,
   FormGroup,
@@ -12,6 +13,7 @@ import ErrorBox from '../../../../../../common/ErrorBox';
 
 function VersionSelection({
   isRosa,
+  rosaMaxOSVersion,
   input,
   isDisabled,
   label,
@@ -22,6 +24,9 @@ function VersionSelection({
   const [isOpen, setIsOpen] = useState(false);
   const [versions, setVersions] = useState([]);
   const [versionsErrorBox, setVersionsErrorBox] = useState(null);
+
+  const isValidRosaVersion = version => rosaMaxOSVersion
+    && semver.satisfies(version, `<=${semver.major(rosaMaxOSVersion)}.${semver.minor(rosaMaxOSVersion)}`);
 
   useEffect(() => {
     if (getInstallableVersionsResponse.pending) {
@@ -42,12 +47,17 @@ function VersionSelection({
   }, [getInstallableVersionsResponse]);
 
   useEffect(() => {
-    if (versions.length && !input.value) {
+    if (versions.length && !input.value?.raw_id) {
       const defaultVersionIndex = versions.findIndex(version => version.default === true);
-      // default to version.default or first version in list
-      input.onChange(versions[defaultVersionIndex !== -1 ? defaultVersionIndex : 0]);
+      const defaultRosaVersionIndex = isRosa
+        && versions.findIndex(version => isValidRosaVersion(version.raw_id));
+      // default to max rosa version supported, version.default, or first version in list
+      const versionIndex = defaultRosaVersionIndex !== -1
+        ? defaultRosaVersionIndex
+        : defaultVersionIndex;
+      input.onChange(versions[versionIndex !== -1 ? versionIndex : 0]);
     }
-  }, [versions, input]);
+  }, [versions, input.value?.raw_id, isRosa, rosaMaxOSVersion]);
 
   const onToggle = (toggleOpenValue) => {
     setIsOpen(toggleOpenValue);
@@ -90,7 +100,7 @@ function VersionSelection({
           <Select
             label={label}
             isOpen={isOpen}
-            selections={getSelection()}
+            selections={input.value.raw_id || getSelection()}
             onToggle={onToggle}
             onSelect={onSelect}
             isDisabled={isDisabled}
@@ -102,6 +112,8 @@ function VersionSelection({
                 value={version.raw_id}
                 formValue={version.raw_id}
                 key={version.id}
+                isDisabled={isRosa && !isValidRosaVersion(version.raw_id)}
+                description={isRosa && !isValidRosaVersion(version.raw_id) && 'This version is not compatible with the selected ARNs in previous step'}
               >
                 {`${version.raw_id}`}
               </SelectOption>
@@ -121,6 +133,7 @@ VersionSelection.propTypes = {
     onChange: PropTypes.func,
   }),
   isRosa: PropTypes.bool,
+  rosaMaxOSVersion: PropTypes.string,
   getInstallableVersions: PropTypes.func.isRequired,
   getInstallableVersionsResponse: PropTypes.object.isRequired,
   initialValue: PropTypes.string,

@@ -113,7 +113,7 @@ class MachineTypeSelection extends React.Component {
     if (!machineType) {
       return false;
     }
-    const resourceName = machineType.resource_name;
+    const resourceName = machineType.generic_name;
 
     const quotaParams = {
       product, cloudProviderID, isBYOC, isMultiAz, resourceName, billingModel,

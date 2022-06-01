@@ -14,6 +14,7 @@ import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '../Networkin
 import VersionSelection from './VersionSelection';
 import { getNodesCount, getMinReplicasCount } from '../ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
+import { createOperatorRolesHashPrefix } from '../../../../CreateROSAPage/CreateROSAWizard/ClusterRolesScreen/ClusterRolesScreen';
 
 function BasicFieldsSection({
   pending,
@@ -31,6 +32,7 @@ function BasicFieldsSection({
 }) {
   const multiAzTooltip = !hasMultiAzQuota && noQuotaTooltip;
   const singleAzTooltip = !hasSingleAzQuota && noQuotaTooltip;
+  const isRosa = product === normalizedProducts.ROSA;
 
   const handleCloudRegionChange = () => {
     // Move the az selection form
@@ -71,6 +73,7 @@ function BasicFieldsSection({
           disabled={pending}
           isRequired
           extendedHelpText={constants.clusterNameHint}
+          onChange={value => isRosa && change('custom_operator_roles_prefix', `${value}-${createOperatorRolesHashPrefix()}`)}
         />
       </GridItem>
       <GridItem md={6} />
@@ -101,7 +104,7 @@ function BasicFieldsSection({
             name="cluster_version"
             label="Version"
             isRequired
-            isRosa={product === normalizedProducts.ROSA}
+            isRosa={isRosa}
           />
         </GridItem>
         <GridItem md={6} />
@@ -155,7 +158,7 @@ function BasicFieldsSection({
                   },
                   {
                     value: 'true',
-                    label: 'Multizone',
+                    label: 'Multi-zone',
                     disabled: !hasMultiAzQuota,
                     tooltipText: multiAzTooltip,
                     extendedHelpText: constants.availabilityHintMultiZone,
