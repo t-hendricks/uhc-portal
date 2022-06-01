@@ -158,7 +158,7 @@ function BasicFieldsSection({
                   },
                   {
                     value: 'true',
-                    label: 'Multizone',
+                    label: 'Multi-zone',
                     disabled: !hasMultiAzQuota,
                     tooltipText: multiAzTooltip,
                     extendedHelpText: constants.availabilityHintMultiZone,

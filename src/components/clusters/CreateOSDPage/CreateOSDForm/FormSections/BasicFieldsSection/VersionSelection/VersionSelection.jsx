@@ -25,6 +25,9 @@ function VersionSelection({
   const [versions, setVersions] = useState([]);
   const [versionsErrorBox, setVersionsErrorBox] = useState(null);
 
+  const isValidRosaVersion = version => rosaMaxOSVersion
+    && semver.satisfies(version, `<=${semver.major(rosaMaxOSVersion)}.${semver.minor(rosaMaxOSVersion)}`);
+
   useEffect(() => {
     if (getInstallableVersionsResponse.pending) {
       setVersionsErrorBox(null);
@@ -46,8 +49,8 @@ function VersionSelection({
   useEffect(() => {
     if (versions.length && !input.value?.raw_id) {
       const defaultVersionIndex = versions.findIndex(version => version.default === true);
-      const defaultRosaVersionIndex = isRosa && rosaMaxOSVersion
-        ? versions.findIndex(version => semver.lte(version.raw_id, rosaMaxOSVersion))
+      const defaultRosaVersionIndex = isRosa
+        ? versions.findIndex(version => isValidRosaVersion(version.raw_id))
         : -1;
       // default to max rosa version supported, version.default, or first version in list
       const versionIndex = defaultRosaVersionIndex !== -1
@@ -75,9 +78,6 @@ function VersionSelection({
     const selectedVersion = versions.find(version => get(input, 'value.raw_id') === version.raw_id);
     return selectedVersion ? selectedVersion.raw_id : '';
   };
-
-  const isInvalidVersionForRosa = version => rosaMaxOSVersion
-    && semver.gt(version, rosaMaxOSVersion);
 
   return (
     <>
@@ -113,8 +113,8 @@ function VersionSelection({
                 value={version.raw_id}
                 formValue={version.raw_id}
                 key={version.id}
-                isDisabled={isRosa && isInvalidVersionForRosa(version.raw_id)}
-                description={isRosa && isInvalidVersionForRosa(version.raw_id) && 'This version is not compatible with the selected ARNs in previous step'}
+                isDisabled={isRosa && !isValidRosaVersion(version.raw_id)}
+                description={isRosa && !isValidRosaVersion(version.raw_id) && 'This version is not compatible with the selected ARNs in previous step'}
               >
                 {`${version.raw_id}`}
               </SelectOption>

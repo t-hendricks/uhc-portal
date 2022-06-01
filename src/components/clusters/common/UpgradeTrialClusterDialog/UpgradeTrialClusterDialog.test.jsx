@@ -14,7 +14,7 @@ describe('<UpgradeTrialClusterDialog />', () => {
   };
   const { cluster } = fixtures.OSDTrialClusterDetails;
   const machineTypesByID = {
-    'm5.xlarge': { id: 'm5.xlarge', resource_name: 'gp.small' },
+    'm5.xlarge': { id: 'm5.xlarge', generic_name: 'standard-4' },
   };
   let wrapper;
   let closeModal;

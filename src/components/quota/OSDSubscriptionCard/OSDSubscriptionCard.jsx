@@ -50,7 +50,7 @@ class OSDSubscriptionCard extends Component {
   }
 
   getZoneType = (zoneType) => {
-    if (zoneType === 'multi') { return 'multizone'; }
+    if (zoneType === 'multi') { return 'multi-zone'; }
     if (zoneType === 'single') { return 'single zone'; }
     return 'N/A';
   }
