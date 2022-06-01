@@ -61,24 +61,31 @@ function AccountRolesARNsSection({
   }, [selectedInstallerRole]);
 
   const setSelectedInstallerRoleAndOptions = (accountRolesARNs) => {
+    const installerOptions = [];
     if (accountRolesARNs.length === 0) {
       change('installer_role_arn', NO_ROLE_DETECTED);
       change('support_role_arn', NO_ROLE_DETECTED);
       change('control_plane_role_arn', NO_ROLE_DETECTED);
       change('worker_role_arn', NO_ROLE_DETECTED);
+      installerOptions.push({
+        name: NO_ROLE_DETECTED,
+        value: NO_ROLE_DETECTED,
+      });
+      change('rosa_max_os_version', undefined);
       setAllARNsFound(false);
     } else {
-      const installerOptions = [];
       accountRolesARNs.forEach((role) => {
         installerOptions.push({
           name: role.Installer,
           value: role.Installer,
         });
       });
-      setInstallerRoleOptions(installerOptions);
-      // default to currently selected or first installer role
-      setSelectedInstallerRole(selectedInstallerRoleARN || accountRolesARNs[0].Installer);
     }
+    setInstallerRoleOptions(installerOptions);
+    // default to currently selected, first installer role, or 'No Role Detected'
+    setSelectedInstallerRole(selectedInstallerRoleARN
+      || accountRolesARNs[0]?.Installer
+      || NO_ROLE_DETECTED);
   };
 
   useEffect(() => {
@@ -113,6 +120,7 @@ function AccountRolesARNsSection({
 
   const refreshARNs = () => {
     clearGetAWSAccountRolesARNsResponse();
+    change('installer_role_arn', '');
     setSelectedInstallerRole('');
     getAWSAccountRolesARNs(selectedAWSAccountID);
   };
