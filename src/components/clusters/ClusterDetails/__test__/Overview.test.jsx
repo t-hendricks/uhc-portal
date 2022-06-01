@@ -100,22 +100,4 @@ describe('<Overview />', () => {
       expect(wrapper.find('Connect(SubscriptionSettings)').length).toEqual(0);
     });
   });
-
-  describe('for an AI cluster', () => {
-    const props = {
-      cluster: fixtures.AIClusterDetails.cluster,
-      cloudProviders: fixtures.cloudProviders,
-      history: {},
-      displayClusterLogs: true,
-      openModal: jest.fn(),
-      insightsData: {},
-      userAccess: fixtures.userAccess,
-    };
-    const wrapper = shallow(
-      <Overview {...props} />,
-    );
-    it('should render', () => {
-      expect(wrapper).toMatchSnapshot();
-    });
-  });
 });
