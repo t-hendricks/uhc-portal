@@ -299,23 +299,31 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
           }));
       };
 
-      const aiPromises = [];
+      const subscriptionIds = [];
       if (aiMergeListsFeatureFlag) {
-        subscriptionMap.forEach((value, clusterId) => {
-          if (isAssistedInstallSubscription(value.subscription)) {
-            /* TODO(mlibra): query all just-needed AI clusters at once, filter by subscription ID
-                Requires: https://issues.redhat.com/browse/MGMT-5259)
-            */
-            aiPromises.push(assistedService.getAICluster(clusterId).then((res) => {
-              const entry = subscriptionMap.get(clusterId);
-              entry.cluster = res?.data; // The AI cluster
-              subscriptionMap.set(clusterId, entry);
-            }));
+        subscriptionMap.forEach(({ subscription }) => {
+          if (isAssistedInstallSubscription(subscription)) {
+            subscriptionIds.push(subscription.id);
           }
         });
       }
 
-      return Promise.allSettled(aiPromises).then(enrichForClusterService);
+      // Performing a batch request to obtain the AI clusters data.
+      const aiClustersRequest = subscriptionIds.length === 0
+        ? Promise.resolve({ data: [] })
+        : assistedService.getAIClustersBySubscription(subscriptionIds);
+      return aiClustersRequest.then((res) => {
+        const aiClusters = res.data || [];
+        aiClusters.forEach((aiCluster) => {
+          const clusterId = aiCluster.id;
+          const entry = subscriptionMap.get(clusterId);
+          if (entry) {
+            entry.cluster = aiCluster;
+            subscriptionMap.set(clusterId, entry);
+          }
+        });
+        return enrichForClusterService();
+      });
     });
 };
 
