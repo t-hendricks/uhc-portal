@@ -115,6 +115,7 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
             "items": null,
             "kind": "AWSInfrastructureAccessRoleGrantLink",
           },
+          "canEdit": false,
           "ccs": Object {
             "disable_scp_checks": false,
             "enabled": true,
