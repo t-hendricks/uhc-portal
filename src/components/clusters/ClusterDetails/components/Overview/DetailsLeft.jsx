@@ -15,26 +15,38 @@ import InfrastructureModelLabel from '../../../common/InfrastructureModelLabel';
 import ClusterVersionInfo from './ClusterVersionInfo';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
-function DetailsLeft({ cluster, cloudProviders }) {
+const getIdFields = (cluster, showAssistedId) => {
+  let label = 'Cluster ID';
+  let id = get(cluster, 'external_id', 'N/A');
+
+  const assistedId = get(cluster, 'aiCluster.id', 'N/A');
+  if (showAssistedId && assistedId) {
+    label = `Assisted cluster ID / ${label}`;
+    id = `${assistedId} / ${id}`;
+  }
+  return { id, idLabel: label };
+};
+function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
   const cloudProviderId = cluster.cloud_provider ? cluster.cloud_provider.id : null;
-  let cloudProvider;
   const region = get(cluster, 'region.id', 'N/A');
   const planType = get(cluster, 'subscription.plan.type');
   const isROSA = planType === normalizedProducts.ROSA;
 
+  let cloudProvider;
   if (cloudProviderId && cloudProviders.fulfilled && cloudProviders.providers[cloudProviderId]) {
     cloudProvider = cloudProviders.providers[cloudProviderId].display_name || 'N/A';
   } else {
     cloudProvider = cloudProviderId ? cloudProviderId.toUpperCase() : 'N/A';
   }
 
+  const { id, idLabel } = getIdFields(cluster, showAssistedId);
   return (
     <>
       <DescriptionList>
         <DescriptionListGroup>
-          <DescriptionListTerm>Cluster ID</DescriptionListTerm>
+          <DescriptionListTerm>{idLabel}</DescriptionListTerm>
           <DescriptionListDescription>
-            {get(cluster, 'external_id', 'N/A')}
+            {id}
           </DescriptionListDescription>
         </DescriptionListGroup>
         <DescriptionListGroup>
@@ -116,6 +128,7 @@ function DetailsLeft({ cluster, cloudProviders }) {
 DetailsLeft.propTypes = {
   cluster: PropTypes.any,
   cloudProviders: PropTypes.object.isRequired,
+  showAssistedId: PropTypes.bool.isRequired,
 };
 
 export default DetailsLeft;

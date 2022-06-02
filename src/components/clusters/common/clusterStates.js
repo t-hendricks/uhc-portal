@@ -1,7 +1,5 @@
 import get from 'lodash/get';
-import { OCM } from 'openshift-assisted-ui-lib';
 import { subscriptionStatuses, normalizedProducts } from '../../../common/subscriptionTypes';
-import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
 
 const clusterStates = {
   WAITING: 'waiting',
@@ -36,14 +34,10 @@ const stateDescription = (state) => {
   return description;
 };
 
+// This function is not meant to return status of uninstalled OCP-AssistedInstall clusters.
+// To display the status for those, use the component <AIClusterStatus />
 function getClusterStateAndDescription(cluster) {
   let state;
-
-  // OCP-AssistenInstall uses the wording from AssisteDInstall UI.
-  // refer to: https://github.com/openshift-assisted/assisted-ui-lib/blob/ec19b30fe29c69bf73cdb27a2f49738ccb4eef71/src/common/api/types.ts#L153-L164
-  if (isAssistedInstallSubscription(cluster.subscription)) {
-    state = OCM.Constants.CLUSTER_STATUS_LABELS[cluster.status];
-  }
 
   // the state is determined by subscriptions.status or cluster.state.
   // the conditions are not mutually exclusive and are ordered by priority, e.g., STALE and READY.

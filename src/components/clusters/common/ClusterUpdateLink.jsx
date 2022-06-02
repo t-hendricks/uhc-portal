@@ -49,7 +49,7 @@ const ClusterUpdateLink = ({
   if (cluster.managed) {
     return (
       <Button
-        className="cluster-update-link"
+        className="cluster-update-link pf-u-mt-0"
         variant="link"
         onClick={() => openModal(modals.UPGRADE_WIZARD,
           {
@@ -67,7 +67,7 @@ const ClusterUpdateLink = ({
   if (cluster.console && cluster.console.url) {
     return (
       <a href={`${cluster.console.url}/settings/cluster`} target="_blank" rel="noopener noreferrer">
-        <Button className="cluster-update-link" variant="link" icon={<OutlinedArrowAltCircleUpIcon />}>
+        <Button className="cluster-update-link pf-u-mt-0" variant="link" icon={<OutlinedArrowAltCircleUpIcon />}>
           Update
         </Button>
       </a>
@@ -90,7 +90,7 @@ const ClusterUpdateLink = ({
         </div>
       )}
     >
-      <Button className="cluster-update-link" variant="link" icon={<InfoCircleIcon />}>
+      <Button className="cluster-update-link pf-u-mt-0" variant="link" icon={<InfoCircleIcon />}>
         Update
       </Button>
     </Popover>
