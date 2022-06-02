@@ -61,7 +61,7 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
            (actual/desired)
         </span>
         <PopoverHint
-          hint="The actual number of worker (compute) nodes may not always match with the number of desired when the cluster is scaling."
+          hint="The actual number of compute nodes may not always match with the number of desired when the cluster is scaling."
           iconClassName="nodes-hint"
         />
       </DescriptionListTerm>
@@ -89,7 +89,7 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
           </Flex>
           <Flex>
             <dt>
-              Worker:
+              Compute:
                
             </dt>
             <dd>
