@@ -66,9 +66,16 @@ describe('<LimitedSupportAlert />', () => {
   });
 
   it('Learn more link is not shown if details link is not provided', () => {
-    const firstReason = reasons[0];
-    delete firstReason.details;
-    wrapper.setProps({ limitedSupportReasons: [firstReason] });
+    const reason = {
+      kind: 'ClusterLimitedSupportReason',
+      href: '/api/clusters_mgmt/v1/limited_support_reasons/reasonId1',
+      id: 'reasonId1',
+      summary: 'the version of the cluster id too far behind',
+      creation_time: '2021-07-23T20:19:53.053814Z',
+      detection_type: 'auto',
+    };
+
+    wrapper.setProps({ limitedSupportReasons: [reason] });
 
     const ExternalLink = wrapper.find('Alert List ListItem ExternalLink');
     expect(ExternalLink).toHaveLength(0);

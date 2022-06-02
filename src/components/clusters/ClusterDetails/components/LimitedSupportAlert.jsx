@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { Alert, List, ListItem } from '@patternfly/react-core';
 import ExternalLink from '../../../common/ExternalLink';
 
-function LimitedSupportAlert({
-  limitedSupportReasons,
-}) {
+function LimitedSupportAlert({ limitedSupportReasons }) {
   if (!limitedSupportReasons || limitedSupportReasons.length === 0) {
     return null;
   }

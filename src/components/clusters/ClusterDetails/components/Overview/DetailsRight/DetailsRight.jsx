@@ -68,8 +68,8 @@ function DetailsRight({
                 <>
                   <ClusterStateIcon
                     clusterState={cluster.state.state}
-                    animated
                     limitedSupport={limitedSupport}
+                    animated
                   />
                   {' '}
                   {cluster.state.description}
