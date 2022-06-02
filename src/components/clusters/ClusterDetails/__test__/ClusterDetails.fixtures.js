@@ -467,6 +467,14 @@ const RHMIClusterDetails = produce(CCSClusterDetails, (draft) => {
   };
 });
 
+const AIClusterDetails = produce(CCSClusterDetails, (draft) => {
+  draft.cluster.aiCluster = { id: normalizedProducts.OCP_Assisted_Install };
+  draft.cluster.subscription.plan = {
+    id: normalizedProducts.OCP_Assisted_Install,
+    type: normalizedProducts.OCP,
+  };
+});
+
 const insightsData = {
   meta: {
     count: 1,
@@ -1035,6 +1043,7 @@ const fixtures = {
   RHMIClusterDetails,
   insightsData,
   OCPClusterDetails,
+  AIClusterDetails,
   AROClusterDetails,
   cloudProviders,
   clusterIdentityProviders,
