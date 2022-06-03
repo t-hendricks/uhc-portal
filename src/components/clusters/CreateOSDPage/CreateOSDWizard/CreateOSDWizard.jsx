@@ -464,31 +464,33 @@ class CreateOSDWizardInternal extends React.Component {
             onBack,
             onClose,
           }) => (
-            <>
-              {activeStep.name === 'Review and create'
-                ? <Button variant="primary" type="submit" onClick={onSubmit}>Create Cluster</Button>
-                : (
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={() => this.beforeOnNext(onNext)}
-                    isLoading={ccsValidationPending}
-                    isDisabled={ccsValidationPending}
-                  >
-                    Next
-                  </Button>
-                )}
-              <Button
-                variant="secondary"
-                onClick={onBack}
-                {...activeStep.name === 'Billing model' && { isDisabled: true }}
-              >
-                Back
-              </Button>
-              <Button variant="link" onClick={onClose}>
-                Cancel
-              </Button>
-            </>
+            !createClusterResponse.pending && (
+              <>
+                {activeStep.name === 'Review and create'
+                  ? <Button variant="primary" type="submit" onClick={onSubmit}>Create cluster</Button>
+                  : (
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      onClick={() => this.beforeOnNext(onNext)}
+                      isLoading={ccsValidationPending}
+                      isDisabled={ccsValidationPending}
+                    >
+                      Next
+                    </Button>
+                  )}
+                <Button
+                  variant="secondary"
+                  onClick={onBack}
+                  {...activeStep.name === 'Billing model' && { isDisabled: true }}
+                >
+                  Back
+                </Button>
+                <Button variant="link" onClick={onClose}>
+                  Cancel
+                </Button>
+              </>
+            )
           )}
         </WizardContext.Consumer>
       </WizardFooter>
