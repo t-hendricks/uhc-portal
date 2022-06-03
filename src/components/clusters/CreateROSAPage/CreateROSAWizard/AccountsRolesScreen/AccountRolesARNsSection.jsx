@@ -173,7 +173,7 @@ function AccountRolesARNsSection({
           <Text component={TextVariants.p}>
             The following roles were detected in your AWS account.
             {' '}
-            <ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>
+            <ExternalLink href={links.ROSA_AWS_IAM_RESOURCES}>
               Learn more about account roles
             </ExternalLink>
             .
@@ -195,7 +195,18 @@ function AccountRolesARNsSection({
                 validate={roleARNRequired}
                 isRequired
                 helpText=""
-                extendedHelpText="An AWS Identity Access Management (IAM) role used by the ROSA installer."
+                extendedHelpText={(
+                  <>
+                    An IAM role used by the ROSA installer.
+                    <br />
+                    For more information see
+                    {' '}
+                    <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                      Table 1 about the installer role policy
+                    </ExternalLink>
+                    .
+                  </>
+                )}
               />
               <br />
               <Field
@@ -205,7 +216,19 @@ function AccountRolesARNsSection({
                 type="text"
                 validate={roleARNRequired}
                 isRequired
-                extendedHelpText="An AWS Identity Access Management (IAM) role used by the Red Hat Site Reliability Engineering (SRE) support team."
+                // An IAM role used by the Red Hat Site Reliability Engineering (SRE) support team.
+                extendedHelpText={(
+                  <>
+                    An IAM role used by the Red Hat Site Reliability Engineering (SRE) support team.
+                    <br />
+                    For more information see
+                    {' '}
+                    <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                      Table 4 about the support role policy
+                    </ExternalLink>
+                    .
+                  </>
+                )}
                 isDisabled
               />
               <br />
@@ -216,7 +239,18 @@ function AccountRolesARNsSection({
                 type="text"
                 validate={roleARNRequired}
                 isRequired
-                extendedHelpText="An AWS Identity Access Management (IAM) role used by the ROSA compute instances."
+                extendedHelpText={(
+                  <>
+                    An IAM role used by the ROSA compute instances.
+                    <br />
+                    For more information see
+                    {' '}
+                    <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                      Table 3 about the worker/compute role policy
+                    </ExternalLink>
+                    .
+                  </>
+                )}
                 isDisabled
               />
               <br />
@@ -227,7 +261,18 @@ function AccountRolesARNsSection({
                 type="text"
                 validate={roleARNRequired}
                 isRequired
-                extendedHelpText="An AWS Identity Access Management (IAM) role used by the ROSA control plane."
+                extendedHelpText={(
+                  <>
+                    An IAM role used by the ROSA control plane.
+                    <br />
+                    For more information see
+                    {' '}
+                    <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                      Table 2 about the control plane role policy
+                    </ExternalLink>
+                    .
+                  </>
+                )}
                 isDisabled
               />
             </GridItem>
