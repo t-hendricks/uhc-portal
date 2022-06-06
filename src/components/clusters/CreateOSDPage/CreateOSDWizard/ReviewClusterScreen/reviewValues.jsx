@@ -76,7 +76,7 @@ const reviewValues = {
     title: 'Availability',
     isBoolean: true,
     values: {
-      true: 'Multi zone',
+      true: 'Multi-zone',
       false: 'Single zone',
     },
   },
@@ -99,7 +99,7 @@ const reviewValues = {
     },
   },
   upgrade_policy: {
-    title: 'Update Strategy',
+    title: 'Update strategy',
     valueTransform: value => (value === 'manual' ? 'Individual updates' : 'Recurring updates'),
   },
   automatic_upgrade_schedule: {
@@ -195,7 +195,7 @@ const reviewValues = {
     ),
   },
   install_to_vpc: {
-    title: 'Install into Existing VPC',
+    title: 'Install into existing VPC',
     isBoolean: true,
     values: {
       true: 'Enabled',

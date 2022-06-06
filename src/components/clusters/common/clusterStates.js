@@ -81,14 +81,19 @@ const isHibernating = state => state === clusterStates.HIBERNATING
   || state === clusterStates.POWERING_DOWN
   || state === clusterStates.RESUMING;
 
+// Indicates that this is a ROSA cluster
+const isROSA = cluster => cluster.product.id === normalizedProducts.ROSA;
+
+// Indicates that this is a ROSA cluster with manual mode
+const isROSAManualMode = cluster => isROSA(cluster) && cluster.aws.sts
+  && !cluster.aws.sts.auto_mode;
+
 // Indicates that this is a ROSA cluster waiting for manual creation of OIDC
 // and operator roles.
-const isWaitingROSAManualMode = cluster => (
-  cluster.product.id === normalizedProducts.ROSA
-  && cluster.state === clusterStates.WAITING
-  && cluster.aws.sts
-  && !cluster.aws.sts.auto_mode
-);
+const isWaitingROSAManualMode = cluster => cluster.state === clusterStates.WAITING
+  && isROSAManualMode(cluster);
 
-export { getClusterStateAndDescription, isHibernating, isWaitingROSAManualMode };
+export {
+  getClusterStateAndDescription, isHibernating, isROSA, isROSAManualMode, isWaitingROSAManualMode,
+};
 export default clusterStates;

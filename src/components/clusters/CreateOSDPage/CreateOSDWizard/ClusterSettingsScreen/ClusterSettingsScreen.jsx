@@ -111,9 +111,9 @@ function ClusterSettingsScreen({
               <Alert
                 isInline
                 variant="info"
-                title="The cloud storage for your cluster is encrypted at rest"
+                title="The cloud storage for your cluster is encrypted at rest."
               >
-                <ExternalLink noIcon href={cloudProviderLearnLink}>Learn more</ExternalLink>
+                <ExternalLink href={cloudProviderLearnLink}>Learn more</ExternalLink>
               </Alert>
             </GridItem>
             <GridItem>
@@ -125,13 +125,15 @@ function ClusterSettingsScreen({
                   <>
                     {constants.enableAdditionalEtcdHint}
                     {' '}
-                    <ExternalLink href={links.OSD_ETCD_ENCRYPTION}>
+                    <ExternalLink href={isRosa
+                      ? links.ROSA_SERVICE_ETCD_ENCRYPTION : links.OSD_ETCD_ENCRYPTION}
+                    >
                       Learn more about etcd encryption
                     </ExternalLink>
                   </>
                 )}
               />
-              <div className="ocm-c--reduxcheckbox-description">Additional encryption of Openshift and Kubernetes API resources.</div>
+              <div className="ocm-c--reduxcheckbox-description">Additional encryption of OpenShift and Kubernetes API resources.</div>
             </GridItem>
           </Grid>
         </FormGroup>

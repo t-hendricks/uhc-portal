@@ -81,6 +81,22 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
           }
           isRequired={true}
           label="Maximum nodes per zone"
+          labelIcon={
+            <PopoverHint
+              hint={
+                <React.Fragment>
+                  The number of compute nodes to provision per zone. The minimum number of compute nodes will vary depending on which features are enabled.
+                  <br />
+                  <ExternalLink
+                    href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
+                  >
+                    Learn more about autoscaling
+                    
+                  </ExternalLink>
+                </React.Fragment>
+              }
+            />
+          }
         >
           <Field
             ariaLabel="Maximum nodes"
@@ -223,6 +239,22 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
           }
           isRequired={true}
           label="Maximum node count"
+          labelIcon={
+            <PopoverHint
+              hint={
+                <React.Fragment>
+                  The number of compute nodes to provision per zone. The minimum number of compute nodes will vary depending on which features are enabled.
+                  <br />
+                  <ExternalLink
+                    href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
+                  >
+                    Learn more about autoscaling
+                    
+                  </ExternalLink>
+                </React.Fragment>
+              }
+            />
+          }
         >
           <Field
             ariaLabel="Maximum nodes"
