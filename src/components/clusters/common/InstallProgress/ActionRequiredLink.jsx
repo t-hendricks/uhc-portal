@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Button } from '@patternfly/react-core';
 import ActionRequiredModal from './ActionRequiredModal';
 
-function ActionRequiredLink({ cluster, icon }) {
-  const [modalOpen, setModalOpen] = React.useState(false);
+function ActionRequiredLink({ cluster, icon, initiallyOpen }) {
+  const [modalOpen, setModalOpen] = React.useState(initiallyOpen);
   return (
     <>
       <Button variant="link" isInline onClick={() => setModalOpen(true)} icon={icon}>
@@ -21,6 +21,7 @@ function ActionRequiredLink({ cluster, icon }) {
 
 ActionRequiredLink.propTypes = {
   cluster: PropTypes.object.isRequired,
+  initiallyOpen: PropTypes.bool,
   icon: PropTypes.node,
 };
 

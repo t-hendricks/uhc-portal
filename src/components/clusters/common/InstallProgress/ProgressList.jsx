@@ -11,7 +11,7 @@ import './ProgressList.scss';
 import ActionRequiredLink from './ActionRequiredLink';
 import clusterStates, { isROSA, isWaitingROSAManualMode } from '../clusterStates';
 
-function ProgressList({ cluster }) {
+function ProgressList({ cluster, actionRequiredInitialOpen }) {
   const isROSACluster = isROSA(cluster);
   const isWaitingAndROSAManualMode = isWaitingROSAManualMode(cluster);
 
@@ -43,7 +43,10 @@ function ProgressList({ cluster }) {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: {
             variant: 'warning',
-            text: <ActionRequiredLink cluster={cluster} />,
+            text: <ActionRequiredLink
+              cluster={cluster}
+              initiallyOpen={actionRequiredInitialOpen}
+            />,
             isCurrent: true,
           },
           DNSSetup: pending,
@@ -155,6 +158,7 @@ function ProgressList({ cluster }) {
 
 ProgressList.propTypes = {
   cluster: PropTypes.object.isRequired,
+  actionRequiredInitialOpen: PropTypes.bool,
 };
 
 export default ProgressList;

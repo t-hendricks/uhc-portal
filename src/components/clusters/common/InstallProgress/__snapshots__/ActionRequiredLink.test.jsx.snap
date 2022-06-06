@@ -387,7 +387,6 @@ exports[`<ActionRequiredLink /> should render correctly 1`] = `
         "pending": false,
       }
     }
-    isOpen={false}
     onClose={[Function]}
   />
 </Fragment>
