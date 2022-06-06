@@ -14,8 +14,11 @@ import {
 import AWSCLITab from './AWSCLITab';
 import ROSACLITab from './ROSACLITab';
 
+const AWS_CLI_TAB_INDEX = 1;
+const ROSA_CLI_TAB_INDEX = 2;
+
 function ActionRequiredModal({ cluster, isOpen, onClose }) {
-  const [activeTab, setActiveTab] = React.useState(1);
+  const [activeTab, setActiveTab] = React.useState(ROSA_CLI_TAB_INDEX);
   return (
     <Modal
       title="Action required to continue installation"
@@ -50,12 +53,12 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
             />
             */}
             <Tab
-              eventKey={1}
+              eventKey={AWS_CLI_TAB_INDEX}
               title={<TabTitleText>AWS CLI</TabTitleText>}
               tabContentId="aws-cli"
             />
             <Tab
-              eventKey={2}
+              eventKey={ROSA_CLI_TAB_INDEX}
               title={<TabTitleText>ROSA CLI</TabTitleText>}
               tabContentId="rosa-cli"
             />
