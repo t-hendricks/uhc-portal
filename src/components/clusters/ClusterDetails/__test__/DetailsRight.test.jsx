@@ -100,4 +100,17 @@ describe('<DetailsRight />', () => {
       expect(wrapper).toMatchSnapshot();
     });
   });
+
+  describe('AI clusters', () => {
+    it('should render the "created at" and "owner" detail', () => {
+      const wrapper = shallow(
+        <DetailsRight
+          cluster={{
+            ...clusterDetails.cluster, aiCluster: {},
+          }}
+        />,
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
 });
