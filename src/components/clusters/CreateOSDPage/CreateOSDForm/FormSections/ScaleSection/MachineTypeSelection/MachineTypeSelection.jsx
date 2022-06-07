@@ -31,6 +31,7 @@ export const machineCategories = [
   { name: 'accelerated_computing', label: 'Accelerated computing' },
 ];
 
+/** Returns useful info about the machine type - CPUs, RAM, [GPUs]. */
 const machineTypeLabel = (machineType) => {
   if (!machineType) {
     return '';
@@ -45,6 +46,22 @@ const machineTypeLabel = (machineType) => {
     }
   }
   return label;
+};
+
+/** Returns exact id used by cloud provider. */
+const machineTypeDescription = (machineType) => {
+  if (!machineType) {
+    return '';
+  }
+  return machineType.id;
+};
+
+/** Returns useful info plus exact id used by the cloud provider. */
+const machineTypeFullLabel = (machineType) => {
+  if (!machineType) {
+    return '';
+  }
+  return `${machineTypeDescription(machineType)} - ${machineTypeLabel(machineType)}`;
 };
 
 class MachineTypeSelection extends React.Component {
@@ -171,21 +188,15 @@ class MachineTypeSelection extends React.Component {
       this.onToggle(false);
     };
 
-    const machineNameParts = (machineType) => {
-      const { name } = machineType;
-      return name.split(' - '); // Assuming the formatting on the backend side is "type - category". If the backend changes the formatting, this assumption will break
-    };
-
     const machineTypeSelectItem = (machineType) => {
       const hasQuota = this.hasQuotaForType(machineType.id);
-      const nameParts = machineNameParts(machineType);
       return (
         <SelectOption
           {...extraProps}
           key={machineType.id}
           id={`machineType.${machineType.id}`}
           value={machineType.id}
-          description={nameParts[0]}
+          description={machineTypeDescription(machineType)}
           isSelected={hasQuota && input.value === machineType.id}
           formValue={machineType.id}
         >
@@ -251,7 +262,9 @@ class MachineTypeSelection extends React.Component {
       }
       const { isOpen } = this.state;
       const options = groupedSelectItems(displayedMachineTypes);
-      const selection = machineTypeLabel(
+      // In the dropdown we put the machine type id in separate description row,
+      // but the Select toggle doesn't support that, so combine both into one label.
+      const selection = machineTypeFullLabel(
         displayedMachineTypes.find(machineType => machineType.id === input.value) || null,
       );
       return (
