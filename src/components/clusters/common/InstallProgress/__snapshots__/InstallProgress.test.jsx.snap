@@ -376,6 +376,7 @@ exports[`<InstallProgress /> should render correclty installing cluster 1`] = `
   </CardTitle>
   <CardBody>
     <ProgressList
+      actionRequiredInitialOpen={true}
       cluster={
         Object {
           "activity_timestamp": "2021-01-11T11:55:29Z",
