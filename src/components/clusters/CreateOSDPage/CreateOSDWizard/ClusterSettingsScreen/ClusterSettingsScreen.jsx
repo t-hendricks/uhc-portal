@@ -125,7 +125,9 @@ function ClusterSettingsScreen({
                   <>
                     {constants.enableAdditionalEtcdHint}
                     {' '}
-                    <ExternalLink href={links.OSD_ETCD_ENCRYPTION}>
+                    <ExternalLink href={isRosa
+                      ? links.ROSA_SERVICE_ETCD_ENCRYPTION : links.OSD_ETCD_ENCRYPTION}
+                    >
                       Learn more about etcd encryption
                     </ExternalLink>
                   </>

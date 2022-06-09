@@ -78,7 +78,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
       <Alert className="subscription-settings compliancy-alert" isInline variant="danger" title="Your 60-day OpenShift evaluation has expired">
         {lastChecked}
         <p>
-          Your cluster is not supported and you may stop receving updates.
+          Your cluster is not supported and you may stop receiving updates.
           {' '}
           {cluster.canEdit ? (
             <>

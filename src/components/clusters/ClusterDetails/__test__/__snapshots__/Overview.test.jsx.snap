@@ -11,7 +11,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
       hasGutter={true}
     >
       <Connect(Component)
-        aiClusterId="OCP-AssistedInstall"
+        aiClusterId="1i4counta3holamvo1g5tp6n8p3a03bq"
       />
       <Card
         className="ocm-c-overview-details__card"
@@ -226,7 +226,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "kind": "AddOnInstallationListLink",
                     },
                     "aiCluster": Object {
-                      "id": "OCP-AssistedInstall",
+                      "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
                     },
                     "api": Object {
                       "listening": "external",
@@ -594,7 +594,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "kind": "AddOnInstallationListLink",
                     },
                     "aiCluster": Object {
-                      "id": "OCP-AssistedInstall",
+                      "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
                     },
                     "api": Object {
                       "listening": "external",
