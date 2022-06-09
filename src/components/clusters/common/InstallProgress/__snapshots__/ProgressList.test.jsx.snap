@@ -3,8 +3,16 @@
 exports[`<ProgressList /> should render for ROSA manual mode 1`] = `
 <ProgressStepper>
   <ProgressStep
+    description="Completed"
+    id="awsAccountSetup"
+    titleId="awsAccountSetup-title"
+    variant="success"
+  >
+    Account setup
+  </ProgressStep>
+  <ProgressStep
     description={
-      <ActionRequiredPopover
+      <ActionRequiredLink
         cluster={
           Object {
             "activity_timestamp": "2021-01-11T11:55:29Z",
@@ -372,15 +380,22 @@ exports[`<ProgressList /> should render for ROSA manual mode 1`] = `
         }
       />
     }
-    id="awsAccountSetup"
+    id="oidcAndOperatorRolesSetup"
     isCurrent={true}
-    titleId="awsAccountSetup-title"
-    variant="info"
+    titleId="oidcAndOperatorRoles-title"
+    variant="warning"
   >
-    Account setup
+    OIDC and operator roles
   </ProgressStep>
   <ProgressStep
     description="Pending"
+    icon={
+      <PendingIcon
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+    }
     id="DNSSetup"
     titleId="DNSSetup-title"
     variant="pending"
@@ -389,6 +404,13 @@ exports[`<ProgressList /> should render for ROSA manual mode 1`] = `
   </ProgressStep>
   <ProgressStep
     description="Pending"
+    icon={
+      <PendingIcon
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+    }
     id="clusterInstallation"
     titleId="clusterInstallation-title"
     variant="pending"
@@ -418,6 +440,13 @@ exports[`<ProgressList /> should render when first step completed 1`] = `
   </ProgressStep>
   <ProgressStep
     description="Installing cluster"
+    icon={
+      <InProgressIcon
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+    }
     id="clusterInstallation"
     isCurrent={true}
     titleId="clusterInstallation-title"
@@ -432,6 +461,13 @@ exports[`<ProgressList /> should render when first step in progress 1`] = `
 <ProgressStepper>
   <ProgressStep
     description="Preparing account"
+    icon={
+      <InProgressIcon
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+    }
     id="awsAccountSetup"
     isCurrent={true}
     titleId="awsAccountSetup-title"
@@ -441,6 +477,13 @@ exports[`<ProgressList /> should render when first step in progress 1`] = `
   </ProgressStep>
   <ProgressStep
     description="Pending"
+    icon={
+      <PendingIcon
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+    }
     id="DNSSetup"
     titleId="DNSSetup-title"
     variant="pending"
@@ -449,6 +492,13 @@ exports[`<ProgressList /> should render when first step in progress 1`] = `
   </ProgressStep>
   <ProgressStep
     description="Pending"
+    icon={
+      <PendingIcon
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+    }
     id="clusterInstallation"
     titleId="clusterInstallation-title"
     variant="pending"
@@ -478,6 +528,13 @@ exports[`<ProgressList /> should render when second step completed 1`] = `
   </ProgressStep>
   <ProgressStep
     description="Installing cluster"
+    icon={
+      <InProgressIcon
+        color="currentColor"
+        noVerticalAlign={false}
+        size="sm"
+      />
+    }
     id="clusterInstallation"
     isCurrent={true}
     titleId="clusterInstallation-title"

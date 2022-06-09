@@ -10,10 +10,8 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
       <DescriptionListDescription>
         <ClusterStateIcon
           animated={true}
-          clusterState="ready"
         />
          
-        Ready
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -34,22 +32,6 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
         137.34
          
         GiB
-      </DescriptionListDescription>
-    </DescriptionListGroup>
-    <DescriptionListGroup>
-      <DescriptionListTerm>
-        Load balancers
-      </DescriptionListTerm>
-      <DescriptionListDescription>
-        N/A
-      </DescriptionListDescription>
-    </DescriptionListGroup>
-    <DescriptionListGroup>
-      <DescriptionListTerm>
-        Persistent storage
-      </DescriptionListTerm>
-      <DescriptionListDescription>
-        100  GiB
       </DescriptionListDescription>
     </DescriptionListGroup>
     <DescriptionListGroup>
@@ -125,7 +107,9 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
             "href": "/api/clusters_mgmt/v1/clusters/1i4counta3holamvo1g5tp6n8p3a03bq/addons",
             "kind": "AddOnInstallationListLink",
           },
-          "aiCluster": Object {},
+          "aiCluster": Object {
+            "id": "1i4counta3holamvo1g5tp6n8p3a03bq",
+          },
           "api": Object {
             "listening": "external",
             "url": "https://api.test-liza.wiex.s1.devshift.org:6443",
@@ -137,7 +121,7 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
           },
           "ccs": Object {
             "disable_scp_checks": false,
-            "enabled": false,
+            "enabled": true,
           },
           "cloud_provider": Object {
             "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
@@ -308,10 +292,7 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
             "id": "us-east-1",
             "kind": "CloudRegionLink",
           },
-          "state": Object {
-            "description": "Ready",
-            "state": "ready",
-          },
+          "state": "ready",
           "status": Object {
             "dns_ready": true,
             "provision_error_code": "",
@@ -461,10 +442,8 @@ exports[`<DetailsRight /> AI clusters should render the "created at" and "owner"
             ],
             "organization_id": "1MKVU4otCIuogoLtgtyU6wajxjW",
             "plan": Object {
-              "href": "/api/accounts_mgmt/v1/plans/OSD",
-              "id": "OSD",
-              "kind": "Plan",
-              "type": "OSD",
+              "id": "OCP-AssistedInstall",
+              "type": "OCP",
             },
             "provenance": "Provisioning",
             "region_id": "us-east-1",

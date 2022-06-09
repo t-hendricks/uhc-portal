@@ -23,7 +23,7 @@ const constants = {
   bypassSCPChecksHint: `Some AWS service control policies (SCP) will cause installation to fail even if
     the credentials have the correct permissions. Disabling SCP checks allows installation to proceed.
     The SCP will still be enforced even if the checks are bypassed.`,
-  enableAdditionalEtcdHint: 'When you enable additional etcd encryption, encryption keys are created. These keys are rotated on a weekly basis.',
+  enableAdditionalEtcdHint: 'When you enable etcd encryption, encryption keys are created. These keys are rotated on a weekly basis.',
   autoscaleHint: 'Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.',
   keyRing: 'A key ring organizes keys in a specific Google Cloud location and allows you to manage access control on groups of keys.',
   keyName: 'A cryptographic key is a resource that is used for encrypting and decrypting data or for producing and verifying digital signatures',

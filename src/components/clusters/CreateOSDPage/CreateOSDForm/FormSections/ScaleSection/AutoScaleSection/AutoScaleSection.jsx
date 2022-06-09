@@ -229,6 +229,11 @@ class AutoScaleSection extends React.Component {
     const errorText = message => <HelperTextItem variant="error" hasIcon>{message}</HelperTextItem>;
     const helpText = message => <HelperTextItem>{message}</HelperTextItem>;
 
+    const isRosa = product === normalizedProducts.ROSA;
+
+    const autoScalingUrl = isRosa ? links.ROSA_AUTOSCALING
+      : links.APPLYING_AUTOSCALING;
+
     const azFormGroups = (
       <>
         <Split hasGutter className="autoscaling__container">
@@ -262,6 +267,29 @@ class AutoScaleSection extends React.Component {
                   {maxErrorMessage && errorText(maxErrorMessage)}
                 </HelperText>
               )}
+              labelIcon={(
+                <PopoverHint
+                  hint={(
+                    <>
+                      {constants.computeNodeCountHint}
+                      <br />
+                      {isRosa ? (
+                        <>
+                          <ExternalLink href={links.ROSA_WORKER_NODE_COUNT}>
+                            Learn more about worker/compute node count
+                          </ExternalLink>
+                          <br />
+                        </>
+                      ) : null}
+
+                      <ExternalLink href={autoScalingUrl}>
+                        Learn more about autoscaling
+                        {isRosa ? ' with ROSA' : ''}
+                      </ExternalLink>
+                    </>
+                )}
+                />
+              )}
             >
               {maxField}
             </FormGroup>
@@ -269,9 +297,6 @@ class AutoScaleSection extends React.Component {
         </Split>
       </>
     );
-
-    const autoScalingUrl = product === normalizedProducts.ROSA ? links.ROSA_AUTOSCALING
-      : links.APPLYING_AUTOSCALING;
 
     return (
       <>
