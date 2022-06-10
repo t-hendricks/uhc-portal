@@ -514,7 +514,7 @@ class CreateOSDWizardInternal extends React.Component {
               onBack={this.onBack}
               onGoToStep={this.onGoToStep}
               onClose={() => history.push('/create/cloud')}
-              footer={createClusterResponse.pending ? null : footer}
+              footer={createClusterResponse.pending ? <></> : footer}
             />
           </div>
         </PageSection>

@@ -384,7 +384,7 @@ class CreateROSAWizardInternal extends React.Component {
                     onSubmit={onSubmit}
                     onBeforeNext={goToNext => this.beforeOnNext(goToNext)}
                   />
-                ) : null
+                ) : <></>
                 )}
               />
             </PersistGate>
