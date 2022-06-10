@@ -49,13 +49,13 @@ function cleanup() {
   if [ ! -z "${pod_id}" ]; then
     # Collect the logs:
     if [ ! -z "${proxy_id}" ]; then
-      podman logs "${proxy_id}" &> proxy.log
+      podman logs "${proxy_id}" &> selenium-proxy.log
     fi
     if [ ! -z "${browser_id}" ]; then
-      podman logs "${browser_id}" &> browser.log
+      podman logs "${browser_id}" &> selenium-browser.log
     fi
     if [ ! -z "${site_id}" ]; then
-      podman logs "${site_id}" &> site.log
+      podman logs "${site_id}" &> selenium-site.log
     fi
 
     # Kill all the containers in the pod:
@@ -121,6 +121,7 @@ browser_id=$(
     --shm-size "2g" \
     --security-opt label="disable" \
     --detach \
+    --env NO_COLOR=1 \
     "${browser_image}"
 )
 

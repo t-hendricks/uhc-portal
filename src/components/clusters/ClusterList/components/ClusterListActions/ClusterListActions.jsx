@@ -73,7 +73,7 @@ const dropdownAssisteInstaller = (
 const toolbarCreateCluster = (
   <ToolbarItem key="createcluster">
     <Link to="/create">
-      <Button>Create cluster</Button>
+      <Button data-testid="create_cluster_btn">Create cluster</Button>
     </Link>
   </ToolbarItem>
 );

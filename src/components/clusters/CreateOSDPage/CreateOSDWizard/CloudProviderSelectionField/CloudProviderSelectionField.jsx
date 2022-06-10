@@ -37,7 +37,7 @@ function CloudProviderSelectionField({
     <Tile
       className={`${getCardClass(hasGcpQuota, value === 'gcp')} pf-u-mb-0`}
       onClick={() => hasGcpQuota && handleChange('gcp')}
-      data-test-id="gcp-provider-card"
+      data-testid="gcp-provider-card"
       title="Run on Google Cloud Platform"
       icon={<GCPLogo />}
       isDisplayLarge
@@ -50,7 +50,7 @@ function CloudProviderSelectionField({
     <Tile
       className={`${getCardClass(hasAwsQuota, value === 'aws')} pf-u-mb-0`}
       onClick={() => hasAwsQuota && handleChange('aws')}
-      data-test-id="aws-provider-card"
+      data-testid="aws-provider-card"
       title="Run on Amazon Web Services"
       icon={<AWSLogo />}
       isDisplayLarge

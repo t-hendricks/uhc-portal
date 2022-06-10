@@ -8,7 +8,11 @@ import {
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 
-const CreateClusterDropDown = () => {
+interface CreateClusterDropDownProps {
+  toggleId?: string;
+}
+
+const CreateClusterDropDown = ({ toggleId }: CreateClusterDropDownProps) => {
   const [isOpen, setOpen] = React.useState(false);
   const dropDownRef = React.useRef<HTMLButtonElement>(null);
 
@@ -24,12 +28,20 @@ const CreateClusterDropDown = () => {
   const dropdownItems = [
     <DropdownItem
       key="getstarted"
-      component={<Link to="/create/rosa/getstarted">With CLI </Link>}
+      component={
+        <Link id="with-cli" to="/create/rosa/getstarted">
+          With CLI{' '}
+        </Link>
+      }
     />,
 
     <DropdownItem
       key="wizard"
-      component={<Link to="/create/rosa/wizard">With web interface</Link>}
+      component={
+        <Link id="with-web" to="/create/rosa/wizard">
+          With web interface
+        </Link>
+      }
     />,
   ];
 
@@ -39,6 +51,7 @@ const CreateClusterDropDown = () => {
         onSelect={onDropDownSelect}
         toggle={
           <DropdownToggle
+            id={toggleId}
             ref={dropDownRef}
             toggleVariant={ButtonVariant.primary}
             onToggle={setOpen}

@@ -211,6 +211,7 @@ exports[`<Tokens /> Renders screen with button 1`] = `
             >
               <Button
                 className="pf-u-mt-md"
+                data-testid="load-token-btn"
                 onClick={[Function]}
                 variant="primary"
               >

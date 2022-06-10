@@ -59,7 +59,7 @@ export const CloudProviderTileField = () => {
     <Tile
       className={classNames('ocm-tile-create-cluster', !hasGcpResources && 'tile-disabled')}
       onClick={() => hasGcpResources && handleChange(CloudProviderType.Gcp)}
-      data-test-id="gcp-provider-card"
+      data-testid="gcp-provider-card"
       title="Run on Google Cloud Platform"
       icon={<GCPLogo />}
       isDisplayLarge
@@ -72,7 +72,7 @@ export const CloudProviderTileField = () => {
     <Tile
       className={classNames('ocm-tile-create-cluster', !hasAwsResources && 'tile-disabled')}
       onClick={() => hasAwsResources && handleChange(CloudProviderType.Aws)}
-      data-test-id="aws-provider-card"
+      data-testid="aws-provider-card"
       title="Run on Amazon Web Services"
       icon={<AWSLogo />}
       isDisplayLarge

@@ -162,6 +162,7 @@ const Tokens = (props: Props) => {
                     <Button
                       variant="primary"
                       className="pf-u-mt-md"
+                      data-testid="load-token-btn"
                       onClick={() =>
                         loadOfflineToken((tokenOrError, errorReason) => {
                           setOfflineToken(errorReason || tokenOrError);
