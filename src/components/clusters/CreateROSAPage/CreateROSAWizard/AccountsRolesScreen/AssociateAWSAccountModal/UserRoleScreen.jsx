@@ -44,7 +44,7 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
           Create a user role
         </Title>
         {hasAWSAccounts && isAlertShown && (
-          <MultipleAccountsInfoBox setIsAlertShown={setIsAlertShown} />
+          <MultipleAccountsInfoBox setIsAlertShown={setIsAlertShown} userRole />
         )}
         <TextContent>
           <Text component={TextVariants.p}>
@@ -61,7 +61,7 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
               {' '}
             </strong>
             <PopoverHint
-              bodyContent="The user role is necessary to allow this interface to validate your user account and enable a trust with the OCM role"
+              bodyContent="The user role is necessary to validate that your Red Hat user account has permissions to install a cluster in the AWS account."
             />
             <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
               {rosaCLICommand.userRole}

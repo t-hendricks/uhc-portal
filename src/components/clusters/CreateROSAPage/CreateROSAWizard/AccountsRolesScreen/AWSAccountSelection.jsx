@@ -22,10 +22,7 @@ function NoAssociatedAWSAccounts() {
     <EmptyState className="no-associated-aws-accounts_empty-state">
       <Title headingLevel="h6" size="md">No associated accounts were found.</Title>
       <EmptyStateBody>
-        To associate an AWS account to your Red Hat account
-        {' '}
-        {/* eslint-disable-next-line react/no-unescaped-entities */}
-        click the "Associate AWS account" button below.
+        Associate an AWS account to your Red Hat account.
       </EmptyStateBody>
     </EmptyState>
   );

@@ -196,13 +196,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
         <FormGroup
           className="autoscaling__nodes-formGroup"
           fieldId="nodes_min"
-          helperText={
-            <HelperText>
-              <HelperTextItem>
-                minimum
-              </HelperTextItem>
-            </HelperText>
-          }
+          helperText={<HelperText />}
           isRequired={true}
           label="Minimum node count"
         >
@@ -230,13 +224,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
         <FormGroup
           className="autoscaling__nodes-formGroup"
           fieldId="nodes_max"
-          helperText={
-            <HelperText>
-              <HelperTextItem>
-                maximum
-              </HelperTextItem>
-            </HelperText>
-          }
+          helperText={<HelperText />}
           isRequired={true}
           label="Maximum node count"
           labelIcon={
