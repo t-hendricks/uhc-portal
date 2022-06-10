@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {
   Card,
   CardBody,
+  Grid,
+  GridItem,
   Title,
   Text,
   TextContent,
@@ -75,11 +77,25 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
             {' '}
             with your Red Hat user account.
           </Text>
-          <div className="ocm-instruction-block">
-            <InstructionCommand textAriaLabel="Copyable ROSA link user-role --arn">
-              {rosaCLICommand.linkUserRole}
-            </InstructionCommand>
-          </div>
+          <Grid className="ocm-instruction-block">
+            <GridItem sm={7} md={6}>
+              <InstructionCommand textAriaLabel="Copyable ROSA link user-role --arn">
+                {rosaCLICommand.linkUserRole}
+              </InstructionCommand>
+            </GridItem>
+            <GridItem sm={1} md={1}>
+              <PopoverHint
+                iconClassName="ocm-instructions__command-help-icon"
+                hint="Check if the role is linked to your
+                      Red Hat user account by running the following command:"
+                footer={(
+                  <InstructionCommand textAriaLabel="Copyable ROSA rosa list user-role">
+                    rosa list user-role
+                  </InstructionCommand>
+)}
+              />
+            </GridItem>
+          </Grid>
         </TextContent>
       </CardBody>
     </Card>

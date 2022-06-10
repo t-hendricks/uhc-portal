@@ -116,17 +116,34 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
             {' '}
             with your Red Hat organization.
           </Text>
-          <div className="ocm-instruction-block">
-            <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn">
-              {rosaCLICommand.linkOcmRole}
-            </InstructionCommand>
+          <Grid className="ocm-instruction-block">
+
+            <GridItem sm={7} md={5}>
+              <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn">
+                {rosaCLICommand.linkOcmRole}
+              </InstructionCommand>
+            </GridItem>
+            <GridItem sm={1} md={1}>
+              <PopoverHint
+                iconClassName="ocm-instructions__command-help-icon"
+                hint="Check if the role is linked to your
+                      Red Hat organization by running the following command:"
+                footer={(
+                  <InstructionCommand textAriaLabel="Copyable ROSA rosa list ocm-role">
+                    rosa list ocm-role
+                  </InstructionCommand>
+)}
+              />
+            </GridItem>
+
             <Alert
               variant="info"
               isInline
               isPlain
+              className="ocm-instruction-block_alert"
               title="You must have organization administrator privileges in your Red Hat account to run this command. After you link the OCM role with your Red Hat organization, it is visible for all users in the organization."
             />
-          </div>
+          </Grid>
         </TextContent>
       </CardBody>
     </Card>
