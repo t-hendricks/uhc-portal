@@ -3,22 +3,30 @@ import { formValueSelector, touch } from 'redux-form';
 
 import wizardConnector from '../../../CreateOSDPage/CreateOSDWizard/WizardConnector';
 import AccountsRolesScreen from './AccountsRolesScreen';
-import { openModal } from '../../../../common/Modal/ModalActions';
+import { openModal, closeModal } from '../../../../common/Modal/ModalActions';
+import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
 import {
   getAWSAccountIDs,
   clearGetAWSAccountIDsResponse,
-  getAWSAccountRolesARNs, clearGetAWSAccountRolesARNsResponse,
+  getAWSAccountRolesARNs,
+  clearGetAWSAccountRolesARNsResponse,
+  clearGetUserRoleResponse,
+  getUserRole,
 } from '../rosaActions';
 
 const mapDispatchToProps = dispatch => ({
   openAssociateAWSAccountModal: token => dispatch(openModal('associate-aws-modal', token)),
+  openUserRoleInstructionsModal: () => dispatch(openModal('user-role-instructions-modal')),
+  closeModal: () => dispatch(closeModal()),
   getAWSAccountIDs: organizationID => dispatch(getAWSAccountIDs(organizationID)),
   getAWSAccountRolesARNs: awsAccountID => dispatch(
     getAWSAccountRolesARNs(awsAccountID),
   ),
   clearGetAWSAccountIDsResponse: () => dispatch(clearGetAWSAccountIDsResponse()),
   clearGetAWSAccountRolesARNsResponse: () => dispatch(clearGetAWSAccountRolesARNsResponse()),
+  clearGetUserRoleResponse: () => dispatch(clearGetUserRoleResponse()),
+  getUserRole: () => dispatch(getUserRole()),
   touchARNsFields: () => {
     dispatch(touch('CreateCluster', 'installer_role_arn'));
     dispatch(touch('CreateCluster', 'support_role_arn'));
@@ -28,7 +36,11 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = (state) => {
-  const { getAWSAccountIDsResponse, getAWSAccountRolesARNsResponse } = state.rosaReducer;
+  const {
+    getAWSAccountIDsResponse,
+    getAWSAccountRolesARNsResponse,
+    getUserRoleResponse,
+  } = state.rosaReducer;
   const valueSelector = formValueSelector('CreateCluster');
 
   return {
@@ -37,6 +49,8 @@ const mapStateToProps = (state) => {
     rosaMaxOSVersion: valueSelector(state, 'rosa_max_os_version'),
     getAWSAccountIDsResponse,
     getAWSAccountRolesARNsResponse,
+    getUserRoleResponse,
+    isUserRoleModalOpen: shouldShowModal(state, 'user-role-instructions-modal'),
   };
 };
 

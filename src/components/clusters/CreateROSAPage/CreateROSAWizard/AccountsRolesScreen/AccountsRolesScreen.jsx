@@ -3,7 +3,18 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
 import {
-  Form, Grid, GridItem, Text, TextContent, TextVariants, Title,
+  Alert,
+  AlertActionLink,
+  Form,
+  Grid,
+  GridItem,
+  Text,
+  TextContent,
+  TextList,
+  TextListItem,
+  TextListVariants,
+  TextVariants,
+  Title,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
@@ -19,6 +30,9 @@ import ErrorBox from '../../../../common/ErrorBox';
 import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import UserRoleInstructionsModal from './UserRoleInstructionsModal';
+import InstructionCommand from '../../../../common/InstructionCommand';
+import { rosaCLICommand } from './AssociateAWSAccountModal/UserRoleScreen';
 
 function AccountsRolesScreen({
   change,
@@ -32,8 +46,13 @@ function AccountsRolesScreen({
   getAWSAccountIDsResponse,
   getAWSAccountRolesARNs,
   getAWSAccountRolesARNsResponse,
+  getUserRoleResponse,
   clearGetAWSAccountRolesARNsResponse,
   clearGetAWSAccountIDsResponse,
+  clearGetUserRoleResponse,
+  openUserRoleInstructionsModal,
+  isUserRoleModalOpen,
+  closeModal,
 }) {
   const longName = 'Red Hat OpenShift Service on AWS (ROSA)';
   const title = `Welcome to ${longName} `;
@@ -49,6 +68,12 @@ function AccountsRolesScreen({
     change('product', normalizedProducts.ROSA);
     change('byoc', 'true');
   }, []);
+
+  useEffect(() => {
+    if (getUserRoleResponse.fulfilled) {
+      clearGetUserRoleResponse();
+    }
+  }, [getUserRoleResponse.fulfilled]);
 
   // default to first available aws account
   useEffect(() => {
@@ -197,8 +222,62 @@ function AccountsRolesScreen({
           touchARNsFields={touchARNsFields}
         />
         )}
+        <GridItem span={9}>
+          {getUserRoleResponse.error && (
+            <>
+              <br />
+              <Alert
+                className="pf-u-ml-lg"
+                variant="danger"
+                isInline
+                title="A user-role could not be detected"
+                actionLinks={(
+                  <AlertActionLink
+                    onClick={() => openUserRoleInstructionsModal()}
+                  >
+                    See more user role instructions
+                  </AlertActionLink>
+              )}
+              >
+                <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
+                  <TextListItem className="pf-u-mb-sm">
+                    <Text component={TextVariants.p} className="pf-u-mb-sm">
+                      It is necessary to create and link a user-role with the Red Hat cluster
+                      {' '}
+                      installer to proceed.
+                    </Text>
+                  </TextListItem>
+                  <TextListItem className="pf-u-mb-sm">
+                    <Text component={TextVariants.p} className="pf-u-mb-sm">
+                      To create a user-role, run the following command:
+                    </Text>
+                  </TextListItem>
+                  <TextListItem className="pf-u-mb-sm">
+                    <Text component={TextVariants.p} className="pf-u-mb-sm">
+                      <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
+                        {rosaCLICommand.userRole}
+                      </InstructionCommand>
+                    </Text>
+                  </TextListItem>
+                  <TextListItem className="pf-u-mb-sm">
+                    <Text component={TextVariants.p} className="pf-u-mb-sm ocm-secondary-text">
+                      After the role is created and linked successfully, you&apos;ll be able to
+                      {' '}
+                      continue by clicking the Next button.
+                    </Text>
+                  </TextListItem>
+                </TextList>
+              </Alert>
+            </>
+          )}
+        </GridItem>
       </Grid>
       <AssociateAWSAccountModal onClose={onModalClose} />
+      <UserRoleInstructionsModal
+        closeModal={closeModal}
+        isOpen={isUserRoleModalOpen}
+        hasAWSAccounts={hasAWSAccounts}
+      />
     </Form>
   );
 }
@@ -213,14 +292,19 @@ AccountsRolesScreen.propTypes = {
   openAssociateAWSAccountModal: PropTypes.func.isRequired,
   getAWSAccountRolesARNs: PropTypes.func.isRequired,
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
+  getUserRoleResponse: PropTypes.object.isRequired,
   clearGetAWSAccountIDsResponse: PropTypes.func.isRequired,
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
+  clearGetUserRoleResponse: PropTypes.func.isRequired,
   organizationID: PropTypes.string.isRequired,
   initialValues: PropTypes.shape({
     associated_aws_id: PropTypes.string,
     installer_role_arn: PropTypes.string,
   }).isRequired,
   rosaMaxOSVersion: PropTypes.string,
+  openUserRoleInstructionsModal: PropTypes.func,
+  isUserRoleModalOpen: PropTypes.bool,
+  closeModal: PropTypes.func,
 };
 
 export default AccountsRolesScreen;

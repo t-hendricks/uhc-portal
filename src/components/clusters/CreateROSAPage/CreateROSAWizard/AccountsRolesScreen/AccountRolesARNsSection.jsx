@@ -166,7 +166,7 @@ function AccountRolesARNsSection({
       {!getAWSAccountRolesARNsResponse.pending && (
       <GridItem span={12}>
         <ExpandableSection
-          isExpanded={!awsARNsErrorBox && isExpanded}
+          isExpanded={isExpanded}
           onToggle={onToggle}
           toggleText="Account roles ARNs"
         >

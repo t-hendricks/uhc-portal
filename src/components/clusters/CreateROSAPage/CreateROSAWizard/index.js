@@ -7,6 +7,7 @@ import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersA
 import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 import { getCloudProviders } from '../../../../redux/actions/cloudProviderActions';
+import { getUserRole, clearGetUserRoleResponse } from './rosaActions';
 import CreateROSAWizard from './CreateROSAWizard';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../../common/Modal/ModalActions';
@@ -16,6 +17,7 @@ import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 const mapStateToProps = (state) => {
   const { organization } = state.userProfile;
+  const { getUserRoleResponse } = state.rosaReducer;
   const valueSelector = formValueSelector('CreateCluster');
 
   return ({
@@ -31,6 +33,7 @@ const mapStateToProps = (state) => {
     cloudProviders: state.cloudProviders,
     hasProductQuota: hasManagedQuotaSelector(state, normalizedProducts.ROSA),
     formErrors: getFormSyncErrors('CreateCluster')(state),
+    getUserRoleResponse,
   });
 };
 
@@ -47,8 +50,10 @@ const mapDispatchToProps = dispatch => ({
   closeModal: () => { dispatch(closeModal()); },
   touch: fieldNames => dispatch(touch('CreateCluster', ...fieldNames)),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
+  getUserRole: () => dispatch(getUserRole()),
   getMachineTypes: () => dispatch(getMachineTypes()),
   getCloudProviders: () => dispatch(getCloudProviders()),
+  clearGetUserRoleResponse: () => dispatch(clearGetUserRoleResponse()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateROSAWizard));
