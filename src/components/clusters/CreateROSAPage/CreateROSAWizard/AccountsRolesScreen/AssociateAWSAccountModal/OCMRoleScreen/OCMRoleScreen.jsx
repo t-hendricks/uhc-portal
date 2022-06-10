@@ -50,10 +50,10 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
           Create an OpenShift Cluster Manager role
         </Title>
         {hasAWSAccounts && isAlertShown && (
-          <MultipleAccountsInfoBox setIsAlertShown={setIsAlertShown} />
+          <MultipleAccountsInfoBox setIsAlertShown={setIsAlertShown} ocmRole />
         )}
         <Title headingLevel="h3">
-          Create an OCM role
+          Create and link OCM role
         </Title>
         <TextContent>
           <Text component={TextVariants.p}>
@@ -82,7 +82,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
                   Basic OCM role
                   {' '}
                   <PopoverHint
-                    bodyContent="The basic OCM role is necessary (one per Red Hat organization) to allow this interface to detect the presence of ROSA necessary AWS roles and policies."
+                    bodyContent="One basic OCM role is needed per Red Hat organization to allow OpenShift Cluster Manager to detect the presence of AWS roles and policies required for ROSA."
                   />
                 </strong>
                 <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role">
@@ -124,7 +124,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
               variant="info"
               isInline
               isPlain
-              title="You must have organization administrator privileges to run this command. After you link the OCM role with your Red Hat organization, it is visible for all users in the organization."
+              title="You must have organization administrator privileges in your Red Hat account to run this command. After you link the OCM role with your Red Hat organization, it is visible for all users in the organization."
             />
           </div>
         </TextContent>

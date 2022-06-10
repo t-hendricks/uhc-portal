@@ -58,7 +58,7 @@ function AuthenticateScreen({ token }) {
           <Text component={TextVariants.p}>
             Run the authentication command in your terminal, and use your API token
             {' '}
-            to authenticate against your Red Hat OpenShift Service on AWS account.
+            to authenticate against your ROSA account.
             {' '}
           </Text>
         </TextContent>

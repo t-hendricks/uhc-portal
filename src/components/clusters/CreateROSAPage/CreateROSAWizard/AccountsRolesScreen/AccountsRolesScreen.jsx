@@ -123,7 +123,7 @@ function AccountsRolesScreen({
           <Prerequisites initiallyExpanded acknowledgementRequired>
             <TextContent>
               <Text component={TextVariants.p} className="ocm-secondary-text">
-                Before continuing, confirm that all prerequisites are met:
+                Before continuing, complete all prerequisites:
               </Text>
               <ul>
                 <li>
@@ -131,7 +131,7 @@ function AccountsRolesScreen({
                     Review and configure the
                     {' '}
                     <ExternalLink noIcon href={links.ROSA_AWS_STS_PREREQUISITES}>
-                      AWS prerequisites for ROSA with STS
+                      AWS prerequisites for STS with ROSA
                     </ExternalLink>
                     .
                   </Text>
@@ -147,10 +147,10 @@ function AccountsRolesScreen({
                 </li>
                 <li>
                   <Text component={TextVariants.p} className="ocm-secondary-text">
-                    Enable the
+                    Enable
                     {' '}
                     <ExternalLink noIcon href={links.AWS_CONSOLE}>
-                      ROSA service in the AWS Console.
+                      ROSA in the AWS Console.
                     </ExternalLink>
                   </Text>
                 </li>

@@ -180,7 +180,7 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                   <ExternalLink
                     href="https://aws.amazon.com/cli/"
                   >
-                    install the AWS CLI
+                    install and configure the AWS CLI
                   </ExternalLink>
                    
                   as per your operating system.
