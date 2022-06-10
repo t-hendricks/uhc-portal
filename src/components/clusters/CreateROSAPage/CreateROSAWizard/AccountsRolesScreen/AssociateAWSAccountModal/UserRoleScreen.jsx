@@ -15,21 +15,23 @@ import ExternalLink from '../../../../../common/ExternalLink';
 import InstructionCommand from '../../../../../common/InstructionCommand';
 import links from '../../../../../../common/installLinks.mjs';
 
-const rosaCLICommand = {
+export const rosaCLICommand = {
   userRole: 'rosa create user-role',
   linkUserRole: 'rosa link user-role <arn>',
 };
 
-const UserRoleScreen = ({ hasAWSAccounts }) => {
+const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
   const [isAlertShown, setIsAlertShown] = useState(true);
 
   return (
     <Card isCompact isPlain>
       <CardBody>
         <TextContent>
-          <Title headingLevel="h2">
-            Create and link a user role
-          </Title>
+          {!hideTitle && (
+            <Title headingLevel="h2">
+              Create and link a user role
+            </Title>
+          )}
           <Text component={TextVariants.p}>
             The user role combined with the OCM role are required to deploy
             {' '}
@@ -86,6 +88,7 @@ const UserRoleScreen = ({ hasAWSAccounts }) => {
 
 UserRoleScreen.propTypes = {
   hasAWSAccounts: PropTypes.bool,
+  hideTitle: PropTypes.bool,
 };
 
 export default UserRoleScreen;

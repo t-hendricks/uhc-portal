@@ -5,9 +5,18 @@ import PropTypes from 'prop-types';
 import { WizardFooter, WizardContext, Button } from '@patternfly/react-core';
 
 const CreateRosaWizardFooter = ({ onBeforeNext, onSubmit }) => {
-  const { pending: getAwsAccountRolesLoading } = useSelector(
+  const { pending: getAccountIDsLoading } = useSelector(
+    state => state.rosaReducer.getAWSAccountIDsResponse,
+  );
+  const { pending: getAccountARNsLoading } = useSelector(
     state => state.rosaReducer.getAWSAccountRolesARNsResponse,
   );
+  const { pending: getUserRoleLoading } = useSelector(
+    state => state.rosaReducer.getUserRoleResponse,
+  );
+
+  const areAwsResourcesLoading = getAccountIDsLoading
+    || getAccountARNsLoading || getUserRoleLoading;
 
   return (
     <WizardFooter>
@@ -26,7 +35,8 @@ const CreateRosaWizardFooter = ({ onBeforeNext, onSubmit }) => {
                   variant="primary"
                   type="submit"
                   onClick={() => onBeforeNext(onNext)}
-                  isDisabled={getAwsAccountRolesLoading}
+                  isLoading={areAwsResourcesLoading}
+                  isDisabled={areAwsResourcesLoading}
                 >
                   Next
                 </Button>
