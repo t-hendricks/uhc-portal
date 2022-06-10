@@ -268,7 +268,7 @@ class CreateROSAWizardInternal extends React.Component {
         component: (
           <ErrorBoundary>
             <ReviewClusterScreen
-              isPending={createClusterResponse.pending}
+              isCreateClusterPending={createClusterResponse.pending}
               clusterRequestParams={{ isWizard: true }}
             />
           </ErrorBoundary>
@@ -379,12 +379,12 @@ class CreateROSAWizardInternal extends React.Component {
                 onBack={this.onBack}
                 onGoToStep={this.onGoToStep}
                 onClose={() => history.push('/')}
-                footer={(
+                footer={(!createClusterResponse.pending ? (
                   <CreateRosaWizardFooter
                     onSubmit={onSubmit}
                     onBeforeNext={goToNext => this.beforeOnNext(goToNext)}
-                    isPending={createClusterResponse.pending}
                   />
+                ) : null
                 )}
               />
             </PersistGate>

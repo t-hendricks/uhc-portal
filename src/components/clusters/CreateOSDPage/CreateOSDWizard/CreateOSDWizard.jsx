@@ -464,33 +464,31 @@ class CreateOSDWizardInternal extends React.Component {
             onBack,
             onClose,
           }) => (
-            !createClusterResponse.pending && (
-              <>
-                {activeStep.name === 'Review and create'
-                  ? <Button variant="primary" type="submit" onClick={onSubmit}>Create cluster</Button>
-                  : (
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      onClick={() => this.beforeOnNext(onNext)}
-                      isLoading={ccsValidationPending}
-                      isDisabled={ccsValidationPending}
-                    >
-                      Next
-                    </Button>
-                  )}
-                <Button
-                  variant="secondary"
-                  onClick={onBack}
-                  {...activeStep.name === 'Billing model' && { isDisabled: true }}
-                >
-                  Back
-                </Button>
-                <Button variant="link" onClick={onClose}>
-                  Cancel
-                </Button>
-              </>
-            )
+            <>
+              {activeStep.name === 'Review and create'
+                ? <Button variant="primary" type="submit" onClick={onSubmit}>Create cluster</Button>
+                : (
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={() => this.beforeOnNext(onNext)}
+                    isLoading={ccsValidationPending}
+                    isDisabled={ccsValidationPending}
+                  >
+                    Next
+                  </Button>
+                )}
+              <Button
+                variant="secondary"
+                onClick={onBack}
+                {...activeStep.name === 'Billing model' && { isDisabled: true }}
+              >
+                Back
+              </Button>
+              <Button variant="link" onClick={onClose}>
+                Cancel
+              </Button>
+            </>
           )}
         </WizardContext.Consumer>
       </WizardFooter>
@@ -516,7 +514,7 @@ class CreateOSDWizardInternal extends React.Component {
               onBack={this.onBack}
               onGoToStep={this.onGoToStep}
               onClose={() => history.push('/create/cloud')}
-              footer={footer}
+              footer={createClusterResponse.pending ? null : footer}
             />
           </div>
         </PageSection>
