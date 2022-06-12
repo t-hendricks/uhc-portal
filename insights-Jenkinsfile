@@ -73,6 +73,11 @@ node {
           sh "python3 bustCache.py $EDGERC ${APP_NAME} ${BRANCH}"
         }
       }
+
+      // Notify #ocm-ui-deploys Slack channel (via Slack's mail integration)
+      mail to: '***REMOVED***',
+       subject: "Finished Running Pipeline: ${currentBuild.fullDisplayName}",
+       body: "The pipeline has completed this build: ${env.BUILD_URL}"
     }
   }
 }

@@ -105,9 +105,7 @@ describe('<DetailsRight />', () => {
     it('should render the "created at" and "owner" detail', () => {
       const wrapper = shallow(
         <DetailsRight
-          cluster={{
-            ...clusterDetails.cluster, aiCluster: {},
-          }}
+          cluster={fixtures.AIClusterDetails.cluster}
         />,
       );
       expect(wrapper).toMatchSnapshot();

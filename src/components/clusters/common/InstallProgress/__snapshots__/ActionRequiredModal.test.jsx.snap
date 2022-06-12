@@ -41,7 +41,7 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
     </StackItem>
     <StackItem>
       <Tabs
-        activeKey={1}
+        activeKey={2}
         component="div"
         hasBorderBottom={true}
         isBox={true}
@@ -79,9 +79,9 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
     </StackItem>
     <StackItem>
       <ForwardRef
-        activeKey={1}
+        activeKey={2}
         eventKey={1}
-        hidden={false}
+        hidden={true}
         id="aws-cli"
         key="1"
       >
@@ -460,9 +460,9 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
         />
       </ForwardRef>
       <ForwardRef
-        activeKey={1}
+        activeKey={2}
         eventKey={2}
-        hidden={true}
+        hidden={false}
         id="rosa-cli"
         key="2"
       >

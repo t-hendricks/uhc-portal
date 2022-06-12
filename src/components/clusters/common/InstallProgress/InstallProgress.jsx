@@ -28,7 +28,7 @@ function InstallProgress({ cluster, children }) {
         { (cluster.state === clusterStates.INSTALLING
         || cluster.state === clusterStates.PENDING
         || cluster.state === clusterStates.WAITING) && (
-          <ProgressList cluster={cluster} />
+          <ProgressList cluster={cluster} actionRequiredInitialOpen />
         )}
         {children && children[1]}
       </CardBody>
