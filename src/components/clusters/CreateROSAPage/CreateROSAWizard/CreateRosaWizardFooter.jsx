@@ -14,9 +14,12 @@ const CreateRosaWizardFooter = ({ onBeforeNext, onSubmit }) => {
   const { pending: getUserRoleLoading } = useSelector(
     state => state.rosaReducer.getUserRoleResponse,
   );
+  const { pending: getOCMRoleLoading } = useSelector(
+    state => state.rosaReducer.getOCMRoleResponse,
+  );
 
   const areAwsResourcesLoading = getAccountIDsLoading
-    || getAccountARNsLoading || getUserRoleLoading;
+    || getAccountARNsLoading || getUserRoleLoading || getOCMRoleLoading;
 
   return (
     <WizardFooter>
