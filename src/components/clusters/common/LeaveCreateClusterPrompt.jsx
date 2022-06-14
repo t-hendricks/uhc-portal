@@ -41,7 +41,7 @@ function LeaveCreateClusterPrompt({ when = true }) {
   return isOpen ? (
     <Modal
       variant={ModalVariant.small}
-      title="Leave create cluster?"
+      title="Leave cluster creation"
       titleIconVariant="warning"
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
@@ -52,7 +52,7 @@ function LeaveCreateClusterPrompt({ when = true }) {
           onClick={onLeave}
           data-testid="submit-button"
         >
-          Yes, leave
+          Leave
         </Button>,
         <Button
           key="stay"
@@ -60,7 +60,7 @@ function LeaveCreateClusterPrompt({ when = true }) {
           onClick={() => setIsOpen(false)}
           data-testid="cancel-button"
         >
-          No, stay
+          Stay
         </Button>,
       ]}
       data-testid="leave-cluster-modal"

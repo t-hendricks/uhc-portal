@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {
   Card,
   CardBody,
+  Grid,
+  GridItem,
   Title,
   Text,
   TextContent,
@@ -15,21 +17,23 @@ import ExternalLink from '../../../../../common/ExternalLink';
 import InstructionCommand from '../../../../../common/InstructionCommand';
 import links from '../../../../../../common/installLinks.mjs';
 
-const rosaCLICommand = {
+export const rosaCLICommand = {
   userRole: 'rosa create user-role',
   linkUserRole: 'rosa link user-role <arn>',
 };
 
-const UserRoleScreen = ({ hasAWSAccounts }) => {
+const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
   const [isAlertShown, setIsAlertShown] = useState(true);
 
   return (
     <Card isCompact isPlain>
       <CardBody>
         <TextContent>
-          <Title headingLevel="h2">
-            Create and link a user role
-          </Title>
+          {!hideTitle && (
+            <Title headingLevel="h2">
+              Create and link a user role
+            </Title>
+          )}
           <Text component={TextVariants.p}>
             The user role combined with the OCM role are required to deploy
             {' '}
@@ -42,7 +46,7 @@ const UserRoleScreen = ({ hasAWSAccounts }) => {
           Create a user role
         </Title>
         {hasAWSAccounts && isAlertShown && (
-          <MultipleAccountsInfoBox setIsAlertShown={setIsAlertShown} />
+          <MultipleAccountsInfoBox setIsAlertShown={setIsAlertShown} userRole />
         )}
         <TextContent>
           <Text component={TextVariants.p}>
@@ -59,7 +63,7 @@ const UserRoleScreen = ({ hasAWSAccounts }) => {
               {' '}
             </strong>
             <PopoverHint
-              bodyContent="The user role is necessary to allow this interface to validate your user account and enable a trust with the OCM role"
+              bodyContent="The user role is necessary to validate that your Red Hat user account has permissions to install a cluster in the AWS account."
             />
             <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
               {rosaCLICommand.userRole}
@@ -73,11 +77,25 @@ const UserRoleScreen = ({ hasAWSAccounts }) => {
             {' '}
             with your Red Hat user account.
           </Text>
-          <div className="ocm-instruction-block">
-            <InstructionCommand textAriaLabel="Copyable ROSA link user-role --arn">
-              {rosaCLICommand.linkUserRole}
-            </InstructionCommand>
-          </div>
+          <Grid className="ocm-instruction-block">
+            <GridItem sm={7} md={6}>
+              <InstructionCommand textAriaLabel="Copyable ROSA link user-role --arn">
+                {rosaCLICommand.linkUserRole}
+              </InstructionCommand>
+            </GridItem>
+            <GridItem sm={1} md={1}>
+              <PopoverHint
+                iconClassName="ocm-instructions__command-help-icon"
+                hint="Check if the role is linked to your
+                      Red Hat user account by running the following command:"
+                footer={(
+                  <InstructionCommand textAriaLabel="Copyable ROSA rosa list user-role">
+                    rosa list user-role
+                  </InstructionCommand>
+)}
+              />
+            </GridItem>
+          </Grid>
         </TextContent>
       </CardBody>
     </Card>
@@ -86,6 +104,7 @@ const UserRoleScreen = ({ hasAWSAccounts }) => {
 
 UserRoleScreen.propTypes = {
   hasAWSAccounts: PropTypes.bool,
+  hideTitle: PropTypes.bool,
 };
 
 export default UserRoleScreen;

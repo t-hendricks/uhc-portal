@@ -21,7 +21,7 @@ function ReviewClusterScreen({
   formValues,
   canAutoScale,
   autoscalingEnabled,
-  isPending,
+  isCreateClusterPending,
   installToVPCSelected,
   configureProxySelected,
 }) {
@@ -41,7 +41,7 @@ function ReviewClusterScreen({
     'etcd_encryption',
     isByoc && 'customer_managed_key',
   ].filter(Boolean);
-  if (isPending) {
+  if (isCreateClusterPending) {
     return (
       <Bullseye>
         <Stack>
@@ -133,7 +133,7 @@ ReviewClusterScreen.propTypes = {
   formValues: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),
-  isPending: PropTypes.bool,
+  isCreateClusterPending: PropTypes.bool,
   canAutoScale: PropTypes.bool,
   autoscalingEnabled: PropTypes.bool,
   installToVPCSelected: PropTypes.bool,

@@ -157,7 +157,7 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                       Note: If you haven’t done so already, also
                       {' '}
                       <ExternalLink href={installLinks.AWS_CLI}>
-                        install the AWS CLI
+                        install and configure the AWS CLI
                       </ExternalLink>
                       {' '}
                       as per your operating system.

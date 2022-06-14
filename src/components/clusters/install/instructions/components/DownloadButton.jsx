@@ -15,7 +15,7 @@ const texts = {
   [tools.PPCINSTALLER]: 'Download installer',
   [tools.ARMINSTALLER]: 'Download installer',
   [tools.OCM]: 'Download ocm CLI',
-  [tools.ROSA]: 'Download rosa CLI',
+  [tools.ROSA]: 'Download the ROSA CLI',
 };
 
 const pendoEvents = {

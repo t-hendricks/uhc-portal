@@ -5,6 +5,10 @@ import {
   Popover,
   PopoverPosition,
   Button,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateBody,
+  Title,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -21,6 +25,7 @@ import { global_warning_color_100 as warningColor } from '@patternfly/react-toke
 
 import { Link } from 'react-router-dom';
 import { OCM } from 'openshift-assisted-ui-lib';
+import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
 import clusterStates, { getClusterStateAndDescription, isWaitingROSAManualMode } from '../../common/clusterStates';
@@ -42,7 +47,19 @@ function ClusterListTable(props) {
     canHibernateClusterList = {}, refreshFunc,
   } = props;
   if (!isPending && (!clusters || clusters.length === 0)) {
-    return <p className="notfound">No results match the filter criteria.</p>;
+    return (
+      <EmptyState>
+        <EmptyStateIcon icon={SearchIcon} />
+        <Title headingLevel="h4" size="lg">
+          No clusters found.
+        </Title>
+        <EmptyStateBody>
+          This filter criteria matches no clusters.
+          <br />
+          Try changing your filter settings.
+        </EmptyStateBody>
+      </EmptyState>
+    );
   }
 
   const sortBy = {

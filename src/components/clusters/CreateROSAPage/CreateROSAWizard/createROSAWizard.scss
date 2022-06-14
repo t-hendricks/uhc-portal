@@ -55,4 +55,7 @@
           solid
           var(--pf-global--BorderColor--100);
   padding: var(--pf-global--spacer--lg);
+  .ocm-instruction-block_alert{
+    margin-top: var(--pf-global--spacer--lg);
+  }
 }

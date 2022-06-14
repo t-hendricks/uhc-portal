@@ -6,12 +6,13 @@ import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import './PopoverHint.scss';
 
 const PopoverHint = ({
-  title, hint, iconClassName, ...popoverProps
+  title, hint, iconClassName, footer, ...popoverProps
 }) => (
   <>
     <Popover
       headerContent={title}
       bodyContent={hint}
+      footerContent={footer}
       aria-label="help"
       {...popoverProps}
     >
@@ -32,6 +33,7 @@ const PopoverHint = ({
 PopoverHint.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
   hint: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]).isRequired,
+  footer: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
   iconClassName: PropTypes.string,
 };
 

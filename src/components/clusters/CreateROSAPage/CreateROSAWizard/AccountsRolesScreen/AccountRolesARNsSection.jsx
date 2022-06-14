@@ -141,7 +141,7 @@ function AccountRolesARNsSection({
         <Alert
           isInline
           variant="info"
-          title="All account roles ARNs were not detected. Follow the steps below to populate the ARN fields."
+          title="Some account roles ARNs were not detected."
         >
           <br />
           Create the account roles using the following command in the ROSA CLI
@@ -166,7 +166,7 @@ function AccountRolesARNsSection({
       {!getAWSAccountRolesARNsResponse.pending && (
       <GridItem span={12}>
         <ExpandableSection
-          isExpanded={!awsARNsErrorBox && isExpanded}
+          isExpanded={isExpanded}
           onToggle={onToggle}
           toggleText="Account roles ARNs"
         >
