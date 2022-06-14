@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
 
   return {
     rosaMaxOSVersion: valueSelector(state, 'rosa_max_os_version'),
+    selectedClusterVersion: valueSelector(state, 'cluster_version'),
     getInstallableVersionsResponse: clusterVersions,
   };
 };

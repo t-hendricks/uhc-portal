@@ -113,6 +113,10 @@ function AccountRolesARNsSection({
   };
 
   const handInstallerRoleChange = (_, value) => {
+    // changing to a new set of ARNs, which could have different
+    // rosa_max_os_version, so clear the cluster_version which
+    // will get a new default on next step of the wizard
+    change('cluster_version', undefined);
     setSelectedInstallerRole(value);
   };
 
@@ -121,6 +125,7 @@ function AccountRolesARNsSection({
   const refreshARNs = () => {
     clearGetAWSAccountRolesARNsResponse();
     change('installer_role_arn', '');
+    change('cluster_version', undefined);
     setSelectedInstallerRole('');
     getAWSAccountRolesARNs(selectedAWSAccountID);
   };
