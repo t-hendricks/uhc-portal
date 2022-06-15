@@ -111,11 +111,11 @@ function UpgradeSettingsFields({
         </Title>
         <TextContent>
           <Text component={TextVariants.p}>
-            You may set a grace period for how long Pod Disruption Budget-protected workloads will
+            You may set a grace period for how long pod disruption budget-protected workloads will
             {' '}
             be respected during updates. After this grace period, any workloads protected by
             {' '}
-            Pod Disruption Budgets that have not been successfully drained from a node will be
+            pod disruption budgets that have not been successfully drained from a node will be
             {' '}
             forcibly evicted.
           </Text>

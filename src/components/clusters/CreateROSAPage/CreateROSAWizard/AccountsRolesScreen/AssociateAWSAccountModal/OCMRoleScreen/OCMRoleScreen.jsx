@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -24,110 +24,131 @@ const rosaCLICommand = {
   linkOcmRole: 'rosa link ocm-role <arn>',
 };
 
-const OCMRoleScreen = ({ hasAWSAccounts }) => (
-  <Card isCompact isPlain>
-    <CardBody>
-      <TextContent>
-        <Title headingLevel="h2">
-          AWS account association
-        </Title>
-        <Text component={TextVariants.p}>
-          ROSA cluster deployments use the AWS Security Token Service for added security.
-          {' '}
-          Run the following required steps from a CLI authenticated with both AWS and ROSA.
-          {' '}
-          <ExternalLink href={links.ROSA_AWS_ACCOUNT_ASSOCIATION}>
-            Learn more about account association
-          </ExternalLink>
-        </Text>
-      </TextContent>
-    </CardBody>
-    <CardBody>
-      <Title headingLevel="h2">
-        Create an OpenShift Cluster Manager role
-      </Title>
-      {hasAWSAccounts && (
-        <MultipleAccountsInfoBox />
-      )}
-      <Title headingLevel="h3">
-        Create an OCM role
-      </Title>
-      <TextContent>
-        <Text component={TextVariants.p}>
-          Run one of the following two commands to create an OCM role.
-          {' '}
-          View the required AWS policy permissions for the
-          {' '}
-          <ExternalLink noIcon href={links.ROSA_AWS_ACCOUNT_ROLES}>
-            basic OCM role
+const OCMRoleScreen = ({ hasAWSAccounts }) => {
+  const [isAlertShown, setIsAlertShown] = useState(true);
+
+  return (
+    <Card isCompact isPlain>
+      <CardBody>
+        <TextContent>
+          <Title headingLevel="h2">
+            AWS account association
+          </Title>
+          <Text component={TextVariants.p}>
+            ROSA cluster deployments use the AWS Security Token Service for added security.
             {' '}
-          </ExternalLink>
-          and the
-          {' '}
-          <ExternalLink noIcon href={links.ROSA_AWS_ACCOUNT_ROLES}>
-            admin OCM role
-          </ExternalLink>
-          .
-        </Text>
-      </TextContent>
-      <br />
-      <TextContent>
-        <div className="ocm-instruction-block">
-          <Grid>
-            <GridItem sm={12} md={5}>
-              <strong>
-                Basic OCM role
-                {' '}
-                <PopoverHint
-                  bodyContent="The basic OCM role is necessary (one per Red Hat organization) to allow this interface to detect the presence of ROSA necessary AWS roles and policies."
-                />
-              </strong>
-              <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role">
-                {rosaCLICommand.ocmRole}
-              </InstructionCommand>
-            </GridItem>
-            <GridItem sm={12} md={1} className="ocm-wizard-or-container">
-              <p>
-                OR
-              </p>
-            </GridItem>
-            <GridItem sm={12} md={6}>
-              <strong>
-                Admin OCM role
-                {' '}
-                <PopoverHint
-                  bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually during deployment"
-                />
-              </strong>
-              <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin">
-                {rosaCLICommand.adminOcmRole}
-              </InstructionCommand>
-            </GridItem>
-          </Grid>
-        </div>
-        <Title headingLevel="h3">
-          Ensure that you associate the OCM role with your Red Hat organization
+            Run the following required steps from a CLI authenticated with both AWS and ROSA.
+            {' '}
+            <ExternalLink href={links.ROSA_AWS_ACCOUNT_ASSOCIATION}>
+              Learn more about account association
+            </ExternalLink>
+          </Text>
+        </TextContent>
+      </CardBody>
+      <CardBody>
+        <Title headingLevel="h2">
+          Create an OpenShift Cluster Manager role
         </Title>
-        <Text component={TextVariants.p}>
-          If not yet linked, run the following command to associate the OCM role
-          {' '}
-          with your Red Hat organization.
-        </Text>
-        <div className="ocm-instruction-block">
-          <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn">
-            {rosaCLICommand.linkOcmRole}
-          </InstructionCommand>
-          <Alert
-            variant="info"
-            isInline
-            isPlain
-            title="You must have organization administrator privileges to run this command. After you link the OCM role with your Red Hat organization, it is visible for all users in the organization."
-          />
-        </div>
-      </TextContent>
-    </CardBody>
-  </Card>
-);
+        {hasAWSAccounts && isAlertShown && (
+          <MultipleAccountsInfoBox setIsAlertShown={setIsAlertShown} ocmRole />
+        )}
+        <Title headingLevel="h3">
+          Create and link OCM role
+        </Title>
+        <TextContent>
+          <Text component={TextVariants.p}>
+            Run one of the following two commands to create an OCM role.
+            {' '}
+            View the required AWS policy permissions for the
+            {' '}
+            <ExternalLink noIcon href={links.ROSA_AWS_ACCOUNT_ROLES}>
+              basic OCM role
+              {' '}
+            </ExternalLink>
+            and the
+            {' '}
+            <ExternalLink noIcon href={links.ROSA_AWS_ACCOUNT_ROLES}>
+              admin OCM role
+            </ExternalLink>
+            .
+          </Text>
+        </TextContent>
+        <br />
+        <TextContent>
+          <div className="ocm-instruction-block">
+            <Grid>
+              <GridItem sm={12} md={5}>
+                <strong>
+                  Basic OCM role
+                  {' '}
+                  <PopoverHint
+                    bodyContent="One basic OCM role is needed per Red Hat organization to allow OpenShift Cluster Manager to detect the presence of AWS roles and policies required for ROSA."
+                  />
+                </strong>
+                <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role">
+                  {rosaCLICommand.ocmRole}
+                </InstructionCommand>
+              </GridItem>
+              <GridItem sm={12} md={1} className="ocm-wizard-or-container">
+                <p>
+                  OR
+                </p>
+              </GridItem>
+              <GridItem sm={12} md={6}>
+                <strong>
+                  Admin OCM role
+                  {' '}
+                  <PopoverHint
+                    bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually during deployment"
+                  />
+                </strong>
+                <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin">
+                  {rosaCLICommand.adminOcmRole}
+                </InstructionCommand>
+              </GridItem>
+            </Grid>
+          </div>
+          <Title headingLevel="h3">
+            Ensure that you associate the OCM role with your Red Hat organization
+          </Title>
+          <Text component={TextVariants.p}>
+            If not yet linked, run the following command to associate the OCM role
+            {' '}
+            with your Red Hat organization.
+          </Text>
+          <Grid className="ocm-instruction-block">
+
+            <GridItem sm={7} md={5}>
+              <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn">
+                {rosaCLICommand.linkOcmRole}
+              </InstructionCommand>
+            </GridItem>
+            <GridItem sm={1} md={1}>
+              <PopoverHint
+                iconClassName="ocm-instructions__command-help-icon"
+                hint="Check if the role is linked to your
+                      Red Hat organization by running the following command:"
+                footer={(
+                  <InstructionCommand textAriaLabel="Copyable ROSA rosa list ocm-role">
+                    rosa list ocm-role
+                  </InstructionCommand>
+)}
+              />
+            </GridItem>
+
+            <Alert
+              variant="info"
+              isInline
+              isPlain
+              className="ocm-instruction-block_alert"
+              title="You must have organization administrator privileges in your Red Hat account to run this command. After you link the OCM role with your Red Hat organization, it is visible for all users in the organization."
+            />
+          </Grid>
+        </TextContent>
+      </CardBody>
+    </Card>
+  );
+};
 
 OCMRoleScreen.propTypes = {
   hasAWSAccounts: PropTypes.bool,

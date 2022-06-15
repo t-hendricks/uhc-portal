@@ -51,7 +51,7 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 1`] =
   variant="danger"
 >
   <p>
-    Your cluster is not supported and you may stop receving updates.
+    Your cluster is not supported and you may stop receiving updates.
      
     <a
       href="https://www.redhat.com/en/contact"
@@ -82,7 +82,7 @@ exports[`<SubscriptionCompliancy /> should warn when evaluation is expired 2`] =
   variant="danger"
 >
   <p>
-    Your cluster is not supported and you may stop receving updates.
+    Your cluster is not supported and you may stop receiving updates.
      
     The cluster owner or an Organization Administrator can edit subscription settings for non-evaluation use.
   </p>

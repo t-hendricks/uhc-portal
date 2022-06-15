@@ -1,7 +1,5 @@
 import get from 'lodash/get';
-import { OCM } from 'openshift-assisted-ui-lib';
 import { subscriptionStatuses, normalizedProducts } from '../../../common/subscriptionTypes';
-import isAssistedInstallSubscription from '../../../common/isAssistedInstallerCluster';
 
 const clusterStates = {
   WAITING: 'waiting',
@@ -36,14 +34,10 @@ const stateDescription = (state) => {
   return description;
 };
 
+// This function is not meant to return status of uninstalled OCP-AssistedInstall clusters.
+// To display the status for those, use the component <AIClusterStatus />
 function getClusterStateAndDescription(cluster) {
   let state;
-
-  // OCP-AssistenInstall uses the wording from AssisteDInstall UI.
-  // refer to: https://github.com/openshift-assisted/assisted-ui-lib/blob/ec19b30fe29c69bf73cdb27a2f49738ccb4eef71/src/common/api/types.ts#L153-L164
-  if (isAssistedInstallSubscription(cluster.subscription)) {
-    state = OCM.Constants.CLUSTER_STATUS_LABELS[cluster.status];
-  }
 
   // the state is determined by subscriptions.status or cluster.state.
   // the conditions are not mutually exclusive and are ordered by priority, e.g., STALE and READY.
@@ -87,21 +81,26 @@ const isHibernating = state => state === clusterStates.HIBERNATING
   || state === clusterStates.POWERING_DOWN
   || state === clusterStates.RESUMING;
 
+// Indicates that this is a ROSA cluster
+const isROSA = cluster => cluster.product.id === normalizedProducts.ROSA;
+
+// Indicates that this is a ROSA cluster with manual mode
+const isROSAManualMode = cluster => isROSA(cluster) && cluster.aws.sts
+  && !cluster.aws.sts.auto_mode;
+
 // Indicates that this is a ROSA cluster waiting for manual creation of OIDC
 // and operator roles.
-const isWaitingROSAManualMode = cluster => (
-  cluster.product.id === normalizedProducts.ROSA
-    && cluster.state === clusterStates.WAITING
-    && cluster.aws.sts
-    && !cluster.aws.sts.auto_mode
-);
+const isWaitingROSAManualMode = cluster => cluster.state === clusterStates.WAITING
+  && isROSAManualMode(cluster);
 
 const isOffline = state => isHibernating(state) || state === clusterStates.UNINSTALLING;
 
 export {
   getClusterStateAndDescription,
   isHibernating,
-  isWaitingROSAManualMode,
   isOffline,
+  isROSA,
+  isROSAManualMode,
+  isWaitingROSAManualMode,
 };
 export default clusterStates;

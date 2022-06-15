@@ -468,7 +468,7 @@ const RHMIClusterDetails = produce(CCSClusterDetails, (draft) => {
 });
 
 const AIClusterDetails = produce(CCSClusterDetails, (draft) => {
-  draft.cluster.aiCluster = { id: normalizedProducts.OCP_Assisted_Install };
+  draft.cluster.aiCluster = { id: clusterDetails.cluster.id };
   draft.cluster.subscription.plan = {
     id: normalizedProducts.OCP_Assisted_Install,
     type: normalizedProducts.OCP,

@@ -141,13 +141,24 @@ function ClusterRolesScreen({
     {
       value: roleModes.MANUAL,
       label: 'Manual',
-      description: 'Manual mode will offer three options to generate the necessary roles and policies for your cluster operators and the necessary OIDC provider: ROSA CLI commands, or, AWS CLI commands. Exercise one of those options after cluster review in order for your cluster to complete installation.',
+      description: (
+        <>
+          You can choose from two options to manually generate the necessary roles and policies
+          {' '}
+          for your cluster operators and the OIDC provider:  ROSA CLI commands, or AWS CLI commands.
+          {' '}
+          <strong>
+            You must complete one of those options after cluster review for your cluster
+            {' '}
+            to complete installation.
+          </strong>
+        </>),
     },
     {
       disabled: !isAutoModeAvailable,
       value: roleModes.AUTO,
       label: 'Auto',
-      description: 'Auto mode will immediately create the necessary cluster operator roles and OIDC provider. This mode requires that you provided an admin privileged role.',
+      description: 'Immediately create the necessary cluster operator roles and OIDC provider. This mode requires an admin privileged OCM role.',
       extraField: getOCMRoleResponse.fulfilled && !isAutoModeAvailable && EnableAutoModeTip,
     },
   ];
@@ -161,7 +172,7 @@ function ClusterRolesScreen({
           <Text component={TextVariants.p}>
             Choose the preferred mode for creating the operator roles and OIDC provider.
             {' '}
-            <ExternalLink href={links.ROSA_AWS_ACCOUNT_ROLES}>
+            <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
               Learn more about ROSA roles
             </ExternalLink>
           </Text>

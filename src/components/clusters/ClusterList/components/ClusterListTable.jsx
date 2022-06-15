@@ -5,6 +5,10 @@ import {
   Popover,
   PopoverPosition,
   Button,
+  EmptyState,
+  EmptyStateIcon,
+  EmptyStateBody,
+  Title,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -21,6 +25,7 @@ import { global_warning_color_100 as warningColor } from '@patternfly/react-toke
 
 import { Link } from 'react-router-dom';
 import { OCM } from 'openshift-assisted-ui-lib';
+import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
 import clusterStates, { getClusterStateAndDescription, isWaitingROSAManualMode } from '../../common/clusterStates';
@@ -31,7 +36,7 @@ import { actionResolver } from '../../common/ClusterActionsDropdown/ClusterActio
 import skeletonRows from '../../../common/SkeletonRows';
 import ClusterTypeLabel from '../../common/ClusterTypeLabel';
 import ProgressList from '../../common/InstallProgress/ProgressList';
-import ActionRequiredPopover from '../../common/InstallProgress/ActionRequiredPopover';
+import ActionRequiredLink from '../../common/InstallProgress/ActionRequiredLink';
 import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedInstallerCluster';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
@@ -42,7 +47,19 @@ function ClusterListTable(props) {
     canHibernateClusterList = {}, refreshFunc,
   } = props;
   if (!isPending && (!clusters || clusters.length === 0)) {
-    return <p className="notfound">No results match the filter criteria.</p>;
+    return (
+      <EmptyState>
+        <EmptyStateIcon icon={SearchIcon} />
+        <Title headingLevel="h4" size="lg">
+          No clusters found.
+        </Title>
+        <EmptyStateBody>
+          This filter criteria matches no clusters.
+          <br />
+          Try changing your filter settings.
+        </EmptyStateBody>
+      </EmptyState>
+    );
   }
 
   const sortBy = {
@@ -73,13 +90,13 @@ function ClusterListTable(props) {
       </Link>
     );
 
-    const clusterState = getClusterStateAndDescription(cluster);
-    const icon = <ClusterStateIcon clusterState={clusterState.state || ''} animated={false} />;
-    const clusterStatus = (clusterStateAndDescription) => {
-      const { state, description } = clusterStateAndDescription;
+    const clusterStatus = () => {
       if (isAISubscriptionWithoutMetrics(cluster.subscription)) {
         return <AIClusterStatus status={cluster.state} className="clusterstate" />;
       }
+
+      const { state, description } = getClusterStateAndDescription(cluster);
+      const icon = <ClusterStateIcon clusterState={state || ''} animated={false} />;
       if (state === clusterStates.ERROR) {
         return (
           <span>
@@ -117,15 +134,15 @@ function ClusterListTable(props) {
       if (isWaitingROSAManualMode(cluster)) {
         // Show a popover for manual creation of ROSA operator roles and OIDC provider.
         return (
-          <ActionRequiredPopover
+          <ActionRequiredLink
             cluster={cluster}
             icon={<ExclamationTriangleIcon color={warningColor.value} />}
           />
         );
       }
       if (state === clusterStates.WAITING
-          || state === clusterStates.PENDING
-          || state === clusterStates.INSTALLING) {
+        || state === clusterStates.PENDING
+        || state === clusterStates.INSTALLING) {
         return (
           <Popover
             headerContent={<div>Installation status</div>}
@@ -163,7 +180,7 @@ function ClusterListTable(props) {
     return {
       cells: [
         { title: clusterName },
-        { title: clusterStatus(clusterState) },
+        { title: clusterStatus() },
         { title: <ClusterTypeLabel cluster={cluster} /> },
         { title: <ClusterCreatedIndicator cluster={cluster} /> },
         { title: clusterVersion },

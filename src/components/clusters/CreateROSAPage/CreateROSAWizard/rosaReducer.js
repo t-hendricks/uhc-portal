@@ -8,9 +8,11 @@ import {
   LIST_ASSOCIATED_AWS_IDS,
   GET_AWS_ACCOUNT_ROLES_ARNS,
   GET_OCM_ROLE,
+  GET_USER_ROLE,
   CLEAR_GET_AWS_ACCOUNT_IDS_RESPONSE,
   CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
   CLEAR_GET_OCM_ROLE_RESPONSE,
+  CLEAR_GET_USER_ROLE_RESPONSE,
 } from './rosaConstants';
 
 const initialState = {
@@ -21,6 +23,9 @@ const initialState = {
     ...baseRequestState,
   },
   getOCMRoleResponse: {
+    ...baseRequestState,
+  },
+  getUserRoleResponse: {
     ...baseRequestState,
   },
 };
@@ -93,6 +98,27 @@ function rosaReducer(state = initialState, action) {
         };
         break;
 
+      // GET_USER_ROLE
+      case PENDING_ACTION(GET_USER_ROLE):
+        draft.getUserRoleResponse.pending = true;
+        break;
+
+      case FULFILLED_ACTION(GET_USER_ROLE):
+        draft.getUserRoleResponse = {
+          ...baseRequestState,
+          fulfilled: true,
+          data: action.payload,
+        };
+        break;
+
+      case REJECTED_ACTION(GET_USER_ROLE):
+        draft.getUserRoleResponse = {
+          ...baseRequestState,
+          ...getErrorState(action),
+          data: {},
+        };
+        break;
+
       // CLEARs
       case CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE:
         draft.getAWSAccountRolesARNsResponse = {
@@ -108,6 +134,13 @@ function rosaReducer(state = initialState, action) {
 
       case CLEAR_GET_OCM_ROLE_RESPONSE:
         draft.getOCMRoleResponse = {
+          ...baseRequestState,
+          data: {},
+        };
+        break;
+
+      case CLEAR_GET_USER_ROLE_RESPONSE:
+        draft.getUserRoleResponse = {
           ...baseRequestState,
           data: {},
         };
