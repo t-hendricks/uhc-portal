@@ -113,7 +113,6 @@ function NetworkScreen(props) {
               <Text>
                 Install your cluster with  all public or all private API endpoint and
                 application routes.
-                You can customize these options after installation.
               </Text>
             </GridItem>
             <Field
@@ -159,15 +158,9 @@ function NetworkScreen(props) {
                   title="You will not be able to access your cluster until you edit network settings in your cloud provider."
                 >
                   {cloudProviderID === 'aws' && (
-                    <span>
-                      Follow the
-                      {' '}
-                      <ExternalLink href={links.OSD_AWS_PRIVATE_CONNECTIONS}>
-                        documentation
-                      </ExternalLink>
-                      {' '}
-                      for how to do that.
-                    </span>
+                  <ExternalLink href={links.OSD_AWS_PRIVATE_CONNECTIONS}>
+                    Learn more about configuring network settings
+                  </ExternalLink>
                   )}
                 </Alert>
               </GridItem>

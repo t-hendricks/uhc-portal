@@ -246,7 +246,6 @@ class AutoScaleSection extends React.Component {
               helperText={(
                 <HelperText>
                   {isMultiAz && helpText(`x 3 zones = ${(parseInt(autoScaleMinNodesValue, 10) * 3)}`)}
-                  {!isMultiAz && helpText('minimum')}
                   {minErrorMessage && errorText(minErrorMessage)}
                 </HelperText>
               )}
@@ -263,7 +262,6 @@ class AutoScaleSection extends React.Component {
               helperText={(
                 <HelperText>
                   {isMultiAz && helpText(`x 3 zones = ${(parseInt(autoScaleMaxNodesValue, 10) * 3)}`)}
-                  {!isMultiAz && helpText('maximum')}
                   {maxErrorMessage && errorText(maxErrorMessage)}
                 </HelperText>
               )}

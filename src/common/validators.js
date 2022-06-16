@@ -86,7 +86,7 @@ const required = value => (value && value.trim() ? undefined : 'Field is require
 const requiredTrue = value => (value && value === true ? undefined : 'Field must be selected');
 
 // Function to validate that user has acknowledged prerequisites by clicking checkbox.
-const acknowledgePrerequisites = value => (value && value === true ? undefined : 'Please acknowledge that you have read and completed all prerequisites.');
+const acknowledgePrerequisites = value => (value && value === true ? undefined : 'Acknowledge that you have read and completed all prerequisites.');
 
 // Function to validate that the identity provider name field doesn't include whitespaces:
 const checkIdentityProviderName = (value) => {

@@ -157,6 +157,11 @@ const getOCMRole = awsAccountID => apiRequest({
   url: '/api/clusters_mgmt/v1/aws_inquiries/sts_ocm_role',
 });
 
+const getUserRole = accountID => apiRequest({
+  method: 'get',
+  url: `/api/accounts_mgmt/v1/accounts/${accountID}/labels/sts_user_role`,
+});
+
 const getPolicies = () => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/aws_inquiries/sts_policies',
@@ -201,6 +206,7 @@ const accountsService = {
   getOrganizationLabels,
   getAWSAccountARNs,
   getOCMRole,
+  getUserRole,
   getPolicies,
   getCredentialRequests,
 };

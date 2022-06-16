@@ -122,8 +122,15 @@ class CreateROSAWizardInternal extends React.Component {
     return (stepIdReached >= id && !hasPrevStepError) || id <= currentStepId;
   }
 
-  beforeOnNext = (onNext) => {
-    const { touch, formErrors } = this.props;
+  getUserRoleInfo = () => {
+    const { getUserRole } = this.props;
+    return getUserRole();
+  }
+
+  beforeOnNext = async (onNext) => {
+    const {
+      touch, formErrors, getUserRoleResponse,
+    } = this.props;
     const { validatedSteps, currentStepId } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorFieldNames = Object.keys(formErrors);
@@ -132,6 +139,9 @@ class CreateROSAWizardInternal extends React.Component {
     if (errorFieldNames?.length > 0 && !isCurrentStepValid) {
       touch(errorFieldNames);
       scrollToFirstError(formErrors);
+    } else if (currentStepId === 10 && !getUserRoleResponse?.fulfilled) {
+      await this.getUserRoleInfo();
+      onNext();
     } else {
       onNext();
     }
@@ -268,7 +278,7 @@ class CreateROSAWizardInternal extends React.Component {
         component: (
           <ErrorBoundary>
             <ReviewClusterScreen
-              isPending={createClusterResponse.pending}
+              isCreateClusterPending={createClusterResponse.pending}
               clusterRequestParams={{ isWizard: true }}
             />
           </ErrorBoundary>
@@ -379,11 +389,12 @@ class CreateROSAWizardInternal extends React.Component {
                 onBack={this.onBack}
                 onGoToStep={this.onGoToStep}
                 onClose={() => history.push('/')}
-                footer={(
+                footer={(!createClusterResponse.pending ? (
                   <CreateRosaWizardFooter
                     onSubmit={onSubmit}
                     onBeforeNext={goToNext => this.beforeOnNext(goToNext)}
                   />
+                ) : <></>
                 )}
               />
             </PersistGate>
@@ -440,6 +451,7 @@ CreateROSAWizardInternal.propTypes = {
 
   getMachineTypes: PropTypes.func,
   getOrganizationAndQuota: PropTypes.func,
+  getUserRole: PropTypes.func,
   getCloudProviders: PropTypes.func,
 
   resetResponse: PropTypes.func,
@@ -448,6 +460,7 @@ CreateROSAWizardInternal.propTypes = {
   onSubmit: PropTypes.func,
   touch: PropTypes.func,
   formErrors: PropTypes.object,
+  getUserRoleResponse: PropTypes.object,
 
   // for "no quota" redirect
   hasProductQuota: PropTypes.bool,
