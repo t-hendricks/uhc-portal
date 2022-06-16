@@ -28,6 +28,7 @@ import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import UserRoleInstructionsModal from './UserRoleInstructionsModal';
+import OCMRoleInstructionsModal from './OCMRoleInstructionsModal';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import { rosaCLICommand } from './AssociateAWSAccountModal/UserRoleScreen';
 
@@ -48,7 +49,9 @@ function AccountsRolesScreen({
   clearGetAWSAccountIDsResponse,
   clearGetUserRoleResponse,
   openUserRoleInstructionsModal,
+  openOcmRoleInstructionsModal,
   isUserRoleModalOpen,
+  isOCMRoleModalOpen,
   closeModal,
 }) {
   const longName = 'Red Hat OpenShift Service on AWS (ROSA)';
@@ -217,6 +220,7 @@ function AccountsRolesScreen({
           clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
           change={change}
           touchARNsFields={touchARNsFields}
+          openOcmRoleInstructionsModal={openOcmRoleInstructionsModal}
         />
         )}
         <GridItem span={9}>
@@ -267,6 +271,11 @@ function AccountsRolesScreen({
         isOpen={isUserRoleModalOpen}
         hasAWSAccounts={hasAWSAccounts}
       />
+      <OCMRoleInstructionsModal
+        closeModal={closeModal}
+        isOpen={isOCMRoleModalOpen}
+        hasAWSAccounts={hasAWSAccounts}
+      />
     </Form>
   );
 }
@@ -292,7 +301,9 @@ AccountsRolesScreen.propTypes = {
   }).isRequired,
   rosaMaxOSVersion: PropTypes.string,
   openUserRoleInstructionsModal: PropTypes.func,
+  openOcmRoleInstructionsModal: PropTypes.func,
   isUserRoleModalOpen: PropTypes.bool,
+  isOCMRoleModalOpen: PropTypes.bool,
   closeModal: PropTypes.func,
 };
 
