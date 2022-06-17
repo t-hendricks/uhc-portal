@@ -10,9 +10,6 @@ import {
   GridItem,
   Text,
   TextContent,
-  TextList,
-  TextListItem,
-  TextListVariants,
   TextVariants,
   Title,
 } from '@patternfly/react-core';
@@ -239,34 +236,26 @@ function AccountsRolesScreen({
                   </AlertActionLink>
               )}
               >
-                <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
-                  <TextListItem className="pf-u-mb-sm">
-                    <Text component={TextVariants.p} className="pf-u-mb-sm">
-                      It is necessary to create and link a user-role with the Red Hat cluster
-                      {' '}
-                      installer to proceed.
-                    </Text>
-                  </TextListItem>
-                  <TextListItem className="pf-u-mb-sm">
-                    <Text component={TextVariants.p} className="pf-u-mb-sm">
-                      To create a user-role, run the following command:
-                    </Text>
-                  </TextListItem>
-                  <TextListItem className="pf-u-mb-sm">
-                    <Text component={TextVariants.p} className="pf-u-mb-sm">
-                      <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
-                        {rosaCLICommand.userRole}
-                      </InstructionCommand>
-                    </Text>
-                  </TextListItem>
-                  <TextListItem className="pf-u-mb-sm">
-                    <Text component={TextVariants.p} className="pf-u-mb-sm ocm-secondary-text">
-                      After the role is created and linked successfully, you&apos;ll be able to
-                      {' '}
-                      continue by clicking the Next button.
-                    </Text>
-                  </TextListItem>
-                </TextList>
+                <TextContent className="ocm-alert-text">
+                  <Text component={TextVariants.p} className="pf-u-mb-sm">
+                    It is necessary to create and link a user-role with the Red Hat cluster
+                    {' '}
+                    installer to proceed.
+                  </Text>
+                  <Text component={TextVariants.p} className="pf-u-mb-sm">
+                    To create a user-role, run the following command:
+                  </Text>
+                  <Text component={TextVariants.p} className="pf-u-mb-sm">
+                    <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
+                      {rosaCLICommand.userRole}
+                    </InstructionCommand>
+                  </Text>
+                  <Text component={TextVariants.p} className="pf-u-mb-sm ocm-secondary-text">
+                    After the role is created and linked successfully, you&apos;ll be able to
+                    {' '}
+                    continue by clicking the Next button.
+                  </Text>
+                </TextContent>
               </Alert>
             </>
           )}
