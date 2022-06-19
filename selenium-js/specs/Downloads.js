@@ -22,31 +22,31 @@ describe('Downloads page', async () => {
 
   it('expand/collapse affects only selected category', async () => {
     await expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    await expect(await Downloads.hiddenRowContaining('Get started with the OpenShift CLI')).toExist();
+    await expect(await Downloads.hiddenRowContaining('the OpenShift client oc')).toExist();
     await expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
 
     await (await Downloads.categoryDropdown())
       .selectByVisibleText('Command-line interface (CLI) tools');
     await (await Downloads.expandAll()).click();
     await expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    await expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
+    await expect(await Downloads.visibleRowContaining('the OpenShift client oc')).toExist();
     await expect(await Downloads.hiddenRowContaining('Helm charts')).not.toExist();
 
     await (await Downloads.categoryDropdown()).selectByVisibleText('All categories');
     await expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    await expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
+    await expect(await Downloads.visibleRowContaining('the OpenShift client oc')).toExist();
     await expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
 
     // Given mixed state, first click expands all.
     await (await Downloads.expandAll()).click();
     await expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    await expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
+    await expect(await Downloads.visibleRowContaining('the OpenShift client oc')).toExist();
     await expect(await Downloads.visibleRowContaining('Helm charts')).toExist();
 
     // Once all expanded, second click collapses all.
     await (await Downloads.collapseAll()).click();
     await expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    await expect(await Downloads.hiddenRowContaining('Get started with the OpenShift CLI')).toExist();
+    await expect(await Downloads.hiddenRowContaining('the OpenShift client oc')).toExist();
     await expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
   });
 
