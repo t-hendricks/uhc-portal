@@ -85,22 +85,26 @@ describe('Downloads page', async () => {
   });
 
   it('selecting a category preserves OS & architecture of invisible sections', async () => {
-    await (await Downloads.OSDropdown('Helm')).selectByVisibleText('Linux');
-    await (await Downloads.architectureDropdown('Helm')).selectByVisibleText('s390x');
-    await (await Downloads.OSDropdown('OpenShift Local')).selectByVisibleText('Windows');
+    await expect(await Downloads.visibleRowContaining('(rosa)')).toExist();
+    await expect(await Downloads.visibleRowContaining('(helm)')).toExist();
+    await expect(await Downloads.visibleRowContaining('(crc)')).toExist();
+
+    await (await Downloads.OSDropdown('(helm)')).selectByVisibleText('Linux');
+    await (await Downloads.architectureDropdown('(helm)')).selectByVisibleText('s390x');
+    await (await Downloads.OSDropdown('(crc)')).selectByVisibleText('Windows');
 
     await (await Downloads.categoryDropdown()).selectByVisibleText('Tokens');
-    await expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).not.toExist();
-    await expect(await Downloads.visibleRowContaining('Helm')).not.toExist();
-    await expect(await Downloads.visibleRowContaining('OpenShift Local')).not.toExist();
+    await expect(await Downloads.visibleRowContaining('(rosa)')).not.toExist();
+    await expect(await Downloads.visibleRowContaining('(helm)')).not.toExist();
+    await expect(await Downloads.visibleRowContaining('(crc)')).not.toExist();
 
     await (await Downloads.categoryDropdown()).selectByVisibleText('All categories');
-    await expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    await expect(await Downloads.visibleRowContaining('Helm')).toExist();
-    await expect(await Downloads.visibleRowContaining('OpenShift Local')).toExist();
+    await expect(await Downloads.visibleRowContaining('(rosa)')).toExist();
+    await expect(await Downloads.visibleRowContaining('(helm)')).toExist();
+    await expect(await Downloads.visibleRowContaining('(crc)')).toExist();
 
-    await expect(await Downloads.OSDropdown('Helm')).toHaveValue('linux');
-    await expect(await Downloads.architectureDropdown('Helm')).toHaveValue('s390x');
-    await expect(await Downloads.OSDropdown('OpenShift Local')).toHaveValue('windows');
+    await expect(await Downloads.OSDropdown('(helm)')).toHaveValue('linux');
+    await expect(await Downloads.architectureDropdown('(helm)')).toHaveValue('s390x');
+    await expect(await Downloads.OSDropdown('(crc)')).toHaveValue('windows');
   });
 });
