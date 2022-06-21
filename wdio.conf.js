@@ -7,7 +7,7 @@ const logger = require('@wdio/logger').default;
 
 const { getAuthConfig } = require('./selenium-js/authConfig');
 
-const saveScreenshot = async (name) => {
+const saveScreenshot = async (log, name) => {
   const dir = 'run/output/embedded_files/';
   await util.promisify(fs.mkdir)(dir, { recursive: true });
 
@@ -258,7 +258,7 @@ exports.config = {
       const close = await $('._pendo-close-guide');
       const exists = await close.isExisting();
       log.error('Trying to close pendo guide, exists = ', exists);
-      await saveScreenshot('before-closing-pendo');
+      await saveScreenshot(log, 'before-closing-pendo');
       if (exists) {
         await close.click();
       }
@@ -269,7 +269,7 @@ exports.config = {
       await browser.debug();
     } else {
       const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
-      await saveScreenshot(testName);
+      await saveScreenshot(log, testName);
       log.info('Tip: to stop for interactive debugging, set SELENIUM_DEBUG=true env var');
     }
   },

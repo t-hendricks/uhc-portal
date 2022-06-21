@@ -10,9 +10,6 @@ import {
   GridItem,
   Text,
   TextContent,
-  TextList,
-  TextListItem,
-  TextListVariants,
   TextVariants,
   Title,
 } from '@patternfly/react-core';
@@ -31,6 +28,7 @@ import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import UserRoleInstructionsModal from './UserRoleInstructionsModal';
+import OCMRoleInstructionsModal from './OCMRoleInstructionsModal';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import { rosaCLICommand } from './AssociateAWSAccountModal/UserRoleScreen';
 
@@ -51,7 +49,9 @@ function AccountsRolesScreen({
   clearGetAWSAccountIDsResponse,
   clearGetUserRoleResponse,
   openUserRoleInstructionsModal,
+  openOcmRoleInstructionsModal,
   isUserRoleModalOpen,
+  isOCMRoleModalOpen,
   closeModal,
 }) {
   const longName = 'Red Hat OpenShift Service on AWS (ROSA)';
@@ -220,6 +220,7 @@ function AccountsRolesScreen({
           clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
           change={change}
           touchARNsFields={touchARNsFields}
+          openOcmRoleInstructionsModal={openOcmRoleInstructionsModal}
         />
         )}
         <GridItem span={9}>
@@ -239,34 +240,26 @@ function AccountsRolesScreen({
                   </AlertActionLink>
               )}
               >
-                <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
-                  <TextListItem className="pf-u-mb-sm">
-                    <Text component={TextVariants.p} className="pf-u-mb-sm">
-                      It is necessary to create and link a user-role with the Red Hat cluster
-                      {' '}
-                      installer to proceed.
-                    </Text>
-                  </TextListItem>
-                  <TextListItem className="pf-u-mb-sm">
-                    <Text component={TextVariants.p} className="pf-u-mb-sm">
-                      To create a user-role, run the following command:
-                    </Text>
-                  </TextListItem>
-                  <TextListItem className="pf-u-mb-sm">
-                    <Text component={TextVariants.p} className="pf-u-mb-sm">
-                      <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
-                        {rosaCLICommand.userRole}
-                      </InstructionCommand>
-                    </Text>
-                  </TextListItem>
-                  <TextListItem className="pf-u-mb-sm">
-                    <Text component={TextVariants.p} className="pf-u-mb-sm ocm-secondary-text">
-                      After the role is created and linked successfully, you&apos;ll be able to
-                      {' '}
-                      continue by clicking the Next button.
-                    </Text>
-                  </TextListItem>
-                </TextList>
+                <TextContent className="ocm-alert-text">
+                  <Text component={TextVariants.p} className="pf-u-mb-sm">
+                    It is necessary to create and link a user-role with the Red Hat cluster
+                    {' '}
+                    installer to proceed.
+                  </Text>
+                  <Text component={TextVariants.p} className="pf-u-mb-sm">
+                    To create a user-role, run the following command:
+                  </Text>
+                  <Text component={TextVariants.p} className="pf-u-mb-sm">
+                    <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
+                      {rosaCLICommand.userRole}
+                    </InstructionCommand>
+                  </Text>
+                  <Text component={TextVariants.p} className="pf-u-mb-sm ocm-secondary-text">
+                    After the role is created and linked successfully, you&apos;ll be able to
+                    {' '}
+                    continue by clicking the Next button.
+                  </Text>
+                </TextContent>
               </Alert>
             </>
           )}
@@ -276,6 +269,11 @@ function AccountsRolesScreen({
       <UserRoleInstructionsModal
         closeModal={closeModal}
         isOpen={isUserRoleModalOpen}
+        hasAWSAccounts={hasAWSAccounts}
+      />
+      <OCMRoleInstructionsModal
+        closeModal={closeModal}
+        isOpen={isOCMRoleModalOpen}
         hasAWSAccounts={hasAWSAccounts}
       />
     </Form>
@@ -303,7 +301,9 @@ AccountsRolesScreen.propTypes = {
   }).isRequired,
   rosaMaxOSVersion: PropTypes.string,
   openUserRoleInstructionsModal: PropTypes.func,
+  openOcmRoleInstructionsModal: PropTypes.func,
   isUserRoleModalOpen: PropTypes.bool,
+  isOCMRoleModalOpen: PropTypes.bool,
   closeModal: PropTypes.func,
 };
 

@@ -708,6 +708,10 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   color: var(--pf-global--Color--200);
 }
 
+.ocm-alert-text {
+  font-size: var(--pf-global--FontSize--sm);
+}
+
 $ocm-l-autofit--breakpoint-map: build-breakpoint-map();
 $ocm-c-width-limiter--breakpoint-map: build-breakpoint-map();
 
