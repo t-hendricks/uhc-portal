@@ -102,6 +102,10 @@ const GatedRosaCreationWizard = withFeatureGate(
   CreateROSAWizard, ROSA_CREATION_WIZARD_FEATURE, CreateROSAWelcome,
 );
 
+const GatedRosaWelcome = withFeatureGate(
+  () => (<Redirect to="/create/rosa/wizard" />), ROSA_CREATION_WIZARD_FEATURE, CreateROSAWelcome,
+);
+
 function Router({ history }) {
   return (
     <>
@@ -196,7 +200,8 @@ function Router({ history }) {
             <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
             <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
             <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
-            <TermsGuardedRoute path="/create/rosa/welcome" history={history} render={() => <CreateROSAWelcome />} />
+
+            <Route path="/create/rosa/welcome" history={history} component={GatedRosaWelcome} />
             <TermsGuardedRoute path="/create/rosa/wizard" history={history} component={GatedRosaCreationWizard} />
             <Route path="/create" component={CreateClusterPage} />
             <Route path="/details/s/:id/insights/:reportId/:errorKey" component={InsightsAdvisorRedirector} />
