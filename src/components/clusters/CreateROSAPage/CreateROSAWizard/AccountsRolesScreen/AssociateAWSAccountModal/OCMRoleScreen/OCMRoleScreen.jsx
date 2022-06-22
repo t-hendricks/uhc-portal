@@ -18,7 +18,7 @@ import ExternalLink from '../../../../../../common/ExternalLink';
 import InstructionCommand from '../../../../../../common/InstructionCommand';
 import links from '../../../../../../../common/installLinks.mjs';
 
-const rosaCLICommand = {
+export const rosaOcmRoleCLICommands = {
   ocmRole: 'rosa create ocm-role',
   adminOcmRole: 'rosa create ocm-role --admin',
   linkOcmRole: 'rosa link ocm-role <arn>',
@@ -86,7 +86,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
                   />
                 </strong>
                 <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role">
-                  {rosaCLICommand.ocmRole}
+                  {rosaOcmRoleCLICommands.ocmRole}
                 </InstructionCommand>
               </GridItem>
               <GridItem sm={12} md={1} className="ocm-wizard-or-container">
@@ -103,7 +103,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
                   />
                 </strong>
                 <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin">
-                  {rosaCLICommand.adminOcmRole}
+                  {rosaOcmRoleCLICommands.adminOcmRole}
                 </InstructionCommand>
               </GridItem>
             </Grid>
@@ -120,7 +120,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
 
             <GridItem sm={7} md={5}>
               <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn">
-                {rosaCLICommand.linkOcmRole}
+                {rosaOcmRoleCLICommands.linkOcmRole}
               </InstructionCommand>
             </GridItem>
             <GridItem sm={1} md={1}>

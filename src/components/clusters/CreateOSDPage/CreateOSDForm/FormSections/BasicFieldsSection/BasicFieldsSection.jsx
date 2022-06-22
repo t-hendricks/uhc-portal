@@ -104,6 +104,7 @@ function BasicFieldsSection({
             name="cluster_version"
             label="Version"
             isRequired
+            validate={value => (value ? undefined : ' ')}
             isRosa={isRosa}
           />
         </GridItem>

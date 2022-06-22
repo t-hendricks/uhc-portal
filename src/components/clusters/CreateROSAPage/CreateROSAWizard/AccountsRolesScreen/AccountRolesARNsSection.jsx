@@ -13,6 +13,7 @@ import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/Redux
 import { ReduxFormDropdown } from '../../../../common/ReduxFormComponents';
 import ExternalLink from '../../../../common/ExternalLink';
 import ErrorBox from '../../../../common/ErrorBox';
+import ErrorNoOCMRole from './ErrorNoOCMRole';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import links from '../../../../../common/installLinks.mjs';
 
@@ -25,6 +26,7 @@ function AccountRolesARNsSection({
   getAWSAccountRolesARNs,
   getAWSAccountRolesARNsResponse,
   clearGetAWSAccountRolesARNsResponse,
+  openOcmRoleInstructionsModal,
 }) {
   const NO_ROLE_DETECTED = 'No role detected';
 
@@ -37,6 +39,9 @@ function AccountRolesARNsSection({
   const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
   const [allARNsFound, setAllARNsFound] = useState(false);
   const [awsARNsErrorBox, setAwsARNsErrorBox] = useState(null);
+
+  const hasNoTrustedRelationshipOnClusterRoleError = errorDetails => errorDetails?.length
+    && errorDetails.some(error => error?.Error_Key === 'NoTrustedRelationshipOnClusterRole');
 
   useEffect(() => {
     // this is required to show any validation error messages for the 4 disabled ARNs fields
@@ -100,11 +105,23 @@ function AccountRolesARNsSection({
       setSelectedInstallerRoleAndOptions(accountRolesARNs);
       setAccountRoles(accountRolesARNs);
     } else if (getAWSAccountRolesARNsResponse.error) {
+      // eslint-disable-next-line max-len
+      const errorComponent = hasNoTrustedRelationshipOnClusterRoleError(getAWSAccountRolesARNsResponse.errorDetails)
+        ? (
+          <ErrorNoOCMRole
+            message="Cannot detect an OCM role"
+            response={getAWSAccountRolesARNsResponse}
+            openOcmRoleInstructionsModal={openOcmRoleInstructionsModal}
+          />
+        )
+        : (
+          <ErrorBox
+            message="Error getting AWS account ARNs"
+            response={getAWSAccountRolesARNsResponse}
+          />
+        );
       // display error
-      setAwsARNsErrorBox(<ErrorBox
-        message="Error getting AWS account ARNs"
-        response={getAWSAccountRolesARNsResponse}
-      />);
+      setAwsARNsErrorBox(errorComponent);
     }
   }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse]);
 
@@ -113,6 +130,10 @@ function AccountRolesARNsSection({
   };
 
   const handInstallerRoleChange = (_, value) => {
+    // changing to a new set of ARNs, which could have different
+    // rosa_max_os_version, so clear the cluster_version which
+    // will get a new default on next step of the wizard
+    change('cluster_version', undefined);
     setSelectedInstallerRole(value);
   };
 
@@ -121,6 +142,7 @@ function AccountRolesARNsSection({
   const refreshARNs = () => {
     clearGetAWSAccountRolesARNsResponse();
     change('installer_role_arn', '');
+    change('cluster_version', undefined);
     setSelectedInstallerRole('');
     getAWSAccountRolesARNs(selectedAWSAccountID);
   };
@@ -305,6 +327,7 @@ AccountRolesARNsSection.propTypes = {
   getAWSAccountRolesARNs: PropTypes.func.isRequired,
   getAWSAccountRolesARNsResponse: PropTypes.object.isRequired,
   clearGetAWSAccountRolesARNsResponse: PropTypes.func.isRequired,
+  openOcmRoleInstructionsModal: PropTypes.func.isRequired,
 };
 
 export default AccountRolesARNsSection;

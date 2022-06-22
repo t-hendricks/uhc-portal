@@ -12,9 +12,6 @@ import {
   GridItem,
   Text,
   TextContent,
-  TextList,
-  TextListItem,
-  TextListVariants,
   TextVariants,
   Title,
 } from '@patternfly/react-core';
@@ -101,39 +98,33 @@ function ClusterRolesScreen({
       isExpandable
       title="If you would like to enable auto mode, expand the alert and follow the steps below."
     >
-      <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
-        <TextListItem className="pf-u-mb-sm">
-          <Text component={TextVariants.p} className="pf-u-mb-sm">
-            Create the Admin OCM role using the following command in the ROSA CLI.
-            {' '}
-            Only one OCM role can be linked per Red Hat org.
-            {' '}
-            <PopoverHint title="If an OCM role with basic privileges exists in your account, you might need to delete or unlink the role before creating an OCM role with administrative privileges." />
-          </Text>
-          <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role command">
-            rosa create ocm-role --admin
-          </InstructionCommand>
-        </TextListItem>
-        <TextListItem className="pf-u-mb-sm">
-          <Text component={TextVariants.p} className="pf-u-mb-sm">
-            If not yet linked, run the following command to associate the OCM role with your AWS
-            {' '}
-            account.
-          </Text>
-          <InstructionCommand textAriaLabel="Copyable ROSA link ocm-role command">
-            rosa link ocm-role &lt;arn&gt;
-          </InstructionCommand>
-        </TextListItem>
-        <TextListItem>
-          <Text component={TextVariants.p} className="pf-u-mb-sm">
-            After running the command, you may need to refresh using the button below to
-            enable auto mode.
-          </Text>
-          <Button onClick={handleRefresh} variant="secondary">
-            Refresh to enable auto mode
-          </Button>
-        </TextListItem>
-      </TextList>
+      <TextContent className="ocm-alert-text">
+        <Text component={TextVariants.p} className="pf-u-mb-sm">
+          Create the Admin OCM role using the following command in the ROSA CLI.
+          {' '}
+          Only one OCM role can be linked per Red Hat org.
+          {' '}
+          <PopoverHint title="If an OCM role with basic privileges exists in your account, you might need to delete or unlink the role before creating an OCM role with administrative privileges." />
+        </Text>
+        <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role command">
+          rosa create ocm-role --admin
+        </InstructionCommand>
+        <Text component={TextVariants.p} className="pf-u-mb-sm">
+          If not yet linked, run the following command to associate the OCM role with your AWS
+          {' '}
+          account.
+        </Text>
+        <InstructionCommand textAriaLabel="Copyable ROSA link ocm-role command">
+          rosa link ocm-role &lt;arn&gt;
+        </InstructionCommand>
+        <Text component={TextVariants.p} className="pf-u-mb-sm">
+          After running the command, you may need to refresh using the button below to
+          enable auto mode.
+        </Text>
+        <Button onClick={handleRefresh} variant="secondary">
+          Refresh to enable auto mode
+        </Button>
+      </TextContent>
     </Alert>
   );
 
