@@ -6,10 +6,11 @@ import get from 'lodash/get';
 import semver from 'semver';
 import {
   Select, SelectOption,
-  FormGroup,
+  FormGroup, TextList, TextListVariants, TextListItem, Text, TextVariants, Alert,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../../../common/ErrorBox';
+import InstructionCommand from '../../../../../../common/InstructionCommand';
 
 function VersionSelection({
   isRosa,
@@ -20,45 +21,70 @@ function VersionSelection({
   meta: { error, touched },
   getInstallableVersions,
   getInstallableVersionsResponse,
+  selectedClusterVersion,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [versions, setVersions] = useState([]);
-  const [versionsErrorBox, setVersionsErrorBox] = useState(null);
+  const [rosaVersionError, setRosaVersionError] = useState(false);
 
   const isValidRosaVersion = version => rosaMaxOSVersion
     && semver.satisfies(version, `<=${semver.major(rosaMaxOSVersion)}.${semver.minor(rosaMaxOSVersion)}`);
 
+  const RosaVersionErrorAlert = () => (
+    <Alert
+      className="pf-u-ml-lg"
+      variant="danger"
+      isInline
+      title="There is no version compatible with the selected ARNs in previous step"
+    >
+      <TextList component={TextListVariants.ol} className="ocm-c-wizard-alert-steps">
+        <TextListItem className="pf-u-mb-sm">
+          <Text component={TextVariants.p} className="pf-u-mb-sm">
+            Please select different ARNs or create new account roles using the following
+            {' '}
+            command in the ROSA CLI
+          </Text>
+        </TextListItem>
+        <TextListItem className="pf-u-mb-sm">
+          <Text component={TextVariants.p} className="pf-u-mb-sm">
+            <InstructionCommand textAriaLabel="Copyable ROSA create account-roles command">
+              rosa create account-roles
+            </InstructionCommand>
+          </Text>
+        </TextListItem>
+      </TextList>
+    </Alert>
+  );
+
   useEffect(() => {
-    if (getInstallableVersionsResponse.pending) {
-      setVersionsErrorBox(null);
-    } else if (getInstallableVersionsResponse.fulfilled) {
+    if (getInstallableVersionsResponse.fulfilled) {
       setVersions(get(getInstallableVersionsResponse, 'versions', []));
-      setVersionsErrorBox(null);
     } else if (getInstallableVersionsResponse.error) {
-      // display error
-      setVersionsErrorBox(<ErrorBox
-        message="Error getting cluster versions"
-        response={getInstallableVersionsResponse}
-      />);
+      // error, close dropdown
       setIsOpen(false);
-    } else { // First time.
+    } else if (!getInstallableVersionsResponse.pending) { // First time.
       getInstallableVersions(isRosa);
     }
   }, [getInstallableVersionsResponse]);
 
   useEffect(() => {
-    if (versions.length && !input.value?.raw_id) {
+    if (versions.length && !selectedClusterVersion?.raw_id) {
       const defaultVersionIndex = versions.findIndex(version => version.default === true);
       const defaultRosaVersionIndex = isRosa
         ? versions.findIndex(version => isValidRosaVersion(version.raw_id))
         : -1;
+      const defaultRosaVersionFound = defaultRosaVersionIndex !== -1;
+      if (isRosa && !defaultRosaVersionFound) {
+        setRosaVersionError(true);
+        return;
+      }
       // default to max rosa version supported, version.default, or first version in list
-      const versionIndex = defaultRosaVersionIndex !== -1
+      const versionIndex = defaultRosaVersionFound
         ? defaultRosaVersionIndex
         : defaultVersionIndex;
       input.onChange(versions[versionIndex !== -1 ? versionIndex : 0]);
     }
-  }, [versions, input.value?.raw_id, isRosa, rosaMaxOSVersion]);
+  }, [versions, selectedClusterVersion?.raw_id, isRosa, rosaMaxOSVersion]);
 
   const onToggle = (toggleOpenValue) => {
     setIsOpen(toggleOpenValue);
@@ -89,19 +115,25 @@ function VersionSelection({
         isRequired
       >
         {getInstallableVersionsResponse.error && (
-          { versionsErrorBox }
+          <ErrorBox
+            message="Error getting cluster versions"
+            response={getInstallableVersionsResponse}
+          />
         )}
-        {getInstallableVersions.pending && (
+        {rosaVersionError && (
+          <RosaVersionErrorAlert />
+        )}
+        {getInstallableVersionsResponse.pending && (
           <>
             <div className="spinner-fit-container"><Spinner /></div>
             <div className="spinner-loading-text">Loading...</div>
           </>
         )}
-        {getInstallableVersionsResponse.fulfilled && (
+        {getInstallableVersionsResponse.fulfilled && !rosaVersionError && (
           <Select
             label={label}
             isOpen={isOpen}
-            selections={input.value.raw_id || getSelection()}
+            selections={selectedClusterVersion?.raw_id || getSelection()}
             onToggle={onToggle}
             onSelect={onSelect}
             isDisabled={isDisabled}
@@ -109,7 +141,7 @@ function VersionSelection({
             {versions.map(version => (
               <SelectOption
                 className="pf-c-dropdown__menu-item"
-                isSelected={input.value.raw_id === version.raw_id}
+                isSelected={selectedClusterVersion?.raw_id === version.raw_id}
                 value={version.raw_id}
                 formValue={version.raw_id}
                 key={version.id}
@@ -133,6 +165,7 @@ VersionSelection.propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
   }),
+  selectedClusterVersion: PropTypes.string,
   isRosa: PropTypes.bool,
   rosaMaxOSVersion: PropTypes.string,
   getInstallableVersions: PropTypes.func.isRequired,

@@ -101,6 +101,7 @@ module.exports = async (_env, argv) => {
       new webpack.EnvironmentPlugin({
         REACT_APP_API_ROOT: '',
         REACT_APP_BUILD_MODE: argv.mode || 'development',
+        TRANSLATION_NAMESPACE: 'assisted_installer'
       }),
       new CopyWebpackPlugin({
         patterns: [
