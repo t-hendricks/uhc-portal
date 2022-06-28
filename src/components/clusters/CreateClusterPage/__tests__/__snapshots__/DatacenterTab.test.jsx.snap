@@ -97,7 +97,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/arm/?arm=true"
+                    to="/install/arm"
                   >
                     Bare Metal (ARM)
                   </Link>
@@ -246,7 +246,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
               Array [
                 <React.Fragment>
                   <Link
-                    to="/install/arm/?arm=true"
+                    to="/install/arm"
                   >
                     Bare Metal (ARM)
                   </Link>
