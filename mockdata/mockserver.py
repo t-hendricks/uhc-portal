@@ -192,7 +192,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 def main():
     output_line_buffering()
     server_address = ('localhost', 8010)
-    httpd = http.server.HTTPServer(server_address, Handler)
+    httpd = http.server.ThreadingHTTPServer(server_address, Handler)
     print("Listening on http://localhost:8010")
     httpd.serve_forever()
 
