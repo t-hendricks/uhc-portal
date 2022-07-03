@@ -369,6 +369,10 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
       { action: 'delete', resource_type: 'Cluster', cluster_id: subscription.data.cluster_id },
     );
 
+    const limitedSupportReasons = await clusterService
+      .getLimitedSupportReasons(subscription.data.cluster_id);
+    cluster.data.limitedSupportReasons = limitedSupportReasons.data?.items || [];
+
     cluster.data.canEdit = canEdit;
     cluster.data.canEditOCMRoles = canEditOCMRoles;
     cluster.data.canViewOCMRoles = canViewOCMRoles;

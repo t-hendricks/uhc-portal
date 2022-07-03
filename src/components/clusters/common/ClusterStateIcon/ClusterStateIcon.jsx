@@ -13,21 +13,24 @@ import {
   AsleepIcon,
   NotStartedIcon,
 } from '@patternfly/react-icons';
-// need to disable eslint for the react tokens because it's silly - it warns about these names
+
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
 import { Spinner } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
 
 function ClusterStateIcon(props) {
-  const { clusterState, animated } = props;
+  const { clusterState, animated, limitedSupport } = props;
 
   const iconProps = {
     className: 'clusterstate',
     size: 'sm',
   };
 
-  // Icons from http://openshift.github.io/openshift-origin-design/web-console/4.0-designs/status/status
+  if (limitedSupport && clusterState !== clusterStates.ERROR) {
+    return <ExclamationCircleIcon color={global_danger_color_100.value} {...iconProps} />;
+  }
+
   switch (clusterState) {
     case clusterStates.WAITING:
     case clusterStates.PENDING:
@@ -65,6 +68,7 @@ function ClusterStateIcon(props) {
 
 ClusterStateIcon.propTypes = {
   clusterState: PropTypes.string.isRequired,
+  limitedSupport: PropTypes.bool,
   animated: PropTypes.bool,
 };
 ClusterStateIcon.defaultProps = {

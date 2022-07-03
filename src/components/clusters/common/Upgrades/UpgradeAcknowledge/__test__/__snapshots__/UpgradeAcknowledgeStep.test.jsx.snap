@@ -140,6 +140,11 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                         target="_blank"
                       >
                         Learn more
+                        <span
+                          className="pf-u-screen-reader"
+                        >
+                           (new window or tab)
+                        </span>
                          
                         <ExternalLinkAltIcon
                           color="#0066cc"
@@ -248,6 +253,11 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                         target="_blank"
                       >
                         Learn more
+                        <span
+                          className="pf-u-screen-reader"
+                        >
+                           (new window or tab)
+                        </span>
                          
                         <ExternalLinkAltIcon
                           color="#0066cc"

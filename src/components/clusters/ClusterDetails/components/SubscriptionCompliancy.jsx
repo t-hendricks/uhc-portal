@@ -75,7 +75,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
 
   if (supportLevel === subscriptionSupportLevels.NONE) {
     return (
-      <Alert className="subscription-settings compliancy-alert" isInline variant="danger" title="Your 60-day OpenShift evaluation has expired">
+      <Alert className="subscription-settings compliancy-alert pf-u-mt-md" isInline variant="danger" title="Your 60-day OpenShift evaluation has expired">
         {lastChecked}
         <p>
           Your cluster is not supported and you may stop receiving updates.
@@ -93,7 +93,7 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
     );
   }
   return (
-    <Alert className="subscription-settings compliancy-alert" isInline variant="warning" title="OpenShift evaluation expiration date">
+    <Alert className="subscription-settings compliancy-alert pf-u-mt-md" isInline variant="warning" title="OpenShift evaluation expiration date">
       {lastChecked}
       <p>
         Your OpenShift evaluation will expire at&nbsp;

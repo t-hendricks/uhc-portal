@@ -443,6 +443,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
       </span>
     </SplitItem>
   </Split>
+  <LimitedSupportAlert />
   <ExpirationAlert
     expirationTimestamp="2021-01-12T03:17:14.999204Z"
   />

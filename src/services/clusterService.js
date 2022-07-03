@@ -397,6 +397,11 @@ const getOperatorRoleCommands = (awsAccountId, clusterId, installerRoleARN) => a
   url: `/api/clusters_mgmt/v1/clusters/${clusterId}/sts_commands`,
 });
 
+const getLimitedSupportReasons = clusterId => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterId}/limited_support_reasons`,
+});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -445,6 +450,7 @@ const clusterService = {
   getClusterGateAgreements,
   postClusterGateAgreement,
   getOperatorRoleCommands,
+  getLimitedSupportReasons,
 };
 export {
   postUpgradeSchedule,
