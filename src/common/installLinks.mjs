@@ -605,6 +605,11 @@ const urls = {
       [architectures.ppc]: {
         [operatingSystems.linux]: `${MIRROR_TKN_LATEST}/tkn-linux-ppc64le.tar.gz`,
       },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_TKN_LATEST}/tkn-linux-arm64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_TKN_LATEST}/tkn-macos-arm64.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_TKN_LATEST}/tkn-windows-arm64.zip`,
+      },
     },
   },
 

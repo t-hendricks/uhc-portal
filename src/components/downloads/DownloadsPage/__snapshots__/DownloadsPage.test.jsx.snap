@@ -520,6 +520,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -1016,6 +1021,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -1503,6 +1513,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -1995,6 +2010,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -2484,6 +2504,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -2997,6 +3022,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -3484,6 +3514,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -3971,6 +4006,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -4458,6 +4498,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -4955,6 +5000,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -5478,6 +5528,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -5978,6 +6033,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -6471,6 +6531,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -6964,6 +7029,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -7465,6 +7535,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -7957,6 +8032,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -8453,6 +8533,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -8938,6 +9023,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -9434,6 +9524,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -9915,6 +10010,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
@@ -10404,6 +10504,11 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "tkn": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-arm64.tar.gz",
+                      "mac": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-macos-arm64.tar.gz",
+                      "windows": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-windows-arm64.zip",
+                    },
                     "ppc": Object {
                       "linux": "https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest/tkn-linux-ppc64le.tar.gz",
                     },
