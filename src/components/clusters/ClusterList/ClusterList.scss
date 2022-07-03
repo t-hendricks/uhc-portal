@@ -10,3 +10,25 @@
 #cluster-list-header {
     display: flex;
 }
+
+@media only screen and (max-width: 768px) {
+  .cluster-list {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    .pf-c-toolbar__content-section {
+      .ocm-c-toolbar__item-cluster-filter-list {
+        --pf-c-toolbar__item--Width: 100%;
+        margin-bottom: var(--pf-global--spacer--sm);
+        margin-right: 0;
+      }
+      .ocm-c-toolbar__item-cluster-list-filter-dropdown {
+        .cluster-filter-dropdown {
+          width: 100%;
+          .pf-c-dropdown__toggle {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
