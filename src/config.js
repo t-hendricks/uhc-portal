@@ -6,13 +6,8 @@ const configs = {};
 
 configs.production = import(/* webpackMode: "eager" */ './config/production.json');
 configs.stageSSO = import(/* webpackMode: "eager" */ './config/ci.json');
-
-const isDevOrStaging = APP_BETA || APP_DEVMODE || APP_API_ENV !== 'production';
-
-if (isDevOrStaging) {
-  configs.staging = import(/* webpackMode: "eager" */ './config/staging.json');
-  configs.integration = import(/* webpackMode: "eager" */ './config/integration.json');
-}
+configs.staging = import(/* webpackMode: "eager" */ './config/staging.json');
+configs.integration = import(/* webpackMode: "eager" */ './config/integration.json');
 
 if (APP_DEV_SERVER) {
   // running in webpack dev server, add development configs
@@ -60,26 +55,22 @@ const config = {
       insightsGateway: data.insightsGateway?.replace('$SELF_PATH$', window.location.host) || undefined,
     };
 
-    if (isDevOrStaging) {
-      // make config available in browser devtools for debugging
-      window.ocmConfig = this;
-    }
+    // make config available in browser devtools for debugging
+    window.ocmConfig = this;
   },
 
   fetchConfig() {
     const that = this;
     return new Promise((resolve) => {
-      if (parseFakeQueryParam() && isDevOrStaging) {
+      if (parseFakeQueryParam()) {
         that.fakeOSD = true;
       }
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
       if (queryEnv && configs[queryEnv]) {
         configs[queryEnv].then((data) => {
           this.loadConfig(data);
-          if (isDevOrStaging) {
-            // eslint-disable-next-line no-console
-            console.info(`Loaded override config: ${queryEnv}`);
-          }
+          // eslint-disable-next-line no-console
+          console.info(`Loaded override config: ${queryEnv}`);
           that.override = queryEnv;
           localStorage.setItem(ENV_OVERRIDE_LOCALSTORAGE_KEY, queryEnv);
           resolve();
@@ -87,10 +78,8 @@ const config = {
       } else {
         configs.default.then((data) => {
           this.loadConfig(data);
-          if (isDevOrStaging) {
-            // eslint-disable-next-line no-console
-            console.info(`Loaded default config: ${APP_API_ENV}`);
-          }
+          // eslint-disable-next-line no-console
+          console.info(`Loaded default config: ${APP_API_ENV}`);
           resolve();
         });
       }
@@ -98,5 +87,5 @@ const config = {
   },
 };
 
-export { ENV_OVERRIDE_LOCALSTORAGE_KEY, isDevOrStaging };
+export { ENV_OVERRIDE_LOCALSTORAGE_KEY };
 export default config;
