@@ -18,11 +18,7 @@ const mapStateToProps = (state) => {
       totalMaxNodesCount,
     };
   }
-  return {
-    autoscaleEnabled: hasMachinePoolWithAutoscaling,
-    totalDesiredComputeNodes,
-    limitedSupport: cluster.status.limited_support_reason_count > 0,
-  };
+  return { autoscaleEnabled: hasMachinePoolWithAutoscaling, totalDesiredComputeNodes };
 };
 
 export default connect(mapStateToProps, null)(DetailsRight);

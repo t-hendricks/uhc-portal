@@ -333,11 +333,6 @@ exports[`<Releases /> should render 1`] = `
                                                 OpenShift
                                                  
                                                 4.8
-                                                <span
-                                                  className="pf-u-screen-reader"
-                                                >
-                                                   (new window or tab)
-                                                </span>
                                               </a>
                                             </ExternalLink>
                                           </div>
@@ -442,11 +437,6 @@ exports[`<Releases /> should render 1`] = `
                                                 OpenShift
                                                  
                                                 4.7
-                                                <span
-                                                  className="pf-u-screen-reader"
-                                                >
-                                                   (new window or tab)
-                                                </span>
                                               </a>
                                             </ExternalLink>
                                           </div>
@@ -563,11 +553,6 @@ exports[`<Releases /> should render 1`] = `
                                                 OpenShift
                                                  
                                                 4.6
-                                                <span
-                                                  className="pf-u-screen-reader"
-                                                >
-                                                   (new window or tab)
-                                                </span>
                                               </a>
                                             </ExternalLink>
                                           </div>
@@ -672,11 +657,6 @@ exports[`<Releases /> should render 1`] = `
                                                 OpenShift
                                                  
                                                 4.5
-                                                <span
-                                                  className="pf-u-screen-reader"
-                                                >
-                                                   (new window or tab)
-                                                </span>
                                               </a>
                                             </ExternalLink>
                                           </div>
@@ -793,11 +773,6 @@ exports[`<Releases /> should render 1`] = `
                                                 OpenShift
                                                  
                                                 4.4
-                                                <span
-                                                  className="pf-u-screen-reader"
-                                                >
-                                                   (new window or tab)
-                                                </span>
                                               </a>
                                             </ExternalLink>
                                           </div>
@@ -914,11 +889,6 @@ exports[`<Releases /> should render 1`] = `
                                                 OpenShift
                                                  
                                                 4.3
-                                                <span
-                                                  className="pf-u-screen-reader"
-                                                >
-                                                   (new window or tab)
-                                                </span>
                                               </a>
                                             </ExternalLink>
                                           </div>
@@ -1066,11 +1036,6 @@ exports[`<Releases /> should render 1`] = `
                                   target="_blank"
                                 >
                                   Learn more about updating channels
-                                  <span
-                                    className="pf-u-screen-reader"
-                                  >
-                                     (new window or tab)
-                                  </span>
                                 </a>
                               </ExternalLink>
                             </div>

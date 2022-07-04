@@ -16,7 +16,6 @@ import getClusterName from '../../../../common/getClusterName';
 import { subscriptionStatuses, normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { isUninstalledAICluster } from '../../../../common/isAssistedInstallerCluster';
 import ExpirationAlert from './ExpirationAlert';
-import LimitedSupportAlert from './LimitedSupportAlert';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
 import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
@@ -69,7 +68,6 @@ function ClusterDetailsTop(props) {
   const IdentityProvidersHint = () => (
     <Alert
       id="idpHint"
-      className="pf-u-mt-md"
       variant="warning"
       isInline
       title="Missing identity providers"
@@ -188,9 +186,6 @@ function ClusterDetailsTop(props) {
           </span>
         </SplitItem>
       </Split>
-
-      <LimitedSupportAlert limitedSupportReasons={cluster.limitedSupportReasons} />
-
       {showIDPMessage && (
       <Split>
         <SplitItem isFilled>
@@ -218,7 +213,6 @@ function ClusterDetailsTop(props) {
         OSDRHMExpiration
       />
       )}
-
       <SubscriptionCompliancy
         cluster={cluster}
         openModal={openModal}

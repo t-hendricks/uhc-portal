@@ -159,11 +159,6 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                             target="_blank"
                           >
                             Change the cluster's pull secret
-                            <span
-                              class="pf-u-screen-reader"
-                            >
-                               (new window or tab)
-                            </span>
                              
                             <svg
                               aria-hidden="true"
@@ -462,11 +457,6 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                                           target="_blank"
                                         >
                                           Change the cluster's pull secret
-                                          <span
-                                            className="pf-u-screen-reader"
-                                          >
-                                             (new window or tab)
-                                          </span>
                                            
                                           <ExternalLinkAltIcon
                                             color="#0066cc"
@@ -771,11 +761,6 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                             target="_blank"
                           >
                             Change the cluster's pull secret
-                            <span
-                              class="pf-u-screen-reader"
-                            >
-                               (new window or tab)
-                            </span>
                              
                             <svg
                               aria-hidden="true"
@@ -1074,11 +1059,6 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                                           target="_blank"
                                         >
                                           Change the cluster's pull secret
-                                          <span
-                                            className="pf-u-screen-reader"
-                                          >
-                                             (new window or tab)
-                                          </span>
                                            
                                           <ExternalLinkAltIcon
                                             color="#0066cc"
@@ -1383,11 +1363,6 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                             target="_blank"
                           >
                             Register the cluster
-                            <span
-                              class="pf-u-screen-reader"
-                            >
-                               (new window or tab)
-                            </span>
                              
                             <svg
                               aria-hidden="true"
@@ -1677,11 +1652,6 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                                           target="_blank"
                                         >
                                           Register the cluster
-                                          <span
-                                            className="pf-u-screen-reader"
-                                          >
-                                             (new window or tab)
-                                          </span>
                                            
                                           <ExternalLinkAltIcon
                                             color="#0066cc"
@@ -2017,11 +1987,6 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                             target="_blank"
                           >
                             Change the cluster's pull secret
-                            <span
-                              class="pf-u-screen-reader"
-                            >
-                               (new window or tab)
-                            </span>
                              
                             <svg
                               aria-hidden="true"
@@ -2400,11 +2365,6 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                                           target="_blank"
                                         >
                                           Change the cluster's pull secret
-                                          <span
-                                            className="pf-u-screen-reader"
-                                          >
-                                             (new window or tab)
-                                          </span>
                                            
                                           <ExternalLinkAltIcon
                                             color="#0066cc"
