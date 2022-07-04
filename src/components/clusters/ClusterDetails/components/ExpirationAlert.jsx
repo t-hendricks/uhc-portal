@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Alert, Button } from '@patternfly/react-core';
 import modals from '../../../common/Modal/modals';
+import './ExpirationAlert.scss';
 import ExternalLink from '../../../common/ExternalLink';
 
 function ExpirationAlert({
@@ -23,7 +24,6 @@ function ExpirationAlert({
     return (
       <Alert
         id="expiration-alert"
-        className="pf-u-mt-md"
         variant="warning"
         isInline
         title={`This cluster should have been deleted ${timeUntilExpiryString}.`}
@@ -85,7 +85,6 @@ function ExpirationAlert({
   return (
     <Alert
       id="expiration-alert"
-      className="pf-u-mt-md"
       variant={variant}
       isInline
       title={`This cluster will be deleted ${timeUntilExpiryString}.`}

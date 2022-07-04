@@ -7,16 +7,14 @@ const ExternalLink = ({
   children,
   noIcon,
   noTarget,
-  className,
 }) => {
   let target = '_blank';
   if (noTarget) {
     target = '';
   }
   return (
-    <a href={href} target={target} rel="noreferrer noopener" className={className}>
+    <a href={href} target={target} rel="noreferrer noopener">
       {children}
-      {noTarget ? null : (<span className="pf-u-screen-reader"> (new window or tab)</span>)}
       {!noIcon && (
         <>
           {' '}
@@ -32,7 +30,6 @@ ExternalLink.propTypes = {
   children: PropTypes.node,
   noIcon: PropTypes.bool,
   noTarget: PropTypes.bool,
-  className: PropTypes.string,
 };
 
 export default ExternalLink;

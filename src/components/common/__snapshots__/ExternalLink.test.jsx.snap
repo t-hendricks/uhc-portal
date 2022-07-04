@@ -7,11 +7,6 @@ exports[`<ExternalLink /> should render 1`] = `
   target="_blank"
 >
   Hello World
-  <span
-    className="pf-u-screen-reader"
-  >
-     (new window or tab)
-  </span>
    
   <ExternalLinkAltIcon
     color="#0066cc"

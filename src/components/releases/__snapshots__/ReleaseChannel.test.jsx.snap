@@ -35,11 +35,6 @@ exports[`<ReleaseChannel /> should render 1`] = `
                   target="_blank"
                 >
                   4.6.12
-                  <span
-                    className="pf-u-screen-reader"
-                  >
-                     (new window or tab)
-                  </span>
                 </a>
               </ExternalLink>
             </div>

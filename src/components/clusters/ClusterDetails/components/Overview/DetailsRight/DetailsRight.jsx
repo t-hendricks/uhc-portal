@@ -23,12 +23,7 @@ import ExternalLink from '../../../../../common/ExternalLink';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
-  cluster,
-  totalDesiredComputeNodes,
-  autoscaleEnabled,
-  totalMinNodesCount,
-  totalMaxNodesCount,
-  limitedSupport,
+  cluster, totalDesiredComputeNodes, autoscaleEnabled, totalMinNodesCount, totalMaxNodesCount,
 }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
     get(cluster, 'metrics.memory.total.value', 0), get(cluster, 'metrics.memory.total.unit', 'B'),
@@ -66,14 +61,9 @@ function DetailsRight({
               ? <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
               : (
                 <>
-                  <ClusterStateIcon
-                    clusterState={cluster.state.state}
-                    limitedSupport={limitedSupport}
-                    animated
-                  />
+                  <ClusterStateIcon clusterState={cluster.state.state} animated />
                   {' '}
                   {cluster.state.description}
-                  {limitedSupport ? ' - Limited support' : null}
                 </>
               )}
           </DescriptionListDescription>
@@ -296,7 +286,6 @@ DetailsRight.propTypes = {
   totalMinNodesCount: PropTypes.number,
   totalMaxNodesCount: PropTypes.number,
   autoscaleEnabled: PropTypes.bool.isRequired,
-  limitedSupport: PropTypes.bool,
 };
 
 export default DetailsRight;
