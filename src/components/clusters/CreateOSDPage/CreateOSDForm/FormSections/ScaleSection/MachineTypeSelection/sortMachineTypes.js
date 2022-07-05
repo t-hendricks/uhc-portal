@@ -2,7 +2,21 @@
 import get from 'lodash/get';
 import map from 'lodash/map';
 import { parseValueWithUnit } from '../../../../../../../common/units';
-import { machineCategories } from './MachineTypeSelection';
+
+/**
+ * Defines order and labels of groups to display to user.
+ * The `name` corresponds to `category` field in machine_types API,
+ * and to `generic_name` in quota_cost API.
+ */
+export const machineCategories = [
+  { name: 'general_purpose', label: 'General purpose' },
+  { name: 'memory_optimized', label: 'Memory optimized' },
+  { name: 'compute_optimized', label: 'Compute optimized' },
+  { name: 'storage_optimized', label: 'Storage optimized' },
+  { name: 'network_optimized', label: 'Network optimized' },
+  { name: 'burstable', label: 'Burstable' },
+  { name: 'accelerated_computing', label: 'Accelerated computing' },
+];
 
 const categories = map(machineCategories, 'name');
 
@@ -35,8 +49,8 @@ const sortFuncs = {
   aws: compareByCategoryMemoryCPU,
 };
 
-function sortMachineTypes(state, cloudProviderID) {
-  const types = get(state.machineTypes.types, cloudProviderID, []);
+function sortMachineTypes(machineTypes, cloudProviderID) {
+  const types = get(machineTypes.types, cloudProviderID, []);
   types.sort(sortFuncs[cloudProviderID]);
   return types;
 }
