@@ -44,6 +44,7 @@ const links = {
   IDP_GITLAB: `${DOCS_BASE}/authentication/identity_providers/configuring-gitlab-identity-provider.html`,
   IDP_GOOGLE: `${DOCS_BASE}/authentication/identity_providers/configuring-google-identity-provider.html`,
   IDP_OPENID: `${DOCS_BASE}/authentication/identity_providers/configuring-oidc-identity-provider.html`,
+  CCO_MANUAL_MODE: `${DOCS_BASE}/authentication/managing_cloud_provider_credentials/cco-mode-manual.html`,
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication/understanding-authentication.html`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
   APPLYING_AUTOSCALING: `${DOCS_BASE}/machine_management/applying-autoscaling.html`,
@@ -244,6 +245,7 @@ const links = {
 const tools = {
   OC: 'oc',
   BUTANE: 'butane',
+  CCOCTL: 'ccoctl',
   COREOS_INSTALLER: 'coreos-installer',
   CRC: 'crc',
   HELM: 'helm',
@@ -359,6 +361,30 @@ const urls = {
     },
   },
 
+  [tools.CCOCTL]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}ccoctl-linux.tar.gz`,
+        /*
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}ccoctl-mac.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_CLIENTS_STABLE_X86}ccoctl-windows.tar.gz`,
+        */
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}ccoctl-linux.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}ccoctl-linux.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}ccoctl-linux.tar.gz`,
+        /*
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_ARM}ccoctl-mac.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_CLIENTS_STABLE_ARM}ccoctl-windows.tar.gz`,
+        */
+      },
+    },
+  },
   [tools.COREOS_INSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {

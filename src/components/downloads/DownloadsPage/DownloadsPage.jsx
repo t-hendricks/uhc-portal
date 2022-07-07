@@ -845,6 +845,30 @@ const customInstallationRows = (
           </TextContent>
         )}
       />
+
+      <ToolAndDescriptionRows
+        {...commonProps}
+        tool={tools.CCOCTL}
+        channel={channels.STABLE}
+        name={(
+          <>
+            Cloud Credential Operator CLI utility (
+            <code>ccoctl</code>
+            )
+          </>
+        )}
+        description={(
+          <TextContent>
+            <Text>
+              The ccoctl tool provides various commands to assist with the creating and
+              maintenance of cloud credentials from outside the cluster (necessary when
+              Cloud Credential Operator is put in Manual mode).
+              {' '}
+              <ExternalLink href={links.CCO_MANUAL_MODE}>Learn more</ExternalLink>
+            </Text>
+          </TextContent>
+        )}
+      />
     </>
   );
 };

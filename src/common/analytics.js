@@ -39,6 +39,11 @@ const trackEvents = {
     link_name: 'butane-cli',
     ocm_resource_type: ocmResourceType.ALL,
   },
+  [tools.CCOCTL]: {
+    event: eventNames.FILE_DOWNLOADED,
+    link_name: 'ccoctl-cli',
+    ocm_resource_type: ocmResourceType.ALL,
+  },
   [tools.COREOS_INSTALLER]: {
     deprecated_name: 'Download-CoreOSInstaller-CLI',
     event: eventNames.FILE_DOWNLOADED,

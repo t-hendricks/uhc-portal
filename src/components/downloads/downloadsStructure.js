@@ -43,7 +43,7 @@ export const downloadsCategories = [
   {
     key: 'CUSTOM_INSTALLATION',
     title: 'OpenShift installation customization tools',
-    tools: [tools.BUTANE, tools.COREOS_INSTALLER],
+    tools: [tools.BUTANE, tools.COREOS_INSTALLER, tools.CCOCTL],
   },
   {
     key: 'TOKENS',
