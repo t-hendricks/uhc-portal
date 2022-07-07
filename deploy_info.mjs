@@ -34,6 +34,11 @@ const getUpstreamRemote = async () => {
   throw 'missing remote for uhc-portal repo';
 };
 
+const getAssistedUILibVersion = async (revision) => {
+  const r = await execFilePromise('git', ['cat-file', 'blob', `${revision}:package.json`]);
+  return JSON.parse(r.stdout).dependencies['openshift-assisted-ui-lib'];
+};
+
 // Helpers returning a promise, should resolve to an object containing *at least* .src_hash.
 
 const gitBranch = async (branch) => {
@@ -126,7 +131,11 @@ const getEnvs = async (upstream) => {
   ];
   // Resolve all .info in parallel.
   await Promise.all(envs.map(async (e) => {
+    // eslint-disable-next-line no-param-reassign
     e.info = await e.info;
+    if (e.info.src_hash) {
+      e.info.assisted_ui_lib_version = await getAssistedUILibVersion(e.info.src_hash);
+    }
   }));
   return envs;
 };
@@ -148,10 +157,13 @@ const main = async () => {
     }
 
     const widestName = Math.max(...envs.map(e => e.name.length));
+    const widestHash = Math.max(...envs.map(e => e.info.src_hash.length));
 
     if (flags.short) {
       envs.forEach((e) => {
-        console.log(e.name.padStart(widestName, ' '), e.info.src_hash);
+        const paddedName = e.name.padStart(widestName, ' ');
+        const paddedHash = e.info.src_hash.padEnd(widestHash, ' ');
+        console.log(`${paddedName} ${paddedHash}  [assited-ui ${e.info.assisted_ui_lib_version}]`);
       });
     }
 
@@ -159,14 +171,16 @@ const main = async () => {
       // I do want a sequential loop, can't use forEach.
       // eslint-disable-next-line no-restricted-syntax
       for (const e of envs) {
+        const paddedName = e.name.padStart(widestName, ' ');
+        const paddedHash = e.info.src_hash.padEnd(widestHash, ' ');
         // Don't try overwriting branches taken from git like `upstream/master`
         // (would probably be a no-op but safer not to).
         if (e.name.match('build_pushed_.*|live_.*') && e.info.src_hash) {
           const cmd = ['git', 'branch', '--force', e.name, e.info.src_hash];
-          console.log(`git branch --force' ${e.name.padStart(widestName, ' ')} ${e.info.src_hash}`);
+          console.log(`git branch --force ${paddedName} ${paddedHash}  # [assited-ui ${e.info.assisted_ui_lib_version}]`);
           await execFilePromise(cmd[0], cmd.slice(1), { stdio: 'inherit' });
         } else {
-          console.log(`#                   ${e.name.padStart(widestName, ' ')} ${e.info.src_hash}`);
+          console.log(`#                  ${paddedName} ${paddedHash}    [assited-ui ${e.info.assisted_ui_lib_version}]`);
         }
       }
     }
