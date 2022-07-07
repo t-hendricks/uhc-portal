@@ -161,6 +161,7 @@ class CreateOSDWizardInternal extends React.Component {
   }
 
   canJumpTo = (id) => {
+    return true;
     const { stepIdReached, currentStepId, validatedSteps } = this.state;
     const hasPrevStepError = Object.entries(validatedSteps).some((
       [validatedStepId, isStepValid],
