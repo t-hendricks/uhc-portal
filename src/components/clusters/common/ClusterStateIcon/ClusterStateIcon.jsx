@@ -20,12 +20,16 @@ import { Spinner } from '@patternfly/react-core';
 import clusterStates from '../clusterStates';
 
 function ClusterStateIcon(props) {
-  const { clusterState, animated } = props;
+  const { clusterState, animated, limitedSupport } = props;
 
   const iconProps = {
     className: 'clusterstate',
     size: 'sm',
   };
+
+  if (limitedSupport && clusterState !== clusterStates.ERROR) {
+    return <ExclamationCircleIcon color={global_danger_color_100.value} {...iconProps} />;
+  }
 
   // Icons from http://openshift.github.io/openshift-origin-design/web-console/4.0-designs/status/status
   switch (clusterState) {
@@ -65,6 +69,7 @@ function ClusterStateIcon(props) {
 
 ClusterStateIcon.propTypes = {
   clusterState: PropTypes.string.isRequired,
+  limitedSupport: PropTypes.bool,
   animated: PropTypes.bool,
 };
 ClusterStateIcon.defaultProps = {

@@ -1,11 +1,19 @@
 #!/usr/bin/env node
-const util = require('util');
-const execFile = util.promisify(require('child_process').execFile);
-const { execFileSync } = require('child_process');
-const listGitRemotes = util.promisify(require('list-git-remotes'));
-const fetch = require('node-fetch');
-const JSON5 = require('json5');
-const yargs = require('yargs');
+import util from 'util';
+import { execFile, execFileSync } from 'child_process';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+import listGitRemotes from 'list-git-remotes';
+import JSON5 from 'json5';
+import yargs from 'yargs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const execFilePromise = util.promisify(execFile);
+const execFileSyncPromise = util.promisify(execFileSync);
+const listGitRemotesPromise = util.promisify(listGitRemotes);
 
 const flags = yargs
   .option('json', { description: 'Output detailed JSON.' })
@@ -17,7 +25,7 @@ const flags = yargs
   .argv;
 
 const getUpstreamRemote = async () => {
-  const remoteUrls = await listGitRemotes(__dirname);
+  const remoteUrls = await listGitRemotesPromise(__dirname);
   for (const remoteName of Object.keys(remoteUrls)) {
     if (remoteUrls[remoteName].match('.*gitlab\\.cee\\.redhat\\.com[:/]service/uhc-portal.*')) {
       return remoteName;
@@ -30,7 +38,7 @@ const getUpstreamRemote = async () => {
 
 const gitBranch = async (branch) => {
   try {
-    const r = await execFile('git', ['rev-parse', '--short=7', branch]);
+    const r = await execFilePromise('git', ['rev-parse', '--short=7', branch]);
     return { src_hash: r.stdout.trimRight() };
   } catch (err) {
     return { ERROR: err };
@@ -39,18 +47,17 @@ const gitBranch = async (branch) => {
 
 // app.info.json files generated in push_to_insights.sh & insights-Jenkinsfile
 const appInfo = async (url) => {
-  const response = await fetch(url);
-  const text = await response.text();
+  const r = await execFilePromise('curl', ['--silent', '--show-error', '--fail-with-body', url]);
   try {
     // Some contain a trailing comma, making it invalid JSON, so use JSON5.
-    return JSON5.parse(text);
+    return JSON5.parse(r.stdout);
   } catch (err) {
-    return { ERROR: `${err} - ${text}` };
+    return { ERROR: `${err} - ${r.stdout}` };
   }
 };
 
 const getEnvs = async (upstream) => {
-  let envs = [
+  const envs = [
     // .info fields are promises, later replaced with their results..
     {
       name: `${upstream}/master`,
@@ -133,7 +140,7 @@ const main = async () => {
     }
 
     const upstream = await getUpstreamRemote();
-    await execFile('git', ['fetch', upstream]);
+    await execFilePromise('git', ['fetch', upstream]);
     const envs = await getEnvs(upstream);
 
     if (flags.json) {
@@ -149,17 +156,19 @@ const main = async () => {
     }
 
     if (flags.setGitBranches || flags.gitGraph) {
-      envs.forEach((e) => {
+      // I do want a sequential loop, can't use forEach.
+      // eslint-disable-next-line no-restricted-syntax
+      for (const e of envs) {
         // Don't try overwriting branches taken from git like `upstream/master`
         // (would probably be a no-op but safer not to).
         if (e.name.match('build_pushed_.*|live_.*') && e.info.src_hash) {
           const cmd = ['git', 'branch', '--force', e.name, e.info.src_hash];
-          console.log('git branch --force', e.name.padStart(widestName, ' '), e.info.src_hash);
-          execFileSync(cmd[0], cmd.slice(1), { stdio: 'inherit' });
+          console.log(`git branch --force' ${e.name.padStart(widestName, ' ')} ${e.info.src_hash}`);
+          await execFilePromise(cmd[0], cmd.slice(1), { stdio: 'inherit' });
         } else {
-          console.log('#                 ', e.name.padStart(widestName, ' '), e.info.src_hash);
+          console.log(`#                   ${e.name.padStart(widestName, ' ')} ${e.info.src_hash}`);
         }
-      });
+      }
     }
 
     if (flags.gitGraph) {
@@ -171,7 +180,7 @@ const main = async () => {
       console.log(...cmd);
       console.log('');
       // For some reason async execFile always pipes stdout/err, we want it left alone for git colors.
-      execFileSync(cmd[0], cmd.slice(1), { stdio: 'inherit' });
+      execFileSyncPromise(cmd[0], cmd.slice(1), { stdio: 'inherit' });
     }
   } catch (err) {
     console.error(err);

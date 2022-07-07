@@ -23,7 +23,21 @@ exports[`<DevPreviewBadge> renders 1`] = `
   position="top"
 >
   <Label
+    className="pf-u-ml-md pf-u-display-inline"
     color="orange"
+    icon={
+      <InfoCircleIcon
+        color="var(--pf-c-label__content--Color)"
+        noVerticalAlign={false}
+        size="sm"
+      />
+    }
+    onClick={[Function]}
+    style={
+      Object {
+        "cursor": "pointer",
+      }
+    }
   >
     Developer Preview
   </Label>

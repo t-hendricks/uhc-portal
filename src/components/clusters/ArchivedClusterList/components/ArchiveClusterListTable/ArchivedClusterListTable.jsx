@@ -2,6 +2,12 @@ import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateIcon,
+  Title,
+} from '@patternfly/react-core';
+import {
   cellWidth,
   classNames,
   sortable,
@@ -11,6 +17,7 @@ import {
   TableHeader,
   Visibility,
 } from '@patternfly/react-table';
+import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import { Link } from 'react-router-dom';
 import ButtonWithTooltip from '../../../../common/ButtonWithTooltip';
 import ClusterLocationLabel from '../../../common/ClusterLocationLabel';
@@ -24,7 +31,19 @@ function ArchivedClusterListTable(props) {
   const { viewOptions, setSorting } = props;
   const { clusters, openModal } = props;
   if (!clusters || clusters.length === 0) {
-    return <p className="notfound">No results match the filter criteria.</p>;
+    return (
+      <EmptyState>
+        <EmptyStateIcon icon={SearchIcon} />
+        <Title headingLevel="h4" size="lg">
+          No archived clusters found.
+        </Title>
+        <EmptyStateBody>
+          This filter criteria matches no clusters.
+          <br />
+          Try changing your filter settings.
+        </EmptyStateBody>
+      </EmptyState>
+    );
   }
 
   const hiddenOnMdOrSmaller = classNames(Visibility.visibleOnLg, Visibility.hiddenOnMd,
