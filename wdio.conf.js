@@ -19,6 +19,33 @@ const saveScreenshot = async (log, name) => {
   log.error(`screenshot:\n  ${filepath}\n`);
 };
 
+const handlePendoError = async (log, error) => {
+  if (/not clickable.*because another element.*pendo.*obscures it/.test(error)) {
+    // If we got here, it ruined this run, but let's try make next runs pass.
+    // eslint-disable-next-line no-undef
+    const close = await $('._pendo-close-guide');
+    const exists = await close.isExisting();
+    log.error('Trying to close pendo guide, exists = ', exists);
+    await saveScreenshot(log, 'before-closing-pendo');
+    if (exists) {
+      await close.click();
+    }
+  }
+}
+
+const debugOrScreenshot = async (log, test, error) => {
+  if (process.env.SELENIUM_DEBUG === 'true') {
+    // eslint-disable-next-line no-undef
+    log.warn('Entering debugger in FAILED TEST:', test.parent, '/', test.title);
+    log.error(error);
+    await browser.debug();
+  } else {
+    const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
+    await saveScreenshot(log, testName);
+    log.info('Tip: to stop for interactive debugging, set SELENIUM_DEBUG=true env var');
+  }
+}
+
 exports.config = {
   // =====================
   // Server Configurations
@@ -232,12 +259,20 @@ exports.config = {
      */
   // beforeHook: function (test, context) {
   // },
+
   /**
      * Hook that gets executed _after_ a hook within the suite starts (e.g. runs after calling
      * afterEach in Mocha)
      */
-  // afterHook: function (test, context, { error, result, duration, passed, retries }) {
-  // },
+  afterHook: async (test, context, { error, result, duration, passed, retries }) => {
+    if (passed) {
+      return;
+    }
+    const log = logger('afterHook');
+    await handlePendoError(log, error);
+    await debugOrScreenshot(log, test, error);
+  },
+
   /**
      * Function to be executed after a test (in Mocha/Jasmine).
      */
@@ -245,33 +280,12 @@ exports.config = {
     // eslint-disable-next-line no-unused-vars
     error, result, duration, passed, retries,
   }) => {
-    // if test passed, ignore, else debug / take and save screenshot.
     if (passed) {
       return;
     }
-
     const log = logger('afterTest');
-
-    if (/not clickable.*because another element.*pendo.*obscures it/.test(error)) {
-      // If we got here, it ruined this run, but let's try make next runs pass.
-      // eslint-disable-next-line no-undef
-      const close = await $('._pendo-close-guide');
-      const exists = await close.isExisting();
-      log.error('Trying to close pendo guide, exists = ', exists);
-      await saveScreenshot(log, 'before-closing-pendo');
-      if (exists) {
-        await close.click();
-      }
-    }
-
-    if (process.env.SELENIUM_DEBUG === 'true') {
-      // eslint-disable-next-line no-undef
-      await browser.debug();
-    } else {
-      const testName = `${test.parent}.${test.title}`.replace(/[^A-Za-z0-9.]+/g, '-');
-      await saveScreenshot(log, testName);
-      log.info('Tip: to stop for interactive debugging, set SELENIUM_DEBUG=true env var');
-    }
+    await handlePendoError(log, error);
+    await debugOrScreenshot(log, test, error);
   },
 
   /**
