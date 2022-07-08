@@ -7,10 +7,9 @@ import {
   DescriptionListTerm,
   ExpandableSection,
   GridItem,
-  Truncate,
 } from '@patternfly/react-core';
 import reviewValues from './reviewValues';
-import ExpandableReviewItem from './ExpandableReviewItem';
+import { ExpandableReviewItem } from './ExpandableReviewItem';
 
 export const ReviewItem = ({ name, formValues }) => {
   const reviewValue = reviewValues[name];
@@ -99,7 +98,7 @@ function ReviewSection({ initiallyExpanded, title, children = null }) {
 ReviewItem.propTypes = {
   name: PropTypes.string,
   formValues: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),
 };
 

@@ -5,7 +5,6 @@ import { ExpandableSection } from '@patternfly/react-core';
 export const ExpandableReviewItem = ({
   children,
   initiallyExpanded,
-  title,
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -31,7 +30,6 @@ export const ExpandableReviewItem = ({
 
 ExpandableReviewItem.propTypes = {
   initiallyExpanded: PropTypes.bool,
-  title: PropTypes.node,
   children: PropTypes.node,
 };
 
