@@ -24,6 +24,7 @@ import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 
 import {
+  HTTP_PROXY_PLACEHOLDER,
   HTTPS_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_PLACEHOLDER,
 } from '../../CreateOSDForm/FormSections/NetworkingSection/networkingPlaceholders';
@@ -48,6 +49,7 @@ function ClusterProxyScreen({
     }
   };
   const noValues = () => !httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle;
+  const validateUrlHttp = value => validateUrl(value, 'http');
   const validateUrlHttps = value => validateUrl(value, ['http', 'https']);
   const validateAtLeastOne = (value, allValues) => {
     if (
@@ -119,9 +121,9 @@ function ClusterProxyScreen({
             component={ReduxVerticalFormGroup}
             name="http_proxy_url"
             label="HTTP proxy URL"
-            placeholder={HTTPS_PROXY_PLACEHOLDER}
+            placeholder={HTTP_PROXY_PLACEHOLDER}
             type="text"
-            validate={[validateUrlHttps, validateAtLeastOne]}
+            validate={[validateUrlHttp, validateAtLeastOne]}
             helpText="Specify a proxy URL to use for HTTP connections outside the cluster."
             showHelpTextOnError={false}
             onBlur={onTouched}
