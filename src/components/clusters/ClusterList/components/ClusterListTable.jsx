@@ -9,6 +9,7 @@ import {
   EmptyStateIcon,
   EmptyStateBody,
   Title,
+  Label,
 } from '@patternfly/react-core';
 import {
   Table,
@@ -74,29 +75,33 @@ function ClusterListTable(props) {
     setSorting(sorting);
   };
 
+  const linkToClusterDetails = (cluster, children) => (
+    <Link
+      to={`/details/s/${cluster.subscription.id}`}
+      onClick={() => {
+        if (!cluster.partialCS) {
+          setClusterDetails(cluster);
+        }
+      }}
+    >
+      {children}
+    </Link>
+  );
+
   const clusterRow = (cluster) => {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
 
-    const clusterName = (
-      <Link
-        to={`/details/s/${cluster.subscription.id}`}
-        onClick={() => {
-          if (!cluster.partialCS) {
-            setClusterDetails(cluster);
-          }
-        }}
-      >
-        {getClusterName(cluster)}
-      </Link>
-    );
+    const clusterName = linkToClusterDetails(cluster, getClusterName(cluster));
 
     const clusterStatus = () => {
       if (isAISubscriptionWithoutMetrics(cluster.subscription)) {
         return <AIClusterStatus status={cluster.state} className="clusterstate" />;
       }
 
+      const hasLimitedSupport = cluster.status?.limited_support_reason_count > 0;
+
       const { state, description } = getClusterStateAndDescription(cluster);
-      const icon = <ClusterStateIcon clusterState={state || ''} animated={false} />;
+      const icon = <ClusterStateIcon clusterState={state || ''} animated={false} limitedSupport={hasLimitedSupport} />;
       if (state === clusterStates.ERROR) {
         return (
           <span>
@@ -165,6 +170,7 @@ function ClusterListTable(props) {
         <span className="cluster-status-string">
           {icon}
           {description}
+          {hasLimitedSupport ? linkToClusterDetails(cluster, <Label color="red">Limited Support</Label>) : null}
         </span>
       );
     };

@@ -367,7 +367,7 @@ const urls = {
     [channels.STABLE]: {
       [architectures.x86]: {
         [operatingSystems.windows]: `${MIRROR_CRC_LATEST}/crc-windows-installer.zip`,
-        [operatingSystems.mac]: `${MIRROR_CRC_LATEST}/crc-macos-amd64.pkg`,
+        [operatingSystems.mac]: `${MIRROR_CRC_LATEST}/crc-macos-installer.pkg`,
         [operatingSystems.linux]: `${MIRROR_CRC_LATEST}/crc-linux-amd64.tar.xz`,
       },
     },
