@@ -15,7 +15,7 @@ describe('<ReduxFormTaints />', () => {
     />);
   });
 
-  it('should render when there is no input - initial reder', () => {
+  it('should render when there is no input - initial render', () => {
     expect(wrapper).toMatchSnapshot();
   });
 

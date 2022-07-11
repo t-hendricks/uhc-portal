@@ -6,8 +6,9 @@ import {
   Form, Grid, GridItem,
 } from '@patternfly/react-core';
 
-import { validateLabels, parseLabels } from '../../machinePoolsHelper';
-import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../SpotInstanceHelper';
+import { checkLabels } from '../../../../../../../common/validators';
+import { parseLabels, validateDuplicateLabels } from '../../machinePoolsHelper';
+import { isMachinePoolUsingSpotInstances, SpotInstanceInfoAlert } from '../SpotInstanceHelper';
 
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
@@ -113,7 +114,7 @@ class EditLabelsModal extends Component {
                   label="Labels"
                   tags={tags}
                   inputPlaceholder="Add a label"
-                  validate={validateLabels}
+                  validate={[checkLabels, validateDuplicateLabels]}
                 />
               </GridItem>
               {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList)
