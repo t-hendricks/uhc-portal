@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import config from '../../../config';
 
+import { DEFAULT_FLAVOUR_ID } from '../../../redux/actions/flavourActions';
 import { createCluster } from '../../../redux/actions/clustersActions';
 import { parseReduxFormKeyValueList } from '../../../common/helpers';
 
@@ -185,7 +186,7 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
       clusterRequest.cloud_provider.display_name = 'gcp';
       clusterRequest.cloud_provider.name = 'gcp';
       clusterRequest.flavour = {
-        id: 'osd-4',
+        id: DEFAULT_FLAVOUR_ID,
       };
       if (isInstallExistingVPC) {
         clusterRequest.gcp_network = {

@@ -22,6 +22,7 @@ import clustersSupportReducer
   from '../../components/clusters/ClusterDetails/components/Support/SupportReducer';
 import addOnsReducer from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsReducer';
 import globalErrorReducer from './globalErrorReducer';
+import flavoursReducer from './flavoursReducer';
 import machineTypesReducer from './machineTypesReducer';
 import insightsReducer from '../../components/clusters/ClusterDetails/components/Insights/InsightsReducer';
 import { subscriptionsReducer } from './subscriptionsReducer';
@@ -57,6 +58,7 @@ const reducers = {
   clusterSupport: clustersSupportReducer,
   addOns: addOnsReducer,
   globalError: globalErrorReducer,
+  flavours: flavoursReducer,
   machineTypes: machineTypesReducer,
   monitoring: MonitoringReducer,
   subscriptions: subscriptionsReducer,

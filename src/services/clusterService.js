@@ -99,6 +99,11 @@ const deleteClusterGroupUser = (clusterID, groupID, userID) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/groups/${groupID}/users/${encodeURIComponent(userID)}`,
 });
 
+const getFlavour = flavourID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/flavours/${flavourID}`,
+});
+
 const getMachineTypes = () => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/machine_types',
@@ -416,6 +421,7 @@ const clusterService = {
   addClusterGroupUser,
   deleteClusterGroupUser,
   deleteIdentityProvider,
+  getFlavour,
   getMachineTypes,
   archiveCluster,
   hibernateCluster,
