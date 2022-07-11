@@ -3,69 +3,74 @@
 exports[`InstructionsChooser renders correctly with AI and UPI 1`] = `
 <Fragment>
   <Card>
-    <div
-      className="pf-c-content ocm-page"
-    >
-      <Title
-        headingLevel="h3"
-        size="2xl"
-      >
-        ARM Bare Metal
-        : Select an installation type
-      </Title>
+    <CardBody>
       <div
-        className="flex-container"
+        className="pf-c-content ocm-page"
       >
-        <Link
-          className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-          to="/assisted-installer/clusters/~new"
+        <Title
+          headingLevel="h3"
+          size="2xl"
         >
-          <CardBody
-            className="ocm-c-ipi-upi-infra-card--body"
-          >
-            <ConnectedIcon
-              alt="Installer-Provisioned Infrastructure"
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
-            <Title
-              headingLevel="h3"
-              size="lg"
-            >
-              Assisted Installer
-            </Title>
-             
-            Install OpenShift on your own infrastructure with step-by-step guidance.
-          </CardBody>
-        </Link>
-        <Link
-          className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-          to="/install/arm/user-provisioned"
+          ARM Bare Metal
+          : Select an installation type
+        </Title>
+        <div
+          className="flex-container"
         >
-          <CardBadge
-            isHidden={true}
-          />
-          <CardBody
-            className="ocm-c-ipi-upi-infra-card--body"
+          <Link
+            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
+            to="/assisted-installer/clusters/~new"
           >
-            <UserIcon
-              alt="User-Provisioned Infrastructure"
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
+            <CardBadge
+              isRecommended={true}
             />
-            <Title
-              headingLevel="h3"
-              size="lg"
+            <CardBody
+              className="ocm-c-ipi-upi-infra-card--body"
             >
-              User-provisioned infrastructure
-            </Title>
-            Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
-          </CardBody>
-        </Link>
+              <ConnectedIcon
+                alt="Installer-Provisioned Infrastructure"
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+              <Title
+                headingLevel="h3"
+                size="lg"
+              >
+                Assisted Installer
+              </Title>
+               
+              Install OpenShift on your own infrastructure with step-by-step guidance.
+            </CardBody>
+          </Link>
+          <Link
+            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
+            to="/install/arm/user-provisioned"
+          >
+            <CardBadge
+              isHidden={true}
+            />
+            <CardBody
+              className="ocm-c-ipi-upi-infra-card--body"
+            >
+              <UserIcon
+                alt="User-Provisioned Infrastructure"
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+              <Title
+                headingLevel="h3"
+                size="lg"
+              >
+                User-provisioned infrastructure
+              </Title>
+              Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
+            </CardBody>
+          </Link>
+        </div>
       </div>
-    </div>
+    </CardBody>
   </Card>
 </Fragment>
 `;
@@ -73,95 +78,97 @@ exports[`InstructionsChooser renders correctly with AI and UPI 1`] = `
 exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
 <Fragment>
   <Card>
-    <div
-      className="pf-c-content ocm-page"
-    >
-      <Title
-        headingLevel="h3"
-        size="2xl"
-      >
-        Bare Metal
-        : Select an installation type
-      </Title>
+    <CardBody>
       <div
-        className="flex-container"
+        className="pf-c-content ocm-page"
       >
-        <Link
-          className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-          to="/assisted-installer/clusters/~new"
+        <Title
+          headingLevel="h3"
+          size="2xl"
         >
-          <CardBody
-            className="ocm-c-ipi-upi-infra-card--body"
-          >
-            <ConnectedIcon
-              alt="Installer-Provisioned Infrastructure"
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
-            <Title
-              headingLevel="h3"
-              size="lg"
-            >
-              Assisted Installer
-            </Title>
-             
-            Install OpenShift on your own infrastructure with step-by-step guidance.
-          </CardBody>
-        </Link>
-        <Link
-          className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-          to="/install/metal/installer-provisioned"
+          Bare Metal
+          : Select an installation type
+        </Title>
+        <div
+          className="flex-container"
         >
-          <CardBadge
-            isRecommened={true}
-          />
-          <CardBody
-            className="ocm-c-ipi-upi-infra-card--body"
+          <Link
+            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
+            to="/assisted-installer/clusters/~new"
           >
-            <SyncAltIcon
-              alt="Installer-Provisioned Infrastructure"
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
+            <CardBadge
+              isRecommended={true}
             />
-            <Title
-              headingLevel="h3"
-              size="lg"
+            <CardBody
+              className="ocm-c-ipi-upi-infra-card--body"
             >
-              Installer-provisioned infrastructure
-            </Title>
-             
-            Deploy an OpenShift cluster on infrastructure that the installation program provisions and the cluster maintains.
-          </CardBody>
-        </Link>
-        <Link
-          className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-          to="/install/metal/user-provisioned"
-        >
-          <CardBadge
-            isHidden={true}
-          />
-          <CardBody
-            className="ocm-c-ipi-upi-infra-card--body"
+              <ConnectedIcon
+                alt="Installer-Provisioned Infrastructure"
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+              <Title
+                headingLevel="h3"
+                size="lg"
+              >
+                Assisted Installer
+              </Title>
+               
+              Install OpenShift on your own infrastructure with step-by-step guidance.
+            </CardBody>
+          </Link>
+          <Link
+            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
+            to="/install/metal/installer-provisioned"
           >
-            <UserIcon
-              alt="User-Provisioned Infrastructure"
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
-            <Title
-              headingLevel="h3"
-              size="lg"
+            <CardBody
+              className="ocm-c-ipi-upi-infra-card--body"
             >
-              User-provisioned infrastructure
-            </Title>
-            Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
-          </CardBody>
-        </Link>
+              <SyncAltIcon
+                alt="Installer-Provisioned Infrastructure"
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+              <Title
+                headingLevel="h3"
+                size="lg"
+              >
+                Installer-provisioned infrastructure
+              </Title>
+               
+              Deploy an OpenShift cluster on infrastructure that the installation program provisions and the cluster maintains.
+            </CardBody>
+          </Link>
+          <Link
+            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
+            to="/install/metal/user-provisioned"
+          >
+            <CardBadge
+              isHidden={true}
+            />
+            <CardBody
+              className="ocm-c-ipi-upi-infra-card--body"
+            >
+              <UserIcon
+                alt="User-Provisioned Infrastructure"
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+              <Title
+                headingLevel="h3"
+                size="lg"
+              >
+                User-provisioned infrastructure
+              </Title>
+              Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
+            </CardBody>
+          </Link>
+        </div>
       </div>
-    </div>
+    </CardBody>
   </Card>
 </Fragment>
 `;
@@ -169,72 +176,71 @@ exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
 exports[`InstructionsChooser renders correctly with default settings 1`] = `
 <Fragment>
   <Card>
-    <div
-      className="pf-c-content ocm-page"
-    >
-      <Title
-        headingLevel="h3"
-        size="2xl"
-      >
-        AWS
-        : Select an installation type
-      </Title>
+    <CardBody>
       <div
-        className="flex-container"
+        className="pf-c-content ocm-page"
       >
-        <Link
-          className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-          to="/install/aws/installer-provisioned"
+        <Title
+          headingLevel="h3"
+          size="2xl"
         >
-          <CardBadge
-            isRecommened={true}
-          />
-          <CardBody
-            className="ocm-c-ipi-upi-infra-card--body"
-          >
-            <SyncAltIcon
-              alt="Installer-Provisioned Infrastructure"
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
-            <Title
-              headingLevel="h3"
-              size="lg"
-            >
-              Installer-provisioned infrastructure
-            </Title>
-             
-            Deploy an OpenShift cluster on infrastructure that the installation program provisions and the cluster maintains.
-          </CardBody>
-        </Link>
-        <Link
-          className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-          to="/install/aws/user-provisioned"
+          AWS
+          : Select an installation type
+        </Title>
+        <div
+          className="flex-container"
         >
-          <CardBadge
-            isHidden={true}
-          />
-          <CardBody
-            className="ocm-c-ipi-upi-infra-card--body"
+          <Link
+            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
+            to="/install/aws/installer-provisioned"
           >
-            <UserIcon
-              alt="User-Provisioned Infrastructure"
-              color="currentColor"
-              noVerticalAlign={false}
-              size="sm"
-            />
-            <Title
-              headingLevel="h3"
-              size="lg"
+            <CardBody
+              className="ocm-c-ipi-upi-infra-card--body"
             >
-              User-provisioned infrastructure
-            </Title>
-            Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
-          </CardBody>
-        </Link>
+              <SyncAltIcon
+                alt="Installer-Provisioned Infrastructure"
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+              <Title
+                headingLevel="h3"
+                size="lg"
+              >
+                Installer-provisioned infrastructure
+              </Title>
+               
+              Deploy an OpenShift cluster on infrastructure that the installation program provisions and the cluster maintains.
+            </CardBody>
+          </Link>
+          <Link
+            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
+            to="/install/aws/user-provisioned"
+          >
+            <CardBadge
+              isHidden={true}
+            />
+            <CardBody
+              className="ocm-c-ipi-upi-infra-card--body"
+            >
+              <UserIcon
+                alt="User-Provisioned Infrastructure"
+                color="currentColor"
+                noVerticalAlign={false}
+                size="sm"
+              />
+              <Title
+                headingLevel="h3"
+                size="lg"
+              >
+                User-provisioned infrastructure
+              </Title>
+              Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
+            </CardBody>
+          </Link>
+        </div>
       </div>
-    </div>
+    </CardBody>
   </Card>
 </Fragment>
 `;
