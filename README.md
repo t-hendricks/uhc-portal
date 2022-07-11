@@ -381,8 +381,8 @@ called via git hooks. See the script for more details.
 So for a regular weekly deploy, we open an merge request master -> candidate,
 followed by candidate -> stable.
 
-Use `./deploy_info.js` script to check which versions are now deployed.
-If you want to monitor/debug the deploy jobs, `./deploy_info.js --json`
+Use `./deploy_info.mjs` script to check which versions are now deployed.
+If you want to monitor/debug the deploy jobs, `./deploy_info.mjs --json`
 output has all the info you’ll need.
 
 # Merge Request review

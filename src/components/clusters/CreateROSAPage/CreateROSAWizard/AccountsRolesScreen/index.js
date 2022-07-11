@@ -18,6 +18,7 @@ import {
 const mapDispatchToProps = dispatch => ({
   openAssociateAWSAccountModal: token => dispatch(openModal('associate-aws-modal', token)),
   openUserRoleInstructionsModal: () => dispatch(openModal('user-role-instructions-modal')),
+  openOcmRoleInstructionsModal: () => dispatch(openModal('ocm-role-instructions-modal')),
   closeModal: () => dispatch(closeModal()),
   getAWSAccountIDs: organizationID => dispatch(getAWSAccountIDs(organizationID)),
   getAWSAccountRolesARNs: awsAccountID => dispatch(
@@ -51,6 +52,7 @@ const mapStateToProps = (state) => {
     getAWSAccountRolesARNsResponse,
     getUserRoleResponse,
     isUserRoleModalOpen: shouldShowModal(state, 'user-role-instructions-modal'),
+    isOCMRoleModalOpen: shouldShowModal(state, 'ocm-role-instructions-modal'),
   };
 };
 

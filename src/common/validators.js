@@ -14,6 +14,9 @@ const DNS_END_ALPHANUMERIC = /[a-z0-9]$/;
 // Regular expression used to check base DNS domains, based on RFC-1035
 const BASE_DOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?\.)+[a-z]([-a-z0-9]*[a-z0-9])?$/;
 
+// Regular expression used to check general subdomain structure, based on RFC-1035
+const DNS_SUBDOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?)+(\.[a-z]([-a-z0-9]*[a-z0-9])?)*$/;
+
 // Regular expression used to check UUID as specified in RFC4122.
 const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -50,9 +53,11 @@ const MAX_NODE_COUNT = 180;
 
 const AWS_ARN_REGEX = /^arn:aws:iam::\d{12}:(user|group)\/\S+/;
 
-const LABEL_MAX_LEN = 63;
+const LABEL_VALUE_MAX_LENGTH = 63;
 
-const PREFIX_MAX_LEN = 253;
+const LABEL_KEY_NAME_MAX_LENGTH = 63;
+
+const LABEL_KEY_PREFIX_MAX_LENGTH = 253;
 
 const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}$/;
 
@@ -61,12 +66,12 @@ const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 const AWS_KMS_SERVICE_ACCOUNT_REGEX = /^arn:aws:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
 /**
- * A valid label key must consist of alphanumeric characters, '-', '_', '/'
- * or '.', and must start and end with an alphanumeric character. e.g. 'MyName', 'my.name',
- * '123-abc', or 'my-label/is-called'
+ * A valid label key name must consist of alphanumeric characters, '-', '_' or '.',
+ * and must start and end with an alphanumeric character. e.g. 'MyName', 'my.name',
+ * or '123-abc'.
  * @see https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set
  */
-const LABEL_KEY_REGEX = /^([A-Za-z0-9][-A-Za-z0-9_./]*)?[A-Za-z0-9]$/;
+const LABEL_KEY_NAME_REGEX = /^([a-z0-9][a-z0-9-_.]*)?[a-z0-9]$/i;
 
 /**
  * A valid label value must be an empty string or consist of alphanumeric characters, '-', '_'
@@ -74,7 +79,7 @@ const LABEL_KEY_REGEX = /^([A-Za-z0-9][-A-Za-z0-9_./]*)?[A-Za-z0-9]$/;
  * or '12345'
  * @see https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set
  */
-const LABEL_VALUE_REGEX = /^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?$/;
+const LABEL_VALUE_REGEX = /^(([a-z0-9][a-z0-9-_.]*)?[a-z0-9])?$/i;
 
 const MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH = 32;
 
@@ -154,6 +159,23 @@ const clusterNameValidation = value => checkObjectNameValidation(value, 'Cluster
 
 const checkMachinePoolName = value => checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
 
+/**
+ * creates a validator function that exits on first failure (and returns its error message),
+ * using the validation provider output collection as its input.
+ *
+ * @param validationProvider {function(*, object, object, object): array}
+ *        a redux-form validation function that returns a collection of validations,
+ *        and can be passed to a Field's validation attribute.
+ *        first argument is the value, second is allValues, etc. (see the redux-form docs).
+ * @returns {function(*): *} a validator function that exits on the first failed validation,
+ *          outputting its error message.
+ */
+const createPessimisticValidator = (validationProvider = () => {}) => (...validationArgs) => (
+  validationProvider(...validationArgs)?.find(validator => (
+    validator.validated === false
+  ))?.text
+);
+
 const checkCustomOperatorRolesPrefix = (value) => {
   const label = 'Custom operator roles prefix';
   if (!value) {
@@ -199,103 +221,86 @@ const checkGithubTeams = (value) => {
   return undefined;
 };
 
-const checkLabels = (input) => {
-  const labels = input.split(',');
+const parseNodeLabelKey = (labelKey) => {
+  const [name, prefix] = labelKey
+    // split at the first delimiter, and only keep the first two segments,
+    // to get rid of the empty match at the end
+    ?.split(/\/(.+)/, 2)
+    // reverse order before destructuring to ensure the name is always defined,
+    // while the prefix is left undefined if missing
+    ?.reverse() ?? [];
 
-  let error;
-
-  if (labels.length) {
-    if (labels.some((pair) => {
-      const pairParts = pair.split('=');
-      // check if prefix exists and get the label
-      const value = pairParts[1];
-      const keyParts = pairParts[0].split('/');
-      const hasPrefix = keyParts.length > 1;
-      const key = hasPrefix ? keyParts[1] : keyParts[0];
-      const prefix = hasPrefix ? keyParts[0] : undefined;
-
-      if (value && value.length > LABEL_MAX_LEN) {
-        error = `Length of label value must be less or equal to ${LABEL_MAX_LEN}`;
-        return true;
-      }
-
-      if (hasPrefix) {
-        if (!BASE_DOMAIN_REGEXP.test(prefix)) {
-          error = 'Prefix must be a DNS subdomain: a series of DNS labels separated by dots (.)';
-          return true;
-        }
-        if (prefix > PREFIX_MAX_LEN) {
-          error = `Length of key prefix must be less or equal to ${PREFIX_MAX_LEN}`;
-          return true;
-        }
-      }
-
-      if (key && key.length > LABEL_MAX_LEN) {
-        error = `Length of label key name must be less or equal to ${LABEL_MAX_LEN}`;
-        return true;
-      }
-
-      if (!key || (!(/^([0-9a-z]+([-_][0-9a-z]+)*$)/i).test(key))) {
-        error = "A qualified key must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
-        return true;
-      }
-
-      if (!value || (!(/^([0-9a-z]+([-_][0-9a-z]+)*$)/i).test(value))) {
-        error = "A qualified value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
-        return true;
-      }
-
-      return false;
-    })) {
-      return error;
-    }
-  }
-  return undefined;
+  return { name, prefix };
 };
 
-const checkRouteSelectors = (input) => {
+const parseNodeLabelTags = labels => (
+  [].concat(labels)
+    .map(pair => pair.split('='))
+);
+
+const parseNodeLabels = (input) => {
+  // avoid processing falsy values (and specifically, empty strings)
   if (!input) {
     return undefined;
   }
+  // turn the input into an array, if necessary
+  const labels = typeof input === 'string'
+    ? input.split(',')
+    : input;
 
-  return checkLabels(input);
+  return parseNodeLabelTags(labels);
 };
 
-const checkMachinePoolLabels = (input) => {
-  if (!input) {
-    return undefined;
-  }
+const labelKeyValidations = (value) => {
+  const { prefix, name } = parseNodeLabelKey(value);
 
-  const error = checkLabels(input);
-  if (error) {
-    return error;
-  }
-
-  const invalidLabels = [
-    'machine.openshift.io/cluster-api-machine-role=master',
-    'machine.openshift.io/cluster-api-machine-role=infra',
-    'machine.openshift.io/cluster-api-machine-type=master',
-    'machine.openshift.io/cluster-api-machine-type=infra',
-  ];
-
-  const labels = input.split(',');
-  if (labels.length) {
-    let invalidLabel;
-
-    if (labels.some((label) => {
-      if (invalidLabels.includes(label)) {
-        invalidLabel = label;
-        return true;
-      }
-      return false;
-    })
-    ) {
-      return `${invalidLabel} is not a valid label`;
-    }
-  }
-
-  return undefined;
+  return ([
+    {
+      validated: typeof prefix === 'undefined' || DNS_SUBDOMAIN_REGEXP.test(prefix),
+      text: 'Key prefix must be a DNS subdomain: a series of DNS labels separated by dots (.)',
+    },
+    {
+      validated: typeof prefix === 'undefined' || prefix.length <= LABEL_KEY_PREFIX_MAX_LENGTH,
+      text: `A valid key prefix must be ${LABEL_KEY_PREFIX_MAX_LENGTH} characters or less`,
+    },
+    {
+      validated: typeof name !== 'undefined' && LABEL_KEY_NAME_REGEX.test(name),
+      text: "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
+    },
+    {
+      validated: typeof name !== 'undefined' && name.length <= LABEL_KEY_NAME_MAX_LENGTH,
+      text: `A valid key name must be ${LABEL_KEY_NAME_MAX_LENGTH} characters or less`,
+    },
+  ]);
 };
+
+const labelValueValidations = value => ([
+  {
+    validated: typeof value === 'undefined' || value.length <= LABEL_VALUE_MAX_LENGTH,
+    text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
+  },
+  {
+    validated: typeof value === 'undefined' || LABEL_VALUE_REGEX.test(value),
+    text: "A valid value must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
+  },
+]);
+
+const checkLabelKey = createPessimisticValidator(labelKeyValidations);
+
+const checkLabelValue = createPessimisticValidator(labelValueValidations);
+
+const checkLabels = input => (
+  parseNodeLabels(input)
+    // collect the first error found
+    ?.reduce((accum, [key, value]) => (
+      accum
+      ?? checkLabelKey(key)
+      ?? checkLabelValue(value)
+      // defaulting to undefined
+    ), undefined)
+);
+
+const checkRouteSelectors = checkLabels;
 
 // Function to validate that the cluster ID field is a UUID:
 const checkClusterUUID = (value) => {
@@ -905,7 +910,7 @@ const validateGCPServiceAccount = (content) => {
  * @returns {function(*, object, object, string): string|Error|undefined}
  * A field-level validation function that checks uniqueness.
  */
-const generateUniqueFieldValidator = (
+const createUniqueFieldValidator = (
   error,
   otherValuesSelector = () => {},
 ) => (
@@ -918,14 +923,14 @@ const generateUniqueFieldValidator = (
   return undefined;
 };
 
-const validateUniqueAZ = generateUniqueFieldValidator(
+const validateUniqueAZ = createUniqueFieldValidator(
   'Must select 3 different AZs.',
   (currentFieldName, allValues) => Object.entries(allValues)
     .filter(([fieldKey]) => fieldKey.startsWith('az_') && fieldKey !== currentFieldName)
     .map(([, fieldValue]) => fieldValue),
 );
 
-const validateUniqueNodeLabel = generateUniqueFieldValidator(
+const validateUniqueNodeLabel = createUniqueFieldValidator(
   'Each label must have a different key.',
   (currentFieldName, allValues) => Object.entries(allValues.node_labels)
     .filter(([fieldKey]) => !currentFieldName.includes(`[${fieldKey}]`))
@@ -1100,27 +1105,15 @@ const shouldSkipLabelKeyValidation = (allValues) => {
   return (nodeLabels.length === 1 && !firstLabelKey && !firstLabelValue);
 };
 
-const validateLabelKey = (key, allValues) => {
+const validateLabelKey = (key, allValues, ...rest) => {
   if (shouldSkipLabelKeyValidation(allValues)) {
     return undefined;
   }
 
-  if (required(key)) {
-    return 'A valid label key must not be empty.';
-  }
-
-  if (!LABEL_KEY_REGEX.test(key)) {
-    return 'A valid label key must consist of alphanumeric characters, \'-\', \'_\', \'/\' or \'.\', and must start and end with an alphanumeric character.';
-  }
-  return undefined;
+  return checkLabelKey(key) ?? validateUniqueNodeLabel(key, allValues, ...rest);
 };
 
-const validateLabelValue = (value) => {
-  if (typeof value !== 'undefined' && !LABEL_VALUE_REGEX.test(value)) {
-    return 'A valid label value must be an empty string or consist of alphanumeric characters, \'-\', \'_\' or \'.\', and must start and end with an alphanumeric character.';
-  }
-  return undefined;
-};
+const validateLabelValue = checkLabelValue;
 
 const validators = {
   required,
@@ -1194,7 +1187,6 @@ export {
   validateGCPServiceAccount,
   validateServiceAccountObject,
   checkMachinePoolName,
-  checkMachinePoolLabels,
   checkCustomOperatorRolesPrefix,
   checkLabels,
   validateUniqueAZ,
@@ -1210,6 +1202,7 @@ export {
   validateUniqueNodeLabel,
   validateLabelKey,
   validateLabelValue,
+  createPessimisticValidator,
   clusterNameValidation,
 };
 

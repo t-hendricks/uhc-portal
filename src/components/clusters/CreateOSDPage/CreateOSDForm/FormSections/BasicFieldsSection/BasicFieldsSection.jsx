@@ -8,7 +8,7 @@ import { noQuotaTooltip } from '../../../../../../common/helpers';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
-import validators, { clusterNameValidation } from '../../../../../../common/validators';
+import validators, { clusterNameValidation, createPessimisticValidator } from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '../NetworkingSection/AvailabilityZoneSelection';
 import VersionSelection from './VersionSelection';
@@ -55,10 +55,6 @@ function BasicFieldsSection({
     }
   };
 
-  const reduxFormsClusterNameValidate = value => (
-    clusterNameValidation(value).find(validator => validator.validated === false)?.text
-  );
-
   return (
     <>
       {/* cluster name */}
@@ -68,7 +64,7 @@ function BasicFieldsSection({
           name="name"
           label="Cluster name"
           type="text"
-          validate={reduxFormsClusterNameValidate}
+          validate={createPessimisticValidator(clusterNameValidation)}
           validation={clusterNameValidation}
           disabled={pending}
           isRequired
@@ -104,6 +100,7 @@ function BasicFieldsSection({
             name="cluster_version"
             label="Version"
             isRequired
+            validate={value => (value ? undefined : ' ')}
             isRosa={isRosa}
           />
         </GridItem>

@@ -12,10 +12,6 @@ def output_line_buffering():
     sys.stderr = os.fdopen(sys.stderr.fileno(), 'w', 1)
 
 class Handler(http.server.SimpleHTTPRequestHandler):
-  def __init__(self, *args, **kwargs):
-    directory = os.path.dirname(os.path.realpath(__file__))
-    super().__init__(*args, directory=directory, **kwargs)
-
   def translate_path(self, path):
     # http.server deliberately preserves trailing '/' (https://bugs.python.org/issue17324).
     # But our APIs generally treat 'foos/?...' same as 'foos?...',
@@ -190,9 +186,17 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
 def main():
+    # SimpleHTTPRequestHandler only takes `directory` param from Python 3.7,
+    # earlier versions serve current dir.
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
     output_line_buffering()
     server_address = ('localhost', 8010)
-    httpd = http.server.ThreadingHTTPServer(server_address, Handler)
+    try:
+        # new in Python 3.7
+        Server = http.server.ThreadingHTTPServer
+    except AttributeError:
+        Server = http.server.HTTPServer
+    httpd = Server(server_address, Handler)
     print("Listening on http://localhost:8010")
     httpd.serve_forever()
 

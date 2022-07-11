@@ -251,13 +251,13 @@ class ClusterList extends Component {
               ) }
               <Toolbar id="cluster-list-toolbar">
                 <ToolbarContent>
-                  <ToolbarItem>
+                  <ToolbarItem className="ocm-c-toolbar__item-cluster-filter-list">
                     <ClusterListFilter
                       isDisabled={isPendingNoData}
                       view={viewConstants.CLUSTERS_VIEW}
                     />
                   </ToolbarItem>
-                  <ToolbarItem>
+                  <ToolbarItem className="ocm-c-toolbar__item-cluster-list-filter-dropdown">
                     <ClusterListFilterDropdown
                       view={viewConstants.CLUSTERS_VIEW}
                       isDisabled={pending}

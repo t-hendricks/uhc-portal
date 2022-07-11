@@ -33,6 +33,7 @@ class InstallArmBareMetal extends Component {
             showAI
             hideIPI
             upiPageLink="/install/arm/user-provisioned"
+            aiPageLink="/assisted-installer/clusters/~new?useArm=true"
           />
         </PageSection>
       </>

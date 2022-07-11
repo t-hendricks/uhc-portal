@@ -13,6 +13,7 @@ const InstructionsChooser = (props) => {
     ipiPageLink,
     hideUPI = false,
     upiPageLink,
+    aiPageLink = '/assisted-installer/clusters/~new',
   } = props;
   return (
     <>
@@ -25,7 +26,7 @@ const InstructionsChooser = (props) => {
           <div className="flex-container">
             {showAI && (
               <>
-                <Link to="/assisted-installer/clusters/~new" className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+                <Link to={aiPageLink} className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
                   <CardBody className="ocm-c-ipi-upi-infra-card--body">
                     <ConnectedIcon alt="Installer-Provisioned Infrastructure" />
                     <Title headingLevel="h3" size="lg">Assisted Installer</Title>
@@ -75,6 +76,7 @@ InstructionsChooser.propTypes = {
   ipiPageLink: PropTypes.string,
   hideUPI: PropTypes.bool,
   upiPageLink: PropTypes.string,
+  aiPageLink: PropTypes.string,
 };
 
 export default InstructionsChooser;

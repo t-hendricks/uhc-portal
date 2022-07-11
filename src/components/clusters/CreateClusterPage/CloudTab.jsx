@@ -12,13 +12,15 @@ import {
 } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
+import { OCM } from 'openshift-assisted-ui-lib';
 
-import TechPreviewBadge from '../../common/TechPreviewBadge';
 import RedHatLogo from '../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
 import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
 import AWSLogo from '../../../styles/images/AWS.png';
 import links from './CreateClusterConsts';
+
+const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
 const getColumns = () => ([
   {
@@ -403,7 +405,7 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/alibaba/installer-provisioned" className="pf-u-mr-xs">Alibaba Cloud</Link>
-        <TechPreviewBadge />
+        <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Full stack automation',
     ],
@@ -426,7 +428,7 @@ const runItYourself = () => {
     [
       <>
         <Link to="/install/ibm-cloud" className="pf-u-mr-xs">IBM Cloud</Link>
-        <TechPreviewBadge />
+        <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Full stack automation',
     ],

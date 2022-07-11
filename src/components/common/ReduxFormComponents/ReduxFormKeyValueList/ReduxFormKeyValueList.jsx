@@ -10,11 +10,7 @@ import {
 import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
 
 import { getRandomID } from '../../../../common/helpers';
-import {
-  validateLabelKey,
-  validateLabelValue,
-  validateUniqueNodeLabel,
-} from '../../../../common/validators';
+import { validateLabelKey, validateLabelValue } from '../../../../common/validators';
 
 import './ReduxFormKeyValueList.scss';
 
@@ -72,7 +68,7 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
               type="text"
               component={LabelKey}
               index={index}
-              validate={[validateLabelKey, validateUniqueNodeLabel]}
+              validate={validateLabelKey}
             />
           </GridItem>
           <GridItem span={4}>

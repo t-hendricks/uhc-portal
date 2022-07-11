@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
+import './i18n';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';

@@ -96,6 +96,7 @@ module.exports = async (_env, argv) => {
         APP_API_ENV: JSON.stringify(apiEnv),
         // For openshift-assisted-ui-lib
         BASE_PATH: JSON.stringify(process.env.BASE_PATH),
+        process: { env: {} }
       }),
       // For openshift-assisted-ui-lib
       new webpack.EnvironmentPlugin({
