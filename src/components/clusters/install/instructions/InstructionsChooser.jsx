@@ -9,6 +9,7 @@ const InstructionsChooser = (props) => {
   const {
     cloudName,
     showAI = false,
+    preferAI = false,
     hideIPI = false,
     ipiPageLink,
     hideUPI = false,
@@ -28,7 +29,7 @@ const InstructionsChooser = (props) => {
               {showAI && (
               <>
                 <Link to={aiPageLink} className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
-                  <CardBadge isRecommended />
+                  {preferAI && <CardBadge isRecommended />}
                   <CardBody className="ocm-c-ipi-upi-infra-card--body">
                     <ConnectedIcon alt="Installer-Provisioned Infrastructure" />
                     <Title headingLevel="h3" size="lg">Assisted Installer</Title>
@@ -41,6 +42,7 @@ const InstructionsChooser = (props) => {
               {!hideIPI && (
               <>
                 <Link to={ipiPageLink} className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+                  {!preferAI && <CardBadge isRecommended />}
                   <CardBody className="ocm-c-ipi-upi-infra-card--body">
                     <SyncAltIcon alt="Installer-Provisioned Infrastructure" />
                     <Title headingLevel="h3" size="lg">Installer-provisioned infrastructure</Title>
@@ -74,6 +76,7 @@ const InstructionsChooser = (props) => {
 InstructionsChooser.propTypes = {
   cloudName: PropTypes.string.isRequired,
   showAI: PropTypes.bool,
+  preferAI: PropTypes.bool,
   hideIPI: PropTypes.bool,
   ipiPageLink: PropTypes.string,
   hideUPI: PropTypes.bool,

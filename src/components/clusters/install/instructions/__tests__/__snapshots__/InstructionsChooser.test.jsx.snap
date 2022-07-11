@@ -194,6 +194,9 @@ exports[`InstructionsChooser renders correctly with default settings 1`] = `
             className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
             to="/install/aws/installer-provisioned"
           >
+            <CardBadge
+              isRecommended={true}
+            />
             <CardBody
               className="ocm-c-ipi-upi-infra-card--body"
             >
