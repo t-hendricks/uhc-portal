@@ -18,16 +18,17 @@ const InstructionsChooser = (props) => {
   return (
     <>
       <Card>
-        <div className="pf-c-content ocm-page">
-          <Title headingLevel="h3" size="2xl">
-            {cloudName}
-            : Select an installation type
-          </Title>
-          <div className="flex-container">
-            {showAI && (
+        <CardBody>
+          <div className="pf-c-content ocm-page">
+            <Title headingLevel="h3" size="2xl">
+              {cloudName}
+              : Select an installation type
+            </Title>
+            <div className="flex-container">
+              {showAI && (
               <>
                 <Link to={aiPageLink} className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
-                  <CardBadge isRecommened />
+                  <CardBadge isRecommended />
                   <CardBody className="ocm-c-ipi-upi-infra-card--body">
                     <ConnectedIcon alt="Installer-Provisioned Infrastructure" />
                     <Title headingLevel="h3" size="lg">Assisted Installer</Title>
@@ -36,8 +37,8 @@ const InstructionsChooser = (props) => {
                   </CardBody>
                 </Link>
               </>
-            )}
-            {!hideIPI && (
+              )}
+              {!hideIPI && (
               <>
                 <Link to={ipiPageLink} className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
                   <CardBody className="ocm-c-ipi-upi-infra-card--body">
@@ -49,8 +50,8 @@ const InstructionsChooser = (props) => {
                   </CardBody>
                 </Link>
               </>
-            )}
-            {!hideUPI && (
+              )}
+              {!hideUPI && (
               <>
                 <Link to={upiPageLink} className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
                   <CardBadge isHidden />
@@ -61,9 +62,10 @@ const InstructionsChooser = (props) => {
                   </CardBody>
                 </Link>
               </>
-            )}
+              )}
+            </div>
           </div>
-        </div>
+        </CardBody>
       </Card>
     </>
   );

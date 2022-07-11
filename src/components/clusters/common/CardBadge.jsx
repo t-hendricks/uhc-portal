@@ -10,14 +10,14 @@ import { Label } from '@patternfly/react-core';
    TechnologyPreview from assisted-ui-lib.
  */
 function CardBadge({
-  isRecommened, isDevPreview, isHidden, devPreviewText = 'Developer Preview',
+  isRecommended, isDevPreview, isHidden, devPreviewText = 'Developer Preview',
 }) {
   const className = isHidden ? 'card-badge card-badge-hidden' : 'card-badge';
   return (
     <div className="card-badge-container">
       <span className={className}>
-        {isRecommened && <StarIcon color={global_active_color_100.value} />}
-        {isRecommened && 'Recommended'}
+        {isRecommended && <StarIcon color={global_active_color_100.value} />}
+        {isRecommended && 'Recommended'}
         {isDevPreview && <Label variant="outline" color="orange">{devPreviewText}</Label>}
       </span>
     </div>
@@ -25,7 +25,7 @@ function CardBadge({
 }
 
 CardBadge.propTypes = {
-  isRecommened: PropTypes.bool,
+  isRecommended: PropTypes.bool,
   isDevPreview: PropTypes.bool,
   isHidden: PropTypes.bool,
   devPreviewText: PropTypes.string,
