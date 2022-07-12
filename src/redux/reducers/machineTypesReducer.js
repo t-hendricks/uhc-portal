@@ -70,6 +70,6 @@ function machineTypesReducer(state = initialState, action) {
 
 machineTypesReducer.initialState = initialState;
 
-export { initialState };
+export { initialState, mapMachineTypesById };
 
 export default machineTypesReducer;

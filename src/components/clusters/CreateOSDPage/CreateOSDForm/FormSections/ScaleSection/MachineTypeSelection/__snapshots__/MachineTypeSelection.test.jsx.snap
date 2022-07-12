@@ -18,11 +18,11 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
       "error": false,
       "errorMessage": "",
       "fulfilled": false,
-      "machineTypes": Object {},
       "pending": false,
+      "types": Object {},
+      "typesByID": Object {},
     }
   }
-  machineTypesByID={Object {}}
   meta={Object {}}
   organization={
     Object {
@@ -32,7 +32,6 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
   }
   product="OSD"
   quota={Object {}}
-  sortedMachineTypes={Array []}
 >
   <div
     className="spinner-fit-container"
@@ -76,103 +75,196 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       "error": false,
       "errorMessage": "",
       "fulfilled": true,
-      "machineTypes": Object {},
       "pending": false,
-    }
-  }
-  machineTypesByID={
-    Object {
-      "g4dn.2xlarge": Object {
-        "category": "accelerated_computing",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 8,
-        },
-        "generic_name": "t4-gpu-8",
-        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
-        "id": "g4dn.2xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "size": "medium",
+      "types": Object {
+        "aws": Array [
+          Object {
+            "category": "general_purpose",
+            "ccs_only": false,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 4,
+            },
+            "generic_name": "standard-4",
+            "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+            "id": "m5.xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 17179869184,
+            },
+            "name": "m5.xlarge - General Purpose",
+            "size": "small",
+          },
+          Object {
+            "category": "general_purpose",
+            "ccs_only": false,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 16,
+            },
+            "generic_name": "standard-16",
+            "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+            "id": "m5.4xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 68719476736,
+            },
+            "name": "m5.4xlarge - General Purpose",
+            "size": "large",
+          },
+          Object {
+            "category": "general_purpose",
+            "ccs_only": true,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 48,
+            },
+            "generic_name": "standard-48",
+            "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+            "id": "m5.12xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 206158430208,
+            },
+            "name": "m5.12xlarge - General purpose",
+            "size": "xxlarge",
+          },
+          Object {
+            "category": "accelerated_computing",
+            "ccs_only": true,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 8,
+            },
+            "generic_name": "t4-gpu-8",
+            "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
+            "id": "g4dn.2xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 34359738368,
+            },
+            "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+            "size": "medium",
+          },
+        ],
       },
-      "m5.12xlarge": Object {
-        "category": "general_purpose",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
+      "typesByID": Object {
+        "g4dn.2xlarge": Object {
+          "category": "accelerated_computing",
+          "ccs_only": true,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 8,
+          },
+          "generic_name": "t4-gpu-8",
+          "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
+          "id": "g4dn.2xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 34359738368,
+          },
+          "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+          "size": "medium",
         },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 48,
+        "m5.12xlarge": Object {
+          "category": "general_purpose",
+          "ccs_only": true,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 48,
+          },
+          "generic_name": "standard-48",
+          "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+          "id": "m5.12xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 206158430208,
+          },
+          "name": "m5.12xlarge - General purpose",
+          "size": "xxlarge",
         },
-        "generic_name": "standard-48",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
-        "id": "m5.12xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 206158430208,
+        "m5.4xlarge": Object {
+          "category": "general_purpose",
+          "ccs_only": false,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 16,
+          },
+          "generic_name": "standard-16",
+          "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+          "id": "m5.4xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 68719476736,
+          },
+          "name": "m5.4xlarge - General Purpose",
+          "size": "large",
         },
-        "name": "m5.12xlarge - General purpose",
-        "size": "xxlarge",
-      },
-      "m5.4xlarge": Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
+        "m5.xlarge": Object {
+          "category": "general_purpose",
+          "ccs_only": false,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 4,
+          },
+          "generic_name": "standard-4",
+          "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+          "id": "m5.xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 17179869184,
+          },
+          "name": "m5.xlarge - General Purpose",
+          "size": "small",
         },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 16,
-        },
-        "generic_name": "standard-16",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
-        "id": "m5.4xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 68719476736,
-        },
-        "name": "m5.4xlarge - General Purpose",
-        "size": "large",
-      },
-      "m5.xlarge": Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 4,
-        },
-        "generic_name": "standard-4",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
-        "id": "m5.xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 17179869184,
-        },
-        "name": "m5.xlarge - General Purpose",
-        "size": "small",
       },
     }
   }
@@ -2874,102 +2966,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       },
     }
   }
-  sortedMachineTypes={
-    Array [
-      Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 4,
-        },
-        "generic_name": "standard-4",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
-        "id": "m5.xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 17179869184,
-        },
-        "name": "m5.xlarge - General Purpose",
-        "size": "small",
-      },
-      Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 16,
-        },
-        "generic_name": "standard-16",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
-        "id": "m5.4xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 68719476736,
-        },
-        "name": "m5.4xlarge - General Purpose",
-        "size": "large",
-      },
-      Object {
-        "category": "general_purpose",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 48,
-        },
-        "generic_name": "standard-48",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
-        "id": "m5.12xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 206158430208,
-        },
-        "name": "m5.12xlarge - General purpose",
-        "size": "xxlarge",
-      },
-      Object {
-        "category": "accelerated_computing",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 8,
-        },
-        "generic_name": "t4-gpu-8",
-        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
-        "id": "g4dn.2xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "size": "medium",
-      },
-    ]
-  }
 >
   <div>
     You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.
@@ -3007,103 +3003,196 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       "error": false,
       "errorMessage": "",
       "fulfilled": true,
-      "machineTypes": Object {},
       "pending": false,
-    }
-  }
-  machineTypesByID={
-    Object {
-      "g4dn.2xlarge": Object {
-        "category": "accelerated_computing",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 8,
-        },
-        "generic_name": "t4-gpu-8",
-        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
-        "id": "g4dn.2xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "size": "medium",
+      "types": Object {
+        "aws": Array [
+          Object {
+            "category": "general_purpose",
+            "ccs_only": false,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 4,
+            },
+            "generic_name": "standard-4",
+            "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+            "id": "m5.xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 17179869184,
+            },
+            "name": "m5.xlarge - General Purpose",
+            "size": "small",
+          },
+          Object {
+            "category": "general_purpose",
+            "ccs_only": false,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 16,
+            },
+            "generic_name": "standard-16",
+            "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+            "id": "m5.4xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 68719476736,
+            },
+            "name": "m5.4xlarge - General Purpose",
+            "size": "large",
+          },
+          Object {
+            "category": "general_purpose",
+            "ccs_only": true,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 48,
+            },
+            "generic_name": "standard-48",
+            "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+            "id": "m5.12xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 206158430208,
+            },
+            "name": "m5.12xlarge - General purpose",
+            "size": "xxlarge",
+          },
+          Object {
+            "category": "accelerated_computing",
+            "ccs_only": true,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 8,
+            },
+            "generic_name": "t4-gpu-8",
+            "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
+            "id": "g4dn.2xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 34359738368,
+            },
+            "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+            "size": "medium",
+          },
+        ],
       },
-      "m5.12xlarge": Object {
-        "category": "general_purpose",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
+      "typesByID": Object {
+        "g4dn.2xlarge": Object {
+          "category": "accelerated_computing",
+          "ccs_only": true,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 8,
+          },
+          "generic_name": "t4-gpu-8",
+          "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
+          "id": "g4dn.2xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 34359738368,
+          },
+          "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+          "size": "medium",
         },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 48,
+        "m5.12xlarge": Object {
+          "category": "general_purpose",
+          "ccs_only": true,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 48,
+          },
+          "generic_name": "standard-48",
+          "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+          "id": "m5.12xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 206158430208,
+          },
+          "name": "m5.12xlarge - General purpose",
+          "size": "xxlarge",
         },
-        "generic_name": "standard-48",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
-        "id": "m5.12xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 206158430208,
+        "m5.4xlarge": Object {
+          "category": "general_purpose",
+          "ccs_only": false,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 16,
+          },
+          "generic_name": "standard-16",
+          "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+          "id": "m5.4xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 68719476736,
+          },
+          "name": "m5.4xlarge - General Purpose",
+          "size": "large",
         },
-        "name": "m5.12xlarge - General purpose",
-        "size": "xxlarge",
-      },
-      "m5.4xlarge": Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
+        "m5.xlarge": Object {
+          "category": "general_purpose",
+          "ccs_only": false,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 4,
+          },
+          "generic_name": "standard-4",
+          "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+          "id": "m5.xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 17179869184,
+          },
+          "name": "m5.xlarge - General Purpose",
+          "size": "small",
         },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 16,
-        },
-        "generic_name": "standard-16",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
-        "id": "m5.4xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 68719476736,
-        },
-        "name": "m5.4xlarge - General Purpose",
-        "size": "large",
-      },
-      "m5.xlarge": Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 4,
-        },
-        "generic_name": "standard-4",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
-        "id": "m5.xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 17179869184,
-        },
-        "name": "m5.xlarge - General Purpose",
-        "size": "small",
       },
     }
   }
@@ -5805,102 +5894,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
       },
     }
   }
-  sortedMachineTypes={
-    Array [
-      Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 4,
-        },
-        "generic_name": "standard-4",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
-        "id": "m5.xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 17179869184,
-        },
-        "name": "m5.xlarge - General Purpose",
-        "size": "small",
-      },
-      Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 16,
-        },
-        "generic_name": "standard-16",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
-        "id": "m5.4xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 68719476736,
-        },
-        "name": "m5.4xlarge - General Purpose",
-        "size": "large",
-      },
-      Object {
-        "category": "general_purpose",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 48,
-        },
-        "generic_name": "standard-48",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
-        "id": "m5.12xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 206158430208,
-        },
-        "name": "m5.12xlarge - General purpose",
-        "size": "xxlarge",
-      },
-      Object {
-        "category": "accelerated_computing",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 8,
-        },
-        "generic_name": "t4-gpu-8",
-        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
-        "id": "g4dn.2xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "size": "medium",
-      },
-    ]
-  }
 >
   <Select
     aria-describedby=""
@@ -6222,103 +6215,196 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       "error": false,
       "errorMessage": "",
       "fulfilled": true,
-      "machineTypes": Object {},
       "pending": false,
-    }
-  }
-  machineTypesByID={
-    Object {
-      "g4dn.2xlarge": Object {
-        "category": "accelerated_computing",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 8,
-        },
-        "generic_name": "t4-gpu-8",
-        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
-        "id": "g4dn.2xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "size": "medium",
+      "types": Object {
+        "aws": Array [
+          Object {
+            "category": "general_purpose",
+            "ccs_only": false,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 4,
+            },
+            "generic_name": "standard-4",
+            "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+            "id": "m5.xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 17179869184,
+            },
+            "name": "m5.xlarge - General Purpose",
+            "size": "small",
+          },
+          Object {
+            "category": "general_purpose",
+            "ccs_only": false,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 16,
+            },
+            "generic_name": "standard-16",
+            "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+            "id": "m5.4xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 68719476736,
+            },
+            "name": "m5.4xlarge - General Purpose",
+            "size": "large",
+          },
+          Object {
+            "category": "general_purpose",
+            "ccs_only": true,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 48,
+            },
+            "generic_name": "standard-48",
+            "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+            "id": "m5.12xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 206158430208,
+            },
+            "name": "m5.12xlarge - General purpose",
+            "size": "xxlarge",
+          },
+          Object {
+            "category": "accelerated_computing",
+            "ccs_only": true,
+            "cloud_provider": Object {
+              "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+              "id": "aws",
+              "kind": "CloudProviderLink",
+            },
+            "cpu": Object {
+              "unit": "vCPU",
+              "value": 8,
+            },
+            "generic_name": "t4-gpu-8",
+            "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
+            "id": "g4dn.2xlarge",
+            "kind": "MachineType",
+            "memory": Object {
+              "unit": "B",
+              "value": 34359738368,
+            },
+            "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+            "size": "medium",
+          },
+        ],
       },
-      "m5.12xlarge": Object {
-        "category": "general_purpose",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
+      "typesByID": Object {
+        "g4dn.2xlarge": Object {
+          "category": "accelerated_computing",
+          "ccs_only": true,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 8,
+          },
+          "generic_name": "t4-gpu-8",
+          "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
+          "id": "g4dn.2xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 34359738368,
+          },
+          "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
+          "size": "medium",
         },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 48,
+        "m5.12xlarge": Object {
+          "category": "general_purpose",
+          "ccs_only": true,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 48,
+          },
+          "generic_name": "standard-48",
+          "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
+          "id": "m5.12xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 206158430208,
+          },
+          "name": "m5.12xlarge - General purpose",
+          "size": "xxlarge",
         },
-        "generic_name": "standard-48",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
-        "id": "m5.12xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 206158430208,
+        "m5.4xlarge": Object {
+          "category": "general_purpose",
+          "ccs_only": false,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 16,
+          },
+          "generic_name": "standard-16",
+          "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
+          "id": "m5.4xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 68719476736,
+          },
+          "name": "m5.4xlarge - General Purpose",
+          "size": "large",
         },
-        "name": "m5.12xlarge - General purpose",
-        "size": "xxlarge",
-      },
-      "m5.4xlarge": Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
+        "m5.xlarge": Object {
+          "category": "general_purpose",
+          "ccs_only": false,
+          "cloud_provider": Object {
+            "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
+            "id": "aws",
+            "kind": "CloudProviderLink",
+          },
+          "cpu": Object {
+            "unit": "vCPU",
+            "value": 4,
+          },
+          "generic_name": "standard-4",
+          "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
+          "id": "m5.xlarge",
+          "kind": "MachineType",
+          "memory": Object {
+            "unit": "B",
+            "value": 17179869184,
+          },
+          "name": "m5.xlarge - General Purpose",
+          "size": "small",
         },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 16,
-        },
-        "generic_name": "standard-16",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
-        "id": "m5.4xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 68719476736,
-        },
-        "name": "m5.4xlarge - General Purpose",
-        "size": "large",
-      },
-      "m5.xlarge": Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 4,
-        },
-        "generic_name": "standard-4",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
-        "id": "m5.xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 17179869184,
-        },
-        "name": "m5.xlarge - General Purpose",
-        "size": "small",
       },
     }
   }
@@ -9020,102 +9106,6 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
       },
     }
   }
-  sortedMachineTypes={
-    Array [
-      Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 4,
-        },
-        "generic_name": "standard-4",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.xlarge",
-        "id": "m5.xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 17179869184,
-        },
-        "name": "m5.xlarge - General Purpose",
-        "size": "small",
-      },
-      Object {
-        "category": "general_purpose",
-        "ccs_only": false,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 16,
-        },
-        "generic_name": "standard-16",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.4xlarge",
-        "id": "m5.4xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 68719476736,
-        },
-        "name": "m5.4xlarge - General Purpose",
-        "size": "large",
-      },
-      Object {
-        "category": "general_purpose",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 48,
-        },
-        "generic_name": "standard-48",
-        "href": "/api/clusters_mgmt/v1/machine_types/m5.12xlarge",
-        "id": "m5.12xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 206158430208,
-        },
-        "name": "m5.12xlarge - General purpose",
-        "size": "xxlarge",
-      },
-      Object {
-        "category": "accelerated_computing",
-        "ccs_only": true,
-        "cloud_provider": Object {
-          "href": "/api/clusters_mgmt/v1/cloud_providers/aws",
-          "id": "aws",
-          "kind": "CloudProviderLink",
-        },
-        "cpu": Object {
-          "unit": "vCPU",
-          "value": 8,
-        },
-        "generic_name": "t4-gpu-8",
-        "href": "/api/clusters_mgmt/v1/machine_types/g4dn.2xlarge",
-        "id": "g4dn.2xlarge",
-        "kind": "MachineType",
-        "memory": Object {
-          "unit": "B",
-          "value": 34359738368,
-        },
-        "name": "g4dn.2xlarge - Accelerated Computing (1 GPU)",
-        "size": "medium",
-      },
-    ]
-  }
 >
   <Select
     aria-describedby=""
@@ -9426,10 +9416,10 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
       "errorMessage": "",
       "fulfilled": false,
       "pending": true,
-      "types": Array [],
+      "types": Object {},
+      "typesByID": Object {},
     }
   }
-  machineTypesByID={Object {}}
   meta={Object {}}
   organization={
     Object {
@@ -9439,7 +9429,6 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
   }
   product="OSD"
   quota={Object {}}
-  sortedMachineTypes={Array []}
 >
   <div
     className="spinner-fit-container"
@@ -9483,11 +9472,11 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
       "error": true,
       "errorMessage": "This is an error message",
       "fulfilled": false,
-      "machineTypes": Object {},
       "pending": false,
+      "types": Object {},
+      "typesByID": Object {},
     }
   }
-  machineTypesByID={Object {}}
   meta={Object {}}
   organization={
     Object {
@@ -9497,7 +9486,6 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
   }
   product="OSD"
   quota={Object {}}
-  sortedMachineTypes={Array []}
 >
   <ErrorBox
     message="Error loading node types"
@@ -9506,8 +9494,9 @@ exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] 
         "error": true,
         "errorMessage": "This is an error message",
         "fulfilled": false,
-        "machineTypes": Object {},
         "pending": false,
+        "types": Object {},
+        "typesByID": Object {},
       }
     }
   >
