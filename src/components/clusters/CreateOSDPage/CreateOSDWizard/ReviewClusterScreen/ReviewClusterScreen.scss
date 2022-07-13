@@ -24,11 +24,17 @@
   }
 
   .review-screen-expandable-section .pf-c-expandable-section__content {
-      padding-left: 29px;
+    padding-left: 29px;
+  }
+  .review-screen-item-expandable-section .pf-c-expandable-section__content {
+    padding-left: var(--pf-c-expandable-section__content--PaddingLeft);
   }
 
   .pf-c-expandable-section__toggle {
-     color: rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
+  }
+  .review-screen-item-expandable-section .pf-c-expandable-section__toggle {
+    color: var(--pf-c-expandable-section__toggle--Color)
   }
 
   .pf-c-expandable-section__toggle-text {
@@ -40,5 +46,10 @@
     font-weight: var(--pf-c-title--m-lg--FontWeight);
     line-height: var(--pf-c-title--m-lg--LineHeight);
      */
+  }
+  .review-screen-item-expandable-section .pf-c-expandable-section__toggle-text {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
   }
 }

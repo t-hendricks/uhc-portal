@@ -14,7 +14,6 @@ import validators, {
   checkDisconnectedNodeCount,
   validateARN,
   checkLabels,
-  checkMachinePoolLabels,
   awsNumericAccountID,
   validateServiceAccountObject,
   validateUniqueAZ,
@@ -28,6 +27,7 @@ import validators, {
   validateHTPasswdUsername,
   clusterNameValidation,
   checkCustomOperatorRolesPrefix,
+  createPessimisticValidator,
 } from '../validators';
 import fixtures from './validators.fixtures';
 import awsVPCs from '../../../mockdata/api/clusters_mgmt/v1/aws_inquiries/vpcs.json';
@@ -503,46 +503,47 @@ test('Field is a valid ARN', () => {
 });
 
 test('Field is a valid key value pair', () => {
-  const validKeyError = "A qualified key must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
-  const validValueError = "A qualified value must consist of alphanumeric characters, '-' or '_' and must start and end with an alphanumeric character.";
-  const maxLenKeyError = 'Length of label key name must be less or equal to 63';
-  const maxLenValueError = 'Length of label value must be less or equal to 63';
+  const validKeyError = "A valid key name must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character";
+  const validValueError = "A valid value must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character";
+  const maxLenKeyError = 'A valid key name must be 63 characters or less';
+  const maxLenKeyPrefixError = 'A valid key prefix must be 253 characters or less';
+  const maxLenValueError = 'A valid value must be 63 characters or less';
   const longKeyStr = 'ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff=val';
+  const longKeyPrefixStr = 'ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffffffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff/a=val';
   const longValStr = 'key=ffffffffffffffffffffffffffffffffkkkkddddddddddddddddddddffffffff';
-  const prefixError = 'Prefix must be a DNS subdomain: a series of DNS labels separated by dots (.)';
+  const prefixError = 'Key prefix must be a DNS subdomain: a series of DNS labels separated by dots (.)';
 
-  expect(checkLabels('foo=bar')).toBe(undefined);
-  expect(checkLabels('fOo=BAr')).toBe(undefined);
-  expect(checkLabels('foo=3')).toBe(undefined);
-  expect(checkLabels('foo=bar,foo=3')).toBe(undefined);
-  expect(checkLabels('fo_o=ba-r')).toBe(undefined);
-  expect(checkLabels('fo-o=ba_r')).toBe(undefined);
+  expect(checkLabels(undefined)).toBeUndefined();
+  expect(checkLabels('')).toBeUndefined();
+  expect(checkLabels('foo')).toBeUndefined();
+  expect(checkLabels('foo=')).toBeUndefined();
+  expect(checkLabels('foo=bar')).toBeUndefined();
+  expect(checkLabels('fOo=BAr')).toBeUndefined();
+  expect(checkLabels('foo=3')).toBeUndefined();
+  expect(checkLabels('foo=bar,foo=3')).toBeUndefined();
+  expect(checkLabels('fo_o=ba-r')).toBeUndefined();
+  expect(checkLabels('fo-o=ba_r')).toBeUndefined();
+  expect(checkLabels('foo.bar=wat')).toBeUndefined();
+  expect(checkLabels('foo=bar.wat')).toBeUndefined();
+
   expect(checkLabels('键=值')).toBe(validKeyError);
   expect(checkLabels('foo:bar')).toBe(validKeyError);
-  expect(checkLabels('foo')).toBe(validValueError);
   expect(checkLabels('_foo=bar')).toBe(validKeyError);
   expect(checkLabels('foo-=bar')).toBe(validKeyError);
+  expect(checkLabels('foo.bar.=wat')).toBe(validKeyError);
+  expect(checkLabels('foo.io/bar/baz#!//@=wat')).toBe(validKeyError);
+
   expect(checkLabels('foo=-bar')).toBe(validValueError);
   expect(checkLabels('foo=bar_')).toBe(validValueError);
   expect(checkLabels('foo=bar_')).toBe(validValueError);
-  expect(checkLabels(longValStr)).toBe(maxLenValueError);
+  expect(checkLabels('foo=bar.wat.')).toBe(validValueError);
+
   expect(checkLabels(longKeyStr)).toBe(maxLenKeyError);
+  expect(checkLabels(longKeyPrefixStr)).toBe(maxLenKeyPrefixError);
+  expect(checkLabels(longValStr)).toBe(maxLenValueError);
+  expect(checkLabels('/foo')).toBe(prefixError);
   expect(checkLabels('prefixError/foo')).toBe(prefixError);
   expect(checkLabels(`some.prefix/${longKeyStr}`)).toBe(maxLenKeyError);
-});
-
-test('Check machine pool labels', () => {
-  const invalidLabels = [
-    'machine.openshift.io/cluster-api-machine-role=master',
-    'machine.openshift.io/cluster-api-machine-role=infra',
-    'machine.openshift.io/cluster-api-machine-type=master',
-    'machine.openshift.io/cluster-api-machine-type=infra',
-  ];
-
-  expect(checkMachinePoolLabels(invalidLabels[0])).toBe(`${invalidLabels[0]} is not a valid label`);
-  expect(checkMachinePoolLabels(invalidLabels[1])).toBe(`${invalidLabels[1]} is not a valid label`);
-  expect(checkMachinePoolLabels(invalidLabels[2])).toBe(`${invalidLabels[2]} is not a valid label`);
-  expect(checkMachinePoolLabels(invalidLabels[3])).toBe(`${invalidLabels[3]} is not a valid label`);
 });
 
 test('awsNumericAccountID', () => {
@@ -745,4 +746,20 @@ test('Custom operator roles prefix', () => {
   expect(checkCustomOperatorRolesPrefix('prefix%')).toContain('isn\'t valid, must consist of lower-case alphanumeric characters or');
   expect(checkCustomOperatorRolesPrefix('a2345678901234567890123456789012')).toBeUndefined();
   expect(checkCustomOperatorRolesPrefix('a23456789012345678901234567890123456')).toContain('may not exceed');
+});
+
+describe('createPessimisticValidator', () => {
+  test('returns a function that outputs the first failed error message', () => {
+    const validatorFunction = createPessimisticValidator(() => ([
+      { validated: true, text: 'first (valid)' },
+      { validated: false, text: 'second (invalid)' },
+      { validated: true, text: 'third (valid)' },
+    ]));
+    expect(validatorFunction()).toBe('second (invalid)');
+  });
+
+  test('returns undefined when validationProvider is missing', () => {
+    const validatorFunction = createPessimisticValidator();
+    expect(validatorFunction()).toBeUndefined();
+  });
 });

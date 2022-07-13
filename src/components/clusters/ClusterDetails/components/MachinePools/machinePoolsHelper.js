@@ -1,4 +1,4 @@
-import { validateLabelKey, validateLabelValue } from '../../../../../common/validators';
+import { checkLabels } from '../../../../../common/validators';
 
 const actionResolver = (rowData,
   onClickDelete,
@@ -44,14 +44,6 @@ const actionResolver = (rowData,
   ];
 };
 
-const isValidLabel = (label) => {
-  const labelParts = label.split('=');
-  // label key may NOT be an empty string (label value may be an empty string)
-  return (labelParts.length === 2 && labelParts[0] !== ''
-    && validateLabelKey(labelParts[0]) === undefined
-    && validateLabelValue(labelParts[1]) === undefined);
-};
-
 const findDuplicateKey = (labels) => {
   const keys = {};
   let duplicateKey = null;
@@ -72,7 +64,7 @@ const parseLabels = labelsObj => (labelsObj ? Object.keys(labelsObj).map(labelKe
 const parseTags = (tags) => {
   const labels = {};
   tags.forEach((tag) => {
-    if (isValidLabel(tag)) {
+    if (!checkLabels(tag)) {
       const labelParts = tag.split('=');
       const labelKey = labelParts[0];
       const labelValue = labelParts[1];
@@ -82,10 +74,7 @@ const parseTags = (tags) => {
   return labels;
 };
 
-const validateLabels = (labels) => {
-  if (labels.some(label => !(isValidLabel(label)))) {
-    return 'Each label should be in the form of "key=value" and each key and value must consist of alphanumeric characters, \' -\', \'_\' or \'.\', and must start and end with an alphanumeric character. A label value may be an empty string';
-  }
+const validateDuplicateLabels = (labels) => {
   const duplicateKey = findDuplicateKey(labels);
   if (duplicateKey) {
     return `Each label should have a unique key. "${duplicateKey}" already exists.`;
@@ -94,5 +83,8 @@ const validateLabels = (labels) => {
 };
 
 export {
-  actionResolver, parseLabels, parseTags, validateLabels,
+  parseTags,
+  parseLabels,
+  actionResolver,
+  validateDuplicateLabels,
 };

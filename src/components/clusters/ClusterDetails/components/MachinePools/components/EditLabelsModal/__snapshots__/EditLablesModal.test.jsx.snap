@@ -49,7 +49,12 @@ exports[`<EditLabelsModal /> renders correctly 1`] = `
           label="Labels"
           name="labels"
           tags={Array []}
-          validate={[Function]}
+          validate={
+            Array [
+              [Function],
+              [Function],
+            ]
+          }
         />
       </GridItem>
     </Grid>

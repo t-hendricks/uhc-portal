@@ -1,6 +1,4 @@
-import {
-  actionResolver, parseLabels, parseTags, validateLabels,
-} from '../machinePoolsHelper';
+import { actionResolver, parseLabels, parseTags } from '../machinePoolsHelper';
 
 describe('machine pools action resolver', () => {
   const onClickDelete = jest.fn();
@@ -97,29 +95,13 @@ describe('parseTags', () => {
     expect(parseTags(tags)).toEqual(expected);
   });
 
+  it('should omit invalid tags', () => {
+    const tags = ['foo=bar', 'hello_=world'];
+    const expected = { foo: 'bar' };
+    expect(parseTags(tags)).toEqual(expected);
+  });
+
   it('should return an empty object when there are no tags', () => {
     expect(parseTags([])).toEqual({});
-  });
-});
-
-describe('validateLabels', () => {
-  const invalidLabelErrorMessage = 'Each label should be in the form of "key=value"';
-  const duplicateErrorMessage = duplicateKey => `Each label should have a unique key. "${duplicateKey}" already exists.`;
-
-  it('should not allow input without "=" sign', () => {
-    expect(validateLabels(['foo=bar', 'foo'])).toContain(invalidLabelErrorMessage);
-  });
-
-  it('should not allow input without a key', () => {
-    expect(validateLabels(['foo=bar', '=bar'])).toContain(invalidLabelErrorMessage);
-  });
-  it('should allow input without a value', () => {
-    expect(validateLabels(['foo=bar', 'hello='])).toEqual(undefined);
-  });
-  it('should not allow input duplicate keys', () => {
-    expect(validateLabels(['t1=t2', 't1=t3'])).toEqual(duplicateErrorMessage('t1'));
-  });
-  it('should not find error', () => {
-    expect(validateLabels(['foo=bar', 'hello=world'])).toEqual(undefined);
   });
 });

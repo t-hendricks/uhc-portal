@@ -247,6 +247,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -688,6 +691,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -1120,6 +1126,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -1557,6 +1566,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -1991,6 +2003,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -2449,6 +2464,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -2881,6 +2899,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -3313,6 +3334,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -3745,6 +3769,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -4187,6 +4214,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -4655,6 +4685,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -5100,6 +5133,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -5538,6 +5574,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -5976,6 +6015,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -6413,6 +6455,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -6854,6 +6899,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -7284,6 +7332,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -7725,6 +7776,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
@@ -8151,6 +8205,9 @@ exports[`<DownloadsPage> renders 1`] = `
                 },
                 "crc": Object {
                   "stable": Object {
+                    "arm": Object {
+                      "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
+                    },
                     "x86": Object {
                       "linux": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz",
                       "mac": "https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-macos-installer.pkg",
