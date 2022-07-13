@@ -16,6 +16,7 @@ import getClusterName from '../../../../common/getClusterName';
 import { subscriptionStatuses, normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 import { isUninstalledAICluster } from '../../../../common/isAssistedInstallerCluster';
 import ExpirationAlert from './ExpirationAlert';
+import LimitedSupportAlert from './LimitedSupportAlert';
 import Breadcrumbs from '../../../common/Breadcrumbs';
 import SubscriptionCompliancy from './SubscriptionCompliancy';
 import TransferClusterOwnershipInfo from './TransferClusterOwnershipInfo';
@@ -50,10 +51,10 @@ function ClusterDetailsTop(props) {
 
   const hasIdentityProviders = clusterIdentityProviders.clusterIDPList.length > 0;
   const showIDPMessage = (cluster.managed
-                          && cluster.state === clusterStates.READY
-                          && consoleURL
-                          && clusterIdentityProviders.fulfilled
-                          && !hasIdentityProviders);
+    && cluster.state === clusterStates.READY
+    && consoleURL
+    && clusterIdentityProviders.fulfilled
+    && !hasIdentityProviders);
 
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
 
@@ -68,6 +69,7 @@ function ClusterDetailsTop(props) {
   const IdentityProvidersHint = () => (
     <Alert
       id="idpHint"
+      className="pf-u-mt-md"
       variant="warning"
       isInline
       title="Missing identity providers"
@@ -121,18 +123,18 @@ function ClusterDetailsTop(props) {
 
   const breadcrumbs = (
     <Breadcrumbs path={
-        [
-          { label: 'Clusters' },
-          (isArchived || isDeprovisioned) && { label: 'Cluster Archives', path: '/archived' },
-          { label: clusterName },
-        ].filter(Boolean)
-      }
+      [
+        { label: 'Clusters' },
+        (isArchived || isDeprovisioned) && { label: 'Cluster Archives', path: '/archived' },
+        { label: clusterName },
+      ].filter(Boolean)
+    }
     />
   );
 
   const isRefreshing = pending
-      || organization.pending
-      || clusterIdentityProviders.pending;
+    || organization.pending
+    || clusterIdentityProviders.pending;
 
   const trialEndDate = isProductOSDTrial && get(cluster, 'subscription.trial_end_date');
   const OSDRHMEndDate = isProductOSDRHM && goZeroTime2Null(get(cluster, 'subscription.billing_expiration_date'));
@@ -164,13 +166,13 @@ function ClusterDetailsTop(props) {
           <Title size="2xl" headingLevel="h1" className="cl-details-page-title">{clusterName}</Title>
         </SplitItem>
         <SplitItem>
-          { isRefreshing && <Spinner className="cluster-details-spinner" /> }
-          { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-details-warning" /> }
+          {isRefreshing && <Spinner className="cluster-details-spinner" />}
+          {error && <ErrorTriangle errorMessage={errorMessage} className="cluster-details-warning" />}
         </SplitItem>
         <SplitItem isFilled />
         <SplitItem>
           <span id="cl-details-btns">
-            { !isArchived && !isDeprovisioned ? (
+            {!isArchived && !isDeprovisioned ? (
               <>
                 {launchConsole}
                 {actions}
@@ -180,39 +182,42 @@ function ClusterDetailsTop(props) {
                 {unarchiveBtn}
               </>
             )}
-            { !isDeprovisioned && !isArchived && (
+            {!isDeprovisioned && !isArchived && (
               <RefreshButton id="refresh" autoRefresh={autoRefreshEnabled} refreshFunc={refreshFunc} clickRefreshFunc={clickRefreshFunc} />
             )}
           </span>
         </SplitItem>
       </Split>
+
+      <LimitedSupportAlert limitedSupportReasons={cluster.limitedSupportReasons} />
+
       {showIDPMessage && (
-      <Split>
-        <SplitItem isFilled>
-          {cluster.canEdit && <IdentityProvidersHint />}
-        </SplitItem>
-      </Split>
+        <Split>
+          <SplitItem isFilled>
+            {cluster.canEdit && <IdentityProvidersHint />}
+          </SplitItem>
+        </Split>
       )}
       {cluster.expiration_timestamp
-      && (
-      <ExpirationAlert
-        expirationTimestamp={cluster.expiration_timestamp}
-      />
-      )}
+        && (
+          <ExpirationAlert
+            expirationTimestamp={cluster.expiration_timestamp}
+          />
+        )}
       {trialEndDate && !isDeprovisioned
-      && (
-      <ExpirationAlert
-        expirationTimestamp={trialEndDate}
-        {...trialExpirationUpgradeProps}
-      />
-      )}
+        && (
+          <ExpirationAlert
+            expirationTimestamp={trialEndDate}
+            {...trialExpirationUpgradeProps}
+          />
+        )}
       {OSDRHMEndDate && !isDeprovisioned
-      && (
-      <ExpirationAlert
-        expirationTimestamp={OSDRHMEndDate}
-        OSDRHMExpiration
-      />
-      )}
+        && (
+          <ExpirationAlert
+            expirationTimestamp={OSDRHMEndDate}
+            OSDRHMExpiration
+          />
+        )}
       <SubscriptionCompliancy
         cluster={cluster}
         openModal={openModal}

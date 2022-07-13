@@ -23,7 +23,12 @@ import ExternalLink from '../../../../../common/ExternalLink';
 
 const { ClusterStatus: AIClusterStatus } = OCM;
 function DetailsRight({
-  cluster, totalDesiredComputeNodes, autoscaleEnabled, totalMinNodesCount, totalMaxNodesCount,
+  cluster,
+  totalDesiredComputeNodes,
+  autoscaleEnabled,
+  totalMinNodesCount,
+  totalMaxNodesCount,
+  limitedSupport,
 }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
     get(cluster, 'metrics.memory.total.value', 0), get(cluster, 'metrics.memory.total.unit', 'B'),
@@ -33,11 +38,11 @@ function DetailsRight({
 
   const showDesiredNodes = cluster.managed;
   const showInfraNodes = (!cluster.managed && get(cluster, 'metrics.nodes.infra', null))
-                         || get(cluster, 'nodes.infra', 0) > 0;
+    || get(cluster, 'nodes.infra', 0) > 0;
   const hasSockets = get(cluster, 'metrics.sockets.total.value', 0) > 0;
 
   const humanizedPersistentStorage = cluster.managed && cluster.storage_quota
-             && humanizeValueWithUnitGiB(cluster.storage_quota.value);
+    && humanizeValueWithUnitGiB(cluster.storage_quota.value);
   const showVCPU = !isDisconnected && !hasSockets;
 
   const controlPlaneActualNodes = get(cluster, 'metrics.nodes.master', '-');
@@ -57,13 +62,18 @@ function DetailsRight({
             Status
           </DescriptionListTerm>
           <DescriptionListDescription style={cluster.state.style}>
-            { isAISubscriptionWithoutMetrics(cluster.subscription)
+            {isAISubscriptionWithoutMetrics(cluster.subscription)
               ? <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
               : (
                 <>
-                  <ClusterStateIcon clusterState={cluster.state.state} animated />
+                  <ClusterStateIcon
+                    clusterState={cluster.state.state}
+                    limitedSupport={limitedSupport}
+                    animated
+                  />
                   {' '}
                   {cluster.state.description}
+                  {limitedSupport ? ' - Limited support' : null}
                 </>
               )}
           </DescriptionListDescription>
@@ -96,7 +106,7 @@ function DetailsRight({
             </DescriptionListGroup>
           </>
         )}
-        { cluster.managed && !cluster.ccs?.enabled && (
+        {cluster.managed && !cluster.ccs?.enabled && (
           <>
             <DescriptionListGroup>
               <DescriptionListTerm>
@@ -138,7 +148,7 @@ function DetailsRight({
                       {' '}
                     </dt>
                     <dd>
-                      { controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
+                      {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
                         ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
                         : 'N/A'}
                     </dd>
@@ -151,7 +161,7 @@ function DetailsRight({
                           {' '}
                         </dt>
                         <dd>
-                          { infraActualNodes !== '-' || infraDesiredNodes !== '-'
+                          {infraActualNodes !== '-' || infraDesiredNodes !== '-'
                             ? `${infraActualNodes}/${infraDesiredNodes}`
                             : 'N/A'}
                         </dd>
@@ -164,7 +174,7 @@ function DetailsRight({
                       {' '}
                     </dt>
                     <dd>
-                      { workerActualNodes !== '-' || workerDesiredNodes !== '-'
+                      {workerActualNodes !== '-' || workerDesiredNodes !== '-'
                         ? `${workerActualNodes}/${workerDesiredNodes}`
                         : 'N/A'}
                     </dd>
@@ -286,6 +296,7 @@ DetailsRight.propTypes = {
   totalMinNodesCount: PropTypes.number,
   totalMaxNodesCount: PropTypes.number,
   autoscaleEnabled: PropTypes.bool.isRequired,
+  limitedSupport: PropTypes.bool,
 };
 
 export default DetailsRight;
