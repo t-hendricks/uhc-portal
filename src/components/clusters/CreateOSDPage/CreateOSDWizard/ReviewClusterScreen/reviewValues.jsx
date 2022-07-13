@@ -29,6 +29,9 @@ import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
  *             to match the behaviour of a boolean field.
  *  isMonospace - when set to `true`, value will be shown in monospace font.
  *  isOptional - when set to `true`, the field will only be shown when the value is not falsy.
+ *  isExpandable: when set to `true`, the field will be expandable
+ *    - initiallyExpanded: optionally set this when isExpandable is set to `true`.
+ *      Determines if the section is initially expanded.
  * }
  */
 const reviewValues = {
@@ -290,6 +293,8 @@ const reviewValues = {
     title: 'Additional trust bundle',
     isMonospace: true,
     isOptional: true,
+    isExpandable: true,
+    initiallyExpanded: false,
   },
   network_machine_cidr: {
     title: 'Machine CIDR',

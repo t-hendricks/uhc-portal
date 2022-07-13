@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  DescriptionList, DescriptionListDescription, DescriptionListGroup, DescriptionListTerm,
-  ExpandableSection, GridItem,
+  DescriptionList,
+  DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
+  ExpandableSection,
+  GridItem,
 } from '@patternfly/react-core';
 import reviewValues from './reviewValues';
+import { ExpandableReviewItem } from './ExpandableReviewItem';
 
 export const ReviewItem = ({ name, formValues }) => {
   const reviewValue = reviewValues[name];
@@ -13,12 +18,8 @@ export const ReviewItem = ({ name, formValues }) => {
   if (!reviewValue) {
     return (
       <DescriptionListGroup>
-        <DescriptionListTerm>
-          {name}
-        </DescriptionListTerm>
-        <DescriptionListDescription>
-          {value}
-        </DescriptionListDescription>
+        <DescriptionListTerm>{name}</DescriptionListTerm>
+        <DescriptionListDescription>{value}</DescriptionListDescription>
       </DescriptionListGroup>
     );
   }
@@ -40,16 +41,22 @@ export const ReviewItem = ({ name, formValues }) => {
     displayValue = value;
   }
 
+  const formattedDisplayValue = reviewValue.isMonospace ? <pre>{displayValue}</pre> : displayValue;
+
+  const description = reviewValue.isExpandable ? (
+    <ExpandableReviewItem
+      initiallyExpanded={reviewValue.initiallyExpanded}
+    >
+      {formattedDisplayValue}
+    </ExpandableReviewItem>
+  ) : (
+    formattedDisplayValue
+  );
+
   return (
     <DescriptionListGroup key={name}>
-      <DescriptionListTerm>
-        {reviewValue.title}
-      </DescriptionListTerm>
-      <DescriptionListDescription>
-        {reviewValue.isMonospace ? (
-          <pre>{displayValue}</pre>
-        ) : displayValue}
-      </DescriptionListDescription>
+      <DescriptionListTerm>{reviewValue.title}</DescriptionListTerm>
+      <DescriptionListDescription>{description}</DescriptionListDescription>
     </DescriptionListGroup>
   );
 };
@@ -74,7 +81,12 @@ function ReviewSection({ initiallyExpanded, title, children = null }) {
 
   return (
     <GridItem>
-      <ExpandableSection className="review-screen-expandable-section" isExpanded={isExpanded} onToggle={onToggle} toggleText={title}>
+      <ExpandableSection
+        className="review-screen-expandable-section"
+        isExpanded={isExpanded}
+        onToggle={onToggle}
+        toggleText={title}
+      >
         <DescriptionList isHorizontal {...listOptions}>
           {children}
         </DescriptionList>
