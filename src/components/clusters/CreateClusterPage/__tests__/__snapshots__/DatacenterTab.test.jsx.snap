@@ -102,7 +102,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
                     Bare Metal (ARM)
                   </Link>
                 </React.Fragment>,
-                "Pre-existing infrastructure",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
@@ -251,7 +251,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
                     Bare Metal (ARM)
                   </Link>
                 </React.Fragment>,
-                "Pre-existing infrastructure",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>

@@ -189,6 +189,13 @@ const instructionsMapping = {
       },
     },
     arm: {
+      ipi: {
+        title: 'Install OpenShift on ARM Bare Metal with installer-provisioned infrastructure',
+        installer: tools.ARMINSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_BAREMETAL_IPI_GETTING_STARTED,
+        preReleasePageLink: '/install/arm/pre-release',
+      },
       upi: {
         title: 'Install OpenShift on ARM Bare Metal with user-provisioned infrastructure',
         rhcos: {

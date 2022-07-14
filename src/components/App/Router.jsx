@@ -84,6 +84,7 @@ import {
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import InstallArmBareMetal from '../clusters/install/InstallArmBareMetal';
+import InstallArmBMIPI from '../clusters/install/InstallArmBareMetalIPI';
 import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
@@ -152,6 +153,7 @@ function Router({ history }) {
             <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
 
             <Route path="/install/alibaba/installer-provisioned" component={ConnectedInstallAlibaba} />
+            <Route path="/install/arm/installer-provisioned" component={InstallArmBMIPI} />
             <Route path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
             <Route path="/install/arm/pre-release" component={ConnectedInstallArmPreRelease} />
             <Route path="/install/arm" component={InstallArmBareMetal} />

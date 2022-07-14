@@ -365,6 +365,46 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
 </Fragment>
 `;
 
+exports[`Every OCP instruction page should render:  Bare Metal-arm-ipi 1`] = `
+<Fragment>
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="baremetal"
+            isBMIPI={false}
+            pendoID="/"
+            preReleasePageLink="/install/arm/pre-release"
+            token={Object {}}
+            tool="aarch64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
+          >
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="baremetal"
+            customizations="https://docs.openshift.com/container-platform/4.11/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
+            isBMIPI={false}
+            isUPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
 exports[`Every OCP instruction page should render:  Bare Metal-arm-upi 1`] = `
 <Fragment>
   <Card>
