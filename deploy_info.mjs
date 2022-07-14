@@ -43,7 +43,8 @@ const getAssistedUILibVersion = async (revision) => {
 
 const gitBranch = async (branch) => {
   try {
-    const r = await execFilePromise('git', ['rev-parse', '--short=7', branch]);
+    // this hash-parsing should match the implementation at /push_to_insights.sh
+    const r = await execFilePromise('git', ['rev-parse', '--short', branch]);
     return { src_hash: r.stdout.trimRight() };
   } catch (err) {
     return { ERROR: err };
