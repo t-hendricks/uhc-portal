@@ -1,21 +1,18 @@
 import apiRequest from './apiRequest';
 import config from '../config';
 
-const insightsAPIRequest = params => apiRequest({
-  ...params,
-  baseURL: `${config.configData.insightsGateway}/insights-results-aggregator/v1`,
-});
-
 /* osd_eligible set to true returns only rules that are
 dedicated for managed (not only OSD) clusters */
-const getClusterInsights = (clusterId, isManaged) => insightsAPIRequest({
+const getClusterInsights = clusterId => apiRequest({
   method: 'get',
-  url: `/clusters/${clusterId}/report?osd_eligible=${isManaged}&get_disabled=false`,
+  url: `/cluster/${clusterId}/reports`,
+  baseURL: `${config.configData.insightsGateway}/insights-results-aggregator/v2`,
 });
 
-const getOrganizationInsights = () => insightsAPIRequest({
+const getOrganizationInsights = () => apiRequest({
   method: 'get',
   url: '/org_overview',
+  baseURL: `${config.configData.insightsGateway}/insights-results-aggregator/v1`,
 });
 
 const insigthsService = {

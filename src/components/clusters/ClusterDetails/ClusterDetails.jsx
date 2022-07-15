@@ -198,14 +198,13 @@ class ClusterDetails extends Component {
     } = this.props;
     const clusterID = get(clusterDetails, 'cluster.id');
     const isManaged = get(clusterDetails, 'cluster.managed', false);
-    const isManagedSubscription = get(clusterDetails, 'cluster.subscription.managed', false);
 
     if (shouldRefetchQuota(organization)) {
       getOrganizationAndQuota();
     }
     const externalClusterID = get(clusterDetails, 'cluster.external_id');
     if (externalClusterID) {
-      fetchClusterInsights(externalClusterID, isManagedSubscription);
+      fetchClusterInsights(externalClusterID);
       this.fetchSupportData();
     }
 
