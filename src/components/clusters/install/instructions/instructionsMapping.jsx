@@ -22,6 +22,7 @@ import links, { tools, channels } from '../../../../common/installLinks.mjs';
 const instructionsMapping = {
   alibaba: {
     cloudProvider: 'Alibaba Cloud',
+    publicCloud: true,
     title: 'Install OpenShift on Alibaba Cloud with installer-provisioned infrastructure',
     docURL: links.INSTALL_ALIBABAIPI_DOCS_LANDING,
     installer: tools.X86INSTALLER,
@@ -29,6 +30,7 @@ const instructionsMapping = {
   },
   aws: {
     cloudProvider: 'AWS',
+    publicCloud: true,
     customizations: links.INSTALL_AWS_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on AWS with installer-provisioned infrastructure',
@@ -46,6 +48,7 @@ const instructionsMapping = {
   },
   armaws: {
     cloudProvider: 'AWS',
+    publicCloud: true,
     customizations: links.INSTALL_AWS_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on AWS with installer-provisioned ARM infrastructure',
@@ -58,6 +61,7 @@ const instructionsMapping = {
   },
   gcp: {
     cloudProvider: 'GCP',
+    publicCloud: true,
     customizations: links.INSTALL_GCP_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on GCP with installer-provisioned infrastructure',
@@ -85,6 +89,7 @@ const instructionsMapping = {
   },
   azure: {
     cloudProvider: 'Azure',
+    publicCloud: true,
     customizations: links.INSTALL_AZURE_CUSTOMIZATIONS,
     ipi: {
       title: 'Install OpenShift on Azure with installer-provisioned infrastructure',
@@ -102,6 +107,7 @@ const instructionsMapping = {
   },
   ibmCloud: {
     cloudProvider: 'IBM Cloud',
+    publicCloud: true,
     title: 'Install OpenShift on IBM Cloud with installer-provisioned infrastructure',
     docURL: links.INSTALL_IBM_CLOUD_GETTING_STARTED,
     installer: tools.X86INSTALLER,

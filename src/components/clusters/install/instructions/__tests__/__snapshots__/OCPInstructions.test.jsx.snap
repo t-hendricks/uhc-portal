@@ -1,17 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Every OCP instruction page should render:  ARM Bare Metal 1`] = `
+exports[`Every OCP instruction page should render:  ARM Bare Metal-upi 1`] = `
 <Fragment>
   <Card>
     <CardBody>
       <Instructions>
         <Instruction>
           <DownloadsAndPullSecretSection
-            cloudProviderID="ARM Bare Metal"
+            channel="stable"
+            cloudProviderID="armBareMetal"
             isBMIPI={false}
             pendoID="/"
+            preReleasePageLink="/install/arm/pre-release"
+            rhcos={
+              Object {
+                "additionalInstructions": "Download the installer ISO image, or the kernel, initramfs, and rootfs.",
+                "downloads": Array [
+                  Object {
+                    "buttonText": "Download RHCOS ISO",
+                    "name": "OCP-Download-RHCOS-ISO",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live.aarch64.iso",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS kernel",
+                    "name": "OCP-Download-RHCOS-kernel",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-kernel-aarch64",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS initramfs",
+                    "name": "OCP-Download-RHCOS-initramfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-initramfs.aarch64.img",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS rootfs",
+                    "name": "OCP-Download-RHCOS-rootfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-rootfs.aarch64.img",
+                  },
+                ],
+                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal",
+              }
+            }
             token={Object {}}
-            tool="x86_64-openshift-install"
+            tool="aarch64-openshift-install"
           />
         </Instruction>
         <Instruction>
@@ -21,44 +51,9 @@ exports[`Every OCP instruction page should render:  ARM Bare Metal 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="ARM Bare Metal"
+            cloudProviderID="armBareMetal"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
-            isBMIPI={false}
-            pendoID="/"
-          />
-        </Instruction>
-        <Instruction>
-          <SubscriptionAndSupport />
-        </Instruction>
-      </Instructions>
-    </CardBody>
-  </Card>
-</Fragment>
-`;
-
-exports[`Every OCP instruction page should render:  AWS 1`] = `
-<Fragment>
-  <Card>
-    <CardBody>
-      <Instructions>
-        <Instruction>
-          <DownloadsAndPullSecretSection
-            cloudProviderID="AWS"
-            isBMIPI={false}
-            pendoID="/"
-            token={Object {}}
-            tool="x86_64-openshift-install"
-          />
-        </Instruction>
-        <Instruction>
-          <Text
-            component="h2"
-          >
-            Follow the instructions to configure your environment and install your cluster
-          </Text>
-          <GetStarted
-            cloudProviderID="AWS"
-            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html"
             isBMIPI={false}
             pendoID="/"
           />
@@ -80,7 +75,46 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="AWS"
+            cloudProviderID="armaws"
+            isBMIPI={false}
+            pendoID="/"
+            preReleasePageLink="/install/arm/pre-release"
+            token={Object {}}
+            tool="aarch64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
+          >
+            Follow the documentation to configure your AWS account and run the installer
+          </Text>
+          <GetStarted
+            cloudProviderID="armaws"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-account.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`Every OCP instruction page should render:  AWS-ipi 2`] = `
+<Fragment>
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="aws"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -91,10 +125,10 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
           <Text
             component="h2"
           >
-            Follow the instructions to configure your environment and install your cluster
+            Follow the documentation to configure your AWS account and run the installer
           </Text>
           <GetStarted
-            cloudProviderID="AWS"
+            cloudProviderID="aws"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-account.html"
             isBMIPI={false}
@@ -118,7 +152,7 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="AWS"
+            cloudProviderID="aws"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -129,10 +163,10 @@ exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
           <Text
             component="h2"
           >
-            Follow the instructions to configure your environment and install your cluster
+            Follow the documentation to configure your AWS account and run the installer
           </Text>
           <GetStarted
-            cloudProviderID="AWS"
+            cloudProviderID="aws"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-user-infra.html"
             isBMIPI={false}
@@ -156,7 +190,7 @@ exports[`Every OCP instruction page should render:  Alibaba Cloud 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Alibaba Cloud"
+            cloudProviderID="alibaba"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -167,10 +201,10 @@ exports[`Every OCP instruction page should render:  Alibaba Cloud 1`] = `
           <Text
             component="h2"
           >
-            Follow the instructions to configure your environment and install your cluster
+            Follow the documentation to configure your Alibaba Cloud account and run the installer
           </Text>
           <GetStarted
-            cloudProviderID="Alibaba Cloud"
+            cloudProviderID="alibaba"
             customizations=""
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_alibaba/installing-alibaba-customizations.html"
             isBMIPI={false}
@@ -194,7 +228,7 @@ exports[`Every OCP instruction page should render:  Azure Stack Hub-ipi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Azure Stack Hub"
+            cloudProviderID="ash"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -208,7 +242,7 @@ exports[`Every OCP instruction page should render:  Azure Stack Hub-ipi 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="Azure Stack Hub"
+            cloudProviderID="ash"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-network-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html"
             isBMIPI={false}
@@ -232,7 +266,7 @@ exports[`Every OCP instruction page should render:  Azure Stack Hub-upi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Azure Stack Hub"
+            cloudProviderID="ash"
             isBMIPI={false}
             pendoID="/"
             rhcos={
@@ -258,7 +292,7 @@ exports[`Every OCP instruction page should render:  Azure Stack Hub-upi 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="Azure Stack Hub"
+            cloudProviderID="ash"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-network-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html"
             isBMIPI={false}
@@ -282,7 +316,7 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Azure"
+            cloudProviderID="azure"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -293,10 +327,10 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
           <Text
             component="h2"
           >
-            Follow the instructions to configure your environment and install your cluster
+            Follow the documentation to configure your Azure account and run the installer
           </Text>
           <GetStarted
-            cloudProviderID="Azure"
+            cloudProviderID="azure"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_azure/installing-azure-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure/installing-azure-default.html"
             isBMIPI={false}
@@ -320,7 +354,7 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Azure"
+            cloudProviderID="azure"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -331,10 +365,10 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
           <Text
             component="h2"
           >
-            Follow the instructions to configure your environment and install your cluster
+            Follow the documentation to configure your Azure account and run the installer
           </Text>
           <GetStarted
-            cloudProviderID="Azure"
+            cloudProviderID="azure"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_azure/installing-azure-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure/installing-azure-user-infra.html"
             isBMIPI={false}
@@ -358,7 +392,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Bare Metal"
+            cloudProviderID="bareMetal"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -372,7 +406,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="Bare Metal"
+            cloudProviderID="bareMetal"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
             isBMIPI={false}
@@ -396,7 +430,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Bare Metal"
+            cloudProviderID="bareMetal"
             isBMIPI={false}
             pendoID="/"
             rhcos={
@@ -438,7 +472,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="Bare Metal"
+            cloudProviderID="bareMetal"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html"
             isBMIPI={false}
@@ -462,7 +496,7 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="GCP"
+            cloudProviderID="gcp"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -473,10 +507,10 @@ exports[`Every OCP instruction page should render:  GCP-ipi 1`] = `
           <Text
             component="h2"
           >
-            Follow the instructions to configure your environment and install your cluster
+            Follow the documentation to configure your GCP account and run the installer
           </Text>
           <GetStarted
-            cloudProviderID="GCP"
+            cloudProviderID="gcp"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-account.html"
             isBMIPI={false}
@@ -500,7 +534,7 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="GCP"
+            cloudProviderID="gcp"
             isBMIPI={false}
             pendoID="/"
             rhcos={
@@ -523,10 +557,10 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
           <Text
             component="h2"
           >
-            Follow the instructions to configure your environment and install your cluster
+            Follow the documentation to configure your GCP account and run the installer
           </Text>
           <GetStarted
-            cloudProviderID="GCP"
+            cloudProviderID="gcp"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-user-infra.html"
             isBMIPI={false}
@@ -550,7 +584,7 @@ exports[`Every OCP instruction page should render:  IBM Cloud 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="IBM Cloud"
+            cloudProviderID="ibmCloud"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -561,10 +595,10 @@ exports[`Every OCP instruction page should render:  IBM Cloud 1`] = `
           <Text
             component="h2"
           >
-            Follow the instructions to configure your environment and install your cluster
+            Follow the documentation to configure your IBM Cloud account and run the installer
           </Text>
           <GetStarted
-            cloudProviderID="IBM Cloud"
+            cloudProviderID="ibmCloud"
             customizations=""
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html"
             isBMIPI={false}
@@ -588,7 +622,7 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="IBM-Z"
+            cloudProviderID="ibmz"
             isBMIPI={false}
             pendoID="/"
             preReleasePageLink="/install/ibmz/pre-release"
@@ -674,7 +708,7 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="IBM-Z"
+            cloudProviderID="ibmz"
             customizations=""
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z.html"
             isBMIPI={false}
@@ -698,7 +732,7 @@ exports[`Every OCP instruction page should render:  Platform Agnostic 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Platform Agnostic"
+            cloudProviderID="generic"
             isBMIPI={false}
             pendoID="/"
             rhcos={
@@ -740,7 +774,7 @@ exports[`Every OCP instruction page should render:  Platform Agnostic 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="Platform Agnostic"
+            cloudProviderID="generic"
             customizations=""
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_platform_agnostic/installing-platform-agnostic.html"
             isBMIPI={false}
@@ -764,7 +798,7 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Power"
+            cloudProviderID="power"
             isBMIPI={false}
             pendoID="/"
             preReleasePageLink="/install/power/pre-release"
@@ -807,7 +841,7 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="Power"
+            cloudProviderID="power"
             customizations=""
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_power/installing-ibm-power.html"
             isBMIPI={false}
@@ -831,7 +865,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Red Hat OpenStack Platform"
+            cloudProviderID="openstack"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -845,7 +879,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-i
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="Red Hat OpenStack Platform"
+            cloudProviderID="openstack"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-installer-custom.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-installer-custom.html"
             isBMIPI={false}
@@ -869,7 +903,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Red Hat OpenStack Platform"
+            cloudProviderID="openstack"
             isBMIPI={false}
             pendoID="/"
             rhcos={
@@ -895,7 +929,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="Red Hat OpenStack Platform"
+            cloudProviderID="openstack"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-installer-custom.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-user.html"
             isBMIPI={false}
@@ -919,7 +953,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Red Hat Virutalization"
+            cloudProviderID="rhv"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -933,7 +967,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="Red Hat Virutalization"
+            cloudProviderID="rhv"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-default.html"
             isBMIPI={false}
@@ -957,7 +991,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="Red Hat Virutalization"
+            cloudProviderID="rhv"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -971,7 +1005,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="Red Hat Virutalization"
+            cloudProviderID="rhv"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-user-infra.html"
             isBMIPI={false}
@@ -995,7 +1029,7 @@ exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="VMware vSphere"
+            cloudProviderID="vmware"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -1009,7 +1043,7 @@ exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="VMware vSphere"
+            cloudProviderID="vmware"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned.html"
             isBMIPI={false}
@@ -1033,7 +1067,7 @@ exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="VMware vSphere"
+            cloudProviderID="vmware"
             isBMIPI={false}
             pendoID="/"
             rhcos={
@@ -1059,7 +1093,7 @@ exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="VMware vSphere"
+            cloudProviderID="vmware"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere.html"
             isBMIPI={false}

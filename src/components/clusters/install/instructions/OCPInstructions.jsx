@@ -29,16 +29,9 @@ const OCPInstructions = (props) => {
     showPreReleasePageLink,
   } = props;
   const pendoID = window.location.pathname;
-  const cloudProviders = [
-    'aws',
-    'armaws',
-    'azure',
-    'gcp',
-    'ibmCloud',
-  ];
-  const getStartedTitleText = cloudProviders.indexOf(cloudProviderID) === -1
-    ? 'Follow the instructions to configure your environment and install your cluster'
-    : `Follow the documentation to configure your ${instructionsMapping[cloudProviderID].cloudProvider} account and run the installer`;
+  const getStartedTitleText = instructionsMapping[cloudProviderID]?.publicCloud
+    ? `Follow the documentation to configure your ${instructionsMapping[cloudProviderID].cloudProvider} account and run the installer`
+    : 'Follow the instructions to configure your environment and install your cluster';
   return (
     <>
       <Card>

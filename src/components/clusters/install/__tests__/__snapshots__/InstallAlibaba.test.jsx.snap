@@ -31,6 +31,7 @@ exports[`InstallAlibaba renders correctly 1`] = `
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_alibaba/installing-alibaba-customizations.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
+      publicCloud={true}
       title="Install OpenShift on Alibaba Cloud with installer-provisioned infrastructure"
       token={Object {}}
     />
