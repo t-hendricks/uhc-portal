@@ -199,83 +199,83 @@ const instructionsMapping = {
     installer: tools.IBMZINSTALLER,
     channel: channels.STABLE,
   },
-  bareMetal: {
+  baremetal: {
     cloudProvider: 'Bare Metal',
     customizations: links.INSTALL_BAREMETAL_CUSTOMIZATIONS,
-    ipi: {
-      title: 'Install OpenShift on Bare Metal with installer-provisioned infrastructure',
-      installer: tools.X86INSTALLER,
-      channel: channels.STABLE,
-      docURL: links.INSTALL_BAREMETAL_IPI_GETTING_STARTED,
-    },
-    upi: {
-      title: 'Install OpenShift on Bare Metal with user-provisioned infrastructure',
-      rhcos: {
-        learnMoreURL: links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE,
-        downloads: [
-          {
-            buttonText: 'Download RHCOS ISO',
-            name: 'OCP-Download-RHCOS-ISO',
-            url: links.RHCOS_GENERIC_ISO_X86,
-          },
-          {
-            buttonText: 'Download RHCOS kernel',
-            name: 'OCP-Download-RHCOS-kernel',
-            url: links.RHCOS_GENERIC_KERNEL_X86,
-          },
-          {
-            buttonText: 'Download RHCOS initramfs',
-            name: 'OCP-Download-RHCOS-initramfs',
-            url: links.RHCOS_GENERIC_INITRAMFS_X86,
-          },
-          {
-            buttonText: 'Download RHCOS rootfs',
-            name: 'OCP-Download-RHCOS-rootfs',
-            url: links.RHCOS_GENERIC_ROOTFS_X86,
-          },
-        ],
-        additionalInstructions: 'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
+    x86: {
+      ipi: {
+        title: 'Install OpenShift on Bare Metal with installer-provisioned infrastructure',
+        installer: tools.X86INSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_BAREMETAL_IPI_GETTING_STARTED,
       },
-      installer: tools.X86INSTALLER,
-      channel: channels.STABLE,
-      docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
-    },
-  },
-  armBareMetal: {
-    cloudProvider: 'ARM Bare Metal',
-    customizations: links.INSTALL_BAREMETAL_CUSTOMIZATIONS,
-    upi: {
-      title: 'Install OpenShift on ARM Bare Metal with user-provisioned infrastructure',
-      rhcos: {
-        learnMoreURL: links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE,
-        downloads: [
-          {
-            buttonText: 'Download RHCOS ISO',
-            name: 'OCP-Download-RHCOS-ISO',
-            url: links.RHCOS_ARM_ISO,
-          },
-          {
-            buttonText: 'Download RHCOS kernel',
-            name: 'OCP-Download-RHCOS-kernel',
-            url: links.RHCOS_ARM_KERNEL,
-          },
-          {
-            buttonText: 'Download RHCOS initramfs',
-            name: 'OCP-Download-RHCOS-initramfs',
-            url: links.RHCOS_ARM_INITRAMFS,
-          },
-          {
-            buttonText: 'Download RHCOS rootfs',
-            name: 'OCP-Download-RHCOS-rootfs',
-            url: links.RHCOS_ARM_ROOTFS,
-          },
-        ],
-        additionalInstructions: 'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
+      upi: {
+        title: 'Install OpenShift on Bare Metal with user-provisioned infrastructure',
+        rhcos: {
+          learnMoreURL: links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE,
+          downloads: [
+            {
+              buttonText: 'Download RHCOS ISO',
+              name: 'OCP-Download-RHCOS-ISO',
+              url: links.RHCOS_GENERIC_ISO_X86,
+            },
+            {
+              buttonText: 'Download RHCOS kernel',
+              name: 'OCP-Download-RHCOS-kernel',
+              url: links.RHCOS_GENERIC_KERNEL_X86,
+            },
+            {
+              buttonText: 'Download RHCOS initramfs',
+              name: 'OCP-Download-RHCOS-initramfs',
+              url: links.RHCOS_GENERIC_INITRAMFS_X86,
+            },
+            {
+              buttonText: 'Download RHCOS rootfs',
+              name: 'OCP-Download-RHCOS-rootfs',
+              url: links.RHCOS_GENERIC_ROOTFS_X86,
+            },
+          ],
+          additionalInstructions: 'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
+        },
+        installer: tools.X86INSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
       },
-      installer: tools.ARMINSTALLER,
-      channel: channels.STABLE,
-      docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
-      preReleasePageLink: '/install/arm/pre-release',
+    },
+    arm: {
+      upi: {
+        title: 'Install OpenShift on ARM Bare Metal with user-provisioned infrastructure',
+        rhcos: {
+          learnMoreURL: links.INSTALL_BAREMETAL_RHCOS_LEARN_MORE,
+          downloads: [
+            {
+              buttonText: 'Download RHCOS ISO',
+              name: 'OCP-Download-RHCOS-ISO',
+              url: links.RHCOS_ARM_ISO,
+            },
+            {
+              buttonText: 'Download RHCOS kernel',
+              name: 'OCP-Download-RHCOS-kernel',
+              url: links.RHCOS_ARM_KERNEL,
+            },
+            {
+              buttonText: 'Download RHCOS initramfs',
+              name: 'OCP-Download-RHCOS-initramfs',
+              url: links.RHCOS_ARM_INITRAMFS,
+            },
+            {
+              buttonText: 'Download RHCOS rootfs',
+              name: 'OCP-Download-RHCOS-rootfs',
+              url: links.RHCOS_ARM_ROOTFS,
+            },
+          ],
+          additionalInstructions: 'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
+        },
+        installer: tools.ARMINSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
+        preReleasePageLink: '/install/arm/pre-release',
+      },
     },
   },
   generic: {

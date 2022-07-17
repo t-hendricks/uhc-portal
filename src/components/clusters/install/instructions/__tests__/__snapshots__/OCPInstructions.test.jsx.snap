@@ -1,72 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Every OCP instruction page should render:  ARM Bare Metal-upi 1`] = `
-<Fragment>
-  <Card>
-    <CardBody>
-      <Instructions>
-        <Instruction>
-          <DownloadsAndPullSecretSection
-            channel="stable"
-            cloudProviderID="armBareMetal"
-            isBMIPI={false}
-            pendoID="/"
-            preReleasePageLink="/install/arm/pre-release"
-            rhcos={
-              Object {
-                "additionalInstructions": "Download the installer ISO image, or the kernel, initramfs, and rootfs.",
-                "downloads": Array [
-                  Object {
-                    "buttonText": "Download RHCOS ISO",
-                    "name": "OCP-Download-RHCOS-ISO",
-                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live.aarch64.iso",
-                  },
-                  Object {
-                    "buttonText": "Download RHCOS kernel",
-                    "name": "OCP-Download-RHCOS-kernel",
-                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-kernel-aarch64",
-                  },
-                  Object {
-                    "buttonText": "Download RHCOS initramfs",
-                    "name": "OCP-Download-RHCOS-initramfs",
-                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-initramfs.aarch64.img",
-                  },
-                  Object {
-                    "buttonText": "Download RHCOS rootfs",
-                    "name": "OCP-Download-RHCOS-rootfs",
-                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-rootfs.aarch64.img",
-                  },
-                ],
-                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal",
-              }
-            }
-            token={Object {}}
-            tool="aarch64-openshift-install"
-          />
-        </Instruction>
-        <Instruction>
-          <Text
-            component="h2"
-          >
-            Follow the instructions to configure your environment and install your cluster
-          </Text>
-          <GetStarted
-            cloudProviderID="armBareMetal"
-            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
-            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html"
-            isBMIPI={false}
-            pendoID="/"
-          />
-        </Instruction>
-        <Instruction>
-          <SubscriptionAndSupport />
-        </Instruction>
-      </Instructions>
-    </CardBody>
-  </Card>
-</Fragment>
-`;
-
 exports[`Every OCP instruction page should render:  AWS-arm-ipi 1`] = `
 <Fragment>
   <Card>
@@ -384,7 +317,7 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
+exports[`Every OCP instruction page should render:  Bare Metal-arm-upi 1`] = `
 <Fragment>
   <Card>
     <CardBody>
@@ -392,7 +325,74 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="bareMetal"
+            cloudProviderID="baremetal"
+            isBMIPI={false}
+            pendoID="/"
+            preReleasePageLink="/install/arm/pre-release"
+            rhcos={
+              Object {
+                "additionalInstructions": "Download the installer ISO image, or the kernel, initramfs, and rootfs.",
+                "downloads": Array [
+                  Object {
+                    "buttonText": "Download RHCOS ISO",
+                    "name": "OCP-Download-RHCOS-ISO",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live.aarch64.iso",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS kernel",
+                    "name": "OCP-Download-RHCOS-kernel",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-kernel-aarch64",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS initramfs",
+                    "name": "OCP-Download-RHCOS-initramfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-initramfs.aarch64.img",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS rootfs",
+                    "name": "OCP-Download-RHCOS-rootfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest/rhcos-live-rootfs.aarch64.img",
+                  },
+                ],
+                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal",
+              }
+            }
+            token={Object {}}
+            tool="aarch64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
+          >
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="baremetal"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
+exports[`Every OCP instruction page should render:  Bare Metal-x86-ipi 1`] = `
+<Fragment>
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="baremetal"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -406,7 +406,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="bareMetal"
+            cloudProviderID="baremetal"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
             isBMIPI={false}
@@ -422,7 +422,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-ipi 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
+exports[`Every OCP instruction page should render:  Bare Metal-x86-upi 1`] = `
 <Fragment>
   <Card>
     <CardBody>
@@ -430,7 +430,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="bareMetal"
+            cloudProviderID="baremetal"
             isBMIPI={false}
             pendoID="/"
             rhcos={
@@ -472,7 +472,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="bareMetal"
+            cloudProviderID="baremetal"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html"
             isBMIPI={false}
