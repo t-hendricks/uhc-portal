@@ -233,9 +233,20 @@ exports[`Every OCP instruction page should render:  Azure Stack Hub-upi 1`] = `
           <DownloadsAndPullSecretSection
             channel="stable"
             cloudProviderID="Azure Stack Hub"
-            displayRHCOSSection={true}
             isBMIPI={false}
             pendoID="/"
+            rhcos={
+              Object {
+                "downloads": Array [
+                  Object {
+                    "buttonText": "Download RHCOS VHD",
+                    "name": "OCP-Download-RHCOS-VHD",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-azurestack.x86_64.vhd.gz",
+                  },
+                ],
+                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html#installation-azure-user-infra-uploading-rhcos_installing-azure-stack-hub-user-infra",
+              }
+            }
             token={Object {}}
             tool="x86_64-openshift-install"
           />
@@ -386,9 +397,36 @@ exports[`Every OCP instruction page should render:  Bare Metal-upi 1`] = `
           <DownloadsAndPullSecretSection
             channel="stable"
             cloudProviderID="Bare Metal"
-            displayRHCOSSection={true}
             isBMIPI={false}
             pendoID="/"
+            rhcos={
+              Object {
+                "additionalInstructions": "Download the installer ISO image, or the kernel, initramfs, and rootfs.",
+                "downloads": Array [
+                  Object {
+                    "buttonText": "Download RHCOS ISO",
+                    "name": "OCP-Download-RHCOS-ISO",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live.x86_64.iso",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS kernel",
+                    "name": "OCP-Download-RHCOS-kernel",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-kernel-x86_64",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS initramfs",
+                    "name": "OCP-Download-RHCOS-initramfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-initramfs.x86_64.img",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS rootfs",
+                    "name": "OCP-Download-RHCOS-rootfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-rootfs.x86_64.img",
+                  },
+                ],
+                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal",
+              }
+            }
             token={Object {}}
             tool="x86_64-openshift-install"
           />
@@ -463,9 +501,20 @@ exports[`Every OCP instruction page should render:  GCP-upi 1`] = `
           <DownloadsAndPullSecretSection
             channel="stable"
             cloudProviderID="GCP"
-            displayRHCOSSection={true}
             isBMIPI={false}
             pendoID="/"
+            rhcos={
+              Object {
+                "downloads": Array [
+                  Object {
+                    "buttonText": "Download RHCOS tar",
+                    "name": "OCP-Download-RHCOS-tar",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-gcp.x86_64.tar.gz",
+                  },
+                ],
+                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra",
+              }
+            }
             token={Object {}}
             tool="x86_64-openshift-install"
           />
@@ -540,10 +589,80 @@ exports[`Every OCP instruction page should render:  IBM-Z 1`] = `
           <DownloadsAndPullSecretSection
             channel="stable"
             cloudProviderID="IBM-Z"
-            displayRHCOSSection={true}
             isBMIPI={false}
             pendoID="/"
             preReleasePageLink="/install/ibmz/pre-release"
+            rhcos={
+              Object {
+                "additionalInstructions": <Text
+                  component="div"
+                >
+                  <List>
+                    <ListItem>
+                      If you plan your installation with z/VM, download the initramfs, the kernel, and the rootfs files.
+                       
+                      <Text
+                        component="a"
+                        href="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z"
+                        rel="noreferrer noopener"
+                        target="_blank"
+                      >
+                        Learn more
+                         
+                        <ExternalLinkAltIcon
+                          color="currentColor"
+                          noVerticalAlign={false}
+                          size="sm"
+                        />
+                        .
+                      </Text>
+                    </ListItem>
+                    <ListItem>
+                      If you plan your installation with RHEL KVM, depending on the installation type you plan to perform, download the QCOW2 file or the initramfs, the kernel, and the rootfs files.
+                       
+                      <Text
+                        component="a"
+                        href="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm"
+                        rel="noreferrer noopener"
+                        target="_blank"
+                      >
+                        Learn more
+                         
+                        <ExternalLinkAltIcon
+                          color="currentColor"
+                          noVerticalAlign={false}
+                          size="sm"
+                        />
+                        .
+                         
+                      </Text>
+                    </ListItem>
+                  </List>
+                </Text>,
+                "downloads": Array [
+                  Object {
+                    "buttonText": "Download RHCOS initramfs",
+                    "name": "OCP-Download-RHCOS-initramfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-initramfs.s390x.img",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS kernel",
+                    "name": "OCP-Download-RHCOS-kernel",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-kernel-s390x",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS rootfs",
+                    "name": "OCP-Download-RHCOS-rootfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-rootfs.s390x.img",
+                  },
+                  Object {
+                    "buttonText": "Download QCOW2 image",
+                    "name": "OCP-Download-RHCOS-qcow2",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-qemu.s390x.qcow2.gz",
+                  },
+                ],
+              }
+            }
             token={Object {}}
             tool="s390x-openshift-install"
           />
@@ -580,9 +699,36 @@ exports[`Every OCP instruction page should render:  Platform Agnostic 1`] = `
           <DownloadsAndPullSecretSection
             channel="stable"
             cloudProviderID="Platform Agnostic"
-            displayRHCOSSection={true}
             isBMIPI={false}
             pendoID="/"
+            rhcos={
+              Object {
+                "additionalInstructions": "Download the installer ISO image, or the kernel, initramfs, and rootfs.",
+                "downloads": Array [
+                  Object {
+                    "buttonText": "Download RHCOS ISO",
+                    "name": "OCP-Download-RHCOS-ISO",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live.x86_64.iso",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS kernel",
+                    "name": "OCP-Download-RHCOS-kernel",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-kernel-x86_64",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS initramfs",
+                    "name": "OCP-Download-RHCOS-initramfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-initramfs.x86_64.img",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS rootfs",
+                    "name": "OCP-Download-RHCOS-rootfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-rootfs.x86_64.img",
+                  },
+                ],
+                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_platform_agnostic/installing-platform-agnostic.html#creating-machines-platform-agnostic",
+              }
+            }
             token={Object {}}
             tool="x86_64-openshift-install"
           />
@@ -619,10 +765,37 @@ exports[`Every OCP instruction page should render:  Power 1`] = `
           <DownloadsAndPullSecretSection
             channel="stable"
             cloudProviderID="Power"
-            displayRHCOSSection={true}
             isBMIPI={false}
             pendoID="/"
             preReleasePageLink="/install/power/pre-release"
+            rhcos={
+              Object {
+                "additionalInstructions": "Download either the installer ISO image or for PXE booting the initramfs, the kernel, and the rootfs files.",
+                "downloads": Array [
+                  Object {
+                    "buttonText": "Download RHCOS ISO",
+                    "name": "OCP-Download-RHCOS-ISO",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live.ppc64le.iso",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS initramfs",
+                    "name": "OCP-Download-RHCOS-initramfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-initramfs.ppc64le.img",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS kernel",
+                    "name": "OCP-Download-RHCOS-kernel",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-kernel-ppc64le",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS rootfs",
+                    "name": "OCP-Download-RHCOS-rootfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-rootfs.ppc64le.img",
+                  },
+                ],
+                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power",
+              }
+            }
             token={Object {}}
             tool="ppc64le-openshift-install"
           />
@@ -697,9 +870,20 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
           <DownloadsAndPullSecretSection
             channel="stable"
             cloudProviderID="Red Hat OpenStack Platform"
-            displayRHCOSSection={true}
             isBMIPI={false}
             pendoID="/"
+            rhcos={
+              Object {
+                "downloads": Array [
+                  Object {
+                    "buttonText": "Download RHCOS QCOW",
+                    "name": "OCP-Download-RHCOS-QCOW",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-openstack.x86_64.qcow2.gz",
+                  },
+                ],
+                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user",
+              }
+            }
             token={Object {}}
             tool="x86_64-openshift-install"
           />
@@ -850,9 +1034,20 @@ exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
           <DownloadsAndPullSecretSection
             channel="stable"
             cloudProviderID="VMware vSphere"
-            displayRHCOSSection={true}
             isBMIPI={false}
             pendoID="/"
+            rhcos={
+              Object {
+                "downloads": Array [
+                  Object {
+                    "buttonText": "Download RHCOS OVA",
+                    "name": "OCP-Download-RHCOS-OVA",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-vmware.x86_64.ova",
+                  },
+                ],
+                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere",
+              }
+            }
             token={Object {}}
             tool="x86_64-openshift-install"
           />

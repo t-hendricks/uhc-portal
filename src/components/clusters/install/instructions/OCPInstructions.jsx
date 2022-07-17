@@ -18,7 +18,7 @@ const OCPInstructions = (props) => {
   const {
     token,
     cloudProviderID,
-    displayRHCOSSection,
+    rhcos,
     installer = tools.X86INSTALLER,
     channel,
     docURL,
@@ -57,7 +57,7 @@ const OCPInstructions = (props) => {
                 token={token}
                 pendoID={pendoID}
                 cloudProviderID={cloudProviderID}
-                displayRHCOSSection={displayRHCOSSection}
+                rhcos={rhcos}
                 tool={installer}
                 channel={channel}
                 isBMIPI={isBMIPI}
@@ -87,7 +87,7 @@ const OCPInstructions = (props) => {
 OCPInstructions.propTypes = {
   token: PropTypes.object.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
-  displayRHCOSSection: PropTypes.bool,
+  rhcos: PropTypes.object,
   installer: PropTypes.oneOf(Object.values(tools)),
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
   docURL: PropTypes.string.isRequired,

@@ -28,81 +28,80 @@ exports[`InstallIBM renders correctly 1`] = `
       channel="stable"
       cloudProvider="IBM-Z"
       cloudProviderID="ibmz"
-      displayRHCOSSection={true}
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z.html"
       installer="s390x-openshift-install"
       isBMIPI={false}
       preReleasePageLink="/install/ibmz/pre-release"
-      rhcosAdditionalInstructions={
-        <Text
-          component="div"
-        >
-          <List>
-            <ListItem>
-              If you plan your installation with z/VM, download the initramfs, the kernel, and the rootfs files.
-               
-              <Text
-                component="a"
-                href="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z"
-                rel="noreferrer noopener"
-                target="_blank"
-              >
-                Learn more
+      rhcos={
+        Object {
+          "additionalInstructions": <Text
+            component="div"
+          >
+            <List>
+              <ListItem>
+                If you plan your installation with z/VM, download the initramfs, the kernel, and the rootfs files.
                  
-                <ExternalLinkAltIcon
-                  color="currentColor"
-                  noVerticalAlign={false}
-                  size="sm"
-                />
-                .
-              </Text>
-            </ListItem>
-            <ListItem>
-              If you plan your installation with RHEL KVM, depending on the installation type you plan to perform, download the QCOW2 file or the initramfs, the kernel, and the rootfs files.
-               
-              <Text
-                component="a"
-                href="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm"
-                rel="noreferrer noopener"
-                target="_blank"
-              >
-                Learn more
+                <Text
+                  component="a"
+                  href="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z.html#installation-user-infra-machines-iso-ibm-z_installing-ibm-z"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  Learn more
+                   
+                  <ExternalLinkAltIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                  />
+                  .
+                </Text>
+              </ListItem>
+              <ListItem>
+                If you plan your installation with RHEL KVM, depending on the installation type you plan to perform, download the QCOW2 file or the initramfs, the kernel, and the rootfs files.
                  
-                <ExternalLinkAltIcon
-                  color="currentColor"
-                  noVerticalAlign={false}
-                  size="sm"
-                />
-                .
-                 
-              </Text>
-            </ListItem>
-          </List>
-        </Text>
-      }
-      rhcosDownloads={
-        Array [
-          Object {
-            "buttonText": "Download RHCOS initramfs",
-            "name": "OCP-Download-RHCOS-initramfs",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-initramfs.s390x.img",
-          },
-          Object {
-            "buttonText": "Download RHCOS kernel",
-            "name": "OCP-Download-RHCOS-kernel",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-kernel-s390x",
-          },
-          Object {
-            "buttonText": "Download RHCOS rootfs",
-            "name": "OCP-Download-RHCOS-rootfs",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-rootfs.s390x.img",
-          },
-          Object {
-            "buttonText": "Download QCOW2 image",
-            "name": "OCP-Download-RHCOS-qcow2",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-qemu.s390x.qcow2.gz",
-          },
-        ]
+                <Text
+                  component="a"
+                  href="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z-kvm.html#installation-user-infra-machines-iso-ibm-z_kvm_installing-ibm-z-kvm"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  Learn more
+                   
+                  <ExternalLinkAltIcon
+                    color="currentColor"
+                    noVerticalAlign={false}
+                    size="sm"
+                  />
+                  .
+                   
+                </Text>
+              </ListItem>
+            </List>
+          </Text>,
+          "downloads": Array [
+            Object {
+              "buttonText": "Download RHCOS initramfs",
+              "name": "OCP-Download-RHCOS-initramfs",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-initramfs.s390x.img",
+            },
+            Object {
+              "buttonText": "Download RHCOS kernel",
+              "name": "OCP-Download-RHCOS-kernel",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-kernel-s390x",
+            },
+            Object {
+              "buttonText": "Download RHCOS rootfs",
+              "name": "OCP-Download-RHCOS-rootfs",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-live-rootfs.s390x.img",
+            },
+            Object {
+              "buttonText": "Download QCOW2 image",
+              "name": "OCP-Download-RHCOS-qcow2",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest/rhcos-qemu.s390x.qcow2.gz",
+            },
+          ],
+        }
       }
       title="Install OpenShift on IBM Z with user-provisioned infrastructure"
       token={Object {}}
