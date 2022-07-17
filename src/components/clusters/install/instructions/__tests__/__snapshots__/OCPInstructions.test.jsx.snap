@@ -67,7 +67,7 @@ exports[`Every OCP instruction page should render:  ARM Bare Metal-upi 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
+exports[`Every OCP instruction page should render:  AWS-arm-ipi 1`] = `
 <Fragment>
   <Card>
     <CardBody>
@@ -75,7 +75,7 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="armaws"
+            cloudProviderID="aws"
             isBMIPI={false}
             pendoID="/"
             preReleasePageLink="/install/arm/pre-release"
@@ -90,7 +90,7 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
             Follow the documentation to configure your AWS account and run the installer
           </Text>
           <GetStarted
-            cloudProviderID="armaws"
+            cloudProviderID="aws"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-account.html"
             isBMIPI={false}
@@ -106,7 +106,7 @@ exports[`Every OCP instruction page should render:  AWS-ipi 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  AWS-ipi 2`] = `
+exports[`Every OCP instruction page should render:  AWS-x86-ipi 1`] = `
 <Fragment>
   <Card>
     <CardBody>
@@ -144,7 +144,7 @@ exports[`Every OCP instruction page should render:  AWS-ipi 2`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  AWS-upi 1`] = `
+exports[`Every OCP instruction page should render:  AWS-x86-upi 1`] = `
 <Fragment>
   <Card>
     <CardBody>

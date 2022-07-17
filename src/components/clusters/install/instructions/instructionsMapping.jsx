@@ -32,30 +32,28 @@ const instructionsMapping = {
     cloudProvider: 'AWS',
     publicCloud: true,
     customizations: links.INSTALL_AWS_CUSTOMIZATIONS,
-    ipi: {
-      title: 'Install OpenShift on AWS with installer-provisioned infrastructure',
-      docURL: links.INSTALL_AWSIPI_DOCS_LANDING,
-      installer: tools.X86INSTALLER,
-      channel: channels.STABLE,
+    x86: {
+      ipi: {
+        title: 'Install OpenShift on AWS with installer-provisioned infrastructure',
+        docURL: links.INSTALL_AWSIPI_DOCS_LANDING,
+        installer: tools.X86INSTALLER,
+        channel: channels.STABLE,
+      },
+      upi: {
+        title: 'Install OpenShift on AWS with user-provisioned infrastructure',
+        docURL: links.INSTALL_AWSUPI_GETTING_STARTED,
+        installer: tools.X86INSTALLER,
+        channel: channels.STABLE,
+      },
     },
-    upi: {
-      title: 'Install OpenShift on AWS with user-provisioned infrastructure',
-      docURL: links.INSTALL_AWSUPI_GETTING_STARTED,
-      installer: tools.X86INSTALLER,
-      channel: channels.STABLE,
-    },
-    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propagate).',
-  },
-  armaws: {
-    cloudProvider: 'AWS',
-    publicCloud: true,
-    customizations: links.INSTALL_AWS_CUSTOMIZATIONS,
-    ipi: {
-      title: 'Install OpenShift on AWS with installer-provisioned ARM infrastructure',
-      docURL: links.INSTALL_AWSIPI_DOCS_LANDING,
-      installer: tools.ARMINSTALLER,
-      channel: channels.STABLE,
-      preReleasePageLink: '/install/arm/pre-release',
+    arm: {
+      ipi: {
+        title: 'Install OpenShift on AWS with installer-provisioned ARM infrastructure',
+        docURL: links.INSTALL_AWSIPI_DOCS_LANDING,
+        installer: tools.ARMINSTALLER,
+        channel: channels.STABLE,
+        preReleasePageLink: '/install/arm/pre-release',
+      },
     },
     getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propagate).',
   },
