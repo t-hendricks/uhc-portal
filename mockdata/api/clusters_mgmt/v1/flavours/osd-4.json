@@ -18,18 +18,15 @@
     "infra_instance_type": "r5.xlarge",
     "master_volume": {
       "iops": 1000,
-      "size": 350,
-      "type": "io1"
+      "size": 350
     },
     "infra_volume": {
       "iops": 100,
-      "size": 300,
-      "type": "gp2"
+      "size": 300
     },
     "worker_volume": {
       "iops": 100,
-      "size": 300,
-      "type": "gp2"
+      "size": 300
     }
   },
   "gcp": {
