@@ -138,8 +138,8 @@ exports[`Every OCP instruction page should render:  Alibaba Cloud 1`] = `
           </Text>
           <GetStarted
             cloudProviderID="alibaba"
-            customizations=""
-            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_alibaba/installing-alibaba-customizations.html"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_alibaba/installing-alibaba-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_alibaba/preparing-to-install-on-alibaba.html"
             isBMIPI={false}
             pendoID="/"
           />
