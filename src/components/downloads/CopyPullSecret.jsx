@@ -7,8 +7,8 @@ import {
 import { CopyIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import isEmpty from 'lodash/isEmpty';
-
-import { trackPendo } from '../../common/helpers';
+import { getTrackEvent } from '../../common/helpers';
+import AnalyticsWrapper from '../../common/AnalyticsWrapper';
 
 class CopyPullSecret extends React.Component {
   constructor(props) {
@@ -41,21 +41,27 @@ class CopyPullSecret extends React.Component {
     const linkText = (variant === 'link-inplace' && clicked) ? 'Copied!' : text;
 
     const button = (
-      <CopyToClipboard
-        text={isDisabled ? '' : tokenView}
-        onCopy={this.onCopy}
-      >
-        <Button
-          variant="link"
-          type="button"
-          tabIndex={0}
-          isAriaDisabled={isDisabled}
-          icon={<CopyIcon />}
-          onClick={() => trackPendo('OCP-Copy-PullSecret', pendoID)}
+      <AnalyticsWrapper render={analytics => (
+        <CopyToClipboard
+          text={isDisabled ? '' : tokenView}
+          onCopy={this.onCopy}
         >
-          {linkText}
-        </Button>
-      </CopyToClipboard>
+          <Button
+            variant="link"
+            type="button"
+            tabIndex={0}
+            isAriaDisabled={isDisabled}
+            icon={<CopyIcon />}
+            onClick={() => {
+              const eventObj = getTrackEvent('CopyPullSecret', null, pendoID);
+              analytics.track(eventObj.event, eventObj.properties);
+            }}
+          >
+            {linkText}
+          </Button>
+        </CopyToClipboard>
+      )}
+      />
     );
 
     if (variant === 'link-inplace') {
