@@ -138,68 +138,6 @@ const instructionsMapping = {
       docURL: links.INSTALL_ASHUPI_GETTING_STARTED,
     },
   },
-  ibmz: {
-    cloudProvider: 'IBM-Z',
-    title: 'Install OpenShift on IBM Z with user-provisioned infrastructure',
-    rhcos: {
-      additionalInstructions: (
-        <Text component="div">
-          <List>
-            <ListItem>
-              If you plan your installation with z/VM, download the initramfs,
-              the kernel, and the rootfs files.
-              {' '}
-              <Text component="a" href={links.INSTALL_IBMZ_LEARN_MORE_ZVM} target="_blank" rel="noreferrer noopener">
-                Learn more
-                {' '}
-                <ExternalLinkAltIcon size="sm" />
-                .
-              </Text>
-            </ListItem>
-            <ListItem>
-              If you plan your installation with RHEL KVM, depending on the installation
-              type you plan to perform, download the QCOW2 file or the initramfs,
-              the kernel, and the rootfs files.
-              {' '}
-              <Text component="a" href={links.INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM} target="_blank" rel="noreferrer noopener">
-                Learn more
-                {' '}
-                <ExternalLinkAltIcon size="sm" />
-                .
-                {' '}
-              </Text>
-            </ListItem>
-          </List>
-        </Text>
-      ),
-      downloads: [
-        {
-          buttonText: 'Download RHCOS initramfs',
-          name: 'OCP-Download-RHCOS-initramfs',
-          url: links.RHCOS_IBMZ_INITRAMFS,
-        },
-        {
-          buttonText: 'Download RHCOS kernel',
-          name: 'OCP-Download-RHCOS-kernel',
-          url: links.RHCOS_IBMZ_KERNEL,
-        },
-        {
-          buttonText: 'Download RHCOS rootfs',
-          name: 'OCP-Download-RHCOS-rootfs',
-          url: links.RHCOS_IBMZ_ROOTFS,
-        },
-        {
-          buttonText: 'Download QCOW2 image',
-          name: 'OCP-Download-RHCOS-qcow2',
-          url: links.RHCOS_IBMZ_QCOW,
-        },
-      ],
-    },
-    docURL: links.INSTALL_IBMZ_GETTING_STARTED,
-    preReleasePageLink: '/install/ibmz/pre-release',
-    installer: tools.IBMZINSTALLER,
-    channel: channels.STABLE,
-  },
   baremetal: {
     cloudProvider: 'Bare Metal',
     customizations: links.INSTALL_BAREMETAL_CUSTOMIZATIONS,
@@ -276,6 +214,69 @@ const instructionsMapping = {
         channel: channels.STABLE,
         docURL: links.INSTALL_BAREMETAL_UPI_GETTING_STARTED,
         preReleasePageLink: '/install/arm/pre-release',
+      },
+    },
+    s390x: {
+      upi: {
+        title: 'Install OpenShift on IBM Z with user-provisioned infrastructure',
+        rhcos: {
+          additionalInstructions: (
+            <Text component="div">
+              <List>
+                <ListItem>
+                  If you plan your installation with z/VM, download the initramfs,
+                  the kernel, and the rootfs files.
+                  {' '}
+                  <Text component="a" href={links.INSTALL_IBMZ_LEARN_MORE_ZVM} target="_blank" rel="noreferrer noopener">
+                    Learn more
+                    {' '}
+                    <ExternalLinkAltIcon size="sm" />
+                    .
+                  </Text>
+                </ListItem>
+                <ListItem>
+                  If you plan your installation with RHEL KVM, depending on the installation
+                  type you plan to perform, download the QCOW2 file or the initramfs,
+                  the kernel, and the rootfs files.
+                  {' '}
+                  <Text component="a" href={links.INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM} target="_blank" rel="noreferrer noopener">
+                    Learn more
+                    {' '}
+                    <ExternalLinkAltIcon size="sm" />
+                    .
+                    {' '}
+                  </Text>
+                </ListItem>
+              </List>
+            </Text>
+          ),
+          downloads: [
+            {
+              buttonText: 'Download RHCOS initramfs',
+              name: 'OCP-Download-RHCOS-initramfs',
+              url: links.RHCOS_IBMZ_INITRAMFS,
+            },
+            {
+              buttonText: 'Download RHCOS kernel',
+              name: 'OCP-Download-RHCOS-kernel',
+              url: links.RHCOS_IBMZ_KERNEL,
+            },
+            {
+              buttonText: 'Download RHCOS rootfs',
+              name: 'OCP-Download-RHCOS-rootfs',
+              url: links.RHCOS_IBMZ_ROOTFS,
+            },
+            {
+              buttonText: 'Download QCOW2 image',
+              name: 'OCP-Download-RHCOS-qcow2',
+              url: links.RHCOS_IBMZ_QCOW,
+            },
+          ],
+        },
+        docURL: links.INSTALL_IBMZ_GETTING_STARTED,
+        preReleasePageLink: '/install/ibmz/pre-release',
+        installer: tools.IBMZINSTALLER,
+        channel: channels.STABLE,
       },
     },
   },
