@@ -1,13 +1,11 @@
 import LoginPage from '../pageobjects/login.page';
-import GlobalNav from '../pageobjects/GlobalNav.page';
 import Downloads from '../pageobjects/Downloads.page';
 
 describe('Downloads page', async () => {
   // eslint-disable-next-line no-undef
   before(async () => {
-    await LoginPage.open();
+    await Downloads.open();
     await LoginPage.login();
-    await GlobalNav.navigateTo('Downloads');
   });
 
   it('can expand and collapse rows', async () => {
