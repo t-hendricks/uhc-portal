@@ -34,12 +34,12 @@ export class InstallPower extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.power.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.baremetal.ppc.upi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProviderID="power"
-            {...instructionsMapping.power}
+            cloudProviderID="baremetal"
+            {...instructionsMapping.baremetal.ppc.upi}
           />
         </PageSection>
       </>

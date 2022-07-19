@@ -216,6 +216,41 @@ const instructionsMapping = {
         preReleasePageLink: '/install/arm/pre-release',
       },
     },
+    ppc: {
+      upi: {
+        title: 'Install OpenShift on Power with user-provisioned infrastructure',
+        installer: tools.PPCINSTALLER,
+        channel: channels.STABLE,
+        rhcos: {
+          learnMoreURL: links.INSTALL_POWER_RHCOS_LEARN_MORE,
+          downloads: [
+            {
+              buttonText: 'Download RHCOS ISO',
+              name: 'OCP-Download-RHCOS-ISO',
+              url: links.RHCOS_POWER_ISO,
+            },
+            {
+              buttonText: 'Download RHCOS initramfs',
+              name: 'OCP-Download-RHCOS-initramfs',
+              url: links.RHCOS_POWER_INITRAMFS,
+            },
+            {
+              buttonText: 'Download RHCOS kernel',
+              name: 'OCP-Download-RHCOS-kernel',
+              url: links.RHCOS_POWER_KERNEL,
+            },
+            {
+              buttonText: 'Download RHCOS rootfs',
+              name: 'OCP-Download-RHCOS-rootfs',
+              url: links.RHCOS_POWER_ROOTFS,
+            },
+          ],
+          additionalInstructions: 'Download either the installer ISO image or for PXE booting the initramfs, the kernel, and the rootfs files.',
+        },
+        preReleasePageLink: '/install/power/pre-release',
+        docURL: links.INSTALL_POWER_GETTING_STARTED,
+      },
+    },
     s390x: {
       upi: {
         title: 'Install OpenShift on IBM Z with user-provisioned infrastructure',
@@ -338,40 +373,6 @@ const instructionsMapping = {
       installer: tools.X86INSTALLER,
       channel: channels.STABLE,
     },
-  },
-  power: {
-    cloudProvider: 'Power',
-    title: 'Install OpenShift on Power with user-provisioned infrastructure',
-    installer: tools.PPCINSTALLER,
-    channel: channels.STABLE,
-    rhcos: {
-      learnMoreURL: links.INSTALL_POWER_RHCOS_LEARN_MORE,
-      downloads: [
-        {
-          buttonText: 'Download RHCOS ISO',
-          name: 'OCP-Download-RHCOS-ISO',
-          url: links.RHCOS_POWER_ISO,
-        },
-        {
-          buttonText: 'Download RHCOS initramfs',
-          name: 'OCP-Download-RHCOS-initramfs',
-          url: links.RHCOS_POWER_INITRAMFS,
-        },
-        {
-          buttonText: 'Download RHCOS kernel',
-          name: 'OCP-Download-RHCOS-kernel',
-          url: links.RHCOS_POWER_KERNEL,
-        },
-        {
-          buttonText: 'Download RHCOS rootfs',
-          name: 'OCP-Download-RHCOS-rootfs',
-          url: links.RHCOS_POWER_ROOTFS,
-        },
-      ],
-      additionalInstructions: 'Download either the installer ISO image or for PXE booting the initramfs, the kernel, and the rootfs files.',
-    },
-    preReleasePageLink: '/install/power/pre-release',
-    docURL: links.INSTALL_POWER_GETTING_STARTED,
   },
   openstack: {
     cloudProvider: 'Red Hat OpenStack Platform',

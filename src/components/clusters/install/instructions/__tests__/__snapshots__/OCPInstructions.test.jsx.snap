@@ -384,6 +384,73 @@ exports[`Every OCP instruction page should render:  Bare Metal-arm-upi 1`] = `
 </Fragment>
 `;
 
+exports[`Every OCP instruction page should render:  Bare Metal-ppc-upi 1`] = `
+<Fragment>
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="baremetal"
+            isBMIPI={false}
+            pendoID="/"
+            preReleasePageLink="/install/power/pre-release"
+            rhcos={
+              Object {
+                "additionalInstructions": "Download either the installer ISO image or for PXE booting the initramfs, the kernel, and the rootfs files.",
+                "downloads": Array [
+                  Object {
+                    "buttonText": "Download RHCOS ISO",
+                    "name": "OCP-Download-RHCOS-ISO",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live.ppc64le.iso",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS initramfs",
+                    "name": "OCP-Download-RHCOS-initramfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-initramfs.ppc64le.img",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS kernel",
+                    "name": "OCP-Download-RHCOS-kernel",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-kernel-ppc64le",
+                  },
+                  Object {
+                    "buttonText": "Download RHCOS rootfs",
+                    "name": "OCP-Download-RHCOS-rootfs",
+                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-rootfs.ppc64le.img",
+                  },
+                ],
+                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power",
+              }
+            }
+            token={Object {}}
+            tool="ppc64le-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
+          >
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="baremetal"
+            customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_power/installing-ibm-power.html"
+            isBMIPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
 exports[`Every OCP instruction page should render:  Bare Metal-s390x-upi 1`] = `
 <Fragment>
   <Card>
@@ -777,73 +844,6 @@ exports[`Every OCP instruction page should render:  Platform Agnostic 1`] = `
             cloudProviderID="generic"
             customizations=""
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_platform_agnostic/installing-platform-agnostic.html"
-            isBMIPI={false}
-            pendoID="/"
-          />
-        </Instruction>
-        <Instruction>
-          <SubscriptionAndSupport />
-        </Instruction>
-      </Instructions>
-    </CardBody>
-  </Card>
-</Fragment>
-`;
-
-exports[`Every OCP instruction page should render:  Power 1`] = `
-<Fragment>
-  <Card>
-    <CardBody>
-      <Instructions>
-        <Instruction>
-          <DownloadsAndPullSecretSection
-            channel="stable"
-            cloudProviderID="power"
-            isBMIPI={false}
-            pendoID="/"
-            preReleasePageLink="/install/power/pre-release"
-            rhcos={
-              Object {
-                "additionalInstructions": "Download either the installer ISO image or for PXE booting the initramfs, the kernel, and the rootfs files.",
-                "downloads": Array [
-                  Object {
-                    "buttonText": "Download RHCOS ISO",
-                    "name": "OCP-Download-RHCOS-ISO",
-                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live.ppc64le.iso",
-                  },
-                  Object {
-                    "buttonText": "Download RHCOS initramfs",
-                    "name": "OCP-Download-RHCOS-initramfs",
-                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-initramfs.ppc64le.img",
-                  },
-                  Object {
-                    "buttonText": "Download RHCOS kernel",
-                    "name": "OCP-Download-RHCOS-kernel",
-                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-kernel-ppc64le",
-                  },
-                  Object {
-                    "buttonText": "Download RHCOS rootfs",
-                    "name": "OCP-Download-RHCOS-rootfs",
-                    "url": "https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest/rhcos-live-rootfs.ppc64le.img",
-                  },
-                ],
-                "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power",
-              }
-            }
-            token={Object {}}
-            tool="ppc64le-openshift-install"
-          />
-        </Instruction>
-        <Instruction>
-          <Text
-            component="h2"
-          >
-            Follow the instructions to configure your environment and install your cluster
-          </Text>
-          <GetStarted
-            cloudProviderID="power"
-            customizations=""
-            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_power/installing-ibm-power.html"
             isBMIPI={false}
             pendoID="/"
           />
