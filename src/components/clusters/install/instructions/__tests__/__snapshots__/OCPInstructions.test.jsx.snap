@@ -1029,7 +1029,7 @@ exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="vmware"
+            cloudProviderID="vsphere"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -1043,7 +1043,7 @@ exports[`Every OCP instruction page should render:  VMware vSphere-ipi 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="vmware"
+            cloudProviderID="vsphere"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned.html"
             isBMIPI={false}
@@ -1067,7 +1067,7 @@ exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="vmware"
+            cloudProviderID="vsphere"
             isBMIPI={false}
             pendoID="/"
             rhcos={
@@ -1093,7 +1093,7 @@ exports[`Every OCP instruction page should render:  VMware vSphere-upi 1`] = `
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="vmware"
+            cloudProviderID="vsphere"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere.html"
             isBMIPI={false}

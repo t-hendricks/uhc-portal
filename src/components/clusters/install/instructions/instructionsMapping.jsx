@@ -348,7 +348,7 @@ const instructionsMapping = {
     channel: channels.STABLE,
     docURL: links.INSTALL_GENERIC_GETTING_STARTED,
   },
-  vmware: {
+  vsphere: {
     cloudProvider: 'VMware vSphere',
     customizations: links.INSTALL_VSPHERE_CUSTOMIZATIONS,
     upi: {
