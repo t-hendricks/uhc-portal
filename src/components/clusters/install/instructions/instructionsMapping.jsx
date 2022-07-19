@@ -400,8 +400,8 @@ const instructionsMapping = {
       channel: channels.STABLE,
     },
   },
-  rhv: {
-    cloudProvider: 'Red Hat Virutalization',
+  ovirt: {
+    cloudProvider: 'Red Hat Virtualization',
     customizations: links.INSTALL_RHV_CUSTOMIZATIONS,
     ipi: {
       docURL: links.INSTALL_RHVIPI_GETTING_STARTED,

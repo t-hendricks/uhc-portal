@@ -945,7 +945,7 @@ exports[`Every OCP instruction page should render:  Red Hat OpenStack Platform-u
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1`] = `
+exports[`Every OCP instruction page should render:  Red Hat Virtualization-ipi 1`] = `
 <Fragment>
   <Card>
     <CardBody>
@@ -953,7 +953,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="rhv"
+            cloudProviderID="ovirt"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -967,7 +967,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="rhv"
+            cloudProviderID="ovirt"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-default.html"
             isBMIPI={false}
@@ -983,7 +983,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-ipi 1
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1`] = `
+exports[`Every OCP instruction page should render:  Red Hat Virtualization-upi 1`] = `
 <Fragment>
   <Card>
     <CardBody>
@@ -991,7 +991,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
         <Instruction>
           <DownloadsAndPullSecretSection
             channel="stable"
-            cloudProviderID="rhv"
+            cloudProviderID="ovirt"
             isBMIPI={false}
             pendoID="/"
             token={Object {}}
@@ -1005,7 +1005,7 @@ exports[`Every OCP instruction page should render:  Red Hat Virutalization-upi 1
             Follow the instructions to configure your environment and install your cluster
           </Text>
           <GetStarted
-            cloudProviderID="rhv"
+            cloudProviderID="ovirt"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-customizations.html"
             docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-user-infra.html"
             isBMIPI={false}
