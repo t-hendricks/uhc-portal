@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import * as Sentry from '@sentry/browser';
 import isEmpty from 'lodash/isEmpty';
 
 import { clustersConstants } from '../constants';
@@ -398,6 +399,12 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
       } else {
         throw e;
       }
+    }
+    try {
+      const { data: featureSupportLevels } = await assistedService.getAIFeatureSupportLevels();
+      cluster.data.aiSupportLevels = featureSupportLevels;
+    } catch (e) {
+      Sentry.captureException(new Error(`Failed to query feature support levels: ${JSON.stringify(e.response?.data)}`));
     }
   } else {
     cluster.data = fakeClusterFromSubscription(subscription.data);

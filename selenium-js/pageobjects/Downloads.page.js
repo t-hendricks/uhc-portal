@@ -53,6 +53,10 @@ class Downloads extends Page {
   )
 
   ocmTokenButton = async () => $('//button[contains(., "View API token")]')
+
+  async open() {
+    return super.open('/openshift/downloads?fake=true');
+  }
 }
 
 export default new Downloads();
