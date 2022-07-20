@@ -12,7 +12,7 @@ import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useC
 import ExternalLink from '../../../../common/ExternalLink';
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
-import { getTrackEvent } from '../../../../../common/helpers';
+import { getTrackEvent, trackEventsKeys } from '~/common/helpers';
 
 const GetStarted = ({
   docURL, pendoID, cloudProviderID, customizations, isBMIPI,
@@ -60,7 +60,11 @@ const GetStarted = ({
             target="_blank"
             variant="secondary"
             onClick={() => {
-              const eventObj = getTrackEvent('OcpInstallDocumentation', docURL, pendoID);
+              const eventObj = getTrackEvent(
+                trackEventsKeys.OcpInstallDocumentation,
+                docURL,
+                pendoID,
+              );
               analytics.track(eventObj.event, eventObj.properties);
             }}
           >

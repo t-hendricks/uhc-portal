@@ -5,7 +5,7 @@ import {
 } from '@patternfly/react-core';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
 import { tools } from '../../../../../common/installLinks.mjs';
-import { getTrackEvent } from '../../../../../common/helpers';
+import { getTrackEvent } from '~/common/helpers';
 
 const texts = {
   [tools.CRC]: 'Download OpenShift Local',

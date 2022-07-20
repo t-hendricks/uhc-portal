@@ -9,10 +9,11 @@ import {
   Title,
   EmptyStateBody, EmptyState,
 } from '@patternfly/react-core';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
+import { getTrackEvent, trackEventsKeys } from '~/common/helpers';
 import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
 import { loadOfflineToken } from '../../../../tokens/Tokens';
-
 import { persistor } from '../../../../../redux/store';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
@@ -43,8 +44,8 @@ function AWSAccountSelection({
   openAssociateAWSAccountModal,
   initialValue,
 }) {
+  const { analytics } = useChrome();
   const [isOpen, setIsOpen] = useState(false);
-
   const associateAWSAccountBtnRef = React.createRef();
 
   const onLoad = (token) => {
@@ -103,7 +104,18 @@ function AWSAccountSelection({
       {AWSAccountIDs.length === 0 && (
       <NoAssociatedAWSAccounts />
       )}
-      <Button ref={associateAWSAccountBtnRef} variant="secondary" onClick={onClick}>Associate AWS account</Button>
+      <Button
+        ref={associateAWSAccountBtnRef}
+        variant="secondary"
+        onClick={() => {
+          const eventObj = getTrackEvent(trackEventsKeys.AssociateAws);
+          analytics.track(eventObj.event, eventObj.properties);
+          onClick();
+        }}
+      >
+        Associate AWS account
+
+      </Button>
     </>
   );
 

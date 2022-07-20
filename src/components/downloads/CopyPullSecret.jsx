@@ -7,8 +7,8 @@ import {
 import { CopyIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import isEmpty from 'lodash/isEmpty';
-import { getTrackEvent } from '../../common/helpers';
-import AnalyticsWrapper from '../../common/AnalyticsWrapper';
+import { getTrackEvent } from '~/common/helpers';
+import AnalyticsWrapper from '~/common/AnalyticsWrapper';
 
 class CopyPullSecret extends React.Component {
   constructor(props) {

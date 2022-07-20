@@ -12,6 +12,7 @@ import {
   Title,
   Alert,
 } from '@patternfly/react-core';
+import { trackEventsKeys } from '~/common/helpers';
 import MultipleAccountsInfoBox from '../MultipleAccountsInfoBox';
 import PopoverHint from '../../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../../common/ExternalLink';
@@ -85,7 +86,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
                     bodyContent="One basic OCM role is needed per Red Hat organization to allow OpenShift Cluster Manager to detect the presence of AWS roles and policies required for ROSA."
                   />
                 </strong>
-                <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role">
+                <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role" trackEventsKey={trackEventsKeys.CopyOcmRoleCreateBasic}>
                   {rosaOcmRoleCLICommands.ocmRole}
                 </InstructionCommand>
               </GridItem>
@@ -102,7 +103,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
                     bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually during deployment"
                   />
                 </strong>
-                <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin">
+                <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin" trackEventsKey={trackEventsKeys.CopyOcmRoleCreateAdmin}>
                   {rosaOcmRoleCLICommands.adminOcmRole}
                 </InstructionCommand>
               </GridItem>
@@ -119,7 +120,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
           <Grid className="ocm-instruction-block">
 
             <GridItem sm={7} md={5}>
-              <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn">
+              <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn" trackEventsKey={trackEventsKeys.CopyOcmRoleLink}>
                 {rosaOcmRoleCLICommands.linkOcmRole}
               </InstructionCommand>
             </GridItem>

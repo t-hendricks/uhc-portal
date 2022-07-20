@@ -18,7 +18,7 @@ import links, { tools, channels } from '../../../common/installLinks.mjs';
 import Instruction from '../../common/Instruction';
 import Instructions from '../../common/Instructions';
 import PullSecretSection from '../install/instructions/components/PullSecretSection';
-import { getTrackEvent } from '../../../common/helpers';
+import { getTrackEvent, trackEventsKeys } from '~/common/helpers';
 
 const pendoID = window.location.pathname;
 const docURL = links.INSTALL_CRC_GETTING_STARTED;
@@ -94,7 +94,11 @@ const LocalTab = ({ token }) => {
                 target="_blank"
                 variant="link"
                 onClick={() => {
-                  const eventObj = getTrackEvent('CrcInstallDocumentation', docURL, pendoID);
+                  const eventObj = getTrackEvent(
+                    trackEventsKeys.CrcInstallDocumentation,
+                    docURL,
+                    pendoID,
+                  );
                   analytics.track(eventObj.event, eventObj.properties);
                 }}
               >

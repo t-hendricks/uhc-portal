@@ -90,9 +90,18 @@ const helpers = {
 
 const ocmResourceType = {
   ALL: 'all',
+  // OpenShift Local
   CRC: 'crc',
+  // OpenShift on AWS aka ROSA
   MOA: 'moa',
+  // OpenShift Container Platform (Self-managed)
   OCP: 'ocp',
+  // OpenShift Assisted Installer
+  OCP_ASSISTED_INSTALL: 'ocp-assistedinstall',
+  // OpenShift Dedicated
+  OSD: 'osd',
+  // OpenShift Dedicated Trial
+  OSDTRIAL: 'osdtrial',
 };
 
 const eventNames = {
@@ -228,7 +237,36 @@ const trackEvents = {
     link_name: 'pull-secret',
     ocm_resource_type: ocmResourceType.ALL,
   },
+  RefreshArns: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'refresh-arns',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  AssociateAws: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'associate-aws',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  CopyOcmRoleCreateBasic: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-ocm-role-create-basic',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  CopyOcmRoleCreateAdmin: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-ocm-role-create-admin',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  CopyOcmRoleLink: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-ocm-role-link',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
 };
+
+const trackEventsKeys = Object.keys(trackEvents).reduce(
+  (accumulator, value) => ({ ...accumulator, [value]: value }), {},
+);
 
 /**
  * OCM track events, see https://docs.google.com/spreadsheets/d/1C_WJWPy3sgE2ICaYHgWpWngj0A3Z3zl5GcstWySG9WE
@@ -238,8 +276,14 @@ const trackEvents = {
  * @param {String} path The current path of where the action was performed
  * @returns {Object} Object {[event]: string, [properties]: Object}
  */
-const getTrackEvent = (key, url, path = window.location.pathname) => (
-  {
+const getTrackEvent = (key, url, path = window.location.pathname) => {
+  if (!(key in trackEvents)) {
+    return {
+      event: null,
+      properties: {},
+    };
+  }
+  return {
     event: trackEvents[key].event,
     properties: {
       link_name: trackEvents[key].link_name,
@@ -247,8 +291,8 @@ const getTrackEvent = (key, url, path = window.location.pathname) => (
       current_path: path,
       ocm_resource_type: trackEvents[key].ocm_resource_type,
     },
-  }
-);
+  };
+};
 
 const shouldRefetchQuota = (organization) => {
   const lastFetchedQuota = organization.timestamp;
@@ -349,6 +393,7 @@ export {
   parseReduxFormTaints,
   goZeroTime2Null,
   getTrackEvent,
+  trackEventsKeys,
 };
 
 export default helpers;
