@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, FieldArray } from 'redux-form';
+import { Field, Fields, FieldArray } from 'redux-form';
 import {
   FormGroup,
   GridItem,
@@ -67,10 +67,10 @@ function ScaleSection({
     <>
       {/* Instance type */}
       <GridItem md={6}>
-        <Field
+        <Fields
           component={MachineTypeSelection}
-          name="machine_type"
-          validate={required}
+          names={['machine_type', 'machine_type_force_choice']}
+          validate={{ machine_type: required }}
           disabled={pending}
           isMultiAz={isMultiAz}
           isBYOC={isBYOC}
