@@ -9,54 +9,54 @@ describe('Downloads page', async () => {
   });
 
   it('can expand and collapse rows', async () => {
-    expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
+    await expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
 
     await (await Downloads.expandToggle('(rosa)')).click();
-    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
+    await expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
 
     await (await Downloads.expandToggle('(rosa)')).click();
-    expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
+    await expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
   });
 
   it('expand/collapse affects only selected category', async () => {
-    expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    expect(await Downloads.hiddenRowContaining('Get started with the OpenShift CLI')).toExist();
-    expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
+    await expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
+    await expect(await Downloads.hiddenRowContaining('the OpenShift client oc')).toExist();
+    await expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
 
     await (await Downloads.categoryDropdown())
       .selectByVisibleText('Command-line interface (CLI) tools');
     await (await Downloads.expandAll()).click();
-    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
-    expect(await Downloads.hiddenRowContaining('Helm charts')).not.toExist();
+    await expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
+    await expect(await Downloads.visibleRowContaining('the OpenShift client oc')).toExist();
+    await expect(await Downloads.hiddenRowContaining('Helm charts')).not.toExist();
 
     await (await Downloads.categoryDropdown()).selectByVisibleText('All categories');
-    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
-    expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
+    await expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
+    await expect(await Downloads.visibleRowContaining('the OpenShift client oc')).toExist();
+    await expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
 
     // Given mixed state, first click expands all.
     await (await Downloads.expandAll()).click();
-    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    expect(await Downloads.visibleRowContaining('Get started with the OpenShift CLI')).toExist();
-    expect(await Downloads.visibleRowContaining('Helm charts')).toExist();
+    await expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
+    await expect(await Downloads.visibleRowContaining('the OpenShift client oc')).toExist();
+    await expect(await Downloads.visibleRowContaining('Helm charts')).toExist();
 
     // Once all expanded, second click collapses all.
     await (await Downloads.collapseAll()).click();
-    expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    expect(await Downloads.hiddenRowContaining('Get started with the OpenShift CLI')).toExist();
-    expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
+    await expect(await Downloads.hiddenRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
+    await expect(await Downloads.hiddenRowContaining('the OpenShift client oc')).toExist();
+    await expect(await Downloads.hiddenRowContaining('Helm charts')).toExist();
   });
 
   it('selecting OS affects architecture options & href', async () => {
     const OSes = await Downloads.OSDropdown('(odo)');
     await OSes.scrollIntoView();
     await OSes.selectByVisibleText('Linux');
-    expect(await Downloads.enabledArchitectureOptions('(odo)')).toEqual([
+    await expect(await Downloads.enabledArchitectureOptions('(odo)')).toEqual([
       'x86_64', 'aarch64', 'ppc64le', 's390x',
     ]);
     const href = await Downloads.downloadHref('(odo)');
-    expect(href).toEqual('https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz');
+    await expect(href).toEqual('https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64.tar.gz');
 
     const architectures = await Downloads.architectureDropdown('(odo)');
     architectures.selectByVisibleText('ppc64le');
@@ -71,11 +71,11 @@ describe('Downloads page', async () => {
       (await Downloads.downloadHref('(odo)'))
       === 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-windows-amd64.exe.zip'
     ));
-    expect(await Downloads.architectureDropdown('(odo)')).toHaveAttr('disabled', true);
-    expect(await Downloads.allArchitectureOptions('(odo)')).toEqual([
+    await expect(await Downloads.architectureDropdown('(odo)')).toHaveAttr('disabled', true);
+    await expect(await Downloads.allArchitectureOptions('(odo)')).toEqual([
       'Select architecture', 'x86_64', 'aarch64', 'ppc64le', 's390x',
     ]);
-    expect(await Downloads.enabledArchitectureOptions('(odo)')).toEqual([
+    await expect(await Downloads.enabledArchitectureOptions('(odo)')).toEqual([
       'x86_64',
     ]);
 
@@ -83,22 +83,26 @@ describe('Downloads page', async () => {
   });
 
   it('selecting a category preserves OS & architecture of invisible sections', async () => {
-    await (await Downloads.OSDropdown('Helm')).selectByVisibleText('Linux');
-    await (await Downloads.architectureDropdown('Helm')).selectByVisibleText('s390x');
-    await (await Downloads.OSDropdown('OpenShift Local')).selectByVisibleText('Windows');
+    await expect(await Downloads.visibleRowContaining('(rosa)')).toExist();
+    await expect(await Downloads.visibleRowContaining('(helm)')).toExist();
+    await expect(await Downloads.visibleRowContaining('(crc)')).toExist();
+
+    await (await Downloads.OSDropdown('(helm)')).selectByVisibleText('Linux');
+    await (await Downloads.architectureDropdown('(helm)')).selectByVisibleText('s390x');
+    await (await Downloads.OSDropdown('(crc)')).selectByVisibleText('Windows');
 
     await (await Downloads.categoryDropdown()).selectByVisibleText('Tokens');
-    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).not.toExist();
-    expect(await Downloads.visibleRowContaining('Helm')).not.toExist();
-    expect(await Downloads.visibleRowContaining('OpenShift Local')).not.toExist();
+    await expect(await Downloads.visibleRowContaining('(rosa)')).not.toExist();
+    await expect(await Downloads.visibleRowContaining('(helm)')).not.toExist();
+    await expect(await Downloads.visibleRowContaining('(crc)')).not.toExist();
 
     await (await Downloads.categoryDropdown()).selectByVisibleText('All categories');
-    expect(await Downloads.visibleRowContaining('Manage your Red Hat OpenShift Service on AWS')).toExist();
-    expect(await Downloads.visibleRowContaining('Helm')).toExist();
-    expect(await Downloads.visibleRowContaining('OpenShift Local')).toExist();
+    await expect(await Downloads.visibleRowContaining('(rosa)')).toExist();
+    await expect(await Downloads.visibleRowContaining('(helm)')).toExist();
+    await expect(await Downloads.visibleRowContaining('(crc)')).toExist();
 
-    expect(await Downloads.OSDropdown('Helm')).toHaveValue('linux');
-    expect(await Downloads.architectureDropdown('Helm')).toHaveValue('s390x');
-    expect(await Downloads.OSDropdown('OpenShift Local')).toHaveValue('windows');
+    await expect(await Downloads.OSDropdown('(helm)')).toHaveValue('linux');
+    await expect(await Downloads.architectureDropdown('(helm)')).toHaveValue('s390x');
+    await expect(await Downloads.OSDropdown('(crc)')).toHaveValue('windows');
   });
 });

@@ -31,6 +31,7 @@ class InstallBareMetal extends Component {
           <InstructionsChooser
             cloudName="Bare Metal"
             showAI
+            preferAI
             ipiPageLink="/install/metal/installer-provisioned"
             upiPageLink="/install/metal/user-provisioned"
           />

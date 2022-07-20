@@ -60,7 +60,7 @@ fi
 set -x
 
 # The version should be the short git hash:
-VERSION="$(git log --pretty=format:'%h' -n 1)"
+VERSION="$(git rev-parse --short HEAD)"
 SUBJECT="$(git log --pretty=format:'%s' -n 1)"
 COMMIT_DATE="$(git log --pretty=format:'%ci' -n 1)"
 

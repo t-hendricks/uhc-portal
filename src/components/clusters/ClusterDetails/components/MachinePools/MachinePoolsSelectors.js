@@ -1,6 +1,5 @@
 import get from 'lodash/get';
 
-import sortMachineTypes from '../../../CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/MachineTypeSelection/sortMachineTypes';
 import { availableNodesFromQuota } from '../../../common/quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../../common/subscriptionTypes';
 
@@ -15,15 +14,7 @@ const hasMachinePoolsQuotaSelector = (state) => {
   const cloudProviderID = cluster.cloud_provider?.id;
   const billingModel = get(cluster, 'billing_model', billingModels.STANDARD);
 
-  const hasNodesQuotaForType = (machineTypeID) => {
-    const machineTypesByID = state.machineTypes.typesByID;
-
-    const machineType = machineTypesByID[machineTypeID];
-
-    if (!machineType) {
-      return false;
-    }
-
+  const hasNodesQuotaForType = (machineType) => {
     const resourceName = machineType.generic_name;
 
     const quotaParams = {
@@ -40,9 +31,8 @@ const hasMachinePoolsQuotaSelector = (state) => {
     return nodesAvailable >= 1;
   };
 
-  const sortedMachineTypes = sortMachineTypes(state, cloudProviderID);
-
-  return sortedMachineTypes.some(type => hasNodesQuotaForType(type.id));
+  const types = get(state.machineTypes.types, cloudProviderID, []);
+  return types.some(type => hasNodesQuotaForType(type.id));
 };
 
 const hasOrgLevelAutoscaleCapability = (state) => {

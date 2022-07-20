@@ -114,6 +114,11 @@ module.exports = async (_env, argv) => {
         exposes: {
           './RootApp': path.resolve(srcDir, 'chrome-main.jsx'),
         },
+        shared: [
+          {
+            '@scalprum/react-core': { requiredVersion: '*', singleton: true },
+          },
+        ],
       }),
       new ChunkMapperPlugin({
         modules: [moduleName],

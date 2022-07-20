@@ -9,6 +9,7 @@ const InstructionsChooser = (props) => {
   const {
     cloudName,
     showAI = false,
+    preferAI = false,
     hideIPI = false,
     ipiPageLink,
     hideUPI = false,
@@ -18,15 +19,17 @@ const InstructionsChooser = (props) => {
   return (
     <>
       <Card>
-        <div className="pf-c-content ocm-page">
-          <Title headingLevel="h3" size="2xl">
-            {cloudName}
-            : Select an installation type
-          </Title>
-          <div className="flex-container">
-            {showAI && (
+        <CardBody>
+          <div className="pf-c-content ocm-page">
+            <Title headingLevel="h3" size="2xl">
+              {cloudName}
+              : Select an installation type
+            </Title>
+            <div className="flex-container">
+              {showAI && (
               <>
                 <Link to={aiPageLink} className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
+                  {preferAI && <CardBadge isRecommended />}
                   <CardBody className="ocm-c-ipi-upi-infra-card--body">
                     <ConnectedIcon alt="Installer-Provisioned Infrastructure" />
                     <Title headingLevel="h3" size="lg">Assisted Installer</Title>
@@ -35,11 +38,11 @@ const InstructionsChooser = (props) => {
                   </CardBody>
                 </Link>
               </>
-            )}
-            {!hideIPI && (
+              )}
+              {!hideIPI && (
               <>
                 <Link to={ipiPageLink} className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
-                  <CardBadge isRecommened />
+                  {!preferAI && <CardBadge isRecommended />}
                   <CardBody className="ocm-c-ipi-upi-infra-card--body">
                     <SyncAltIcon alt="Installer-Provisioned Infrastructure" />
                     <Title headingLevel="h3" size="lg">Installer-provisioned infrastructure</Title>
@@ -49,8 +52,8 @@ const InstructionsChooser = (props) => {
                   </CardBody>
                 </Link>
               </>
-            )}
-            {!hideUPI && (
+              )}
+              {!hideUPI && (
               <>
                 <Link to={upiPageLink} className="ocm-c-ipi-upi-infra-card infra-card pf-c-card">
                   <CardBadge isHidden />
@@ -61,9 +64,10 @@ const InstructionsChooser = (props) => {
                   </CardBody>
                 </Link>
               </>
-            )}
+              )}
+            </div>
           </div>
-        </div>
+        </CardBody>
       </Card>
     </>
   );
@@ -72,6 +76,7 @@ const InstructionsChooser = (props) => {
 InstructionsChooser.propTypes = {
   cloudName: PropTypes.string.isRequired,
   showAI: PropTypes.bool,
+  preferAI: PropTypes.bool,
   hideIPI: PropTypes.bool,
   ipiPageLink: PropTypes.string,
   hideUPI: PropTypes.bool,

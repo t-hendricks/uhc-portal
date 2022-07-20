@@ -49,7 +49,7 @@ class UpgradeWizard extends React.Component {
 
   onNext = (newStep) => {
     const {
-      clusterDetails, postSchedule, getUnMetClusterAcknowledgements, setGate,
+      clusterDetails, postSchedule, getUnMetClusterAcknowledgements, setGate, rejectGate,
     } = this.props;
     const { selectedVersion, scheduleType, upgradeTimestamp } = this.state;
     const MINUTES_IN_MS = 1000 * 60;
@@ -58,24 +58,36 @@ class UpgradeWizard extends React.Component {
         ? new Date(new Date().getTime() + 6 * MINUTES_IN_MS).toISOString()
         : upgradeTimestamp;
 
+      let error = null;
+
       const promises = getUnMetClusterAcknowledgements(selectedVersion)
-        .map(upgradeGate => (
-          clusterService.postClusterGateAgreement(clusterDetails.cluster.id, upgradeGate.id)
-            .then(() => {
-              setGate(upgradeGate.id);
-            }).catch(() => {
-              // let pass through - will be caught when user tries to post schedule
-            })
-        ));
+        .map((upgradeGate) => {
+          if (!error) {
+            return (
+              // post upgrade_gate agreement
+              clusterService.postClusterGateAgreement(clusterDetails.cluster.id, upgradeGate.id)
+                .then(() => {
+                  setGate(upgradeGate.id);
+                }).catch((e) => {
+                  error = e;
+                })
+            );
+          }
+          return true;
+        });
 
       Promise.allSettled(promises)
         .then(() => {
-          postSchedule(clusterDetails.cluster.id, {
-            schedule_type: 'manual',
-            upgrade_type: 'OSD',
-            next_run: nextRun,
-            version: selectedVersion,
-          });
+          if (!error) {
+            postSchedule(clusterDetails.cluster.id, {
+              schedule_type: 'manual',
+              upgrade_type: 'OSD',
+              next_run: nextRun,
+              version: selectedVersion,
+            });
+          } else {
+            rejectGate(error);
+          }
         });
     }
   }
@@ -247,6 +259,7 @@ UpgradeWizard.propTypes = {
   }),
   getUnMetClusterAcknowledgements: PropTypes.func,
   setGate: PropTypes.func,
+  rejectGate: PropTypes.func,
 };
 
 UpgradeWizard.modalName = modals.UPGRADE_WIZARD;
