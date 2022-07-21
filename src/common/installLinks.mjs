@@ -120,6 +120,8 @@ const links = {
   INSTALL_GCP_VPC: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-vpc.html`,
   RHCOS_GCPUPI_TAR_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-gcp.x86_64.tar.gz`,
 
+  INSTALL_NUTANIXIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_nutanix/preparing-to-install-on-nutanix.html`,
+
   INSTALL_OSPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-installer-custom.html`,
   INSTALL_OSPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-user.html`,
   INSTALL_OSPUPI_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-user.html#installation-osp-creating-image_installing-openstack-user`,

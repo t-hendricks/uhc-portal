@@ -22,6 +22,8 @@ const ocpTableRows = [
     'Pre-existing infrastructure'],
   [(<><Link to="/install/power/user-provisioned">Power</Link></>),
     'Pre-existing infrastructure'],
+  [(<><Link to="/install/nutanix/installer-provisioned">Nutanix AOS</Link></>),
+    'Full stack automation'],
   [(<><Link to="/install/openstack">Red Hat OpenStack</Link></>),
     'Full stack automation and pre-existing infrastructure'],
   [(<><Link to="/install/rhv">Red Hat Virtualization</Link></>),

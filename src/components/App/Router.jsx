@@ -53,6 +53,7 @@ import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
 import ConnectedInstallIBMCloud from '../clusters/install/InstallIBMCloud';
 import ConnectedInstallMultiAzureIPI from '../clusters/install/InstallMultiAzureIPI';
 import ConnectedInstallMultiPreRelease from '../clusters/install/InstallMultiPreRelease';
+import ConnectedInstallNutanixIPI from '../clusters/install/InstallNutanixIPI';
 import InstallOSP from '../clusters/install/InstallOSP';
 import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
 import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
@@ -168,6 +169,7 @@ function Router({ history }) {
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
             <Route path="/install/gcp" component={InstallGCP} />
+            <Route path="/install/nutanix/installer-provisioned" component={ConnectedInstallNutanixIPI} />
             <Route path="/install/openstack/installer-provisioned" component={ConnectedInstallOSPIPI} />
             <Route path="/install/openstack/user-provisioned" component={ConnectedInstallOSPUPI} />
             <Route path="/install/openstack" component={InstallOSP} />

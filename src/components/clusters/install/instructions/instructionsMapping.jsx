@@ -373,6 +373,15 @@ const instructionsMapping = {
     channel: channels.STABLE,
     docURL: links.INSTALL_GENERIC_GETTING_STARTED,
   },
+  nutanix: {
+    cloudProvider: 'Nutanix AOS',
+    ipi: {
+      title: 'Install OpenShift on Nutanix AOS with installer-provisioned infrastructure',
+      docURL: links.INSTALL_NUTANIXIPI_GETTING_STARTED,
+      installer: tools.X86INSTALLER,
+      channel: channels.STABLE,
+    },
+  },
   vsphere: {
     cloudProvider: 'VMware vSphere',
     customizations: links.INSTALL_VSPHERE_CUSTOMIZATIONS,

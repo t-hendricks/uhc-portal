@@ -887,6 +887,45 @@ exports[`Every OCP instruction page should render:  IBM Cloud 1`] = `
 </Fragment>
 `;
 
+exports[`Every OCP instruction page should render:  Nutanix AOS-ipi 1`] = `
+<Fragment>
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="nutanix"
+            isBMIPI={false}
+            pendoID="/"
+            token={Object {}}
+            tool="x86_64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
+          >
+            Follow the instructions to configure your environment and install your cluster
+          </Text>
+          <GetStarted
+            cloudProviderID="nutanix"
+            customizations=""
+            docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_nutanix/preparing-to-install-on-nutanix.html"
+            isBMIPI={false}
+            isUPI={false}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
 exports[`Every OCP instruction page should render:  Platform Agnostic 1`] = `
 <Fragment>
   <Card>
