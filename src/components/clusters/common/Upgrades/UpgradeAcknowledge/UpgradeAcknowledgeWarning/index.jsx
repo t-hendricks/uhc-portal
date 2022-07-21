@@ -11,10 +11,6 @@ import {
   getHasScheduledManual,
 } from '../UpgradeAcknowledgeSelectors';
 
-import {
-  getEnableMinorVersionUpgrades,
-} from '../../MinorVersionUpgradeAlert/MinorVersionUpgradeSelectors';
-
 const mapStateToProps = state => ({
   clusterId: getClusterIdFromState(state),
   openshiftVersion: getClusterOpenShiftVersion(state),
@@ -23,7 +19,6 @@ const mapStateToProps = state => ({
   isManual: getIsManual(state),
   getAcks: getClusterAcks(state),
   hasScheduledManual: getHasScheduledManual(state),
-  isMinorVersionUpgradesEnabled: getEnableMinorVersionUpgrades(state),
 });
 
 const mapDispatchToProps = {

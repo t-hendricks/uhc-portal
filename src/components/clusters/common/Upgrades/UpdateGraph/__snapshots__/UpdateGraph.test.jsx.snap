@@ -30,6 +30,7 @@ exports[`<UpdateGraph /> should render 1`] = `
     isPlain={true}
     showConfirm={true}
   />
+  <Connect(MinorVersionUpgradeConfirm) />
 </div>
 `;
 
@@ -73,6 +74,7 @@ exports[`<UpdateGraph /> should render when additional versions are available 1`
     isPlain={true}
     showConfirm={true}
   />
+  <Connect(MinorVersionUpgradeConfirm) />
 </div>
 `;
 
@@ -99,5 +101,6 @@ exports[`<UpdateGraph /> should render with no updates available 1`] = `
     isPlain={true}
     showConfirm={true}
   />
+  <Connect(MinorVersionUpgradeConfirm) />
 </div>
 `;
