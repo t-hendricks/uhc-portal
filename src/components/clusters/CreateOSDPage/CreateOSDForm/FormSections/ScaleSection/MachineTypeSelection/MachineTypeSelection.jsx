@@ -5,16 +5,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  FormGroup,
   Select,
   SelectGroup,
   SelectOption,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../../../common/ErrorBox';
+import PopoverHint from '../../../../../../common/PopoverHint';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
 import { noMachineTypes } from '../../../../../../../common/helpers';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../../../../../common/quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../../../../common/subscriptionTypes';
+import { constants } from '../../../CreateOSDFormConstants';
 import sortMachineTypes, { machineCategories } from './sortMachineTypes';
 
 /** Returns useful info about the machine type - CPUs, RAM, [GPUs]. */
@@ -254,12 +257,20 @@ class MachineTypeSelection extends React.Component {
         displayedMachineTypes.find(machineType => machineType.id === input.value) || null,
       );
       return (
-        <>
-          {(touched && error) && (<span className="error">{error}</span>)}
+        <FormGroup
+          label="Compute node instance type"
+          isRequired
+          validated={touched && error ? 'error' : 'default'}
+          isHelperTextBeforeField
+          helperTextInvalid={touched && error}
+          fieldId="node_type"
+          labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
+        >
           <Select
             variant="single"
             selections={selection}
             isOpen={isOpen}
+            placeholderText="Select instance type"
             onToggle={this.onToggle}
             onSelect={changeHandler}
             maxHeight={inModal ? 300 : 600}
@@ -267,7 +278,7 @@ class MachineTypeSelection extends React.Component {
           >
             {options}
           </Select>
-        </>
+        </FormGroup>
       );
     }
 

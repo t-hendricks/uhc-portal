@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import MachineTypeSelection from './MachineTypeSelection';
 
 import {
@@ -128,7 +128,7 @@ describe('<MachineTypeSelection />', () => {
     beforeEach(() => {
       onChange = jest.fn();
       getMachineTypes = jest.fn();
-      wrapper = mount(
+      wrapper = shallow(
         <MachineTypeSelection
           machineTypes={baseState}
           input={{ onChange }}
@@ -164,7 +164,7 @@ describe('<MachineTypeSelection />', () => {
 
       onChange = jest.fn();
       getMachineTypes = jest.fn();
-      wrapper = mount(
+      wrapper = shallow(
         <MachineTypeSelection
           machineTypes={state}
           input={{ onChange }}
@@ -199,7 +199,7 @@ describe('<MachineTypeSelection />', () => {
     beforeEach(() => {
       onChange = jest.fn();
       getMachineTypes = jest.fn();
-      wrapper = mount(
+      wrapper = shallow(
         <MachineTypeSelection
           machineTypes={state}
           input={{ onChange }}
@@ -238,7 +238,7 @@ describe('<MachineTypeSelection />', () => {
         const quota = rhQuotaList;
         onChange = jest.fn();
         getMachineTypes = jest.fn();
-        wrapper = mount(
+        wrapper = shallow(
           <MachineTypeSelection
             machineTypes={state}
             input={{ onChange }}
@@ -277,7 +277,7 @@ describe('<MachineTypeSelection />', () => {
         const quota = CCSQuotaList;
         onChange = jest.fn();
         getMachineTypes = jest.fn();
-        wrapper = mount(
+        wrapper = shallow(
           <MachineTypeSelection
             machineTypes={state}
             input={{ onChange }}
@@ -305,7 +305,6 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('displays only machine types with quota', () => {
-        wrapper.find('SelectToggle').simulate('click');
         const types = wrapper.find('SelectOption').getElements().map(e => e.key);
         expect(types).toContain('m5.xlarge');
       });
@@ -316,7 +315,7 @@ describe('<MachineTypeSelection />', () => {
         const quota = CCSOneNodeRemainingQuotaList;
         onChange = jest.fn();
         getMachineTypes = jest.fn();
-        wrapper = mount(
+        wrapper = shallow(
           <MachineTypeSelection
             machineTypes={state}
             input={{ onChange }}
