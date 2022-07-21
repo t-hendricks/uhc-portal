@@ -88,7 +88,7 @@ const helpers = {
   nestedIsEmpty,
 };
 
-const ocmResourceType = {
+export const ocmResourceType = {
   ALL: 'all',
   CRC: 'crc',
   MOA: 'moa',
@@ -228,6 +228,14 @@ const trackEvents = {
     link_name: 'pull-secret',
     ocm_resource_type: ocmResourceType.ALL,
   },
+  WizardNext: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'wizard-next',
+  },
+  WizardEnd: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'wizard-submit',
+  },
 };
 
 /**
@@ -236,16 +244,22 @@ const trackEvents = {
  * @param {String} key The object key to return metadata for
  * @param {String} url Link URL
  * @param {String} path The current path of where the action was performed
+ * @param {String} resourceType The resource type, for allowed values see ocmResourceType
  * @returns {Object} Object {[event]: string, [properties]: Object}
  */
-const getTrackEvent = (key, url, path = window.location.pathname) => (
+const getTrackEvent = (
+  key,
+  url,
+  path = window.location.pathname,
+  resourceType = trackEvents[key]?.ocm_resource_type ?? ocmResourceType.ALL,
+) => (
   {
     event: trackEvents[key].event,
     properties: {
       link_name: trackEvents[key].link_name,
       ...(url && { link_url: url }),
       current_path: path,
-      ocm_resource_type: trackEvents[key].ocm_resource_type,
+      ocm_resource_type: resourceType,
     },
   }
 );

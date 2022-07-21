@@ -1,18 +1,18 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
-
+import { PersistGate } from 'redux-persist/integration/react';
 import { Banner, Wizard, PageSection } from '@patternfly/react-core';
-
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
-import { PersistGate } from 'redux-persist/integration/react';
-
-import PageTitle from '../../../common/PageTitle';
-import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
-import Breadcrumbs from '../../../common/Breadcrumbs';
-
-import { shouldRefetchQuota, scrollToFirstError } from '../../../../common/helpers';
+import config from '../../../../config';
+import {
+  shouldRefetchQuota,
+  scrollToFirstError,
+  getTrackEvent,
+  ocmResourceType,
+} from '../../../../common/helpers';
+import { persistor } from '../../../../redux/store';
 import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
@@ -23,17 +23,19 @@ import ClusterProxyScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterProxy
 import CIDRScreen from '../../CreateOSDPage/CreateOSDWizard/CIDRScreen';
 import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
 import ReviewClusterScreen from '../../CreateOSDPage/CreateOSDWizard/ReviewClusterScreen';
-import config from '../../../../config';
+
+import withAnalytics from '../../../../hoc/withAnalytics';
 import Unavailable from '../../../common/Unavailable';
+import PageTitle from '../../../common/PageTitle';
+import Breadcrumbs from '../../../common/Breadcrumbs';
+import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
+import ErrorBoundary from '../../../App/ErrorBoundary';
+import ClusterRolesScreen from './ClusterRolesScreen';
+import AccountsRolesScreen from './AccountsRolesScreen';
+import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
 import './createROSAWizard.scss';
-import AccountsRolesScreen from './AccountsRolesScreen';
-import ClusterRolesScreen from './ClusterRolesScreen';
-import ErrorBoundary from '../../../App/ErrorBoundary';
-
-import { persistor } from '../../../../redux/store';
-import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
 class CreateROSAWizardInternal extends React.Component {
   state = {
@@ -99,11 +101,13 @@ class CreateROSAWizardInternal extends React.Component {
   }
 
   onNext = ({ id }) => {
-    const { stepIdReached } = this.state;
+    const { stepIdReached, currentStepId } = this.state;
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
     this.setState({ currentStepId: id });
+
+    this.trackWizardNavigation('WizardNext', currentStepId);
   };
 
   onGoToStep = ({ id }) => this.setState({ currentStepId: id });
@@ -127,7 +131,12 @@ class CreateROSAWizardInternal extends React.Component {
     return getUserRole();
   }
 
-  beforeOnNext = async (onNext) => {
+  onBeforeSubmit = (onSubmit) => {
+    this.trackWizardNavigation('WizardEnd');
+    onSubmit();
+  }
+
+  onBeforeNext = async (onNext) => {
     const {
       touch, formErrors, getUserRoleResponse,
     } = this.props;
@@ -139,12 +148,26 @@ class CreateROSAWizardInternal extends React.Component {
     if (errorFieldNames?.length > 0 && !isCurrentStepValid) {
       touch(errorFieldNames);
       scrollToFirstError(formErrors);
-    } else if (currentStepId === 10 && !getUserRoleResponse?.fulfilled) {
-      await this.getUserRoleInfo();
-      onNext();
-    } else {
-      onNext();
+      return;
     }
+    if (currentStepId === 10 && !getUserRoleResponse?.fulfilled) {
+      await this.getUserRoleInfo();
+    }
+    onNext();
+  }
+
+  // todo - move this to an external utility, to share among the wizards? where to?
+  trackWizardNavigation = (eventKey, currentStepId = '') => {
+    const { analytics } = this.props;
+    // todo - figure out if that's ok as the path (considering we can't rely on the URL)
+    const currentStepPath = `${window.location.pathname}/${currentStepId}`;
+    const eventObj = getTrackEvent(
+      eventKey,
+      null,
+      currentStepPath,
+      ocmResourceType.MOA,
+    );
+    analytics.track(eventObj.event, eventObj.properties);
   }
 
   render() {
@@ -301,7 +324,7 @@ class CreateROSAWizardInternal extends React.Component {
     }
 
     if (orgWasFetched
-     && !hasProductQuota) {
+      && !hasProductQuota) {
       return (
         <Redirect to="/create" />
       );
@@ -372,9 +395,9 @@ class CreateROSAWizardInternal extends React.Component {
         {title}
         <PageSection>
           {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
-          <Banner variant="warning">
-            On submit, a fake ROSA cluster will be created.
-          </Banner>
+            <Banner variant="warning">
+              On submit, a fake ROSA cluster will be created.
+            </Banner>
           )}
           <div className="ocm-page">
             {isErrorModalOpen && <CreateClusterErrorModal />}
@@ -392,7 +415,8 @@ class CreateROSAWizardInternal extends React.Component {
                 footer={(!createClusterResponse.pending ? (
                   <CreateRosaWizardFooter
                     onSubmit={onSubmit}
-                    onBeforeNext={goToNext => this.beforeOnNext(goToNext)}
+                    onBeforeNext={this.onBeforeNext}
+                    onBeforeSubmit={this.onBeforeSubmit}
                   />
                 ) : <></>
                 )}
@@ -474,4 +498,4 @@ CreateROSAWizardInternal.propTypes = {
 
 CreateROSAWizard.propTypes = { ...CreateROSAWizardInternal.propTypes };
 
-export default CreateROSAWizard;
+export default withAnalytics(CreateROSAWizard);
