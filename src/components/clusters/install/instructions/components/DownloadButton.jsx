@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {
   Button,
 } from '@patternfly/react-core';
-
-import { trackPendo } from '../../../../../common/helpers';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
 import { tools } from '../../../../../common/installLinks.mjs';
+import { getTrackEvent } from '../../../../../common/helpers';
 
 const texts = {
   [tools.CRC]: 'Download OpenShift Local',
@@ -18,26 +18,6 @@ const texts = {
   [tools.ROSA]: 'Download the ROSA CLI',
 };
 
-const pendoEvents = {
-  [tools.OC]: 'OCP-Download-CLITools',
-  [tools.BUTANE]: 'Download-BUTANE-CLI',
-  [tools.COREOS_INSTALLER]: 'Download-CoreOSInstaller-CLI',
-  [tools.CRC]: 'OCP-Download-CRC',
-  [tools.HELM]: 'Download-HELM-CLI',
-  [tools.X86INSTALLER]: 'OCP-Download-X86Installer',
-  [tools.IBMZINSTALLER]: 'OCP-Download-IBMZInstaller',
-  [tools.PPCINSTALLER]: 'OCP-Download-PPCInstaller',
-  [tools.ARMINSTALLER]: 'OCP-Download-ARMInstaller',
-  [tools.KN]: 'Download-KN-CLI',
-  [tools.OCM]: 'Download-OCM-CLI',
-  [tools.ODO]: 'Download-ODO-CLI',
-  [tools.OPERATOR_SDK]: 'Download-OSDK-CLI',
-  [tools.OPM]: 'Download-OPM-CLI',
-  [tools.RHOAS]: 'Download-RHOAS-CLI',
-  [tools.ROSA]: 'Download-ROSA-CLI',
-  [tools.MIRROR_REGISTRY]: 'Download-Mirror-Registry',
-};
-
 const DownloadButton = ({
   url,
   disabled = false,
@@ -47,8 +27,8 @@ const DownloadButton = ({
   text = '',
   name = '',
 }) => {
+  const { analytics } = useChrome();
   const buttonText = text || texts[tool];
-  const event = name || pendoEvents[tool];
   const downloadProps = download ? (
     { download: true }
   ) : (
@@ -62,7 +42,8 @@ const DownloadButton = ({
       variant="secondary"
       className={`download-button tool-${tool.toLowerCase()}`}
       onClick={() => {
-        trackPendo(event, pendoID);
+        const eventObj = getTrackEvent(tool, url, pendoID);
+        analytics.track(name || eventObj.event, name ? pendoID : eventObj.properties);
       }}
       disabled={!url || disabled}
       {...downloadProps}

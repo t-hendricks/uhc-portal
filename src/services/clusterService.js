@@ -99,6 +99,11 @@ const deleteClusterGroupUser = (clusterID, groupID, userID) => apiRequest({
   url: `/api/clusters_mgmt/v1/clusters/${clusterID}/groups/${groupID}/users/${encodeURIComponent(userID)}`,
 });
 
+const getFlavour = flavourID => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/flavours/${flavourID}`,
+});
+
 const getMachineTypes = () => apiRequest({
   method: 'get',
   url: '/api/clusters_mgmt/v1/machine_types',
@@ -397,6 +402,11 @@ const getOperatorRoleCommands = (awsAccountId, clusterId, installerRoleARN) => a
   url: `/api/clusters_mgmt/v1/clusters/${clusterId}/sts_commands`,
 });
 
+const getLimitedSupportReasons = clusterId => apiRequest({
+  method: 'get',
+  url: `/api/clusters_mgmt/v1/clusters/${clusterId}/limited_support_reasons`,
+});
+
 const clusterService = {
   getClusters,
   postNewCluster,
@@ -411,6 +421,7 @@ const clusterService = {
   addClusterGroupUser,
   deleteClusterGroupUser,
   deleteIdentityProvider,
+  getFlavour,
   getMachineTypes,
   archiveCluster,
   hibernateCluster,
@@ -445,6 +456,7 @@ const clusterService = {
   getClusterGateAgreements,
   postClusterGateAgreement,
   getOperatorRoleCommands,
+  getLimitedSupportReasons,
 };
 export {
   postUpgradeSchedule,

@@ -11,97 +11,104 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
 import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
 import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
 import links, { tools, channels } from '../../../common/installLinks.mjs';
 import Instruction from '../../common/Instruction';
 import Instructions from '../../common/Instructions';
 import PullSecretSection from '../install/instructions/components/PullSecretSection';
-import { trackPendo } from '../../../common/helpers';
+import { getTrackEvent } from '../../../common/helpers';
 
 const pendoID = window.location.pathname;
 const docURL = links.INSTALL_CRC_GETTING_STARTED;
 
-const LocalTab = ({ token }) => (
-  <>
-    <PageSection>
-      <Split hasGutter>
-        <Title headingLevel="h2">
-          Red Hat OpenShift Local
-        </Title>
-        <SplitItem>
-          <Label variant="outline">
-            local sandbox
-          </Label>
-        </SplitItem>
-      </Split>
-      <TextContent>
-        <Text component="p">
-          Create a minimal cluster on your desktop/laptop for local development and testing.
-        </Text>
-        <Text component="p" className="ocm-secondary-text">
-          <b>Note: </b>
-          Your Openshift Local installation won&apos;t appear in the OpenShift Cluster Manager
-          unless you enable cluster monitoring and telemetry.
-        </Text>
-      </TextContent>
-      <Divider className="pf-u-mt-lg pf-u-mb-xl" />
-      {token.error && (
-        <>
-          <TokenErrorAlert token={token} />
-          <div className="pf-u-mb-lg" />
-        </>
-      )}
-      <Instructions>
-        <Instruction>
-          <Text component="h3">Download what you need to get started</Text>
-          <Text component="h4">OpenShift Local</Text>
-          <DownloadAndOSSelection
-            token={token}
-            tool={tools.CRC}
-            channel={channels.STABLE}
-            pendoID={pendoID}
-          />
-          <Text component="h3">Pull secret</Text>
-          <PullSecretSection token={token} pendoID={pendoID} />
-        </Instruction>
-        <Instruction>
-          <Text component="h3">
-            Follow the documentation to install OpenShift Local
-          </Text>
+const LocalTab = ({ token }) => {
+  const { analytics } = useChrome();
+  return (
+    <>
+      <PageSection>
+        <Split hasGutter>
+          <Title headingLevel="h2">
+            Red Hat OpenShift Local
+          </Title>
+          <SplitItem>
+            <Label variant="outline">
+              local sandbox
+            </Label>
+          </SplitItem>
+        </Split>
+        <TextContent>
           <Text component="p">
-            Run
-            {' '}
-            <code>crc setup</code>
-            {' '}
-            to set up your host operating system for the OpenShift
-            Local virtual machine.
+            Create a minimal cluster on your desktop/laptop for local development and testing.
           </Text>
-          <Text component="p">
-            Then, run
-            {' '}
-            <code>crc start</code>
-            {' '}
-            to create a minimal OpenShift 4 cluster on your computer.
+          <Text component="p" className="ocm-secondary-text">
+            <b>Note: </b>
+            Your Openshift Local installation won&apos;t appear in the OpenShift Cluster Manager
+            unless you enable cluster monitoring and telemetry.
           </Text>
-          <Text component="p">
-            <a
-              href={docURL}
-              rel="noreferrer noopener"
-              target="_blank"
-              variant="link"
-              onClick={() => trackPendo('OCP-Download-OfficialDocumentation', pendoID)}
-            >
-              View the OpenShift Local Getting started guide
+        </TextContent>
+        <Divider className="pf-u-mt-lg pf-u-mb-xl" />
+        {token.error && (
+          <>
+            <TokenErrorAlert token={token} />
+            <div className="pf-u-mb-lg" />
+          </>
+        )}
+        <Instructions>
+          <Instruction>
+            <Text component="h3">Download what you need to get started</Text>
+            <Text component="h4">OpenShift Local</Text>
+            <DownloadAndOSSelection
+              token={token}
+              tool={tools.CRC}
+              channel={channels.STABLE}
+              pendoID={pendoID}
+            />
+            <Text component="h3">Pull secret</Text>
+            <PullSecretSection token={token} pendoID={pendoID} />
+          </Instruction>
+          <Instruction>
+            <Text component="h3">
+              Follow the documentation to install OpenShift Local
+            </Text>
+            <Text component="p">
+              Run
               {' '}
-              <ExternalLinkAltIcon color="#0066cc" size="sm" />
-            </a>
-          </Text>
-        </Instruction>
-      </Instructions>
-    </PageSection>
-  </>
-);
+              <code>crc setup</code>
+              {' '}
+              to set up your host operating system for the OpenShift
+              Local virtual machine.
+            </Text>
+            <Text component="p">
+              Then, run
+              {' '}
+              <code>crc start</code>
+              {' '}
+              to create a minimal OpenShift 4 cluster on your computer.
+            </Text>
+            <Text component="p">
+              <a
+                href={docURL}
+                rel="noreferrer noopener"
+                target="_blank"
+                variant="link"
+                onClick={() => {
+                  const eventObj = getTrackEvent('CrcInstallDocumentation', docURL, pendoID);
+                  analytics.track(eventObj.event, eventObj.properties);
+                }}
+              >
+                View the OpenShift Local Getting started guide
+                {' '}
+                <ExternalLinkAltIcon color="#0066cc" size="sm" />
+              </a>
+            </Text>
+          </Instruction>
+        </Instructions>
+      </PageSection>
+    </>
+  );
+};
 
 LocalTab.propTypes = {
   token: PropTypes.object.isRequired,

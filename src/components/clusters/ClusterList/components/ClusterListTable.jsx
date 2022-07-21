@@ -170,7 +170,7 @@ function ClusterListTable(props) {
         <span className="cluster-status-string">
           {icon}
           {description}
-          {hasLimitedSupport ? linkToClusterDetails(cluster, <Label color="red">Limited Support</Label>) : null}
+          {hasLimitedSupport ? linkToClusterDetails(cluster, <Label color="red">Limited support</Label>) : null}
         </span>
       );
     };

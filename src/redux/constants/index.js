@@ -5,6 +5,7 @@ import * as userConstants from './userConstants';
 import * as clusterLogConstants from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
 import * as cloudProviderConstants from './cloudProviderConstants';
 import * as costConstants from './costConstants';
+import * as flavourConstants from './flavourConstants';
 import * as machineTypesConstants from './machineTypesConstants';
 import * as subscriptionsConstants from './subscriptionsConstants';
 import * as persistentStorageConstants from './persistentStorageConstants';
@@ -21,6 +22,7 @@ export {
   clusterLogConstants,
   cloudProviderConstants,
   costConstants,
+  flavourConstants,
   machineTypesConstants,
   subscriptionsConstants,
   persistentStorageConstants,

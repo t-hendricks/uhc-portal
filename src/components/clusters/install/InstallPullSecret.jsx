@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { PageSection } from '@patternfly/react-core';
+import Breadcrumbs from '../../common/Breadcrumbs';
 import PageTitle from '../../common/PageTitle';
 
 import { tollboothActions } from '../../../redux/actions';
@@ -21,9 +22,17 @@ export class InstallPullSecret extends Component {
 
   render() {
     const { token } = this.props;
+    const breadcrumbs = (
+      <Breadcrumbs path={[
+        { label: 'Downloads', path: '/downloads' },
+        { label: 'Pull secret' },
+      ]}
+      />
+    );
+
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" />
+        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
         <PageSection className="ocp-instructions">
           <InstructionsPullSecret token={token} />
         </PageSection>

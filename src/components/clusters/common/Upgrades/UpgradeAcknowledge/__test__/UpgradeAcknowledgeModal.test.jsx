@@ -138,6 +138,8 @@ describe('<UpgradeAcknowledgeModal >', () => {
     expect(mockCloseModal).not.toHaveBeenCalled();
 
     expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.pf-m-danger')).toHaveLength(1);
+
+    // Show two alerts due to two different errors
+    expect(wrapper.find('.pf-m-danger')).toHaveLength(2);
   });
 });

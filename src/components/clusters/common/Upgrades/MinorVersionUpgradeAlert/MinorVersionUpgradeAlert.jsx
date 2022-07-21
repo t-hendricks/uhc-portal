@@ -90,7 +90,7 @@ const MinorVersionUpgradeAlert = ({
             {' '}
             at the time you selected.
             {' '}
-            <ExternalLink href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}>
+            <ExternalLink href={isRosa ? links.ROSA_UPGRADES : links.OSD_UPGRADES}>
               Learn more about updates
             </ExternalLink>
           </p>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Alert,
   ModalVariant,
 } from '@patternfly/react-core';
 import UpgradeAcknowledgeStep from '../UpgradeAcknowledgeStep';
 import Modal from '../../../../../common/Modal/Modal';
-
+import { getErrorState } from '../../../../../../common/errors';
+import ErrorBox from '../../../../../common/ErrorBox';
 import clusterService, { patchUpgradeSchedule } from '../../../../../../services/clusterService';
 
 const UpgradeAcknowledgeModal = (props) => {
@@ -54,7 +54,7 @@ const UpgradeAcknowledgeModal = (props) => {
         );
         setUpgradePolicy(patchUpgradeScheduleResponse.data);
       } catch (error) {
-        foundErrors.push(error.response.data.reason);
+        foundErrors.push(error);
       }
     }
 
@@ -66,7 +66,7 @@ const UpgradeAcknowledgeModal = (props) => {
           .then(() => {
             setGate(upgradeUpdateId);
           })
-          .catch(e => Promise.reject(e.response.data.reason))
+          .catch(e => Promise.reject(e))
       ));
 
       const response = await Promise.allSettled(promises);
@@ -112,9 +112,9 @@ const UpgradeAcknowledgeModal = (props) => {
           confirmed={isConfirmed => setConfirmed(isConfirmed)}
         />
       ) : (
-        <Alert variant="danger" isInline title="Failed to save administrator acknowledgement.">
-          {errors.map(error => (<p>{error}</p>))}
-        </Alert>
+        errors.map(error => (
+          <ErrorBox message="Failed to save administrator acknowledgement." response={getErrorState({ payload: error })} />
+        ))
       )}
     </Modal>
   );

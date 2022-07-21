@@ -215,7 +215,7 @@ const state = {
 
 describe('sort machine type', () => {
   it('sorts correctly for aws', () => {
-    const sorted = sortMachineTypes(state, 'aws');
+    const sorted = sortMachineTypes(state.machineTypes, 'aws');
     expect(sorted.map(e => e.id)).toEqual([
       'm5.xlarge',
       'm5.2xlarge',
@@ -230,7 +230,7 @@ describe('sort machine type', () => {
     ]);
   });
   it('sorts correctly for gcp', () => {
-    const sorted = sortMachineTypes(state, 'gcp');
+    const sorted = sortMachineTypes(state.machineTypes, 'gcp');
     expect(sorted.map(e => e.id)).toEqual([
       'n1-standard-1',
       'n1-standard-2',

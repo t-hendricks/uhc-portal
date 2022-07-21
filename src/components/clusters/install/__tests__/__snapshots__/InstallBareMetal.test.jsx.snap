@@ -27,6 +27,7 @@ exports[`BareMetal install renders correctly 1`] = `
     <InstructionsChooser
       cloudName="Bare Metal"
       ipiPageLink="/install/metal/installer-provisioned"
+      preferAI={true}
       showAI={true}
       upiPageLink="/install/metal/user-provisioned"
     />

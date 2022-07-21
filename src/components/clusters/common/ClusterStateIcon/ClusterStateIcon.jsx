@@ -13,7 +13,7 @@ import {
   AsleepIcon,
   NotStartedIcon,
 } from '@patternfly/react-icons';
-// need to disable eslint for the react tokens because it's silly - it warns about these names
+
 // eslint-disable-next-line camelcase
 import { global_danger_color_100, global_success_color_100 } from '@patternfly/react-tokens';
 import { Spinner } from '@patternfly/react-core';
@@ -31,7 +31,6 @@ function ClusterStateIcon(props) {
     return <ExclamationCircleIcon color={global_danger_color_100.value} {...iconProps} />;
   }
 
-  // Icons from http://openshift.github.io/openshift-origin-design/web-console/4.0-designs/status/status
   switch (clusterState) {
     case clusterStates.WAITING:
     case clusterStates.PENDING:

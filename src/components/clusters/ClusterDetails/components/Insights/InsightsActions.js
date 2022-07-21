@@ -21,17 +21,17 @@ import {
 } from './InsightsConstants';
 import { insightsService } from '../../../../../services';
 
-const fetchSingleClusterInsights = (clusterId, isManaged) => insightsService
-  .getClusterInsights(clusterId, isManaged)
+const fetchSingleClusterInsights = clusterId => insightsService
+  .getClusterInsights(clusterId)
   .then(response => ({
     insightsData: get(response, 'data.report', {}),
     clusterId,
     status: response.status,
   }));
 
-export const fetchClusterInsights = (clusterId, isManaged) => dispatch => dispatch({
+export const fetchClusterInsights = clusterId => dispatch => dispatch({
   type: GET_CLUSTER_INSIGHTS,
-  payload: fetchSingleClusterInsights(clusterId, isManaged),
+  payload: fetchSingleClusterInsights(clusterId),
   meta: {
     clusterId,
   },
