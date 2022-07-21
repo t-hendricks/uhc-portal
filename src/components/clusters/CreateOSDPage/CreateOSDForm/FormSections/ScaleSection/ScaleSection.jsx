@@ -67,27 +67,20 @@ function ScaleSection({
     <>
       {/* Instance type */}
       <GridItem md={6}>
-        <FormGroup
-          label="Compute node instance type"
-          isRequired
-          fieldId="node_type"
-          labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
-        >
-          <Field
-            component={MachineTypeSelection}
-            name="machine_type"
-            validate={required}
-            disabled={pending}
-            isMultiAz={isMultiAz}
-            isBYOC={isBYOC}
-            onChange={handleMachineTypesChange}
-            cloudProviderID={cloudProviderID}
-            product={product}
-            isMachinePool={isMachinePool}
-            billingModel={billingModel}
-            inModal={inModal}
-          />
-        </FormGroup>
+        <Field
+          component={MachineTypeSelection}
+          name="machine_type"
+          validate={required}
+          disabled={pending}
+          isMultiAz={isMultiAz}
+          isBYOC={isBYOC}
+          onChange={handleMachineTypesChange}
+          cloudProviderID={cloudProviderID}
+          product={product}
+          isMachinePool={isMachinePool}
+          billingModel={billingModel}
+          inModal={inModal}
+        />
       </GridItem>
       <GridItem md={6} />
       {/* autoscale */}
