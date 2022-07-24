@@ -5,26 +5,34 @@ import withAnalytics from '../withAnalytics';
 
 describe('withAnalytics', () => {
   let wrapper;
-  let contents;
 
   beforeEach(() => {
     const AnalyticsContext = withAnalytics(() => (
       <div>test</div>
     ));
     wrapper = shallow(<AnalyticsContext />);
-    contents = wrapper.dive();
   });
 
-  it('should match snapshot', () => {
-    expect(contents).toMatchSnapshot();
-    // (no use in testing the wrapper; that's the templating-engine's domain)
+  describe('wrapper', () => {
+    it('should render successfully', () => {
+      expect(wrapper.html()).not.toBe(null);
+    });
   });
 
-  it('should render successfully', () => {
-    expect(wrapper.html()).not.toBe(null);
-  });
+  describe('contents', () => {
+    let contents;
 
-  it('should render the wrapped component', () => {
-    expect(contents.text()).toEqual('test');
+    beforeAll(() => {
+      contents = wrapper.dive();
+    });
+
+    it('should match snapshot', () => {
+      expect(contents).toMatchSnapshot();
+    });
+
+    it('should render successfully', () => {
+      expect(contents.html()).not.toBe(null);
+      expect(contents.text()).toEqual('test');
+    });
   });
 });
