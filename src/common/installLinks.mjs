@@ -74,6 +74,7 @@ const links = {
   OSD_PRIVATE_CLUSTER: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_private_connections/private-cluster.html`,
   OSD_CLUSTER_WIDE_PROXY: `${OSD_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
   OSD_UPGRADES: `${OSD_DOCS_BASE}/upgrading/osd-upgrades.html`,
+  OSD_LIMITED_SUPPORT_DEFINITION: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
@@ -205,6 +206,7 @@ const links = {
   ROSA_SERVICE_ETCD_ENCRYPTION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-sdpolicy-etcd-encryption_rosa-service-definition`,
   ROSA_CLUSTER_WIDE_PROXY: `${ROSA_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
   ROSA_UPGRADES: `${ROSA_DOCS_BASE}/upgrading/rosa-upgrading-sts.html`,
+  ROSA_LIMITED_SUPPORT_DEFINITION: `${ROSA_DOCS_BASE}/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-limited-support_rosa-service-definition`,
 
   ROSA_AWS_STS_PREREQUISITES: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html`,
   ROSA_AWS_ACCOUNT_ASSOCIATION: `${ROSA_DOCS_BASE}/rosa_planning/rosa-sts-aws-prereqs.html#rosa-associating-account_rosa-sts-aws-prereqs`,
@@ -214,6 +216,7 @@ const links = {
   ROSA_AWS_IAM_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-account-wide-roles-and-policies_rosa-sts-about-iam-resources`,
   ROSA_AWS_ACCOUNT_ROLES: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-understanding-ocm-role_rosa-sts-about-iam-resources`,
   ROSA_AWS_OPERATOR_ROLE_PREFIX: `${ROSA_DOCS_BASE}/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-about-operator-role-prefixes_rosa-sts-about-iam-resources`,
+
   AWS_CONSOLE: 'https://console.aws.amazon.com/rosa/home',
   AWS_CLI: 'https://aws.amazon.com/cli/',
 

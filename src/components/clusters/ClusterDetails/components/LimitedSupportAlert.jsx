@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Alert, List, ListItem } from '@patternfly/react-core';
+import {
+  Alert, DescriptionList, DescriptionListGroup, DescriptionListTerm, DescriptionListDescription,
+} from '@patternfly/react-core';
 import ExternalLink from '../../../common/ExternalLink';
 
-function LimitedSupportAlert({ limitedSupportReasons }) {
+import links from '../../../../common/installLinks.mjs';
+
+function LimitedSupportAlert({ limitedSupportReasons, isROSA, isOSD }) {
   if (!limitedSupportReasons || limitedSupportReasons.length === 0) {
     return null;
   }
@@ -18,18 +22,27 @@ function LimitedSupportAlert({ limitedSupportReasons }) {
       isInline
       isExpandable={limitedSupportReasons.length > 1}
       title={title}
+      actionLinks={isROSA || isOSD ? (
+        <ExternalLink
+          href={isROSA
+            ? links.ROSA_LIMITED_SUPPORT_DEFINITION
+            : links.OSD_LIMITED_SUPPORT_DEFINITION}
+        >
+          Learn more
+        </ExternalLink>
+      ) : null}
     >
-      <List isPlain>
+      <DescriptionList>
         {limitedSupportReasons.map(reason => (
-          <ListItem>
-            {reason.summary}
-            {' '}
-            {reason.details ? (
-              <ExternalLink href={reason.details}>Learn more</ExternalLink>
-            ) : null}
-          </ListItem>
+          <DescriptionListGroup>
+            {reason.summary
+              ? <DescriptionListTerm>{reason.summary}</DescriptionListTerm> : null}
+            {reason.details
+              ? <DescriptionListDescription>{reason.details}</DescriptionListDescription> : null}
+
+          </DescriptionListGroup>
         ))}
-      </List>
+      </DescriptionList>
     </Alert>
   );
 }
@@ -40,6 +53,8 @@ LimitedSupportAlert.propTypes = {
     summary: PropTypes.string,
     details: PropTypes.string,
   })),
+  isROSA: PropTypes.bool,
+  isOSD: PropTypes.bool,
 };
 
 export default LimitedSupportAlert;
