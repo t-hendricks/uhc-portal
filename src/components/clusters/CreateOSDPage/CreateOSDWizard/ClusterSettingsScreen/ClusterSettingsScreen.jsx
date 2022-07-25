@@ -47,7 +47,7 @@ function ClusterSettingsScreen({
           <Title headingLevel="h3">Cluster details</Title>
         </GridItem>
         <BasicFieldsSection
-        /* TODO move some props to index.js */
+          /* TODO move some props to index.js */
           cloudProviderID={cloudProviderID}
           isBYOC={isByoc}
           isMultiAz={isMultiAz}
@@ -57,7 +57,7 @@ function ClusterSettingsScreen({
           billingModel={billingModel}
           isWizard
         />
-        { !isByoc && !isRosa && (
+        {!isByoc && !isRosa && (
           <>
             <GridItem md={6}>
               <FormGroup
@@ -98,7 +98,7 @@ function ClusterSettingsScreen({
             </GridItem>
           </>
         )}
-        <UserWorkloadMonitoringSection parent="create" disableUVM={false} />
+        <UserWorkloadMonitoringSection parent="create" disableUVM={false} planType={product} />
         <GridItem>
           <Title headingLevel="h3">Encryption</Title>
         </GridItem>
