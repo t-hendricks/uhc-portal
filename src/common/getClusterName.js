@@ -9,7 +9,7 @@ const getClusterName = (cluster) => {
   if (!cluster) {
     return '';
   }
-  const clusterName = get(cluster, 'subscription.display_name', false) || cluster.display_name || cluster.name || cluster.external_id;
+  const clusterName = get(cluster, 'subscription.display_name', false) || cluster.name || cluster.external_id;
   if (clusterName === undefined) {
     if (get(cluster, 'subscription.status', false) === 'Deprovisioned') {
       const subscriptionId = get(cluster, 'subscription.id', false);
