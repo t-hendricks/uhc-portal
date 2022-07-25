@@ -10,7 +10,7 @@ describe('<LimitedSupportAlert />', () => {
       href: '/api/clusters_mgmt/v1/limited_support_reasons/reasonId1',
       id: 'reasonId1',
       summary: 'the version of the cluster id too far behind',
-      details: 'https:://support.redhat.com/version_too_old',
+      details: 'More details about the version being too far behind the supported version',
       creation_time: '2021-07-23T20:19:53.053814Z',
       detection_type: 'auto',
     },
@@ -19,7 +19,7 @@ describe('<LimitedSupportAlert />', () => {
       href: '/api/clusters_mgmt/v1/limited_support_reasons/reasonId2',
       id: 'reasonId2',
       summary: 'This is another sample reason',
-      details: 'https:://support.redhat.com/some_other_reason',
+      details: 'This is the detailed information about another sample reason',
       creation_time: '2021-07-23T20:19:53.053814Z',
       detection_type: 'auto',
     },
@@ -40,44 +40,31 @@ describe('<LimitedSupportAlert />', () => {
     expect(wrapper.find('Alert').props().title).toEqual('This cluster has limited support due to multiple reasons.');
 
     // Check for correct number of reasons
-    expect(wrapper.find('Alert List ListItem')).toHaveLength(reasons.length);
+    expect(wrapper.find('Alert DescriptionListGroup')).toHaveLength(reasons.length);
 
-    // Check "learn more links for each reason"
-    wrapper.find('Alert List ListItem').forEach((item, index) => {
-      const ExternalLink = item.find('ExternalLink');
-      expect(ExternalLink).toHaveLength(1);
-      expect(ExternalLink.props().href).toEqual(reasons[index].details);
+    // Check for summary and details for each reason
+    wrapper.find('Alert DescriptionListGroup').forEach((item, index) => {
+      const summary = item.find('DescriptionListTerm');
+      const details = item.find('DescriptionListDescription');
+
+      expect(summary.children().text()).toEqual(reasons[index].summary);
+      expect(details.children().text()).toEqual(reasons[index].details);
     });
   });
 
-  it('Single limited support item is shown', () => {
-    expect(wrapper.isEmptyRender()).toBeFalsy();
-
-    wrapper.setProps({ limitedSupportReasons: [reasons[0]] });
-    expect(wrapper.find('Alert').props().title).toEqual('This cluster has limited support.');
-
-    // Check for correct number of reasons
-    expect(wrapper.find('Alert List ListItem')).toHaveLength(1);
-
-    // Check "learn more links for single reason"
-    const ExternalLink = wrapper.find('Alert List ListItem ExternalLink');
-    expect(ExternalLink).toHaveLength(1);
-    expect(ExternalLink.props().href).toEqual(reasons[0].details);
+  it('No link is shown if neither ROSA nor OSD', () => {
+    expect(wrapper.find('Alert').props().actionLinks).toBeNull();
   });
 
-  it('Learn more link is not shown if details link is not provided', () => {
-    const reason = {
-      kind: 'ClusterLimitedSupportReason',
-      href: '/api/clusters_mgmt/v1/limited_support_reasons/reasonId1',
-      id: 'reasonId1',
-      summary: 'the version of the cluster id too far behind',
-      creation_time: '2021-07-23T20:19:53.053814Z',
-      detection_type: 'auto',
-    };
+  it('OSD link is shown for OSD cluster', () => {
+    wrapper.setProps({ isOSD: true });
+    expect(wrapper.find('Alert').props().actionLinks).not.toBeNull();
+    expect(wrapper.find('Alert').props().actionLinks.props.href).toEqual('https://docs.openshift.com/dedicated/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition');
+  });
 
-    wrapper.setProps({ limitedSupportReasons: [reason] });
-
-    const ExternalLink = wrapper.find('Alert List ListItem ExternalLink');
-    expect(ExternalLink).toHaveLength(0);
+  it('ROSA link is shown for ROSA cluster', () => {
+    wrapper.setProps({ isROSA: true });
+    expect(wrapper.find('Alert').props().actionLinks).not.toBeNull();
+    expect(wrapper.find('Alert').props().actionLinks.props.href).toEqual('https://docs.openshift.com/rosa/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-limited-support_rosa-service-definition');
   });
 });
