@@ -46,7 +46,7 @@ function SupportReducer(state = initialState, action) {
         draft.notificationContacts = {
           ...baseRequestState,
           fulfilled: true,
-          subscriptionID: action.payload?.data?.subscriptionID,
+          subscriptionID: action.meta.subscriptionID,
           contacts: items.map(contact => ({
             userID: contact.id,
             username: contact.username,
@@ -132,7 +132,7 @@ function SupportReducer(state = initialState, action) {
         draft.supportCases = {
           ...baseRequestState,
           fulfilled: true,
-          subscriptionID: action.payload?.data?.subscriptionID,
+          subscriptionID: action.meta.subscriptionID,
           cases: cases.map(supportCase => ({
             summary: supportCase.case_summary,
             caseID: supportCase.case_number,
