@@ -5,12 +5,7 @@ const pfReactIconsMapper = {
 module.exports = {
   presets: [['@babel/preset-env', {
     targets: {
-      browsers: [
-        'last 2 firefox versions',
-        'last 2 chrome versions',
-        'last 2 edge versions',
-        'last 2 safari versions',
-      ],
+      browsers: '> 0.25%, not dead',
       // As of Nov 2021, we have Node 12 in CI.  Most people have newer (14-16) locally,
       // could use 'current' but prefer testing exactly same code locally as on CI.
       node: '12',
