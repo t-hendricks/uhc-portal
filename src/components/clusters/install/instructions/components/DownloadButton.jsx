@@ -14,6 +14,7 @@ const texts = {
   [tools.IBMZINSTALLER]: 'Download installer',
   [tools.PPCINSTALLER]: 'Download installer',
   [tools.ARMINSTALLER]: 'Download installer',
+  [tools.MULTIINSTALLER]: 'Download installer',
   [tools.OCM]: 'Download ocm CLI',
   [tools.ROSA]: 'Download the ROSA CLI',
 };

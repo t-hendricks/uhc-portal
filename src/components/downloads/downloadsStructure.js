@@ -27,7 +27,12 @@ export const downloadsCategories = [
     key: 'INSTALLATION',
     title: 'OpenShift installation',
     tools: [
-      tools.X86INSTALLER, tools.IBMZINSTALLER, tools.PPCINSTALLER, tools.ARMINSTALLER, tools.CRC,
+      tools.X86INSTALLER,
+      tools.IBMZINSTALLER,
+      tools.PPCINSTALLER,
+      tools.ARMINSTALLER,
+      tools.MULTIINSTALLER,
+      tools.CRC,
     ],
   },
   {

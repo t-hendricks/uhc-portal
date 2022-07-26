@@ -5,10 +5,12 @@ const MIRROR_CLIENTS_STABLE_X86 = 'https://mirror.openshift.com/pub/openshift-v4
 const MIRROR_CLIENTS_STABLE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/';
+const MIRROR_CLIENTS_LATEST_TP_MULTI = 'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/latest/';
 const MIRROR_CLIENTS_LATEST_PRE_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/';
+const MIRROR_CLIENTS_LATEST_PRE_MULTI = 'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp-dev-preview/pre-release/';
 const MIRROR_COREOS_INSTALLER_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest';
 const MIRROR_CRC_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest';
 const MIRROR_HELM_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest';
@@ -246,6 +248,7 @@ const tools = {
   IBMZINSTALLER: 's390x-openshift-install',
   PPCINSTALLER: 'ppc64le-openshift-install',
   ARMINSTALLER: 'aarch64-openshift-install',
+  MULTIINSTALLER: 'multi-openshift-install',
   KN: 'kn',
   OCM: 'ocm',
   ODO: 'odo',
@@ -501,6 +504,44 @@ const urls = {
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-linux.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-mac-arm64.tar.gz`,
+      },
+    },
+  },
+  [tools.MULTIINSTALLER]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}amd64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}amd64/openshift-install-mac.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}arm64/openshift-install-linux.tar.gz`,
+        /*
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}arm64/openshift-install-mac-arm64.tar.gz`,
+        */
+      },
+      /*
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}ppc64le/openshift-install-linux.tar.gz`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}s390x/openshift-install-linux.tar.gz`,
+      },
+      */
+    },
+    [channels.PRE_RELEASE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}amd64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}amd64/openshift-install-mac.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}arm64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}arm64/openshift-install-mac-arm64.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}ppc64le/openshift-install-linux.tar.gz`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}s390x/openshift-install-linux.tar.gz`,
       },
     },
   },

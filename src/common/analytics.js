@@ -81,6 +81,11 @@ const trackEvents = {
     link_name: 'ocp-installer-arm',
     ocm_resource_type: ocmResourceType.OCP,
   },
+  [tools.MULTIINSTALLER]: {
+    event: eventNames.FILE_DOWNLOADED,
+    link_name: 'ocp-installer-multi',
+    ocm_resource_type: ocmResourceType.OCP,
+  },
   [tools.KN]: {
     deprecated_name: 'Download-KN-CLI',
     event: eventNames.FILE_DOWNLOADED,
