@@ -117,22 +117,7 @@ export const operatingSystemDropdown = (urls, tool, channel, OS, setOS) => (
   </FormSelect>
 );
 
-const architectureSelectOption = (urls, tool, channel, OS, { value, label }) => (
-  has(urls, [tool, channel, value, OS]) ? (
-    <FormSelectOption key={value} value={value} label={label} />
-  ) : (
-    <FormSelectOption
-      isDisabled
-      key={value}
-      value={value}
-      label={label}
-      title="This type of architecture is not available for the selected OS type"
-    />
-  )
-);
-
 export const architectureDropdown = (urls, tool, channel, OS, architecture, setArchitecture) => {
-  const allOptions = allArchitecturesForTool(urls, tool, channel);
   const optionsForOS = architecturesForToolOS(urls, tool, channel, OS);
   return (
     <FormSelect
@@ -142,7 +127,11 @@ export const architectureDropdown = (urls, tool, channel, OS, architecture, setA
       isDisabled={optionsForOS.length <= 1}
     >
       <FormSelectOption key="select" value="select" label="Select architecture" isDisabled />
-      {allOptions.map(option => architectureSelectOption(urls, tool, channel, OS, option))}
+      {allArchitecturesForTool(urls, tool, channel).map(({ value, label }) => (
+        has(urls, [tool, channel, value, OS]) && (
+          <FormSelectOption key={value} value={value} label={label} />
+        )
+      ))}
     </FormSelect>
   );
 };

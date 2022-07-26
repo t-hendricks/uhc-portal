@@ -23,7 +23,6 @@ const UpgradeAcknowledgeWarning = (props) => {
     showConfirm,
     openshiftVersion,
     hasScheduledManual,
-    isMinorVersionUpgradesEnabled,
   } = props;
 
   const handleButtonClick = () => {
@@ -47,8 +46,7 @@ const UpgradeAcknowledgeWarning = (props) => {
   const showConfirmMessage = (
     showConfirm
     && clusterUnmetAcks.length === 0
-    && ((isManual && clusterMetAcks.length > 0)
-      || (!isManual && isMinorVersionUpgradesEnabled))
+    && clusterMetAcks.length > 0
   );
 
   return (
@@ -113,7 +111,6 @@ UpgradeAcknowledgeWarning.propTypes = {
   toVersion: PropTypes.func,
   getAcks: PropTypes.array,
   isManual: PropTypes.bool,
-  isMinorVersionUpgradesEnabled: PropTypes.bool,
 };
 
 UpgradeAcknowledgeWarning.defaultProps = {
