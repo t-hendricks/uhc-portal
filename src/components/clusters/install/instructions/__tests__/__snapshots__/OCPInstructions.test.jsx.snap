@@ -308,7 +308,7 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
       <Instructions>
         <Instruction>
           <DownloadsAndPullSecretSection
-            channel="preRelease"
+            channel="stable"
             cloudProviderID="Azure"
             isBMIPI={false}
             pendoID="/"
@@ -325,7 +325,7 @@ exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
           <GetStarted
             cloudProviderID="Azure"
             customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_azure/installing-azure-customizations.html"
-            docURL="https://github.com/openshift/installer/blob/master/docs/user/azure/install_upi.md"
+            docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure/installing-azure-user-infra.html"
             isBMIPI={false}
             pendoID="/"
           />
