@@ -247,6 +247,11 @@ const trackEvents = {
     link_name: 'associate-aws',
     ocm_resource_type: ocmResourceType.MOA,
   },
+  RosaLogin: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-rosa-login',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
   CopyOcmRoleCreateBasic: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'copy-ocm-role-create-basic',
@@ -260,6 +265,21 @@ const trackEvents = {
   CopyOcmRoleLink: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'copy-ocm-role-link',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  CopyUserRoleCreate: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-user-role-create',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  CopyUserRoleLink: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-user-role-link',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  CopyUserRoleList: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'copy-user-role-list',
     ocm_resource_type: ocmResourceType.MOA,
   },
 };
@@ -392,6 +412,7 @@ export {
   parseReduxFormKeyValueList,
   parseReduxFormTaints,
   goZeroTime2Null,
+  eventNames,
   getTrackEvent,
   trackEventsKeys,
 };
