@@ -7,12 +7,13 @@ import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import config from '../../../../config';
 import {
-  shouldRefetchQuota,
-  scrollToFirstError,
   getTrackEvent,
   ocmResourceType,
+  shouldRefetchQuota,
+  scrollToFirstError,
 } from '../../../../common/helpers';
 import { persistor } from '../../../../redux/store';
+import withAnalytics from '../../../../hoc/withAnalytics';
 import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
@@ -24,10 +25,9 @@ import CIDRScreen from '../../CreateOSDPage/CreateOSDWizard/CIDRScreen';
 import UpdatesScreen from '../../CreateOSDPage/CreateOSDWizard/UpdatesScreen';
 import ReviewClusterScreen from '../../CreateOSDPage/CreateOSDWizard/ReviewClusterScreen';
 
-import withAnalytics from '../../../../hoc/withAnalytics';
-import Unavailable from '../../../common/Unavailable';
 import PageTitle from '../../../common/PageTitle';
 import Breadcrumbs from '../../../common/Breadcrumbs';
+import Unavailable from '../../../common/Unavailable';
 import CreateClusterErrorModal from '../../common/CreateClusterErrorModal';
 import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
 import ErrorBoundary from '../../../App/ErrorBoundary';
