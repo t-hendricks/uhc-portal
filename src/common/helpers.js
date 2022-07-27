@@ -245,6 +245,8 @@ const trackEvents = {
  * @param {String} url Link URL
  * @param {String} path The current path of where the action was performed
  * @param {String} resourceType The resource type, for allowed values see ocmResourceType
+ * @param {Object} customProperties A JSON-serializable object for any custom event data
+ *
  * @returns {Object} Object {[event]: string, [properties]: Object}
  */
 const getTrackEvent = (
@@ -252,6 +254,7 @@ const getTrackEvent = (
   url,
   path = window.location.pathname,
   resourceType = trackEvents[key]?.ocm_resource_type ?? ocmResourceType.ALL,
+  customProperties = {},
 ) => (
   {
     event: trackEvents[key].event,
@@ -260,6 +263,7 @@ const getTrackEvent = (
       ...(url && { link_url: url }),
       current_path: path,
       ocm_resource_type: resourceType,
+      ...customProperties,
     },
   }
 );
