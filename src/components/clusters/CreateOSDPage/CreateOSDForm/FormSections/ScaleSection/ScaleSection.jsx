@@ -29,7 +29,6 @@ function ScaleSection({
   isBYOC,
   isMultiAz,
   machineType,
-  handleMachineTypesChange,
   cloudProviderID,
   product,
   showStorageAndLoadBalancers = true,
@@ -74,7 +73,6 @@ function ScaleSection({
           disabled={pending}
           isMultiAz={isMultiAz}
           isBYOC={isBYOC}
-          onChange={handleMachineTypesChange}
           cloudProviderID={cloudProviderID}
           product={product}
           isMachinePool={isMachinePool}
@@ -196,7 +194,6 @@ ScaleSection.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
-  handleMachineTypesChange: PropTypes.func.isRequired,
   minNodes: PropTypes.number,
   isMachinePool: PropTypes.bool,
   canAutoScale: PropTypes.bool,
