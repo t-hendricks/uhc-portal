@@ -18,7 +18,6 @@ describe('<CopyPullSecret />', () => {
         });
         it('should have Copy', () => {
           const copy = wrapper.dive().find('CopyToClipboard');
-          // console.log(wrapper);
           expect(copy.length).toEqual(1);
           const copyButton = copy.find(Button);
           expect(copyButton.length).toEqual(1);
