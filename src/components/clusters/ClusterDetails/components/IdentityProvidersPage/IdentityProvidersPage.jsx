@@ -115,7 +115,7 @@ class IdentityProvidersPage extends React.Component {
     const clusterPending = (get(cluster, 'subscription.id') !== requestedSubscriptionID && !clusterDetails.error);
     const idpsPending = get(clusterIDPs, 'pending', false);
 
-    if (clusterPending || idpsPending) {
+    if ((clusterPending || idpsPending) && !clusterDetails.error) {
       return (
         <div id="clusterdetails-content">
           <div className="cluster-loading-container">
