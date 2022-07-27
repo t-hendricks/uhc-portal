@@ -53,10 +53,10 @@ exports[`BareMetal UPI install renders correctly 1`] = `
       }
       channel="stable"
       cloudProviderID="baremetal"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
+      isUPI={true}
       rhcos={
         Object {
           "additionalInstructions": "Download the installer ISO image, or the kernel, initramfs, and rootfs.",

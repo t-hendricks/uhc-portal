@@ -13,7 +13,7 @@ Object.keys(instructionsMapping).forEach((value) => {
   const { cloudProvider, customizations } = mapping;
   if (mapping.installer) {
     // not (yet) divided into x86/arm and/or ipi/upi
-    ocpOptions[cloudProvider] = { ...mapping, cloudProviderID };
+    ocpOptions[cloudProvider] = { cloudProviderID, customizations, ...mapping };
     providers.push(cloudProvider);
   } else {
     Object.values(architectures).forEach((arch) => {
@@ -24,7 +24,7 @@ Object.keys(instructionsMapping).forEach((value) => {
         providers.push(`${cloudProvider}-${arch}-ipi`);
       }
       if (upi) {
-        ocpOptions[`${cloudProvider}-${arch}-upi`] = ({ cloudProviderID, customizations, ...upi });
+        ocpOptions[`${cloudProvider}-${arch}-upi`] = ({ cloudProviderID, isUPI: true, ...upi });
         providers.push(`${cloudProvider}-${arch}-upi`);
       }
     });
@@ -36,7 +36,7 @@ Object.keys(instructionsMapping).forEach((value) => {
       providers.push(`${cloudProvider}-ipi`);
     }
     if (upi) {
-      ocpOptions[`${cloudProvider}-upi`] = ({ cloudProviderID, customizations, ...upi });
+      ocpOptions[`${cloudProvider}-upi`] = ({ cloudProviderID, isUPI: true, ...upi });
       providers.push(`${cloudProvider}-upi`);
     }
   }

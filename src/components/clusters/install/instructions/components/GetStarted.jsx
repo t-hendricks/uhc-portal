@@ -15,7 +15,7 @@ import instructionsMapping from '../instructionsMapping';
 import { getTrackEvent, trackEvents } from '~/common/analytics';
 
 const GetStarted = ({
-  docURL, pendoID, cloudProviderID, customizations, isBMIPI,
+  docURL, pendoID, cloudProviderID, customizations, isBMIPI, isUPI,
 }) => {
   const { analytics } = useChrome();
   return (
@@ -71,7 +71,7 @@ const GetStarted = ({
             Get started
           </Button>
         </StackItem>
-        { !isBMIPI && (
+        { !isBMIPI && !isUPI && (
           <>
             <StackItem>
               <Text component="p">
@@ -112,6 +112,7 @@ const GetStarted = ({
 
 GetStarted.defaultProps = {
   isBMIPI: false,
+  isUPI: false,
 };
 
 GetStarted.propTypes = {
@@ -120,6 +121,7 @@ GetStarted.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   customizations: PropTypes.string,
   isBMIPI: PropTypes.bool,
+  isUPI: PropTypes.bool,
 };
 
 export default GetStarted;

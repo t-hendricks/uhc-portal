@@ -40,7 +40,7 @@ export class InstallRHVUPI extends Component {
           <OCPInstructions
             token={token}
             cloudProviderID="ovirt"
-            customizations={instructionsMapping.ovirt.customizations}
+            isUPI
             {...instructionsMapping.ovirt.upi}
           />
         </PageSection>

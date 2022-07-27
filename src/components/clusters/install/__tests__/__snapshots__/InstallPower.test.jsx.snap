@@ -30,6 +30,7 @@ exports[`InstallPower renders correctly 1`] = `
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_power/installing-ibm-power.html"
       installer="ppc64le-openshift-install"
       isBMIPI={false}
+      isUPI={true}
       preReleasePageLink="/install/power/pre-release"
       rhcos={
         Object {
