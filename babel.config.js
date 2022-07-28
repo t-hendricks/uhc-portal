@@ -31,5 +31,10 @@ module.exports = {
       },
       'react-icons',
     ],
+    ['@babel/plugin-transform-runtime',
+      {
+        regenerator: true,
+      },
+    ]
   ],
 };

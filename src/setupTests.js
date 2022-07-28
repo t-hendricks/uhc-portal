@@ -1,7 +1,6 @@
 import { configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { setAutoFreeze } from 'immer';
-import 'regenerator-runtime/runtime';
 
 setAutoFreeze(false);
 if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
