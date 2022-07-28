@@ -51,6 +51,7 @@ import InstallGCP from '../clusters/install/InstallGCP';
 import ConnectedInstallGCPIPI from '../clusters/install/InstallGCPIPI';
 import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
 import ConnectedInstallIBMCloud from '../clusters/install/InstallIBMCloud';
+import ConnectedInstallMultiPreRelease from '../clusters/install/InstallMultiPreRelease';
 import InstallOSP from '../clusters/install/InstallOSP';
 import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
 import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
@@ -181,6 +182,7 @@ function Router({ history }) {
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
+            <Route path="/install/multi/pre-release" component={ConnectedInstallMultiPreRelease} />
             <Route path="/install/vsphere" exact component={InstallVSphere} />
             <Route path="/install/vsphere/user-provisioned" component={ConnectedInstallVSphereUPI} />
             <Route path="/install/vsphere/installer-provisioned" component={ConnectedInstallVSphereIPI} />
