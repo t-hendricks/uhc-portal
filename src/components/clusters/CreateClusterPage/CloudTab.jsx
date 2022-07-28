@@ -415,7 +415,7 @@ const runItYourself = () => {
     ],
     [
       <><Link to="/install/aws/arm">AWS (ARM)</Link></>,
-      'Full stack automation',
+      'Full stack automation and pre-existing infrastructure',
     ],
     [
       <><Link to="/install/azure">Azure</Link></>,

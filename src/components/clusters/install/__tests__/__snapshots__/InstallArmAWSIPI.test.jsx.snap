@@ -16,6 +16,7 @@ exports[`InstallArmAWSIPI renders correctly 1`] = `
             },
             Object {
               "label": "Amazon Web Services (ARM)",
+              "path": "/install/aws/arm",
             },
             Object {
               "label": "Installer-provisioned infrastructure",
