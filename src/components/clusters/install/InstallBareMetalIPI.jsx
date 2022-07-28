@@ -35,13 +35,13 @@ export class InstallBareMetalIPI extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.bareMetal.ipi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.baremetal.x86.ipi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
             breadcrumbs={breadcrumbs}
-            cloudProviderID="bareMetal"
-            {...instructionsMapping.bareMetal.ipi}
+            cloudProviderID="baremetal"
+            {...instructionsMapping.baremetal.x86.ipi}
             isBMIPI
           />
         </PageSection>

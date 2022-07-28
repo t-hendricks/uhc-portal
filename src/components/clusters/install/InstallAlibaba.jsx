@@ -39,6 +39,7 @@ export class InstallAlibaba extends Component {
           <OCPInstructions
             token={token}
             cloudProviderID="alibaba"
+            customizations={instructionsMapping.alibaba.customizations}
             {...instructionsMapping.alibaba}
           />
         </PageSection>

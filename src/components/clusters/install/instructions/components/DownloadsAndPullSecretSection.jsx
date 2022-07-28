@@ -16,7 +16,6 @@ import DeveloperPreviewSection from './DeveloperPreviewSection';
 import links, { tools, channels } from '../../../../../common/installLinks.mjs';
 
 function DownloadsAndPullSecretSection({
-  displayRHCOSSection = false,
   token,
   showPreReleaseDocs = false,
   preReleaseDocsLink = links.INSTALL_PRE_RELEASE_INSTALLER_DOC,
@@ -26,7 +25,7 @@ function DownloadsAndPullSecretSection({
   pendoID,
   tool,
   channel,
-  cloudProviderID,
+  rhcos,
   isBMIPI,
 }) {
   return (
@@ -89,14 +88,14 @@ function DownloadsAndPullSecretSection({
             />
           </TextContent>
         </StackItem>
-        {displayRHCOSSection && (
+        {rhcos && (
           <StackItem key="rhcos">
             <TextContent>
               <Text component="h3">Red Hat Enterprise Linux CoreOS (RHCOS)</Text>
               <RHCOSSection
                 token={token}
                 pendoID={pendoID}
-                cloudProviderID={cloudProviderID}
+                rhcos={rhcos}
               />
             </TextContent>
           </StackItem>
@@ -116,9 +115,8 @@ DownloadsAndPullSecretSection.propTypes = {
   pendoID: PropTypes.string,
   tool: PropTypes.oneOf(Object.values(tools)).isRequired,
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
-  cloudProviderID: PropTypes.string, // required when displayRHCOSSection = true.
   isBMIPI: PropTypes.bool,
-  displayRHCOSSection: PropTypes.bool,
+  rhcos: PropTypes.object,
 };
 
 DownloadsAndPullSecretSection.defaultProps = {
