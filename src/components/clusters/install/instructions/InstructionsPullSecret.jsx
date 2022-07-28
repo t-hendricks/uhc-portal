@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Card, Title,
+  Card, CardBody, Stack, StackItem, TextContent, Title,
 } from '@patternfly/react-core';
 import TelemetryDisclaimer from './components/TelemetryDisclaimer';
 import TokenErrorAlert from './components/TokenErrorAlert';
@@ -10,18 +10,25 @@ import PullSecretSection from './components/PullSecretSection';
 function InstructionsPullSecret({ token }) {
   return (
     <>
-      <Title headingLevel="h3" size="2xl">
-        Pull secret
-      </Title>
       <Card>
-        <div className="pf-l-grid pf-m-gutter ocm-page">
-          {token.error && <TokenErrorAlert token={token} />}
-          <TelemetryDisclaimer />
-          <div className="pf-c-content">
-            <h3 className="pf-c-title pf-m-md downloads-subtitle">Pull secret</h3>
-            <PullSecretSection token={token} />
+        <CardBody>
+          <div className="pf-c-content ocm-page">
+            <Title headingLevel="h3" size="2xl">
+              Pull secret
+            </Title>
+            <Stack hasGutter>
+              <StackItem key="pull-secret">
+                {token.error && <TokenErrorAlert token={token} />}
+                <TextContent>
+                  <PullSecretSection token={token} />
+                </TextContent>
+              </StackItem>
+              <StackItem>
+                <TelemetryDisclaimer />
+              </StackItem>
+            </Stack>
           </div>
-        </div>
+        </CardBody>
       </Card>
     </>
   );

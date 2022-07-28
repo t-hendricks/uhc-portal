@@ -1,35 +1,24 @@
-// MachineTypeSelector renders a series of radio buttons for all available node types,
+// MachineTypeSelection renders a series of radio buttons for all available node types,
 // allowing the user to select just one.
 // It is meant to be used in a redux-form <Field> and expects an onChange callback.
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  FormGroup,
   Select,
   SelectGroup,
   SelectOption,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../../../common/ErrorBox';
+import PopoverHint from '../../../../../../common/PopoverHint';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
 import { noMachineTypes } from '../../../../../../../common/helpers';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../../../../../common/quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../../../../common/subscriptionTypes';
-
-/**
- * Defines order and labels of groups to display to user.
- * The `name` corresponds to `category` field in machine_types API,
- * and to `generic_name` in quota_cost API.
- */
-export const machineCategories = [
-  { name: 'general_purpose', label: 'General purpose' },
-  { name: 'memory_optimized', label: 'Memory optimized' },
-  { name: 'compute_optimized', label: 'Compute optimized' },
-  { name: 'storage_optimized', label: 'Storage optimized' },
-  { name: 'network_optimized', label: 'Network optimized' },
-  { name: 'burstable', label: 'Burstable' },
-  { name: 'accelerated_computing', label: 'Accelerated computing' },
-];
+import { constants } from '../../../CreateOSDFormConstants';
+import sortMachineTypes, { machineCategories } from './sortMachineTypes';
 
 /** Returns useful info about the machine type - CPUs, RAM, [GPUs]. */
 const machineTypeLabel = (machineType) => {
@@ -100,7 +89,8 @@ class MachineTypeSelection extends React.Component {
 
   setDefaultValue() {
     // Find the first sortedMachineTypes we have quota for, and set it as default
-    const { sortedMachineTypes, input } = this.props;
+    const { machineTypes, cloudProviderID, input } = this.props;
+    const sortedMachineTypes = sortMachineTypes(machineTypes, cloudProviderID);
     if (sortedMachineTypes.length > 0) {
       const defaultType = sortedMachineTypes.find(type => this.hasQuotaForType(type.id));
       if (defaultType) {
@@ -125,7 +115,7 @@ class MachineTypeSelection extends React.Component {
   // Returns false if necessary data not fulfilled yet.
   hasQuotaForType(machineTypeID) {
     const {
-      machineTypesByID, organization, quota,
+      machineTypes, organization, quota,
       cloudProviderID, isBYOC, isMultiAz, isMachinePool, product, billingModel,
     } = this.props;
 
@@ -134,7 +124,7 @@ class MachineTypeSelection extends React.Component {
       return false;
     }
 
-    const machineType = machineTypesByID[machineTypeID];
+    const machineType = machineTypes.typesByID[machineTypeID];
     if (!machineType) {
       return false;
     }
@@ -164,15 +154,13 @@ class MachineTypeSelection extends React.Component {
   }
 
   render() {
-    // getMachineTypes, isBYOC , and machineTypesByID are unused here, but it's needed so
+    // getMachineTypes and isBYOC are unused here, but it's needed so
     // it won't go into extraProps and then get to the DOM, generating a React warning.
     const {
       machineTypes,
-      sortedMachineTypes,
       getMachineTypes,
       isBYOC,
       isMultiAz,
-      machineTypesByID,
       quota,
       organization,
       input,
@@ -244,6 +232,7 @@ class MachineTypeSelection extends React.Component {
       return selectGroups;
     };
 
+    const sortedMachineTypes = sortMachineTypes(machineTypes, cloudProviderID);
     const quotaMachineTypes = sortedMachineTypes.filter(type => (
       this.hasQuotaForType(type.id)
     ));
@@ -268,12 +257,20 @@ class MachineTypeSelection extends React.Component {
         displayedMachineTypes.find(machineType => machineType.id === input.value) || null,
       );
       return (
-        <>
-          {(touched && error) && (<span className="error">{error}</span>)}
+        <FormGroup
+          label="Compute node instance type"
+          isRequired
+          validated={touched && error ? 'error' : 'default'}
+          isHelperTextBeforeField
+          helperTextInvalid={touched && error}
+          fieldId="node_type"
+          labelIcon={<PopoverHint hint={constants.computeNodeInstanceTypeHint} />}
+        >
           <Select
             variant="single"
             selections={selection}
             isOpen={isOpen}
+            placeholderText="Select instance type"
             onToggle={this.onToggle}
             onSelect={changeHandler}
             maxHeight={inModal ? 300 : 600}
@@ -281,7 +278,7 @@ class MachineTypeSelection extends React.Component {
           >
             {options}
           </Select>
-        </>
+        </FormGroup>
       );
     }
 
@@ -303,8 +300,6 @@ MachineTypeSelection.propTypes = {
   }).isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
-  sortedMachineTypes: PropTypes.array.isRequired,
-  machineTypesByID: PropTypes.object.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
   isBYOC: PropTypes.bool.isRequired,
   isMachinePool: PropTypes.bool.isRequired,

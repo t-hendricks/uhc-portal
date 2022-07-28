@@ -1,10 +1,11 @@
 import Page from './page';
-import GlobalNav from './GlobalNav.page';
+import LoginPage from './login.page';
 import DownloadsPage from './Downloads.page';
 
 class TokenPages extends Page {
   async navigateToOCMToken() {
-    await GlobalNav.navigateTo('Downloads');
+    await DownloadsPage.open();
+    await LoginPage.closeCookieConsentIfShowing();
     const button = await DownloadsPage.ocmTokenButton();
     await button.click();
   }

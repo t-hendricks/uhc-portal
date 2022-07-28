@@ -267,18 +267,6 @@ p.notfound {
   font-size: larger;
 }
 
-#idpHint {
-  margin-top: 20px;
-}
-
-#expiration-alert {
-  margin-top: 20px;
-}
-
-#transfer-cluster-ownership-alert {
-  margin-top: 20px;
-}
-
 #terms-alert {
   margin-top: 20px;
 }
@@ -650,9 +638,6 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   &.expired-eval-option {
     color: var(--pf-global--danger-color--100);
     font-weight: var(--pf-global--FontWeight--bold);
-  }
-  &.compliancy-alert {
-    margin-top: 20px;
   }
   &.warning-title-icon{
     margin-left: 10px;

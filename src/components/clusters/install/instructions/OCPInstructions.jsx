@@ -18,7 +18,7 @@ const OCPInstructions = (props) => {
   const {
     token,
     cloudProviderID,
-    displayRHCOSSection,
+    rhcos,
     installer = tools.X86INSTALLER,
     channel,
     docURL,
@@ -29,16 +29,9 @@ const OCPInstructions = (props) => {
     showPreReleasePageLink,
   } = props;
   const pendoID = window.location.pathname;
-  const cloudProviders = [
-    'aws',
-    'armaws',
-    'azure',
-    'gcp',
-    'ibmCloud',
-  ];
-  const getStartedTitleText = cloudProviders.indexOf(cloudProviderID) === -1
-    ? 'Follow the instructions to configure your environment and install your cluster'
-    : `Follow the documentation to configure your ${instructionsMapping[cloudProviderID].cloudProvider} account and run the installer`;
+  const getStartedTitleText = instructionsMapping[cloudProviderID]?.publicCloud
+    ? `Follow the documentation to configure your ${instructionsMapping[cloudProviderID].cloudProvider} account and run the installer`
+    : 'Follow the instructions to configure your environment and install your cluster';
   return (
     <>
       <Card>
@@ -57,7 +50,7 @@ const OCPInstructions = (props) => {
                 token={token}
                 pendoID={pendoID}
                 cloudProviderID={cloudProviderID}
-                displayRHCOSSection={displayRHCOSSection}
+                rhcos={rhcos}
                 tool={installer}
                 channel={channel}
                 isBMIPI={isBMIPI}
@@ -87,7 +80,7 @@ const OCPInstructions = (props) => {
 OCPInstructions.propTypes = {
   token: PropTypes.object.isRequired,
   cloudProviderID: PropTypes.string.isRequired,
-  displayRHCOSSection: PropTypes.bool,
+  rhcos: PropTypes.object,
   installer: PropTypes.oneOf(Object.values(tools)),
   channel: PropTypes.oneOf(Object.values(channels)).isRequired,
   docURL: PropTypes.string.isRequired,
