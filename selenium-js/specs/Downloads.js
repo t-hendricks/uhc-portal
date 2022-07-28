@@ -65,6 +65,15 @@ describe('Downloads page', async () => {
       === 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-ppc64le.tar.gz'
     ));
 
+    // Only x86/arm available for MacOS.
+    await OSes.selectByVisibleText('MacOS');
+    await expect(await Downloads.allArchitectureOptions('(odo)')).toEqual([
+      'Select architecture', 'x86_64', 'aarch64',
+    ]);
+    await expect(await Downloads.enabledArchitectureOptions('(odo)')).toEqual([
+      'x86_64', 'aarch64',
+    ]);
+
     // Only x86 available for Windows.
     await OSes.selectByVisibleText('Windows');
     await browser.waitUntil(async () => (
@@ -73,7 +82,7 @@ describe('Downloads page', async () => {
     ));
     await expect(await Downloads.architectureDropdown('(odo)')).toHaveAttr('disabled', true);
     await expect(await Downloads.allArchitectureOptions('(odo)')).toEqual([
-      'Select architecture', 'x86_64', 'aarch64', 'ppc64le', 's390x',
+      'Select architecture', 'x86_64',
     ]);
     await expect(await Downloads.enabledArchitectureOptions('(odo)')).toEqual([
       'x86_64',

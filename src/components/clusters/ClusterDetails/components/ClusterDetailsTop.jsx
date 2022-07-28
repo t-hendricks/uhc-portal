@@ -46,6 +46,8 @@ function ClusterDetailsTop(props) {
   const isProductOSDTrial = get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSDTrial;
   const isProductOSDRHM = get(cluster, 'subscription.plan.type', '') === normalizedProducts.OSD
     && get(cluster, 'subscription.cluster_billing_model', '') === billingModels.MARKETPLACE;
+  const isOSD = get(cluster, 'subscription.plan.type') === normalizedProducts.OSD;
+  const isROSA = get(cluster, 'subscription.plan.type') === normalizedProducts.ROSA;
   const clusterName = getClusterName(cluster);
   const consoleURL = cluster.console ? cluster.console.url : false;
 
@@ -189,7 +191,11 @@ function ClusterDetailsTop(props) {
         </SplitItem>
       </Split>
 
-      <LimitedSupportAlert limitedSupportReasons={cluster.limitedSupportReasons} />
+      <LimitedSupportAlert
+        limitedSupportReasons={cluster.limitedSupportReasons}
+        isOSD={isOSD}
+        isROSA={isROSA}
+      />
 
       {showIDPMessage && (
         <Split>
