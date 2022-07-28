@@ -183,7 +183,7 @@ class CreateOSDWizardInternal extends React.Component {
     return getAWSCloudProviderRegions(ccsCredentials);
   }
 
-  beforeOnNext = async (onNext) => {
+  onBeforeNext = async (onNext) => {
     const {
       touch,
       formErrors,
@@ -198,14 +198,14 @@ class CreateOSDWizardInternal extends React.Component {
     if (errorFieldNames?.length > 0 && !isCurrentStepValid) {
       touch(errorFieldNames);
       scrollToFirstError(formErrors);
-    } else if (isCCSCredentialsValidationNeeded && cloudProviderID && currentStepId === 21) {
+      return;
+    }
+    if (isCCSCredentialsValidationNeeded && cloudProviderID && currentStepId === 21) {
       // Only proceed to the next step if the validation is successful.
       await this.getCloudProverInfo(cloudProviderID);
-      onNext();
-    } else {
-      // When no errors or validy checks are required, go to the next step.
-      onNext();
     }
+    // When no errors or validy checks are required, go to the next step.
+    onNext();
   }
 
   render() {
@@ -471,7 +471,7 @@ class CreateOSDWizardInternal extends React.Component {
                   <Button
                     variant="primary"
                     type="submit"
-                    onClick={() => this.beforeOnNext(onNext)}
+                    onClick={() => this.onBeforeNext(onNext)}
                     isLoading={ccsValidationPending}
                     isDisabled={ccsValidationPending}
                   >

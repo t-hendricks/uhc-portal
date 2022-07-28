@@ -88,7 +88,7 @@ const helpers = {
   nestedIsEmpty,
 };
 
-const ocmResourceType = {
+export const ocmResourceType = {
   ALL: 'all',
   // OpenShift Local
   CRC: 'crc',
@@ -282,6 +282,14 @@ const trackEvents = {
     link_name: 'copy-user-role-list',
     ocm_resource_type: ocmResourceType.MOA,
   },
+  WizardNext: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'wizard-next',
+  },
+  WizardEnd: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'wizard-submit',
+  },
 };
 
 const trackEventsKeys = Object.keys(trackEvents).reduce(
@@ -294,9 +302,18 @@ const trackEventsKeys = Object.keys(trackEvents).reduce(
  * @param {String} key The object key to return metadata for
  * @param {String} url Link URL
  * @param {String} path The current path of where the action was performed
+ * @param {String} resourceType The resource type, for allowed values see ocmResourceType
+ * @param {Object} customProperties A JSON-serializable object for any custom event data
+ *
  * @returns {Object} Object {[event]: string, [properties]: Object}
  */
-const getTrackEvent = (key, url, path = window.location.pathname) => {
+const getTrackEvent = (
+  key,
+  url,
+  path = window.location.pathname,
+  resourceType = trackEvents[key]?.ocm_resource_type ?? ocmResourceType.ALL,
+  customProperties = {},
+) => {
   if (!(key in trackEvents)) {
     return {
       event: null,
@@ -309,7 +326,8 @@ const getTrackEvent = (key, url, path = window.location.pathname) => {
       link_name: trackEvents[key].link_name,
       ...(url && { link_url: url }),
       current_path: path,
-      ocm_resource_type: trackEvents[key].ocm_resource_type,
+      ocm_resource_type: resourceType,
+      ...customProperties,
     },
   };
 };

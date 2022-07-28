@@ -32,20 +32,21 @@ exports[`InstallGCPUPI renders correctly 1`] = `
       channel="stable"
       cloudProviderID="gcp"
       customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-customizations.html"
-      displayRHCOSSection={true}
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-user-infra.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
-      rhcosDownloads={
-        Array [
-          Object {
-            "buttonText": "Download RHCOS tar",
-            "name": "OCP-Download-RHCOS-tar",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-gcp.x86_64.tar.gz",
-          },
-        ]
+      rhcos={
+        Object {
+          "downloads": Array [
+            Object {
+              "buttonText": "Download RHCOS tar",
+              "name": "OCP-Download-RHCOS-tar",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-gcp.x86_64.tar.gz",
+            },
+          ],
+          "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra",
+        }
       }
-      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra"
       title="Install OpenShift on GCP with user-provisioned infrastructure"
       token={Object {}}
     />

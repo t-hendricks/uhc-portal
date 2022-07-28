@@ -30,7 +30,7 @@ exports[`InstallVSphereIPI renders correctly 1`] = `
   <PageSection>
     <OCPInstructions
       channel="stable"
-      cloudProviderID="vmware"
+      cloudProviderID="vsphere"
       customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned.html"
       installer="x86_64-openshift-install"

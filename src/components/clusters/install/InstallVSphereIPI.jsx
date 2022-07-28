@@ -34,13 +34,13 @@ export class InstallVSphereIPI extends Component {
     );
     return (
       <>
-        <PageTitle title={instructionsMapping.vmware.ipi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.vsphere.ipi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProviderID="vmware"
-            customizations={instructionsMapping.vmware.customizations}
-            {...instructionsMapping.vmware.ipi}
+            cloudProviderID="vsphere"
+            customizations={instructionsMapping.vsphere.customizations}
+            {...instructionsMapping.vsphere.ipi}
           />
         </PageSection>
       </>
