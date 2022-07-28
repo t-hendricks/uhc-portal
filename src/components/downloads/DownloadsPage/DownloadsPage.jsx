@@ -800,7 +800,14 @@ const disconnectedInstallationRows = (
   );
 };
 
-const rhcosRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
+const customInstallationRows = (
+  expanded,
+  setExpanded,
+  selections,
+  setSelections,
+  toolRefs,
+  urls,
+) => {
   const commonProps = {
     expanded, setExpanded, selections, setSelections, toolRefs, urls,
   };
@@ -1166,16 +1173,17 @@ class DownloadsPage extends React.Component {
 
             <DownloadsSection
               selectedCategory={selectedCategory}
-              category="RHCOS"
+              category="CUSTOM_INSTALLATION"
               description={(
                 <Text>
-                  Customize Red Hat Enterprise Linux CoreOS (RHCOS) nodes with these tools.
+                  Customize OpenShift and Red Hat Enterprise Linux CoreOS (RHCOS) installation
+                  with these tools.
                 </Text>
               )}
             >
-              <TableComposable aria-label="RHCOS downloads table">
+              <TableComposable aria-label="OpenShift installation customization downloads table">
                 <ColumnHeadings />
-                {rhcosRows(expanded, this.setExpanded, selections, this.setSelections,
+                {customInstallationRows(expanded, this.setExpanded, selections, this.setSelections,
                   this.toolRefs, urls)}
               </TableComposable>
             </DownloadsSection>

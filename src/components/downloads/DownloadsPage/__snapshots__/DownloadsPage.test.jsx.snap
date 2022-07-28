@@ -8596,16 +8596,16 @@ exports[`<DownloadsPage> renders 1`] = `
         </TableComposable>
       </DownloadsSection>
       <DownloadsSection
-        category="RHCOS"
+        category="CUSTOM_INSTALLATION"
         description={
           <Text>
-            Customize Red Hat Enterprise Linux CoreOS (RHCOS) nodes with these tools.
+            Customize OpenShift and Red Hat Enterprise Linux CoreOS (RHCOS) installation with these tools.
           </Text>
         }
         selectedCategory="ALL"
       >
         <TableComposable
-          aria-label="RHCOS downloads table"
+          aria-label="OpenShift installation customization downloads table"
         >
           <ColumnHeadings />
           <ToolAndDescriptionRows

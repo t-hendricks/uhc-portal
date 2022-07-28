@@ -41,8 +41,8 @@ export const downloadsCategories = [
     tools: [tools.MIRROR_REGISTRY, tools.OC_MIRROR_PLUGIN],
   },
   {
-    key: 'RHCOS',
-    title: 'RHCOS management tools',
+    key: 'CUSTOM_INSTALLATION',
+    title: 'OpenShift installation customization tools',
     tools: [tools.BUTANE, tools.COREOS_INSTALLER],
   },
   {
