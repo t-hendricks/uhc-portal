@@ -418,7 +418,7 @@ const runItYourself = () => {
       'Full stack automation and pre-existing infrastructure',
     ],
     [
-      <><Link to="/install/azure">Azure</Link></>,
+      <><Link to="/install/azure">Azure (x86_64)</Link></>,
       'Full stack automation and pre-existing infrastructure',
     ],
     [

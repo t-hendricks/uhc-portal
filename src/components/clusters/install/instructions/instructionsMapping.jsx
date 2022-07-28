@@ -97,17 +97,19 @@ const instructionsMapping = {
     cloudProvider: 'Azure',
     publicCloud: true,
     customizations: links.INSTALL_AZURE_CUSTOMIZATIONS,
-    ipi: {
-      title: 'Install OpenShift on Azure with installer-provisioned infrastructure',
-      installer: tools.X86INSTALLER,
-      channel: channels.STABLE,
-      docURL: links.INSTALL_AZUREIPI_GETTING_STARTED,
-    },
-    upi: {
-      title: 'Install OpenShift on Azure with user-provisioned infrastructure',
-      installer: tools.X86INSTALLER,
-      channel: channels.STABLE,
-      docURL: links.INSTALL_AZUREUPI_GETTING_STARTED,
+    x86: {
+      ipi: {
+        title: 'Install OpenShift on Azure with installer-provisioned infrastructure',
+        installer: tools.X86INSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_AZUREIPI_GETTING_STARTED,
+      },
+      upi: {
+        title: 'Install OpenShift on Azure with user-provisioned infrastructure',
+        installer: tools.X86INSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_AZUREUPI_GETTING_STARTED,
+      },
     },
     getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through Azure but it will take some time for the DNS to propagate).',
   },

@@ -287,7 +287,7 @@ exports[`Every OCP instruction page should render:  Azure Stack Hub-upi 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
+exports[`Every OCP instruction page should render:  Azure-x86-ipi 1`] = `
 <Fragment>
   <Card>
     <CardBody>
@@ -326,7 +326,7 @@ exports[`Every OCP instruction page should render:  Azure-ipi 1`] = `
 </Fragment>
 `;
 
-exports[`Every OCP instruction page should render:  Azure-upi 1`] = `
+exports[`Every OCP instruction page should render:  Azure-x86-upi 1`] = `
 <Fragment>
   <Card>
     <CardBody>
