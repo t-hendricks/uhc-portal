@@ -51,6 +51,7 @@ import InstallGCP from '../clusters/install/InstallGCP';
 import ConnectedInstallGCPIPI from '../clusters/install/InstallGCPIPI';
 import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
 import ConnectedInstallIBMCloud from '../clusters/install/InstallIBMCloud';
+import ConnectedInstallMultiAzureIPI from '../clusters/install/InstallMultiAzureIPI';
 import ConnectedInstallMultiPreRelease from '../clusters/install/InstallMultiPreRelease';
 import InstallOSP from '../clusters/install/InstallOSP';
 import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
@@ -173,6 +174,7 @@ function Router({ history }) {
             <Route path="/install/rhv/installer-provisioned" component={ConnectedInstallRHVIPI} />
             <Route path="/install/rhv/user-provisioned" component={ConnectedInstallRHVUPI} />
             <Route path="/install/rhv" component={InstallRHV} />
+            <Route path="/install/azure/multi/installer-provisioned" component={ConnectedInstallMultiAzureIPI} />
             <Route path="/install/azure/installer-provisioned" component={ConnectedInstallAzureIPI} />
             <Route path="/install/azure/user-provisioned" component={ConnectedInstallAzureUPI} />
             <Route path="/install/azure" exact component={InstallAzure} />

@@ -502,6 +502,20 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
+                    to="/install/azure/multi/installer-provisioned"
+                  >
+                    Azure (heterogeneous)
+                  </Link>
+                  <TechnologyPreview
+                    position={1}
+                  />
+                </React.Fragment>,
+                "Full stack automation",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/gcp"
                   >
                     Google Cloud
@@ -1049,6 +1063,20 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
               Array [
                 <React.Fragment>
                   <Link
+                    className="pf-u-mr-xs"
+                    to="/install/azure/multi/installer-provisioned"
+                  >
+                    Azure (heterogeneous)
+                  </Link>
+                  <TechnologyPreview
+                    position={1}
+                  />
+                </React.Fragment>,
+                "Full stack automation",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
                     to="/install/gcp"
                   >
                     Google Cloud
@@ -1527,6 +1555,20 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    className="pf-u-mr-xs"
+                    to="/install/azure/multi/installer-provisioned"
+                  >
+                    Azure (heterogeneous)
+                  </Link>
+                  <TechnologyPreview
+                    position={1}
+                  />
+                </React.Fragment>,
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>

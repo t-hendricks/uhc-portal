@@ -111,6 +111,15 @@ const instructionsMapping = {
         docURL: links.INSTALL_AZUREUPI_GETTING_STARTED,
       },
     },
+    multi: {
+      ipi: {
+        title: 'Install OpenShift on Azure with heterogeneous infrastructure',
+        installer: tools.MULTIINSTALLER,
+        channel: channels.STABLE,
+        docURL: links.INSTALL_AZURE_HETEROGENEOUS,
+        preReleasePageLink: '/install/multi/pre-release',
+      },
+    },
     getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through Azure but it will take some time for the DNS to propagate).',
   },
   ibmCloud: {

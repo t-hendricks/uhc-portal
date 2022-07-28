@@ -422,6 +422,13 @@ const runItYourself = () => {
       'Full stack automation and pre-existing infrastructure',
     ],
     [
+      <>
+        <Link to="/install/azure/multi/installer-provisioned" className="pf-u-mr-xs">Azure (heterogeneous)</Link>
+        <TechnologyPreview position={PreviewBadgePosition.inline} />
+      </>,
+      'Full stack automation',
+    ],
+    [
       <><Link to="/install/gcp">Google Cloud</Link></>,
       'Full stack automation and pre-existing infrastructure',
     ],
