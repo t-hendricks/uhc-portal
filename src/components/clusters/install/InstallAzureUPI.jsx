@@ -42,7 +42,7 @@ export class InstallAzureUPI extends Component {
             breadcrumbs={breadcrumbs}
             cloudProviderID="azure"
             customizations={instructionsMapping.azure.customizations}
-            {...instructionsMapping.azure.ipi}
+            {...instructionsMapping.azure.upi}
           />
         </PageSection>
       </>

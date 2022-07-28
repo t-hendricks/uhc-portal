@@ -163,13 +163,6 @@ exports[`DownloadAndOSSelection crc renders correctly 1`] = `
           label="x86_64"
           value="x86"
         />
-        <FormSelectOption
-          isDisabled={true}
-          key="arm"
-          label="aarch64"
-          title="This type of architecture is not available for the selected OS type"
-          value="arm"
-        />
       </FormSelect>
     </GridItem>
     <GridItem

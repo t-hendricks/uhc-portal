@@ -45,7 +45,7 @@ describe('<UpgradeAcknowledgeWarning>', () => {
     expect(wrapper).toMatchInlineSnapshot('<Fragment />');
   });
 
-  it('Display confirmation if there is only clusterMetAcks and is yStream approved', () => {
+  it('Display confirmation if  clusterMetAcks and is yStream approved', () => {
     wrapper.setProps({
       showConfirm: true,
       getAcks: [[], metAcks],
@@ -56,13 +56,13 @@ describe('<UpgradeAcknowledgeWarning>', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('Do not display confirmation if there is only clusterMetAcks and is not yStream approved', () => {
+  it('Display confirmation if there is only clusterMetAcks and is not yStream approved', () => {
     wrapper.setProps({
       showConfirm: true,
       getAcks: [[], metAcks],
       isMinorVersionUpgradesEnabled: false,
     });
-    expect(wrapper.find('[data-testid="confirmAckReceived"]')).toHaveLength(0);
+    expect(wrapper.find('[data-testid="confirmAckReceived"]')).toHaveLength(1);
   });
 
   it('Display infoCircle if isManual AND if is Info', () => {
