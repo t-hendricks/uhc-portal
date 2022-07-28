@@ -40,6 +40,46 @@ exports[`Every OCP instruction page should render:  AWS-arm-ipi 1`] = `
 </Fragment>
 `;
 
+exports[`Every OCP instruction page should render:  AWS-arm-upi 1`] = `
+<Fragment>
+  <Card>
+    <CardBody>
+      <Instructions>
+        <Instruction>
+          <DownloadsAndPullSecretSection
+            channel="stable"
+            cloudProviderID="aws"
+            isBMIPI={false}
+            pendoID="/"
+            preReleasePageLink="/install/arm/pre-release"
+            token={Object {}}
+            tool="aarch64-openshift-install"
+          />
+        </Instruction>
+        <Instruction>
+          <Text
+            component="h2"
+          >
+            Follow the documentation to configure your AWS account and run the installer
+          </Text>
+          <GetStarted
+            cloudProviderID="aws"
+            customizations=""
+            docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-user-infra.html"
+            isBMIPI={false}
+            isUPI={true}
+            pendoID="/"
+          />
+        </Instruction>
+        <Instruction>
+          <SubscriptionAndSupport />
+        </Instruction>
+      </Instructions>
+    </CardBody>
+  </Card>
+</Fragment>
+`;
+
 exports[`Every OCP instruction page should render:  AWS-x86-ipi 1`] = `
 <Fragment>
   <Card>

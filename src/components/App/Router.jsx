@@ -35,6 +35,7 @@ import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
 import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
 import ConnectedInstallArmAWSIPI from '../clusters/install/InstallArmAWSIPI';
+import ConnectedInstallArmAWSUPI from '../clusters/install/InstallArmAWSUPI';
 import InstallAWS from '../clusters/install/InstallAWS';
 import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
@@ -155,6 +156,7 @@ function Router({ history }) {
             <Route path="/install/arm" component={InstallArmBareMetal} />
             <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
+            <Route path="/install/aws/arm/user-provisioned" component={ConnectedInstallArmAWSUPI} />
             <Route path="/install/aws/arm" component={ConnectedInstallArmAWSIPI} />
             <Route path="/install/aws" component={InstallAWS} />
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
