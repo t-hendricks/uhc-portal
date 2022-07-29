@@ -1,13 +1,10 @@
 {
-  // This file is required for VSCode to understand webpack aliases
   "compilerOptions": {
     "jsx": "react",
-    // This must be specified if "paths" is set
     "baseUrl": "./src",
-    // Relative to "baseUrl"
     "paths": {
       "~/*": ["./*"]
     }
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "build"]
 }

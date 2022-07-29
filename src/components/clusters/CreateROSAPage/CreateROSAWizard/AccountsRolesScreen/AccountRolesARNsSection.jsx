@@ -9,7 +9,7 @@ import {
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
-import { getTrackEvent, trackEventsKeys } from '~/common/helpers';
+import { getTrackEvent, trackEvents } from '~/common/analytics';
 import './AccountsRolesScreen.scss';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { ReduxFormDropdown } from '../../../../common/ReduxFormComponents';
@@ -207,7 +207,7 @@ function AccountRolesARNsSection({
           <Button
             variant="secondary"
             onClick={() => {
-              const eventObj = getTrackEvent(trackEventsKeys.RefreshArns);
+              const eventObj = getTrackEvent(trackEvents.RefreshARNs);
               analytics.track(eventObj.event, eventObj.properties);
               refreshARNs();
             }}

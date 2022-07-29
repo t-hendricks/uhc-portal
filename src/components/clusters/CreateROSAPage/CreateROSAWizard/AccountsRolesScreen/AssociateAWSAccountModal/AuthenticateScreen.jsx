@@ -11,7 +11,7 @@ import DownloadAndOSSelection
   from '../../../../install/instructions/components/DownloadAndOSSelection';
 import links, { channels, tools } from '../../../../../../common/installLinks.mjs';
 import InstructionCommand from '../../../../../common/InstructionCommand';
-import { trackEventsKeys } from '~/common/helpers';
+import { trackEvents } from '~/common/analytics';
 
 function AuthenticateScreen({ token }) {
   const loginCommand = `rosa login --token="${token}"`;
@@ -66,7 +66,7 @@ function AuthenticateScreen({ token }) {
         <br />
         <InstructionCommand
           textAriaLabel="Copyable ROSA login command"
-          trackEventsKey={trackEventsKeys.RosaLogin}
+          trackEvent={trackEvents.ROSALogin}
         >
           {loginCommand}
         </InstructionCommand>

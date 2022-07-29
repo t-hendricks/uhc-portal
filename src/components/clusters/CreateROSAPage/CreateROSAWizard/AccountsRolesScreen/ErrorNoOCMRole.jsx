@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Alert, AlertActionLink, ExpandableSection, Grid, GridItem, Text, TextContent, TextVariants,
 } from '@patternfly/react-core';
-import { trackEventsKeys } from '~/common/helpers';
+import { trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import { rosaOcmRoleCLICommands } from './AssociateAWSAccountModal/OCMRoleScreen/OCMRoleScreen';
@@ -29,7 +29,7 @@ function ErrorNoOCMRole({
                 bodyContent="One basic OCM role is needed per Red Hat organization to allow OpenShift Cluster Manager to detect the presence of AWS roles and policies required for ROSA."
               />
             </strong>
-            <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role" trackEventsKey={trackEventsKeys.CopyOcmRoleCreateBasic}>
+            <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role" trackEvent={trackEvents.CopyOCMRoleCreateBasic}>
               {rosaOcmRoleCLICommands.ocmRole}
             </InstructionCommand>
           </GridItem>
@@ -46,7 +46,7 @@ function ErrorNoOCMRole({
                 bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually during deployment"
               />
             </strong>
-            <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin" trackEventsKey={trackEventsKeys.CopyOcmRoleCreateAdmin}>
+            <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin" trackEvent={trackEvents.CopyOCMRoleCreateAdmin}>
               {rosaOcmRoleCLICommands.adminOcmRole}
             </InstructionCommand>
           </GridItem>
@@ -57,7 +57,7 @@ function ErrorNoOCMRole({
         </Text>
         <Grid>
           <GridItem sm={7} md={5}>
-            <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn" trackEventsKey={trackEventsKeys.CopyOcmRoleLink}>
+            <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn" trackEvent={trackEvents.CopyOCMRoleLink}>
               {rosaOcmRoleCLICommands.linkOcmRole}
             </InstructionCommand>
           </GridItem>

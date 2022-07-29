@@ -10,7 +10,7 @@ import {
   EmptyStateBody, EmptyState,
 } from '@patternfly/react-core';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
-import { getTrackEvent, trackEventsKeys } from '~/common/helpers';
+import { getTrackEvent, trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
 import { loadOfflineToken } from '../../../../tokens/Tokens';
@@ -107,10 +107,10 @@ function AWSAccountSelection({
       <Button
         ref={associateAWSAccountBtnRef}
         variant="secondary"
-        onClick={() => {
-          const eventObj = getTrackEvent(trackEventsKeys.AssociateAws);
+        onClick={(event) => {
+          const eventObj = getTrackEvent(trackEvents.AssociateAWS);
           analytics.track(eventObj.event, eventObj.properties);
-          onClick();
+          onClick(event);
         }}
       >
         Associate AWS account

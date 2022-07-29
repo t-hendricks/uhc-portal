@@ -16,7 +16,7 @@ import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 import InstructionCommand from '../../../../../common/InstructionCommand';
 import links from '../../../../../../common/installLinks.mjs';
-import { trackEventsKeys } from '~/common/helpers';
+import { trackEvents } from '~/common/analytics';
 
 export const rosaCLICommand = {
   userRole: 'rosa create user-role',
@@ -68,7 +68,7 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
             />
             <InstructionCommand
               textAriaLabel="Copyable ROSA create user-role"
-              trackEventsKey={trackEventsKeys.CopyUserRoleCreate}
+              trackEvent={trackEvents.CopyUserRoleCreate}
             >
               {rosaCLICommand.userRole}
             </InstructionCommand>
@@ -85,7 +85,7 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
             <GridItem sm={7} md={6}>
               <InstructionCommand
                 textAriaLabel="Copyable ROSA link user-role --arn"
-                trackEventsKey={trackEventsKeys.CopyUserRoleLink}
+                trackEvent={trackEvents.CopyUserRoleLink}
               >
                 {rosaCLICommand.linkUserRole}
               </InstructionCommand>
@@ -98,7 +98,7 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
                 footer={(
                   <InstructionCommand
                     textAriaLabel="Copyable ROSA rosa list user-role"
-                    trackEventsKey={trackEventsKeys.CopyUserRoleList}
+                    trackEvent={trackEvents.CopyUserRoleList}
                   >
                     rosa list user-role
                   </InstructionCommand>

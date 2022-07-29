@@ -6,7 +6,7 @@ import {
 import Download from '@axetroy/react-download';
 import isEmpty from 'lodash/isEmpty';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
-import { getTrackEvent } from '../../common/helpers';
+import { getTrackEvent, trackEvents } from '../../common/analytics';
 
 function DownloadPullSecret({ token, pendoID, text }) {
   const { analytics } = useChrome();
@@ -18,7 +18,7 @@ function DownloadPullSecret({ token, pendoID, text }) {
       variant="secondary"
       isDisabled={isDisabled}
       onClick={() => {
-        const eventObj = getTrackEvent('DownloadPullSecret', null, pendoID);
+        const eventObj = getTrackEvent(trackEvents.DownloadPullSecret, null, pendoID);
         analytics.track(eventObj.event, eventObj.properties);
       }}
     >
