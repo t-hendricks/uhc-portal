@@ -75,11 +75,12 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           component={ReduxVerticalFormGroup}
           name="secret_access_key"
           label="AWS secret access key"
-          type="password"
+          type="text"
           validate={required}
           disabled={pending || isValidating}
           helpText={isValidating ? 'Validating...' : ''}
           isRequired
+          isPassword
         />
       </GridItem>
       <GridItem md={6} />
