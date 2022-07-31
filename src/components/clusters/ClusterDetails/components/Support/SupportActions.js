@@ -50,13 +50,12 @@ const clearDeleteNotificationContacts = () => dispatch => dispatch({
   type: INVALIDATE_ACTION(DELETE_NOTIFICATION_CONTACT),
 });
 
-const getNotificationContacts = subscriptionID => dispatch => dispatch({
+const getNotificationContacts = subscriptionID => ({
   type: GET_NOTIFICATION_CONTACTS,
-  payload: accountsService.getNotificationContacts(subscriptionID)
-    .then((response) => {
-      response.data.subscriptionID = subscriptionID;
-      return response;
-    }),
+  payload: accountsService.getNotificationContacts(subscriptionID),
+  meta: {
+    subscriptionID,
+  },
 });
 
 const addNotificationContact = (subscriptionID, username) => dispatch => dispatch({
@@ -74,13 +73,12 @@ const deleteNotificationContact = (subscriptionID, accountID) => dispatch => dis
   meta: buildNotificationsMeta('Notification contact deleted successfully'),
 });
 
-const getSupportCases = subscriptionID => dispatch => dispatch({
+const getSupportCases = subscriptionID => ({
   type: GET_SUPPORT_CASES,
-  payload: accountsService.getSupportCases(subscriptionID)
-    .then((response) => {
-      response.data.subscriptionID = subscriptionID;
-      return response;
-    }),
+  payload: accountsService.getSupportCases(subscriptionID),
+  meta: {
+    subscriptionID,
+  },
 });
 
 const supportActions = {
