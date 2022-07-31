@@ -12,15 +12,18 @@ describe('SupportActions', () => {
 
   describe('getNotificationContacts', () => {
     it('dispatches successfully', () => {
-      SupportActions.getNotificationContacts('cluster id')(mockDispatch);
-      expect(mockDispatch)
-        .toBeCalledWith({
+      const result = SupportActions.getNotificationContacts('cluster id');
+      expect(result)
+        .toEqual({
           payload: expect.anything(),
           type: SupportConstants.GET_NOTIFICATION_CONTACTS,
+          meta: {
+            subscriptionID: 'cluster id',
+          },
         });
     });
     it('calls accountsService.getNotificationContacts', () => {
-      SupportActions.getNotificationContacts('cluster id')(mockDispatch);
+      SupportActions.getNotificationContacts('cluster id');
       expect(accountsService.getNotificationContacts)
         .toBeCalledWith('cluster id');
     });
