@@ -196,10 +196,8 @@ class CreateROSAWizardInternal extends React.Component {
       undefined,
       ocmResourceType.MOA,
       {
-        step: {
-          id: currentStepId,
-          name: CreateROSAWizardInternal.stepNameById[currentStepId],
-        },
+        step_id: currentStepId,
+        step_name: CreateROSAWizardInternal.stepNameById[currentStepId],
       },
     );
     analytics.track(eventObj.event, eventObj.properties);
