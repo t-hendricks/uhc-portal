@@ -43,6 +43,7 @@ describe('<AddMachinePoolModal />', () => {
       machineTypes={pendingRequest}
       pristine
       invalid={false}
+      selectedMachineType="r5.2xlarge"
       canAutoScale
       autoscalingEnabled
       change={change}

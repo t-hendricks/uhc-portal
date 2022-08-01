@@ -9,6 +9,31 @@ import {
 } from '../../../../../common/__test__/quota.fixtures';
 import { mapMachineTypesById } from '../../../../../../../redux/reducers/machineTypesReducer';
 
+const baseFlavoursState = {
+  error: false,
+  errorMessage: '',
+  pending: false,
+  fulfilled: false,
+  byID: {
+    // actually contains 'osd-4' key, but not supposed to peek at it until fulfilled
+  },
+};
+
+const fulfilledFlavoursState = {
+  ...baseFlavoursState,
+  fulfilled: true,
+  byID: {
+    'osd-4': {
+      aws: {
+        compute_instance_type: 'm5.xlarge',
+      },
+      gcp: {
+        compute_instance_type: 'custom-4-16384', // TODO not listed in machineTypes
+      },
+    },
+  },
+};
+
 const baseState = {
   error: false,
   errorMessage: '',
@@ -120,22 +145,103 @@ const machineTypes = {
   ],
 };
 
+const fulfilledMachineState = {
+  ...baseState,
+  fulfilled: true,
+  types: machineTypes,
+  typesByID: mapMachineTypesById(machineTypes),
+};
+
+const unknownCategoryMachineTypes = [
+  {
+    kind: 'MachineType',
+    name: 'foo.2xbar - Quantum Computing (1 QPU)',
+    category: 'foobar_computing',
+    size: 'medium',
+    id: 'foo.2xbar',
+    href: '/api/clusters_mgmt/v1/machine_types/foo.2xbar',
+    memory: {
+      value: 34359738368,
+      unit: 'B',
+    },
+    cpu: {
+      value: 8,
+      unit: 'vCPU',
+    },
+    cloud_provider: {
+      kind: 'CloudProviderLink',
+      id: 'aws',
+      href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+    },
+    ccs_only: false,
+    generic_name: 'standard-4', // reusing existing one for simplicity, need to have quota for it.
+  },
+  {
+    kind: 'MachineType',
+    name: 'foo.4xbar - Quantum Computing (2 QPU)',
+    category: 'foobar_computing',
+    size: 'medium',
+    id: 'foo.4xbar',
+    href: '/api/clusters_mgmt/v1/machine_types/foo.4xbar',
+    memory: {
+      value: 34359738368,
+      unit: 'B',
+    },
+    cpu: {
+      value: 16,
+      unit: 'vCPU',
+    },
+    cloud_provider: {
+      kind: 'CloudProviderLink',
+      id: 'aws',
+      href: '/api/clusters_mgmt/v1/cloud_providers/aws',
+    },
+    ccs_only: false,
+    generic_name: 'standard-4', // reusing existing one for simplicity, need to have quota for it.
+  },
+];
+
+// A stateful redux-form field.
+const fieldProps = (initialValue) => {
+  const input = {
+    value: initialValue,
+    onChange: jest.fn((newValue) => {
+      // Hack: this mutates the already passed prop.
+      // Ideally to simulate redux/react, we should instead call wrapper.setProps(), afterwards?
+      input.value = newValue;
+    }),
+  };
+  return {
+    input,
+    meta: {
+      error: false,
+      touched: false,
+    },
+  };
+};
+
 describe('<MachineTypeSelection />', () => {
   describe('when machine type list needs to be fetched', () => {
-    let onChange;
+    let field;
+    let forceChoiceField;
+    let getDefaultFlavour;
     let getMachineTypes;
     let wrapper;
     beforeEach(() => {
-      onChange = jest.fn();
+      field = fieldProps(undefined);
+      forceChoiceField = fieldProps(false);
+      getDefaultFlavour = jest.fn();
       getMachineTypes = jest.fn();
       wrapper = shallow(
         <MachineTypeSelection
+          flavours={baseFlavoursState}
           machineTypes={baseState}
-          input={{ onChange }}
-          meta={{}}
+          machine_type={field}
+          machine_type_force_choice={forceChoiceField}
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          getDefaultFlavour={getDefaultFlavour}
           getMachineTypes={getMachineTypes}
           isBYOC={false}
           cloudProviderID="aws"
@@ -149,10 +255,16 @@ describe('<MachineTypeSelection />', () => {
     it('renders correctly', () => {
       expect(wrapper).toMatchSnapshot();
     });
+
+    it('fetches flavours', () => {
+      expect(getDefaultFlavour).toBeCalled();
+    });
   });
 
-  describe('when there was an error', () => {
-    let onChange;
+  describe('with an error loading machineTypes', () => {
+    let field;
+    let forceChoiceField;
+    let getDefaultFlavour;
     let getMachineTypes;
     let wrapper;
     beforeEach(() => {
@@ -162,16 +274,20 @@ describe('<MachineTypeSelection />', () => {
         errorMessage: 'This is an error message',
       };
 
-      onChange = jest.fn();
+      field = fieldProps(undefined);
+      forceChoiceField = fieldProps(false);
+      getDefaultFlavour = jest.fn();
       getMachineTypes = jest.fn();
       wrapper = shallow(
         <MachineTypeSelection
+          flavours={fulfilledFlavoursState}
           machineTypes={state}
-          input={{ onChange }}
-          meta={{}}
+          machine_type={field}
+          machine_type_force_choice={forceChoiceField}
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          getDefaultFlavour={getDefaultFlavour}
           getMachineTypes={getMachineTypes}
           isBYOC={false}
           cloudProviderID="aws"
@@ -188,25 +304,35 @@ describe('<MachineTypeSelection />', () => {
   });
 
   describe('when the request is pending', () => {
-    let onChange;
+    let field;
+    let forceChoiceField;
+    let getDefaultFlavour;
     let getMachineTypes;
     let wrapper;
+    const flavoursState = {
+      ...baseFlavoursState,
+      pending: true,
+    };
     const state = {
       ...baseState,
       pending: true,
       fulfilled: false,
     };
     beforeEach(() => {
-      onChange = jest.fn();
+      field = fieldProps(undefined);
+      forceChoiceField = fieldProps(false);
+      getDefaultFlavour = jest.fn();
       getMachineTypes = jest.fn();
       wrapper = shallow(
         <MachineTypeSelection
+          flavours={flavoursState}
           machineTypes={state}
-          input={{ onChange }}
-          meta={{}}
+          machine_type={field}
+          machine_type_force_choice={forceChoiceField}
           isMultiAz={false}
           quota={{}}
           organization={organizationState}
+          getDefaultFlavour={getDefaultFlavour}
           getMachineTypes={getMachineTypes}
           isBYOC={false}
           cloudProviderID="aws"
@@ -223,28 +349,69 @@ describe('<MachineTypeSelection />', () => {
   });
 
   describe('when the machine types list is available', () => {
-    let onChange;
+    let field;
+    let forceChoiceField;
+    let getDefaultFlavour;
     let getMachineTypes;
     let wrapper;
-    const state = {
-      ...baseState,
-      fulfilled: true,
-      types: machineTypes,
-      typesByID: mapMachineTypesById(machineTypes),
-    };
+
+    describe('with an error loading flavours', () => {
+      beforeEach(() => {
+        const flavoursState = {
+          ...baseFlavoursState,
+          error: true,
+          errorMessage: 'Out of vanilla ice cream',
+        };
+
+        field = fieldProps(undefined);
+        forceChoiceField = fieldProps(false);
+        getDefaultFlavour = jest.fn();
+        getMachineTypes = jest.fn();
+        wrapper = shallow(
+          <MachineTypeSelection
+            flavours={flavoursState}
+            machineTypes={fulfilledMachineState}
+            machine_type={field}
+            machine_type_force_choice={forceChoiceField}
+            isMultiAz={false}
+            quota={rhQuotaList}
+            organization={organizationState}
+            getDefaultFlavour={getDefaultFlavour}
+            getMachineTypes={getMachineTypes}
+            isBYOC={false}
+            cloudProviderID="aws"
+            isMachinePool={false}
+            product="OSD"
+            billingModel="standard"
+          />,
+        );
+      });
+
+      it('renders correctly', () => {
+        expect(wrapper).toMatchSnapshot();
+      });
+
+      it('does not select default', () => {
+        expect(field.input.onChange).not.toHaveBeenCalled();
+      });
+    });
 
     describe('with rhinfra quota available', () => {
       beforeEach(() => {
         const quota = rhQuotaList;
-        onChange = jest.fn();
+        field = fieldProps(undefined);
+        forceChoiceField = fieldProps(false);
+        getDefaultFlavour = jest.fn();
         getMachineTypes = jest.fn();
         wrapper = shallow(
           <MachineTypeSelection
-            machineTypes={state}
-            input={{ onChange }}
-            meta={{}}
+            flavours={fulfilledFlavoursState}
+            machineTypes={fulfilledMachineState}
+            machine_type={field}
+            machine_type_force_choice={forceChoiceField}
             quota={quota}
             organization={organizationState}
+            getDefaultFlavour={getDefaultFlavour}
             getMachineTypes={getMachineTypes}
             isMultiAz
             isBYOC={false}
@@ -260,9 +427,95 @@ describe('<MachineTypeSelection />', () => {
         expect(wrapper).toMatchSnapshot();
       });
 
-      it('calls onChange with the first item that has quota', () => {
-        expect(onChange).toBeCalled();
-        expect(onChange).toBeCalledWith('m5.xlarge');
+      it('selects default according to flavours API', () => {
+        expect(field.input.onChange).toBeCalled();
+        expect(field.input.onChange).toBeCalledWith('m5.xlarge');
+      });
+
+      it('does not display ccs_only machine types, only machines with quota', () => {
+        const types = wrapper.find('SelectOption').getElements().map(e => e.key);
+        expect(types).not.toContain('m5.12xlarge');
+        expect(types).not.toContain('g4dn.2xlarge');
+      });
+    });
+
+    describe('with rhinfra quota covering previous selection', () => {
+      beforeEach(() => {
+        const quota = rhQuotaList;
+        field = fieldProps('m5.4xlarge');
+        forceChoiceField = fieldProps(false);
+        getDefaultFlavour = jest.fn();
+        getMachineTypes = jest.fn();
+        wrapper = shallow(
+          <MachineTypeSelection
+            flavours={fulfilledFlavoursState}
+            machineTypes={fulfilledMachineState}
+            machine_type={field}
+            machine_type_force_choice={forceChoiceField}
+            quota={quota}
+            organization={organizationState}
+            getDefaultFlavour={getDefaultFlavour}
+            getMachineTypes={getMachineTypes}
+            isMultiAz
+            isBYOC={false}
+            isMachinePool={false}
+            cloudProviderID="aws"
+            product="OSD"
+            billingModel="standard"
+          />,
+        );
+      });
+
+      it('renders correctly', () => {
+        expect(wrapper).toMatchSnapshot();
+      });
+
+      it('keeps selection', () => {
+        expect(field.input.onChange).not.toHaveBeenCalled();
+      });
+
+      it('does not display ccs_only machine types, only machines with quota', () => {
+        const types = wrapper.find('SelectOption').getElements().map(e => e.key);
+        expect(types).toContain('m5.xlarge');
+        expect(types).toContain('m5.4xlarge');
+        expect(types).not.toContain('m5.12xlarge');
+      });
+    });
+
+    describe('with rhinfra quota not covering previous selection', () => {
+      beforeEach(() => {
+        const quota = rhQuotaList;
+        field = fieldProps('m5.12xlarge');
+        forceChoiceField = fieldProps(false);
+        getDefaultFlavour = jest.fn();
+        getMachineTypes = jest.fn();
+        wrapper = shallow(
+          <MachineTypeSelection
+            flavours={fulfilledFlavoursState}
+            machineTypes={fulfilledMachineState}
+            machine_type={field}
+            machine_type_force_choice={forceChoiceField}
+            quota={quota}
+            organization={organizationState}
+            getDefaultFlavour={getDefaultFlavour}
+            getMachineTypes={getMachineTypes}
+            isMultiAz
+            isBYOC={false}
+            isMachinePool={false}
+            cloudProviderID="aws"
+            product="OSD"
+            billingModel="standard"
+          />,
+        );
+      });
+
+      it('renders correctly', () => {
+        expect(wrapper).toMatchSnapshot();
+      });
+
+      it('clears selection to force manual choice', () => {
+        expect(field.input.onChange).toHaveBeenCalledWith('');
+        expect(forceChoiceField.input.onChange).toHaveBeenCalledWith(true);
       });
 
       it('does not display ccs_only machine types, only machines with quota', () => {
@@ -275,15 +528,19 @@ describe('<MachineTypeSelection />', () => {
     describe('byoc with sufficient byoc quota available', () => {
       beforeEach(() => {
         const quota = CCSQuotaList;
-        onChange = jest.fn();
+        field = fieldProps(undefined);
+        forceChoiceField = fieldProps(false);
+        getDefaultFlavour = jest.fn();
         getMachineTypes = jest.fn();
         wrapper = shallow(
           <MachineTypeSelection
-            machineTypes={state}
-            input={{ onChange }}
-            meta={{}}
+            flavours={fulfilledFlavoursState}
+            machineTypes={fulfilledMachineState}
+            machine_type={field}
+            machine_type_force_choice={forceChoiceField}
             quota={quota}
             organization={organizationState}
+            getDefaultFlavour={getDefaultFlavour}
             getMachineTypes={getMachineTypes}
             isMultiAz
             isBYOC
@@ -299,9 +556,9 @@ describe('<MachineTypeSelection />', () => {
         expect(wrapper).toMatchSnapshot();
       });
 
-      it('calls onChange with the first item that has quota', () => {
-        expect(onChange).toBeCalled();
-        expect(onChange).toBeCalledWith('m5.xlarge');
+      it('selects default according to flavours API', () => {
+        expect(field.input.onChange).toBeCalled();
+        expect(field.input.onChange).toBeCalledWith('m5.xlarge');
       });
 
       it('displays only machine types with quota', () => {
@@ -313,15 +570,19 @@ describe('<MachineTypeSelection />', () => {
     describe('byoc lacking enough byoc node quota', () => {
       beforeEach(() => {
         const quota = CCSOneNodeRemainingQuotaList;
-        onChange = jest.fn();
+        field = fieldProps(undefined);
+        forceChoiceField = fieldProps(false);
+        getDefaultFlavour = jest.fn();
         getMachineTypes = jest.fn();
         wrapper = shallow(
           <MachineTypeSelection
-            machineTypes={state}
-            input={{ onChange }}
-            meta={{}}
+            flavours={fulfilledFlavoursState}
+            machineTypes={fulfilledMachineState}
+            machine_type={field}
+            machine_type_force_choice={forceChoiceField}
             quota={quota}
             organization={organizationState}
+            getDefaultFlavour={getDefaultFlavour}
             getMachineTypes={getMachineTypes}
             isMachinePool={false}
             isMultiAz
@@ -337,8 +598,71 @@ describe('<MachineTypeSelection />', () => {
         expect(wrapper).toMatchSnapshot();
       });
 
-      it('does not call onChange', () => {
-        expect(onChange).not.toHaveBeenCalled();
+      it('does not select default', () => {
+        expect(field.input.onChange).not.toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('when the machine types list contains unknown categories', () => {
+    const moreTypes = {
+      aws: [
+        ...machineTypes.aws,
+        ...unknownCategoryMachineTypes,
+      ],
+    };
+    const state = {
+      ...baseState,
+      fulfilled: true,
+      types: moreTypes,
+      typesByID: mapMachineTypesById(moreTypes),
+    };
+    let field;
+    let forceChoiceField;
+    let getDefaultFlavour;
+    let getMachineTypes;
+    let wrapper;
+
+    describe('byoc with sufficient byoc quota available', () => {
+      beforeEach(() => {
+        const quota = CCSQuotaList;
+        field = fieldProps(undefined);
+        forceChoiceField = fieldProps(false);
+        getDefaultFlavour = jest.fn();
+        getMachineTypes = jest.fn();
+        wrapper = shallow(
+          <MachineTypeSelection
+            flavours={fulfilledFlavoursState}
+            machineTypes={state}
+            machine_type={field}
+            machine_type_force_choice={forceChoiceField}
+            quota={quota}
+            organization={organizationState}
+            getDefaultFlavour={getDefaultFlavour}
+            getMachineTypes={getMachineTypes}
+            isMultiAz
+            isBYOC
+            isMachinePool={false}
+            cloudProviderID="aws"
+            product="OSD"
+            billingModel="standard"
+          />,
+        );
+      });
+
+      it('renders correctly', () => {
+        expect(wrapper).toMatchSnapshot();
+      });
+
+      it('selects default according to flavours API', () => {
+        expect(field.input.onChange).toBeCalled();
+        expect(field.input.onChange).toBeCalledWith('m5.xlarge');
+      });
+
+      it('displays only machine types with quota from known categories', () => {
+        const types = wrapper.find('SelectOption').getElements().map(e => e.key);
+        expect(types).toContain('m5.xlarge');
+        expect(types).not.toContain('foo.2xbar');
       });
     });
   });

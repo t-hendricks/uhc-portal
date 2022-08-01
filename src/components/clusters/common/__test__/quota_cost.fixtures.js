@@ -20,6 +20,16 @@ export const dedicatedRhInfra = [
         billing_model: 'standard',
         cost: 1,
       },
+      {
+        cloud_provider: 'any',
+        resource_name: 'standard-16',
+        resource_type: 'cluster',
+        byoc: 'rhinfra',
+        availability_zone_type: 'multi',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 2,
+      },
     ],
   },
   {
@@ -33,6 +43,16 @@ export const dedicatedRhInfra = [
       {
         cloud_provider: 'any',
         resource_name: 'standard-4',
+        resource_type: 'compute.node',
+        byoc: 'rhinfra',
+        availability_zone_type: 'any',
+        product: 'OSD',
+        billing_model: 'standard',
+        cost: 1,
+      },
+      {
+        cloud_provider: 'any',
+        resource_name: 'standard-16',
         resource_type: 'compute.node',
         byoc: 'rhinfra',
         availability_zone_type: 'any',
