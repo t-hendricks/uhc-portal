@@ -5,7 +5,7 @@ import {
 } from '@patternfly/react-core';
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
 import { tools } from '../../../../../common/installLinks.mjs';
-import { getTrackEvent } from '../../../../../common/helpers';
+import { getTrackEvent, trackEvents } from '~/common/analytics';
 
 const texts = {
   [tools.CRC]: 'Download OpenShift Local',
@@ -42,7 +42,7 @@ const DownloadButton = ({
       variant="secondary"
       className={`download-button tool-${tool.toLowerCase()}`}
       onClick={() => {
-        const eventObj = getTrackEvent(tool, url, pendoID);
+        const eventObj = getTrackEvent(trackEvents[tool], url, pendoID);
         analytics.track(name || eventObj.event, name ? pendoID : eventObj.properties);
       }}
       disabled={!url || disabled}
