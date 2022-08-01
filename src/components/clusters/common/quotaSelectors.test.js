@@ -1,9 +1,5 @@
 import {
   hasManagedQuotaSelector,
-  hasAwsQuotaSelector,
-  hasGcpQuotaSelector,
-  awsQuotaSelector,
-  gcpQuotaSelector,
   availableClustersFromQuota,
   availableNodesFromQuota,
 } from './quotaSelectors';
@@ -11,44 +7,13 @@ import { normalizedProducts, billingModels } from '../../../common/subscriptionT
 import {
   mockQuotaList, emptyQuotaList,
   ROSAQuotaList, CCSQuotaList, TrialQuotaList,
-  ROSACCSQuotaList, CCSROSAQuotaList, TrialCCSQuotaList, CCSTrialQuotaList,
+  ROSACCSQuotaList, CCSROSAQuotaList,
   rhQuotaList, negativeQuotaList,
 } from './__test__/quota.fixtures';
 
 const state = quotaList => ({ userProfile: { organization: { quotaList } } });
 
 describe('quotaSelectors', () => {
-  describe('processQuota', () => {
-    it('processed result does not depend on input order', () => {
-      // Resulting .items is the input, so obviously depends on input.
-      // But the .clustersQuota, .nodesQuota etc. should match.
-      expect({ ...ROSACCSQuotaList, items: null }).toEqual({ ...CCSROSAQuotaList, items: null });
-      expect({ ...TrialCCSQuotaList, items: null }).toEqual({ ...CCSTrialQuotaList, items: null });
-    });
-  });
-
-  describe('hasAwsQuotaSelector', () => {
-    it('', () => {
-      expect(hasAwsQuotaSelector(state(emptyQuotaList), normalizedProducts.OSD)).toBe(false);
-      expect(hasAwsQuotaSelector(state(ROSAQuotaList), normalizedProducts.OSD)).toBe(false);
-      expect(hasAwsQuotaSelector(state(ROSAQuotaList), normalizedProducts.ROSA)).toBe(true);
-      expect(hasAwsQuotaSelector(state(CCSQuotaList), normalizedProducts.OSD)).toBe(true);
-      expect(hasAwsQuotaSelector(state(rhQuotaList), normalizedProducts.OSD)).toBe(true);
-      expect(hasAwsQuotaSelector(state(mockQuotaList), normalizedProducts.OSD)).toBe(true);
-      expect(hasAwsQuotaSelector(state(mockQuotaList), normalizedProducts.OSDTrial)).toBe(true);
-    });
-  });
-
-  describe('hasGcpQuotaSelector', () => {
-    it('', () => {
-      expect(hasGcpQuotaSelector(state(emptyQuotaList), normalizedProducts.OSD)).toBe(false);
-      expect(hasGcpQuotaSelector(state(ROSAQuotaList), normalizedProducts.OSD)).toBe(false);
-      expect(hasGcpQuotaSelector(state(CCSQuotaList), normalizedProducts.OSD)).toBe(true);
-      expect(hasGcpQuotaSelector(state(rhQuotaList), normalizedProducts.OSD)).toBe(true);
-      expect(hasGcpQuotaSelector(state(mockQuotaList), normalizedProducts.OSD)).toBe(true);
-    });
-  });
-
   describe('hasManagedQuotaSelector', () => {
     it('', () => {
       expect(hasManagedQuotaSelector(state(emptyQuotaList), normalizedProducts.OSD)).toBe(false);
@@ -57,60 +22,6 @@ describe('quotaSelectors', () => {
       expect(hasManagedQuotaSelector(state(rhQuotaList), normalizedProducts.OSD)).toBe(true);
       expect(hasManagedQuotaSelector(state(mockQuotaList), normalizedProducts.OSD)).toBe(true);
       expect(hasManagedQuotaSelector(state(negativeQuotaList), normalizedProducts.OSD)).toBe(true);
-    });
-  });
-
-  describe('awsQuotaSelector', () => {
-    it('handles empty quota', () => {
-      const empty = awsQuotaSelector(state(emptyQuotaList), normalizedProducts.OSD);
-      expect(empty.isAvailable).toBe(false);
-      expect(empty.byoc.totalAvailable).toEqual(0);
-      expect(empty.byoc.singleAz.available).toEqual(0);
-    });
-
-    it('handles quota for CCS', () => {
-      const mock = awsQuotaSelector(state(mockQuotaList), normalizedProducts.OSD);
-      expect(mock.byoc.singleAz.available).toBeGreaterThan(0);
-
-      const aws = awsQuotaSelector(state(CCSQuotaList), normalizedProducts.OSD);
-      expect(aws.isAvailable).toBe(true);
-      expect(aws.byoc.totalAvailable).toEqual(20);
-      expect(aws.byoc.multiAz.available).toEqual(20);
-    });
-
-    it('handles quota by product', () => {
-      const productMismatch = awsQuotaSelector(state(CCSQuotaList), normalizedProducts.OSDTrial);
-      expect(productMismatch.isAvailable).toBe(false);
-
-      const trial = awsQuotaSelector(state(TrialQuotaList), normalizedProducts.OSDTrial);
-      expect(trial.isAvailable).toBe(true);
-    });
-  });
-
-  describe('gcpQuotaSelector', () => {
-    it('handles empty quota', () => {
-      const empty = gcpQuotaSelector(state(emptyQuotaList), normalizedProducts.OSD);
-      expect(empty.isAvailable).toBe(false);
-      expect(empty.byoc.totalAvailable).toEqual(0);
-      expect(empty.byoc.singleAz.available).toEqual(0);
-    });
-
-    it('handles quota for CCS', () => {
-      const mock = gcpQuotaSelector(state(mockQuotaList), normalizedProducts.OSD);
-      expect(mock.byoc.singleAz.available).toBeGreaterThan(0);
-
-      const gcp = gcpQuotaSelector(state(CCSQuotaList), normalizedProducts.OSD);
-      expect(gcp.isAvailable).toBe(true);
-      expect(gcp.byoc.totalAvailable).toEqual(20);
-      expect(gcp.byoc.multiAz.available).toEqual(20);
-    });
-
-    it('handles quota by product', () => {
-      const productMismatch = awsQuotaSelector(state(CCSQuotaList), normalizedProducts.OSDTrial);
-      expect(productMismatch.isAvailable).toBe(false);
-
-      const trial = awsQuotaSelector(state(TrialQuotaList), normalizedProducts.OSDTrial);
-      expect(trial.isAvailable).toBe(true);
     });
   });
 
