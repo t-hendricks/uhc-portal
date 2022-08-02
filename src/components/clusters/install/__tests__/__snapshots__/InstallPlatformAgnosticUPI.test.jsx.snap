@@ -15,6 +15,10 @@ exports[`Platform agnostic UPI install renders correctly 1`] = `
               "path": "/create",
             },
             Object {
+              "label": "Platform agnostic (x86_64)",
+              "path": "/install/platform-agnostic",
+            },
+            Object {
               "label": "x86_64 User-provisioned infrastructure",
             },
           ]
@@ -35,6 +39,10 @@ exports[`Platform agnostic UPI install renders correctly 1`] = `
               Object {
                 "label": "Create",
                 "path": "/create",
+              },
+              Object {
+                "label": "Platform agnostic (x86_64)",
+                "path": "/install/platform-agnostic",
               },
               Object {
                 "label": "x86_64 User-provisioned infrastructure",
