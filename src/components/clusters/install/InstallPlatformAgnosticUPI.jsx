@@ -12,7 +12,7 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-export class InstallPlatformAgnostic extends Component {
+export class InstallPlatformAgnosticUPI extends Component {
   componentDidMount() {
     scrollToTop();
     document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | x86_64 User-Provisioned Infrastructure';
@@ -48,11 +48,11 @@ export class InstallPlatformAgnostic extends Component {
   }
 }
 
-InstallPlatformAgnostic.propTypes = {
+InstallPlatformAgnosticUPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallPlatformAgnostic);
+export default connect(mapStateToProps)(InstallPlatformAgnosticUPI);

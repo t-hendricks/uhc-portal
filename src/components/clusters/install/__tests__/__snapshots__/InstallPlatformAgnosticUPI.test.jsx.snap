@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Platform agnostic install renders correctly 1`] = `
+exports[`Platform agnostic UPI install renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
