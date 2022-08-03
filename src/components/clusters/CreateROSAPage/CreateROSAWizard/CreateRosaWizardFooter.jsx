@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import { WizardFooter, WizardContext, Button } from '@patternfly/react-core';
 
+import { stepId } from './rosaWizardConstants';
+
 const CreateRosaWizardFooter = ({ onBeforeNext, onBeforeSubmit, onSubmit }) => {
   const { pending: getAccountIDsLoading } = useSelector(
     state => state.rosaReducer.getAWSAccountIDsResponse,
@@ -54,7 +56,7 @@ const CreateRosaWizardFooter = ({ onBeforeNext, onBeforeSubmit, onSubmit }) => {
             <Button
               variant="secondary"
               onClick={onBack}
-              {...activeStep.name === 'Accounts and roles' && { isDisabled: true }}
+              isDisabled={activeStep.id === stepId.ACCOUNTS_AND_ROLES}
             >
               Back
             </Button>

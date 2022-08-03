@@ -8,7 +8,7 @@ import {
   Button, ClipboardCopy,
 } from '@patternfly/react-core';
 import { get } from 'lodash';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import ExternalLink from '../../../../common/ExternalLink';
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Button,
 } from '@patternfly/react-core';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import { tools } from '../../../../../common/installLinks.mjs';
 import { getTrackEvent, trackEvents } from '~/common/analytics';
 
