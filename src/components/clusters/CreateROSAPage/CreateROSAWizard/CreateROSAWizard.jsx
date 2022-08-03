@@ -5,16 +5,15 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Banner, Wizard, PageSection } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
-import config from '../../../../config';
+import config from '~/config';
 import {
-  getTrackEvent,
-  ocmResourceType,
   shouldRefetchQuota,
   scrollToFirstError,
-} from '../../../../common/helpers';
-import { persistor } from '../../../../redux/store';
-import withAnalytics from '../../../../hoc/withAnalytics';
-import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
+} from '~/common/helpers';
+import { trackEvents, getTrackEvent, ocmResourceType } from '~/common/analytics';
+import { persistor } from '~/redux/store';
+import withAnalytics from '~/hoc/withAnalytics';
+import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 
 import ClusterSettingsScreen from '../../CreateOSDPage/CreateOSDWizard/ClusterSettingsScreen';
 import MachinePoolScreen from '../../CreateOSDPage/CreateOSDWizard/MachinePoolScreen';
@@ -137,7 +136,7 @@ class CreateROSAWizardInternal extends React.Component {
     }
     this.setState({ currentStepId: id });
 
-    this.trackWizardNavigation('WizardNext', currentStepId);
+    this.trackWizardNavigation(trackEvents.WizardNext, currentStepId);
   };
 
   onGoToStep = ({ id }) => this.setState({ currentStepId: id });
@@ -162,7 +161,7 @@ class CreateROSAWizardInternal extends React.Component {
   }
 
   onBeforeSubmit = (onSubmit) => {
-    this.trackWizardNavigation('WizardEnd');
+    this.trackWizardNavigation(trackEvents.WizardEnd);
     onSubmit();
   }
 
@@ -187,19 +186,17 @@ class CreateROSAWizardInternal extends React.Component {
     onNext();
   }
 
-  trackWizardNavigation = (eventKey, currentStepId = '') => {
+  trackWizardNavigation = (event, currentStepId = '') => {
     const { analytics } = this.props;
 
     const eventObj = getTrackEvent(
-      eventKey,
+      event,
       null,
       undefined,
       ocmResourceType.MOA,
       {
-        step: {
-          id: currentStepId,
-          name: CreateROSAWizardInternal.stepNameById[currentStepId],
-        },
+        step_id: currentStepId,
+        step_name: CreateROSAWizardInternal.stepNameById[currentStepId],
       },
     );
     analytics.track(eventObj.event, eventObj.properties);

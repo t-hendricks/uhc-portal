@@ -32,7 +32,7 @@ exports[`<LocalTab /> renders correctly 1`] = `
         <b>
           Note: 
         </b>
-        Your Openshift Local installation won't appear in the OpenShift Cluster Manager unless you enable cluster monitoring and telemetry.
+        Your OpenShift Local installation won't appear in the OpenShift Cluster Manager unless you enable cluster monitoring and telemetry.
       </Text>
     </TextContent>
     <Divider
