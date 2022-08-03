@@ -9,7 +9,7 @@ import {
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import useAnalytics from '~/hooks/useAnalytics';
-import { getTrackEvent, trackEvents } from '~/common/analytics';
+import { trackEvents } from '~/common/analytics';
 import './AccountsRolesScreen.scss';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { ReduxFormDropdown } from '../../../../common/ReduxFormComponents';
@@ -32,7 +32,7 @@ function AccountRolesARNsSection({
 }) {
   const NO_ROLE_DETECTED = 'No role detected';
 
-  const analytics = useAnalytics();
+  const { track } = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
   const [installerRoleOptions, setInstallerRoleOptions] = useState([{
@@ -207,8 +207,7 @@ function AccountRolesARNsSection({
           <Button
             variant="secondary"
             onClick={() => {
-              const eventObj = getTrackEvent(trackEvents.RefreshARNs);
-              analytics.track(eventObj.event, eventObj.properties);
+              track(trackEvents.RefreshARNs);
               refreshARNs();
             }}
           >

@@ -27,7 +27,7 @@ const DownloadButton = ({
   text = '',
   name = '',
 }) => {
-  const analytics = useAnalytics();
+  const { analytics } = useAnalytics();
   const buttonText = text || texts[tool];
   const downloadProps = download ? (
     { download: true }

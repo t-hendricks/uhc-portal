@@ -9,7 +9,7 @@ import {
 } from '@patternfly/react-core';
 import { get } from 'lodash';
 import useAnalytics from '~/hooks/useAnalytics';
-import { getTrackEvent, trackEvents } from '~/common/analytics';
+import { trackEvents } from '~/common/analytics';
 import ExternalLink from '../../../../common/ExternalLink';
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
@@ -17,7 +17,7 @@ import instructionsMapping from '../instructionsMapping';
 const GetStarted = ({
   docURL, pendoID, cloudProviderID, customizations, isBMIPI,
 }) => {
-  const analytics = useAnalytics();
+  const { track } = useAnalytics();
   return (
     <>
       <Stack hasGutter>
@@ -60,12 +60,11 @@ const GetStarted = ({
             target="_blank"
             variant="secondary"
             onClick={() => {
-              const eventObj = getTrackEvent(
+              track(
                 trackEvents.OCPInstallDocumentation,
                 docURL,
                 pendoID,
               );
-              analytics.track(eventObj.event, eventObj.properties);
             }}
           >
             Get started

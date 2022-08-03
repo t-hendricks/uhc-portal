@@ -7,10 +7,10 @@ import Download from '@axetroy/react-download';
 import isEmpty from 'lodash/isEmpty';
 
 import useAnalytics from '~/hooks/useAnalytics';
-import { getTrackEvent, trackEvents } from '~/common/analytics';
+import { trackEvents } from '~/common/analytics';
 
 function DownloadPullSecret({ token, pendoID, text }) {
-  const analytics = useAnalytics();
+  const { track } = useAnalytics();
   const isDisabled = (!token || !!token.error || isEmpty(token));
   const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
 
@@ -19,8 +19,7 @@ function DownloadPullSecret({ token, pendoID, text }) {
       variant="secondary"
       isDisabled={isDisabled}
       onClick={() => {
-        const eventObj = getTrackEvent(trackEvents.DownloadPullSecret, null, pendoID);
-        analytics.track(eventObj.event, eventObj.properties);
+        track(trackEvents.DownloadPullSecret, null, pendoID);
       }}
     >
       {text}

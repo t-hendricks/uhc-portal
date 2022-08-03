@@ -18,13 +18,13 @@ import Instruction from '../../common/Instruction';
 import Instructions from '../../common/Instructions';
 import PullSecretSection from '../install/instructions/components/PullSecretSection';
 import useAnalytics from '~/hooks/useAnalytics';
-import { getTrackEvent, trackEvents } from '~/common/analytics';
+import { trackEvents } from '~/common/analytics';
 
 const pendoID = window.location.pathname;
 const docURL = links.INSTALL_CRC_GETTING_STARTED;
 
 const LocalTab = ({ token }) => {
-  const analytics = useAnalytics();
+  const { track } = useAnalytics();
   return (
     <>
       <PageSection>
@@ -94,12 +94,11 @@ const LocalTab = ({ token }) => {
                 target="_blank"
                 variant="link"
                 onClick={() => {
-                  const eventObj = getTrackEvent(
+                  track(
                     trackEvents.CRCInstallDocumentation,
                     docURL,
                     pendoID,
                   );
-                  analytics.track(eventObj.event, eventObj.properties);
                 }}
               >
                 View the OpenShift Local Getting started guide

@@ -10,7 +10,7 @@ import {
   EmptyStateBody, EmptyState,
 } from '@patternfly/react-core';
 import useAnalytics from '~/hooks/useAnalytics';
-import { getTrackEvent, trackEvents } from '~/common/analytics';
+import { trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
 import { loadOfflineToken } from '../../../../tokens/Tokens';
@@ -44,7 +44,7 @@ function AWSAccountSelection({
   openAssociateAWSAccountModal,
   initialValue,
 }) {
-  const analytics = useAnalytics();
+  const { track } = useAnalytics();
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = React.createRef();
 
@@ -108,8 +108,7 @@ function AWSAccountSelection({
         ref={associateAWSAccountBtnRef}
         variant="secondary"
         onClick={(event) => {
-          const eventObj = getTrackEvent(trackEvents.AssociateAWS);
-          analytics.track(eventObj.event, eventObj.properties);
+          track(trackEvents.AssociateAWS);
           onClick(event);
         }}
       >
