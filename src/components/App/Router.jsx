@@ -58,7 +58,8 @@ import ConnectedInstallRHVUPI from '../clusters/install/InstallRHVUPI';
 import ConnectedInstallVSphereUPI from '../clusters/install/InstallVSphereUPI';
 import ConnectedInstallVSphereIPI from '../clusters/install/InstallVSphereIPI';
 import InstallVSphere from '../clusters/install/InstallVSphere';
-import ConnectedInstallPlatformAgnostic from '../clusters/install/InstallPlatformAgnostic';
+import InstallPlatformAgnostic from '../clusters/install/InstallPlatformAgnostic';
+import ConnectedInstallPlatformAgnosticUPI from '../clusters/install/InstallPlatformAgnosticUPI';
 import ConnectedInstallPreRelease from '../clusters/install/InstallPreRelease';
 import ConnectedInstallPullSecret from '../clusters/install/InstallPullSecret';
 import ConnectedInstallPullSecretAzure from '../clusters/install/InstallPullSecretAzure';
@@ -182,7 +183,8 @@ function Router({ history }) {
             <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMPreRelease} />
             <Route path="/install/power/user-provisioned" component={ConnectedInstallPower} />
             <Route path="/install/power/pre-release" component={ConnectedInstallPowerPreRelease} />
-            <Route path="/install/platform-agnostic" component={ConnectedInstallPlatformAgnostic} />
+            <Route path="/install/platform-agnostic/user-provisioned" component={ConnectedInstallPlatformAgnosticUPI} />
+            <Route path="/install/platform-agnostic" component={InstallPlatformAgnostic} />
             <Route path="/install/pre-release" component={ConnectedInstallPreRelease} />
             <Route path="/install/pull-secret" component={ConnectedInstallPullSecret} />
             <Route path="/install/azure/aro-provisioned" component={ConnectedInstallPullSecretAzure} />
