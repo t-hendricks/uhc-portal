@@ -5,7 +5,7 @@ import {
 } from '@patternfly/react-core';
 import Download from '@axetroy/react-download';
 import isEmpty from 'lodash/isEmpty';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import { getTrackEvent } from '../../common/helpers';
 
 function DownloadPullSecret({ token, pendoID, text }) {

@@ -11,7 +11,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
 import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
 import links, { tools, channels } from '../../../common/installLinks.mjs';
