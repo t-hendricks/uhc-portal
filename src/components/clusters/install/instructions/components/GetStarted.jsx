@@ -8,16 +8,16 @@ import {
   Button, ClipboardCopy,
 } from '@patternfly/react-core';
 import { get } from 'lodash';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import useAnalytics from '~/hooks/useAnalytics';
+import { getTrackEvent, trackEvents } from '~/common/analytics';
 import ExternalLink from '../../../../common/ExternalLink';
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
-import { getTrackEvent, trackEvents } from '~/common/analytics';
 
 const GetStarted = ({
   docURL, pendoID, cloudProviderID, customizations, isBMIPI,
 }) => {
-  const { analytics } = useChrome();
+  const analytics = useAnalytics();
   return (
     <>
       <Stack hasGutter>

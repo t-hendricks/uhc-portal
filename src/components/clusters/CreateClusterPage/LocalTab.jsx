@@ -11,20 +11,20 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import TokenErrorAlert from '../install/instructions/components/TokenErrorAlert';
 import DownloadAndOSSelection from '../install/instructions/components/DownloadAndOSSelection';
 import links, { tools, channels } from '../../../common/installLinks.mjs';
 import Instruction from '../../common/Instruction';
 import Instructions from '../../common/Instructions';
 import PullSecretSection from '../install/instructions/components/PullSecretSection';
+import useAnalytics from '~/hooks/useAnalytics';
 import { getTrackEvent, trackEvents } from '~/common/analytics';
 
 const pendoID = window.location.pathname;
 const docURL = links.INSTALL_CRC_GETTING_STARTED;
 
 const LocalTab = ({ token }) => {
-  const { analytics } = useChrome();
+  const analytics = useAnalytics();
   return (
     <>
       <PageSection>

@@ -9,7 +9,7 @@ import {
   Title,
   EmptyStateBody, EmptyState,
 } from '@patternfly/react-core';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
+import useAnalytics from '~/hooks/useAnalytics';
 import { getTrackEvent, trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
@@ -44,7 +44,7 @@ function AWSAccountSelection({
   openAssociateAWSAccountModal,
   initialValue,
 }) {
-  const { analytics } = useChrome();
+  const analytics = useAnalytics();
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = React.createRef();
 

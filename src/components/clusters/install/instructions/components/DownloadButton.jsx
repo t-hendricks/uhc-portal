@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {
   Button,
 } from '@patternfly/react-core';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import { tools } from '../../../../../common/installLinks.mjs';
+import useAnalytics from '~/hooks/useAnalytics';
 import { getTrackEvent, trackEvents } from '~/common/analytics';
+import { tools } from '../../../../../common/installLinks.mjs';
 
 const texts = {
   [tools.CRC]: 'Download OpenShift Local',
@@ -27,7 +27,7 @@ const DownloadButton = ({
   text = '',
   name = '',
 }) => {
-  const { analytics } = useChrome();
+  const analytics = useAnalytics();
   const buttonText = text || texts[tool];
   const downloadProps = download ? (
     { download: true }

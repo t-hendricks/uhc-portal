@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ClipboardCopy, clipboardCopyFunc, Text } from '@patternfly/react-core';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
+import useAnalytics from '~/hooks/useAnalytics';
 import { getTrackEvent } from '~/common/analytics';
+
 import './InstructionCommand.scss';
 
 const InstructionCommand = ({ children, textAriaLabel, trackEvent }) => {
-  const { analytics } = useChrome();
+  const analytics = useAnalytics();
   return (
     <Text component="pre" className="ocm-instructions__command">
       <ClipboardCopy

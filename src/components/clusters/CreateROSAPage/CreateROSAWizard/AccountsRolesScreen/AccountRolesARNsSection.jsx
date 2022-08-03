@@ -8,7 +8,7 @@ import {
   ExpandableSection, Grid, GridItem, Text, TextVariants, Title,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
+import useAnalytics from '~/hooks/useAnalytics';
 import { getTrackEvent, trackEvents } from '~/common/analytics';
 import './AccountsRolesScreen.scss';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -32,6 +32,7 @@ function AccountRolesARNsSection({
 }) {
   const NO_ROLE_DETECTED = 'No role detected';
 
+  const analytics = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
   const [installerRoleOptions, setInstallerRoleOptions] = useState([{
@@ -41,7 +42,6 @@ function AccountRolesARNsSection({
   const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
   const [allARNsFound, setAllARNsFound] = useState(false);
   const [awsARNsErrorBox, setAwsARNsErrorBox] = useState(null);
-  const { analytics } = useChrome();
 
   const hasNoTrustedRelationshipOnClusterRoleError = errorDetails => errorDetails?.length
     && errorDetails.some(error => error?.Error_Key === 'NoTrustedRelationshipOnClusterRole');
