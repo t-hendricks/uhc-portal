@@ -106,7 +106,7 @@ function AccountRolesARNsSection({
   );
 
   const trackRefreshArns = (response) => {
-    const trackEvent = getTrackEvent('ARNsRefreshed', null, undefined, undefined, {
+    const trackEvent = getTrackEvent(trackEvents.ARNsRefreshed, null, undefined, undefined, {
       error: !!response.error,
       ...(response.error && {
         error_title: resolveARNsErrorTitle(response),
