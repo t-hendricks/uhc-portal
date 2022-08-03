@@ -166,7 +166,6 @@ class CreateROSAWizardInternal extends React.Component {
       undefined,
       ocmResourceType.MOA,
       {
-        step_id: currentStepId,
         step_name: stepNameById[currentStepId],
       },
     );
