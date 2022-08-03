@@ -18,7 +18,7 @@ import links, { tools, channels } from '../../../common/installLinks.mjs';
 import Instruction from '../../common/Instruction';
 import Instructions from '../../common/Instructions';
 import PullSecretSection from '../install/instructions/components/PullSecretSection';
-import { getTrackEvent } from '../../../common/helpers';
+import { getTrackEvent, trackEvents } from '~/common/analytics';
 
 const pendoID = window.location.pathname;
 const docURL = links.INSTALL_CRC_GETTING_STARTED;
@@ -44,7 +44,7 @@ const LocalTab = ({ token }) => {
           </Text>
           <Text component="p" className="ocm-secondary-text">
             <b>Note: </b>
-            Your Openshift Local installation won&apos;t appear in the OpenShift Cluster Manager
+            Your OpenShift Local installation won&apos;t appear in the OpenShift Cluster Manager
             unless you enable cluster monitoring and telemetry.
           </Text>
         </TextContent>
@@ -94,7 +94,11 @@ const LocalTab = ({ token }) => {
                 target="_blank"
                 variant="link"
                 onClick={() => {
-                  const eventObj = getTrackEvent('CrcInstallDocumentation', docURL, pendoID);
+                  const eventObj = getTrackEvent(
+                    trackEvents.CRCInstallDocumentation,
+                    docURL,
+                    pendoID,
+                  );
                   analytics.track(eventObj.event, eventObj.properties);
                 }}
               >
