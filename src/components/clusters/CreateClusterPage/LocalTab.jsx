@@ -94,11 +94,10 @@ const LocalTab = ({ token }) => {
                 target="_blank"
                 variant="link"
                 onClick={() => {
-                  track(
-                    trackEvents.CRCInstallDocumentation,
-                    docURL,
-                    pendoID,
-                  );
+                  track(trackEvents.CRCInstallDocumentation, {
+                    url: docURL,
+                    path: pendoID,
+                  });
                 }}
               >
                 View the OpenShift Local Getting started guide

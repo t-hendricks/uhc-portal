@@ -210,21 +210,21 @@ const trackEvents = {
 /**
  * Returns the full trackEvent object that can be passed to analytics.track
  *
- * @param {Object} trackEvent The common trackEvent metadata
- * @param {String} url Link URL
- * @param {String} path The current path of where the action was performed
- * @param {String} resourceType The resource type, for allowed values see ocmResourceType
- * @param {Object} customProperties A JSON-serializable object for any custom event data
+ * @param {Object} trackEvent - The common trackEvent metadata (mandatory)
+ * @param {Object} options - configuration options:
+ * - {String} url - Link URL
+ * - {String} path - The current path of where the action was performed
+ * - {String} resourceType - The resource type, for allowed values see ocmResourceType
+ * - {Object} customProperties - A JSON-serializable object for any custom event data
  *
  * @returns {Object} Object {[event]: string, [properties]: Object}
  */
-const getTrackEvent = (
-  trackEvent,
+const getTrackEvent = (trackEvent, {
   url,
   path = window.location.pathname,
   resourceType = trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
   customProperties = {},
-) => ({
+}) => ({
   event: trackEvent.event,
   properties: {
     link_name: trackEvent.link_name,

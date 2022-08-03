@@ -52,7 +52,7 @@ class CopyPullSecret extends React.Component {
           isAriaDisabled={isDisabled}
           icon={<CopyIcon />}
           onClick={() => {
-            track(trackEvents.CopyPullSecret, null, pendoID);
+            track(trackEvents.CopyPullSecret, { path: pendoID });
           }}
         >
           {linkText}

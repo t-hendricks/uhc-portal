@@ -42,7 +42,10 @@ const DownloadButton = ({
       variant="secondary"
       className={`download-button tool-${tool.toLowerCase()}`}
       onClick={() => {
-        const eventObj = getTrackEvent(trackEvents[tool], url, pendoID);
+        const eventObj = getTrackEvent(trackEvents[tool], {
+          url,
+          path: pendoID,
+        });
         analytics.track(name || eventObj.event, name ? pendoID : eventObj.properties);
       }}
       disabled={!url || disabled}

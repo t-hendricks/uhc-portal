@@ -160,16 +160,13 @@ class CreateROSAWizardInternal extends React.Component {
   trackWizardNavigation = (event, currentStepId = '') => {
     const { track } = this.props;
 
-    track(
-      event,
-      null,
-      undefined,
-      ocmResourceType.MOA,
-      {
+    track(event, {
+      resourceType: ocmResourceType.MOA,
+      customProperties: {
         step_id: currentStepId,
         step_name: stepNameById[currentStepId],
       },
-    );
+    });
   }
 
   render() {

@@ -60,11 +60,10 @@ const GetStarted = ({
             target="_blank"
             variant="secondary"
             onClick={() => {
-              track(
-                trackEvents.OCPInstallDocumentation,
-                docURL,
-                pendoID,
-              );
+              track(trackEvents.OCPInstallDocumentation, {
+                url: docURL,
+                path: pendoID,
+              });
             }}
           >
             Get started

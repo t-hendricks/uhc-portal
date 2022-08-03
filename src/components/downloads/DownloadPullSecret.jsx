@@ -19,7 +19,7 @@ function DownloadPullSecret({ token, pendoID, text }) {
       variant="secondary"
       isDisabled={isDisabled}
       onClick={() => {
-        track(trackEvents.DownloadPullSecret, null, pendoID);
+        track(trackEvents.DownloadPullSecret, { path: pendoID });
       }}
     >
       {text}
