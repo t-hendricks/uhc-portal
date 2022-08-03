@@ -8,16 +8,19 @@ import {
   ExpandableSection, Grid, GridItem, Text, TextVariants, Title,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import { getTrackEvent, trackEvents } from '~/common/analytics';
-import './AccountsRolesScreen.scss';
+import links from '../../../../../common/installLinks.mjs';
+
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { ReduxFormDropdown } from '../../../../common/ReduxFormComponents';
 import ExternalLink from '../../../../common/ExternalLink';
 import ErrorBox from '../../../../common/ErrorBox';
 import ErrorNoOCMRole from './ErrorNoOCMRole';
 import InstructionCommand from '../../../../common/InstructionCommand';
-import links from '../../../../../common/installLinks.mjs';
+
+// todo - WAT!?
+import './AccountsRolesScreen.scss';
 
 function AccountRolesARNsSection({
   change,
@@ -32,6 +35,7 @@ function AccountRolesARNsSection({
 }) {
   const NO_ROLE_DETECTED = 'No role detected';
 
+  const { analytics } = useChrome();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
   const [installerRoleOptions, setInstallerRoleOptions] = useState([{
@@ -40,10 +44,9 @@ function AccountRolesARNsSection({
   }]);
   const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
   const [allARNsFound, setAllARNsFound] = useState(false);
-  const [awsARNsErrorBox, setAwsARNsErrorBox] = useState(null);
-  const { analytics } = useChrome();
+  const [hasARNsError, setHasARNsError] = useState(false);
 
-  const hasNoTrustedRelationshipOnClusterRoleError = errorDetails => errorDetails?.length
+  const hasNoTrustedRelationshipOnClusterRoleError = ({ errorDetails }) => errorDetails?.length
     && errorDetails.some(error => error?.Error_Key === 'NoTrustedRelationshipOnClusterRole');
 
   useEffect(() => {
@@ -96,37 +99,46 @@ function AccountRolesARNsSection({
       || NO_ROLE_DETECTED);
   };
 
+  const resolveARNsErrorTitle = response => (
+    hasNoTrustedRelationshipOnClusterRoleError(response)
+      ? 'Cannot detect an OCM role'
+      : 'Error getting AWS account ARNs'
+  );
+
+  const trackRefreshArns = (response) => {
+    const trackEvent = getTrackEvent('ARNsRefreshed', null, undefined, undefined, {
+      error: !!response.error,
+      ...(response.error && {
+        error_title: resolveARNsErrorTitle(response),
+        error_message: response.errorMessage || undefined, // omit empty strings
+        error_code: response.errorCode,
+        error_operation_id: response.operationID,
+      }),
+    });
+    analytics.track(trackEvent.event, trackEvent.properties);
+  };
+
   useEffect(() => {
     if (!getAWSAccountRolesARNsResponse.pending
       && !getAWSAccountRolesARNsResponse.fulfilled
       && !getAWSAccountRolesARNsResponse.error) {
       getAWSAccountRolesARNs(selectedAWSAccountID);
     } else if (getAWSAccountRolesARNsResponse.pending) {
-      setAwsARNsErrorBox(null);
+      setHasARNsError(false);
     } else if (getAWSAccountRolesARNsResponse.fulfilled) {
       const accountRolesARNs = get(getAWSAccountRolesARNsResponse, 'data', []);
       setSelectedInstallerRoleAndOptions(accountRolesARNs);
       setAccountRoles(accountRolesARNs);
     } else if (getAWSAccountRolesARNsResponse.error) {
-      // eslint-disable-next-line max-len
-      const errorComponent = hasNoTrustedRelationshipOnClusterRoleError(getAWSAccountRolesARNsResponse.errorDetails)
-        ? (
-          <ErrorNoOCMRole
-            message="Cannot detect an OCM role"
-            response={getAWSAccountRolesARNsResponse}
-            openOcmRoleInstructionsModal={openOcmRoleInstructionsModal}
-          />
-        )
-        : (
-          <ErrorBox
-            message="Error getting AWS account ARNs"
-            response={getAWSAccountRolesARNsResponse}
-          />
-        );
-      // display error
-      setAwsARNsErrorBox(errorComponent);
+      setHasARNsError(true);
     }
   }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse]);
+
+  useEffect(() => {
+    if (getAWSAccountRolesARNsResponse.fulfilled || getAWSAccountRolesARNsResponse.error) {
+      trackRefreshArns(getAWSAccountRolesARNsResponse);
+    }
+  }, [getAWSAccountRolesARNsResponse]);
 
   const onToggle = () => {
     setIsExpanded(!isExpanded);
@@ -156,12 +168,19 @@ function AccountRolesARNsSection({
       <GridItem>
         <Title headingLevel="h3">Account roles</Title>
       </GridItem>
-      {awsARNsErrorBox && (
+      {hasARNsError && (
         <GridItem>
-          { awsARNsErrorBox }
+          <ErrorBox
+            message={resolveARNsErrorTitle(getAWSAccountRolesARNsResponse)}
+            response={getAWSAccountRolesARNsResponse}
+          >
+            {hasNoTrustedRelationshipOnClusterRoleError(getAWSAccountRolesARNsResponse) && (
+              <ErrorNoOCMRole openOcmRoleInstructionsModal={openOcmRoleInstructionsModal} />
+            )}
+          </ErrorBox>
         </GridItem>
       )}
-      {!getAWSAccountRolesARNsResponse.pending && !allARNsFound && !awsARNsErrorBox && (
+      {!getAWSAccountRolesARNsResponse.pending && !allARNsFound && !hasARNsError && (
       <GridItem>
         <Alert
           isInline
