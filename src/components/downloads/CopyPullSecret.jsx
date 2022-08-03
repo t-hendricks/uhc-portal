@@ -7,7 +7,7 @@ import {
 import { CopyIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import isEmpty from 'lodash/isEmpty';
-import { getTrackEvent, trackEvents } from '~/common/analytics';
+import { trackEvents } from '~/common/analytics';
 import withAnalytics from '~/hoc/withAnalytics';
 
 class CopyPullSecret extends React.Component {
@@ -32,7 +32,7 @@ class CopyPullSecret extends React.Component {
 
   render() {
     const {
-      token, text, variant, pendoID, analytics,
+      token, text, variant, pendoID, track,
     } = this.props;
     const isDisabled = (!token || !!token.error || isEmpty(token));
     const { clicked } = this.state;
@@ -52,8 +52,7 @@ class CopyPullSecret extends React.Component {
           isAriaDisabled={isDisabled}
           icon={<CopyIcon />}
           onClick={() => {
-            const eventObj = getTrackEvent(trackEvents.CopyPullSecret, null, pendoID);
-            analytics.track(eventObj.event, eventObj.properties);
+            track(trackEvents.CopyPullSecret, null, pendoID);
           }}
         >
           {linkText}
@@ -78,7 +77,7 @@ class CopyPullSecret extends React.Component {
 }
 CopyPullSecret.propTypes = {
   pendoID: PropTypes.string,
-  analytics: PropTypes.object.isRequired,
+  track: PropTypes.object.isRequired,
   token: PropTypes.object.isRequired,
   text: PropTypes.string,
   variant: PropTypes.oneOf(['link-tooltip', 'link-inplace']).isRequired,

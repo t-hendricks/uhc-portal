@@ -10,7 +10,7 @@ import {
   shouldRefetchQuota,
   scrollToFirstError,
 } from '~/common/helpers';
-import { trackEvents, getTrackEvent, ocmResourceType } from '~/common/analytics';
+import { trackEvents, ocmResourceType } from '~/common/analytics';
 import { persistor } from '~/redux/store';
 import withAnalytics from '~/hoc/withAnalytics';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
@@ -158,9 +158,9 @@ class CreateROSAWizardInternal extends React.Component {
   }
 
   trackWizardNavigation = (event, currentStepId = '') => {
-    const { analytics } = this.props;
+    const { track } = this.props;
 
-    const eventObj = getTrackEvent(
+    track(
       event,
       null,
       undefined,
@@ -170,7 +170,6 @@ class CreateROSAWizardInternal extends React.Component {
         step_name: stepNameById[currentStepId],
       },
     );
-    analytics.track(eventObj.event, eventObj.properties);
   }
 
   render() {
