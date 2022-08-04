@@ -2,15 +2,13 @@ import { renderHook } from '@testing-library/react-hooks';
 import useAnalytics from '../useAnalytics';
 
 describe('useAnalytics', () => {
-  it.skip('...', () => {
-    renderHook(useAnalytics);
-    expect().toBe();
+  let hook;
+
+  beforeEach(() => {
+    hook = renderHook(useAnalytics).result.current;
   });
 
-  it.skip('... when the hook is unmounted', () => {
-    const { unmount } = renderHook(() => useAnalytics());
-
-    unmount();
-    expect().toBeNull();
+  it('provides the track method', async () => {
+    expect(hook.track).toBeInstanceOf(Function);
   });
 });
