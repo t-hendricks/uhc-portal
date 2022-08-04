@@ -3709,6 +3709,19 @@ cidr-tools@^3.0.0:
     jsbn "^1.1.0"
     string-natural-compare "^3.0.1"
 
+cidr-tools@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.npmjs.org/cidr-tools/-/cidr-tools-4.3.0.tgz#e99dd323a99b9b1149e6ad52bd0ed89357796cf7"
+  integrity sha512-Conidfn8svry8txRhW63SkaRMYJWJSvCT5kRCovIzlD0A3wzaV3gVFNxmAFJo5rxx3KHeYnJxCe7bUKFr1wxHA==
+  dependencies:
+    ip-address "^8.1.0"
+    ip-cidr "^3.0.4"
+    ipv6-normalize "^1.0.1"
+    is-cidr "^4.0.2"
+    is-ip "^3.1.0"
+    jsbn "^1.1.0"
+    string-natural-compare "^3.0.1"
+
 cjs-module-lexer@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/cjs-module-lexer/-/cjs-module-lexer-0.6.0.tgz#4186fcca0eae175970aee870b9fe2d6cf8d5655f"
@@ -6536,12 +6549,28 @@ ip-address@^7.1.0:
     jsbn "1.1.0"
     sprintf-js "1.1.2"
 
+ip-address@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.npmjs.org/ip-address/-/ip-address-8.1.0.tgz#1fe9b4509b51ff7d2fbbef4d3d26994d9915a459"
+  integrity sha512-Wz91gZKpNKoXtqvY8ScarKYwhXoK4r/b5QuT+uywe/azv0/nUCo7Bh0IRRI7F9DHR06kJNWtzMGLIbXavngbKA==
+  dependencies:
+    jsbn "1.1.0"
+    sprintf-js "1.1.2"
+
 ip-cidr@^2.1.2:
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/ip-cidr/-/ip-cidr-2.1.4.tgz#5d687775a15afb394a1132a8f57e7f5b798c3942"
   integrity sha512-dre+OGDYAYHMCm6nNoqXHwGByqMDHArVpxslJVtSxk47spvyjoiKNe7X+HV+AtBN+LxboCVuY0ARXpzibizNMg==
   dependencies:
     ip-address "^6.3.0"
+    jsbn "^1.1.0"
+
+ip-cidr@^3.0.4:
+  version "3.0.10"
+  resolved "https://registry.npmjs.org/ip-cidr/-/ip-cidr-3.0.10.tgz#e1a039705196d84b43858f81a243fd70def9cefc"
+  integrity sha512-PXSsrRYirsuaCI1qBVyVXRLUIpNzxm76eHd3UvN5NXTMUG85GWGZpr6P+70mimc5e7Nfh/tShmjk0oSywErMWg==
+  dependencies:
+    ip-address "^7.1.0"
     jsbn "^1.1.0"
 
 ip-regex@^4.0.0, ip-regex@^4.1.0:
@@ -8667,6 +8696,7 @@ openshift-assisted-ui-lib@2.6.5:
   integrity sha512-NkfKQ5CMuo1+CXzySTla8tmTsLmWHoX+3mqrg9ztn5M/oaRRlW3B522ui45LWxJrbqOFapp8EBN71xwooqxdiA==
   dependencies:
     axios-case-converter "^0.8.1"
+    cidr-tools "^4.3.0"
     classnames "^2.3.1"
     file-saver "^2.0.2"
     filesize.js "^2.0.0"
@@ -8679,6 +8709,7 @@ openshift-assisted-ui-lib@2.6.5:
     is-in-subnet "^3.1.0"
     js-yaml "^4.1.0"
     prism-react-renderer "^1.1.1"
+    react-error-boundary "^3.1.4"
     react-measure "^2.5.2"
     unique-names-generator "^4.2.0"
 
@@ -9405,7 +9436,7 @@ react-dropzone@9.0.0:
     prop-types "^15.6.2"
     prop-types-extra "^1.1.0"
 
-react-error-boundary@^3.1.0:
+react-error-boundary@^3.1.0, react-error-boundary@^3.1.4:
   version "3.1.4"
   resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-3.1.4.tgz#255db92b23197108757a888b01e5b729919abde0"
   integrity sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==
