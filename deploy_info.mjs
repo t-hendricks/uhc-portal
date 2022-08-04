@@ -193,7 +193,10 @@ const main = async () => {
         '--not', 'live_stable~2', '--graph',
         // Only MR merges, skip internal merge commit done while working on MR content.
         '--extended-regexp', "--grep=Merge branch '[^']+' into '(master|candidate.*|stable)'|[Cc]herry",
-        '--oneline', '--decorate',
+        // %C: color, %h: hash, %d: (decorations).
+        // %s subject "Merge branch ...", start %b body on same line to conserve vertical space.
+        // %w: indents following lines of body.
+        '--pretty=%C(auto)%cs %H%d %C(dim)%s — %C(auto)%w(0,0,10)%b',
         '--color=always',
       ];
       console.log(quote(cmd));
