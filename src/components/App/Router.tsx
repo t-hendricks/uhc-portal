@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Route, Redirect, Switch, withRouter,
-} from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
+import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 
 import { OCM } from 'openshift-assisted-ui-lib';
@@ -102,142 +100,214 @@ const { AssistedUiRouter } = OCM;
 
 const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALLER_FEATURE);
 const GatedMetalInstall = withFeatureGate(
-  InstallBareMetal, ASSISTED_INSTALLER_FEATURE, InstallBMUPI, InstallBMIPI,
+  InstallBareMetal,
+  ASSISTED_INSTALLER_FEATURE,
+  // TODO remove ts-ignore when `withFeatureGate` is converted to typescript
+  // @ts-ignore
+  InstallBMUPI, // InstallBMIPI,
 );
 
 const GatedRosaCreationWizard = withFeatureGate(
-  CreateROSAWizard, ROSA_CREATION_WIZARD_FEATURE, CreateROSAWelcome,
+  CreateROSAWizard,
+  ROSA_CREATION_WIZARD_FEATURE,
+  // TODO remove ts-ignore when `withFeatureGate` is converted to typescript
+  // @ts-ignore
+  CreateROSAWelcome,
 );
 
-function Router({ history }) {
-  return (
-    <>
-      <Insights history={history} />
-      <ConnectedRouter history={history}>
-        <ApiError history={history} apiRequest={apiRequest}>
-          <Switch>
-            {/*
+const Router: React.FC<RouteComponentProps> = ({ history }) => (
+  <>
+    <Insights history={history} />
+    <ConnectedRouter history={history}>
+      <ApiError history={history} apiRequest={apiRequest}>
+        <Switch>
+          {/*
               IMPORTANT!
               When adding new routes, make sure to add the route both here and in Router.test.jsx,
               to ensure the route is tested.
 
               When adding new top-level entries to left navigation, see also getNavClickParams.js.
             */}
-            <Redirect from="/install/osp/installer-provisioned" to="/install/openstack/installer-provisioned" />
-            <Redirect from="/install/crc/installer-provisioned" to="/create/local" />
-            <Redirect from="/token/moa" to="/token/rosa" />
-            <Redirect from="/insights" to="/overview" />
-            <Redirect from="/subscriptions" to="/quota" />
-            <Route path="/downloads" component={DownloadsPage} />
+          <Redirect
+            from="/install/osp/installer-provisioned"
+            to="/install/openstack/installer-provisioned"
+          />
+          <Redirect from="/install/crc/installer-provisioned" to="/create/local" />
+          <Redirect from="/token/moa" to="/token/rosa" />
+          <Redirect from="/insights" to="/overview" />
+          <Redirect from="/subscriptions" to="/quota" />
+          <Route path="/downloads" component={DownloadsPage} />
 
-            {/* Each token page has 2 routes with distinct paths, to remember that user wanted
+          {/* Each token page has 2 routes with distinct paths, to remember that user wanted
                 to see it during page reload that may be needed for elevated auth. */}
-            <TermsGuardedRoute
-              path="/token/rosa/show"
-              history={history}
-              render={() => (
-                <>
-                  <TokensROSA show />
-                  <EntitlementConfig />
-                </>
-              )}
-            />
-            <TermsGuardedRoute
-              path="/token/rosa"
-              history={history}
-              render={() => (
-                <>
-                  <TokensROSA show={false} showPath="/token/rosa/show" />
-                  <EntitlementConfig />
-                </>
-              )}
-            />
-            <Route path="/token/show" render={() => <Tokens show />} />
-            <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
+          <TermsGuardedRoute
+            path="/token/rosa/show"
+            history={history}
+            render={() => (
+              <>
+                <TokensROSA show />
+                <EntitlementConfig />
+              </>
+            )}
+          />
+          <TermsGuardedRoute
+            path="/token/rosa"
+            history={history}
+            render={() => (
+              <>
+                <TokensROSA show={false} showPath="/token/rosa/show" />
+                <EntitlementConfig />
+              </>
+            )}
+          />
+          <Route path="/token/show" render={() => <Tokens show />} />
+          <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
 
-            <Route path="/install/alibaba/installer-provisioned" component={ConnectedInstallAlibaba} />
-            <Route path="/install/arm/installer-provisioned" component={InstallArmBMIPI} />
-            <Route path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
-            <Route path="/install/arm/pre-release" component={ConnectedInstallArmPreRelease} />
-            <Route path="/install/arm" component={InstallArmBareMetal} />
-            <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
-            <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
-            <Route path="/install/aws/arm/installer-provisioned" component={ConnectedInstallArmAWSIPI} />
-            <Route path="/install/aws/arm/user-provisioned" component={ConnectedInstallArmAWSUPI} />
-            <Route path="/install/aws/arm" component={InstallArmAWS} />
-            <Route path="/install/aws" component={InstallAWS} />
-            <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
-            <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
-            <Route path="/install/gcp" component={InstallGCP} />
-            <Route path="/install/nutanix/installer-provisioned" component={ConnectedInstallNutanixIPI} />
-            <Route path="/install/openstack/installer-provisioned" component={ConnectedInstallOSPIPI} />
-            <Route path="/install/openstack/user-provisioned" component={ConnectedInstallOSPUPI} />
-            <Route path="/install/openstack" component={InstallOSP} />
-            <Route path="/install/rhv/installer-provisioned" component={ConnectedInstallRHVIPI} />
-            <Route path="/install/rhv/user-provisioned" component={ConnectedInstallRHVUPI} />
-            <Route path="/install/rhv" component={InstallRHV} />
-            <Route path="/install/azure/multi/installer-provisioned" component={ConnectedInstallMultiAzureIPI} />
-            <Route path="/install/azure/installer-provisioned" component={ConnectedInstallAzureIPI} />
-            <Route path="/install/azure/user-provisioned" component={ConnectedInstallAzureUPI} />
-            <Route path="/install/azure" exact component={InstallAzure} />
-            <Route path="/install/azure-stack-hub/installer-provisioned" exact component={ConnectedInstallASHIPI} />
-            <Route path="/install/azure-stack-hub/user-provisioned" exact component={ConnectedInstallASHUPI} />
-            <Route path="/install/azure-stack-hub" exact component={InstallASH} />
-            <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
-            <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
-            <Route path="/install/metal" component={GatedMetalInstall} />
-            <Route path="/install/multi/pre-release" component={ConnectedInstallMultiPreRelease} />
-            <Route path="/install/vsphere" exact component={InstallVSphere} />
-            <Route path="/install/vsphere/user-provisioned" component={ConnectedInstallVSphereUPI} />
-            <Route path="/install/vsphere/installer-provisioned" component={ConnectedInstallVSphereIPI} />
-            <Route path="/install/ibm-cloud" component={ConnectedInstallIBMCloud} />
-            <Route path="/install/ibmz/user-provisioned" component={ConnectedInstallIBM} />
-            <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMPreRelease} />
-            <Route path="/install/power/user-provisioned" component={ConnectedInstallPower} />
-            <Route path="/install/power/pre-release" component={ConnectedInstallPowerPreRelease} />
-            <Route path="/install/platform-agnostic/user-provisioned" component={ConnectedInstallPlatformAgnosticUPI} />
-            <Route path="/install/platform-agnostic" component={InstallPlatformAgnostic} />
-            <Route path="/install/pre-release" component={ConnectedInstallPreRelease} />
-            <Route path="/install/pull-secret" component={ConnectedInstallPullSecret} />
-            <Route path="/install/azure/aro-provisioned" component={ConnectedInstallPullSecretAzure} />
-            <Redirect from="/install" to="/create" />
-            <Redirect from="/create/osd/aws" to="/create/osd" />
-            <Redirect from="/create/osd/gcp" to="/create/osd" />
-            <Redirect from="/create/osdtrial/aws" to="/create/osdtrial" />
-            <Redirect from="/create/osdtrial/gcp" to="/create/osdtrial" />
-            <TermsGuardedRoute path="/create/osdtrial" gobackPath="/create" render={() => <CreateOSDWizard product={normalizedProducts.OSDTrial} />} history={history} />
-            <TermsGuardedRoute path="/create/osd" gobackPath="/create" render={() => <CreateOSDWizard product={normalizedProducts.OSD} />} history={history} />
-            <Route path="/create/cloud" render={props => <CreateClusterPage activeTab="cloud" {...props} />} />
-            <Route path="/create/datacenter" render={props => <CreateClusterPage activeTab="datacenter" {...props} />} />
-            <Route path="/create/local" render={props => <CreateClusterPage activeTab="local" {...props} />} />
+          <Route
+            path="/install/alibaba/installer-provisioned"
+            component={ConnectedInstallAlibaba}
+          />
+          <Route path="/install/arm/installer-provisioned" component={InstallArmBMIPI} />
+          <Route path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
+          <Route path="/install/arm/pre-release" component={ConnectedInstallArmPreRelease} />
+          <Route path="/install/arm" component={InstallArmBareMetal} />
+          <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
+          <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
+          <Route
+            path="/install/aws/arm/installer-provisioned"
+            component={ConnectedInstallArmAWSIPI}
+          />
+          <Route path="/install/aws/arm/user-provisioned" component={ConnectedInstallArmAWSUPI} />
+          <Route path="/install/aws/arm" component={InstallArmAWS} />
+          <Route path="/install/aws" component={InstallAWS} />
+          <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
+          <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
+          <Route path="/install/gcp" component={InstallGCP} />
+          <Route
+            path="/install/nutanix/installer-provisioned"
+            component={ConnectedInstallNutanixIPI}
+          />
+          <Route
+            path="/install/openstack/installer-provisioned"
+            component={ConnectedInstallOSPIPI}
+          />
+          <Route path="/install/openstack/user-provisioned" component={ConnectedInstallOSPUPI} />
+          <Route path="/install/openstack" component={InstallOSP} />
+          <Route path="/install/rhv/installer-provisioned" component={ConnectedInstallRHVIPI} />
+          <Route path="/install/rhv/user-provisioned" component={ConnectedInstallRHVUPI} />
+          <Route path="/install/rhv" component={InstallRHV} />
+          <Route
+            path="/install/azure/multi/installer-provisioned"
+            component={ConnectedInstallMultiAzureIPI}
+          />
+          <Route path="/install/azure/installer-provisioned" component={ConnectedInstallAzureIPI} />
+          <Route path="/install/azure/user-provisioned" component={ConnectedInstallAzureUPI} />
+          <Route path="/install/azure" exact component={InstallAzure} />
+          <Route
+            path="/install/azure-stack-hub/installer-provisioned"
+            exact
+            component={ConnectedInstallASHIPI}
+          />
+          <Route
+            path="/install/azure-stack-hub/user-provisioned"
+            exact
+            component={ConnectedInstallASHUPI}
+          />
+          <Route path="/install/azure-stack-hub" exact component={InstallASH} />
+          <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
+          <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
+          <Route path="/install/metal" component={GatedMetalInstall} />
+          <Route path="/install/multi/pre-release" component={ConnectedInstallMultiPreRelease} />
+          <Route path="/install/vsphere" exact component={InstallVSphere} />
+          <Route path="/install/vsphere/user-provisioned" component={ConnectedInstallVSphereUPI} />
+          <Route
+            path="/install/vsphere/installer-provisioned"
+            component={ConnectedInstallVSphereIPI}
+          />
+          <Route path="/install/ibm-cloud" component={ConnectedInstallIBMCloud} />
+          <Route path="/install/ibmz/user-provisioned" component={ConnectedInstallIBM} />
+          <Route path="/install/ibmz/pre-release" component={ConnectedInstallIBMPreRelease} />
+          <Route path="/install/power/user-provisioned" component={ConnectedInstallPower} />
+          <Route path="/install/power/pre-release" component={ConnectedInstallPowerPreRelease} />
+          <Route
+            path="/install/platform-agnostic/user-provisioned"
+            component={ConnectedInstallPlatformAgnosticUPI}
+          />
+          <Route path="/install/platform-agnostic" component={InstallPlatformAgnostic} />
+          <Route path="/install/pre-release" component={ConnectedInstallPreRelease} />
+          <Route path="/install/pull-secret" component={ConnectedInstallPullSecret} />
+          <Route
+            path="/install/azure/aro-provisioned"
+            component={ConnectedInstallPullSecretAzure}
+          />
+          <Redirect from="/install" to="/create" />
+          <Redirect from="/create/osd/aws" to="/create/osd" />
+          <Redirect from="/create/osd/gcp" to="/create/osd" />
+          <Redirect from="/create/osdtrial/aws" to="/create/osdtrial" />
+          <Redirect from="/create/osdtrial/gcp" to="/create/osdtrial" />
+          <TermsGuardedRoute
+            path="/create/osdtrial"
+            gobackPath="/create"
+            render={() => <CreateOSDWizard product={normalizedProducts.OSDTrial} />}
+            history={history}
+          />
+          <TermsGuardedRoute
+            path="/create/osd"
+            gobackPath="/create"
+            render={() => <CreateOSDWizard product={normalizedProducts.OSD} />}
+            history={history}
+          />
+          <Route
+            path="/create/cloud"
+            render={(props) => <CreateClusterPage activeTab="cloud" {...props} />}
+          />
+          <Route
+            path="/create/datacenter"
+            render={(props) => <CreateClusterPage activeTab="datacenter" {...props} />}
+          />
+          <Route
+            path="/create/local"
+            render={(props) => <CreateClusterPage activeTab="local" {...props} />}
+          />
 
-            <Redirect from="/create/rosa/welcome" to="/create/rosa/wizard" />
-            <TermsGuardedRoute path="/create/rosa/wizard" history={history} component={GatedRosaCreationWizard} />
-            <Route path="/create" component={CreateClusterPage} />
-            <Route path="/details/s/:id/insights/:reportId/:errorKey" component={InsightsAdvisorRedirector} />
-            <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />
-            <Route path="/details/s/:id/edit-idp/:idpName" render={({ match }) => <IdentityProvidersPage isEditForm match={match} />} />
-            <Route path="/details/s/:id" component={ClusterDetailsSubscriptionId} />
-            <Route path="/details/:id/insights/:reportId/:errorKey" component={InsightsAdvisorRedirector} />
-            <Route path="/details/:id" component={ClusterDetailsClusterOrExternalId} />
-            <Route path="/register" component={RegisterCluster} />
-            <Route path="/quota/resource-limits" render={props => <Quota marketplace {...props} />} />
-            <Route path="/quota" render={props => <Quota {...props} />} />
-            <Route path="/archived" component={ArchivedClusterList} />
-            <Route path="/overview" exact component={Overview} />
-            <Route path="/releases" exact component={Releases} />
-            <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
-            <Route path="/" exact component={ClustersList} />
-            <Route component={NotFoundError} />
-          </Switch>
-        </ApiError>
-      </ConnectedRouter>
-    </>
-  );
-}
+          <Redirect from="/create/rosa/welcome" to="/create/rosa/wizard" />
+          <TermsGuardedRoute
+            path="/create/rosa/wizard"
+            history={history}
+            component={GatedRosaCreationWizard}
+          />
+          <Route path="/create" component={CreateClusterPage} />
+          <Route
+            path="/details/s/:id/insights/:reportId/:errorKey"
+            component={InsightsAdvisorRedirector}
+          />
+          <Route path="/details/s/:id/add-idp/:idpTypeName" component={IdentityProvidersPage} />
+          <Route
+            path="/details/s/:id/edit-idp/:idpName"
+            render={({ match }) => <IdentityProvidersPage isEditForm match={match} />}
+          />
+          <Route path="/details/s/:id" component={ClusterDetailsSubscriptionId} />
+          <Route
+            path="/details/:id/insights/:reportId/:errorKey"
+            component={InsightsAdvisorRedirector}
+          />
+          <Route path="/details/:id" component={ClusterDetailsClusterOrExternalId} />
+          <Route path="/register" component={RegisterCluster} />
+          <Route
+            path="/quota/resource-limits"
+            render={(props) => <Quota marketplace {...props} />}
+          />
+          <Route path="/quota" render={(props) => <Quota {...props} />} />
+          <Route path="/archived" component={ArchivedClusterList} />
+          <Route path="/overview" exact component={Overview} />
+          <Route path="/releases" exact component={Releases} />
+          <Route path="/assisted-installer" component={GatedAssistedUiRouter} />
+          <Route path="/" exact component={ClustersList} />
+          <Route component={NotFoundError} />
+        </Switch>
+      </ApiError>
+    </ConnectedRouter>
+  </>
+);
 
-Router.propTypes = {
-  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
-};
-
-export default (withRouter(Router));
+export default withRouter(Router);
