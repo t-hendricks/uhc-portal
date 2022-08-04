@@ -75,6 +75,7 @@ const links = {
   OSD_CLUSTER_WIDE_PROXY: `${OSD_DOCS_BASE}/networking/configuring-cluster-wide-proxy.html`,
   OSD_UPGRADES: `${OSD_DOCS_BASE}/upgrading/osd-upgrades.html`,
   OSD_LIMITED_SUPPORT_DEFINITION: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition`,
+  OSD_MONITORING_STACK: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_monitoring/osd-understanding-the-monitoring-stack.html`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
