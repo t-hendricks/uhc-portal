@@ -304,7 +304,7 @@ class ClusterDetails extends Component {
 
     // organization.details is required by canCreateGCPNonCCSCluster below
     // and must be loaded so the Networking tab displays properly
-    if (isPending || !organization.fulfilled) {
+    if (isPending || (!organization.fulfilled && !clusterDetails.error)) {
       return (
         <div id="clusterdetails-content">
           <div className="cluster-loading-container">

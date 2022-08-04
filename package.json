@@ -45,7 +45,7 @@
     "jszip": "^3.9.0",
     "lodash": "^4.17.19",
     "moment": "^2.24.0",
-    "openshift-assisted-ui-lib": "2.7.2",
+    "openshift-assisted-ui-lib": "2.7.5",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
@@ -85,6 +85,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-modules-commonjs": "^7.16.0",
     "@babel/plugin-transform-object-assign": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.18.9",
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.10.5",
@@ -162,7 +163,8 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js",
-      "^@testUtils": "<rootDir>/src/testUtils.jsx"
+      "^@testUtils": "<rootDir>/src/testUtils.jsx",
+      "^~/(.*)$": "<rootDir>/src/$1"
     },
     "globals": {
       "APP_DEVMODE": false,

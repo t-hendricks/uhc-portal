@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, FieldArray } from 'redux-form';
+import { Field, Fields, FieldArray } from 'redux-form';
 import {
   FormGroup,
   GridItem,
@@ -29,7 +29,6 @@ function ScaleSection({
   isBYOC,
   isMultiAz,
   machineType,
-  handleMachineTypesChange,
   cloudProviderID,
   product,
   showStorageAndLoadBalancers = true,
@@ -67,14 +66,13 @@ function ScaleSection({
     <>
       {/* Instance type */}
       <GridItem md={6}>
-        <Field
+        <Fields
           component={MachineTypeSelection}
-          name="machine_type"
-          validate={required}
+          names={['machine_type', 'machine_type_force_choice']}
+          validate={{ machine_type: required }}
           disabled={pending}
           isMultiAz={isMultiAz}
           isBYOC={isBYOC}
-          onChange={handleMachineTypesChange}
           cloudProviderID={cloudProviderID}
           product={product}
           isMachinePool={isMachinePool}
@@ -196,7 +194,6 @@ ScaleSection.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   product: PropTypes.oneOf(Object.keys(normalizedProducts)).isRequired,
   billingModel: PropTypes.oneOf(Object.values(billingModels)),
-  handleMachineTypesChange: PropTypes.func.isRequired,
   minNodes: PropTypes.number,
   isMachinePool: PropTypes.bool,
   canAutoScale: PropTypes.bool,

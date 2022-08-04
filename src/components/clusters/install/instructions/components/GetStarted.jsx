@@ -8,14 +8,14 @@ import {
   Button, ClipboardCopy,
 } from '@patternfly/react-core';
 import { get } from 'lodash';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import ExternalLink from '../../../../common/ExternalLink';
 import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
-import { getTrackEvent } from '../../../../../common/helpers';
+import { getTrackEvent, trackEvents } from '~/common/analytics';
 
 const GetStarted = ({
-  docURL, pendoID, cloudProviderID, customizations, isBMIPI,
+  docURL, pendoID, cloudProviderID, customizations, isBMIPI, isUPI,
 }) => {
   const { analytics } = useChrome();
   return (
@@ -60,14 +60,18 @@ const GetStarted = ({
             target="_blank"
             variant="secondary"
             onClick={() => {
-              const eventObj = getTrackEvent('OcpInstallDocumentation', docURL, pendoID);
+              const eventObj = getTrackEvent(
+                trackEvents.OCPInstallDocumentation,
+                docURL,
+                pendoID,
+              );
               analytics.track(eventObj.event, eventObj.properties);
             }}
           >
             Get started
           </Button>
         </StackItem>
-        { !isBMIPI && (
+        { !isBMIPI && !isUPI && (
           <>
             <StackItem>
               <Text component="p">
@@ -108,6 +112,7 @@ const GetStarted = ({
 
 GetStarted.defaultProps = {
   isBMIPI: false,
+  isUPI: false,
 };
 
 GetStarted.propTypes = {
@@ -116,6 +121,7 @@ GetStarted.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   customizations: PropTypes.string,
   isBMIPI: PropTypes.bool,
+  isUPI: PropTypes.bool,
 };
 
 export default GetStarted;

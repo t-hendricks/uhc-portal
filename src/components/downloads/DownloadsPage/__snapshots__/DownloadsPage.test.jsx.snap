@@ -8481,7 +8481,7 @@ exports[`<DownloadsPage> renders 1`] = `
                       hasGutter={true}
                     >
                       <SplitItem>
-                        <CopyPullSecret
+                        <Unknown
                           text="Copy"
                           token={
                             Object {

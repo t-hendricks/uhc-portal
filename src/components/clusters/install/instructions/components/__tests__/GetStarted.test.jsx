@@ -50,4 +50,20 @@ describe('<GetStarted />', () => {
       expect(link.length).toEqual(0);
     });
   });
+
+  describe('GetStarted for UPI', () => {
+    const wrapper = shallow(<GetStarted docURL="" cloudProviderID="" isUPI />);
+
+    it('should render', () => {
+      expect(wrapper).toMatchSnapshot();
+    });
+    it('should have a Get Started button', () => {
+      const getStartedButton = wrapper.find(Button);
+      expect(getStartedButton.length).toEqual(1);
+    });
+    it('should not have a copybox', () => {
+      const copybox = wrapper.find(ClipboardCopy);
+      expect(copybox.length).toEqual(0);
+    });
+  });
 });

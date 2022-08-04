@@ -40,10 +40,10 @@ describe('<InsightsAdvisorCard />', () => {
           4: 1,
         },
         hit_by_tag: {
-          fault_tolerance: 1,
-          performance: 2,
-          security: 10,
-          service_availability: 1,
+          fault_tolerance: 2,
+          performance: 4,
+          security: 3,
+          service_availability: 11,
         },
       };
       const groups = [
@@ -109,23 +109,6 @@ describe('<InsightsAdvisorCard />', () => {
           expect(title.find('a').props().href).toBe(`http://localhost/openshift/insights/advisor/recommendations?category=${categoryMapping[category]}`);
         },
       );
-    });
-
-    it('the insights widget render pie labels correctly', () => {
-      const insightsPieChart = wrapper.find('ChartByGroups');
-      expect(insightsPieChart.find('#pie-labels-0').find('tspan').text()).toEqual('7%');
-      expect(insightsPieChart.find('#pie-labels-1').find('tspan').text()).toEqual('14%');
-      expect(insightsPieChart.find('#pie-labels-2').find('tspan').text()).toEqual('71%');
-      expect(insightsPieChart.find('#pie-labels-3').find('tspan').text()).toEqual('7%');
-    });
-
-    it('the insights widget render 4 tooltips for the pie chart', () => {
-      const tooltip = wrapper.find('Tooltip');
-      expect(tooltip).toHaveLength(4);
-      expect(tooltip.first().prop('content')).toEqual('Fault Tolerance: 1');
-      expect(tooltip.at(1).prop('content')).toEqual('Performance: 2');
-      expect(tooltip.at(2).prop('content')).toEqual('Security: 10');
-      expect(tooltip.at(3).prop('content')).toEqual('Service Availability: 1');
     });
   });
 });

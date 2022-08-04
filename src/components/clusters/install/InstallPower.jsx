@@ -39,6 +39,7 @@ export class InstallPower extends Component {
           <OCPInstructions
             token={token}
             cloudProviderID="baremetal"
+            isUPI
             {...instructionsMapping.baremetal.ppc.upi}
           />
         </PageSection>
