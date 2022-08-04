@@ -53,10 +53,10 @@ exports[`InstallOSPUPI renders correctly 1`] = `
       }
       channel="stable"
       cloudProviderID="openstack"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-installer-custom.html"
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-user.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
+      isUPI={true}
       rhcos={
         Object {
           "downloads": Array [

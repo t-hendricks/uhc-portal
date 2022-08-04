@@ -39,7 +39,7 @@ export class InstallVSphereUPI extends Component {
           <OCPInstructions
             token={token}
             cloudProviderID="vsphere"
-            customizations={instructionsMapping.vsphere.customizations}
+            isUPI
             {...instructionsMapping.vsphere.upi}
           />
         </PageSection>

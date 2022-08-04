@@ -53,10 +53,10 @@ exports[`Arm BareMetal UPI install renders correctly 1`] = `
       }
       channel="stable"
       cloudProviderID="baremetal"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html"
       installer="aarch64-openshift-install"
       isBMIPI={false}
+      isUPI={true}
       preReleasePageLink="/install/arm/pre-release"
       rhcos={
         Object {

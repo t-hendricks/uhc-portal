@@ -57,6 +57,7 @@ exports[`Platform agnostic UPI install renders correctly 1`] = `
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_platform_agnostic/installing-platform-agnostic.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
+      isUPI={true}
       rhcos={
         Object {
           "additionalInstructions": "Download the installer ISO image, or the kernel, initramfs, and rootfs.",

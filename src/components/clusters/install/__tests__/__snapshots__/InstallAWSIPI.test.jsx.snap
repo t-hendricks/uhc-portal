@@ -35,6 +35,7 @@ exports[`InstallAWSIPI renders correctly 1`] = `
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-account.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
+      isUPI={false}
       title="Install OpenShift on AWS with installer-provisioned infrastructure"
       token={Object {}}
     />

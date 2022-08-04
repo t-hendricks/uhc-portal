@@ -40,7 +40,7 @@ export class InstallAWSUPI extends Component {
           <OCPInstructions
             token={token}
             cloudProviderID="aws"
-            customizations={instructionsMapping.aws.customizations}
+            isUPI
             {...instructionsMapping.aws.x86.upi}
           />
         </PageSection>

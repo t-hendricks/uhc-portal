@@ -42,6 +42,7 @@ export class InstallIBM extends Component {
           <OCPInstructions
             token={token}
             cloudProviderID="baremetal"
+            isUPI
             {...instructionsMapping.baremetal.s390x.upi}
           />
         </PageSection>
