@@ -6,13 +6,13 @@ import path from 'path';
 
 import listGitRemotes from 'list-git-remotes';
 import JSON5 from 'json5';
+import { quote } from 'shell-quote'; // only to be used for logging
 import yargs from 'yargs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const execFilePromise = util.promisify(execFile);
-const execFileSyncPromise = util.promisify(execFileSync);
 const listGitRemotesPromise = util.promisify(listGitRemotes);
 
 const flags = yargs
@@ -190,12 +190,15 @@ const main = async () => {
       const cmd = [
         'env', 'GIT_PAGER=', 'git', 'log', ...envs.map(e => e.name),
         // Limit graph scope by omitting everything including 2 prod deploys ago.
-        '--not', 'live_stable~2', '--oneline', '--graph', '--merges', '--decorate', '--color=always',
+        '--not', 'live_stable~2', '--graph',
+        // Only MR merges, skip internal merge commit done while working on MR content.
+        '--extended-regexp', "--grep=Merge branch '[^']+' into '(master|candidate.*|stable)'|[Cc]herry",
+        '--oneline', '--decorate',
+        '--color=always',
       ];
-      console.log(...cmd);
+      console.log(quote(cmd));
       console.log('');
-      // For some reason async execFile always pipes stdout/err, we want it left alone for git colors.
-      execFileSyncPromise(cmd[0], cmd.slice(1), { stdio: 'inherit' });
+      execFileSync(cmd[0], cmd.slice(1), { stdio: 'inherit' });
     }
   } catch (err) {
     console.error(err);
