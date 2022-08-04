@@ -81,7 +81,7 @@ class UpgradeSettingsTab extends React.Component {
     const { confirmationModalOpen } = this.state;
 
     const isDisabled = !schedules.fulfilled
-                      || upgradeScheduleRequest.pending;
+      || upgradeScheduleRequest.pending;
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
     const hibernatingReason = clusterHibernating && (
       'This operation is not available while cluster is hibernating'
@@ -98,8 +98,8 @@ class UpgradeSettingsTab extends React.Component {
     const availableUpgrades = cluster?.version?.available_upgrades;
 
     const showUpdateButton = !!cluster.openshift_version
-                            && availableUpgrades?.length > 0
-                            && !scheduledUpgrade && !clusterHibernating;
+      && availableUpgrades?.length > 0
+      && !scheduledUpgrade && !clusterHibernating;
 
     const isPending = upgradeScheduleRequest.pending
       || deleteScheduleRequest.pending
@@ -146,7 +146,7 @@ class UpgradeSettingsTab extends React.Component {
           )}
           <Card>
             <CardBody>
-              <UserWorkloadMonitoringSection parent="details" disableUVM={disableUVM} />
+              <UserWorkloadMonitoringSection parent="details" disableUVM={disableUVM} planType={cluster.subscription?.plan?.type} />
             </CardBody>
           </Card>
         </GridItem>
@@ -257,6 +257,7 @@ UpgradeSettingsTab.propTypes = {
     id: PropTypes.string,
     subscription: PropTypes.shape({
       id: PropTypes.string,
+      plan: PropTypes.shape({ type: PropTypes.string }),
     }),
     version: PropTypes.shape({
       channel_group: PropTypes.string,
