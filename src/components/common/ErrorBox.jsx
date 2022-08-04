@@ -4,7 +4,11 @@ import { Alert, ExpandableSection } from '@patternfly/react-core';
 import { formatErrorDetails } from '../../common/errors';
 
 function ErrorBox({
-  message, response, variant = 'danger', isExpandable,
+  message,
+  variant = 'danger',
+  response,
+  children,
+  isExpandable,
 }) {
   const errorDetails = formatErrorDetails(response.errorDetails);
   const detailsDisplay = (
@@ -17,8 +21,14 @@ function ErrorBox({
   );
   return (
     <Alert variant={variant} isInline title={message} className="error-box">
-      {isExpandable ? (
-        <ExpandableSection toggleText="Error details">
+      {children && (
+        <>
+          {children}
+          <br />
+        </>
+      )}
+      {isExpandable || children ? (
+        <ExpandableSection toggleText={children ? 'More details' : 'Error details'}>
           {detailsDisplay}
         </ExpandableSection>
       ) : detailsDisplay}
@@ -38,6 +48,7 @@ ErrorBox.propTypes = {
     operationID: PropTypes.string,
   }),
   variant: PropTypes.oneOf(['danger', 'warning']),
+  children: PropTypes.node,
   isExpandable: PropTypes.bool,
 };
 

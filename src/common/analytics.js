@@ -20,6 +20,7 @@ const eventNames = {
   FILE_DOWNLOADED: 'File Downloaded',
   BUTTON_CLICKED: 'Button Clicked',
   LINK_CLICKED: 'Link Clicked',
+  ARNS_REFRESHED: 'ARNs Refreshed',
 };
 
 /**
@@ -155,6 +156,11 @@ const trackEvents = {
   RefreshARNs: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'refresh-arns',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  ARNsRefreshed: {
+    event: eventNames.ARNS_REFRESHED,
+    link_name: 'arns-refreshed',
     ocm_resource_type: ocmResourceType.MOA,
   },
   AssociateAWS: {
