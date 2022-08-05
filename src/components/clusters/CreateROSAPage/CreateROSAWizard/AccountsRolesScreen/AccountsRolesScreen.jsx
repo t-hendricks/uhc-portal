@@ -195,7 +195,7 @@ function AccountsRolesScreen({
           <Field
             component={AWSAccountSelection}
             name="associated_aws_id"
-            label="Associated AWS account"
+            label="Associated AWS accounts"
             openAssociateAWSAccountModal={openAssociateAWSAccountModal}
             validate={required}
             extendedHelpText={(
