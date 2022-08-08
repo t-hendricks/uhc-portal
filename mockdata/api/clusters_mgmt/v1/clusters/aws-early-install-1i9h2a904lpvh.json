@@ -3,7 +3,6 @@
   "id": "aws-early-install-1i9h2a904lpvh",
   "href": "/api/clusters_mgmt/v1/clusters/aws-early-install-1i9h2a904lpvh",
   "name": "cben-osd-aws",
-  "display_name": "osd-aws early install",
   "creation_timestamp": "2021-01-18T10:12:57.841951Z",
   "activity_timestamp": "2021-01-18T10:12:57.841951Z",
   "cloud_provider": {

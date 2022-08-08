@@ -4,7 +4,6 @@
   "href": "/api/clusters_mgmt/v1/clusters/fake-installing-cluster",
   "name": "fake-installing-cluster",
   "external_id": "whatever-external-id",
-  "display_name": "fake-installing-cluster",
   "creation_timestamp": "2019-02-11T09:28:16.000143Z",
   "activity_timestamp": "2019-02-11T09:28:16.000143Z",
   "status": {},
