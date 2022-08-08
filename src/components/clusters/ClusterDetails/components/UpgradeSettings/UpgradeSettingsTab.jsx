@@ -82,6 +82,7 @@ class UpgradeSettingsTab extends React.Component {
       initialValues,
       clusterHibernating,
       isReadOnly,
+      isAROCluster,
     } = this.props;
     const { confirmationModalOpen } = this.state;
 
@@ -149,6 +150,7 @@ class UpgradeSettingsTab extends React.Component {
           {editClusterRequest.error && (
             <ErrorBox response={editClusterRequest} message="Error processing request" />
           )}
+          {!isAROCluster && (
           <Card>
             <CardBody>
               <UserWorkloadMonitoringSection
@@ -158,6 +160,7 @@ class UpgradeSettingsTab extends React.Component {
               />
             </CardBody>
           </Card>
+          )}
         </GridItem>
         <GridItem lg={9} md={12} className="ocm-c-upgrade-monitoring-top">
           <Card>
@@ -231,7 +234,7 @@ class UpgradeSettingsTab extends React.Component {
                 clusterID={cluster.id}
                 canEdit={cluster.canEdit}
                 clusterVersion={cluster.openshift_version}
-                clusterVersionRawID={cluster.version.raw_id}
+                clusterVersionRawID={cluster?.version?.raw_id}
                 scheduledUpgrade={scheduledUpgrade}
                 availableUpgrades={availableUpgrades}
                 openModal={openModal}
@@ -260,6 +263,7 @@ class UpgradeSettingsTab extends React.Component {
 UpgradeSettingsTab.propTypes = {
   pristine: PropTypes.bool,
   isAutomatic: PropTypes.bool,
+  isAROCluster: PropTypes.bool,
   clusterHibernating: PropTypes.bool,
   isReadOnly: PropTypes.bool.isRequired,
   cluster: PropTypes.shape({
