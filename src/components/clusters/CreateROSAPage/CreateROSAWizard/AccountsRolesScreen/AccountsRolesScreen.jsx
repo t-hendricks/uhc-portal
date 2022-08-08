@@ -174,7 +174,7 @@ function AccountsRolesScreen({
                       oc
                     </Link>
                     {' '}
-                    CLIs on your workstation (recommended).
+                    CLIs on your workstation.
                   </Text>
                 </li>
               </ul>
@@ -191,11 +191,11 @@ function AccountsRolesScreen({
         </GridItem>
         <GridItem span={4} />
         <GridItem span={5}>
-          { awsIDsErrorBox }
+          {awsIDsErrorBox}
           <Field
             component={AWSAccountSelection}
             name="associated_aws_id"
-            label="Associated AWS account"
+            label="Associated AWS accounts"
             openAssociateAWSAccountModal={openAssociateAWSAccountModal}
             validate={required}
             extendedHelpText={(
@@ -204,7 +204,7 @@ function AccountsRolesScreen({
                 {' '}
                 one account to proceed.
               </>
-              )}
+            )}
             AWSAccountIDs={AWSAccountIDs}
             selectedAWSAccountID={selectedAWSAccountID}
             disabled={getAWSAccountIDsResponse.pending}
@@ -212,19 +212,19 @@ function AccountsRolesScreen({
         </GridItem>
         <GridItem span={7} />
         {selectedAWSAccountID
-        && (
-        <AccountRolesARNsSection
-          selectedAWSAccountID={selectedAWSAccountID}
-          selectedInstallerRoleARN={selectedInstallerRoleARN}
-          rosaMaxOSVersion={rosaMaxOSVersion}
-          getAWSAccountRolesARNs={getAWSAccountRolesARNs}
-          getAWSAccountRolesARNsResponse={getAWSAccountRolesARNsResponse}
-          clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
-          change={change}
-          touchARNsFields={touchARNsFields}
-          openOcmRoleInstructionsModal={openOcmRoleInstructionsModal}
-        />
-        )}
+          && (
+            <AccountRolesARNsSection
+              selectedAWSAccountID={selectedAWSAccountID}
+              selectedInstallerRoleARN={selectedInstallerRoleARN}
+              rosaMaxOSVersion={rosaMaxOSVersion}
+              getAWSAccountRolesARNs={getAWSAccountRolesARNs}
+              getAWSAccountRolesARNsResponse={getAWSAccountRolesARNsResponse}
+              clearGetAWSAccountRolesARNsResponse={clearGetAWSAccountRolesARNsResponse}
+              change={change}
+              touchARNsFields={touchARNsFields}
+              openOcmRoleInstructionsModal={openOcmRoleInstructionsModal}
+            />
+          )}
         <GridItem span={9}>
           {getUserRoleResponse.error && (
             <>
@@ -240,7 +240,7 @@ function AccountsRolesScreen({
                   >
                     See more user role instructions
                   </AlertActionLink>
-              )}
+                )}
               >
                 <TextContent className="ocm-alert-text">
                   <Text component={TextVariants.p} className="pf-u-mb-sm">

@@ -31,10 +31,10 @@ exports[`InstallASHUPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="ash"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-network-customizations.html"
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
+      isUPI={true}
       rhcos={
         Object {
           "downloads": Array [

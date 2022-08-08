@@ -163,7 +163,6 @@ class CreateROSAWizardInternal extends React.Component {
     track(event, {
       resourceType: ocmResourceType.MOA,
       customProperties: {
-        step_id: currentStepId,
         step_name: stepNameById[currentStepId],
       },
     });

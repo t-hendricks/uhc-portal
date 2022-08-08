@@ -41,6 +41,7 @@ export class InstallPlatformAgnosticUPI extends Component {
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProviderID="generic"
+            isUPI
             {...instructionsMapping.generic}
           />
         </PageSection>

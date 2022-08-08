@@ -15,7 +15,7 @@ import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
 
 const GetStarted = ({
-  docURL, pendoID, cloudProviderID, customizations, isBMIPI,
+  docURL, pendoID, cloudProviderID, customizations, isBMIPI, isUPI,
 }) => {
   const { track } = useAnalytics();
   return (
@@ -69,7 +69,7 @@ const GetStarted = ({
             Get started
           </Button>
         </StackItem>
-        { !isBMIPI && (
+        { !isBMIPI && !isUPI && (
           <>
             <StackItem>
               <Text component="p">
@@ -110,6 +110,7 @@ const GetStarted = ({
 
 GetStarted.defaultProps = {
   isBMIPI: false,
+  isUPI: false,
 };
 
 GetStarted.propTypes = {
@@ -118,6 +119,7 @@ GetStarted.propTypes = {
   cloudProviderID: PropTypes.string.isRequired,
   customizations: PropTypes.string,
   isBMIPI: PropTypes.bool,
+  isUPI: PropTypes.bool,
 };
 
 export default GetStarted;

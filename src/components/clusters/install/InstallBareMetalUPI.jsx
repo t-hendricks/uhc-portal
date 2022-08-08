@@ -41,7 +41,7 @@ export class InstallBareMetalUPI extends Component {
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProviderID="baremetal"
-            customizations={instructionsMapping.baremetal.customizations}
+            isUPI
             {...instructionsMapping.baremetal.x86.upi}
           />
         </PageSection>

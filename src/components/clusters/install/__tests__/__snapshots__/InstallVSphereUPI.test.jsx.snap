@@ -31,10 +31,10 @@ exports[`InstallVSphereUPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="vsphere"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
+      isUPI={true}
       rhcos={
         Object {
           "downloads": Array [

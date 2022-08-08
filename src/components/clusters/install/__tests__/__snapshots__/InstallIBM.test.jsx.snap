@@ -30,6 +30,7 @@ exports[`InstallIBM renders correctly 1`] = `
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_z/installing-ibm-z.html"
       installer="s390x-openshift-install"
       isBMIPI={false}
+      isUPI={true}
       preReleasePageLink="/install/ibmz/pre-release"
       rhcos={
         Object {

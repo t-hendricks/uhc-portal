@@ -1,5 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<GetStarted /> GetStarted for UPI should render 1`] = `
+<Fragment>
+  <Stack
+    hasGutter={true}
+  >
+    <StackItem>
+      <TextContent>
+        <Text
+          component="p"
+        >
+          The installer will take about 45 minutes to run.
+           
+        </Text>
+      </TextContent>
+    </StackItem>
+    <StackItem>
+      <Button
+        component="a"
+        href=""
+        onClick={[Function]}
+        rel="noreferrer noopener"
+        target="_blank"
+        variant="secondary"
+      >
+        Get started
+      </Button>
+    </StackItem>
+    <StackItem>
+      <TelemetryDisclaimer />
+    </StackItem>
+  </Stack>
+</Fragment>
+`;
+
 exports[`<GetStarted /> GetStarted w/ customizations should render 1`] = `
 <Fragment>
   <Stack

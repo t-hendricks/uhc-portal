@@ -31,10 +31,10 @@ exports[`InstallAWSUPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="aws"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-customizations.html"
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-user-infra.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
+      isUPI={true}
       title="Install OpenShift on AWS with user-provisioned infrastructure"
       token={Object {}}
     />

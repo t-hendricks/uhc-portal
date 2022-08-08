@@ -40,7 +40,7 @@ export class InstallASHUPI extends Component {
           <OCPInstructions
             token={token}
             cloudProviderID="ash"
-            customizations={instructionsMapping.ash.customizations}
+            isUPI
             {...instructionsMapping.ash.upi}
           />
         </PageSection>
