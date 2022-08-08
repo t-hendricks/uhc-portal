@@ -105,17 +105,18 @@ function AccountRolesARNsSection({
       : 'Error getting AWS account ARNs'
   );
 
-  const trackRefreshArns = (response) => {
-    const trackEvent = getTrackEvent(trackEvents.ARNsRefreshed, null, undefined, undefined, {
-      error: !!response.error,
-      ...(response.error && {
-        error_title: resolveARNsErrorTitle(response),
-        error_message: response.errorMessage || undefined, // omit empty strings
-        error_code: response.errorCode,
-        error_operation_id: response.operationID,
-      }),
+  const trackArnsRefreshed = (response) => {
+    track(trackEvents.ARNsRefreshed, {
+      customProperties: {
+        error: !!response.error,
+        ...(response.error && {
+          error_title: resolveARNsErrorTitle(response),
+          error_message: response.errorMessage || undefined, // omit empty strings
+          error_code: response.errorCode,
+          error_operation_id: response.operationID,
+        }),
+      },
     });
-    analytics.track(trackEvent.event, trackEvent.properties);
   };
 
   useEffect(() => {
@@ -136,7 +137,7 @@ function AccountRolesARNsSection({
 
   useEffect(() => {
     if (getAWSAccountRolesARNsResponse.fulfilled || getAWSAccountRolesARNsResponse.error) {
-      trackRefreshArns(getAWSAccountRolesARNsResponse);
+      trackArnsRefreshed(getAWSAccountRolesARNsResponse);
     }
   }, [getAWSAccountRolesARNsResponse]);
 
