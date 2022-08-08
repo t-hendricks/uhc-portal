@@ -8,8 +8,8 @@ import {
   ExpandableSection, Grid, GridItem, Text, TextVariants, Title,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import { getTrackEvent, trackEvents } from '~/common/analytics';
+import useAnalytics from '~/hooks/useAnalytics';
+import { trackEvents } from '~/common/analytics';
 import links from '../../../../../common/installLinks.mjs';
 
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -35,7 +35,7 @@ function AccountRolesARNsSection({
 }) {
   const NO_ROLE_DETECTED = 'No role detected';
 
-  const { analytics } = useChrome();
+  const { track } = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
   const [installerRoleOptions, setInstallerRoleOptions] = useState([{
@@ -105,17 +105,18 @@ function AccountRolesARNsSection({
       : 'Error getting AWS account ARNs'
   );
 
-  const trackRefreshArns = (response) => {
-    const trackEvent = getTrackEvent(trackEvents.ARNsRefreshed, null, undefined, undefined, {
-      error: !!response.error,
-      ...(response.error && {
-        error_title: resolveARNsErrorTitle(response),
-        error_message: response.errorMessage || undefined, // omit empty strings
-        error_code: response.errorCode,
-        error_operation_id: response.operationID,
-      }),
+  const trackArnsRefreshed = (response) => {
+    track(trackEvents.ARNsRefreshed, {
+      customProperties: {
+        error: !!response.error,
+        ...(response.error && {
+          error_title: resolveARNsErrorTitle(response),
+          error_message: response.errorMessage || undefined, // omit empty strings
+          error_code: response.errorCode,
+          error_operation_id: response.operationID,
+        }),
+      },
     });
-    analytics.track(trackEvent.event, trackEvent.properties);
   };
 
   useEffect(() => {
@@ -136,7 +137,7 @@ function AccountRolesARNsSection({
 
   useEffect(() => {
     if (getAWSAccountRolesARNsResponse.fulfilled || getAWSAccountRolesARNsResponse.error) {
-      trackRefreshArns(getAWSAccountRolesARNsResponse);
+      trackArnsRefreshed(getAWSAccountRolesARNsResponse);
     }
   }, [getAWSAccountRolesARNsResponse]);
 
@@ -226,8 +227,7 @@ function AccountRolesARNsSection({
           <Button
             variant="secondary"
             onClick={() => {
-              const eventObj = getTrackEvent(trackEvents.RefreshARNs);
-              analytics.track(eventObj.event, eventObj.properties);
+              track(trackEvents.RefreshARNs);
               refreshARNs();
             }}
           >
