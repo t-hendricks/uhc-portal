@@ -39,6 +39,11 @@ const trackEvents = {
     link_name: 'butane-cli',
     ocm_resource_type: ocmResourceType.ALL,
   },
+  [tools.CCOCTL]: {
+    event: eventNames.FILE_DOWNLOADED,
+    link_name: 'ccoctl-cli',
+    ocm_resource_type: ocmResourceType.ALL,
+  },
   [tools.COREOS_INSTALLER]: {
     deprecated_name: 'Download-CoreOSInstaller-CLI',
     event: eventNames.FILE_DOWNLOADED,
@@ -79,6 +84,11 @@ const trackEvents = {
     deprecated_name: 'OCP-Download-ARMInstaller',
     event: eventNames.FILE_DOWNLOADED,
     link_name: 'ocp-installer-arm',
+    ocm_resource_type: ocmResourceType.OCP,
+  },
+  [tools.MULTIINSTALLER]: {
+    event: eventNames.FILE_DOWNLOADED,
+    link_name: 'ocp-installer-multi',
     ocm_resource_type: ocmResourceType.OCP,
   },
   [tools.KN]: {

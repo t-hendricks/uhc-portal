@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import {
   PageSection,
 } from '@patternfly/react-core';
-
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { tollboothActions } from '../../../redux/actions';
 import { scrollToTop } from '../../../common/helpers';
@@ -12,10 +11,10 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-export class InstallArmAWSIPI extends Component {
+export class InstallMultiAzureIPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS Installer-Provisioned ARM Infrastructure';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Installer-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -27,21 +26,20 @@ export class InstallArmAWSIPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'Amazon Web Services (ARM)', path: '/install/aws/arm' },
-        { label: 'Installer-provisioned infrastructure' },
+        { label: 'Microsoft Azure', path: '/install/azure' },
+        { label: 'Heterogeneous infrastructure' },
       ]}
       />
     );
 
     return (
       <>
-        <PageTitle title={instructionsMapping.aws.arm.ipi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.azure.multi.ipi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProviderID="aws"
-            customizations={instructionsMapping.aws.customizations}
-            {...instructionsMapping.aws.arm.ipi}
+            cloudProviderID="azure"
+            {...instructionsMapping.azure.multi.ipi}
           />
         </PageSection>
       </>
@@ -49,11 +47,11 @@ export class InstallArmAWSIPI extends Component {
   }
 }
 
-InstallArmAWSIPI.propTypes = {
+InstallMultiAzureIPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallArmAWSIPI);
+export default connect(mapStateToProps)(InstallMultiAzureIPI);

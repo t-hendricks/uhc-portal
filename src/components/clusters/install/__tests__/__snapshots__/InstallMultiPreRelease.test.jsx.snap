@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ARM Bare Metal install renders correctly 1`] = `
+exports[`InstallMultiPreRelease renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
@@ -15,21 +15,21 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "ARM Bare Metal",
+              "label": "Heterogeneous clusters",
+            },
+            Object {
+              "label": "Pre-Release Builds",
             },
           ]
         }
       />
     }
-    title="Install OpenShift Container Platform 4"
+    title="Install OpenShift on heterogeneous infrastructure"
   />
   <PageSection>
-    <InstructionsChooser
-      aiPageLink="/assisted-installer/clusters/~new?useArm=true"
-      cloudName="ARM Bare Metal"
-      ipiPageLink="/install/arm/installer-provisioned"
-      showAI={true}
-      upiPageLink="/install/arm/user-provisioned"
+    <InstructionsPreRelease
+      installer="multi-openshift-install"
+      token={Object {}}
     />
   </PageSection>
 </Fragment>

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InstallAzureIPI renders correctly 1`] = `
+exports[`InstallMultiAzureIPI renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
@@ -19,24 +19,24 @@ exports[`InstallAzureIPI renders correctly 1`] = `
               "path": "/install/azure",
             },
             Object {
-              "label": "Installer-provisioned infrastructure",
+              "label": "Heterogeneous infrastructure",
             },
           ]
         }
       />
     }
-    title="Install OpenShift on Azure with installer-provisioned infrastructure"
+    title="Install OpenShift on Azure with heterogeneous infrastructure"
   />
   <PageSection>
     <OCPInstructions
       channel="stable"
       cloudProviderID="azure"
-      customizations="https://docs.openshift.com/container-platform/4.11/installing/installing_azure/installing-azure-customizations.html"
-      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_azure/installing-azure-default.html"
-      installer="x86_64-openshift-install"
+      docURL="https://docs.openshift.com/container-platform/4.11/post_installation_configuration/deploy-heterogeneous-configuration.html"
+      installer="multi-openshift-install"
       isBMIPI={false}
       isUPI={false}
-      title="Install OpenShift on Azure with installer-provisioned infrastructure"
+      preReleasePageLink="/install/multi/pre-release"
+      title="Install OpenShift on Azure with heterogeneous infrastructure"
       token={Object {}}
     />
   </PageSection>

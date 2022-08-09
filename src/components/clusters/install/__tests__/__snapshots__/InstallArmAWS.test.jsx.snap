@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ARM Bare Metal install renders correctly 1`] = `
+exports[`InstallArmAWS renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
@@ -15,7 +15,7 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "ARM Bare Metal",
+              "label": "Amazon Web Services (ARM)",
             },
           ]
         }
@@ -25,11 +25,9 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
   />
   <PageSection>
     <InstructionsChooser
-      aiPageLink="/assisted-installer/clusters/~new?useArm=true"
-      cloudName="ARM Bare Metal"
-      ipiPageLink="/install/arm/installer-provisioned"
-      showAI={true}
-      upiPageLink="/install/arm/user-provisioned"
+      cloudName="AWS (ARM)"
+      ipiPageLink="/install/aws/arm/installer-provisioned"
+      upiPageLink="/install/aws/arm/user-provisioned"
     />
   </PageSection>
 </Fragment>
