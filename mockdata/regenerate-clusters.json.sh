@@ -1,5 +1,15 @@
 #!/bin/bash -e
 
+# This script serves two roles:
+#  1. Run locally to generate new subscriptions.json, clusters.json collections
+#     from individual subscriptions/*.json, clusters/*.json responses.
+#     - In this case, modifying the collections is expected, `git status` is just informative.
+#     * Inconsistency between subscriptions/clusters is an error.
+#  2. Run in CI to test committed data is consistent.
+#     * In this case, if the collections changed it's an error — files in git were inconsistent.
+#       => This is checked with `git diff` in pr_check.sh.
+#     * Inconsistency between subscriptions/clusters is an error.  Checked by this script.
+
 cd "$(dirname "$0")" # directory of this script
 cd "$(git rev-parse --show-toplevel)"
 
@@ -47,5 +57,8 @@ diff --report-identical-files --side-by-side --width=150 \
   |
   (colordiff || cat)
 
-# exit status - only 0 if nothing changes and consistency was good
-[ "${PIPESTATUS[0]}" == 0 ] && git diff --quiet -- "$CLUSTERS.json" "$SUBSCRIPTIONS.json"
+# exit status is diff's status
+if [ "${PIPESTATUS[0]}" != 0 ]; then
+  echo "ERROR: $SUBSCRIPTIONS/*.json <-> $CLUSTERS/*.json inconsistent, see diff ^^^"
+  exit 1
+fi
