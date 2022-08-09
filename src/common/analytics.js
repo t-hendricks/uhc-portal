@@ -235,21 +235,18 @@ const trackEvents = {
  *
  * @returns {Object} Object {[event]: string, [properties]: Object}
  */
-const getTrackEvent = (trackEvent, {
-  url,
-  path = window.location.pathname,
-  resourceType = trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
-  customProperties = {},
-}) => ({
-  event: trackEvent.event,
-  properties: {
-    link_name: trackEvent.link_name,
-    ...(url && { link_url: url }),
-    current_path: path,
-    ocm_resource_type: resourceType,
-    ...customProperties,
-  },
-});
+const getTrackEvent = (trackEvent, options = {}) => (
+  {
+    event: trackEvent.event,
+    properties: {
+      link_name: trackEvent.link_name,
+      ...(options.url && { link_url: options.url }),
+      current_path: options.path || window.location.pathname,
+      ocm_resource_type: trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
+      ...options.customProperties,
+    },
+  }
+);
 
 export {
   ocmResourceType, eventNames, trackEvents, getTrackEvent,
