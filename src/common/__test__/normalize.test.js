@@ -69,7 +69,9 @@ describe('normalizeQuotaCost', () => {
   test('Normalizes product ids', () => {
     const products = quotaCost => quotaCost.related_resources.map(r => r.product);
 
-    expect(products(normalizeQuotaCost(dedicatedRhInfra[0]))).toEqual([normalizedProducts.OSD]);
+    expect(products(normalizeQuotaCost(dedicatedRhInfra[0]))).toEqual(
+      [normalizedProducts.OSD, normalizedProducts.OSD],
+    );
     expect(products(normalizeQuotaCost(unlimitedROSA[0]))).toEqual([normalizedProducts.ROSA]);
     expect(products(normalizeQuotaCost(rhmiAddon[0]))).toEqual(
       [normalizedProducts.OSD, normalizedProducts.RHMI],

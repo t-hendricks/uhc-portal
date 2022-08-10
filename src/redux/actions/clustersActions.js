@@ -186,6 +186,7 @@ const buildSearchQuery = (items, field) => {
   return `id in (${Array.from(IDs).join(',')})`;
 };
 
+// Builds an array in the order things were inserted into `subscriptionMap`.
 const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => {
   const result = [];
   subscriptionMap.forEach((entry) => {
@@ -241,7 +242,8 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
       }
 
       // map subscription ID to subscription info
-      // Note: Map keeps order of insertions
+      // Note: Map keeps order of insertions.
+      // Will display them in order returned by getSubscriptions().
       const subscriptionMap = new Map();
       items.forEach(item => subscriptionMap.set(item.cluster_id, {
         subscription: item,

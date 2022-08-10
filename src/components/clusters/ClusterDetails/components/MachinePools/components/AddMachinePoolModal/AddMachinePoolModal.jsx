@@ -14,10 +14,6 @@ import { checkMachinePoolName } from '../../../../../../../common/validators';
 import CostSavingsSection from './CostSavingsSection';
 
 class AddMachinePoolModal extends Component {
-  state = {
-    machineType: '',
-  };
-
   componentDidMount() {
     const {
       getOrganizationAndQuota,
@@ -41,10 +37,6 @@ class AddMachinePoolModal extends Component {
     }
   }
 
-  handleMachineTypesChange = (_, value) => {
-    this.setState({ machineType: value });
-  };
-
   cancelAddMachinePool = () => {
     const { clearAddMachinePoolResponse, closeModal } = this.props;
     clearAddMachinePoolResponse();
@@ -62,6 +54,7 @@ class AddMachinePoolModal extends Component {
       canAutoScale,
       autoscalingEnabled,
       change,
+      selectedMachineType,
       autoScaleMinNodesValue,
       autoScaleMaxNodesValue,
       canUseSpotInstances,
@@ -70,7 +63,6 @@ class AddMachinePoolModal extends Component {
       spotInstanceMaxHourlyPrice,
     } = this.props;
 
-    const { machineType } = this.state;
     const billingModel = get(cluster, 'billing_model');
 
     const hasError = addMachinePoolResponse.error && (
@@ -114,8 +106,7 @@ class AddMachinePoolModal extends Component {
                 pending={isPending}
                 isBYOC={!!cluster?.ccs?.enabled}
                 isMultiAz={cluster.multi_az}
-                machineType={machineType}
-                handleMachineTypesChange={this.handleMachineTypesChange}
+                machineType={selectedMachineType}
                 cloudProviderID={cluster.cloud_provider.id}
                 product={cluster?.subscription?.plan?.type}
                 showStorageAndLoadBalancers={false}
@@ -161,6 +152,7 @@ AddMachinePoolModal.propTypes = {
   pristine: PropTypes.bool.isRequired,
   invalid: PropTypes.bool.isRequired,
   organization: PropTypes.object,
+  selectedMachineType: PropTypes.string,
   canAutoScale: PropTypes.bool.isRequired,
   autoscalingEnabled: PropTypes.bool.isRequired,
   change: PropTypes.func.isRequired,

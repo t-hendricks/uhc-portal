@@ -52,10 +52,11 @@ exports[`InstallBareMetalIPI renders correctly 1`] = `
         />
       }
       channel="stable"
-      cloudProviderID="bareMetal"
+      cloudProviderID="baremetal"
       docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
       installer="x86_64-openshift-install"
       isBMIPI={true}
+      isUPI={false}
       title="Install OpenShift on Bare Metal with installer-provisioned infrastructure"
       token={Object {}}
     />

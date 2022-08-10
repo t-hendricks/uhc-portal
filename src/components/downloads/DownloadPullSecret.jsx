@@ -5,11 +5,12 @@ import {
 } from '@patternfly/react-core';
 import Download from '@axetroy/react-download';
 import isEmpty from 'lodash/isEmpty';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
-import { getTrackEvent } from '../../common/helpers';
+
+import useAnalytics from '~/hooks/useAnalytics';
+import { trackEvents } from '~/common/analytics';
 
 function DownloadPullSecret({ token, pendoID, text }) {
-  const { analytics } = useChrome();
+  const { track } = useAnalytics();
   const isDisabled = (!token || !!token.error || isEmpty(token));
   const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
 
@@ -18,8 +19,7 @@ function DownloadPullSecret({ token, pendoID, text }) {
       variant="secondary"
       isDisabled={isDisabled}
       onClick={() => {
-        const eventObj = getTrackEvent('DownloadPullSecret', null, pendoID);
-        analytics.track(eventObj.event, eventObj.properties);
+        track(trackEvents.DownloadPullSecret, { path: pendoID });
       }}
     >
       {text}

@@ -19,7 +19,6 @@ describe('InstructionsChooser', () => {
       <InstructionsChooser
         cloudName="Bare Metal"
         showAI
-        preferAI
         ipiPageLink="/install/metal/installer-provisioned"
         upiPageLink="/install/metal/user-provisioned"
       />,
@@ -31,7 +30,6 @@ describe('InstructionsChooser', () => {
       <InstructionsChooser
         cloudName="ARM Bare Metal"
         showAI
-        preferAI
         hideIPI
         upiPageLink="/install/arm/user-provisioned"
       />,

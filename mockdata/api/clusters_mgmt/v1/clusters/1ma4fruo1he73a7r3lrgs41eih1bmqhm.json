@@ -5,7 +5,6 @@
   "name": "cben-hibernating-gcp",
   "external_id": "fake-cluster-1fe2a748-0c1f-4a2e-a084-50df81bec7a9-EXPECT-AMS-null",
   "infra_id": "fake-infra-id",
-  "display_name": "osd-gcp hibernating",
   "creation_timestamp": "2021-08-01T12:39:11.338617Z",
   "activity_timestamp": "2021-08-01T12:39:11.338617Z",
   "expiration_timestamp": "2021-08-03T00:39:11.236061Z",

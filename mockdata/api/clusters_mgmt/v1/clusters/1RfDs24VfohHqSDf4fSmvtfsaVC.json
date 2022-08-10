@@ -5,7 +5,6 @@
   "name": "cben-osd2",
   "external_id": "16ff188e-6dcb-4d1e-bb5d-8717e127ebde",
   "infra_id": "cben-osd2-lwqwn",
-  "display_name": "fake-insights-cluster",
   "creation_timestamp": "2019-02-11T09:28:16.000143Z",
   "activity_timestamp": "2019-12-22T10:18:09Z",
   "openshift_version": "4.2.13",

@@ -15,15 +15,10 @@ exports[`<MachineTypeSelection /> when machine type list needs to be fetched ren
 </Fragment>
 `;
 
-exports[`<MachineTypeSelection /> when the machine types list is available byoc lacking enough byoc node quota renders correctly 1`] = `
-<div>
-  You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.
-</div>
-`;
-
-exports[`<MachineTypeSelection /> when the machine types list is available byoc with sufficient byoc quota available renders correctly 1`] = `
+exports[`<MachineTypeSelection /> when the machine types list contains unknown categories byoc with sufficient byoc quota available renders correctly 1`] = `
 <FormGroup
   fieldId="node_type"
+  helperTextInvalid={false}
   isHelperTextBeforeField={true}
   isRequired={true}
   label="Compute node instance type"
@@ -94,7 +89,26 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
         className=""
         component="button"
         description="m5.xlarge"
+        flavours={
+          Object {
+            "byID": Object {
+              "osd-4": Object {
+                "aws": Object {
+                  "compute_instance_type": "m5.xlarge",
+                },
+                "gcp": Object {
+                  "compute_instance_type": "custom-4-16384",
+                },
+              },
+            },
+            "error": false,
+            "errorMessage": "",
+            "fulfilled": true,
+            "pending": false,
+          }
+        }
         formValue="m5.xlarge"
+        getDefaultFlavour={[MockFunction]}
         id="machineType.m5.xlarge"
         index={0}
         inputId=""
@@ -122,9 +136,16 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
 </FormGroup>
 `;
 
-exports[`<MachineTypeSelection /> when the machine types list is available with rhinfra quota available renders correctly 1`] = `
+exports[`<MachineTypeSelection /> when the machine types list is available byoc lacking enough byoc node quota renders correctly 1`] = `
+<div>
+  You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.
+</div>
+`;
+
+exports[`<MachineTypeSelection /> when the machine types list is available byoc with sufficient byoc quota available renders correctly 1`] = `
 <FormGroup
   fieldId="node_type"
+  helperTextInvalid={false}
   isHelperTextBeforeField={true}
   isRequired={true}
   label="Compute node instance type"
@@ -195,7 +216,26 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
         className=""
         component="button"
         description="m5.xlarge"
+        flavours={
+          Object {
+            "byID": Object {
+              "osd-4": Object {
+                "aws": Object {
+                  "compute_instance_type": "m5.xlarge",
+                },
+                "gcp": Object {
+                  "compute_instance_type": "custom-4-16384",
+                },
+              },
+            },
+            "error": false,
+            "errorMessage": "",
+            "fulfilled": true,
+            "pending": false,
+          }
+        }
         formValue="m5.xlarge"
+        getDefaultFlavour={[MockFunction]}
         id="machineType.m5.xlarge"
         index={0}
         inputId=""
@@ -217,6 +257,516 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
         value="m5.xlarge"
       >
         4 vCPU 16 GiB RAM
+      </SelectOption>
+    </SelectGroup>
+  </Select>
+</FormGroup>
+`;
+
+exports[`<MachineTypeSelection /> when the machine types list is available with an error loading flavours renders correctly 1`] = `
+<div>
+  You do not have enough quota to create a cluster with the minimum required worker capacity. Contact sales to purchase additional quota.
+</div>
+`;
+
+exports[`<MachineTypeSelection /> when the machine types list is available with rhinfra quota available renders correctly 1`] = `
+<FormGroup
+  fieldId="node_type"
+  helperTextInvalid={false}
+  isHelperTextBeforeField={true}
+  isRequired={true}
+  label="Compute node instance type"
+  labelIcon={
+    <PopoverHint
+      hint="The instance type for the compute nodes. Instance type
+    determines the amount of memory and vCPU allocated to each compute node."
+    />
+  }
+  validated="default"
+>
+  <Select
+    aria-describedby=""
+    aria-invalid={false}
+    aria-label=""
+    aria-labelledby=""
+    chipGroupComponent={null}
+    className=""
+    clearSelectionsAriaLabel="Clear all"
+    createText="Create"
+    customBadgeText={null}
+    customContent={null}
+    direction="down"
+    favorites={Array []}
+    favoritesLabel="Favorites"
+    hasInlineFilter={false}
+    hasPlaceholderStyle={false}
+    inlineFilterPlaceholderText={null}
+    inputAutoComplete="off"
+    inputIdPrefix=""
+    isCreatable={false}
+    isCreateSelectOptionObject={false}
+    isDisabled={false}
+    isGrouped={false}
+    isInputFilterPersisted={false}
+    isInputValuePersisted={false}
+    isOpen={false}
+    isPlain={false}
+    maxHeight={600}
+    menuAppendTo="parent"
+    noResultsFoundText="No results found"
+    onClear={[Function]}
+    onCreateOption={[Function]}
+    onFilter={null}
+    onSelect={[Function]}
+    onToggle={[Function]}
+    onTypeaheadInputChanged={null}
+    ouiaSafe={true}
+    placeholderText="Select instance type"
+    position="left"
+    removeSelectionAriaLabel="Remove"
+    selections=""
+    shouldResetOnSelect={true}
+    toggleAriaLabel="Options menu"
+    toggleIcon={null}
+    toggleId={null}
+    typeAheadAriaLabel=""
+    validated="default"
+    variant="single"
+    width=""
+  >
+    <SelectGroup
+      key="General purpose"
+      label="General purpose"
+    >
+      <SelectOption
+        billingModel="standard"
+        className=""
+        component="button"
+        description="m5.xlarge"
+        flavours={
+          Object {
+            "byID": Object {
+              "osd-4": Object {
+                "aws": Object {
+                  "compute_instance_type": "m5.xlarge",
+                },
+                "gcp": Object {
+                  "compute_instance_type": "custom-4-16384",
+                },
+              },
+            },
+            "error": false,
+            "errorMessage": "",
+            "fulfilled": true,
+            "pending": false,
+          }
+        }
+        formValue="m5.xlarge"
+        getDefaultFlavour={[MockFunction]}
+        id="machineType.m5.xlarge"
+        index={0}
+        inputId=""
+        isChecked={false}
+        isDisabled={false}
+        isFavorite={null}
+        isLastOptionBeforeFooter={[Function]}
+        isLoad={false}
+        isLoading={false}
+        isNoResultsOption={false}
+        isPlaceholder={false}
+        isSelected={false}
+        key="m5.xlarge"
+        keyHandler={[Function]}
+        onClick={[Function]}
+        product="OSD"
+        sendRef={[Function]}
+        setViewMoreNextIndex={[Function]}
+        value="m5.xlarge"
+      >
+        4 vCPU 16 GiB RAM
+      </SelectOption>
+      <SelectOption
+        billingModel="standard"
+        className=""
+        component="button"
+        description="m5.4xlarge"
+        flavours={
+          Object {
+            "byID": Object {
+              "osd-4": Object {
+                "aws": Object {
+                  "compute_instance_type": "m5.xlarge",
+                },
+                "gcp": Object {
+                  "compute_instance_type": "custom-4-16384",
+                },
+              },
+            },
+            "error": false,
+            "errorMessage": "",
+            "fulfilled": true,
+            "pending": false,
+          }
+        }
+        formValue="m5.4xlarge"
+        getDefaultFlavour={[MockFunction]}
+        id="machineType.m5.4xlarge"
+        index={0}
+        inputId=""
+        isChecked={false}
+        isDisabled={false}
+        isFavorite={null}
+        isLastOptionBeforeFooter={[Function]}
+        isLoad={false}
+        isLoading={false}
+        isNoResultsOption={false}
+        isPlaceholder={false}
+        isSelected={false}
+        key="m5.4xlarge"
+        keyHandler={[Function]}
+        onClick={[Function]}
+        product="OSD"
+        sendRef={[Function]}
+        setViewMoreNextIndex={[Function]}
+        value="m5.4xlarge"
+      >
+        16 vCPU 64 GiB RAM
+      </SelectOption>
+    </SelectGroup>
+  </Select>
+</FormGroup>
+`;
+
+exports[`<MachineTypeSelection /> when the machine types list is available with rhinfra quota covering previous selection renders correctly 1`] = `
+<FormGroup
+  fieldId="node_type"
+  helperTextInvalid={false}
+  isHelperTextBeforeField={true}
+  isRequired={true}
+  label="Compute node instance type"
+  labelIcon={
+    <PopoverHint
+      hint="The instance type for the compute nodes. Instance type
+    determines the amount of memory and vCPU allocated to each compute node."
+    />
+  }
+  validated="default"
+>
+  <Select
+    aria-describedby=""
+    aria-invalid={false}
+    aria-label=""
+    aria-labelledby=""
+    chipGroupComponent={null}
+    className=""
+    clearSelectionsAriaLabel="Clear all"
+    createText="Create"
+    customBadgeText={null}
+    customContent={null}
+    direction="down"
+    favorites={Array []}
+    favoritesLabel="Favorites"
+    hasInlineFilter={false}
+    hasPlaceholderStyle={false}
+    inlineFilterPlaceholderText={null}
+    inputAutoComplete="off"
+    inputIdPrefix=""
+    isCreatable={false}
+    isCreateSelectOptionObject={false}
+    isDisabled={false}
+    isGrouped={false}
+    isInputFilterPersisted={false}
+    isInputValuePersisted={false}
+    isOpen={false}
+    isPlain={false}
+    maxHeight={600}
+    menuAppendTo="parent"
+    noResultsFoundText="No results found"
+    onClear={[Function]}
+    onCreateOption={[Function]}
+    onFilter={null}
+    onSelect={[Function]}
+    onToggle={[Function]}
+    onTypeaheadInputChanged={null}
+    ouiaSafe={true}
+    placeholderText="Select instance type"
+    position="left"
+    removeSelectionAriaLabel="Remove"
+    selections="m5.4xlarge - 16 vCPU 64 GiB RAM"
+    shouldResetOnSelect={true}
+    toggleAriaLabel="Options menu"
+    toggleIcon={null}
+    toggleId={null}
+    typeAheadAriaLabel=""
+    validated="default"
+    variant="single"
+    width=""
+  >
+    <SelectGroup
+      key="General purpose"
+      label="General purpose"
+    >
+      <SelectOption
+        billingModel="standard"
+        className=""
+        component="button"
+        description="m5.xlarge"
+        flavours={
+          Object {
+            "byID": Object {
+              "osd-4": Object {
+                "aws": Object {
+                  "compute_instance_type": "m5.xlarge",
+                },
+                "gcp": Object {
+                  "compute_instance_type": "custom-4-16384",
+                },
+              },
+            },
+            "error": false,
+            "errorMessage": "",
+            "fulfilled": true,
+            "pending": false,
+          }
+        }
+        formValue="m5.xlarge"
+        getDefaultFlavour={[MockFunction]}
+        id="machineType.m5.xlarge"
+        index={0}
+        inputId=""
+        isChecked={false}
+        isDisabled={false}
+        isFavorite={null}
+        isLastOptionBeforeFooter={[Function]}
+        isLoad={false}
+        isLoading={false}
+        isNoResultsOption={false}
+        isPlaceholder={false}
+        isSelected={false}
+        key="m5.xlarge"
+        keyHandler={[Function]}
+        onClick={[Function]}
+        product="OSD"
+        sendRef={[Function]}
+        setViewMoreNextIndex={[Function]}
+        value="m5.xlarge"
+      >
+        4 vCPU 16 GiB RAM
+      </SelectOption>
+      <SelectOption
+        billingModel="standard"
+        className=""
+        component="button"
+        description="m5.4xlarge"
+        flavours={
+          Object {
+            "byID": Object {
+              "osd-4": Object {
+                "aws": Object {
+                  "compute_instance_type": "m5.xlarge",
+                },
+                "gcp": Object {
+                  "compute_instance_type": "custom-4-16384",
+                },
+              },
+            },
+            "error": false,
+            "errorMessage": "",
+            "fulfilled": true,
+            "pending": false,
+          }
+        }
+        formValue="m5.4xlarge"
+        getDefaultFlavour={[MockFunction]}
+        id="machineType.m5.4xlarge"
+        index={0}
+        inputId=""
+        isChecked={false}
+        isDisabled={false}
+        isFavorite={null}
+        isLastOptionBeforeFooter={[Function]}
+        isLoad={false}
+        isLoading={false}
+        isNoResultsOption={false}
+        isPlaceholder={false}
+        isSelected={true}
+        key="m5.4xlarge"
+        keyHandler={[Function]}
+        onClick={[Function]}
+        product="OSD"
+        sendRef={[Function]}
+        setViewMoreNextIndex={[Function]}
+        value="m5.4xlarge"
+      >
+        16 vCPU 64 GiB RAM
+      </SelectOption>
+    </SelectGroup>
+  </Select>
+</FormGroup>
+`;
+
+exports[`<MachineTypeSelection /> when the machine types list is available with rhinfra quota not covering previous selection renders correctly 1`] = `
+<FormGroup
+  fieldId="node_type"
+  helperTextInvalid={false}
+  isHelperTextBeforeField={true}
+  isRequired={true}
+  label="Compute node instance type"
+  labelIcon={
+    <PopoverHint
+      hint="The instance type for the compute nodes. Instance type
+    determines the amount of memory and vCPU allocated to each compute node."
+    />
+  }
+  validated="default"
+>
+  <Select
+    aria-describedby=""
+    aria-invalid={false}
+    aria-label=""
+    aria-labelledby=""
+    chipGroupComponent={null}
+    className=""
+    clearSelectionsAriaLabel="Clear all"
+    createText="Create"
+    customBadgeText={null}
+    customContent={null}
+    direction="down"
+    favorites={Array []}
+    favoritesLabel="Favorites"
+    hasInlineFilter={false}
+    hasPlaceholderStyle={false}
+    inlineFilterPlaceholderText={null}
+    inputAutoComplete="off"
+    inputIdPrefix=""
+    isCreatable={false}
+    isCreateSelectOptionObject={false}
+    isDisabled={false}
+    isGrouped={false}
+    isInputFilterPersisted={false}
+    isInputValuePersisted={false}
+    isOpen={false}
+    isPlain={false}
+    maxHeight={600}
+    menuAppendTo="parent"
+    noResultsFoundText="No results found"
+    onClear={[Function]}
+    onCreateOption={[Function]}
+    onFilter={null}
+    onSelect={[Function]}
+    onToggle={[Function]}
+    onTypeaheadInputChanged={null}
+    ouiaSafe={true}
+    placeholderText="Select instance type"
+    position="left"
+    removeSelectionAriaLabel="Remove"
+    selections=""
+    shouldResetOnSelect={true}
+    toggleAriaLabel="Options menu"
+    toggleIcon={null}
+    toggleId={null}
+    typeAheadAriaLabel=""
+    validated="default"
+    variant="single"
+    width=""
+  >
+    <SelectGroup
+      key="General purpose"
+      label="General purpose"
+    >
+      <SelectOption
+        billingModel="standard"
+        className=""
+        component="button"
+        description="m5.xlarge"
+        flavours={
+          Object {
+            "byID": Object {
+              "osd-4": Object {
+                "aws": Object {
+                  "compute_instance_type": "m5.xlarge",
+                },
+                "gcp": Object {
+                  "compute_instance_type": "custom-4-16384",
+                },
+              },
+            },
+            "error": false,
+            "errorMessage": "",
+            "fulfilled": true,
+            "pending": false,
+          }
+        }
+        formValue="m5.xlarge"
+        getDefaultFlavour={[MockFunction]}
+        id="machineType.m5.xlarge"
+        index={0}
+        inputId=""
+        isChecked={false}
+        isDisabled={false}
+        isFavorite={null}
+        isLastOptionBeforeFooter={[Function]}
+        isLoad={false}
+        isLoading={false}
+        isNoResultsOption={false}
+        isPlaceholder={false}
+        isSelected={false}
+        key="m5.xlarge"
+        keyHandler={[Function]}
+        onClick={[Function]}
+        product="OSD"
+        sendRef={[Function]}
+        setViewMoreNextIndex={[Function]}
+        value="m5.xlarge"
+      >
+        4 vCPU 16 GiB RAM
+      </SelectOption>
+      <SelectOption
+        billingModel="standard"
+        className=""
+        component="button"
+        description="m5.4xlarge"
+        flavours={
+          Object {
+            "byID": Object {
+              "osd-4": Object {
+                "aws": Object {
+                  "compute_instance_type": "m5.xlarge",
+                },
+                "gcp": Object {
+                  "compute_instance_type": "custom-4-16384",
+                },
+              },
+            },
+            "error": false,
+            "errorMessage": "",
+            "fulfilled": true,
+            "pending": false,
+          }
+        }
+        formValue="m5.4xlarge"
+        getDefaultFlavour={[MockFunction]}
+        id="machineType.m5.4xlarge"
+        index={0}
+        inputId=""
+        isChecked={false}
+        isDisabled={false}
+        isFavorite={null}
+        isLastOptionBeforeFooter={[Function]}
+        isLoad={false}
+        isLoading={false}
+        isNoResultsOption={false}
+        isPlaceholder={false}
+        isSelected={false}
+        key="m5.4xlarge"
+        keyHandler={[Function]}
+        onClick={[Function]}
+        product="OSD"
+        sendRef={[Function]}
+        setViewMoreNextIndex={[Function]}
+        value="m5.4xlarge"
+      >
+        16 vCPU 64 GiB RAM
       </SelectOption>
     </SelectGroup>
   </Select>
@@ -238,7 +788,7 @@ exports[`<MachineTypeSelection /> when the request is pending renders correctly 
 </Fragment>
 `;
 
-exports[`<MachineTypeSelection /> when there was an error renders correctly 1`] = `
+exports[`<MachineTypeSelection /> with an error loading machineTypes renders correctly 1`] = `
 <ErrorBox
   message="Error loading node types"
   response={
