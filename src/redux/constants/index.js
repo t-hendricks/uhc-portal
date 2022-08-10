@@ -1,5 +1,6 @@
 import * as clustersConstants from './clustersConstants';
 import * as viewConstants from './viewConstants';
+import * as viewOptionsConstants from './viewOptionsConstants';
 import * as viewPaginationConstants from './viewPaginationConstants';
 import * as userConstants from './userConstants';
 import * as clusterLogConstants from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
@@ -17,6 +18,7 @@ import * as featureConstants from './featureConstants';
 export {
   clustersConstants,
   viewConstants,
+  viewOptionsConstants,
   viewPaginationConstants,
   userConstants,
   clusterLogConstants,
