@@ -15,10 +15,10 @@ exports[`<InstallToVPC> renders correctly when checkbox is selected 1`] = `
       <PopoverHint
         hint={
           <React.Fragment>
-            Your VPC must have control plane and compute subnets. The control plane subnet is where you deploy your control plane machines to. The compute subnet is where you deploy your compute machines to. 
-             
+            Your VPC must have control plane and compute subnets. The control plane subnet is where you deploy your control plane machines to. The compute subnet is where you deploy your compute machines to.
+
             <ExternalLink
-              href="https://docs.openshift.com/container-platform/4.11/installing/installing_gcp/installing-gcp-vpc.html"
+              href="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-vpc.html"
             >
               Learn more about installing into an existing VPC
             </ExternalLink>
@@ -45,9 +45,9 @@ exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
         hint={
           <React.Fragment>
             Your VPC must have public and private subnets. Public subnets are associated with appropriate Ingress rules. Private subnets need appropriate routes and tables.
-             
+
             <ExternalLink
-              href="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-vpc.html"
+              href="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-vpc.html"
             >
               Learn more about installing into an existing VPC
             </ExternalLink>
@@ -57,9 +57,9 @@ exports[`<InstallToVPC> renders correctly when selected for multi AZ 1`] = `
       />
     </Title>
     To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availability zone that you want the cluster installed into.
-     
+
     <ExternalLink
-      href="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc"
+      href="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc"
     >
       Learn all about VPC
     </ExternalLink>
@@ -93,9 +93,9 @@ exports[`<InstallToVPC> renders correctly when selected for single AZ 1`] = `
         hint={
           <React.Fragment>
             Your VPC must have public and private subnets. Public subnets are associated with appropriate Ingress rules. Private subnets need appropriate routes and tables.
-             
+
             <ExternalLink
-              href="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-vpc.html"
+              href="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-vpc.html"
             >
               Learn more about installing into an existing VPC
             </ExternalLink>
@@ -105,9 +105,9 @@ exports[`<InstallToVPC> renders correctly when selected for single AZ 1`] = `
       />
     </Title>
     To install into an existing VPC you need to ensure that your VPC is configured with a public and a private subnet for each availability zone that you want the cluster installed into.
-     
+
     <ExternalLink
-      href="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc"
+      href="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-vpc.html#installation-custom-aws-vpc-requirements_installing-aws-vpc"
     >
       Learn all about VPC
     </ExternalLink>

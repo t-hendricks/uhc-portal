@@ -27,12 +27,7 @@ export const downloadsCategories = [
     key: 'INSTALLATION',
     title: 'OpenShift installation',
     tools: [
-      tools.X86INSTALLER,
-      tools.IBMZINSTALLER,
-      tools.PPCINSTALLER,
-      tools.ARMINSTALLER,
-      tools.MULTIINSTALLER,
-      tools.CRC,
+      tools.X86INSTALLER, tools.IBMZINSTALLER, tools.PPCINSTALLER, tools.ARMINSTALLER, tools.CRC,
     ],
   },
   {
@@ -41,9 +36,9 @@ export const downloadsCategories = [
     tools: [tools.MIRROR_REGISTRY, tools.OC_MIRROR_PLUGIN],
   },
   {
-    key: 'CUSTOM_INSTALLATION',
-    title: 'OpenShift installation customization tools',
-    tools: [tools.BUTANE, tools.COREOS_INSTALLER, tools.CCOCTL],
+    key: 'RHCOS',
+    title: 'RHCOS management tools',
+    tools: [tools.BUTANE, tools.COREOS_INSTALLER],
   },
   {
     key: 'TOKENS',

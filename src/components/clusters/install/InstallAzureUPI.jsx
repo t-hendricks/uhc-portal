@@ -35,14 +35,14 @@ export class InstallAzureUPI extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.azure.x86.upi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.azure.upi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProviderID="azure"
             isUPI
-            {...instructionsMapping.azure.x86.upi}
+            {...instructionsMapping.azure.upi}
           />
         </PageSection>
       </>

@@ -31,8 +31,8 @@ exports[`InstallAWSIPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="aws"
-      customizations="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-customizations.html"
-      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-account.html"
+      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-customizations.html"
+      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-account.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
       isUPI={false}

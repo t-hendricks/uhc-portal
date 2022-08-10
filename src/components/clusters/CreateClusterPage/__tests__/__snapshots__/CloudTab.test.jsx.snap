@@ -124,7 +124,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             variant="link"
           >
             View your available quota
-             
+
             <ArrowRightIcon
               color="currentColor"
               noVerticalAlign={false}
@@ -258,7 +258,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Azure Red Hat OpenShift
-                           
+
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -325,7 +325,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift on IBM Cloud
-                           
+
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -389,7 +389,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift Service on AWS
-                           
+
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -487,31 +487,17 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                     AWS (ARM)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
                   <Link
                     to="/install/azure"
                   >
-                    Azure (x86_64)
+                    Azure
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
-              ],
-              Array [
-                <React.Fragment>
-                  <Link
-                    className="pf-u-mr-xs"
-                    to="/install/azure/multi/installer-provisioned"
-                  >
-                    Azure (heterogeneous)
-                  </Link>
-                  <TechnologyPreview
-                    position={1}
-                  />
-                </React.Fragment>,
-                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -685,7 +671,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             variant="link"
           >
             View your available quota
-             
+
             <ArrowRightIcon
               color="currentColor"
               noVerticalAlign={false}
@@ -819,7 +805,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Azure Red Hat OpenShift
-                           
+
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -886,7 +872,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift on IBM Cloud
-                           
+
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -950,7 +936,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift Service on AWS
-                           
+
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -1048,31 +1034,17 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                     AWS (ARM)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
                   <Link
                     to="/install/azure"
                   >
-                    Azure (x86_64)
+                    Azure
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
-              ],
-              Array [
-                <React.Fragment>
-                  <Link
-                    className="pf-u-mr-xs"
-                    to="/install/azure/multi/installer-provisioned"
-                  >
-                    Azure (heterogeneous)
-                  </Link>
-                  <TechnologyPreview
-                    position={1}
-                  />
-                </React.Fragment>,
-                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -1248,7 +1220,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift Dedicated
-                           
+
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -1315,7 +1287,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Azure Red Hat OpenShift
-                           
+
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -1382,7 +1354,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift on IBM Cloud
-                           
+
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -1446,7 +1418,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift Service on AWS
-                           
+
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -1544,31 +1516,17 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                     AWS (ARM)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation and pre-existing infrastructure",
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
                   <Link
                     to="/install/azure"
                   >
-                    Azure (x86_64)
+                    Azure
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
-              ],
-              Array [
-                <React.Fragment>
-                  <Link
-                    className="pf-u-mr-xs"
-                    to="/install/azure/multi/installer-provisioned"
-                  >
-                    Azure (heterogeneous)
-                  </Link>
-                  <TechnologyPreview
-                    position={1}
-                  />
-                </React.Fragment>,
-                "Full stack automation",
               ],
               Array [
                 <React.Fragment>

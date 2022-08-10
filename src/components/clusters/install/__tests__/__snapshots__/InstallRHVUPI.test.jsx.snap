@@ -31,7 +31,7 @@ exports[`InstallRHVUPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="ovirt"
-      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_rhv/installing-rhv-user-infra.html"
+      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_rhv/installing-rhv-user-infra.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
       isUPI={true}

@@ -12,7 +12,7 @@ exports[`<Users /> should render without users 1`] = `
     </Title>
     <p>
       Grant permission to manage this cluster to users defined in your identity provider.
-       
+
       <ExternalLink
         href="https://docs.openshift.com/dedicated/osd_cluster_admin/osd-admin-roles.html"
       >
@@ -60,7 +60,7 @@ exports[`<Users /> with users should render 1`] = `
     </Title>
     <p>
       Grant permission to manage this cluster to users defined in your identity provider.
-       
+
       <ExternalLink
         href="https://docs.openshift.com/dedicated/osd_cluster_admin/osd-admin-roles.html"
       >
@@ -118,11 +118,11 @@ exports[`<Users /> with users should render 1`] = `
                 bodyContent={
                   <p>
                     Groups are mapped to role bindings on the cluster.
-                     
+
                     For more information check the
-                     
+
                     <a
-                      href="https://docs.openshift.com/container-platform/4.11/authentication/understanding-authentication.html"
+                      href="https://docs.openshift.com/container-platform/4.10/authentication/understanding-authentication.html"
                     >
                       OpenShift 4 documentation
                     </a>

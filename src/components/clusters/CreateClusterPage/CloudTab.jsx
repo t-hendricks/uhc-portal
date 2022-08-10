@@ -415,18 +415,11 @@ const runItYourself = () => {
     ],
     [
       <><Link to="/install/aws/arm">AWS (ARM)</Link></>,
-      'Full stack automation and pre-existing infrastructure',
-    ],
-    [
-      <><Link to="/install/azure">Azure (x86_64)</Link></>,
-      'Full stack automation and pre-existing infrastructure',
-    ],
-    [
-      <>
-        <Link to="/install/azure/multi/installer-provisioned" className="pf-u-mr-xs">Azure (heterogeneous)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
-      </>,
       'Full stack automation',
+    ],
+    [
+      <><Link to="/install/azure">Azure</Link></>,
+      'Full stack automation and pre-existing infrastructure',
     ],
     [
       <><Link to="/install/gcp">Google Cloud</Link></>,

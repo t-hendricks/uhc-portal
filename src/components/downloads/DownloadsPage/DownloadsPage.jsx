@@ -19,7 +19,6 @@ import {
 } from '@patternfly/react-table';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
-import { OCM } from 'openshift-assisted-ui-lib';
 
 import produce from 'immer';
 import { has, get } from 'lodash';
@@ -45,8 +44,6 @@ import DownloadPullSecret from '../DownloadPullSecret';
 import CopyPullSecret from '../CopyPullSecret';
 
 import './DownloadsPage.scss';
-
-const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
 const ColumnHeadings = () => (
   <Thead>
@@ -681,38 +678,6 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
 
       <ToolAndDescriptionRows
         {...commonProps}
-        tool={tools.MULTIINSTALLER}
-        channel={channels.STABLE}
-        name={(
-          <>
-            OpenShift Installer for heterogeneous clusters
-            {' '}
-            <TechnologyPreview position={PreviewBadgePosition.inline} />
-          </>
-        )}
-        description={(
-          <TextContent>
-            <Text>
-              Download and extract your operating system&apos;s installation program and
-              place the file in the directory where you&apos;ll store your configuration details.
-              Then, create clusters on supported infrastructure using our
-              {' '}
-              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
-              {' '}
-              as a guide.
-            </Text>
-            <Text>
-              Learn how to deploy in
-              {' '}
-              <Link to="/install/azure/multi/installer-provisioned">Azure</Link>
-              .
-            </Text>
-          </TextContent>
-        )}
-      />
-
-      <ToolAndDescriptionRows
-        {...commonProps}
         tool={tools.CRC}
         channel={channels.STABLE}
         name={(
@@ -800,14 +765,7 @@ const disconnectedInstallationRows = (
   );
 };
 
-const customInstallationRows = (
-  expanded,
-  setExpanded,
-  selections,
-  setSelections,
-  toolRefs,
-  urls,
-) => {
+const rhcosRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
   const commonProps = {
     expanded, setExpanded, selections, setSelections, toolRefs, urls,
   };
@@ -841,30 +799,6 @@ const customInstallationRows = (
               Download and install RHCOS disk images with the coreos-installer CLI tool.
               {' '}
               <ExternalLink href={links.COREOS_INSTALLER_DOCS}>Learn more</ExternalLink>
-            </Text>
-          </TextContent>
-        )}
-      />
-
-      <ToolAndDescriptionRows
-        {...commonProps}
-        tool={tools.CCOCTL}
-        channel={channels.STABLE}
-        name={(
-          <>
-            Cloud Credential Operator CLI utility (
-            <code>ccoctl</code>
-            )
-          </>
-        )}
-        description={(
-          <TextContent>
-            <Text>
-              The ccoctl tool provides various commands to assist with the creating and
-              maintenance of cloud credentials from outside the cluster (necessary when
-              Cloud Credential Operator is put in Manual mode).
-              {' '}
-              <ExternalLink href={links.CCO_MANUAL_MODE}>Learn more</ExternalLink>
             </Text>
           </TextContent>
         )}
@@ -1197,17 +1131,16 @@ class DownloadsPage extends React.Component {
 
             <DownloadsSection
               selectedCategory={selectedCategory}
-              category="CUSTOM_INSTALLATION"
+              category="RHCOS"
               description={(
                 <Text>
-                  Customize OpenShift and Red Hat Enterprise Linux CoreOS (RHCOS) installation
-                  with these tools.
+                  Customize Red Hat Enterprise Linux CoreOS (RHCOS) nodes with these tools.
                 </Text>
               )}
             >
-              <TableComposable aria-label="OpenShift installation customization downloads table">
+              <TableComposable aria-label="RHCOS downloads table">
                 <ColumnHeadings />
-                {customInstallationRows(expanded, this.setExpanded, selections, this.setSelections,
+                {rhcosRows(expanded, this.setExpanded, selections, this.setSelections,
                   this.toolRefs, urls)}
               </TableComposable>
             </DownloadsSection>

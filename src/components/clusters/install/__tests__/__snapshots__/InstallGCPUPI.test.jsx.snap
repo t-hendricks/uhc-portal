@@ -31,7 +31,7 @@ exports[`InstallGCPUPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="gcp"
-      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_gcp/installing-gcp-user-infra.html"
+      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-user-infra.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
       isUPI={true}
@@ -44,7 +44,7 @@ exports[`InstallGCPUPI renders correctly 1`] = `
               "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-gcp.x86_64.tar.gz",
             },
           ],
-          "learnMoreURL": "https://docs.openshift.com/container-platform/4.11/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra",
+          "learnMoreURL": "https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-user-infra.html#installation-gcp-user-infra-rhcos_installing-gcp-user-infra",
         }
       }
       title="Install OpenShift on GCP with user-provisioned infrastructure"

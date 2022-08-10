@@ -12,7 +12,6 @@ const testtools = [
   tools.IBMZINSTALLER,
   tools.PPCINSTALLER,
   tools.ARMINSTALLER,
-  tools.MULTIINSTALLER,
   tools.OCM,
   tools.ROSA,
 ];
