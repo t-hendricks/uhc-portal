@@ -30,22 +30,23 @@ exports[`InstallVSphereUPI renders correctly 1`] = `
   <PageSection>
     <OCPInstructions
       channel="stable"
-      cloudProviderID="vmware"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere-installer-provisioned-customizations.html"
-      displayRHCOSSection={true}
-      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere.html"
+      cloudProviderID="vsphere"
+      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_vsphere/installing-vsphere.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
-      rhcosDownloads={
-        Array [
-          Object {
-            "buttonText": "Download RHCOS OVA",
-            "name": "OCP-Download-RHCOS-OVA",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-vmware.x86_64.ova",
-          },
-        ]
+      isUPI={true}
+      rhcos={
+        Object {
+          "downloads": Array [
+            Object {
+              "buttonText": "Download RHCOS OVA",
+              "name": "OCP-Download-RHCOS-OVA",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-vmware.x86_64.ova",
+            },
+          ],
+          "learnMoreURL": "https://docs.openshift.com/container-platform/4.11/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere",
+        }
       }
-      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.10/installing/installing_vsphere/installing-vsphere.html#installation-vsphere-machines_installing-vsphere"
       title="Install OpenShift on vSphere with user-provisioned infrastructure"
       token={Object {}}
     />

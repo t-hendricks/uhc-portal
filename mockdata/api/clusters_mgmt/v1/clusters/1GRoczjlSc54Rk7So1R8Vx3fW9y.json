@@ -5,7 +5,6 @@
   "name": "fake-selfmanaged-cluster",
   "infra_id": "fake-selfmanaged-cluster-a1c4",
   "external_id": "8b00e902-f675-4903-9118-91a8f9f5110a",
-  "display_name": "fake-selfmanaged-cluster",
   "creation_timestamp": "2019-01-29T16:04:15.281411Z",
   "activity_timestamp": "2020-01-01T00:00:00.000000Z",
   "status": {},

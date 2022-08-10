@@ -40,7 +40,7 @@ export class InstallGCPUPI extends Component {
           <OCPInstructions
             token={token}
             cloudProviderID="gcp"
-            customizations={instructionsMapping.gcp.customizations}
+            isUPI
             {...instructionsMapping.gcp.upi}
           />
         </PageSection>

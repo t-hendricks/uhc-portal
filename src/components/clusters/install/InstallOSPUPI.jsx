@@ -41,7 +41,7 @@ export class InstallOSPUPI extends Component {
             token={token}
             breadcrumbs={breadcrumbs}
             cloudProviderID="openstack"
-            customizations={instructionsMapping.openstack.customizations}
+            isUPI
             {...instructionsMapping.openstack.upi}
           />
         </PageSection>

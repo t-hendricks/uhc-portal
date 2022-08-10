@@ -60,9 +60,13 @@
   },
   "settings": {
     "import/resolver": {
-      "alias": [
-        ["@testUtils", "./src/testUtils.jsx"]
-      ]
+      "alias": {
+        "extensions": [".js", ".jsx"],
+        "map": [
+          ["~", "./src"],
+          ["@testUtils", "./src/testUtils.jsx"]
+        ]
+      }
     }
   }
 }

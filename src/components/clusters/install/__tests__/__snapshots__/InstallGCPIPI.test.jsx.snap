@@ -31,10 +31,11 @@ exports[`InstallGCPIPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="gcp"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-customizations.html"
-      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_gcp/installing-gcp-account.html"
+      customizations="https://docs.openshift.com/container-platform/4.11/installing/installing_gcp/installing-gcp-customizations.html"
+      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_gcp/installing-gcp-account.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
+      isUPI={false}
       title="Install OpenShift on GCP with installer-provisioned infrastructure"
       token={Object {}}
     />

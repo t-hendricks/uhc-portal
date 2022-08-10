@@ -210,6 +210,10 @@ module.exports = async (_env, argv) => {
         path: require.resolve('path-browserify'),
         url: require.resolve('url/'),
       },
+      alias: {
+        '~': path.resolve(__dirname, 'src/'),
+        '@testUtils': path.resolve(__dirname, 'src/testUtils.jsx'),
+      },
     },
 
     devServer: {

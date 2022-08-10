@@ -28,9 +28,11 @@ exports[`InstallIBMCloud renders correctly 1`] = `
       channel="stable"
       cloudProvider="IBM Cloud"
       cloudProviderID="ibmCloud"
-      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html"
+      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
+      isUPI={false}
+      publicCloud={true}
       title="Install OpenShift on IBM Cloud with installer-provisioned infrastructure"
       token={Object {}}
     />

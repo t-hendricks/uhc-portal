@@ -5,7 +5,6 @@
   "name": "aws-auto-update",
   "external_id": "aws-auto-update-f8ead1de-1286-4d32-b510-c3e594754df7",
   "infra_id": "cben-upgrades3-485vq",
-  "display_name": "aws-auto-update",
   "creation_timestamp": "2021-11-11T11:22:13.198506Z",
   "activity_timestamp": "2021-11-11T12:31:16Z",
   "expiration_timestamp": "2021-11-12T23:22:13.100597Z",

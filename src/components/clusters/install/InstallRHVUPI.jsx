@@ -35,13 +35,13 @@ export class InstallRHVUPI extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.rhv.upi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.ovirt.upi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProviderID="rhv"
-            customizations={instructionsMapping.rhv.customizations}
-            {...instructionsMapping.rhv.upi}
+            cloudProviderID="ovirt"
+            isUPI
+            {...instructionsMapping.ovirt.upi}
           />
         </PageSection>
       </>

@@ -16,6 +16,7 @@ exports[`InstallArmAWSIPI renders correctly 1`] = `
             },
             Object {
               "label": "Amazon Web Services (ARM)",
+              "path": "/install/aws/arm",
             },
             Object {
               "label": "Installer-provisioned infrastructure",
@@ -29,11 +30,12 @@ exports[`InstallArmAWSIPI renders correctly 1`] = `
   <PageSection>
     <OCPInstructions
       channel="stable"
-      cloudProviderID="armaws"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-customizations.html"
-      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_aws/installing-aws-account.html"
+      cloudProviderID="aws"
+      customizations="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-customizations.html"
+      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-account.html"
       installer="aarch64-openshift-install"
       isBMIPI={false}
+      isUPI={false}
       preReleasePageLink="/install/arm/pre-release"
       title="Install OpenShift on AWS with installer-provisioned ARM infrastructure"
       token={Object {}}

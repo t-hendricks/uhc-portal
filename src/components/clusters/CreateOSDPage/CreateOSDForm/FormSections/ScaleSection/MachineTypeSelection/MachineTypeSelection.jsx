@@ -17,6 +17,7 @@ import { humanizeValueWithUnit } from '../../../../../../../common/units';
 import { noMachineTypes } from '../../../../../../../common/helpers';
 import { availableClustersFromQuota, availableNodesFromQuota } from '../../../../../common/quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../../../../common/subscriptionTypes';
+import { DEFAULT_FLAVOUR_ID } from '../../../../../../../redux/actions/flavourActions';
 import { constants } from '../../../CreateOSDFormConstants';
 import sortMachineTypes, { machineCategories } from './sortMachineTypes';
 
@@ -58,51 +59,82 @@ class MachineTypeSelection extends React.Component {
     isOpen: false,
   };
 
+  // Default selection scenarios:
+  // - First time, default is available => select it.
+  // - First time, default is not listed (due to quota or ccs_only) => leave placeholder ''.
+  // - Error fetching flavours (very unlikely) => no need to show error to user, leave placeholder.
+  // - User selected a type manually, then changed CSS or multiAz, choice still listed.
+  //   => keep it.
+  // - User selected a type manually, then changed CSS or multiAz, choice no longer listed.
+  //   => restore placeholder '' to force choice (even if have quota for default).
+  //   - componentDidUpdate running in this situation (e.g. onToggle) should not select default.
+  // - Something was selected (either automatically or manually), then changed cloud provider.
+  //   CloudProviderSelectionField does `change('machine_type', '')` => same as first time.
+
   componentDidMount() {
     const {
-      machineTypes, organization, input,
+      flavours, getDefaultFlavour, machine_type: { input },
     } = this.props;
 
-    if (!input.value && machineTypes.fulfilled && organization.fulfilled) {
+    if (!flavours.fulfilled && !flavours.pending) {
+      getDefaultFlavour();
+    }
+
+    if (!input.value && this.dataReady()) {
       this.setDefaultValue();
+    }
+
+    // If user had made a choice, then some external param changed like CCS/MultiAz,
+    // (we can get here on mount after switching wizard steps)
+    // and selected type is no longer availble, force user to choose again.
+    if (input.value && this.dataReady() && !this.isTypeAvailable(input.value)) {
+      this.setInvalidValue();
     }
   }
 
   componentDidUpdate() {
-    const { machineTypes, input } = this.props;
-    if (machineTypes.error || machineTypes.pending) {
-      // Don't let the user submit if we couldn't get machine types.
+    const { machine_type: { input } } = this.props;
+    if (!input.value && this.dataReady()) {
+      this.setDefaultValue();
+    }
+
+    // If user had made a choice, then some external param changed,
+    // and selected type is no longer availble, force user to choose again.
+    if (input.value && this.dataReady() && !this.isTypeAvailable(input.value)) {
       this.setInvalidValue();
-    }
-
-    if (!input.value && machineTypes.fulfilled) {
-      // we got the machine types, and the user hasn't selected one yet - set to default.
-      this.setDefaultValue();
-    }
-
-    // if some external param changed, like MultiAz, and we no longer have quota
-    // for the selected instance type, we need to revert to default.
-    if (input.value && !this.hasQuotaForType(input.value)) {
-      this.setDefaultValue();
     }
   }
 
   setDefaultValue() {
-    // Find the first sortedMachineTypes we have quota for, and set it as default
-    const { machineTypes, cloudProviderID, input } = this.props;
-    const sortedMachineTypes = sortMachineTypes(machineTypes, cloudProviderID);
-    if (sortedMachineTypes.length > 0) {
-      const defaultType = sortedMachineTypes.find(type => this.hasQuotaForType(type.id));
-      if (defaultType) {
-        input.onChange(defaultType.id);
-      }
+    // Select the type suggested by backend, if possible.
+    const {
+      cloudProviderID,
+      flavours,
+      machine_type: { input },
+      machine_type_force_choice: { input: forceChoiceInput },
+    } = this.props;
+
+    if (forceChoiceInput.value) {
+      return; // Keep untouched, wait for user to choose.
     }
+
+    const defaultType = flavours.byID[DEFAULT_FLAVOUR_ID]?.[cloudProviderID]?.compute_instance_type;
+    if (this.isTypeAvailable(defaultType)) {
+      input.onChange(defaultType);
+    }
+    // If it's not available, don't select anything, wait for user to choose.
   }
 
   setInvalidValue() {
     // Tell redux form the current value of this field is empty.
-    // This will cause it to not pass validation if it is required.
-    const { input } = this.props;
+    // This will cause it to not pass 'required' validation.
+    const {
+      machine_type: { input },
+      machine_type_force_choice: { input: forceChoiceInput },
+    } = this.props;
+    // Order might matter here!
+    // If we cleared to '' before force_choice, componentDidUpdate could select new value(?)
+    forceChoiceInput.onChange(true);
     input.onChange('');
   }
 
@@ -112,15 +144,29 @@ class MachineTypeSelection extends React.Component {
     });
   };
 
-  // Returns false if necessary data not fulfilled yet.
-  hasQuotaForType(machineTypeID) {
+  /** Checks whether required data arrived. */
+  dataReady() {
+    const { flavours, machineTypes, organization } = this.props;
+    return (
+      // Wait for quota_cost.  Presently, it's fetched together with organization.
+      organization.fulfilled
+      && machineTypes.fulfilled
+      // Tolerate flavours error gracefully.
+      && (flavours.fulfilled || flavours.error)
+    );
+  }
+
+  /**
+   * Checks whether type can be offered, based on quota and ccs_only.
+   * Returns false if necessary data not fulfilled yet.
+   */
+  isTypeAvailable(machineTypeID) {
     const {
-      machineTypes, organization, quota,
+      machineTypes, quota,
       cloudProviderID, isBYOC, isMultiAz, isMachinePool, product, billingModel,
     } = this.props;
 
-    // Wait for quota_cost.  Presently, it's fetched together with organization.
-    if (!organization.fulfilled) {
+    if (!this.dataReady()) {
       return false;
     }
 
@@ -129,6 +175,10 @@ class MachineTypeSelection extends React.Component {
       return false;
     }
     const resourceName = machineType.generic_name;
+
+    if (!isBYOC && machineType.ccs_only) {
+      return false;
+    }
 
     const quotaParams = {
       product, cloudProviderID, isBYOC, isMultiAz, resourceName, billingModel,
@@ -163,8 +213,11 @@ class MachineTypeSelection extends React.Component {
       isMultiAz,
       quota,
       organization,
-      input,
-      meta: { error, touched },
+      machine_type: {
+        input,
+        meta: { error, touched },
+      },
+      machine_type_force_choice: { input: forceChoiceInput },
       cloudProviderID,
       isMachinePool,
       inModal = false,
@@ -173,11 +226,12 @@ class MachineTypeSelection extends React.Component {
 
     const changeHandler = (_, value) => {
       input.onChange(value);
+      forceChoiceInput.onChange(false);
       this.onToggle(false);
     };
 
     const machineTypeSelectItem = (machineType) => {
-      const hasQuota = this.hasQuotaForType(machineType.id);
+      const hasQuota = this.isTypeAvailable(machineType.id);
       return (
         <SelectOption
           {...extraProps}
@@ -233,16 +287,12 @@ class MachineTypeSelection extends React.Component {
     };
 
     const sortedMachineTypes = sortMachineTypes(machineTypes, cloudProviderID);
-    const quotaMachineTypes = sortedMachineTypes.filter(type => (
-      this.hasQuotaForType(type.id)
+    const filteredMachineTypes = sortedMachineTypes.filter(type => (
+      this.isTypeAvailable(type.id)
     ));
 
-    let displayedMachineTypes = quotaMachineTypes;
-    if (machineTypes.fulfilled && organization.fulfilled) {
-      if (!isBYOC) {
-        displayedMachineTypes = quotaMachineTypes.filter(type => (!type.ccs_only));
-      }
-      if (displayedMachineTypes.length === 0) {
+    if (this.dataReady()) {
+      if (filteredMachineTypes.length === 0) {
         return (
           <div>
             {noMachineTypes}
@@ -250,11 +300,11 @@ class MachineTypeSelection extends React.Component {
         );
       }
       const { isOpen } = this.state;
-      const options = groupedSelectItems(displayedMachineTypes);
+      const options = groupedSelectItems(filteredMachineTypes);
       // In the dropdown we put the machine type id in separate description row,
       // but the Select toggle doesn't support that, so combine both into one label.
       const selection = machineTypeFullLabel(
-        displayedMachineTypes.find(machineType => machineType.id === input.value) || null,
+        filteredMachineTypes.find(machineType => machineType.id === input.value) || null,
       );
       return (
         <FormGroup
@@ -293,11 +343,22 @@ class MachineTypeSelection extends React.Component {
   }
 }
 
-MachineTypeSelection.propTypes = {
+const inputMetaPropTypes = PropTypes.shape({
   input: PropTypes.shape({
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string,
   }).isRequired,
+  meta: PropTypes.shape({
+    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    touched: PropTypes.bool,
+  }).isRequired,
+});
+
+MachineTypeSelection.propTypes = {
+  machine_type: inputMetaPropTypes.isRequired,
+  machine_type_force_choice: inputMetaPropTypes.isRequired,
+  getDefaultFlavour: PropTypes.func.isRequired,
+  flavours: PropTypes.object.isRequired,
   getMachineTypes: PropTypes.func.isRequired,
   machineTypes: PropTypes.object.isRequired,
   isMultiAz: PropTypes.bool.isRequired,
@@ -309,10 +370,6 @@ MachineTypeSelection.propTypes = {
   billingModel: PropTypes.oneOf(Object.values(billingModels)).isRequired,
   quota: PropTypes.object.isRequired,
   organization: PropTypes.object.isRequired,
-  meta: PropTypes.shape({
-    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    touched: PropTypes.bool,
-  }).isRequired,
   // Plus extraprops passed by redux Field
 };
 

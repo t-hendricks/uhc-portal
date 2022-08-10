@@ -31,10 +31,11 @@ exports[`InstallOSPIPI renders correctly 1`] = `
     <OCPInstructions
       channel="stable"
       cloudProviderID="openstack"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-installer-custom.html"
-      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_openstack/installing-openstack-installer-custom.html"
+      customizations="https://docs.openshift.com/container-platform/4.11/installing/installing_openstack/installing-openstack-installer-custom.html"
+      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_openstack/installing-openstack-installer-custom.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
+      isUPI={false}
       title="Install OpenShift on Red Hat OpenStack Platform with installer-provisioned infrastructure"
       token={Object {}}
     />

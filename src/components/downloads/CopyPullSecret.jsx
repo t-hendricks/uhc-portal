@@ -7,8 +7,8 @@ import {
 import { CopyIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import isEmpty from 'lodash/isEmpty';
-import { getTrackEvent } from '../../common/helpers';
-import AnalyticsWrapper from '../../common/AnalyticsWrapper';
+import { trackEvents } from '~/common/analytics';
+import withAnalytics from '~/hoc/withAnalytics';
 
 class CopyPullSecret extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class CopyPullSecret extends React.Component {
 
   render() {
     const {
-      token, text, variant, pendoID,
+      token, text, variant, pendoID, track,
     } = this.props;
     const isDisabled = (!token || !!token.error || isEmpty(token));
     const { clicked } = this.state;
@@ -41,27 +41,23 @@ class CopyPullSecret extends React.Component {
     const linkText = (variant === 'link-inplace' && clicked) ? 'Copied!' : text;
 
     const button = (
-      <AnalyticsWrapper render={analytics => (
-        <CopyToClipboard
-          text={isDisabled ? '' : tokenView}
-          onCopy={this.onCopy}
+      <CopyToClipboard
+        text={isDisabled ? '' : tokenView}
+        onCopy={this.onCopy}
+      >
+        <Button
+          variant="link"
+          type="button"
+          tabIndex={0}
+          isAriaDisabled={isDisabled}
+          icon={<CopyIcon />}
+          onClick={() => {
+            track(trackEvents.CopyPullSecret, { path: pendoID });
+          }}
         >
-          <Button
-            variant="link"
-            type="button"
-            tabIndex={0}
-            isAriaDisabled={isDisabled}
-            icon={<CopyIcon />}
-            onClick={() => {
-              const eventObj = getTrackEvent('CopyPullSecret', null, pendoID);
-              analytics.track(eventObj.event, eventObj.properties);
-            }}
-          >
-            {linkText}
-          </Button>
-        </CopyToClipboard>
-      )}
-      />
+          {linkText}
+        </Button>
+      </CopyToClipboard>
     );
 
     if (variant === 'link-inplace') {
@@ -81,6 +77,7 @@ class CopyPullSecret extends React.Component {
 }
 CopyPullSecret.propTypes = {
   pendoID: PropTypes.string,
+  track: PropTypes.object.isRequired,
   token: PropTypes.object.isRequired,
   text: PropTypes.string,
   variant: PropTypes.oneOf(['link-tooltip', 'link-inplace']).isRequired,
@@ -89,4 +86,4 @@ CopyPullSecret.defaultProps = {
   text: 'Copy pull secret',
 };
 
-export default CopyPullSecret;
+export default withAnalytics(CopyPullSecret);

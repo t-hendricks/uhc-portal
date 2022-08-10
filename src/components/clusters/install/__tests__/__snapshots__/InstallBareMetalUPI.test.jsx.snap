@@ -52,38 +52,39 @@ exports[`BareMetal UPI install renders correctly 1`] = `
         />
       }
       channel="stable"
-      cloudProviderID="bareMetal"
-      customizations="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal-network-customizations.html"
-      displayRHCOSSection={true}
-      docURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html"
+      cloudProviderID="baremetal"
+      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_bare_metal/installing-bare-metal.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
-      rhcosAdditionalInstructions="Download the installer ISO image, or the kernel, initramfs, and rootfs."
-      rhcosDownloads={
-        Array [
-          Object {
-            "buttonText": "Download RHCOS ISO",
-            "name": "OCP-Download-RHCOS-ISO",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live.x86_64.iso",
-          },
-          Object {
-            "buttonText": "Download RHCOS kernel",
-            "name": "OCP-Download-RHCOS-kernel",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-kernel-x86_64",
-          },
-          Object {
-            "buttonText": "Download RHCOS initramfs",
-            "name": "OCP-Download-RHCOS-initramfs",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-initramfs.x86_64.img",
-          },
-          Object {
-            "buttonText": "Download RHCOS rootfs",
-            "name": "OCP-Download-RHCOS-rootfs",
-            "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-rootfs.x86_64.img",
-          },
-        ]
+      isUPI={true}
+      rhcos={
+        Object {
+          "additionalInstructions": "Download the installer ISO image, or the kernel, initramfs, and rootfs.",
+          "downloads": Array [
+            Object {
+              "buttonText": "Download RHCOS ISO",
+              "name": "OCP-Download-RHCOS-ISO",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live.x86_64.iso",
+            },
+            Object {
+              "buttonText": "Download RHCOS kernel",
+              "name": "OCP-Download-RHCOS-kernel",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-kernel-x86_64",
+            },
+            Object {
+              "buttonText": "Download RHCOS initramfs",
+              "name": "OCP-Download-RHCOS-initramfs",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-initramfs.x86_64.img",
+            },
+            Object {
+              "buttonText": "Download RHCOS rootfs",
+              "name": "OCP-Download-RHCOS-rootfs",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-rootfs.x86_64.img",
+            },
+          ],
+          "learnMoreURL": "https://docs.openshift.com/container-platform/4.11/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal",
+        }
       }
-      rhcosLearnMoreURL="https://docs.openshift.com/container-platform/4.10/installing/installing_bare_metal/installing-bare-metal.html#creating-machines-bare-metal"
       title="Install OpenShift on Bare Metal with user-provisioned infrastructure"
       token={Object {}}
     />

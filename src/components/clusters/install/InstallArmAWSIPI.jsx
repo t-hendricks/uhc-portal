@@ -27,7 +27,7 @@ export class InstallArmAWSIPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'Amazon Web Services (ARM)' /* , path: '/install/aws/arm' */ },
+        { label: 'Amazon Web Services (ARM)', path: '/install/aws/arm' },
         { label: 'Installer-provisioned infrastructure' },
       ]}
       />
@@ -35,13 +35,13 @@ export class InstallArmAWSIPI extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.armaws.ipi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.aws.arm.ipi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProviderID="armaws"
-            customizations={instructionsMapping.armaws.customizations}
-            {...instructionsMapping.armaws.ipi}
+            cloudProviderID="aws"
+            customizations={instructionsMapping.aws.customizations}
+            {...instructionsMapping.aws.arm.ipi}
           />
         </PageSection>
       </>

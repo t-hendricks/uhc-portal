@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Platform agnostic UPI install renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "Platform agnostic (x86_64)",
+              "path": "/install/platform-agnostic",
+            },
+            Object {
+              "label": "x86_64 User-provisioned infrastructure",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on any x86_64 platform with user-provisioned infrastructure"
+  />
+  <PageSection>
+    <OCPInstructions
+      breadcrumbs={
+        <Breadcrumbs
+          path={
+            Array [
+              Object {
+                "label": "Clusters",
+              },
+              Object {
+                "label": "Create",
+                "path": "/create",
+              },
+              Object {
+                "label": "Platform agnostic (x86_64)",
+                "path": "/install/platform-agnostic",
+              },
+              Object {
+                "label": "x86_64 User-provisioned infrastructure",
+              },
+            ]
+          }
+        />
+      }
+      channel="stable"
+      cloudProvider="Platform Agnostic"
+      cloudProviderID="generic"
+      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_platform_agnostic/installing-platform-agnostic.html"
+      installer="x86_64-openshift-install"
+      isBMIPI={false}
+      isUPI={true}
+      rhcos={
+        Object {
+          "additionalInstructions": "Download the installer ISO image, or the kernel, initramfs, and rootfs.",
+          "downloads": Array [
+            Object {
+              "buttonText": "Download RHCOS ISO",
+              "name": "OCP-Download-RHCOS-ISO",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live.x86_64.iso",
+            },
+            Object {
+              "buttonText": "Download RHCOS kernel",
+              "name": "OCP-Download-RHCOS-kernel",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-kernel-x86_64",
+            },
+            Object {
+              "buttonText": "Download RHCOS initramfs",
+              "name": "OCP-Download-RHCOS-initramfs",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-initramfs.x86_64.img",
+            },
+            Object {
+              "buttonText": "Download RHCOS rootfs",
+              "name": "OCP-Download-RHCOS-rootfs",
+              "url": "https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest/rhcos-live-rootfs.x86_64.img",
+            },
+          ],
+          "learnMoreURL": "https://docs.openshift.com/container-platform/4.11/installing/installing_platform_agnostic/installing-platform-agnostic.html#creating-machines-platform-agnostic",
+        }
+      }
+      title="Install OpenShift on any x86_64 platform with user-provisioned infrastructure"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;

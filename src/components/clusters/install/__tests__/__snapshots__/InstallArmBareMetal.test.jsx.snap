@@ -27,8 +27,7 @@ exports[`ARM Bare Metal install renders correctly 1`] = `
     <InstructionsChooser
       aiPageLink="/assisted-installer/clusters/~new?useArm=true"
       cloudName="ARM Bare Metal"
-      hideIPI={true}
-      preferAI={true}
+      ipiPageLink="/install/arm/installer-provisioned"
       showAI={true}
       upiPageLink="/install/arm/user-provisioned"
     />

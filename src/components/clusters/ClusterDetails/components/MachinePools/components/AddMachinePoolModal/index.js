@@ -24,6 +24,7 @@ const mapStateToProps = (state, ownProps) => {
     addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,
+    selectedMachineType: valueSelector(state, 'machine_type'),
     autoscalingEnabled: !!valueSelector(state, 'autoscalingEnabled'),
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),

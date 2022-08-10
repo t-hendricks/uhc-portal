@@ -71,65 +71,6 @@ export const addonsQuota = userActions.processQuota({
   },
 });
 
-// Values for `clustersQuota` prop passed down by CreateOSDPage.
-
-export const awsByocRhInfraGcpRhInfraClustersQuota = {
-  hasStandardOSDQuota: true,
-  hasProductQuota: true,
-  hasAwsQuota: true,
-  hasGcpQuota: true,
-  aws: {
-    byoc: {
-      singleAz: { available: 5 },
-      multiAz: { available: 5 },
-      totalAvailable: 10,
-    },
-    rhInfra: {
-      singleAz: { available: 5 },
-      multiAz: { available: 5 },
-      totalAvailable: 10,
-    },
-  },
-  gcp: {
-    rhInfra: {
-      singleAz: { available: 5 },
-      multiAz: { available: 5 },
-      totalAvailable: 10,
-    },
-  },
-  hasMarketplaceProductQuota: false,
-};
-
-export const awsRhInfraGcpRhInfraClustersQuota = {
-  hasStandardOSDQuota: true,
-  hasProductQuota: true,
-  hasAwsQuota: true,
-  hasGcpQuota: true,
-  aws: {
-    byoc: {
-      multiAz: { available: 0 },
-      singleAz: { available: 0 },
-      hasQuota: false,
-      totalAvailable: 0,
-    },
-    rhInfra: {
-      hasQuota: true,
-      multiAz: { available: 1 },
-      singleAz: { available: 1 },
-      totalAvailable: 1,
-    },
-  },
-  gcp: {
-    rhInfra: {
-      hasQuota: true,
-      multiAz: { available: 1 },
-      singleAz: { available: 1 },
-      totalAvailable: 1,
-    },
-  },
-  hasMarketplaceProductQuota: false,
-};
-
 export const storageQuotaList = userActions.processQuota(
   { data: { items: quotaCostFixtures.storage } },
 );
