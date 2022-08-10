@@ -14,7 +14,7 @@ import PageTitle from '../../common/PageTitle';
 export class InstallMultiAzureIPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Installer-Provisioned Infrastructure';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Azure Heterogeneous Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -26,8 +26,7 @@ export class InstallMultiAzureIPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'Microsoft Azure', path: '/install/azure' },
-        { label: 'Heterogeneous infrastructure' },
+        { label: 'Microsoft Azure heterogeneous infrastructure' },
       ]}
       />
     );
