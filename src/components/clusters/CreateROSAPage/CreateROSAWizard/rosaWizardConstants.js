@@ -1,0 +1,29 @@
+export const stepId = {
+  ACCOUNTS_AND_ROLES: 10,
+  CLUSTER_SETTINGS: 20,
+  CLUSTER_SETTINGS__DETAILS: 21,
+  CLUSTER_SETTINGS__MACHINE_POOL: 23,
+  NETWORKING: 30,
+  NETWORKING__CONFIGURATION: 31,
+  NETWORKING__VPC_SETTINGS: 32,
+  NETWORKING__CLUSTER_WIDE_PROXY: 33,
+  NETWORKING__CIDR_RANGES: 34,
+  CLUSTER_ROLES_AND_POLICIES: 40,
+  CLUSTER_UPDATES: 50,
+  REVIEW_AND_CREATE: 60,
+};
+
+export const stepNameById = {
+  [stepId.ACCOUNTS_AND_ROLES]: 'Accounts and roles',
+  [stepId.CLUSTER_SETTINGS]: 'Cluster settings',
+  [stepId.CLUSTER_SETTINGS__DETAILS]: 'Details',
+  [stepId.CLUSTER_SETTINGS__MACHINE_POOL]: 'Machine pool',
+  [stepId.NETWORKING]: 'Networking',
+  [stepId.NETWORKING__CONFIGURATION]: 'Configuration',
+  [stepId.NETWORKING__VPC_SETTINGS]: 'VPC settings',
+  [stepId.NETWORKING__CLUSTER_WIDE_PROXY]: 'Cluster-wide proxy',
+  [stepId.NETWORKING__CIDR_RANGES]: 'CIDR ranges',
+  [stepId.CLUSTER_ROLES_AND_POLICIES]: 'Cluster roles and policies',
+  [stepId.CLUSTER_UPDATES]: 'Cluster updates',
+  [stepId.REVIEW_AND_CREATE]: 'Review and create',
+};

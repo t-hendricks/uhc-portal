@@ -16,6 +16,7 @@ import PopoverHint from '../../../../../common/PopoverHint';
 import ExternalLink from '../../../../../common/ExternalLink';
 import InstructionCommand from '../../../../../common/InstructionCommand';
 import links from '../../../../../../common/installLinks.mjs';
+import { trackEvents } from '~/common/analytics';
 
 export const rosaCLICommand = {
   userRole: 'rosa create user-role',
@@ -65,7 +66,10 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
             <PopoverHint
               bodyContent="The user role is necessary to validate that your Red Hat user account has permissions to install a cluster in the AWS account."
             />
-            <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
+            <InstructionCommand
+              textAriaLabel="Copyable ROSA create user-role"
+              trackEvent={trackEvents.CopyUserRoleCreate}
+            >
               {rosaCLICommand.userRole}
             </InstructionCommand>
           </div>
@@ -79,7 +83,10 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
           </Text>
           <Grid className="ocm-instruction-block">
             <GridItem sm={7} md={6}>
-              <InstructionCommand textAriaLabel="Copyable ROSA link user-role --arn">
+              <InstructionCommand
+                textAriaLabel="Copyable ROSA link user-role --arn"
+                trackEvent={trackEvents.CopyUserRoleLink}
+              >
                 {rosaCLICommand.linkUserRole}
               </InstructionCommand>
             </GridItem>
@@ -89,7 +96,10 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
                 hint="Check if the role is linked to your
                       Red Hat user account by running the following command:"
                 footer={(
-                  <InstructionCommand textAriaLabel="Copyable ROSA rosa list user-role">
+                  <InstructionCommand
+                    textAriaLabel="Copyable ROSA rosa list user-role"
+                    trackEvent={trackEvents.CopyUserRoleList}
+                  >
                     rosa list user-role
                   </InstructionCommand>
 )}

@@ -5,20 +5,15 @@ import {
   Stack, StackItem, Text,
 } from '@patternfly/react-core';
 import { tools } from '../../../../../../common/installLinks.mjs';
-import instructionsMapping from '../../instructionsMapping';
 import RHCOSDownloadAndSelect from './RHCOSDownloadAndSelect';
 import DownloadButton from '../DownloadButton';
 
 const RHCOSSection = (props) => {
   const {
     token,
-    cloudProviderID,
     pendoID,
+    rhcos,
   } = props;
-  let instructionsObj = instructionsMapping[cloudProviderID];
-  if (instructionsObj.upi) {
-    instructionsObj = instructionsObj.upi;
-  }
   const downloadButtons = (rhcosDownloads) => {
     // rhcosDownloads is an array where each item corresponds to a row of buttons
     const buttons = rhcosDownloads.map((item) => {
@@ -65,17 +60,17 @@ const RHCOSSection = (props) => {
     <>
       <Text component="p">
         Download RHCOS to create machines for your cluster to use during installation.
-        {instructionsObj.rhcosAdditionalInstructions
-          && typeof instructionsObj.rhcosAdditionalInstructions === 'string'
+        {rhcos.additionalInstructions
+          && typeof rhcos.additionalInstructions === 'string'
           && (
             <>
               {' '}
-              {instructionsObj.rhcosAdditionalInstructions}
+              {rhcos.additionalInstructions}
             </>
           )}
         {' '}
-        {instructionsObj.rhcosLearnMoreURL && (
-          <Text component="a" href={instructionsObj.rhcosLearnMoreURL} rel="noreferrer noopener" target="_blank">
+        {rhcos.learnMoreURL && (
+          <Text component="a" href={rhcos.learnMoreURL} rel="noreferrer noopener" target="_blank">
             Learn more
             {' '}
             <ExternalLinkAltIcon size="sm" />
@@ -83,16 +78,16 @@ const RHCOSSection = (props) => {
           </Text>
         )}
       </Text>
-      { instructionsObj.rhcosAdditionalInstructions
-        && typeof instructionsObj.rhcosAdditionalInstructions !== 'string'
+      { rhcos.additionalInstructions
+        && typeof rhcos.additionalInstructions !== 'string'
         && (
           <>
             {' '}
-            {instructionsObj.rhcosAdditionalInstructions}
+            {rhcos.additionalInstructions}
           </>
         )}
       {
-        downloadButtons(instructionsObj.rhcosDownloads)
+        downloadButtons(rhcos.downloads)
       }
     </>
   );
@@ -101,7 +96,7 @@ const RHCOSSection = (props) => {
 RHCOSSection.propTypes = {
   pendoID: PropTypes.string,
   token: PropTypes.object.isRequired,
-  cloudProviderID: PropTypes.string.isRequired,
+  rhcos: PropTypes.object.isRequired,
 };
 
 export default RHCOSSection;

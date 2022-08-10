@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {
   Button,
 } from '@patternfly/react-core';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome/useChrome';
+import useAnalytics from '~/hooks/useAnalytics';
+import { getTrackEvent, trackEvents } from '~/common/analytics';
 import { tools } from '../../../../../common/installLinks.mjs';
-import { getTrackEvent } from '../../../../../common/helpers';
 
 const texts = {
   [tools.CRC]: 'Download OpenShift Local',
@@ -27,7 +27,7 @@ const DownloadButton = ({
   text = '',
   name = '',
 }) => {
-  const { analytics } = useChrome();
+  const { analytics } = useAnalytics();
   const buttonText = text || texts[tool];
   const downloadProps = download ? (
     { download: true }
@@ -42,7 +42,10 @@ const DownloadButton = ({
       variant="secondary"
       className={`download-button tool-${tool.toLowerCase()}`}
       onClick={() => {
-        const eventObj = getTrackEvent(tool, url, pendoID);
+        const eventObj = getTrackEvent(trackEvents[tool], {
+          url,
+          path: pendoID,
+        });
         analytics.track(name || eventObj.event, name ? pendoID : eventObj.properties);
       }}
       disabled={!url || disabled}

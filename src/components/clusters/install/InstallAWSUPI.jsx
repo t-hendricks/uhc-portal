@@ -35,13 +35,13 @@ export class InstallAWSUPI extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.aws.upi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.aws.x86.upi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
             cloudProviderID="aws"
-            customizations={instructionsMapping.aws.customizations}
-            {...instructionsMapping.aws.upi}
+            isUPI
+            {...instructionsMapping.aws.x86.upi}
           />
         </PageSection>
       </>

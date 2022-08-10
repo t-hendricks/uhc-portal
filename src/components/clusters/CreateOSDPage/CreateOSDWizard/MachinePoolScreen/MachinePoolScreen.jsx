@@ -43,7 +43,6 @@ function DefaultMachinePoolScreen({
           isBYOC={isByoc}
           isMultiAz={isMultiAz}
           machineType={machineType}
-          handleMachineTypesChange={(_, value) => change('machine_type', value)}
           cloudProviderID={cloudProviderID}
           product={product}
           canAutoScale={canAutoScale}

@@ -34,12 +34,16 @@ export class InstallIBM extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.ibmz.title} breadcrumbs={breadcrumbs} />
+        <PageTitle
+          title={instructionsMapping.baremetal.s390x.upi.title}
+          breadcrumbs={breadcrumbs}
+        />
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProviderID="ibmz"
-            {...instructionsMapping.ibmz}
+            cloudProviderID="baremetal"
+            isUPI
+            {...instructionsMapping.baremetal.s390x.upi}
           />
         </PageSection>
       </>
