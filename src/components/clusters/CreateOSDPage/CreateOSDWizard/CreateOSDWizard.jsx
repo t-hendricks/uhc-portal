@@ -21,6 +21,9 @@ import Breadcrumbs from '../../../common/Breadcrumbs';
 import { shouldRefetchQuota, scrollToFirstError } from '../../../../common/helpers';
 import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
+import { trackEvents, ocmResourceType } from '~/common/analytics';
+import withAnalytics from '~/hoc/withAnalytics';
+import { stepId, stepNameById } from './osdWizardConstants';
 import BillingModelScreen from './BillingModelScreen';
 import CloudProviderScreen from './CloudProviderScreen';
 import ClusterSettingsScreen from './ClusterSettingsScreen';
@@ -42,8 +45,8 @@ import './createOSDWizard.scss';
 
 class CreateOSDWizardInternal extends React.Component {
   state = {
-    stepIdReached: 10,
-    currentStepId: 10,
+    stepIdReached: stepId.BILLING_MODEL,
+    currentStepId: stepId.BILLING_MODEL,
     // Dictionary of step IDs; { [stepId: number]: boolean },
     // where entry values indicate the latest form validation state for those respective steps.
     validatedSteps: {},
@@ -98,7 +101,7 @@ class CreateOSDWizardInternal extends React.Component {
       isCCS,
     } = this.props;
     const { currentStepId, stepIdReached, validatedSteps } = this.state;
-    const hasInvalidCpStep = !validatedSteps[21];
+    const hasInvalidCpStep = !validatedSteps[stepId.CLUSTER_SETTINGS__CLOUD_PROVIDER];
 
     if (createClusterResponse.error && !isErrorModalOpen) {
       openModal('osd-create-error');
@@ -107,11 +110,11 @@ class CreateOSDWizardInternal extends React.Component {
     // set [max] step reached to cloud providers step, to force users to go
     // through the steps again after changing cloud providers or infra type is updated to CCS.
     if (
-      (stepIdReached > 10 && cloudProviderID !== prevProps.cloudProviderID)
+      (stepIdReached > stepId.BILLING_MODEL && cloudProviderID !== prevProps.cloudProviderID)
       || (isCCS && isCCS !== prevProps.isCCS)
     ) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ stepIdReached: 21 });
+      this.setState({ stepIdReached: stepId.CLUSTER_SETTINGS__CLOUD_PROVIDER });
     }
 
     // If the cloud provider step was invalid prior to updating the infra type to
@@ -121,7 +124,7 @@ class CreateOSDWizardInternal extends React.Component {
       this.setState(() => ({
         validatedSteps: {
           ...prevState.validatedSteps,
-          21: true,
+          [stepId.CLUSTER_SETTINGS__CLOUD_PROVIDER]: true,
         },
       }));
     }
@@ -146,18 +149,34 @@ class CreateOSDWizardInternal extends React.Component {
 
   onNext = ({ id }) => {
     const { stepIdReached } = this.state;
+
     if (id && stepIdReached < id) {
       this.setState({ stepIdReached: id });
     }
+
     this.setState({ currentStepId: id });
+    this.trackWizardNavigation(trackEvents.WizardNext, id);
   };
 
   onGoToStep = ({ id }) => {
     this.setState({ currentStepId: id });
+    this.trackWizardNavigation(trackEvents.WizardLinkNav, id);
   }
 
   onBack = ({ id }) => {
     this.setState({ currentStepId: id });
+    this.trackWizardNavigation(trackEvents.WizardBack, id);
+  }
+
+  trackWizardNavigation = (event, currentStepId = '') => {
+    const { track } = this.props;
+
+    track(event, {
+      resourceType: ocmResourceType.osd,
+      customProperties: {
+        step_name: stepNameById[currentStepId],
+      },
+    });
   }
 
   canJumpTo = (id) => {
@@ -200,7 +219,11 @@ class CreateOSDWizardInternal extends React.Component {
       scrollToFirstError(formErrors);
       return;
     }
-    if (isCCSCredentialsValidationNeeded && cloudProviderID && currentStepId === 21) {
+    if (
+      isCCSCredentialsValidationNeeded
+      && cloudProviderID
+      && currentStepId === stepId.CLUSTER_SETTINGS__CLOUD_PROVIDER
+    ) {
       // Only proceed to the next step if the validation is successful.
       await this.getCloudProverInfo(cloudProviderID);
     }
@@ -239,8 +262,8 @@ class CreateOSDWizardInternal extends React.Component {
 
     const steps = [
       {
-        id: 10,
-        name: 'Billing model',
+        id: stepId.BILLING_MODEL,
+        name: stepNameById[stepId.BILLING_MODEL],
         component: (
           <ErrorBoundary>
             <Grid>
@@ -248,51 +271,51 @@ class CreateOSDWizardInternal extends React.Component {
             </Grid>
           </ErrorBoundary>
         ),
-        canJumpTo: this.canJumpTo(10),
+        canJumpTo: this.canJumpTo(stepId.BILLING_MODEL),
       },
       {
-        name: 'Cluster settings',
-        canJumpTo: this.canJumpTo(20),
+        name: stepNameById[stepId.CLUSTER_SETTINGS],
+        canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS),
         steps: [
           {
-            id: 21,
-            name: 'Cloud provider',
+            id: stepId.CLUSTER_SETTINGS__CLOUD_PROVIDER,
+            name: stepNameById[stepId.CLUSTER_SETTINGS__CLOUD_PROVIDER],
             component: (
               <ErrorBoundary>
                 <CloudProviderScreen />
               </ErrorBoundary>
             ),
-            canJumpTo: this.canJumpTo(21),
+            canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS__CLOUD_PROVIDER),
           },
           {
-            id: 22,
-            name: 'Details',
+            id: stepId.CLUSTER_SETTINGS__DETAILS,
+            name: stepNameById[stepId.CLUSTER_SETTINGS__DETAILS],
             component: (
               <ErrorBoundary>
                 <ClusterSettingsScreen isTrialDefault={isTrialDefault} />
               </ErrorBoundary>
             ),
-            canJumpTo: this.canJumpTo(22),
+            canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS__DETAILS),
           },
           {
-            id: 23,
-            name: 'Machine pool',
+            id: stepId.CLUSTER_SETTINGS__MACHINE_POOL,
+            name: stepNameById[stepId.CLUSTER_SETTINGS__MACHINE_POOL],
             component: (
               <ErrorBoundary>
                 <MachinePoolScreen isTrialDefault={isTrialDefault} />
               </ErrorBoundary>
             ),
-            canJumpTo: this.canJumpTo(23),
+            canJumpTo: this.canJumpTo(stepId.CLUSTER_SETTINGS__MACHINE_POOL),
           },
         ],
       },
       {
-        name: 'Networking',
-        canJumpTo: this.canJumpTo(30),
+        name: stepNameById[stepId.NETWORKING],
+        canJumpTo: this.canJumpTo(stepId.NETWORKING),
         steps: [
           (showClusterPrivacy || showVPCCheckbox) && {
-            id: 31,
-            name: 'Configuration',
+            id: stepId.NETWORKING__CONFIGURATION,
+            name: stepNameById[stepId.NETWORKING__CONFIGURATION],
             component: (
               <ErrorBoundary>
                 <NetworkScreen
@@ -303,53 +326,53 @@ class CreateOSDWizardInternal extends React.Component {
                 />
               </ErrorBoundary>
             ),
-            canJumpTo: this.canJumpTo(31),
+            canJumpTo: this.canJumpTo(stepId.NETWORKING__CONFIGURATION),
           },
           showVPCCheckbox && installToVPCSelected && {
-            id: 32,
-            name: 'VPC settings',
+            id: stepId.NETWORKING__VPC_SETTINGS,
+            name: stepNameById[stepId.NETWORKING__VPC_SETTINGS],
             component: (
               <ErrorBoundary>
                 <VPCScreen privateLinkSelected={privateLinkSelected} />
               </ErrorBoundary>
             ),
-            canJumpTo: this.canJumpTo(32),
+            canJumpTo: this.canJumpTo(stepId.NETWORKING__VPC_SETTINGS),
           },
           showVPCCheckbox && configureProxySelected && {
-            id: 33,
-            name: 'Cluster-wide proxy',
+            id: stepId.NETWORKING__CLUSTER_WIDE_PROXY,
+            name: stepNameById[stepId.NETWORKING__CLUSTER_WIDE_PROXY],
             component: (
               <ErrorBoundary>
                 <ClusterProxyScreen />
               </ErrorBoundary>
             ),
-            canJumpTo: this.canJumpTo(33),
+            canJumpTo: this.canJumpTo(stepId.NETWORKING__CLUSTER_WIDE_PROXY),
           },
           {
-            id: 34,
-            name: 'CIDR ranges',
+            id: stepId.NETWORKING__CIDR_RANGES,
+            name: stepNameById[stepId.NETWORKING__CIDR_RANGES],
             component: (
               <ErrorBoundary>
                 <CIDRScreen />
               </ErrorBoundary>
             ),
-            canJumpTo: this.canJumpTo(34),
+            canJumpTo: this.canJumpTo(stepId.NETWORKING__CIDR_RANGES),
           },
         ].filter(Boolean),
       },
       {
-        id: 40,
-        name: 'Cluster updates',
+        id: stepId.CLUSTER_UPDATES,
+        name: stepNameById[stepId.CLUSTER_UPDATES],
         component: (
           <ErrorBoundary>
             <UpdatesScreen />
           </ErrorBoundary>
         ),
-        canJumpTo: this.canJumpTo(40),
+        canJumpTo: this.canJumpTo(stepId.CLUSTER_UPDATES),
       },
       {
-        id: 50,
-        name: 'Review and create',
+        id: stepId.REVIEW_AND_CREATE,
+        name: stepNameById[stepId.REVIEW_AND_CREATE],
         component: (
           <ErrorBoundary>
             <ReviewClusterScreen
@@ -359,7 +382,7 @@ class CreateOSDWizardInternal extends React.Component {
             {isErrorModalOpen && <CreateClusterErrorModal onRetry={onSubmit} />}
           </ErrorBoundary>
         ),
-        canJumpTo: this.canJumpTo(50),
+        canJumpTo: this.canJumpTo(stepId.REVIEW_AND_CREATE),
       },
     ];
     const ariaTitle = 'Create OpenShift Dedicated cluster wizard';
@@ -465,8 +488,19 @@ class CreateOSDWizardInternal extends React.Component {
             onClose,
           }) => (
             <>
-              {activeStep.name === 'Review and create'
-                ? <Button variant="primary" type="submit" onClick={onSubmit}>Create cluster</Button>
+              {activeStep.id === stepId.REVIEW_AND_CREATE
+                ? (
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={(event) => {
+                      onSubmit(event);
+                      this.trackWizardNavigation(trackEvents.WizardEnd);
+                    }}
+                  >
+                    Create cluster
+                  </Button>
+                )
                 : (
                   <Button
                     variant="primary"
@@ -481,7 +515,7 @@ class CreateOSDWizardInternal extends React.Component {
               <Button
                 variant="secondary"
                 onClick={onBack}
-                {...activeStep.name === 'Billing model' && { isDisabled: true }}
+                {...activeStep.id === stepId.BILLING_MODEL && { isDisabled: true }}
               >
                 Back
               </Button>
@@ -582,6 +616,7 @@ CreateOSDWizardInternal.propTypes = {
   onSubmit: PropTypes.func,
   touch: PropTypes.func,
   formErrors: PropTypes.object,
+  track: PropTypes.func,
 
   // for "no quota" redirect
   hasProductQuota: PropTypes.bool,
@@ -596,4 +631,4 @@ CreateOSDWizardInternal.propTypes = {
   product: PropTypes.string,
 };
 
-export default CreateOSDWizard;
+export default withAnalytics(CreateOSDWizard);
