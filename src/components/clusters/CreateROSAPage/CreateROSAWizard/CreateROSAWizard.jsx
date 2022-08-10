@@ -112,7 +112,7 @@ class CreateROSAWizardInternal extends React.Component {
 
   onGoToStep = ({ id }) => {
     this.setState({ currentStepId: id });
-    this.trackWizardNavigation(trackEvents.WizardNav, id);
+    this.trackWizardNavigation(trackEvents.WizardLinkNav, id);
   };
 
   onBack = ({ id }) => {

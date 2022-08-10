@@ -225,7 +225,7 @@ const trackEvents = {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-submit',
   },
-  WizardNav: {
+  WizardLinkNav: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-nav',
   },

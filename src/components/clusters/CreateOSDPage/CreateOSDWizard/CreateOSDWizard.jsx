@@ -23,7 +23,7 @@ import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
 import { trackEvents, ocmResourceType } from '~/common/analytics';
 import withAnalytics from '~/hoc/withAnalytics';
-import { stepId, stepNameById } from './constants';
+import { stepId, stepNameById } from './osdWizardConstants';
 import BillingModelScreen from './BillingModelScreen';
 import CloudProviderScreen from './CloudProviderScreen';
 import ClusterSettingsScreen from './ClusterSettingsScreen';
@@ -160,7 +160,7 @@ class CreateOSDWizardInternal extends React.Component {
 
   onGoToStep = ({ id }) => {
     this.setState({ currentStepId: id });
-    this.trackWizardNavigation(trackEvents.WizardNav, id);
+    this.trackWizardNavigation(trackEvents.WizardLinkNav, id);
   }
 
   onBack = ({ id }) => {
@@ -488,7 +488,7 @@ class CreateOSDWizardInternal extends React.Component {
             onClose,
           }) => (
             <>
-              {activeStep.name === stepNameById[stepId.REVIEW_AND_CREATE]
+              {activeStep.id === stepId.REVIEW_AND_CREATE
                 ? (
                   <Button
                     variant="primary"
@@ -515,7 +515,7 @@ class CreateOSDWizardInternal extends React.Component {
               <Button
                 variant="secondary"
                 onClick={onBack}
-                {...activeStep.name === stepNameById[stepId.BILLING_MODEL] && { isDisabled: true }}
+                {...activeStep.id === stepId.BILLING_MODEL && { isDisabled: true }}
               >
                 Back
               </Button>
