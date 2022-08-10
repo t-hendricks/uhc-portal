@@ -250,7 +250,8 @@ const getTrackEvent = (trackEvent, options = {}) => (
       link_name: trackEvent.link_name,
       ...(options.url && { link_url: options.url }),
       current_path: options.path || window.location.pathname,
-      ocm_resource_type: trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
+      ocm_resource_type:
+        trackEvent?.ocm_resource_type ?? options.resourceType ?? ocmResourceType.ALL,
       ...options.customProperties,
     },
   }
