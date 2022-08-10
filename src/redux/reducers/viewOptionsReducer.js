@@ -5,8 +5,11 @@ import {
   subscriptionsConstants,
   viewConstants,
   viewPaginationConstants,
+  viewOptionsConstants,
 } from '../constants';
-import { GET_CLUSTER_LOGS } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
+import {
+  GET_CLUSTER_LOGS,
+} from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
 
 const INITIAL_VIEW_STATE = {
   currentPage: 1,
@@ -21,6 +24,7 @@ const INITIAL_VIEW_STATE = {
   },
   flags: {
     showArchived: false,
+    showMyClustersOnly: true,
   },
 };
 
@@ -75,8 +79,22 @@ const viewOptionsReducer = (state = initialState, action) => {
   };
 
   switch (action.type) {
+    case viewOptionsConstants.VIEW_MY_CLUSTERS_ONLY_CHANGED:
+      updateState[viewConstants.CLUSTERS_VIEW] = {
+        ...state[viewConstants.CLUSTERS_VIEW],
+        flags: {
+          ...state[viewConstants.CLUSTERS_VIEW].flags,
+          showMyClustersOnly: action.payload.showMyClustersOnly,
+        },
+      };
+
+      return { ...state, ...updateState };
+
     case viewPaginationConstants.VIEW_FIRST_PAGE:
-      updateState[action.viewType] = { ...state[action.viewType], currentPage: 1 };
+      updateState[action.viewType] = {
+        ...state[action.viewType],
+        currentPage: 1,
+      };
       return { ...state, ...updateState };
 
     case viewPaginationConstants.VIEW_LAST_PAGE:
@@ -116,11 +134,17 @@ const viewOptionsReducer = (state = initialState, action) => {
         return state;
       }
 
-      updateState[action.viewType] = { ...state[action.viewType], currentPage: action.pageNumber };
+      updateState[action.viewType] = {
+        ...state[action.viewType],
+        currentPage: action.pageNumber,
+      };
       return { ...state, ...updateState };
 
     case viewPaginationConstants.SET_PER_PAGE:
-      updateState[action.viewType] = { ...state[action.viewType], pageSize: action.pageSize };
+      updateState[action.viewType] = {
+        ...state[action.viewType],
+        pageSize: action.pageSize,
+      };
       return { ...state, ...updateState };
 
     case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS):
@@ -153,7 +177,10 @@ const viewOptionsReducer = (state = initialState, action) => {
       return { ...state, ...updateState };
 
     case viewPaginationConstants.VIEW_CHANGE_SORT:
-      updateState[action.viewType] = { ...state[action.viewType], sorting: action.sorting };
+      updateState[action.viewType] = {
+        ...state[action.viewType],
+        sorting: action.sorting,
+      };
       return { ...state, ...updateState };
 
     case viewPaginationConstants.VIEW_SET_LIST_FLAGS:
