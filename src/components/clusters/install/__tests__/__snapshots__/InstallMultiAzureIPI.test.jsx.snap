@@ -15,11 +15,7 @@ exports[`InstallMultiAzureIPI renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "Microsoft Azure",
-              "path": "/install/azure",
-            },
-            Object {
-              "label": "Heterogeneous infrastructure",
+              "label": "Microsoft Azure heterogeneous infrastructure",
             },
           ]
         }
