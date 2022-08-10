@@ -21,7 +21,7 @@ import Breadcrumbs from '../../../common/Breadcrumbs';
 import { shouldRefetchQuota, scrollToFirstError } from '../../../../common/helpers';
 import usePreventBrowserNav from '../../../../hooks/usePreventBrowserNav';
 
-import { trackEvents, ocmResourceType } from '~/common/analytics';
+import { trackEvents, ocmResourceTypeByProduct } from '~/common/analytics';
 import withAnalytics from '~/hoc/withAnalytics';
 import { stepId, stepNameById } from './osdWizardConstants';
 import BillingModelScreen from './BillingModelScreen';
@@ -169,10 +169,10 @@ class CreateOSDWizardInternal extends React.Component {
   }
 
   trackWizardNavigation = (event, currentStepId = '') => {
-    const { track } = this.props;
+    const { track, product } = this.props;
 
     track(event, {
-      resourceType: ocmResourceType.OSD,
+      resourceType: ocmResourceTypeByProduct[product],
       customProperties: {
         step_name: stepNameById[currentStepId],
       },

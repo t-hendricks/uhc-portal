@@ -1,19 +1,31 @@
 import { tools } from './installLinks.mjs';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+
+/**
+ * a dictionary for mapping product keys to subscription plan ID values.
+ * derived from the normalizedProducts map, with its values lower-cased.
+ *
+ * see subscriptionTypes.normalizedProducts for the available keys.
+ *
+ * @type {{[p: string]: string}}
+ * @see subscriptionTypes.normalizedProducts
+ */
+const ocmResourceTypeByProduct = Object.fromEntries(
+  Object.entries(normalizedProducts)
+    .map(([key, value]) => (
+      [key, String(value).toLowerCase()]
+    )),
+);
 
 const ocmResourceType = {
-  ALL: 'all',
+  ...ocmResourceTypeByProduct,
   // OpenShift Local aka CodeReady Containers
   CRC: 'crc',
   // OpenShift on AWS aka ROSA
   MOA: 'moa',
-  // OpenShift Container Platform (Self-managed)
-  OCP: 'ocp',
-  // OpenShift Assisted Installer
-  OCP_ASSISTED_INSTALL: 'ocp-assistedinstall',
-  // OpenShift Dedicated
-  OSD: 'osd',
-  // OpenShift Dedicated Trial
-  OSD_TRIAL: 'osdtrial',
+  ROSA: 'moa',
+  // All subscription plans
+  ALL: 'all',
 };
 
 const eventNames = {
@@ -258,5 +270,9 @@ const getTrackEvent = (trackEvent, options = {}) => (
 );
 
 export {
-  ocmResourceType, eventNames, trackEvents, getTrackEvent,
+  eventNames,
+  trackEvents,
+  getTrackEvent,
+  ocmResourceType,
+  ocmResourceTypeByProduct,
 };
