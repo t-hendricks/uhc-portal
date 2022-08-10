@@ -163,7 +163,9 @@ NodeCountInput.propTypes = {
   label: PropTypes.string,
   helpText: PropTypes.string,
   extendedHelpText: PropTypes.string,
-  quota: PropTypes.object.isRequired,
+  quota: PropTypes.shape({
+    nodesQuota: PropTypes.object,
+  }).isRequired,
   isByoc: PropTypes.bool,
   isMachinePool: PropTypes.bool,
   isMultiAz: PropTypes.bool,
