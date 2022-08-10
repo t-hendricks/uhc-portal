@@ -124,7 +124,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
             variant="link"
           >
             View your available quota
-
+             
             <ArrowRightIcon
               color="currentColor"
               noVerticalAlign={false}
@@ -258,7 +258,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Azure Red Hat OpenShift
-
+                           
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -325,7 +325,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift on IBM Cloud
-
+                           
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -389,7 +389,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift Service on AWS
-
+                           
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -671,7 +671,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
             variant="link"
           >
             View your available quota
-
+             
             <ArrowRightIcon
               color="currentColor"
               noVerticalAlign={false}
@@ -805,7 +805,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Azure Red Hat OpenShift
-
+                           
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -872,7 +872,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift on IBM Cloud
-
+                           
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -936,7 +936,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift Service on AWS
-
+                           
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -1220,7 +1220,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift Dedicated
-
+                           
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -1287,7 +1287,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Azure Red Hat OpenShift
-
+                           
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -1354,7 +1354,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift on IBM Cloud
-
+                           
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}
@@ -1418,7 +1418,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                           target="_blank"
                         >
                           Learn more about Red Hat OpenShift Service on AWS
-
+                           
                           <ArrowRightIcon
                             color="currentColor"
                             noVerticalAlign={false}

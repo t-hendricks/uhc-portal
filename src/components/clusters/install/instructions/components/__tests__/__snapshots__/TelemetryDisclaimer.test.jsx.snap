@@ -5,7 +5,7 @@ exports[`TelemetryDisclaimer renders correctly 1`] = `
   component="small"
 >
   Red Hat collects a limited amount of telemetry data. By installing OpenShift Container Platform 4, you accept our data collection policy.
-
+   
   <Text
     component="a"
     href="https://docs.openshift.com/container-platform/4.10/support/remote_health_monitoring/about-remote-health-monitoring.html"
@@ -14,7 +14,7 @@ exports[`TelemetryDisclaimer renders correctly 1`] = `
   >
     Learn more
   </Text>
-
+   
   about the data we collect.
 </Text>
 `;

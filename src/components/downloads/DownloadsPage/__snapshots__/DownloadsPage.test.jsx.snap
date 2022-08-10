@@ -65,12 +65,12 @@ exports[`<DownloadsPage> renders 1`] = `
             description={
               <Text>
                 Create applications and manage OpenShift projects from the command line using the OpenShift client
-
+                 
                 <code>
                   oc
                 </code>
                 .
-
+                 
                 <ExternalLink
                   ExternalLink={true}
                   href="https://docs.openshift.com/container-platform/4.10/cli_reference/openshift_cli/getting-started-cli.html"
@@ -507,12 +507,12 @@ exports[`<DownloadsPage> renders 1`] = `
               <TextContent>
                 <Text>
                   Manage your OpenShift clusters from the command line using the OpenShift Cluster Manager API client
-
+                   
                   <code>
                     ocm
                   </code>
                   .
-
+                   
                   <ExternalLink
                     href="https://access.redhat.com/articles/6114701"
                   >
@@ -554,7 +554,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   ocm
                 </code>
                 )
-
+                 
                 <DevPreviewBadge />
               </React.Fragment>
             }
@@ -950,7 +950,7 @@ exports[`<DownloadsPage> renders 1`] = `
             description={
               <Text>
                 Manage your Red Hat OpenShift Service on AWS (ROSA) clusters from the command line using the ROSA client for OCM and AWS APIs.
-
+                 
                 <ExternalLink
                   href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
                 >
@@ -1385,12 +1385,12 @@ exports[`<DownloadsPage> renders 1`] = `
             description={
               <Text>
                 Interact with Knative components on OpenShift Container Platform with the Knative client for OpenShift Serverless
-
+                 
                 <code>
                   kn
                 </code>
                 .
-
+                 
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.10/cli_reference/kn-cli-tools.html"
                 >
@@ -1825,9 +1825,9 @@ exports[`<DownloadsPage> renders 1`] = `
             description={
               <Text>
                 Manage and interact with CI pipelines on OpenShift Container Platform
-
+                 
                 with the Tekton CLI for OpenShift Pipelines.
-
+                 
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.10/cli_reference/tkn_cli/installing-tkn.html#installing-tkn"
                 >
@@ -2264,7 +2264,7 @@ exports[`<DownloadsPage> renders 1`] = `
         description={
           <Text>
             Access all the powers of Kubernetes through a simplified workflow with Red Hat’s developer tools.
-
+             
             <ExternalLink
               href="https://developers.redhat.com/topics/developer-tools"
             >
@@ -2283,12 +2283,12 @@ exports[`<DownloadsPage> renders 1`] = `
             description={
               <Text>
                 Write, build, and deploy applications on OpenShift with
-
+                 
                 <code>
                   odo
                 </code>
                 , a fast, iterative, and straightforward CLI tool for developers.
-
+                 
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.10/cli_reference/developer_cli_odo/understanding-odo.html"
                 >
@@ -2723,7 +2723,7 @@ exports[`<DownloadsPage> renders 1`] = `
             description={
               <Text>
                 Define, install, and upgrade application packages as Helm charts using Helm 3, a package manager for Kubernetes.
-
+                 
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.10/applications/working_with_helm_charts/understanding-helm.html"
                 >
@@ -3158,7 +3158,7 @@ exports[`<DownloadsPage> renders 1`] = `
             description={
               <Text>
                 Create and maintain catalogs of Operators from a list of bundles with the Operator Package Manager.
-
+                 
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.10/cli_reference/opm/cli-opm-install.html"
                 >
@@ -3593,7 +3593,7 @@ exports[`<DownloadsPage> renders 1`] = `
             description={
               <Text>
                 Build, test, and deploy Operators with the Operator SDK CLI.
-
+                 
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.10/cli_reference/osdk/cli-osdk-install.html"
                 >
@@ -4029,7 +4029,7 @@ exports[`<DownloadsPage> renders 1`] = `
               <TextContent>
                 <Text>
                   Create and manage Kafka instances and topics, service accounts, and more using
-
+                   
                   <code>
                     rhoas
                   </code>
@@ -4077,7 +4077,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   rhoas
                 </code>
                 )
-
+                 
                 <DevPreviewBadge />
               </React.Fragment>
             }
@@ -4475,13 +4475,13 @@ exports[`<DownloadsPage> renders 1`] = `
         description={
           <Text>
             Install OpenShift based on your infrastructure. For the installer matching your infrastructure type, select the operating system and architecture on which you wish to run the installer.  Then follow the steps provided within your infrastructure's tab on the
-
+             
             <Link
               to="/create"
             >
               create cluster
             </Link>
-
+             
             page to install an OpenShift cluster.
           </Text>
         }
@@ -4497,25 +4497,25 @@ exports[`<DownloadsPage> renders 1`] = `
               <TextContent>
                 <Text>
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported x86_64 infrastructure using our
-
+                   
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.10/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
-
+                   
                   as a guide.
                 </Text>
                 <Text>
                   Learn how to deploy in the
-
+                   
                   <Link
                     to="/create"
                   >
                     cloud
                   </Link>
                   , or in your
-
+                   
                   <Link
                     to="/create/datacenter"
                   >
@@ -4945,25 +4945,25 @@ exports[`<DownloadsPage> renders 1`] = `
               <TextContent>
                 <Text>
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported ARM infrastructure using our
-
+                   
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.10/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
-
+                   
                   as a guide.
                 </Text>
                 <Text>
                   Learn how to deploy in
-
+                   
                   <Link
                     to="/install/aws/arm"
                   >
                     AWS
                   </Link>
                   , or in your
-
+                   
                   <Link
                     to="/install/arm"
                   >
@@ -5393,18 +5393,18 @@ exports[`<DownloadsPage> renders 1`] = `
               <TextContent>
                 <Text>
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported IBM Z infrastructure using our
-
+                   
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.10/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
-
+                   
                   as a guide.
                 </Text>
                 <Text>
                   Learn how to deploy in your
-
+                   
                   <Link
                     to="/install/ibmz/user-provisioned"
                   >
@@ -5834,18 +5834,18 @@ exports[`<DownloadsPage> renders 1`] = `
               <TextContent>
                 <Text>
                   Download and extract your operating system's installation program and place the file in the directory where you'll store your configuration details. Then, create clusters on supported Power infrastructure using our
-
+                   
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.10/installing/index.html"
                   >
                     documentation
                   </ExternalLink>
-
+                   
                   as a guide.
                 </Text>
                 <Text>
                   Learn how to deploy in your
-
+                   
                   <Link
                     to="/install/power/user-provisioned"
                   >
@@ -6282,7 +6282,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   >
                     Create a minimal cluster on your desktop
                   </Link>
-
+                   
                   for local development and testing.
                 </Text>
               </TextContent>
@@ -6730,7 +6730,7 @@ exports[`<DownloadsPage> renders 1`] = `
               <TextContent>
                 <Text>
                   Download and install a local, minimal single instance deployment of Red Hat Quay to aid bootstrapping the first disconnected cluster.
-
+                   
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.10/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images"
                   >
@@ -7159,11 +7159,11 @@ exports[`<DownloadsPage> renders 1`] = `
               <TextContent>
                 <Text>
                   The "mirror" plugin for the OpenShift CLI client (oc) controls the process
-
+                   
                   of mirroring all relevant container image for a full disconnected OpenShift
-
+                   
                   installation in a central, declarative tool.
-
+                   
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.10/installing/disconnected_install/installing-mirroring-disconnected.html"
                   >
@@ -7607,7 +7607,7 @@ exports[`<DownloadsPage> renders 1`] = `
               <TextContent>
                 <Text>
                   Write and validate machine configs in a convenient short-hand syntax with the Butane config transpiler CLI tool.
-
+                   
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.10/installing/install_config/installing-customizing.html"
                   >
@@ -8036,7 +8036,7 @@ exports[`<DownloadsPage> renders 1`] = `
               <TextContent>
                 <Text>
                   Download and install RHCOS disk images with the coreos-installer CLI tool.
-
+                   
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.10/installing/installing_platform_agnostic/installing-platform-agnostic.html"
                   >
@@ -8517,15 +8517,15 @@ exports[`<DownloadsPage> renders 1`] = `
                 </Text>
                 <Text>
                   Learn how to
-
+                   
                   <Link
                     to="/create"
                   >
                     create a cluster
                   </Link>
-
+                   
                   or
-
+                   
                   <ExternalLink
                     href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets"
                   >

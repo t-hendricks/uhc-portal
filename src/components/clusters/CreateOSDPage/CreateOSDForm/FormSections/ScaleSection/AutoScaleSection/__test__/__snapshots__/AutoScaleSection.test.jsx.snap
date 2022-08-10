@@ -13,7 +13,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
           hint={
             <React.Fragment>
               Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
-
+               
               <ExternalLink
                 href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
               >
@@ -91,7 +91,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
                     href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
                   >
                     Learn more about autoscaling
-
+                    
                   </ExternalLink>
                 </React.Fragment>
               }
@@ -137,7 +137,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale disabled 1`] = `
           hint={
             <React.Fragment>
               Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
-
+               
               <ExternalLink
                 href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
               >
@@ -171,7 +171,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
           hint={
             <React.Fragment>
               Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
-
+               
               <ExternalLink
                 href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
               >
@@ -237,7 +237,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
                     href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
                   >
                     Learn more about autoscaling
-
+                    
                   </ExternalLink>
                 </React.Fragment>
               }
