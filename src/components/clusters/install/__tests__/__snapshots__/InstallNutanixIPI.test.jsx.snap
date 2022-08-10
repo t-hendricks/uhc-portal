@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InstallIBMCloud renders correctly 1`] = `
+exports[`InstallNutanixIPI renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
@@ -15,25 +15,23 @@ exports[`InstallIBMCloud renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "IBM Cloud",
+              "label": "Nutanix AOS",
             },
           ]
         }
       />
     }
-    title="Install OpenShift on IBM Cloud with installer-provisioned infrastructure"
+    title="Install OpenShift on Nutanix AOS with installer-provisioned infrastructure"
   />
   <PageSection>
     <OCPInstructions
       channel="stable"
-      cloudProvider="IBM Cloud"
-      cloudProviderID="ibmCloud"
-      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_ibm_cloud_public/preparing-to-install-on-ibm-cloud.html"
+      cloudProviderID="nutanix"
+      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_nutanix/preparing-to-install-on-nutanix.html"
       installer="x86_64-openshift-install"
       isBMIPI={false}
       isUPI={false}
-      publicCloud={true}
-      title="Install OpenShift on IBM Cloud with installer-provisioned infrastructure"
+      title="Install OpenShift on Nutanix AOS with installer-provisioned infrastructure"
       token={Object {}}
     />
   </PageSection>

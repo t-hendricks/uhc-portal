@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InstallAzureUPI renders correctly 1`] = `
+exports[`Arm BareMetal IPI install renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
@@ -15,17 +15,17 @@ exports[`InstallAzureUPI renders correctly 1`] = `
               "path": "/create",
             },
             Object {
-              "label": "Microsoft Azure",
-              "path": "/install/azure",
+              "label": "ARM Bare Metal",
+              "path": "/install/arm",
             },
             Object {
-              "label": "User-provisioned infrastructure",
+              "label": "Installer-provisioned infrastructure",
             },
           ]
         }
       />
     }
-    title="Install OpenShift on Azure with user-provisioned infrastructure"
+    title="Install OpenShift on ARM Bare Metal with installer-provisioned infrastructure"
   />
   <PageSection>
     <OCPInstructions
@@ -41,23 +41,24 @@ exports[`InstallAzureUPI renders correctly 1`] = `
                 "path": "/create",
               },
               Object {
-                "label": "Microsoft Azure",
-                "path": "/install/azure",
+                "label": "ARM Bare Metal",
+                "path": "/install/arm",
               },
               Object {
-                "label": "User-provisioned infrastructure",
+                "label": "Installer-provisioned infrastructure",
               },
             ]
           }
         />
       }
       channel="stable"
-      cloudProviderID="azure"
-      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_azure/installing-azure-user-infra.html"
-      installer="x86_64-openshift-install"
-      isBMIPI={false}
-      isUPI={true}
-      title="Install OpenShift on Azure with user-provisioned infrastructure"
+      cloudProviderID="baremetal"
+      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_bare_metal_ipi/ipi-install-installation-workflow.html"
+      installer="aarch64-openshift-install"
+      isBMIPI={true}
+      isUPI={false}
+      preReleasePageLink="/install/arm/pre-release"
+      title="Install OpenShift on ARM Bare Metal with installer-provisioned infrastructure"
       token={Object {}}
     />
   </PageSection>

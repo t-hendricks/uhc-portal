@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InstallArmAWSIPI renders correctly 1`] = `
+exports[`InstallArmAWSUPI renders correctly 1`] = `
 <Fragment>
   <PageTitle
     breadcrumbs={
@@ -19,25 +19,24 @@ exports[`InstallArmAWSIPI renders correctly 1`] = `
               "path": "/install/aws/arm",
             },
             Object {
-              "label": "Installer-provisioned infrastructure",
+              "label": "User-provisioned infrastructure",
             },
           ]
         }
       />
     }
-    title="Install OpenShift on AWS with installer-provisioned ARM infrastructure"
+    title="Install OpenShift on AWS with user-provisioned ARM infrastructure"
   />
   <PageSection>
     <OCPInstructions
       channel="stable"
       cloudProviderID="aws"
-      customizations="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-customizations.html"
-      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-account.html"
+      docURL="https://docs.openshift.com/container-platform/4.11/installing/installing_aws/installing-aws-user-infra.html"
       installer="aarch64-openshift-install"
       isBMIPI={false}
-      isUPI={false}
+      isUPI={true}
       preReleasePageLink="/install/arm/pre-release"
-      title="Install OpenShift on AWS with installer-provisioned ARM infrastructure"
+      title="Install OpenShift on AWS with user-provisioned ARM infrastructure"
       token={Object {}}
     />
   </PageSection>

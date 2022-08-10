@@ -12,10 +12,10 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-export class InstallArmAWSIPI extends Component {
+export class InstallArmBareMetalIPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS Installer-Provisioned ARM Infrastructure';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | ARM Bare Metal Installer-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -27,7 +27,7 @@ export class InstallArmAWSIPI extends Component {
       <Breadcrumbs path={[
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
-        { label: 'Amazon Web Services (ARM)', path: '/install/aws/arm' },
+        { label: 'ARM Bare Metal', path: '/install/arm' },
         { label: 'Installer-provisioned infrastructure' },
       ]}
       />
@@ -35,13 +35,14 @@ export class InstallArmAWSIPI extends Component {
 
     return (
       <>
-        <PageTitle title={instructionsMapping.aws.arm.ipi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.baremetal.arm.ipi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
-            cloudProviderID="aws"
-            customizations={instructionsMapping.aws.customizations}
-            {...instructionsMapping.aws.arm.ipi}
+            breadcrumbs={breadcrumbs}
+            cloudProviderID="baremetal"
+            {...instructionsMapping.baremetal.arm.ipi}
+            isBMIPI
           />
         </PageSection>
       </>
@@ -49,11 +50,11 @@ export class InstallArmAWSIPI extends Component {
   }
 }
 
-InstallArmAWSIPI.propTypes = {
+InstallArmBareMetalIPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallArmAWSIPI);
+export default connect(mapStateToProps)(InstallArmBareMetalIPI);

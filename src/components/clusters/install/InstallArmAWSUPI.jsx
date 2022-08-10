@@ -12,10 +12,10 @@ import instructionsMapping from './instructions/instructionsMapping';
 import OCPInstructions from './instructions/OCPInstructions';
 import PageTitle from '../../common/PageTitle';
 
-export class InstallArmAWSIPI extends Component {
+export class InstallArmAWSUPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS Installer-Provisioned ARM Infrastructure';
+    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | AWS User-Provisioned ARM Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -28,32 +28,33 @@ export class InstallArmAWSIPI extends Component {
         { label: 'Clusters' },
         { label: 'Create', path: '/create' },
         { label: 'Amazon Web Services (ARM)', path: '/install/aws/arm' },
-        { label: 'Installer-provisioned infrastructure' },
+        { label: 'User-provisioned infrastructure' },
       ]}
       />
     );
 
     return (
       <>
-        <PageTitle title={instructionsMapping.aws.arm.ipi.title} breadcrumbs={breadcrumbs} />
+        <PageTitle title={instructionsMapping.aws.arm.upi.title} breadcrumbs={breadcrumbs} />
         <PageSection>
           <OCPInstructions
             token={token}
             cloudProviderID="aws"
-            customizations={instructionsMapping.aws.customizations}
-            {...instructionsMapping.aws.arm.ipi}
+            isUPI
+            {...instructionsMapping.aws.arm.upi}
           />
         </PageSection>
       </>
+
     );
   }
 }
 
-InstallArmAWSIPI.propTypes = {
+InstallArmAWSUPI.propTypes = {
   token: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ token: state.tollbooth.token });
 
-export default connect(mapStateToProps)(InstallArmAWSIPI);
+export default connect(mapStateToProps)(InstallArmAWSUPI);
