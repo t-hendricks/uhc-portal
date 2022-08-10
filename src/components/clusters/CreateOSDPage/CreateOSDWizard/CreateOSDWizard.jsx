@@ -172,7 +172,7 @@ class CreateOSDWizardInternal extends React.Component {
     const { track } = this.props;
 
     track(event, {
-      resourceType: ocmResourceType.osd,
+      resourceType: ocmResourceType.OSD,
       customProperties: {
         step_name: stepNameById[currentStepId],
       },
