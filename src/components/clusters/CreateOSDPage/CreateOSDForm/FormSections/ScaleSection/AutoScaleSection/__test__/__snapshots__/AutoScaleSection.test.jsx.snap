@@ -15,7 +15,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
               Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
-                href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
+                href="https://docs.openshift.com/container-platform/4.11/machine_management/applying-autoscaling.html"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -88,7 +88,7 @@ exports[`<AutoScaleSection /> renders correctly for multiAz 1`] = `
                   The number of compute nodes to provision per zone. The minimum number of compute nodes will vary depending on which features are enabled.
                   <br />
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
+                    href="https://docs.openshift.com/container-platform/4.11/machine_management/applying-autoscaling.html"
                   >
                     Learn more about autoscaling
                     
@@ -139,7 +139,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale disabled 1`] = `
               Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
-                href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
+                href="https://docs.openshift.com/container-platform/4.11/machine_management/applying-autoscaling.html"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -173,7 +173,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
               Autoscaling automatically adds and removes nodes from the cluster based on resource requirements.
                
               <ExternalLink
-                href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
+                href="https://docs.openshift.com/container-platform/4.11/machine_management/applying-autoscaling.html"
               >
                 Learn more about autoscaling
               </ExternalLink>
@@ -234,7 +234,7 @@ exports[`<AutoScaleSection /> renders correctly when autoscale enabled 1`] = `
                   The number of compute nodes to provision per zone. The minimum number of compute nodes will vary depending on which features are enabled.
                   <br />
                   <ExternalLink
-                    href="https://docs.openshift.com/container-platform/4.10/machine_management/applying-autoscaling.html"
+                    href="https://docs.openshift.com/container-platform/4.11/machine_management/applying-autoscaling.html"
                   >
                     Learn more about autoscaling
                     
