@@ -81,7 +81,7 @@ const EditClusterWideProxyDialog = (props) => {
     sendError();
   };
 
-  const AtLeastOneAlert = (
+  const atLeastOneAlert = (
     <Alert
       isInline
       variant="warning"
@@ -197,7 +197,7 @@ const EditClusterWideProxyDialog = (props) => {
           </GridItem>
           <GridItem sm={0} md={2} xl2={4} />
           <GridItem>
-            {anyTouched && noValues() && AtLeastOneAlert}
+            {anyTouched && noValues && atLeastOneAlert}
           </GridItem>
         </Grid>
       </Form>
