@@ -60,7 +60,7 @@ const EditClusterWideProxyDialog = (props) => {
   // sets trust bundle file upload depending on whether or not a trust bundle is already uploaded
   const [openFileUpload, setOpenFileUpload] = useState(!additionalTrustBundle);
 
-  const noValues = () => !httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle;
+  const noValues = !httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle;
 
   const handleClose = () => {
     closeModal();
