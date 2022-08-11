@@ -10,10 +10,7 @@ import {
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import useAnalytics from '~/hooks/useAnalytics';
 
-function LeaveCreateClusterPrompt({
-  when = true,
-  product,
-}) {
+function LeaveCreateClusterPrompt({ product }) {
   const history = useHistory();
   const { track } = useAnalytics();
 
@@ -23,7 +20,7 @@ function LeaveCreateClusterPrompt({
   useEffect(() => {
     let unblock;
 
-    if (when && !isOpen) {
+    if (!isOpen) {
       // Open the prompt and capture the destination path meant to navigate to so that
       // if the user decides to leave, we send them to the intended route.
       unblock = history.block((location, action) => {
@@ -43,7 +40,7 @@ function LeaveCreateClusterPrompt({
     return () => {
       unblock?.();
     };
-  }, [history, isOpen, when]);
+  }, [history, isOpen]);
 
   const onLeave = () => {
     track(trackEvents.WizardLeave, {
@@ -86,9 +83,6 @@ function LeaveCreateClusterPrompt({
 }
 
 LeaveCreateClusterPrompt.propTypes = {
-  /* Used to control when nav away prompt is shown. */
-  when: PropTypes.bool,
-  /* The normalized product string */
   product: PropTypes.oneOf(Object.values(normalizedProducts)),
 };
 
