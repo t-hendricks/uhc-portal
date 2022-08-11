@@ -223,4 +223,4 @@ EditClusterWideProxyDialog.propTypes = {
   clearClusterProxyResponse: PropTypes.func,
 };
 
-export default React.memo(EditClusterWideProxyDialog);
+export default EditClusterWideProxyDialog;
