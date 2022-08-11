@@ -40,9 +40,9 @@ exports[`<DownloadsCategoryDropdown /> should render 1`] = `
     value="DISCONNECTED_INSTALLATION"
   />
   <FormSelectOption
-    key="RHCOS"
-    label="RHCOS management tools"
-    value="RHCOS"
+    key="CUSTOM_INSTALLATION"
+    label="OpenShift installation customization tools"
+    value="CUSTOM_INSTALLATION"
   />
   <FormSelectOption
     key="TOKENS"
