@@ -495,7 +495,7 @@ class CreateOSDWizardInternal extends React.Component {
                     type="submit"
                     onClick={(event) => {
                       onSubmit(event);
-                      this.trackWizardNavigation(trackEvents.WizardEnd);
+                      this.trackWizardNavigation(trackEvents.WizardSubmit);
                     }}
                   >
                     Create cluster

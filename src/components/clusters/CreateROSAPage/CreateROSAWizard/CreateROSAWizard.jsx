@@ -138,7 +138,7 @@ class CreateROSAWizardInternal extends React.Component {
   }
 
   onBeforeSubmit = (onSubmit) => {
-    this.trackWizardNavigation(trackEvents.WizardEnd);
+    this.trackWizardNavigation(trackEvents.WizardSubmit);
     onSubmit();
   }
 

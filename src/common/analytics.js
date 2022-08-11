@@ -221,7 +221,7 @@ const trackEvents = {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-back',
   },
-  WizardEnd: {
+  WizardSubmit: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-submit',
   },
