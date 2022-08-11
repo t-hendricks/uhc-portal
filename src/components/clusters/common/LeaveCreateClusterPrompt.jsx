@@ -5,7 +5,7 @@ import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 
 import {
   trackEvents,
-  // ocmResourceTypeByProduct,
+  ocmResourceTypeByProduct,
 } from '~/common/analytics';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import useAnalytics from '~/hooks/useAnalytics';
@@ -46,11 +46,8 @@ function LeaveCreateClusterPrompt({
   }, [history, isOpen, when]);
 
   const onLeave = () => {
-    // todo - remove this log print
-    console.log('> product:', product);
     track(trackEvents.WizardLeave, {
-      // todo - parsing the resource type correctly depends on !3536
-      // resourceType: ocmResourceTypeByProduct[product],
+      resourceType: ocmResourceTypeByProduct[product],
     });
     history.push(destinationLocation);
     setIsOpen(false);
