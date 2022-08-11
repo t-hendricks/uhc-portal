@@ -1,19 +1,31 @@
 import { tools } from './installLinks.mjs';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+
+/**
+ * a dictionary for mapping product keys to subscription plan ID values.
+ * derived from the normalizedProducts map, with its values lower-cased.
+ *
+ * see subscriptionTypes.normalizedProducts for the available keys.
+ *
+ * @type {{[p: string]: string}}
+ * @see subscriptionTypes.normalizedProducts
+ */
+const ocmResourceTypeByProduct = Object.fromEntries(
+  Object.entries(normalizedProducts)
+    .map(([key, value]) => (
+      [key, String(value).toLowerCase()]
+    )),
+);
 
 const ocmResourceType = {
-  ALL: 'all',
+  ...ocmResourceTypeByProduct,
   // OpenShift Local aka CodeReady Containers
   CRC: 'crc',
   // OpenShift on AWS aka ROSA
   MOA: 'moa',
-  // OpenShift Container Platform (Self-managed)
-  OCP: 'ocp',
-  // OpenShift Assisted Installer
-  OCP_ASSISTED_INSTALL: 'ocp-assistedinstall',
-  // OpenShift Dedicated
-  OSD: 'osd',
-  // OpenShift Dedicated Trial
-  OSD_TRIAL: 'osdtrial',
+  ROSA: 'moa',
+  // All subscription plans
+  ALL: 'all',
 };
 
 const eventNames = {
@@ -254,12 +266,17 @@ const getTrackEvent = (trackEvent, options = {}) => (
       link_name: trackEvent.link_name,
       ...(options.url && { link_url: options.url }),
       current_path: options.path || window.location.pathname,
-      ocm_resource_type: trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
+      ocm_resource_type:
+        options.resourceType ?? trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
       ...options.customProperties,
     },
   }
 );
 
 export {
-  ocmResourceType, eventNames, trackEvents, getTrackEvent,
+  eventNames,
+  trackEvents,
+  getTrackEvent,
+  ocmResourceType,
+  ocmResourceTypeByProduct,
 };
