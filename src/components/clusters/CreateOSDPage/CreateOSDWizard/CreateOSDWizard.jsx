@@ -515,7 +515,7 @@ class CreateOSDWizardInternal extends React.Component {
               <Button
                 variant="secondary"
                 onClick={onBack}
-                {...activeStep.id === stepId.BILLING_MODEL && { isDisabled: true }}
+                isDisabled={activeStep.id === stepId.BILLING_MODEL}
               >
                 Back
               </Button>
