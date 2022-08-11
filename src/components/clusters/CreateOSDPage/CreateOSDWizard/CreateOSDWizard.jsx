@@ -559,11 +559,12 @@ class CreateOSDWizardInternal extends React.Component {
 
 function CreateOSDWizard(props) {
   usePreventBrowserNav();
+  const { product } = props;
 
   return (
     <>
       <CreateOSDWizardInternal {...props} />
-      <LeaveCreateClusterPrompt />
+      <LeaveCreateClusterPrompt product={product} />
     </>
   );
 }
@@ -630,5 +631,7 @@ CreateOSDWizardInternal.propTypes = {
   // for the /create/osdtrial url
   product: PropTypes.string,
 };
+
+CreateOSDWizard.propTypes = CreateOSDWizardInternal.propTypes;
 
 export default withAnalytics(CreateOSDWizard);

@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 
-function LeaveCreateClusterPrompt({ when = true }) {
-  const history = useHistory();
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [destinationLocation, setDestinationLocation] = React.useState('');
+import {
+  trackEvents,
+  // ocmResourceTypeByProduct,
+} from '~/common/analytics';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import useAnalytics from '~/hooks/useAnalytics';
 
-  React.useEffect(() => {
+function LeaveCreateClusterPrompt({
+  when = true,
+  product,
+}) {
+  const history = useHistory();
+  const { track } = useAnalytics();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [destinationLocation, setDestinationLocation] = useState('');
+
+  useEffect(() => {
     let unblock;
 
     if (when && !isOpen) {
@@ -34,6 +46,12 @@ function LeaveCreateClusterPrompt({ when = true }) {
   }, [history, isOpen, when]);
 
   const onLeave = () => {
+    // todo - remove this log print
+    console.log('> product:', product);
+    track(trackEvents.WizardLeave, {
+      // todo - parsing the resource type correctly depends on !3536
+      // resourceType: ocmResourceTypeByProduct[product],
+    });
     history.push(destinationLocation);
     setIsOpen(false);
   };
@@ -73,6 +91,8 @@ function LeaveCreateClusterPrompt({ when = true }) {
 LeaveCreateClusterPrompt.propTypes = {
   /* Used to control when nav away prompt is shown. */
   when: PropTypes.bool,
+  /* The normalized product string */
+  product: PropTypes.oneOf(Object.values(normalizedProducts)),
 };
 
 export default LeaveCreateClusterPrompt;

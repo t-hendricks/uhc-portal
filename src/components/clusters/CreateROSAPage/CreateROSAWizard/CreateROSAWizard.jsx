@@ -10,6 +10,7 @@ import {
   shouldRefetchQuota,
   scrollToFirstError,
 } from '~/common/helpers';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents, ocmResourceType } from '~/common/analytics';
 import { persistor } from '~/redux/store';
 import withAnalytics from '~/hoc/withAnalytics';
@@ -439,7 +440,7 @@ function CreateROSAWizard(props) {
   return (
     <>
       <CreateROSAWizardInternal {...props} />
-      <LeaveCreateClusterPrompt />
+      <LeaveCreateClusterPrompt product={normalizedProducts.ROSA} />
     </>
   );
 }
