@@ -10,7 +10,7 @@ import {
   shouldRefetchQuota,
   scrollToFirstError,
 } from '~/common/helpers';
-import { trackEvents, getTrackEvent, ocmResourceType } from '~/common/analytics';
+import { trackEvents, ocmResourceType } from '~/common/analytics';
 import { persistor } from '~/redux/store';
 import withAnalytics from '~/hoc/withAnalytics';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
@@ -110,9 +110,15 @@ class CreateROSAWizardInternal extends React.Component {
     this.trackWizardNavigation(trackEvents.WizardNext, currentStepId);
   };
 
-  onGoToStep = ({ id }) => this.setState({ currentStepId: id });
+  onGoToStep = ({ id }) => {
+    this.setState({ currentStepId: id });
+    this.trackWizardNavigation(trackEvents.WizardLinkNav, id);
+  };
 
-  onBack = ({ id }) => this.setState({ currentStepId: id });
+  onBack = ({ id }) => {
+    this.setState({ currentStepId: id });
+    this.trackWizardNavigation(trackEvents.WizardBack, id);
+  };
 
   canJumpTo = (id) => {
     const { stepIdReached, currentStepId, validatedSteps } = this.state;
@@ -158,18 +164,14 @@ class CreateROSAWizardInternal extends React.Component {
   }
 
   trackWizardNavigation = (event, currentStepId = '') => {
-    const { analytics } = this.props;
+    const { track } = this.props;
 
-    const eventObj = getTrackEvent(
-      event,
-      null,
-      undefined,
-      ocmResourceType.MOA,
-      {
+    track(event, {
+      resourceType: ocmResourceType.MOA,
+      customProperties: {
         step_name: stepNameById[currentStepId],
       },
-    );
-    analytics.track(eventObj.event, eventObj.properties);
+    });
   }
 
   render() {

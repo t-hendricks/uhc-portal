@@ -1,19 +1,31 @@
 import { tools } from './installLinks.mjs';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+
+/**
+ * a dictionary for mapping product keys to subscription plan ID values.
+ * derived from the normalizedProducts map, with its values lower-cased.
+ *
+ * see subscriptionTypes.normalizedProducts for the available keys.
+ *
+ * @type {{[p: string]: string}}
+ * @see subscriptionTypes.normalizedProducts
+ */
+const ocmResourceTypeByProduct = Object.fromEntries(
+  Object.entries(normalizedProducts)
+    .map(([key, value]) => (
+      [key, String(value).toLowerCase()]
+    )),
+);
 
 const ocmResourceType = {
-  ALL: 'all',
+  ...ocmResourceTypeByProduct,
   // OpenShift Local aka CodeReady Containers
   CRC: 'crc',
   // OpenShift on AWS aka ROSA
   MOA: 'moa',
-  // OpenShift Container Platform (Self-managed)
-  OCP: 'ocp',
-  // OpenShift Assisted Installer
-  OCP_ASSISTED_INSTALL: 'ocp-assistedinstall',
-  // OpenShift Dedicated
-  OSD: 'osd',
-  // OpenShift Dedicated Trial
-  OSD_TRIAL: 'osdtrial',
+  ROSA: 'moa',
+  // All subscription plans
+  ALL: 'all',
 };
 
 const eventNames = {
@@ -37,6 +49,11 @@ const trackEvents = {
     deprecated_name: 'Download-BUTANE-CLI',
     event: eventNames.FILE_DOWNLOADED,
     link_name: 'butane-cli',
+    ocm_resource_type: ocmResourceType.ALL,
+  },
+  [tools.CCOCTL]: {
+    event: eventNames.FILE_DOWNLOADED,
+    link_name: 'ccoctl-cli',
     ocm_resource_type: ocmResourceType.ALL,
   },
   [tools.COREOS_INSTALLER]: {
@@ -79,6 +96,11 @@ const trackEvents = {
     deprecated_name: 'OCP-Download-ARMInstaller',
     event: eventNames.FILE_DOWNLOADED,
     link_name: 'ocp-installer-arm',
+    ocm_resource_type: ocmResourceType.OCP,
+  },
+  [tools.MULTIINSTALLER]: {
+    event: eventNames.FILE_DOWNLOADED,
+    link_name: 'ocp-installer-multi',
     ocm_resource_type: ocmResourceType.OCP,
   },
   [tools.KN]: {
@@ -207,40 +229,50 @@ const trackEvents = {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-next',
   },
+  WizardBack: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'wizard-back',
+  },
   WizardEnd: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-submit',
+  },
+  WizardLinkNav: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'wizard-nav',
   },
 };
 
 /**
  * Returns the full trackEvent object that can be passed to analytics.track
  *
- * @param {Object} trackEvent The common trackEvent metadata
- * @param {String} url Link URL
- * @param {String} path The current path of where the action was performed
- * @param {String} resourceType The resource type, for allowed values see ocmResourceType
- * @param {Object} customProperties A JSON-serializable object for any custom event data
+ * @param {Object} trackEvent - The common trackEvent metadata (mandatory)
+ * @param {Object} options - configuration options:
+ * - {String} url - Link URL
+ * - {String} path - The current path of where the action was performed
+ * - {String} resourceType - The resource type, for allowed values see ocmResourceType
+ * - {Object} customProperties - A JSON-serializable object for any custom event data
  *
  * @returns {Object} Object {[event]: string, [properties]: Object}
  */
-const getTrackEvent = (
-  trackEvent,
-  url,
-  path = window.location.pathname,
-  resourceType = trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
-  customProperties = {},
-) => ({
-  event: trackEvent.event,
-  properties: {
-    link_name: trackEvent.link_name,
-    ...(url && { link_url: url }),
-    current_path: path,
-    ocm_resource_type: resourceType,
-    ...customProperties,
-  },
-});
+const getTrackEvent = (trackEvent, options = {}) => (
+  {
+    event: trackEvent.event,
+    properties: {
+      link_name: trackEvent.link_name,
+      ...(options.url && { link_url: options.url }),
+      current_path: options.path || window.location.pathname,
+      ocm_resource_type:
+        options.resourceType ?? trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
+      ...options.customProperties,
+    },
+  }
+);
 
 export {
-  ocmResourceType, eventNames, trackEvents, getTrackEvent,
+  eventNames,
+  trackEvents,
+  getTrackEvent,
+  ocmResourceType,
+  ocmResourceTypeByProduct,
 };

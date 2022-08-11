@@ -3,7 +3,6 @@
   "id": "gcp-early-install-1i9h34q00bcf5",
   "href": "/api/clusters_mgmt/v1/clusters/gcp-early-install-1i9h34q00bcf5",
   "name": "cben-osd-gcp",
-  "display_name": "osd-gcp early install",
   "creation_timestamp": "2021-01-18T10:14:43.788438Z",
   "activity_timestamp": "2021-01-18T10:14:43.788438Z",
   "cloud_provider": {

@@ -57,10 +57,7 @@ class LoginPage extends Page {
     if (await footer.isExisting()) {
       console.log("Trying to close cookie consent");
       const close = await footer.$('button#truste-consent-button');
-      // Due to a bug cannot close the banner https://issues.redhat.com/browse/RHCLOUD-20205
-      // workaround is to remove the banner from DOM instead
-      // await close.click();
-      await browser.execute("document.querySelector('#consent_blackbar').remove()");
+      await close.click();
       // Have to wait for fade-out animation before page is interactable.
       // The elements remain but become display: none;
       browser.waitUntil(async () => await !footer.isDisplayed());

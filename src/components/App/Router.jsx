@@ -34,7 +34,9 @@ import RegisterCluster from '../clusters/RegisterCluster';
 import CreateOSDWizard from '../clusters/CreateOSDPage/CreateOSDWizard';
 import CreateROSAWizard from '../clusters/CreateROSAPage/CreateROSAWizard';
 import ConnectedInstallAlibaba from '../clusters/install/InstallAlibaba';
+import InstallArmAWS from '../clusters/install/InstallArmAWS';
 import ConnectedInstallArmAWSIPI from '../clusters/install/InstallArmAWSIPI';
+import ConnectedInstallArmAWSUPI from '../clusters/install/InstallArmAWSUPI';
 import InstallAWS from '../clusters/install/InstallAWS';
 import ConnectedInstallAWSUPI from '../clusters/install/InstallAWSUPI';
 import ConnectedInstallAWSIPI from '../clusters/install/InstallAWSIPI';
@@ -49,6 +51,9 @@ import InstallGCP from '../clusters/install/InstallGCP';
 import ConnectedInstallGCPIPI from '../clusters/install/InstallGCPIPI';
 import ConnectedInstallGCPUPI from '../clusters/install/InstallGCPUPI';
 import ConnectedInstallIBMCloud from '../clusters/install/InstallIBMCloud';
+import ConnectedInstallMultiAzureIPI from '../clusters/install/InstallMultiAzureIPI';
+import ConnectedInstallMultiPreRelease from '../clusters/install/InstallMultiPreRelease';
+import ConnectedInstallNutanixIPI from '../clusters/install/InstallNutanixIPI';
 import InstallOSP from '../clusters/install/InstallOSP';
 import ConnectedInstallOSPIPI from '../clusters/install/InstallOSPIPI';
 import ConnectedInstallOSPUPI from '../clusters/install/InstallOSPUPI';
@@ -82,6 +87,7 @@ import {
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
 import InstallArmBareMetal from '../clusters/install/InstallArmBareMetal';
+import InstallArmBMIPI from '../clusters/install/InstallArmBareMetalIPI';
 import InstallArmBMUPI from '../clusters/install/InstallArmBareMetalUPI';
 import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
@@ -150,22 +156,27 @@ function Router({ history }) {
             <Route path="/token" render={() => <Tokens show={false} showPath="/token/show" />} />
 
             <Route path="/install/alibaba/installer-provisioned" component={ConnectedInstallAlibaba} />
+            <Route path="/install/arm/installer-provisioned" component={InstallArmBMIPI} />
             <Route path="/install/arm/user-provisioned" component={InstallArmBMUPI} />
             <Route path="/install/arm/pre-release" component={ConnectedInstallArmPreRelease} />
             <Route path="/install/arm" component={InstallArmBareMetal} />
             <Route path="/install/aws/installer-provisioned" component={ConnectedInstallAWSIPI} />
             <Route path="/install/aws/user-provisioned" component={ConnectedInstallAWSUPI} />
-            <Route path="/install/aws/arm" component={ConnectedInstallArmAWSIPI} />
+            <Route path="/install/aws/arm/installer-provisioned" component={ConnectedInstallArmAWSIPI} />
+            <Route path="/install/aws/arm/user-provisioned" component={ConnectedInstallArmAWSUPI} />
+            <Route path="/install/aws/arm" component={InstallArmAWS} />
             <Route path="/install/aws" component={InstallAWS} />
             <Route path="/install/gcp/installer-provisioned" component={ConnectedInstallGCPIPI} />
             <Route path="/install/gcp/user-provisioned" component={ConnectedInstallGCPUPI} />
             <Route path="/install/gcp" component={InstallGCP} />
+            <Route path="/install/nutanix/installer-provisioned" component={ConnectedInstallNutanixIPI} />
             <Route path="/install/openstack/installer-provisioned" component={ConnectedInstallOSPIPI} />
             <Route path="/install/openstack/user-provisioned" component={ConnectedInstallOSPUPI} />
             <Route path="/install/openstack" component={InstallOSP} />
             <Route path="/install/rhv/installer-provisioned" component={ConnectedInstallRHVIPI} />
             <Route path="/install/rhv/user-provisioned" component={ConnectedInstallRHVUPI} />
             <Route path="/install/rhv" component={InstallRHV} />
+            <Route path="/install/azure/multi/installer-provisioned" component={ConnectedInstallMultiAzureIPI} />
             <Route path="/install/azure/installer-provisioned" component={ConnectedInstallAzureIPI} />
             <Route path="/install/azure/user-provisioned" component={ConnectedInstallAzureUPI} />
             <Route path="/install/azure" exact component={InstallAzure} />
@@ -175,6 +186,7 @@ function Router({ history }) {
             <Route path="/install/metal/user-provisioned" component={InstallBMUPI} />
             <Route path="/install/metal/installer-provisioned" component={InstallBMIPI} />
             <Route path="/install/metal" component={GatedMetalInstall} />
+            <Route path="/install/multi/pre-release" component={ConnectedInstallMultiPreRelease} />
             <Route path="/install/vsphere" exact component={InstallVSphere} />
             <Route path="/install/vsphere/user-provisioned" component={ConnectedInstallVSphereUPI} />
             <Route path="/install/vsphere/installer-provisioned" component={ConnectedInstallVSphereIPI} />

@@ -5,7 +5,6 @@
   "name": "cben-osd-gcp",
   "external_id": "gcp-ready-ff373269-39ec-4b39-a999-5fe2ff56a706",
   "infra_id": "cben-osd-gcp-jwvvz",
-  "display_name": "osd-gcp ready",
   "creation_timestamp": "2021-01-18T10:14:43.788438Z",
   "activity_timestamp": "2021-01-18T13:00:29Z",
   "cloud_provider": {

@@ -4,7 +4,6 @@
   "href":"/api/clusters_mgmt/v1/clusters/1KgB0iDX8WjCDIlLMyavyIgM4Wr",
   "name":"61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
   "external_id":"61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
-  "display_name":"61639a0e-b5f9-4bf5-9f91-5e4e5a7b68b9",
   "creation_timestamp":"2019-05-02T13:18:58.077019Z",
   "activity_timestamp":"2019-05-02T13:18:58.077019Z",
   "openshift_version":"4.1.0-rc.0",

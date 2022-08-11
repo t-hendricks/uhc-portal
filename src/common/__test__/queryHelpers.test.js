@@ -141,4 +141,21 @@ describe('createViewQueryObject()', () => {
 
     expect(createViewQueryObject(viewOptions)).toEqual(expected);
   });
+
+  it('correctly applies filtering by username', () => {
+    const username = 'test@test.com';
+    const viewOptions = {
+      ...baseViewOptions,
+      flags: {
+        showMyClustersOnly: true,
+      },
+    };
+    const expected = {
+      ...baseResult,
+      has_filters: false,
+      filter: `(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (creator.username='${username}')`,
+    };
+
+    expect(createViewQueryObject(viewOptions, username)).toEqual(expected);
+  });
 });

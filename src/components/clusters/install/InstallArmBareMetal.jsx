@@ -31,7 +31,7 @@ class InstallArmBareMetal extends Component {
           <InstructionsChooser
             cloudName="ARM Bare Metal"
             showAI
-            hideIPI
+            ipiPageLink="/install/arm/installer-provisioned"
             upiPageLink="/install/arm/user-provisioned"
             aiPageLink="/assisted-installer/clusters/~new?useArm=true"
           />

@@ -487,17 +487,31 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                     AWS (ARM)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
                   <Link
                     to="/install/azure"
                   >
-                    Azure
+                    Azure (x86_64)
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    className="pf-u-mr-xs"
+                    to="/install/azure/multi/installer-provisioned"
+                  >
+                    Azure (heterogeneous)
+                  </Link>
+                  <TechnologyPreview
+                    position={1}
+                  />
+                </React.Fragment>,
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -1034,17 +1048,31 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                     AWS (ARM)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
                   <Link
                     to="/install/azure"
                   >
-                    Azure
+                    Azure (x86_64)
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    className="pf-u-mr-xs"
+                    to="/install/azure/multi/installer-provisioned"
+                  >
+                    Azure (heterogeneous)
+                  </Link>
+                  <TechnologyPreview
+                    position={1}
+                  />
+                </React.Fragment>,
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -1516,17 +1544,31 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                     AWS (ARM)
                   </Link>
                 </React.Fragment>,
-                "Full stack automation",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
                   <Link
                     to="/install/azure"
                   >
-                    Azure
+                    Azure (x86_64)
                   </Link>
                 </React.Fragment>,
                 "Full stack automation and pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    className="pf-u-mr-xs"
+                    to="/install/azure/multi/installer-provisioned"
+                  >
+                    Azure (heterogeneous)
+                  </Link>
+                  <TechnologyPreview
+                    position={1}
+                  />
+                </React.Fragment>,
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>

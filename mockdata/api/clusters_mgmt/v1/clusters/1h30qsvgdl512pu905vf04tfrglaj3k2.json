@@ -4,7 +4,6 @@
   "href": "/api/clusters_mgmt/v1/clusters/1h30qsvgdl512pu905vf04tfrglaj3k2",
   "name": "fcbd6131-3f14-42b7-b7e8-b430e15ea99b",
   "external_id": "fcbd6131-3f14-42b7-b7e8-b430e15ea99b",
-  "display_name": "OCP 4.x AWS LZ NP2",
   "creation_timestamp": "2020-11-21T00:12:35.654728Z",
   "activity_timestamp": "2021-04-29T10:12:44Z",
   "cloud_provider": {

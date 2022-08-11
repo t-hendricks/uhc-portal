@@ -21,8 +21,11 @@ import {
   DropdownItem,
   DropdownPosition,
   KebabToggle,
+  Popover,
+  Switch,
   ToolbarItem,
 } from '@patternfly/react-core';
+import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -117,6 +120,8 @@ const useItems = (aiEnabled) => {
 const ClusterListActions = ({
   className,
   aiEnabled,
+  showMyClustersOnly,
+  onShowMyClustersOnlyChange,
 }) => {
   const [isOpen, onToggle] = useState(false);
   const [dropdownItems, toolbarItems] = useItems(aiEnabled);
@@ -136,6 +141,29 @@ const ClusterListActions = ({
           position={DropdownPosition.right}
         />
       </ToolbarItem>
+      <ToolbarItem>
+        <Switch
+          className="pf-u-align-items-center"
+          id="view-only-my-clusters"
+          aria-label="View only my clusters"
+          label={(
+            <>
+              <span>View only my clusters</span>
+              <Popover
+                bodyContent="Show only the clusters you previously created, or all clusters in your organisation."
+                enableFlip={false}
+              >
+                <Button variant="plain">
+                  <OutlinedQuestionCircleIcon />
+                </Button>
+              </Popover>
+            </>
+          )}
+          hasCheckIcon
+          isChecked={showMyClustersOnly}
+          onChange={onShowMyClustersOnlyChange}
+        />
+      </ToolbarItem>
     </>
   );
 };
@@ -143,6 +171,8 @@ const ClusterListActions = ({
 ClusterListActions.propTypes = {
   className: PropTypes.string,
   aiEnabled: PropTypes.bool,
+  showMyClustersOnly: PropTypes.bool,
+  onShowMyClustersOnlyChange: PropTypes.func,
 };
 
 export default ClusterListActions;

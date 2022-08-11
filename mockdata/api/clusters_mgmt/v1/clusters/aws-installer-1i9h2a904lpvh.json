@@ -5,7 +5,6 @@
   "name": "cben-osd-aws",
   "external_id": "aws-installer-68339ba4-b45a-4a13-ad2d-c3dc6c5d0456-EXPECT-AMS-null",
   "infra_id": "cben-osd-aws-9sm8j",
-  "display_name": "osd-aws installer",
   "creation_timestamp": "2021-01-18T10:12:57.841951Z",
   "activity_timestamp": "2021-01-18T10:12:57.841951Z",
   "cloud_provider": {

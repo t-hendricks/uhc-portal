@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallMultiAzureIPI renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Create",
+              "path": "/create",
+            },
+            Object {
+              "label": "Microsoft Azure heterogeneous infrastructure",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on Azure with heterogeneous infrastructure"
+  />
+  <PageSection>
+    <OCPInstructions
+      channel="stable"
+      cloudProviderID="azure"
+      docURL="https://docs.openshift.com/container-platform/4.11/post_installation_configuration/deploy-heterogeneous-configuration.html"
+      installer="multi-openshift-install"
+      isBMIPI={false}
+      isUPI={false}
+      preReleasePageLink="/install/multi/pre-release"
+      title="Install OpenShift on Azure with heterogeneous infrastructure"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;

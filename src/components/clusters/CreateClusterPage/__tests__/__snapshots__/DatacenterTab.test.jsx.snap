@@ -102,7 +102,7 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
                     Bare Metal (ARM)
                   </Link>
                 </React.Fragment>,
-                "Pre-existing infrastructure",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
@@ -133,6 +133,16 @@ exports[`<DatacenterTab /> renders correctly with assisted installer 1`] = `
                   </Link>
                 </React.Fragment>,
                 "Pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/nutanix/installer-provisioned"
+                  >
+                    Nutanix AOS
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>
@@ -251,7 +261,7 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
                     Bare Metal (ARM)
                   </Link>
                 </React.Fragment>,
-                "Pre-existing infrastructure",
+                "Full stack automation and pre-existing infrastructure",
               ],
               Array [
                 <React.Fragment>
@@ -282,6 +292,16 @@ exports[`<DatacenterTab /> renders correctly without assisted installer 1`] = `
                   </Link>
                 </React.Fragment>,
                 "Pre-existing infrastructure",
+              ],
+              Array [
+                <React.Fragment>
+                  <Link
+                    to="/install/nutanix/installer-provisioned"
+                  >
+                    Nutanix AOS
+                  </Link>
+                </React.Fragment>,
+                "Full stack automation",
               ],
               Array [
                 <React.Fragment>

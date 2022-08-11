@@ -5,10 +5,12 @@ const MIRROR_CLIENTS_STABLE_X86 = 'https://mirror.openshift.com/pub/openshift-v4
 const MIRROR_CLIENTS_STABLE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
 const MIRROR_CLIENTS_STABLE_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/';
+const MIRROR_CLIENTS_LATEST_TP_MULTI = 'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/latest/';
 const MIRROR_CLIENTS_LATEST_PRE_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/';
 const MIRROR_CLIENTS_LATEST_PRE_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/';
+const MIRROR_CLIENTS_LATEST_PRE_MULTI = 'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp-dev-preview/pre-release/';
 const MIRROR_COREOS_INSTALLER_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest';
 const MIRROR_CRC_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest';
 const MIRROR_HELM_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest';
@@ -26,7 +28,7 @@ const MIRROR_RHCOS_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/a
 const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest';
 const MIRROR_MIRROR_REGISTRY_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
 
-const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.10';
+const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.11';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 
@@ -42,6 +44,7 @@ const links = {
   IDP_GITLAB: `${DOCS_BASE}/authentication/identity_providers/configuring-gitlab-identity-provider.html`,
   IDP_GOOGLE: `${DOCS_BASE}/authentication/identity_providers/configuring-google-identity-provider.html`,
   IDP_OPENID: `${DOCS_BASE}/authentication/identity_providers/configuring-oidc-identity-provider.html`,
+  CCO_MANUAL_MODE: `${DOCS_BASE}/authentication/managing_cloud_provider_credentials/cco-mode-manual.html`,
   UNDERSTANDING_AUTHENTICATION: `${DOCS_BASE}/authentication/understanding-authentication.html`,
   UNDERSTANDING_IDENTITY_PROVIDER: `${DOCS_BASE}/authentication/understanding-identity-provider.html`,
   APPLYING_AUTOSCALING: `${DOCS_BASE}/machine_management/applying-autoscaling.html`,
@@ -94,6 +97,7 @@ const links = {
   INSTALL_AZUREUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-user-infra.html`,
   INSTALL_AZUREIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure/installing-azure-default.html`,
   INSTALL_AZURE_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_azure/installing-azure-customizations.html`,
+  INSTALL_AZURE_HETEROGENEOUS: `${DOCS_BASE}/post_installation_configuration/deploy-heterogeneous-configuration.html`,
 
   INSTALL_ASHIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-default.html`,
   INSTALL_ASHUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_azure_stack_hub/installing-azure-stack-hub-user-infra.html`,
@@ -116,6 +120,8 @@ const links = {
   INSTALL_GCP_CUSTOMIZATIONS: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-customizations.html`,
   INSTALL_GCP_VPC: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-vpc.html`,
   RHCOS_GCPUPI_TAR_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-gcp.x86_64.tar.gz`,
+
+  INSTALL_NUTANIXIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_nutanix/preparing-to-install-on-nutanix.html`,
 
   INSTALL_OSPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-installer-custom.html`,
   INSTALL_OSPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_openstack/installing-openstack-user.html`,
@@ -239,6 +245,7 @@ const links = {
 const tools = {
   OC: 'oc',
   BUTANE: 'butane',
+  CCOCTL: 'ccoctl',
   COREOS_INSTALLER: 'coreos-installer',
   CRC: 'crc',
   HELM: 'helm',
@@ -246,6 +253,7 @@ const tools = {
   IBMZINSTALLER: 's390x-openshift-install',
   PPCINSTALLER: 'ppc64le-openshift-install',
   ARMINSTALLER: 'aarch64-openshift-install',
+  MULTIINSTALLER: 'multi-openshift-install',
   KN: 'kn',
   OCM: 'ocm',
   ODO: 'odo',
@@ -353,6 +361,30 @@ const urls = {
     },
   },
 
+  [tools.CCOCTL]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_X86}ccoctl-linux.tar.gz`,
+        /*
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_X86}ccoctl-mac.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_CLIENTS_STABLE_X86}ccoctl-windows.tar.gz`,
+        */
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_IBMZ}ccoctl-linux.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_PPC}ccoctl-linux.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_STABLE_ARM}ccoctl-linux.tar.gz`,
+        /*
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_STABLE_ARM}ccoctl-mac.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_CLIENTS_STABLE_ARM}ccoctl-windows.tar.gz`,
+        */
+      },
+    },
+  },
   [tools.COREOS_INSTALLER]: {
     [channels.STABLE]: {
       [architectures.x86]: {
@@ -501,6 +533,44 @@ const urls = {
       [architectures.arm]: {
         [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-linux.tar.gz`,
         [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_ARM}openshift-install-mac-arm64.tar.gz`,
+      },
+    },
+  },
+  [tools.MULTIINSTALLER]: {
+    [channels.STABLE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}amd64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}amd64/openshift-install-mac.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}arm64/openshift-install-linux.tar.gz`,
+        /*
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}arm64/openshift-install-mac-arm64.tar.gz`,
+        */
+      },
+      /*
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}ppc64le/openshift-install-linux.tar.gz`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_TP_MULTI}s390x/openshift-install-linux.tar.gz`,
+      },
+      */
+    },
+    [channels.PRE_RELEASE]: {
+      [architectures.x86]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}amd64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}amd64/openshift-install-mac.tar.gz`,
+      },
+      [architectures.arm]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}arm64/openshift-install-linux.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}arm64/openshift-install-mac-arm64.tar.gz`,
+      },
+      [architectures.ppc]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}ppc64le/openshift-install-linux.tar.gz`,
+      },
+      [architectures.s390x]: {
+        [operatingSystems.linux]: `${MIRROR_CLIENTS_LATEST_PRE_MULTI}s390x/openshift-install-linux.tar.gz`,
       },
     },
   },
