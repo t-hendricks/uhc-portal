@@ -88,19 +88,8 @@ class AppEntry extends React.Component {
             }
           });
       });
-
     if (APP_DEVMODE) {
-      this.disableAnalyticsDevMode = insights.chrome.enable.segmentDev();
-    }
-  }
-
-  /**
-   * this happens when the user navigates away from the app.
-   * for example: console.redhat.com/openshift --> console.redhat.com/
-   */
-  componentWillUnmount() {
-    if (this.disableAnalyticsDevMode) {
-      this.disableAnalyticsDevMode();
+      insights.chrome.enable.segmentDev();
     }
   }
 
