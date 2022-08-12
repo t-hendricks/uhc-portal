@@ -14,8 +14,10 @@ import RadioButtons from '../../../../common/ReduxFormComponents/RadioButtons';
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
 import ExternalLink from '../../../../common/ExternalLink';
 import links from '../../../../../common/installLinks.mjs';
-import { normalizedProducts } from '../../../../../common/subscriptionTypes';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { PLACEHOLDER_VALUE } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
+import useAnalytics from '~/hooks/useAnalytics';
+import { ocmResourceType, trackEvents } from '~/common/analytics';
 
 function NetworkScreen(props) {
   const {
@@ -39,6 +41,18 @@ function NetworkScreen(props) {
   // Do not need to check for VPC here, since checking the "Configure a cluster-wide proxy" checkbox
   // automatically checks the "Install into an existing VPC" checkbox in the UI
   const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
+
+  const { track } = useAnalytics();
+
+  const trackOcmResourceType = product === normalizedProducts.ROSA
+    ? ocmResourceType.MOA : ocmResourceType.OSD;
+
+  const trackCheckedState = (trackEvent, checked) => track(trackEvent, {
+    resourceType: trackOcmResourceType,
+    customProperties: {
+      checked,
+    },
+  });
 
   const shouldUncheckInstallToVPC = () => {
     const availabilityZones = [formValues.az_0, formValues.az_1, formValues.az_2];
@@ -76,10 +90,17 @@ function NetworkScreen(props) {
   }
 
   const onClusterProxyChange = (checked) => {
+    trackCheckedState(trackEvents.ConfigureClusterWideProxy, checked);
     change('configure_proxy', checked);
     if (checked) {
       change('install_to_vpc', true);
+      trackCheckedState(trackEvents.InstallIntoVPC, checked);
     }
+  };
+
+  const onInstallIntoVPCchange = (checked) => {
+    change('install_to_vpc', checked);
+    trackCheckedState(trackEvents.InstallIntoVPC, checked);
   };
 
   const privateLinkAndClusterSelected = privateLinkSelected && privateClusterSelected;
@@ -88,6 +109,7 @@ function NetworkScreen(props) {
       component={ReduxCheckbox}
       name="install_to_vpc"
       label="Install into an existing VPC"
+      onChange={onInstallIntoVPCchange}
       isDisabled={(privateLinkAndClusterSelected || configureProxySelected)}
     />
   );
