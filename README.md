@@ -51,8 +51,11 @@ yarn build
 
 As all apps under console.redhat.com, our app uses
 [insights-chrome](https://github.com/RedHatInsights/insights-chrome).
-(The term "chrome" refers to it being responsible for header & menu
-around the main content, no relation to Google Chrome.)
+(The term "chrome" refers to it being a thin wrapper, no relation to Google Chrome.)
+
+It is responsible for rendering the header & menu around the main content,
+and providing common services, like authentication or analytics.
+                                     
 
 It’s not a regular build dependency but is injected by CDN using [Edge
 Side Includes](https://en.wikipedia.org/wiki/Edge_Side_Includes) tags.
@@ -66,7 +69,7 @@ have two solutions:
   Such a build is OK for local dev but not for long-lived deploys.
 
 - [insights-proxy](https://github.com/RedHatInsights/insights-proxy) is a
-  heavier solution interpretting ESI on-the-fly, as the CDN would.
+  heavier solution interpreting ESI on-the-fly, as the CDN would.
   Details below.
 
 # Running locally
@@ -77,10 +80,15 @@ After initial setup, run `yarn install && yarn start`.
 
 The UI will be available at https://prod.foo.redhat.com:1337/openshift/
 
-By default UI will use a real staging backend.
+By default, UI will use a real staging backend.
 You can switch between real backends and mockserver (see below) at any time by
 appending `?env=staging` / `?env=production` / `?env=mockdata` URL param.
-(`src/config/` directory contains some more options but they might not work.)
+(`src/config/` directory contains some more options, but they might not work.)
+
+In development mode, analytics events are configured to be routed
+to the [_OCM Web Portal_ development source on Segment](https://app.segment.com/redhat-devtools/sources/ocm_web_portal_dev/overview).
+If you see them in the [production source](https://app.segment.com/redhat-devtools/sources/ocm_web_portal/overview) instead, reload the page once
+(this will stick until local storage is cleared).
 
 ## Running Without a Real Backend (mock backend)
 
