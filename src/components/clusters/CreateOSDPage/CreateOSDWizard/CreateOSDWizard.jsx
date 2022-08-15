@@ -495,7 +495,7 @@ class CreateOSDWizardInternal extends React.Component {
                     type="submit"
                     onClick={(event) => {
                       onSubmit(event);
-                      this.trackWizardNavigation(trackEvents.WizardEnd);
+                      this.trackWizardNavigation(trackEvents.WizardSubmit);
                     }}
                   >
                     Create cluster
@@ -515,7 +515,7 @@ class CreateOSDWizardInternal extends React.Component {
               <Button
                 variant="secondary"
                 onClick={onBack}
-                {...activeStep.id === stepId.BILLING_MODEL && { isDisabled: true }}
+                isDisabled={activeStep.id === stepId.BILLING_MODEL}
               >
                 Back
               </Button>
@@ -559,11 +559,12 @@ class CreateOSDWizardInternal extends React.Component {
 
 function CreateOSDWizard(props) {
   usePreventBrowserNav();
+  const { product } = props;
 
   return (
     <>
       <CreateOSDWizardInternal {...props} />
-      <LeaveCreateClusterPrompt />
+      <LeaveCreateClusterPrompt product={product} />
     </>
   );
 }
@@ -630,5 +631,7 @@ CreateOSDWizardInternal.propTypes = {
   // for the /create/osdtrial url
   product: PropTypes.string,
 };
+
+CreateOSDWizard.propTypes = CreateOSDWizardInternal.propTypes;
 
 export default withAnalytics(CreateOSDWizard);
