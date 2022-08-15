@@ -418,18 +418,19 @@ const urls = {
   [tools.HELM]: {
     [channels.STABLE]: {
       [architectures.x86]: {
-        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-amd64`,
-        [operatingSystems.mac]: `${MIRROR_HELM_LATEST}/helm-darwin-amd64`,
-        [operatingSystems.windows]: `${MIRROR_HELM_LATEST}/helm-windows-amd64.exe`,
+        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-amd64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_HELM_LATEST}/helm-darwin-amd64.tar.gz`,
+        [operatingSystems.windows]: `${MIRROR_HELM_LATEST}/helm-windows-amd64.exe.zip`,
       },
       [architectures.s390x]: {
-        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-s390x`,
+        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-s390x.tar.gz`,
       },
       [architectures.ppc]: {
-        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-ppc64le`,
+        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-ppc64le.tar.gz`,
       },
       [architectures.arm]: {
-        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-arm64`,
+        [operatingSystems.linux]: `${MIRROR_HELM_LATEST}/helm-linux-arm64.tar.gz`,
+        [operatingSystems.mac]: `${MIRROR_HELM_LATEST}/helm-darwin-arm64.tar.gz`,
       },
     },
   },
