@@ -10,6 +10,7 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ClusterIngressCard from './components/ClusterIngressCard';
 import NetworkConfigurationCard from './components/NetworkConfigurationCard';
 import VirtualPrivateCloudDetailsCard from './components/VirtualPrivateCloudDetailsCard';
+import VPCSubnetsCard from './components/VPCSubnetsCard';
 
 class Networking extends React.Component {
   componentWillUnmount() {
@@ -47,6 +48,9 @@ class Networking extends React.Component {
         </GridItem>
         <GridItem lg={9} md={12}>
           <VirtualPrivateCloudDetailsCard />
+        </GridItem>
+        <GridItem lg={3} md={12}>
+          <VPCSubnetsCard />
         </GridItem>
       </Grid>
     );
