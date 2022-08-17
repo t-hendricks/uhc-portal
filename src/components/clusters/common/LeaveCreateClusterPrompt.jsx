@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 
-function LeaveCreateClusterPrompt({ when = true }) {
-  const history = useHistory();
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [destinationLocation, setDestinationLocation] = React.useState('');
+import {
+  trackEvents,
+  ocmResourceTypeByProduct,
+} from '~/common/analytics';
+import { normalizedProducts } from '~/common/subscriptionTypes';
+import useAnalytics from '~/hooks/useAnalytics';
 
-  React.useEffect(() => {
+function LeaveCreateClusterPrompt({ product }) {
+  const history = useHistory();
+  const { track } = useAnalytics();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [destinationLocation, setDestinationLocation] = useState('');
+
+  useEffect(() => {
     let unblock;
 
-    if (when && !isOpen) {
+    if (!isOpen) {
       // Open the prompt and capture the destination path meant to navigate to so that
       // if the user decides to leave, we send them to the intended route.
       unblock = history.block((location, action) => {
@@ -31,9 +40,12 @@ function LeaveCreateClusterPrompt({ when = true }) {
     return () => {
       unblock?.();
     };
-  }, [history, isOpen, when]);
+  }, [history, isOpen]);
 
   const onLeave = () => {
+    track(trackEvents.WizardLeave, {
+      resourceType: ocmResourceTypeByProduct[product],
+    });
     history.push(destinationLocation);
     setIsOpen(false);
   };
@@ -71,8 +83,7 @@ function LeaveCreateClusterPrompt({ when = true }) {
 }
 
 LeaveCreateClusterPrompt.propTypes = {
-  /* Used to control when nav away prompt is shown. */
-  when: PropTypes.bool,
+  product: PropTypes.oneOf(Object.values(normalizedProducts)),
 };
 
 export default LeaveCreateClusterPrompt;
