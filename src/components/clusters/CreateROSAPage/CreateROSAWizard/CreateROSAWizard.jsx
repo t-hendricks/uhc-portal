@@ -10,6 +10,7 @@ import {
   shouldRefetchQuota,
   scrollToFirstError,
 } from '~/common/helpers';
+import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents, ocmResourceType } from '~/common/analytics';
 import { persistor } from '~/redux/store';
 import withAnalytics from '~/hoc/withAnalytics';
@@ -110,9 +111,15 @@ class CreateROSAWizardInternal extends React.Component {
     this.trackWizardNavigation(trackEvents.WizardNext, currentStepId);
   };
 
-  onGoToStep = ({ id }) => this.setState({ currentStepId: id });
+  onGoToStep = ({ id }) => {
+    this.setState({ currentStepId: id });
+    this.trackWizardNavigation(trackEvents.WizardLinkNav, id);
+  };
 
-  onBack = ({ id }) => this.setState({ currentStepId: id });
+  onBack = ({ id }) => {
+    this.setState({ currentStepId: id });
+    this.trackWizardNavigation(trackEvents.WizardBack, id);
+  };
 
   canJumpTo = (id) => {
     const { stepIdReached, currentStepId, validatedSteps } = this.state;
@@ -132,7 +139,7 @@ class CreateROSAWizardInternal extends React.Component {
   }
 
   onBeforeSubmit = (onSubmit) => {
-    this.trackWizardNavigation(trackEvents.WizardEnd);
+    this.trackWizardNavigation(trackEvents.WizardSubmit);
     onSubmit();
   }
 
@@ -433,7 +440,7 @@ function CreateROSAWizard(props) {
   return (
     <>
       <CreateROSAWizardInternal {...props} />
-      <LeaveCreateClusterPrompt />
+      <LeaveCreateClusterPrompt product={normalizedProducts.ROSA} />
     </>
   );
 }
