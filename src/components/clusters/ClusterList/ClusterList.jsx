@@ -133,8 +133,8 @@ class ClusterList extends Component {
   }
 
   refresh = () => {
-    const { fetchClusters, viewOptions, username } = this.props;
-    fetchClusters(createViewQueryObject(viewOptions, username));
+    const { fetchClusters, viewOptions } = this.props;
+    fetchClusters(createViewQueryObject(viewOptions));
   }
 
   render() {
@@ -316,7 +316,6 @@ class ClusterList extends Component {
 }
 
 ClusterList.propTypes = {
-  username: PropTypes.string.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   fetchClusters: PropTypes.func.isRequired,
   setClusterDetails: PropTypes.func.isRequired,
