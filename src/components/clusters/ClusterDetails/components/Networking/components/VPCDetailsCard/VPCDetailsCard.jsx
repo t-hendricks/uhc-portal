@@ -13,11 +13,12 @@ import {
   Button,
 } from '@patternfly/react-core';
 
-import './VirtualPrivateCloudDetailsCard.scss';
-import EditClusterWideProxyDialog from './EditClusterWideProxyDialog';
-import modals from '../../../../../../common/Modal/modals';
+import modals from '~/components/common/Modal/modals';
+import EditClusterWideProxyDialog from '../EditClusterWideProxyDialog';
 
-const VirtualPrivateCloudDetailsCard = (props) => {
+import './VPCDetailsCard.scss';
+
+const VPCDetailsCard = (props) => {
   const {
     privateLink,
     httpProxyUrl,
@@ -87,7 +88,7 @@ const VirtualPrivateCloudDetailsCard = (props) => {
   );
 };
 
-VirtualPrivateCloudDetailsCard.propTypes = {
+VPCDetailsCard.propTypes = {
   openModal: PropTypes.func.isRequired,
   privateLink: PropTypes.bool,
   httpProxyUrl: PropTypes.string,
@@ -96,4 +97,4 @@ VirtualPrivateCloudDetailsCard.propTypes = {
   gcpVPCName: PropTypes.string,
 };
 
-export default VirtualPrivateCloudDetailsCard;
+export default VPCDetailsCard;

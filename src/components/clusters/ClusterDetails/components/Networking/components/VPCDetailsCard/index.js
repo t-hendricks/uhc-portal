@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import { getFormValues } from 'redux-form';
-import VirtualPrivateCloudDetailsCard from './VirtualPrivateCloudDetailsCard';
-import { openModal } from '../../../../../../common/Modal/ModalActions';
+
+import { openModal } from '~/components/common/Modal/ModalActions';
+import VPCDetailsCard from './VPCDetailsCard';
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
@@ -19,4 +20,4 @@ const mapDispatchToProps = dispatch => ({
   openModal: (name, data) => dispatch(openModal(name, data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(VirtualPrivateCloudDetailsCard);
+export default connect(mapStateToProps, mapDispatchToProps)(VPCDetailsCard);

@@ -10,22 +10,21 @@ import {
   Alert,
   Button,
 } from '@patternfly/react-core';
-import PopoverHint from '../../../../../../../common/PopoverHint';
-import Modal from '../../../../../../../common/Modal/Modal';
-import ErrorBox from '../../../../../../../common/ErrorBox';
-import ExternalLink from '../../../../../../../common/ExternalLink';
-import links from '../../../../../../../../common/installLinks.mjs';
-import ReduxVerticalFormGroup from '../../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import ReduxFileUpload from '../../../../../../../common/ReduxFormComponents/ReduxFileUpload';
+
+import links from '~/common/installLinks.mjs';
+import { validateUrl, validateCA } from '~/common/validators';
+
+import Modal from '~/components/common/Modal/Modal';
+import ErrorBox from '~/components/common/ErrorBox';
+import PopoverHint from '~/components/common/PopoverHint';
+import ExternalLink from '~/components/common/ExternalLink';
+import ReduxFileUpload from '~/components/common/ReduxFormComponents/ReduxFileUpload';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 import {
   HTTPS_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_PLACEHOLDER,
-} from '../../../../../../CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingPlaceholders';
-import {
-  validateUrl,
-  validateCA,
-} from '../../../../../../../../common/validators';
-import { MAX_FILE_SIZE, ACCEPT } from '../../../../IdentityProvidersPage/components/CAUpload';
+} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingPlaceholders';
+import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components/CAUpload';
 
 const validateUrlHttps = value => validateUrl(value, ['http', 'https']);
 const validateAtLeastOne = (value, allValues) => {

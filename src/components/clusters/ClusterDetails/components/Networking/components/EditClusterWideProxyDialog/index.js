@@ -2,11 +2,12 @@ import { connect } from 'react-redux';
 import {
   change, reduxForm, getFormMeta,
 } from 'redux-form';
-import modals from '../../../../../../../common/Modal/modals';
-import shouldShowModal from '../../../../../../../common/Modal/ModalSelectors';
-import { closeModal } from '../../../../../../../common/Modal/ModalActions';
+
+import modals from '~/components/common/Modal/modals';
+import shouldShowModal from '~/components/common/Modal/ModalSelectors';
+import { closeModal } from '~/components/common/Modal/ModalActions';
+import { editCluster, clearClusterResponse } from '~/redux/actions/clustersActions';
 import EditClusterWideProxyDialog from './EditClusterWideProxyDialog';
-import { editCluster, clearClusterResponse } from '../../../../../../../../redux/actions/clustersActions';
 
 const reduxFormConfig = {
   form: 'EditClusterWideProxy',
