@@ -7,7 +7,7 @@ import VPCDetailsCard from './VPCDetailsCard';
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
   return {
-    privateLink: cluster.aws.private_link,
+    privateLink: cluster.aws?.private_link,
     formValues: getFormValues('EditClusterWideProxy')(state),
     httpProxyUrl: cluster.proxy?.http_proxy,
     httpsProxyUrl: cluster.proxy?.https_proxy,
