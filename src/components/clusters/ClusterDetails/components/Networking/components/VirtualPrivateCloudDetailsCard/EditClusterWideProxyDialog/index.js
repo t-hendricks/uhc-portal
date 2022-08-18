@@ -67,5 +67,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
   });
 };
 
-// eslint-disable-next-line max-len
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(reduxFormEditCWProxy);
+export default connect(
+  mapStateToProps, mapDispatchToProps, mergeProps,
+)(reduxFormEditCWProxy);
