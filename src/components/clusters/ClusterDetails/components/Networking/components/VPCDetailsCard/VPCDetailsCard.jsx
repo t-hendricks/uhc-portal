@@ -28,6 +28,8 @@ const VPCDetailsCard = (props) => {
     gcpVPCName,
   } = props;
 
+  const isPrivateLinkInitialized = typeof privateLink !== 'undefined';
+
   const handleEditClusterProxy = () => {
     openModal(modals.EDIT_CLUSTER_WIDE_PROXY);
   };
@@ -38,7 +40,7 @@ const VPCDetailsCard = (props) => {
         <Title headingLevel="h2" className="card-title">Virtual Private Cloud (VPC)</Title>
       </CardTitle>
       <CardBody className="ocm-c-networking-vpc-details__card--body pf-l-stack pf-m-gutter">
-        {gcpVPCName || privateLink !== undefined ? (
+        {gcpVPCName || isPrivateLinkInitialized ? (
           <>
             <Title headingLevel="h3" className="pf-l-stack__item">VPC Details</Title>
             <DescriptionList isHorizontal className="pf-l-stack__item pf-m-auto-column-widths details-card-dl">
@@ -48,7 +50,7 @@ const VPCDetailsCard = (props) => {
                   <DescriptionListDescription>{gcpVPCName}</DescriptionListDescription>
                 </DescriptionListGroup>
               ) : null}
-              {privateLink !== undefined ? (
+              {isPrivateLinkInitialized ? (
                 <DescriptionListGroup>
                   <DescriptionListTerm>PrivateLink</DescriptionListTerm>
                   <DescriptionListDescription>{privateLink ? 'Enabled' : 'Disabled'}</DescriptionListDescription>
