@@ -34,6 +34,7 @@ const eventNames = {
   LINK_CLICKED: 'Link Clicked',
   ARNS_REFRESHED: 'ARNs Refreshed',
   CHECKBOX_CLICKED: 'Checkbox Clicked',
+  RADIOBUTTON_CLICKED: 'Radiobutton Clicked',
 };
 
 /**
@@ -233,6 +234,16 @@ const trackEvents = {
   ConfigureClusterWideProxy: {
     event: eventNames.CHECKBOX_CLICKED,
     link_name: 'configure-cluster-wide-proxy',
+  },
+  RosaCreationMode: {
+    event: eventNames.RADIOBUTTON_CLICKED,
+    link_name: 'rosa-creation-mode',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  OCMRoleRefreshed: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'refresh-to-enable-auto-mode',
+    ocm_resource_type: ocmResourceType.MOA,
   },
   WizardNext: {
     event: eventNames.BUTTON_CLICKED,
