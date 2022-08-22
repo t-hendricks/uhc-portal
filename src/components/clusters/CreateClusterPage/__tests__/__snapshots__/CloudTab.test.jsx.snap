@@ -46,7 +46,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                 ],
               },
               Object {
-                "title": "",
+                "title": " ",
                 "transforms": Array [
                   [Function],
                 ],
@@ -178,7 +178,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                 ],
               },
               Object {
-                "title": "",
+                "title": " ",
                 "transforms": Array [
                   [Function],
                 ],
@@ -607,7 +607,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                 ],
               },
               Object {
-                "title": "",
+                "title": " ",
                 "transforms": Array [
                   [Function],
                 ],
@@ -739,7 +739,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                 ],
               },
               Object {
-                "title": "",
+                "title": " ",
                 "transforms": Array [
                   [Function],
                 ],
@@ -1167,7 +1167,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                 ],
               },
               Object {
-                "title": "",
+                "title": " ",
                 "transforms": Array [
                   [Function],
                 ],
