@@ -93,7 +93,14 @@ const isROSAManualMode = cluster => isROSA(cluster) && cluster.aws.sts
 const isWaitingROSAManualMode = cluster => cluster.state === clusterStates.WAITING
   && isROSAManualMode(cluster);
 
+const isOffline = state => isHibernating(state) || state === clusterStates.UNINSTALLING;
+
 export {
-  getClusterStateAndDescription, isHibernating, isROSA, isROSAManualMode, isWaitingROSAManualMode,
+  getClusterStateAndDescription,
+  isHibernating,
+  isOffline,
+  isROSA,
+  isROSAManualMode,
+  isWaitingROSAManualMode,
 };
 export default clusterStates;

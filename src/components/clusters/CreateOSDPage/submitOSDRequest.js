@@ -13,7 +13,6 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
   // But to avoid bugs where we ignore user's choices, when both are present, the field should win.
   const actualCloudProviderID = formData.cloud_provider || cloudProviderID;
   const actualProduct = formData.product || product;
-
   const clusterRequest = {
     name: formData.name,
     region: {
