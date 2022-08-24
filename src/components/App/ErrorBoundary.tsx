@@ -1,12 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Alert, EmptyState } from '@patternfly/react-core';
 import * as Sentry from '@sentry/browser';
 
-class ErrorBoundary extends React.Component {
-  state = { error: null, componentStack: null }
+type Props = {
+  children: React.ReactNode;
+};
 
-  componentDidCatch(error, info) {
+type State = {
+  error?: string;
+  componentStack?: string;
+};
+
+class ErrorBoundary extends React.Component<Props, State> {
+  state: State = {};
+
+  componentDidCatch(error: Error, info: React.ErrorInfo): void {
     this.setState({ error: error.toString(), componentStack: info.componentStack });
     Sentry.withScope((scope) => {
       scope.setExtras(info);
@@ -34,9 +42,5 @@ class ErrorBoundary extends React.Component {
     return children;
   }
 }
-
-ErrorBoundary.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default ErrorBoundary;
