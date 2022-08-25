@@ -188,7 +188,15 @@
         "isolatedModules": true
       }
     },
-    "moduleFileExtensions": ["js", "jsx", "ts", "tsx", "json", "node", "mjs"]
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx",
+      "json",
+      "node",
+      "mjs"
+    ]
   },
   "scripts": {
     "build": "webpack $(run/progress-flag-if-tty.sh)",

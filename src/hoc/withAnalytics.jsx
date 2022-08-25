@@ -14,7 +14,7 @@ import { getTrackEvent } from '~/common/analytics';
  * - analytics - the analytics API instance
  */
 const withAnalytics = AnalyticsContext => (props) => {
-  const { analytics } = useChrome();
+  const { analytics, segment: { setPageMetadata } } = useChrome();
 
   const track = (...args) => {
     const eventObj = getTrackEvent(...args);
@@ -26,6 +26,7 @@ const withAnalytics = AnalyticsContext => (props) => {
       {...props}
       track={track}
       analytics={analytics}
+      setPageMetadata={setPageMetadata}
     />
   );
 };

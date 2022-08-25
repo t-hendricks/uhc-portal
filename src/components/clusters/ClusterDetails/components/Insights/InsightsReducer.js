@@ -55,7 +55,7 @@ function insightsReducer(state = initialState, action) {
         break;
       case REJECTED_ACTION(GET_CLUSTER_INSIGHTS):
         draft.insightsData[action.meta.clusterId] = {
-          status: action.payload.response.status,
+          status: action.payload.response?.status,
         };
         break;
       // GET_ORGANIZATION_INSIGHTS
