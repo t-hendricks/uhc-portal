@@ -1,6 +1,7 @@
 import { configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { setAutoFreeze } from 'immer';
+import * as useChromeHook from '@redhat-cloud-services/frontend-components/useChrome';
 
 setAutoFreeze(false);
 if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
@@ -33,5 +34,14 @@ console.error = (...args) => {
     throw (args[0] instanceof Error ? args[0] : new Error(args[0]));
   }
 };
+
+// global mock for useChrome
+const useChromeSpy = jest.spyOn(useChromeHook, 'default');
+const mockSetPageMetadata = jest.fn();
+useChromeSpy.mockImplementation(() => ({
+  segment: {
+    setPageMetadata: mockSetPageMetadata,
+  },
+}));
 
 configure({ adapter: new Adapter() });

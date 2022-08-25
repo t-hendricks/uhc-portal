@@ -113,7 +113,7 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "extensions": [".js", ".jsx"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
         "map": [
           ["~", "./src"],
           ["@testUtils", "./src/testUtils.jsx"]
