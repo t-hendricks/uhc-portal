@@ -9218,10 +9218,10 @@ opener@^1.5.2:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.2.tgz#5d37e1f35077b9dcac4301372271afdeb2a13598"
   integrity sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==
 
-openshift-assisted-ui-lib@2.8.2:
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-2.8.2.tgz#c1f39734c8361e6c7af43458518997645060ae09"
-  integrity sha512-+vGiBpBGVDsu0FDkqMfLhZ/huQ5sBlIDBAlHY6tdiaYaDKjyXrVjZxNFpzbt2BJ5kWaWL1UEntlC5D3YqXJkIg==
+openshift-assisted-ui-lib@2.9.2:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/openshift-assisted-ui-lib/-/openshift-assisted-ui-lib-2.9.2.tgz#fbc9b9f7fb7c7e63da97b997264d05b864475356"
+  integrity sha512-KPp5940wzDpGqyiqEJ31v/eF17IARtgKXqgpHQ+DLk6rl2P4LWCZTOLz0l6mJjKd+5t6vtYpLTtm+RczKtAGfw==
   dependencies:
     axios-case-converter "^0.8.1"
     cidr-tools "^4.3.0"
