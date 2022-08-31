@@ -1,29 +1,27 @@
 import apiRequest from './apiRequest';
+import type {
+  SelfResourceReview,
+  AccessReviewResponse,
+  FeatureReviewResponse,
+  TermsReviewResponse,
+  SelfAccessReview,
+  SelfResourceReviewRequest,
+  SelfTermsReview,
+} from '../types/authorizations.v1';
 
-const selfResourceReview = params => apiRequest({
-  method: 'post',
-  url: '/api/authorizations/v1/self_resource_review',
-  data: params,
-});
+const selfResourceReview = (params: SelfResourceReviewRequest) =>
+  apiRequest.post<SelfResourceReview>('/api/authorizations/v1/self_resource_review', params);
 
-const selfAccessReview = params => apiRequest({
-  method: 'post',
-  url: '/api/authorizations/v1/self_access_review',
-  data: params,
-});
+const selfAccessReview = (params: SelfAccessReview) =>
+  apiRequest.post<AccessReviewResponse>('/api/authorizations/v1/self_access_review', params);
 
-const selfTermsReview = () => apiRequest({
-  method: 'post',
-  url: '/api/authorizations/v1/self_terms_review',
-});
+const selfTermsReview = (params?: SelfTermsReview) =>
+  apiRequest.post<TermsReviewResponse>('/api/authorizations/v1/self_terms_review', params);
 
-const selfFeatureReview = featureID => apiRequest({
-  method: 'post',
-  data: {
+const selfFeatureReview = (featureID: string) =>
+  apiRequest.post<FeatureReviewResponse>('/api/authorizations/v1/self_feature_review', {
     feature: featureID,
-  },
-  url: '/api/authorizations/v1/self_feature_review',
-});
+  });
 
 const authorizationsService = {
   selfResourceReview,

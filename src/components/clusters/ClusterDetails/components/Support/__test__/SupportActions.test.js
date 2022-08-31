@@ -2,7 +2,7 @@ import { accountsService } from '../../../../../../services';
 import SupportActions, { SupportConstants } from '../SupportActions';
 import { INVALIDATE_ACTION } from '../../../../../../redux/reduxHelpers';
 
-jest.mock('../../../../../../services/accountsService.js');
+jest.mock('../../../../../../services/accountsService');
 
 describe('SupportActions', () => {
   let mockDispatch;

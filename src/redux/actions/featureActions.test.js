@@ -2,7 +2,7 @@ import { detectFeatures, features } from './featureActions';
 import { SET_FEATURE } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
 
-jest.mock('../../services/authorizationsService.js');
+jest.mock('../../services/authorizationsService');
 
 const flushPromises = () => new Promise(setImmediate);
 

@@ -3,9 +3,9 @@ import { clusterService, accountsService } from '../../services';
 import { clustersConstants } from '../constants';
 import { INVALIDATE_ACTION } from '../reduxHelpers';
 
-jest.mock('../../services/accountsService.js');
-jest.mock('../../services/authorizationsService.js');
-jest.mock('../../services/clusterService.js');
+jest.mock('../../services/accountsService');
+jest.mock('../../services/authorizationsService');
+jest.mock('../../services/clusterService');
 
 describe('clustersActions', () => {
   let mockDispatch;
