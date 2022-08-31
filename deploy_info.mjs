@@ -53,7 +53,7 @@ const gitBranch = async (branch) => {
 
 // app.info.json files generated in push_to_insights.sh & insights-Jenkinsfile
 const appInfo = async (url) => {
-  const r = await execFilePromise('curl', ['--silent', '--show-error', '--fail-with-body', url]);
+  const r = await execFilePromise('curl', ['--silent', '--show-error', '--fail', url]);
   try {
     // Some contain a trailing comma, making it invalid JSON, so use JSON5.
     return JSON5.parse(r.stdout);
