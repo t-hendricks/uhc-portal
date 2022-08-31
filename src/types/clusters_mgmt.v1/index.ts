@@ -137,3 +137,7 @@ export type { Value } from './models/Value';
 export type { Version } from './models/Version';
 export type { VersionGate } from './models/VersionGate';
 export type { VersionGateAgreement } from './models/VersionGateAgreement';
+
+export type { STSAccountRole } from './models_/STSAccountRole';
+export type { STSAccountRoles } from './models_/STSAccountRoles';
+export type { STSAccountRolesList } from './models_/STSAccountRolesList';
