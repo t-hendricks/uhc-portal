@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewOnlyMyClustersToggle renders default state correctly 1`] = `
+<Switch
+  aria-label="View only my clusters"
+  className="pf-u-align-items-center"
+  hasCheckIcon={true}
+  id="view-only-my-clusters"
+  isChecked={false}
+  isDisabled={false}
+  isReversed={false}
+  label={
+    <React.Fragment>
+      <span>
+        View only my clusters
+      </span>
+      <Popover
+        bodyContent="Show only the clusters you previously created, or all clusters in your organisation."
+        enableFlip={false}
+      >
+        <Button
+          variant="plain"
+        >
+          <OutlinedQuestionCircleIcon
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+        </Button>
+      </Popover>
+    </React.Fragment>
+  }
+  onChange={[Function]}
+/>
+`;
+
+exports[`ViewOnlyMyClustersToggle renders selected state correctly 1`] = `
+<Switch
+  aria-label="View only my clusters"
+  className="pf-u-align-items-center"
+  hasCheckIcon={true}
+  id="view-only-my-clusters"
+  isChecked={true}
+  isDisabled={false}
+  isReversed={false}
+  label={
+    <React.Fragment>
+      <span>
+        View only my clusters
+      </span>
+      <Popover
+        bodyContent="Show only the clusters you previously created, or all clusters in your organisation."
+        enableFlip={false}
+      >
+        <Button
+          variant="plain"
+        >
+          <OutlinedQuestionCircleIcon
+            color="currentColor"
+            noVerticalAlign={false}
+            size="sm"
+          />
+        </Button>
+      </Popover>
+    </React.Fragment>
+  }
+  onChange={[Function]}
+/>
+`;

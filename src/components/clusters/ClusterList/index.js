@@ -33,6 +33,7 @@ const mapDispatchToProps = {
 const mapStateToProps = state => ({
   ...state.clusters.clusters,
   viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
+  username: state.userProfile.keycloakProfile.username,
   cloudProviders: state.cloudProviders,
   machineTypes: state.machineTypes,
   organization: state.userProfile.organization,
