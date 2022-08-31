@@ -25,55 +25,72 @@ exports[`<ArchivedClusterList /> ArchivedClusterList should render 1`] = `
         className="cluster-list"
       >
         <Connect(GlobalErrorBox) />
-        <Split
+        <Toolbar
           id="cluster-list-top"
         >
-          <SplitItem>
-            <Connect(ClusterListFilter)
-              view="ARCHIVED_CLUSTERS_VIEW"
-            />
-          </SplitItem>
-          <SplitItem
-            className="pf-l-split__item split-margin-left"
+          <ToolbarContent
+            isExpanded={false}
+            showClearFiltersButton={false}
           >
-            <Connect(ClusterListFilterDropdown)
-              isDisabled={false}
-              view="ARCHIVED_CLUSTERS_VIEW"
-            />
-          </SplitItem>
-          <SplitItem
-            className="pf-l-split__item split-margin-left"
-          >
-            <div
-              className="show-active-clusters-link"
+            <ToolbarItem>
+              <Connect(ClusterListFilter)
+                view="ARCHIVED_CLUSTERS_VIEW"
+              />
+            </ToolbarItem>
+            <ToolbarItem
+              className="pf-l-split__item split-margin-left"
             >
-              <Link
-                to="/"
+              <Connect(ClusterListFilterDropdown)
+                isDisabled={false}
+                view="ARCHIVED_CLUSTERS_VIEW"
+              />
+            </ToolbarItem>
+            <ToolbarItem
+              className="pf-l-split__item split-margin-left"
+            >
+              <Connect(ViewOnlyMyClustersToggle)
+                view="ARCHIVED_CLUSTERS_VIEW"
+              />
+            </ToolbarItem>
+            <ToolbarItem
+              className="pf-l-split__item split-margin-left"
+            >
+              <div
+                className="show-active-clusters-link"
               >
-                Show active clusters
-              </Link>
-            </div>
-          </SplitItem>
-          <SplitItem
-            className="spinner-fit-container"
-          />
-          <SplitItem
-            isFilled={true}
-          />
-          <SplitItem>
-            <Connect(ViewPaginationRow)
-              variant="top"
-              viewType="ARCHIVED_CLUSTERS_VIEW"
+                <Link
+                  to="/"
+                >
+                  Show active clusters
+                </Link>
+              </div>
+            </ToolbarItem>
+            <ToolbarItem
+              className="spinner-fit-container"
             />
-          </SplitItem>
-          <SplitItem>
-            <RefreshBtn
-              autoRefresh={true}
-              classOptions="cluster-list-top"
-              refreshFunc={[Function]}
-            />
-          </SplitItem>
-        </Split>
+            <ToolbarItem
+              alignment={
+                Object {
+                  "default": "alignRight",
+                }
+              }
+              className="pf-m-hidden visible-on-lgplus"
+              variant="pagination"
+            >
+              <Connect(ViewPaginationRow)
+                variant="top"
+                viewType="ARCHIVED_CLUSTERS_VIEW"
+              />
+            </ToolbarItem>
+            <ToolbarItem>
+              <RefreshBtn
+                autoRefresh={true}
+                classOptions="cluster-list-top"
+                refreshFunc={[Function]}
+              />
+            </ToolbarItem>
+          </ToolbarContent>
+        </Toolbar>
         <Connect(ClusterListFilterChipGroup)
           view="ARCHIVED_CLUSTERS_VIEW"
         />

@@ -25,14 +25,17 @@ import { Link } from 'react-router-dom';
 
 import {
   Card,
-  Split,
-  SplitItem,
+  Toolbar,
+  ToolbarItem,
+  ToolbarContent,
   PageSection,
 } from '@patternfly/react-core';
 
 import ClusterListFilter from '../common/ClusterListFilter';
 import ClusterListFilterDropDown from '../ClusterList/components/ClusterListFilterDropdown';
 import ClusterListFilterChipGroup from '../ClusterList/components/ClusterListFilterChipGroup';
+import ViewOnlyMyClustersToggle from '../ClusterList/components/ViewOnlyMyClustersToggle';
+
 import ArchivedClusterListTable from './components/ArchiveClusterListTable/ArchivedClusterListTable';
 import RefreshBtn from '../../common/RefreshButton/RefreshButton';
 import ErrorTriangle from '../common/ErrorTriangle';
@@ -46,6 +49,8 @@ import UnarchiveClusterDialog from '../common/UnarchiveClusterDialog';
 import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 import { viewPropsChanged, createViewQueryObject } from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
+
+import './ArchivedClusterList.scss';
 
 class ArchivedClusterList extends Component {
   constructor(props) {
@@ -88,8 +93,8 @@ class ArchivedClusterList extends Component {
   }
 
   refresh() {
-    const { fetchClusters, viewOptions } = this.props;
-    fetchClusters(createViewQueryObject(viewOptions));
+    const { fetchClusters, viewOptions, username } = this.props;
+    fetchClusters(createViewQueryObject(viewOptions, username));
   }
 
   render() {
@@ -161,42 +166,50 @@ class ArchivedClusterList extends Component {
           <Card>
             <div className="cluster-list">
               <GlobalErrorBox />
-              <Split id="cluster-list-top">
-                <SplitItem>
-                  <ClusterListFilter view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
-                </SplitItem>
-                <SplitItem className="pf-l-split__item split-margin-left">
-                  <ClusterListFilterDropDown
-                    view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
-                    isDisabled={pending}
-                  />
-                </SplitItem>
-                <SplitItem className="pf-l-split__item split-margin-left">
-                  <div className="show-active-clusters-link">
-                    <Link to="/">
-                      Show active clusters
-                    </Link>
-                  </div>
-                </SplitItem>
-                <SplitItem className="spinner-fit-container">
-                  { pending && <Spinner className="cluster-list-spinner" /> }
-                  { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" /> }
-                </SplitItem>
-                <SplitItem isFilled />
-                <SplitItem>
-                  <ViewPaginationRow
-                    viewType={viewConstants.ARCHIVED_CLUSTERS_VIEW}
-                    currentPage={viewOptions.currentPage}
-                    pageSize={viewOptions.pageSize}
-                    totalCount={viewOptions.totalCount}
-                    totalPages={viewOptions.totalPages}
-                    variant="top"
-                  />
-                </SplitItem>
-                <SplitItem>
-                  <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
-                </SplitItem>
-              </Split>
+              <Toolbar id="cluster-list-top">
+                <ToolbarContent>
+                  <ToolbarItem>
+                    <ClusterListFilter view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
+                  </ToolbarItem>
+                  <ToolbarItem className="pf-l-split__item split-margin-left">
+                    <ClusterListFilterDropDown
+                      view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
+                      isDisabled={pending}
+                    />
+                  </ToolbarItem>
+                  <ToolbarItem className="pf-l-split__item split-margin-left">
+                    <ViewOnlyMyClustersToggle view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
+                  </ToolbarItem>
+                  <ToolbarItem className="pf-l-split__item split-margin-left">
+                    <div className="show-active-clusters-link">
+                      <Link to="/">
+                        Show active clusters
+                      </Link>
+                    </div>
+                  </ToolbarItem>
+                  <ToolbarItem className="spinner-fit-container">
+                    { pending && <Spinner className="cluster-list-spinner" /> }
+                    { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" /> }
+                  </ToolbarItem>
+                  <ToolbarItem
+                    alignment={{ default: 'alignRight' }}
+                    variant="pagination"
+                    className="pf-m-hidden visible-on-lgplus"
+                  >
+                    <ViewPaginationRow
+                      viewType={viewConstants.ARCHIVED_CLUSTERS_VIEW}
+                      currentPage={viewOptions.currentPage}
+                      pageSize={viewOptions.pageSize}
+                      totalCount={viewOptions.totalCount}
+                      totalPages={viewOptions.totalPages}
+                      variant="top"
+                    />
+                  </ToolbarItem>
+                  <ToolbarItem>
+                    <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
+                  </ToolbarItem>
+                </ToolbarContent>
+              </Toolbar>
               <ClusterListFilterChipGroup view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
               <ArchivedClusterListTable
                 clusters={clusters || []}
@@ -225,6 +238,7 @@ class ArchivedClusterList extends Component {
 }
 
 ArchivedClusterList.propTypes = {
+  username: PropTypes.string.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   fetchClusters: PropTypes.func.isRequired,
   valid: PropTypes.bool.isRequired,
