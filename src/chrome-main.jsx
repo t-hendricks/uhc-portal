@@ -88,7 +88,13 @@ class AppEntry extends React.Component {
             }
           });
       });
-    if (APP_DEVMODE) {
+
+    if (
+      // local development
+      APP_DEVMODE ||
+      // any deployed build which is not in production-stable
+      (APP_API_ENV !== 'production' || APP_BETA)
+    ) {
       insights.chrome.enable.segmentDev();
     }
   }
