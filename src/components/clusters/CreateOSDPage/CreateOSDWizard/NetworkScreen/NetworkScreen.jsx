@@ -92,7 +92,7 @@ function NetworkScreen(props) {
   const onClusterProxyChange = (checked) => {
     trackCheckedState(trackEvents.ConfigureClusterWideProxy, checked);
     change('configure_proxy', checked);
-    if (checked) {
+    if (checked && !formValues.install_to_vpc) {
       change('install_to_vpc', true);
       trackCheckedState(trackEvents.InstallIntoVPC, checked);
     }
