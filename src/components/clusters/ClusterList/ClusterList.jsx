@@ -35,6 +35,7 @@ import ClusterListFilter from '../common/ClusterListFilter';
 import ClusterListActions from './components/ClusterListActions';
 import ClusterListFilterDropdown from './components/ClusterListFilterDropdown';
 import ClusterListFilterChipGroup from './components/ClusterListFilterChipGroup';
+import ViewOnlyMyClustersToggle from './components/ViewOnlyMyClustersToggle';
 
 import ClusterListEmptyState from './components/ClusterListEmptyState';
 import ClusterListTable from './components/ClusterListTable';
@@ -133,8 +134,8 @@ class ClusterList extends Component {
   }
 
   refresh = () => {
-    const { fetchClusters, viewOptions } = this.props;
-    fetchClusters(createViewQueryObject(viewOptions));
+    const { fetchClusters, viewOptions, username } = this.props;
+    fetchClusters(createViewQueryObject(viewOptions, username));
   }
 
   render() {
@@ -164,8 +165,8 @@ class ClusterList extends Component {
 
     const { loadingChangedView } = this.state;
 
-    const hasNoFilters = !queryParams.has_filters
-      && helpers.nestedIsEmpty(viewOptions.flags.subscriptionFilter);
+    const { showMyClustersOnly, subscriptionFilter } = viewOptions.flags;
+    const hasNoFilters = !queryParams.has_filters && helpers.nestedIsEmpty(subscriptionFilter);
 
     /* isPendingNoData - we're waiting for the cluster list response,
       and we have no valid data to show. In this case we probably want to show a "Skeleton".
@@ -174,6 +175,8 @@ class ClusterList extends Component {
 
     const showSpinner = !isPendingNoData && pending && !loadingChangedView;
     const showSkeleton = isPendingNoData || (pending && loadingChangedView);
+    const showEmptyState = !isPendingNoData && !size(clusters)
+      && hasNoFilters && !showMyClustersOnly;
 
     const someReadOnly = clusters.map(c => c?.status?.configuration_mode).includes('read_only');
 
@@ -223,7 +226,7 @@ class ClusterList extends Component {
     // for concrete data they expect to see.
     const dataReady = !showSkeleton;
 
-    if (!size(clusters) && !isPendingNoData && hasNoFilters) {
+    if (showEmptyState) {
       return (
         <PageSection>
           <GlobalErrorBox />
@@ -266,6 +269,7 @@ class ClusterList extends Component {
                     />
                   </ToolbarItem>
                   <ClusterListActions />
+                  <ViewOnlyMyClustersToggle view={viewConstants.CLUSTERS_VIEW} />
                   <ToolbarItem
                     alignment={{ default: 'alignRight' }}
                     variant="pagination"
@@ -316,6 +320,7 @@ class ClusterList extends Component {
 }
 
 ClusterList.propTypes = {
+  username: PropTypes.string.isRequired,
   invalidateClusters: PropTypes.func.isRequired,
   fetchClusters: PropTypes.func.isRequired,
   setClusterDetails: PropTypes.func.isRequired,

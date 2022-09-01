@@ -14,34 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { ReactNode } from 'react';
 import Router from './Router';
 import ErrorBoundary from './ErrorBoundary';
 import EnvOverrideMessage from './EnvOverrideMessage';
 
 import config from '../../config';
 
-const App = ({ children }) => (
+type Props = {
+  children?: ReactNode | undefined;
+};
+
+const App = ({ children }: Props) => (
   <>
     <span id="scrollToTop" />
-    {config.override && <EnvOverrideMessage env={config.override} />}
+    {config.override && <EnvOverrideMessage env={String(config.override)} />}
     <ErrorBoundary>
       {children || <Router />}
     </ErrorBoundary>
   </>
 );
 
-App.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-};
-
-const mapStateToProps = state => ({
-  userProfile: state.userProfile,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;
