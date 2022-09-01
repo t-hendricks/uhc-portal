@@ -94,8 +94,8 @@ class AppEntry extends React.Component {
       APP_DEV_SERVER
       // app is not built in production mode
       || APP_DEVMODE
-      // build is not deployed in production-stable environment
-      || (APP_API_ENV !== 'production' || APP_BETA)
+      // build is not deployed in a production environment
+      || (APP_API_ENV !== 'production')
     ) {
       insights.chrome.enable.segmentDev();
     }
