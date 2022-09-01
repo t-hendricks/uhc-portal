@@ -9,6 +9,8 @@ describe('<ClusterLogs />', () => {
   const getClusterHistory = jest.fn();
   const setSorting = jest.fn();
   const setListFlag = jest.fn();
+  const setFilter = jest.fn();
+  const createdAt = new Date().toISOString();
   const push = jest.fn();
 
   it('should render', () => {
@@ -18,6 +20,8 @@ describe('<ClusterLogs />', () => {
       getClusterHistory={getClusterHistory}
       setSorting={setSorting}
       setListFlag={setListFlag}
+      setFilter={setFilter}
+      createdAt={createdAt}
       clusterLogs={{
         requestState: fixtures.clusterDetails,
       }}

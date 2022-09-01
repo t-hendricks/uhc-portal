@@ -24,6 +24,7 @@ import { clusterLogActions, getClusterHistory } from './components/ClusterLogs/c
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import { viewConstants } from '../../../redux/constants';
+import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
 import {
   fetchClusterInsights,
 } from './components/Insights/InsightsActions';
@@ -120,6 +121,7 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   getUserAccess,
   addNotification,
   fetchUpgradeGates,
+  clearFiltersAndFlags: () => onClearFiltersAndFlags(viewConstants.CLUSTER_LOGS_VIEW),
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

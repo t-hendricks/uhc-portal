@@ -24,6 +24,7 @@ import ClusterDetailsTop from './components/ClusterDetailsTop';
 import TabsRow from './components/TabsRow';
 import Overview from './components/Overview/Overview';
 import Monitoring from './components/Monitoring';
+import ClusterLogs from './components/ClusterLogs';
 import Networking from './components/Networking';
 import AccessControl from './components/AccessControl/AccessControl';
 import AddOns from './components/AddOns';
@@ -66,6 +67,7 @@ class ClusterDetails extends Component {
     this.monitoringTabRef = React.createRef();
     this.accessControlTabRef = React.createRef();
     this.addOnsTabRef = React.createRef();
+    this.clusterHistoryTabRef = React.createRef();
     this.networkingTabRef = React.createRef();
     this.supportTabRef = React.createRef();
     this.machinePoolsTabRef = React.createRef();
@@ -121,11 +123,13 @@ class ClusterDetails extends Component {
       closeModal,
       resetClusterHistory,
       clearGetMachinePoolsResponse,
+      clearFiltersAndFlags,
     } = this.props;
     resetIdentityProvidersState();
     closeModal();
     resetClusterHistory();
     clearGetMachinePoolsResponse();
+    clearFiltersAndFlags();
   }
 
   onDialogClose = () => {
@@ -404,6 +408,7 @@ class ClusterDetails extends Component {
               displayMonitoringTab={displayMonitoringTab}
               displayAccessControlTab={displayAccessControlTab}
               displayAddOnsTab={displayAddOnsTab}
+              displayClusterHistoryTab={displayClusterLogs}
               displayNetworkingTab={displayNetworkingTab}
               displaySupportTab={displaySupportTab}
               displayMachinePoolsTab={displayMachinePoolsTab}
@@ -413,6 +418,7 @@ class ClusterDetails extends Component {
               monitoringTabRef={this.monitoringTabRef}
               accessControlTabRef={this.accessControlTabRef}
               addOnsTabRef={this.addOnsTabRef}
+              clusterHistoryTabRef={this.clusterHistoryTabRef}
               networkingTabRef={this.networkingTabRef}
               insightsTabRef={this.insightsTabRef}
               supportTabRef={this.supportTabRef}
@@ -438,7 +444,6 @@ class ClusterDetails extends Component {
                 cluster={cluster}
                 cloudProviders={cloudProviders}
                 history={history}
-                displayClusterLogs={displayClusterLogs}
                 refresh={this.refresh}
                 openModal={openModal}
                 insightsData={insightsData[cluster.external_id]}
@@ -491,9 +496,22 @@ class ClusterDetails extends Component {
             </ErrorBoundary>
           </TabContent>
           )}
+          {displayClusterLogs && (
+            <TabContent
+              eventKey={4}
+              id="clusterHistoryTabContent"
+              ref={this.clusterHistoryTabRef}
+              aria-label="Cluster history"
+              hidden
+            >
+              <ErrorBoundary>
+                <ClusterLogs externalClusterID={cluster.external_id} history={history} />
+              </ErrorBoundary>
+            </TabContent>
+          )}
           {displayNetworkingTab && (
           <TabContent
-            eventKey={4}
+            eventKey={5}
             id="networkingTabContent"
             ref={this.networkingTabRef}
             aria-label="Networking"
@@ -640,6 +658,7 @@ ClusterDetails.propTypes = {
     fulfilled: PropTypes.bool,
   }).isRequired,
   fetchUpgradeGates: PropTypes.func,
+  clearFiltersAndFlags: PropTypes.func.isRequired,
 };
 
 ClusterDetails.defaultProps = {

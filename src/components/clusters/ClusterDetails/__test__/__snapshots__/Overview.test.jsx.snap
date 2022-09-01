@@ -959,12 +959,6 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
       <Connect(SubscriptionSettings) />
     </Grid>
   </GridItem>
-  <GridItem>
-    <Connect(ClusterLogs)
-      externalClusterID="bae5b227-2472-4e71-be4d-a18fc60bb48a"
-      history={Object {}}
-    />
-  </GridItem>
 </Grid>
 `;
 
@@ -1555,12 +1549,6 @@ exports[`<Overview /> for an ARO cluster should render 1`] = `
         />
       </GridItem>
     </Grid>
-  </GridItem>
-  <GridItem>
-    <Connect(ClusterLogs)
-      externalClusterID="9f50940b-fba8-4c59-9c6c-d64284a2beef"
-      history={Object {}}
-    />
   </GridItem>
 </Grid>
 `;
@@ -2215,12 +2203,6 @@ exports[`<Overview /> for an OCP cluster should render 1`] = `
         />
       </GridItem>
     </Grid>
-  </GridItem>
-  <GridItem>
-    <Connect(ClusterLogs)
-      externalClusterID="9f50940b-fba8-4c59-9c6c-d64284b2026d"
-      history={Object {}}
-    />
   </GridItem>
 </Grid>
 `;

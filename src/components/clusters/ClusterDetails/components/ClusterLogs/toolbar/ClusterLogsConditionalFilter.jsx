@@ -46,10 +46,11 @@ class ClusterLogsConditionalFilter extends Component {
   }
 
   updateFilter() {
-    const { setFilter } = this.props;
+    const { currentFilter, setFilter } = this.props;
     const { description } = this.state;
 
     setFilter({
+      ...currentFilter,
       description,
     });
   }
@@ -119,6 +120,8 @@ class ClusterLogsConditionalFilter extends Component {
 ClusterLogsConditionalFilter.propTypes = {
   currentFilter: PropTypes.shape({
     description: PropTypes.string,
+    timestampFrom: PropTypes.string,
+    timestampTo: PropTypes.string,
   }).isRequired,
   currentFlags: PropTypes.shape({
     severityTypes: PropTypes.arrayOf(PropTypes.string),

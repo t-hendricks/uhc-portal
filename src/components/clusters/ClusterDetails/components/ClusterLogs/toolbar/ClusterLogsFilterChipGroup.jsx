@@ -103,10 +103,11 @@ function ClusterLogsFilterChipGroup({
     },
   ];
 
-  if (helpers.nestedIsEmpty(currentFilter) && helpers.nestedIsEmpty(currentFlags)) {
+  // Do not count the timestamps filters
+  const { timestampFrom, timestampTo, ...currentFilterNoTimestamps } = currentFilter;
+  if (helpers.nestedIsEmpty(currentFilterNoTimestamps) && helpers.nestedIsEmpty(currentFlags)) {
     return null;
   }
-
   return (
     <Split>
       <SplitItem>
@@ -138,6 +139,8 @@ ClusterLogsFilterChipGroup.propTypes = {
   setFilter: PropTypes.func.isRequired,
   currentFilter: PropTypes.shape({
     description: PropTypes.string,
+    timestampFrom: PropTypes.string,
+    timestampTo: PropTypes.string,
   }).isRequired,
   setFlags: PropTypes.func.isRequired,
   currentFlags: PropTypes.shape({
