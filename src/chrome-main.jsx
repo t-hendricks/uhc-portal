@@ -90,9 +90,11 @@ class AppEntry extends React.Component {
       });
 
     if (
-      // local development
+      // app is running in local development
+      APP_DEV_SERVER ||
+      // app is not built in production mode
       APP_DEVMODE ||
-      // any deployed build which is not in production-stable
+      // build is not deployed in production-stable environment
       (APP_API_ENV !== 'production' || APP_BETA)
     ) {
       insights.chrome.enable.segmentDev();
