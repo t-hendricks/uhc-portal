@@ -1,6 +1,10 @@
 {
   "root": true,
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "plugin:import/typescript"
+  ],
+  "plugins": ["@typescript-eslint"],
   "env": {
     "browser": true,
     "jest": true
@@ -14,6 +18,9 @@
           "**/*.test.js*",
           "**/*test.js*",
           "**/*.spec.js*",
+          "**/*.test.ts*",
+          "**/*test.ts*",
+          "**/*.spec.ts*",
           "selenium-js/**/*",
           "webpack.config.js",
           "src/testUtils.jsx"
@@ -24,9 +31,23 @@
     "react/require-default-props": [0],
     "react/jsx-no-target-blank": [2],
     "react/jsx-props-no-spreading": [0],
+    "react/sort-comp": "off",
     "react/state-in-constructor": [2, "never"],
     "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
-    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draft" , "response"] }]
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draft" , "response"] }],
+    "no-use-before-define": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "mjs": "never",
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+   ],
+   "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }]
   },
   "overrides": [{
     "files": [
@@ -48,8 +69,39 @@
       "browser": "readonly",
       "after": "readonly"
     }
+  },
+  {
+    
+    "files": [
+      "**/*.ts",
+      "**/*.tsx"
+    ],
+    "rules": {
+      "no-unused-vars": 0,
+      "react/prop-types": "off",
+      // use prettier with typescript
+      "implicit-arrow-linebreak": 0,
+      "arrow-parens": 0,
+      "indent": 0,
+      "operator-linebreak": 0,
+      "object-curly-newline": 0,
+      "no-confusing-arrow": 0,
+      "function-paren-newline": 0,
+      "react/jsx-one-expression-per-line": 0
+    }
   }],
-  "parser": "@babel/eslint-parser",
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.lint.json",
+    "comment": true,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2017,
+    "extraFileExtensions": [".json"],
+    "sourceType": "module",
+    "tsconfigRootDir": "./"
+  },
   "globals": {
     "insights": "readonly",
     "APP_BETA": "readonly",

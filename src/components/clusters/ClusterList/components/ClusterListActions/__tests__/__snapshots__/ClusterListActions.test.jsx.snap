@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterListActions /> renders correctly 1`] = `
+<Fragment>
+  <ToolbarItem
+    key="createcluster"
+  >
+    <Link
+      to="/create"
+    >
+      <Button>
+        Create cluster
+      </Button>
+    </Link>
+  </ToolbarItem>
+  <ToolbarItem>
+    <Dropdown
+      data-testid="cluster-list-extra-actions-dropdown"
+      dropdownItems={
+        Array [
+          <DropdownItem
+            component="button"
+            data-testid="register-cluster-item"
+          >
+            <div>
+              <Link
+                className="pf-c-dropdown__menu-item"
+                to="/register"
+              >
+                Register disconnected cluster
+              </Link>
+            </div>
+          </DropdownItem>,
+          <DropdownItem
+            component="button"
+          >
+            <div>
+              <Link
+                className="pf-c-dropdown__menu-item"
+                to="archived"
+              >
+                View cluster archives
+              </Link>
+            </div>
+          </DropdownItem>,
+        ]
+      }
+      isOpen={false}
+      isPlain={true}
+      onSelect={[Function]}
+      position="right"
+      toggle={
+        <KebabToggle
+          onToggle={[Function]}
+        />
+      }
+    />
+  </ToolbarItem>
+</Fragment>
+`;

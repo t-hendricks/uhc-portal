@@ -24,6 +24,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ChunkMapperPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/chunk-mapper');
 const FederationPlugin = require('@redhat-cloud-services/frontend-components-config-utilities/federated-modules');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { insights } = require('./package.json');
 
 const name = insights.appname;
@@ -56,7 +57,9 @@ module.exports = async (_env, argv) => {
   const noInsightsProxy = argv.env.noproxy;
 
   const getChromeTemplate = async () => {
-    const result = await axios.get(`https://console.redhat.com/${betaMode ? 'beta/' : ''}apps/chrome`);
+    const result = await axios.get(
+      `https://console.redhat.com/${betaMode ? 'beta/' : ''}apps/chrome`,
+    );
     return result.data;
   };
   const chromeTemplate = await getChromeTemplate();
@@ -76,12 +79,13 @@ module.exports = async (_env, argv) => {
     output: {
       path: outDir,
       filename: 'bundle.[name].[contenthash].js',
-      hashFunction: "xxhash64", // default md4 not allowed on recent NodeJS/OpenSSL
+      hashFunction: 'xxhash64', // default md4 not allowed on recent NodeJS/OpenSSL
       publicPath,
     },
     devtool: 'source-map',
 
     plugins: [
+      new ForkTsCheckerWebpackPlugin(),
       new MiniCssExtractPlugin({
         filename: devMode ? '[name].css' : '[name].[contenthash].css',
         chunkFilename: devMode ? '[id].css' : '[id].[contenthash].css',
@@ -96,7 +100,7 @@ module.exports = async (_env, argv) => {
         APP_API_ENV: JSON.stringify(apiEnv),
         // For openshift-assisted-ui-lib
         BASE_PATH: JSON.stringify(process.env.BASE_PATH),
-        process: { env: {} }
+        process: { env: {} },
       }),
       // For openshift-assisted-ui-lib
       new webpack.EnvironmentPlugin({
@@ -104,9 +108,7 @@ module.exports = async (_env, argv) => {
         REACT_APP_BUILD_MODE: argv.mode || 'development',
       }),
       new CopyWebpackPlugin({
-        patterns: [
-          { from: 'public', to: outDir, toType: 'dir' },
-        ],
+        patterns: [{ from: 'public', to: outDir, toType: 'dir' }],
       }),
       FederationPlugin({
         root: __dirname,
@@ -130,7 +132,9 @@ module.exports = async (_env, argv) => {
       rules: [
         {
           test: new RegExp(entry),
-          loader: require.resolve('@redhat-cloud-services/frontend-components-config-utilities/chrome-render-loader'),
+          loader: require.resolve(
+            '@redhat-cloud-services/frontend-components-config-utilities/chrome-render-loader',
+          ),
           options: {
             appName: moduleName,
           },
@@ -144,6 +148,11 @@ module.exports = async (_env, argv) => {
               cacheDirectory: true,
             },
           },
+        },
+        {
+          test: /src\/.*\.tsx?$/,
+          loader: 'ts-loader',
+          exclude: /(node_modules)/i,
         },
         {
           test: /\.scss$/,
@@ -191,19 +200,21 @@ module.exports = async (_env, argv) => {
         // https://github.com/vfile/vfile/issues/38#issuecomment-683198538
         {
           test: /node_modules\/vfile\/core\.js/,
-          use: [{
-            loader: 'imports-loader',
-            options: {
-              type: 'commonjs',
-              imports: ['single process/browser process'],
+          use: [
+            {
+              loader: 'imports-loader',
+              options: {
+                type: 'commonjs',
+                imports: ['single process/browser process'],
+              },
             },
-          }],
+          ],
         },
       ],
     },
 
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
       modules: [srcDir, modDir],
       // For react-markdown#unified#vfile
       fallback: {
@@ -227,28 +238,30 @@ module.exports = async (_env, argv) => {
 
         return middlewares;
       },
-      proxy: noInsightsProxy ? [
-        {
-          context: ['/mockdata'],
-          pathRewrite: { '^/mockdata': '' },
-          target: 'http://localhost:8010',
-          logLevel: 'info', // Less necessary because mockserver also logs.
-        },
-        {
-          // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
-          // proxy everything except our own app, mimicking insights-proxy behaviour
-          context: ['**', `!${publicPath}**`, '!/mockdata'],
-          target: 'https://console.redhat.com',
-          // replace the "host" header's URL origin with the origin from the target URL
-          changeOrigin: true,
-          // change the "origin" header of the proxied request to avoid CORS
-          // many APIs do not allow the requests from the foreign origin
-          onProxyReq(request) {
-            request.setHeader('origin', 'https://console.redhat.com');
+      proxy: noInsightsProxy
+        ? [
+          {
+            context: ['/mockdata'],
+            pathRewrite: { '^/mockdata': '' },
+            target: 'http://localhost:8010',
+            logLevel: 'info', // Less necessary because mockserver also logs.
           },
-          logLevel: 'debug',
-        },
-      ] : undefined,
+          {
+            // docs: https://github.com/chimurai/http-proxy-middleware#http-proxy-options
+            // proxy everything except our own app, mimicking insights-proxy behaviour
+            context: ['**', `!${publicPath}**`, '!/mockdata'],
+            target: 'https://console.redhat.com',
+            // replace the "host" header's URL origin with the origin from the target URL
+            changeOrigin: true,
+            // change the "origin" header of the proxied request to avoid CORS
+            // many APIs do not allow the requests from the foreign origin
+            onProxyReq(request) {
+              request.setHeader('origin', 'https://console.redhat.com');
+            },
+            logLevel: 'debug',
+          },
+        ]
+        : undefined,
       hot: false,
       port: noInsightsProxy ? 1337 : 8001,
       https: !!noInsightsProxy,

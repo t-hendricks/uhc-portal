@@ -22,10 +22,8 @@ const sqlString = (s) => {
   return `'${escaped}'`;
 };
 
-const createViewQueryObject = (viewOptions, queryObj) => {
-  const queryObject = {
-    ...queryObj,
-  };
+const createViewQueryObject = (viewOptions, username) => {
+  const queryObject = {};
 
   if (viewOptions) {
     queryObject.page = viewOptions.currentPage;
@@ -51,6 +49,11 @@ const createViewQueryObject = (viewOptions, queryObj) => {
       clauses.push("status IN ('Deprovisioned', 'Archived')");
     } else {
       clauses.push("status NOT IN ('Deprovisioned', 'Archived')");
+    }
+
+    // handle my-clusters-only flag
+    if (viewOptions.flags.showMyClustersOnly) {
+      clauses.push(`creator.username='${username}'`);
     }
 
     // If we got a search string from the user, format it as a LIKE query.

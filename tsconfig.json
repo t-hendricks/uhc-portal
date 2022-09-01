@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "outDir": "./dist/",
+    "target": "es2015",
+    "jsx": "react",
+    "allowJs": true,
+    "experimentalDecorators": false,
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "typeRoots": ["node_modules/@types", "@types"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true
+  },
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx"
+  ],
+  "include": ["@types", "src/**/*.ts", "src/**/*.tsx"]
+}
