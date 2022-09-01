@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import get from 'lodash/get';
 
 import ClusterLogsToolbar from './ClusterLogsToolbar';
 import {
@@ -9,12 +10,16 @@ import {
 import { clusterLogActions } from '../clusterLogActions';
 import { viewConstants } from '../../../../../../redux/constants';
 
-const mapStateToProps = (state, ownProps) => ({
-  clusterLogs: state.clusterLogs,
-  viewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
-  currentFilter: state.viewOptions[ownProps.view].filter || { conditionalFilterFlags: {} },
-  currentFlags: state.viewOptions[ownProps.view].flags.conditionalFilterFlags || {},
-});
+const mapStateToProps = (state, ownProps) => {
+  const cluster = get(state, 'clusters.details.cluster', {});
+  return {
+    clusterLogs: state.clusterLogs,
+    viewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
+    currentFilter: state.viewOptions[ownProps.view].filter || { conditionalFilterFlags: {} },
+    currentFlags: state.viewOptions[ownProps.view].flags.conditionalFilterFlags || {},
+    createdAt: get(cluster, 'creation_timestamp', ''),
+  };
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   downloadClusterLogs: (

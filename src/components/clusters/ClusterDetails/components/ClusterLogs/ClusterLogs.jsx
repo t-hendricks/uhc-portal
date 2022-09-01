@@ -12,6 +12,7 @@ import {
 } from '@patternfly/react-core';
 import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
+import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { viewPropsChanged, getQueryParam } from '../../../../../common/queryHelpers';
 import ClusterLogsToolbar from './toolbar';
@@ -22,10 +23,24 @@ import ViewPaginationRow from '../../../common/ViewPaginationRow/viewPaginationR
 import helpers from '../../../../../common/helpers';
 import { SEVERITY_TYPES } from './clusterLogConstants';
 import LiveDateFormat from '../../../../common/LiveDateFormat/LiveDateFormat';
+import {
+  dateParse, dateFormat, getTimestampFrom, onDateChangeFromFilter,
+} from './toolbar/ClusterLogsDatePicker';
 
 class ClusterLogs extends React.Component {
   componentDidMount() {
-    const { setListFlag } = this.props;
+    const {
+      setListFlag, setFilter, viewOptions, createdAt,
+    } = this.props;
+
+    // Apply a timestamp filter by default
+    const minDate = dateParse(createdAt);
+    const { symbol, date } = onDateChangeFromFilter(dateFormat(getTimestampFrom(minDate)));
+    const filterObject = {
+      ...viewOptions.filter,
+      timestampFrom: `${symbol} '${date}'`,
+    };
+    setFilter(filterObject);
 
     const severityTypes = getQueryParam('severityTypes') || '';
     if (!isEmpty(severityTypes)) {
@@ -112,11 +127,14 @@ class ClusterLogs extends React.Component {
               externalClusterID={externalClusterID}
               isPendingNoData={isPendingNoData}
             />
-            <LogTable
-              logs={logs}
-              setSorting={setSorting}
-            />
-
+            {pending ? (
+              <Spinner centered className="cluster-list-spinner" />
+            ) : (
+              <LogTable
+                logs={logs}
+                setSorting={setSorting}
+              />
+            )}
             <ViewPaginationRow
               viewType={viewConstants.CLUSTER_LOGS_VIEW}
               currentPage={viewOptions.currentPage}
@@ -148,11 +166,13 @@ ClusterLogs.propTypes = {
   clusterLogs: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
+  setFilter: PropTypes.func.isRequired,
   setSorting: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  createdAt: PropTypes.string.isRequired,
 };
 
 export default ClusterLogs;

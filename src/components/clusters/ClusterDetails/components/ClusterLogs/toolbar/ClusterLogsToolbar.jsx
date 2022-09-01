@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Toolbar, ToolbarContent, ToolbarItem } from '@patternfly/react-core';
+import {
+  Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem,
+} from '@patternfly/react-core';
 import { viewConstants } from '../../../../../../redux/constants';
-
 import ClusterLogsFilterChipGroup from './ClusterLogsFilterChipGroup';
 import ClusterLogsDownload from './ClusterLogsDownload';
 import ClusterLogsConditionalFilter from './ClusterLogsConditionalFilter';
+import ClusterLogsDatePicker from './ClusterLogsDatePicker';
 import ViewPaginationRow from '../../../../common/ViewPaginationRow/viewPaginationRow';
 
 class ClusterLogsToolbar extends React.PureComponent {
@@ -22,12 +24,22 @@ class ClusterLogsToolbar extends React.PureComponent {
       downloadClusterLogs,
       clearFiltersAndFlags,
       isPendingNoData,
+      createdAt,
     } = this.props;
 
     return (
       <>
-        <Toolbar>
+        <Toolbar className="cluster-log__toolbar">
           <ToolbarContent>
+            <ToolbarGroup variant="filter-group">
+              <ClusterLogsDatePicker
+                currentFilter={currentFilter}
+                currentFlags={currentFlags}
+                setFilter={setFilter}
+                setFlags={setFlags}
+                createdAt={createdAt}
+              />
+            </ToolbarGroup>
             <ToolbarItem>
               <ClusterLogsConditionalFilter
                 view={viewConstants.CLUSTER_LOGS_VIEW}
@@ -77,6 +89,8 @@ ClusterLogsToolbar.propTypes = {
   setFilter: PropTypes.func.isRequired,
   currentFilter: PropTypes.shape({
     description: PropTypes.string,
+    timestampFrom: PropTypes.string,
+    timestampTo: PropTypes.string,
   }).isRequired,
   setFlags: PropTypes.func.isRequired,
   currentFlags: PropTypes.shape({
@@ -91,6 +105,7 @@ ClusterLogsToolbar.propTypes = {
   clusterLogs: PropTypes.object.isRequired,
   downloadClusterLogs: PropTypes.func.isRequired,
   isPendingNoData: PropTypes.bool.isRequired,
+  createdAt: PropTypes.string.isRequired,
 };
 
 export default ClusterLogsToolbar;

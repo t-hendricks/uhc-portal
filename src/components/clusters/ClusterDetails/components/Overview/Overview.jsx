@@ -13,7 +13,6 @@ import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
 import SubscriptionSettings from './SubscriptionSettings';
-import ClusterLogs from '../ClusterLogs';
 import HibernatingClusterCard from '../../../common/HibernatingClusterCard/HibernatingClusterCard';
 import InstallationLogView, { shouldShowLogs } from './InstallationLogView';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
@@ -61,7 +60,6 @@ class Overview extends React.Component {
       cluster,
       cloudProviders,
       history,
-      displayClusterLogs,
       refresh,
       openModal,
       insightsData,
@@ -222,11 +220,6 @@ class Overview extends React.Component {
             </Grid>
           </GridItem>
         )}
-        {displayClusterLogs && (
-          <GridItem>
-            <ClusterLogs externalClusterID={cluster.external_id} history={history} />
-          </GridItem>
-        )}
       </Grid>
     );
   }
@@ -236,7 +229,6 @@ Overview.propTypes = {
   cluster: PropTypes.object,
   cloudProviders: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  displayClusterLogs: PropTypes.bool.isRequired,
   refresh: PropTypes.func,
   openModal: PropTypes.func.isRequired,
   insightsData: PropTypes.object,
