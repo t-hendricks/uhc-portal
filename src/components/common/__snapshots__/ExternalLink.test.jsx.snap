@@ -12,8 +12,8 @@ exports[`<ExternalLink /> should render 1`] = `
   >
      (new window or tab)
   </span>
-   
   <ExternalLinkAltIcon
+    className="pf-u-ml-sm"
     color="#0066cc"
     noVerticalAlign={false}
     size="sm"

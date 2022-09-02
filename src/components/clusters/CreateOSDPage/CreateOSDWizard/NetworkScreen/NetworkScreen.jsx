@@ -133,8 +133,8 @@ function NetworkScreen(props) {
             </GridItem>
             <GridItem>
               <Text>
-                Install your cluster with  all public or all private API endpoint and
-                application routes.
+                {/* eslint-disable-next-line max-len */}
+                Install your cluster with all public or private API endpoints and application routes.
               </Text>
             </GridItem>
             <Field

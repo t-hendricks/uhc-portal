@@ -23,7 +23,7 @@ import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/Redu
 import {
   HTTPS_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_PLACEHOLDER,
-} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingPlaceholders';
+} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components/CAUpload';
 
 const validateUrlHttps = value => validateUrl(value, ['http', 'https']);

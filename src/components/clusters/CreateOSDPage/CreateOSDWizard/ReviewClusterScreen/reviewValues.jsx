@@ -7,12 +7,6 @@ import {
 } from '@patternfly/react-core';
 import { billingModels } from '../../../../../common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
-import {
-  MACHINE_CIDR_PLACEHOLDER,
-  SERVICE_CIDR_PLACEHOLDER,
-  HOST_PREFIX_PLACEHOLDER,
-  podCidrPlaceholder,
-} from '../../CreateOSDForm/FormSections/NetworkingSection/networkingPlaceholders';
 import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
 
 /**
@@ -57,7 +51,7 @@ const reviewValues = {
   },
   cloud_provider: {
     title: 'Cloud provider',
-    valueTransform: value => value.toUpperCase(),
+    valueTransform: value => value?.toUpperCase(),
   },
   name: {
     title: 'Cluster name',
@@ -70,7 +64,7 @@ const reviewValues = {
   },
   cluster_version: {
     title: 'Version',
-    valueTransform: value => value.raw_id,
+    valueTransform: value => value?.raw_id,
   },
   region: {
     title: 'Region',
@@ -298,39 +292,16 @@ const reviewValues = {
   },
   network_machine_cidr: {
     title: 'Machine CIDR',
-    valueTransform: (value) => {
-      if (value) {
-        return value;
-      }
-      return `${MACHINE_CIDR_PLACEHOLDER} (default)`;
-    },
   },
   network_service_cidr: {
     title: 'Service CIDR',
-    valueTransform: (value) => {
-      if (value) {
-        return value;
-      }
-      return `${SERVICE_CIDR_PLACEHOLDER} (default)`;
-    },
   },
   network_pod_cidr: {
     title: 'Pod CIDR',
-    valueTransform: (value, allValues) => {
-      if (value) {
-        return value;
-      }
-      return `${podCidrPlaceholder(allValues.cloud_provider)} (default)`;
-    },
   },
   network_host_prefix: {
     title: 'Host prefix',
-    valueTransform: (value) => {
-      if (value) {
-        return `/${value}`;
-      }
-      return `${HOST_PREFIX_PLACEHOLDER} (default)`;
-    },
+    valueTransform: value => (value.includes('/') ? value : `/${value}`),
   },
   cluster_privacy: {
     title: 'Cluster privacy',
