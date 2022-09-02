@@ -27,7 +27,7 @@ import {
   HTTP_PROXY_PLACEHOLDER,
   HTTPS_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_PLACEHOLDER,
-} from '../../CreateOSDForm/FormSections/NetworkingSection/networkingPlaceholders';
+} from '../../CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 
 import { MAX_FILE_SIZE, ACCEPT } from '../../../ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
 
