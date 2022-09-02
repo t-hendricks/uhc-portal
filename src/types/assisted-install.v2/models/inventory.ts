@@ -6,7 +6,7 @@ import type { boot } from './boot';
 import type { cpu } from './cpu';
 import type { disk } from './disk';
 import type { gpu } from './gpu';
-import type { interface } from './interface';
+import type { interface_ } from './interface';
 import type { memory } from './memory';
 import type { route } from './route';
 import type { system_vendor } from './system_vendor';
@@ -19,7 +19,7 @@ export type inventory = {
     disks?: Array<disk>;
     gpus?: Array<gpu>;
     hostname?: string;
-    interfaces?: Array<interface>;
+    interfaces?: Array<interface_>;
     memory?: memory;
     routes?: Array<route>;
     system_vendor?: system_vendor;

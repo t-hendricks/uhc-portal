@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type interface = {
+export type interface_ = {
     biosdevname?: string;
     client_id?: string;
     flags?: Array<string>;

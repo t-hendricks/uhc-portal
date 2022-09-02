@@ -80,7 +80,7 @@ export type { infra_error } from './models/infra_error';
 export type { ingress_cert_params } from './models/ingress_cert_params';
 export { install_cmd_request } from './models/install_cmd_request';
 export type { installer_args_params } from './models/installer_args_params';
-export type { interface } from './models/interface';
+export type { interface_ } from './models/interface';
 export { inventory } from './models/inventory';
 export type { io_perf } from './models/io_perf';
 export type { l2_connectivity } from './models/l2_connectivity';

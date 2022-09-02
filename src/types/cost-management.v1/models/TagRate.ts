@@ -5,14 +5,14 @@
 export type TagRate = {
     readonly uuid?: string;
     metric: any;
-    'cost-type'?: TagRate.'cost-type';
+    'cost-type'?: TagRate.CostType;
     description?: string;
     tag_rates?: any;
 };
 
 export namespace TagRate {
 
-    export enum 'cost-type' {
+    export enum CostType {
         INFRASTRUCTURE = 'Infrastructure',
         SUPPLEMENTARY = 'Supplementary',
     }
