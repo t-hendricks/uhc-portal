@@ -25,6 +25,7 @@ const mapStateToProps = (state) => {
       clusterID: cluster.id,
       httpProxyUrl: cluster.proxy?.http_proxy,
       httpsProxyUrl: cluster.proxy?.https_proxy,
+      noProxyDomains: cluster.proxy?.no_proxy,
     },
     additionalTrustBundle: cluster?.additional_trust_bundle,
     editClusterProxyResponse: state.clusters.editedCluster,
@@ -40,6 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
       proxy: {
         http_proxy: formData.httpProxyUrl,
         https_proxy: formData.httpsProxyUrl,
+        no_proxy: formData.noProxyDomains,
       },
       additional_trust_bundle: formData.additionalTrustBundle,
     };
