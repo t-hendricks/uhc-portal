@@ -76,6 +76,8 @@ class DynamicSelect extends React.Component {
     } = this.props;
     const show = matchesDependencies && requestStatus.fulfilled;
 
+    let showError = meta.touched && meta.invalid; // Normally hide until touched, but see below.
+
     let options;
     if (show) {
       if (items.length > 0) {
@@ -91,6 +93,11 @@ class DynamicSelect extends React.Component {
         options = (
           <FormSelectOption isDisabled isPlaceholder value="" label={emptyPlaceholder} />
         );
+        if (isRequired && meta.invalid) {
+          // Highlight problem immediately — can't satisfy with current data. User must change
+          // dependencies or go create new options (and toggle dependencies to force reload).
+          showError = true;
+        }
       }
     } else if (requestStatus.pending) {
       options = (
@@ -110,7 +117,7 @@ class DynamicSelect extends React.Component {
       <FormGroup
         label={label}
         labelIcon={labelIcon}
-        validated={meta.touched && meta.invalid ? 'error' : 'default'}
+        validated={showError ? 'error' : 'default'}
         helperText={helperText}
         helperTextInvalid={meta.error}
         fieldId={input.name}

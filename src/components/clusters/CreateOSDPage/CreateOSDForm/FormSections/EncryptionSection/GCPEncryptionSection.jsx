@@ -41,7 +41,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           labelIcon={<PopoverHint hint={constants.keyRing} />}
           helperText="A key ring organizes keys in a specific Google Cloud location."
           noDependenciesPlaceholder="Enter GCP credentials first"
-          emptyPlaceholder="No key rings"
+          emptyPlaceholder="No key rings found for this location"
           placeholder="Select key ring"
           requestErrorTitle="Error listing key rings using your GCP credentials"
           validate={required}
@@ -58,7 +58,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           label="Key name"
           labelIcon={<PopoverHint hint={constants.keyName} />}
           helperText="Name of the key in the keyring."
-          emptyPlaceholder="No keys"
+          emptyPlaceholder="No keys found for this location and key ring"
           placeholder="Select key"
           requestErrorTitle="Error listing keys using your GCP credentials"
           validate={required}
