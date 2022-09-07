@@ -23,6 +23,7 @@ import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import {
   HTTP_PROXY_PLACEHOLDER,
   HTTPS_PROXY_PLACEHOLDER,
+  NO_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_PLACEHOLDER,
 } from '../../CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 
@@ -147,6 +148,19 @@ function ClusterProxyScreen({
             helpText="Specify a proxy URL to use for HTTPS connections outside the cluster."
             showHelpTextOnError={false}
             onBlur={onTouched}
+          />
+        </GridItem>
+        <GridItem sm={0} md={2} xl2={4} />
+        <GridItem sm={12} md={10} xl2={8}>
+          <Field
+            component={ReduxVerticalFormGroup}
+            name="no_proxy"
+            label="No Proxy domains"
+            placeholder={NO_PROXY_PLACEHOLDER}
+            type="text"
+            helpText="A comma-separated list of domains and CIDRs for which the proxy should not be used.
+            To include all subdomains of that domain, use *."
+            showHelpTextOnError={false}
           />
         </GridItem>
         <GridItem sm={0} md={2} xl2={4} />

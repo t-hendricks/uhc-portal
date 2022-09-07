@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     product: valueSelector(state, 'product'),
     httpProxyUrl: valueSelector(state, 'http_proxy_url'),
     httpsProxyUrl: valueSelector(state, 'https_proxy_url'),
+    noProxyDomains: valueSelector(state, 'no_proxy'),
     additionalTrustBundle: valueSelector(state, 'additional_trust_bundle'),
   };
 };
