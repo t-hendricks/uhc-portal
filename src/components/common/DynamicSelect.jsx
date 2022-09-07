@@ -105,7 +105,7 @@ class DynamicSelect extends React.Component {
       );
     } else {
       options = (
-        <FormSelectOption isDisabled value="" label={noDependenciesPlaceholder} />
+        <FormSelectOption isDisabled value="" label={noDependenciesPlaceholder || ''} />
       );
     }
 
