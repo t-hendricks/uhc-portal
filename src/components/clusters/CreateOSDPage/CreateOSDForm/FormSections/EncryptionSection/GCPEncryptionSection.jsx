@@ -21,6 +21,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           label="Key ring location"
           fieldId="key_location"
           labelIcon={<PopoverHint hint={constants.regionHint} />}
+          isRequired
         >
           <Field
             component={KMSKeyLocationComboBox}
@@ -75,6 +76,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           label="KMS Service Account"
           placeholder="KMS Service Account"
           validate={validateGCPKMSServiceAccount}
+          isRequired
           helpText="GCP Service account will be used for compute scaling."
           extendedHelpText={(
             <>

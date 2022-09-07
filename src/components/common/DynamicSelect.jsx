@@ -65,6 +65,7 @@ class DynamicSelect extends React.Component {
       matchesDependencies,
       meta,
       input,
+      isRequired,
       label,
       labelIcon,
       helperText,
@@ -113,6 +114,7 @@ class DynamicSelect extends React.Component {
         helperText={helperText}
         helperTextInvalid={meta.error}
         fieldId={input.name}
+        isRequired={isRequired}
       >
         {matchesDependencies && requestStatus.error && (
           <ErrorBox message={requestErrorTitle} response={requestStatus} />
@@ -133,6 +135,7 @@ DynamicSelect.propTypes = {
   input: PropTypes.object.isRequired,
   // redux-form metadata like error or active states
   meta: PropTypes.object.isRequired,
+  isRequired: PropTypes.bool,
   label: PropTypes.string.isRequired,
   labelIcon: PropTypes.node,
   helperText: PropTypes.string,
