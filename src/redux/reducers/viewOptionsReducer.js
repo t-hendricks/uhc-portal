@@ -144,6 +144,9 @@ const viewOptionsReducer = (state = initialState, action) => {
       updateState[action.viewType] = {
         ...state[action.viewType],
         pageSize: action.pageSize,
+        // reset current page to 1, as otherwise we might be on a page that could no longer be valid
+        // after changing the page size
+        currentPage: 1,
       };
       return { ...state, ...updateState };
 
