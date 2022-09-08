@@ -15,7 +15,9 @@ import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/Redu
 import {
   HTTPS_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_PLACEHOLDER,
+  TRUST_BUNDLE_HELPER_TEXT,
   NO_PROXY_PLACEHOLDER,
+  NO_PROXY_HELPER_TEXT,
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components/CAUpload';
 
@@ -137,13 +139,25 @@ const EditClusterWideProxyDialog = (props) => {
           </GridItem>
 
           <GridItem sm={12} md={10} xl2={11}>
+            <Field
+              component={ReduxVerticalFormGroup}
+              name="noProxyDomains"
+              label="No Proxy domains"
+              placeholder={NO_PROXY_PLACEHOLDER}
+              type="text"
+              helpText={NO_PROXY_HELPER_TEXT}
+              showHelpTextOnError={false}
+            />
+          </GridItem>
+
+          <GridItem sm={12} md={10} xl2={11}>
             {!openFileUpload ? (
               <>
                 <Text className="ocm-c-networking-vpc-details__card pf-c-form__label-text pf-c-form__group-label">
                   Additional Trust Bundle{' '}
                   <PopoverHint
                     headerContent="Additional trust bundle"
-                    bodyContent="An additional trust bundle is a PEM encoded X.509 certificate bundle that will be added to the nodes' trusted certificate store."
+                    bodyContent={TRUST_BUNDLE_HELPER_TEXT}
                   />
                 </Text>
                 <Text>

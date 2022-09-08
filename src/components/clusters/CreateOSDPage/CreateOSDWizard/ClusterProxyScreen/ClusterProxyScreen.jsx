@@ -24,7 +24,9 @@ import {
   HTTP_PROXY_PLACEHOLDER,
   HTTPS_PROXY_PLACEHOLDER,
   NO_PROXY_PLACEHOLDER,
+  NO_PROXY_HELPER_TEXT,
   TRUST_BUNDLE_PLACEHOLDER,
+  TRUST_BUNDLE_HELPER_TEXT,
 } from '../../CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 
 import {
@@ -158,8 +160,7 @@ function ClusterProxyScreen({
             label="No Proxy domains"
             placeholder={NO_PROXY_PLACEHOLDER}
             type="text"
-            helpText="A comma-separated list of domains and CIDRs for which the proxy should not be used.
-            To include all subdomains of that domain, use *."
+            helpText={NO_PROXY_HELPER_TEXT}
             showHelpTextOnError={false}
           />
         </GridItem>
@@ -171,7 +172,7 @@ function ClusterProxyScreen({
             label="Additional trust bundle"
             placeholder={TRUST_BUNDLE_PLACEHOLDER}
             extendedHelpTitle="Additional trust bundle"
-            extendedHelpText="An additional trust bundle is a PEM encoded X.509 certificate bundle that will be added to the nodes' trusted certificate store."
+            extendedHelpText={TRUST_BUNDLE_HELPER_TEXT}
             validate={[validateCA, validateAtLeastOne]}
             onBlur={onTouched}
             dropzoneProps={{
