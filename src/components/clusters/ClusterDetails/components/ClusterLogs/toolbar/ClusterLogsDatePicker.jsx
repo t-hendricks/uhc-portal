@@ -32,23 +32,11 @@ const getDefaultTimestamps = (refresh = false) => {
   return defaultTimestamps;
 };
 
-export const getTimestampFrom = (minDate, mapToRange = true) => {
-  const {
-    lastMonthStart, lastWeekStart, last72HoursStart,
-  } = getDefaultTimestamps();
+export const getTimestampFrom = (minDate) => {
+  const { lastMonthStart } = getDefaultTimestamps();
 
-  if (!mapToRange) {
-    return minDate;
-  }
-
-  if (lastMonthStart >= minDate) {
+  if (minDate < lastMonthStart) {
     return lastMonthStart;
-  }
-  if (lastWeekStart >= minDate) {
-    return lastWeekStart;
-  }
-  if (last72HoursStart >= minDate) {
-    return last72HoursStart;
   }
 
   return minDate;
@@ -116,7 +104,6 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
     { value: optionValues.Custom },
   ];
 
-  // pick first option that maps to the select options
   const [startDateStr, setStartDateStr] = useState(dateFormat(getTimestampFrom(minDate)));
   const [endDateStr, setEndDateStr] = useState(dateFormat(now));
   const [selectorOpen, setSelectorOpen] = useState(false);
