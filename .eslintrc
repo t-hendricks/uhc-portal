@@ -37,6 +37,8 @@
     "react/state-in-constructor": [2, "never"],
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draft" , "response"] }],
     "no-use-before-define": "off",
+    "import/prefer-default-export": 0,
+    "no-shadow": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -50,14 +52,7 @@
    ],
    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }]
   },
-  "overrides": [{
-    "files": [
-      "**/*index.js*"
-    ],
-    "rules": {
-      "import/prefer-default-export": 0
-    }
-  },
+  "overrides": [
   {
     "files": [
       "selenium-js/**/*.js"
@@ -72,7 +67,6 @@
     }
   },
   {
-    
     "files": [
       "**/*.ts",
       "**/*.tsx"

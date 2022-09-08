@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import {
   Card,
@@ -11,19 +11,24 @@ import {
   TextContent,
   TextVariants,
 } from '@patternfly/react-core';
-import MultipleAccountsInfoBox from './MultipleAccountsInfoBox';
-import PopoverHint from '../../../../../common/PopoverHint';
-import ExternalLink from '../../../../../common/ExternalLink';
-import InstructionCommand from '../../../../../common/InstructionCommand';
-import links from '../../../../../../common/installLinks.mjs';
+
+import { GlobalState } from '~/redux/store';
+import PopoverHint from '~/components/common/PopoverHint';
+import ExternalLink from '~/components/common/ExternalLink';
+import InstructionCommand from '~/components/common/InstructionCommand';
+import links from '~/common/installLinks.mjs';
 import { trackEvents } from '~/common/analytics';
+import { RosaCliCommand } from '../constants/cliCommands';
+import MultipleAccountsInfoBox from './MultipleAccountsInfoBox';
 
-export const rosaCLICommand = {
-  userRole: 'rosa create user-role',
-  linkUserRole: 'rosa link user-role <arn>',
-};
+interface UserRoleScreenProps {
+  hideTitle?: boolean;
+}
 
-const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
+export const UserRoleScreen = ({ hideTitle = false }: UserRoleScreenProps) => {
+  const hasAwsAccounts = useSelector<GlobalState>(
+    state => !!state.rosaReducer.getAWSAccountIDsResponse?.data?.length,
+  );
   const [isAlertShown, setIsAlertShown] = useState(true);
 
   return (
@@ -46,7 +51,7 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
         <Title headingLevel="h2">
           Create a user role
         </Title>
-        {hasAWSAccounts && isAlertShown && (
+        {hasAwsAccounts && isAlertShown && (
           <MultipleAccountsInfoBox setIsAlertShown={setIsAlertShown} userRole />
         )}
         <TextContent>
@@ -70,7 +75,7 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
               textAriaLabel="Copyable ROSA create user-role"
               trackEvent={trackEvents.CopyUserRoleCreate}
             >
-              {rosaCLICommand.userRole}
+              {RosaCliCommand.UserRole}
             </InstructionCommand>
           </div>
           <Title headingLevel="h3">
@@ -87,7 +92,7 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
                 textAriaLabel="Copyable ROSA link user-role --arn"
                 trackEvent={trackEvents.CopyUserRoleLink}
               >
-                {rosaCLICommand.linkUserRole}
+                {RosaCliCommand.LinkUserRole}
               </InstructionCommand>
             </GridItem>
             <GridItem sm={1} md={1}>
@@ -102,7 +107,7 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
                   >
                     rosa list user-role
                   </InstructionCommand>
-)}
+                )}
               />
             </GridItem>
           </Grid>
@@ -111,10 +116,3 @@ const UserRoleScreen = ({ hasAWSAccounts, hideTitle = false }) => {
     </Card>
   );
 };
-
-UserRoleScreen.propTypes = {
-  hasAWSAccounts: PropTypes.bool,
-  hideTitle: PropTypes.bool,
-};
-
-export default UserRoleScreen;

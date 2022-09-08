@@ -35,14 +35,14 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
           >
             Cancel this update
           </Button>,
-          undefined,
+          null,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Close
           </Button>,
-          undefined,
+          null,
           false,
         ]
       }
@@ -59,7 +59,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
       title="Cancel update"
       titleIconVariant={null}
       titleLabel=""
-      variant="small"
+      variant="default"
     >
       <Portal
         containerInfo={
@@ -75,8 +75,8 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                   aria-label="Cancel update"
                   aria-labelledby="pf-modal-part-0 pf-modal-part-1"
                   aria-modal="true"
-                  class="pf-c-modal-box pf-m-sm"
-                  data-ouia-component-id="OUIA-Generated-Modal-small-1"
+                  class="pf-c-modal-box"
+                  data-ouia-component-id="OUIA-Generated-Modal-default-1"
                   data-ouia-component-type="PF4/ModalContent"
                   data-ouia-safe="true"
                   id="pf-modal-part-0"
@@ -86,7 +86,7 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                     aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
-                    data-ouia-component-id="OUIA-Generated-Modal-small-1-ModalBoxCloseButton"
+                    data-ouia-component-id="OUIA-Generated-Modal-default-1-ModalBoxCloseButton"
                     data-ouia-component-type="PF4/Button"
                     data-ouia-safe="true"
                     type="button"
@@ -182,14 +182,14 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
               >
                 Cancel this update
               </Button>,
-              undefined,
+              null,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Close
               </Button>,
-              undefined,
+              null,
               false,
             ]
           }
@@ -203,13 +203,13 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
           isOpen={true}
           labelId="pf-modal-part-1"
           onClose={[Function]}
-          ouiaId="OUIA-Generated-Modal-small-1"
+          ouiaId="OUIA-Generated-Modal-default-1"
           ouiaSafe={true}
           showClose={true}
           title="Cancel update"
           titleIconVariant={null}
           titleLabel=""
-          variant="small"
+          variant="default"
         >
           <Backdrop>
             <div
@@ -221,6 +221,9 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                 focusTrapOptions={
                   Object {
                     "clickOutsideDeactivates": true,
+                    "tabbableOptions": Object {
+                      "displayCheck": "none",
+                    },
                   }
                 }
                 paused={false}
@@ -234,20 +237,20 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                     aria-label="Cancel update"
                     aria-labelledby="pf-modal-part-0 pf-modal-part-1"
                     className=""
-                    data-ouia-component-id="OUIA-Generated-Modal-small-1"
+                    data-ouia-component-id="OUIA-Generated-Modal-default-1"
                     data-ouia-component-type="PF4/ModalContent"
                     data-ouia-safe={true}
                     id="pf-modal-part-0"
                     style={Object {}}
-                    variant="small"
+                    variant="default"
                   >
                     <div
                       aria-describedby="pf-modal-part-2"
                       aria-label="Cancel update"
                       aria-labelledby="pf-modal-part-0 pf-modal-part-1"
                       aria-modal="true"
-                      className="pf-c-modal-box pf-m-sm"
-                      data-ouia-component-id="OUIA-Generated-Modal-small-1"
+                      className="pf-c-modal-box"
+                      data-ouia-component-id="OUIA-Generated-Modal-default-1"
                       data-ouia-component-type="PF4/ModalContent"
                       data-ouia-safe={true}
                       id="pf-modal-part-0"
@@ -256,13 +259,13 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                     >
                       <ModalBoxCloseButton
                         onClose={[Function]}
-                        ouiaId="OUIA-Generated-Modal-small-1"
+                        ouiaId="OUIA-Generated-Modal-default-1"
                       >
                         <Button
                           aria-label="Close"
                           className=""
                           onClick={[Function]}
-                          ouiaId="OUIA-Generated-Modal-small-1-ModalBoxCloseButton"
+                          ouiaId="OUIA-Generated-Modal-default-1-ModalBoxCloseButton"
                           variant="plain"
                         >
                           <ButtonBase
@@ -270,14 +273,14 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                             className=""
                             innerRef={null}
                             onClick={[Function]}
-                            ouiaId="OUIA-Generated-Modal-small-1-ModalBoxCloseButton"
+                            ouiaId="OUIA-Generated-Modal-default-1-ModalBoxCloseButton"
                             variant="plain"
                           >
                             <button
                               aria-disabled={false}
                               aria-label="Close"
                               className="pf-c-button pf-m-plain"
-                              data-ouia-component-id="OUIA-Generated-Modal-small-1-ModalBoxCloseButton"
+                              data-ouia-component-id="OUIA-Generated-Modal-default-1-ModalBoxCloseButton"
                               data-ouia-component-type="PF4/Button"
                               data-ouia-safe={true}
                               disabled={false}

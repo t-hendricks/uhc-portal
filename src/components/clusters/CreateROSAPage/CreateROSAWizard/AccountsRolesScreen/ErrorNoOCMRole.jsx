@@ -7,7 +7,7 @@ import {
 import { trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import InstructionCommand from '../../../../common/InstructionCommand';
-import { rosaOcmRoleCLICommands } from './AssociateAWSAccountModal/OCMRoleScreen/OCMRoleScreen';
+import { RosaCliCommand } from './constants/cliCommands';
 
 const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
   <TextContent className="ocm-alert-text">
@@ -27,7 +27,7 @@ const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
           />
         </strong>
         <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role" trackEvent={trackEvents.CopyOCMRoleCreateBasic}>
-          {rosaOcmRoleCLICommands.ocmRole}
+          {RosaCliCommand.OcmRole}
         </InstructionCommand>
       </GridItem>
       <GridItem sm={12} md={1} className="ocm-wizard-or-container">
@@ -44,7 +44,7 @@ const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
           />
         </strong>
         <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin" trackEvent={trackEvents.CopyOCMRoleCreateAdmin}>
-          {rosaOcmRoleCLICommands.adminOcmRole}
+          {RosaCliCommand.AdminOcmRole}
         </InstructionCommand>
       </GridItem>
     </Grid>
@@ -55,7 +55,7 @@ const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
     <Grid>
       <GridItem sm={7} md={5}>
         <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn" trackEvent={trackEvents.CopyOCMRoleLink}>
-          {rosaOcmRoleCLICommands.linkOcmRole}
+          {RosaCliCommand.LinkOcmRole}
         </InstructionCommand>
       </GridItem>
       <GridItem sm={1} md={1}>

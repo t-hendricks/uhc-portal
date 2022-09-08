@@ -1,19 +1,26 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Popover } from '@patternfly/react-core';
+import { Button, Popover, PopoverProps } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 
 import './PopoverHint.scss';
 
+interface PopoverHintProps extends Omit<PopoverProps, 'bodyContent'> {
+  hint?: React.ReactNode;
+  title?: React.ReactNode;
+  iconClassName?: string;
+  footer?: React.ReactNode;
+  bodyContent?: React.ReactNode | ((hide: () => void) => React.ReactNode);
+}
+
 const PopoverHint = ({
-  title, hint, iconClassName, footer, ...popoverProps
-}) => (
+  title, hint, iconClassName, footer, bodyContent, ...popoverProps
+}: PopoverHintProps) => (
   <>
     <Popover
       headerContent={title}
-      bodyContent={hint}
       footerContent={footer}
       aria-label="help"
+      {...bodyContent ? { bodyContent } : { bodyContent: hint }}
       {...popoverProps}
     >
       <Button
@@ -29,12 +36,5 @@ const PopoverHint = ({
     </Popover>
   </>
 );
-
-PopoverHint.propTypes = {
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
-  hint: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]).isRequired,
-  footer: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
-  iconClassName: PropTypes.string,
-};
 
 export default PopoverHint;
