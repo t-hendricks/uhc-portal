@@ -37,7 +37,7 @@ const VPCDetailsCard = (props) => {
     openModal(modals.EDIT_CLUSTER_WIDE_PROXY);
   };
 
-  const handleNoProxys = noProxyDomains ? (
+  const renderNoProxyDomains = noProxyDomains ? (
     noProxyDomains.split(',').map(domain => (
       <Label isCompact color="blue">{domain.trim()}</Label>
     ))
@@ -99,7 +99,7 @@ const VPCDetailsCard = (props) => {
             <DescriptionListTerm>No Proxy domains</DescriptionListTerm>
             <DescriptionListDescription>
               <LabelGroup isCompact>
-                {handleNoProxys}
+                {renderNoProxyDomains}
               </LabelGroup>
             </DescriptionListDescription>
           </DescriptionListGroup>
