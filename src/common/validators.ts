@@ -1,8 +1,12 @@
 import { get, indexOf, inRange } from 'lodash';
 import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
-
+import { NodeLabelParams } from 'openshift-assisted-ui-lib/cim';
 import { clusterService } from '~/services';
+import { GCP } from '../types/cluster_mgmt.v1';
+import { AugmentedSubnetwork, SubnetFormProps } from '../types/types';
+
+type Networks = Parameters<typeof cidrTools['overlap']>[0];
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
@@ -87,20 +91,22 @@ const LABEL_VALUE_REGEX = /^(([a-z0-9][a-z0-9-_.]*)?[a-z0-9])?$/i;
 const MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH = 32;
 
 // Function to validate that a field is mandatory, i.e. must be a non whitespace string
-const required = (value) => (value && value.trim() ? undefined : 'Field is required');
+const required = (value: string): string | undefined =>
+  value && value.trim() ? undefined : 'Field is required';
 
 // Function to validate that a field has a true value.
 // Use with checkbox to ensure it is selected on a form, e.g. Ts&Cs agreement
-const requiredTrue = (value) => (value && value === true ? undefined : 'Field must be selected');
+const requiredTrue = (value: string | boolean): string | undefined =>
+  value && value === true ? undefined : 'Field must be selected';
 
 // Function to validate that user has acknowledged prerequisites by clicking checkbox.
-const acknowledgePrerequisites = (value) =>
+const acknowledgePrerequisites = (value: string | boolean): string | undefined =>
   value && value === true
     ? undefined
     : 'Acknowledge that you have read and completed all prerequisites.';
 
 // Function to validate that the identity provider name field doesn't include whitespaces:
-const checkIdentityProviderName = (value) => {
+const checkIdentityProviderName = (value: string): string | undefined => {
   if (!value) {
     return 'Name is required.';
   }
@@ -114,7 +120,7 @@ const checkIdentityProviderName = (value) => {
 };
 
 // Function to validate that the issuer field uses https scheme:
-const checkOpenIDIssuer = (value) => {
+const checkOpenIDIssuer = (value: string): string | undefined => {
   if (!value) {
     return 'Issuer URL is required.';
   }
@@ -141,7 +147,7 @@ const checkOpenIDIssuer = (value) => {
 };
 
 // Function to validate that the object name contains a valid DNS label:
-const checkObjectName = (value, objectName, maxLen) => {
+const checkObjectName = (value: string, objectName: string, maxLen: number): string | undefined => {
   if (!value) {
     return `${objectName} name is required.`;
   }
@@ -154,7 +160,7 @@ const checkObjectName = (value, objectName, maxLen) => {
   return undefined;
 };
 
-const checkObjectNameValidation = (value, objectName, maxLen) => [
+const checkObjectNameValidation = (value: string, objectName: string, maxLen: number) => [
   {
     text: `1 - ${maxLen} characters`,
     validated: value?.length > 0 && value?.length <= maxLen,
@@ -173,7 +179,7 @@ const checkObjectNameValidation = (value, objectName, maxLen) => [
   },
 ];
 
-const checkObjectNameAsyncValidation = (value) => [
+const checkObjectNameAsyncValidation = (value: string) => [
   {
     text: 'Globally unique name in your organization',
     validator: async () => {
@@ -186,13 +192,12 @@ const checkObjectNameAsyncValidation = (value) => [
   },
 ];
 
-const clusterNameValidation = (value) =>
+const clusterNameValidation = (value: string) =>
   checkObjectNameValidation(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
 
-const clusterNameAsyncValidation = (value) =>
-  checkObjectNameAsyncValidation(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
+const clusterNameAsyncValidation = (value: string) => checkObjectNameAsyncValidation(value);
 
-const checkMachinePoolName = (value) =>
+const checkMachinePoolName = (value: string) =>
   checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
 
 /**
@@ -203,22 +208,29 @@ const checkMachinePoolName = (value) =>
  * @param value the value to be validated
  * @returns {Promise<void>} a promise which resolves quietly, or rejects with a form errors map.
  */
-const asyncValidateClusterName = async (value) => {
+const asyncValidateClusterName = async (value: string) => {
   const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(value);
   return findFirstFailureMessage(evaluatedAsyncValidation);
 };
 
-const createAsyncValidationEvaluator = (asyncValidation) => async (value) => {
-  const populatedValidation = asyncValidation(value);
-  const validationResults = await Promise.all(
-    populatedValidation.map(({ validator }) => validator?.()),
-  );
+const createAsyncValidationEvaluator =
+  (
+    asyncValidation: (value: string) => {
+      text: string;
+      validator: () => Promise<boolean>;
+    }[],
+  ) =>
+  async (value: string) => {
+    const populatedValidation = asyncValidation(value);
+    const validationResults = await Promise.all(
+      populatedValidation.map(({ validator }) => validator?.()),
+    );
 
-  return populatedValidation.map((item, i) => ({
-    ...item,
-    validated: validationResults[i],
-  }));
-};
+    return populatedValidation.map((item, i) => ({
+      ...item,
+      validated: validationResults[i],
+    }));
+  };
 
 const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
   clusterNameAsyncValidation,
@@ -236,14 +248,32 @@ const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
  *          outputting its error message.
  */
 const createPessimisticValidator =
-  (validationProvider = () => {}) =>
-  (...validationArgs) =>
-    findFirstFailureMessage(validationProvider(...validationArgs));
+  <V>(
+    validationProvider: (
+      value: V,
+      allValues?: any,
+      props?: any,
+      name?: any,
+    ) =>
+      | {
+          validated: boolean;
+          text: string;
+        }[]
+      | undefined = () => undefined,
+  ) =>
+  (value: V, allValues?: any, props?: any, name?: any) =>
+    findFirstFailureMessage(validationProvider(value, allValues, props, name));
 
-const findFirstFailureMessage = (populatedValidation) =>
-  populatedValidation?.find((validation) => validation.validated === false)?.text;
+const findFirstFailureMessage = (
+  populatedValidation:
+    | {
+        validated: boolean;
+        text: string;
+      }[]
+    | undefined,
+) => populatedValidation?.find((validation) => validation.validated === false)?.text;
 
-const checkCustomOperatorRolesPrefix = (value) => {
+const checkCustomOperatorRolesPrefix = (value: string): string | undefined => {
   const label = 'Custom operator roles prefix';
   if (!value) {
     return undefined;
@@ -258,7 +288,7 @@ const checkCustomOperatorRolesPrefix = (value) => {
 };
 
 // Function to validate that the github team is formatted: <org/team>
-const checkGithubTeams = (value) => {
+const checkGithubTeams = (value: string): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -288,7 +318,9 @@ const checkGithubTeams = (value) => {
   return undefined;
 };
 
-const parseNodeLabelKey = (labelKey) => {
+const parseNodeLabelKey = (
+  labelKey: string,
+): { name: string | undefined; prefix: string | undefined } => {
   const [name, prefix] =
     labelKey
       // split at the first delimiter, and only keep the first two segments,
@@ -301,9 +333,10 @@ const parseNodeLabelKey = (labelKey) => {
   return { name, prefix };
 };
 
-const parseNodeLabelTags = (labels) => [].concat(labels).map((pair) => pair.split('='));
+const parseNodeLabelTags = (labels: string[]) =>
+  ([] as string[]).concat(labels).map((pair) => pair.split('='));
 
-const parseNodeLabels = (input) => {
+const parseNodeLabels = (input: string | string[] | undefined) => {
   // avoid processing falsy values (and specifically, empty strings)
   if (!input) {
     return undefined;
@@ -314,7 +347,12 @@ const parseNodeLabels = (input) => {
   return parseNodeLabelTags(labels);
 };
 
-const labelKeyValidations = (value) => {
+const labelKeyValidations = (
+  value: string,
+): {
+  validated: boolean;
+  text: string;
+}[] => {
   const { prefix, name } = parseNodeLabelKey(value);
 
   return [
@@ -337,7 +375,12 @@ const labelKeyValidations = (value) => {
   ];
 };
 
-const labelValueValidations = (value) => [
+const labelValueValidations = (
+  value: string,
+): {
+  validated: boolean;
+  text: string;
+}[] => [
   {
     validated: typeof value === 'undefined' || value.length <= LABEL_VALUE_MAX_LENGTH,
     text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
@@ -352,10 +395,10 @@ const checkLabelKey = createPessimisticValidator(labelKeyValidations);
 
 const checkLabelValue = createPessimisticValidator(labelValueValidations);
 
-const checkLabels = (input) =>
+const checkLabels = (input: string | string[]) =>
   parseNodeLabels(input)
     // collect the first error found
-    ?.reduce(
+    ?.reduce<string | undefined>(
       (accum, [key, value]) => accum ?? checkLabelKey(key) ?? checkLabelValue(value),
       // defaulting to undefined
       undefined,
@@ -364,7 +407,7 @@ const checkLabels = (input) =>
 const checkRouteSelectors = checkLabels;
 
 // Function to validate that the cluster ID field is a UUID:
-const checkClusterUUID = (value) => {
+const checkClusterUUID = (value: string): string | undefined => {
   if (!value) {
     return 'Cluster ID is required.';
   }
@@ -375,7 +418,7 @@ const checkClusterUUID = (value) => {
 };
 
 // Function to validate the cluster display name length
-const checkClusterDisplayName = (value) => {
+const checkClusterDisplayName = (value: string): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -385,7 +428,7 @@ const checkClusterDisplayName = (value) => {
   return undefined;
 };
 
-const checkUser = (value) => {
+const checkUser = (value: string): string | undefined => {
   if (!value) {
     return 'cannot be empty.';
   }
@@ -417,24 +460,26 @@ const checkUser = (value) => {
   return undefined;
 };
 
-const checkUserID = (value) => {
+const checkUserID = (value: string): string | undefined => {
   const invalid = checkUser(value);
   return invalid ? `User ID ${invalid}` : undefined;
 };
 
 const RHIT_PRINCIPAL_PATTERN = /^[^"$<> ^|%\\(),=;~:/*\r\n]*$/;
-const validateRHITUsername = (username) => {
+const validateRHITUsername = (username: string): string | undefined => {
   const valid = RHIT_PRINCIPAL_PATTERN.test(username);
   return valid ? undefined : 'Username includes illegal symbols';
 };
 
-const validateUrl = (value, protocol = 'http') => {
+const validateUrl = (value: string, protocol: string | string[] = 'http'): string | undefined => {
   if (!value) {
     return undefined;
   }
-  let protocolArr = protocol;
+  let protocolArr: string[];
   if (typeof protocol === 'string') {
     protocolArr = [protocol];
+  } else {
+    protocolArr = protocol;
   }
   try {
     // eslint-disable-next-line no-new
@@ -452,7 +497,7 @@ const validateUrl = (value, protocol = 'http') => {
   return undefined;
 };
 
-const validateCA = (value) => {
+const validateCA = (value: string): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -463,7 +508,7 @@ const validateCA = (value) => {
 };
 
 // Function to validate the cluster console URL
-const checkClusterConsoleURL = (value, isRequired) => {
+const checkClusterConsoleURL = (value: string, isRequired?: false): string | undefined => {
   if (!value) {
     return isRequired ? 'Cluster console URL should not be empty' : undefined;
   }
@@ -489,7 +534,7 @@ const checkClusterConsoleURL = (value, isRequired) => {
 };
 
 // Function to validate that a field contains a correct base DNS domain
-const checkBaseDNSDomain = (value) => {
+const checkBaseDNSDomain = (value: string): string | undefined => {
   if (!value) {
     return 'Base DNS domain is required.';
   }
@@ -500,22 +545,22 @@ const checkBaseDNSDomain = (value) => {
 };
 
 // Function to validate IP address blocks
-const cidr = (value) => {
+const cidr = (value: string): string | undefined => {
   if (value && !CIDR_REGEXP.test(value)) {
     return `IP address range '${value}' isn't valid CIDR notation. It must follow the RFC-4632 format: '192.168.0.0/16'.`;
   }
   return undefined;
 };
 
-const getCIDRSubnetLength = (value) => {
+const getCIDRSubnetLength = (value: string): number | undefined => {
   if (!value) {
     return undefined;
   }
 
-  return parseInt(value.split('/').pop(), 10);
+  return parseInt(value.split('/').pop() ?? '', 10);
 };
 
-const awsMachineCidr = (value, formData) => {
+const awsMachineCidr = (value: string, formData: { ['multi_az']: string }): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -523,16 +568,18 @@ const awsMachineCidr = (value, formData) => {
   const isMultiAz = formData.multi_az === 'true';
   const prefixLength = getCIDRSubnetLength(value);
 
-  if (prefixLength < AWS_MACHINE_CIDR_MIN) {
-    return `The subnet mask can't be larger than '/${AWS_MACHINE_CIDR_MIN}'.`;
-  }
+  if (prefixLength != null) {
+    if (prefixLength < AWS_MACHINE_CIDR_MIN) {
+      return `The subnet mask can't be larger than '/${AWS_MACHINE_CIDR_MIN}'.`;
+    }
 
-  if (isMultiAz && prefixLength > AWS_MACHINE_CIDR_MAX_MULTI_AZ) {
-    return `The subnet mask can't be smaller than '/${AWS_MACHINE_CIDR_MAX_MULTI_AZ}'.`;
-  }
+    if (isMultiAz && prefixLength > AWS_MACHINE_CIDR_MAX_MULTI_AZ) {
+      return `The subnet mask can't be smaller than '/${AWS_MACHINE_CIDR_MAX_MULTI_AZ}'.`;
+    }
 
-  if (!isMultiAz && prefixLength > AWS_MACHINE_CIDR_MAX_SINGLE_AZ) {
-    return `The subnet mask can't be smaller than '/${AWS_MACHINE_CIDR_MAX_SINGLE_AZ}'.`;
+    if (!isMultiAz && prefixLength > AWS_MACHINE_CIDR_MAX_SINGLE_AZ) {
+      return `The subnet mask can't be smaller than '/${AWS_MACHINE_CIDR_MAX_SINGLE_AZ}'.`;
+    }
   }
 
   return undefined;
@@ -541,7 +588,7 @@ const awsMachineCidr = (value, formData) => {
 // Temporarily removed until messaging can be vetted according to https://issues.redhat.com/browse/HAC-2118.
 /* eslint-disable max-len */
 /*
-const gcpMachineCidr = (value, formData) => {
+const gcpMachineCidr = (value: string, formData: { ['multi_az']: string }): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -549,16 +596,18 @@ const gcpMachineCidr = (value, formData) => {
   const isMultiAz = formData.multi_az === 'true';
   const prefixLength = getCIDRSubnetLength(value);
 
-  if (isMultiAz && prefixLength > GCP_MACHINE_CIDR_MAX) {
-    const maxComputeNodes = 2 ** (28 - GCP_MACHINE_CIDR_MAX);
-    const multiAZ = (maxComputeNodes - 9) * 3;
-    return `The subnet mask can't be smaller than '/${GCP_MACHINE_CIDR_MAX}', which provides up to ${multiAZ} nodes.`;
-  }
+  if (prefixLength != null) {
+    if (isMultiAz && prefixLength > GCP_MACHINE_CIDR_MAX) {
+      const maxComputeNodes = 2 ** (28 - GCP_MACHINE_CIDR_MAX);
+      const multiAZ = (maxComputeNodes - 9) * 3;
+      return `The subnet mask can't be smaller than '/${GCP_MACHINE_CIDR_MAX}', which provides up to ${multiAZ} nodes.`;
+    }
 
-  if (!isMultiAz && prefixLength > GCP_MACHINE_CIDR_MAX) {
-    const maxComputeNodes = 2 ** (28 - GCP_MACHINE_CIDR_MAX);
-    const singleAZ = maxComputeNodes - 9;
-    return `The subnet mask can't be smaller than '/${GCP_MACHINE_CIDR_MAX}', which provides up to ${singleAZ} nodes.`;
+    if (!isMultiAz && prefixLength > GCP_MACHINE_CIDR_MAX) {
+      const maxComputeNodes = 2 ** (28 - GCP_MACHINE_CIDR_MAX);
+      const singleAZ = maxComputeNodes - 9;
+      return `The subnet mask can't be smaller than '/${GCP_MACHINE_CIDR_MAX}', which provides up to ${singleAZ} nodes.`;
+    }
   }
 
   return undefined;
@@ -566,42 +615,49 @@ const gcpMachineCidr = (value, formData) => {
 */
 /* eslint-enable max-len */
 
-const serviceCidr = (value) => {
+const serviceCidr = (value: string): string | undefined => {
   if (!value) {
     return undefined;
   }
 
   const prefixLength = getCIDRSubnetLength(value);
 
-  if (prefixLength > SERVICE_CIDR_MAX) {
-    const maxServices = 2 ** (32 - SERVICE_CIDR_MAX) - 2;
-    return `The subnet mask can't be smaller than '/${SERVICE_CIDR_MAX}', which provides up to ${maxServices} services.`;
+  if (prefixLength != null) {
+    if (prefixLength > SERVICE_CIDR_MAX) {
+      const maxServices = 2 ** (32 - SERVICE_CIDR_MAX) - 2;
+      return `The subnet mask can't be smaller than '/${SERVICE_CIDR_MAX}', which provides up to ${maxServices} services.`;
+    }
   }
 
   return undefined;
 };
 
-const podCidr = (value, formData) => {
+const podCidr = (
+  value: string,
+  formData: { ['network_host_prefix']: string },
+): string | undefined => {
   if (!value) {
     return undefined;
   }
 
   const prefixLength = getCIDRSubnetLength(value);
-  if (prefixLength > POD_CIDR_MAX) {
-    return `The subnet mask can't be smaller than /${POD_CIDR_MAX}.`;
-  }
+  if (prefixLength != null) {
+    if (prefixLength > POD_CIDR_MAX) {
+      return `The subnet mask can't be smaller than /${POD_CIDR_MAX}.`;
+    }
 
-  const hostPrefix = getCIDRSubnetLength(formData.network_host_prefix) || 23;
-  const maxPodIPs = 2 ** (32 - hostPrefix);
-  const maxPodNodes = Math.floor(2 ** (32 - prefixLength) / maxPodIPs);
-  if (maxPodNodes < POD_NODES_MIN) {
-    return `The subnet mask of /${prefixLength} does not allow for enough nodes. Try changing the host prefix or the pod subnet range.`;
+    const hostPrefix = getCIDRSubnetLength(formData.network_host_prefix) || 23;
+    const maxPodIPs = 2 ** (32 - hostPrefix);
+    const maxPodNodes = Math.floor(2 ** (32 - prefixLength) / maxPodIPs);
+    if (maxPodNodes < POD_NODES_MIN) {
+      return `The subnet mask of /${prefixLength} does not allow for enough nodes. Try changing the host prefix or the pod subnet range.`;
+    }
   }
 
   return undefined;
 };
 
-const validateRange = (value) => {
+const validateRange = (value: string): string | undefined => {
   if (cidr(value) !== undefined || !value) {
     return undefined;
   }
@@ -619,38 +675,40 @@ const validateRange = (value) => {
   return undefined;
 };
 
-const disjointSubnets = (fieldName) => (value, formData) => {
-  if (!value) {
+const disjointSubnets =
+  (fieldName: string) =>
+  (value: string, formData: { [name: string]: Networks }): string | undefined => {
+    if (!value) {
+      return undefined;
+    }
+
+    const networkingFields: { [key: string]: string } = {
+      network_machine_cidr: 'Machine CIDR',
+      network_service_cidr: 'Service CIDR',
+      network_pod_cidr: 'Pod CIDR',
+    };
+    delete networkingFields[fieldName];
+    const overlappingFields: string[] = [];
+    try {
+      Object.keys(networkingFields).forEach((name) => {
+        const fieldValue = get(formData, name, null);
+        if (fieldValue && cidrTools.overlap(value, fieldValue)) {
+          overlappingFields.push(networkingFields[name]);
+        }
+      });
+    } catch (e) {
+      return `Failed to parse CIDR: ${e}`;
+    }
+    const plural = overlappingFields.length > 1;
+    if (overlappingFields.length > 0) {
+      return `This subnet overlaps with the subnet${
+        plural ? 's' : ''
+      } in the ${overlappingFields.join(', ')} field${plural ? 's' : ''}.`;
+    }
     return undefined;
-  }
-
-  const networkingFields = {
-    network_machine_cidr: 'Machine CIDR',
-    network_service_cidr: 'Service CIDR',
-    network_pod_cidr: 'Pod CIDR',
   };
-  delete networkingFields[fieldName];
-  const overlappingFields = [];
-  try {
-    Object.keys(networkingFields).forEach((name) => {
-      const fieldValue = get(formData, name, null);
-      if (fieldValue && cidrTools.overlap(value, fieldValue)) {
-        overlappingFields.push(networkingFields[name]);
-      }
-    });
-  } catch (e) {
-    return `Failed to parse CIDR: ${e}`;
-  }
-  const plural = overlappingFields.length > 1;
-  if (overlappingFields.length > 0) {
-    return `This subnet overlaps with the subnet${
-      plural ? 's' : ''
-    } in the ${overlappingFields.join(', ')} field${plural ? 's' : ''}.`;
-  }
-  return undefined;
-};
 
-const privateAddress = (value) => {
+const privateAddress = (value: string): string | undefined => {
   if (cidr(value) !== undefined || !value) {
     return undefined;
   }
@@ -676,7 +734,7 @@ const privateAddress = (value) => {
   return 'Range is not private.';
 };
 
-const disjointFromDockerRange = (value) => {
+const disjointFromDockerRange = (value: string): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -690,32 +748,34 @@ const disjointFromDockerRange = (value) => {
   }
 };
 
-const awsSubnetMask = (fieldName) => (value) => {
-  if (cidr(value) !== undefined || !value) {
-    return undefined;
-  }
-  const awsSubnetMaskRanges = {
-    network_machine_cidr_single_az: [AWS_MACHINE_CIDR_MIN, AWS_MACHINE_CIDR_MAX_SINGLE_AZ],
-    network_machine_cidr_multi_az: [AWS_MACHINE_CIDR_MIN, AWS_MACHINE_CIDR_MAX_MULTI_AZ],
-    network_service_cidr: [undefined, SERVICE_CIDR_MAX],
-  };
-  const maskRange = awsSubnetMaskRanges[fieldName];
-  const parts = value.split('/');
-  const maskBits = parseInt(parts[1], 10);
-  if (!maskRange[0]) {
-    if (maskBits > maskRange[1] || maskBits < 1) {
-      return `Subnet mask must be between /1 and /${maskRange[1]}.`;
+const awsSubnetMask =
+  (fieldName: string) =>
+  (value: string): string | undefined => {
+    if (cidr(value) !== undefined || !value) {
+      return undefined;
+    }
+    const awsSubnetMaskRanges: { [key: string]: [number | undefined, number] } = {
+      network_machine_cidr_single_az: [AWS_MACHINE_CIDR_MIN, AWS_MACHINE_CIDR_MAX_SINGLE_AZ],
+      network_machine_cidr_multi_az: [AWS_MACHINE_CIDR_MIN, AWS_MACHINE_CIDR_MAX_MULTI_AZ],
+      network_service_cidr: [undefined, SERVICE_CIDR_MAX],
+    };
+    const maskRange = awsSubnetMaskRanges[fieldName];
+    const parts = value.split('/');
+    const maskBits = parseInt(parts[1], 10);
+    if (!maskRange[0]) {
+      if (maskBits > maskRange[1] || maskBits < 1) {
+        return `Subnet mask must be between /1 and /${maskRange[1]}.`;
+      }
+      return undefined;
+    }
+    if (!(maskRange[0] <= maskBits && maskBits <= maskRange[1])) {
+      return `Subnet mask must be between /${maskRange[0]} and /${maskRange[1]}.`;
     }
     return undefined;
-  }
-  if (!(maskRange[0] <= maskBits && maskBits <= maskRange[1])) {
-    return `Subnet mask must be between /${maskRange[0]} and /${maskRange[1]}.`;
-  }
-  return undefined;
-};
+  };
 
 // Function to validate IP address masks
-const hostPrefix = (value) => {
+const hostPrefix = (value: string): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -726,13 +786,15 @@ const hostPrefix = (value) => {
 
   const prefixLength = getCIDRSubnetLength(value);
 
-  if (prefixLength < HOST_PREFIX_MIN) {
-    const maxPodIPs = 2 ** (32 - HOST_PREFIX_MIN) - 2;
-    return `The subnet mask can't be larger than '/${HOST_PREFIX_MIN}', which provides up to ${maxPodIPs} Pod IP addresses.`;
-  }
-  if (prefixLength > HOST_PREFIX_MAX) {
-    const maxPodIPs = 2 ** (32 - HOST_PREFIX_MAX) - 2;
-    return `The subnet mask can't be smaller than '/${HOST_PREFIX_MAX}', which provides up to ${maxPodIPs} Pod IP addresses.`;
+  if (prefixLength != null) {
+    if (prefixLength < HOST_PREFIX_MIN) {
+      const maxPodIPs = 2 ** (32 - HOST_PREFIX_MIN) - 2;
+      return `The subnet mask can't be larger than '/${HOST_PREFIX_MIN}', which provides up to ${maxPodIPs} Pod IP addresses.`;
+    }
+    if (prefixLength > HOST_PREFIX_MAX) {
+      const maxPodIPs = 2 ** (32 - HOST_PREFIX_MAX) - 2;
+      return `The subnet mask can't be smaller than '/${HOST_PREFIX_MAX}', which provides up to ${maxPodIPs} Pod IP addresses.`;
+    }
   }
 
   return undefined;
@@ -746,23 +808,30 @@ const hostPrefix = (value) => {
  * and a string 'validationMsg' with an error message.
  * @param {number} [max=MAX_NODE_COUNT] - maximum allowed number of nodes.
  */
-const nodes = (value, min, max = MAX_NODE_COUNT) => {
+const nodes = (
+  value: string | number,
+  min: { value: number; validationMsg?: string },
+  max = MAX_NODE_COUNT,
+): string | undefined => {
   if (value === undefined || value < min.value) {
     return min.validationMsg || `The minimum number of nodes is ${min.value}.`;
   }
   if (value > max) {
     return `Maximum number allowed is ${max}.`;
   }
-  // eslint-disable-next-line eqeqeq
-  if (Number.isNaN(parseInt(value, 10)) || Math.floor(value) != value) {
+
+  if (
+    (typeof value === 'string' && Number.isNaN(parseInt(value, 10))) ||
+    Math.floor(Number(value)) !== Number(value)
+  ) {
     // Using Math.floor to check for valid int because Number.isInteger doesn't work on IE.
     return `'${value}' is not a valid number of nodes.`;
   }
   return undefined;
 };
 
-const nodesMultiAz = (value) => {
-  if (value % 3 > 0) {
+const nodesMultiAz = (value: string | number): string | undefined => {
+  if (Number(value) % 3 > 0) {
     return 'Number of nodes must be multiple of 3 for Multi AZ cluster.';
   }
   return undefined;
@@ -778,7 +847,7 @@ const nodesMultiAz = (value) => {
  * @param {*} allowZero       true if input number may be 0, otherwise false
  */
 const validateNumericInput = (
-  input,
+  input: string | undefined,
   { allowDecimal = false, allowNeg = false, allowZero = false, max = NaN, min = NaN } = {},
 ) => {
   if (!input) {
@@ -806,16 +875,16 @@ const validateNumericInput = (
   return undefined;
 };
 
-const checkDisconnectedConsoleURL = (value) => checkClusterConsoleURL(value, false);
+const checkDisconnectedConsoleURL = (value: string) => checkClusterConsoleURL(value, false);
 
-const checkDisconnectedvCPU = (value) => validateNumericInput(value, { max: 16000 });
+const checkDisconnectedvCPU = (value: string) => validateNumericInput(value, { max: 16000 });
 
-const checkDisconnectedSockets = (value) => validateNumericInput(value, { max: 2000 });
+const checkDisconnectedSockets = (value: string) => validateNumericInput(value, { max: 2000 });
 
-const checkDisconnectedMemCapacity = (value) =>
+const checkDisconnectedMemCapacity = (value: string) =>
   validateNumericInput(value, { allowDecimal: true, max: 256000 });
 
-const checkDisconnectedNodeCount = (value) => {
+const checkDisconnectedNodeCount = (value: string): string | undefined => {
   if (value === '') {
     return undefined;
   }
@@ -825,7 +894,7 @@ const checkDisconnectedNodeCount = (value) => {
   return nodes(Number(value), { value: 0 }, 250);
 };
 
-const validateARN = (value) => {
+const validateARN = (value: string): string | undefined => {
   if (!value) {
     return 'Field is required';
   }
@@ -847,7 +916,7 @@ const validateARN = (value) => {
  *
  * @param {*} values array of value objects, from redux-form
  */
-const atLeastOneRequired = (fieldName) => (fields) => {
+const atLeastOneRequired = (fieldName: string) => (fields: { name: string }[]) => {
   if (!fields) {
     return undefined;
   }
@@ -864,7 +933,7 @@ const atLeastOneRequired = (fieldName) => (fields) => {
   return undefined;
 };
 
-const awsNumericAccountID = (input) => {
+const awsNumericAccountID = (input: string): string | undefined => {
   if (!input) {
     return 'AWS account ID is required.';
   }
@@ -874,7 +943,7 @@ const awsNumericAccountID = (input) => {
   return undefined;
 };
 
-const validateServiceAccountObject = (obj) => {
+const validateServiceAccountObject = (obj: GCP): string | undefined => {
   const osdServiceAccountSchema = {
     id: '/osdServiceAccount',
     type: 'object',
@@ -934,7 +1003,7 @@ const validateServiceAccountObject = (obj) => {
   return undefined;
 };
 
-const validateGCPServiceAccount = (content) => {
+const validateGCPServiceAccount = (content: string): string | undefined => {
   try {
     const contentObj = JSON.parse(content);
     return validateServiceAccountObject(contentObj);
@@ -977,8 +1046,8 @@ const validateGCPServiceAccount = (content) => {
  * A field-level validation function that checks uniqueness.
  */
 const createUniqueFieldValidator =
-  (error, otherValuesSelector = () => {}) =>
-  (value, allValues, _, name) => {
+  (error: string, otherValuesSelector: (name: string, allValues: any) => any[]) =>
+  (value: unknown, allValues: any, _: unknown, name: string) => {
     const otherValues = otherValuesSelector(name, allValues) ?? [];
     if (otherValues.includes(value)) {
       return error;
@@ -988,7 +1057,7 @@ const createUniqueFieldValidator =
 
 const validateUniqueAZ = createUniqueFieldValidator(
   'Must select 3 different AZs.',
-  (currentFieldName, allValues) =>
+  (currentFieldName: string, allValues: { [key: string]: unknown }) =>
     Object.entries(allValues)
       .filter(([fieldKey]) => fieldKey.startsWith('az_') && fieldKey !== currentFieldName)
       .map(([, fieldValue]) => fieldValue),
@@ -996,13 +1065,13 @@ const validateUniqueAZ = createUniqueFieldValidator(
 
 const validateUniqueNodeLabel = createUniqueFieldValidator(
   'Each label must have a different key.',
-  (currentFieldName, allValues) =>
+  (currentFieldName: string, allValues: { ['node_labels']: NodeLabelParams[] }) =>
     Object.entries(allValues.node_labels)
       .filter(([fieldKey]) => !currentFieldName.includes(`[${fieldKey}]`))
       .map(([, fieldValue]) => fieldValue.key),
 );
 
-const validateValueNotPlaceholder = (placeholder) => (value) =>
+const validateValueNotPlaceholder = (placeholder: any) => (value: any) =>
   value !== placeholder ? undefined : 'Field is required';
 
 // AWS VPC validators expect the known vpcs to be passed as prop to the form —
@@ -1012,9 +1081,14 @@ const validateValueNotPlaceholder = (placeholder) => (value) =>
 // unregisters and re-registers the field when `validate` prop changes, which would
 // happen constantly without careful memoization.)
 
+type BySubnetID = { [id: string]: AugmentedSubnetwork };
+
 /** Finds all bySubnetID info hashes for AWS VPC subnet fields. */
-const awsVPCSubnetInfos = (allValues, vpcsBySubnetID) => {
-  const infos = [];
+const awsVPCSubnetInfos = (
+  allValues: { [key: string]: string },
+  vpcsBySubnetID: BySubnetID,
+): AugmentedSubnetwork[] => {
+  const infos: AugmentedSubnetwork[] = [];
   Object.entries(allValues).forEach(([fieldName, fieldValue]) => {
     if (fieldName.match(/^(private|public)_subnet_id_/)) {
       if (vpcsBySubnetID[fieldValue]) {
@@ -1025,7 +1099,21 @@ const awsVPCSubnetInfos = (allValues, vpcsBySubnetID) => {
   return infos;
 };
 
-const validateAWSSubnet = (value, allValues, formProps, name) => {
+const validateAWSSubnet = (
+  value: string,
+  allValues: { [key: string]: string },
+  formProps: {
+    vpcs: {
+      fulfilled: boolean;
+      data: {
+        bySubnetID: BySubnetID;
+      };
+      region?: string;
+    };
+    vpcsValid: boolean;
+  },
+  name: string,
+): string | undefined => {
   if (!value) {
     return undefined;
   }
@@ -1053,7 +1141,11 @@ const validateAWSSubnet = (value, allValues, formProps, name) => {
   return undefined;
 };
 
-const validateAWSSubnetIsPrivate = (value, allValues, formProps) => {
+const validateAWSSubnetIsPrivate = (
+  value: string,
+  allValues: unknown,
+  formProps: SubnetFormProps,
+) => {
   const { vpcs, vpcsValid } = formProps;
   if (vpcsValid) {
     const subnetInfo = vpcs.data.bySubnetID[value];
@@ -1064,7 +1156,11 @@ const validateAWSSubnetIsPrivate = (value, allValues, formProps) => {
   return undefined;
 };
 
-const validateAWSSubnetIsPublic = (value, allValues, formProps) => {
+const validateAWSSubnetIsPublic = (
+  value: string,
+  allValues: unknown,
+  formProps: SubnetFormProps,
+) => {
   const { vpcs, vpcsValid } = formProps;
   if (vpcsValid) {
     const subnetInfo = vpcs.data.bySubnetID[value];
@@ -1075,7 +1171,7 @@ const validateAWSSubnetIsPublic = (value, allValues, formProps) => {
   return undefined;
 };
 
-const validateGCPSubnet = (value) => {
+const validateGCPSubnet = (value: string): string | undefined => {
   if (!value) {
     return 'Field is required.';
   }
@@ -1091,7 +1187,7 @@ const validateGCPSubnet = (value) => {
   return undefined;
 };
 
-const validateGCPKMSServiceAccount = (value) => {
+const validateGCPKMSServiceAccount = (value: string): string | undefined => {
   if (!value) {
     return 'Field is required.';
   }
@@ -1107,7 +1203,7 @@ const validateGCPKMSServiceAccount = (value) => {
   return undefined;
 };
 
-const validateAWSKMSKeyARN = (value) => {
+const validateAWSKMSKeyARN = (value: string): string | undefined => {
   if (!value) {
     return 'Field is required.';
   }
@@ -1120,7 +1216,17 @@ const validateAWSKMSKeyARN = (value) => {
   return undefined;
 };
 
-const validateHTPasswdPassword = (password) => {
+const validateHTPasswdPassword = (
+  password: string,
+):
+  | {
+      emptyPassword: boolean;
+      baseRequirements: boolean;
+      uppercase: boolean;
+      lowercase: boolean;
+      numbersOrSymbols: boolean;
+    }
+  | undefined => {
   const errors = {
     emptyPassword: false,
     baseRequirements: false,
@@ -1154,7 +1260,7 @@ const validateHTPasswdPassword = (password) => {
   return errors;
 };
 
-const validateHTPasswdUsername = (username) => {
+const validateHTPasswdUsername = (username: string): string | undefined => {
   if (
     indexOf(username, '%') !== -1 ||
     indexOf(username, ':') !== -1 ||
@@ -1165,20 +1271,25 @@ const validateHTPasswdUsername = (username) => {
   return undefined;
 };
 
-const shouldSkipLabelKeyValidation = (allValues) => {
-  const nodeLabels = allValues?.node_labels ?? [{}];
+const shouldSkipLabelKeyValidation = (allValues: Record<string, unknown>): boolean => {
+  const nodeLabels = (allValues?.node_labels as NodeLabelParams[]) ?? [{}];
   // filling the first and only label key/value pair is optional -it serves as a placeholder.
   // if empty, it won't be taken into account in the request payload.
   const [{ key: firstLabelKey, value: firstLabelValue }] = nodeLabels;
   return nodeLabels.length === 1 && !firstLabelKey && !firstLabelValue;
 };
 
-const validateLabelKey = (key, allValues, ...rest) => {
+const validateLabelKey = (
+  key: string,
+  allValues: Record<string, unknown>,
+  props?: any,
+  name?: any,
+): string | undefined => {
   if (shouldSkipLabelKeyValidation(allValues)) {
     return undefined;
   }
 
-  return checkLabelKey(key) ?? validateUniqueNodeLabel(key, allValues, ...rest);
+  return checkLabelKey(key) ?? validateUniqueNodeLabel(key, allValues, props, name);
 };
 
 const validateLabelValue = checkLabelValue;

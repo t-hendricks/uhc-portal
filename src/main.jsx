@@ -15,7 +15,12 @@ limitations under the License.
 */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import fromEntries from 'object.fromentries';
 import AppEntry from './chrome-main';
+
+if (!Object.fromEntries) {
+  fromEntries.shim();
+}
 
 const renderDevEnvError = () => {
   ReactDOM.render(

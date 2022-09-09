@@ -1,12 +1,12 @@
-import get from 'lodash/get';
 import moment from 'moment';
+import { ClusterFromSubscription } from '../types/types';
 
-const getTrialExpiresInDays = (cluster, isOSD) => {
-  let trialEndDate = '';
+const getTrialExpiresInDays = (cluster: ClusterFromSubscription, isOSD: boolean): string => {
+  let trialEndDate: string | undefined = '';
   if (isOSD) {
-    trialEndDate = get(cluster, 'subscription.trial_end_date');
+    trialEndDate = cluster.subscription?.trial_end_date;
   } else {
-    trialEndDate = get(cluster, 'subscription.eval_expiration_date');
+    trialEndDate = cluster.subscription?.eval_expiration_date;
   }
   if (trialEndDate) {
     const endsInDays = moment(trialEndDate).diff(moment(), 'days');
@@ -19,8 +19,8 @@ const getTrialExpiresInDays = (cluster, isOSD) => {
   return 'unknown days';
 };
 
-const getTrialEndDate = (cluster) => {
-  const trialEndDate = get(cluster, 'subscription.trial_end_date');
+const getTrialEndDate = (cluster: ClusterFromSubscription): string => {
+  const trialEndDate = cluster.subscription?.trial_end_date;
   if (trialEndDate) {
     return moment(trialEndDate).local().format('dddd, MMMM Do YYYY, h:mm a');
   }

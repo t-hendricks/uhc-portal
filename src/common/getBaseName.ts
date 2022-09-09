@@ -1,20 +1,17 @@
-const { insights } = require('../../package.json');
+const {
+  insights: { appname },
+} = require('../../package.json');
 
-function getBaseName() {
-  return APP_BETA ? `/beta/${insights.appname}` : `/${insights.appname}`;
-}
+const getBaseName = (): string => (APP_BETA ? `/beta/${appname}` : `/${appname}`);
 
 /**
  * Removes the basename from the beginning of a path
  * @param {string} path
  */
-function removeBaseName(path) {
-  return path.replace(new RegExp(`^${getBaseName()}`, 'i'), '');
-}
+const removeBaseName = (path: string): string =>
+  path.replace(new RegExp(`^${getBaseName()}`, 'i'), '');
 
-function getResourcesBase() {
-  return APP_BETA ? `/beta/apps/${insights.appname}` : `/apps/${insights.appname}`;
-}
+const getResourcesBase = (): string => (APP_BETA ? `/beta/apps/${appname}` : `/apps/${appname}`);
 
 export { getResourcesBase, removeBaseName };
 

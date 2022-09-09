@@ -1,9 +1,11 @@
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
-
 import { productFilterOptions } from './subscriptionTypes';
+import { ViewOptions } from '../types/types';
 
-const viewPropsChanged = (nextViewOptions, currentViewOptions) =>
+type QueryObject = { [key: string]: string | number | boolean };
+
+const viewPropsChanged = (nextViewOptions: ViewOptions, currentViewOptions: ViewOptions): boolean =>
   nextViewOptions.currentPage !== currentViewOptions.currentPage ||
   nextViewOptions.pageSize !== currentViewOptions.pageSize ||
   !isEqual(nextViewOptions.sorting, currentViewOptions.sorting) ||
@@ -15,13 +17,13 @@ const viewPropsChanged = (nextViewOptions, currentViewOptions) =>
 // This requires the UI to construct the syntax correctly (e.g. escape singlequotes).
 // It also means that the query we send to the backend is quite complicated.
 
-const sqlString = (s) => {
+const sqlString = (s: string) => {
   // escape ' characters by doubling
   const escaped = s.replace(/'/g, "''");
   return `'${escaped}'`;
 };
 
-const getOrder = (sortField, isAscending) => {
+const getOrder = (sortField: string, isAscending: boolean) => {
   const direction = isAscending ? 'asc' : 'desc';
   // i.e. turns 'username,created_by' into 'username asc, created_by asc'
   return sortField
@@ -30,8 +32,8 @@ const getOrder = (sortField, isAscending) => {
     .join(', ');
 };
 
-const createViewQueryObject = (viewOptions, username) => {
-  const queryObject = {};
+const createViewQueryObject = (viewOptions?: ViewOptions, username?: string): QueryObject => {
+  const queryObject: QueryObject = {};
 
   if (viewOptions) {
     queryObject.page = viewOptions.currentPage;
@@ -48,7 +50,7 @@ const createViewQueryObject = (viewOptions, username) => {
       }
     }
 
-    const clauses = []; // will be joined with AND
+    const clauses: string[] = []; // will be joined with AND
 
     // base filter: filter out clusters without IDs
     clauses.push("cluster_id!=''");
@@ -66,7 +68,7 @@ const createViewQueryObject = (viewOptions, username) => {
     }
 
     // If we got a search string from the user, format it as a LIKE query.
-    if (viewOptions.filter) {
+    if (typeof viewOptions.filter === 'string') {
       const likePattern = sqlString(`%${viewOptions.filter}%`);
       clauses.push(
         `display_name ILIKE ${likePattern} OR external_cluster_id ILIKE ${likePattern} OR cluster_id ILIKE ${likePattern}`,
@@ -82,7 +84,7 @@ const createViewQueryObject = (viewOptions, username) => {
         // The values we got are internal normalizedProducts values,
         // but we have to query backend with pre-normalization values.
         const backendValues = items.flatMap(
-          (v) => productFilterOptions.find((opt) => opt.key === v).plansToQuery,
+          (v: unknown) => productFilterOptions.find((opt) => opt.key === v)?.plansToQuery,
         );
 
         const quotedItems = backendValues.map(sqlString);
@@ -98,8 +100,11 @@ const createViewQueryObject = (viewOptions, username) => {
   return queryObject;
 };
 
-const createServiceLogQueryObject = (viewOptions, queryObj) => {
-  const queryObject = {
+const createServiceLogQueryObject = (
+  viewOptions?: ViewOptions,
+  queryObj?: QueryObject,
+): QueryObject => {
+  const queryObject: QueryObject = {
     ...queryObj,
   };
 
@@ -112,10 +117,10 @@ const createServiceLogQueryObject = (viewOptions, queryObj) => {
       queryObject.order = getOrder(sortField, isAscending);
     }
 
-    const clauses = []; // will be joined with AND
+    const clauses: string[] = []; // will be joined with AND
 
     // If we got a search string from the user, format it as an ILIKE query.
-    if (viewOptions.filter) {
+    if (viewOptions.filter && typeof viewOptions.filter !== 'string') {
       const { description, timestampFrom, timestampTo } = viewOptions.filter;
       if (description) {
         const likePattern = sqlString(`%${description}%`);
@@ -148,8 +153,8 @@ const createServiceLogQueryObject = (viewOptions, queryObj) => {
   return queryObject;
 };
 
-const createOverviewQueryObject = (viewOptions, queryObj) => {
-  const queryObject = {
+const createOverviewQueryObject = (viewOptions?: ViewOptions, queryObj?: QueryObject) => {
+  const queryObject: QueryObject = {
     order: 'display_name asc',
     ...queryObj,
   };
@@ -162,7 +167,7 @@ const createOverviewQueryObject = (viewOptions, queryObj) => {
   return queryObject;
 };
 
-const buildUrlParams = (params) =>
+const buildUrlParams = (params: QueryObject): string =>
   Object.keys(params)
     .map((key) => `${key}=${encodeURIComponent(params[key])}`)
     .join('&');
@@ -177,14 +182,14 @@ const buildUrlParams = (params) =>
  * ```
  * @param {Object} params
  */
-const buildFilterURLParams = (params) =>
+const buildFilterURLParams = (params: { [key: string]: (string | number | boolean)[] }): string =>
   Object.keys(params)
     .map((key) => !isEmpty(params[key]) && `${key}=${params[key].join(',')}`)
     .filter(Boolean)
     .join('&');
 
-const getQueryParam = (param) => {
-  let ret;
+const getQueryParam = (param: string): string | undefined => {
+  let ret: string | undefined;
   window.location.search
     .substring(1)
     .split('&')
