@@ -22,6 +22,15 @@ const sqlString = (s) => {
   return `'${escaped}'`;
 };
 
+const getOrder = (sortField, isAscending) => {
+  const direction = isAscending ? 'asc' : 'desc';
+  // i.e. turns 'username,created_by' into 'username asc, created_by asc'
+  if (sortField.split(',').length > 1) {
+    return sortField.split(',').map(f => `${f.trim()} ${direction}`).join(', ');
+  }
+  return `${sortField} ${direction}`;
+};
+
 const createViewQueryObject = (viewOptions, username) => {
   const queryObject = {};
 
@@ -30,12 +39,13 @@ const createViewQueryObject = (viewOptions, username) => {
     queryObject.page_size = viewOptions.pageSize;
     queryObject.has_filters = !!viewOptions.filter;
 
-    if (viewOptions.sorting.sortField !== null) {
-      const direction = viewOptions.sorting.isAscending ? 'asc' : 'desc';
-      if (viewOptions.sorting.sortField === 'name') {
+    const { sortField, isAscending } = viewOptions.sorting;
+    if (sortField !== null) {
+      const direction = isAscending ? 'asc' : 'desc';
+      if (sortField === 'name') {
         queryObject.order = `display_name ${direction}`;
       } else {
-        queryObject.order = `${viewOptions.sorting.sortField} ${direction}`;
+        queryObject.order = getOrder(sortField, isAscending);
       }
     }
 
@@ -93,9 +103,9 @@ const createServiceLogQueryObject = (viewOptions, queryObj) => {
     queryObject.page = viewOptions.currentPage;
     queryObject.page_size = viewOptions.pageSize;
 
-    if (viewOptions.sorting.sortField !== null) {
-      const direction = viewOptions.sorting.isAscending ? 'asc' : 'desc';
-      queryObject.order = `${viewOptions.sorting.sortField} ${direction}`;
+    const { sortField, isAscending } = viewOptions.sorting;
+    if (sortField !== null) {
+      queryObject.order = getOrder(sortField, isAscending);
     }
 
     const clauses = []; // will be joined with AND
