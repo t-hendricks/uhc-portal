@@ -2,7 +2,8 @@
   "root": true,
   "extends": [
     "airbnb",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "prettier"
   ],
   "plugins": ["@typescript-eslint"],
   "env": {
@@ -33,7 +34,6 @@
     "react/jsx-props-no-spreading": [0],
     "react/sort-comp": "off",
     "react/state-in-constructor": [2, "never"],
-    "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draft" , "response"] }],
     "no-use-before-define": "off",
     "import/extensions": [
