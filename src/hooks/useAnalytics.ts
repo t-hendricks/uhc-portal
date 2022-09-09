@@ -3,7 +3,7 @@ import { getTrackEvent } from '~/common/analytics';
 
 interface useAnalyticsReturn {
   /** a convenience function that composes the track event parsing and the actual tracking. */
-  track: () => void;
+  track: (trackEvent: any, options: any) => void;
   /** the analytics API instance */
   analytics: any;
   /**
@@ -19,8 +19,8 @@ interface useAnalyticsReturn {
 const useAnalytics = (): useAnalyticsReturn => {
   const { analytics, segment: { setPageMetadata } } = useChrome();
 
-  const track = (...args: any[]) => {
-    const eventObj: any = getTrackEvent([...args]);
+  const track = (trackEvent: any, options = {}) => {
+    const eventObj: any = getTrackEvent(trackEvent, options);
     analytics.track(eventObj.event, eventObj.properties);
   };
 
