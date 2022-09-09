@@ -10,8 +10,7 @@ Slack channels: `#service-development` for OCM in general, `#ocm-osd-ui` for UI.
 
 # Style
 
-To promote consistency in the code base and prevent bike-shedding over
-style issues, OCM follows the JavaScript and React style guides produced
+To promote consistency in the code base, OCM follows the JavaScript and React style guides produced
 by airbnb.
 
 [airbnb style guides](https://github.com/airbnb/javascript)
@@ -27,6 +26,31 @@ To run the linter
 ```
     $ yarn lint
 ```
+
+# Formatting
+To promote consistency in the code base, OCM uses the [Prettier](https://prettier.io/) code formatter for Javascript and TypeScript files.
+
+To run prettier on all files in the `src` directory:
+```
+    $ yarn prettier
+```
+
+To fix all formatting issues in all files in the `src` directory:
+```
+    $ yarn prettier:fix
+```
+
+If you need to have prettier run on a set of files, NPX can be used.
+
+```
+npx prettier --check <path to file or directory>
+```
+For example _npx prettier --check 'src/common/**/*.{js,ts,jsx,tsx}'_  Note that you can use the `--write` flag instead of "check" to fix formatting issues.
+
+
+
+NOTE: Staged javascript files from the `src` directory will be checked and fixed by Prettier at commit time via [Husky](https://typicode.github.io/husky/#/) and [lint-staged](https://github.com/okonet/lint-staged).  If there are any formatting errors that cannot be fixed, the commit will not happen.  The scripts that are run at commit time can be run at any time against staged files by running `npx lint-staged`.  Prettier is not run by the CI.
+
 
 ## Local Linting
 
