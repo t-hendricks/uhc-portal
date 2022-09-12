@@ -38,8 +38,8 @@ const VPCDetailsCard = (props) => {
   };
 
   const renderNoProxyDomains = noProxyDomains ? (
-    noProxyDomains.split(',').map(domain => (
-      <Label isCompact color="blue">{domain.trim()}</Label>
+    noProxyDomains.map(domain => (
+      <Label isCompact color="blue">{domain}</Label>
     ))
   ) : 'N/A';
 

@@ -153,18 +153,23 @@ function ClusterProxyScreen({
           />
         </GridItem>
         <GridItem sm={0} md={2} xl2={4} />
-        <GridItem sm={12} md={10} xl2={8}>
-          <Field
-            component={ReduxVerticalFormGroup}
-            name="no_proxy"
-            label="No Proxy domains"
-            placeholder={NO_PROXY_PLACEHOLDER}
-            type="text"
-            helpText={NO_PROXY_HELPER_TEXT}
-            showHelpTextOnError={false}
-          />
-        </GridItem>
-        <GridItem sm={0} md={2} xl2={4} />
+        {(httpProxyUrl || httpsProxyUrl) && (
+        <>
+          <GridItem sm={12} md={10} xl2={8}>
+            <Field
+              component={ReduxVerticalFormGroup}
+              name="no_proxy"
+              label="No Proxy domains"
+              placeholder={NO_PROXY_PLACEHOLDER}
+              type="text"
+              helpText={NO_PROXY_HELPER_TEXT}
+              showHelpTextOnError={false}
+            />
+          </GridItem>
+          <GridItem sm={0} md={2} xl2={4} />
+        </>
+        )}
+
         <GridItem sm={12} md={10} xl2={8}>
           <Field
             component={ReduxFileUpload}
