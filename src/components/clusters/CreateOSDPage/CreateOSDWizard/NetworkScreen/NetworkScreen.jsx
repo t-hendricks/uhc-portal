@@ -211,7 +211,7 @@ function NetworkScreen(props) {
                       <p>
                         Private clusters must be installed into an existing VPC
                         {' '}
-                        using a PrivateLink.
+                        and have PrivateLink enabled.
                       </p>
                     )}
                   >
