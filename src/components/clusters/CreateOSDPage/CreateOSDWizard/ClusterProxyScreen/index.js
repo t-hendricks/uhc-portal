@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
-import { formValueSelector, change } from 'redux-form';
+import { formValueSelector, change, getFormValues } from 'redux-form';
 
 import wizardConnector from '../WizardConnector';
 import ClusterProxyScreen from './ClusterProxyScreen';
 
 const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
+  const formValues = getFormValues('CreateCluster')(state);
 
   return {
     product: valueSelector(state, 'product'),
@@ -13,6 +14,7 @@ const mapStateToProps = (state) => {
     httpsProxyUrl: valueSelector(state, 'https_proxy_url'),
     noProxyDomains: valueSelector(state, 'no_proxy'),
     additionalTrustBundle: valueSelector(state, 'additional_trust_bundle'),
+    formValues,
   };
 };
 

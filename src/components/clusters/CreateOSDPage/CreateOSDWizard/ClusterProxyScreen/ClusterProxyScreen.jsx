@@ -67,6 +67,7 @@ function ClusterProxyScreen({
     return undefined;
   };
 
+  const noProxyStringToArray = value => value.trim().split(',');
   const atLeastOneAlert = (
     <Alert
       isInline
@@ -164,6 +165,7 @@ function ClusterProxyScreen({
               type="text"
               helpText={NO_PROXY_HELPER_TEXT}
               showHelpTextOnError={false}
+              parse={noProxyStringToArray}
             />
           </GridItem>
           <GridItem sm={0} md={2} xl2={4} />
