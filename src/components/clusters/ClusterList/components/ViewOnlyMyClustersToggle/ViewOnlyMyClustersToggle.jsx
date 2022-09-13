@@ -18,7 +18,7 @@ function ViewOnlyMyClustersToggle(props) {
         <>
           <span>View only my clusters</span>
           <Popover
-            bodyContent="Show only the clusters you previously created, or all clusters in your organisation."
+            bodyContent="Show only the clusters you previously archived, or all archived clusters in your organization."
             enableFlip={false}
           >
             <Button variant="plain">

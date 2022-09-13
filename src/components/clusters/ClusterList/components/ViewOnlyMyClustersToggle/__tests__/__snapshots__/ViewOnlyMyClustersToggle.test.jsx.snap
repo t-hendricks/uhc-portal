@@ -15,7 +15,7 @@ exports[`ViewOnlyMyClustersToggle renders default state correctly 1`] = `
         View only my clusters
       </span>
       <Popover
-        bodyContent="Show only the clusters you previously created, or all clusters in your organisation."
+        bodyContent="Show only the clusters you previously archived, or all archived clusters in your organization."
         enableFlip={false}
       >
         <Button
@@ -49,7 +49,7 @@ exports[`ViewOnlyMyClustersToggle renders selected state correctly 1`] = `
         View only my clusters
       </span>
       <Popover
-        bodyContent="Show only the clusters you previously created, or all clusters in your organisation."
+        bodyContent="Show only the clusters you previously archived, or all archived clusters in your organization."
         enableFlip={false}
       >
         <Button
