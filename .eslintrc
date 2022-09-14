@@ -24,7 +24,8 @@
           "**/*.spec.ts*",
           "selenium-js/**/*",
           "webpack.config.js",
-          "src/testUtils.jsx"
+          "src/testUtils.jsx",
+          "scripts/**/*"
         ]
       }
     ],

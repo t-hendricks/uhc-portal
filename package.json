@@ -139,6 +139,7 @@
     "mini-css-extract-plugin": "^1.4.1",
     "node-fetch": "^2.6.1",
     "null-loader": "^4.0.1",
+    "openapi-typescript-codegen": "^0.23.0",
     "porty": "^3.1.1",
     "prettier": "2.7.1",
     "progress": "^2.0.3",
@@ -219,7 +220,8 @@
     "e2e-test": "concurrently --kill-others --success=first --raw --handle-input --passthrough-arguments 'yarn selenium-with-vnc {@}' 'env WEBPACK_WATCH=false yarn start' --",
     "selenium-viewer": "wait-on tcp:5900 && vinagre --file=run/selenium.vnc",
     "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh rm --force browser; pkill --full 'concurrently.*SERVER(prevent self match){0},MOCK'; pkill --full 'concurrently.*BROWSER(prevent self match){0},TEST'; true",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "gen-types": "node scripts/gen-openapi-typescript.js"
   },
   "insights": {
     "appname": "openshift"
