@@ -63,8 +63,8 @@ export const linkify = (text, linkFunction, jiraByKey = {}) => {
     // TODO color-blind mode
     if (status) {
       const resolutionSuffix = resolution && resolution !== 'Done' ? `/${resolution}` : '';
-      // With inverse video, these "TRIANGULAR THREE QUARTERS BLOCK" chars form a hexagonal badge.
-      const badge = chalk.inverse(`\u{1FB6A}${status}${resolutionSuffix}\u{1FB68}`);
+      // ◤ U+25E4 BLACK UPPER LEFT TRIANGLE, ◢ U+25E2 BLACK LOWER RIGHT TRIANGLE
+      const badge = chalk.inverse(`\u{25E4}${status}${resolutionSuffix}\u{25E2}`);
       const color = jiraStatusColors[status];
       return (color ? color(badge) : badge) + link;
     }
