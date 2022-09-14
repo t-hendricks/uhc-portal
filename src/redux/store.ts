@@ -1,3 +1,5 @@
+// @ts-nocheck
+// TODO, Both 'history' & '@redhat-cloud-services' modules implicitly have an 'any' type.
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';

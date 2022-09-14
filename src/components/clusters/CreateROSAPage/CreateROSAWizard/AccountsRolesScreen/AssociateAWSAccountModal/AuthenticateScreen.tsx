@@ -15,7 +15,7 @@ import DownloadAndOSSelection
 import links, { channels, tools } from '../../../../../../common/installLinks.mjs';
 import InstructionCommand from '../../../../../common/InstructionCommand';
 
-function AuthenticateScreen() {
+const AuthenticateScreen = () => {
   const token = useSelector<GlobalState>(state => state.modal.data);
   const loginCommand = `rosa login --token="${token}"`;
 
@@ -77,6 +77,6 @@ function AuthenticateScreen() {
       </CardBody>
     </Card>
   );
-}
+};
 
 export default AuthenticateScreen;
