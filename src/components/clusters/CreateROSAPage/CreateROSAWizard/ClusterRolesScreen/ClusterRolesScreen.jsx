@@ -24,6 +24,8 @@ import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/Redux
 import validators from '../../../../../common/validators';
 import PopoverHint from '../../../../common/PopoverHint';
 import links from '../../../../../common/installLinks.mjs';
+import useAnalytics from '~/hooks/useAnalytics';
+import { trackEvents } from '~/common/analytics';
 
 export const createOperatorRolesHashPrefix = () => {
   // random 4 alphanumeric hash
@@ -52,12 +54,19 @@ function ClusterRolesScreen({
 }) {
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
+  const { track } = useAnalytics();
 
   useEffect(() => {
     if (!customOperatorRolesPrefix) {
       change('custom_operator_roles_prefix', `${clusterName}-${createOperatorRolesHashPrefix()}`);
     }
   }, [customOperatorRolesPrefix, clusterName]);
+
+  useEffect(() => {
+    // clearing the ocm_role_response results in ocm role being re-fetched
+    // when navigating to this step (from Next or Back)
+    clearGetOcmRoleResponse();
+  }, []);
 
   useEffect(() => {
     if (!rosaCreationMode && getOCMRoleResponse.fulfilled) {
@@ -87,7 +96,19 @@ function ClusterRolesScreen({
   const handleRefresh = () => {
     clearGetOcmRoleResponse();
     change('rosa_roles_provider_creation_mode', undefined);
-    getOCMRole(awsAccountID);
+    track(trackEvents.OCMRoleRefreshed);
+  };
+
+  const handleCreationModeChange = (_, value) => {
+    // Going to Next step and Back, triggers this onChange with value undefined?!
+    if (value) {
+      change('rosa_roles_provider_creation_mode', value);
+      track(trackEvents.RosaCreationMode, {
+        customProperties: {
+          value,
+        },
+      });
+    }
   };
 
   const EnableAutoModeTip = (
@@ -106,7 +127,10 @@ function ClusterRolesScreen({
           {' '}
           <PopoverHint title="If an OCM role with basic privileges exists in your account, you might need to delete or unlink the role before creating an OCM role with administrative privileges." />
         </Text>
-        <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role command">
+        <InstructionCommand
+          textAriaLabel="Copyable ROSA create ocm-role command"
+          trackEvent={trackEvents.CopyOCMRoleCreateAdmin}
+        >
           rosa create ocm-role --admin
         </InstructionCommand>
         <Text component={TextVariants.p} className="pf-u-mb-sm">
@@ -114,7 +138,10 @@ function ClusterRolesScreen({
           {' '}
           account.
         </Text>
-        <InstructionCommand textAriaLabel="Copyable ROSA link ocm-role command">
+        <InstructionCommand
+          textAriaLabel="Copyable ROSA link ocm-role command"
+          trackEvent={trackEvents.CopyOCMRoleLink}
+        >
           rosa link ocm-role &lt;arn&gt;
         </InstructionCommand>
         <Text component={TextVariants.p} className="pf-u-mb-sm">
@@ -191,6 +218,7 @@ function ClusterRolesScreen({
                 className="radio-button"
                 disabled={getOCMRoleResponse.pending}
                 options={roleModeOptions}
+                onChange={handleCreationModeChange}
                 disableDefaultValueHandling
               />
             </FormGroup>
