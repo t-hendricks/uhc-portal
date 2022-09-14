@@ -1,11 +1,20 @@
 import React from 'react';
 
 import { Button, Modal, ModalVariant } from '@patternfly/react-core';
-import { useWizardContext, useWizardFooter, Wizard, WizardHeader, WizardStep, WizardStepProps } from '@patternfly/react-core/dist/esm/next';
+import {
+  useWizardContext,
+  useWizardFooter,
+  Wizard,
+  WizardHeader,
+  WizardStep,
+  WizardStepProps,
+} from '@patternfly/react-core/dist/esm/next';
 
 import AuthenticateScreen from './AuthenticateScreen';
 import { OcmRoleScreen } from './OcmRoleScreen';
 import { UserRoleScreen } from './UserRoleScreen';
+
+import './associateAwsAccountModal.scss';
 
 interface Props {
   isOpen: boolean;
@@ -18,6 +27,7 @@ export const AssociateAwsAccountModal = ({ isOpen, onClose }: Props) => (
     variant={ModalVariant.large}
     showClose={false}
     hasNoBodyWrapper
+    className="associate-aws-account-modal"
   >
     <Wizard
       onSave={onClose}
@@ -26,6 +36,7 @@ export const AssociateAwsAccountModal = ({ isOpen, onClose }: Props) => (
         <WizardHeader
           title="Associate AWS Account"
           description="Link your AWS account to your Red Hat account."
+          onClose={onClose}
         />
       )}
     >
@@ -53,9 +64,15 @@ const UserRoleScreenStep = (props: WizardStepProps) => {
     React.useMemo(
       () => (
         <footer className="pf-c-wizard__footer">
-          <Button variant="primary" onClick={onClose}>Ok</Button>
-          <Button variant="secondary" onClick={onBack}>Back</Button>
-          <Button variant="link" onClick={onClose}>Cancel</Button>
+          <Button variant="primary" onClick={onClose}>
+            Ok
+          </Button>
+          <Button variant="secondary" onClick={onBack}>
+            Back
+          </Button>
+          <Button variant="link" onClick={onClose}>
+            Cancel
+          </Button>
         </footer>
       ),
       [onClose, onBack],
