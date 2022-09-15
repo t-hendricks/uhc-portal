@@ -166,28 +166,29 @@ test('Field is valid CIDR range', () => {
 
 test('Field is valid Machine CIDR for AWS', () => {
   expect(validators.awsMachineCidr()).toBe(undefined);
-  expect(validators.awsMachineCidr('192.168.0.0/15', { multi_az: 'false' })).toBe('The subnet mask can\'t be lower than \'/16\'.');
+  expect(validators.awsMachineCidr('192.168.0.0/15', { multi_az: 'false' })).toBe('The subnet mask can\'t be larger than \'/16\'.');
   expect(validators.awsMachineCidr('192.168.0.0/16', { multi_az: 'false' })).toBe(undefined);
   expect(validators.awsMachineCidr('192.168.0.0/25', { multi_az: 'false' })).toBe(undefined);
-  expect(validators.awsMachineCidr('192.168.0.0/26', { multi_az: 'false' })).toBe('The subnet mask can\'t be higher than \'/25\'.');
-  expect(validators.awsMachineCidr('192.168.0.0/15', { multi_az: 'true' })).toBe('The subnet mask can\'t be lower than \'/16\'.');
+  expect(validators.awsMachineCidr('192.168.0.0/26', { multi_az: 'false' })).toBe('The subnet mask can\'t be smaller than \'/25\'.');
+  expect(validators.awsMachineCidr('192.168.0.0/15', { multi_az: 'true' })).toBe('The subnet mask can\'t be larger than \'/16\'.');
   expect(validators.awsMachineCidr('192.168.0.0/16', { multi_az: 'true' })).toBe(undefined);
   expect(validators.awsMachineCidr('192.168.0.0/24', { multi_az: 'true' })).toBe(undefined);
-  expect(validators.awsMachineCidr('192.168.0.0/25', { multi_az: 'true' })).toBe('The subnet mask can\'t be higher than \'/24\'.');
+  expect(validators.awsMachineCidr('192.168.0.0/25', { multi_az: 'true' })).toBe('The subnet mask can\'t be smaller than \'/24\'.');
 });
 
-test('Field is valid Machine CIDR for GCP', () => {
+// https://issues.redhat.com/browse/HAC-2118
+test.skip('Field is valid Machine CIDR for GCP', () => {
   expect(validators.gcpMachineCidr()).toBe(undefined);
   expect(validators.gcpMachineCidr('192.168.0.0/0', { multi_az: 'false' })).toBe(undefined);
-  expect(validators.gcpMachineCidr('192.168.0.0/25', { multi_az: 'false' })).toBe('The subnet mask can\'t be higher than \'/23\', which provides up to 23 nodes.');
+  expect(validators.gcpMachineCidr('192.168.0.0/25', { multi_az: 'false' })).toBe('The subnet mask can\'t be smaller than \'/23\', which provides up to 23 nodes.');
   expect(validators.gcpMachineCidr('192.168.0.0/0', { multi_az: 'true' })).toBe(undefined);
-  expect(validators.gcpMachineCidr('192.168.0.0/25', { multi_az: 'true' })).toBe('The subnet mask can\'t be higher than \'/23\', which provides up to 69 nodes.');
+  expect(validators.gcpMachineCidr('192.168.0.0/25', { multi_az: 'true' })).toBe('The subnet mask can\'t be smaller than \'/23\', which provides up to 69 nodes.');
 });
 
 test('Field is valid Service CIDR', () => {
   expect(validators.serviceCidr()).toBe(undefined);
   expect(validators.serviceCidr('192.168.0.0/0')).toBe(undefined);
-  expect(validators.serviceCidr('192.168.0.0/25')).toBe('The subnet mask can\'t be higher than \'/24\', which provides up to 254 services.');
+  expect(validators.serviceCidr('192.168.0.0/25')).toBe('The subnet mask can\'t be smaller than \'/24\', which provides up to 254 services.');
 });
 
 test('Field is valid Pod CIDR', () => {
@@ -199,7 +200,7 @@ test('Field is valid Pod CIDR', () => {
   expect(validators.podCidr('192.168.0.0/19', { network_host_prefix: '/24' })).toBe(undefined);
   expect(validators.podCidr('192.168.0.0/20', { network_host_prefix: '/25' })).toBe(undefined);
   expect(validators.podCidr('192.168.0.0/21', { network_host_prefix: '/26' })).toBe(undefined);
-  expect(validators.podCidr('192.168.0.0/22', { network_host_prefix: '/27' })).toBe('The subnet mask can\'t be higher than /21.');
+  expect(validators.podCidr('192.168.0.0/22', { network_host_prefix: '/27' })).toBe('The subnet mask can\'t be smaller than /21.');
 
   // With host prefix /23, pod subnet needs to be at most /18
   expect(validators.podCidr('192.168.0.0/17', { network_host_prefix: '/23' })).toBe(undefined);
@@ -216,7 +217,7 @@ test('Field is valid Pod CIDR', () => {
 
   // With host prefix /26, pod subnet needs to be at most /21
   expect(validators.podCidr('192.168.0.0/21', { network_host_prefix: '/26' })).toBe(undefined);
-  expect(validators.podCidr('192.168.0.0/22', { network_host_prefix: '/26' })).toBe('The subnet mask can\'t be higher than /21.');
+  expect(validators.podCidr('192.168.0.0/22', { network_host_prefix: '/26' })).toBe('The subnet mask can\'t be smaller than /21.');
 });
 
 test('Field is a private IP address', () => {
@@ -306,17 +307,17 @@ test('Field is an address the corresponds with the first host in its subnet', ()
 
 test('Field is valid subnet mask', () => {
   expect(validators.hostPrefix()).toBe(undefined);
-  expect(validators.hostPrefix('/22')).toBe('The subnet mask can\'t be lower than \'/23\', which provides up to 510 Pod IP addresses.');
+  expect(validators.hostPrefix('/22')).toBe('The subnet mask can\'t be larger than \'/23\', which provides up to 510 Pod IP addresses.');
   expect(validators.hostPrefix('/23')).toBe(undefined);
   expect(validators.hostPrefix('/26')).toBe(undefined);
-  expect(validators.hostPrefix('/27')).toBe('The subnet mask can\'t be higher than \'/26\', which provides up to 62 Pod IP addresses.');
+  expect(validators.hostPrefix('/27')).toBe('The subnet mask can\'t be smaller than \'/26\', which provides up to 62 Pod IP addresses.');
   expect(validators.hostPrefix('/33')).toBe('The value \'/33\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
-  expect(validators.hostPrefix('32')).toBe('The subnet mask can\'t be higher than \'/26\', which provides up to 62 Pod IP addresses.');
+  expect(validators.hostPrefix('32')).toBe('The subnet mask can\'t be smaller than \'/26\', which provides up to 62 Pod IP addresses.');
   expect(validators.hostPrefix('/foo')).toBe('The value \'/foo\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
   expect(validators.hostPrefix('foo')).toBe('The value \'foo\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
   expect(validators.hostPrefix('/')).toBe('The value \'/\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
-  expect(validators.hostPrefix('/0')).toBe('The subnet mask can\'t be lower than \'/23\', which provides up to 510 Pod IP addresses.');
-  expect(validators.hostPrefix('0')).toBe('The subnet mask can\'t be lower than \'/23\', which provides up to 510 Pod IP addresses.');
+  expect(validators.hostPrefix('/0')).toBe('The subnet mask can\'t be larger than \'/23\', which provides up to 510 Pod IP addresses.');
+  expect(validators.hostPrefix('0')).toBe('The subnet mask can\'t be larger than \'/23\', which provides up to 510 Pod IP addresses.');
   expect(validators.hostPrefix('/-1')).toBe('The value \'/-1\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
   expect(validators.hostPrefix('-1')).toBe('The value \'-1\' isn\'t a valid subnet mask. It must follow the RFC-4632 format: \'/16\'.');
 });
