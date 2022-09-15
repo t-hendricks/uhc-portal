@@ -38,4 +38,13 @@ describe('getClusterName', () => {
   it('returns "Unnamed Cluster" when no other info is present', () => {
     expect(getClusterName({})).toEqual('Unnamed Cluster');
   });
+
+  it('returns cluster.name if subscription.display_name is equal to subscription.external_cluster_id', () => {
+    const cluster = {
+      name: 'my_cluster_name',
+      external_id: 'my_external_id',
+      subscription: { display_name: 'my_cluster_uuid', external_cluster_id: 'my_cluster_uuid' },
+    };
+    expect(getClusterName(cluster)).toEqual('my_cluster_name');
+  });
 });

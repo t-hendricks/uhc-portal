@@ -58,7 +58,7 @@ function NetworkingSection({
   const machineCidrValidators = [
     validators.cidr,
     cloudProviderID === 'aws' && validators.awsMachineCidr,
-    cloudProviderID === 'gcp' && validators.gcpMachineCidr,
+    // cloudProviderID === 'gcp' && validators.gcpMachineCidr, https://issues.redhat.com/browse/HAC-2118
     validators.validateRange,
     machineDisjointSubnets,
     validators.disjointFromDockerRange,

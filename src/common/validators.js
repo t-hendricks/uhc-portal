@@ -463,20 +463,23 @@ const awsMachineCidr = (value, formData) => {
   const prefixLength = getCIDRSubnetLength(value);
 
   if (prefixLength < AWS_MACHINE_CIDR_MIN) {
-    return `The subnet mask can't be lower than '/${AWS_MACHINE_CIDR_MIN}'.`;
+    return `The subnet mask can't be larger than '/${AWS_MACHINE_CIDR_MIN}'.`;
   }
 
   if (isMultiAz && prefixLength > AWS_MACHINE_CIDR_MAX_MULTI_AZ) {
-    return `The subnet mask can't be higher than '/${AWS_MACHINE_CIDR_MAX_MULTI_AZ}'.`;
+    return `The subnet mask can't be smaller than '/${AWS_MACHINE_CIDR_MAX_MULTI_AZ}'.`;
   }
 
   if (!isMultiAz && prefixLength > AWS_MACHINE_CIDR_MAX_SINGLE_AZ) {
-    return `The subnet mask can't be higher than '/${AWS_MACHINE_CIDR_MAX_SINGLE_AZ}'.`;
+    return `The subnet mask can't be smaller than '/${AWS_MACHINE_CIDR_MAX_SINGLE_AZ}'.`;
   }
 
   return undefined;
 };
 
+// Temporarily removed until messaging can be vetted according to https://issues.redhat.com/browse/HAC-2118.
+/* eslint-disable max-len */
+/*
 const gcpMachineCidr = (value, formData) => {
   if (!value) {
     return undefined;
@@ -488,17 +491,19 @@ const gcpMachineCidr = (value, formData) => {
   if (isMultiAz && prefixLength > GCP_MACHINE_CIDR_MAX) {
     const maxComputeNodes = 2 ** (28 - GCP_MACHINE_CIDR_MAX);
     const multiAZ = (maxComputeNodes - 9) * 3;
-    return `The subnet mask can't be higher than '/${GCP_MACHINE_CIDR_MAX}', which provides up to ${multiAZ} nodes.`;
+    return `The subnet mask can't be smaller than '/${GCP_MACHINE_CIDR_MAX}', which provides up to ${multiAZ} nodes.`;
   }
 
   if (!isMultiAz && prefixLength > GCP_MACHINE_CIDR_MAX) {
     const maxComputeNodes = 2 ** (28 - GCP_MACHINE_CIDR_MAX);
     const singleAZ = maxComputeNodes - 9;
-    return `The subnet mask can't be higher than '/${GCP_MACHINE_CIDR_MAX}', which provides up to ${singleAZ} nodes.`;
+    return `The subnet mask can't be smaller than '/${GCP_MACHINE_CIDR_MAX}', which provides up to ${singleAZ} nodes.`;
   }
 
   return undefined;
 };
+*/
+/* eslint-enable max-len */
 
 const serviceCidr = (value) => {
   if (!value) {
@@ -509,7 +514,7 @@ const serviceCidr = (value) => {
 
   if (prefixLength > SERVICE_CIDR_MAX) {
     const maxServices = 2 ** (32 - SERVICE_CIDR_MAX) - 2;
-    return `The subnet mask can't be higher than '/${SERVICE_CIDR_MAX}', which provides up to ${maxServices} services.`;
+    return `The subnet mask can't be smaller than '/${SERVICE_CIDR_MAX}', which provides up to ${maxServices} services.`;
   }
 
   return undefined;
@@ -522,7 +527,7 @@ const podCidr = (value, formData) => {
 
   const prefixLength = getCIDRSubnetLength(value);
   if (prefixLength > POD_CIDR_MAX) {
-    return `The subnet mask can't be higher than /${POD_CIDR_MAX}.`;
+    return `The subnet mask can't be smaller than /${POD_CIDR_MAX}.`;
   }
 
   const hostPrefix = getCIDRSubnetLength(formData.network_host_prefix) || 23;
@@ -657,11 +662,11 @@ const hostPrefix = (value) => {
 
   if (prefixLength < HOST_PREFIX_MIN) {
     const maxPodIPs = 2 ** (32 - HOST_PREFIX_MIN) - 2;
-    return `The subnet mask can't be lower than '/${HOST_PREFIX_MIN}', which provides up to ${maxPodIPs} Pod IP addresses.`;
+    return `The subnet mask can't be larger than '/${HOST_PREFIX_MIN}', which provides up to ${maxPodIPs} Pod IP addresses.`;
   }
   if (prefixLength > HOST_PREFIX_MAX) {
     const maxPodIPs = 2 ** (32 - HOST_PREFIX_MAX) - 2;
-    return `The subnet mask can't be higher than '/${HOST_PREFIX_MAX}', which provides up to ${maxPodIPs} Pod IP addresses.`;
+    return `The subnet mask can't be smaller than '/${HOST_PREFIX_MAX}', which provides up to ${maxPodIPs} Pod IP addresses.`;
   }
 
   return undefined;
@@ -1126,7 +1131,7 @@ const validators = {
   checkBaseDNSDomain,
   cidr,
   awsMachineCidr,
-  gcpMachineCidr,
+  // gcpMachineCidr, https://issues.redhat.com/browse/HAC-2118
   serviceCidr,
   podCidr,
   disjointSubnets,
