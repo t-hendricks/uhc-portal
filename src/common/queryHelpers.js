@@ -25,10 +25,7 @@ const sqlString = (s) => {
 const getOrder = (sortField, isAscending) => {
   const direction = isAscending ? 'asc' : 'desc';
   // i.e. turns 'username,created_by' into 'username asc, created_by asc'
-  if (sortField.split(',').length > 1) {
-    return sortField.split(',').map(f => `${f.trim()} ${direction}`).join(', ');
-  }
-  return `${sortField} ${direction}`;
+  return sortField.split(',').map(f => `${f.trim()} ${direction}`).join(', ');
 };
 
 const createViewQueryObject = (viewOptions, username) => {

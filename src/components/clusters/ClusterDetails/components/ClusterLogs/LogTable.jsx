@@ -37,7 +37,7 @@ const columns = [
     transforms: [sortable],
   },
   {
-    title: 'Created by',
+    title: 'Logged by',
     transforms: [sortable],
   },
   {
@@ -50,7 +50,7 @@ const sortColumns = {
   Description: 'summary',
   Date: 'timestamp',
   Severity: 'severity',
-  'Created by': 'username,created_by',
+  'Logged by': 'username,created_by',
 };
 
 const emptyState = [{
