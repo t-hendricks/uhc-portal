@@ -99,6 +99,21 @@ describe('createViewQueryObject()', () => {
     });
   });
 
+  it('sorts correctly (with multiple sort fields)', () => {
+    const viewOptions = {
+      ...baseViewOptions,
+      sorting: {
+        sortField: 'username,created_by',
+        isAscending: false,
+      },
+    };
+
+    expect(createViewQueryObject(viewOptions)).toEqual({
+      ...baseResult,
+      order: 'username desc, created_by desc',
+    });
+  });
+
   it('handles archived flag when no query is set', () => {
     const viewOptions = {
       ...baseViewOptions,

@@ -12,7 +12,6 @@ import {
 } from '@patternfly/react-core';
 import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
-import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 
 import { viewPropsChanged, getQueryParam } from '../../../../../common/queryHelpers';
 import ClusterLogsToolbar from './toolbar';
@@ -127,14 +126,11 @@ class ClusterLogs extends React.Component {
               externalClusterID={externalClusterID}
               isPendingNoData={isPendingNoData}
             />
-            {pending ? (
-              <Spinner centered className="cluster-list-spinner" />
-            ) : (
-              <LogTable
-                logs={logs}
-                setSorting={setSorting}
-              />
-            )}
+            <LogTable
+              pending={pending}
+              logs={logs}
+              setSorting={setSorting}
+            />
             <ViewPaginationRow
               viewType={viewConstants.CLUSTER_LOGS_VIEW}
               currentPage={viewOptions.currentPage}
