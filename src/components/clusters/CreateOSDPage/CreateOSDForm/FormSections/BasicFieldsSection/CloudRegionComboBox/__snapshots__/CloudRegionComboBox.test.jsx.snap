@@ -9,6 +9,21 @@ exports[`<CloudRegionComboBox /> when region list needs to be fetched renders co
         "display_name": "N. Virginia",
         "enabled": true,
         "id": "us-east-1",
+        "supports_multi_az": true,
+      },
+      Object {
+        "ccs_only": false,
+        "display_name": "Ireland",
+        "enabled": true,
+        "id": "eu-west-1",
+        "supports_multi_az": true,
+      },
+      Object {
+        "ccs_only": false,
+        "display_name": "Antarctica",
+        "enabled": true,
+        "id": "single-az-3",
+        "supports_multi_az": false,
       },
     ]
   }
@@ -29,6 +44,7 @@ exports[`<CloudRegionComboBox /> when region list needs to be fetched renders co
       "onChange": [MockFunction],
     }
   }
+  isMultiAz={false}
 >
   <div
     className="spinner-fit-container"
@@ -63,6 +79,21 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
         "display_name": "N. Virginia",
         "enabled": true,
         "id": "us-east-1",
+        "supports_multi_az": true,
+      },
+      Object {
+        "ccs_only": false,
+        "display_name": "Ireland",
+        "enabled": true,
+        "id": "eu-west-1",
+        "supports_multi_az": true,
+      },
+      Object {
+        "ccs_only": false,
+        "display_name": "Antarctica",
+        "enabled": true,
+        "id": "single-az-3",
+        "supports_multi_az": false,
       },
     ]
   }
@@ -76,15 +107,33 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
       "providers": Object {
         "aws": Object {
           "regions": Object {
-            "eu-west-1": Object {
-              "display_name": "Ireland",
+            "disabled-2": Object {
+              "ccs_only": false,
+              "display_name": "Kamchatka",
               "enabled": false,
+              "id": "disabled-2",
+              "supports_multi_az": true,
+            },
+            "eu-west-1": Object {
+              "ccs_only": false,
+              "display_name": "Ireland",
+              "enabled": true,
               "id": "eu-west-1",
+              "supports_multi_az": true,
+            },
+            "single-az-3": Object {
+              "ccs_only": false,
+              "display_name": "Antarctica",
+              "enabled": true,
+              "id": "single-az-3",
+              "supports_multi_az": false,
             },
             "us-east-1": Object {
+              "ccs_only": false,
               "display_name": "N. Virginia",
               "enabled": true,
               "id": "us-east-1",
+              "supports_multi_az": true,
             },
           },
         },
@@ -96,8 +145,10 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
   input={
     Object {
       "onChange": [MockFunction],
+      "value": "eu-west-1",
     }
   }
+  isMultiAz={false}
 >
   <FormSelect
     aria-label="Region"
@@ -110,7 +161,7 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
     onFocus={[Function]}
     ouiaSafe={true}
     validated="default"
-    value=""
+    value="eu-west-1"
   >
     <select
       aria-invalid={false}
@@ -124,9 +175,10 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
       onChange={[Function]}
       onFocus={[Function]}
       required={false}
-      value=""
+      value="eu-west-1"
     >
       <FormSelectOption
+        isDisabled={false}
         key="us-east-1"
         label="us-east-1, N. Virginia"
         value="us-east-1"
@@ -137,6 +189,34 @@ exports[`<CloudRegionComboBox /> when the region list is available renders corre
           value="us-east-1"
         >
           us-east-1, N. Virginia
+        </option>
+      </FormSelectOption>
+      <FormSelectOption
+        isDisabled={false}
+        key="eu-west-1"
+        label="eu-west-1, Ireland"
+        value="eu-west-1"
+      >
+        <option
+          className=""
+          disabled={false}
+          value="eu-west-1"
+        >
+          eu-west-1, Ireland
+        </option>
+      </FormSelectOption>
+      <FormSelectOption
+        isDisabled={false}
+        key="single-az-3"
+        label="single-az-3, Antarctica"
+        value="single-az-3"
+      >
+        <option
+          className=""
+          disabled={false}
+          value="single-az-3"
+        >
+          single-az-3, Antarctica
         </option>
       </FormSelectOption>
     </select>
@@ -153,6 +233,21 @@ exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1
         "display_name": "N. Virginia",
         "enabled": true,
         "id": "us-east-1",
+        "supports_multi_az": true,
+      },
+      Object {
+        "ccs_only": false,
+        "display_name": "Ireland",
+        "enabled": true,
+        "id": "eu-west-1",
+        "supports_multi_az": true,
+      },
+      Object {
+        "ccs_only": false,
+        "display_name": "Antarctica",
+        "enabled": true,
+        "id": "single-az-3",
+        "supports_multi_az": false,
       },
     ]
   }
@@ -173,6 +268,7 @@ exports[`<CloudRegionComboBox /> when the request is pending renders correctly 1
       "onChange": [MockFunction],
     }
   }
+  isMultiAz={false}
 >
   <div
     className="spinner-fit-container"
@@ -207,6 +303,21 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
         "display_name": "N. Virginia",
         "enabled": true,
         "id": "us-east-1",
+        "supports_multi_az": true,
+      },
+      Object {
+        "ccs_only": false,
+        "display_name": "Ireland",
+        "enabled": true,
+        "id": "eu-west-1",
+        "supports_multi_az": true,
+      },
+      Object {
+        "ccs_only": false,
+        "display_name": "Antarctica",
+        "enabled": true,
+        "id": "single-az-3",
+        "supports_multi_az": false,
       },
     ]
   }
@@ -227,6 +338,7 @@ exports[`<CloudRegionComboBox /> when there was an error renders correctly 1`] =
       "onChange": [MockFunction],
     }
   }
+  isMultiAz={false}
 >
   <ErrorBox
     message="Error loading region list"

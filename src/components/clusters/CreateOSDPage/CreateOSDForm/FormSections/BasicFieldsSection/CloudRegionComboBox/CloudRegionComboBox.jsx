@@ -7,7 +7,6 @@ import {
   FormSelect,
   FormSelectOption,
 } from '@patternfly/react-core';
-import get from 'lodash/get';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../../../common/ErrorBox';
@@ -19,19 +18,20 @@ class CloudRegionComboBox extends React.Component {
       isMultiAz, input, cloudProviderID, cloudProviders,
     } = this.props;
 
-    const selectedRegionData = get(cloudProviders, 'providers[cloudProviderID].regions[input.value]', {});
+    const regionData = cloudProviders?.providers?.[cloudProviderID]?.regions?.[input.value];
+    const supportsMultiAz = regionData?.supports_multi_az ?? true;
 
-    if ((isMultiAz && !prevProps.isMultiAz) && !selectedRegionData.supports_multi_az) {
-      input.onChange(cloudProviderID === 'aws' ? 'us-east-1' : 'us-east1');
+    if ((isMultiAz && !prevProps.isMultiAz) && !supportsMultiAz) {
+      this.onChange(cloudProviderID === 'aws' ? 'us-east-1' : 'us-east1');
     }
   }
 
-  onChange = (value, event) => {
+  onChange = (value) => {
     const { input: { onChange }, handleCloudRegionChange } = this.props;
     if (handleCloudRegionChange) {
       handleCloudRegionChange();
     }
-    onChange(event, value); // redux form has the parameters the other way around from PF
+    onChange(value);
   };
 
   render() {
