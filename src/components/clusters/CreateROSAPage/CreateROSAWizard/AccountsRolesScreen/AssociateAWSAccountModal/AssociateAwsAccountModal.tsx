@@ -27,18 +27,20 @@ export const AssociateAwsAccountModal = ({ isOpen, onClose }: Props) => (
     variant={ModalVariant.large}
     showClose={false}
     hasNoBodyWrapper
+    aria-label="Associate AWS account modal"
     className="associate-aws-account-modal"
+    onEscapePress={onClose}
   >
     <Wizard
       onSave={onClose}
       onClose={onClose}
-      header={(
+      header={
         <WizardHeader
           title="Associate AWS Account"
           description="Link your AWS account to your Red Hat account."
           onClose={onClose}
         />
-      )}
+      }
     >
       <WizardStep name="Authenticate" id="auth">
         <AuthenticateScreen />

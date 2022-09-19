@@ -23,12 +23,12 @@ declare global {
 export interface GlobalState {
   modal: {
     data: any;
-  }
+  };
   rosaReducer: {
     getAWSAccountIDsResponse: {
-      data: any[]
-    }
-  },
+      data: any[];
+    };
+  };
 }
 
 const emptyState = {} as GlobalState;
@@ -45,7 +45,7 @@ const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
  */
 const restoreStateOnTokenReload = createTransform(
   // gets called right before state is persisted
-  (inboundState) => ({ ...inboundState }),
+  (inboundState: GlobalState) => ({ ...inboundState }),
   // gets called right before state is rehydrated
   (outboundState: GlobalState) => {
     const tokenReload = window.localStorage.getItem('token-reload') === 'true';
