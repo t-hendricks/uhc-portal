@@ -19,6 +19,7 @@ exports[`<ErroBox /> should render expandable 1`] = `
     toggleText="Error details"
     toggleTextCollapsed=""
     toggleTextExpanded=""
+    variant="default"
   >
     <span>
       this is some error message

@@ -1,20 +1,24 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import {
   Card,
   CardBody,
   Text, TextContent, TextVariants, Title,
 } from '@patternfly/react-core';
-import PropTypes from 'prop-types';
+
+import { trackEvents } from '~/common/analytics';
+import { GlobalState } from '~/redux/store';
 import ExternalLink from '../../../../../common/ExternalLink';
 import DownloadAndOSSelection
   from '../../../../install/instructions/components/DownloadAndOSSelection';
 import links, { channels, tools } from '../../../../../../common/installLinks.mjs';
 import InstructionCommand from '../../../../../common/InstructionCommand';
-import { trackEvents } from '~/common/analytics';
 
-function AuthenticateScreen({ token }) {
+const AuthenticateScreen = () => {
+  const token = useSelector<GlobalState>(state => state.modal.data);
   const loginCommand = `rosa login --token="${token}"`;
+
   return (
     <Card isCompact isPlain isFullHeight>
       <CardBody>
@@ -73,10 +77,6 @@ function AuthenticateScreen({ token }) {
       </CardBody>
     </Card>
   );
-}
-
-AuthenticateScreen.propTypes = {
-  token: PropTypes.string,
 };
 
 export default AuthenticateScreen;

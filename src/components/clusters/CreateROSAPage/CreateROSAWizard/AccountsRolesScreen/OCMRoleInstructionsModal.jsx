@@ -2,33 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Modal from '../../../../common/Modal/Modal';
-
-import OCMRoleScreen from './AssociateAWSAccountModal/OCMRoleScreen';
+import { OcmRoleScreen } from './AssociateAWSAccountModal/OcmRoleScreen';
 
 function OCMRoleInstructionsModal(props) {
-  const {
-    isOpen,
-    hasAWSAccounts,
-    closeModal,
-  } = props;
+  const { isOpen, closeModal } = props;
 
-  return isOpen && (
-    <Modal
-      title="Create and Link OCM Role"
-      modalSize="medium"
-      onClose={() => closeModal()}
-      showPrimary={false}
-      secondaryText="Ok"
-      onSecondaryClick={() => closeModal()}
-    >
-      <OCMRoleScreen hasAWSAccounts={hasAWSAccounts} hideTitle />
-    </Modal>
+  return (
+    isOpen && (
+      <Modal
+        title="Create and Link OCM Role"
+        modalSize="medium"
+        onClose={() => closeModal()}
+        showPrimary={false}
+        secondaryText="Ok"
+        onSecondaryClick={() => closeModal()}
+      >
+        <OcmRoleScreen />
+      </Modal>
+    )
   );
 }
 
 OCMRoleInstructionsModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  hasAWSAccounts: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
 };
 

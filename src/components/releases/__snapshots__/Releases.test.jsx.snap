@@ -138,6 +138,9 @@ exports[`<Releases /> should render 1`] = `
                                           "clickOutsideDeactivates": true,
                                           "fallbackFocus": [Function],
                                           "returnFocusOnDeactivate": true,
+                                          "tabbableOptions": Object {
+                                            "displayCheck": "none",
+                                          },
                                         }
                                       }
                                       onMouseDown={[Function]}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import {
   Card,
@@ -12,20 +12,20 @@ import {
   Title,
   Alert,
 } from '@patternfly/react-core';
+
+import { GlobalState } from '~/redux/store';
 import { trackEvents } from '~/common/analytics';
-import MultipleAccountsInfoBox from '../MultipleAccountsInfoBox';
-import PopoverHint from '../../../../../../common/PopoverHint';
-import ExternalLink from '../../../../../../common/ExternalLink';
-import InstructionCommand from '../../../../../../common/InstructionCommand';
-import links from '../../../../../../../common/installLinks.mjs';
+import links from '~/common/installLinks.mjs';
+import PopoverHint from '~/components/common/PopoverHint';
+import ExternalLink from '~/components/common/ExternalLink';
+import InstructionCommand from '~/components/common/InstructionCommand';
+import { RosaCliCommand } from '../constants/cliCommands';
+import MultipleAccountsInfoBox from './MultipleAccountsInfoBox';
 
-export const rosaOcmRoleCLICommands = {
-  ocmRole: 'rosa create ocm-role',
-  adminOcmRole: 'rosa create ocm-role --admin',
-  linkOcmRole: 'rosa link ocm-role <arn>',
-};
-
-const OCMRoleScreen = ({ hasAWSAccounts }) => {
+export const OcmRoleScreen = () => {
+  const hasAwsAccounts = useSelector<GlobalState>(
+    state => !!state.rosaReducer.getAWSAccountIDsResponse?.data?.length,
+  );
   const [isAlertShown, setIsAlertShown] = useState(true);
 
   return (
@@ -50,7 +50,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
         <Title headingLevel="h2">
           Create an OpenShift Cluster Manager role
         </Title>
-        {hasAWSAccounts && isAlertShown && (
+        {hasAwsAccounts && isAlertShown && (
           <MultipleAccountsInfoBox setIsAlertShown={setIsAlertShown} ocmRole />
         )}
         <Title headingLevel="h3">
@@ -87,7 +87,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
                   />
                 </strong>
                 <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role" trackEvent={trackEvents.CopyOCMRoleCreateBasic}>
-                  {rosaOcmRoleCLICommands.ocmRole}
+                  {RosaCliCommand.OcmRole}
                 </InstructionCommand>
               </GridItem>
               <GridItem sm={12} md={1} className="ocm-wizard-or-container">
@@ -104,7 +104,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
                   />
                 </strong>
                 <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin" trackEvent={trackEvents.CopyOCMRoleCreateAdmin}>
-                  {rosaOcmRoleCLICommands.adminOcmRole}
+                  {RosaCliCommand.AdminOcmRole}
                 </InstructionCommand>
               </GridItem>
             </Grid>
@@ -121,7 +121,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
 
             <GridItem sm={7} md={5}>
               <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn" trackEvent={trackEvents.CopyOCMRoleLink}>
-                {rosaOcmRoleCLICommands.linkOcmRole}
+                {RosaCliCommand.LinkOcmRole}
               </InstructionCommand>
             </GridItem>
             <GridItem sm={1} md={1}>
@@ -133,7 +133,7 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
                   <InstructionCommand textAriaLabel="Copyable ROSA rosa list ocm-role">
                     rosa list ocm-role
                   </InstructionCommand>
-)}
+                )}
               />
             </GridItem>
 
@@ -150,9 +150,3 @@ const OCMRoleScreen = ({ hasAWSAccounts }) => {
     </Card>
   );
 };
-
-OCMRoleScreen.propTypes = {
-  hasAWSAccounts: PropTypes.bool,
-};
-
-export default OCMRoleScreen;

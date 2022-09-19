@@ -21,7 +21,6 @@ import RedHat from '../../../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
 import Prerequisites from '../../../common/Prerequisites/Prerequisites';
 import AWSAccountSelection from './AWSAccountSelection';
 import ExternalLink from '../../../../common/ExternalLink';
-import AssociateAWSAccountModal from './AssociateAWSAccountModal';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import ErrorBox from '../../../../common/ErrorBox';
 import links from '../../../../../common/installLinks.mjs';
@@ -30,7 +29,8 @@ import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import UserRoleInstructionsModal from './UserRoleInstructionsModal';
 import OCMRoleInstructionsModal from './OCMRoleInstructionsModal';
 import InstructionCommand from '../../../../common/InstructionCommand';
-import { rosaCLICommand } from './AssociateAWSAccountModal/UserRoleScreen';
+import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
+import { RosaCliCommand } from './constants/cliCommands';
 
 function AccountsRolesScreen({
   change,
@@ -54,12 +54,10 @@ function AccountsRolesScreen({
   isOCMRoleModalOpen,
   closeModal,
 }) {
-  const longName = 'Red Hat OpenShift Service on AWS (ROSA)';
-  const title = `Welcome to ${longName} `;
-
   const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
-
+  const [isAssocAwsAccountModalOpen, setIsAssocAwsAccountModalOpen] = useState(false);
+  const title = 'Welcome to Red Hat OpenShift Service on AWS (ROSA)';
   const hasAWSAccounts = AWSAccountIDs.length > 0;
 
   // default product and cloud_provider form values
@@ -102,7 +100,8 @@ function AccountsRolesScreen({
     }
   }, [getAWSAccountIDsResponse]);
 
-  const onModalClose = () => {
+  const onAssociateAwsAccountModalClose = () => {
+    setIsAssocAwsAccountModalOpen(false);
     clearGetAWSAccountIDsResponse();
     getAWSAccountIDs(organizationID);
   };
@@ -196,7 +195,10 @@ function AccountsRolesScreen({
             component={AWSAccountSelection}
             name="associated_aws_id"
             label="Associated AWS accounts"
-            openAssociateAWSAccountModal={openAssociateAWSAccountModal}
+            openAssociateAWSAccountModal={(token) => {
+              openAssociateAWSAccountModal(token);
+              setIsAssocAwsAccountModalOpen(true);
+            }}
             validate={required}
             extendedHelpText={(
               <>
@@ -253,7 +255,7 @@ function AccountsRolesScreen({
                   </Text>
                   <Text component={TextVariants.p} className="pf-u-mb-sm">
                     <InstructionCommand textAriaLabel="Copyable ROSA create user-role">
-                      {rosaCLICommand.userRole}
+                      {RosaCliCommand.UserRole}
                     </InstructionCommand>
                   </Text>
                   <Text component={TextVariants.p} className="pf-u-mb-sm ocm-secondary-text">
@@ -267,12 +269,18 @@ function AccountsRolesScreen({
           )}
         </GridItem>
       </Grid>
-      <AssociateAWSAccountModal onClose={onModalClose} />
+
+      <AssociateAwsAccountModal
+        isOpen={isAssocAwsAccountModalOpen}
+        onClose={onAssociateAwsAccountModalClose}
+      />
+
       <UserRoleInstructionsModal
         closeModal={closeModal}
         isOpen={isUserRoleModalOpen}
         hasAWSAccounts={hasAWSAccounts}
       />
+
       <OCMRoleInstructionsModal
         closeModal={closeModal}
         isOpen={isOCMRoleModalOpen}
