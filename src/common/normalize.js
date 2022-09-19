@@ -110,6 +110,11 @@ const normalizeCluster = (cluster) => {
     result.version.available_upgrades.sort(versionComparator);
   }
 
+  // turn no_proxy string into a more usable form
+  if (cluster.proxy?.no_proxy.typeof === 'string') {
+    result.proxy.no_proxy = cluster.proxy.no_proxy.trim().split(',');
+  }
+
   return result;
 };
 

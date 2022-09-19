@@ -6,9 +6,7 @@ export const routeSelectorPairsAsStrings = (routeSelectors = {}) =>
 export const routeSelectorsAsString = (routeSelectors) =>
   routeSelectorPairsAsStrings(routeSelectors).join(',') || null;
 
-export const noProxyDomainsArray = noProxyDomainsString => (
-  noProxyDomainsString ? noProxyDomainsString.trim().split(',') : null
-);
+// export const noProxyDomainsString = domainList => domainList.join(',') || null;
 
 const NetworkingSelector = (state) => {
   const { clusterRouters } = state;

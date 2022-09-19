@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import { Form, Grid, GridItem, Text, Alert, Button } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
-import { validateUrl, validateCA } from '~/common/validators';
+import { validateUrl, validateCA, checkInvalidDNS } from '~/common/validators';
 
 import Modal from '~/components/common/Modal/Modal';
 import ErrorBox from '~/components/common/ErrorBox';
@@ -41,6 +41,7 @@ const EditClusterWideProxyDialog = (props) => {
     clearClusterProxyResponse,
     httpProxyUrl,
     httpsProxyUrl,
+    noProxyDomains,
     additionalTrustBundle,
     anyTouched,
   } = props;
@@ -52,6 +53,8 @@ const EditClusterWideProxyDialog = (props) => {
   const [openFileUpload, setOpenFileUpload] = useState(!additionalTrustBundle);
 
   const noValues = !httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle;
+
+  const noProxyStringToArray = value => value.trim().split(',');
 
   const handleClose = () => {
     closeModal();
@@ -145,8 +148,10 @@ const EditClusterWideProxyDialog = (props) => {
               label="No Proxy domains"
               placeholder={NO_PROXY_PLACEHOLDER}
               type="text"
+              validate={checkInvalidDNS}
               helpText={NO_PROXY_HELPER_TEXT}
               showHelpTextOnError={false}
+              parse={noProxyStringToArray}
             />
           </GridItem>
 
@@ -206,6 +211,7 @@ EditClusterWideProxyDialog.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   httpProxyUrl: PropTypes.string,
   httpsProxyUrl: PropTypes.string,
+  noProxyDomains: PropTypes.array,
   additionalTrustBundle: PropTypes.string,
   editClusterProxyResponse: PropTypes.shape({
     error: PropTypes.bool,
