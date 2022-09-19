@@ -25,20 +25,12 @@ const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
  */
 const restoreStateOnTokenReload = createTransform(
   // gets called right before state is persisted
-  (inboundState) => {
-    const tokenReload = window.localStorage.getItem('token-reload') === 'true';
-    if (tokenReload) {
-      return { ...inboundState };
-    }
-    return {};
-  },
+  (inboundState) => ({ ...inboundState }),
   // gets called right before state is rehydrated
   (outboundState) => {
     const tokenReload = window.localStorage.getItem('token-reload') === 'true';
-    if (tokenReload) {
-      return outboundState;
-    }
-    return {};
+    clearFormDataFromPersistor();
+    return tokenReload ? outboundState : {};
   },
   // define which reducers this transform gets called for.
   { whitelist: ['form'] },
@@ -55,13 +47,19 @@ const persistedReducer = persistReducer(persistReducerConfig, reduxReducers(hist
 
 const store = createStore(
   persistedReducer,
-  composeEnhancer(applyMiddleware(routerMiddleware(history), thunkMiddleware, promiseMiddleware,
-    notificationsMiddleware({ ...defaultOptions }),
-    sentryMiddleware)),
+  composeEnhancer(
+    applyMiddleware(
+      routerMiddleware(history),
+      thunkMiddleware,
+      promiseMiddleware,
+      notificationsMiddleware({ ...defaultOptions }),
+      sentryMiddleware,
+    ),
+  ),
 );
 
 const persistor = persistStore(store);
 
-export {
-  store as default, store, history, persistor,
-};
+const clearFormDataFromPersistor = () => window.localStorage.removeItem('persist:form');
+
+export { store as default, store, history, persistor, clearFormDataFromPersistor };
