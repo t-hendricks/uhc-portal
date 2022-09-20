@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import {
   Card,
   CardBody,
+  ExpandableSection,
   Grid,
   GridItem,
   Title,
@@ -65,36 +66,39 @@ export const UserRoleScreen = ({ hideTitle = false }: UserRoleScreenProps) => {
               {RosaCliCommand.UserRole}
             </InstructionCommand>
           </div>
-          <Title headingLevel="h3">
-            Ensure that you associate the user role with your Red Hat user account
-          </Title>
-          <Text component={TextVariants.p}>
-            If not yet linked, run the following command to associate the user role with your Red
-            Hat user account.
-          </Text>
-          <Grid className="ocm-instruction-block">
-            <GridItem sm={7} md={6}>
-              <InstructionCommand
-                textAriaLabel="Copyable ROSA link user-role --arn"
-                trackEvent={trackEvents.CopyUserRoleLink}
-              >
-                {RosaCliCommand.LinkUserRole}
-              </InstructionCommand>
-            </GridItem>
-            <GridItem sm={1} md={1}>
-              <PopoverHint
-                iconClassName="ocm-instructions__command-help-icon"
-                hint="Check if the role is linked to your
-                      Red Hat user account by running the following command:"
-                footer={
-                  <InstructionCommand
-                    textAriaLabel="Copyable ROSA rosa list user-role"
-                    trackEvent={trackEvents.CopyUserRoleList}
-                  >
-                    rosa list user-role
-                  </InstructionCommand>
-                }
-              />
+          <Grid>
+            <GridItem>
+              <ExpandableSection toggleText="Check if the User role is linked">
+                <Text component={TextVariants.p}>
+                  If not yet linked, run the following command to associate the user role
+                  with your Red Hat user account.
+                </Text>
+                <Grid hasGutter>
+                  <GridItem sm={7} md={7}>
+                    <Text component={TextVariants.p} className="pf-u-mb-0">
+                      Check if the role is linked with:
+                    </Text>
+                    <InstructionCommand
+                      textAriaLabel="Copyable ROSA rosa list user-role"
+                      trackEvent={trackEvents.CopyUserRoleList}
+                    >
+                      rosa list user-role
+                    </InstructionCommand>
+                  </GridItem>
+
+                  <GridItem sm={7} md={7}>
+                    <Text component={TextVariants.p} className="pf-u-mb-0">
+                      If a role exists but is not linked, link it with:
+                    </Text>
+                    <InstructionCommand
+                      textAriaLabel="Copyable ROSA link user-role --arn"
+                      trackEvent={trackEvents.CopyUserRoleLink}
+                    >
+                      {RosaCliCommand.LinkUserRole}
+                    </InstructionCommand>
+                  </GridItem>
+                </Grid>
+              </ExpandableSection>
             </GridItem>
           </Grid>
         </TextContent>
