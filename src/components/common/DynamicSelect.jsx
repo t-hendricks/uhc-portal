@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  FormGroup, FormSelect, FormSelectOption,
+  Alert,
+  Button,
+  FormGroup,
+  FormSelect,
+  FormSelectOption,
+  Text,
+  TextContent,
 } from '@patternfly/react-core';
 
 import ErrorBox from './ErrorBox';
@@ -60,6 +66,7 @@ class DynamicSelect extends React.Component {
 
   render() {
     const {
+      loadData,
       requestStatus,
       items,
       matchesDependencies,
@@ -70,15 +77,17 @@ class DynamicSelect extends React.Component {
       labelIcon,
       helperText,
       placeholder,
-      emptyPlaceholder,
+      emptyAlertTitle,
+      emptyAlertBody,
+      refreshButtonText,
       noDependenciesPlaceholder,
       requestErrorTitle,
     } = this.props;
     const show = matchesDependencies && requestStatus.fulfilled;
 
-    let showError = meta.touched && meta.invalid; // Normally hide until touched, but see below.
+    let error = null;
+    let options = null;
 
-    let options;
     if (show) {
       if (items.length > 0) {
         options = (
@@ -90,18 +99,39 @@ class DynamicSelect extends React.Component {
           </>
         );
       } else {
-        options = (
-          <FormSelectOption isDisabled isPlaceholder value="" label={emptyPlaceholder} />
+        error = (
+          <Alert
+            isInline
+            variant="danger"
+            title={emptyAlertTitle}
+          >
+            <TextContent>
+              {emptyAlertBody}
+              {refreshButtonText && (
+                <Text>
+                  <Button
+                    variant="secondary"
+                    onClick={loadData}
+                  >
+                    {refreshButtonText}
+                  </Button>
+                </Text>
+              )}
+            </TextContent>
+          </Alert>
         );
-        if (isRequired && meta.invalid) {
-          // Highlight problem immediately — can't satisfy with current data. User must change
-          // dependencies or go create new options (and toggle dependencies to force reload).
-          showError = true;
-        }
+        options = (
+          <FormSelectOption isDisabled isPlaceholder value="" label="" />
+        );
       }
     } else if (requestStatus.pending) {
       options = (
         <FormSelectOption isDisabled value="" label="Loading..." />
+      );
+    } else if (matchesDependencies && requestStatus.error) {
+      error = <ErrorBox message={requestErrorTitle} response={requestStatus} />;
+      options = (
+        <FormSelectOption isDisabled isPlaceholder value="" label="" />
       );
     } else {
       options = (
@@ -117,15 +147,13 @@ class DynamicSelect extends React.Component {
       <FormGroup
         label={label}
         labelIcon={labelIcon}
-        validated={showError ? 'error' : 'default'}
+        validated={meta.touched && meta.invalid ? 'error' : 'default'}
         helperText={helperText}
         helperTextInvalid={meta.error}
         fieldId={input.name}
         isRequired={isRequired}
       >
-        {matchesDependencies && requestStatus.error && (
-          <ErrorBox message={requestErrorTitle} response={requestStatus} />
-        )}
+        {error}
         <FormSelect
           aria-label={label}
           isDisabled={!(show && items.length > 0)}
@@ -147,7 +175,9 @@ DynamicSelect.propTypes = {
   labelIcon: PropTypes.node,
   helperText: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
-  emptyPlaceholder: PropTypes.string.isRequired,
+  emptyAlertTitle: PropTypes.node,
+  emptyAlertBody: PropTypes.node,
+  refreshButtonText: PropTypes.node,
   noDependenciesPlaceholder: PropTypes.string,
   requestErrorTitle: PropTypes.string.isRequired,
   hasDependencies: PropTypes.bool.isRequired,
