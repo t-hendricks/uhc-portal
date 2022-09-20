@@ -109,7 +109,10 @@ export const OcmRoleScreen = () => {
                     <Text component={TextVariants.p} className="pf-u-mb-0">
                       Check if a role exists and is linked with:
                     </Text>
-                    <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role">
+                    <InstructionCommand
+                      textAriaLabel="Copyable ROSA create ocm-role"
+                      trackEvent={trackEvents.CopyOCMRoleList}
+                    >
                       rosa list ocm-role
                     </InstructionCommand>
                   </GridItem>
