@@ -24,7 +24,7 @@ const pendoID = window.location.pathname;
 const docURL = links.INSTALL_CRC_GETTING_STARTED;
 
 const LocalTab = ({ token }) => {
-  const { track } = useAnalytics();
+  const track = useAnalytics();
   return (
     <>
       <PageSection>

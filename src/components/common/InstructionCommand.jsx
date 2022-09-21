@@ -6,7 +6,7 @@ import useAnalytics from '~/hooks/useAnalytics';
 import './InstructionCommand.scss';
 
 const InstructionCommand = ({ children, textAriaLabel, trackEvent }) => {
-  const { track } = useAnalytics();
+  const track = useAnalytics();
   return (
     <Text component="pre" className="ocm-instructions__command">
       <ClipboardCopy

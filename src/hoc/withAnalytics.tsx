@@ -1,37 +1,16 @@
 import React from 'react';
-import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
+import useAnalytics from '~/hooks/useAnalytics';
 
-import { getTrackEvent } from '~/common/analytics';
+type WithAnalyticsProps = ReturnType<typeof useAnalytics>;
 
 /**
- * Provides an analytics API instance, and a helper method for tracking.
- *
- * @param AnalyticsContext {function(*)|React.Component|React.PureComponent}
- * The component to receive the analytics instance.
- * @returns {function(*)}
- * A wrapped component, enriched with these properties:
- * - track - a convenience function that composes the track event parsing and the actual tracking.
- * - analytics - the analytics API instance
+ * Provides a helper function for analytics track events.
+ * Wrapped component enriched with these properties:
+ *  - track - a convenience function that composes the track event parsing and the actual tracking.
  */
-const withAnalytics = (AnalyticsContext) => (props) => {
-  const {
-    analytics,
-    segment: { setPageMetadata },
-  } = useChrome();
-
-  const track = (...args) => {
-    const eventObj = getTrackEvent(...args);
-    analytics.track(eventObj.event, eventObj.properties);
-  };
-
-  return (
-    <AnalyticsContext
-      {...props}
-      track={track}
-      analytics={analytics}
-      setPageMetadata={setPageMetadata}
-    />
-  );
-};
+const withAnalytics =
+  <Props extends WithAnalyticsProps>(AnalyticsContext: React.ComponentType<Props>) =>
+  (props: Omit<Props, 'track'>) =>
+    <AnalyticsContext {...(props as Props)} track={useAnalytics()} />;
 
 export default withAnalytics;

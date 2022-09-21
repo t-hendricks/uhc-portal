@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@patternfly/react-core';
 import useAnalytics from '~/hooks/useAnalytics';
-import { getTrackEvent, trackEvents } from '~/common/analytics';
+import { trackEvents } from '~/common/analytics';
 import { tools } from '../../../../../common/installLinks.mjs';
 
 const texts = {
@@ -26,7 +26,7 @@ const DownloadButton = ({
   text = '',
   name = '',
 }) => {
-  const { analytics } = useAnalytics();
+  const track = useAnalytics();
   const buttonText = text || texts[tool];
   const downloadProps = download
     ? { download: true }
@@ -39,11 +39,15 @@ const DownloadButton = ({
       variant="secondary"
       className={`download-button tool-${tool.toLowerCase()}`}
       onClick={() => {
-        const eventObj = getTrackEvent(trackEvents[tool], {
-          url,
-          path: pendoID,
-        });
-        analytics.track(name || eventObj.event, name ? pendoID : eventObj.properties);
+        track(
+          name || trackEvents[tool],
+          name
+            ? pendoID
+            : {
+                url,
+                path: pendoID,
+              },
+        );
       }}
       disabled={!url || disabled}
       {...downloadProps}

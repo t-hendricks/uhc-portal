@@ -1,14 +1,57 @@
 import { renderHook } from '@testing-library/react-hooks';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import useAnalytics from '../useAnalytics';
+import { getTrackEvent } from '../../common/analytics';
+
+jest.mock('@redhat-cloud-services/frontend-components/useChrome', () => jest.fn());
+jest.mock('../../common/analytics', () => ({
+  getTrackEvent: jest.fn(),
+}));
+
+const useChromeMock = useChrome as jest.Mock;
+const getTrackEventMock = getTrackEvent as jest.Mock;
 
 describe('useAnalytics', () => {
-  let hook;
+  const analyticsTrackMock = jest.fn();
 
   beforeEach(() => {
-    hook = renderHook(useAnalytics).result.current;
+    jest.resetAllMocks();
+    useChromeMock.mockReturnValue({
+      analytics: {
+        track: analyticsTrackMock,
+      },
+    });
   });
 
-  it('provides the track method', async () => {
-    expect(hook.track).toBeInstanceOf(Function);
+  it('should track events as a string', async () => {
+    const track = renderHook(useAnalytics).result.current;
+
+    // string event with string properties
+    track('testEvent', 'testProperties');
+    expect(analyticsTrackMock).toHaveBeenCalledWith('testEvent', { type: 'testProperties' });
+    analyticsTrackMock.mockReset();
+
+    // string event with object properties
+    track('testEvent', { foo: 'bar' });
+    expect(analyticsTrackMock).toHaveBeenCalledWith('testEvent', { foo: 'bar' });
+  });
+
+  it('should track events as an object', async () => {
+    const track = renderHook(useAnalytics).result.current;
+    const getTrackEventValue = {
+      event: 'test',
+      properties: { foo: 'bar' },
+    };
+    getTrackEventMock.mockReturnValue(getTrackEventValue);
+
+    // object event with object options
+    const trackEvent = { a: 'b' };
+    const trackOptions = { x: 'y' };
+    track(trackEvent, trackOptions);
+    expect(getTrackEventMock).toHaveBeenCalledWith(trackEvent, trackOptions);
+    expect(analyticsTrackMock).toHaveBeenCalledWith(
+      getTrackEventValue.event,
+      getTrackEventValue.properties,
+    );
   });
 });
