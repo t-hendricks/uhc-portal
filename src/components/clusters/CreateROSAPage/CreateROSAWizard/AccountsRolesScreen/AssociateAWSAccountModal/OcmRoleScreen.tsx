@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
+  Accordion,
+  AccordionItem,
+  AccordionToggle,
+  AccordionContent,
   Alert,
   Card,
   CardBody,
-  ExpandableSection,
   Grid,
   GridItem,
   Text,
@@ -28,6 +31,15 @@ export const OcmRoleScreen = () => {
     (state) => !!state.rosaReducer.getAWSAccountIDsResponse?.data?.length,
   );
   const [isAlertShown, setIsAlertShown] = useState(true);
+  const [expanded, setExpanded] = useState('');
+
+  const onToggle = (id: string) => {
+    if (id === expanded) {
+      setExpanded('');
+    } else {
+      setExpanded(id);
+    }
+  };
 
   return (
     <Card isCompact isPlain>
@@ -96,46 +108,62 @@ export const OcmRoleScreen = () => {
               </GridItem>
             </Grid>
           </div>
-          <br />
-          <Grid>
-            <GridItem>
-              <ExpandableSection toggleText="Check if the OCM role is linked">
-                <Text component={TextVariants.p}>
-                  You must link OCM role with the Red Hat cluster installer to proceed. You can
-                  link only one OCM role per Red Hat organization.
-                </Text>
-                <Grid hasGutter>
-                  <GridItem sm={7} md={7}>
-                    <Text component={TextVariants.p} className="pf-u-mb-0">
-                      Check if a role exists and is linked with:
-                    </Text>
-                    <InstructionCommand
-                      textAriaLabel="Copyable ROSA create ocm-role"
-                      trackEvent={trackEvents.CopyOCMRoleList}
-                    >
-                      rosa list ocm-role
-                    </InstructionCommand>
-                  </GridItem>
-                  <GridItem sm={7} md={7}>
-                    <Text component={TextVariants.p} className="pf-u-mb-0">
-                      If a role exists but is not linked, link it with:
-                    </Text>
-                    <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn" trackEvent={trackEvents.CopyOCMRoleLink}>
-                    {RosaCliCommand.LinkOcmRole}
-                    </InstructionCommand>
-                  </GridItem>
-                  <Alert
-                    variant="info"
-                    isInline
-                    isPlain
-                    className="ocm-instruction-block_alert"
-                    title="You must have organization administrator privileges in your Red Hat account to run this command. After you link the OCM role with your Red Hat organization, it is visible for all users in the organization."
-                  />
-                </Grid>
-              </ExpandableSection>
-            </GridItem>
-          </Grid>
         </TextContent>
+        <br />
+        <Accordion displaySize="large">
+          <AccordionItem>
+            <AccordionToggle
+              onClick={() => {
+                onToggle('associate-ocm-role');
+              }}
+              isExpanded={expanded === 'associate-ocm-role'}
+              id="associate-ocm-role"
+            >
+              <Title headingLevel="h3">Check if the OCM role is linked</Title>
+            </AccordionToggle>
+            <AccordionContent
+              id="associate-ocm-role-expand"
+              isHidden={expanded !== 'associate-ocm-role'}
+            >
+              <Grid hasGutter>
+                <GridItem>
+                  <Text component={TextVariants.p}>
+                    You must link OCM role with the Red Hat cluster installer to proceed. You can
+                    link only one OCM role per Red Hat organization.
+                  </Text>
+                </GridItem>
+                <GridItem sm={7} md={7}>
+                  <Text component={TextVariants.p}>Check if a role exists and is linked with:</Text>
+                  <InstructionCommand
+                    textAriaLabel="Copyable ROSA create ocm-role"
+                    trackEvent={trackEvents.CopyOCMRoleList}
+                  >
+                    rosa list ocm-role
+                  </InstructionCommand>
+                </GridItem>
+                <GridItem sm={7} md={7}>
+                  <Text component={TextVariants.p}>
+                    If a role exists but is not linked, link it with:
+                  </Text>
+                  <InstructionCommand
+                    textAriaLabel="Copyable ROSA create ocm-role --arn"
+                    trackEvent={trackEvents.CopyOCMRoleLink}
+                  >
+                    {RosaCliCommand.LinkOcmRole}
+                  </InstructionCommand>
+                </GridItem>
+
+                <Alert
+                  variant="info"
+                  isInline
+                  isPlain
+                  className="ocm-instruction-block_alert"
+                  title="You must have organization administrator privileges in your Red Hat account to run this command. After you link the OCM role with your Red Hat organization, it is visible for all users in the organization."
+                />
+              </Grid>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </CardBody>
     </Card>
   );
