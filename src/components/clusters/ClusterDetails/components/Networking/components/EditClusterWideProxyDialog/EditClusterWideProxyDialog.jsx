@@ -42,6 +42,7 @@ const EditClusterWideProxyDialog = (props) => {
     httpProxyUrl,
     httpsProxyUrl,
     noProxyDomains,
+    formValues,
     additionalTrustBundle,
     anyTouched,
   } = props;
@@ -140,7 +141,6 @@ const EditClusterWideProxyDialog = (props) => {
               showHelpTextOnError={false}
             />
           </GridItem>
-
           <GridItem sm={12} md={10} xl2={11}>
             <Field
               component={ReduxVerticalFormGroup}
@@ -152,9 +152,9 @@ const EditClusterWideProxyDialog = (props) => {
               helpText={NO_PROXY_HELPER_TEXT}
               showHelpTextOnError={false}
               parse={noProxyStringToArray}
+              isDisabled={!formValues.httpProxyUrl && !formValues.httpsProxyUrl}
             />
           </GridItem>
-
           <GridItem sm={12} md={10} xl2={11}>
             {!openFileUpload ? (
               <>
@@ -209,6 +209,14 @@ EditClusterWideProxyDialog.propTypes = {
   isOpen: PropTypes.bool,
   reset: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape({
+    httpProxyUrl: PropTypes.string,
+    httpsProxyUrl: PropTypes.string,
+    noProxyDomains: PropTypes.array,
+  }),
+  // http_proxy: PropTypes.string,
+  // https_proxy: PropTypes.string,
+  // no_proxy: PropTypes.array,
   httpProxyUrl: PropTypes.string,
   httpsProxyUrl: PropTypes.string,
   noProxyDomains: PropTypes.array,

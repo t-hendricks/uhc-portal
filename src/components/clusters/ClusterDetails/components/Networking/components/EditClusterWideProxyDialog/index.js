@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import {
-  change, reduxForm, getFormMeta, formValueSelector, getFormValues,
+  change, reduxForm, getFormMeta, getFormValues,
 } from 'redux-form';
 
 import modals from '~/components/common/Modal/modals';
@@ -21,8 +21,7 @@ const reduxFormEditCWProxy = reduxForm(reduxFormConfig)(EditClusterWideProxyDial
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
-  const valueSelector = formValueSelector('CreateCluster');
-  const formValues = getFormValues('CreateCluster')(state);
+  const formValues = getFormValues('EditClusterWideProxy')(state);
 
   return {
     isOpen: shouldShowModal(state, modals.EDIT_CLUSTER_WIDE_PROXY),
@@ -30,11 +29,9 @@ const mapStateToProps = (state) => {
       clusterID: cluster.id,
       httpProxyUrl: cluster.proxy?.http_proxy,
       httpsProxyUrl: cluster.proxy?.https_proxy,
-      // mms turn to string?
-      noProxyDomains: cluster.proxy?.no_proxy,
+      noproxyDomains: cluster.no_proxy,
     },
-    product: valueSelector(state, 'product'),
-
+    formValues,
     additionalTrustBundle: cluster?.additional_trust_bundle,
     editClusterProxyResponse: state.clusters.editedCluster,
     meta: getFormMeta('EditClusterWideProxy')(state),
@@ -59,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   sendError: () => {
     // 'invalid file' is a magic string that triggers a validation error
-    // in src/common/validators.js validateCA function
+    // in src/c4ommon/validators.js validateCA function
     dispatch(change('EditClusterWideProxy', 'additional_trust_bundle', 'invalid file'));
   },
 });

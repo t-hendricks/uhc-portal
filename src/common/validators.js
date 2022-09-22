@@ -500,14 +500,12 @@ const checkBaseDNSDomain = (value) => {
 };
 
 const checkInvalidDNS = (value) => {
-  console.log('domain list', value);
-
   if (value) {
     const invalidDomains = value.filter(domain => (
-      !(BASE_DOMAIN_REGEXP.test(domain) && DNS_SUBDOMAIN_REGEXP.test(domain)) || domain !== ''
+      !(BASE_DOMAIN_REGEXP.test(domain) && DNS_SUBDOMAIN_REGEXP.test(domain)) && domain !== ''
     ));
     const plural = invalidDomains.length > 1;
-    return invalidDomains ? `The domain${plural ? 's' : ''} '${invalidDomains.join(', ')}' ${plural ? 'aren\'t' : 'isn\'t'} valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'domain.com' or 'sub.domain.com'.` : undefined;
+    if (invalidDomains.length > 0) return `The domain${plural ? 's' : ''} '${invalidDomains.join(', ')}' ${plural ? 'aren\'t' : 'isn\'t'} valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'domain.com' or 'sub.domain.com'.`;
   }
   return undefined;
 };
