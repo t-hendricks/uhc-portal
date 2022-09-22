@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  GridItem, FormGroup,
+  GridItem, FormGroup, Text,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
-import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { required, validateGCPKMSServiceAccount } from '../../../../../../common/validators';
+import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { required, validateGCPKMSServiceAccount } from '~/common/validators';
 import { constants } from '../../CreateOSDFormConstants';
 
-import PopoverHint from '../../../../../common/PopoverHint';
+import ExternalLink from '~/components/common/ExternalLink';
+import PopoverHint from '~/components/common/PopoverHint';
 import KMSKeyLocationComboBox from './KMSKeyLocationComboBox';
 import KMSKeyRingSelect from './KMSKeyRingSelect';
 import KMSKeySelect from './KMSKeySelect';
@@ -21,6 +22,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           label="Key ring location"
           fieldId="key_location"
           labelIcon={<PopoverHint hint={constants.regionHint} />}
+          isRequired
         >
           <Field
             component={KMSKeyLocationComboBox}
@@ -40,9 +42,28 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           labelIcon={<PopoverHint hint={constants.keyRing} />}
           helperText="A key ring organizes keys in a specific Google Cloud location."
           noDependenciesPlaceholder="Enter GCP credentials first"
-          emptyPlaceholder="No key rings"
           placeholder="Select key ring"
           requestErrorTitle="Error listing key rings using your GCP credentials"
+          emptyAlertTitle="No key rings found for this location"
+          emptyAlertBody={(
+            <>
+              <Text>
+                If available, change the Key ring location. Or go to your
+                {' '}
+                <ExternalLink href="https://console.cloud.google.com/security/kms">Google Cloud Console</ExternalLink>
+                {' '}
+                and create the key ring.
+              </Text>
+              <Text>
+                Once created, refresh using the
+                {' '}
+                <strong>Refresh custom key rings</strong>
+                {' '}
+                button.
+              </Text>
+            </>
+          )}
+          refreshButtonText="Refresh custom key rings"
           validate={required}
           isRequired
           className="pf-c-form-control"
@@ -57,9 +78,28 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           label="Key name"
           labelIcon={<PopoverHint hint={constants.keyName} />}
           helperText="Name of the key in the keyring."
-          emptyPlaceholder="No keys"
           placeholder="Select key"
           requestErrorTitle="Error listing keys using your GCP credentials"
+          emptyAlertTitle="No keys found for this location and key ring"
+          emptyAlertBody={(
+            <>
+              <Text>
+                If available, change the Key ring location / Key ring. Or go to your
+                {' '}
+                <ExternalLink href="https://console.cloud.google.com/security/kms">Google Cloud Console</ExternalLink>
+                {' '}
+                and create the key.
+              </Text>
+              <Text>
+                Once created, refresh using the
+                {' '}
+                <strong>Refresh custom keys</strong>
+                {' '}
+                button.
+              </Text>
+            </>
+          )}
+          refreshButtonText="Refresh custom keys"
           validate={required}
           isRequired
           className="pf-c-form-control"
@@ -75,6 +115,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           label="KMS Service Account"
           placeholder="KMS Service Account"
           validate={validateGCPKMSServiceAccount}
+          isRequired
           helpText="GCP Service account will be used for compute scaling."
           extendedHelpText={(
             <>
