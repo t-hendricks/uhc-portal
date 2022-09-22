@@ -37,7 +37,7 @@ const getColumns = () => ([
     transforms: [cellWidth(20)],
   },
   {
-    title: '',
+    title: '\u00A0',
     transforms: [cellWidth(20)],
   },
   {

@@ -6,13 +6,13 @@ import path from 'path';
 
 import listGitRemotes from 'list-git-remotes';
 import JSON5 from 'json5';
+import { quote } from 'shell-quote'; // only to be used for logging
 import yargs from 'yargs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const execFilePromise = util.promisify(execFile);
-const execFileSyncPromise = util.promisify(execFileSync);
 const listGitRemotesPromise = util.promisify(listGitRemotes);
 
 const flags = yargs
@@ -53,7 +53,7 @@ const gitBranch = async (branch) => {
 
 // app.info.json files generated in push_to_insights.sh & insights-Jenkinsfile
 const appInfo = async (url) => {
-  const r = await execFilePromise('curl', ['--silent', '--show-error', '--fail-with-body', url]);
+  const r = await execFilePromise('curl', ['--silent', '--show-error', '--fail', url]);
   try {
     // Some contain a trailing comma, making it invalid JSON, so use JSON5.
     return JSON5.parse(r.stdout);
@@ -190,12 +190,21 @@ const main = async () => {
       const cmd = [
         'env', 'GIT_PAGER=', 'git', 'log', ...envs.map(e => e.name),
         // Limit graph scope by omitting everything including 2 prod deploys ago.
-        '--not', 'live_stable~2', '--oneline', '--graph', '--merges', '--decorate', '--color=always',
+        '--not', 'live_stable~2', '--graph',
+        // Want MR merges, not internal merge commits done while working on MR content.
+        // But allow .* suffixes to incude merges to deploy-related branches like
+        // 'candidate-changes-9-aug-22' or 'stable-assisted-ui-lib-v2.8.2'.
+        // Also include cherry-picks (not using --merges flag which would omit them).
+        '--extended-regexp', "--grep=[Mm]erge .* into '?(master|candidate|stable).*|[Cc]herry",
+        // %C: color, %h: hash, %d: (decorations).
+        // %s subject "Merge branch ...", start %b body on same line to conserve vertical space.
+        // %w: indents following lines of body.
+        '--pretty=%C(auto)%cs %H%d %C(dim)%s — %C(auto)%w(0,0,10)%b',
+        '--color=always',
       ];
-      console.log(...cmd);
+      console.log(quote(cmd));
       console.log('');
-      // For some reason async execFile always pipes stdout/err, we want it left alone for git colors.
-      execFileSyncPromise(cmd[0], cmd.slice(1), { stdio: 'inherit' });
+      execFileSync(cmd[0], cmd.slice(1), { stdio: 'inherit' });
     }
   } catch (err) {
     console.error(err);
