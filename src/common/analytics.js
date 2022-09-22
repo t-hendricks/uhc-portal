@@ -33,6 +33,7 @@ const eventNames = {
   BUTTON_CLICKED: 'Button Clicked',
   LINK_CLICKED: 'Link Clicked',
   ARNS_REFRESHED: 'ARNs Refreshed',
+  CHECKBOX_CLICKED: 'Checkbox Clicked',
 };
 
 /**
@@ -224,6 +225,14 @@ const trackEvents = {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'copy-user-role-list',
     ocm_resource_type: ocmResourceType.MOA,
+  },
+  InstallIntoVPC: {
+    event: eventNames.CHECKBOX_CLICKED,
+    link_name: 'install-into-existing-vpc',
+  },
+  ConfigureClusterWideProxy: {
+    event: eventNames.CHECKBOX_CLICKED,
+    link_name: 'configure-cluster-wide-proxy',
   },
   WizardNext: {
     event: eventNames.BUTTON_CLICKED,

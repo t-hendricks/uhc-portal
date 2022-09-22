@@ -2,7 +2,8 @@
   "root": true,
   "extends": [
     "airbnb",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "prettier"
   ],
   "plugins": ["@typescript-eslint"],
   "env": {
@@ -23,7 +24,8 @@
           "**/*.spec.ts*",
           "selenium-js/**/*",
           "webpack.config.js",
-          "src/testUtils.jsx"
+          "src/testUtils.jsx",
+          "scripts/**/*"
         ]
       }
     ],
@@ -33,7 +35,6 @@
     "react/jsx-props-no-spreading": [0],
     "react/sort-comp": "off",
     "react/state-in-constructor": [2, "never"],
-    "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
     "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["draft" , "response"] }],
     "no-use-before-define": "off",
     "import/extensions": [
@@ -113,7 +114,7 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "extensions": [".js", ".jsx"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
         "map": [
           ["~", "./src"],
           ["@testUtils", "./src/testUtils.jsx"]
