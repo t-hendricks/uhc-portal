@@ -165,9 +165,7 @@ class ArchivedClusterList extends Component {
                   <ToolbarItem className="pf-l-split__item split-margin-left">
                     <ViewOnlyMyClustersToggle
                       view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
-                      bodyContent={
-                        'Show only the clusters you previously archived, or all archived clusters in your organization.'
-                      }
+                      bodyContent="Show only the clusters you previously archived, or all archived clusters in your organization."
                     />
                   </ToolbarItem>
                   <ToolbarItem className="pf-l-split__item split-margin-left">
