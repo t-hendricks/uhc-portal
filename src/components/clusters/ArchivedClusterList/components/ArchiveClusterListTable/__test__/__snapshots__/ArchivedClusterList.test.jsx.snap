@@ -88,6 +88,7 @@ exports[`<ArchivedClusterList /> ArchivedClusterList should render 1`] = `
                 autoRefresh={true}
                 classOptions="cluster-list-top"
                 refreshFunc={[Function]}
+                useShortTimer={false}
               />
             </ToolbarItem>
           </ToolbarContent>
