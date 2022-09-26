@@ -23,13 +23,7 @@ import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-com
 import Spinner from '@redhat-cloud-services/frontend-components/Spinner';
 import { Link } from 'react-router-dom';
 
-import {
-  Card,
-  Toolbar,
-  ToolbarItem,
-  ToolbarContent,
-  PageSection,
-} from '@patternfly/react-core';
+import { Card, Toolbar, ToolbarItem, ToolbarContent, PageSection } from '@patternfly/react-core';
 
 import ClusterListFilter from '../common/ClusterListFilter';
 import ClusterListFilterDropDown from '../ClusterList/components/ClusterListFilterDropdown';
@@ -62,9 +56,7 @@ class ArchivedClusterList extends Component {
 
   componentDidMount() {
     document.title = 'Cluster Archives | Red Hat OpenShift Cluster Manager';
-    const {
-      getCloudProviders, cloudProviders, setListFlag, invalidateClusters,
-    } = this.props;
+    const { getCloudProviders, cloudProviders, setListFlag, invalidateClusters } = this.props;
 
     setListFlag('showArchived', true);
     invalidateClusters();
@@ -76,11 +68,8 @@ class ArchivedClusterList extends Component {
 
   componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
-    const {
-      viewOptions, valid, pending,
-    } = this.props;
-    if ((!valid && !pending)
-      || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
+    const { viewOptions, valid, pending } = this.props;
+    if ((!valid && !pending) || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       this.refresh();
     }
   }
@@ -113,11 +102,7 @@ class ArchivedClusterList extends Component {
     } = this.props;
 
     const breadCrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Cluster Archives' },
-      ]}
-      />
+      <Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Cluster Archives' }]} />
     );
 
     const pageHeader = (
@@ -178,18 +163,21 @@ class ArchivedClusterList extends Component {
                     />
                   </ToolbarItem>
                   <ToolbarItem className="pf-l-split__item split-margin-left">
-                    <ViewOnlyMyClustersToggle view={viewConstants.ARCHIVED_CLUSTERS_VIEW} />
+                    <ViewOnlyMyClustersToggle
+                      view={viewConstants.ARCHIVED_CLUSTERS_VIEW}
+                      bodyContent="Show only the clusters you previously archived, or all archived clusters in your organization."
+                    />
                   </ToolbarItem>
                   <ToolbarItem className="pf-l-split__item split-margin-left">
                     <div className="show-active-clusters-link">
-                      <Link to="/">
-                        Show active clusters
-                      </Link>
+                      <Link to="/">Show active clusters</Link>
                     </div>
                   </ToolbarItem>
                   <ToolbarItem className="spinner-fit-container">
-                    { pending && <Spinner className="cluster-list-spinner" /> }
-                    { error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" /> }
+                    {pending && <Spinner className="cluster-list-spinner" />}
+                    {error && (
+                      <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
+                    )}
                   </ToolbarItem>
                   <ToolbarItem
                     alignment={{ default: 'alignRight' }}
@@ -206,7 +194,11 @@ class ArchivedClusterList extends Component {
                     />
                   </ToolbarItem>
                   <ToolbarItem>
-                    <RefreshBtn autoRefresh refreshFunc={this.refresh} classOptions="cluster-list-top" />
+                    <RefreshBtn
+                      autoRefresh
+                      refreshFunc={this.refresh}
+                      classOptions="cluster-list-top"
+                    />
                   </ToolbarItem>
                 </ToolbarContent>
               </Toolbar>
@@ -245,11 +237,8 @@ ArchivedClusterList.propTypes = {
   clusters: PropTypes.array.isRequired,
   error: PropTypes.bool.isRequired,
   errorCode: PropTypes.number,
-  errorMessage: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.node,
-    PropTypes.element,
-  ]).isRequired,
+  errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element])
+    .isRequired,
   pending: PropTypes.bool.isRequired,
   viewOptions: PropTypes.object.isRequired,
   setSorting: PropTypes.func.isRequired,

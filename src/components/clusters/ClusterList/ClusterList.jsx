@@ -51,7 +51,11 @@ import ViewPaginationRow from '../common/ViewPaginationRow/viewPaginationRow';
 import helpers, { scrollToTop } from '../../../common/helpers';
 import { productFilterOptions } from '../../../common/subscriptionTypes';
 
-import { viewPropsChanged, createViewQueryObject, getQueryParam } from '../../../common/queryHelpers';
+import {
+  viewPropsChanged,
+  createViewQueryObject,
+  getQueryParam,
+} from '../../../common/queryHelpers';
 import { viewConstants } from '../../../redux/constants';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../../../redux/constants/featureConstants';
 
@@ -80,8 +84,10 @@ class ClusterList extends Component {
 
     if (!isEmpty(planIDFilter)) {
       const allowedProducts = {};
-      productFilterOptions.forEach((option) => { allowedProducts[option.key] = true; });
-      const sanitizedFilter = planIDFilter.split(',').filter(value => allowedProducts[value]);
+      productFilterOptions.forEach((option) => {
+        allowedProducts[option.key] = true;
+      });
+      const sanitizedFilter = planIDFilter.split(',').filter((value) => allowedProducts[value]);
       setListFlag('subscriptionFilter', {
         plan_id: sanitizedFilter,
       });
@@ -106,16 +112,17 @@ class ClusterList extends Component {
 
   componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
-    const {
-      viewOptions, valid, pending, features,
-    } = this.props;
+    const { viewOptions, valid, pending, features } = this.props;
     // List only selected features here to avoid request-flooding.
-    const isFeatureChange = features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE]
-      !== prevProps.features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE];
+    const isFeatureChange =
+      features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE] !==
+      prevProps.features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE];
 
-    if ((!valid && !pending)
-      || isFeatureChange
-      || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
+    if (
+      (!valid && !pending) ||
+      isFeatureChange ||
+      viewPropsChanged(viewOptions, prevProps.viewOptions)
+    ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ loadingChangedView: true });
       this.refresh();
@@ -136,7 +143,7 @@ class ClusterList extends Component {
   refresh = () => {
     const { fetchClusters, viewOptions, username } = this.props;
     fetchClusters(createViewQueryObject(viewOptions, username));
-  }
+  };
 
   render() {
     const {
@@ -175,10 +182,10 @@ class ClusterList extends Component {
 
     const showSpinner = !isPendingNoData && pending && !loadingChangedView;
     const showSkeleton = isPendingNoData || (pending && loadingChangedView);
-    const showEmptyState = !isPendingNoData && !size(clusters)
-      && hasNoFilters && !showMyClustersOnly;
+    const showEmptyState =
+      !isPendingNoData && !size(clusters) && hasNoFilters && !showMyClustersOnly;
 
-    const someReadOnly = clusters.map(c => c?.status?.configuration_mode).includes('read_only');
+    const someReadOnly = clusters.map((c) => c?.status?.configuration_mode).includes('read_only');
 
     const pageHeader = (
       <>
@@ -187,7 +194,9 @@ class ClusterList extends Component {
           <PageHeaderTitle title="Clusters" className="page-title" />
           <PageHeaderTools>
             {showSpinner && <Spinner size="lg" className="cluster-list-spinner" />}
-            {error && <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />}
+            {error && (
+              <ErrorTriangle errorMessage={errorMessage} className="cluster-list-warning" />
+            )}
           </PageHeaderTools>
           <RefreshBtn
             autoRefresh={!anyModalOpen}
@@ -244,14 +253,14 @@ class ClusterList extends Component {
           <Card>
             <div className="cluster-list" data-ready={dataReady}>
               <GlobalErrorBox />
-              { clustersServiceError && (
+              {clustersServiceError && (
                 <ErrorBox
                   variant="warning"
                   message="Some operations are unavailable, try again later"
                   response={clustersServiceError}
                   isExpandable
                 />
-              ) }
+              )}
               <Toolbar id="cluster-list-toolbar">
                 <ToolbarContent>
                   <ToolbarItem className="ocm-c-toolbar__item-cluster-filter-list">
@@ -269,7 +278,10 @@ class ClusterList extends Component {
                     />
                   </ToolbarItem>
                   <ClusterListActions />
-                  <ViewOnlyMyClustersToggle view={viewConstants.CLUSTERS_VIEW} />
+                  <ViewOnlyMyClustersToggle
+                    view={viewConstants.CLUSTERS_VIEW}
+                    bodyContent="Show only the clusters you previously created, or all clusters in your organization."
+                  />
                   <ToolbarItem
                     alignment={{ default: 'alignRight' }}
                     variant="pagination"
@@ -327,18 +339,12 @@ ClusterList.propTypes = {
   valid: PropTypes.bool.isRequired,
   clusters: PropTypes.array.isRequired,
   error: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.node,
-    PropTypes.element,
-  ]).isRequired,
+  errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element])
+    .isRequired,
   meta: PropTypes.shape({
     clustersServiceError: PropTypes.shape({
-      errorMessage: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-        PropTypes.element,
-      ]).isRequired,
+      errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element])
+        .isRequired,
       errorDetails: PropTypes.array,
       errorCode: PropTypes.number,
     }),
