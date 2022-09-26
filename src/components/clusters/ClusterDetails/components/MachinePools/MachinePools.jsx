@@ -18,13 +18,7 @@ import {
   SplitItem,
   Popover,
 } from '@patternfly/react-core';
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  cellWidth,
-  expandable,
-} from '@patternfly/react-table';
+import { Table, TableHeader, TableBody, cellWidth, expandable } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
 import AddMachinePoolModal from './components/AddMachinePoolModal';
@@ -76,19 +70,27 @@ class MachinePools extends React.Component {
     } = this.props;
     const { deletedRowIndex } = this.state;
 
-    if (((deleteMachinePoolResponse.fulfilled && prevProps.deleteMachinePoolResponse.pending)
-      || (addMachinePoolResponse.fulfilled && prevProps.addMachinePoolResponse.pending)
-      || (scaleMachinePoolResponse.fulfilled && prevProps.scaleMachinePoolResponse.pending))
-      && (!machinePoolsList.pending)
+    if (
+      ((deleteMachinePoolResponse.fulfilled && prevProps.deleteMachinePoolResponse.pending) ||
+        (addMachinePoolResponse.fulfilled && prevProps.addMachinePoolResponse.pending) ||
+        (scaleMachinePoolResponse.fulfilled && prevProps.scaleMachinePoolResponse.pending)) &&
+      !machinePoolsList.pending
     ) {
       getOrganizationAndQuota();
       getMachinePools();
     }
 
-    if (prevProps.machinePoolsList.pending
-      && machinePoolsList.fulfilled && deletedRowIndex !== null) {
+    if (
+      prevProps.machinePoolsList.pending &&
+      machinePoolsList.fulfilled &&
+      deletedRowIndex !== null
+    ) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState(produce((draft) => { draft.deletedRowIndex = null; }));
+      this.setState(
+        produce((draft) => {
+          draft.deletedRowIndex = null;
+        }),
+      );
     }
   }
 
@@ -98,18 +100,20 @@ class MachinePools extends React.Component {
   }
 
   onCollapse = (event, rowKey, isOpen, rowData) => {
-    this.setState(produce((draft) => {
-      if (isOpen) {
-        if (!(draft.openedRows.includes(rowData.machinePool.id))) {
-          draft.openedRows.push(rowData.machinePool.id);
+    this.setState(
+      produce((draft) => {
+        if (isOpen) {
+          if (!draft.openedRows.includes(rowData.machinePool.id)) {
+            draft.openedRows.push(rowData.machinePool.id);
+          }
+        } else {
+          draft.openedRows = draft.openedRows.filter(
+            (machinePoolId) => machinePoolId !== rowData.machinePool.id,
+          );
         }
-      } else {
-        draft.openedRows = draft.openedRows.filter(
-          machinePoolId => machinePoolId !== rowData.machinePool.id,
-        );
-      }
-    }));
-  }
+      }),
+    );
+  };
 
   render() {
     const {
@@ -158,34 +162,40 @@ class MachinePools extends React.Component {
               bodyContent="Minimum and maximum node totals are calculated based on the number of zones."
               aria-label="help"
             >
-              <Button className="nodes-count" variant="link">{autoScaleNodesText}</Button>
+              <Button className="nodes-count" variant="link">
+                {autoScaleNodesText}
+              </Button>
             </Popover>
           </>
-        ) : autoScaleNodesText;
+        ) : (
+          autoScaleNodesText
+        );
       } else {
         nodes = `${machinePool.desired || machinePool.replicas}`;
       }
 
-      const row = (
-        {
-          cells: [
-            machinePool.id,
-            {
-              title: (
-                <>
-                  {machinePool.instance_type}
-                  {machinePool.aws && <Label variant="outline" className="ocm-c-machine-pools__spot-label">Spot</Label> }
-                </>
-              ),
-            },
-            machinePool.availability_zones?.join(', '),
-            { title: nodes },
-            autoscalingEnabled ? 'Enabled' : 'Disabled',
-          ],
-          key: machinePool.id,
-          machinePool,
-        }
-      );
+      const row = {
+        cells: [
+          machinePool.id,
+          {
+            title: (
+              <>
+                {machinePool.instance_type}
+                {machinePool.aws && (
+                  <Label variant="outline" className="ocm-c-machine-pools__spot-label">
+                    Spot
+                  </Label>
+                )}
+              </>
+            ),
+          },
+          machinePool.availability_zones?.join(', '),
+          { title: nodes },
+          autoscalingEnabled ? 'Enabled' : 'Disabled',
+        ],
+        key: machinePool.id,
+        machinePool,
+      };
       if (isExpandableRow) {
         row.isOpen = openedRows.includes(machinePool.id);
       }
@@ -196,82 +206,101 @@ class MachinePools extends React.Component {
       const { labels, taints } = machinePool;
       const labelsKeys = !isEmpty(labels) ? Object.keys(labels) : [];
 
-      const labelsList = labelsKeys.length ? labelsKeys.map(key => (
-        <React.Fragment key={`laebl-${key}`}>
-          <Label color="blue">{`${[key]} = ${labels[key]}`}</Label>
-          {' '}
-        </React.Fragment>
-      )) : null;
+      const labelsList = labelsKeys.length
+        ? labelsKeys.map((key) => (
+            <React.Fragment key={`laebl-${key}`}>
+              <Label color="blue">{`${[key]} = ${labels[key]}`}</Label>{' '}
+            </React.Fragment>
+          ))
+        : null;
 
-      const taintsList = taints?.map(taint => (
+      const taintsList = taints?.map((taint) => (
         <React.Fragment key={`taint-${taint.key}`}>
           <Label color="blue" className="pf-c-label--break-word">
             {`${taint.key} = ${taint.value}:${taint.effect}`}
-          </Label>
-          {' '}
+          </Label>{' '}
         </React.Fragment>
       ));
 
       const autoScaling = machinePool.autoscaling && (
         <>
-          <Title headingLevel="h4" className="pf-u-mb-sm pf-u-mt-lg">Autoscaling</Title>
+          <Title headingLevel="h4" className="pf-u-mb-sm pf-u-mt-lg">
+            Autoscaling
+          </Title>
           <Split hasGutter>
             <SplitItem>
-              <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${cluster.multi_az ? 'per zone' : ''}`}</Title>
+              <Title headingLevel="h4" className="autoscale__lim">{`Min nodes ${
+                cluster.multi_az ? 'per zone' : ''
+              }`}</Title>
               {cluster.multi_az
-                ? machinePool.autoscaling.min_replicas / 3 : machinePool.autoscaling.min_replicas}
+                ? machinePool.autoscaling.min_replicas / 3
+                : machinePool.autoscaling.min_replicas}
             </SplitItem>
             <SplitItem>
-              <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${cluster.multi_az ? 'per zone' : ''}`}</Title>
+              <Title headingLevel="h4" className="autoscale__lim">{`Max nodes ${
+                cluster.multi_az ? 'per zone' : ''
+              }`}</Title>
               {cluster.multi_az
-                ? machinePool.autoscaling.max_replicas / 3 : machinePool.autoscaling.max_replicas}
+                ? machinePool.autoscaling.max_replicas / 3
+                : machinePool.autoscaling.max_replicas}
             </SplitItem>
           </Split>
         </>
       );
 
       const awsSpotInstance = machinePool?.aws?.spot_market_options;
-      const awsPrice = awsSpotInstance?.max_price ? `Maximum hourly price: ${awsSpotInstance?.max_price}` : 'On-Demand';
+      const awsPrice = awsSpotInstance?.max_price
+        ? `Maximum hourly price: ${awsSpotInstance?.max_price}`
+        : 'On-Demand';
 
       const expandableRowContent = (
         <>
           {labelsList && (
             <>
-              <Title headingLevel="h4" className="pf-u-mb-sm">Labels</Title>
+              <Title headingLevel="h4" className="pf-u-mb-sm">
+                Labels
+              </Title>
               {labelsList}
             </>
           )}
           {taintsList && (
             <>
-              <Title headingLevel="h4" className={cx('pf-u-mb-sm', labelsList && 'pf-u-mt-lg')}>Taints</Title>
+              <Title headingLevel="h4" className={cx('pf-u-mb-sm', labelsList && 'pf-u-mt-lg')}>
+                Taints
+              </Title>
               {taintsList}
             </>
           )}
           {autoScaling}
           {awsSpotInstance && (
             <>
-              <Title headingLevel="h4" className={cx('pf-u-mb-sm', labelsList && 'pf-u-mt-lg')}>Spot Instance Pricing</Title>
+              <Title headingLevel="h4" className={cx('pf-u-mb-sm', labelsList && 'pf-u-mt-lg')}>
+                Spot Instance Pricing
+              </Title>
               {awsPrice}
             </>
           )}
         </>
       );
 
-      return (
-        {
-          parent: parentIndex,
-          fullWidth: true,
-          cells: [{
+      return {
+        parent: parentIndex,
+        fullWidth: true,
+        cells: [
+          {
             title: expandableRowContent,
-          }],
-          key: `${machinePool.id}-child`,
-        }
-      );
+          },
+        ],
+        key: `${machinePool.id}-child`,
+      };
     };
 
     // row is expandable if autoscaling enabled, or it has lables, or taints
-    const isExpandable = (machinePool = {}) => !isEmpty(machinePool.labels)
-    || machinePool.taints?.length > 0 || machinePool.autoscaling || machinePool.aws;
+    const isExpandable = (machinePool = {}) =>
+      !isEmpty(machinePool.labels) ||
+      machinePool.taints?.length > 0 ||
+      machinePool.autoscaling ||
+      machinePool.aws;
 
     const isDefaultExpandable = isExpandable(defaultMachinePool);
 
@@ -298,28 +327,33 @@ class MachinePools extends React.Component {
     });
 
     const onClickDeleteAction = (_, rowID, rowData) => {
-      this.setState(produce((draft) => {
-        draft.deletedRowIndex = rowID;
-        draft.openedRows = draft.openedRows.filter(
-          machinePoolId => machinePoolId !== rowData.machinePool.id,
-        );
-      }));
+      this.setState(
+        produce((draft) => {
+          draft.deletedRowIndex = rowID;
+          draft.openedRows = draft.openedRows.filter(
+            (machinePoolId) => machinePoolId !== rowData.machinePool.id,
+          );
+        }),
+      );
       deleteMachinePool(rowData.machinePool.id);
     };
 
-    const onClickScaleAction = (_, __, rowData) => openModal(modals.EDIT_NODE_COUNT, {
-      machinePool: rowData.machinePool,
-      isDefaultMachinePool: rowData.machinePool.id === 'Default',
-      cluster,
-    });
+    const onClickScaleAction = (_, __, rowData) =>
+      openModal(modals.EDIT_NODE_COUNT, {
+        machinePool: rowData.machinePool,
+        isDefaultMachinePool: rowData.machinePool.id === 'Default',
+        cluster,
+      });
 
-    const onClickEditTaintsAction = (_, __, rowData) => openModal(modals.EDIT_TAINTS, {
-      machinePool: rowData.machinePool,
-    });
+    const onClickEditTaintsAction = (_, __, rowData) =>
+      openModal(modals.EDIT_TAINTS, {
+        machinePool: rowData.machinePool,
+      });
 
-    const onClickEditLaeblsAction = (_, __, rowData) => openModal(modals.EDIT_LABELS, {
-      machinePool: rowData.machinePool,
-    });
+    const onClickEditLaeblsAction = (_, __, rowData) =>
+      openModal(modals.EDIT_LABELS, {
+        machinePool: rowData.machinePool,
+      });
 
     const showSkeleton = !hasMachinePools && machinePoolsList.pending;
     const skeletonRow = {
@@ -331,8 +365,11 @@ class MachinePools extends React.Component {
       ],
     };
 
-    if (hasMachinePools && (machinePoolsList.pending || addMachinePoolResponse.pending)
-    && deletedRowIndex === null) {
+    if (
+      hasMachinePools &&
+      (machinePoolsList.pending || addMachinePoolResponse.pending) &&
+      deletedRowIndex === null
+    ) {
       rows.push(skeletonRow);
     }
 
@@ -348,12 +385,12 @@ class MachinePools extends React.Component {
 
     const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
-    const hibernatingReason = isHibernating(cluster.state) && (
-      'This operation is not available while cluster is hibernating'
-    );
-    const canNotEditReason = !cluster.canEdit && (
-      'You do not have permission to add a machine pool. Only cluster owners, cluster editors, and Organization Administrators can add machine pools.'
-    );
+    const hibernatingReason =
+      isHibernating(cluster.state) &&
+      'This operation is not available while cluster is hibernating';
+    const canNotEditReason =
+      !cluster.canEdit &&
+      'You do not have permission to add a machine pool. Only cluster owners, cluster editors, and Organization Administrators can add machine pools.';
     const quotaReason = !hasMachinePoolsQuota && noQuotaTooltip;
 
     const addMachinePoolBtn = (
@@ -387,25 +424,27 @@ class MachinePools extends React.Component {
         ) : (
           <Card className="ocm-c-machine-pools__card">
             <CardBody className="ocm-c-machine-pools__card--body">
-              { machinePoolsList.error && (
-              <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
+              {machinePoolsList.error && (
+                <ErrorBox message="Error retrieving machine pools" response={machinePoolsList} />
               )}
               {addMachinePoolBtn}
               <Divider />
-              { deleteMachinePoolResponse.error && (
-              <ErrorBox message="Error deleting machine pool" response={machinePoolsList} />
+              {deleteMachinePoolResponse.error && (
+                <ErrorBox message="Error deleting machine pool" response={machinePoolsList} />
               )}
               <Table
                 aria-label="Machine pools"
                 cells={columns}
                 rows={rows}
                 onCollapse={this.onCollapse}
-                actionResolver={
-                  rowData => actionResolver(rowData,
+                actionResolver={(rowData) =>
+                  actionResolver(
+                    rowData,
                     onClickDeleteAction,
                     onClickScaleAction,
                     onClickEditTaintsAction,
-                    onClickEditLaeblsAction)
+                    onClickEditLaeblsAction,
+                  )
                 }
                 areActionsDisabled={() => tableActionsDisabled}
               >

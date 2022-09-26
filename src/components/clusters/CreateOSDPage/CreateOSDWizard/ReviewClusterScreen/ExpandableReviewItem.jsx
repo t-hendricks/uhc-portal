@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ExpandableSection } from '@patternfly/react-core';
 
-export const ExpandableReviewItem = ({
-  children,
-  initiallyExpanded,
-}) => {
+export const ExpandableReviewItem = ({ children, initiallyExpanded }) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   useEffect(() => {

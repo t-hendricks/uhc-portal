@@ -33,9 +33,7 @@ const baseProps = {
 };
 
 describe('<EditNodeCountModal />', () => {
-  const wrapper = shallow(<EditNodeCountModal
-    {...baseProps}
-  />);
+  const wrapper = shallow(<EditNodeCountModal {...baseProps} />);
 
   it('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();

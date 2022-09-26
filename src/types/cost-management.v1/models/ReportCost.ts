@@ -4,7 +4,6 @@
 
 import type { Report } from './Report';
 
-export type ReportCost = (Report & {
-    data: Array<any>;
-});
-
+export type ReportCost = Report & {
+  data: Array<any>;
+};

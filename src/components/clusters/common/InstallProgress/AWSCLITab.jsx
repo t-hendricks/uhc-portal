@@ -14,11 +14,7 @@ import {
 } from '@patternfly/react-core';
 
 import { accountsService, clusterService } from '../../../../services';
-import {
-  getAWSAccountID,
-  getOIDCEndpointNoScheme,
-  getOIDCProviderARN,
-} from './rosaUtils';
+import { getAWSAccountID, getOIDCEndpointNoScheme, getOIDCProviderARN } from './rosaUtils';
 
 function AWSCLITab({ cluster }) {
   const [commands, setCommands] = React.useState();
@@ -65,18 +61,15 @@ function AWSCLITab({ cluster }) {
 
   function generateRolePolicyFiles() {
     // Find the operator role policy in the resposne.
-    const policyTemplate = policies.find(
-      ({ id }) => id === 'operator_iam_role_policy',
-    );
+    const policyTemplate = policies.find(({ id }) => id === 'operator_iam_role_policy');
     const issuer = getOIDCEndpointNoScheme(cluster);
     const oidcProviderARN = getOIDCProviderARN(cluster);
     return cluster.aws.sts.operator_iam_roles.map((role) => {
       const request = credentialRequests.find(
-        r => r.operator.name === role.name
-          && r.operator.namespace === role.namespace,
+        (r) => r.operator.name === role.name && r.operator.namespace === role.namespace,
       );
       const serviceAccounts = request.operator.service_accounts.map(
-        sa => `system:serviceaccount:${role.namespace}:${sa}`,
+        (sa) => `system:serviceaccount:${role.namespace}:${sa}`,
       );
       return {
         // Filename must match the pattern used in the sts_commands response.
@@ -124,10 +117,7 @@ extracted from the ZIP. Cluster installation will continue automatically when
 the roles and OIDC provider are available.
 `,
       );
-      zip.file(
-        'commands.txt',
-        commands.map(({ command }) => command).join('\n\n'),
-      );
+      zip.file('commands.txt', commands.map(({ command }) => command).join('\n\n'));
       const policyFiles = generateRolePolicyFiles();
       policyFiles.forEach(({ filename, content }) => {
         zip.file(filename, content);
@@ -146,11 +136,8 @@ the roles and OIDC provider are available.
           <Alert isInline variant="danger" title="Something went wrong">
             <p>{error}</p>
             <p>
-              You will need to use
-              {' '}
-              {/* either AWS CloudFormation or */}
-              {' '}
-              the ROSA CLI to create the operator roles and OIDC provider.
+              You will need to use {/* either AWS CloudFormation or */} the ROSA CLI to create the
+              operator roles and OIDC provider.
             </p>
           </Alert>
         </StackItem>
@@ -158,19 +145,13 @@ the roles and OIDC provider are available.
       <StackItem>
         <TextContent>
           <TextList component={TextListVariants.ol}>
+            <TextListItem>Download and extract the following .zip file.</TextListItem>
             <TextListItem>
-              Download and extract the following .zip file.
-            </TextListItem>
-            <TextListItem>
-              In the AWS CLI, run the commands with the included policy files to
-              create the operator roles and OIDC provider.
+              In the AWS CLI, run the commands with the included policy files to create the operator
+              roles and OIDC provider.
             </TextListItem>
           </TextList>
-          <Button
-            variant="secondary"
-            onClick={downloadZip}
-            isDisabled={!ready}
-          >
+          <Button variant="secondary" onClick={downloadZip} isDisabled={!ready}>
             {ready ? <>Download .zip</> : <>Preparing .zip</>}
           </Button>
         </TextContent>

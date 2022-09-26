@@ -1,34 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import {
-  Button, EmptyState, EmptyStateBody, EmptyStateVariant,
-} from '@patternfly/react-core';
-import {
-  Table, TableBody, TableHeader, TableVariant,
-} from '@patternfly/react-table';
+import { Button, EmptyState, EmptyStateBody, EmptyStateVariant } from '@patternfly/react-core';
+import { Table, TableBody, TableHeader, TableVariant } from '@patternfly/react-table';
 import { normalizedProducts } from '../../../../../../../common/subscriptionTypes';
 
 class SupportCasesCard extends React.Component {
   componentDidMount() {
-    const {
-      subscriptionID,
-      supportCases,
-      getSupportCases,
-    } = this.props;
-    if ((supportCases.subscriptionID !== subscriptionID) || (!supportCases.pending)) {
+    const { subscriptionID, supportCases, getSupportCases } = this.props;
+    if (supportCases.subscriptionID !== subscriptionID || !supportCases.pending) {
       getSupportCases(subscriptionID);
     }
   }
 
   render() {
-    const {
-      supportCases,
-      clusterUUID,
-      product,
-      version,
-      isDisabled = false,
-    } = this.props;
+    const { supportCases, clusterUUID, product, version, isDisabled = false } = this.props;
 
     const productMap = {
       OSD: 'OpenShift Dedicated',
@@ -51,13 +37,17 @@ class SupportCasesCard extends React.Component {
       openshiftVersion = encodeURIComponent(productMap[product]);
     }
 
-    const url = `https://access.redhat.com/support/cases/#/case/new/open-case/describe-issue?clusterId=${clusterUUID}&caseCreate=true&product=${encodeURIComponent(productMap[product])}&version=${openshiftVersion}`;
+    const url = `https://access.redhat.com/support/cases/#/case/new/open-case/describe-issue?clusterId=${clusterUUID}&caseCreate=true&product=${encodeURIComponent(
+      productMap[product],
+    )}&version=${openshiftVersion}`;
 
     const supportCaseRow = (supportCase) => {
       const caseIdURL = `https://access.redhat.com/support/cases/#/case/${supportCase.caseID}`;
       const caseID = (
         <>
-          <a href={caseIdURL} target="_blank" rel="noopener noreferrer">{supportCase.caseID}</a>
+          <a href={caseIdURL} target="_blank" rel="noopener noreferrer">
+            {supportCase.caseID}
+          </a>
         </>
       );
 
@@ -91,11 +81,7 @@ class SupportCasesCard extends React.Component {
       <>
         {showOpenSupportCaseButton && (
           <a href={url} target="_blank" rel="noopener noreferrer">
-            <Button
-              variant="secondary"
-            >
-              Open support case
-            </Button>
+            <Button variant="secondary">Open support case</Button>
           </a>
         )}
         <Table
@@ -109,9 +95,7 @@ class SupportCasesCard extends React.Component {
         </Table>
         {!hasRows && (
           <EmptyState variant={EmptyStateVariant.small}>
-            <EmptyStateBody>
-              You have no open support cases
-            </EmptyStateBody>
+            <EmptyStateBody>You have no open support cases</EmptyStateBody>
           </EmptyState>
         )}
       </>

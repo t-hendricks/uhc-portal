@@ -11,7 +11,8 @@ export type GitHubRelease = {
 };
 
 /** Given a repo like 'redhat-developer/app-services-cli', return latest release info. */
-const getLatestRelease = (repo: string) => axios.get<GitHubRelease>(`https://api.github.com/repos/${repo}/releases/latest`);
+const getLatestRelease = (repo: string) =>
+  axios.get<GitHubRelease>(`https://api.github.com/repos/${repo}/releases/latest`);
 
 export default {
   getLatestRelease,

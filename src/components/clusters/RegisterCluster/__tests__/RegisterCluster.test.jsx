@@ -27,19 +27,13 @@ describe('<RegisterCluster />', () => {
   };
 
   it('renders correctly', () => {
-    const wrapper = shallow(<RegisterCluster
-      {...baseProps}
-      canSubscribeOCP
-    />);
+    const wrapper = shallow(<RegisterCluster {...baseProps} canSubscribeOCP />);
 
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('renders correctly when user can\'t subscribe ocp', () => {
-    const wrapper = shallow(<RegisterCluster
-      {...baseProps}
-      canSubscribeOCP={false}
-    />);
+  it("renders correctly when user can't subscribe ocp", () => {
+    const wrapper = shallow(<RegisterCluster {...baseProps} canSubscribeOCP={false} />);
 
     expect(wrapper).toMatchSnapshot();
   });

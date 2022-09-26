@@ -7,9 +7,7 @@ import { global_danger_color_100 } from '@patternfly/react-tokens';
 import { formatErrorDetails } from '../../../common/errors';
 import Modal from '../Modal/Modal';
 
-function ErrorModal({
-  title, errorResponse, resetResponse, closeModal,
-}) {
+function ErrorModal({ title, errorResponse, resetResponse, closeModal }) {
   const close = () => {
     resetResponse();
     closeModal();
@@ -19,13 +17,11 @@ function ErrorModal({
 
   return (
     <Modal
-      header={(
+      header={
         <Title headingLevel="h2" size="2xl">
-          <ExclamationCircleIcon color={global_danger_color_100.value} />
-          {' '}
-          {title}
+          <ExclamationCircleIcon color={global_danger_color_100.value} /> {title}
         </Title>
-      )}
+      }
       primaryText="Close"
       onPrimaryClick={close}
       onClose={close}

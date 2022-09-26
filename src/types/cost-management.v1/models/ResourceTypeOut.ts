@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type ResourceTypeOut = {
-    value?: string;
+  value?: string;
 };
-

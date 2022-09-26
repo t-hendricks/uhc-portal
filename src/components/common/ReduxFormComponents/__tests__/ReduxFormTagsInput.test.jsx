@@ -5,7 +5,13 @@ import ReduxFormTagsInput from '../ReduxFormTagsInput';
 describe('<ReduxFormTagsInput />', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<ReduxFormTagsInput tags={['hello=world', 'foo=bar']} meta={{ error: undefined }} input={{ onChange: jest.fn() }} />);
+    wrapper = shallow(
+      <ReduxFormTagsInput
+        tags={['hello=world', 'foo=bar']}
+        meta={{ error: undefined }}
+        input={{ onChange: jest.fn() }}
+      />,
+    );
   });
 
   it('should render with tags', () => {

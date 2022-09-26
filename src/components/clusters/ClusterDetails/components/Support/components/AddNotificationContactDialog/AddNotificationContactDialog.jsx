@@ -15,9 +15,7 @@ class AddNotificationContactDialog extends Component {
   state = initialState;
 
   componentDidUpdate() {
-    const {
-      addContactResponse, clearAddNotificationContacts, closeModal,
-    } = this.props;
+    const { addContactResponse, clearAddNotificationContacts, closeModal } = this.props;
     if (addContactResponse.fulfilled) {
       closeModal();
       clearAddNotificationContacts();
@@ -25,7 +23,7 @@ class AddNotificationContactDialog extends Component {
     }
   }
 
-  onUpdate = state => this.setState(state);
+  onUpdate = (state) => this.setState(state);
 
   setUserNameValue = (userNameValue) => {
     this.onUpdate({
@@ -43,7 +41,10 @@ class AddNotificationContactDialog extends Component {
 
   render() {
     const {
-      isAddNotificationContactModalOpen, addNotificationContact, addContactResponse, subscriptionID,
+      isAddNotificationContactModalOpen,
+      addNotificationContact,
+      addContactResponse,
+      subscriptionID,
     } = this.props;
     const { userName, userNameTouched } = this.state;
 
@@ -76,8 +77,8 @@ class AddNotificationContactDialog extends Component {
         isPending={addContactResponse.pending}
       >
         <p className="pf-u-mb-xl">
-          Identify the user to be added as notification contact. These users will be contacted
-          in the event of notifications about this cluster.
+          Identify the user to be added as notification contact. These users will be contacted in
+          the event of notifications about this cluster.
         </p>
         <Form
           className="control-form-cursor"

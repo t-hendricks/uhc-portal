@@ -1,11 +1,17 @@
 import get from 'lodash/get';
 
 import {
-  normalizeCluster, normalizeProductID,
-  normalizeQuotaCost, normalizeMetrics,
+  normalizeCluster,
+  normalizeProductID,
+  normalizeQuotaCost,
+  normalizeMetrics,
 } from '../normalize';
 import { normalizedProducts } from '../subscriptionTypes';
-import { dedicatedRhInfra, unlimitedROSA, rhmiAddon } from '../../components/clusters/common/__test__/quota_cost.fixtures';
+import {
+  dedicatedRhInfra,
+  unlimitedROSA,
+  rhmiAddon,
+} from '../../components/clusters/common/__test__/quota_cost.fixtures';
 
 const productOCP = {
   kind: 'ProductLink',
@@ -67,15 +73,17 @@ describe('normalizeProductID', () => {
 
 describe('normalizeQuotaCost', () => {
   test('Normalizes product ids', () => {
-    const products = quotaCost => quotaCost.related_resources.map(r => r.product);
+    const products = (quotaCost) => quotaCost.related_resources.map((r) => r.product);
 
-    expect(products(normalizeQuotaCost(dedicatedRhInfra[0]))).toEqual(
-      [normalizedProducts.OSD, normalizedProducts.OSD],
-    );
+    expect(products(normalizeQuotaCost(dedicatedRhInfra[0]))).toEqual([
+      normalizedProducts.OSD,
+      normalizedProducts.OSD,
+    ]);
     expect(products(normalizeQuotaCost(unlimitedROSA[0]))).toEqual([normalizedProducts.ROSA]);
-    expect(products(normalizeQuotaCost(rhmiAddon[0]))).toEqual(
-      [normalizedProducts.OSD, normalizedProducts.RHMI],
-    );
+    expect(products(normalizeQuotaCost(rhmiAddon[0]))).toEqual([
+      normalizedProducts.OSD,
+      normalizedProducts.RHMI,
+    ]);
   });
 });
 
@@ -387,8 +395,7 @@ describe('normalizeMetrics()', () => {
         used: {
           value: 1,
         },
-        total: {
-        },
+        total: {},
       },
     });
     expect(ret.memory).toMatchObject({

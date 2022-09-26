@@ -7,18 +7,17 @@
  * by node role and OS.
  */
 export type SocketTotalNodeRoleOSMetricNode = {
-    /**
-     * Representation of the node role for a cluster.
-     */
-    node_roles?: Array<string>;
-    /**
-     * The operating system.
-     */
-    operating_system?: string;
-    /**
-     * The total socket capacity of nodes with this set of roles and operating system.
-     */
-    socket_total?: number;
-    time?: string;
+  /**
+   * Representation of the node role for a cluster.
+   */
+  node_roles?: Array<string>;
+  /**
+   * The operating system.
+   */
+  operating_system?: string;
+  /**
+   * The total socket capacity of nodes with this set of roles and operating system.
+   */
+  socket_total?: number;
+  time?: string;
 };
-

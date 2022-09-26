@@ -12,9 +12,7 @@ describe('<InstallProgress />', () => {
 
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(
-      <InstallProgress cluster={clusterInstalling} />,
-    );
+    wrapper = shallow(<InstallProgress cluster={clusterInstalling} />);
   });
 
   it('should render correclty installing cluster', () => {
@@ -22,15 +20,12 @@ describe('<InstallProgress />', () => {
   });
 
   it('should render correclty uninstalling cluster', () => {
-    wrapper.setProps(
-      {
-        cluster:
-        {
-          ...fixtures.clusterDetails.cluster,
-          state: clusterStates.UNINSTALLING,
-        },
+    wrapper.setProps({
+      cluster: {
+        ...fixtures.clusterDetails.cluster,
+        state: clusterStates.UNINSTALLING,
       },
-    );
+    });
     expect(wrapper).toMatchSnapshot();
   });
 });

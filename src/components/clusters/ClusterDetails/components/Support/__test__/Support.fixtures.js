@@ -44,7 +44,8 @@ const mockGetNotificationContactsPayload = {
           created_at: '0001-01-01T00:00:00Z',
           updated_at: '0001-01-01T00:00:00Z',
         },
-      }, {
+      },
+      {
         id: '1VW00yfnFuhoybNRBqF86RyS2h6',
         kind: 'Account',
         href: '/api/accounts_mgmt/v1/accounts/1VW00yfnFuhoybNRBqF86RyS2h6',
@@ -59,7 +60,8 @@ const mockGetNotificationContactsPayload = {
           created_at: '0001-01-01T00:00:00Z',
           updated_at: '0001-01-01T00:00:00Z',
         },
-      }, {
+      },
+      {
         id: '1NjzrgHzgOHK0pGi6zxPfhC7PQV',
         kind: 'Account',
         href: '/api/accounts_mgmt/v1/accounts/1NjzrgHzgOHK0pGi6zxPfhC7PQV',
@@ -86,13 +88,15 @@ const mockGetNotificationContactsList = [
     lastName: 'Shilin',
     username: 'gshilin.openshift',
     email: '***REMOVED***',
-  }, {
+  },
+  {
     userID: '1VW00yfnFuhoybNRBqF86RyS2h6',
     firstName: 'Liran',
     lastName: 'Roitman',
     username: 'lroitman.openshift',
     email: '***REMOVED***',
-  }, {
+  },
+  {
     userID: '1NjzrgHzgOHK0pGi6zxPfhC7PQV',
     firstName: 'Timothy',
     lastName: 'Williams',

@@ -16,10 +16,10 @@ import { clearGlobalError } from '../../../redux/actions/globalErrorActions';
 
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),
-  fetchClusters: queryObj => clustersActions.fetchClusters(queryObj),
+  fetchClusters: (queryObj) => clustersActions.fetchClusters(queryObj),
   setClusterDetails: clustersActions.setClusterDetails,
   clearClusterDetails: clustersActions.clearClusterDetails,
-  setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
+  setSorting: (sorting) => viewActions.onListSortBy(sorting, viewConstants.CLUSTERS_VIEW),
   setListFlag: (key, value) => viewActions.onListFlagsSet(key, value, viewConstants.CLUSTERS_VIEW),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   getMachineTypes: machineTypesActions.getMachineTypes,
@@ -30,7 +30,7 @@ const mapDispatchToProps = {
   clearGlobalError,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...state.clusters.clusters,
   viewOptions: state.viewOptions[viewConstants.CLUSTERS_VIEW],
   username: state.userProfile.keycloakProfile.username,
@@ -44,7 +44,4 @@ const mapStateToProps = state => ({
   canTransferClusterOwnershipList: canTransferClusterOwnershipListSelector(state),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ClusterList);
+export default connect(mapStateToProps, mapDispatchToProps)(ClusterList);

@@ -53,42 +53,35 @@ const sortColumns = {
   'Logged by': 'username,created_by',
 };
 
-const emptyState = [{
-  heightAuto: true,
-  cells: [
-    {
-      props: { colSpan: 8, dataLabel: null },
-      title: (
-        <Bullseye>
-          <EmptyState variant={EmptyStateVariant.small}>
-            <EmptyStateIcon icon={SearchIcon} />
-            <Title headingLevel="h2" size="lg">
-              No results found
-            </Title>
-            <EmptyStateBody>
-              No results match the filter criteria. Remove all filters or clear all filters to
-              show results.
-            </EmptyStateBody>
-          </EmptyState>
-        </Bullseye>
-      ),
-    },
-  ],
-}];
+const emptyState = [
+  {
+    heightAuto: true,
+    cells: [
+      {
+        props: { colSpan: 8, dataLabel: null },
+        title: (
+          <Bullseye>
+            <EmptyState variant={EmptyStateVariant.small}>
+              <EmptyStateIcon icon={SearchIcon} />
+              <Title headingLevel="h2" size="lg">
+                No results found
+              </Title>
+              <EmptyStateBody>
+                No results match the filter criteria. Remove all filters or clear all filters to
+                show results.
+              </EmptyStateBody>
+            </EmptyState>
+          </Bullseye>
+        ),
+      },
+    ],
+  },
+];
 
 const mapLog = (log, index) => {
-  const {
-    id,
-    summary,
-    severity,
-    timestamp,
-    description,
-    username,
-    created_by: createdBy,
-  } = log;
+  const { id, summary, severity, timestamp, description, username, created_by: createdBy } = log;
 
-  const day = moment.utc(timestamp)
-    .format('D MMM YYYY, HH:mm UTC');
+  const day = moment.utc(timestamp).format('D MMM YYYY, HH:mm UTC');
 
   const md = (
     <ReactMarkdown
@@ -109,21 +102,20 @@ const mapLog = (log, index) => {
     />
   );
 
-  return ([{
-    // parent
-    isOpen: false,
-    cells: [
-      summary, severity, username || createdBy, day,
-    ],
-    expandId: id,
-  }, {
-    // child
-    parent: index * 2,
-    fullWidth: true,
-    cells: [
-      { title: md },
-    ],
-  }]);
+  return [
+    {
+      // parent
+      isOpen: false,
+      cells: [summary, severity, username || createdBy, day],
+      expandId: id,
+    },
+    {
+      // child
+      parent: index * 2,
+      fullWidth: true,
+      cells: [{ title: md }],
+    },
+  ];
 };
 
 class LogTable extends React.Component {
@@ -148,8 +140,8 @@ class LogTable extends React.Component {
       return { rows: emptyState };
     }
     const { rows: oldRows } = state;
-    const oldIds = oldRows.map(row => row.expandId).filter(x => x !== undefined);
-    const newIds = newRows.map(row => row.id);
+    const oldIds = oldRows.map((row) => row.expandId).filter((x) => x !== undefined);
+    const newIds = newRows.map((row) => row.id);
     if (!isEqual(oldIds, newIds)) {
       const rows = newRows.length === 0 ? emptyState : flatten(newRows.map(mapLog));
       return { rows };

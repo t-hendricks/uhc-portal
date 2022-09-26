@@ -16,7 +16,11 @@ describe('canAllowAdminSelector', () => {
               plan: { id: normalizedProducts.OSD },
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
-                { name: 'capability.cluster.manage_cluster_admin', value: 'false', inherited: false },
+                {
+                  name: 'capability.cluster.manage_cluster_admin',
+                  value: 'false',
+                  inherited: false,
+                },
               ],
             },
           },
@@ -63,7 +67,11 @@ describe('canAllowAdminSelector', () => {
               plan: { id: normalizedProducts.RHMI },
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
-                { name: 'capability.cluster.manage_cluster_admin', value: 'false', inherited: false },
+                {
+                  name: 'capability.cluster.manage_cluster_admin',
+                  value: 'false',
+                  inherited: false,
+                },
               ],
             },
           },
@@ -89,7 +97,11 @@ describe('canAllowAdminSelector', () => {
               plan: { id: normalizedProducts.OSD },
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
-                { name: 'capability.cluster.manage_cluster_admin', value: 'true', inherited: false },
+                {
+                  name: 'capability.cluster.manage_cluster_admin',
+                  value: 'true',
+                  inherited: false,
+                },
               ],
             },
           },
@@ -115,7 +127,11 @@ describe('canAllowAdminSelector', () => {
               plan: { id: normalizedProducts.OSD },
               capabilities: [
                 { name: 'capability.cluster.subscribed_ocp', value: 'true', inherited: true },
-                { name: 'capability.cluster.manage_cluster_admin', value: 'true', inherited: false },
+                {
+                  name: 'capability.cluster.manage_cluster_admin',
+                  value: 'true',
+                  inherited: false,
+                },
               ],
             },
           },

@@ -1,13 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Title,
-  Grid,
-  GridItem,
-  FormGroup,
-  Form,
-  Alert,
-} from '@patternfly/react-core';
+import { Title, Grid, GridItem, FormGroup, Form, Alert } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import PopoverHint from '../../../../common/PopoverHint';
@@ -36,12 +29,18 @@ function ClusterSettingsScreen({
   change,
 }) {
   const isRosa = product === normalizedProducts.ROSA;
-  const cloudProviderLearnLink = cloudProviderID === 'aws'
-    ? 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html'
-    : 'https://cloud.google.com/storage/docs/encryption/default-keys';
+  const cloudProviderLearnLink =
+    cloudProviderID === 'aws'
+      ? 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/data-protection.html'
+      : 'https://cloud.google.com/storage/docs/encryption/default-keys';
 
   return (
-    <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
+    <Form
+      onSubmit={(event) => {
+        event.preventDefault();
+        return false;
+      }}
+    >
       <Grid hasGutter>
         <GridItem>
           <Title headingLevel="h3">Cluster details</Title>
@@ -102,10 +101,7 @@ function ClusterSettingsScreen({
         <GridItem>
           <Title headingLevel="h3">Encryption</Title>
         </GridItem>
-        <FormGroup
-          fieldId="etcd_encryption"
-          id="etcdEncryption"
-        >
+        <FormGroup fieldId="etcd_encryption" id="etcdEncryption">
           <Grid hasGutter>
             <GridItem>
               <Alert
@@ -121,19 +117,20 @@ function ClusterSettingsScreen({
                 component={ReduxCheckbox}
                 name="etcd_encryption"
                 label="Enable additional etcd encryption"
-                extendedHelpText={(
+                extendedHelpText={
                   <>
-                    {constants.enableAdditionalEtcdHint}
-                    {' '}
-                    <ExternalLink href={isRosa
-                      ? links.ROSA_SERVICE_ETCD_ENCRYPTION : links.OSD_ETCD_ENCRYPTION}
+                    {constants.enableAdditionalEtcdHint}{' '}
+                    <ExternalLink
+                      href={isRosa ? links.ROSA_SERVICE_ETCD_ENCRYPTION : links.OSD_ETCD_ENCRYPTION}
                     >
                       Learn more about etcd encryption
                     </ExternalLink>
                   </>
-                )}
+                }
               />
-              <div className="ocm-c--reduxcheckbox-description">Additional encryption of OpenShift and Kubernetes API resources.</div>
+              <div className="ocm-c--reduxcheckbox-description">
+                Additional encryption of OpenShift and Kubernetes API resources.
+              </div>
             </GridItem>
           </Grid>
         </FormGroup>

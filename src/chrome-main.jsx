@@ -60,42 +60,40 @@ class AppEntry extends React.Component {
     insights.chrome.identifyApp('').then(() => {
       insights.chrome.appNavClick(getNavClickParams(window.location.pathname));
     });
-    insights.chrome.auth.getUser()
-      .then((data) => {
-        store.dispatch(userInfoResponse(data && data.identity && data.identity.user));
-        config.fetchConfig()
-          .then(() => {
-            store.dispatch(detectFeatures());
-            this.setState({ ready: true });
-            if (!config.override && config.configData.sentryDSN) {
-              Sentry.init({
-                dsn: config.configData.sentryDSN,
-                integrations: [
-                  new SessionTiming(),
-                  new Sentry.Integrations.GlobalHandlers({
-                    onerror: true,
-                    onunhandledrejection: false,
-                  }),
-                ],
-              });
-              if (data && data.identity && data.identity.user) {
-                // add user info to Sentry
-                Sentry.configureScope((scope) => {
-                  const { email, username } = data.identity.user;
-                  scope.setUser({ email, username });
-                });
-              }
-            }
+    insights.chrome.auth.getUser().then((data) => {
+      store.dispatch(userInfoResponse(data && data.identity && data.identity.user));
+      config.fetchConfig().then(() => {
+        store.dispatch(detectFeatures());
+        this.setState({ ready: true });
+        if (!config.override && config.configData.sentryDSN) {
+          Sentry.init({
+            dsn: config.configData.sentryDSN,
+            integrations: [
+              new SessionTiming(),
+              new Sentry.Integrations.GlobalHandlers({
+                onerror: true,
+                onunhandledrejection: false,
+              }),
+            ],
           });
+          if (data && data.identity && data.identity.user) {
+            // add user info to Sentry
+            Sentry.configureScope((scope) => {
+              const { email, username } = data.identity.user;
+              scope.setUser({ email, username });
+            });
+          }
+        }
       });
+    });
 
     if (
       // app is running in local development
-      APP_DEV_SERVER
+      APP_DEV_SERVER ||
       // app is not built in production mode
-      || APP_DEVMODE
+      APP_DEVMODE ||
       // build is not deployed in a production environment
-      || APP_API_ENV !== 'production'
+      APP_API_ENV !== 'production'
     ) {
       insights.chrome.enable.segmentDev();
     }

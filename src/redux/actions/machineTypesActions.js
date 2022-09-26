@@ -15,19 +15,17 @@ const groupByCloudProvider = (machineTypes) => {
   return byProvider;
 };
 
-const getMachineTypes = () => dispatch => dispatch({
-  type: machineTypesConstants.GET_MACHINE_TYPES,
-  payload: clusterService.getMachineTypes()
-    .then(response => groupByCloudProvider(response.data.items)),
-});
+const getMachineTypes = () => (dispatch) =>
+  dispatch({
+    type: machineTypesConstants.GET_MACHINE_TYPES,
+    payload: clusterService
+      .getMachineTypes()
+      .then((response) => groupByCloudProvider(response.data.items)),
+  });
 
 const machineTypesActions = {
   getMachineTypes,
   groupByCloudProvider,
 };
 
-export {
-  machineTypesActions,
-  getMachineTypes,
-  groupByCloudProvider,
-};
+export { machineTypesActions, getMachineTypes, groupByCloudProvider };

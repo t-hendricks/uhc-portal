@@ -4,7 +4,6 @@
 
 import type { Report } from './Report';
 
-export type ReportOpenShiftMemory = (Report & {
-    data: Array<any>;
-});
-
+export type ReportOpenShiftMemory = Report & {
+  data: Array<any>;
+};

@@ -3,8 +3,7 @@
 /* eslint-disable */
 
 export type SettingOut = {
-    fields?: Array<any>;
-    name?: string;
-    component?: string;
+  fields?: Array<any>;
+  name?: string;
+  component?: string;
 };
-

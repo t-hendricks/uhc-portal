@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-} from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
 import useAnalytics from '~/hooks/useAnalytics';
 import { getTrackEvent, trackEvents } from '~/common/analytics';
 import { tools } from '../../../../../common/installLinks.mjs';
@@ -30,11 +28,9 @@ const DownloadButton = ({
 }) => {
   const { analytics } = useAnalytics();
   const buttonText = text || texts[tool];
-  const downloadProps = download ? (
-    { download: true }
-  ) : (
-    { rel: 'noreferrer noopener', target: '_blank' }
-  );
+  const downloadProps = download
+    ? { download: true }
+    : { rel: 'noreferrer noopener', target: '_blank' };
 
   return (
     <Button

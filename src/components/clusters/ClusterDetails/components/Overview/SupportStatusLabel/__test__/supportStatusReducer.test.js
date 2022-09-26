@@ -1,6 +1,10 @@
 import reducer, { initialState } from '../supportStatusReducer';
 import GET_SUPPORT_STATUS from '../supportStatusConstants';
-import { FULFILLED_ACTION, PENDING_ACTION, REJECTED_ACTION } from '../../../../../../../redux/reduxHelpers';
+import {
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  REJECTED_ACTION,
+} from '../../../../../../../redux/reduxHelpers';
 
 describe('support status reducer', () => {
   const mockPayload = {
@@ -44,7 +48,11 @@ describe('support status reducer', () => {
     const action = { type: FULFILLED_ACTION(GET_SUPPORT_STATUS), payload: mockPayload };
     const result = reducer(initialState, action);
 
-    expect(result).toHaveProperty('supportStatus', { 4.5: 'Full support', 4.4: 'Maintainence support', 4.3: 'End of life' });
+    expect(result).toHaveProperty('supportStatus', {
+      4.5: 'Full support',
+      4.4: 'Maintainence support',
+      4.3: 'End of life',
+    });
     expect(result).toMatchObject({ fulfilled: true, pending: false, error: false });
   });
 });

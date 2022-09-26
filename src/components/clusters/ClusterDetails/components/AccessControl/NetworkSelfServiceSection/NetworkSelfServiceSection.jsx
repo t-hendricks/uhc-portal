@@ -11,12 +11,7 @@ import {
   CardFooter,
   CardTitle,
 } from '@patternfly/react-core';
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableVariant,
-} from '@patternfly/react-table';
+import { Table, TableHeader, TableBody, TableVariant } from '@patternfly/react-table';
 
 import {
   HelpIcon,
@@ -42,23 +37,25 @@ class NetworkSelfServiceSection extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      deleteGrantResponse, addGrantResponse, getGrants, grants, addNotification,
-    } = this.props;
+    const { deleteGrantResponse, addGrantResponse, getGrants, grants, addNotification } =
+      this.props;
     const { deletedRowIndex } = this.state;
 
     // fetch grants again after deleting or adding a grant
-    if (((deleteGrantResponse.fulfilled && prevProps.deleteGrantResponse.pending)
-      || (addGrantResponse.fulfilled && prevProps.addGrantResponse.pending))
-      && !grants.pending) {
+    if (
+      ((deleteGrantResponse.fulfilled && prevProps.deleteGrantResponse.pending) ||
+        (addGrantResponse.fulfilled && prevProps.addGrantResponse.pending)) &&
+      !grants.pending
+    ) {
       getGrants();
     }
     if (grants.fulfilled && prevProps.grants.pending && grants.data.length !== 0) {
       const prevGrants = prevProps.grants.data;
-      const prevGrantsStates = prevGrants.reduce(
+      const prevGrantsStates = prevGrants.reduce((states, grant) => {
         // eslint-disable-next-line no-param-reassign
-        (states, grant) => { states[grant.id] = grant.state; return states; }, {},
-      );
+        states[grant.id] = grant.state;
+        return states;
+      }, {});
       grants.data.forEach((grant) => {
         if (prevGrantsStates[grant.id] && grant.state !== prevGrantsStates[grant.id]) {
           if (grant.state === 'failed') {
@@ -134,12 +131,7 @@ class NetworkSelfServiceSection extends React.Component {
               bodyContent={description}
               aria-label="grant-failed"
             >
-              <Button
-                className="self-service-failed"
-                variant="link"
-                isInline
-                icon={icon}
-              >
+              <Button className="self-service-failed" variant="link" isInline icon={icon}>
                 {statusStr}
               </Button>
             </Popover>
@@ -148,10 +140,7 @@ class NetworkSelfServiceSection extends React.Component {
       }
       return (
         <>
-          {icon}
-          {' '}
-          <span>{statusStr}</span>
-          {' '}
+          {icon} <span>{statusStr}</span>{' '}
         </>
       );
     };
@@ -164,11 +153,7 @@ class NetworkSelfServiceSection extends React.Component {
             <Popover
               position={PopoverPosition.top}
               aria-label="ARNs"
-              bodyContent={(
-                <p>
-                  Amazon Resource Names (ARNs) uniquely identify AWS resources.
-                </p>
-              )}
+              bodyContent={<p>Amazon Resource Names (ARNs) uniquely identify AWS resources.</p>}
             >
               <Button variant="plain" isInline>
                 <HelpIcon size="sm" />
@@ -203,14 +188,24 @@ class NetworkSelfServiceSection extends React.Component {
       cells: [
         grant.user_arn,
         grant.roleName,
-        { title: grantStatus(deletedRowIndex === index ? 'deleting' : grant.state, grant.state_description) },
+        {
+          title: grantStatus(
+            deletedRowIndex === index ? 'deleting' : grant.state,
+            grant.state_description,
+          ),
+        },
         {
           title: (
             <>
-              <ClipboardCopyLinkButton className="access-control-tables-copy" text={grant.console_url} isDisabled={!grant.console_url}>
+              <ClipboardCopyLinkButton
+                className="access-control-tables-copy"
+                text={grant.console_url}
+                isDisabled={!grant.console_url}
+              >
                 Copy URL to clipboard
               </ClipboardCopyLinkButton>
-            </>),
+            </>
+          ),
         },
       ],
       grantId: grant.id,
@@ -225,27 +220,39 @@ class NetworkSelfServiceSection extends React.Component {
       );
     }
 
-    const loginAWSLink = <a rel="noopener noreferrer" href="https://console.aws.amazon.com/console/home" target="_blank">Log in to your aws account.</a>;
+    const loginAWSLink = (
+      <a
+        rel="noopener noreferrer"
+        href="https://console.aws.amazon.com/console/home"
+        target="_blank"
+      >
+        Log in to your aws account.
+      </a>
+    );
 
     const hasGrants = !!grants.data.length;
 
     const rows = hasGrants && grants.data.map(grantRow);
 
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
-    const hibernatingReason = clusterHibernating && 'This operation is not available while cluster is hibernating';
-    const canNotEditReason = !canEdit && 'You do not have permission to grant a role. Only cluster owners, cluster editors, and Organization Administrators can grant roles.';
+    const hibernatingReason =
+      clusterHibernating && 'This operation is not available while cluster is hibernating';
+    const canNotEditReason =
+      !canEdit &&
+      'You do not have permission to grant a role. Only cluster owners, cluster editors, and Organization Administrators can grant roles.';
     const disableReason = readOnlyReason || hibernatingReason || canNotEditReason;
 
     const addGrantBtn = (
       <ButtonWithTooltip
-        onClick={() => { setTimeout(() => openAddGrantModal(), 0); }}
+        onClick={() => {
+          setTimeout(() => openAddGrantModal(), 0);
+        }}
         variant="secondary"
         className="access-control-add"
         disableReason={disableReason}
       >
         Grant role
-      </ButtonWithTooltip
-      >
+      </ButtonWithTooltip>
     );
 
     return grants.pending && !hasGrants ? (
@@ -264,19 +271,26 @@ class NetworkSelfServiceSection extends React.Component {
       <>
         <Card id="networkSelfService">
           <CardBody>
-            { deleteGrantResponse.error && (
-            <ErrorBox message="Error deleting grant" response={deleteGrantResponse} />
+            {deleteGrantResponse.error && (
+              <ErrorBox message="Error deleting grant" response={deleteGrantResponse} />
             )}
-            <Title size="lg" className="card-title" headingLevel="h3">AWS infrastructure access</Title>
+            <Title size="lg" className="card-title" headingLevel="h3">
+              AWS infrastructure access
+            </Title>
             <p>
-              Grant permission to view or manage the AWS infrastructure of the cluster to
-              IAM users defined in your AWS account.
-              {' '}
-              {loginAWSLink}
+              Grant permission to view or manage the AWS infrastructure of the cluster to IAM users
+              defined in your AWS account. {loginAWSLink}
               <ExternalLinkAltIcon color="#0066cc" size="sm" />
             </p>
             {hasGrants && (
-              <Table aria-label="Grants" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows} areActionsDisabled={rowData => (rowData.state === 'deleting') || !!disableReason}>
+              <Table
+                aria-label="Grants"
+                actions={actions}
+                variant={TableVariant.compact}
+                cells={columns}
+                rows={rows}
+                areActionsDisabled={(rowData) => rowData.state === 'deleting' || !!disableReason}
+              >
                 <TableHeader />
                 <TableBody />
               </Table>

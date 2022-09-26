@@ -10,12 +10,13 @@ const CHART_HEIGHT = 185;
 const CHART_WIDTH = 350;
 
 class CostBreakdownSummary extends Component {
-  formatCurrency = (value = 0, units = 'USD') => value.toLocaleString('en', {
-    style: 'currency',
-    currency: units,
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  formatCurrency = (value = 0, units = 'USD') =>
+    value.toLocaleString('en', {
+      style: 'currency',
+      currency: units,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
 
   getChart = () => {
     const { report } = this.props;
@@ -33,11 +34,15 @@ class CostBreakdownSummary extends Component {
     const rawValue = hasRaw ? report.meta.total.cost.raw.value : 0;
     const usageValue = hasUsage ? report.meta.total.cost.usage.value : 0;
 
-    const markup = this.formatCurrency(hasMarkup
-      ? report.meta.total.cost.markup.value : 0, markupUnits);
+    const markup = this.formatCurrency(
+      hasMarkup ? report.meta.total.cost.markup.value : 0,
+      markupUnits,
+    );
     const raw = this.formatCurrency(hasRaw ? report.meta.total.cost.raw.value : 0, rawUnits);
-    const usage = this.formatCurrency(hasUsage
-      ? report.meta.total.cost.usage.value : 0, usageUnits);
+    const usage = this.formatCurrency(
+      hasUsage ? report.meta.total.cost.usage.value : 0,
+      usageUnits,
+    );
 
     const markupLabel = 'Markup';
     const rawLabel = 'Raw cost';
@@ -81,13 +86,16 @@ class CostBreakdownSummary extends Component {
   };
 
   // Override legend label layout
-  getLegendLabel = () => ({ values, ...props }) => (
-    <ChartLabel
-      {...props}
-      style={[{ fontWeight: 600 }, {}]}
-      text={[values[props.index], props.text]}
-    />
-  );
+  getLegendLabel =
+    () =>
+    ({ values, ...props }) =>
+      (
+        <ChartLabel
+          {...props}
+          style={[{ fontWeight: 600 }, {}]}
+          text={[values[props.index], props.text]}
+        />
+      );
 
   getLegend = (values) => {
     const LegendLabel = this.getLegendLabel();
@@ -104,8 +112,12 @@ class CostBreakdownSummary extends Component {
   getTotal = () => {
     const { report } = this.props;
 
-    const hasTotal = report && report.meta && report.meta.total && report.meta.total.cost
-      && report.meta.total.cost.total;
+    const hasTotal =
+      report &&
+      report.meta &&
+      report.meta.total &&
+      report.meta.total.cost &&
+      report.meta.total.cost.total;
     const total = hasTotal ? report.meta.total.cost.total.value : 0;
     const units = hasTotal ? report.meta.total.cost.total.units : 'USD';
 
@@ -123,14 +135,9 @@ class CostBreakdownSummary extends Component {
       <>
         <Title className="ocm--cost-title" size="md" headingLevel="h2">
           Total cost
-          <span className="ocm--cost-total">
-            {' '}
-            {this.getTotal()}
-          </span>
+          <span className="ocm--cost-total"> {this.getTotal()}</span>
         </Title>
-        <div style={{ maxHeight: CHART_HEIGHT, maxWidth: CHART_WIDTH }}>
-          {this.getChart()}
-        </div>
+        <div style={{ maxHeight: CHART_HEIGHT, maxWidth: CHART_WIDTH }}>{this.getChart()}</div>
       </>
     );
   }

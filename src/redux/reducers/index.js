@@ -18,8 +18,7 @@ import { IdentityProvidersReducer } from '../../components/clusters/ClusterDetai
 import NetworkSelfServiceReducer from '../../components/clusters/ClusterDetails/components/AccessControl/NetworkSelfServiceSection/NetworkSelfServiceReducer';
 import { MonitoringReducer } from '../../components/clusters/ClusterDetails/components/Monitoring/MonitoringReducer';
 import clusterUsersReducer from '../../components/clusters/ClusterDetails/components/AccessControl/UsersSection/UsersReducer';
-import clustersSupportReducer
-  from '../../components/clusters/ClusterDetails/components/Support/SupportReducer';
+import clustersSupportReducer from '../../components/clusters/ClusterDetails/components/Support/SupportReducer';
 import addOnsReducer from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsReducer';
 import globalErrorReducer from './globalErrorReducer';
 import flavoursReducer from './flavoursReducer';
@@ -85,10 +84,11 @@ const reducers = {
   rosaReducer,
 };
 
-const reduxReducers = history => combineReducers({
-  ...reducers,
-  router: connectRouter(history),
-});
+const reduxReducers = (history) =>
+  combineReducers({
+    ...reducers,
+    router: connectRouter(history),
+  });
 
 export { reduxReducers, reducers };
 

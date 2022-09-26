@@ -43,8 +43,7 @@ exports[`<AddOnsParametersModal /> renders correctly 1`] = `
         onClick={[Function]}
         variant="link"
       >
-        Use default:
-         
+        Use default: 
         dummy value
       </Button>
     </FormGroup>

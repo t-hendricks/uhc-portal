@@ -27,9 +27,26 @@ const routes = [
   { path: '/token/show', metadata: { ocm_resource_type: 'all' } },
   { path: '/downloads', metadata: { ocm_resource_type: 'all' } },
   { path: '/details/:id', metadata: { ocm_resource_type: 'all' } },
-  { path: '/details/s/:id', metadata: { ocm_resource_type: 'unknown', title: 'View Cluster', path: '/openshift/details/s' } },
-  { path: '/details/s/:id/add-idp/:idpTypeName', metadata: { ocm_resource_type: 'unknown', title: 'Add IdP', path: '/openshift/details/s/add-idp' } },
-  { path: '/details/s/:id/edit-idp/:idpName', metadata: { ocm_resource_type: 'unknown', title: 'Edit IdP', path: '/openshift/details/s/edit-idp' } },
+  {
+    path: '/details/s/:id',
+    metadata: { ocm_resource_type: 'unknown', title: 'View Cluster', path: '/openshift/details/s' },
+  },
+  {
+    path: '/details/s/:id/add-idp/:idpTypeName',
+    metadata: {
+      ocm_resource_type: 'unknown',
+      title: 'Add IdP',
+      path: '/openshift/details/s/add-idp',
+    },
+  },
+  {
+    path: '/details/s/:id/edit-idp/:idpName',
+    metadata: {
+      ocm_resource_type: 'unknown',
+      title: 'Edit IdP',
+      path: '/openshift/details/s/edit-idp',
+    },
+  },
   { path: '/create/osd/aws', metadata: { ocm_resource_type: 'osd' } },
   { path: '/create/osd/gcp', metadata: { ocm_resource_type: 'osd' } },
   { path: '/create/osd', metadata: { ocm_resource_type: 'osd' } },
@@ -38,8 +55,14 @@ const routes = [
   { path: '/quota', metadata: { ocm_resource_type: 'all' } },
   { path: '/archived', metadata: { ocm_resource_type: 'all' } },
   { path: '/releases', metadata: { ocm_resource_type: 'ocp' } },
-// eslint-disable-next-line object-shorthand, func-names
-].map(route => Object.assign(route, { toString: function () { return this.path; } }));
+].map((route) =>
+  Object.assign(route, {
+    // eslint-disable-next-line object-shorthand, func-names
+    toString: function () {
+      return this.path;
+    },
+  }),
+);
 
 describe('Router', () => {
   const useChromeSpy = jest.spyOn(useChromeHook, 'default');
@@ -51,16 +74,21 @@ describe('Router', () => {
       },
     }));
   });
-  describe('Every route should render: ', () => test.each(routes)('%s', (route) => {
-    const { path, metadata } = route;
-    const wrapper = mount(
-      <Provider store={store}>
-        <MemoryRouter keyLength={0} initialEntries={[{ pathname: path, key: 'testKey' }]}>
-          <Router />
-        </MemoryRouter>
-      </Provider>,
-    );
-    expect(wrapper).toBeTruthy();
-    expect(mockSetPageMetadata).lastCalledWith(metadata);
-  }, 2000));
+  describe('Every route should render: ', () =>
+    test.each(routes)(
+      '%s',
+      (route) => {
+        const { path, metadata } = route;
+        const wrapper = mount(
+          <Provider store={store}>
+            <MemoryRouter keyLength={0} initialEntries={[{ pathname: path, key: 'testKey' }]}>
+              <Router />
+            </MemoryRouter>
+          </Provider>,
+        );
+        expect(wrapper).toBeTruthy();
+        expect(mockSetPageMetadata).lastCalledWith(metadata);
+      },
+      2000,
+    ));
 });

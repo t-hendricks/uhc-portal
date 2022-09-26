@@ -56,7 +56,10 @@ class ClusterLogsConditionalFilter extends Component {
   }
 
   updateFlags(value, field) {
-    const { setFlags, history: { push } } = this.props;
+    const {
+      setFlags,
+      history: { push },
+    } = this.props;
 
     this.setState({ [field]: value }, () => {
       const { severityTypes } = this.state;
@@ -76,10 +79,7 @@ class ClusterLogsConditionalFilter extends Component {
   }
 
   render() {
-    const {
-      description,
-      severityTypes,
-    } = this.state;
+    const { description, severityTypes } = this.state;
 
     const descriptionFilter = {
       type: conditionalFilterType.text,
@@ -98,7 +98,7 @@ class ClusterLogsConditionalFilter extends Component {
       value: 'Severity',
       filterValues: {
         onChange: (event, value) => this.updateFlags(value, 'severityTypes'),
-        items: SEVERITY_TYPES.map(key => ({
+        items: SEVERITY_TYPES.map((key) => ({
           label: key,
           value: key,
         })),
@@ -106,14 +106,7 @@ class ClusterLogsConditionalFilter extends Component {
       },
     };
 
-    return (
-      <ConditionalFilter
-        items={[
-          descriptionFilter,
-          severityTypesCheckbox,
-        ]}
-      />
-    );
+    return <ConditionalFilter items={[descriptionFilter, severityTypesCheckbox]} />;
   }
 }
 

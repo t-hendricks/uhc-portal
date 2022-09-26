@@ -26,43 +26,27 @@ const {
   CPU_TOTAL,
 } = subscriptionSettings;
 
-const {
-  EVAL,
-  STANDARD,
-  NONE,
-} = subscriptionSupportLevels;
+const { EVAL, STANDARD, NONE } = subscriptionSupportLevels;
 
-const {
-  L1_L3,
-} = subscriptionServiceLevels;
+const { L1_L3 } = subscriptionServiceLevels;
 
-const {
-  PRODUCTION,
-} = subscriptionUsages;
+const { PRODUCTION } = subscriptionUsages;
 
-const {
-  OPENSHIFT,
-} = subscriptionProductBundles;
+const { OPENSHIFT } = subscriptionProductBundles;
 
-const {
-  CORES_VCPU,
-  SOCKETS,
-} = subscriptionSystemUnits;
+const { CORES_VCPU, SOCKETS } = subscriptionSystemUnits;
 
-const {
-  ACTIVE,
-  DISCONNECTED,
-} = subscriptionStatuses;
+const { ACTIVE, DISCONNECTED } = subscriptionStatuses;
 
 const { SUBSCRIBED_OCP, SUBSCRIBED_OCP_MARKETPLACE } = subscriptionCapabilities;
 
 describe('<EditSubscriptionSettingsDialog />', () => {
-  const radioSelector = name => (`ReduxFormRadioGroup[name="${name}"] Radio`);
-  const disabledGroupSelector = name => (`ReduxFormRadioGroup[name="${name}"][isDisabled=true]`);
-  const numberInputSelector = name => (`NumberInput[inputName="${name}"]`);
+  const radioSelector = (name) => `ReduxFormRadioGroup[name="${name}"] Radio`;
+  const disabledGroupSelector = (name) => `ReduxFormRadioGroup[name="${name}"][isDisabled=true]`;
+  const numberInputSelector = (name) => `NumberInput[inputName="${name}"]`;
   const cpuSocketNumberText = 'span[id="cpu-socket-value"]';
-  const buttonSelector = variant => (`Button[variant="${variant}"]`);
-  const disabledButtonSelector = variant => (`Button[variant="${variant}"][isDisabled=true]`);
+  const buttonSelector = (variant) => `Button[variant="${variant}"]`;
+  const disabledButtonSelector = (variant) => `Button[variant="${variant}"][isDisabled=true]`;
   const billingModelInfoSelector = 'Alert[id="subscription-settings-cluster-billing-model-alert"]';
 
   const newOCPSubscription = (supportLeve, systemUnits, status) => ({
@@ -95,14 +79,16 @@ describe('<EditSubscriptionSettingsDialog />', () => {
       error: false,
       pending: false,
     };
-    const wrapper = mount(<EditSubscriptionSettingsDialog
-      isOpen
-      closeModal={closeModal}
-      onClose={onClose}
-      submit={submit}
-      subscription={subscription}
-      requestState={requestState}
-    />);
+    const wrapper = mount(
+      <EditSubscriptionSettingsDialog
+        isOpen
+        closeModal={closeModal}
+        onClose={onClose}
+        submit={submit}
+        subscription={subscription}
+        requestState={requestState}
+      />,
+    );
     return {
       wrapper,
       submit,
@@ -232,12 +218,7 @@ describe('<EditSubscriptionSettingsDialog />', () => {
 
   it('submits correctly', () => {
     const subscription = withStandardSub(newOCPSubscription(STANDARD, CORES_VCPU, ACTIVE));
-    const {
-      wrapper,
-      submit,
-      closeModal,
-      onClose,
-    } = getTestContext(subscription);
+    const { wrapper, submit, closeModal, onClose } = getTestContext(subscription);
     wrapper.find(buttonSelector('primary')).at(0).simulate('click');
     expect(submit).toBeCalled();
     wrapper.setProps({ requestState: { fulfilled: true } });

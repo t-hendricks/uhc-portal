@@ -6,7 +6,7 @@ const apiErrorConstants = {
   CLEAR_API_ERROR,
 };
 
-const showApiError = error => ({
+const showApiError = (error) => ({
   type: SHOW_API_ERROR,
   payload: error,
 });
@@ -18,6 +18,10 @@ const clearApiError = () => ({
 const apiErrorActions = { showApiError, clearApiError };
 
 export {
-  apiErrorConstants, SHOW_API_ERROR, CLEAR_API_ERROR,
-  apiErrorActions, showApiError, clearApiError,
+  apiErrorConstants,
+  SHOW_API_ERROR,
+  CLEAR_API_ERROR,
+  apiErrorActions,
+  showApiError,
+  clearApiError,
 };

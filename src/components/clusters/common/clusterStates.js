@@ -47,8 +47,10 @@ function getClusterStateAndDescription(cluster) {
     state = clusterStates.DEPROVISIONED;
   } else if (cluster.subscription.status === subscriptionStatuses.ARCHIVED) {
     state = clusterStates.ARCHIVED;
-  } else if (cluster.state === clusterStates.INSTALLING
-    || cluster.state === clusterStates.PENDING) {
+  } else if (
+    cluster.state === clusterStates.INSTALLING ||
+    cluster.state === clusterStates.PENDING
+  ) {
     state = clusterStates.INSTALLING;
   } else if (cluster.state === clusterStates.WAITING) {
     state = clusterStates.WAITING;
@@ -66,8 +68,10 @@ function getClusterStateAndDescription(cluster) {
     state = clusterStates.STALE;
   } else if (get(cluster, 'metrics.upgrade.state') === 'running') {
     state = clusterStates.UPDATING;
-  } else if (cluster.subscription.status === subscriptionStatuses.ACTIVE
-    || cluster.state === clusterStates.READY) {
+  } else if (
+    cluster.subscription.status === subscriptionStatuses.ACTIVE ||
+    cluster.state === clusterStates.READY
+  ) {
     state = clusterStates.READY;
   }
 
@@ -77,23 +81,24 @@ function getClusterStateAndDescription(cluster) {
   };
 }
 
-const isHibernating = state => state === clusterStates.HIBERNATING
-  || state === clusterStates.POWERING_DOWN
-  || state === clusterStates.RESUMING;
+const isHibernating = (state) =>
+  state === clusterStates.HIBERNATING ||
+  state === clusterStates.POWERING_DOWN ||
+  state === clusterStates.RESUMING;
 
 // Indicates that this is a ROSA cluster
-const isROSA = cluster => cluster.product.id === normalizedProducts.ROSA;
+const isROSA = (cluster) => cluster.product.id === normalizedProducts.ROSA;
 
 // Indicates that this is a ROSA cluster with manual mode
-const isROSAManualMode = cluster => isROSA(cluster) && cluster.aws.sts
-  && !cluster.aws.sts.auto_mode;
+const isROSAManualMode = (cluster) =>
+  isROSA(cluster) && cluster.aws.sts && !cluster.aws.sts.auto_mode;
 
 // Indicates that this is a ROSA cluster waiting for manual creation of OIDC
 // and operator roles.
-const isWaitingROSAManualMode = cluster => cluster.state === clusterStates.WAITING
-  && isROSAManualMode(cluster);
+const isWaitingROSAManualMode = (cluster) =>
+  cluster.state === clusterStates.WAITING && isROSAManualMode(cluster);
 
-const isOffline = state => isHibernating(state) || state === clusterStates.UNINSTALLING;
+const isOffline = (state) => isHibernating(state) || state === clusterStates.UNINSTALLING;
 
 export {
   getClusterStateAndDescription,

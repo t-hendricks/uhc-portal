@@ -26,12 +26,7 @@ import { IDPTypeNames, singularFormIDP } from './IdentityProvidersHelper';
 
 class IdentityProvidersPage extends React.Component {
   componentDidMount() {
-    const {
-      fetchDetails,
-      clusterDetails,
-      getClusterIDPs,
-      match,
-    } = this.props;
+    const { fetchDetails, clusterDetails, getClusterIDPs, match } = this.props;
     const { cluster } = clusterDetails;
 
     document.title = 'Red Hat OpenShift Cluster Manager';
@@ -46,38 +41,36 @@ class IdentityProvidersPage extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      match,
-      clusterDetails,
-      getClusterIDPs,
-    } = this.props;
+    const { match, clusterDetails, getClusterIDPs } = this.props;
     const subscriptionID = match.params.id;
 
     if (get(clusterDetails, 'cluster.subscription.id') === subscriptionID) {
       const clusterName = getClusterName(clusterDetails.cluster);
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
     }
-    if (!prevProps.clusterDetails?.cluster?.id
-      && clusterDetails.fulfilled
-      && clusterDetails?.cluster?.id) {
+    if (
+      !prevProps.clusterDetails?.cluster?.id &&
+      clusterDetails.fulfilled &&
+      clusterDetails?.cluster?.id
+    ) {
       /* we only know the Cluster Service `cluster_id` after the subscription request has returned.
       only then we can fetch Cluster Service specific data */
       const { cluster } = clusterDetails;
       const clusterID = get(cluster, 'id');
       const isManaged = get(clusterDetails, 'cluster.managed', false);
       const subscriptionStatus = get(cluster, 'subscription.status');
-      if (isValid(clusterID)
-        && subscriptionStatus !== subscriptionStatuses.DEPROVISIONED
-        && isManaged) {
+      if (
+        isValid(clusterID) &&
+        subscriptionStatus !== subscriptionStatuses.DEPROVISIONED &&
+        isManaged
+      ) {
         getClusterIDPs(clusterID);
       }
     }
   }
 
   componentWillUnmount() {
-    const {
-      resetResponse, resetForm,
-    } = this.props;
+    const { resetResponse, resetForm } = this.props;
     resetResponse();
     resetForm();
   }
@@ -106,13 +99,12 @@ class IdentityProvidersPage extends React.Component {
     const { cluster } = clusterDetails;
 
     if (submitIDPResponse.fulfilled) {
-      return (
-        <Redirect to={`/details/s/${cluster.subscription.id}#accessControl`} />
-      );
+      return <Redirect to={`/details/s/${cluster.subscription.id}#accessControl`} />;
     }
     const requestedSubscriptionID = match.params.id;
 
-    const clusterPending = (get(cluster, 'subscription.id') !== requestedSubscriptionID && !clusterDetails.error);
+    const clusterPending =
+      get(cluster, 'subscription.id') !== requestedSubscriptionID && !clusterDetails.error;
     const idpsPending = get(clusterIDPs, 'pending', false);
 
     if ((clusterPending || idpsPending) && !clusterDetails.error) {
@@ -132,54 +124,60 @@ class IdentityProvidersPage extends React.Component {
       </>
     );
 
-    if (clusterDetails.error && (!cluster || get(cluster, 'subscription.id') !== requestedSubscriptionID)) {
+    if (
+      clusterDetails.error &&
+      (!cluster || get(cluster, 'subscription.id') !== requestedSubscriptionID)
+    ) {
       if (clusterDetails.errorCode === 404 || clusterDetails.errorCode === 403) {
-        setGlobalError((
+        setGlobalError(
           <>
-            Cluster with subscription ID
-            {' '}
-            <b>{requestedSubscriptionID}</b>
-            {' '}
-            was not found, it might have been deleted or you don&apos;t have permission to see it.
-          </>
-        ), 'identityProvidersPage', clusterDetails.errorMessage);
-        return (<Redirect to="/" />);
+            Cluster with subscription ID <b>{requestedSubscriptionID}</b> was not found, it might
+            have been deleted or you don&apos;t have permission to see it.
+          </>,
+          'identityProvidersPage',
+          clusterDetails.errorMessage,
+        );
+        return <Redirect to="/" />;
       }
       return errorState();
     }
 
     const isManaged = get(clusterDetails, 'cluster.managed', false);
     if (!isManaged) {
-      setGlobalError((
+      setGlobalError(
         <>
-          Cluster with subscription ID
-          {' '}
-          <b>{requestedSubscriptionID}</b>
-          {' '}
-          is not a managed cluster.
-        </>
-      ), 'identityProvidersPage', "Go to the cluster's console to see and edit identity providers.");
-      return (<Redirect to="/" />);
+          Cluster with subscription ID <b>{requestedSubscriptionID}</b> is not a managed cluster.
+        </>,
+        'identityProvidersPage',
+        "Go to the cluster's console to see and edit identity providers.",
+      );
+      return <Redirect to="/" />;
     }
 
     if ((!isEditForm && !selectedIDP) || (isEditForm && clusterIDPs.fulfilled && !editedType)) {
-      return (
-        <Redirect to={`/details/s/${cluster.subscription.id}#accessControl`} />
-      );
+      return <Redirect to={`/details/s/${cluster.subscription.id}#accessControl`} />;
     }
     const idpTypeName = IDPTypeNames[selectedIDP];
-    const title = isEditForm ? `Edit identity provider: ${idpEdited.name}` : `Add identity provider: ${idpTypeName}`;
+    const title = isEditForm
+      ? `Edit identity provider: ${idpEdited.name}`
+      : `Add identity provider: ${idpTypeName}`;
     const clusterName = getClusterName(clusterDetails.cluster);
-    const secondaryTitle = isEditForm ? title : `Add ${singularFormIDP[selectedIDP]} identity provider`;
+    const secondaryTitle = isEditForm
+      ? title
+      : `Add ${singularFormIDP[selectedIDP]} identity provider`;
     return (
       <>
         <PageHeader>
-          <Breadcrumbs path={[
-            { label: 'Clusters' },
-            { label: clusterName, path: `/details/s/${cluster.subscription.id}` },
-            { label: 'Access control', path: `/details/s/${cluster.subscription.id}#accessControl` },
-            { label: title },
-          ]}
+          <Breadcrumbs
+            path={[
+              { label: 'Clusters' },
+              { label: clusterName, path: `/details/s/${cluster.subscription.id}` },
+              {
+                label: 'Access control',
+                path: `/details/s/${cluster.subscription.id}#accessControl`,
+              },
+              { label: title },
+            ]}
           />
           <PageHeaderTitle title={title} />
         </PageHeader>
@@ -188,24 +186,24 @@ class IdentityProvidersPage extends React.Component {
             <CardBody>
               <Grid>
                 <GridItem md={8}>
-                  { clusterIDPs.fulfilled
-                    ? (
-                      <IDPForm
-                        selectedIDP={selectedIDP}
-                        idpTypeName={idpTypeName}
-                        formTitle={secondaryTitle}
-                        submitIDPResponse={submitIDPResponse}
-                        selectedMappingMethod={selectedMappingMethod}
-                        clusterConsoleURL={clusterConsoleURL}
-                        change={change}
-                        IDPList={IDPList}
-                        isEditForm={isEditForm}
-                        idpEdited={idpEdited}
-                        idpName={initialValues.name}
-                        HTPasswdPasswordErrors={HTPasswdPasswordErrors}
-                      />
-                    )
-                    : <Spinner />}
+                  {clusterIDPs.fulfilled ? (
+                    <IDPForm
+                      selectedIDP={selectedIDP}
+                      idpTypeName={idpTypeName}
+                      formTitle={secondaryTitle}
+                      submitIDPResponse={submitIDPResponse}
+                      selectedMappingMethod={selectedMappingMethod}
+                      clusterConsoleURL={clusterConsoleURL}
+                      change={change}
+                      IDPList={IDPList}
+                      isEditForm={isEditForm}
+                      idpEdited={idpEdited}
+                      idpName={initialValues.name}
+                      HTPasswdPasswordErrors={HTPasswdPasswordErrors}
+                    />
+                  ) : (
+                    <Spinner />
+                  )}
                 </GridItem>
               </Grid>
             </CardBody>
@@ -245,11 +243,7 @@ IdentityProvidersPage.propTypes = {
     cluster: PropTypes.object,
     error: PropTypes.bool,
     errorCode: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    errorMessage: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.node,
-      PropTypes.element,
-    ]),
+    errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
     fulfilled: PropTypes.bool,
     pending: PropTypes.bool,
   }),

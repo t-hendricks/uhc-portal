@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LinkContainer } from 'react-router-bootstrap';
-import {
-  Breadcrumb, BreadcrumbItem,
-} from '@patternfly/react-core';
+import { Breadcrumb, BreadcrumbItem } from '@patternfly/react-core';
 import getBaseName from '../../common/getBaseName';
 
 function Breadcrumbs({ path }) {

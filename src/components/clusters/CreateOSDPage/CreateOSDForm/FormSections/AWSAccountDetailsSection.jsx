@@ -1,12 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import {
-  GridItem,
-  Alert,
-  Title,
-  Flex,
-} from '@patternfly/react-core';
+import { GridItem, Alert, Title, Flex } from '@patternfly/react-core';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { billingModelConstants, constants } from '../CreateOSDFormConstants';
 import { required, awsNumericAccountID } from '../../../../../common/validators';
@@ -26,12 +21,11 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
           type="text"
           validate={awsNumericAccountID}
           disabled={pending}
-          extendedHelpText={(
+          extendedHelpText={
             <>
               <p>
-                Find your 12-digit AWS account ID in the AWS
-                {' '}
-                console or by running this command in the AWS CLI:
+                Find your 12-digit AWS account ID in the AWS console or by running this command in
+                the AWS CLI:
               </p>
               <br />
               <InstructionCommand textAriaLabel="Copyable AWS account ID command">
@@ -42,7 +36,7 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
                 Finding your AWS account ID
               </ExternalLink>
             </>
-          )}
+          }
           isRequired
           data-hj-suppress
         />
@@ -53,7 +47,12 @@ function AWSAccountDetailsSection({ pending, isWizard, isValidating }) {
       </GridItem>
       {!isWizard && (
         <GridItem>
-          <Alert className="bottom-alert" variant="warning" title={billingModelConstants.awsCredentialsWarning} isInline />
+          <Alert
+            className="bottom-alert"
+            variant="warning"
+            title={billingModelConstants.awsCredentialsWarning}
+            isInline
+          />
         </GridItem>
       )}
       <GridItem md={6}>

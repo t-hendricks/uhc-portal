@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import {
-  Divider,
-  Form, Grid, GridItem,
-} from '@patternfly/react-core';
+import { Divider, Form, Grid, GridItem } from '@patternfly/react-core';
 
 import { checkLabels } from '../../../../../../../common/validators';
 import { parseLabels, validateDuplicateLabels } from '../../machinePoolsHelper';
@@ -12,14 +9,14 @@ import { isMachinePoolUsingSpotInstances, SpotInstanceInfoAlert } from '../SpotI
 
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
-import { ReduxFormDropdown, ReduxFormTagsInput } from '../../../../../../common/ReduxFormComponents';
+import {
+  ReduxFormDropdown,
+  ReduxFormTagsInput,
+} from '../../../../../../common/ReduxFormComponents';
 
 class EditLabelsModal extends Component {
   componentDidMount() {
-    const {
-      machinePoolsList,
-      getMachinePools,
-    } = this.props;
+    const { machinePoolsList, getMachinePools } = this.props;
 
     if (!machinePoolsList.pending) {
       getMachinePools();
@@ -29,28 +26,23 @@ class EditLabelsModal extends Component {
   componentDidUpdate() {
     const { editLabelsResponse } = this.props;
 
-    if (editLabelsResponse.fulfilled
-          && !editLabelsResponse.pending
-          && !editLabelsResponse.error) {
+    if (editLabelsResponse.fulfilled && !editLabelsResponse.pending && !editLabelsResponse.error) {
       this.cancelEdit();
     }
   }
 
   handleMachinePoolChange = (_, value) => {
     const { change, machinePoolsList } = this.props;
-    const selectedMachinePool = machinePoolsList.data.find(machinePool => machinePool.id === value);
+    const selectedMachinePool = machinePoolsList.data.find(
+      (machinePool) => machinePool.id === value,
+    );
     if (selectedMachinePool) {
       change('labels', parseLabels(selectedMachinePool.labels));
     }
   };
 
   cancelEdit = () => {
-    const {
-      resetEditLabelsResponse,
-      resetGetMachinePoolsResponse,
-      closeModal,
-      reset,
-    } = this.props;
+    const { resetEditLabelsResponse, resetGetMachinePoolsResponse, closeModal, reset } = this.props;
     resetEditLabelsResponse();
     resetGetMachinePoolsResponse();
     closeModal();
@@ -94,7 +86,7 @@ class EditLabelsModal extends Component {
                   component={ReduxFormDropdown}
                   name="machinePoolId"
                   label="Machine pool"
-                  options={machinePoolsList.data.map(machinePool => ({
+                  options={machinePoolsList.data.map((machinePool) => ({
                     name: machinePool.id,
                     value: machinePool.id,
                   }))}
@@ -104,9 +96,8 @@ class EditLabelsModal extends Component {
               <GridItem span={7} />
               <GridItem>
                 <p className="pf-u-mb-md">
-                  Labels help you organize and select resources.
-                  Adding labels below will let you query for objects
-                  that have similar, overlapping or dissimilar labels.
+                  Labels help you organize and select resources. Adding labels below will let you
+                  query for objects that have similar, overlapping or dissimilar labels.
                 </p>
                 <Field
                   component={ReduxFormTagsInput}
@@ -117,16 +108,15 @@ class EditLabelsModal extends Component {
                   validate={[checkLabels, validateDuplicateLabels]}
                 />
               </GridItem>
-              {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList)
-              && (
-              <>
-                <GridItem span={7} />
-                <Divider />
-                <GridItem span={7} />
-                <GridItem>
-                  <SpotInstanceInfoAlert />
-                </GridItem>
-              </>
+              {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList) && (
+                <>
+                  <GridItem span={7} />
+                  <Divider />
+                  <GridItem span={7} />
+                  <GridItem>
+                    <SpotInstanceInfoAlert />
+                  </GridItem>
+                </>
               )}
             </Grid>
           </Form>

@@ -35,19 +35,20 @@ class RefreshBtn extends React.Component {
   }
 
   render() {
-    const {
-      refreshFunc,
-      clickRefreshFunc,
-      classOptions,
-      isDisabled,
-      ouiaId,
-    } = this.props;
+    const { refreshFunc, clickRefreshFunc, classOptions, isDisabled, ouiaId } = this.props;
 
     const onClickFunc = clickRefreshFunc !== undefined ? clickRefreshFunc : refreshFunc;
 
     return (
       <Tooltip position={TooltipPosition.bottom} content="Refresh">
-        <Button variant="plain" aria-label="Refresh" className={classOptions} onClick={onClickFunc} isAriaDisabled={isDisabled} ouiaId={ouiaId}>
+        <Button
+          variant="plain"
+          aria-label="Refresh"
+          className={classOptions}
+          onClick={onClickFunc}
+          isAriaDisabled={isDisabled}
+          ouiaId={ouiaId}
+        >
           <RedoIcon />
         </Button>
       </Tooltip>

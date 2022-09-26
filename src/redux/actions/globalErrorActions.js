@@ -7,7 +7,7 @@ const setGlobalError = (errorTitle, sourceComponent, errorMessage) => (dispatch)
   });
 };
 
-const clearGlobalError = requestingComponent => (dispatch) => {
+const clearGlobalError = (requestingComponent) => (dispatch) => {
   dispatch({
     type: CLEAR_GLOBAL_ERROR,
     payload: requestingComponent,

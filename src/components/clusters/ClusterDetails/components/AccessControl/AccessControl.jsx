@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import {
-  Tabs, Tab, TabTitleText, Card, CardBody,
-} from '@patternfly/react-core';
+import { Tabs, Tab, TabTitleText, Card, CardBody } from '@patternfly/react-core';
 
 import OCMRolesSection from './OCMRolesSection';
 import UsersSection from './UsersSection';
@@ -62,9 +60,14 @@ function AccessControl({
   useEffect(() => {
     setIsReadOnly(cluster?.status?.configuration_mode === 'read_only');
     const isClusterReady = cluster.state === clusterStates.READY;
-    const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED
-      || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
-    const isManagedAndReady = cluster.managed && get(cluster, 'console.url') && (isClusterReady || isHibernating(cluster.state)) && !isArchived;
+    const isArchived =
+      get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED ||
+      get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+    const isManagedAndReady =
+      cluster.managed &&
+      get(cluster, 'console.url') &&
+      (isClusterReady || isHibernating(cluster.state)) &&
+      !isArchived;
     // hide the tab title if there only one tab - "OCM Roles and Access".
     if (isManagedAndReady) {
       setBodyClass('');
@@ -73,7 +76,9 @@ function AccessControl({
     }
     setClusterRolesAndAccessIsHidden(!isManagedAndReady);
     setIdentityProvidersIsHidden(!isManagedAndReady);
-    setAWSInfrastructureAccessIsHidden(!isManagedAndReady || cloudProvider !== 'aws' || get(cluster, 'ccs.enabled', false));
+    setAWSInfrastructureAccessIsHidden(
+      !isManagedAndReady || cloudProvider !== 'aws' || get(cluster, 'ccs.enabled', false),
+    );
   }, [cluster]);
 
   return (
@@ -85,10 +90,7 @@ function AccessControl({
           isVertical={isVerticalTab}
           className={tabClass}
         >
-          <Tab
-            eventKey={0}
-            title={<TabTitleText>OCM Roles and Access</TabTitleText>}
-          >
+          <Tab eventKey={0} title={<TabTitleText>OCM Roles and Access</TabTitleText>}>
             <OCMRolesSection
               subscription={cluster.subscription}
               canEditOCMRoles={cluster.canEditOCMRoles}

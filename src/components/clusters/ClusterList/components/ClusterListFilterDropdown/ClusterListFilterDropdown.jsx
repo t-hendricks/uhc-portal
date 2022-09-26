@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Dropdown, DropdownToggle, DropdownGroup, DropdownItem, Checkbox,
+  Dropdown,
+  DropdownToggle,
+  DropdownGroup,
+  DropdownItem,
+  Checkbox,
 } from '@patternfly/react-core';
 import { FilterIcon } from '@patternfly/react-icons';
 import get from 'lodash/get';
@@ -19,17 +23,11 @@ class ClusterListFilterDropdown extends React.Component {
     };
   }
 
-  state = { isOpen: false }
+  state = { isOpen: false };
 
   render() {
     const { isOpen } = this.state;
-    const {
-      currentFilters,
-      setFilter,
-      history,
-      className,
-      isDisabled,
-    } = this.props;
+    const { currentFilters, setFilter, history, className, isDisabled } = this.props;
     const filterOptions = [
       {
         key: 'plan_id',
@@ -51,19 +49,22 @@ class ClusterListFilterDropdown extends React.Component {
     const dropdownItems = filterOptions.map((group) => {
       const selected = {};
       const currentFilter = get(currentFilters, group.key, []);
-      currentFilter.forEach((activeFilter) => { selected[activeFilter] = true; });
+      currentFilter.forEach((activeFilter) => {
+        selected[activeFilter] = true;
+      });
       return (
         <DropdownGroup key={`filtergroup-${group.key}`} label={group.label}>
           {group.options.map((option) => {
             const onChange = (checked) => {
               if (checked) {
                 setFilterAndQueryParams({
-                  ...currentFilters, [group.key]: [...currentFilter, option.key],
+                  ...currentFilters,
+                  [group.key]: [...currentFilter, option.key],
                 });
               } else {
                 setFilterAndQueryParams({
                   ...currentFilters,
-                  [group.key]: currentFilter.filter(item => item !== option.key),
+                  [group.key]: currentFilter.filter((item) => item !== option.key),
                 });
               }
             };
@@ -84,13 +85,11 @@ class ClusterListFilterDropdown extends React.Component {
     });
     return (
       <Dropdown
-        toggle={(
+        toggle={
           <DropdownToggle onToggle={this.onToggle} isDisabled={isDisabled}>
-            <FilterIcon />
-            {' '}
-            Cluster type
+            <FilterIcon /> Cluster type
           </DropdownToggle>
-        )}
+        }
         isOpen={isOpen}
         dropdownItems={dropdownItems}
         isGrouped

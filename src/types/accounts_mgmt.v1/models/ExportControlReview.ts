@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type ExportControlReview = {
-    restricted: boolean;
+  restricted: boolean;
 };
-

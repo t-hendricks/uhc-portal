@@ -38,18 +38,14 @@ describe('<DynamicSelect>', () => {
   });
 
   it('without dependencies', () => {
-    const select = shallow(
-      <DynamicSelect {...baseProps} hasDependencies={false} />,
-    );
+    const select = shallow(<DynamicSelect {...baseProps} hasDependencies={false} />);
     expect(select).toMatchSnapshot('blank');
     expect(select.find('FormSelectOption').at(0).props().label).toEqual('Must select bar first');
     expect(loadData).not.toBeCalled();
   });
 
   it('gets data', () => {
-    const select = shallow(
-      <DynamicSelect {...baseProps} matchesDependencies={false} />,
-    );
+    const select = shallow(<DynamicSelect {...baseProps} matchesDependencies={false} />);
     expect(loadData).toBeCalled();
 
     select.setProps({
@@ -69,9 +65,7 @@ describe('<DynamicSelect>', () => {
 
   it('empty data', () => {
     const status = { pending: false, fulfilled: true, error: null };
-    const select = shallow(
-      <DynamicSelect {...baseProps} requestStatus={status} items={[]} />,
-    );
+    const select = shallow(<DynamicSelect {...baseProps} requestStatus={status} items={[]} />);
     expect(loadData).not.toBeCalled();
     expect(select).toMatchSnapshot('empty');
     expect(select.find('FormSelectOption').at(0).props().label).toEqual('');

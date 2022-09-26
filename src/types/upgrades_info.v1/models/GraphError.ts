@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type GraphError = {
-    kind: string;
-    value: string;
+  kind: string;
+  value: string;
 };
-

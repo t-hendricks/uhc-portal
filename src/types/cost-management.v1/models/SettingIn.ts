@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type SettingIn = {
-    api: any;
+  api: any;
 };
-

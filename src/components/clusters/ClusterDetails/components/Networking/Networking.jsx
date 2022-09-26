@@ -1,11 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Grid,
-  GridItem,
-  EmptyState,
-  EmptyStateBody,
-} from '@patternfly/react-core';
+import { Grid, GridItem, EmptyState, EmptyStateBody } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ClusterIngressCard from './components/ClusterIngressCard';
 import NetworkConfigurationCard from './components/NetworkConfigurationCard';
@@ -19,12 +14,7 @@ class Networking extends React.Component {
   }
 
   render() {
-    const {
-      network,
-      refreshCluster,
-      gotRouters,
-      provider,
-    } = this.props;
+    const { network, refreshCluster, gotRouters, provider } = this.props;
 
     if (!gotRouters) {
       return (
@@ -42,9 +32,7 @@ class Networking extends React.Component {
           <ClusterIngressCard refreshCluster={refreshCluster} provider={provider} />
         </GridItem>
         <GridItem lg={3} md={12}>
-          <NetworkConfigurationCard
-            network={network}
-          />
+          <NetworkConfigurationCard network={network} />
         </GridItem>
         <GridItem lg={9} md={12}>
           <VPCDetailsCard />

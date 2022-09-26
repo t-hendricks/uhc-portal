@@ -11,10 +11,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
  * @see subscriptionTypes.normalizedProducts
  */
 const ocmResourceTypeByProduct = Object.fromEntries(
-  Object.entries(normalizedProducts)
-    .map(([key, value]) => (
-      [key, String(value).toLowerCase()]
-    )),
+  Object.entries(normalizedProducts).map(([key, value]) => [key, String(value).toLowerCase()]),
 );
 
 const ocmResourceType = {
@@ -279,24 +276,15 @@ const trackEvents = {
  *
  * @returns {Object} Object {[event]: string, [properties]: Object}
  */
-const getTrackEvent = (trackEvent, options = {}) => (
-  {
-    event: trackEvent.event,
-    properties: {
-      link_name: trackEvent.link_name,
-      ...(options.url && { link_url: options.url }),
-      current_path: options.path || window.location.pathname,
-      ocm_resource_type:
-        options.resourceType ?? trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
-      ...options.customProperties,
-    },
-  }
-);
+const getTrackEvent = (trackEvent, options = {}) => ({
+  event: trackEvent.event,
+  properties: {
+    link_name: trackEvent.link_name,
+    ...(options.url && { link_url: options.url }),
+    current_path: options.path || window.location.pathname,
+    ocm_resource_type: options.resourceType ?? trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
+    ...options.customProperties,
+  },
+});
 
-export {
-  eventNames,
-  trackEvents,
-  getTrackEvent,
-  ocmResourceType,
-  ocmResourceTypeByProduct,
-};
+export { eventNames, trackEvents, getTrackEvent, ocmResourceType, ocmResourceTypeByProduct };

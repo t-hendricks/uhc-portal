@@ -41,7 +41,9 @@ describe('MachinePools actions', () => {
 
   describe('addMachinePool', () => {
     it('dispatches successfully', () => {
-      addMachinePool('mock-cluster-id', { id: 'mp-id', replicas: 1, instance_type: 'type' })(mockDispatch);
+      addMachinePool('mock-cluster-id', { id: 'mp-id', replicas: 1, instance_type: 'type' })(
+        mockDispatch,
+      );
       expect(mockDispatch).toBeCalledWith({
         payload: expect.anything(),
         type: ADD_MACHINE_POOL,
@@ -49,8 +51,14 @@ describe('MachinePools actions', () => {
     });
 
     it('calls clusterService.addMachinePool', () => {
-      addMachinePool('mock-cluster-id', { id: 'mp-id', replicas: 1, instance_type: 'type' })(mockDispatch);
-      expect(clusterService.addMachinePool).toBeCalledWith('mock-cluster-id', { id: 'mp-id', replicas: 1, instance_type: 'type' });
+      addMachinePool('mock-cluster-id', { id: 'mp-id', replicas: 1, instance_type: 'type' })(
+        mockDispatch,
+      );
+      expect(clusterService.addMachinePool).toBeCalledWith('mock-cluster-id', {
+        id: 'mp-id',
+        replicas: 1,
+        instance_type: 'type',
+      });
     });
   });
 
@@ -65,7 +73,9 @@ describe('MachinePools actions', () => {
 
     it('calls clusterService.deleteMachinePool', () => {
       scaleMachinePool('mock-cluster-id', 'mock-mp-id', { replicas: 2 })(mockDispatch);
-      expect(clusterService.scaleMachinePool).toBeCalledWith('mock-cluster-id', 'mock-mp-id', { replicas: 2 });
+      expect(clusterService.scaleMachinePool).toBeCalledWith('mock-cluster-id', 'mock-mp-id', {
+        replicas: 2,
+      });
     });
   });
 

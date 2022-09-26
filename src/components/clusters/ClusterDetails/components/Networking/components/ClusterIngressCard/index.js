@@ -15,7 +15,8 @@ const mapStateToProps = (state) => {
   const controlPlaneAPIEndpoint = cluster.api.url;
   const defaultRouterAddress = clusterRouters.default.address;
   const additionalRouterAddress = hasAdditionalRouter
-    ? clusterRouters.additional.address : `apps2${clusterRouters.default.address.substr(4)}`;
+    ? clusterRouters.additional.address
+    : `apps2${clusterRouters.default.address.substr(4)}`;
   const additionalRouterLabels = routeSelectorPairsAsStrings(
     clusterRouters?.additional?.routeSelectors,
   );
@@ -48,7 +49,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   openModal: (name, data) => dispatch(openModal(name, data)),
 });
 

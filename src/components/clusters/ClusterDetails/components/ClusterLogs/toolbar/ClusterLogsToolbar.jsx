@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem,
-} from '@patternfly/react-core';
+import { Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem } from '@patternfly/react-core';
 import { viewConstants } from '../../../../../../redux/constants';
 import ClusterLogsFilterChipGroup from './ClusterLogsFilterChipGroup';
 import ClusterLogsDownload from './ClusterLogsDownload';

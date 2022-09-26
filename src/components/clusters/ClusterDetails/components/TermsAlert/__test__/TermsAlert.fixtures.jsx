@@ -19,9 +19,4 @@ const subscription = {
   status: 'Active',
 };
 
-export {
-  tncUrl,
-  selfTermsReview,
-  selfTermsReviewResult,
-  subscription,
-};
+export { tncUrl, selfTermsReview, selfTermsReviewResult, subscription };

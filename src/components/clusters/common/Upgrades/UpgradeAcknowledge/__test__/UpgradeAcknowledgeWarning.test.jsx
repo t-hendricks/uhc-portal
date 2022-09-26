@@ -50,7 +50,6 @@ describe('<UpgradeAcknowledgeWarning>', () => {
       showConfirm: true,
       getAcks: [[], metAcks],
       isMinorVersionUpgradesEnabled: true,
-
     });
     expect(wrapper.find('[data-testid="confirmAckReceived"]')).toHaveLength(1);
     expect(wrapper).toMatchSnapshot();

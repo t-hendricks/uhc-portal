@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  Title,
-} from '@patternfly/react-core';
+import { Card, CardBody, CardTitle, Title } from '@patternfly/react-core';
 
 import CostEmptyState from '../../../../../overview/CostCard/CostEmptyState';
 import CostBreakdownSummary from './CostBreakdownSummary';
@@ -18,11 +13,7 @@ class CostBreakdownCard extends Component {
   }
 
   refresh = () => {
-    const {
-      clusterId,
-      getReport,
-      getSources,
-    } = this.props;
+    const { clusterId, getReport, getSources } = this.props;
 
     // Filter example: cluster = ['a94ea9bc-9e4f-4b91-89c2-c7099ec08427']
     getReport({
@@ -45,7 +36,7 @@ class CostBreakdownCard extends Component {
           </Title>
         </CardTitle>
         <CardBody className="ocm--cost-breakdown-card__body">
-          { !hasSources && sources.fulfilled ? (
+          {!hasSources && sources.fulfilled ? (
             <CostEmptyState />
           ) : (
             <CostBreakdownSummary report={report} />

@@ -29,13 +29,9 @@ const LocalTab = ({ token }) => {
     <>
       <PageSection>
         <Split hasGutter>
-          <Title headingLevel="h2">
-            Red Hat OpenShift Local
-          </Title>
+          <Title headingLevel="h2">Red Hat OpenShift Local</Title>
           <SplitItem>
-            <Label variant="outline">
-              local sandbox
-            </Label>
+            <Label variant="outline">local sandbox</Label>
           </SplitItem>
         </Split>
         <TextContent>
@@ -69,23 +65,14 @@ const LocalTab = ({ token }) => {
             <PullSecretSection token={token} pendoID={pendoID} />
           </Instruction>
           <Instruction>
-            <Text component="h3">
-              Follow the documentation to install OpenShift Local
-            </Text>
+            <Text component="h3">Follow the documentation to install OpenShift Local</Text>
             <Text component="p">
-              Run
-              {' '}
-              <code>crc setup</code>
-              {' '}
-              to set up your host operating system for the OpenShift
+              Run <code>crc setup</code> to set up your host operating system for the OpenShift
               Local virtual machine.
             </Text>
             <Text component="p">
-              Then, run
-              {' '}
-              <code>crc start</code>
-              {' '}
-              to create a minimal OpenShift 4 cluster on your computer.
+              Then, run <code>crc start</code> to create a minimal OpenShift 4 cluster on your
+              computer.
             </Text>
             <Text component="p">
               <a
@@ -100,8 +87,7 @@ const LocalTab = ({ token }) => {
                   });
                 }}
               >
-                View the OpenShift Local Getting started guide
-                {' '}
+                View the OpenShift Local Getting started guide{' '}
                 <ExternalLinkAltIcon color="#0066cc" size="sm" />
               </a>
             </Text>

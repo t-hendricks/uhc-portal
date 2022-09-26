@@ -3,20 +3,16 @@
 /* eslint-disable */
 
 export type TieredRate = {
-    readonly uuid?: string;
-    metric: any;
-    'cost-type'?: TieredRate.CostType;
-    description?: string;
-    tiered_rates?: Array<any>;
+  readonly uuid?: string;
+  metric: any;
+  'cost-type'?: TieredRate.CostType;
+  description?: string;
+  tiered_rates?: Array<any>;
 };
 
 export namespace TieredRate {
-
-    export enum CostType {
-        INFRASTRUCTURE = 'Infrastructure',
-        SUPPLEMENTARY = 'Supplementary',
-    }
-
-
+  export enum CostType {
+    INFRASTRUCTURE = 'Infrastructure',
+    SUPPLEMENTARY = 'Supplementary',
+  }
 }
-

@@ -14,76 +14,85 @@ const CLEAR_DELETE_UPGRADE_SCHEDULE = 'CLEAR_DELETE_UPGRADE_SCHEDULE';
 const CLEAR_GET_UPGRADE_SCHEDULE = 'CLEAR_GET_UPGRADE_SCHEDULE';
 const SET_CLUSTER_UPGRADE_POLICY = 'SET_CLUSTER_UPGRADE_POLICY';
 
-const getSchedules = clusterID => dispatch => dispatch({
-  type: GET_UPGRADE_SCHEDULES,
-  payload: getUpgradeSchedules(clusterID).then((schedulesResponse) => {
-    const items = schedulesResponse.data.items || [];
-    const promises = [];
-    items.forEach((schedule) => {
-      promises.push(getUpgradeScheduleState(schedule.cluster_id, schedule.id).then(
+const getSchedules = (clusterID) => (dispatch) =>
+  dispatch({
+    type: GET_UPGRADE_SCHEDULES,
+    payload: getUpgradeSchedules(clusterID).then((schedulesResponse) => {
+      const items = schedulesResponse.data.items || [];
+      const promises = [];
+      items.forEach((schedule) => {
+        promises.push(
+          getUpgradeScheduleState(schedule.cluster_id, schedule.id).then((stateResponse) => {
+            // eslint-disable-next-line no-param-reassign
+            schedule.state = stateResponse.data;
+          }),
+        );
+      });
+      return Promise.all(promises).then(() => {
         // eslint-disable-next-line no-param-reassign
-        (stateResponse) => { schedule.state = stateResponse.data; },
-      ));
-    });
-    return Promise.all(promises).then(() => {
-      // eslint-disable-next-line no-param-reassign
-      schedulesResponse.data.items = items;
-      return schedulesResponse;
-    });
-  }),
-});
-
-const postSchedule = (clusterID, schedule) => dispatch => dispatch({
-  type: POST_UPGRADE_SCHEDULE,
-  payload: postUpgradeSchedule(clusterID, schedule).then((response) => {
-    dispatch(getSchedules(clusterID)); // refresh schedules after posting
-    return response;
-  }),
-});
-
-const replaceSchedule = (clusterID, oldScheduleID, newSchedule) => dispatch => dispatch({
-  type: POST_UPGRADE_SCHEDULE,
-  payload: deleteUpgradeSchedule(clusterID, oldScheduleID).then(
-    () => postUpgradeSchedule(clusterID, newSchedule),
-  ).then((response) => {
-    dispatch(getSchedules(clusterID)); // refresh schedules after replacing
-    return response;
-  }),
-});
-
-const editSchedule = (clusterID, policyID, schedule) => dispatch => dispatch({
-  type: POST_UPGRADE_SCHEDULE,
-  payload: patchUpgradeSchedule(clusterID, policyID, schedule).then((response) => {
-    dispatch(getSchedules(clusterID)); // refresh schedules after posting
-    return response;
-  }),
-});
-
-const deleteSchedule = (clusterID, scheduleID) => dispatch => dispatch({
-  type: DELETE_UPGRADE_SCHEDULE,
-  payload: deleteUpgradeSchedule(clusterID, scheduleID).then((response) => {
-    dispatch(getSchedules(clusterID)); // refresh schedules after deletion
-    return response;
-  }),
-});
-
-const clearDeleteScheduleResponse = () => dispatch => dispatch({
-  type: CLEAR_DELETE_UPGRADE_SCHEDULE,
-});
-
-const clearPostedUpgradeScheduleResponse = () => dispatch => dispatch({
-  type: CLEAR_POST_UPGRADE_SCHEDULE,
-});
-
-const clearSchedulesResponse = () => dispatch => dispatch({
-  type: CLEAR_GET_UPGRADE_SCHEDULE,
-});
-
-const setAutomaticUpgradePolicy = upgradePolicy => (
-  {
-    type: SET_CLUSTER_UPGRADE_POLICY,
-    payload: upgradePolicy,
+        schedulesResponse.data.items = items;
+        return schedulesResponse;
+      });
+    }),
   });
+
+const postSchedule = (clusterID, schedule) => (dispatch) =>
+  dispatch({
+    type: POST_UPGRADE_SCHEDULE,
+    payload: postUpgradeSchedule(clusterID, schedule).then((response) => {
+      dispatch(getSchedules(clusterID)); // refresh schedules after posting
+      return response;
+    }),
+  });
+
+const replaceSchedule = (clusterID, oldScheduleID, newSchedule) => (dispatch) =>
+  dispatch({
+    type: POST_UPGRADE_SCHEDULE,
+    payload: deleteUpgradeSchedule(clusterID, oldScheduleID)
+      .then(() => postUpgradeSchedule(clusterID, newSchedule))
+      .then((response) => {
+        dispatch(getSchedules(clusterID)); // refresh schedules after replacing
+        return response;
+      }),
+  });
+
+const editSchedule = (clusterID, policyID, schedule) => (dispatch) =>
+  dispatch({
+    type: POST_UPGRADE_SCHEDULE,
+    payload: patchUpgradeSchedule(clusterID, policyID, schedule).then((response) => {
+      dispatch(getSchedules(clusterID)); // refresh schedules after posting
+      return response;
+    }),
+  });
+
+const deleteSchedule = (clusterID, scheduleID) => (dispatch) =>
+  dispatch({
+    type: DELETE_UPGRADE_SCHEDULE,
+    payload: deleteUpgradeSchedule(clusterID, scheduleID).then((response) => {
+      dispatch(getSchedules(clusterID)); // refresh schedules after deletion
+      return response;
+    }),
+  });
+
+const clearDeleteScheduleResponse = () => (dispatch) =>
+  dispatch({
+    type: CLEAR_DELETE_UPGRADE_SCHEDULE,
+  });
+
+const clearPostedUpgradeScheduleResponse = () => (dispatch) =>
+  dispatch({
+    type: CLEAR_POST_UPGRADE_SCHEDULE,
+  });
+
+const clearSchedulesResponse = () => (dispatch) =>
+  dispatch({
+    type: CLEAR_GET_UPGRADE_SCHEDULE,
+  });
+
+const setAutomaticUpgradePolicy = (upgradePolicy) => ({
+  type: SET_CLUSTER_UPGRADE_POLICY,
+  payload: upgradePolicy,
+});
 
 export {
   POST_UPGRADE_SCHEDULE,

@@ -4,8 +4,7 @@
 
 import type { ObjectReference } from './ObjectReference';
 
-export type AccountGroupRequest = (ObjectReference & {
-    description: string;
-    name: string;
-});
-
+export type AccountGroupRequest = ObjectReference & {
+  description: string;
+  name: string;
+};

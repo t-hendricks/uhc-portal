@@ -3,7 +3,8 @@ export const crcWorkspaces = {
   href: '/api/clusters_mgmt/v1/addons/codeready-workspaces',
   id: 'codeready-workspaces',
   name: 'Red Hat CodeReady Workspaces',
-  description: 'A collaborative Kubernetes-native development solution that delivers OpenShift workspaces and in-browser IDE for rapid cloud application development. This add-on installs PostgreSQL, Red Hat SSO, and the Red Hat CodeReady Workspaces server, as well as configures all three services.',
+  description:
+    'A collaborative Kubernetes-native development solution that delivers OpenShift workspaces and in-browser IDE for rapid cloud application development. This add-on installs PostgreSQL, Red Hat SSO, and the Red Hat CodeReady Workspaces server, as well as configures all three services.',
   docs_link: 'https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces',
   label: 'api.openshift.com/addon-codeready-workspaces-operator',
   icon: 'SNIPPED',
@@ -21,7 +22,8 @@ export const managedIntegration = {
   href: '/api/clusters_mgmt/v1/addons/managed-integration',
   id: 'managed-integration',
   name: 'Red Hat Managed Integration',
-  description: 'Red Hat managed integration, based on the integreatly project, is an opinionated installation of a number of independent middleware services and tools into an OpenShift Dedicated cluster.',
+  description:
+    'Red Hat managed integration, based on the integreatly project, is an opinionated installation of a number of independent middleware services and tools into an OpenShift Dedicated cluster.',
   docs_link: 'https://access.redhat.com/documentation/en-us/red_hat_managed_integration/2/',
   label: 'api.openshift.com/addon-managed-integration',
   icon: null,
@@ -36,9 +38,11 @@ export const managedIntegration = {
       {
         id: 'cidr-range',
         name: 'CIDR Range',
-        description: 'A block of IP addresses used by the RHMI installation program while installing the cluster',
+        description:
+          'A block of IP addresses used by the RHMI installation program while installing the cluster',
         value_type: 'string',
-        validation: '/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]).){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(/(1[6-9]|2[0-6]))$/',
+        validation:
+          '/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]).){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(/(1[6-9]|2[0-6]))$/',
         required: true,
         editable: false,
       },
@@ -59,7 +63,8 @@ export const serviceMesh = {
   href: '/api/clusters_mgmt/v1/addons/service-mesh',
   id: 'service-mesh',
   name: 'Red Hat OpenShift Service Mesh',
-  description: 'Based on the open source Istio project, Red Hat OpenShift Service Mesh provides an easy way to create a network of deployed services that provides discovery, load balancing, service-to-service authentication, failure recovery, metrics, and monitoring.',
+  description:
+    'Based on the open source Istio project, Red Hat OpenShift Service Mesh provides an easy way to create a network of deployed services that provides discovery, load balancing, service-to-service authentication, failure recovery, metrics, and monitoring.',
   label: 'api.openshift.com/addon-service-mesh',
   icon: null,
   enabled: true,
@@ -121,7 +126,8 @@ export const loggingOperator = {
   href: '/api/clusters_mgmt/v1/addons/cluster-logging-operator',
   id: 'cluster-logging-operator',
   name: 'Red Hat OpenShift Cluster logging operator',
-  description: 'The Cluster Logging Operator for OKD provides a means for configuring and managing your aggregated logging stack.',
+  description:
+    'The Cluster Logging Operator for OKD provides a means for configuring and managing your aggregated logging stack.',
   label: 'api.openshift.com/addon-cluster-logging-operator',
   icon: 'SNIPPED',
   enabled: true,

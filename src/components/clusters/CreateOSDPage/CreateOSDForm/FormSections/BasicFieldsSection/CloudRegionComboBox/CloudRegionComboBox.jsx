@@ -3,10 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormSelect,
-  FormSelectOption,
-} from '@patternfly/react-core';
+import { FormSelect, FormSelectOption } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../../../common/ErrorBox';
@@ -14,20 +11,21 @@ import './CloudRegionComboBox.scss';
 
 class CloudRegionComboBox extends React.Component {
   componentDidUpdate(prevProps) {
-    const {
-      isMultiAz, input, cloudProviderID, cloudProviders,
-    } = this.props;
+    const { isMultiAz, input, cloudProviderID, cloudProviders } = this.props;
 
     const regionData = cloudProviders?.providers?.[cloudProviderID]?.regions?.[input.value];
     const supportsMultiAz = regionData?.supports_multi_az ?? true;
 
-    if ((isMultiAz && !prevProps.isMultiAz) && !supportsMultiAz) {
+    if (isMultiAz && !prevProps.isMultiAz && !supportsMultiAz) {
       this.onChange(cloudProviderID === 'aws' ? 'us-east-1' : 'us-east1');
     }
   }
 
   onChange = (value) => {
-    const { input: { onChange }, handleCloudRegionChange } = this.props;
+    const {
+      input: { onChange },
+      handleCloudRegionChange,
+    } = this.props;
     if (handleCloudRegionChange) {
       handleCloudRegionChange();
     }
@@ -35,11 +33,9 @@ class CloudRegionComboBox extends React.Component {
   };
 
   render() {
-    const {
-      input, availableRegions, cloudProviders, disabled, isMultiAz,
-    } = this.props;
+    const { input, availableRegions, cloudProviders, disabled, isMultiAz } = this.props;
 
-    const regionOption = region => (
+    const regionOption = (region) => (
       <FormSelectOption
         key={region.id}
         value={region.id}
@@ -57,7 +53,7 @@ class CloudRegionComboBox extends React.Component {
           {...input}
           onChange={this.onChange}
         >
-          {availableRegions.map(region => regionOption(region))}
+          {availableRegions.map((region) => regionOption(region))}
         </FormSelect>
       );
     }
@@ -66,7 +62,9 @@ class CloudRegionComboBox extends React.Component {
       <ErrorBox message="Error loading region list" response={cloudProviders} />
     ) : (
       <>
-        <div className="spinner-fit-container"><Spinner /></div>
+        <div className="spinner-fit-container">
+          <Spinner />
+        </div>
         <div className="spinner-loading-text">Loading region list...</div>
       </>
     );

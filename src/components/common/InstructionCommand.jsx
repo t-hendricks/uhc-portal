@@ -12,10 +12,14 @@ const InstructionCommand = ({ children, textAriaLabel, trackEvent }) => {
       <ClipboardCopy
         isReadOnly
         textAriaLabel={textAriaLabel}
-        onCopy={trackEvent ? (event, text) => {
-          track(trackEvent);
-          clipboardCopyFunc(event, text);
-        } : undefined}
+        onCopy={
+          trackEvent
+            ? (event, text) => {
+                track(trackEvent);
+                clipboardCopyFunc(event, text);
+              }
+            : undefined
+        }
       >
         {children}
       </ClipboardCopy>

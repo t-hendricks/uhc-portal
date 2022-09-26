@@ -22,15 +22,21 @@ describe('<UpgradeAcknowledgeModal >', () => {
   const mockSetGate = jest.fn();
   const mockSetUpgradePolicy = jest.fn();
   beforeEach(() => {
-    wrapper = mount(<UpgradeAcknowledgeModal
-      closeModal={mockCloseModal}
-      clusterId="myClusterId"
-      automaticUpgradePolicyId="myUpgradePolicyId"
-      isOpen
-      setGate={mockSetGate}
-      setUpgradePolicy={mockSetUpgradePolicy}
-      modalData={{ fromVersion: '1.2.3', toVersion: '1.3.4', unmetAcknowledgements: [{ id: 'unMetAck1' }, { id: 'unMetAck2' }] }}
-    />);
+    wrapper = mount(
+      <UpgradeAcknowledgeModal
+        closeModal={mockCloseModal}
+        clusterId="myClusterId"
+        automaticUpgradePolicyId="myUpgradePolicyId"
+        isOpen
+        setGate={mockSetGate}
+        setUpgradePolicy={mockSetUpgradePolicy}
+        modalData={{
+          fromVersion: '1.2.3',
+          toVersion: '1.3.4',
+          unmetAcknowledgements: [{ id: 'unMetAck1' }, { id: 'unMetAck2' }],
+        }}
+      />,
+    );
   });
   afterEach(() => {
     jest.clearAllMocks();
@@ -55,14 +61,25 @@ describe('<UpgradeAcknowledgeModal >', () => {
     // API calls made
     expect(apiRequest.patch).toBeCalledTimes(1);
     expect(apiRequest.post).toBeCalledTimes(2);
-    expect(apiRequest.patch).toHaveBeenNthCalledWith(1, '/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId', { enable_minor_version_upgrades: true });
-    expect(apiRequest.post).toHaveBeenNthCalledWith(1, '/api/clusters_mgmt/v1/clusters/myClusterId/gate_agreements', { version_gate: { id: 'unMetAck1' } });
-    expect(apiRequest.post).toHaveBeenNthCalledWith(2, '/api/clusters_mgmt/v1/clusters/myClusterId/gate_agreements', { version_gate: { id: 'unMetAck2' } });
+    expect(apiRequest.patch).toHaveBeenNthCalledWith(
+      1,
+      '/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId',
+      { enable_minor_version_upgrades: true },
+    );
+    expect(apiRequest.post).toHaveBeenNthCalledWith(
+      1,
+      '/api/clusters_mgmt/v1/clusters/myClusterId/gate_agreements',
+      { version_gate: { id: 'unMetAck1' } },
+    );
+    expect(apiRequest.post).toHaveBeenNthCalledWith(
+      2,
+      '/api/clusters_mgmt/v1/clusters/myClusterId/gate_agreements',
+      { version_gate: { id: 'unMetAck2' } },
+    );
 
     // Call updatePolicy (y-stream) action
     expect(mockSetUpgradePolicy.mock.calls).toHaveLength(1);
-    expect(mockSetUpgradePolicy.mock.calls[0][0])
-      .toEqual({ enable_minor_version_upgrades: true });
+    expect(mockSetUpgradePolicy.mock.calls[0][0]).toEqual({ enable_minor_version_upgrades: true });
 
     // Call updateGate action
     expect(mockSetGate.mock.calls).toHaveLength(2);
@@ -80,9 +97,7 @@ describe('<UpgradeAcknowledgeModal >', () => {
         data: { reason: 'an error happened' },
       },
     };
-    apiRequest.patch
-      .mockRejectedValueOnce(apiError)
-      .mockResolvedValue();
+    apiRequest.patch.mockRejectedValueOnce(apiError).mockResolvedValue();
 
     wrapper = clickSubmitButton(wrapper);
     await new Promise(process.nextTick); // wait for all promises to finish
@@ -91,7 +106,11 @@ describe('<UpgradeAcknowledgeModal >', () => {
 
     // API calls made
     expect(apiRequest.patch).toBeCalledTimes(1);
-    expect(apiRequest.patch).toHaveBeenNthCalledWith(1, '/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId', { enable_minor_version_upgrades: true });
+    expect(apiRequest.patch).toHaveBeenNthCalledWith(
+      1,
+      '/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId',
+      { enable_minor_version_upgrades: true },
+    );
 
     // Call updatePolicy (y-stream) action
     expect(mockSetUpgradePolicy).not.toHaveBeenCalled();
@@ -113,10 +132,8 @@ describe('<UpgradeAcknowledgeModal >', () => {
         data: { reason: 'an error happened' },
       },
     };
-    apiRequest.post
-      .mockRejectedValue(apiError);
-    apiRequest.patch
-      .mockResolvedValueOnce(apiReturnValue);
+    apiRequest.post.mockRejectedValue(apiError);
+    apiRequest.patch.mockResolvedValueOnce(apiReturnValue);
 
     wrapper = clickSubmitButton(wrapper);
     await new Promise(process.nextTick); // wait for all promises to finish
@@ -126,14 +143,25 @@ describe('<UpgradeAcknowledgeModal >', () => {
     // API calls made
     expect(apiRequest.patch).toBeCalledTimes(1);
     expect(apiRequest.post).toBeCalledTimes(2);
-    expect(apiRequest.patch).toHaveBeenNthCalledWith(1, '/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId', { enable_minor_version_upgrades: true });
-    expect(apiRequest.post).toHaveBeenNthCalledWith(1, '/api/clusters_mgmt/v1/clusters/myClusterId/gate_agreements', { version_gate: { id: 'unMetAck1' } });
-    expect(apiRequest.post).toHaveBeenNthCalledWith(2, '/api/clusters_mgmt/v1/clusters/myClusterId/gate_agreements', { version_gate: { id: 'unMetAck2' } });
+    expect(apiRequest.patch).toHaveBeenNthCalledWith(
+      1,
+      '/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId',
+      { enable_minor_version_upgrades: true },
+    );
+    expect(apiRequest.post).toHaveBeenNthCalledWith(
+      1,
+      '/api/clusters_mgmt/v1/clusters/myClusterId/gate_agreements',
+      { version_gate: { id: 'unMetAck1' } },
+    );
+    expect(apiRequest.post).toHaveBeenNthCalledWith(
+      2,
+      '/api/clusters_mgmt/v1/clusters/myClusterId/gate_agreements',
+      { version_gate: { id: 'unMetAck2' } },
+    );
 
     // Call updatePolicy (y-stream) action
     expect(mockSetUpgradePolicy.mock.calls).toHaveLength(1);
-    expect(mockSetUpgradePolicy.mock.calls[0][0])
-      .toEqual({ enable_minor_version_upgrades: true });
+    expect(mockSetUpgradePolicy.mock.calls[0][0]).toEqual({ enable_minor_version_upgrades: true });
 
     // Call updateGate action
     expect(mockSetGate).not.toHaveBeenCalled();

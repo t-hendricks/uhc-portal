@@ -5,5 +5,4 @@
 import type { Error_allOf } from './Error_allOf';
 import type { ObjectReference } from './ObjectReference';
 
-export type Error = (ObjectReference & Error_allOf);
-
+export type Error = ObjectReference & Error_allOf;

@@ -15,11 +15,12 @@ class InstallVSphere extends Component {
 
   render() {
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'VMware vSphere' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'VMware vSphere' },
+        ]}
       />
     );
 

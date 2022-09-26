@@ -15,29 +15,27 @@ limitations under the License.
 */
 
 import get from 'lodash/get';
-import {
-  GET_CLUSTER_INSIGHTS,
-  GET_ORGANIZATION_INSIGHTS,
-} from './InsightsConstants';
+import { GET_CLUSTER_INSIGHTS, GET_ORGANIZATION_INSIGHTS } from './InsightsConstants';
 import { insightsService } from '../../../../../services';
 
-const fetchSingleClusterInsights = clusterId => insightsService
-  .getClusterInsights(clusterId)
-  .then(response => ({
+const fetchSingleClusterInsights = (clusterId) =>
+  insightsService.getClusterInsights(clusterId).then((response) => ({
     insightsData: get(response, 'data.report', {}),
     clusterId,
     status: response.status,
   }));
 
-export const fetchClusterInsights = clusterId => dispatch => dispatch({
-  type: GET_CLUSTER_INSIGHTS,
-  payload: fetchSingleClusterInsights(clusterId),
-  meta: {
-    clusterId,
-  },
-});
+export const fetchClusterInsights = (clusterId) => (dispatch) =>
+  dispatch({
+    type: GET_CLUSTER_INSIGHTS,
+    payload: fetchSingleClusterInsights(clusterId),
+    meta: {
+      clusterId,
+    },
+  });
 
-export const fetchOrganizationInsights = () => dispatch => dispatch({
-  type: GET_ORGANIZATION_INSIGHTS,
-  payload: insightsService.getOrganizationInsights(),
-});
+export const fetchOrganizationInsights = () => (dispatch) =>
+  dispatch({
+    type: GET_ORGANIZATION_INSIGHTS,
+    payload: insightsService.getOrganizationInsights(),
+  });

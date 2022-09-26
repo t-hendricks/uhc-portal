@@ -12,16 +12,18 @@ const baseIDPs = {
 describe('<IDPSection />', () => {
   it('should render (no IDPs)', () => {
     const openModal = jest.fn();
-    const wrapper = shallow(<IDPSection
-      canEdit={false}
-      clusterID="fake id"
-      subscriptionID="fake sub"
-      identityProviders={baseIDPs}
-      clusterHibernating={false}
-      isReadOnly={false}
-      openModal={openModal}
-      clusterConsoleURL="http://example.com/"
-    />);
+    const wrapper = shallow(
+      <IDPSection
+        canEdit={false}
+        clusterID="fake id"
+        subscriptionID="fake sub"
+        identityProviders={baseIDPs}
+        clusterHibernating={false}
+        isReadOnly={false}
+        openModal={openModal}
+        clusterConsoleURL="http://example.com/"
+      />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -32,16 +34,18 @@ describe('<IDPSection />', () => {
       fulfilled: false,
     };
 
-    const wrapper = shallow(<IDPSection
-      canEdit={false}
-      clusterHibernating={false}
-      isReadOnly={false}
-      clusterID="fake id"
-      subscriptionID="fake sub"
-      identityProviders={IDPs}
-      openModal={jest.fn()}
-      clusterConsoleURL="http://example.com/"
-    />);
+    const wrapper = shallow(
+      <IDPSection
+        canEdit={false}
+        clusterHibernating={false}
+        isReadOnly={false}
+        clusterID="fake id"
+        subscriptionID="fake sub"
+        identityProviders={IDPs}
+        openModal={jest.fn()}
+        clusterConsoleURL="http://example.com/"
+      />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -64,16 +68,18 @@ describe('<IDPSection />', () => {
     };
 
     const openModal = jest.fn();
-    const wrapper = shallow(<IDPSection
-      canEdit={false}
-      clusterID="fake id"
-      subscriptionID="fake sub"
-      identityProviders={IDPs}
-      clusterHibernating={false}
-      isReadOnly={false}
-      openModal={openModal}
-      clusterConsoleURL="http://example.com/"
-    />);
+    const wrapper = shallow(
+      <IDPSection
+        canEdit={false}
+        clusterID="fake id"
+        subscriptionID="fake sub"
+        identityProviders={IDPs}
+        clusterHibernating={false}
+        isReadOnly={false}
+        openModal={openModal}
+        clusterConsoleURL="http://example.com/"
+      />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 });

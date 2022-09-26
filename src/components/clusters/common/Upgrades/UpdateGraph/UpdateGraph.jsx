@@ -6,37 +6,19 @@ import MinorVersionUpgradeConfirm from '../MinorVersionUpgradeConfirm';
 import './UpdateGraph.scss';
 
 const GraphContainer = ({ children }) => (
-  <div
-    className="ocm-upgrade-graph-container"
-  >
-    {children}
-  </div>
+  <div className="ocm-upgrade-graph-container">{children}</div>
 );
 
-const GraphLine = ({ children }) => (
-  <li className="ocm-upgrade-graph-line">
-    {children}
-  </li>
-);
+const GraphLine = ({ children }) => <li className="ocm-upgrade-graph-line">{children}</li>;
 
-const GraphPath = ({ children }) => (
-  <ul className="ocm-upgrade-graph-path">
-    {children}
-  </ul>
-);
+const GraphPath = ({ children }) => <ul className="ocm-upgrade-graph-path">{children}</ul>;
 
 const VersionLabel = ({ children }) => (
-  <span
-    className="ocm-upgrade-graph-version"
-  >
-    {children}
-  </span>
+  <span className="ocm-upgrade-graph-version">{children}</span>
 );
 
 const VersionDot = ({ current }) => (
-  <div
-    className={`ocm-upgrade-graph-version-dot ${current ? 'ocm-upgrade-current' : ''}`}
-  />
+  <div className={`ocm-upgrade-graph-version-dot ${current ? 'ocm-upgrade-current' : ''}`} />
 );
 
 const UpdateGraph = ({ currentVersion, updateVersion, hasMore }) => (
@@ -47,7 +29,7 @@ const UpdateGraph = ({ currentVersion, updateVersion, hasMore }) => (
           <VersionLabel>{currentVersion}</VersionLabel>
           <VersionDot current />
         </GraphLine>
-        { updateVersion && (
+        {updateVersion && (
           <>
             <GraphLine />
             <GraphLine>
@@ -58,7 +40,7 @@ const UpdateGraph = ({ currentVersion, updateVersion, hasMore }) => (
         )}
       </GraphPath>
     </GraphContainer>
-    { hasMore && (
+    {hasMore && (
       <div className="ocm-upgrade-additional-versions-available">
         <InfoCircleIcon />
         {`Additional versions available between ${currentVersion} and ${updateVersion}`}

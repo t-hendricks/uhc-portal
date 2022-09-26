@@ -15,7 +15,8 @@ describe('groupTagHitsByGroups', () => {
     groups = [
       { title: 'Group1', tags: ['tag1'] },
       { title: 'Group2', tags: ['tag1', 'tag2'] },
-      { title: 'Group3', tags: ['tag1', 'tag2', 'tag3'] }];
+      { title: 'Group3', tags: ['tag1', 'tag2', 'tag3'] },
+    ];
   });
 
   it('returns groups with theirs count and tags', () => {
@@ -24,13 +25,11 @@ describe('groupTagHitsByGroups', () => {
 
   it('does not count unknown tags', () => {
     groups[2].tags = ['tag42'];
-    expect(groupTagHitsByGroups(hits, groups)).toStrictEqual(
-      {
-        Group1: { count: 3, tags: 'tag1' },
-        Group2: { count: 5, tags: 'tag1,tag2' },
-        Group3: { count: 0, tags: 'tag42' },
-      },
-    );
+    expect(groupTagHitsByGroups(hits, groups)).toStrictEqual({
+      Group1: { count: 3, tags: 'tag1' },
+      Group2: { count: 5, tags: 'tag1,tag2' },
+      Group3: { count: 0, tags: 'tag42' },
+    });
   });
 
   it('does not count tags not presented in groups', () => {

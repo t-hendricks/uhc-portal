@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Split,
-  SplitItem,
-} from '@patternfly/react-core';
+import { Split, SplitItem } from '@patternfly/react-core';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 
 const PageTitle = ({ title, breadcrumbs, children }) => (

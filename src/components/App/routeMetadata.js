@@ -6,10 +6,10 @@ import { ocmResourceType } from '~/common/analytics';
  */
 export const metadataByRoute = (pathname, planType, clusterId, externalClusterId) => {
   /**
-     * Note: Order matters here
-     * Statements are sorted by the matcher clause, from more specific to less specific
-     * i.e. check for "osdtrial" must precede "osd"
-     */
+   * Note: Order matters here
+   * Statements are sorted by the matcher clause, from more specific to less specific
+   * i.e. check for "osdtrial" must precede "osd"
+   */
 
   const clusterDetails = {
     ocm_cluster_id: clusterId,

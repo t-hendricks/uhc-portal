@@ -16,11 +16,12 @@ class InstallArmAWS extends Component {
 
   render() {
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'Amazon Web Services (ARM)' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'Amazon Web Services (ARM)' },
+        ]}
       />
     );
 

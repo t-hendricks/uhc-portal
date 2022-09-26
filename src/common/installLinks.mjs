@@ -1,39 +1,63 @@
 // This module has .mjs extension to simplify importing from NodeJS scripts.
 
 const MIRROR_BUTANE_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest';
-const MIRROR_CLIENTS_STABLE_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/';
-const MIRROR_CLIENTS_STABLE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
-const MIRROR_CLIENTS_STABLE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
-const MIRROR_CLIENTS_STABLE_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/';
-const MIRROR_CLIENTS_LATEST_TP_MULTI = 'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/latest/';
-const MIRROR_CLIENTS_LATEST_PRE_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
-const MIRROR_CLIENTS_LATEST_PRE_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/';
-const MIRROR_CLIENTS_LATEST_PRE_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/';
-const MIRROR_CLIENTS_LATEST_PRE_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/';
-const MIRROR_CLIENTS_LATEST_PRE_MULTI = 'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp-dev-preview/pre-release/';
-const MIRROR_COREOS_INSTALLER_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest';
-const MIRROR_CRC_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest';
+const MIRROR_CLIENTS_STABLE_X86 =
+  'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/';
+const MIRROR_CLIENTS_STABLE_IBMZ =
+  'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp/stable/';
+const MIRROR_CLIENTS_STABLE_PPC =
+  'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp/stable/';
+const MIRROR_CLIENTS_STABLE_ARM =
+  'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp/stable/';
+const MIRROR_CLIENTS_LATEST_TP_MULTI =
+  'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp/latest/';
+const MIRROR_CLIENTS_LATEST_PRE_X86 =
+  'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp-dev-preview/pre-release/';
+const MIRROR_CLIENTS_LATEST_PRE_IBMZ =
+  'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/ocp-dev-preview/pre-release/';
+const MIRROR_CLIENTS_LATEST_PRE_PPC =
+  'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/ocp-dev-preview/pre-release/';
+const MIRROR_CLIENTS_LATEST_PRE_ARM =
+  'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/ocp-dev-preview/pre-release/';
+const MIRROR_CLIENTS_LATEST_PRE_MULTI =
+  'https://mirror.openshift.com/pub/openshift-v4/multi/clients/ocp-dev-preview/pre-release/';
+const MIRROR_COREOS_INSTALLER_LATEST =
+  'https://mirror.openshift.com/pub/openshift-v4/clients/coreos-installer/latest';
+const MIRROR_CRC_LATEST =
+  'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest';
 const MIRROR_HELM_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest';
 const MIRROR_KN_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/serverless/latest';
 const MIRROR_TKN_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/pipeline/latest';
-const MIRROR_ODO_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest';
-const MIRROR_OSDK_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/operator-sdk/latest';
-const MIRROR_OSDK_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/operator-sdk/latest';
-const MIRROR_OSDK_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/operator-sdk/latest';
-const MIRROR_OSDK_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/operator-sdk/latest';
-const MIRROR_RHCOS_LATEST_X86 = 'https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest';
-const MIRROR_RHCOS_LATEST_IBMZ = 'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest';
-const MIRROR_RHCOS_LATEST_PPC = 'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest';
-const MIRROR_RHCOS_LATEST_ARM = 'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest';
+const MIRROR_ODO_LATEST =
+  'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest';
+const MIRROR_OSDK_LATEST_X86 =
+  'https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/operator-sdk/latest';
+const MIRROR_OSDK_LATEST_IBMZ =
+  'https://mirror.openshift.com/pub/openshift-v4/s390x/clients/operator-sdk/latest';
+const MIRROR_OSDK_LATEST_PPC =
+  'https://mirror.openshift.com/pub/openshift-v4/ppc64le/clients/operator-sdk/latest';
+const MIRROR_OSDK_LATEST_ARM =
+  'https://mirror.openshift.com/pub/openshift-v4/aarch64/clients/operator-sdk/latest';
+const MIRROR_RHCOS_LATEST_X86 =
+  'https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/latest';
+const MIRROR_RHCOS_LATEST_IBMZ =
+  'https://mirror.openshift.com/pub/openshift-v4/s390x/dependencies/rhcos/latest';
+const MIRROR_RHCOS_LATEST_PPC =
+  'https://mirror.openshift.com/pub/openshift-v4/ppc64le/dependencies/rhcos/latest';
+const MIRROR_RHCOS_LATEST_ARM =
+  'https://mirror.openshift.com/pub/openshift-v4/aarch64/dependencies/rhcos/latest';
 const MIRROR_ROSA_LATEST = 'https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest';
-const MIRROR_MIRROR_REGISTRY_LATEST = 'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
+const MIRROR_MIRROR_REGISTRY_LATEST =
+  'https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/mirror-registry/latest';
 
 const DOCS_BASE = 'https://docs.openshift.com/container-platform/4.11';
 const OSD_DOCS_BASE = 'https://docs.openshift.com/dedicated';
 const ROSA_DOCS_BASE = 'https://docs.openshift.com/rosa';
 
-const COSTMGMT_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/cost_management_service/2022';
-const OCM_DOCS_BASE = 'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022';
+const COSTMGMT_DOCS_BASE =
+  'https://access.redhat.com/documentation/en-us/cost_management_service/2022';
+const OCM_DOCS_BASE =
+  'https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022';
 
 const links = {
   DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
@@ -112,7 +136,8 @@ const links = {
   RHCOS_BAREMETAL_ISO_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live.x86_64.iso`,
   RHCOS_BAREMETAL_RAW_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-metal.x86_64.raw.gz`,
 
-  INSTALL_CRC_GETTING_STARTED: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_local',
+  INSTALL_CRC_GETTING_STARTED:
+    'https://access.redhat.com/documentation/en-us/red_hat_openshift_local',
 
   INSTALL_GCPIPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-account.html`,
   INSTALL_GCPUPI_GETTING_STARTED: `${DOCS_BASE}/installing/installing_gcp/installing-gcp-user-infra.html`,
@@ -157,9 +182,11 @@ const links = {
   RHCOS_GENERIC_INITRAMFS_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live-initramfs.x86_64.img`,
   RHCOS_GENERIC_ROOTFS_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live-rootfs.x86_64.img`,
 
-  INSTALL_PRE_RELEASE_BUG_LIST_45: 'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.5.0',
+  INSTALL_PRE_RELEASE_BUG_LIST_45:
+    'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.5.0',
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
-  INSTALL_PRE_RELEASE_FEEDBACK_MAILTO: 'mailto:***REMOVED***?subject=[dev preview build]',
+  INSTALL_PRE_RELEASE_FEEDBACK_MAILTO:
+    'mailto:***REMOVED***?subject=[dev preview build]',
   INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/articles/4307871',
 
   INSTALL_POWER_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html`,
@@ -178,7 +205,8 @@ const links = {
   OCM_CLI_DOCS: 'https://access.redhat.com/articles/6114701',
   OCM_CLI_RELEASES_LATEST: 'https://github.com/openshift-online/ocm-cli/releases/latest',
 
-  RHOAS_CLI_DOCS: 'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/88e1487a-2a14-4b35-85b9-a7a2d67a37f3',
+  RHOAS_CLI_DOCS:
+    'https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/88e1487a-2a14-4b35-85b9-a7a2d67a37f3',
   RHOAS_CLI_RELEASES_LATEST: 'https://github.com/redhat-developer/app-services-cli/releases/latest',
 
   HELM_DOCS: `${DOCS_BASE}/applications/working_with_helm_charts/understanding-helm.html`,
@@ -236,9 +264,11 @@ const links = {
 
   COSTMGMT_ADDING_OCP: `${COSTMGMT_DOCS_BASE}/html/adding_an_openshift_container_platform_source_to_cost_management/assembly-adding-openshift-container-platform-source`,
 
-  FINDING_AWS_ACCOUNT_IDENTIFIERS: 'https://docs.aws.amazon.com/general/latest/gr/acct-identifiers.html',
+  FINDING_AWS_ACCOUNT_IDENTIFIERS:
+    'https://docs.aws.amazon.com/general/latest/gr/acct-identifiers.html',
   CIDR_RANGE_DEFINITIONS: 'https://docs.openshift.com/rosa/networking/cidr-range-definitions.html',
-  CONFIGURE_PROXY_URL: 'https://docs.openshift.com/dedicated/networking/configuring-cluster-wide-proxy.html',
+  CONFIGURE_PROXY_URL:
+    'https://docs.openshift.com/dedicated/networking/configuring-cluster-wide-proxy.html',
 };
 
 // Tool identifiers are public — e.g. for linking to specific tool in DownloadsPage.
@@ -698,10 +728,7 @@ const urls = {
   },
 };
 
-const githubReleasesToFetch = [
-  'openshift-online/ocm-cli',
-  'redhat-developer/app-services-cli',
-];
+const githubReleasesToFetch = ['openshift-online/ocm-cli', 'redhat-developer/app-services-cli'];
 
 /**
  * Computes full urls data.

@@ -1,8 +1,6 @@
 import React from 'react';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
-import {
-  List, ListItem, Text,
-} from '@patternfly/react-core';
+import { List, ListItem, Text } from '@patternfly/react-core';
 import links, { tools, channels } from '../../../../common/installLinks.mjs';
 
 /**
@@ -63,7 +61,8 @@ const instructionsMapping = {
         preReleasePageLink: '/install/arm/pre-release',
       },
     },
-    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propagate).',
+    getStartedAdditional:
+      'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through AWS but it will take some time for the DNS to propagate).',
   },
   gcp: {
     cloudProvider: 'GCP',
@@ -91,7 +90,8 @@ const instructionsMapping = {
       installer: tools.X86INSTALLER,
       channel: channels.STABLE,
     },
-    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through GCP but it will take some time for the DNS to propagate).',
+    getStartedAdditional:
+      'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through GCP but it will take some time for the DNS to propagate).',
   },
   azure: {
     cloudProvider: 'Azure',
@@ -120,7 +120,8 @@ const instructionsMapping = {
         preReleasePageLink: '/install/multi/pre-release',
       },
     },
-    getStartedAdditional: 'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through Azure but it will take some time for the DNS to propagate).',
+    getStartedAdditional:
+      'The installer will ask you for the domain or subdomain you wish to use (this can be purchased through Azure but it will take some time for the DNS to propagate).',
   },
   ibmCloud: {
     cloudProvider: 'IBM Cloud',
@@ -192,7 +193,8 @@ const instructionsMapping = {
               url: links.RHCOS_GENERIC_ROOTFS_X86,
             },
           ],
-          additionalInstructions: 'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
+          additionalInstructions:
+            'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
         },
         installer: tools.X86INSTALLER,
         channel: channels.STABLE,
@@ -233,7 +235,8 @@ const instructionsMapping = {
               url: links.RHCOS_ARM_ROOTFS,
             },
           ],
-          additionalInstructions: 'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
+          additionalInstructions:
+            'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
         },
         installer: tools.ARMINSTALLER,
         channel: channels.STABLE,
@@ -270,7 +273,8 @@ const instructionsMapping = {
               url: links.RHCOS_POWER_ROOTFS,
             },
           ],
-          additionalInstructions: 'Download either the installer ISO image or for PXE booting the initramfs, the kernel, and the rootfs files.',
+          additionalInstructions:
+            'Download either the installer ISO image or for PXE booting the initramfs, the kernel, and the rootfs files.',
         },
         preReleasePageLink: '/install/power/pre-release',
         docURL: links.INSTALL_POWER_GETTING_STARTED,
@@ -284,27 +288,28 @@ const instructionsMapping = {
             <Text component="div">
               <List>
                 <ListItem>
-                  If you plan your installation with z/VM, download the initramfs,
-                  the kernel, and the rootfs files.
-                  {' '}
-                  <Text component="a" href={links.INSTALL_IBMZ_LEARN_MORE_ZVM} target="_blank" rel="noreferrer noopener">
-                    Learn more
-                    {' '}
-                    <ExternalLinkAltIcon size="sm" />
-                    .
+                  If you plan your installation with z/VM, download the initramfs, the kernel, and
+                  the rootfs files.{' '}
+                  <Text
+                    component="a"
+                    href={links.INSTALL_IBMZ_LEARN_MORE_ZVM}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Learn more <ExternalLinkAltIcon size="sm" />.
                   </Text>
                 </ListItem>
                 <ListItem>
-                  If you plan your installation with RHEL KVM, depending on the installation
-                  type you plan to perform, download the QCOW2 file or the initramfs,
-                  the kernel, and the rootfs files.
-                  {' '}
-                  <Text component="a" href={links.INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM} target="_blank" rel="noreferrer noopener">
-                    Learn more
-                    {' '}
-                    <ExternalLinkAltIcon size="sm" />
-                    .
-                    {' '}
+                  If you plan your installation with RHEL KVM, depending on the installation type
+                  you plan to perform, download the QCOW2 file or the initramfs, the kernel, and the
+                  rootfs files.{' '}
+                  <Text
+                    component="a"
+                    href={links.INSTALL_IBMZ_RHCOS_LEARN_MORE_RHEL_KVM}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Learn more <ExternalLinkAltIcon size="sm" />.{' '}
                   </Text>
                 </ListItem>
               </List>
@@ -367,7 +372,8 @@ const instructionsMapping = {
           url: links.RHCOS_GENERIC_ROOTFS_X86,
         },
       ],
-      additionalInstructions: 'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
+      additionalInstructions:
+        'Download the installer ISO image, or the kernel, initramfs, and rootfs.',
     },
     installer: tools.X86INSTALLER,
     channel: channels.STABLE,
@@ -412,7 +418,8 @@ const instructionsMapping = {
     cloudProvider: 'Red Hat OpenStack Platform',
     customizations: links.INSTALL_OSP_CUSTOMIZATIONS,
     ipi: {
-      title: 'Install OpenShift on Red Hat OpenStack Platform with installer-provisioned infrastructure',
+      title:
+        'Install OpenShift on Red Hat OpenStack Platform with installer-provisioned infrastructure',
       installer: tools.X86INSTALLER,
       channel: channels.STABLE,
       docURL: links.INSTALL_OSPIPI_GETTING_STARTED,
@@ -439,7 +446,8 @@ const instructionsMapping = {
     customizations: links.INSTALL_RHV_CUSTOMIZATIONS,
     ipi: {
       docURL: links.INSTALL_RHVIPI_GETTING_STARTED,
-      title: 'Install OpenShift on Red Hat Virtualization with installer-provisioned infrastructure',
+      title:
+        'Install OpenShift on Red Hat Virtualization with installer-provisioned infrastructure',
       installer: tools.X86INSTALLER,
       channel: channels.STABLE,
     },

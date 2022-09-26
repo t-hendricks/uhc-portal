@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type DependencyError = {
-    errors: Array<any>;
+  errors: Array<any>;
 };
-

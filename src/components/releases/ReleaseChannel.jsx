@@ -17,8 +17,8 @@ const ReleaseChannel = ({ channel, status }) => {
   React.useEffect(() => {
     const fetchChannelData = async () => {
       const result = await getOCPReleaseChannel(channel);
-      const sortedVersions = result?.data?.nodes?.sort(
-        ({ version: left }, { version: right }) => semver.rcompare(left, right),
+      const sortedVersions = result?.data?.nodes?.sort(({ version: left }, { version: right }) =>
+        semver.rcompare(left, right),
       );
       setLatestVersion(sortedVersions[0]?.version);
     };
@@ -28,21 +28,18 @@ const ReleaseChannel = ({ channel, status }) => {
   const isCandidate = channel.includes('candidate');
   const candidateChannelLink = getCandidateChannelLink(latestVersion);
   const parsed = latestVersion ? semver.coerce(latestVersion) : semver.coerce('4.7');
-  const {
-    major,
-    minor,
-  } = parsed;
+  const { major, minor } = parsed;
   const releaseNotesLink = getReleaseNotesLink(latestVersion);
 
   return (
     <>
       <ReleaseChannelName>
-        {isCandidate && (<Divider className="ocm-l-ocp-releases__divider pf-u-my-lg" />)}
+        {isCandidate && <Divider className="ocm-l-ocp-releases__divider pf-u-my-lg" />}
         {channel}
         {isCandidate && (
           <PopoverHint
             iconClassName="pf-u-ml-sm"
-            hint={(
+            hint={
               <>
                 <p className="pf-u-mb-md">
                   {`Candidate channels contain candidate releases for a z-stream
@@ -58,15 +55,14 @@ const ReleaseChannel = ({ channel, status }) => {
                   </p>
                 )}
               </>
-            )}
+            }
           />
         )}
       </ReleaseChannelName>
       <ReleaseChannelDescription>
         {latestVersion && (
           <LevelItem>
-            Latest version
-            {' '}
+            Latest version{' '}
             {releaseNotesLink ? (
               <ExternalLink href={releaseNotesLink} noIcon>
                 {latestVersion}
@@ -76,9 +72,7 @@ const ReleaseChannel = ({ channel, status }) => {
             )}
           </LevelItem>
         )}
-        {status && (
-          <SupportStatus status={status} />
-        )}
+        {status && <SupportStatus status={status} />}
       </ReleaseChannelDescription>
     </>
   );

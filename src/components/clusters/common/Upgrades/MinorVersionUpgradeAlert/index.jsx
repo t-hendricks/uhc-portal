@@ -6,11 +6,14 @@ import {
 } from '../UpgradeAcknowledge/UpgradeAcknowledgeSelectors';
 import { setAutomaticUpgradePolicy } from '../clusterUpgradeActions';
 import {
-  getEnableMinorVersionUpgrades, getUpgradeScheduleId, isNextMinorVersionAvailable, isRosa,
+  getEnableMinorVersionUpgrades,
+  getUpgradeScheduleId,
+  isNextMinorVersionAvailable,
+  isRosa,
 } from './MinorVersionUpgradeSelectors';
 import MinorVersionUpgradeAlert from './MinorVersionUpgradeAlert';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isAutomatic: !getIsManual(state),
   hasUnmetUpgradeAcknowledge: getHasUnMetClusterAcks(state),
   isMinorVersionUpgradesEnabled: getEnableMinorVersionUpgrades(state),
@@ -20,8 +23,8 @@ const mapStateToProps = state => ({
   isRosa: isRosa(state),
 });
 
-const mapDispatchToProps = dispatch => ({
-  setUpgradePolicy: upgradePolicy => dispatch(setAutomaticUpgradePolicy(upgradePolicy)),
+const mapDispatchToProps = (dispatch) => ({
+  setUpgradePolicy: (upgradePolicy) => dispatch(setAutomaticUpgradePolicy(upgradePolicy)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MinorVersionUpgradeAlert);

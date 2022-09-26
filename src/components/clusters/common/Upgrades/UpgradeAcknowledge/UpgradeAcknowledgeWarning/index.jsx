@@ -11,7 +11,7 @@ import {
   getHasScheduledManual,
 } from '../UpgradeAcknowledgeSelectors';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   clusterId: getClusterIdFromState(state),
   openshiftVersion: getClusterOpenShiftVersion(state),
   fromVersion: getFromVersionFromState(state),

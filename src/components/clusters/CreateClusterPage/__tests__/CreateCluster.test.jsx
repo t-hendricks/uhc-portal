@@ -17,16 +17,18 @@ describe('<CreateClusterPage />', () => {
 
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<CreateClusterPage
-      hasOSDQuota
-      hasOSDTrialQuota={false}
-      getOrganizationAndQuota={getOrganizationAndQuota}
-      organization={{ ...organization, fulfilled: true }}
-      token={{}}
-      getAuthToken={getAuthToken}
-      history={{ push }}
-      osdTrialFeature={false}
-    />);
+    wrapper = shallow(
+      <CreateClusterPage
+        hasOSDQuota
+        hasOSDTrialQuota={false}
+        getOrganizationAndQuota={getOrganizationAndQuota}
+        organization={{ ...organization, fulfilled: true }}
+        token={{}}
+        getAuthToken={getAuthToken}
+        history={{ push }}
+        osdTrialFeature={false}
+      />,
+    );
   });
 
   it('renders correctly', () => {
@@ -71,16 +73,18 @@ describe('<CreateClusterPage />', () => {
 
   describe('Quota not fetched yet', () => {
     beforeEach(() => {
-      wrapper = shallow(<CreateClusterPage
-        hasOSDQuota={false}
-        hasOSDTrialQuota={false}
-        getOrganizationAndQuota={getOrganizationAndQuota}
-        organization={organization}
-        token={{}}
-        getAuthToken={getAuthToken}
-        history={{ push }}
-        osdTrialFeature={false}
-      />);
+      wrapper = shallow(
+        <CreateClusterPage
+          hasOSDQuota={false}
+          hasOSDTrialQuota={false}
+          getOrganizationAndQuota={getOrganizationAndQuota}
+          organization={organization}
+          token={{}}
+          getAuthToken={getAuthToken}
+          history={{ push }}
+          osdTrialFeature={false}
+        />,
+      );
     });
 
     it('should render', () => {

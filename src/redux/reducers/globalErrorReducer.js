@@ -23,8 +23,10 @@ function globalErrorReducer(state = initialState, action) {
       When requestingComponent is not set, clear the state uncodintionally - this is for
       allowing the user to close the error alert by clicking the X button.
       */
-      if (!action.payload.requestingComponent
-          || action.payload.requestingComponent === state.sourceComponent) {
+      if (
+        !action.payload.requestingComponent ||
+        action.payload.requestingComponent === state.sourceComponent
+      ) {
         return initialState;
       }
       return state;

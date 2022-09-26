@@ -342,13 +342,11 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                     <span
                       className="ocm-upgrade-ack-step_text-input-label"
                     >
-                      Confirm the above by typing
-                       
+                      Confirm the above by typing 
                       <strong>
                         Acknowledge
                       </strong>
-                       
-                      below:
+                       below:
                     </span>
                   }
                 >
@@ -371,13 +369,11 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                             <span
                               className="ocm-upgrade-ack-step_text-input-label"
                             >
-                              Confirm the above by typing
-                               
+                              Confirm the above by typing 
                               <strong>
                                 Acknowledge
                               </strong>
-                               
-                              below:
+                               below:
                             </span>
                           </span>
                           <span

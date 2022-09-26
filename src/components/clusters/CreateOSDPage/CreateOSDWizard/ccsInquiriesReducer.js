@@ -1,7 +1,10 @@
 import produce from 'immer';
 
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  baseRequestState,
 } from '../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../common/errors';
 import {
@@ -72,7 +75,7 @@ const indexAWSVPCs = (vpcsData) => {
 };
 
 /** Enriches response with .bySubnetID entry. */
-export const processAWSVPCs = vpcsData => ({ ...vpcsData, bySubnetID: indexAWSVPCs(vpcsData) });
+export const processAWSVPCs = (vpcsData) => ({ ...vpcsData, bySubnetID: indexAWSVPCs(vpcsData) });
 
 function ccsInquiriesReducer(state = initialState, action) {
   // eslint-disable-next-line consistent-return

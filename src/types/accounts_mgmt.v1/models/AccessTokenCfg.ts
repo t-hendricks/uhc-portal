@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type AccessTokenCfg = {
-    auths: any;
+  auths: any;
 };
-

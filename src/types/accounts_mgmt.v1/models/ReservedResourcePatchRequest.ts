@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type ReservedResourcePatchRequest = {
-    billing_model?: string;
+  billing_model?: string;
 };
-

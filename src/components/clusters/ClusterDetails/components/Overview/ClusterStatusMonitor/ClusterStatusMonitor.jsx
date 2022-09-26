@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import {
-  Alert,
-} from '@patternfly/react-core';
+import { Alert } from '@patternfly/react-core';
 
 import clusterStates from '../../../../common/clusterStates';
 import getClusterName from '../../../../../../common/getClusterName';
@@ -17,17 +15,16 @@ class clusterStatusMonitor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      status, cluster, refresh, addNotification, history,
-    } = this.props;
+    const { status, cluster, refresh, addNotification, history } = this.props;
     if (prevProps.status.pending && !status.pending) {
       if (this.timerID !== null) {
         clearTimeout(this.timerID);
       }
 
-      const isInstalling = state => state === clusterStates.INSTALLING
-                                 || state === clusterStates.PENDING
-                                 || state === clusterStates.WAITING;
+      const isInstalling = (state) =>
+        state === clusterStates.INSTALLING ||
+        state === clusterStates.PENDING ||
+        state === clusterStates.WAITING;
 
       if (status.fulfilled) {
         const clusterState = status.status.state;
@@ -64,7 +61,7 @@ class clusterStatusMonitor extends React.Component {
     const { cluster, getClusterStatus } = this.props;
     getClusterStatus(cluster.id);
     this.timerID = null;
-  }
+  };
 
   render() {
     const { status, cluster } = this.props;
@@ -83,11 +80,14 @@ class clusterStatusMonitor extends React.Component {
           </Alert>
         );
       }
-      if (status.status.provision_error_code
-          || status.status.provision_error_message) {
+      if (status.status.provision_error_code || status.status.provision_error_message) {
         return (
           <span>
-            <Alert variant="warning" isInline title={`${title} Installation is taking longer than expected`}>
+            <Alert
+              variant="warning"
+              isInline
+              title={`${title} Installation is taking longer than expected`}
+            >
               {reason}
             </Alert>
             <br />

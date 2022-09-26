@@ -4,9 +4,8 @@
 
 import type { ObjectReference } from './ObjectReference';
 
-export type Plan = (ObjectReference & {
-    category?: string;
-    name?: string;
-    type?: string;
-});
-
+export type Plan = ObjectReference & {
+  category?: string;
+  name?: string;
+  type?: string;
+};

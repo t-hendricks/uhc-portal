@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-  PageSection,
-} from '@patternfly/react-core';
+import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { scrollToTop } from '../../../common/helpers';
@@ -16,11 +14,12 @@ class InstallArmBareMetal extends Component {
 
   render() {
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'ARM Bare Metal' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'ARM Bare Metal' },
+        ]}
       />
     );
 

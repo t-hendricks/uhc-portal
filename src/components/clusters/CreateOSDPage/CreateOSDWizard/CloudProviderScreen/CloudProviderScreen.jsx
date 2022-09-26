@@ -44,27 +44,37 @@ function CloudProviderScreen({
   ]);
 
   return (
-    <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
-      <Title headingLevel="h3">
-        Select a cloud provider
-      </Title>
+    <Form
+      onSubmit={(event) => {
+        event.preventDefault();
+        return false;
+      }}
+    >
+      <Title headingLevel="h3">Select a cloud provider</Title>
       <Field
         name="cloud_provider"
         component={CloudProviderSelectionField}
-        validate={value => (!value ? 'Cloud provider is required.' : undefined)}
+        validate={(value) => (!value ? 'Cloud provider is required.' : undefined)}
         change={change}
       />
       {isByoc && (
         <>
-          {cloudProviderId === 'aws'
-            ? <AWSByocFields isValidating={ccsCredentialsValidityResponse.pending} />
-            : <GCPByocFields isValidating={ccsCredentialsValidityResponse.pending} />}
+          {cloudProviderId === 'aws' ? (
+            <AWSByocFields isValidating={ccsCredentialsValidityResponse.pending} />
+          ) : (
+            <GCPByocFields isValidating={ccsCredentialsValidityResponse.pending} />
+          )}
 
           {(ccsCredentialsValidityResponse.error || showValidationAlert) && (
-            <Alert variant="danger" isInline title={`${cloudProviderId.toUpperCase()} wasn't able to verify your credentials`}>
-              Verify that your entered
-              {' '}
-              {cloudProviderId === 'aws' ? 'access keys match the access keys provided in your AWS account.' : 'service account details are correct.'}
+            <Alert
+              variant="danger"
+              isInline
+              title={`${cloudProviderId.toUpperCase()} wasn't able to verify your credentials`}
+            >
+              Verify that your entered{' '}
+              {cloudProviderId === 'aws'
+                ? 'access keys match the access keys provided in your AWS account.'
+                : 'service account details are correct.'}
             </Alert>
           )}
         </>

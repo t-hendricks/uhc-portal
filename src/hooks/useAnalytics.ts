@@ -17,7 +17,10 @@ interface useAnalyticsReturn {
  * Provides an analytics API instance, and a helper method for tracking.
  */
 const useAnalytics = (): useAnalyticsReturn => {
-  const { analytics, segment: { setPageMetadata } } = useChrome();
+  const {
+    analytics,
+    segment: { setPageMetadata },
+  } = useChrome();
 
   const track = (trackEvent: object, options = {}) => {
     const eventObj: any = getTrackEvent(trackEvent, options);

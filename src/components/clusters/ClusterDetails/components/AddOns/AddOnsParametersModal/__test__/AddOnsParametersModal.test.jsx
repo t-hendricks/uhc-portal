@@ -36,20 +36,24 @@ describe('<AddOnsParametersModal />', () => {
           id: 'Dummy ID',
           name: 'Dummy Name',
           parameters: {
-            items: [{
-              id: 'dummy item',
-              enabled: true,
-              editable: true,
-              default_value: dummyValue,
-            }],
+            items: [
+              {
+                id: 'dummy item',
+                enabled: true,
+                editable: true,
+                default_value: dummyValue,
+              },
+            ],
           },
         }}
         addOnInstallation={{
           id: 'Dummy ID',
           parameters: {
-            items: [{
-              id: 'dummy item',
-            }],
+            items: [
+              {
+                id: 'dummy item',
+              },
+            ],
           },
         }}
         isUpdateForm={false}
@@ -87,11 +91,13 @@ describe('<AddOnsParametersModal />', () => {
       id: 'Dummy ID',
       name: 'Dummy Name',
       parameters: {
-        items: [{
-          id: 'dummy item',
-          enabled: true,
-          editable: true,
-        }],
+        items: [
+          {
+            id: 'dummy item',
+            enabled: true,
+            editable: true,
+          },
+        ],
       },
     };
     wrapper.setProps({ addOn }, () => {
@@ -107,11 +113,13 @@ describe('<AddOnsParametersModal />', () => {
       id: 'Dummy ID',
       name: 'Dummy Name',
       parameters: {
-        items: [{
-          id: 'dummy item',
-          enabled: true,
-          editable: false,
-        }],
+        items: [
+          {
+            id: 'dummy item',
+            enabled: true,
+            editable: false,
+          },
+        ],
       },
     };
     const isUpdateForm = true;
@@ -128,17 +136,19 @@ describe('<AddOnsParametersModal />', () => {
       id: 'Dummy ID',
       name: 'Dummy Name',
       parameters: {
-        items: [{
-          id: 'dummy item',
-          options: [
-            {
-              name: 'Option 1',
-              value: 'option1',
-            },
-          ],
-          enabled: true,
-          editable: false,
-        }],
+        items: [
+          {
+            id: 'dummy item',
+            options: [
+              {
+                name: 'Option 1',
+                value: 'option1',
+              },
+            ],
+            enabled: true,
+            editable: false,
+          },
+        ],
       },
     };
     wrapper.setProps({ addOn }, () => {
@@ -157,18 +167,20 @@ describe('<AddOnsParametersModal />', () => {
       id: 'Dummy ID',
       name: 'Dummy Name',
       parameters: {
-        items: [{
-          id: 'dummy item',
-          options: [
-            {
-              name: 'Option 1',
-              value: 'option1',
-            },
-          ],
-          default_value: 'option1',
-          enabled: true,
-          editable: true,
-        }],
+        items: [
+          {
+            id: 'dummy item',
+            options: [
+              {
+                name: 'Option 1',
+                value: 'option1',
+              },
+            ],
+            default_value: 'option1',
+            enabled: true,
+            editable: true,
+          },
+        ],
       },
     };
     wrapper.setProps({ addOn }, () => {

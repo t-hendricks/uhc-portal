@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type Error = {
-    errors: Array<any>;
+  errors: Array<any>;
 };
-

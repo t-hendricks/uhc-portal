@@ -12,7 +12,8 @@ describe('<CloudFormationTab />', () => {
 
   it('should return the custom account role prefix', () => {
     const customPrefix = produce(fixtures.ROSAManualClusterDetails, (draft) => {
-      draft.cluster.aws.sts.role_arn = 'arn:aws:iam::123456789012:role/Custom-Prefix-Installer-Role';
+      draft.cluster.aws.sts.role_arn =
+        'arn:aws:iam::123456789012:role/Custom-Prefix-Installer-Role';
     });
     const prefix = getAccountRolePrefix(customPrefix.cluster);
     expect(prefix).toBe('Custom-Prefix');

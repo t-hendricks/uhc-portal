@@ -10,16 +10,14 @@ exports[`DeveloperPreviewSection with default parameters renders correctly 1`] =
       noVerticalAlign={false}
       size="sm"
     />
-     
-    Developer Preview
+     Developer Preview
   </span>
    
   <Link
     to="/install/pre-release"
   >
     Download
-     
-    pre-release builds
+     pre-release builds
   </Link>
 </Fragment>
 `;
@@ -34,16 +32,14 @@ exports[`DeveloperPreviewSection with devPreviewLink renders correctly 1`] = `
       noVerticalAlign={false}
       size="sm"
     />
-     
-    Developer Preview
+     Developer Preview
   </span>
    
   <Link
     to="/install/ibmz/pre-release"
   >
     Download
-     
-    pre-release builds
+     pre-release builds
   </Link>
 </Fragment>
 `;

@@ -48,7 +48,7 @@ const baseURLProps = {
  * otherwise returns false.
  * @param {Object} obj
  */
-const hasData = obj => get(obj, 'data.length', 0) > 0;
+const hasData = (obj) => get(obj, 'data.length', 0) > 0;
 
 /**
  * Get the number of issues and warnings by some defined criteria for each of them
@@ -64,9 +64,7 @@ const hasData = obj => get(obj, 'data.length', 0) > 0;
  * @param {string} warningsMatch
  */
 
-const getIssuesAndWarnings = ({
-  data, criteria, issuesMatch, warningsMatch,
-}) => {
+const getIssuesAndWarnings = ({ data, criteria, issuesMatch, warningsMatch }) => {
   if (!data || data.length === 0) {
     return { issuesCount: null, warningsCount: null };
   }
@@ -91,14 +89,15 @@ const hasResourceUsageMetrics = (cluster) => {
   const metricsLastUpdate = moment.utc(get(cluster, 'metrics.cpu.updated_timestamp', 0));
   const now = moment.utc();
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-  const isDisconnected = get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED;
+  const isDisconnected =
+    get(cluster, 'subscription.status', false) === subscriptionStatuses.DISCONNECTED;
   const showOldMetrics = !!config.configData.showOldMetrics;
 
-  const metricsAvailable = !isArchived
-   && !isDisconnected
-   && hasCpuAndMemory(get(cluster, 'metrics.cpu', null), get(cluster, 'metrics.memory', null))
-   && (showOldMetrics
-   || (now.diff(metricsLastUpdate, 'hours') < maxMetricsTimeDelta));
+  const metricsAvailable =
+    !isArchived &&
+    !isDisconnected &&
+    hasCpuAndMemory(get(cluster, 'metrics.cpu', null), get(cluster, 'metrics.memory', null)) &&
+    (showOldMetrics || now.diff(metricsLastUpdate, 'hours') < maxMetricsTimeDelta);
 
   return metricsAvailable;
 };
@@ -112,10 +111,10 @@ const resourceUsageIssuesHelper = (cpu, memory, threshold) => {
   const totalMemory = memory.total.value;
 
   let numOfIssues = 0;
-  if (cpu && totalCPU && (cpu.used.value / cpu.total.value > threshold)) {
+  if (cpu && totalCPU && cpu.used.value / cpu.total.value > threshold) {
     numOfIssues += 1;
   }
-  if (memory && totalMemory && (memory.used.value / memory.total.value > threshold)) {
+  if (memory && totalMemory && memory.used.value / memory.total.value > threshold) {
     numOfIssues += 1;
   }
   return numOfIssues;

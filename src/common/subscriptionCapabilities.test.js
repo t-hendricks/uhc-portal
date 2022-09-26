@@ -11,14 +11,9 @@ import { subscriptionStatuses } from './subscriptionTypes';
 
 import { getRandomID } from './helpers';
 
-const {
-  SUBSCRIBED_OCP_MARKETPLACE,
-} = subscriptionCapabilities;
+const { SUBSCRIBED_OCP_MARKETPLACE } = subscriptionCapabilities;
 
-const {
-  ACTIVE,
-  DISCONNECTED,
-} = subscriptionStatuses;
+const { ACTIVE, DISCONNECTED } = subscriptionStatuses;
 
 const newOCPCluster = () => {
   const clusterID = getRandomID();
@@ -63,22 +58,28 @@ const withCapabilites = (cluster) => {
 
 const withFalsyCapabilites = (cluster) => {
   forOwn(subscriptionCapabilities, (cap) => {
-    cluster.subscription.capabilities.push({
-      name: cap,
-      value: 'false',
-    }, {
-      name: cap,
-      value: '',
-    }, {
-      name: cap,
-      value: null,
-    }, {
-      name: cap,
-      value: undefined,
-    }, {
-      name: 'foobar',
-      value: 'true',
-    });
+    cluster.subscription.capabilities.push(
+      {
+        name: cap,
+        value: 'false',
+      },
+      {
+        name: cap,
+        value: '',
+      },
+      {
+        name: cap,
+        value: null,
+      },
+      {
+        name: cap,
+        value: undefined,
+      },
+      {
+        name: 'foobar',
+        value: 'true',
+      },
+    );
   });
 
   return cluster;

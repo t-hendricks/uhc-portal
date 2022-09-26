@@ -16,7 +16,10 @@ limitations under the License.
 import merge from 'lodash/merge';
 import { produce } from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, INVALIDATE_ACTION,
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  INVALIDATE_ACTION,
   baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
@@ -127,8 +130,9 @@ function clustersReducer(state = initialState, action) {
         break;
       case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS): {
         const { data } = action.payload;
-        const clustersServiceError = !!data?.meta?.clustersServiceError
-                                     && getErrorState({ payload: data.meta.clustersServiceError });
+        const clustersServiceError =
+          !!data?.meta?.clustersServiceError &&
+          getErrorState({ payload: data.meta.clustersServiceError });
         draft.clusters = {
           ...initialState.clusters,
           clusters: data.items,
@@ -421,7 +425,8 @@ function clustersReducer(state = initialState, action) {
 
       case clustersConstants.SET_CLUSTER_UPGRADE_GATE:
         draft.details.cluster.upgradeGates = [
-          ...state.details.cluster.upgradeGates, { version_gate: { id: action.payload } },
+          ...state.details.cluster.upgradeGates,
+          { version_gate: { id: action.payload } },
         ];
         break;
 

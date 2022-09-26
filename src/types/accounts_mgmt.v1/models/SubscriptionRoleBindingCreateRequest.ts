@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type SubscriptionRoleBindingCreateRequest = {
-    account_username: string;
-    role_id: string;
+  account_username: string;
+  role_id: string;
 };
-

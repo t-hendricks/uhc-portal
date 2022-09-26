@@ -5,10 +5,7 @@ import { OSD_TRIAL_FEATURE } from '../../../../../../redux/constants/featureCons
 
 import { billingModels, normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
-import {
-  availableQuota,
-  quotaTypes,
-} from '../../../../common/quotaSelectors';
+import { availableQuota, quotaTypes } from '../../../../common/quotaSelectors';
 
 import BillingModelSection from './BillingModelSection';
 
@@ -20,7 +17,8 @@ const mapStateToProps = (state) => {
 
   const product = valueSelector(state, 'product');
 
-  const quotaQuery = params => availableQuota(state.userProfile.organization.quotaList, params) > 0;
+  const quotaQuery = (params) =>
+    availableQuota(state.userProfile.organization.quotaList, params) > 0;
 
   // calculate marketplace quota for OSD even if OSDTrial was selected
   // since there is no OSDTrial on RHM
@@ -28,54 +26,48 @@ const mapStateToProps = (state) => {
 
   return {
     product,
-    showOSDTrial: state.features[OSD_TRIAL_FEATURE] && quotaQuery({
-      resourceType: quotaTypes.CLUSTER,
-      product: OSDTrial,
-    }),
+    showOSDTrial:
+      state.features[OSD_TRIAL_FEATURE] &&
+      quotaQuery({
+        resourceType: quotaTypes.CLUSTER,
+        product: OSDTrial,
+      }),
 
     hasStandardOSDQuota: quotaQuery({
       resourceType: quotaTypes.CLUSTER,
       product: OSD,
       billingModel: STANDARD,
     }),
-    hasBYOCquota: quotaQuery(
-      {
-        resourceType: quotaTypes.CLUSTER,
-        billingModel: STANDARD,
-        product,
-        isBYOC: true,
-      },
-    ),
-    hasRhInfraQuota: quotaQuery(
-      {
-        resourceType: quotaTypes.CLUSTER,
-        billingModel: STANDARD,
-        product,
-        isBYOC: false,
-      },
-    ),
+    hasBYOCquota: quotaQuery({
+      resourceType: quotaTypes.CLUSTER,
+      billingModel: STANDARD,
+      product,
+      isBYOC: true,
+    }),
+    hasRhInfraQuota: quotaQuery({
+      resourceType: quotaTypes.CLUSTER,
+      billingModel: STANDARD,
+      product,
+      isBYOC: false,
+    }),
 
     hasMarketplaceQuota: quotaQuery({
       resourceType: quotaTypes.CLUSTER,
       product: productForMarketplace,
       billingModel: MARKETPLACE,
     }),
-    hasMarketplaceBYOCQuota: quotaQuery(
-      {
-        resourceType: quotaTypes.CLUSTER,
-        billingModel: MARKETPLACE,
-        product: productForMarketplace,
-        isBYOC: true,
-      },
-    ),
-    hasMarketplaceRhInfraQuota: quotaQuery(
-      {
-        resourceType: quotaTypes.CLUSTER,
-        billingModel: MARKETPLACE,
-        product: productForMarketplace,
-        isBYOC: false,
-      },
-    ),
+    hasMarketplaceBYOCQuota: quotaQuery({
+      resourceType: quotaTypes.CLUSTER,
+      billingModel: MARKETPLACE,
+      product: productForMarketplace,
+      isBYOC: true,
+    }),
+    hasMarketplaceRhInfraQuota: quotaQuery({
+      resourceType: quotaTypes.CLUSTER,
+      billingModel: MARKETPLACE,
+      product: productForMarketplace,
+      isBYOC: false,
+    }),
   };
 };
 

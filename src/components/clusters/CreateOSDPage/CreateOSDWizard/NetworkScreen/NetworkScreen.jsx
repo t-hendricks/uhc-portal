@@ -6,7 +6,10 @@ import {
   Grid,
   GridItem,
   Title,
-  Text, FormFieldGroup, FormGroup, Tooltip,
+  Text,
+  FormFieldGroup,
+  FormGroup,
+  Tooltip,
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import { ReduxCheckbox } from '../../../../common/ReduxFormComponents';
@@ -44,26 +47,26 @@ function NetworkScreen(props) {
 
   const { track } = useAnalytics();
 
-  const trackOcmResourceType = product === normalizedProducts.ROSA
-    ? ocmResourceType.MOA : ocmResourceType.OSD;
+  const trackOcmResourceType =
+    product === normalizedProducts.ROSA ? ocmResourceType.MOA : ocmResourceType.OSD;
 
-  const trackCheckedState = (trackEvent, checked) => track(trackEvent, {
-    resourceType: trackOcmResourceType,
-    customProperties: {
-      checked,
-    },
-  });
+  const trackCheckedState = (trackEvent, checked) =>
+    track(trackEvent, {
+      resourceType: trackOcmResourceType,
+      customProperties: {
+        checked,
+      },
+    });
 
   const shouldUncheckInstallToVPC = () => {
     const availabilityZones = [formValues.az_0, formValues.az_1, formValues.az_2];
     const hasSubnets = Object.keys(formValues).some(
-      formValue => formValue.startsWith('public_subnet_id')
-      || formValue.startsWith('private_subnet_id'),
+      (formValue) =>
+        formValue.startsWith('public_subnet_id') || formValue.startsWith('private_subnet_id'),
     );
 
     const noAvailZones = availabilityZones.every(
-      zone => zone === undefined
-      || zone === PLACEHOLDER_VALUE,
+      (zone) => zone === undefined || zone === PLACEHOLDER_VALUE,
     );
 
     if (!hasSubnets && noAvailZones) {
@@ -110,31 +113,37 @@ function NetworkScreen(props) {
       name="install_to_vpc"
       label="Install into an existing VPC"
       onChange={onInstallIntoVPCchange}
-      isDisabled={(privateLinkAndClusterSelected || configureProxySelected)}
+      isDisabled={privateLinkAndClusterSelected || configureProxySelected}
     />
   );
 
   return (
-    <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
+    <Form
+      onSubmit={(event) => {
+        event.preventDefault();
+        return false;
+      }}
+    >
       <Grid hasGutter>
         <GridItem>
           <Title headingLevel="h3">Networking configuration</Title>
         </GridItem>
         <GridItem>
-          <Text>
-            Configure network access for your cluster.
-          </Text>
+          <Text>Configure network access for your cluster.</Text>
         </GridItem>
 
         {showClusterPrivacy && (
           <>
             <GridItem>
-              <Title headingLevel="h4" size="xl" className="privacy-heading">Cluster privacy</Title>
+              <Title headingLevel="h4" size="xl" className="privacy-heading">
+                Cluster privacy
+              </Title>
             </GridItem>
             <GridItem>
               <Text>
                 {/* eslint-disable-next-line max-len */}
-                Install your cluster with all public or private API endpoints and application routes.
+                Install your cluster with all public or private API endpoints and application
+                routes.
               </Text>
             </GridItem>
             <Field
@@ -152,7 +161,8 @@ function NetworkScreen(props) {
                       <div className="radio-helptext">
                         Access Kubernetes API endpoint and application routes from the internet.
                       </div>
-                    </>),
+                    </>
+                  ),
                 },
                 {
                   value: 'internal',
@@ -161,8 +171,8 @@ function NetworkScreen(props) {
                     <>
                       Private
                       <div className="radio-helptext">
-                        Access Kubernetes API endpoint and application routes from
-                        direct private connections only.
+                        Access Kubernetes API endpoint and application routes from direct private
+                        connections only.
                       </div>
                     </>
                   ),
@@ -180,9 +190,9 @@ function NetworkScreen(props) {
                   title="You will not be able to access your cluster until you edit network settings in your cloud provider."
                 >
                   {cloudProviderID === 'aws' && (
-                  <ExternalLink href={links.OSD_AWS_PRIVATE_CONNECTIONS}>
-                    Learn more about configuring network settings
-                  </ExternalLink>
+                    <ExternalLink href={links.OSD_AWS_PRIVATE_CONNECTIONS}>
+                      Learn more about configuring network settings
+                    </ExternalLink>
                   )}
                 </Alert>
               </GridItem>
@@ -197,8 +207,8 @@ function NetworkScreen(props) {
                 Virtual Private Cloud (VPC)
               </Title>
               <Text>
-                By default, a new VPC will be created for your cluster.
-                Alternatively, you may opt to install to an existing VPC below.
+                By default, a new VPC will be created for your cluster. Alternatively, you may opt
+                to install to an existing VPC below.
               </Text>
             </GridItem>
             <GridItem>
@@ -207,48 +217,41 @@ function NetworkScreen(props) {
                   <Tooltip
                     position="top-start"
                     enableFlip
-                    content={(
+                    content={
                       <p>
-                        Private clusters must be installed into an existing VPC
-                        {' '}
-                        and have PrivateLink enabled.
+                        Private clusters must be installed into an existing VPC and have PrivateLink
+                        enabled.
                       </p>
-                    )}
+                    }
                   >
                     {installToVPCCheckbox}
                   </Tooltip>
-                ) : installToVPCCheckbox}
+                ) : (
+                  installToVPCCheckbox
+                )}
                 <FormFieldGroup>
                   {privateClusterSelected && cloudProviderID === 'aws' && (
-                  <FormGroup>
-                    <Field
-                      component={ReduxCheckbox}
-                      name="use_privatelink"
-                      label="Use a PrivateLink"
-                      onChange={onPrivateLinkChange}
-                      isDisabled={forcePrivateLink && privateClusterSelected}
-                      helpText={(
-                        <>
-                          {constants.privateLinkHint}
-                        </>
-                      )}
-                    />
-                  </FormGroup>
+                    <FormGroup>
+                      <Field
+                        component={ReduxCheckbox}
+                        name="use_privatelink"
+                        label="Use a PrivateLink"
+                        onChange={onPrivateLinkChange}
+                        isDisabled={forcePrivateLink && privateClusterSelected}
+                        helpText={<>{constants.privateLinkHint}</>}
+                      />
+                    </FormGroup>
                   )}
                   {showConfigureProxy && (
-                  <FormGroup>
-                    <Field
-                      component={ReduxCheckbox}
-                      name="configure_cluster_proxy"
-                      label="Configure a cluster-wide proxy"
-                      onChange={onClusterProxyChange}
-                      helpText={(
-                        <>
-                          {constants.clusterProxyHint}
-                        </>
-                      )}
-                    />
-                  </FormGroup>
+                    <FormGroup>
+                      <Field
+                        component={ReduxCheckbox}
+                        name="configure_cluster_proxy"
+                        label="Configure a cluster-wide proxy"
+                        onChange={onClusterProxyChange}
+                        helpText={<>{constants.clusterProxyHint}</>}
+                      />
+                    </FormGroup>
                   )}
                 </FormFieldGroup>
               </FormGroup>

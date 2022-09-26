@@ -14,20 +14,18 @@ export const categoryMapping = {
 
 /* PF's ChartLabel doesn't allow to create a link from the part of the label,
    thus, the custom title component is used */
-const TitleComponent = ({
-  data, index, x, y, style,
-}) => {
+const TitleComponent = ({ data, index, x, y, style }) => {
   const entity = data[index];
   const { name, count, tags } = entity;
 
   return (
     <text x={x} y={y} style={style} dy={5}>
       <tspan x={x} y={y}>
-        {name}
-        :
-        {' '}
+        {name}:{' '}
         <a
-          href={`${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor/recommendations?category=${categoryMapping[tags]}`}
+          href={`${window.location.origin}/${
+            APP_BETA ? 'beta/' : ''
+          }openshift/insights/advisor/recommendations?category=${categoryMapping[tags]}`}
           className="enabled-link"
         >
           {count}
@@ -61,8 +59,10 @@ const ChartByGroups = ({ tagHits, groups }) => {
           labelRadius={25}
           ariaTitle="Categories statistics"
           constrainToVisibleArea
-          data={Object.entries(groupedRulesByGroups)
-            .map(([title, group]) => ({ x: title, y: group.count }))}
+          data={Object.entries(groupedRulesByGroups).map(([title, group]) => ({
+            x: title,
+            y: group.count,
+          }))}
           width={400}
           height={120}
           padding={{
@@ -71,16 +71,20 @@ const ChartByGroups = ({ tagHits, groups }) => {
             right: 300, // Adjusted to accommodate legend
             top: 10,
           }}
-          labels={({ datum }) => (parseInt(datum.y, 10) === 0 || totalHits === 0 ? '' : `${((parseInt(datum.y, 10) / totalHits) * 100).toFixed()}%`)}
-          legendData={
-            Object.entries(groupedRulesByGroups)
-              .map(([title, { count, tags }]) => ({
-                name: title, count, tags, symbol: { type: 'circle' },
-              }))
+          labels={({ datum }) =>
+            parseInt(datum.y, 10) === 0 || totalHits === 0
+              ? ''
+              : `${((parseInt(datum.y, 10) / totalHits) * 100).toFixed()}%`
           }
+          legendData={Object.entries(groupedRulesByGroups).map(([title, { count, tags }]) => ({
+            name: title,
+            count,
+            tags,
+            symbol: { type: 'circle' },
+          }))}
           legendPosition="right"
           legendAllowWrap
-          legendComponent={(
+          legendComponent={
             <ChartLegend
               labelComponent={<TitleComponent />}
               height={100}
@@ -91,7 +95,7 @@ const ChartByGroups = ({ tagHits, groups }) => {
               style={{ labels: { fontSize: 12 } }}
               gutter={30}
             />
-          )}
+          }
         />
       </FlexItem>
     </Flex>

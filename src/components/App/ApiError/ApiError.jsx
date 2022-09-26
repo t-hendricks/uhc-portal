@@ -8,12 +8,7 @@ import TermsError from '../../common/TermsError';
 
 class ApiError extends Component {
   componentDidMount() {
-    const {
-      history,
-      apiRequest,
-      showApiError,
-      clearApiError,
-    } = this.props;
+    const { history, apiRequest, showApiError, clearApiError } = this.props;
     // intercept api response and set the apiError state for watched errors
     this.ejectApiErrorInterceptor = apiErrorInterceptor(apiRequest, showApiError);
     // when user navigates away, clear any apiError state.
@@ -42,10 +37,7 @@ class ApiError extends Component {
 }
 
 ApiError.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   history: PropTypes.shape({
     listen: PropTypes.func.isRequired,
   }).isRequired,

@@ -13,7 +13,10 @@ class ReduxFileUpload extends React.Component {
     // added because the FileUpload component does not forward additional props
     // like placeholder and onBlur to the TextArea
     // https://github.com/patternfly/patternfly-react/issues/7004
-    const { placeholder, input: { name } } = this.props;
+    const {
+      placeholder,
+      input: { name },
+    } = this.props;
     document.getElementById(name).addEventListener('blur', this.onTextAreaBlur);
     if (placeholder) {
       document.getElementById(name).setAttribute('placeholder', placeholder);
@@ -21,12 +24,16 @@ class ReduxFileUpload extends React.Component {
   }
 
   componentWillUnmount() {
-    const { input: { name } } = this.props;
+    const {
+      input: { name },
+    } = this.props;
     document.getElementById(name)?.removeEventListener('blur', this.onTextAreaBlur);
   }
 
   onTextAreaBlur = (event) => {
-    const { input: { onBlur } } = this.props;
+    const {
+      input: { onBlur },
+    } = this.props;
     onBlur(event);
   };
 
@@ -45,11 +52,12 @@ class ReduxFileUpload extends React.Component {
     } else {
       input.onChange(value);
     }
-  }
+  };
 
   handleFileRejected = (rejectedFiles, event) => {
     const {
-      input: { onBlur }, dropzoneProps,
+      input: { onBlur },
+      dropzoneProps,
     } = this.props;
     // makes the input touched so that the validation error message is displayed
     onBlur();
@@ -73,9 +81,7 @@ class ReduxFileUpload extends React.Component {
       extendedHelpText,
       dropzoneProps,
     } = this.props;
-    const {
-      filename,
-    } = this.state;
+    const { filename } = this.state;
 
     const helperTextInvalidText = () => {
       if ((dirty || touched) && error) {
@@ -91,9 +97,9 @@ class ReduxFileUpload extends React.Component {
         helperTextInvalid={helperTextInvalidText()}
         validated={(dirty || touched) && error ? 'error' : 'default'}
         label={label}
-        labelIcon={extendedHelpText && (
-          <PopoverHint title={extendedHelpTitle} hint={extendedHelpText} />
-        )}
+        labelIcon={
+          extendedHelpText && <PopoverHint title={extendedHelpTitle} hint={extendedHelpText} />
+        }
         isRequired={isRequired}
       >
         <FileUpload

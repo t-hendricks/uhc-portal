@@ -12,7 +12,7 @@ const ErrorKey = {
 
 const CreateClusterErrorModal = ({ onRetry }) => {
   const dispatch = useDispatch();
-  const createClusterResponse = useSelector(state => state.clusters.createdCluster);
+  const createClusterResponse = useSelector((state) => state.clusters.createdCluster);
   const resetResponse = () => dispatch(resetCreatedClusterResponse());
   const { error: createClusterError } = createClusterResponse;
 

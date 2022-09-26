@@ -23,9 +23,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import {
-  getInstalled, hasQuota, validateAddOnRequirements,
-} from '../AddOnsHelper';
+import { getInstalled, hasQuota, validateAddOnRequirements } from '../AddOnsHelper';
 
 import AddOnsCard from '../AddOnsCard';
 import AddOnStateLabel from '../AddOnStateLabel';
@@ -57,19 +55,16 @@ class AddOnsDrawer extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    const {
-      addClusterAddOnResponse,
-      deleteClusterAddOnResponse,
-      submitClusterAddOnResponse,
-    } = this.props;
+    const { addClusterAddOnResponse, deleteClusterAddOnResponse, submitClusterAddOnResponse } =
+      this.props;
 
-    const {
-      isDrawerExpanded,
-    } = this.state;
+    const { isDrawerExpanded } = this.state;
 
-    if (((addClusterAddOnResponse.fulfilled && prevProps.addClusterAddOnResponse.pending)
-    || (deleteClusterAddOnResponse.fulfilled && prevProps.deleteClusterAddOnResponse.pending)
-    || (submitClusterAddOnResponse.fulfilled && prevProps.submitClusterAddOnResponse.pending))) {
+    if (
+      (addClusterAddOnResponse.fulfilled && prevProps.addClusterAddOnResponse.pending) ||
+      (deleteClusterAddOnResponse.fulfilled && prevProps.deleteClusterAddOnResponse.pending) ||
+      (submitClusterAddOnResponse.fulfilled && prevProps.submitClusterAddOnResponse.pending)
+    ) {
       // close drawer when cluster is added, updated or deleted
       if (isDrawerExpanded) {
         // disabling lint for setting state in component did update as is safe due to conditional
@@ -85,19 +80,13 @@ class AddOnsDrawer extends React.Component {
 
   // check if user has quota for addons
   getHasQuota = (addOn) => {
-    const {
-      cluster,
-      organization,
-      quota,
-    } = this.props;
-    return (addOn !== null) ? hasQuota(addOn, cluster, organization, quota) : false;
+    const { cluster, organization, quota } = this.props;
+    return addOn !== null ? hasQuota(addOn, cluster, organization, quota) : false;
   };
 
   // return installed addon
   getInstalledAddon = (addOn) => {
-    const {
-      clusterAddOns,
-    } = this.props;
+    const { clusterAddOns } = this.props;
 
     return getInstalled(addOn, clusterAddOns);
   };
@@ -111,14 +100,10 @@ class AddOnsDrawer extends React.Component {
   };
 
   // handles card click, setting active card state
-  handleCardClick = addOn => () => {
-    const {
-      clusterAddOns,
-    } = this.props;
+  handleCardClick = (addOn) => () => {
+    const { clusterAddOns } = this.props;
 
-    const {
-      activeCard,
-    } = this.state;
+    const { activeCard } = this.state;
 
     // if acvtiveCard is clicked again close drawer
     if (addOn.id === activeCard?.id) {
@@ -127,10 +112,7 @@ class AddOnsDrawer extends React.Component {
     }
 
     // get installedAddon
-    const installedAddOn = getInstalled(
-      addOn,
-      clusterAddOns,
-    );
+    const installedAddOn = getInstalled(addOn, clusterAddOns);
 
     // get addOn requirements
     const requirements = validateAddOnRequirements(addOn);
@@ -163,16 +145,10 @@ class AddOnsDrawer extends React.Component {
       isDrawerExpanded: false,
       activeTabKey: 0,
     });
-  }
+  };
 
   render() {
-    const {
-      addClusterAddOn,
-      addClusterAddOnResponse,
-      addOnsList,
-      cluster,
-      openModal,
-    } = this.props;
+    const { addClusterAddOn, addClusterAddOnResponse, addOnsList, cluster, openModal } = this.props;
 
     const {
       // current selected addon info
@@ -196,8 +172,8 @@ class AddOnsDrawer extends React.Component {
         <DrawerHead className="ocm-c-addons__drawer--header">
           <Grid hasGutter>
             <GridItem span={3}>
-              { activeCard?.icon && (
-              <img alt={activeCard?.name} src={`data:image/png;base64,${activeCard?.icon}`} />
+              {activeCard?.icon && (
+                <img alt={activeCard?.name} src={`data:image/png;base64,${activeCard?.icon}`} />
               )}
             </GridItem>
             <GridItem span={9}>
@@ -216,9 +192,7 @@ class AddOnsDrawer extends React.Component {
             requirements={validateAddOnRequirements(activeCard)}
             installedAddOn={installedAddOn}
           />
-          <AddOnsFailedBox
-            installedAddOn={installedAddOn}
-          />
+          <AddOnsFailedBox installedAddOn={installedAddOn} />
         </DrawerPanelBody>
         <div>
           <Tabs
@@ -234,9 +208,7 @@ class AddOnsDrawer extends React.Component {
             <Tab eventKey={0} title={<TabTitleText>Details</TabTitleText>}>
               <DrawerPanelBody className="ocm-addons-tab--drawer-panel-body">
                 <Flex spaceItems={{ default: 'spaceItemsLg' }} direction={{ default: 'column' }}>
-                  <FlexItem>
-                    {activeCard?.description}
-                  </FlexItem>
+                  <FlexItem>{activeCard?.description}</FlexItem>
                   <AddOnsMetaDataItem
                     activeCardDocsLink={activeCard?.docs_link}
                     installedAddOnOperatorVersion={installedAddOn?.operator_version}
@@ -270,9 +242,7 @@ class AddOnsDrawer extends React.Component {
                 <DrawerPanelBody className="ocm-addons-tab--drawer-panel-body">
                   <Flex spaceItems={{ default: 'spaceItemsLg' }} direction={{ default: 'column' }}>
                     <FlexItem>
-                      <AddOnsRequirementContent
-                        activeCardRequirements={activeCardRequirements}
-                      />
+                      <AddOnsRequirementContent activeCardRequirements={activeCardRequirements} />
                     </FlexItem>
                   </Flex>
                 </DrawerPanelBody>
@@ -285,20 +255,23 @@ class AddOnsDrawer extends React.Component {
 
     return (
       <>
-        <Drawer isExpanded={isDrawerExpanded} isInline className="ocm-addons-tab--addon-drawer pf-m-inline-on-2xl">
-          <DrawerContent panelContent={panelContent} className="pf-m-no-background ocm-c-addons__drawer--panel-gallery">
+        <Drawer
+          isExpanded={isDrawerExpanded}
+          isInline
+          className="ocm-addons-tab--addon-drawer pf-m-inline-on-2xl"
+        >
+          <DrawerContent
+            panelContent={panelContent}
+            className="pf-m-no-background ocm-c-addons__drawer--panel-gallery"
+          >
             <DrawerContentBody>
               <Gallery hasGutter>
-                { addOnsList.map(addOn => (
+                {addOnsList.map((addOn) => (
                   <AddOnsCard
                     key={addOn.id}
                     addOn={addOn}
-                    installedAddOn={
-                            this.getInstalledAddon(addOn)
-                          }
-                    requirements={
-                            validateAddOnRequirements(addOn)
-                          }
+                    installedAddOn={this.getInstalledAddon(addOn)}
+                    requirements={validateAddOnRequirements(addOn)}
                     onClick={this.handleCardClick(addOn)}
                     activeCard={activeCard?.id}
                   />
@@ -307,9 +280,7 @@ class AddOnsDrawer extends React.Component {
             </DrawerContentBody>
           </DrawerContent>
         </Drawer>
-        <AddOnsParametersModal
-          clusterID={cluster.id}
-        />
+        <AddOnsParametersModal clusterID={cluster.id} />
         <AddOnsDeleteModal />
       </>
     );

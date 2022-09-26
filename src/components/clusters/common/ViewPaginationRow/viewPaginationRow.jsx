@@ -7,9 +7,18 @@ import { connect } from 'react-redux';
 import * as actions from '../../../../redux/actions/viewOptionsActions';
 
 const ViewPaginationRow = ({
-  currentPage, pageSize, totalCount, onFirstPage,
-  onLastPage, onPreviousPage, onNextPage, onPageInput, onPerPageSelect, variant,
-  isDisabled, perPageOptions,
+  currentPage,
+  pageSize,
+  totalCount,
+  onFirstPage,
+  onLastPage,
+  onPreviousPage,
+  onNextPage,
+  onPageInput,
+  onPerPageSelect,
+  variant,
+  isDisabled,
+  perPageOptions,
 }) => (
   <Pagination
     page={currentPage}
@@ -63,7 +72,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
 });
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(ViewPaginationRow);
+export default connect(null, mapDispatchToProps)(ViewPaginationRow);

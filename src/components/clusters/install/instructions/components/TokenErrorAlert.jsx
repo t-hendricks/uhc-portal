@@ -20,22 +20,21 @@ class TokenErrorAlert extends React.Component {
     const { token } = this.props;
     const code = token.internalErrorCode || '';
     const errorMessage = token.errorMessage || '';
-    const message = code === BANNED_USER_CODE ? errorMessage : (
-      <>
-        {errorMessage}
-        <br />
-        <br />
-        Try again by refreshing the page.
-        If the problem persists, report the issue to
-        {' '}
-        <a href="mailto:ocm-feedback@redhat.com" rel="noreferrer noopener" target="_blank">
-          ocm-feedback@redhat.com
-          {' '}
-          <ExternalLinkAltIcon color="#0066cc" size="sm" />
-        </a>
-        .
-      </>
-    );
+    const message =
+      code === BANNED_USER_CODE ? (
+        errorMessage
+      ) : (
+        <>
+          {errorMessage}
+          <br />
+          <br />
+          Try again by refreshing the page. If the problem persists, report the issue to{' '}
+          <a href="mailto:ocm-feedback@redhat.com" rel="noreferrer noopener" target="_blank">
+            ocm-feedback@redhat.com <ExternalLinkAltIcon color="#0066cc" size="sm" />
+          </a>
+          .
+        </>
+      );
 
     return (
       <Alert

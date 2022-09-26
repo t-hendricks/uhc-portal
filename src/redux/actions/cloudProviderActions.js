@@ -1,8 +1,8 @@
 import { cloudProviderConstants } from '../constants';
 import { clusterService } from '../../services';
 
-const getCloudProvidersAndRegions = () => clusterService.getCloudProviders().then(
-  (cloudProvidersResponse) => {
+const getCloudProvidersAndRegions = () =>
+  clusterService.getCloudProviders().then((cloudProvidersResponse) => {
     const cloudProviders = {};
     cloudProvidersResponse.data.items.forEach((provider) => {
       cloudProviders[provider.id] = provider;
@@ -25,13 +25,13 @@ const getCloudProvidersAndRegions = () => clusterService.getCloudProviders().the
       cloudProviders[provider.id].regions = regions;
     });
     return cloudProviders;
-  },
-);
+  });
 
-const getCloudProviders = () => dispatch => dispatch({
-  type: cloudProviderConstants.GET_CLOUD_PROVIDERS,
-  payload: getCloudProvidersAndRegions(),
-});
+const getCloudProviders = () => (dispatch) =>
+  dispatch({
+    type: cloudProviderConstants.GET_CLOUD_PROVIDERS,
+    payload: getCloudProvidersAndRegions(),
+  });
 
 const cloudProviderActions = { getCloudProviders };
 

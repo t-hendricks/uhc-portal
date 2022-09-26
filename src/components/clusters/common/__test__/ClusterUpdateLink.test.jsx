@@ -12,9 +12,7 @@ describe('<ClusterUpdateLink />', () => {
         },
       },
     };
-    const wrapper = shallow(<ClusterUpdateLink
-      cluster={cluster}
-    />);
+    const wrapper = shallow(<ClusterUpdateLink cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper).toMatchObject({});
   });
@@ -31,9 +29,7 @@ describe('<ClusterUpdateLink />', () => {
         status: 'Stale',
       },
     };
-    const wrapper = shallow(<ClusterUpdateLink
-      cluster={cluster}
-    />);
+    const wrapper = shallow(<ClusterUpdateLink cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper).toMatchObject({});
   });
@@ -50,9 +46,7 @@ describe('<ClusterUpdateLink />', () => {
         status: 'Stale',
       },
     };
-    const wrapper = shallow(<ClusterUpdateLink
-      cluster={cluster}
-    />);
+    const wrapper = shallow(<ClusterUpdateLink cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper).toMatchObject({});
   });
@@ -71,9 +65,7 @@ describe('<ClusterUpdateLink />', () => {
         },
       },
     };
-    const wrapper = shallow(<ClusterUpdateLink
-      cluster={cluster}
-    />);
+    const wrapper = shallow(<ClusterUpdateLink cluster={cluster} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

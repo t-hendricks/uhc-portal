@@ -9,6 +9,5 @@ import type { CPUTotalNodeRoleOSMetricNode } from './CPUTotalNodeRoleOSMetricNod
  * role and OS of a cluster.
  */
 export type CPUTotalsNodeRoleOSMetricNode = {
-    cpu_totals?: Array<CPUTotalNodeRoleOSMetricNode>;
+  cpu_totals?: Array<CPUTotalNodeRoleOSMetricNode>;
 };
-

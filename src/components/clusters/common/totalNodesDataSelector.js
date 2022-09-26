@@ -37,14 +37,14 @@ const totalNodesDataSelector = (cluster, machinePools) => {
     });
   }
 
-  return ({
+  return {
     totalDesiredComputeNodes,
     hasMachinePoolWithAutoscaling,
     totalMinNodesCount,
     totalMaxNodesCount,
     totalDefaultMaxNodes,
     totalDefaultMinNods,
-  });
+  };
 };
 
 export default totalNodesDataSelector;

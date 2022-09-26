@@ -1,14 +1,10 @@
 import get from 'lodash/get';
 
-export const routeSelectorPairsAsStrings = (routeSelectors = {}) => (
-  Object.entries(routeSelectors)
-    .map(entry => entry.join('=')) || []
-);
+export const routeSelectorPairsAsStrings = (routeSelectors = {}) =>
+  Object.entries(routeSelectors).map((entry) => entry.join('=')) || [];
 
-export const routeSelectorsAsString = routeSelectors => (
-  routeSelectorPairsAsStrings(routeSelectors)
-    .join(',') || null
-);
+export const routeSelectorsAsString = (routeSelectors) =>
+  routeSelectorPairsAsStrings(routeSelectors).join(',') || null;
 
 const NetworkingSelector = (state) => {
   const { clusterRouters } = state;

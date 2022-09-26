@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   openModal: (name, data) => dispatch(openModal(name, data)),
 });
 

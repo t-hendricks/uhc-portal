@@ -6,18 +6,20 @@ import ArchivedClusterListTable from '../ArchivedClusterListTable';
 
 describe('<ArchivedClusterListTable />', () => {
   describe('ArchivedClusterListTable', () => {
-    const wrapper = shallow(<ArchivedClusterListTable
-      viewOptions={{
-        flags: {},
-        fields: {},
-        sorting: {
-          sortIndex: 0,
-          isAscending: true,
-          sortField: 'name',
-        },
-      }}
-      {...Fixtures}
-    />);
+    const wrapper = shallow(
+      <ArchivedClusterListTable
+        viewOptions={{
+          flags: {},
+          fields: {},
+          sorting: {
+            sortIndex: 0,
+            isAscending: true,
+            sortField: 'name',
+          },
+        }}
+        {...Fixtures}
+      />,
+    );
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();

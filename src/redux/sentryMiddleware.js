@@ -2,7 +2,7 @@
 
 import * as Sentry from '@sentry/browser';
 
-const sentryMiddleware = () => next => (action) => {
+const sentryMiddleware = () => (next) => (action) => {
   // for some actions, we want to keep some of the parameters in the breadcrumb
   let data = {};
   switch (action.type) {

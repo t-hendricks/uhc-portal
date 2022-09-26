@@ -24,13 +24,7 @@ class AddOnsCard extends Component {
   };
 
   render() {
-    const {
-      addOn,
-      installedAddOn,
-      requirements,
-      activeCard,
-      onClick,
-    } = this.props;
+    const { addOn, installedAddOn, requirements, activeCard, onClick } = this.props;
 
     return (
       <Card
@@ -44,16 +38,12 @@ class AddOnsCard extends Component {
       >
         <CardHeader className="ocm-c-addons__card--header">
           <CardHeaderMain>
-            { addOn.icon && (
-            <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />
-            )}
+            {addOn.icon && <img alt={addOn.name} src={`data:image/png;base64,${addOn.icon}`} />}
           </CardHeaderMain>
         </CardHeader>
-        <CardTitle>
-          { addOn.name }
-        </CardTitle>
+        <CardTitle>{addOn.name}</CardTitle>
         <CardBody className="ocm-c-addons__card--body">
-          { this.reduceCardDescription(addOn) }
+          {this.reduceCardDescription(addOn)}
         </CardBody>
         <CardFooter>
           <AddOnStateLabel

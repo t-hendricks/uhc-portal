@@ -32,7 +32,7 @@ const getOrganization = (organizationID: string) =>
 
 const getSubscriptions = (params: {
   page: number;
-  'page_size': number;
+  page_size: number;
   filter?: string;
   fields?: string;
   order?: string;
@@ -73,7 +73,7 @@ const getUnhealthyClusters = (
   organizationID: string,
   params: {
     page: number;
-    'page_size': number;
+    page_size: number;
     order?: string;
     search?: string;
     filter?: string;

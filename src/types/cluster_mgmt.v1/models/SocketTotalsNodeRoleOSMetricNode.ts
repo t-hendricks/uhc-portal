@@ -9,6 +9,5 @@ import type { SocketTotalNodeRoleOSMetricNode } from './SocketTotalNodeRoleOSMet
  * role and OS of a cluster.
  */
 export type SocketTotalsNodeRoleOSMetricNode = {
-    socket_totals?: Array<SocketTotalNodeRoleOSMetricNode>;
+  socket_totals?: Array<SocketTotalNodeRoleOSMetricNode>;
 };
-

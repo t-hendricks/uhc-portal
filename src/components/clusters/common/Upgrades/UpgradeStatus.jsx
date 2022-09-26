@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, EmptyState, EmptyStateBody, EmptyStateVariant, Title,
+  Button,
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateVariant,
+  Title,
 } from '@patternfly/react-core';
-import { OutlinedArrowAltCircleUpIcon, CheckCircleIcon, InProgressIcon } from '@patternfly/react-icons';
+import {
+  OutlinedArrowAltCircleUpIcon,
+  CheckCircleIcon,
+  InProgressIcon,
+} from '@patternfly/react-icons';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import './UpgradeStatus.scss';
 import UpdateGraph from './UpdateGraph/UpdateGraph';
@@ -35,10 +43,8 @@ function UpgradeStatus({
   };
 
   const upgradeState = scheduledUpgrade && scheduledUpgrade.state?.value;
-  const canCancel = isManualUpgradeScheduled
-                    && canEdit
-                    && upgradeState !== 'started'
-                    && upgradeState !== 'delayed';
+  const canCancel =
+    isManualUpgradeScheduled && canEdit && upgradeState !== 'started' && upgradeState !== 'delayed';
 
   const upgradeStateIcon = () => {
     let icon;
@@ -59,9 +65,7 @@ function UpgradeStatus({
     }
     return (
       <>
-        {icon}
-        {' '}
-        {text}
+        {icon} {text}
       </>
     );
   };
@@ -72,9 +76,7 @@ function UpgradeStatus({
         <Title headingLevel="h4" size="md">
           Update status is not available
         </Title>
-        <EmptyStateBody>
-          Update status is not available. Try again later.
-        </EmptyStateBody>
+        <EmptyStateBody>Update status is not available. Try again later.</EmptyStateBody>
       </EmptyState>
     );
   }
@@ -96,22 +98,20 @@ function UpgradeStatus({
           </>
         )}
       </div>
-      {
-    canCancel && (
-      <Button
-        id="ocm-upgrade-status-cancel"
-        variant="link"
-        onClick={() => {
-          if (onCancelClick) {
-            onCancelClick();
-          }
-          openModal('cancel-upgrade', { clusterID, schedule: scheduledUpgrade });
-        }}
-      >
-        Cancel this update
-      </Button>
-    )
-  }
+      {canCancel && (
+        <Button
+          id="ocm-upgrade-status-cancel"
+          variant="link"
+          onClick={() => {
+            if (onCancelClick) {
+              onCancelClick();
+            }
+            openModal('cancel-upgrade', { clusterID, schedule: scheduledUpgrade });
+          }}
+        >
+          Cancel this update
+        </Button>
+      )}
     </>
   );
 }

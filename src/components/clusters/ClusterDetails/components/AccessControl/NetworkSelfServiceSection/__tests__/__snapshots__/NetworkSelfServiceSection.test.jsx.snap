@@ -14,8 +14,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant fails 1`] = `
         AWS infrastructure access
       </Title>
       <p>
-        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account.
-         
+        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account. 
         <a
           href="https://console.aws.amazon.com/console/home"
           rel="noopener noreferrer"
@@ -212,8 +211,7 @@ exports[`<NetworkSelfServiceSection /> should notify when a grant succeeds 1`] =
         AWS infrastructure access
       </Title>
       <p>
-        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account.
-         
+        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account. 
         <a
           href="https://console.aws.amazon.com/console/home"
           rel="noopener noreferrer"
@@ -420,8 +418,7 @@ exports[`<NetworkSelfServiceSection /> should render with grants 1`] = `
         AWS infrastructure access
       </Title>
       <p>
-        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account.
-         
+        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account. 
         <a
           href="https://console.aws.amazon.com/console/home"
           rel="noopener noreferrer"
@@ -608,8 +605,7 @@ exports[`<NetworkSelfServiceSection /> should render with no data 1`] = `
         AWS infrastructure access
       </Title>
       <p>
-        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account.
-         
+        Grant permission to view or manage the AWS infrastructure of the cluster to IAM users defined in your AWS account. 
         <a
           href="https://console.aws.amazon.com/console/home"
           rel="noopener noreferrer"

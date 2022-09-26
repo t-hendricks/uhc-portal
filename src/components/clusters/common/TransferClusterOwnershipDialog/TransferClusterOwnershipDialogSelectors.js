@@ -1,6 +1,9 @@
 import get from 'lodash/get';
 
-import { subscriptionCapabilities, hasCapability } from '../../../../common/subscriptionCapabilities';
+import {
+  subscriptionCapabilities,
+  hasCapability,
+} from '../../../../common/subscriptionCapabilities';
 
 const canTransferClusterOwnershipSelector = (state) => {
   const subscription = get(state, 'clusters.details.cluster.subscription', {});
@@ -14,14 +17,12 @@ const canTransferClusterOwnershipListSelector = (state) => {
   clusters.forEach((cluster) => {
     const subscription = cluster.subscription || {};
     results[cluster.id] = hasCapability(
-      subscription, subscriptionCapabilities.RELEASE_OCP_CLUSTERS,
+      subscription,
+      subscriptionCapabilities.RELEASE_OCP_CLUSTERS,
     );
   });
 
   return results;
 };
 
-export {
-  canTransferClusterOwnershipListSelector,
-  canTransferClusterOwnershipSelector,
-};
+export { canTransferClusterOwnershipListSelector, canTransferClusterOwnershipSelector };

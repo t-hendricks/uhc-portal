@@ -11,7 +11,7 @@ import getClusterName from '../../../../common/getClusterName';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;
-  return ({
+  return {
     upgradeTrialClusterResponse: state.clusters.upgradedCluster,
     organization: state.userProfile.organization,
     clusterID: modalData.clusterID ? modalData.clusterID : '',
@@ -19,17 +19,19 @@ const mapStateToProps = (state) => {
     clusterDisplayName: getClusterName(modalData.cluster),
     shouldDisplayClusterName: modalData.shouldDisplayClusterName,
     machineTypesByID: state.machineTypes.typesByID,
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   submit: (clusterID, billingModel) => {
-    dispatch(upgradeTrialCluster(clusterID, {
-      billing_model: billingModel,
-      product: {
-        id: 'osd',
-      },
-    }));
+    dispatch(
+      upgradeTrialCluster(clusterID, {
+        billing_model: billingModel,
+        product: {
+          id: 'osd',
+        },
+      }),
+    );
   },
   resetResponse: () => dispatch(clearUpgradeTrialClusterResponse()),
   closeModal: () => dispatch(closeModal()),

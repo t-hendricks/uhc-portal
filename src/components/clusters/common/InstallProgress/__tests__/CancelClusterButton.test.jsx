@@ -1,12 +1,6 @@
 import React from 'react';
 
-import {
-  render,
-  screen,
-  within,
-  waitFor,
-  userEvent,
-} from '@testUtils';
+import { render, screen, within, waitFor, userEvent } from '@testUtils';
 
 import CancelClusterButton from '../CancelClusterButton';
 

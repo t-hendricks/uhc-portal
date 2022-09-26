@@ -20,7 +20,7 @@ describe('ApiError', () => {
     const apiError = null;
     const wrapper = shallow(
       <ApiError {...fixtures} apiError={apiError}>
-        { fixtures.children }
+        {fixtures.children}
       </ApiError>,
     );
     expect(wrapper.equals(fixtures.children)).toBe(true);
@@ -32,17 +32,20 @@ describe('ApiError', () => {
         id: '451',
         code: 'CLUSTERS-MGMT-451',
         reason: 'Legal terms should be agreed. See details',
-        details: [{
-          legal_terms_url: 'https://www.redhat.com/wapps/tnc/ackrequired?site=ocm&event=register',
-        }],
+        details: [
+          {
+            legal_terms_url: 'https://www.redhat.com/wapps/tnc/ackrequired?site=ocm&event=register',
+          },
+        ],
       },
     };
     const wrapper = shallow(
       <ApiError {...fixtures} apiError={apiError}>
-        { fixtures.children }
+        {fixtures.children}
       </ApiError>,
     );
-    expect(wrapper.matchesElement(<TermsError error={apiError} restore={fixtures.clearApiError} />))
-      .toBe(true);
+    expect(
+      wrapper.matchesElement(<TermsError error={apiError} restore={fixtures.clearApiError} />),
+    ).toBe(true);
   });
 });

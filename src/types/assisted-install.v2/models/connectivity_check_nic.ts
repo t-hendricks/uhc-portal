@@ -3,8 +3,7 @@
 /* eslint-disable */
 
 export type connectivity_check_nic = {
-    ip_addresses?: Array<string>;
-    mac?: string;
-    name?: string;
+  ip_addresses?: Array<string>;
+  mac?: string;
+  name?: string;
 };
-

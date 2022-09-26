@@ -8,13 +8,15 @@ describe('<AddOnsStateLabel />', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<AddOnStateLabel
-      addOn={{}}
-      installedAddOn={{
-        state: AddOnsConstants.INSTALLATION_STATE.READY,
-      }}
-      requirements={{ fulfilled: true, errorMsgs: [] }}
-    />);
+    wrapper = shallow(
+      <AddOnStateLabel
+        addOn={{}}
+        installedAddOn={{
+          state: AddOnsConstants.INSTALLATION_STATE.READY,
+        }}
+        requirements={{ fulfilled: true, errorMsgs: [] }}
+      />,
+    );
   });
 
   it('should render', () => {
@@ -30,17 +32,16 @@ describe('<AddOnsStateLabel />', () => {
   it('should render prerequisits not met if addon has requirements', () => {
     wrapper.setProps({
       addOn: {
-        requirements:
-          [
-            {
-              id: 'my-cluster-req',
-              resource: 'cluster',
-              data: {
-                cloud_providerd: 'gcp',
-              },
-              enabled: true,
+        requirements: [
+          {
+            id: 'my-cluster-req',
+            resource: 'cluster',
+            data: {
+              cloud_providerd: 'gcp',
             },
-          ],
+            enabled: true,
+          },
+        ],
       },
       requirements: { fulfilled: false, errorMsgs: [] },
     });

@@ -4,9 +4,8 @@
 
 import type { ObjectReference } from './ObjectReference';
 
-export type Error = (ObjectReference & {
-    code?: string;
-    operation_id?: string;
-    reason?: string;
-});
-
+export type Error = ObjectReference & {
+  code?: string;
+  operation_id?: string;
+  reason?: string;
+};

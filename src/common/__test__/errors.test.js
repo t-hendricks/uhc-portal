@@ -1,7 +1,6 @@
 import { formatErrorDetails, getErrorMessage, overrideErrorMessage } from '../errors';
 import { PENDING_ACTION } from '../../redux/reduxHelpers';
-import AddOnsConstants
-  from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsConstants';
+import AddOnsConstants from '../../components/clusters/ClusterDetails/components/AddOns/AddOnsConstants';
 
 describe('getErrorMessage()', () => {
   it('Properly extracts error message from the Error API object', () => {
@@ -66,8 +65,9 @@ describe('overrideErrorMessage()', () => {
     };
     const expectedMessage = `You are not authorized to create the cluster add-on because your request exceeds available quota.
               In order to fulfill this request, you will need quota/subscriptions for:`;
-    expect(overrideErrorMessage(payload, PENDING_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON)))
-      .toBe(expectedMessage);
+    expect(overrideErrorMessage(payload, PENDING_ACTION(AddOnsConstants.ADD_CLUSTER_ADDON))).toBe(
+      expectedMessage,
+    );
   });
 
   it('handles ExcessResources error kind for cluster addon update', () => {
@@ -80,58 +80,62 @@ describe('overrideErrorMessage()', () => {
     };
     const expectedMessage = `You are not authorized to create the cluster add-on because your request exceeds available quota.
               In order to fulfill this request, you will need quota/subscriptions for:`;
-    expect(overrideErrorMessage(payload, PENDING_ACTION(AddOnsConstants.UPDATE_CLUSTER_ADDON)))
-      .toBe(expectedMessage);
+    expect(
+      overrideErrorMessage(payload, PENDING_ACTION(AddOnsConstants.UPDATE_CLUSTER_ADDON)),
+    ).toBe(expectedMessage);
   });
 });
 
 describe('formatErrorDetails()', () => {
   it('handles ExcessResources kind addon', () => {
-    const errDetails = [{
-      kind: 'ExcessResources',
-      items: [
-        {
-          resource_type: 'addon',
-          resource_name: 'addon-prow-operator',
-          availability_zone_type: 'single',
-          count: 5,
-          billing_model: 'standard',
-        },
-      ],
-    }];
+    const errDetails = [
+      {
+        kind: 'ExcessResources',
+        items: [
+          {
+            resource_type: 'addon',
+            resource_name: 'addon-prow-operator',
+            availability_zone_type: 'single',
+            count: 5,
+            billing_model: 'standard',
+          },
+        ],
+      },
+    ];
     expect(formatErrorDetails(errDetails)).toMatchSnapshot();
   });
 });
 
 describe('formatErrorDetails()', () => {
   it('handles AddOnParameterOptionList kind', () => {
-    const errDetails = [{
-      kind: 'AddOnParameterOptionList',
-      items: [
-        {
-          name: 'Option 1',
-          value: 'option 1',
-        },
-        {
-          name: 'Option 2',
-          value: 'option 2',
-        },
-      ],
-    }];
+    const errDetails = [
+      {
+        kind: 'AddOnParameterOptionList',
+        items: [
+          {
+            name: 'Option 1',
+            value: 'option 1',
+          },
+          {
+            name: 'Option 2',
+            value: 'option 2',
+          },
+        ],
+      },
+    ];
     expect(formatErrorDetails(errDetails)).toMatchSnapshot();
   });
 
   it('handles AddOnRequirementData kind', () => {
-    const errDetails = [{
-      kind: 'AddOnRequirementData',
-      items: {
-        'cloud_provider.id': 'gcp',
-        'region.id': [
-          'us-east-1',
-          'eu-west-1',
-        ],
+    const errDetails = [
+      {
+        kind: 'AddOnRequirementData',
+        items: {
+          'cloud_provider.id': 'gcp',
+          'region.id': ['us-east-1', 'eu-west-1'],
+        },
       },
-    }];
+    ];
     expect(formatErrorDetails(errDetails)).toMatchSnapshot();
   });
 });

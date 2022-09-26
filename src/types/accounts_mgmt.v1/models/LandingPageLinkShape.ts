@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type LandingPageLinkShape = {
-    href?: string;
-    title?: string;
+  href?: string;
+  title?: string;
 };
-

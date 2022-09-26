@@ -16,11 +16,16 @@ function CloudProviderSelectionField({
   input: { value, onChange },
 }) {
   const BASE_CARD_CLASS = 'ocm-tile-create-cluster';
-  const getCardClass = hasQuota => cx(BASE_CARD_CLASS, !hasQuota ? 'card-disabled' : '');
+  const getCardClass = (hasQuota) => cx(BASE_CARD_CLASS, !hasQuota ? 'card-disabled' : '');
 
   const handleChange = (providerValue) => {
     // Silently reset some user choices that are now meaningless.
-    change('region', providerValue === 'aws' ? osdInitialValues.AWS_DEFAULT_REGION : osdInitialValues.GCP_DEFAULT_REGION);
+    change(
+      'region',
+      providerValue === 'aws'
+        ? osdInitialValues.AWS_DEFAULT_REGION
+        : osdInitialValues.GCP_DEFAULT_REGION,
+    );
     // Allow MachineTypeSelection to pick a new default.
     change('machine_type_force_choice', false);
     change('machine_type', '');
@@ -56,16 +61,8 @@ function CloudProviderSelectionField({
 
   return (
     <div>
-      {hasAwsQuota ? awsTile : (
-        <Tooltip content={noQuotaTooltip}>
-          {awsTile}
-        </Tooltip>
-      )}
-      {hasGcpQuota ? gcpTile : (
-        <Tooltip content={noQuotaTooltip}>
-          {gcpTile}
-        </Tooltip>
-      )}
+      {hasAwsQuota ? awsTile : <Tooltip content={noQuotaTooltip}>{awsTile}</Tooltip>}
+      {hasGcpQuota ? gcpTile : <Tooltip content={noQuotaTooltip}>{gcpTile}</Tooltip>}
     </div>
   );
 }

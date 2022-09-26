@@ -5,7 +5,6 @@
 import type { CloudResource } from './CloudResource';
 import type { List } from './List';
 
-export type CloudResourceList = (List & {
-    items?: Array<CloudResource>;
-});
-
+export type CloudResourceList = List & {
+  items?: Array<CloudResource>;
+};

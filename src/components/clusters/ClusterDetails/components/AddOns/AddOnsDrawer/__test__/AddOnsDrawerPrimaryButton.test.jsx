@@ -12,21 +12,23 @@ describe('<AddOnsPrimaryButton />', () => {
   const openModal = jest.fn();
 
   beforeEach(() => {
-    wrapper = shallow(<AddOnsPrimaryButton
-      activeCard={managedIntegration}
-      activeCardRequirementsFulfilled
-      addClusterAddOn={addClusterAddOn}
-      addClusterAddOnResponse={addClusterAddOnResponse}
-      cluster={{
-        canEdit: true,
-        id: 'fake id',
-        state: 'ready',
-        console: { url: 'https://example.com/veryfakeconsole' },
-      }}
-      hasQuota
-      installedAddOn={{ state: 'ready', operator_version: '0.0.1', csv_name: 'fake-addon.0.0.1' }}
-      openModal={openModal}
-    />);
+    wrapper = shallow(
+      <AddOnsPrimaryButton
+        activeCard={managedIntegration}
+        activeCardRequirementsFulfilled
+        addClusterAddOn={addClusterAddOn}
+        addClusterAddOnResponse={addClusterAddOnResponse}
+        cluster={{
+          canEdit: true,
+          id: 'fake id',
+          state: 'ready',
+          console: { url: 'https://example.com/veryfakeconsole' },
+        }}
+        hasQuota
+        installedAddOn={{ state: 'ready', operator_version: '0.0.1', csv_name: 'fake-addon.0.0.1' }}
+        openModal={openModal}
+      />,
+    );
   });
 
   it('should render', () => {
@@ -49,7 +51,11 @@ describe('<AddOnsPrimaryButton />', () => {
   it('uninstall button should open uninstall modal', () => {
     const UninstallButton = wrapper.find('ButtonWithTooltip').at(0);
     UninstallButton.simulate('click');
-    expect(openModal).toBeCalledWith('add-ons-delete-modal', { addOnName: managedIntegration.name, addOnID: managedIntegration.id, clusterID: 'fake id' });
+    expect(openModal).toBeCalledWith('add-ons-delete-modal', {
+      addOnName: managedIntegration.name,
+      addOnID: managedIntegration.id,
+      clusterID: 'fake id',
+    });
   });
 
   it('expect contact support button if addon failed', () => {
@@ -58,7 +64,9 @@ describe('<AddOnsPrimaryButton />', () => {
     });
     const SupportButton = wrapper.find('Button').at(0);
     expect(SupportButton.props().children).toEqual('Contact support');
-    expect(SupportButton.props().href).toEqual('https://access.redhat.com/support/cases/#/case/new');
+    expect(SupportButton.props().href).toEqual(
+      'https://access.redhat.com/support/cases/#/case/new',
+    );
   });
 
   it('expect install button to be disabled if cluster is not ready', () => {
@@ -147,6 +155,10 @@ describe('<AddOnsPrimaryButton />', () => {
     expect(InstallButton.props().children).toEqual('Install');
 
     InstallButton.simulate('click');
-    expect(openModal).toBeCalledWith('add-ons-parameters-modal', { addOn: managedIntegration, isUpdateForm: false, clusterID: 'fake id' });
+    expect(openModal).toBeCalledWith('add-ons-parameters-modal', {
+      addOn: managedIntegration,
+      isUpdateForm: false,
+      clusterID: 'fake id',
+    });
   });
 });

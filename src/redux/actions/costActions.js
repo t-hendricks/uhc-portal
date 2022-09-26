@@ -17,20 +17,23 @@ limitations under the License.
 import { costConstants } from '../constants';
 import { costService } from '../../services';
 
-const getReport = params => dispatch => dispatch({
-  type: costConstants.GET_REPORT,
-  payload: costService.getReport(params),
-});
+const getReport = (params) => (dispatch) =>
+  dispatch({
+    type: costConstants.GET_REPORT,
+    payload: costService.getReport(params),
+  });
 
-const getSources = params => dispatch => dispatch({
-  type: costConstants.GET_SOURCES,
-  payload: costService.getSources(params),
-});
+const getSources = (params) => (dispatch) =>
+  dispatch({
+    type: costConstants.GET_SOURCES,
+    payload: costService.getSources(params),
+  });
 
-const getUserAccess = params => dispatch => dispatch({
-  type: costConstants.GET_USER_ACCESS,
-  payload: costService.getUserAccess(params),
-});
+const getUserAccess = (params) => (dispatch) =>
+  dispatch({
+    type: costConstants.GET_USER_ACCESS,
+    payload: costService.getUserAccess(params),
+  });
 
 const costActions = {
   getReport,
@@ -38,9 +41,4 @@ const costActions = {
   getUserAccess,
 };
 
-export {
-  costActions,
-  getReport,
-  getSources,
-  getUserAccess,
-};
+export { costActions, getReport, getSources, getUserAccess };

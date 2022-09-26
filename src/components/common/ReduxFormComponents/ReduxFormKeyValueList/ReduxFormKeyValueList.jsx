@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import {
-  Button,
-  Grid,
-  GridItem,
-  TextInput,
-} from '@patternfly/react-core';
+import { Button, Grid, GridItem, TextInput } from '@patternfly/react-core';
 import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
 
 import { getRandomID } from '../../../../common/helpers';
@@ -54,8 +49,12 @@ LabelValue.propTypes = {
 
 const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
   <Grid hasGutter>
-    <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">Key</GridItem>
-    <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">Value</GridItem>
+    <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
+      Key
+    </GridItem>
+    <GridItem span={4} className="pf-c-form__label pf-c-form__label-text">
+      Value
+    </GridItem>
     <GridItem span={4} />
     {fields.map((label, index) => {
       const isRemoveDisabled = index === 0 && fields.length === 1;
@@ -86,7 +85,11 @@ const ReduxFormKeyValueList = ({ fields, meta: { error, submitFailed } }) => (
               icon={<MinusCircleIcon />}
               variant="link"
               isDisabled={isRemoveDisabled}
-              className={isRemoveDisabled ? 'reduxFormKeyValueList-removeBtn-disabled' : 'reduxFormKeyValueList-removeBtn'}
+              className={
+                isRemoveDisabled
+                  ? 'reduxFormKeyValueList-removeBtn-disabled'
+                  : 'reduxFormKeyValueList-removeBtn'
+              }
             />
           </GridItem>
         </React.Fragment>

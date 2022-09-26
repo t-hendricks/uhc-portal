@@ -40,14 +40,12 @@ import {
 } from '../../../common/subscriptionTypes';
 import validateSubscriptionSettings from './validateSubscriptionSettings';
 
-const {
-  EVAL,
-} = subscriptionSupportLevels;
+const { EVAL } = subscriptionSupportLevels;
 
 class RegisterCluster extends React.Component {
-  state = { settings: { } }
+  state = { settings: {} };
 
-  initialSettings = { support_level: EVAL, isValid: true }
+  initialSettings = { support_level: EVAL, isValid: true };
 
   componentDidMount() {
     const { getOrganizationAndQuota } = this.props;
@@ -68,15 +66,12 @@ class RegisterCluster extends React.Component {
 
   handleSettingsChange = (newSettings) => {
     this.setState({ settings: newSettings });
-  }
+  };
 
   handleSubmit = (values) => {
     const { onSubmit } = this.props;
     const { settings } = this.state;
-    const {
-      request,
-      isValid,
-    } = validateSubscriptionSettings(settings);
+    const { request, isValid } = validateSubscriptionSettings(settings);
     if (isValid) {
       const registrationRequest = {
         cluster_uuid: values.cluster_id,
@@ -87,7 +82,7 @@ class RegisterCluster extends React.Component {
       };
       onSubmit(registrationRequest, request);
     }
-  }
+  };
 
   reset() {
     const { resetResponse, resetForm } = this.props;
@@ -120,15 +115,13 @@ class RegisterCluster extends React.Component {
       />
     );
 
-    const topText = 'Register clusters that are not connected to OpenShift Cluster Manager. Existing cluster owners, cluster editors, or admins can edit existing cluster subscriptions from the cluster details page.';
+    const topText =
+      'Register clusters that are not connected to OpenShift Cluster Manager. Existing cluster owners, cluster editors, or admins can edit existing cluster subscriptions from the cluster details page.';
 
     if (quotaResponse.error) {
       return (
         <PageSection>
-          <Unavailable
-            message="Error retrieving quota"
-            response={quotaResponse}
-          />
+          <Unavailable message="Error retrieving quota" response={quotaResponse} />
         </PageSection>
       );
     }
@@ -147,11 +140,7 @@ class RegisterCluster extends React.Component {
     return (
       <>
         <PageHeader>
-          <Breadcrumbs path={[
-            { label: 'Clusters' },
-            { label: 'Register disconnected cluster' },
-          ]}
-          />
+          <Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Register disconnected cluster' }]} />
           <PageHeaderTitle title="Register disconnected cluster" />
         </PageHeader>
         <PageSection>
@@ -163,61 +152,77 @@ class RegisterCluster extends React.Component {
                   <TextContent id="register-cluster-top-text">
                     <Text component={TextVariants.p}>{topText}</Text>
                   </TextContent>
-                  { quotaResponse.fulfilled
-                    ? (
-                      <Form onSubmit={handleSubmit(this.handleSubmit)} className="subscription-settings form">
-                        <Field
-                          component={ReduxVerticalFormGroup}
-                          name="cluster_id"
-                          label="Cluster ID"
-                          type="text"
-                          extendedHelpText={constants.clusterIDHint}
-                          disabled={registerClusterResponse.pending}
-                          validate={checkClusterUUID}
-                          isRequired
-                        />
-                        <Field
-                          component={ReduxVerticalFormGroup}
-                          name="display_name"
-                          label="Display name"
-                          type="text"
-                          disabled={registerClusterResponse.pending}
-                          validate={checkClusterDisplayName}
-                        />
-                        <Field
-                          component={ReduxVerticalFormGroup}
-                          name="web_console_url"
-                          label="Web console URL"
-                          validate={checkDisconnectedConsoleURL}
-                          disabled={registerClusterResponse.pending}
-                          type="text"
-                        />
-                        <Title headingLevel="h4" size="xl">Subscription settings</Title>
-                        <TextContent>
-                          <Text component={TextVariants.p}>
-                            Editing the subscription settings will help ensure that
-                            you receive the level of support that you expect, and that
-                            your cluster is consuming the correct type of subscription.
-                          </Text>
-                        </TextContent>
-                        {canSubscribeOCP ? editSubscriptionSettings : (
-                          <Tooltip
-                            content="You cannot edit subscription settings because your organization does not have any OpenShift subscriptions. Contact sales to purchase OpenShift."
-                            position={TooltipPosition.auto}
-                          >
-                            <div>{editSubscriptionSettings}</div>
-                          </Tooltip>
-                        )}
-                      </Form>
-                    )
-                    : <Spinner />}
+                  {quotaResponse.fulfilled ? (
+                    <Form
+                      onSubmit={handleSubmit(this.handleSubmit)}
+                      className="subscription-settings form"
+                    >
+                      <Field
+                        component={ReduxVerticalFormGroup}
+                        name="cluster_id"
+                        label="Cluster ID"
+                        type="text"
+                        extendedHelpText={constants.clusterIDHint}
+                        disabled={registerClusterResponse.pending}
+                        validate={checkClusterUUID}
+                        isRequired
+                      />
+                      <Field
+                        component={ReduxVerticalFormGroup}
+                        name="display_name"
+                        label="Display name"
+                        type="text"
+                        disabled={registerClusterResponse.pending}
+                        validate={checkClusterDisplayName}
+                      />
+                      <Field
+                        component={ReduxVerticalFormGroup}
+                        name="web_console_url"
+                        label="Web console URL"
+                        validate={checkDisconnectedConsoleURL}
+                        disabled={registerClusterResponse.pending}
+                        type="text"
+                      />
+                      <Title headingLevel="h4" size="xl">
+                        Subscription settings
+                      </Title>
+                      <TextContent>
+                        <Text component={TextVariants.p}>
+                          Editing the subscription settings will help ensure that you receive the
+                          level of support that you expect, and that your cluster is consuming the
+                          correct type of subscription.
+                        </Text>
+                      </TextContent>
+                      {canSubscribeOCP ? (
+                        editSubscriptionSettings
+                      ) : (
+                        <Tooltip
+                          content="You cannot edit subscription settings because your organization does not have any OpenShift subscriptions. Contact sales to purchase OpenShift."
+                          position={TooltipPosition.auto}
+                        >
+                          <div>{editSubscriptionSettings}</div>
+                        </Tooltip>
+                      )}
+                    </Form>
+                  ) : (
+                    <Spinner />
+                  )}
                 </GridItem>
               </Grid>
             </CardBody>
             <CardFooter>
-              <Button variant="primary" type="submit" onClick={handleSubmit(this.handleSubmit)} isDisabled={registerClusterResponse.pending || !isValid}>Register cluster</Button>
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={handleSubmit(this.handleSubmit)}
+                isDisabled={registerClusterResponse.pending || !isValid}
+              >
+                Register cluster
+              </Button>
               <Link to="/">
-                <Button variant="secondary" isDisabled={registerClusterResponse.pending}>Cancel</Button>
+                <Button variant="secondary" isDisabled={registerClusterResponse.pending}>
+                  Cancel
+                </Button>
               </Link>
             </CardFooter>
           </Card>

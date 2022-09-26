@@ -41,7 +41,7 @@ describe('<DetailsRight />', () => {
   });
 
   describe('Self Managed cluster', () => {
-    it('should not render desired nodes when they don\'t exist', () => {
+    it("should not render desired nodes when they don't exist", () => {
       const wrapper = shallow(
         <DetailsRight
           cluster={{ ...clusterDetails.cluster, managed: false, nodes: null }}
@@ -54,7 +54,11 @@ describe('<DetailsRight />', () => {
     it('should render status correctly for archived cluster', () => {
       const wrapper = shallow(
         <DetailsRight
-          cluster={{ ...clusterDetails.cluster, managed: false, subscription: { status: 'Archived' } }}
+          cluster={{
+            ...clusterDetails.cluster,
+            managed: false,
+            subscription: { status: 'Archived' },
+          }}
           autoscaleEnabled={false}
         />,
       );
@@ -64,7 +68,11 @@ describe('<DetailsRight />', () => {
     it('should render status correctly for deprovisioned cluster', () => {
       const wrapper = shallow(
         <DetailsRight
-          cluster={{ ...clusterDetails.cluster, managed: true, subscription: { status: 'Deprovisioned' } }}
+          cluster={{
+            ...clusterDetails.cluster,
+            managed: true,
+            subscription: { status: 'Deprovisioned' },
+          }}
           autoscaleEnabled={false}
         />,
       );
@@ -92,7 +100,10 @@ describe('<DetailsRight />', () => {
       const wrapper = shallow(
         <DetailsRight
           cluster={{
-            ...clusterDetails.cluster, managed: true, ccs: { enabled: true }, storage_quota: null,
+            ...clusterDetails.cluster,
+            managed: true,
+            ccs: { enabled: true },
+            storage_quota: null,
           }}
           autoscaleEnabled={false}
         />,
@@ -103,11 +114,7 @@ describe('<DetailsRight />', () => {
 
   describe('AI clusters', () => {
     it('should render the "created at" and "owner" detail', () => {
-      const wrapper = shallow(
-        <DetailsRight
-          cluster={fixtures.AIClusterDetails.cluster}
-        />,
-      );
+      const wrapper = shallow(<DetailsRight cluster={fixtures.AIClusterDetails.cluster} />);
       expect(wrapper).toMatchSnapshot();
     });
   });

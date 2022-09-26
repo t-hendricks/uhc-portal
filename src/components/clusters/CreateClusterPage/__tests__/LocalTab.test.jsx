@@ -5,11 +5,7 @@ import LocalTab from '../LocalTab';
 
 describe('<LocalTab />', () => {
   it('renders correctly', () => {
-    const wrapper = shallow(
-      <LocalTab
-        token={{}}
-      />,
-    );
+    const wrapper = shallow(<LocalTab token={{}} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

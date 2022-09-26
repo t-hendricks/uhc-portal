@@ -31,7 +31,9 @@ describe('redirection to Advisor cluster page: with the external ID', () => {
   it('should redirect', () => {
     const redirect = wrapper.find('ExternalRedirect');
     expect(redirect.length).toBe(1);
-    expect(redirect.props().url).toBe('http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa');
+    expect(redirect.props().url).toBe(
+      'http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa',
+    );
   });
   it('should not call fetchClusterDetails', () => {
     expect(fetchClusterDetails).not.toBeCalled();
@@ -56,7 +58,8 @@ describe('redirection to Advisor recommendation page: with the external ID', () 
           },
         }}
         location={{
-          pathname: '/details/5d5892d3-1f74-4ccf-91af-548dfc9767aa/insights/ccx_rules_ocp|external|rules|master_defined_as_machinesets|report/MASTER_DEFINED_AS_MACHINESETS',
+          pathname:
+            '/details/5d5892d3-1f74-4ccf-91af-548dfc9767aa/insights/ccx_rules_ocp|external|rules|master_defined_as_machinesets|report/MASTER_DEFINED_AS_MACHINESETS',
         }}
         setGlobalError={setGlobalError}
         fetchClusterDetails={fetchClusterDetails}
@@ -71,7 +74,9 @@ describe('redirection to Advisor recommendation page: with the external ID', () 
   it('should redirect', () => {
     const redirect = wrapper.find('ExternalRedirect');
     expect(redirect.length).toBe(1);
-    expect(redirect.props().url).toBe('http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa?first=ccx_rules_ocp.external.rules.master_defined_as_machinesets%7CMASTER_DEFINED_AS_MACHINESETS');
+    expect(redirect.props().url).toBe(
+      'http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa?first=ccx_rules_ocp.external.rules.master_defined_as_machinesets%7CMASTER_DEFINED_AS_MACHINESETS',
+    );
   });
   it('should not call fetchClusterDetails', () => {
     expect(fetchClusterDetails).not.toBeCalled();
@@ -122,7 +127,9 @@ describe('redirection to Advisor cluster page: with the subscription ID', () => 
     });
     const redirect = wrapper.find('ExternalRedirect');
     expect(redirect.length).toBe(1);
-    expect(redirect.props().url).toBe('http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa');
+    expect(redirect.props().url).toBe(
+      'http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa',
+    );
   });
 });
 
@@ -144,7 +151,8 @@ describe('redirection to Advisor recommendation page: with the subscription ID',
           },
         }}
         location={{
-          pathname: '/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa/insights/ccx_rules_ocp|external|rules|master_defined_as_machinesets|report/MASTER_DEFINED_AS_MACHINESETS',
+          pathname:
+            '/details/s/1ZyOzuBzgnXcKa92ZE2E4olYmQa/insights/ccx_rules_ocp|external|rules|master_defined_as_machinesets|report/MASTER_DEFINED_AS_MACHINESETS',
         }}
         setGlobalError={setGlobalError}
         fetchClusterDetails={fetchClusterDetails}
@@ -175,7 +183,9 @@ describe('redirection to Advisor recommendation page: with the subscription ID',
     });
     const redirect = wrapper.find('ExternalRedirect');
     expect(redirect.length).toBe(1);
-    expect(redirect.props().url).toBe('http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa?first=ccx_rules_ocp.external.rules.master_defined_as_machinesets%7CMASTER_DEFINED_AS_MACHINESETS');
+    expect(redirect.props().url).toBe(
+      'http://localhost/openshift/insights/advisor/clusters/5d5892d3-1f74-4ccf-91af-548dfc9767aa?first=ccx_rules_ocp.external.rules.master_defined_as_machinesets%7CMASTER_DEFINED_AS_MACHINESETS',
+    );
   });
 });
 
@@ -279,10 +289,8 @@ describe('Insights Advisor redirection utilities', () => {
       ],
     ];
 
-    testData.forEach(
-      ([pluginName, errorKey, expected]) => expect(
-        composeRuleId(pluginName, errorKey),
-      ).toBe(expected),
+    testData.forEach(([pluginName, errorKey, expected]) =>
+      expect(composeRuleId(pluginName, errorKey)).toBe(expected),
     );
   });
 });

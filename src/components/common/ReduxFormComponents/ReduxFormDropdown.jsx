@@ -10,7 +10,9 @@ class DropDownSelect extends React.Component {
   };
 
   onChange = (value, event) => {
-    const { input: { onChange } } = this.props;
+    const {
+      input: { onChange },
+    } = this.props;
     this.setState({ value });
     onChange(event, value); // redux form has the parameters the other way around from PF
   };
@@ -40,12 +42,8 @@ class DropDownSelect extends React.Component {
         isDisabled={disabled}
         {...extraProps}
       >
-        {options.map(option => (
-          <FormSelectOption
-            key={option.value}
-            value={option.value}
-            label={option.name}
-          />
+        {options.map((option) => (
+          <FormSelectOption key={option.value} value={option.value} label={option.name} />
         ))}
       </FormSelect>
     );
@@ -56,22 +54,25 @@ class DropDownSelect extends React.Component {
         label={label}
         validated={touched && error ? 'error' : null}
         isRequired={isRequired}
-        labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
+        labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
         helperText={helpText}
         helperTextInvalid={touched && error ? `${helpText} ${error}` : ''}
       >
         {formSelect}
       </FormGroup>
-    )
-      : formSelect;
+    ) : (
+      formSelect
+    );
   }
 }
 
 DropDownSelect.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  })).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   input: PropTypes.shape({
     onChange: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,

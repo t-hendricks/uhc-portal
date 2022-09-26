@@ -23,19 +23,19 @@ describe('<SubscriptionCompliancy />', () => {
       organization,
       openModal,
     };
-    wrapper = shallow(
-      <SubscriptionCompliancy {...props} />,
-    );
+    wrapper = shallow(<SubscriptionCompliancy {...props} />);
   });
 
   it('should warn during evaluation period', () => {
     const cluster = { ...OCPClusterDetails.cluster, canEdit: true };
     cluster.subscription[SUPPORT_LEVEL] = EVAL;
-    cluster.subscription.capabilities = [{
-      name: 'capability.cluster.subscribed_ocp',
-      value: 'true',
-      inherited: true,
-    }];
+    cluster.subscription.capabilities = [
+      {
+        name: 'capability.cluster.subscribed_ocp',
+        value: 'true',
+        inherited: true,
+      },
+    ];
     wrapper.setProps({ cluster }, () => {
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find(Alert).length).toEqual(1);
