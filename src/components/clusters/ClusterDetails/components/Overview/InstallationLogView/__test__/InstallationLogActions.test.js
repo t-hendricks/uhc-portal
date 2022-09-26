@@ -2,7 +2,7 @@ import { installationLogActions } from '../InstallationLogActions';
 import { clusterService } from '../../../../../../../services';
 import { installationLogConstants } from '../InstallationLogConstants';
 
-jest.mock('../../../../../../../services/clusterService.js');
+jest.mock('../../../../../../../services/clusterService');
 
 describe('installationLogActions', () => {
   let mockDispatch;

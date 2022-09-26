@@ -1,5 +1,13 @@
 const ENV_OVERRIDE_LOCALSTORAGE_KEY = 'ocmOverridenEnvironment';
-const configs = {};
+
+type EnvConfig = {
+  apiGateway: string;
+  insightsGateway?: string;
+  sentryDSN?: string;
+  showOldMetrics?: boolean;
+};
+
+const configs: {[env: string]: Promise<EnvConfig> | undefined} = {};
 
 // Specify configs to load below. The `webpackMode` comments are to ensure configs
 // get bundled in the main chunk, and not spilt to tiny chunks
@@ -18,65 +26,73 @@ if (APP_DEV_SERVER) {
 // select config according to the APP_API_ENV flag (see webpack.config.js)
 configs.default = configs[APP_API_ENV];
 
-const parseEnvQueryParam = () => {
-  let ret;
-  window.location.search.substring(1).split('&').forEach((queryString) => {
-    const [key, val] = queryString.split('=');
-    if (key === 'env' && !!configs[val]) {
-      ret = val;
-    } else if (key === 'env' && val === 'mockserver' && configs.mockdata) {
-      ret = 'mockdata';
-    }
-  });
+const parseEnvQueryParam = (): string | undefined => {
+  let ret: string | undefined;
+  window.location.search
+    .substring(1)
+    .split('&')
+    .forEach((queryString) => {
+      const [key, val] = queryString.split('=');
+      if (key === 'env' && !!configs[val]) {
+        ret = val;
+      } else if (key === 'env' && val === 'mockserver' && configs.mockdata) {
+        ret = 'mockdata';
+      }
+    });
   return ret;
 };
 
 const parseFakeQueryParam = () => {
   let ret = false;
-  window.location.search.substring(1).split('&').forEach((queryString) => {
-    const [key, val] = queryString.split('=');
-    if (key === 'fake' && val === 'true') {
-      ret = true;
-    }
-  });
+  window.location.search
+    .substring(1)
+    .split('&')
+    .forEach((queryString) => {
+      const [key, val] = queryString.split('=');
+      if (key === 'fake' && val === 'true') {
+        ret = true;
+      }
+    });
   return ret;
 };
 
 const config = {
-  configData: {},
+  configData: {} as EnvConfig,
   override: false,
+  fakeOSD: false,
 
-  loadConfig(data) {
+  loadConfig(data: EnvConfig) {
     this.configData = {
       ...data,
       // replace $SELF_PATH$ with the current host
       // to avoid CORS issues when not using prod.foo
       apiGateway: data.apiGateway.replace('$SELF_PATH$', window.location.host),
-      insightsGateway: data.insightsGateway?.replace('$SELF_PATH$', window.location.host) || undefined,
+      insightsGateway:
+        data.insightsGateway?.replace('$SELF_PATH$', window.location.host) || undefined,
     };
 
     // make config available in browser devtools for debugging
-    window.ocmConfig = this;
+    (window as any).ocmConfig = this;
   },
 
   fetchConfig() {
     const that = this;
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       if (parseFakeQueryParam()) {
         that.fakeOSD = true;
       }
       const queryEnv = parseEnvQueryParam() || localStorage.getItem(ENV_OVERRIDE_LOCALSTORAGE_KEY);
       if (queryEnv && configs[queryEnv]) {
-        configs[queryEnv].then((data) => {
+        configs[queryEnv]!.then((data) => {
           this.loadConfig(data);
           // eslint-disable-next-line no-console
           console.info(`Loaded override config: ${queryEnv}`);
-          that.override = queryEnv;
+          that.override = !!queryEnv;
           localStorage.setItem(ENV_OVERRIDE_LOCALSTORAGE_KEY, queryEnv);
           resolve();
         });
       } else {
-        configs.default.then((data) => {
+        configs.default?.then((data) => {
           this.loadConfig(data);
           // eslint-disable-next-line no-console
           console.info(`Loaded default config: ${APP_API_ENV}`);

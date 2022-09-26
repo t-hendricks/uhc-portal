@@ -16,7 +16,7 @@ import {
 } from '../MachinePoolsActions';
 import { clusterService } from '../../../../../../services';
 
-jest.mock('../../../../../../services/clusterService.js');
+jest.mock('../../../../../../services/clusterService');
 
 describe('MachinePools actions', () => {
   let mockDispatch;

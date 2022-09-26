@@ -7,7 +7,7 @@ import * as useChromeHook from '@redhat-cloud-services/frontend-components/useCh
 import Router from './Router';
 import { store } from '../../redux/store';
 
-jest.mock('../../services/apiRequest.js');
+jest.mock('../../services/apiRequest');
 
 global.insights = {
   chrome: {
