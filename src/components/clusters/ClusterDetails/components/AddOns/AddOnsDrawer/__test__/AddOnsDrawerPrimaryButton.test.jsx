@@ -38,7 +38,7 @@ describe('<AddOnsPrimaryButton />', () => {
   it('should render both open and uninstall buttons for ready cluster', () => {
     const OpenButton = wrapper.find('Button').at(0).props();
 
-    expect(OpenButton.children[0]).toEqual('Open in Console');
+    expect(OpenButton.children[0].trim()).toEqual('Open in Console');
     expect(OpenButton.href).toEqual(
       'https://example.com/veryfakeconsole/k8s/ns/redhat-rhmi-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/fake-addon.0.0.1',
     );

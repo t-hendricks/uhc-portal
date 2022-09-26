@@ -72,7 +72,7 @@ describe('<AddOnsParametersModal />', () => {
   });
 
   it('expect set default option button is be present if default_value present', () => {
-    expect(wrapper.find(Button).props().children[2]).toEqual(dummyValue);
+    expect(wrapper.find(Button).props().children.includes(dummyValue)).toBeTruthy();
   });
 
   it('expect addon field to be enabled on create form', () => {
@@ -189,7 +189,7 @@ describe('<AddOnsParametersModal />', () => {
         { name: 'Option 1', value: 'option1' },
       ]);
       expect(wrapper.find(Button).exists()).toBeTruthy();
-      expect(wrapper.find(Button).props().children[2]).toEqual('Option 1');
+      expect(wrapper.find(Button).props().children.includes('Option 1')).toBeTruthy();
     });
   });
 });
