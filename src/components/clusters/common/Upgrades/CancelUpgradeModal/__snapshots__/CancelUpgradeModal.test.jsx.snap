@@ -129,11 +129,9 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                       novalidate=""
                     >
                       <p>
-                        This update to version
-                         
+                        This update to version 
                         v1.2.3
-                         
-                        is scheduled for
+                         is scheduled for
                          
                         02 Nov 2020 00:00 UTC
                         .
@@ -357,11 +355,9 @@ exports[`<CancelUpgradeModal /> renders correctly 1`] = `
                               onSubmit={[Function]}
                             >
                               <p>
-                                This update to version
-                                 
+                                This update to version 
                                 v1.2.3
-                                 
-                                is scheduled for
+                                 is scheduled for
                                  
                                 <DateFormat
                                   date={1604275200000}

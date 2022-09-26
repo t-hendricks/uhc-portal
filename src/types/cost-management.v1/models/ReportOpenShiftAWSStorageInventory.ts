@@ -7,10 +7,9 @@ import type { ReportOpenShiftAWSFilter } from './ReportOpenShiftAWSFilter';
 import type { ReportOpenShiftAWSGrouping } from './ReportOpenShiftAWSGrouping';
 import type { ReportOpenShiftAWSOrdering } from './ReportOpenShiftAWSOrdering';
 
-export type ReportOpenShiftAWSStorageInventory = (Report & {
-    group_by?: ReportOpenShiftAWSGrouping;
-    order_by?: ReportOpenShiftAWSOrdering;
-    filter?: ReportOpenShiftAWSFilter;
-    data: Array<any>;
-});
-
+export type ReportOpenShiftAWSStorageInventory = Report & {
+  group_by?: ReportOpenShiftAWSGrouping;
+  order_by?: ReportOpenShiftAWSOrdering;
+  filter?: ReportOpenShiftAWSFilter;
+  data: Array<any>;
+};

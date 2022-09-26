@@ -26,16 +26,17 @@ const valueSelector = formValueSelector('editLabels');
 const mapStateToProps = (state) => {
   const currentLabels = state.modal.data.machinePool?.labels;
 
-  return ({
+  return {
     machinePoolsList: state.machinePools.getMachinePools,
     editLabelsResponse: state.machinePools.scaleMachinePoolResponse,
     tags: valueSelector(state, 'labels') || parseLabels(currentLabels),
-    selectedMachinePoolId: valueSelector(state, 'machinePoolId') || state.modal.data.machinePool?.id,
+    selectedMachinePoolId:
+      valueSelector(state, 'machinePoolId') || state.modal.data.machinePool?.id,
     initialValues: {
       labels: parseLabels(currentLabels),
       machinePoolId: state.modal.data.machinePool?.id,
     },
-  });
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -44,9 +45,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterId)),
   resetEditLabelsResponse: () => dispatch(clearScaleMachinePoolResponse(ownProps.clusterId)),
   resetDefaultMachinePoolEditLabelsResponse: () => dispatch(clearClusterResponse()),
-  onSubmit: formData => dispatch(
-    editLabels(ownProps.clusterId, formData.machinePoolId, { labels: parseTags(formData.labels) }),
-  ),
+  onSubmit: (formData) =>
+    dispatch(
+      editLabels(ownProps.clusterId, formData.machinePoolId, {
+        labels: parseTags(formData.labels),
+      }),
+    ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFormEditLabels);

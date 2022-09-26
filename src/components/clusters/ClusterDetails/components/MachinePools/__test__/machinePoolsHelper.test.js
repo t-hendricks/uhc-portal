@@ -36,13 +36,9 @@ describe('machine pools action resolver', () => {
       cells: [{ title: 'test' }],
       key: 'Default-child',
     };
-    expect(actionResolver(
-      expandableRowData,
-      onClickDelete,
-      onClickScale,
-      onClickTaints,
-      onClickLabels,
-    )).toEqual([]);
+    expect(
+      actionResolver(expandableRowData, onClickDelete, onClickScale, onClickTaints, onClickLabels),
+    ).toEqual([]);
   });
 
   it('should only have scale section for the default machine pool', () => {
@@ -52,12 +48,15 @@ describe('machine pools action resolver', () => {
       key: 'Default',
     };
     const expected = [scaleAction];
-    expect((actionResolver(defaultMachinePoolRowData,
-      onClickDelete,
-      onClickScale,
-      onClickTaints,
-      onClickLabels)).toString())
-      .toEqual(expected.toString());
+    expect(
+      actionResolver(
+        defaultMachinePoolRowData,
+        onClickDelete,
+        onClickScale,
+        onClickTaints,
+        onClickLabels,
+      ).toString(),
+    ).toEqual(expected.toString());
   });
 
   it('should have scale, edit taints, edit labels and delete actions', () => {
@@ -67,12 +66,15 @@ describe('machine pools action resolver', () => {
       key: 'test-mp',
     };
     const expected = [scaleAction, editLabelsAction, editTaintsAction, deleteAction];
-    expect((actionResolver(machinePoolRowData,
-      onClickDelete,
-      onClickScale,
-      onClickTaints,
-      onClickLabels)).toString())
-      .toEqual(expected.toString());
+    expect(
+      actionResolver(
+        machinePoolRowData,
+        onClickDelete,
+        onClickScale,
+        onClickTaints,
+        onClickLabels,
+      ).toString(),
+    ).toEqual(expected.toString());
   });
 });
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {
-  Divider,
-} from '@patternfly/react-core';
+import { Divider } from '@patternfly/react-core';
 import VersionSelectionGrid from '../VersionSelectionGrid';
 import VersionCard from '../VersionCard';
 
@@ -12,24 +10,20 @@ describe('<VersionSelectionGrid />', () => {
   let onSelect;
 
   const cases = [
-    { // should only have latest
+    {
+      // should only have latest
       version: '4.5.20',
       channelGroup: 'candidate',
-      availableUpgrades: [
-        '4.6.5',
-      ],
+      availableUpgrades: ['4.6.5'],
     },
-    { // should only have latest in curr minor
+    {
+      // should only have latest in curr minor
       version: '4.5.15',
       channelGroup: 'stable',
-      availableUpgrades: [
-        '4.5.16',
-        '4.5.17',
-        '4.5.18',
-        '4.5.19',
-      ],
+      availableUpgrades: ['4.5.16', '4.5.17', '4.5.18', '4.5.19'],
     },
-    { // should have both recommendations and more
+    {
+      // should have both recommendations and more
       version: '4.5.15',
       channelGroup: 'candidate',
       availableUpgrades: [
@@ -48,10 +42,7 @@ describe('<VersionSelectionGrid />', () => {
       // should have both recommendation and nothing more
       version: '4.5.18',
       channelGroup: 'fast',
-      availableUpgrades: [
-        '4.5.19',
-        '4.6.4',
-      ],
+      availableUpgrades: ['4.5.19', '4.6.4'],
     },
   ];
 
@@ -84,7 +75,9 @@ describe('<VersionSelectionGrid />', () => {
     const versionCards = wrapper.find(VersionCard);
     expect(versionCards.length).toEqual(1);
     expect(versionCards.at(0).props().isRecommended).toEqual(true);
-    expect(versionCards.at(0).render().text()).toContain('Start taking advantage of the new features');
+    expect(versionCards.at(0).render().text()).toContain(
+      'Start taking advantage of the new features',
+    );
     expect(wrapper.find(Divider).length).toEqual(0);
   });
 
@@ -97,7 +90,9 @@ describe('<VersionSelectionGrid />', () => {
     const versionCards = wrapper.find(VersionCard);
     expect(versionCards.length).toEqual(4);
     expect(versionCards.filter({ isRecommended: true }).length).toEqual(1);
-    expect(versionCards.filter({ isRecommended: true }).at(0).render().text()).toContain('The latest on your current minor version.');
+    expect(versionCards.filter({ isRecommended: true }).at(0).render().text()).toContain(
+      'The latest on your current minor version.',
+    );
     expect(wrapper.find(Divider).length).toEqual(1);
   });
 

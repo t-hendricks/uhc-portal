@@ -8,9 +8,7 @@ import ErrorBox from '../../../common/ErrorBox';
 
 class ArchiveClusterDialog extends Component {
   componentDidUpdate() {
-    const {
-      archiveClusterResponse, resetResponse, closeModal, onClose,
-    } = this.props;
+    const { archiveClusterResponse, resetResponse, closeModal, onClose } = this.props;
     if (archiveClusterResponse.fulfilled) {
       resetResponse();
       closeModal();
@@ -20,7 +18,12 @@ class ArchiveClusterDialog extends Component {
 
   render() {
     const {
-      closeModal, submit, archiveClusterResponse, resetResponse, subscriptionID, name,
+      closeModal,
+      submit,
+      archiveClusterResponse,
+      resetResponse,
+      subscriptionID,
+      name,
       shouldDisplayClusterName,
     } = this.props;
 
@@ -48,13 +51,17 @@ class ArchiveClusterDialog extends Component {
           {error}
           <Form onSubmit={() => submit(subscriptionID, name)}>
             <p>
-              Archiving a cluster will remove it from the cluster list and remove the cluster
-              from subscription management.
+              Archiving a cluster will remove it from the cluster list and remove the cluster from
+              subscription management.
             </p>
             <p>
               This action will not delete the cluster, only remove it from OpenShift Cluster
               Manager.&nbsp;
-              <a href="https://access.redhat.com/articles/4397891" target="_blank" rel="noreferrer noopener">
+              <a
+                href="https://access.redhat.com/articles/4397891"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
                 Instructions
               </a>
               &nbsp;for deleting a cluster may be found in the knowledge base.

@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Alert, Button } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
-import { normalizedProducts, subscriptionSupportLevels, subscriptionStatuses } from '../../../../common/subscriptionTypes';
-import getClusterName from '../../../../common/getClusterName';
 import {
-  getSubscriptionLastReconciledDate,
-} from '../clusterDetailsHelper';
+  normalizedProducts,
+  subscriptionSupportLevels,
+  subscriptionStatuses,
+} from '../../../../common/subscriptionTypes';
+import getClusterName from '../../../../common/getClusterName';
+import { getSubscriptionLastReconciledDate } from '../clusterDetailsHelper';
 import modals from '../../../common/Modal/modals';
 
 function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false }) {
@@ -19,8 +21,10 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
   }
 
   const supportLevel = get(subscription, 'support_level');
-  if (supportLevel !== subscriptionSupportLevels.EVAL
-    && supportLevel !== subscriptionSupportLevels.NONE) {
+  if (
+    supportLevel !== subscriptionSupportLevels.EVAL &&
+    supportLevel !== subscriptionSupportLevels.NONE
+  ) {
     return null;
   }
 
@@ -33,14 +37,14 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
   const lastReconcileDate = getSubscriptionLastReconciledDate(subscription);
   const clusterName = getClusterName(cluster);
 
-  const lastChecked = lastReconcileDate
-    ? (
-      <p>
-        Last checked:&nbsp;
-        {lastReconcileDate}
-      </p>
-    )
-    : '';
+  const lastChecked = lastReconcileDate ? (
+    <p>
+      Last checked:&nbsp;
+      {lastReconcileDate}
+    </p>
+  ) : (
+    ''
+  );
 
   const handleEditSettings = () => {
     openModal('edit-subscription-settings', { subscription });
@@ -56,44 +60,60 @@ function SubscriptionCompliancy({ cluster, openModal, canSubscribeOCP = false })
 
   const textForUsersCanEdit = canSubscribeOCP ? (
     <>
-      <Button variant="link" isInline onClick={handleEditSettings}>Edit subscription settings</Button>
+      <Button variant="link" isInline onClick={handleEditSettings}>
+        Edit subscription settings
+      </Button>
       {' for non-evaluation use. '}
     </>
   ) : (
     <>
-      <a href={salesURL} target="_blank" rel="noreferrer noopener">Contact sales</a>
+      <a href={salesURL} target="_blank" rel="noreferrer noopener">
+        Contact sales
+      </a>
       {' to purchase an OpenShift subscription.'}
     </>
   );
 
   const textForUsersCanNotEdit = (
     <>
-      The cluster owner or an Organization Administrator can
-      edit subscription settings for non-evaluation use.
+      The cluster owner or an Organization Administrator can edit subscription settings for
+      non-evaluation use.
     </>
   );
 
   if (supportLevel === subscriptionSupportLevels.NONE) {
     return (
-      <Alert className="subscription-settings compliancy-alert pf-u-mt-md" isInline variant="danger" title="Your 60-day OpenShift evaluation has expired">
+      <Alert
+        className="subscription-settings compliancy-alert pf-u-mt-md"
+        isInline
+        variant="danger"
+        title="Your 60-day OpenShift evaluation has expired"
+      >
         {lastChecked}
         <p>
-          Your cluster is not supported and you may stop receiving updates.
-          {' '}
+          Your cluster is not supported and you may stop receiving updates.{' '}
           {cluster.canEdit ? (
             <>
-              {textForUsersCanEdit}
-              {' '}
-              <Button variant="link" isInline onClick={handleArchiveCluster}>Archive this cluster</Button>
+              {textForUsersCanEdit}{' '}
+              <Button variant="link" isInline onClick={handleArchiveCluster}>
+                Archive this cluster
+              </Button>
               {' if it no longer exits. '}
             </>
-          ) : textForUsersCanNotEdit}
+          ) : (
+            textForUsersCanNotEdit
+          )}
         </p>
       </Alert>
     );
   }
   return (
-    <Alert className="subscription-settings compliancy-alert pf-u-mt-md" isInline variant="warning" title="OpenShift evaluation expiration date">
+    <Alert
+      className="subscription-settings compliancy-alert pf-u-mt-md"
+      isInline
+      variant="warning"
+      title="OpenShift evaluation expiration date"
+    >
       {lastChecked}
       <p>
         Your OpenShift evaluation will expire at&nbsp;

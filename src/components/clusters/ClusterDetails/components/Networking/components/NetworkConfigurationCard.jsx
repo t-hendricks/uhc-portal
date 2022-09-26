@@ -16,9 +16,7 @@ import './NetworkConfigurationCard.scss';
 function NetworkConfigurationCard({ network }) {
   return (
     <Card className="ocm-c-networking-network-configuration__card">
-      <CardTitle>
-        CIDR ranges
-      </CardTitle>
+      <CardTitle>CIDR ranges</CardTitle>
       <CardBody className="ocm-c-networking-network-configuration__card--body">
         <>
           <DescriptionList>
@@ -36,9 +34,7 @@ function NetworkConfigurationCard({ network }) {
             </DescriptionListGroup>
             <DescriptionListGroup>
               <DescriptionListTerm>Pod CIDR</DescriptionListTerm>
-              <DescriptionListDescription>
-                {network.pod_cidr || 'N/A'}
-              </DescriptionListDescription>
+              <DescriptionListDescription>{network.pod_cidr || 'N/A'}</DescriptionListDescription>
             </DescriptionListGroup>
             <DescriptionListGroup>
               <DescriptionListTerm>Host prefix</DescriptionListTerm>

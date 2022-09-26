@@ -15,7 +15,10 @@ limitations under the License.
 */
 import produce from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  baseRequestState,
 } from '../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../common/errors';
 import { identityProvidersConstants } from './IdentityProvidersConstants';
@@ -80,7 +83,7 @@ function IdentityProvidersReducer(state = initialState, action) {
           clusterIdentityProviders: action.payload.data,
         };
         break;
-        // UPDATE_CLUSTER_IDENTITY_PROVIDER
+      // UPDATE_CLUSTER_IDENTITY_PROVIDER
       case REJECTED_ACTION(identityProvidersConstants.UPDATE_CLUSTER_IDENTITY_PROVIDER):
         draft.editClusterIDP = {
           ...initialState.editClusterIDP,
@@ -108,7 +111,7 @@ function IdentityProvidersReducer(state = initialState, action) {
         };
         break;
 
-        // DELETE_IDP
+      // DELETE_IDP
       case PENDING_ACTION(identityProvidersConstants.DELETE_IDENTITY_PROVIDER):
         draft.deletedIDP.pending = true;
         break;

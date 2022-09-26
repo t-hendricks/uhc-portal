@@ -8,18 +8,17 @@ import modals from '../../../common/Modal/modals';
 import { isAssistedInstallCluster } from '../../../../common/isAssistedInstallerCluster';
 
 /**
-* Helper using reason message why it's disabled as source-of-truth
-* for whether it should be disabled.
-* This allows easy chaining `disableIfTooltip(reason1 || reason2 || ...)`.
-*
-* @param tooltip - message to show.  If truthy, also returns `isAriaDisabled: true` prop.
-* @param [propsIfEnabled] - return value if `tooltip` was falsy (default {}).
+ * Helper using reason message why it's disabled as source-of-truth
+ * for whether it should be disabled.
+ * This allows easy chaining `disableIfTooltip(reason1 || reason2 || ...)`.
+ *
+ * @param tooltip - message to show.  If truthy, also returns `isAriaDisabled: true` prop.
+ * @param [propsIfEnabled] - return value if `tooltip` was falsy (default {}).
  */
-const disableIfTooltip = (tooltip, propsIfEnabled = {}) => (
+const disableIfTooltip = (tooltip, propsIfEnabled = {}) =>
   // isDisabled blocks mouse events, so tooltip doesn't show on hover.
   // isAriaDisabled solved this, https://github.com/patternfly/patternfly-react/pull/6038.
-  tooltip ? { isAriaDisabled: true, tooltip, tooltipProps: { position: 'left' } } : propsIfEnabled
-);
+  tooltip ? { isAriaDisabled: true, tooltip, tooltipProps: { position: 'left' } } : propsIfEnabled;
 
 /**
  * This function is used by PF tables to determine which dropdown items are displayed
@@ -30,9 +29,15 @@ const disableIfTooltip = (tooltip, propsIfEnabled = {}) => (
  * @param {*} openModal           Action to open modal
  */
 function actionResolver(
-  cluster, showConsoleButton, openModal, canSubscribeOCP,
-  canTransferClusterOwnership, canHibernateCluster,
-  toggleSubscriptionReleased, refreshFunc, inClusterList,
+  cluster,
+  showConsoleButton,
+  openModal,
+  canSubscribeOCP,
+  canTransferClusterOwnership,
+  canHibernateCluster,
+  toggleSubscriptionReleased,
+  refreshFunc,
+  inClusterList,
 ) {
   const baseProps = {
     component: 'button',
@@ -43,24 +48,17 @@ function actionResolver(
   );
   const isClusterReady = cluster.state === clusterStates.READY;
   // Superset of more specific uninstallingMessage.
-  const notReadyMessage = !isClusterReady && (
-    <span>This cluster is not ready</span>
-  );
+  const notReadyMessage = !isClusterReady && <span>This cluster is not ready</span>;
   const isClusterInHibernatingProcess = isHibernating(cluster.state);
-  const hibernatingMessage = isClusterInHibernatingProcess && (
-    cluster.state === clusterStates.RESUMING
-      ? (
-        <>
-          This cluster is resuming; wait for it to be ready in order to perform actions
-        </>
-      ) : (
-        <>
-          This cluster is hibernating; resume cluster in order to perform actions
-        </>
-      )
-  );
-  const isClusterHibernatingOrPoweringDown = cluster.state === clusterStates.HIBERNATING
-    || cluster.state === clusterStates.POWERING_DOWN;
+  const hibernatingMessage =
+    isClusterInHibernatingProcess &&
+    (cluster.state === clusterStates.RESUMING ? (
+      <>This cluster is resuming; wait for it to be ready in order to perform actions</>
+    ) : (
+      <>This cluster is hibernating; resume cluster in order to perform actions</>
+    ));
+  const isClusterHibernatingOrPoweringDown =
+    cluster.state === clusterStates.HIBERNATING || cluster.state === clusterStates.POWERING_DOWN;
   const isClusterPoweringDown = cluster.state === clusterStates.POWERING_DOWN;
   const poweringDownMessage = isClusterPoweringDown && (
     <span>
@@ -78,22 +76,20 @@ function actionResolver(
     <span>Admin console is not yet available for this cluster</span>
   );
 
-  const getKey = item => `${cluster.id}.menu.${item}`;
+  const getKey = (item) => `${cluster.id}.menu.${item}`;
   const clusterName = getClusterName(cluster);
-  const isProductOSDTrial = cluster.product
-    && cluster.product.id === normalizedProducts.OSDTrial;
+  const isProductOSDTrial = cluster.product && cluster.product.id === normalizedProducts.OSDTrial;
 
   const getAdminConsoleProps = () => ({
     ...baseProps,
     title: 'Open console',
     key: getKey('adminconsole'),
-    ...disableIfTooltip(uninstallingMessage || hibernatingMessage || consoleDisabledMessage,
-      {
-        component: 'a',
-        href: consoleURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-      }),
+    ...disableIfTooltip(uninstallingMessage || hibernatingMessage || consoleDisabledMessage, {
+      component: 'a',
+      href: consoleURL,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+    }),
   });
 
   const getHibernateClusterProps = () => {
@@ -110,18 +106,16 @@ function actionResolver(
     const hibernateClusterProps = {
       ...hibernateClusterBaseProps,
       title: 'Hibernate cluster',
-      ...disableIfTooltip(uninstallingMessage || readOnlyMessage || notReadyMessage,
-        {
-          onClick: () => openModal(modals.HIBERNATE_CLUSTER, modalData),
-        }),
+      ...disableIfTooltip(uninstallingMessage || readOnlyMessage || notReadyMessage, {
+        onClick: () => openModal(modals.HIBERNATE_CLUSTER, modalData),
+      }),
     };
     const resumeHibernatingClusterProps = {
       ...hibernateClusterBaseProps,
       title: 'Resume from Hibernation',
-      ...disableIfTooltip(poweringDownMessage || readOnlyMessage,
-        {
-          onClick: () => openModal(modals.RESUME_CLUSTER, modalData),
-        }),
+      ...disableIfTooltip(poweringDownMessage || readOnlyMessage, {
+        onClick: () => openModal(modals.RESUME_CLUSTER, modalData),
+      }),
     };
 
     if (isClusterHibernatingOrPoweringDown) {
@@ -137,9 +131,8 @@ function actionResolver(
     ...disableIfTooltip(
       uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
       {
-        onClick: () => openModal(
-          modals.SCALE_CLUSTER, { ...cluster, shouldDisplayClusterName: inClusterList },
-        ),
+        onClick: () =>
+          openModal(modals.SCALE_CLUSTER, { ...cluster, shouldDisplayClusterName: inClusterList }),
       },
     ),
   });
@@ -151,10 +144,12 @@ function actionResolver(
     ...disableIfTooltip(
       uninstallingMessage || readOnlyMessage || hibernatingMessage || notReadyMessage,
       {
-        onClick: () => openModal(
-          modals.EDIT_NODE_COUNT,
-          { cluster, isDefaultMachinePool: true, shouldDisplayClusterName: inClusterList },
-        ),
+        onClick: () =>
+          openModal(modals.EDIT_NODE_COUNT, {
+            cluster,
+            isDefaultMachinePool: true,
+            shouldDisplayClusterName: inClusterList,
+          }),
       },
     ),
   });
@@ -163,12 +158,13 @@ function actionResolver(
     ...baseProps,
     title: 'Edit display name',
     key: getKey('editdisplayname'),
-    ...disableIfTooltip(uninstallingMessage,
-      {
-        onClick: () => openModal(
-          modals.EDIT_DISPLAY_NAME, { ...cluster, shouldDisplayClusterName: inClusterList },
-        ),
-      }),
+    ...disableIfTooltip(uninstallingMessage, {
+      onClick: () =>
+        openModal(modals.EDIT_DISPLAY_NAME, {
+          ...cluster,
+          shouldDisplayClusterName: inClusterList,
+        }),
+    }),
   });
   const getArchiveClusterProps = () => {
     const baseArchiveProps = {
@@ -182,13 +178,13 @@ function actionResolver(
     };
     return {
       ...baseArchiveProps,
-      ...disableIfTooltip(readOnlyMessage,
-        {
-          onClick: () => openModal(
-            modals.ARCHIVE_CLUSTER,
-            { ...archiveModalData, shouldDisplayClusterName: inClusterList },
-          ),
-        }),
+      ...disableIfTooltip(readOnlyMessage, {
+        onClick: () =>
+          openModal(modals.ARCHIVE_CLUSTER, {
+            ...archiveModalData,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      }),
     };
   };
 
@@ -204,43 +200,38 @@ function actionResolver(
     };
     return {
       ...baseArchiveProps,
-      ...disableIfTooltip(readOnlyMessage,
-        {
-          onClick: () => openModal(
-            modals.UNARCHIVE_CLUSTER,
-            { ...unarchiveModalData, shouldDisplayClusterName: inClusterList },
-          ),
-        }),
+      ...disableIfTooltip(readOnlyMessage, {
+        onClick: () =>
+          openModal(modals.UNARCHIVE_CLUSTER, {
+            ...unarchiveModalData,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      }),
     };
   };
 
   const getEditConsoleURLProps = () => ({
     ...baseProps,
     key: getKey('editconsoleurl'),
-    ...disableIfTooltip(uninstallingMessage,
-      {
-        title: consoleURL ? 'Edit console URL' : 'Add console URL',
-        onClick: () => openModal(
-          modals.EDIT_CONSOLE_URL, { ...cluster, shouldDisplayClusterName: inClusterList },
-        ),
-      }),
+    ...disableIfTooltip(uninstallingMessage, {
+      title: consoleURL ? 'Edit console URL' : 'Add console URL',
+      onClick: () =>
+        openModal(modals.EDIT_CONSOLE_URL, { ...cluster, shouldDisplayClusterName: inClusterList }),
+    }),
   });
 
   const getDeleteItemProps = () => ({
     ...baseProps,
     title: 'Delete cluster',
     key: getKey('deletecluster'),
-    ...disableIfTooltip(uninstallingMessage || readOnlyMessage || hibernatingMessage,
-      {
-        onClick: () => openModal(
-          modals.DELETE_CLUSTER,
-          {
-            clusterID: cluster.id,
-            clusterName,
-            shouldDisplayClusterName: inClusterList,
-          },
-        ),
-      }),
+    ...disableIfTooltip(uninstallingMessage || readOnlyMessage || hibernatingMessage, {
+      onClick: () =>
+        openModal(modals.DELETE_CLUSTER, {
+          clusterID: cluster.id,
+          clusterName,
+          shouldDisplayClusterName: inClusterList,
+        }),
+    }),
   });
 
   const getEditSubscriptionSettingsProps = () => {
@@ -248,19 +239,18 @@ function actionResolver(
       ...baseProps,
       title: 'Edit subscription settings',
       key: getKey('editsubscriptionsettings'),
-      onClick: () => openModal(
-        modals.EDIT_SUBSCRIPTION_SETTINGS,
-        { subscription: cluster.subscription, shouldDisplayClusterName: inClusterList },
-      ),
+      onClick: () =>
+        openModal(modals.EDIT_SUBSCRIPTION_SETTINGS, {
+          subscription: cluster.subscription,
+          shouldDisplayClusterName: inClusterList,
+        }),
     };
     return editSubscriptionSettingsProps;
   };
 
   const getTransferClusterOwnershipProps = () => {
     const isReleased = get(cluster, 'subscription.released', false);
-    const title = isReleased
-      ? 'Cancel ownership transfer'
-      : 'Transfer cluster ownership';
+    const title = isReleased ? 'Cancel ownership transfer' : 'Transfer cluster ownership';
     const transferClusterOwnershipProps = {
       ...baseProps,
       title,
@@ -270,10 +260,10 @@ function actionResolver(
           toggleSubscriptionReleased(get(cluster, 'subscription.id'), false);
           refreshFunc();
         } else {
-          openModal(
-            modals.TRANSFER_CLUSTER_OWNERSHIP,
-            { subscription: cluster.subscription, shouldDisplayClusterName: inClusterList },
-          );
+          openModal(modals.TRANSFER_CLUSTER_OWNERSHIP, {
+            subscription: cluster.subscription,
+            shouldDisplayClusterName: inClusterList,
+          });
         }
       },
     };
@@ -292,13 +282,13 @@ function actionResolver(
     };
     return {
       ...upgradeTrialClusterProps,
-      ...disableIfTooltip(readOnlyMessage,
-        {
-          onClick: () => openModal(
-            modals.UPGRADE_TRIAL_CLUSTER,
-            { ...upgradeTrialClusterData, shouldDisplayClusterName: inClusterList },
-          ),
-        }),
+      ...disableIfTooltip(readOnlyMessage, {
+        onClick: () =>
+          openModal(modals.UPGRADE_TRIAL_CLUSTER, {
+            ...upgradeTrialClusterData,
+            shouldDisplayClusterName: inClusterList,
+          }),
+      }),
     };
   };
 
@@ -317,23 +307,26 @@ function actionResolver(
 
   const showDelete = cluster.canDelete && cluster.managed;
   const showScale = cluster.canEdit && cluster.managed && !cluster.ccs?.enabled;
-  const showHibernateCluster = cluster.canEdit && cluster.managed && canHibernateCluster
-    && !isProductOSDTrial;
+  const showHibernateCluster =
+    cluster.canEdit && cluster.managed && canHibernateCluster && !isProductOSDTrial;
   const showEditNodeCount = cluster.canEdit && cluster.managed;
   const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-  const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription
-    && !isArchived;
-  const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription
-    && isArchived;
-  const showEditURL = !cluster.managed && cluster.canEdit && (showConsoleButton || consoleURL)
-    && !isAssistedInstallCluster(cluster);
+  const showArchive = cluster.canEdit && !cluster.managed && cluster.subscription && !isArchived;
+  const showUnarchive = cluster.canEdit && !cluster.managed && cluster.subscription && isArchived;
+  const showEditURL =
+    !cluster.managed &&
+    cluster.canEdit &&
+    (showConsoleButton || consoleURL) &&
+    !isAssistedInstallCluster(cluster);
   const product = get(cluster, 'subscription.plan.type', '');
-  const showEditSubscriptionSettings = product === normalizedProducts.OCP
-    && cluster.canEdit && canSubscribeOCP;
+  const showEditSubscriptionSettings =
+    product === normalizedProducts.OCP && cluster.canEdit && canSubscribeOCP;
   const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(product);
-  const showTransferClusterOwnership = cluster.canEdit && canTransferClusterOwnership
-    && isAllowedProducts
-    && get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
+  const showTransferClusterOwnership =
+    cluster.canEdit &&
+    canTransferClusterOwnership &&
+    isAllowedProducts &&
+    get(cluster, 'subscription.status') !== subscriptionStatuses.ARCHIVED;
   const showUpgradeTrialCluster = isClusterReady && cluster.canEdit && isProductOSDTrial;
 
   return [
@@ -353,18 +346,30 @@ function actionResolver(
 }
 
 function dropDownItems({
-  cluster, showConsoleButton, openModal, canSubscribeOCP,
-  canTransferClusterOwnership, canHibernateCluster,
-  toggleSubscriptionReleased, refreshFunc, inClusterList,
+  cluster,
+  showConsoleButton,
+  openModal,
+  canSubscribeOCP,
+  canTransferClusterOwnership,
+  canHibernateCluster,
+  toggleSubscriptionReleased,
+  refreshFunc,
+  inClusterList,
 }) {
   const actions = actionResolver(
-    cluster, showConsoleButton, openModal, canSubscribeOCP,
-    canTransferClusterOwnership, canHibernateCluster,
-    toggleSubscriptionReleased, refreshFunc, inClusterList,
+    cluster,
+    showConsoleButton,
+    openModal,
+    canSubscribeOCP,
+    canTransferClusterOwnership,
+    canHibernateCluster,
+    toggleSubscriptionReleased,
+    refreshFunc,
+    inClusterList,
   );
-  const menuItems = actions.map(
-    action => (<DropdownItem {...action}>{action.title}</DropdownItem>),
-  );
+  const menuItems = actions.map((action) => (
+    <DropdownItem {...action}>{action.title}</DropdownItem>
+  ));
   return menuItems;
 }
 

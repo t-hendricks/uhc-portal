@@ -27,14 +27,16 @@ describe('<TransferClusterOwnershipDialog />', () => {
       error: false,
       pending: false,
     };
-    wrapper = mount(<TransferClusterOwnershipDialog
-      isOpen
-      closeModal={closeModal}
-      onClose={onClose}
-      submit={submit}
-      subscription={subscription}
-      requestState={requestState}
-    />);
+    wrapper = mount(
+      <TransferClusterOwnershipDialog
+        isOpen
+        closeModal={closeModal}
+        onClose={onClose}
+        submit={submit}
+        subscription={subscription}
+        requestState={requestState}
+      />,
+    );
   });
 
   it('should release clusters', () => {

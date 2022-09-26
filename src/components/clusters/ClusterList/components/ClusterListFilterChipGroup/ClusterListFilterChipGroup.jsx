@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
-import {
-  Chip, ChipGroup, Button, Split, SplitItem,
-} from '@patternfly/react-core';
+import { Chip, ChipGroup, Button, Split, SplitItem } from '@patternfly/react-core';
 
 import { productFilterOptions } from '../../../../../common/subscriptionTypes';
 import helpers from '../../../../../common/helpers';
@@ -37,34 +35,38 @@ function ClusterListFilterChipGroup({ currentFilters, setFilter, history }) {
     <Split>
       <SplitItem>
         <ChipGroup>
-          {groups.map((group) => {
-            const currentFilter = currentFilters[group.key] || [];
-            if (isEmpty(currentFilter)) {
-              return null;
-            }
-            return (
-              <ChipGroup key={`chipgroup-${group.key}`} categoryName={group.label}>
-                {currentFilter.map((key) => {
-                  const { label } = group.options.find(opt => opt.key === key);
-                  const deleteItem = () => {
-                    setFilterAndQueryParams({
-                      ...currentFilters,
-                      [group.key]: currentFilter.filter(item => item !== key),
-                    });
-                  };
-                  return (
-                    <Chip key={key} onClick={deleteItem}>
-                      {label}
-                    </Chip>
-                  );
-                })}
-              </ChipGroup>
-            );
-          }).filter(Boolean)}
+          {groups
+            .map((group) => {
+              const currentFilter = currentFilters[group.key] || [];
+              if (isEmpty(currentFilter)) {
+                return null;
+              }
+              return (
+                <ChipGroup key={`chipgroup-${group.key}`} categoryName={group.label}>
+                  {currentFilter.map((key) => {
+                    const { label } = group.options.find((opt) => opt.key === key);
+                    const deleteItem = () => {
+                      setFilterAndQueryParams({
+                        ...currentFilters,
+                        [group.key]: currentFilter.filter((item) => item !== key),
+                      });
+                    };
+                    return (
+                      <Chip key={key} onClick={deleteItem}>
+                        {label}
+                      </Chip>
+                    );
+                  })}
+                </ChipGroup>
+              );
+            })
+            .filter(Boolean)}
         </ChipGroup>
       </SplitItem>
       <SplitItem>
-        <Button variant="link" onClick={() => setFilterAndQueryParams({})}>Clear filters</Button>
+        <Button variant="link" onClick={() => setFilterAndQueryParams({})}>
+          Clear filters
+        </Button>
       </SplitItem>
     </Split>
   );

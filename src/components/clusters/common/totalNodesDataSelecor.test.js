@@ -46,8 +46,10 @@ it('should find if autoscaling enabled when the default machine pool has autosca
     },
   };
 
-  const result = nodesSectionDataSelector(state.clusters.details.cluster,
-    state.machinePools.getMachinePools.data);
+  const result = nodesSectionDataSelector(
+    state.clusters.details.cluster,
+    state.machinePools.getMachinePools.data,
+  );
   expect(result).toHaveProperty('hasMachinePoolWithAutoscaling', true);
 });
 
@@ -61,8 +63,10 @@ it('should find if autoscaling enabled when andditional machine pools has autosc
     },
   };
 
-  const result = nodesSectionDataSelector(state.clusters.details.cluster,
-    state.machinePools.getMachinePools.data);
+  const result = nodesSectionDataSelector(
+    state.clusters.details.cluster,
+    state.machinePools.getMachinePools.data,
+  );
   expect(result).toHaveProperty('hasMachinePoolWithAutoscaling', true);
 });
 
@@ -76,8 +80,10 @@ it('should count total max and total min compute nodes', () => {
     },
   };
 
-  const result = nodesSectionDataSelector(state.clusters.details.cluster,
-    state.machinePools.getMachinePools.data);
+  const result = nodesSectionDataSelector(
+    state.clusters.details.cluster,
+    state.machinePools.getMachinePools.data,
+  );
 
   expect(result).toHaveProperty('totalMinNodesCount', 9);
   expect(result).toHaveProperty('totalMaxNodesCount', 12);
@@ -93,7 +99,9 @@ it('should count total desired compute nodes', () => {
     },
   };
 
-  const result = nodesSectionDataSelector(state.clusters.details.cluster,
-    state.machinePools.getMachinePools.data);
+  const result = nodesSectionDataSelector(
+    state.clusters.details.cluster,
+    state.machinePools.getMachinePools.data,
+  );
   expect(result).toHaveProperty('totalDesiredComputeNodes', 6);
 });

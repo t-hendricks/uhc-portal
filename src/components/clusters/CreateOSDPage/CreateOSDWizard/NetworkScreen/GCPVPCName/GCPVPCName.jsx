@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Alert, FormGroup, FormSelect, FormSelectOption,
-} from '@patternfly/react-core';
+import { Alert, FormGroup, FormSelect, FormSelectOption } from '@patternfly/react-core';
 
 import { LIST_VPCS } from '../../ccsInquiriesActions';
 
@@ -35,12 +33,10 @@ class GCPVPCName extends React.Component {
     if (hasDependencies && !matchesDependencies && !vpcs.pending) {
       getGCPCloudProviderVPCs(LIST_VPCS, credentials, region);
     }
-  }
+  };
 
   currentValueIrrelevant = () => {
-    const {
-      hasDependencies, matchesDependencies, vpcs, input,
-    } = this.props;
+    const { hasDependencies, matchesDependencies, vpcs, input } = this.props;
     if (!input.value) {
       // Blank/placeholder always legitimate.
       return false;
@@ -52,21 +48,14 @@ class GCPVPCName extends React.Component {
     if (matchesDependencies && vpcs.fulfilled) {
       // Made request and current value is no longer valid.
       const items = vpcs.data?.items || [];
-      return !items.some(item => item.name === input.value);
+      return !items.some((item) => item.name === input.value);
     }
     return false;
-  }
+  };
 
   render() {
-    const {
-      vpcs,
-      matchesDependencies,
-      input,
-      label,
-      placeholder,
-      emptyPlaceholder,
-      meta,
-    } = this.props;
+    const { vpcs, matchesDependencies, input, label, placeholder, emptyPlaceholder, meta } =
+      this.props;
     const show = matchesDependencies && vpcs.fulfilled;
     const items = vpcs?.data?.items || [];
 
@@ -82,18 +71,12 @@ class GCPVPCName extends React.Component {
           </>
         );
       } else {
-        options = (
-          <FormSelectOption isDisabled isPlaceholder value="" label={emptyPlaceholder} />
-        );
+        options = <FormSelectOption isDisabled isPlaceholder value="" label={emptyPlaceholder} />;
       }
     } else if (vpcs.pending) {
-      options = (
-        <FormSelectOption isDisabled value="" label="Loading..." />
-      );
+      options = <FormSelectOption isDisabled value="" label="Loading..." />;
     } else {
-      options = (
-        <FormSelectOption isDisabled value="" label="" />
-      );
+      options = <FormSelectOption isDisabled value="" label="" />;
     }
 
     // Prevent FormSelect from picking wrong option when valid options changed.
@@ -108,7 +91,11 @@ class GCPVPCName extends React.Component {
         fieldId={input.name}
       >
         {matchesDependencies && vpcs.error && (
-          <Alert variant="danger" isInline title="Failed to list existing VPCs using your GCP credentials">
+          <Alert
+            variant="danger"
+            isInline
+            title="Failed to list existing VPCs using your GCP credentials"
+          >
             Verify that your entered service account details are correct
           </Alert>
         )}

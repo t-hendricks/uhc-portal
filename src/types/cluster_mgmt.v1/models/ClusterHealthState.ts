@@ -6,7 +6,7 @@
  * ClusterHealthState indicates the health of a cluster.
  */
 export enum ClusterHealthState {
-    HEALTHY = 'healthy',
-    UNHEALTHY = 'unhealthy',
-    UNKNOWN = 'unknown',
+  HEALTHY = 'healthy',
+  UNHEALTHY = 'unhealthy',
+  UNKNOWN = 'unknown',
 }

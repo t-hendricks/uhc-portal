@@ -10,58 +10,50 @@ import GCPClusterEncryption from './GCPEncryptionSection';
 import AWSCustomerManagedEncryption from './AWSEncryptionSection';
 
 function CustomerManagedEncryption({
-  customerManagedEncryptionSelected, selectedRegion, cloudProviderID,
+  customerManagedEncryptionSelected,
+  selectedRegion,
+  cloudProviderID,
 }) {
   const isGCP = cloudProviderID === 'gcp';
-  const gcpDesc = 'Managed via Google Cloud Key Management Service. Used to store and generate encryption keys and encrypt your data.';
-  const awsDesc = 'Use a custom AWS KMS key for AWS EBS volume encryption instead of your default AWS KMS key.';
+  const gcpDesc =
+    'Managed via Google Cloud Key Management Service. Used to store and generate encryption keys and encrypt your data.';
+  const awsDesc =
+    'Use a custom AWS KMS key for AWS EBS volume encryption instead of your default AWS KMS key.';
 
   return (
     <>
-      <FormGroup
-        fieldId="customer_managed_key"
-        id="customerManagedKey"
-      >
+      <FormGroup fieldId="customer_managed_key" id="customerManagedKey">
         <Field
           component={ReduxCheckbox}
           name="customer_managed_key"
           label="Encrypt persistent volumes with customer keys"
-          extendedHelpText={(
+          extendedHelpText={
             <>
               <Title headingLevel="h6" className="pf-u-mb-sm">
                 {isGCP ? constants.cloudKMSTitle : constants.amazonEBSTitle}
               </Title>
-              <p className="pf-u-mb-sm">
-                {isGCP ? constants.cloudKMS : constants.amazonEBS}
-              </p>
+              <p className="pf-u-mb-sm">{isGCP ? constants.cloudKMS : constants.amazonEBS}</p>
               <ExternalLink
-                href={isGCP ? (
-                  'https://cloud.google.com/kms/docs/resource-hierarchy'
-                ) : (
-                  'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html'
-                )}
+                href={
+                  isGCP
+                    ? 'https://cloud.google.com/kms/docs/resource-hierarchy'
+                    : 'https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html'
+                }
               >
-                {isGCP ? (
-                  'Learn all about Cloud KMS'
-                ) : (
-                  'Learn more about AWS EBS encryption'
-                )}
+                {isGCP ? 'Learn all about Cloud KMS' : 'Learn more about AWS EBS encryption'}
               </ExternalLink>
             </>
-          )}
+          }
         />
-        <div className="ocm-c--reduxcheckbox-description">
-          {isGCP ? gcpDesc : awsDesc}
-        </div>
+        <div className="ocm-c--reduxcheckbox-description">{isGCP ? gcpDesc : awsDesc}</div>
       </FormGroup>
 
-      {customerManagedEncryptionSelected && (
-        isGCP ? (
+      {customerManagedEncryptionSelected &&
+        (isGCP ? (
           <GCPClusterEncryption selectedRegion={selectedRegion} />
         ) : (
           <AWSCustomerManagedEncryption />
-        )
-      )}
+        ))}
     </>
   );
 }

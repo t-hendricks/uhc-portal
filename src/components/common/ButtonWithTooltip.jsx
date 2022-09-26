@@ -16,9 +16,7 @@ import { Button, Tooltip } from '@patternfly/react-core';
  * Can optionally specify `tooltipProps` to pass to Tooltip;
  * all other props (including children) passed down to Button.
  */
-function ButtonWithTooltip({
-  disableReason, isAriaDisabled, tooltipProps = {}, ...buttonProps
-}) {
+function ButtonWithTooltip({ disableReason, isAriaDisabled, tooltipProps = {}, ...buttonProps }) {
   if (disableReason) {
     return (
       <Tooltip content={disableReason} {...tooltipProps}>

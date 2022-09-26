@@ -8,9 +8,7 @@ import ErrorBox from '../../../common/ErrorBox';
 
 class UnarchiveClusterDialog extends Component {
   componentDidUpdate() {
-    const {
-      unarchiveClusterResponse, resetResponse, closeModal, onClose,
-    } = this.props;
+    const { unarchiveClusterResponse, resetResponse, closeModal, onClose } = this.props;
     if (unarchiveClusterResponse.fulfilled) {
       resetResponse();
       closeModal();
@@ -20,7 +18,12 @@ class UnarchiveClusterDialog extends Component {
 
   render() {
     const {
-      closeModal, submit, unarchiveClusterResponse, resetResponse, subscriptionID, name,
+      closeModal,
+      submit,
+      unarchiveClusterResponse,
+      resetResponse,
+      subscriptionID,
+      name,
       shouldDisplayClusterName,
     } = this.props;
 
@@ -48,8 +51,8 @@ class UnarchiveClusterDialog extends Component {
           {error}
           <Form onSubmit={() => submit(subscriptionID, name)}>
             <p>
-              Un-archiving a cluster will make it visible in the active (default) cluster list.
-              You may need to manage subscriptions if the cluster is active.
+              Un-archiving a cluster will make it visible in the active (default) cluster list. You
+              may need to manage subscriptions if the cluster is active.
             </p>
           </Form>
         </>

@@ -5,9 +5,7 @@ import SubnetFields from './SubnetFields';
 describe('<SubnetFields />', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(
-      <SubnetFields selectedRegion="fake-region" />,
-    );
+    wrapper = shallow(<SubnetFields selectedRegion="fake-region" />);
   });
 
   it('should render', () => {

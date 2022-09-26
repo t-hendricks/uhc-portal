@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import PropTypes from 'prop-types';
-import {
-  Form,
-  Alert,
-} from '@patternfly/react-core';
+import { Form, Alert } from '@patternfly/react-core';
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import ErrorBox from '../../../common/ErrorBox';
@@ -19,9 +16,7 @@ class HibernateClusterModal extends Component {
   }
 
   componentDidUpdate() {
-    const {
-      hibernateClusterResponse, resetResponses, closeModal, onClose,
-    } = this.props;
+    const { hibernateClusterResponse, resetResponses, closeModal, onClose } = this.props;
     if (hibernateClusterResponse.fulfilled) {
       resetResponses();
       closeModal();
@@ -31,13 +26,20 @@ class HibernateClusterModal extends Component {
 
   render() {
     const {
-      closeModal, submit, hibernateClusterResponse, resetResponses,
-      clusterID, clusterName, clusterUpgrades, history, subscriptionID,
+      closeModal,
+      submit,
+      hibernateClusterResponse,
+      resetResponses,
+      clusterID,
+      clusterName,
+      clusterUpgrades,
+      history,
+      subscriptionID,
       shouldDisplayClusterName,
     } = this.props;
 
-    const upgradesInState = state => clusterUpgrades.items
-      .filter(schedule => schedule.state?.value === state);
+    const upgradesInState = (state) =>
+      clusterUpgrades.items.filter((schedule) => schedule.state?.value === state);
 
     const cancelHibernateCluster = () => {
       resetResponses();
@@ -56,17 +58,10 @@ class HibernateClusterModal extends Component {
       <Form onSubmit={() => submit()}>
         {error}
         <p>
-          Moving
-          {' '}
-          <b>
-            {clusterName}
-          </b>
-          {' '}
-          cluster to Hibernating state will block any
-          operation for this cluster. While hibernating,
-          the cluster will not consume any virtual machine instance or network resources,
-          but will still count against subscription quota.
-          Note that version upgrades will not occur.
+          Moving <b>{clusterName}</b> cluster to Hibernating state will block any operation for this
+          cluster. While hibernating, the cluster will not consume any virtual machine instance or
+          network resources, but will still count against subscription quota. Note that version
+          upgrades will not occur.
         </p>
         <Alert
           variant="warning"
@@ -79,30 +74,22 @@ class HibernateClusterModal extends Component {
       </Form>
     );
 
-    const upgradeScheduledForm = schedule => (
+    const upgradeScheduledForm = (schedule) => (
       <Form onSubmit={() => submit()}>
         {error}
         <p>
-          Moving
-          {' '}
-          <b>
-            {clusterName}
-          </b>
-          {' '}
-          cluster to Hibernating state is not possible while there is a scheduled cluster upgrade.
+          Moving <b>{clusterName}</b> cluster to Hibernating state is not possible while there is a
+          scheduled cluster upgrade.
         </p>
         <Alert
           variant="warning"
-          title={(
+          title={
             <p>
-              There is a scheduled update to,
-              {' '}
-              <DateFormat type="exact" date={Date.parse(schedule.next_run)} />
-              .
-              {' '}
-              The scheduled update cannot be executed if the cluster is hibernating
+              There is a scheduled update to,{' '}
+              <DateFormat type="exact" date={Date.parse(schedule.next_run)} />. The scheduled update
+              cannot be executed if the cluster is hibernating
             </p>
-          )}
+          }
         />
         Try again after the cluster upgrade is done or cancel the upgrade.
       </Form>
@@ -112,13 +99,8 @@ class HibernateClusterModal extends Component {
       <Form onSubmit={() => submit()}>
         {error}
         <p>
-          Moving
-          {' '}
-          <b>
-            {clusterName}
-          </b>
-          {' '}
-          to Hibernating state is not possible while the cluster is upgrading.
+          Moving <b>{clusterName}</b> to Hibernating state is not possible while the cluster is
+          upgrading.
         </p>
       </Form>
     );
@@ -171,9 +153,7 @@ class HibernateClusterModal extends Component {
         onSecondaryClick={onSecondaryClick}
         isPending={hibernateClusterResponse.pending || clusterUpgrades.pending}
       >
-        <>
-          {hibernateForm}
-        </>
+        <>{hibernateForm}</>
       </Modal>
     );
   }

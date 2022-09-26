@@ -20,17 +20,19 @@ import { accountsService, authorizationsService, clusterService } from '../../se
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
 
 function fetchAccount() {
-  return dispatch => dispatch({
-    type: subscriptionsConstants.GET_ACCOUNT,
-    payload: accountsService.getCurrentAccount(),
-  });
+  return (dispatch) =>
+    dispatch({
+      type: subscriptionsConstants.GET_ACCOUNT,
+      payload: accountsService.getCurrentAccount(),
+    });
 }
 
 const getSubscriptionsAndPermissions = async (params) => {
   let canEdit = [];
-  const permissionsResponse = await authorizationsService.selfResourceReview(
-    { action: 'update', resource_type: 'Cluster' },
-  );
+  const permissionsResponse = await authorizationsService.selfResourceReview({
+    action: 'update',
+    resource_type: 'Cluster',
+  });
   canEdit = buildPermissionDict(permissionsResponse);
 
   return accountsService.getSubscriptions(params).then((response) => {
@@ -42,31 +44,32 @@ const getSubscriptionsAndPermissions = async (params) => {
   });
 };
 
-const getSubscriptions = params => dispatch => dispatch({
-  type: subscriptionsConstants.GET_SUBSCRIPTIONS,
-  payload: getSubscriptionsAndPermissions(params),
-});
+const getSubscriptions = (params) => (dispatch) =>
+  dispatch({
+    type: subscriptionsConstants.GET_SUBSCRIPTIONS,
+    payload: getSubscriptionsAndPermissions(params),
+  });
 
-const invalidateSubscriptions = () => dispatch => dispatch({
-  type: INVALIDATE_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS),
-});
+const invalidateSubscriptions = () => (dispatch) =>
+  dispatch({
+    type: INVALIDATE_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS),
+  });
 
 function fetchQuotaCost(organizationID) {
-  return dispatch => dispatch({
-    type: subscriptionsConstants.GET_QUOTA_COST,
-    payload: accountsService.getOrganizationQuota(organizationID),
-  });
+  return (dispatch) =>
+    dispatch({
+      type: subscriptionsConstants.GET_QUOTA_COST,
+      payload: accountsService.getOrganizationQuota(organizationID),
+    });
 }
 
 const getSubscriptionIDForCluster = (clusterID) => {
   if (isUuid(clusterID)) {
     return accountsService
       .fetchSubscriptionByExternalId(clusterID)
-      .then(result => result.data?.items[0]?.id);
+      .then((result) => result.data?.items[0]?.id);
   }
-  return clusterService
-    .getClusterDetails(clusterID)
-    .then(result => result.data.subscription.id);
+  return clusterService.getClusterDetails(clusterID).then((result) => result.data.subscription.id);
 };
 
 /**
@@ -75,14 +78,16 @@ const getSubscriptionIDForCluster = (clusterID) => {
  *
  * @param {String} clusterID Either a Clusters Service cluster ID or a cluster's external_id (uuid)
  */
-const fetchSubscriptionIDForCluster = clusterID => dispatch => dispatch({
-  type: subscriptionsConstants.GET_SUBSCRIPTION_ID,
-  payload: getSubscriptionIDForCluster(clusterID),
-});
+const fetchSubscriptionIDForCluster = (clusterID) => (dispatch) =>
+  dispatch({
+    type: subscriptionsConstants.GET_SUBSCRIPTION_ID,
+    payload: getSubscriptionIDForCluster(clusterID),
+  });
 
-const clearSubscriptionIDForCluster = () => dispatch => dispatch({
-  type: subscriptionsConstants.CLEAR_SUBSCRIPTION_ID,
-});
+const clearSubscriptionIDForCluster = () => (dispatch) =>
+  dispatch({
+    type: subscriptionsConstants.CLEAR_SUBSCRIPTION_ID,
+  });
 
 const subscriptionsActions = {
   fetchAccount,

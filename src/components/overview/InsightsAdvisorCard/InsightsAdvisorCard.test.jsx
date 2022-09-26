@@ -16,10 +16,7 @@ describe('<InsightsAdvisorCard />', () => {
   describe('When no Advisor recommendations (no rule hits)', () => {
     beforeEach(() => {
       wrapper = shallow(
-        <InsightsAdvisorCard
-          overview={initialState.overview}
-          groups={initialState.groups}
-        />,
+        <InsightsAdvisorCard overview={initialState.overview} groups={initialState.groups} />,
       );
     });
 
@@ -68,12 +65,7 @@ describe('<InsightsAdvisorCard />', () => {
           tags: ['service_availability'],
         },
       ];
-      wrapper = mount(
-        <InsightsAdvisorCard
-          overview={overview}
-          groups={groups}
-        />,
-      );
+      wrapper = mount(<InsightsAdvisorCard overview={overview} groups={groups} />);
     });
 
     it('renders two charts', () => {
@@ -93,7 +85,10 @@ describe('<InsightsAdvisorCard />', () => {
       expect(links).toHaveLength(4);
       links.forEach(
         // check whether low risk is mapped to 1, moderate to 2, important to 3, critical to 4
-        (link, index) => expect(link.props().href).toBe(`http://localhost/openshift/insights/advisor/recommendations?total_risk=${4 - index}`),
+        (link, index) =>
+          expect(link.props().href).toBe(
+            `http://localhost/openshift/insights/advisor/recommendations?total_risk=${4 - index}`,
+          ),
       );
     });
 
@@ -101,14 +96,14 @@ describe('<InsightsAdvisorCard />', () => {
       const titles = wrapper.find('TitleComponent');
       // four categories in total and four TitleComponents rendered
       expect(titles).toHaveLength(4);
-      titles.forEach(
-        (title) => {
-          // take a tag for the particular category
-          const category = title.props().datum.tags;
-          // check whether the link is correct with the mapping
-          expect(title.find('a').props().href).toBe(`http://localhost/openshift/insights/advisor/recommendations?category=${categoryMapping[category]}`);
-        },
-      );
+      titles.forEach((title) => {
+        // take a tag for the particular category
+        const category = title.props().datum.tags;
+        // check whether the link is correct with the mapping
+        expect(title.find('a').props().href).toBe(
+          `http://localhost/openshift/insights/advisor/recommendations?category=${categoryMapping[category]}`,
+        );
+      });
     });
   });
 });

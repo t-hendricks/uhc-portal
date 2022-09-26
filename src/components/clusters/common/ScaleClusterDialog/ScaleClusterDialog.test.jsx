@@ -34,30 +34,35 @@ describe('<ScaleClusterDialog />', () => {
     resetResponse = jest.fn();
     getLoadBalancers = jest.fn();
     getPersistentStorage = jest.fn();
-    wrapper = shallow(<ScaleClusterDialog
-      isOpen
-      closeModal={closeModal}
-      onClose={onClose}
-      handleSubmit={handleSubmit}
-      change={change}
-      resetResponse={resetResponse}
-      getPersistentStorage={getPersistentStorage}
-      getCloudProviders={jest.fn()}
-      getOrganizationAndQuota={jest.fn()}
-      getLoadBalancers={getLoadBalancers}
-      loadBalancerValues={fulfilledRequest}
-      persistentStorageValues={fulfilledRequest}
-      organization={fulfilledRequest}
-      cloudProviderID="aws"
-      billingModel="standard"
-      isMultiAZ
-      product="OSD"
-      initialValues={{
-        id: 'test-id', nodes_compute: 4, load_balancers: 4, persistent_storage: 107374182400,
-      }}
-      min={{ value: 4, validationMsg: 'error' }}
-      pristine={false}
-    />);
+    wrapper = shallow(
+      <ScaleClusterDialog
+        isOpen
+        closeModal={closeModal}
+        onClose={onClose}
+        handleSubmit={handleSubmit}
+        change={change}
+        resetResponse={resetResponse}
+        getPersistentStorage={getPersistentStorage}
+        getCloudProviders={jest.fn()}
+        getOrganizationAndQuota={jest.fn()}
+        getLoadBalancers={getLoadBalancers}
+        loadBalancerValues={fulfilledRequest}
+        persistentStorageValues={fulfilledRequest}
+        organization={fulfilledRequest}
+        cloudProviderID="aws"
+        billingModel="standard"
+        isMultiAZ
+        product="OSD"
+        initialValues={{
+          id: 'test-id',
+          nodes_compute: 4,
+          load_balancers: 4,
+          persistent_storage: 107374182400,
+        }}
+        min={{ value: 4, validationMsg: 'error' }}
+        pristine={false}
+      />,
+    );
   });
   it('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();
@@ -78,30 +83,35 @@ describe('<ScaleClusterDialog />', () => {
 
   describe('fecth data -', () => {
     it('should fetch machine types, storgae and load balancers data', () => {
-      shallow(<ScaleClusterDialog
-        isOpen
-        closeModal={closeModal}
-        onClose={onClose}
-        handleSubmit={handleSubmit}
-        change={change}
-        resetResponse={resetResponse}
-        getPersistentStorage={getPersistentStorage}
-        getCloudProviders={jest.fn()}
-        getOrganizationAndQuota={jest.fn()}
-        getLoadBalancers={getLoadBalancers}
-        loadBalancerValues={requestInitialState}
-        persistentStorageValues={requestInitialState}
-        organization={fulfilledRequest}
-        cloudProviderID="aws"
-        isMultiAZ
-        billingModel="standard"
-        product="OSD"
-        initialValues={{
-          id: 'test-id', nodes_compute: 4, load_balancers: 4, persistent_storage: 107374182400,
-        }}
-        min={{ value: 4, validationMsg: 'error' }}
-        pristine={false}
-      />);
+      shallow(
+        <ScaleClusterDialog
+          isOpen
+          closeModal={closeModal}
+          onClose={onClose}
+          handleSubmit={handleSubmit}
+          change={change}
+          resetResponse={resetResponse}
+          getPersistentStorage={getPersistentStorage}
+          getCloudProviders={jest.fn()}
+          getOrganizationAndQuota={jest.fn()}
+          getLoadBalancers={getLoadBalancers}
+          loadBalancerValues={requestInitialState}
+          persistentStorageValues={requestInitialState}
+          organization={fulfilledRequest}
+          cloudProviderID="aws"
+          isMultiAZ
+          billingModel="standard"
+          product="OSD"
+          initialValues={{
+            id: 'test-id',
+            nodes_compute: 4,
+            load_balancers: 4,
+            persistent_storage: 107374182400,
+          }}
+          min={{ value: 4, validationMsg: 'error' }}
+          pristine={false}
+        />,
+      );
       expect(getLoadBalancers).toBeCalled();
       expect(getPersistentStorage).toBeCalled();
     });

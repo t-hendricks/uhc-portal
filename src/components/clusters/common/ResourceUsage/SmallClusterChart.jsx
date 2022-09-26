@@ -7,9 +7,7 @@ import { humanizeValueWithUnit, roundValueWithUnit } from '../../../../common/un
 import './SmallClusterChart.scss';
 
 function SmallClusterChart(props) {
-  const {
-    used, total, unit, humanize, donutId, usedTitle, availableTitle,
-  } = props;
+  const { used, total, unit, humanize, donutId, usedTitle, availableTitle } = props;
 
   const format = humanize ? humanizeValueWithUnit : roundValueWithUnit;
   const formattedUsed = format(used, unit);
@@ -26,10 +24,15 @@ function SmallClusterChart(props) {
         <ChartDonut
           id={donutId}
           labels={({ datum }) => (datum.x ? `${datum.x}` : null)}
-          data={[{ x: `${formattedUsed.value} ${formattedUsed.unit}`, y: usedPercentage },
-            { x: `${formattedUnused.value} ${formattedUnused.unit}`, y: unusedPrecentage }]}
+          data={[
+            { x: `${formattedUsed.value} ${formattedUsed.unit}`, y: usedPercentage },
+            { x: `${formattedUnused.value} ${formattedUnused.unit}`, y: unusedPrecentage },
+          ]}
           constrainToVisibleArea
-          legendData={[{ name: `${usedTitle}: ${formattedUsed.value} ${formattedUsed.unit}` }, { name: `${availableTitle}: ${formattedUnused.value} ${formattedUnused.unit}` }]}
+          legendData={[
+            { name: `${usedTitle}: ${formattedUsed.value} ${formattedUsed.unit}` },
+            { name: `${availableTitle}: ${formattedUnused.value} ${formattedUnused.unit}` },
+          ]}
           legendOrientation="vertical"
           padding={{
             bottom: 20,

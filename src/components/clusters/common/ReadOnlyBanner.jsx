@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Banner, Text,
-} from '@patternfly/react-core';
+import { Banner, Text } from '@patternfly/react-core';
 
 function ReadOnlyBanner({ isReadOnly, someReadOnly }) {
   if (isReadOnly) {
@@ -13,13 +11,9 @@ function ReadOnlyBanner({ isReadOnly, someReadOnly }) {
           <b>You will be unable to configure your cluster during maintenance.</b>
         </Text>
         <Text>
-          Actions like configuring identity providers and updating cluster settings
-          are disabled until maintenance is complete.
-          More information may be available under
-          {' '}
-          <b>Cluster history</b>
-          {' '}
-          in Overview tab.
+          Actions like configuring identity providers and updating cluster settings are disabled
+          until maintenance is complete. More information may be available under{' '}
+          <b>Cluster history</b> in Overview tab.
         </Text>
       </Banner>
     );
@@ -31,8 +25,8 @@ function ReadOnlyBanner({ isReadOnly, someReadOnly }) {
           <b>You will be unable to configure some of your clusters during maintenance.</b>
         </Text>
         <Text>
-          Actions like configuring identity providers and updating cluster settings
-          are disabled until maintenance is complete.
+          Actions like configuring identity providers and updating cluster settings are disabled
+          until maintenance is complete.
         </Text>
       </Banner>
     );

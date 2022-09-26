@@ -4,18 +4,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormGroup,
-  Select,
-  SelectGroup,
-  SelectOption,
-} from '@patternfly/react-core';
+import { FormGroup, Select, SelectGroup, SelectOption } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import PopoverHint from '../../../../../../common/PopoverHint';
 import { humanizeValueWithUnit } from '../../../../../../../common/units';
 import { noMachineTypes } from '../../../../../../../common/helpers';
-import { availableClustersFromQuota, availableNodesFromQuota } from '../../../../../common/quotaSelectors';
+import {
+  availableClustersFromQuota,
+  availableNodesFromQuota,
+} from '../../../../../common/quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../../../../../common/subscriptionTypes';
 import { DEFAULT_FLAVOUR_ID } from '../../../../../../../redux/actions/flavourActions';
 import { constants } from '../../../CreateOSDFormConstants';
@@ -26,8 +24,7 @@ const machineTypeLabel = (machineType) => {
   if (!machineType) {
     return '';
   }
-  const humanizedMemory = humanizeValueWithUnit(machineType.memory.value,
-    machineType.memory.unit);
+  const humanizedMemory = humanizeValueWithUnit(machineType.memory.value, machineType.memory.unit);
   let label = `${machineType.cpu.value} ${machineType.cpu.unit} ${humanizedMemory.value} ${humanizedMemory.unit} RAM`;
   if (machineType.category === 'accelerated_computing') {
     const numGPUsStr = machineType.name.match(/\d+ GPU[s]?/g);
@@ -73,7 +70,9 @@ class MachineTypeSelection extends React.Component {
 
   componentDidMount() {
     const {
-      flavours, getDefaultFlavour, machine_type: { input },
+      flavours,
+      getDefaultFlavour,
+      machine_type: { input },
     } = this.props;
 
     if (!flavours.fulfilled && !flavours.pending) {
@@ -93,7 +92,9 @@ class MachineTypeSelection extends React.Component {
   }
 
   componentDidUpdate() {
-    const { machine_type: { input } } = this.props;
+    const {
+      machine_type: { input },
+    } = this.props;
     if (!input.value && this.dataReady()) {
       this.setDefaultValue();
     }
@@ -149,10 +150,10 @@ class MachineTypeSelection extends React.Component {
     const { flavours, machineTypes, organization } = this.props;
     return (
       // Wait for quota_cost.  Presently, it's fetched together with organization.
-      organization.fulfilled
-      && machineTypes.fulfilled
+      organization.fulfilled &&
+      machineTypes.fulfilled &&
       // Tolerate flavours error gracefully.
-      && (flavours.fulfilled || flavours.error)
+      (flavours.fulfilled || flavours.error)
     );
   }
 
@@ -162,8 +163,14 @@ class MachineTypeSelection extends React.Component {
    */
   isTypeAvailable(machineTypeID) {
     const {
-      machineTypes, quota,
-      cloudProviderID, isBYOC, isMultiAz, isMachinePool, product, billingModel,
+      machineTypes,
+      quota,
+      cloudProviderID,
+      isBYOC,
+      isMultiAz,
+      isMachinePool,
+      product,
+      billingModel,
     } = this.props;
 
     if (!this.dataReady()) {
@@ -181,7 +188,12 @@ class MachineTypeSelection extends React.Component {
     }
 
     const quotaParams = {
-      product, cloudProviderID, isBYOC, isMultiAz, resourceName, billingModel,
+      product,
+      cloudProviderID,
+      isBYOC,
+      isMultiAz,
+      resourceName,
+      billingModel,
     };
 
     const clustersAvailable = availableClustersFromQuota(quota, quotaParams);
@@ -273,38 +285,34 @@ class MachineTypeSelection extends React.Component {
 
     const groupedSelectItems = (machines) => {
       const machineGroups = groupedMachineTypes(machines);
-      const selectGroups = machineGroups.map(([categoryLabel, categoryMachines]) => {
-        if (categoryMachines.length > 0) {
-          return (
-            <SelectGroup label={categoryLabel} key={categoryLabel}>
-              {categoryMachines.map(machineType => machineTypeSelectItem(machineType))}
-            </SelectGroup>
-          );
-        }
-        return null;
-      }).filter(Boolean);
+      const selectGroups = machineGroups
+        .map(([categoryLabel, categoryMachines]) => {
+          if (categoryMachines.length > 0) {
+            return (
+              <SelectGroup label={categoryLabel} key={categoryLabel}>
+                {categoryMachines.map((machineType) => machineTypeSelectItem(machineType))}
+              </SelectGroup>
+            );
+          }
+          return null;
+        })
+        .filter(Boolean);
       return selectGroups;
     };
 
     const sortedMachineTypes = sortMachineTypes(machineTypes, cloudProviderID);
-    const filteredMachineTypes = sortedMachineTypes.filter(type => (
-      this.isTypeAvailable(type.id)
-    ));
+    const filteredMachineTypes = sortedMachineTypes.filter((type) => this.isTypeAvailable(type.id));
 
     if (this.dataReady()) {
       if (filteredMachineTypes.length === 0) {
-        return (
-          <div>
-            {noMachineTypes}
-          </div>
-        );
+        return <div>{noMachineTypes}</div>;
       }
       const { isOpen } = this.state;
       const options = groupedSelectItems(filteredMachineTypes);
       // In the dropdown we put the machine type id in separate description row,
       // but the Select toggle doesn't support that, so combine both into one label.
       const selection = machineTypeFullLabel(
-        filteredMachineTypes.find(machineType => machineType.id === input.value) || null,
+        filteredMachineTypes.find((machineType) => machineType.id === input.value) || null,
       );
       return (
         <FormGroup
@@ -336,7 +344,9 @@ class MachineTypeSelection extends React.Component {
       <ErrorBox message="Error loading node types" response={machineTypes} />
     ) : (
       <>
-        <div className="spinner-fit-container"><Spinner /></div>
+        <div className="spinner-fit-container">
+          <Spinner />
+        </div>
         <div className="spinner-loading-text">Loading node types...</div>
       </>
     );

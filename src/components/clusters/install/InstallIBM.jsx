@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  PageSection,
-} from '@patternfly/react-core';
+import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { tollboothActions } from '../../../redux/actions';
@@ -24,11 +22,8 @@ export class InstallIBM extends Component {
   render() {
     const { token } = this.props;
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'IBM Z' },
-      ]}
+      <Breadcrumbs
+        path={[{ label: 'Clusters' }, { label: 'Create', path: '/create' }, { label: 'IBM Z' }]}
       />
     );
 
@@ -56,6 +51,6 @@ InstallIBM.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({ token: state.tollbooth.token });
+const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
 export default connect(mapStateToProps)(InstallIBM);

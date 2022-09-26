@@ -2,21 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 
-const ExternalLink = ({
-  href,
-  children,
-  noIcon,
-  noTarget,
-  className,
-}) => (
-  <a
-    href={href}
-    target={noTarget ? '' : '_blank'}
-    rel="noreferrer noopener"
-    className={className}
-  >
+const ExternalLink = ({ href, children, noIcon, noTarget, className }) => (
+  <a href={href} target={noTarget ? '' : '_blank'} rel="noreferrer noopener" className={className}>
     {children}
-    {noTarget ? null : (<span className="pf-u-screen-reader"> (new window or tab)</span>)}
+    {noTarget ? null : <span className="pf-u-screen-reader"> (new window or tab)</span>}
     {!noIcon && <ExternalLinkAltIcon color="#0066cc" size="sm" className="pf-u-ml-sm" />}
   </a>
 );

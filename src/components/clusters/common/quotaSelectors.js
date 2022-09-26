@@ -31,15 +31,14 @@ const matchCaseInsensitively = (a, b) => match(a.toLowerCase(), b.toLowerCase())
  * Returns true if a QuotaCost.related_resources item matches given constraints.
  * query should consists of same fields as the resource; omitted fields are treated as 'any'.
  */
-const relatedResourceMatches = (resource, query) => (
-  match(resource.resource_type, query.resource_type || any)
-  && matchCaseInsensitively(resource.product, query.product || normalizedProducts.ANY)
-  && match(resource.billing_model, query.billing_model || any)
-  && match(resource.cloud_provider, query.cloud_provider || any)
-  && match(resource.byoc, query.byoc || any)
-  && matchCaseInsensitively(resource.availability_zone_type, query.availability_zone_type || any)
-  && match(resource.resource_name, query.resource_name || any)
-);
+const relatedResourceMatches = (resource, query) =>
+  match(resource.resource_type, query.resource_type || any) &&
+  matchCaseInsensitively(resource.product, query.product || normalizedProducts.ANY) &&
+  match(resource.billing_model, query.billing_model || any) &&
+  match(resource.cloud_provider, query.cloud_provider || any) &&
+  match(resource.byoc, query.byoc || any) &&
+  matchCaseInsensitively(resource.availability_zone_type, query.availability_zone_type || any) &&
+  match(resource.resource_name, query.resource_name || any);
 
 /**
  * Returns remaining matching quota (integer, possibly 0 or Infinity) from a single QuotaCost item.
@@ -77,17 +76,10 @@ const availableFromQuotaCostItem = (quotaCostItem, query) => {
  */
 const availableQuota = (
   quotaList,
-  {
-    resourceType,
-    product,
-    billingModel,
-    cloudProviderID,
-    isBYOC,
-    isMultiAz,
-    resourceName,
-  },
+  { resourceType, product, billingModel, cloudProviderID, isBYOC, isMultiAz, resourceName },
 ) => {
-  const normalizedBillingModel = billingModel === 'standard-trial' ? billingModels.STANDARD : billingModel;
+  const normalizedBillingModel =
+    billingModel === 'standard-trial' ? billingModels.STANDARD : billingModel;
   const query = {
     resource_type: resourceType,
     product,
@@ -111,15 +103,7 @@ const availableQuota = (
  */
 const hasPotentialQuota = (
   quotaList,
-  {
-    resourceType,
-    product,
-    billingModel,
-    cloudProviderID,
-    isBYOC,
-    isMultiAz,
-    resourceName,
-  },
+  { resourceType, product, billingModel, cloudProviderID, isBYOC, isMultiAz, resourceName },
 ) => {
   const query = {
     resource_type: resourceType,
@@ -146,15 +130,13 @@ const hasPotentialQuota = (
 /**
  * Returns partial query object for availableQuota() matching an existing cluster.
  */
-const queryFromCluster = cluster => (
-  {
-    product: cluster.subscription.plan.type,
-    billingModel: get(cluster, 'billing_model', billingModels.STANDARD),
-    cloudProviderID: get(cluster, 'cloud_provider.id', 'any'),
-    isBYOC: get(cluster, 'ccs.enabled', false),
-    isMultiAz: get(cluster, 'multi_az', false),
-  }
-);
+const queryFromCluster = (cluster) => ({
+  product: cluster.subscription.plan.type,
+  billingModel: get(cluster, 'billing_model', billingModels.STANDARD),
+  cloudProviderID: get(cluster, 'cloud_provider.id', 'any'),
+  isBYOC: get(cluster, 'ccs.enabled', false),
+  isMultiAz: get(cluster, 'multi_az', false),
+});
 
 /**
  * Returns number of clusters of specific type that can be created/added, from 0 to `Infinity`.
@@ -162,15 +144,13 @@ const queryFromCluster = cluster => (
  * @param quotaList - `state.userProfile.organization.quotaList`
  * @param query - {product, cloudProviderID, resourceName, isBYOC,isMultiAz, billingModel}
  */
-const availableClustersFromQuota = (quotaList, query) => (
-  availableQuota(quotaList, { ...query, resourceType: quotaTypes.CLUSTER })
-);
+const availableClustersFromQuota = (quotaList, query) =>
+  availableQuota(quotaList, { ...query, resourceType: quotaTypes.CLUSTER });
 
-const hasManagedQuotaSelector = (state, product) => (
+const hasManagedQuotaSelector = (state, product) =>
   availableClustersFromQuota(state.userProfile.organization.quotaList, {
     product,
-  }) >= 1
-);
+  }) >= 1;
 
 /**
  * Returns number of nodes of specific type that can be created/added, from 0 to `Infinity`.
@@ -178,9 +158,8 @@ const hasManagedQuotaSelector = (state, product) => (
  * @param quotaList - `state.userProfile.organization.quotaList`
  * @param query - {product, cloudProviderID, resourceName, isBYOC,isMultiAz, billingModel}
  */
-const availableNodesFromQuota = (quotaList, query) => (
-  availableQuota(quotaList, { ...query, resourceType: quotaTypes.NODE })
-);
+const availableNodesFromQuota = (quotaList, query) =>
+  availableQuota(quotaList, { ...query, resourceType: quotaTypes.NODE });
 
 export {
   quotaTypes,

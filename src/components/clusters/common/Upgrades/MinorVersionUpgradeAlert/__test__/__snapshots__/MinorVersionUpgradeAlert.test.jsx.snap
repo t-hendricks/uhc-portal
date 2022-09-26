@@ -26,13 +26,7 @@ exports[`<MinorVersionUpgradeAlert > Correct data is shown for approved minor up
   <p
     data-testid="minorVersionUpgradeAlertDisableMessage"
   >
-    Your cluster will be updated to the newest minor version
-     
-    at the time you selected. Minor releases can include new Kubernetes
-     
-    versions or operating system capabilities, improved automation on IaaS
-     
-    providers, and other expanded features.
+    Your cluster will be updated to the newest minor version at the time you selected. Minor releases can include new Kubernetes versions or operating system capabilities, improved automation on IaaS providers, and other expanded features.
   </p>
 </Alert>
 `;
@@ -63,9 +57,7 @@ exports[`<MinorVersionUpgradeAlert > Correct data is shown for unapproved minor 
   <p
     data-testid="minorVersionUpgradeAlertEnableMessage"
   >
-    Allow your cluster to be updated to the newest minor version
-     
-    at the time you selected.
+    Allow your cluster to be updated to the newest minor version at the time you selected.
      
     <ExternalLink
       href="https://docs.openshift.com/dedicated/upgrading/osd-upgrades.html"

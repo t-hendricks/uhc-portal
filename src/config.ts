@@ -7,7 +7,7 @@ type EnvConfig = {
   showOldMetrics?: boolean;
 };
 
-const configs: {[env: string]: Promise<EnvConfig> | undefined} = {};
+const configs: { [env: string]: Promise<EnvConfig> | undefined } = {};
 
 // Specify configs to load below. The `webpackMode` comments are to ensure configs
 // get bundled in the main chunk, and not spilt to tiny chunks

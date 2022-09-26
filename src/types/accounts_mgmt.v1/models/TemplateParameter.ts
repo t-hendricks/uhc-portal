@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type TemplateParameter = {
-    content: string;
-    name: string;
+  content: string;
+  name: string;
 };
-

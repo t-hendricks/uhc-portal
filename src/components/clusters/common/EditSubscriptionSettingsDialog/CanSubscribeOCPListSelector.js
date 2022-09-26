@@ -1,7 +1,10 @@
 import get from 'lodash/get';
 import mergeWith from 'lodash/mergeWith';
 
-import { haveCapabilities, subscriptionCapabilities } from '../../../../common/subscriptionCapabilities';
+import {
+  haveCapabilities,
+  subscriptionCapabilities,
+} from '../../../../common/subscriptionCapabilities';
 
 const { SUBSCRIBED_OCP, SUBSCRIBED_OCP_MARKETPLACE } = subscriptionCapabilities;
 
@@ -10,9 +13,11 @@ const canSubscribeOCPListSelector = (state) => {
   const subscribeStandardOCPList = haveCapabilities(clusters, SUBSCRIBED_OCP);
   const subscribeMarketplaceOCPList = haveCapabilities(clusters, SUBSCRIBED_OCP_MARKETPLACE);
 
-  return mergeWith(subscribeStandardOCPList,
+  return mergeWith(
+    subscribeStandardOCPList,
     subscribeMarketplaceOCPList,
-    (objVal, srcVal) => (objVal || srcVal));
+    (objVal, srcVal) => objVal || srcVal,
+  );
 };
 
 export default canSubscribeOCPListSelector;

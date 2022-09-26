@@ -17,7 +17,10 @@ import produce from 'immer';
 import moment from 'moment';
 
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  baseRequestState,
 } from '../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../common/errors';
 import {
@@ -119,8 +122,8 @@ function UpgradesRecuder(state = initialState, action) {
       case SET_CLUSTER_UPGRADE_POLICY: {
         draft.schedules.items = state.schedules.items.map((schedule) => {
           if (
-            schedule.cluster_id === action.payload.cluster_id
-            && schedule.schedule_type === action.payload.schedule_type
+            schedule.cluster_id === action.payload.cluster_id &&
+            schedule.schedule_type === action.payload.schedule_type
           ) {
             return action.payload;
           }

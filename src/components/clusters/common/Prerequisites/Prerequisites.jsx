@@ -4,15 +4,13 @@ import { ExpandableSection } from '@patternfly/react-core';
 import './Prerequisites.scss';
 import AcknowledgePrerequisites from './AcknowledgePrerequisites';
 
-const Prerequisites = (
-  {
-    initiallyExpanded,
-    children,
-    acknowledgementRequired = false,
-    toggleText = 'Prerequisites',
-    ...restProps
-  },
-) => {
+const Prerequisites = ({
+  initiallyExpanded,
+  children,
+  acknowledgementRequired = false,
+  toggleText = 'Prerequisites',
+  ...restProps
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
@@ -25,12 +23,16 @@ const Prerequisites = (
 
   return (
     <>
-      <ExpandableSection className="prerequisites-expandable-section" toggleText={toggleText} isExpanded={isExpanded} onToggle={onToggle} {...restProps}>
-        <div className="prerequisites-section">
-          {children}
-        </div>
+      <ExpandableSection
+        className="prerequisites-expandable-section"
+        toggleText={toggleText}
+        isExpanded={isExpanded}
+        onToggle={onToggle}
+        {...restProps}
+      >
+        <div className="prerequisites-section">{children}</div>
       </ExpandableSection>
-      { acknowledgementRequired && <AcknowledgePrerequisites />}
+      {acknowledgementRequired && <AcknowledgePrerequisites />}
     </>
   );
 };

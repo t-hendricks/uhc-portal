@@ -26,56 +26,34 @@ const MissingPrereqErrorModal = ({ onRetry, onClose }) => {
 
   return (
     <Modal
-      header={(
+      header={
         <Title headingLevel="h2" size="2xl">
           <ExclamationCircleIcon color={ExclamationCircleColor.value} className="pf-u-mr-sm" />
           {title}
         </Title>
-      )}
+      }
       modalSize="medium"
       aria-label={title}
       onPrimaryClick={close}
       onClose={close}
       actions={[
-        <Button
-          key="retry"
-          variant="primary"
-          onClick={onRetry}
-          type="submit"
-        >
+        <Button key="retry" variant="primary" onClick={onRetry} type="submit">
           Retry creating cluster
         </Button>,
-        <Button
-          key="prereq-guide"
-          variant="secondary"
-          onClick={goToClusterProviderStep}
-        >
+        <Button key="prereq-guide" variant="secondary" onClick={goToClusterProviderStep}>
           Go back to prerequisites guide
         </Button>,
-        <Button
-          key="secondary"
-          variant="secondary"
-          onClick={close}
-        >
+        <Button key="secondary" variant="secondary" onClick={close}>
           Cancel
         </Button>,
       ]}
     >
       <p>
         {/* eslint-disable-next-line max-len */}
-        The cluster cannot be created because the provided AWS credentials don&apos;t belong to the
-        {' '}
-        <strong>osdCcsAdmin</strong>
-        {' '}
-        user. To provision a cluster successfully, your AWS account requires an IAM user called
-        {' '}
-        <strong>osdCcsAdmin</strong>
-        {' '}
-        with the
-        {' '}
-        <strong>AdministratorAccess</strong>
-        {' '}
-        policy.
+        The cluster cannot be created because the provided AWS credentials don&apos;t belong to the{' '}
+        <strong>osdCcsAdmin</strong> user. To provision a cluster successfully, your AWS account
+        requires an IAM user called <strong>osdCcsAdmin</strong> with the{' '}
+        <strong>AdministratorAccess</strong> policy.
       </p>
 
       <p className="pf-u-mt-md">

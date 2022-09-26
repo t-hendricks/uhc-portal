@@ -12,13 +12,14 @@ const getCluster = (showAssistedId) => {
 };
 
 describe('<DetailsLeft />', () => {
-  const wrapper = showAssistedId => shallow(
-    <DetailsLeft
-      cluster={getCluster(showAssistedId)}
-      cloudProviders={fixtures.cloudProviders}
-      showAssistedId={showAssistedId}
-    />,
-  );
+  const wrapper = (showAssistedId) =>
+    shallow(
+      <DetailsLeft
+        cluster={getCluster(showAssistedId)}
+        cloudProviders={fixtures.cloudProviders}
+        showAssistedId={showAssistedId}
+      />,
+    );
 
   it('should render', () => {
     expect(wrapper(false)).toMatchSnapshot();

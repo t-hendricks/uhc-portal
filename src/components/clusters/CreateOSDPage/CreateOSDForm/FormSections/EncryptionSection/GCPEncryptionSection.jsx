@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  GridItem, FormGroup, Text,
-} from '@patternfly/react-core';
+import { GridItem, FormGroup, Text } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
 import { required, validateGCPKMSServiceAccount } from '~/common/validators';
@@ -45,24 +43,20 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           placeholder="Select key ring"
           requestErrorTitle="Error listing key rings using your GCP credentials"
           emptyAlertTitle="No key rings found for this location"
-          emptyAlertBody={(
+          emptyAlertBody={
             <>
               <Text>
-                If available, change the Key ring location. Or go to your
-                {' '}
-                <ExternalLink href="https://console.cloud.google.com/security/kms">Google Cloud Console</ExternalLink>
-                {' '}
+                If available, change the Key ring location. Or go to your{' '}
+                <ExternalLink href="https://console.cloud.google.com/security/kms">
+                  Google Cloud Console
+                </ExternalLink>{' '}
                 and create the key ring.
               </Text>
               <Text>
-                Once created, refresh using the
-                {' '}
-                <strong>Refresh custom key rings</strong>
-                {' '}
-                button.
+                Once created, refresh using the <strong>Refresh custom key rings</strong> button.
               </Text>
             </>
-          )}
+          }
           refreshButtonText="Refresh custom key rings"
           validate={required}
           isRequired
@@ -81,24 +75,20 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           placeholder="Select key"
           requestErrorTitle="Error listing keys using your GCP credentials"
           emptyAlertTitle="No keys found for this location and key ring"
-          emptyAlertBody={(
+          emptyAlertBody={
             <>
               <Text>
-                If available, change the Key ring location / Key ring. Or go to your
-                {' '}
-                <ExternalLink href="https://console.cloud.google.com/security/kms">Google Cloud Console</ExternalLink>
-                {' '}
+                If available, change the Key ring location / Key ring. Or go to your{' '}
+                <ExternalLink href="https://console.cloud.google.com/security/kms">
+                  Google Cloud Console
+                </ExternalLink>{' '}
                 and create the key.
               </Text>
               <Text>
-                Once created, refresh using the
-                {' '}
-                <strong>Refresh custom keys</strong>
-                {' '}
-                button.
+                Once created, refresh using the <strong>Refresh custom keys</strong> button.
               </Text>
             </>
-          )}
+          }
           refreshButtonText="Refresh custom keys"
           validate={required}
           isRequired
@@ -117,11 +107,7 @@ function GCPCustomerManagedEncryption({ selectedRegion }) {
           validate={validateGCPKMSServiceAccount}
           isRequired
           helpText="GCP Service account will be used for compute scaling."
-          extendedHelpText={(
-            <>
-              {constants.kmsserviceAccount}
-            </>
-          )}
+          extendedHelpText={<>{constants.kmsserviceAccount}</>}
           showHelpTextOnError={false}
         />
       </GridItem>

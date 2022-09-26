@@ -13,8 +13,7 @@ exports[`EvaluationAlert renders correctly 1`] = `
     rel="noreferrer noopener"
     target="_blank"
   >
-    Learn more
-     
+    Learn more 
     <ExternalLinkAltIcon
       color="#0066cc"
       noVerticalAlign={false}

@@ -1,5 +1,8 @@
 import {
-  buildUrlParams, buildFilterURLParams, sqlString, createViewQueryObject,
+  buildUrlParams,
+  buildFilterURLParams,
+  sqlString,
+  createViewQueryObject,
 } from '../queryHelpers';
 
 test('Test buildUrlParams', () => {
@@ -19,13 +22,13 @@ describe('sqlString', () => {
   });
 
   it('doubles single quotes', () => {
-    expect(sqlString("1 quote ' 3 quote'''s 2 quotes ''"))
-      .toBe("'1 quote '' 3 quote''''''s 2 quotes '''''");
+    expect(sqlString("1 quote ' 3 quote'''s 2 quotes ''")).toBe(
+      "'1 quote '' 3 quote''''''s 2 quotes '''''",
+    );
   });
 
   it('does not touch other quotes', () => {
-    expect(sqlString('double quote " backtick `'))
-      .toBe("'double quote \" backtick `'");
+    expect(sqlString('double quote " backtick `')).toBe("'double quote \" backtick `'");
   });
 
   it('does not touch backslash, %, _', () => {
@@ -121,7 +124,10 @@ describe('createViewQueryObject()', () => {
         showArchived: true,
       },
     };
-    expect(createViewQueryObject(viewOptions)).toEqual({ ...baseResult, filter: "(cluster_id!='') AND (status IN ('Deprovisioned', 'Archived'))" });
+    expect(createViewQueryObject(viewOptions)).toEqual({
+      ...baseResult,
+      filter: "(cluster_id!='') AND (status IN ('Deprovisioned', 'Archived'))",
+    });
   });
 
   it('correctly formats filter when a filter is set', () => {
@@ -151,7 +157,8 @@ describe('createViewQueryObject()', () => {
     const expected = {
       ...baseResult,
       has_filters: false,
-      filter: "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (plan_id IN ('OCP','OCP-AssistedInstall','MOA','ROSA'))",
+      filter:
+        "(cluster_id!='') AND (status NOT IN ('Deprovisioned', 'Archived')) AND (plan_id IN ('OCP','OCP-AssistedInstall','MOA','ROSA'))",
     };
 
     expect(createViewQueryObject(viewOptions)).toEqual(expected);

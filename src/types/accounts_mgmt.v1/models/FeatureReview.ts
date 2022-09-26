@@ -3,8 +3,7 @@
 /* eslint-disable */
 
 export type FeatureReview = {
-    account_username?: string;
-    feature: string;
-    organization_id?: string;
+  account_username?: string;
+  feature: string;
+  organization_id?: string;
 };
-

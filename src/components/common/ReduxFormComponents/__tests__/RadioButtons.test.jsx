@@ -21,7 +21,6 @@ describe('<RadioButtons />', () => {
         value: 'test-default',
       },
     ],
-
   };
 
   let wrapper;

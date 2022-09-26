@@ -1,11 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Form,
-  Grid,
-  GridItem,
-  Title,
-} from '@patternfly/react-core';
+import { Form, Grid, GridItem, Title } from '@patternfly/react-core';
 
 import CIDRFields from './CIDRFields';
 
@@ -17,7 +12,12 @@ function CIDRScreen({
   change,
 }) {
   return (
-    <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
+    <Form
+      onSubmit={(event) => {
+        event.preventDefault();
+        return false;
+      }}
+    >
       <Grid hasGutter>
         <GridItem>
           <Title headingLevel="h3">CIDR ranges</Title>

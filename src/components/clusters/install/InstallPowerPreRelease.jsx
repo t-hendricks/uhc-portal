@@ -23,18 +23,22 @@ export class InstallPowerPreRelease extends Component {
   render() {
     const { token } = this.props;
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'Power', path: '/install/power/user-provisioned' },
-        { label: 'Pre-Release Builds' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'Power', path: '/install/power/user-provisioned' },
+          { label: 'Pre-Release Builds' },
+        ]}
       />
     );
 
     return (
       <>
-        <PageTitle title="Install OpenShift on Power with user-provisioned infrastructure" breadcrumbs={breadcrumbs} />
+        <PageTitle
+          title="Install OpenShift on Power with user-provisioned infrastructure"
+          breadcrumbs={breadcrumbs}
+        />
         <PageSection>
           <InstructionsPreRelease token={token} installer={tools.PPCINSTALLER} />
         </PageSection>
@@ -48,6 +52,6 @@ InstallPowerPreRelease.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({ token: state.tollbooth.token });
+const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
 export default connect(mapStateToProps)(InstallPowerPreRelease);

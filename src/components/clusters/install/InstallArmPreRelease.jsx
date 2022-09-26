@@ -23,17 +23,21 @@ export class InstallArmPreRelease extends Component {
   render() {
     const { token } = this.props;
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'ARM Pre-Release Builds' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'ARM Pre-Release Builds' },
+        ]}
       />
     );
 
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4 on ARM" breadcrumbs={breadcrumbs} />
+        <PageTitle
+          title="Install OpenShift Container Platform 4 on ARM"
+          breadcrumbs={breadcrumbs}
+        />
         <PageSection>
           <InstructionsPreRelease token={token} installer={tools.ARMINSTALLER} />
         </PageSection>
@@ -47,6 +51,6 @@ InstallArmPreRelease.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({ token: state.tollbooth.token });
+const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
 export default connect(mapStateToProps)(InstallArmPreRelease);

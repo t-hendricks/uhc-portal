@@ -70,7 +70,10 @@ function ClusterRolesScreen({
 
   useEffect(() => {
     if (!rosaCreationMode && getOCMRoleResponse.fulfilled) {
-      change('rosa_roles_provider_creation_mode', isAutoModeAvailable ? roleModes.AUTO : roleModes.MANUAL);
+      change(
+        'rosa_roles_provider_creation_mode',
+        isAutoModeAvailable ? roleModes.AUTO : roleModes.MANUAL,
+      );
     }
   }, [rosaCreationMode, isAutoModeAvailable, getOCMRoleResponse.fulfilled]);
 
@@ -84,10 +87,12 @@ function ClusterRolesScreen({
       setGetOCMRoleErrorBox(null);
     } else if (getOCMRoleResponse.error) {
       // display error
-      setGetOCMRoleErrorBox(<ErrorBox
-        message="Error getting OCM role to determine administrator role"
-        response={getOCMRoleResponse}
-      />);
+      setGetOCMRoleErrorBox(
+        <ErrorBox
+          message="Error getting OCM role to determine administrator role"
+          response={getOCMRoleResponse}
+        />,
+      );
     } else {
       getOCMRole(awsAccountID);
     }
@@ -121,10 +126,8 @@ function ClusterRolesScreen({
     >
       <TextContent className="ocm-alert-text">
         <Text component={TextVariants.p} className="pf-u-mb-sm">
-          Create the Admin OCM role using the following command in the ROSA CLI.
-          {' '}
-          Only one OCM role can be linked per Red Hat org.
-          {' '}
+          Create the Admin OCM role using the following command in the ROSA CLI. Only one OCM role
+          can be linked per Red Hat org.{' '}
           <PopoverHint title="If an OCM role with basic privileges exists in your account, you might need to delete or unlink the role before creating an OCM role with administrative privileges." />
         </Text>
         <InstructionCommand
@@ -134,8 +137,7 @@ function ClusterRolesScreen({
           rosa create ocm-role --admin
         </InstructionCommand>
         <Text component={TextVariants.p} className="pf-u-mb-sm">
-          If not yet linked, run the following command to associate the OCM role with your AWS
-          {' '}
+          If not yet linked, run the following command to associate the OCM role with your AWS{' '}
           account.
         </Text>
         <InstructionCommand
@@ -145,8 +147,8 @@ function ClusterRolesScreen({
           rosa link ocm-role &lt;arn&gt;
         </InstructionCommand>
         <Text component={TextVariants.p} className="pf-u-mb-sm">
-          After running the command, you may need to refresh using the button below to
-          enable auto mode.
+          After running the command, you may need to refresh using the button below to enable auto
+          mode.
         </Text>
         <Button onClick={handleRefresh} variant="secondary">
           Refresh to enable auto mode
@@ -161,22 +163,21 @@ function ClusterRolesScreen({
       label: 'Manual',
       description: (
         <>
-          You can choose from two options to manually generate the necessary roles and policies
-          {' '}
-          for your cluster operators and the OIDC provider:  ROSA CLI commands, or AWS CLI commands.
-          {' '}
+          You can choose from two options to manually generate the necessary roles and policies for
+          your cluster operators and the OIDC provider: ROSA CLI commands, or AWS CLI commands.{' '}
           <strong>
-            You must complete one of those options after cluster review for your cluster
-            {' '}
-            to complete installation.
+            You must complete one of those options after cluster review for your cluster to complete
+            installation.
           </strong>
-        </>),
+        </>
+      ),
     },
     {
       disabled: !isAutoModeAvailable,
       value: roleModes.AUTO,
       label: 'Auto',
-      description: 'Immediately create the necessary cluster operator roles and OIDC provider. This mode requires an admin privileged OCM role.',
+      description:
+        'Immediately create the necessary cluster operator roles and OIDC provider. This mode requires an admin privileged OCM role.',
       extraField: getOCMRoleResponse.fulfilled && !isAutoModeAvailable && EnableAutoModeTip,
     },
   ];
@@ -188,30 +189,22 @@ function ClusterRolesScreen({
         </GridItem>
         <GridItem>
           <Text component={TextVariants.p}>
-            Choose the preferred mode for creating the operator roles and OIDC provider.
-            {' '}
-            <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
-              Learn more about ROSA roles
-            </ExternalLink>
+            Choose the preferred mode for creating the operator roles and OIDC provider.{' '}
+            <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>Learn more about ROSA roles</ExternalLink>
           </Text>
         </GridItem>
-        {getOCMRoleErrorBox && (
-          <GridItem>
-            { getOCMRoleErrorBox }
-          </GridItem>
-        )}
+        {getOCMRoleErrorBox && <GridItem>{getOCMRoleErrorBox}</GridItem>}
         {getOCMRoleResponse.pending && (
           <GridItem>
-            <div className="spinner-fit-container"><Spinner /></div>
+            <div className="spinner-fit-container">
+              <Spinner />
+            </div>
             <div className="spinner-loading-text pf-u-ml-xl">Checking for admin OCM role...</div>
           </GridItem>
         )}
         {getOCMRoleResponse.fulfilled && (
           <GridItem span={10}>
-            <FormGroup
-              isRequired
-              fieldId="role_mode"
-            >
+            <FormGroup isRequired fieldId="role_mode">
               <Field
                 component={RadioButtons}
                 name="rosa_roles_provider_creation_mode"
@@ -229,11 +222,9 @@ function ClusterRolesScreen({
         </GridItem>
         <GridItem span={10}>
           <Text component={TextVariants.p}>
-            To easily identify the Operator IAM roles for a cluster in your AWS account, the
-            {' '}
-            Operator role names are prefixed with your cluster name and a random 4-digit hash.
-            {' '}
-            You can optionally replace this prefix.
+            To easily identify the Operator IAM roles for a cluster in your AWS account, the{' '}
+            Operator role names are prefixed with your cluster name and a random 4-digit hash. You
+            can optionally replace this prefix.
           </Text>
         </GridItem>
         <GridItem span={6}>
@@ -245,22 +236,18 @@ function ClusterRolesScreen({
             // eslint-disable-next-line import/no-named-as-default-member
             validate={validators.checkCustomOperatorRolesPrefix}
             helpText={`Maximum ${validators.MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH} characters.  Changing the cluster name will regenerate this value.`}
-            extendedHelpText={(
+            extendedHelpText={
               <TextContent>
                 <Text component={TextVariants.p}>
-                  You can specify a custom prefix for the cluster-specific Operator IAM roles to
-                  {' '}
-                  use.
-                  {' '}
-                  <br />
-                  See examples in
-                  {' '}
+                  You can specify a custom prefix for the cluster-specific Operator IAM roles to{' '}
+                  use. <br />
+                  See examples in{' '}
                   <ExternalLink href={links.ROSA_AWS_OPERATOR_ROLE_PREFIX}>
                     Defining a custom Operator IAM role prefix
                   </ExternalLink>
                 </Text>
               </TextContent>
-            )}
+            }
             showHelpTextOnError={false}
           />
         </GridItem>

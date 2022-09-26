@@ -25,33 +25,29 @@ describe('<ClusterDetails />', () => {
       });
 
       it('should get IDPs', () => {
-        expect(functions.getClusterIdentityProviders)
-          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+        expect(functions.getClusterIdentityProviders).toBeCalledWith(
+          fixtures.clusterDetails.cluster.id,
+        );
       });
 
       it('should get users', () => {
-        expect(functions.getUsers)
-          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+        expect(functions.getUsers).toBeCalledWith(fixtures.clusterDetails.cluster.id);
       });
 
       it('should get cluster routers', () => {
-        expect(functions.getClusterRouters)
-          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+        expect(functions.getClusterRouters).toBeCalledWith(fixtures.clusterDetails.cluster.id);
       });
 
       it('should get cluster addons', () => {
-        expect(functions.getClusterAddOns)
-          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+        expect(functions.getClusterAddOns).toBeCalledWith(fixtures.clusterDetails.cluster.id);
       });
 
       it('should get machine pools', () => {
-        expect(functions.getMachinePools)
-          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+        expect(functions.getMachinePools).toBeCalledWith(fixtures.clusterDetails.cluster.id);
       });
 
       it('should get schedules', () => {
-        expect(functions.getSchedules)
-          .toBeCalledWith(fixtures.clusterDetails.cluster.id);
+        expect(functions.getSchedules).toBeCalledWith(fixtures.clusterDetails.cluster.id);
       });
 
       it('should not get on-demand metrics', () => {
@@ -114,8 +110,9 @@ describe('<ClusterDetails />', () => {
     const wrapper = shallow(<ClusterDetails {...props} />);
 
     it('should get on-demand metrics', () => {
-      expect(functions.getOnDemandMetrics)
-        .toBeCalledWith(fixtures.AROClusterDetails.cluster.subscription.id);
+      expect(functions.getOnDemandMetrics).toBeCalledWith(
+        fixtures.AROClusterDetails.cluster.subscription.id,
+      );
     });
 
     it('it should hide 1 tab', () => {

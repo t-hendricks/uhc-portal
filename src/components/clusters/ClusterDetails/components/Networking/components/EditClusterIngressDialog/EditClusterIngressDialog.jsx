@@ -25,8 +25,7 @@ import { checkRouteSelectors } from '../../../../../../../common/validators';
 class EditClusterIngressDialog extends React.Component {
   componentDidUpdate(prevProps) {
     const { editClusterRoutersResponse, refreshCluster } = this.props;
-    if (prevProps.editClusterRoutersResponse.pending
-      && editClusterRoutersResponse.fulfilled) {
+    if (prevProps.editClusterRoutersResponse.pending && editClusterRoutersResponse.fulfilled) {
       refreshCluster();
       this.onClose();
     }
@@ -37,7 +36,7 @@ class EditClusterIngressDialog extends React.Component {
     reset();
     resetResponse();
     closeModal();
-  }
+  };
 
   render() {
     const {
@@ -86,24 +85,16 @@ class EditClusterIngressDialog extends React.Component {
     ) : null;
 
     const advancedOptions = hideAdvancedOptions ? null : (
-      <ExpandableSection
-        toggleText="Advanced options"
-      >
+      <ExpandableSection toggleText="Advanced options">
         <Form>
-          <FormGroup
-            fieldId="enable_additional_router"
-            isStack
-          >
+          <FormGroup fieldId="enable_additional_router" isStack>
             <Field
               component={ReduxCheckbox}
               name="enable_additional_router"
               label="Enable additional router"
             />
           </FormGroup>
-          <FormGroup
-            fieldId="additional_router_address"
-            isStack
-          >
+          <FormGroup fieldId="additional_router_address" isStack>
             <TextInput
               id="additional_router_address"
               value={`*.${additionalRouterAddress}`}
@@ -131,55 +122,49 @@ class EditClusterIngressDialog extends React.Component {
       </ExpandableSection>
     );
 
-    return isOpen && (
-      <Modal
-        width="max(35%, 550px)"
-        primaryText="Save"
-        secondaryText="Cancel"
-        title="Edit cluster ingress"
-        onClose={this.onClose}
-        onPrimaryClick={handleSubmit}
-        onSecondaryClick={this.onClose}
-        isPending={editClusterRoutersResponse.pending}
-        isPrimaryDisabled={!valid || pristine}
-      >
-        {editRoutersError}
-        <Form>
-          {privacySettingsWarningBox}
-          {routerVisibilityWarningBox}
-          <FormGroup
-            fieldId="control_plane_api_endpoint"
-            label="Control Plane API endpoint"
-            isStack
-          >
-            <ClipboardCopy name="control_plane_api_endpoint" isReadOnly>
-              {controlPlaneAPIEndpoint}
-            </ClipboardCopy>
-            <Field
-              component={ReduxCheckbox}
-              name="private_api"
-              label="Make API private"
-            />
-          </FormGroup>
-          <FormGroup
-            fieldId="default_router_address"
-            label="Default application router"
-            isStack
-          >
-            <TextInput
-              id="default_router_address"
-              value={`*.${defaultRouterAddress}`}
-              isReadOnly
-            />
-            <Field
-              component={ReduxCheckbox}
-              name="private_default_router"
-              label="Make router private"
-            />
-          </FormGroup>
-          {advancedOptions}
-        </Form>
-      </Modal>
+    return (
+      isOpen && (
+        <Modal
+          width="max(35%, 550px)"
+          primaryText="Save"
+          secondaryText="Cancel"
+          title="Edit cluster ingress"
+          onClose={this.onClose}
+          onPrimaryClick={handleSubmit}
+          onSecondaryClick={this.onClose}
+          isPending={editClusterRoutersResponse.pending}
+          isPrimaryDisabled={!valid || pristine}
+        >
+          {editRoutersError}
+          <Form>
+            {privacySettingsWarningBox}
+            {routerVisibilityWarningBox}
+            <FormGroup
+              fieldId="control_plane_api_endpoint"
+              label="Control Plane API endpoint"
+              isStack
+            >
+              <ClipboardCopy name="control_plane_api_endpoint" isReadOnly>
+                {controlPlaneAPIEndpoint}
+              </ClipboardCopy>
+              <Field component={ReduxCheckbox} name="private_api" label="Make API private" />
+            </FormGroup>
+            <FormGroup fieldId="default_router_address" label="Default application router" isStack>
+              <TextInput
+                id="default_router_address"
+                value={`*.${defaultRouterAddress}`}
+                isReadOnly
+              />
+              <Field
+                component={ReduxCheckbox}
+                name="private_default_router"
+                label="Make router private"
+              />
+            </FormGroup>
+            {advancedOptions}
+          </Form>
+        </Modal>
+      )
     );
   }
 }

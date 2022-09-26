@@ -86,8 +86,7 @@ exports[`<Releases /> should render 1`] = `
                                     <p
                                       className="pf-u-mb-md"
                                     >
-                                      The most recent versions aren't always available for every cluster. To keep your cluster up to date with the recommended version, run regular updates from the
-                                       
+                                      The most recent versions aren't always available for every cluster. To keep your cluster up to date with the recommended version, run regular updates from the 
                                       <Link
                                         to="/"
                                       >
@@ -99,8 +98,7 @@ exports[`<Releases /> should render 1`] = `
                                       <em>
                                         Note:
                                       </em>
-                                       
-                                      Disconnected clusters won't show available recommended updates on the clusters list.
+                                       Disconnected clusters won't show available recommended updates on the clusters list.
                                     </p>
                                   </React.Fragment>
                                 }
@@ -169,8 +167,7 @@ exports[`<Releases /> should render 1`] = `
                                             <p
                                               className="pf-u-mb-md"
                                             >
-                                              The most recent versions aren't always available for every cluster. To keep your cluster up to date with the recommended version, run regular updates from the
-                                               
+                                              The most recent versions aren't always available for every cluster. To keep your cluster up to date with the recommended version, run regular updates from the 
                                               <Link
                                                 to="/"
                                               >
@@ -182,8 +179,7 @@ exports[`<Releases /> should render 1`] = `
                                               <em>
                                                 Note:
                                               </em>
-                                               
-                                              Disconnected clusters won't show available recommended updates on the clusters list.
+                                               Disconnected clusters won't show available recommended updates on the clusters list.
                                             </p>
                                           </React.Fragment>
                                         </PopoverBody>
@@ -333,8 +329,7 @@ exports[`<Releases /> should render 1`] = `
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
-                                                OpenShift
-                                                 
+                                                OpenShift 
                                                 4.8
                                                 <span
                                                   className="pf-u-screen-reader"
@@ -442,8 +437,7 @@ exports[`<Releases /> should render 1`] = `
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
-                                                OpenShift
-                                                 
+                                                OpenShift 
                                                 4.7
                                                 <span
                                                   className="pf-u-screen-reader"
@@ -563,8 +557,7 @@ exports[`<Releases /> should render 1`] = `
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
-                                                OpenShift
-                                                 
+                                                OpenShift 
                                                 4.6
                                                 <span
                                                   className="pf-u-screen-reader"
@@ -672,8 +665,7 @@ exports[`<Releases /> should render 1`] = `
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
-                                                OpenShift
-                                                 
+                                                OpenShift 
                                                 4.5
                                                 <span
                                                   className="pf-u-screen-reader"
@@ -793,8 +785,7 @@ exports[`<Releases /> should render 1`] = `
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
-                                                OpenShift
-                                                 
+                                                OpenShift 
                                                 4.4
                                                 <span
                                                   className="pf-u-screen-reader"
@@ -914,8 +905,7 @@ exports[`<Releases /> should render 1`] = `
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
-                                                OpenShift
-                                                 
+                                                OpenShift 
                                                 4.3
                                                 <span
                                                   className="pf-u-screen-reader"

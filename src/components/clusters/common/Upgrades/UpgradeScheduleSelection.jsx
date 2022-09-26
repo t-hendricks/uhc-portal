@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Select, SelectOption, FormGroup, Grid, GridItem, Button, Alert,
+  Select,
+  SelectOption,
+  FormGroup,
+  Grid,
+  GridItem,
+  Button,
+  Alert,
 } from '@patternfly/react-core';
 import parseUpdateSchedule from './parseUpdateSchedule';
 import './UpgradeSettingsFields.scss';
@@ -12,15 +18,15 @@ class UpgradeScheduleSelection extends React.Component {
   state = {
     daySelectOpen: false,
     timeSelectOpen: false,
-  }
+  };
 
   toggleDaySelect = (isOpen) => {
     this.setState({ daySelectOpen: isOpen });
-  }
+  };
 
   toggleHourSelect = (isOpen) => {
     this.setState({ timeSelectOpen: isOpen });
-  }
+  };
 
   onDaySelect = (_, selection) => {
     const { input } = this.props;
@@ -33,7 +39,7 @@ class UpgradeScheduleSelection extends React.Component {
     */
     input.onChange(`00 ${selectedHour} * * ${selection}`);
     this.setState({ daySelectOpen: false });
-  }
+  };
 
   onHourSelect = (_, selection) => {
     const { input } = this.props;
@@ -46,7 +52,7 @@ class UpgradeScheduleSelection extends React.Component {
     */
     input.onChange(`00 ${selection} * * ${selectedDay}`);
     this.setState({ timeSelectOpen: false });
-  }
+  };
 
   /** Parse cron syntax from the redux form value
    * @returns {Array<string>} Array of [hour, day]
@@ -73,15 +79,12 @@ class UpgradeScheduleSelection extends React.Component {
             variant="info"
             title="Recurring updates occur when a new patch (z-stream) update becomes available at least 2 days prior to your selected start time."
           />
-          <FormGroup
-            label="Select a day and start time"
-            className="ocm-upgrade-schedule-selection"
-          >
-            This cluster has a custom schedule which can not be modified from this page.
-            {' '}
-            Use the API to set the schedule, or
-            {' '}
-            <Button variant="link" isInline onClick={() => input.onChange('')}>reset the schedule</Button>
+          <FormGroup label="Select a day and start time" className="ocm-upgrade-schedule-selection">
+            This cluster has a custom schedule which can not be modified from this page. Use the API
+            to set the schedule, or{' '}
+            <Button variant="link" isInline onClick={() => input.onChange('')}>
+              reset the schedule
+            </Button>
             .
           </FormGroup>
         </>
@@ -95,9 +98,7 @@ class UpgradeScheduleSelection extends React.Component {
         const value = `${hour.toString().padStart(2, 0)}:00`;
         ret.push(
           <SelectOption key={value} value={hour.toString()}>
-            {value}
-            {' '}
-            UTC
+            {value} UTC
           </SelectOption>,
         );
       }
@@ -114,10 +115,7 @@ class UpgradeScheduleSelection extends React.Component {
           variant="info"
           title="Recurring updates occur when a new patch (z-stream) update becomes available at least 2 days prior to your selected start time."
         />
-        <FormGroup
-          label="Select a day and start time"
-          className="ocm-upgrade-schedule-selection"
-        >
+        <FormGroup label="Select a day and start time" className="ocm-upgrade-schedule-selection">
           <Grid hasGutter>
             <GridItem sm={6} md={4}>
               <Select
@@ -127,12 +125,16 @@ class UpgradeScheduleSelection extends React.Component {
                 onSelect={this.onDaySelect}
                 isDisabled={isDisabled}
               >
-                <SelectOption isPlaceholder isDisabled value="">Select day</SelectOption>
-                {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, idx) => (
-                  <SelectOption key={day} value={idx.toString()}>
-                    {day}
-                  </SelectOption>
-                ))}
+                <SelectOption isPlaceholder isDisabled value="">
+                  Select day
+                </SelectOption>
+                {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map(
+                  (day, idx) => (
+                    <SelectOption key={day} value={idx.toString()}>
+                      {day}
+                    </SelectOption>
+                  ),
+                )}
               </Select>
             </GridItem>
             <GridItem sm={6} md={4}>
@@ -143,7 +145,9 @@ class UpgradeScheduleSelection extends React.Component {
                 onSelect={this.onHourSelect}
                 isDisabled={isDisabled}
               >
-                <SelectOption isPlaceholder isDisabled value="">Select hour</SelectOption>
+                <SelectOption isPlaceholder isDisabled value="">
+                  Select hour
+                </SelectOption>
                 {makeHourList()}
               </Select>
             </GridItem>

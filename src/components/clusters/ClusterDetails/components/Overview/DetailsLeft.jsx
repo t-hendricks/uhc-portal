@@ -45,43 +45,34 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
       <DescriptionList>
         <DescriptionListGroup>
           <DescriptionListTerm>{idLabel}</DescriptionListTerm>
-          <DescriptionListDescription>
-            {id}
-          </DescriptionListDescription>
+          <DescriptionListDescription>{id}</DescriptionListDescription>
         </DescriptionListGroup>
         <DescriptionListGroup>
-          <DescriptionListTerm>
-            Type
-          </DescriptionListTerm>
+          <DescriptionListTerm>Type</DescriptionListTerm>
           <DescriptionListDescription>
             <ClusterTypeLabel cluster={cluster} />
           </DescriptionListDescription>
         </DescriptionListGroup>
         <DescriptionListGroup>
           <DescriptionListTerm>Region</DescriptionListTerm>
-          <DescriptionListDescription>
-            {region}
-          </DescriptionListDescription>
+          <DescriptionListDescription>{region}</DescriptionListDescription>
         </DescriptionListGroup>
         {!isROSA && (
           <DescriptionListGroup>
             <DescriptionListTerm>Provider</DescriptionListTerm>
-            <DescriptionListDescription>
-              {cloudProvider}
-            </DescriptionListDescription>
+            <DescriptionListDescription>{cloudProvider}</DescriptionListDescription>
           </DescriptionListGroup>
         )}
-        {cluster.managed
-          && (
-            <>
-              <DescriptionListGroup>
-                <DescriptionListTerm>Availability</DescriptionListTerm>
-                <DescriptionListDescription>
-                  {cluster.multi_az ? 'Multi-zone' : 'Single zone'}
-                </DescriptionListDescription>
-              </DescriptionListGroup>
-            </>
-          )}
+        {cluster.managed && (
+          <>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Availability</DescriptionListTerm>
+              <DescriptionListDescription>
+                {cluster.multi_az ? 'Multi-zone' : 'Single zone'}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        )}
         <DescriptionListGroup>
           <DescriptionListTerm>Version</DescriptionListTerm>
           <DescriptionListDescription>
@@ -97,23 +88,20 @@ function DetailsLeft({ cluster, cloudProviders, showAssistedId }) {
         <DescriptionListGroup>
           <DescriptionListTerm>Owner</DescriptionListTerm>
           <DescriptionListDescription>
-            {get(cluster, 'subscription.creator.name') || get(cluster, 'subscription.creator.username', 'N/A')}
+            {get(cluster, 'subscription.creator.name') ||
+              get(cluster, 'subscription.creator.username', 'N/A')}
           </DescriptionListDescription>
         </DescriptionListGroup>
         {cluster.managed && !isROSA && (
           <>
             <DescriptionListGroup>
-              <DescriptionListTerm>
-                Subscription type
-              </DescriptionListTerm>
+              <DescriptionListTerm>Subscription type</DescriptionListTerm>
               <DescriptionListDescription>
                 <BillingModelLabel cluster={cluster} />
               </DescriptionListDescription>
             </DescriptionListGroup>
             <DescriptionListGroup>
-              <DescriptionListTerm>
-                Infrastructure type
-              </DescriptionListTerm>
+              <DescriptionListTerm>Infrastructure type</DescriptionListTerm>
               <DescriptionListDescription>
                 <InfrastructureModelLabel cluster={cluster} />
               </DescriptionListDescription>

@@ -12,7 +12,7 @@ import { noop } from '../../../../common/helpers';
 class DeleteClusterDialog extends React.Component {
   state = {
     clusterNameInput: '',
-  }
+  };
 
   componentDidUpdate(prevProps) {
     const { deleteClusterResponse, onSuccess } = this.props;
@@ -27,7 +27,7 @@ class DeleteClusterDialog extends React.Component {
     this.setState({
       clusterNameInput: newInput,
     });
-  }
+  };
 
   closeDialog(parentShouldRefresh) {
     const { clearDeleteClusterResponse, close, onClose } = this.props;
@@ -51,14 +51,9 @@ class DeleteClusterDialog extends React.Component {
       titleIconVariant,
     } = this.props;
 
-    const {
-      clusterID,
-      clusterName,
-    } = modalData;
+    const { clusterID, clusterName } = modalData;
 
-    const {
-      clusterNameInput,
-    } = this.state;
+    const { clusterNameInput } = this.state;
 
     const errorContainer = deleteClusterResponse.error && (
       <ErroBox message="Error deleting cluster" response={deleteClusterResponse} />
@@ -91,7 +86,8 @@ class DeleteClusterDialog extends React.Component {
         <Flex direction={{ default: 'column' }}>
           {errorContainer}
           <p>
-            {textContent || 'This action cannot be undone. It will uninstall the cluster, and all data will be deleted.'}
+            {textContent ||
+              'This action cannot be undone. It will uninstall the cluster, and all data will be deleted.'}
           </p>
           <p>
             {/* eslint-disable-next-line react/jsx-one-expression-per-line */}

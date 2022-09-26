@@ -16,11 +16,7 @@ const ErrorTriangle = ({ item = 'clusters', errorMessage }) => (
 );
 ErrorTriangle.propTypes = {
   item: PropTypes.string,
-  errorMessage: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.node,
-    PropTypes.element,
-  ]),
+  errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
 };
 
 export default ErrorTriangle;

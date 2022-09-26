@@ -29,19 +29,21 @@ describe('<UpgradeTrialClusterDialog />', () => {
     submit = jest.fn();
     resetResponse = jest.fn();
     getOrganizationAndQuota = jest.fn();
-    wrapper = shallow(<UpgradeTrialClusterDialog
-      isOpen
-      closeModal={closeModal}
-      onClose={onClose}
-      submit={submit}
-      resetResponse={resetResponse}
-      organization={organizationState}
-      getOrganizationAndQuota={getOrganizationAndQuota}
-      clusterID="some-cluster-id"
-      cluster={cluster}
-      machineTypesByID={machineTypesByID}
-      upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
-    />);
+    wrapper = shallow(
+      <UpgradeTrialClusterDialog
+        isOpen
+        closeModal={closeModal}
+        onClose={onClose}
+        submit={submit}
+        resetResponse={resetResponse}
+        organization={organizationState}
+        getOrganizationAndQuota={getOrganizationAndQuota}
+        clusterID="some-cluster-id"
+        cluster={cluster}
+        machineTypesByID={machineTypesByID}
+        upgradeTrialClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
+      />,
+    );
   });
 
   it('renders correctly', () => {
@@ -49,7 +51,9 @@ describe('<UpgradeTrialClusterDialog />', () => {
   });
 
   it('renders correctly when an erorr occurs', () => {
-    wrapper.setProps({ upgradeTrialClusterResponse: { error: true, errorMessage: 'this is an error' } });
+    wrapper.setProps({
+      upgradeTrialClusterResponse: { error: true, errorMessage: 'this is an error' },
+    });
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(ErrorBox).length).toEqual(1);
   });

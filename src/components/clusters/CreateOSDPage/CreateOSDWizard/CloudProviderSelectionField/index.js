@@ -1,10 +1,7 @@
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 
-import {
-  availableQuota,
-  quotaTypes,
-} from '../../../common/quotaSelectors';
+import { availableQuota, quotaTypes } from '../../../common/quotaSelectors';
 
 import CloudProviderSelectionField from './CloudProviderSelectionField';
 
@@ -15,7 +12,8 @@ const mapStateToProps = (state) => {
   const billingModel = valueSelector(state, 'billing_model');
   const isByoc = valueSelector(state, 'byoc') === 'true';
 
-  const quotaQuery = params => availableQuota(state.userProfile.organization.quotaList, params) > 0;
+  const quotaQuery = (params) =>
+    availableQuota(state.userProfile.organization.quotaList, params) > 0;
 
   return {
     product,

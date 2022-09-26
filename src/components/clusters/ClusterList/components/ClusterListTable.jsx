@@ -29,7 +29,10 @@ import { OCM } from 'openshift-assisted-ui-lib';
 import SearchIcon from '@patternfly/react-icons/dist/esm/icons/search-icon';
 import ClusterStateIcon from '../../common/ClusterStateIcon/ClusterStateIcon';
 import ClusterLocationLabel from '../../common/ClusterLocationLabel';
-import clusterStates, { getClusterStateAndDescription, isWaitingROSAManualMode } from '../../common/clusterStates';
+import clusterStates, {
+  getClusterStateAndDescription,
+  isWaitingROSAManualMode,
+} from '../../common/clusterStates';
 import ClusterUpdateLink from '../../common/ClusterUpdateLink';
 import ClusterCreatedIndicator from './ClusterCreatedIndicator';
 import getClusterName from '../../../../common/getClusterName';
@@ -43,9 +46,17 @@ import { isAISubscriptionWithoutMetrics } from '../../../../common/isAssistedIns
 const { ClusterStatus: AIClusterStatus } = OCM;
 function ClusterListTable(props) {
   const {
-    viewOptions, setSorting, clusters, openModal, isPending, setClusterDetails,
-    canSubscribeOCPList = {}, canTransferClusterOwnershipList = {}, toggleSubscriptionReleased,
-    canHibernateClusterList = {}, refreshFunc,
+    viewOptions,
+    setSorting,
+    clusters,
+    openModal,
+    isPending,
+    setClusterDetails,
+    canSubscribeOCPList = {},
+    canTransferClusterOwnershipList = {},
+    toggleSubscriptionReleased,
+    canHibernateClusterList = {},
+    refreshFunc,
   } = props;
   if (!isPending && (!clusters || clusters.length === 0)) {
     return (
@@ -101,35 +112,34 @@ function ClusterListTable(props) {
       const hasLimitedSupport = cluster.status?.limited_support_reason_count > 0;
 
       const { state, description } = getClusterStateAndDescription(cluster);
-      const icon = <ClusterStateIcon clusterState={state || ''} animated={false} limitedSupport={hasLimitedSupport} />;
+      const icon = (
+        <ClusterStateIcon
+          clusterState={state || ''}
+          animated={false}
+          limitedSupport={hasLimitedSupport}
+        />
+      );
       if (state === clusterStates.ERROR) {
         return (
           <span>
             <Popover
               position={PopoverPosition.top}
-              bodyContent={(
+              bodyContent={
                 <>
-                  Your cluster is in error state.
-                  {' '}
+                  Your cluster is in error state.{' '}
                   <a
                     href="https://access.redhat.com/support/cases/#/case/new"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     Contact Red Hat Support
-                  </a>
-                  {' '}
+                  </a>{' '}
                   for further assistance.
                 </>
-              )}
+              }
               aria-label="Status: Error"
             >
-              <Button
-                className="cluster-status-string"
-                variant="link"
-                isInline
-                icon={icon}
-              >
+              <Button className="cluster-status-string" variant="link" isInline icon={icon}>
                 {description}
               </Button>
             </Popover>
@@ -145,9 +155,11 @@ function ClusterListTable(props) {
           />
         );
       }
-      if (state === clusterStates.WAITING
-        || state === clusterStates.PENDING
-        || state === clusterStates.INSTALLING) {
+      if (
+        state === clusterStates.WAITING ||
+        state === clusterStates.PENDING ||
+        state === clusterStates.INSTALLING
+      ) {
         return (
           <Popover
             headerContent={<div>Installation status</div>}
@@ -170,7 +182,9 @@ function ClusterListTable(props) {
         <span className="cluster-status-string">
           {icon}
           {description}
-          {hasLimitedSupport ? linkToClusterDetails(cluster, <Label color="red">Limited support</Label>) : null}
+          {hasLimitedSupport
+            ? linkToClusterDetails(cluster, <Label color="red">Limited support</Label>)
+            : null}
         </span>
       );
     };
@@ -191,18 +205,23 @@ function ClusterListTable(props) {
         { title: <ClusterCreatedIndicator cluster={cluster} /> },
         { title: clusterVersion },
         {
-          title: <ClusterLocationLabel
-            regionID={get(cluster, 'region.id', 'N/A')}
-            cloudProviderID={provider}
-          />,
+          title: (
+            <ClusterLocationLabel
+              regionID={get(cluster, 'region.id', 'N/A')}
+              cloudProviderID={provider}
+            />
+          ),
         },
       ],
       cluster,
     };
   };
 
-  const hiddenOnMdOrSmaller = classNames(Visibility.visibleOnLg, Visibility.hiddenOnMd,
-    Visibility.hiddenOnSm);
+  const hiddenOnMdOrSmaller = classNames(
+    Visibility.visibleOnLg,
+    Visibility.hiddenOnMd,
+    Visibility.hiddenOnSm,
+  );
 
   const columns = [
     { title: 'Name', transforms: [sortable, cellWidth(30)] },
@@ -214,13 +233,21 @@ function ClusterListTable(props) {
     '',
   ];
 
-  const rows = isPending ? skeletonRows() : clusters.map(cluster => clusterRow(cluster));
-  const resolver = isPending ? undefined
-    : rowData => actionResolver(rowData.cluster, true, openModal,
-      canSubscribeOCPList[get(rowData, 'cluster.id')] || false,
-      canTransferClusterOwnershipList[get(rowData, 'cluster.id')] || false,
-      canHibernateClusterList[get(rowData, 'cluster.id')] || false,
-      toggleSubscriptionReleased, refreshFunc, true);
+  const rows = isPending ? skeletonRows() : clusters.map((cluster) => clusterRow(cluster));
+  const resolver = isPending
+    ? undefined
+    : (rowData) =>
+        actionResolver(
+          rowData.cluster,
+          true,
+          openModal,
+          canSubscribeOCPList[get(rowData, 'cluster.id')] || false,
+          canTransferClusterOwnershipList[get(rowData, 'cluster.id')] || false,
+          canHibernateClusterList[get(rowData, 'cluster.id')] || false,
+          toggleSubscriptionReleased,
+          refreshFunc,
+          true,
+        );
 
   return (
     <Table

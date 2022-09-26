@@ -5,9 +5,7 @@ import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 describe('<AWSCLITab />', () => {
   it('should render correctly', () => {
-    const wrapper = shallow(
-      <AWSCLITab cluster={fixtures.ROSAManualClusterDetails.cluster} />,
-    );
+    const wrapper = shallow(<AWSCLITab cluster={fixtures.ROSAManualClusterDetails.cluster} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

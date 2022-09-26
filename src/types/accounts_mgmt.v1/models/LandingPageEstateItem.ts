@@ -5,8 +5,7 @@
 import type { LandingPageLinkShape } from './LandingPageLinkShape';
 
 export type LandingPageEstateItem = {
-    count?: number;
-    id?: string;
-    shape?: LandingPageLinkShape;
+  count?: number;
+  id?: string;
+  shape?: LandingPageLinkShape;
 };
-

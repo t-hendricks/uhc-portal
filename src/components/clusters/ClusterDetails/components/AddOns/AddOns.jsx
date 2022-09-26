@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  EmptyState,
-  EmptyStateBody,
-  EmptyStateIcon,
-  Title,
-} from '@patternfly/react-core';
+import { EmptyState, EmptyStateBody, EmptyStateIcon, Title } from '@patternfly/react-core';
 import { PlusCircleIcon } from '@patternfly/react-icons';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../common/ErrorBox';
@@ -15,12 +10,8 @@ import AddOnsDrawer from './AddOnsDrawer';
 
 class AddOns extends React.Component {
   componentDidMount() {
-    const {
-      clusterID,
-      getClusterAddOns,
-      clusterAddOns,
-    } = this.props;
-    if (clusterAddOns.clusterID !== clusterID || (!clusterAddOns.pending)) {
+    const { clusterID, getClusterAddOns, clusterAddOns } = this.props;
+    if (clusterAddOns.clusterID !== clusterID || !clusterAddOns.pending) {
       getClusterAddOns(clusterID);
     }
   }
@@ -35,9 +26,11 @@ class AddOns extends React.Component {
       getOrganizationAndQuota,
       deleteClusterAddOnResponse,
     } = this.props;
-    if (((addClusterAddOnResponse.fulfilled && prevProps.addClusterAddOnResponse.pending)
-      || (updateClusterAddOnResponse.fulfilled && prevProps.updateClusterAddOnResponse.pending)
-      || (deleteClusterAddOnResponse.fulfilled && prevProps.deleteClusterAddOnResponse.pending))) {
+    if (
+      (addClusterAddOnResponse.fulfilled && prevProps.addClusterAddOnResponse.pending) ||
+      (updateClusterAddOnResponse.fulfilled && prevProps.updateClusterAddOnResponse.pending) ||
+      (deleteClusterAddOnResponse.fulfilled && prevProps.deleteClusterAddOnResponse.pending)
+    ) {
       // Fetch cluster add-ons again if we just added, updated or deleted a cluster add-on
       if (!clusterAddOns.pending) {
         getClusterAddOns(clusterID);
@@ -80,13 +73,11 @@ class AddOns extends React.Component {
       return (
         <EmptyState>
           <EmptyStateIcon icon={PlusCircleIcon} />
-          {addOns.error && (
-            <ErrorBox message="Error getting add-ons" response={addOns} />
-          )}
-          <Title headingLevel="h5" size="lg">No add-ons available for this cluster</Title>
-          <EmptyStateBody>
-            There are no add-ons available for this cluster.
-          </EmptyStateBody>
+          {addOns.error && <ErrorBox message="Error getting add-ons" response={addOns} />}
+          <Title headingLevel="h5" size="lg">
+            No add-ons available for this cluster
+          </Title>
+          <EmptyStateBody>There are no add-ons available for this cluster.</EmptyStateBody>
         </EmptyState>
       );
     }
@@ -101,8 +92,8 @@ class AddOns extends React.Component {
 
     return (
       <>
-        { addClusterAddOnResponse.error && (
-        <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
+        {addClusterAddOnResponse.error && (
+          <ErrorBox message="Error adding add-ons" response={addClusterAddOnResponse} />
         )}
         <AddOnsDrawer
           addOnsList={addOnsList}

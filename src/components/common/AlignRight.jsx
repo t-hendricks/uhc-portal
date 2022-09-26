@@ -6,9 +6,7 @@ import PropTypes from 'prop-types';
  */
 const AlignRight = ({ children }) => (
   <div style={{ textAlign: 'right' }}>
-    <span style={{ display: 'inline-block' }}>
-      {children}
-    </span>
+    <span style={{ display: 'inline-block' }}>{children}</span>
   </div>
 );
 AlignRight.propTypes = {

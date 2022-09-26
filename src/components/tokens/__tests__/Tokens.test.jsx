@@ -19,7 +19,9 @@ import { shallow } from 'enzyme';
 
 import Tokens from '../Tokens';
 
-const mockGetToken = jest.fn().mockResolvedValue({ data: { refresh_token: 'hello offline access token!' } });
+const mockGetToken = jest
+  .fn()
+  .mockResolvedValue({ data: { refresh_token: 'hello offline access token!' } });
 
 window.insights = {
   chrome: {

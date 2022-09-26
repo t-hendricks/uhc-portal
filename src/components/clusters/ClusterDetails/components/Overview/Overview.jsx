@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import {
-  Grid, GridItem, Card, CardBody, Title, Alert, CardTitle,
-} from '@patternfly/react-core';
+import { Grid, GridItem, Card, CardBody, Title, Alert, CardTitle } from '@patternfly/react-core';
 
 import { OCM } from 'openshift-assisted-ui-lib';
-import clusterStates, { getClusterStateAndDescription, isHibernating } from '../../../common/clusterStates';
+import clusterStates, {
+  getClusterStateAndDescription,
+  isHibernating,
+} from '../../../common/clusterStates';
 
 import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
@@ -23,7 +24,9 @@ import InstallProgress from '../../../common/InstallProgress/InstallProgress';
 import UninstallProgress from '../../../common/UninstallProgress';
 import InsightsAdvisor from './InsightsAdvisor/InsightsAdvisor';
 import CostBreakdownCard from './CostBreakdownCard';
-import isAssistedInstallSubscription, { isUninstalledAICluster } from '../../../../../common/isAssistedInstallerCluster';
+import isAssistedInstallSubscription, {
+  isUninstalledAICluster,
+} from '../../../../../common/isAssistedInstallerCluster';
 import withFeatureGate from '../../../../features/with-feature-gate';
 import { ASSISTED_INSTALLER_FEATURE } from '../../../../../redux/constants/featureConstants';
 
@@ -31,22 +34,26 @@ import './Overview.scss';
 
 const { AssistedInstallerDetailCard, AssistedInstallerExtraDetailCard } = OCM;
 const GatedAIDetailCard = withFeatureGate(AssistedInstallerDetailCard, ASSISTED_INSTALLER_FEATURE);
-const GatedAIExtraDetailCard = withFeatureGate(AssistedInstallerExtraDetailCard,
-  ASSISTED_INSTALLER_FEATURE);
+const GatedAIExtraDetailCard = withFeatureGate(
+  AssistedInstallerExtraDetailCard,
+  ASSISTED_INSTALLER_FEATURE,
+);
 
 class Overview extends React.Component {
   state = {
     showInstallSuccessAlert: false,
-  }
+  };
 
   componentDidUpdate(prevProps) {
     const { cluster } = this.props;
-    if ((prevProps.cluster.state === clusterStates.INSTALLING
-      || prevProps.cluster.state === clusterStates.PENDING
-      || prevProps.cluster.state === clusterStates.WAITING)
-        && cluster.state === clusterStates.READY
-        && cluster.managed
-        && prevProps.cluster.id === cluster.id) {
+    if (
+      (prevProps.cluster.state === clusterStates.INSTALLING ||
+        prevProps.cluster.state === clusterStates.PENDING ||
+        prevProps.cluster.state === clusterStates.WAITING) &&
+      cluster.state === clusterStates.READY &&
+      cluster.managed &&
+      prevProps.cluster.id === cluster.id
+    ) {
       // we only want to show this alert if the cluster transitioned from installing/pending
       // to Ready while the page was open.
 
@@ -56,72 +63,69 @@ class Overview extends React.Component {
   }
 
   render() {
-    const {
-      cluster,
-      cloudProviders,
-      history,
-      refresh,
-      openModal,
-      insightsData,
-      userAccess,
-    } = this.props;
+    const { cluster, cloudProviders, history, refresh, openModal, insightsData, userAccess } =
+      this.props;
     let topCard;
 
     const { showInstallSuccessAlert } = this.state;
     const clusterState = getClusterStateAndDescription(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-    const isDeprovisioned = get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
-    const metricsAvailable = hasResourceUsageMetrics(cluster)
-      && (cluster.canEdit
-          || (cluster.state !== clusterStates.WAITING
-              && cluster.state !== clusterStates.PENDING
-              && cluster.state !== clusterStates.INSTALLING));
-    const metricsStatusMessage = isArchived ? metricsStatusMessages.archived
+    const isDeprovisioned =
+      get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+    const metricsAvailable =
+      hasResourceUsageMetrics(cluster) &&
+      (cluster.canEdit ||
+        (cluster.state !== clusterStates.WAITING &&
+          cluster.state !== clusterStates.PENDING &&
+          cluster.state !== clusterStates.INSTALLING));
+    const metricsStatusMessage = isArchived
+      ? metricsStatusMessages.archived
       : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
 
-    const shouldMonitorStatus = cluster.state === clusterStates.WAITING
-                             || cluster.state === clusterStates.PENDING
-                             || cluster.state === clusterStates.INSTALLING
-                             || cluster.state === clusterStates.UNINSTALLING;
+    const shouldMonitorStatus =
+      cluster.state === clusterStates.WAITING ||
+      cluster.state === clusterStates.PENDING ||
+      cluster.state === clusterStates.INSTALLING ||
+      cluster.state === clusterStates.UNINSTALLING;
 
-    const showInsightsAdvisor = insightsData?.status === 200 && insightsData?.data
-                              && !isDeprovisioned && !isArchived;
-    const showResourceUsage = !isHibernating(cluster.state)
-      && !isAssistedInstallSubscription(cluster.subscription)
-      && !shouldShowLogs(cluster) && !isDeprovisioned && !isArchived;
-    const showCostBreakdown = !cluster.managed && userAccess.fulfilled
-      && userAccess.data !== undefined && userAccess.data === true
-      && !isDeprovisioned && !isArchived;
+    const showInsightsAdvisor =
+      insightsData?.status === 200 && insightsData?.data && !isDeprovisioned && !isArchived;
+    const showResourceUsage =
+      !isHibernating(cluster.state) &&
+      !isAssistedInstallSubscription(cluster.subscription) &&
+      !shouldShowLogs(cluster) &&
+      !isDeprovisioned &&
+      !isArchived;
+    const showCostBreakdown =
+      !cluster.managed &&
+      userAccess.fulfilled &&
+      userAccess.data !== undefined &&
+      userAccess.data === true &&
+      !isDeprovisioned &&
+      !isArchived;
     const showSidePanel = showInsightsAdvisor || showCostBreakdown;
-    const showAssistedInstallerDetailCard = cluster.aiCluster && !isArchived
-      && isAssistedInstallSubscription(cluster.subscription);
+    const showAssistedInstallerDetailCard =
+      cluster.aiCluster && !isArchived && isAssistedInstallSubscription(cluster.subscription);
     const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
     const showSubscriptionSettings = !isDeprovisioned && !isArchived;
 
     if (isHibernating(cluster.state)) {
-      topCard = (
-        <HibernatingClusterCard cluster={cluster} openModal={openModal} />
-      );
+      topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
     } else if (cluster.state === clusterStates.UNINSTALLING) {
       topCard = !isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster) && (
-      <>
-        <UninstallProgress cluster={cluster}>
-          <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
-          <InstallationLogView
-            cluster={cluster}
-          />
-        </UninstallProgress>
-      </>
+        <>
+          <UninstallProgress cluster={cluster}>
+            <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
+            <InstallationLogView cluster={cluster} />
+          </UninstallProgress>
+        </>
       );
     } else {
       topCard = !isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster) && (
         <>
           <InstallProgress cluster={cluster}>
             <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
-            <InstallationLogView
-              isExpandable
-              cluster={cluster}
-            />
+            <InstallationLogView isExpandable cluster={cluster} />
           </InstallProgress>
         </>
       );
@@ -130,10 +134,14 @@ class Overview extends React.Component {
     const resourceUsage = (
       <Card className="ocm-c-overview-resource-usage__card">
         <CardTitle className="ocm-c-overview-resource-usage__card--header">
-          <Title headingLevel="h2" className="card-title">Resource usage</Title>
-          { showInstallSuccessAlert && <Alert variant="success" isInline title="Cluster installed successfully" />}
-          { shouldMonitorStatus && (
-          <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
+          <Title headingLevel="h2" className="card-title">
+            Resource usage
+          </Title>
+          {showInstallSuccessAlert && (
+            <Alert variant="success" isInline title="Cluster installed successfully" />
+          )}
+          {shouldMonitorStatus && (
+            <ClusterStatusMonitor refresh={refresh} cluster={cluster} history={history} />
           )}
         </CardTitle>
         <CardBody className="ocm-c-overview-resource-usage__card--body">
@@ -158,36 +166,34 @@ class Overview extends React.Component {
       <Grid hasGutter>
         <GridItem xl2={showSidePanel ? 9 : 12}>
           <Grid hasGutter>
-            { topCard }
+            {topCard}
             {showAssistedInstallerDetailCard && (
-            <GatedAIDetailCard aiClusterId={cluster.aiCluster.id} />
+              <GatedAIDetailCard aiClusterId={cluster.aiCluster.id} />
             )}
-            { (showResourceUsage && !showSidePanel) && resourceUsage}
+            {showResourceUsage && !showSidePanel && resourceUsage}
             {showDetailsCard && (
-            <Card className="ocm-c-overview-details__card">
-              <CardTitle className="ocm-c-overview-details__card--header">
-                <Title headingLevel="h2" className="card-title">Details</Title>
-              </CardTitle>
-              <CardBody className="ocm-c-overview-details__card--body">
-                <Grid>
-                  <GridItem sm={6}>
-                    <DetailsLeft
-                      cluster={cluster}
-                      cloudProviders={cloudProviders}
-                      showAssistedId={showAssistedInstallerDetailCard}
-                    />
-                  </GridItem>
-                  <GridItem sm={6}>
-                    <DetailsRight
-                      cluster={{ ...cluster, state: clusterState }}
-                    />
-                  </GridItem>
-                </Grid>
-                {showAssistedInstallerDetailCard && (
-                  <GatedAIExtraDetailCard />
-                )}
-              </CardBody>
-            </Card>
+              <Card className="ocm-c-overview-details__card">
+                <CardTitle className="ocm-c-overview-details__card--header">
+                  <Title headingLevel="h2" className="card-title">
+                    Details
+                  </Title>
+                </CardTitle>
+                <CardBody className="ocm-c-overview-details__card--body">
+                  <Grid>
+                    <GridItem sm={6}>
+                      <DetailsLeft
+                        cluster={cluster}
+                        cloudProviders={cloudProviders}
+                        showAssistedId={showAssistedInstallerDetailCard}
+                      />
+                    </GridItem>
+                    <GridItem sm={6}>
+                      <DetailsRight cluster={{ ...cluster, state: clusterState }} />
+                    </GridItem>
+                  </Grid>
+                  {showAssistedInstallerDetailCard && <GatedAIExtraDetailCard />}
+                </CardBody>
+              </Card>
             )}
             {showSubscriptionSettings && <SubscriptionSettings />}
           </Grid>
@@ -196,21 +202,21 @@ class Overview extends React.Component {
           <GridItem xl2={3}>
             <Grid hasGutter>
               {showResourceUsage && (
-              <GridItem sm={6} xl2={12}>
-                {resourceUsage}
-              </GridItem>
+                <GridItem sm={6} xl2={12}>
+                  {resourceUsage}
+                </GridItem>
               )}
               {showInsightsAdvisor && (
-              <GridItem sm={6} xl2={12}>
-                <Card className="ocm-c-overview-advisor--card" ouiaId="insightsAdvisor">
-                  <CardBody>
-                    <InsightsAdvisor
-                      insightsData={insightsData}
-                      externalId={cluster?.external_id}
-                    />
-                  </CardBody>
-                </Card>
-              </GridItem>
+                <GridItem sm={6} xl2={12}>
+                  <Card className="ocm-c-overview-advisor--card" ouiaId="insightsAdvisor">
+                    <CardBody>
+                      <InsightsAdvisor
+                        insightsData={insightsData}
+                        externalId={cluster?.external_id}
+                      />
+                    </CardBody>
+                  </Card>
+                </GridItem>
               )}
               {showCostBreakdown && (
                 <GridItem sm={6} xl2={12}>

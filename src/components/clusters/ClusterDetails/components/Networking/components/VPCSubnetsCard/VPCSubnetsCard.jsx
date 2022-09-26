@@ -11,7 +11,6 @@ import {
   DescriptionListGroup,
   DescriptionListTerm,
   DescriptionListDescription,
-
 } from '@patternfly/react-core';
 
 const subnetCount = (awsSubnetsLength, gcpNetwork) => (gcpNetwork ? 2 : awsSubnetsLength);
@@ -23,15 +22,13 @@ function VPCSubnetsCard({ awsSubnets, gcpNetwork }) {
 
   return (
     <Card className="ocm-c-networking-network-configuration__card">
-      <CardTitle>
-        VPC subnets (
-        {subnetCount(awsSubnets.length, gcpNetwork)}
-        )
-      </CardTitle>
+      <CardTitle>VPC subnets ({subnetCount(awsSubnets.length, gcpNetwork)})</CardTitle>
       <CardBody className="ocm-c-networking-network-configuration__card--body">
         {awsSubnets.length > 0 ? (
           <List isPlain>
-            {awsSubnets.map(subnet => (<ListItem>{subnet}</ListItem>))}
+            {awsSubnets.map((subnet) => (
+              <ListItem>{subnet}</ListItem>
+            ))}
           </List>
         ) : null}
 
@@ -45,13 +42,10 @@ function VPCSubnetsCard({ awsSubnets, gcpNetwork }) {
             </DescriptionListGroup>
             <DescriptionListGroup>
               <DescriptionListTerm>Compute subnet</DescriptionListTerm>
-              <DescriptionListDescription>
-                {gcpNetwork.compute_subnet}
-              </DescriptionListDescription>
+              <DescriptionListDescription>{gcpNetwork.compute_subnet}</DescriptionListDescription>
             </DescriptionListGroup>
           </DescriptionList>
         ) : null}
-
       </CardBody>
     </Card>
   );

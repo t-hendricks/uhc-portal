@@ -5,19 +5,35 @@ import DisconnectedCloudRegionComboBox from './CloudRegionComboBox';
 
 const regions = {
   'us-east-1': {
-    id: 'us-east-1', display_name: 'N. Virginia', enabled: true, ccs_only: false, supports_multi_az: true,
+    id: 'us-east-1',
+    display_name: 'N. Virginia',
+    enabled: true,
+    ccs_only: false,
+    supports_multi_az: true,
   },
   'eu-west-1': {
-    id: 'eu-west-1', display_name: 'Ireland', enabled: true, ccs_only: false, supports_multi_az: true,
+    id: 'eu-west-1',
+    display_name: 'Ireland',
+    enabled: true,
+    ccs_only: false,
+    supports_multi_az: true,
   },
   'disabled-2': {
-    id: 'disabled-2', display_name: 'Kamchatka', enabled: false, ccs_only: false, supports_multi_az: true,
+    id: 'disabled-2',
+    display_name: 'Kamchatka',
+    enabled: false,
+    ccs_only: false,
+    supports_multi_az: true,
   },
   'single-az-3': {
-    id: 'single-az-3', display_name: 'Antarctica', enabled: true, ccs_only: false, supports_multi_az: false,
+    id: 'single-az-3',
+    display_name: 'Antarctica',
+    enabled: true,
+    ccs_only: false,
+    supports_multi_az: false,
   },
 };
-const availableRegions = Object.values(regions).filter(region => region.enabled);
+const availableRegions = Object.values(regions).filter((region) => region.enabled);
 
 describe('<CloudRegionComboBox />', () => {
   describe('when region list needs to be fetched', () => {
@@ -155,14 +171,20 @@ describe('<CloudRegionComboBox />', () => {
     });
 
     it('renders only enabled regions', () => {
-      const options = wrapper.find('FormSelectOption').getElements().map(e => e.key);
+      const options = wrapper
+        .find('FormSelectOption')
+        .getElements()
+        .map((e) => e.key);
       expect(options).toEqual(['us-east-1', 'eu-west-1', 'single-az-3']);
     });
 
     it('should call handleCloudRegionChange on selection', () => {
-      wrapper.find('.cloud-region-combo-box').at(0).simulate('change', {
-        target: { value: availableRegions[0].id, selectedIndex: 0 },
-      });
+      wrapper
+        .find('.cloud-region-combo-box')
+        .at(0)
+        .simulate('change', {
+          target: { value: availableRegions[0].id, selectedIndex: 0 },
+        });
       expect(handleCloudRegionChange).toBeCalled();
     });
 

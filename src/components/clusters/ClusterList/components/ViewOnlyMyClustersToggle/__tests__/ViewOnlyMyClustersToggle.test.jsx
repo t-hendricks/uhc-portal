@@ -7,16 +7,11 @@ const fakeOnShowClusters = () => {};
 
 describe('ViewOnlyMyClustersToggle', () => {
   it('renders default state correctly', () => {
-    const wrapper = shallow(<ViewOnlyMyClustersToggle
-      onChange={fakeOnShowClusters}
-    />);
+    const wrapper = shallow(<ViewOnlyMyClustersToggle onChange={fakeOnShowClusters} />);
     expect(wrapper).toMatchSnapshot();
   });
   it('renders selected state correctly', () => {
-    const wrapper = shallow(<ViewOnlyMyClustersToggle
-      isChecked
-      onChange={fakeOnShowClusters}
-    />);
+    const wrapper = shallow(<ViewOnlyMyClustersToggle isChecked onChange={fakeOnShowClusters} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

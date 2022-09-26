@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 import ClusterUtilizationChart from './ClusterUtilizationChart';
 import { parseValueWithUnit } from '../../../../common/units';
 
-function ResourceUsage({
-  cpu, memory, metricsStatusMessage, metricsAvailable, type,
-}) {
+function ResourceUsage({ cpu, memory, metricsStatusMessage, metricsAvailable, type }) {
   // Why parse memory but not cpu?
   // In theory both are `ValueWithUnit` but openapi only documents units for the case of bytes,
   // and we only implemented parseValueWithUnit() for "B", "KB", "KiB" etc.
@@ -16,7 +14,7 @@ function ResourceUsage({
 
   return (
     <>
-      { metricsAvailable ? (
+      {metricsAvailable ? (
         <>
           <ClusterUtilizationChart
             title="vCPU"
@@ -37,12 +35,9 @@ function ResourceUsage({
             type={type}
           />
         </>
-      )
-        : (
-          <p>
-            { metricsStatusMessage }
-          </p>
-        ) }
+      ) : (
+        <p>{metricsStatusMessage}</p>
+      )}
     </>
   );
 }

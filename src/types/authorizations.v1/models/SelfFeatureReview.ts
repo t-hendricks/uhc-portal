@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type SelfFeatureReview = {
-    feature: string;
+  feature: string;
 };
-

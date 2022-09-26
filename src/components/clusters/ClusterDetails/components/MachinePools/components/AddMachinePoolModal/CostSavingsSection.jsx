@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  FormGroup, GridItem, NumberInput, Alert,
-} from '@patternfly/react-core';
+import { FormGroup, GridItem, NumberInput, Alert } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import './CostSavings.scss';
@@ -15,25 +13,17 @@ import links from '../../../../../../../common/installLinks.mjs';
 class CostSavingSection extends React.Component {
   state = {};
 
-  onMaxHourlyPriceChange = (currentPrice, delta) => Number(
-    (parseFloat(currentPrice) + delta).toFixed(2),
-  );
+  onMaxHourlyPriceChange = (currentPrice, delta) =>
+    Number((parseFloat(currentPrice) + delta).toFixed(2));
 
   render() {
-    const {
-      change,
-      useSpotInstances,
-      spotInstancePricing,
-      spotInstanceMaxHourlyPrice,
-    } = this.props;
+    const { change, useSpotInstances, spotInstancePricing, spotInstanceMaxHourlyPrice } =
+      this.props;
     return (
       <>
         <GridItem lg={6} />
         <GridItem id="costsavings">
-          <FormGroup
-            fieldId="costsavings"
-            label="Cost saving"
-          />
+          <FormGroup fieldId="costsavings" label="Cost saving" />
           <Field
             component={ReduxCheckbox}
             name="spot_instances"
@@ -43,7 +33,7 @@ class CostSavingSection extends React.Component {
           />
         </GridItem>
         <GridItem lg={6} />
-        { useSpotInstances && (
+        {useSpotInstances && (
           <>
             <GridItem>
               <Field
@@ -55,27 +45,21 @@ class CostSavingSection extends React.Component {
                     value: 'onDemand',
                     label: 'Use On-Demand instance price',
                     description: (
-                      <>
-                        The maximum price defaults to charge up to the On-Demand Instance price.
-                      </>
+                      <>The maximum price defaults to charge up to the On-Demand Instance price.</>
                     ),
                   },
                   {
                     value: 'maximum',
                     label: (
                       <>
-                        Set maximum price
-                        {' '}
+                        Set maximum price{' '}
                         <PopoverHint
                           headerContent="Maximum hourly price for a Spot Instance"
                           hint="This value should be lower or equal to the On-Demand Instance price. This cannot be changed after the machine pool is created."
                         />
-                      </>),
-                    description: (
-                      <>
-                        Specify the maximum hourly price for a Spot Instance.
                       </>
                     ),
+                    description: <>Specify the maximum hourly price for a Spot Instance.</>,
                     extraField: spotInstancePricing === 'maximum' && (
                       <Field
                         component={NumberInput}
@@ -83,26 +67,33 @@ class CostSavingSection extends React.Component {
                         name="spot_instance_max_hourly_price"
                         inputName="spot_instance_max_hourly_price"
                         id="spot_instance_max_hourly_price"
-                        props={
-                          {
-                            value: parseFloat(spotInstanceMaxHourlyPrice).toFixed(2),
-                            id: 'spot_instance_max_hourly_price',
-                            min: 0.01,
-                            onMinus: () => {
-                              change('spot_instance_max_hourly_price', this.onMaxHourlyPriceChange(spotInstanceMaxHourlyPrice, -0.01));
-                            },
-                            onPlus: () => {
-                              change('spot_instance_max_hourly_price', this.onMaxHourlyPriceChange(spotInstanceMaxHourlyPrice, 0.01));
-                            },
-                            onChange: (e) => {
-                              const newHourlyMaxPriceNum = parseFloat(e.target.value);
-                              change('spot_instance_max_hourly_price', this.onMaxHourlyPriceChange(newHourlyMaxPriceNum, 0));
-                            },
-                            widthChars: '8',
-                            unit: '$ Hourly',
-                            isDisabled: false,
-                          }
-                        }
+                        props={{
+                          value: parseFloat(spotInstanceMaxHourlyPrice).toFixed(2),
+                          id: 'spot_instance_max_hourly_price',
+                          min: 0.01,
+                          onMinus: () => {
+                            change(
+                              'spot_instance_max_hourly_price',
+                              this.onMaxHourlyPriceChange(spotInstanceMaxHourlyPrice, -0.01),
+                            );
+                          },
+                          onPlus: () => {
+                            change(
+                              'spot_instance_max_hourly_price',
+                              this.onMaxHourlyPriceChange(spotInstanceMaxHourlyPrice, 0.01),
+                            );
+                          },
+                          onChange: (e) => {
+                            const newHourlyMaxPriceNum = parseFloat(e.target.value);
+                            change(
+                              'spot_instance_max_hourly_price',
+                              this.onMaxHourlyPriceChange(newHourlyMaxPriceNum, 0),
+                            );
+                          },
+                          widthChars: '8',
+                          unit: '$ Hourly',
+                          isDisabled: false,
+                        }}
                       />
                     ),
                   },

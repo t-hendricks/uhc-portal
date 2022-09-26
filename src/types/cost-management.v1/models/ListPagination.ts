@@ -6,7 +6,6 @@ import type { PaginationLinks } from './PaginationLinks';
 import type { PaginationMeta } from './PaginationMeta';
 
 export type ListPagination = {
-    meta?: PaginationMeta;
-    links?: PaginationLinks;
+  meta?: PaginationMeta;
+  links?: PaginationLinks;
 };
-

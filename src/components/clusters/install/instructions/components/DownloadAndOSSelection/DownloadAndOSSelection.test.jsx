@@ -33,15 +33,14 @@ const props = {
       },
     },
   },
-  getLatestRelease: () => { },
+  getLatestRelease: () => {},
 };
 
-describe('DownloadAndOSSelection', () => test.each(testtools)('%s renders correctly', (tool) => {
-  const wrapper = shallow(
-    <DownloadAndOSSelection token={token} tool={tool} {...props} />,
-  );
-  expect(wrapper).toMatchSnapshot();
-}));
+describe('DownloadAndOSSelection', () =>
+  test.each(testtools)('%s renders correctly', (tool) => {
+    const wrapper = shallow(<DownloadAndOSSelection token={token} tool={tool} {...props} />);
+    expect(wrapper).toMatchSnapshot();
+  }));
 
 describe('DownloadAndOSSelection', () => {
   describe('with error', () => {

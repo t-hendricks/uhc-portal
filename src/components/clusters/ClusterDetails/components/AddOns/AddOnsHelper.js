@@ -1,7 +1,10 @@
 import get from 'lodash/get';
 
 import {
-  availableQuota, hasPotentialQuota, queryFromCluster, quotaTypes,
+  availableQuota,
+  hasPotentialQuota,
+  queryFromCluster,
+  quotaTypes,
 } from '../../../common/quotaSelectors';
 
 // An add-on is only visible if it has an entry in the quota summary
@@ -14,11 +17,13 @@ const isAvailable = (addOn, cluster, organization, quotaList) => {
   }
 
   // If the add-on is not in the quota cost, it should not be available
-  return hasPotentialQuota(quotaList, {
-    ...queryFromCluster(cluster),
-    resourceType: quotaTypes.ADD_ON,
-    resourceName: addOn.resource_name,
-  }) >= 1;
+  return (
+    hasPotentialQuota(quotaList, {
+      ...queryFromCluster(cluster),
+      resourceType: quotaTypes.ADD_ON,
+      resourceName: addOn.resource_name,
+    }) >= 1
+  );
 };
 
 const isInstalled = (addOn, clusterAddOns) => {
@@ -26,28 +31,26 @@ const isInstalled = (addOn, clusterAddOns) => {
     return false;
   }
 
-  return clusterAddOns.items.some(clusterAddOn => clusterAddOn.addon.id === addOn.id);
+  return clusterAddOns.items.some((clusterAddOn) => clusterAddOn.addon.id === addOn.id);
 };
 
-const getInstalled = (addOn, clusterAddOns) => clusterAddOns.items.find(
-  item => item.addon.id === addOn.id,
-);
+const getInstalled = (addOn, clusterAddOns) =>
+  clusterAddOns.items.find((item) => item.addon.id === addOn.id);
 
 const formatRequirementData = (data) => {
   if (data === undefined) {
     return '';
   }
   const attrs = [];
-  Object.entries(data)
-    .forEach(([field, requiredValue]) => {
-      if (Array.isArray(requiredValue)) {
-        attrs.push(`${field} is ${requiredValue.join(' or ')}`);
-      } else if (typeof requiredValue === 'number') {
-        attrs.push(`${field} >= ${requiredValue}`);
-      } else {
-        attrs.push(`${field} is ${requiredValue}`);
-      }
-    });
+  Object.entries(data).forEach(([field, requiredValue]) => {
+    if (Array.isArray(requiredValue)) {
+      attrs.push(`${field} is ${requiredValue.join(' or ')}`);
+    } else if (typeof requiredValue === 'number') {
+      attrs.push(`${field} >= ${requiredValue}`);
+    } else {
+      attrs.push(`${field} is ${requiredValue}`);
+    }
+  });
   return `where ${attrs.join(' and ')}`;
 };
 
@@ -58,14 +61,20 @@ const validateAddOnResourceRequirement = (requirement) => {
   if (!requirementMet) {
     if (get(requirementErrors, 'length', 0) === 0) {
       if (requirement.resource === 'addon') {
-        requirementErrors.push('This addon requires another addon to be installed '
-          + `${formatRequirementData(requirement.data)}`);
+        requirementErrors.push(
+          'This addon requires another addon to be installed ' +
+            `${formatRequirementData(requirement.data)}`,
+        );
       } else if (requirement.resource === 'machine_pool') {
-        requirementErrors.push('This addon requires a machine pool to exist '
-          + `${formatRequirementData(requirement.data)}`);
+        requirementErrors.push(
+          'This addon requires a machine pool to exist ' +
+            `${formatRequirementData(requirement.data)}`,
+        );
       } else {
-        requirementErrors.push(`This addon requires a ${requirement.resource} `
-          + `${formatRequirementData(requirement.data)}`);
+        requirementErrors.push(
+          `This addon requires a ${requirement.resource} ` +
+            `${formatRequirementData(requirement.data)}`,
+        );
       }
     }
   }
@@ -94,23 +103,28 @@ const validateAddOnResourceRequirementList = (requirements, breakOnFirstError = 
 };
 
 // validates that a given addons requirements are fulfilled
-const validateAddOnRequirements = (addOn, breakOnFirstError = false) => validateAddOnResourceRequirementList(get(addOn, 'requirements', []), breakOnFirstError);
+const validateAddOnRequirements = (addOn, breakOnFirstError = false) =>
+  validateAddOnResourceRequirementList(get(addOn, 'requirements', []), breakOnFirstError);
 
 // return a list of parameters for the given addon
-const getParameters = addOn => get(addOn, 'parameters.items', []);
+const getParameters = (addOn) => get(addOn, 'parameters.items', []);
 
 // returns true if the given addon has parameters
-const hasParameters = addOn => get(getParameters(addOn), 'length', 0) > 0;
+const hasParameters = (addOn) => get(getParameters(addOn), 'length', 0) > 0;
 
 const minQuotaCount = (addOn) => {
   let min = 1;
   if (hasParameters(addOn)) {
     addOn.parameters.items.forEach((param) => {
-      if (param.value_type === 'resource' && param.id === addOn.resource_name
-        && param.options !== undefined && param.options.length > 0) {
+      if (
+        param.value_type === 'resource' &&
+        param.id === addOn.resource_name &&
+        param.options !== undefined &&
+        param.options.length > 0
+      ) {
         const values = param.options
-          .map(option => Number(option.value))
-          .filter(value => !Number.isNaN(value));
+          .map((option) => Number(option.value))
+          .filter((value) => !Number.isNaN(value));
         min = Math.min(...values);
       }
     });
@@ -124,11 +138,13 @@ const hasQuota = (addOn, cluster, organization, quotaList) => {
     return false;
   }
   const minCount = minQuotaCount(addOn);
-  return availableQuota(quotaList, {
-    ...queryFromCluster(cluster),
-    resourceType: quotaTypes.ADD_ON,
-    resourceName: addOn.resource_name,
-  }) >= minCount;
+  return (
+    availableQuota(quotaList, {
+      ...queryFromCluster(cluster),
+      resourceType: quotaTypes.ADD_ON,
+      resourceName: addOn.resource_name,
+    }) >= minCount
+  );
 };
 
 const quotaCostOptions = (resourceName, cluster, quotaList, allOptions, currentValue = 0) => {
@@ -148,7 +164,7 @@ const quotaCostOptions = (resourceName, cluster, quotaList, allOptions, currentV
     return allOptions;
   }
   const available = availableQuota(quotaList, query);
-  return allOptions.filter(option => (available + currentValue) >= option.value);
+  return allOptions.filter((option) => available + currentValue >= option.value);
 };
 
 const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) => {
@@ -156,15 +172,17 @@ const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) =>
     return [];
   }
 
-  return addOns.items.filter(addOn => isAvailable(addOn, cluster, organization, quota)
-    || isInstalled(addOn, clusterAddOns));
+  return addOns.items.filter(
+    (addOn) =>
+      isAvailable(addOn, cluster, organization, quota) || isInstalled(addOn, clusterAddOns),
+  );
 };
 
-const hasRequirements = addOn => get(addOn, 'requirements.length', 0) > 0;
+const hasRequirements = (addOn) => get(addOn, 'requirements.length', 0) > 0;
 
 const getParameter = (addOn, paramID) => {
   if (hasParameters(addOn)) {
-    return addOn.parameters.items.find(item => item.id === paramID);
+    return addOn.parameters.items.find((item) => item.id === paramID);
   }
   return undefined;
 };
@@ -211,7 +229,7 @@ const parameterAndValue = (addOnInstallation, addOn) => {
         paramValue = (paramValue || '').toString().toLowerCase() === 'true';
       }
       if (curr.options) {
-        const optionObj = curr.options.find(obj => obj.value === paramValue);
+        const optionObj = curr.options.find((obj) => obj.value === paramValue);
         if (optionObj?.name) {
           paramValue = optionObj.name;
         }

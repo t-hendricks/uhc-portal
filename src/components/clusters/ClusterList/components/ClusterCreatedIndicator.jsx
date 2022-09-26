@@ -7,7 +7,10 @@ import { ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/reac
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 // eslint-disable-next-line camelcase
 import { global_warning_color_100, global_danger_color_100 } from '@patternfly/react-tokens';
-import { subscriptionSupportLevels, normalizedProducts } from '../../../../common/subscriptionTypes';
+import {
+  subscriptionSupportLevels,
+  normalizedProducts,
+} from '../../../../common/subscriptionTypes';
 import { getTrialExpiresInDays, getTrialEndDate } from '../../../../common/getTrialExpiresDates';
 
 function ClusterCreatedIndicator({ cluster }) {
@@ -38,18 +41,23 @@ function ClusterCreatedIndicator({ cluster }) {
         aria-label="Trial Expiration date"
         bodyContent={bodyContent}
       >
-        <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
+        <Button
+          variant="link"
+          isInline
+          icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}
+        >
           {trialExpiresStr}
-          &nbsp;
-          left
+          &nbsp; left
         </Button>
       </Popover>
     );
   }
 
-  if (managed || (
-    supportLevel !== subscriptionSupportLevels.EVAL
-    && supportLevel !== subscriptionSupportLevels.NONE)) {
+  if (
+    managed ||
+    (supportLevel !== subscriptionSupportLevels.EVAL &&
+      supportLevel !== subscriptionSupportLevels.NONE)
+  ) {
     const clusterCreationTime = get(cluster, 'creation_timestamp', false);
     if (clusterCreationTime) {
       return moment(cluster.creation_timestamp).format('DD MMM YYYY');
@@ -65,7 +73,11 @@ function ClusterCreatedIndicator({ cluster }) {
         bodyContent="Your 60-day evaluation has expired. Edit subscription settings to continue using this cluster, or archive this cluster if it no longer exits"
         aria-label="Evaluation expired"
       >
-        <Button variant="link" isInline icon={<ExclamationCircleIcon color={global_danger_color_100.value} />}>
+        <Button
+          variant="link"
+          isInline
+          icon={<ExclamationCircleIcon color={global_danger_color_100.value} />}
+        >
           Evaluation expired
         </Button>
       </Popover>
@@ -81,7 +93,9 @@ function ClusterCreatedIndicator({ cluster }) {
         Your OCP cluster will expire in&nbsp;
         {OCPTrialExpiresStr}
         &nbsp;on&nbsp;
-        <strong><DateFormat date={subscription.eval_expiration_date} type="onlyDate" /></strong>
+        <strong>
+          <DateFormat date={subscription.eval_expiration_date} type="onlyDate" />
+        </strong>
         &nbsp;once expired, your cluster will remain unsupported.
       </p>
     </>
@@ -93,10 +107,13 @@ function ClusterCreatedIndicator({ cluster }) {
       bodyContent={OCPTrialBodyContent}
       aria-label="Trial Expiration date"
     >
-      <Button variant="link" isInline icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}>
+      <Button
+        variant="link"
+        isInline
+        icon={<ExclamationTriangleIcon color={global_warning_color_100.value} />}
+      >
         {OCPTrialExpiresStr}
-        &nbsp;
-        left
+        &nbsp; left
       </Button>
     </Popover>
   );

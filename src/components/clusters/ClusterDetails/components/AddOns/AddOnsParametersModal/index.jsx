@@ -13,7 +13,7 @@ const reduxFormConfig = {
 
 const reduxFormAddOnParameters = reduxForm(reduxFormConfig)(AddOnsParametersModal);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isOpen: shouldShowModal(state, 'add-ons-parameters-modal'),
   addOn: state.modal.data.addOn,
   addOnInstallation: state.modal.data.addOnInstallation,
@@ -22,13 +22,15 @@ const mapStateToProps = state => ({
     ? state.addOns.updateClusterAddOnResponse
     : state.addOns.addClusterAddOnResponse,
   initialValues: parameterValuesForEditing(
-    state.modal.data.addOnInstallation, state.modal.data.addOn, state.clusters.details.cluster,
+    state.modal.data.addOnInstallation,
+    state.modal.data.addOn,
+    state.clusters.details.cluster,
   ),
   cluster: state.clusters.details.cluster,
   quota: state.userProfile.organization.quotaList,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   closeModal: () => dispatch(closeModal()),
   addClusterAddOn: () => dispatch(addClusterAddOn()),
   updateClusterAddOn: () => dispatch(updateClusterAddOn()),

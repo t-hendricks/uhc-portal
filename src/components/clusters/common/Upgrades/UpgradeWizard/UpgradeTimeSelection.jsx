@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Radio, Title, FormGroup, Form, TextInput, Select, SelectOption,
+  Radio,
+  Title,
+  FormGroup,
+  Form,
+  TextInput,
+  Select,
+  SelectOption,
 } from '@patternfly/react-core';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import DatePicker from 'react-datepicker';
@@ -20,7 +26,7 @@ class UpgradeTimeSelection extends React.Component {
     atLeastOneHourFromNow.setMinutes(0);
 
     return atLeastOneHourFromNow;
-  }
+  };
 
   modeChange = (_, event) => {
     const { onSet, timestamp } = this.props;
@@ -30,7 +36,7 @@ class UpgradeTimeSelection extends React.Component {
       const defaultTimeStamp = timestamp || this.getDefaultTimestamp().toISOString();
       onSet({ type: 'time', timestamp: defaultTimeStamp });
     }
-  }
+  };
 
   setDate = (selectedDate) => {
     const { onSet } = this.props;
@@ -39,7 +45,7 @@ class UpgradeTimeSelection extends React.Component {
       set it to the minimum instead */
     const selected = selectedDate < minimum ? minimum : selectedDate;
     onSet({ type: 'time', timestamp: selected });
-  }
+  };
 
   setTime = (_, selectedTime) => {
     const { onSet, timestamp } = this.props;
@@ -50,11 +56,9 @@ class UpgradeTimeSelection extends React.Component {
     date.setMinutes(minute);
     onSet({ type: 'time', timestamp: date.toISOString() });
     this.setState({ timeSelectionOpen: false });
-  }
+  };
 
-  onSelectToggle = () => {
-
-  }
+  onSelectToggle = () => {};
 
   render() {
     const { type, timestamp } = this.props;
@@ -63,7 +67,9 @@ class UpgradeTimeSelection extends React.Component {
       // scroll to the selected item when the Select is opened
       setTimeout(() => {
         requestAnimationFrame(() => {
-          const selected = document.querySelector('#upgrade-time-select-dropdown .pf-c-select__menu-item.pf-m-selected');
+          const selected = document.querySelector(
+            '#upgrade-time-select-dropdown .pf-c-select__menu-item.pf-m-selected',
+          );
           if (selected) {
             selected.scrollIntoView({ block: 'center' });
           }
@@ -99,7 +105,9 @@ class UpgradeTimeSelection extends React.Component {
 
     return (
       <>
-        <Title className="wizard-step-title" size="lg" headingLevel="h3">Schedule update</Title>
+        <Title className="wizard-step-title" size="lg" headingLevel="h3">
+          Schedule update
+        </Title>
         <Form className="wizard-step-body">
           <FormGroup fieldId="upgrade-schedule-now">
             <Radio
@@ -121,9 +129,12 @@ class UpgradeTimeSelection extends React.Component {
               onChange={this.modeChange}
             />
           </FormGroup>
-          { type === 'time' && (
+          {type === 'time' && (
             <>
-              <FormGroup fieldId="upgrade-schedule-datepicker" className="upgrade-schedule-datepicker">
+              <FormGroup
+                fieldId="upgrade-schedule-datepicker"
+                className="upgrade-schedule-datepicker"
+              >
                 <DatePicker
                   id="upgrade-schedule-datepicker"
                   selected={timestamp && new Date(timestamp)}
@@ -136,9 +147,9 @@ class UpgradeTimeSelection extends React.Component {
                 <Select
                   selections={getSelectedTime()}
                   onSelect={this.setTime}
-                  onToggle={() => this.setState(state => (
-                    { timeSelectionOpen: !state.timeSelectionOpen }
-                  ))}
+                  onToggle={() =>
+                    this.setState((state) => ({ timeSelectionOpen: !state.timeSelectionOpen }))
+                  }
                   isOpen={timeSelectionOpen}
                   id="upgrade-time-select-dropdown"
                 >

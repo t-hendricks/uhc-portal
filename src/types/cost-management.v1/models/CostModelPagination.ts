@@ -5,7 +5,6 @@
 import type { CostModelOut } from './CostModelOut';
 import type { ListPagination } from './ListPagination';
 
-export type CostModelPagination = (ListPagination & {
-    data: Array<CostModelOut>;
-});
-
+export type CostModelPagination = ListPagination & {
+  data: Array<CostModelOut>;
+};

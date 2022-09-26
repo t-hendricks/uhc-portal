@@ -6,11 +6,11 @@
  * Overall state of a cluster upgrade policy.
  */
 export enum UpgradePolicyStateValue {
-    CANCELLED = 'cancelled',
-    COMPLETED = 'completed',
-    DELAYED = 'delayed',
-    FAILED = 'failed',
-    PENDING = 'pending',
-    SCHEDULED = 'scheduled',
-    STARTED = 'started',
+  CANCELLED = 'cancelled',
+  COMPLETED = 'completed',
+  DELAYED = 'delayed',
+  FAILED = 'failed',
+  PENDING = 'pending',
+  SCHEDULED = 'scheduled',
+  STARTED = 'started',
 }

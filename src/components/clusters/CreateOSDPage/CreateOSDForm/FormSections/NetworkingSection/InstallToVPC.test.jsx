@@ -8,11 +8,7 @@ describe('<InstallToVPC>', () => {
   let wrapper;
   beforeEach(() => {
     wrapper = shallow(
-      <InstallToVPC
-        selectedRegion="us-east-1"
-        isMultiAz={false}
-        cloudProviderID="aws"
-      />,
+      <InstallToVPC selectedRegion="us-east-1" isMultiAz={false} cloudProviderID="aws" />,
     );
   });
 
@@ -40,12 +36,7 @@ describe('<InstallToVPC>', () => {
 describe('<InstallToVPC>', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(
-      <InstallToVPC
-        selectedRegion="us-east1"
-        cloudProviderID="gcp"
-      />,
-    );
+    wrapper = shallow(<InstallToVPC selectedRegion="us-east1" cloudProviderID="gcp" />);
   });
 
   it('renders correctly when checkbox is not selected', () => {

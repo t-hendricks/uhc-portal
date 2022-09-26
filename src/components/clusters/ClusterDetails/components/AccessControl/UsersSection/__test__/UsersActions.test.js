@@ -36,7 +36,11 @@ describe('ClusterDetails UserActions', () => {
 
     it('calls clusterService.addClusterGroupUser', () => {
       UsersActions.addUser('fake id', 'fake-group', 'fake-user')(mockDispatch);
-      expect(clusterService.addClusterGroupUser).toBeCalledWith('fake id', 'fake-group', 'fake-user');
+      expect(clusterService.addClusterGroupUser).toBeCalledWith(
+        'fake id',
+        'fake-group',
+        'fake-user',
+      );
     });
   });
 
@@ -51,7 +55,11 @@ describe('ClusterDetails UserActions', () => {
 
     it('calls clusterService.getClusterGroupUsers', () => {
       UsersActions.deleteUser('fake id', 'fake-group', 'fake-user')(mockDispatch);
-      expect(clusterService.deleteClusterGroupUser).toBeCalledWith('fake id', 'fake-group', 'fake-user');
+      expect(clusterService.deleteClusterGroupUser).toBeCalledWith(
+        'fake id',
+        'fake-group',
+        'fake-user',
+      );
     });
   });
 });

@@ -19,14 +19,8 @@ import EditClusterWideProxyDialog from '../EditClusterWideProxyDialog';
 import './VPCDetailsCard.scss';
 
 const VPCDetailsCard = (props) => {
-  const {
-    privateLink,
-    httpProxyUrl,
-    httpsProxyUrl,
-    additionalTrustBundle,
-    openModal,
-    gcpVPCName,
-  } = props;
+  const { privateLink, httpProxyUrl, httpsProxyUrl, additionalTrustBundle, openModal, gcpVPCName } =
+    props;
 
   const isPrivateLinkInitialized = typeof privateLink !== 'undefined';
 
@@ -37,13 +31,20 @@ const VPCDetailsCard = (props) => {
   return (
     <Card className="ocm-c-networking-vpc-details__card">
       <CardTitle>
-        <Title headingLevel="h2" className="card-title">Virtual Private Cloud (VPC)</Title>
+        <Title headingLevel="h2" className="card-title">
+          Virtual Private Cloud (VPC)
+        </Title>
       </CardTitle>
       <CardBody className="ocm-c-networking-vpc-details__card--body pf-l-stack pf-m-gutter">
         {gcpVPCName || isPrivateLinkInitialized ? (
           <>
-            <Title headingLevel="h3" className="pf-l-stack__item">VPC Details</Title>
-            <DescriptionList isHorizontal className="pf-l-stack__item pf-m-auto-column-widths details-card-dl">
+            <Title headingLevel="h3" className="pf-l-stack__item">
+              VPC Details
+            </Title>
+            <DescriptionList
+              isHorizontal
+              className="pf-l-stack__item pf-m-auto-column-widths details-card-dl"
+            >
               {gcpVPCName ? (
                 <DescriptionListGroup>
                   <DescriptionListTerm>VPC name</DescriptionListTerm>
@@ -53,13 +54,17 @@ const VPCDetailsCard = (props) => {
               {isPrivateLinkInitialized ? (
                 <DescriptionListGroup>
                   <DescriptionListTerm>PrivateLink</DescriptionListTerm>
-                  <DescriptionListDescription>{privateLink ? 'Enabled' : 'Disabled'}</DescriptionListDescription>
+                  <DescriptionListDescription>
+                    {privateLink ? 'Enabled' : 'Disabled'}
+                  </DescriptionListDescription>
                 </DescriptionListGroup>
               ) : null}
             </DescriptionList>
           </>
         ) : null}
-        <Title headingLevel="h3" className="pf-l-stack__item --">Cluster-wide proxy</Title>
+        <Title headingLevel="h3" className="pf-l-stack__item --">
+          Cluster-wide proxy
+        </Title>
         <DescriptionList isHorizontal className="pf-l-stack__item details-card-dl">
           <DescriptionListGroup>
             <DescriptionListTerm>HTTP proxy URL</DescriptionListTerm>
@@ -79,10 +84,7 @@ const VPCDetailsCard = (props) => {
         <EditClusterWideProxyDialog />
       </CardBody>
       <CardFooter>
-        <Button
-          variant="secondary"
-          onClick={handleEditClusterProxy}
-        >
+        <Button variant="secondary" onClick={handleEditClusterProxy}>
           Edit cluster-wide proxy
         </Button>
       </CardFooter>

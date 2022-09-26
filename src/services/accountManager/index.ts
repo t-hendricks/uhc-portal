@@ -3,9 +3,7 @@ import apiRequest from '../apiRequest';
 import type { Summary } from '../../types/accounts_mgmt.v1';
 
 const getDashboard = (orgId: string) =>
-  apiRequest.get<Summary>(
-    `/api/accounts_mgmt/v1/organizations/${orgId}/summary_dashboard`,
-  );
+  apiRequest.get<Summary>(`/api/accounts_mgmt/v1/organizations/${orgId}/summary_dashboard`);
 
 const accountManager = {
   createAuthorizationToken,

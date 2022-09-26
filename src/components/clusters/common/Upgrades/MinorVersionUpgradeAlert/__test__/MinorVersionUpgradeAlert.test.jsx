@@ -13,8 +13,9 @@ const disableLink = 'Disallow this minor version update';
 const enableTitleForKnownMinor = 'New minor version available';
 const disableTitleForKnownMinor = 'Next minor version update allowed';
 
-const getAlertActionLinksText = wrapper => wrapper.find('Alert').props().actionLinks.props.children.props.children;
-const getAlertTitle = wrapper => wrapper.find('Alert').props().title;
+const getAlertActionLinksText = (wrapper) =>
+  wrapper.find('Alert').props().actionLinks.props.children.props.children;
+const getAlertTitle = (wrapper) => wrapper.find('Alert').props().title;
 
 jest.useFakeTimers();
 
@@ -31,7 +32,7 @@ describe('<MinorVersionUpgradeAlert >', () => {
         isNextMinorVersionAvailable
         clusterId="myClusterId"
         automaticUpgradePolicyId="myUpgradePolicyId"
-        setUpgradePolicy={() => { }}
+        setUpgradePolicy={() => {}}
       />,
     );
     mountWrapper = mount(
@@ -117,7 +118,10 @@ describe('<MinorVersionUpgradeAlert >', () => {
     mountWrapper.find('AlertActionLink').simulate('click');
     await new Promise(process.nextTick); // wait for all promises to finish
     jest.runAllTimers();
-    expect(apiRequest.patch).toHaveBeenCalledWith('/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId', { enable_minor_version_upgrades: true });
+    expect(apiRequest.patch).toHaveBeenCalledWith(
+      '/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId',
+      { enable_minor_version_upgrades: true },
+    );
     expect(mockSetUpgradePolicy.mock.calls).toHaveLength(1);
     expect(mockSetUpgradePolicy.mock.calls[0][0]).toEqual(apiReturnValue.data);
     expect(mountWrapper.find('Alert').props().variant).not.toEqual('danger');
@@ -132,7 +136,10 @@ describe('<MinorVersionUpgradeAlert >', () => {
     mountWrapper.find('AlertActionLink').simulate('click');
     await new Promise(process.nextTick); // wait for all promises to finish
     jest.runAllTimers();
-    expect(apiRequest.patch).toHaveBeenCalledWith('/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId', { enable_minor_version_upgrades: false });
+    expect(apiRequest.patch).toHaveBeenCalledWith(
+      '/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId',
+      { enable_minor_version_upgrades: false },
+    );
     expect(mockSetUpgradePolicy.mock.calls).toHaveLength(1);
     expect(mockSetUpgradePolicy.mock.calls[0][0]).toEqual(apiReturnValue.data);
     expect(mountWrapper.find('Alert').props().variant).not.toEqual('danger');
@@ -148,7 +155,10 @@ describe('<MinorVersionUpgradeAlert >', () => {
     mountWrapper.find('AlertActionLink').simulate('click');
     await new Promise(process.nextTick); // wait for all promises to finish
     jest.runAllTimers();
-    expect(apiRequest.patch).toHaveBeenCalledWith('/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId', { enable_minor_version_upgrades: true });
+    expect(apiRequest.patch).toHaveBeenCalledWith(
+      '/api/clusters_mgmt/v1/clusters/myClusterId/upgrade_policies/myUpgradePolicyId',
+      { enable_minor_version_upgrades: true },
+    );
     expect(mockSetUpgradePolicy).not.toHaveBeenCalled();
     mountWrapper.update();
     expect(mountWrapper).toMatchSnapshot();

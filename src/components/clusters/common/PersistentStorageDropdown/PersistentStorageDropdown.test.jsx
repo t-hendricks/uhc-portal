@@ -114,11 +114,14 @@ describe('<PersistentStorageDropdown />', () => {
     });
 
     it('does not call getPersistentStorage again if request returns an error', () => {
-      wrapper.setProps({
-        persistentStorageValues: { ...state, error: true, pending: false },
-      }, () => {
-        expect(getPersistentStorage).not.toBeCalled();
-      });
+      wrapper.setProps(
+        {
+          persistentStorageValues: { ...state, error: true, pending: false },
+        },
+        () => {
+          expect(getPersistentStorage).not.toBeCalled();
+        },
+      );
     });
   });
 
@@ -130,7 +133,11 @@ describe('<PersistentStorageDropdown />', () => {
       const state = {
         ...baseState,
         fulfilled: true,
-        values: [{ unit: 'B', value: 107374182400 }, { unit: 'B', value: 644245094400 }, { unit: 'B', value: 1181116006400 }],
+        values: [
+          { unit: 'B', value: 107374182400 },
+          { unit: 'B', value: 644245094400 },
+          { unit: 'B', value: 1181116006400 },
+        ],
       };
 
       getPersistentStorage = jest.fn();

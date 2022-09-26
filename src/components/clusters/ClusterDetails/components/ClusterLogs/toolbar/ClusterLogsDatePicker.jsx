@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Select, SelectOption, DatePicker, ToolbarItem, isValidDate,
-} from '@patternfly/react-core';
+import { Select, SelectOption, DatePicker, ToolbarItem, isValidDate } from '@patternfly/react-core';
 
 // Local timezone UTC offset
-const offset = (new Date()).getTimezoneOffset() * 60000;
+const offset = new Date().getTimezoneOffset() * 60000;
 
 let defaultTimestamps;
 const getDefaultTimestamps = (refresh = false) => {
@@ -59,7 +57,11 @@ export const dateFormat = (date) => {
   return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 };
 
-const splitDateStr = dateStr => dateStr.replace(/T.*/, '').split('-').filter(part => part !== '' && Number.parseInt(part, 10) !== 0);
+const splitDateStr = (dateStr) =>
+  dateStr
+    .replace(/T.*/, '')
+    .split('-')
+    .filter((part) => part !== '' && Number.parseInt(part, 10) !== 0);
 
 /**
  * Parses a date string that is in ISO format YYYY-MM-DD
@@ -72,28 +74,29 @@ export const dateParse = (dateStr, asDate = true) => {
   const year = split[0];
   const month = split[1];
   const day = split[2];
-  const paddedDateStr = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  const paddedDateStr = `${year.padStart(4, '0')}-${month.padStart(2, '0')}-${day.padStart(
+    2,
+    '0',
+  )}`;
   return asDate
     ? new Date(Date.UTC(year, Number.parseInt(month, 10) - 1, day) + offset)
     : paddedDateStr;
 };
 
-export const onDateChangeFromFilter = dateStr => ({
+export const onDateChangeFromFilter = (dateStr) => ({
   date: `${dateStr}T00:00:00.000Z`,
   key: 'timestampFrom',
   symbol: '>=',
 });
 
-const onDateChangeToFilter = dateStr => ({
+const onDateChangeToFilter = (dateStr) => ({
   date: `${dateStr}T23:59:59.999Z`,
   key: 'timestampTo',
   symbol: '<=',
 });
 
 const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
-  const {
-    now, lastMonthStart, lastWeekStart, last72HoursStart,
-  } = getDefaultTimestamps();
+  const { now, lastMonthStart, lastWeekStart, last72HoursStart } = getDefaultTimestamps();
   const minDateStr = createdAt.replace(/T.*/, '');
   const minDate = dateParse(createdAt);
 
@@ -145,7 +148,7 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
     return '';
   };
 
-  const isValid = dateStr => isValidDate(new Date(dateStr));
+  const isValid = (dateStr) => isValidDate(new Date(dateStr));
 
   const inputOnChange = (dateStr, date, onChange) => {
     setSelected(optionValues.Custom);
@@ -241,26 +244,18 @@ const ClusterLogsDatePicker = ({ setFilter, currentFilter, createdAt }) => {
       aria-label="Select a date range"
       aria-labelledby="select-date-range"
     >
-      {options.map(
-        (option, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <SelectOption key={index} value={option.value} isDisabled={option.isDisabled} />
-        ),
-      )}
+      {options.map((option, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <SelectOption key={index} value={option.value} isDisabled={option.isDisabled} />
+      ))}
     </Select>
   );
 
   return (
     <>
-      <ToolbarItem>
-        {dateSelector}
-      </ToolbarItem>
-      <ToolbarItem>
-        {pickerFrom}
-      </ToolbarItem>
-      <ToolbarItem>
-        {pickerTo}
-      </ToolbarItem>
+      <ToolbarItem>{dateSelector}</ToolbarItem>
+      <ToolbarItem>{pickerFrom}</ToolbarItem>
+      <ToolbarItem>{pickerTo}</ToolbarItem>
     </>
   );
 };

@@ -14,7 +14,8 @@ import { tools } from '../../../common/installLinks.mjs';
 export class InstallMultiPreRelease extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Heterogeneous clusters | Experimental Developer Preview Builds';
+    document.title =
+      'Install OpenShift 4 | Heterogeneous clusters | Experimental Developer Preview Builds';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -23,18 +24,22 @@ export class InstallMultiPreRelease extends Component {
   render() {
     const { token } = this.props;
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'Heterogeneous clusters' /* , path: '/install/multi/installer-provisioned' */ },
-        { label: 'Pre-Release Builds' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'Heterogeneous clusters' /* , path: '/install/multi/installer-provisioned' */ },
+          { label: 'Pre-Release Builds' },
+        ]}
       />
     );
 
     return (
       <>
-        <PageTitle title="Install OpenShift on heterogeneous infrastructure" breadcrumbs={breadcrumbs} />
+        <PageTitle
+          title="Install OpenShift on heterogeneous infrastructure"
+          breadcrumbs={breadcrumbs}
+        />
         <PageSection>
           <InstructionsPreRelease token={token} installer={tools.MULTIINSTALLER} />
         </PageSection>
@@ -48,6 +53,6 @@ InstallMultiPreRelease.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({ token: state.tollbooth.token });
+const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
 export default connect(mapStateToProps)(InstallMultiPreRelease);

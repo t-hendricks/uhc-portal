@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card, CardBody, CardTitle, Title,
-} from '@patternfly/react-core';
+import { Card, CardBody, CardTitle, Title } from '@patternfly/react-core';
 
 import NotificationContactsCard from './components/NotificationContactsSection';
 import SupportCasesCard from './components/SupportCasesSection';
@@ -15,9 +13,8 @@ const clusterOwnerMsg = (clusterCreator) => {
     /* eslint-disable react/jsx-one-expression-per-line */
     <>
       <br />
-      The cluster owner will always receive notifications, at email address
-      &lt;{clusterOwner}&gt;
-      , in addition to this list of notification contacts.
+      The cluster owner will always receive notifications, at email address &lt;{clusterOwner}&gt; ,
+      in addition to this list of notification contacts.
     </>
   ) : null;
 };
@@ -43,19 +40,16 @@ const Support = ({
   <>
     <Card className="ocm-c-support-notification-contacts__card">
       <CardTitle className="ocm-c-support-notification-contacts__card--header">
-        <Title headingLevel="h2" className="card-title">Notification contacts</Title>
+        <Title headingLevel="h2" className="card-title">
+          Notification contacts
+        </Title>
         <div className="support-subtitle">
           Add users to be contacted in the event of notifications about this cluster.
           {clusterOwnerMsg(clusterCreator)}
         </div>
       </CardTitle>
       <CardBody className="ocm-c-support-notification-contacts__card--body">
-        {!isDisabled && (
-          <AddNotificationContactSection
-            canEdit={canEdit}
-            openModal={openModal}
-          />
-        )}
+        {!isDisabled && <AddNotificationContactSection canEdit={canEdit} openModal={openModal} />}
         <NotificationContactsCard
           subscriptionID={subscriptionID}
           isDisabled={!canEdit || isDisabled}
@@ -73,7 +67,9 @@ const Support = ({
     </Card>
     <Card className="ocm-c-support-support-cases__card">
       <CardTitle className="ocm-c-support-support-cases__card--header">
-        <Title headingLevel="h2" className="card-title">Support cases</Title>
+        <Title headingLevel="h2" className="card-title">
+          Support cases
+        </Title>
       </CardTitle>
       <CardBody className="ocm-c-support-support-cases__card--body">
         <SupportCasesCard

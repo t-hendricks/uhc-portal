@@ -9,9 +9,7 @@ import ExternalLink from '../../common/ExternalLink';
 import { normalizedProducts } from '../../../common/subscriptionTypes';
 import '../CreateOSDPage/CreateOSDForm/CreateOSDForm.scss';
 
-function UserWorkloadMonitoringSection({
-  parent, disableUVM, planType,
-}) {
+function UserWorkloadMonitoringSection({ parent, disableUVM, planType }) {
   const title = <Title headingLevel="h3"> Monitoring </Title>;
   const isROSA = planType === normalizedProducts.ROSA;
   const isOSD = planType === normalizedProducts.OSD || planType === normalizedProducts.OSDTrial;
@@ -23,22 +21,20 @@ function UserWorkloadMonitoringSection({
         name="enable_user_workload_monitoring"
         label="Enable user workload monitoring"
         isDisabled={disableUVM}
-        extendedHelpText={(
+        extendedHelpText={
           <>
-            {constants.enableUserWorkloadMonitoringHelp}
-            {' '}
-            {isROSA || isOSD
-              ? (
-                <ExternalLink href={isROSA
-                  ? links.ROSA_MONITORING : links.OSD_MONITORING_STACK}
-                >
-                  Learn more
-                </ExternalLink>
-              ) : null}
+            {constants.enableUserWorkloadMonitoringHelp}{' '}
+            {isROSA || isOSD ? (
+              <ExternalLink href={isROSA ? links.ROSA_MONITORING : links.OSD_MONITORING_STACK}>
+                Learn more
+              </ExternalLink>
+            ) : null}
           </>
-        )}
+        }
       />
-      <div className="ocm-c--reduxcheckbox-description">{constants.enableUserWorkloadMonitoringHint}</div>
+      <div className="ocm-c--reduxcheckbox-description">
+        {constants.enableUserWorkloadMonitoringHint}
+      </div>
     </>
   );
 }

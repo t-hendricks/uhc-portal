@@ -4,14 +4,18 @@ import { connect } from 'react-redux';
 import { addNotification } from '@redhat-cloud-services/frontend-components-notifications/redux/actions/notifications';
 import NetworkSelfServiceSection from './NetworkSelfServiceSection';
 import {
-  getRoles, getGrants, addGrant, clearAddGrantResponse, deleteGrant,
+  getRoles,
+  getGrants,
+  addGrant,
+  clearAddGrantResponse,
+  deleteGrant,
 } from './NetworkSelfServiceActions';
 import grantsSelector from './NetworkSelfServiceSelector';
 
 import { openModal, closeModal } from '../../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../../common/Modal/ModalSelectors';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isModalOpen: shouldShowModal(state, 'grant-modal'),
   grants: { ...state.networkSelfService.grants, data: grantsSelector(state) },
   addGrantResponse: state.networkSelfService.addGrantResponse,
@@ -28,8 +32,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   submit: (role, arn) => {
     dispatch(addGrant(ownProps.clusterID, role, arn));
   },
-  deleteGrant: grantId => dispatch(deleteGrant(ownProps.clusterID, grantId)),
-  addNotification: data => dispatch(addNotification(data)),
+  deleteGrant: (grantId) => dispatch(deleteGrant(ownProps.clusterID, grantId)),
+  addNotification: (data) => dispatch(addNotification(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NetworkSelfServiceSection);

@@ -3,9 +3,8 @@
 /* eslint-disable */
 
 export type Currencies = {
-    code: string;
-    symbol: string;
-    name: string;
-    description: string;
+  code: string;
+  symbol: string;
+  name: string;
+  description: string;
 };
-

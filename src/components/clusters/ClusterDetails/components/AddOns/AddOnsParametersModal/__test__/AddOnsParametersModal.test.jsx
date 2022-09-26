@@ -36,20 +36,24 @@ describe('<AddOnsParametersModal />', () => {
           id: 'Dummy ID',
           name: 'Dummy Name',
           parameters: {
-            items: [{
-              id: 'dummy item',
-              enabled: true,
-              editable: true,
-              default_value: dummyValue,
-            }],
+            items: [
+              {
+                id: 'dummy item',
+                enabled: true,
+                editable: true,
+                default_value: dummyValue,
+              },
+            ],
           },
         }}
         addOnInstallation={{
           id: 'Dummy ID',
           parameters: {
-            items: [{
-              id: 'dummy item',
-            }],
+            items: [
+              {
+                id: 'dummy item',
+              },
+            ],
           },
         }}
         isUpdateForm={false}
@@ -68,7 +72,7 @@ describe('<AddOnsParametersModal />', () => {
   });
 
   it('expect set default option button is be present if default_value present', () => {
-    expect(wrapper.find(Button).props().children[2]).toEqual(dummyValue);
+    expect(wrapper.find(Button).props().children.includes(dummyValue)).toBeTruthy();
   });
 
   it('expect addon field to be enabled on create form', () => {
@@ -87,11 +91,13 @@ describe('<AddOnsParametersModal />', () => {
       id: 'Dummy ID',
       name: 'Dummy Name',
       parameters: {
-        items: [{
-          id: 'dummy item',
-          enabled: true,
-          editable: true,
-        }],
+        items: [
+          {
+            id: 'dummy item',
+            enabled: true,
+            editable: true,
+          },
+        ],
       },
     };
     wrapper.setProps({ addOn }, () => {
@@ -107,11 +113,13 @@ describe('<AddOnsParametersModal />', () => {
       id: 'Dummy ID',
       name: 'Dummy Name',
       parameters: {
-        items: [{
-          id: 'dummy item',
-          enabled: true,
-          editable: false,
-        }],
+        items: [
+          {
+            id: 'dummy item',
+            enabled: true,
+            editable: false,
+          },
+        ],
       },
     };
     const isUpdateForm = true;
@@ -128,17 +136,19 @@ describe('<AddOnsParametersModal />', () => {
       id: 'Dummy ID',
       name: 'Dummy Name',
       parameters: {
-        items: [{
-          id: 'dummy item',
-          options: [
-            {
-              name: 'Option 1',
-              value: 'option1',
-            },
-          ],
-          enabled: true,
-          editable: false,
-        }],
+        items: [
+          {
+            id: 'dummy item',
+            options: [
+              {
+                name: 'Option 1',
+                value: 'option1',
+              },
+            ],
+            enabled: true,
+            editable: false,
+          },
+        ],
       },
     };
     wrapper.setProps({ addOn }, () => {
@@ -157,18 +167,20 @@ describe('<AddOnsParametersModal />', () => {
       id: 'Dummy ID',
       name: 'Dummy Name',
       parameters: {
-        items: [{
-          id: 'dummy item',
-          options: [
-            {
-              name: 'Option 1',
-              value: 'option1',
-            },
-          ],
-          default_value: 'option1',
-          enabled: true,
-          editable: true,
-        }],
+        items: [
+          {
+            id: 'dummy item',
+            options: [
+              {
+                name: 'Option 1',
+                value: 'option1',
+              },
+            ],
+            default_value: 'option1',
+            enabled: true,
+            editable: true,
+          },
+        ],
       },
     };
     wrapper.setProps({ addOn }, () => {
@@ -177,7 +189,7 @@ describe('<AddOnsParametersModal />', () => {
         { name: 'Option 1', value: 'option1' },
       ]);
       expect(wrapper.find(Button).exists()).toBeTruthy();
-      expect(wrapper.find(Button).props().children[2]).toEqual('Option 1');
+      expect(wrapper.find(Button).props().children.includes('Option 1')).toBeTruthy();
     });
   });
 });

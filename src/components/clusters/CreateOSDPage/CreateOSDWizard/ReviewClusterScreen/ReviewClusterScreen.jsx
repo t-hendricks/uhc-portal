@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import {
-  Title,
-  Bullseye,
-  Stack,
-  StackItem,
-  Spinner,
-} from '@patternfly/react-core';
+import { Title, Bullseye, Stack, StackItem, Spinner } from '@patternfly/react-core';
 
 import DebugClusterRequest from '../../DebugClusterRequest';
 import config from '../../../../../config';
@@ -33,7 +27,9 @@ function ReviewClusterScreen({
   const clusterSettingsFields = [
     !isROSA && 'cloud_provider',
     'name',
-    'cluster_version', 'region', 'multi_az',
+    'cluster_version',
+    'region',
+    'multi_az',
     !isByoc && !isROSA && 'persistent_storage',
     !isByoc && isROSA && 'load_balancers',
     isByoc && isAWS && !isROSA && 'disable_scp_checks',
@@ -63,11 +59,7 @@ function ReviewClusterScreen({
   return (
     <div className="ocm-create-osd-review-screen">
       <Title headingLevel="h2" className="pf-u-pb-md">
-        Review your
-        {' '}
-        {isROSA ? 'ROSA' : 'dedicated'}
-        {' '}
-        cluster
+        Review your {isROSA ? 'ROSA' : 'dedicated'} cluster
       </Title>
       {isROSA && (
         <ReviewSection title="Accounts and roles" initiallyExpanded={false}>
@@ -79,13 +71,13 @@ function ReviewClusterScreen({
         </ReviewSection>
       )}
       {!isROSA && (
-      <ReviewSection title="Billing Model">
-        {ReviewItem({ name: 'billing_model', formValues })}
-        {ReviewItem({ name: 'byoc', formValues })}
-      </ReviewSection>
+        <ReviewSection title="Billing Model">
+          {ReviewItem({ name: 'billing_model', formValues })}
+          {ReviewItem({ name: 'byoc', formValues })}
+        </ReviewSection>
       )}
       <ReviewSection title="Cluster settings">
-        {clusterSettingsFields.map(name => ReviewItem({ name, formValues }))}
+        {clusterSettingsFields.map((name) => ReviewItem({ name, formValues }))}
       </ReviewSection>
       <ReviewSection title="Default machine pool">
         {ReviewItem({ name: 'machine_type', formValues })}
@@ -93,20 +85,34 @@ function ReviewClusterScreen({
         {autoscalingEnabled
           ? ReviewItem({ name: 'min_replicas', formValues })
           : ReviewItem({ name: 'nodes_compute', formValues })}
-        {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0]))
-        && ReviewItem({ name: 'node_labels', formValues })}
+        {!(formValues.node_labels.length === 1 && isEmpty(formValues.node_labels[0])) &&
+          ReviewItem({ name: 'node_labels', formValues })}
       </ReviewSection>
       <ReviewSection title="Networking">
         {ReviewItem({ name: 'cluster_privacy', formValues })}
         {showVPCCheckbox && ReviewItem({ name: 'install_to_vpc', formValues })}
-        {showVPCCheckbox && formValues.cluster_privacy === 'internal' && formValues.install_to_vpc
-        && ReviewItem({ name: 'use_privatelink', formValues })}
-        {showVPCCheckbox && formValues.install_to_vpc && isAWS && ReviewItem({ name: 'aws_vpc', formValues })}
-        {showVPCCheckbox && formValues.install_to_vpc && isGCP && ReviewItem({ name: 'gpc_vpc', formValues })}
+        {showVPCCheckbox &&
+          formValues.cluster_privacy === 'internal' &&
+          formValues.install_to_vpc &&
+          ReviewItem({ name: 'use_privatelink', formValues })}
+        {showVPCCheckbox &&
+          formValues.install_to_vpc &&
+          isAWS &&
+          ReviewItem({ name: 'aws_vpc', formValues })}
+        {showVPCCheckbox &&
+          formValues.install_to_vpc &&
+          isGCP &&
+          ReviewItem({ name: 'gpc_vpc', formValues })}
         {installToVPCSelected && ReviewItem({ name: 'configure_proxy', formValues })}
-        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'http_proxy_url', formValues })}
-        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'https_proxy_url', formValues })}
-        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'additional_trust_bundle', formValues })}
+        {installToVPCSelected &&
+          configureProxySelected &&
+          ReviewItem({ name: 'http_proxy_url', formValues })}
+        {installToVPCSelected &&
+          configureProxySelected &&
+          ReviewItem({ name: 'https_proxy_url', formValues })}
+        {installToVPCSelected &&
+          configureProxySelected &&
+          ReviewItem({ name: 'additional_trust_bundle', formValues })}
         {ReviewItem({ name: 'network_machine_cidr', formValues })}
         {ReviewItem({ name: 'network_service_cidr', formValues })}
         {ReviewItem({ name: 'network_pod_cidr', formValues })}
@@ -120,11 +126,12 @@ function ReviewClusterScreen({
       )}
       <ReviewSection title="Updates">
         {ReviewItem({ name: 'upgrade_policy', formValues })}
-        {formValues.upgrade_policy === 'automatic' && ReviewItem({ name: 'automatic_upgrade_schedule', formValues })}
+        {formValues.upgrade_policy === 'automatic' &&
+          ReviewItem({ name: 'automatic_upgrade_schedule', formValues })}
         {ReviewItem({ name: 'node_drain_grace_period', formValues })}
       </ReviewSection>
 
-      {config.fakeOSD && <DebugClusterRequest {...clusterRequestParams} /> }
+      {config.fakeOSD && <DebugClusterRequest {...clusterRequestParams} />}
     </div>
   );
 }

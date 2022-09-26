@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import SupportStatusLabel from './SupportStatusLabel';
 import getSupportStatus from './supportStatusActions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   lines: state.logs.lines,
   fulfilled: state.supportStatus.fulfilled,
   pending: state.supportStatus.pending,

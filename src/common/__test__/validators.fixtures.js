@@ -10,7 +10,8 @@ const GCPServiceAccounts = [
       auth_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_uri: 'https://oauth2.googleapis.com/token',
       auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-      client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
+      client_x509_cert_url:
+        'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
     },
     expectedError: null,
   },
@@ -25,7 +26,8 @@ const GCPServiceAccounts = [
       auth_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_uri: 'https://oauth2.googleapis.com/token',
       auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-      client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
+      client_x509_cert_url:
+        'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
     },
     expectedError: {
       property: 'instance.type',
@@ -43,11 +45,13 @@ const GCPServiceAccounts = [
       auth_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_uri: 'https://oauth2.googleapis.com/token',
       auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-      client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
+      client_x509_cert_url:
+        'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
     },
     expectedError: {
       property: 'instance.private_key',
-      message: 'does not match pattern "^-----BEGIN PRIVATE KEY-----\\n(.|\\n)*\\n-----END PRIVATE KEY-----\\n$"',
+      message:
+        'does not match pattern "^-----BEGIN PRIVATE KEY-----\\n(.|\\n)*\\n-----END PRIVATE KEY-----\\n$"',
     },
   },
   {
@@ -60,7 +64,8 @@ const GCPServiceAccounts = [
       auth_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_uri: 'https://oauth2.googleapis.com/token',
       auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-      client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
+      client_x509_cert_url:
+        'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
     },
     expectedError: {
       property: 'instance',
@@ -77,7 +82,8 @@ const GCPServiceAccounts = [
       auth_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_uri: 'https://oauth2.googleapis.com/token',
       auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-      client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
+      client_x509_cert_url:
+        'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
     },
     expectedError: {
       property: 'instance.client_email',
@@ -94,11 +100,13 @@ const GCPServiceAccounts = [
       auth_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_uri: 'https://oauth2.googleapis.com/token',
       auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-      client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
+      client_x509_cert_url:
+        'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
     },
     expectedError: {
       property: 'instance.client_email',
-      message: 'does not match pattern "^osd-ccs-admin@([\\\\S]*)\\\\.iam\\\\.gserviceaccount\\\\.com$"',
+      message:
+        'does not match pattern "^osd-ccs-admin@([\\\\S]*)\\\\.iam\\\\.gserviceaccount\\\\.com$"',
     },
   },
   {
@@ -111,11 +119,13 @@ const GCPServiceAccounts = [
       auth_uri: '://accounts.google.com/o/oauth2/auth',
       token_uri: 'https://oauth2.googleapis.com/token',
       auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-      client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
+      client_x509_cert_url:
+        'https://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
     },
     expectedError: {
       property: 'instance.auth_uri',
-      message: 'does not exactly match expected constant: https://accounts.google.com/o/oauth2/auth',
+      message:
+        'does not exactly match expected constant: https://accounts.google.com/o/oauth2/auth',
     },
   },
   {
@@ -129,7 +139,8 @@ const GCPServiceAccounts = [
       auth_uri: 'https://accounts.google.com/o/oauth2/auth',
       token_uri: 'https://oauth2.googleapis.com/token',
       auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-      client_x509_cert_url: '://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
+      client_x509_cert_url:
+        '://www.googleapis.com/robot/v1/metadata/x509/my-service-account%40exampleproj.iam.gserviceaccount.com',
     },
     expectedError: {
       property: 'instance.client_x509_cert_url',

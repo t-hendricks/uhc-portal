@@ -22,19 +22,11 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  downloadClusterLogs: (
-    externalClusterID, queryObj, format,
-  ) => dispatch(clusterLogActions.downloadClusterLogs(
-    externalClusterID,
-    queryObj,
-    format,
-  )),
-  setFilter: filter => dispatch(onListFilterSet(filter, ownProps.view)),
-  setFlags: flags => dispatch(onListFlagsSet('conditionalFilterFlags', flags, ownProps.view)),
+  downloadClusterLogs: (externalClusterID, queryObj, format) =>
+    dispatch(clusterLogActions.downloadClusterLogs(externalClusterID, queryObj, format)),
+  setFilter: (filter) => dispatch(onListFilterSet(filter, ownProps.view)),
+  setFlags: (flags) => dispatch(onListFlagsSet('conditionalFilterFlags', flags, ownProps.view)),
   clearFiltersAndFlags: () => dispatch(onClearFiltersAndFlags(ownProps.view)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ClusterLogsToolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(ClusterLogsToolbar);

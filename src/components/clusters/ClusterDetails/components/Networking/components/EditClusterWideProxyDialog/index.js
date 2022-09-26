@@ -1,7 +1,5 @@
 import { connect } from 'react-redux';
-import {
-  change, reduxForm, getFormMeta,
-} from 'redux-form';
+import { change, reduxForm, getFormMeta } from 'redux-form';
 
 import modals from '~/components/common/Modal/modals';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
@@ -34,7 +32,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   clearClusterProxyResponse: () => dispatch(clearClusterResponse()),
   closeModal: () => dispatch(closeModal()),
   onSubmit: (formData) => {
@@ -56,18 +54,14 @@ const mapDispatchToProps = dispatch => ({
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const onSubmit = (formData) => {
-    dispatchProps.onSubmit(
-      formData,
-    );
+    dispatchProps.onSubmit(formData);
   };
-  return ({
+  return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
     onSubmit,
-  });
+  };
 };
 
-export default connect(
-  mapStateToProps, mapDispatchToProps, mergeProps,
-)(reduxFormEditCWProxy);
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(reduxFormEditCWProxy);

@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  ProgressStepper,
-  ProgressStep,
-} from '@patternfly/react-core';
+import { ProgressStepper, ProgressStep } from '@patternfly/react-core';
 import UnknownIcon from '@patternfly/react-icons/dist/js/icons/unknown-icon';
 import InProgressIcon from '@patternfly/react-icons/dist/js/icons/in-progress-icon';
 import PendingIcon from '@patternfly/react-icons/dist/js/icons/pending-icon';
@@ -21,8 +18,10 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     const unknown = { icon: <UnknownIcon className="icon-space-right" />, text: 'Unknown' };
 
     // first step in progress
-    if (!isROSACluster
-      && (cluster.state === clusterStates.WAITING || cluster.state === clusterStates.PENDING)) {
+    if (
+      !isROSACluster &&
+      (cluster.state === clusterStates.WAITING || cluster.state === clusterStates.PENDING)
+    ) {
       return {
         awsAccountSetup: {
           variant: 'info',
@@ -43,10 +42,9 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: {
             variant: 'warning',
-            text: <ActionRequiredLink
-              cluster={cluster}
-              initiallyOpen={actionRequiredInitialOpen}
-            />,
+            text: (
+              <ActionRequiredLink cluster={cluster} initiallyOpen={actionRequiredInitialOpen} />
+            ),
             isCurrent: true,
           },
           DNSSetup: pending,

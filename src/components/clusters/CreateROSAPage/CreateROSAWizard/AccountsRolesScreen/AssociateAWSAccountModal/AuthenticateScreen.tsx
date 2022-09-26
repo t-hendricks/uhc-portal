@@ -1,40 +1,27 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import {
-  Card,
-  CardBody,
-  Text, TextContent, TextVariants, Title,
-} from '@patternfly/react-core';
+import { Card, CardBody, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
 
 import { trackEvents } from '~/common/analytics';
 import { GlobalState } from '~/redux/store';
 import ExternalLink from '../../../../../common/ExternalLink';
-import DownloadAndOSSelection
-  from '../../../../install/instructions/components/DownloadAndOSSelection';
+import DownloadAndOSSelection from '../../../../install/instructions/components/DownloadAndOSSelection';
 import links, { channels, tools } from '../../../../../../common/installLinks.mjs';
 import InstructionCommand from '../../../../../common/InstructionCommand';
 
 const AuthenticateScreen = () => {
-  const token = useSelector<GlobalState>(state => state.modal.data);
+  const token = useSelector<GlobalState>((state) => state.modal.data);
   const loginCommand = `rosa login --token="${token}"`;
 
   return (
     <Card isCompact isPlain isFullHeight>
       <CardBody>
         <TextContent>
-          <Title headingLevel="h2">
-            Download and install the ROSA command line tool
-          </Title>
+          <Title headingLevel="h2">Download and install the ROSA command line tool</Title>
           <Text component="p">
-            Download the ROSA command line (CLI) tools and add them to your
-            {' '}
-            <strong>PATH</strong>
-            .
-            {' '}
-            <ExternalLink href={links.ROSA_INSTALLING}>
-              Help
-            </ExternalLink>
+            Download the ROSA command line (CLI) tools and add them to your <strong>PATH</strong>.{' '}
+            <ExternalLink href={links.ROSA_INSTALLING}>Help</ExternalLink>
           </Text>
           <Text component="p">
             <DownloadAndOSSelection
@@ -45,26 +32,18 @@ const AuthenticateScreen = () => {
             />
           </Text>
           <Text component={TextVariants.p} className="ocm-secondary-text">
-            Note: If you haven’t done so already, also
-            {' '}
-            <ExternalLink href={links.AWS_CLI}>
-              install the AWS CLI
-            </ExternalLink>
-            {' '}
-            as per your operating system.
+            Note: If you haven’t done so already, also{' '}
+            <ExternalLink href={links.AWS_CLI}>install the AWS CLI</ExternalLink> as per your
+            operating system.
           </Text>
         </TextContent>
       </CardBody>
       <CardBody>
         <TextContent>
-          <Title headingLevel="h2">
-            Authenticate using API token
-          </Title>
+          <Title headingLevel="h2">Authenticate using API token</Title>
           <Text component={TextVariants.p}>
-            Run the authentication command in your terminal, and use your API token
-            {' '}
-            to authenticate against your ROSA account.
-            {' '}
+            Run the authentication command in your terminal, and use your API token to authenticate
+            against your ROSA account.{' '}
           </Text>
         </TextContent>
         <br />

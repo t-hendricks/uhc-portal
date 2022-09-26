@@ -8,14 +8,14 @@ import EditSubscriptionSettingsDialog from './EditSubscriptionSettingsDialog';
 import { closeModal } from '../../../common/Modal/ModalActions';
 import getClusterName from '../../../../common/getClusterName';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   subscription: state.modal.data.subscription,
   requestState: state.subscriptionSettings.requestState,
   shouldDisplayClusterName: state.modal.data.shouldDisplayClusterName || false,
   clusterDisplayName: getClusterName(state.modal.data),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   submit: (subscriptionID, updates) => {
     const requestData = updates;
     if (updates.socket_total && updates.system_units === 'Sockets') {

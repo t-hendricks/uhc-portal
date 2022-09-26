@@ -1,5 +1,8 @@
 import {
-  REJECTED_ACTION, FULFILLED_ACTION, PENDING_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 

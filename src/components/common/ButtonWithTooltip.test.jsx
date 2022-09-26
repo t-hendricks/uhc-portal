@@ -16,7 +16,11 @@ describe('<ButtonWithTooltip>', () => {
 
   describe('with blank disableReason', () => {
     it('renders', () => {
-      const button = shallow(<ButtonWithTooltip className="foo" disableReason="">Press me</ButtonWithTooltip>);
+      const button = shallow(
+        <ButtonWithTooltip className="foo" disableReason="">
+          Press me
+        </ButtonWithTooltip>,
+      );
       expect(button).toMatchSnapshot();
     });
   });
@@ -43,13 +47,13 @@ describe('<ButtonWithTooltip>', () => {
     it('renders', () => {
       const reason = (
         <Text>
-          Unsupported.
-          {' '}
-          <Link to="http://example.com">Learn more</Link>
+          Unsupported. <Link to="http://example.com">Learn more</Link>
         </Text>
       );
       const button = shallow(
-        <ButtonWithTooltip className="foo" disableReason={reason}>Teleport</ButtonWithTooltip>,
+        <ButtonWithTooltip className="foo" disableReason={reason}>
+          Teleport
+        </ButtonWithTooltip>,
       );
       expect(button).toMatchSnapshot();
     });

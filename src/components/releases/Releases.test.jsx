@@ -12,7 +12,7 @@ jest.mock('axios');
 
 const MockReleaseChannel = ({ channel }) => {
   React.useEffect(() => {});
-  return (<dt className="pf-c-description-list__term pf-u-mt-md">{channel}</dt>);
+  return <dt className="pf-c-description-list__term pf-u-mt-md">{channel}</dt>;
 };
 
 MockReleaseChannel.propTypes = {

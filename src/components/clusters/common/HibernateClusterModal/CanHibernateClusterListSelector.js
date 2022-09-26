@@ -6,8 +6,12 @@ const canHibernateClusterListSelector = (state) => {
   const canHibernateClusterList = {};
   clusters.forEach((cluster) => {
     const capabilites = get(state, 'userProfile.organization.details.capabilities', []);
-    const canHibernateCluster = capabilites.find(capability => capability.name === 'capability.organization.hibernate_cluster');
-    canHibernateClusterList[cluster.id] = !!(canHibernateCluster && canHibernateCluster.value === 'true');
+    const canHibernateCluster = capabilites.find(
+      (capability) => capability.name === 'capability.organization.hibernate_cluster',
+    );
+    canHibernateClusterList[cluster.id] = !!(
+      canHibernateCluster && canHibernateCluster.value === 'true'
+    );
   });
 
   return canHibernateClusterList;

@@ -6,6 +6,6 @@
  * The resolution to apply to the report. Default resolution is daily.
  */
 export enum ReportResolution {
-    DAILY = 'daily',
-    MONTHLY = 'monthly',
+  DAILY = 'daily',
+  MONTHLY = 'monthly',
 }
