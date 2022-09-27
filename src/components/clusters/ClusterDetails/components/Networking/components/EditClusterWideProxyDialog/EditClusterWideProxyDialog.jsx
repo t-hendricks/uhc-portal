@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form, Grid, GridItem, Text, Alert, Button } from '@patternfly/react-core';
+import { Form, Grid, GridItem, Text, Alert, Button, Title } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
-import { validateUrl, validateCA, checkDNSDomain } from '~/common/validators';
+import { validateUrl, validateCA, checkNoProxyDomains } from '~/common/validators';
 
 import Modal from '~/components/common/Modal/Modal';
 import ErrorBox from '~/components/common/ErrorBox';
@@ -151,7 +151,7 @@ const EditClusterWideProxyDialog = (props) => {
                 placeholder={noUrlValues ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER}
                 type="text"
                 parse={stringToArray}
-                validate={checkDNSDomain}
+                validate={checkNoProxyDomains}
                 helpText={NO_PROXY_HELPER_TEXT}
                 showHelpTextOnError={false}
                 isDisabled={noUrlValues}

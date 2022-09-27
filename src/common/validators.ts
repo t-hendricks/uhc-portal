@@ -24,6 +24,12 @@ const DNS_SUBDOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?)+(\.[a-z]([-a-z0-9]*[
 // Regular expression used to check UUID as specified in RFC4122.
 const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+// Regular expression used to check base DNS domains, based on RFC-1035 and asterisk inclusive
+const PROXY_DOMAIN_REGEXP = /^([a-z*]([-a-z0-9]*[a-z0-9])?\.)+[a-z*]([-a-z0-9]*[a-z0-9])?$/;
+
+// Regular expression used to check general subdomain structure, based on RFC-1035 and asterisk inclusive
+const PROXY_SUBDOMAIN_REGEXP = /^([a-z*]([-a-z0-9]*[a-z0-9])?)+(\.[a-z*]([-a-z0-9]*[a-z0-9])?)*$/;
+
 // Regular expression used to check whether input is a valid IPv4 CIDR range
 const CIDR_REGEXP =
   /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[1-9]))$/;
@@ -548,11 +554,15 @@ const checkBaseDNSDomain = (value: string): string | undefined => {
   return undefined;
 };
 
-const checkDNSDomain = (value?: string[]) => {
+const checkNoProxyDomains = (value?: string[]) => {
   if (value && value.length > 0) {
     const invalidDomains = value.filter(
       (domain) =>
-        !!domain && !(BASE_DOMAIN_REGEXP.test(domain) && DNS_SUBDOMAIN_REGEXP.test(domain)),
+        !!domain &&
+        !(
+          domain == '*' ||
+          (PROXY_DOMAIN_REGEXP.test(domain) && PROXY_SUBDOMAIN_REGEXP.test(domain))
+        ),
     );
     const plural = invalidDomains.length > 1;
     if (invalidDomains.length > 0) {
@@ -1388,7 +1398,7 @@ export {
   validateRHITUsername,
   validateUrl,
   validateCA,
-  checkDNSDomain,
+  checkNoProxyDomains,
   checkClusterConsoleURL,
   checkOpenIDIssuer,
   validateNumericInput,
