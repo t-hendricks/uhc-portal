@@ -32,6 +32,8 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { RosaCliCommand } from './constants/cliCommands';
 
+export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) => users.some(user => user.aws_id === awsAcctId)
+
 function AccountsRolesScreen({
   change,
   touchARNsFields,
@@ -55,6 +57,7 @@ function AccountsRolesScreen({
   closeModal,
 }) {
   const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
+  const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
   const [isAssocAwsAccountModalOpen, setIsAssocAwsAccountModalOpen] = useState(false);
   const title = 'Welcome to Red Hat OpenShift Service on AWS (ROSA)';
@@ -71,6 +74,8 @@ function AccountsRolesScreen({
 
   useEffect(() => {
     if (getUserRoleResponse.fulfilled) {
+      const found = isUserRoleForSelectedAWSAccount(getUserRoleResponse.data, selectedAWSAccountID);
+      setNoUserForSelectedAWSAcct(!found);
       clearGetUserRoleResponse();
     }
   }, [getUserRoleResponse.fulfilled]);
@@ -226,7 +231,7 @@ function AccountsRolesScreen({
           />
         )}
         <GridItem span={9}>
-          {getUserRoleResponse.error && (
+          {(getUserRoleResponse?.error || noUserForSelectedAWSAcct) && (
             <>
               <br />
               <Alert
