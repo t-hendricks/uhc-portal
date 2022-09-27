@@ -31,6 +31,8 @@ import LeaveCreateClusterPrompt from '../../common/LeaveCreateClusterPrompt';
 import ErrorBoundary from '../../../App/ErrorBoundary';
 import ClusterRolesScreen from './ClusterRolesScreen';
 import AccountsRolesScreen from './AccountsRolesScreen';
+import { isUserRoleForSelectedAWSAccount } from './AccountsRolesScreen/AccountsRolesScreen';
+
 import CreateRosaWizardFooter from './CreateRosaWizardFooter';
 
 import './createROSAWizard.scss';
@@ -134,7 +136,7 @@ class CreateROSAWizardInternal extends React.Component {
   };
 
   onBeforeNext = async (onNext) => {
-    const { touch, formErrors, getUserRoleResponse } = this.props;
+    const { touch, formErrors, getUserRoleResponse, selectedAWSAccountID } = this.props;
     const { validatedSteps, currentStepId } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorFieldNames = Object.keys(formErrors);
@@ -146,7 +148,11 @@ class CreateROSAWizardInternal extends React.Component {
       return;
     }
     if (currentStepId === stepId.ACCOUNTS_AND_ROLES && !getUserRoleResponse?.fulfilled) {
-      await this.getUserRoleInfo();
+      const data = await this.getUserRoleInfo();
+      const gotoNextStep = isUserRoleForSelectedAWSAccount(data.value, selectedAWSAccountID);
+      if (!gotoNextStep) {
+        return;
+      }
     }
     onNext();
   };
@@ -466,6 +472,7 @@ CreateROSAWizardInternal.propTypes = {
   touch: PropTypes.func,
   formErrors: PropTypes.object,
   getUserRoleResponse: PropTypes.object,
+  selectedAWSAccountID: PropTypes.string,
 
   // for "no quota" redirect
   hasProductQuota: PropTypes.bool,

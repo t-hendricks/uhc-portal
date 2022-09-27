@@ -40,6 +40,7 @@ const mapStateToProps = (state) => {
     hasProductQuota: hasManagedQuotaSelector(state, normalizedProducts.ROSA),
     formErrors: getFormSyncErrors('CreateCluster')(state),
     getUserRoleResponse,
+    selectedAWSAccountID: valueSelector(state, 'associated_aws_id'),
   };
 };
 
