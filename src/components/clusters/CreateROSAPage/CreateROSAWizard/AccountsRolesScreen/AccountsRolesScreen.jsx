@@ -32,7 +32,8 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { RosaCliCommand } from './constants/cliCommands';
 
-export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) => users.some(user => user.aws_id === awsAcctId)
+export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
+  users.some((user) => user.aws_id === awsAcctId);
 
 function AccountsRolesScreen({
   change,
@@ -141,31 +142,6 @@ function AccountsRolesScreen({
               <ul>
                 <li>
                   <Text component={TextVariants.p} className="ocm-secondary-text">
-                    Review and configure the{' '}
-                    <ExternalLink noIcon href={links.ROSA_AWS_STS_PREREQUISITES}>
-                      AWS prerequisites for STS with ROSA
-                    </ExternalLink>
-                    .
-                  </Text>
-                </li>
-                <li>
-                  <Text component={TextVariants.p} className="ocm-secondary-text">
-                    Ensure you have available{' '}
-                    <ExternalLink noIcon href={links.ROSA_AWS_SERVICE_QUOTAS}>
-                      AWS quota.
-                    </ExternalLink>
-                  </Text>
-                </li>
-                <li>
-                  <Text component={TextVariants.p} className="ocm-secondary-text">
-                    Enable{' '}
-                    <ExternalLink noIcon href={links.AWS_CONSOLE}>
-                      ROSA in the AWS Console.
-                    </ExternalLink>
-                  </Text>
-                </li>
-                <li>
-                  <Text component={TextVariants.p} className="ocm-secondary-text">
                     Install and configure the latest{' '}
                     <ExternalLink noIcon href={links.AWS_CLI}>
                       AWS
@@ -179,6 +155,31 @@ function AccountsRolesScreen({
                       oc
                     </Link>{' '}
                     CLIs on your workstation.
+                  </Text>
+                </li>
+                <li>
+                  <Text component={TextVariants.p} className="ocm-secondary-text">
+                    Enable{' '}
+                    <ExternalLink noIcon href={links.AWS_CONSOLE}>
+                      ROSA in the AWS Console.
+                    </ExternalLink>
+                  </Text>
+                </li>
+                <li>
+                  <Text component={TextVariants.p} className="ocm-secondary-text">
+                    Ensure you have available{' '}
+                    <ExternalLink noIcon href={links.ROSA_AWS_SERVICE_QUOTAS}>
+                      AWS quota.
+                    </ExternalLink>
+                  </Text>
+                </li>
+                <li>
+                  <Text component={TextVariants.p} className="ocm-secondary-text">
+                    Review and configure the{' '}
+                    <ExternalLink noIcon href={links.ROSA_AWS_STS_PREREQUISITES}>
+                      AWS prerequisites for STS with ROSA
+                    </ExternalLink>
+                    .
                   </Text>
                 </li>
               </ul>
