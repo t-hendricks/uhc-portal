@@ -146,13 +146,17 @@ const EditClusterWideProxyDialog = (props) => {
               component={ReduxVerticalFormGroup}
               name="noProxyDomains"
               label="No Proxy domains"
-              placeholder={NO_PROXY_PLACEHOLDER}
+              placeholder={NO_PROXY_PLACEHOLDER(
+                !formValues.httpProxyUrl && !formValues.httpsProxyUrl
+              )}
               type="text"
               validate={checkInvalidDNS}
               helpText={NO_PROXY_HELPER_TEXT}
               showHelpTextOnError={false}
               parse={noProxyStringToArray}
-              isDisabled={!formValues.httpProxyUrl && !formValues.httpsProxyUrl}
+              isDisabled={
+                !formValues.httpProxyUrl && !formValues.httpsProxyUrl
+              }
             />
           </GridItem>
           <GridItem sm={12} md={10} xl2={11}>
@@ -214,9 +218,6 @@ EditClusterWideProxyDialog.propTypes = {
     httpsProxyUrl: PropTypes.string,
     noProxyDomains: PropTypes.array,
   }),
-  // http_proxy: PropTypes.string,
-  // https_proxy: PropTypes.string,
-  // no_proxy: PropTypes.array,
   httpProxyUrl: PropTypes.string,
   httpsProxyUrl: PropTypes.string,
   noProxyDomains: PropTypes.array,

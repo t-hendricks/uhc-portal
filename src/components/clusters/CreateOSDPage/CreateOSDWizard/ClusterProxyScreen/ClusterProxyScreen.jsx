@@ -163,7 +163,7 @@ function ClusterProxyScreen({
             component={ReduxVerticalFormGroup}
             name="no_proxy"
             label="No Proxy domains"
-            placeholder={NO_PROXY_PLACEHOLDER}
+            placeholder={NO_PROXY_PLACEHOLDER(!httpProxyUrl && !httpsProxyUrl)}
             type="text"
             validate={checkInvalidDNS}
             helpText={NO_PROXY_HELPER_TEXT}
