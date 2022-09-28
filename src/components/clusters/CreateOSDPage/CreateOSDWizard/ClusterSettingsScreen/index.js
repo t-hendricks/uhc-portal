@@ -26,7 +26,11 @@ const mapStateToProps = (state, ownProps) => {
     customerManagedEncryptionSelected,
     selectedRegion,
     initialValues: createOSDInitialValues({
-      cloudProviderID, product, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
+      cloudProviderID,
+      product,
+      isMultiAz,
+      isByoc,
+      isTrialDefault: ownProps.isTrialDefault,
     }),
   };
 };

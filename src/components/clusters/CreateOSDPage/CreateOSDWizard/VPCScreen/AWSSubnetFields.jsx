@@ -1,15 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  GridItem,
-} from '@patternfly/react-core';
+import { GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
-import AvailabilityZoneSelection, { PLACEHOLDER_VALUE } from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
+import AvailabilityZoneSelection, {
+  PLACEHOLDER_VALUE,
+} from '../../CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
 import {
-  required, validateAWSSubnet, validateAWSSubnetIsPrivate, validateAWSSubnetIsPublic,
-  validateUniqueAZ, validateValueNotPlaceholder,
+  required,
+  validateAWSSubnet,
+  validateAWSSubnetIsPrivate,
+  validateAWSSubnetIsPublic,
+  validateUniqueAZ,
+  validateValueNotPlaceholder,
 } from '../../../../../common/validators';
 import ErrorBox from '../../../../common/ErrorBox';
 
@@ -67,16 +71,15 @@ const SingleSubnetFieldsRow = ({
   );
 };
 
-const AWSSubnetFields = ({
-  selectedRegion,
-  isMultiAz,
-  privateLinkSelected,
-}) => {
+const AWSSubnetFields = ({ selectedRegion, isMultiAz, privateLinkSelected }) => {
   const vpcs = useAWSVPCInquiry();
   return (
     <>
       {vpcs.error && (
-        <ErrorBox message="Failed to list existing VPCs, validations will be partial" response={vpcs} />
+        <ErrorBox
+          message="Failed to list existing VPCs, validations will be partial"
+          response={vpcs}
+        />
       )}
       <SingleSubnetFieldsRow
         showLabels
@@ -86,20 +89,20 @@ const AWSSubnetFields = ({
         privateLinkSelected={privateLinkSelected}
       />
       {isMultiAz && (
-      <>
-        <SingleSubnetFieldsRow
-          index={1}
-          selectedRegion={selectedRegion}
-          isMultiAz={isMultiAz}
-          privateLinkSelected={privateLinkSelected}
-        />
-        <SingleSubnetFieldsRow
-          index={2}
-          selectedRegion={selectedRegion}
-          isMultiAz={isMultiAz}
-          privateLinkSelected={privateLinkSelected}
-        />
-      </>
+        <>
+          <SingleSubnetFieldsRow
+            index={1}
+            selectedRegion={selectedRegion}
+            isMultiAz={isMultiAz}
+            privateLinkSelected={privateLinkSelected}
+          />
+          <SingleSubnetFieldsRow
+            index={2}
+            selectedRegion={selectedRegion}
+            isMultiAz={isMultiAz}
+            privateLinkSelected={privateLinkSelected}
+          />
+        </>
       )}
     </>
   );

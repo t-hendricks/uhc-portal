@@ -5,23 +5,27 @@ import { networkingConstants } from './NetworkingConstants';
 import { setClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { clusterService } from '../../../../../services';
 
-const getClusterRouters = clusterID => dispatch => dispatch({
-  type: networkingConstants.GET_CLUSTER_ROUTERS,
-  payload: clusterService.getIngresses(clusterID),
-});
+const getClusterRouters = (clusterID) => (dispatch) =>
+  dispatch({
+    type: networkingConstants.GET_CLUSTER_ROUTERS,
+    payload: clusterService.getIngresses(clusterID),
+  });
 
-const editClusterRouters = (clusterID, data) => dispatch => dispatch({
-  type: networkingConstants.EDIT_CLUSTER_ROUTERS,
-  payload: clusterService.editIngresses(clusterID, data),
-});
+const editClusterRouters = (clusterID, data) => (dispatch) =>
+  dispatch({
+    type: networkingConstants.EDIT_CLUSTER_ROUTERS,
+    payload: clusterService.editIngresses(clusterID, data),
+  });
 
-const resetEditRoutersResponse = () => dispatch => dispatch({
-  type: networkingConstants.RESET_EDIT_ROUTERS_RESPONSE,
-});
+const resetEditRoutersResponse = () => (dispatch) =>
+  dispatch({
+    type: networkingConstants.RESET_EDIT_ROUTERS_RESPONSE,
+  });
 
-const resetClusterRouters = () => dispatch => dispatch({
-  type: networkingConstants.RESET_CLUSTER_ROUTERS,
-});
+const resetClusterRouters = () => (dispatch) =>
+  dispatch({
+    type: networkingConstants.RESET_CLUSTER_ROUTERS,
+  });
 
 const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispatch) => {
   let result;
@@ -58,11 +62,16 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   // Edit existing additional router
   if (!additionalRouterDeleted && hadAdditionalRouter) {
     if (newData.private_additional_router !== currentData.additional.isPrivate) {
-      requestAdditionalRouter.listening = newData.private_additional_router ? 'internal' : 'external';
+      requestAdditionalRouter.listening = newData.private_additional_router
+        ? 'internal'
+        : 'external';
       requestAdditionalRouter.id = currentData.additional.routerID;
     }
     if (newData.labels_additional_router !== currentData.additional.routeSelectors) {
-      requestAdditionalRouter.route_selectors = strToCleanObject(newData.labels_additional_router, '=');
+      requestAdditionalRouter.route_selectors = strToCleanObject(
+        newData.labels_additional_router,
+        '=',
+      );
       requestAdditionalRouter.id = currentData.additional.routerID;
     }
   }
@@ -70,17 +79,24 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
   // Add new additional router
   if (additionalRouterCreated) {
     requestAdditionalRouter.listening = newData.private_additional_router ? 'internal' : 'external';
-    requestAdditionalRouter.route_selectors = strToCleanObject(newData.labels_additional_router, '=');
+    requestAdditionalRouter.route_selectors = strToCleanObject(
+      newData.labels_additional_router,
+      '=',
+    );
   }
 
   if (defaultRouterEdited) {
     result = await clusterService.editIngress(
-      clusterID, requestDefaultRouter.id, requestDefaultRouter,
+      clusterID,
+      requestDefaultRouter.id,
+      requestDefaultRouter,
     );
   }
   if (additionalRouterDeleted) {
     result = await clusterService.deleteAdditionalIngress(
-      clusterID, currentData.additional.routerID, requestDefaultRouter,
+      clusterID,
+      currentData.additional.routerID,
+      requestDefaultRouter,
     );
   }
   if (!isEmpty(requestAdditionalRouter)) {
@@ -88,17 +104,20 @@ const sendNetworkConfigRequests = async (newData, currentData, clusterID, dispat
       result = await clusterService.addAdditionalIngress(clusterID, requestAdditionalRouter);
     } else {
       result = await clusterService.editIngress(
-        clusterID, requestAdditionalRouter.id, requestAdditionalRouter,
+        clusterID,
+        requestAdditionalRouter.id,
+        requestAdditionalRouter,
       );
     }
   }
   return result;
 };
 
-const saveNetworkingConfiguration = (newData, currentData, clusterID) => dispatch => dispatch({
-  type: networkingConstants.EDIT_CLUSTER_ROUTERS,
-  payload: sendNetworkConfigRequests(newData, currentData, clusterID, dispatch),
-});
+const saveNetworkingConfiguration = (newData, currentData, clusterID) => (dispatch) =>
+  dispatch({
+    type: networkingConstants.EDIT_CLUSTER_ROUTERS,
+    payload: sendNetworkConfigRequests(newData, currentData, clusterID, dispatch),
+  });
 
 const networkingActions = {
   getClusterRouters,

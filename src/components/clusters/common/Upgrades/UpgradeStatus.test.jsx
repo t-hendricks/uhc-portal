@@ -23,8 +23,8 @@ describe('<UpgradeStatus />', () => {
           canEdit
           clusterVersion="1.2.3"
           clusterVersionRawID="1.2.3"
-          onCancelClick={() => { }}
-          openModal={() => { }}
+          onCancelClick={() => {}}
+          openModal={() => {}}
         />,
       );
     });
@@ -48,8 +48,8 @@ describe('<UpgradeStatus />', () => {
           canEdit
           clusterVersion="1.2.3"
           clusterVersionRawID="1.2.3"
-          onCancelClick={() => { }}
-          openModal={() => { }}
+          onCancelClick={() => {}}
+          openModal={() => {}}
         />,
       );
     });
@@ -119,8 +119,8 @@ describe('<UpgradeStatus />', () => {
             ...schedule,
             schedule_type: 'automatic',
           }}
-          onCancelClick={() => { }}
-          openModal={() => { }}
+          onCancelClick={() => {}}
+          openModal={() => {}}
         />,
       );
     });
@@ -170,8 +170,8 @@ describe('<UpgradeStatus />', () => {
               value: 'started',
             },
           }}
-          onCancelClick={() => { }}
-          openModal={() => { }}
+          onCancelClick={() => {}}
+          openModal={() => {}}
         />,
       );
     });

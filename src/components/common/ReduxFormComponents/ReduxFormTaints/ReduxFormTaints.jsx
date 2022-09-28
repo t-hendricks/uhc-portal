@@ -12,9 +12,15 @@ import '../ReduxFormKeyValueList/ReduxFormKeyValueList.scss';
 
 const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = false }) => (
   <Grid hasGutter>
-    <GridItem span={3} className="pf-c-form__label pf-c-form__label-text">Key</GridItem>
-    <GridItem span={3} className="pf-c-form__label pf-c-form__label-text">Value</GridItem>
-    <GridItem span={3} className="pf-c-form__label pf-c-form__label-text">Effect</GridItem>
+    <GridItem span={3} className="pf-c-form__label pf-c-form__label-text">
+      Key
+    </GridItem>
+    <GridItem span={3} className="pf-c-form__label pf-c-form__label-text">
+      Value
+    </GridItem>
+    <GridItem span={3} className="pf-c-form__label pf-c-form__label-text">
+      Effect
+    </GridItem>
     <GridItem span={3} />
     {fields.map((label, index) => {
       const isRemoveDisabled = !isEditing && index === 0 && fields.length === 1;
@@ -57,7 +63,11 @@ const ReduxFormTaints = ({ fields, meta: { error, submitFailed }, isEditing = fa
               icon={<MinusCircleIcon />}
               variant="link"
               isDisabled={isRemoveDisabled}
-              className={isRemoveDisabled ? 'reduxFormKeyValueList-removeBtn-disabled' : 'reduxFormKeyValueList-removeBtn'}
+              className={
+                isRemoveDisabled
+                  ? 'reduxFormKeyValueList-removeBtn-disabled'
+                  : 'reduxFormKeyValueList-removeBtn'
+              }
             />
           </GridItem>
         </React.Fragment>

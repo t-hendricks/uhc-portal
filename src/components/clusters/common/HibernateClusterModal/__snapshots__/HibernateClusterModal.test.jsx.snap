@@ -14,13 +14,11 @@ exports[`<HibernateClusterModal /> renders correctly 1`] = `
     onSubmit={[Function]}
   >
     <p>
-      Moving
-       
+      Moving 
       <b>
         some-name
       </b>
-       
-      cluster to Hibernating state will block any operation for this cluster. While hibernating, the cluster will not consume any virtual machine instance or network resources, but will still count against subscription quota. Note that version upgrades will not occur.
+       cluster to Hibernating state will block any operation for this cluster. While hibernating, the cluster will not consume any virtual machine instance or network resources, but will still count against subscription quota. Note that version upgrades will not occur.
     </p>
     <Alert
       title="
@@ -57,13 +55,11 @@ exports[`<HibernateClusterModal /> renders correctly when an error occurs 1`] = 
       }
     />
     <p>
-      Moving
-       
+      Moving 
       <b>
         some-name
       </b>
-       
-      cluster to Hibernating state will block any operation for this cluster. While hibernating, the cluster will not consume any virtual machine instance or network resources, but will still count against subscription quota. Note that version upgrades will not occur.
+       cluster to Hibernating state will block any operation for this cluster. While hibernating, the cluster will not consume any virtual machine instance or network resources, but will still count against subscription quota. Note that version upgrades will not occur.
     </p>
     <Alert
       title="
@@ -92,13 +88,11 @@ exports[`<HibernateClusterModal /> renders correctly when pending 1`] = `
     onSubmit={[Function]}
   >
     <p>
-      Moving
-       
+      Moving 
       <b>
         some-name
       </b>
-       
-      cluster to Hibernating state will block any operation for this cluster. While hibernating, the cluster will not consume any virtual machine instance or network resources, but will still count against subscription quota. Note that version upgrades will not occur.
+       cluster to Hibernating state will block any operation for this cluster. While hibernating, the cluster will not consume any virtual machine instance or network resources, but will still count against subscription quota. Note that version upgrades will not occur.
     </p>
     <Alert
       title="

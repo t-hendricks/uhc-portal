@@ -9,7 +9,9 @@ class EntitlementConfig extends React.Component {
     }
   }
 
-  render() { return null; }
+  render() {
+    return null;
+  }
 }
 
 EntitlementConfig.propTypes = {

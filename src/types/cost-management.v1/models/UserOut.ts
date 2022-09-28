@@ -4,7 +4,6 @@
 
 import type { User } from './User';
 
-export type UserOut = (User & {
-    uuid: string;
-});
-
+export type UserOut = User & {
+  uuid: string;
+};

@@ -21,9 +21,7 @@ describe('createClusterRequest', () => {
     node_drain_grace_period: 60,
     upgrade_policy: 'manual',
     automatic_upgrade_schedule: '0 0 * * 0',
-    node_labels: [
-      {},
-    ],
+    node_labels: [{}],
     enable_user_workload_monitoring: true,
     machine_type: 'PDP-11', // GCP defaults 'custom-4-16384', AWS 'm5.xlarge' not important here.
     cluster_version: {
@@ -79,23 +77,15 @@ describe('createClusterRequest', () => {
   };
 
   const expectAWSVPC = (request) => {
-    expect(request.aws.subnet_ids).toEqual(
-      [
-        'subnet-00b3753ab2dd892ac',
-        'subnet-0703ec90283d1fd6b',
-        'subnet-0735da52d658da28b',
-        'subnet-00327948731118662',
-        'subnet-09404f4fc139bd94e',
-        'subnet-09ad4ef49f2e29996',
-      ],
-    );
-    expect(request.nodes.availability_zones).toEqual(
-      [
-        'us-east-1d',
-        'us-east-1e',
-        'us-east-1f',
-      ],
-    );
+    expect(request.aws.subnet_ids).toEqual([
+      'subnet-00b3753ab2dd892ac',
+      'subnet-0703ec90283d1fd6b',
+      'subnet-0735da52d658da28b',
+      'subnet-00327948731118662',
+      'subnet-09404f4fc139bd94e',
+      'subnet-09ad4ef49f2e29996',
+    ]);
+    expect(request.nodes.availability_zones).toEqual(['us-east-1d', 'us-east-1e', 'us-east-1f']);
   };
 
   const CIDRData = {

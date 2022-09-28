@@ -22,15 +22,30 @@ import ViewPaginationRow from '../../../common/ViewPaginationRow/viewPaginationR
 import helpers from '../../../../../common/helpers';
 import { SEVERITY_TYPES } from './clusterLogConstants';
 import LiveDateFormat from '../../../../common/LiveDateFormat/LiveDateFormat';
+import {
+  dateParse,
+  dateFormat,
+  getTimestampFrom,
+  onDateChangeFromFilter,
+} from './toolbar/ClusterLogsDatePicker';
 
 class ClusterLogs extends React.Component {
   componentDidMount() {
-    const { setListFlag } = this.props;
+    const { setListFlag, setFilter, viewOptions, createdAt } = this.props;
+
+    // Apply a timestamp filter by default
+    const minDate = dateParse(createdAt);
+    const { symbol, date } = onDateChangeFromFilter(dateFormat(getTimestampFrom(minDate)));
+    const filterObject = {
+      ...viewOptions.filter,
+      timestampFrom: `${symbol} '${date}'`,
+    };
+    setFilter(filterObject);
 
     const severityTypes = getQueryParam('severityTypes') || '';
     if (!isEmpty(severityTypes)) {
       setListFlag('conditionalFilterFlags', {
-        severityTypes: severityTypes.split(',').filter(type => SEVERITY_TYPES.includes(type)),
+        severityTypes: severityTypes.split(',').filter((type) => SEVERITY_TYPES.includes(type)),
       });
     } else {
       // only call refresh if we're not setting the filter flag. When the flag is set, refresh
@@ -42,7 +57,8 @@ class ClusterLogs extends React.Component {
   componentDidUpdate(prevProps) {
     // Check for changes resulting in a fetch
     const {
-      viewOptions, clusterLogs: { pending },
+      viewOptions,
+      clusterLogs: { pending },
     } = this.props;
     if (!pending && viewPropsChanged(viewOptions, prevProps.viewOptions)) {
       this.refresh();
@@ -57,12 +73,7 @@ class ClusterLogs extends React.Component {
   render() {
     const {
       clusterLogs: {
-        requestState: {
-          error,
-          pending,
-          errorMessage,
-          operationID,
-        },
+        requestState: { error, pending, errorMessage, operationID },
         logs,
         fetchedClusterLogsAt,
       },
@@ -89,20 +100,23 @@ class ClusterLogs extends React.Component {
       );
     }
 
-    const hasNoFilters = isEmpty(viewOptions.filter)
-      && helpers.nestedIsEmpty(viewOptions.flags.severityTypes);
-    const isPendingNoData = (!size(logs) && pending && hasNoFilters);
+    const hasNoFilters =
+      isEmpty(viewOptions.filter) && helpers.nestedIsEmpty(viewOptions.flags.severityTypes);
+    const isPendingNoData = !size(logs) && pending && hasNoFilters;
     return (
       <>
         <Card className="ocm-c-overview-cluster-history__card">
           <CardHeader className="ocm-c-overview-cluster-history__card--header">
             <CardTitle className="ocm-c-overview-cluster-history__card--header">
-              <Title headingLevel="h2" className="card-title">Cluster history</Title>
+              <Title headingLevel="h2" className="card-title">
+                Cluster history
+              </Title>
             </CardTitle>
             <CardActions>
               Updated &nbsp;
-              {fetchedClusterLogsAt
-              && <LiveDateFormat timestamp={fetchedClusterLogsAt.getTime()} />}
+              {fetchedClusterLogsAt && (
+                <LiveDateFormat timestamp={fetchedClusterLogsAt.getTime()} />
+              )}
             </CardActions>
           </CardHeader>
           <CardBody className="ocm-c-overview-cluster-history__card--body">
@@ -112,11 +126,7 @@ class ClusterLogs extends React.Component {
               externalClusterID={externalClusterID}
               isPendingNoData={isPendingNoData}
             />
-            <LogTable
-              logs={logs}
-              setSorting={setSorting}
-            />
-
+            <LogTable pending={pending} logs={logs} setSorting={setSorting} />
             <ViewPaginationRow
               viewType={viewConstants.CLUSTER_LOGS_VIEW}
               currentPage={viewOptions.currentPage}
@@ -148,11 +158,13 @@ ClusterLogs.propTypes = {
   clusterLogs: PropTypes.object.isRequired,
   getClusterHistory: PropTypes.func.isRequired,
   setListFlag: PropTypes.func.isRequired,
+  setFilter: PropTypes.func.isRequired,
   setSorting: PropTypes.func.isRequired,
   pending: PropTypes.bool,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  createdAt: PropTypes.string.isRequired,
 };
 
 export default ClusterLogs;

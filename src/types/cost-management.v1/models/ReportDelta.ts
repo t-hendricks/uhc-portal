@@ -6,6 +6,5 @@
  * Field to calculate delta values for in report.
  */
 export type ReportDelta = {
-    delta?: string;
+  delta?: string;
 };
-

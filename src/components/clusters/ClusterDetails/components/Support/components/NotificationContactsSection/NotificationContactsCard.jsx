@@ -1,21 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Table, TableBody, TableHeader, TableVariant,
-} from '@patternfly/react-table';
+import { Table, TableBody, TableHeader, TableVariant } from '@patternfly/react-table';
 import { EmptyState } from '@patternfly/react-core';
 import ErrorBox from '../../../../../../common/ErrorBox';
 
 class NotificationContactsCard extends React.Component {
   componentDidMount() {
-    const {
-      subscriptionID,
-      notificationContacts,
-      getNotificationContacts,
-    } = this.props;
+    const { subscriptionID, notificationContacts, getNotificationContacts } = this.props;
 
-    if ((notificationContacts.subscriptionID !== subscriptionID)
-      || (!notificationContacts.pending)) {
+    if (notificationContacts.subscriptionID !== subscriptionID || !notificationContacts.pending) {
       getNotificationContacts(subscriptionID);
     }
   }
@@ -33,9 +26,10 @@ class NotificationContactsCard extends React.Component {
 
     if (addContactResponse.fulfilled && prevProps.addContactResponse.pending) {
       // Display notification after successful addition of notification contact
-      const title = addContactResponse.count === 1
-        ? 'Notification contact added successfully'
-        : `${addContactResponse.count} notification contacts added successfully`;
+      const title =
+        addContactResponse.count === 1
+          ? 'Notification contact added successfully'
+          : `${addContactResponse.count} notification contacts added successfully`;
       addNotificationToaster({
         variant: 'success',
         title,
@@ -45,9 +39,11 @@ class NotificationContactsCard extends React.Component {
     }
 
     // fetch contacts again if we just added/deleted one.
-    if (((deleteContactResponse.fulfilled && prevProps.deleteContactResponse.pending)
-      || (addContactResponse.fulfilled && prevProps.addContactResponse.pending))
-      && !notificationContacts.pending) {
+    if (
+      ((deleteContactResponse.fulfilled && prevProps.deleteContactResponse.pending) ||
+        (addContactResponse.fulfilled && prevProps.addContactResponse.pending)) &&
+      !notificationContacts.pending
+    ) {
       clearDeleteNotificationContacts();
       getNotificationContacts(subscriptionID);
     }
@@ -91,13 +87,8 @@ class NotificationContactsCard extends React.Component {
       },
     ];
 
-    const userRow = user => ({
-      cells: [
-        user.username,
-        user.email,
-        user.firstName,
-        user.lastName,
-      ],
+    const userRow = (user) => ({
+      cells: [user.username, user.email, user.firstName, user.lastName],
       userID: user.userID,
     });
 
@@ -105,16 +96,14 @@ class NotificationContactsCard extends React.Component {
 
     return (
       <>
-        {
-          deleteContactResponse.error && (
-            <EmptyState>
-              <ErrorBox
-                message="Error deleting Notification Contact"
-                response={deleteContactResponse}
-              />
-            </EmptyState>
-          )
-        }
+        {deleteContactResponse.error && (
+          <EmptyState>
+            <ErrorBox
+              message="Error deleting Notification Contact"
+              response={deleteContactResponse}
+            />
+          </EmptyState>
+        )}
         <Table
           aria-label="Notification Contacts"
           actions={actions}

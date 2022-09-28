@@ -1,8 +1,7 @@
 import reducer, { initialState } from '../clusterLogReducer';
 import { DOWNLOAD_CLUSTER_LOGS, GET_CLUSTER_LOGS } from '../clusterLogConstants';
 import { FULFILLED_ACTION } from '../../../../../../redux/reduxHelpers';
-import * as mockPayloadGet
-  from '../../../../../../../mockdata/api/service_logs/v1/cluster_logs.json';
+import * as mockPayloadGet from '../../../../../../../mockdata/api/service_logs/v1/cluster_logs.json';
 
 describe('cluster log Reducer', () => {
   describe('should not handle unrelated actions', () => {
@@ -10,8 +9,7 @@ describe('cluster log Reducer', () => {
       const action = { type: 'HOLY_GUACAMOLE' };
       const result = reducer(initialState, action);
 
-      expect(result)
-        .toEqual(initialState);
+      expect(result).toEqual(initialState);
     });
   });
 
@@ -22,8 +20,7 @@ describe('cluster log Reducer', () => {
     };
     const result = reducer(initialState, action);
 
-    expect(result)
-      .toHaveProperty('logs', mockPayloadGet.logs.data.items);
+    expect(result).toHaveProperty('logs', mockPayloadGet.logs.data.items);
   });
 
   it('should handle download cluster logs action', () => {
@@ -33,7 +30,6 @@ describe('cluster log Reducer', () => {
     };
     const result = reducer(initialState, action);
 
-    expect(result)
-      .toHaveProperty('data', mockPayloadGet.logs.data.data);
+    expect(result).toHaveProperty('data', mockPayloadGet.logs.data.data);
   });
 });

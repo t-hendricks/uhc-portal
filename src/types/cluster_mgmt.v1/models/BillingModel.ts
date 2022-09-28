@@ -6,6 +6,6 @@
  * Billing model for cluster resources.
  */
 export enum BillingModel {
-    MARKETPLACE = 'marketplace',
-    STANDARD = 'standard',
+  MARKETPLACE = 'marketplace',
+  STANDARD = 'standard',
 }

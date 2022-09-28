@@ -10,17 +10,17 @@ import { clearGlobalError } from '../../../redux/actions/globalErrorActions';
 
 const mapDispatchToProps = {
   invalidateClusters: () => clustersActions.invalidateClusters(),
-  fetchClusters: queryObj => clustersActions.fetchClusters(queryObj),
-  setSorting: sorting => viewActions.onListSortBy(sorting, viewConstants.ARCHIVED_CLUSTERS_VIEW),
-  setListFlag: (key, value) => viewActions.onListFlagsSet(key, value,
-    viewConstants.ARCHIVED_CLUSTERS_VIEW),
+  fetchClusters: (queryObj) => clustersActions.fetchClusters(queryObj),
+  setSorting: (sorting) => viewActions.onListSortBy(sorting, viewConstants.ARCHIVED_CLUSTERS_VIEW),
+  setListFlag: (key, value) =>
+    viewActions.onListFlagsSet(key, value, viewConstants.ARCHIVED_CLUSTERS_VIEW),
   getCloudProviders: cloudProviderActions.getCloudProviders,
   openModal: modalActions.openModal,
   closeModal: modalActions.closeModal,
   clearGlobalError,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...state.clusters.clusters,
   username: state.userProfile.keycloakProfile.username,
   viewOptions: state.viewOptions[viewConstants.ARCHIVED_CLUSTERS_VIEW],
@@ -28,7 +28,4 @@ const mapStateToProps = state => ({
   sortByIndex: state.sortByIndex,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ArchivedClusterList);
+export default connect(mapStateToProps, mapDispatchToProps)(ArchivedClusterList);

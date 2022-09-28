@@ -1,4 +1,6 @@
-import masterResizeAlertThresholdSelector, { masterResizeThresholds } from '../EditNodeCountModalSelectors';
+import masterResizeAlertThresholdSelector, {
+  masterResizeThresholds,
+} from '../EditNodeCountModalSelectors';
 import fixtures from '../../../ClusterDetails/__test__/ClusterDetails.fixtures';
 
 const DEFAULT_MACHINE_POOL_ID = 'Default';
@@ -85,22 +87,24 @@ describe('masterResizeAlertThreshold Selector', () => {
       },
       machinePools: {
         getMachinePools: {
-          data: [{
-            availability_zones: ['us-east-1a'],
-            href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
-            id: 'mp-with-label0',
-            instance_type: 'm5.xlarge',
-            kind: 'MachinePool',
-            replicas: 7,
-          },
-          {
-            availability_zones: ['us-east-1a'],
-            href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
-            id: 'mp-with-label1',
-            instance_type: 'm5.xlarge',
-            kind: 'MachinePool',
-            replicas: 10,
-          }],
+          data: [
+            {
+              availability_zones: ['us-east-1a'],
+              href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
+              id: 'mp-with-label0',
+              instance_type: 'm5.xlarge',
+              kind: 'MachinePool',
+              replicas: 7,
+            },
+            {
+              availability_zones: ['us-east-1a'],
+              href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
+              id: 'mp-with-label1',
+              instance_type: 'm5.xlarge',
+              kind: 'MachinePool',
+              replicas: 10,
+            },
+          ],
         },
       },
       // This cluster is scaled from 21 to 30 > medium threshold.
@@ -134,17 +138,19 @@ describe('masterResizeAlertThreshold Selector', () => {
       },
       machinePools: {
         getMachinePools: {
-          data: [{
-            availability_zones: ['us-east-1a'],
-            href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
-            id: 'mp-with-label',
-            instance_type: 'm5.xlarge',
-            kind: 'MachinePool',
-            autoscaling: {
-              min_replicas: 10,
-              max_replicas: 14,
+          data: [
+            {
+              availability_zones: ['us-east-1a'],
+              href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
+              id: 'mp-with-label',
+              instance_type: 'm5.xlarge',
+              kind: 'MachinePool',
+              autoscaling: {
+                min_replicas: 10,
+                max_replicas: 14,
+              },
             },
-          }],
+          ],
         },
       },
       // This cluster is scaled from 17 to 26 > medium threshold.
@@ -176,28 +182,30 @@ describe('masterResizeAlertThreshold Selector', () => {
       },
       machinePools: {
         getMachinePools: {
-          data: [{
-            availability_zones: ['us-east-1a'],
-            href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
-            id: 'mp-with-label0',
-            instance_type: 'm5.xlarge',
-            kind: 'MachinePool',
-            autoscaling: {
-              min_replicas: 3,
-              max_replicas: 4,
+          data: [
+            {
+              availability_zones: ['us-east-1a'],
+              href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
+              id: 'mp-with-label0',
+              instance_type: 'm5.xlarge',
+              kind: 'MachinePool',
+              autoscaling: {
+                min_replicas: 3,
+                max_replicas: 4,
+              },
             },
-          },
-          {
-            availability_zones: ['us-east-1a'],
-            href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
-            id: 'mp-with-label1',
-            instance_type: 'm5.xlarge',
-            kind: 'MachinePool',
-            autoscaling: {
-              min_replicas: 10,
-              max_replicas: 15,
+            {
+              availability_zones: ['us-east-1a'],
+              href: '/api/clusters_mgmt/v1/clusters/cluster-id/machine_pools/fake2',
+              id: 'mp-with-label1',
+              instance_type: 'm5.xlarge',
+              kind: 'MachinePool',
+              autoscaling: {
+                min_replicas: 10,
+                max_replicas: 15,
+              },
             },
-          }],
+          ],
         },
       },
       // This cluster is scaled from 19 to 26 > medium threshold.

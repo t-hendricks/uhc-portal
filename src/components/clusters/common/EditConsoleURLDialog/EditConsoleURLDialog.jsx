@@ -11,7 +11,7 @@ import { checkClusterConsoleURL } from '../../../../common/validators';
 class EditConsoleURLDialog extends Component {
   state = {
     currentValue: '',
-  }
+  };
 
   componentDidMount() {
     const { consoleURL } = this.props;
@@ -19,9 +19,7 @@ class EditConsoleURLDialog extends Component {
   }
 
   componentDidUpdate() {
-    const {
-      editClusterResponse, resetResponse, closeModal, onClose,
-    } = this.props;
+    const { editClusterResponse, resetResponse, closeModal, onClose } = this.props;
     if (editClusterResponse.fulfilled) {
       resetResponse();
       closeModal();
@@ -37,8 +35,15 @@ class EditConsoleURLDialog extends Component {
 
   render() {
     const {
-      closeModal, submit, editClusterResponse, resetResponse, clusterID, subscriptionID, consoleURL,
-      shouldDisplayClusterName, clusterDisplayName,
+      closeModal,
+      submit,
+      editClusterResponse,
+      resetResponse,
+      clusterID,
+      subscriptionID,
+      consoleURL,
+      shouldDisplayClusterName,
+      clusterDisplayName,
     } = this.props;
     const { currentValue } = this.state;
 
@@ -61,7 +66,6 @@ class EditConsoleURLDialog extends Component {
     const beenSet = currentValue !== consoleURL;
 
     return (
-
       <Modal
         data-test-id="edit-console-url-dialog"
         title={consoleURL ? 'Edit console URL' : 'Add console URL'}
@@ -77,11 +81,16 @@ class EditConsoleURLDialog extends Component {
           {hasError}
           {!consoleURL && (
             <p>
-              Adding a cluster&apos;s web console URL will allow you to&nbsp;
-              launch the web console from the OpenShift Cluster Manager.
+              Adding a cluster&apos;s web console URL will allow you to&nbsp; launch the web console
+              from the OpenShift Cluster Manager.
             </p>
           )}
-          <Form onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
+          <Form
+            onSubmit={(e) => {
+              handleSubmit();
+              e.preventDefault();
+            }}
+          >
             <FormGroup
               label="Web console URL"
               helperTextInvalid={validationMessage}
@@ -93,7 +102,7 @@ class EditConsoleURLDialog extends Component {
                 validated={(beenSet ? !validationMessage : true) ? 'default' : 'error'}
                 value={currentValue}
                 placeholder="https://console-openshift-console.apps.mycluster.example.com/"
-                onChange={newValue => this.setValue(newValue)}
+                onChange={(newValue) => this.setValue(newValue)}
                 aria-label="Web console URL"
                 id="edit-console-url-input"
               />

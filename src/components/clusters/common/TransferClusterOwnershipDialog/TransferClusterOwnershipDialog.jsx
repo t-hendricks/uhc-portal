@@ -2,8 +2,12 @@ import get from 'lodash/get';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  TextContent, Text, TextVariants,
-  TextList, TextListVariants, TextListItem,
+  TextContent,
+  Text,
+  TextVariants,
+  TextList,
+  TextListVariants,
+  TextListItem,
 } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
@@ -31,48 +35,40 @@ class TransferClusterOwnershipDialog extends Component {
   handleClose = () => {
     const { closeModal } = this.props;
     closeModal();
-  }
+  };
 
   render() {
-    const {
-      requestState,
-      subscription,
-      clusterDisplayName,
-      shouldDisplayClusterName,
-    } = this.props;
+    const { requestState, subscription, clusterDisplayName, shouldDisplayClusterName } = this.props;
 
     const changePullSecretUrl = 'https://access.redhat.com/solutions/4902871';
-    const descriptionText = subscription?.status === subscriptionStatuses.DISCONNECTED ? (
-      <>
-        <TextList component={TextListVariants.ol}>
-          <TextListItem>Initiate transfer</TextListItem>
-          <TextListItem>
-            <ExternalLink href={`${getBaseName()}/register`}>
-              Register the cluster
-            </ExternalLink>
-            {' '}
-            within 5 days
-          </TextListItem>
-        </TextList>
-      </>
-    ) : (
-      <>
-        <TextList component={TextListVariants.ol}>
-          <TextListItem>Initiate transfer</TextListItem>
-          <TextListItem>
-            <ExternalLink href={changePullSecretUrl}>
-              Change the cluster&apos;s pull secret
-            </ExternalLink>
-            {' '}
-            within 5 days
-          </TextListItem>
-        </TextList>
-        <Text component={TextVariants.p}>
-          The transfer is complete when OpenShift Cluster Manager receives
-          telemetry data from the cluster with the new pull secret.
-        </Text>
-      </>
-    );
+    const descriptionText =
+      subscription?.status === subscriptionStatuses.DISCONNECTED ? (
+        <>
+          <TextList component={TextListVariants.ol}>
+            <TextListItem>Initiate transfer</TextListItem>
+            <TextListItem>
+              <ExternalLink href={`${getBaseName()}/register`}>Register the cluster</ExternalLink>{' '}
+              within 5 days
+            </TextListItem>
+          </TextList>
+        </>
+      ) : (
+        <>
+          <TextList component={TextListVariants.ol}>
+            <TextListItem>Initiate transfer</TextListItem>
+            <TextListItem>
+              <ExternalLink href={changePullSecretUrl}>
+                Change the cluster&apos;s pull secret
+              </ExternalLink>{' '}
+              within 5 days
+            </TextListItem>
+          </TextList>
+          <Text component={TextVariants.p}>
+            The transfer is complete when OpenShift Cluster Manager receives telemetry data from the
+            cluster with the new pull secret.
+          </Text>
+        </>
+      );
 
     return (
       <Modal
@@ -87,15 +83,15 @@ class TransferClusterOwnershipDialog extends Component {
         onSecondaryClick={this.handleClose}
         isPrimaryDisabled={requestState.pending}
       >
-        { requestState.error && (
+        {requestState.error && (
           <ErrorBox message="Error initiating transfer" response={requestState} />
         )}
         <TextContent>
           <Text component={TextVariants.p}>
-            Transferring cluster ownership will allow another individual to manage this cluster.
-            The steps for transferring cluster ownership are:
+            Transferring cluster ownership will allow another individual to manage this cluster. The
+            steps for transferring cluster ownership are:
           </Text>
-          { descriptionText }
+          {descriptionText}
           <Text component={TextVariants.h4}>
             If the transfer is not completed within 5 days, the procedure must be restarted.
           </Text>

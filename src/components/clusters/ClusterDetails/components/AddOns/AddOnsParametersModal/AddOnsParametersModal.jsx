@@ -51,10 +51,12 @@ class AddOnsParametersModal extends Component {
 
   isFieldDisabled = (param) => {
     const { isUpdateForm, addOnInstallation } = this.props;
-    return isUpdateForm
-      && !param.editable
-      && addOnInstallation.parameters !== undefined
-      && addOnInstallation.parameters.items.find(x => x.id === param.id) !== undefined;
+    return (
+      isUpdateForm &&
+      !param.editable &&
+      addOnInstallation.parameters !== undefined &&
+      addOnInstallation.parameters.items.find((x) => x.id === param.id) !== undefined
+    );
   };
 
   // only return param on create form.
@@ -91,7 +93,7 @@ class AddOnsParametersModal extends Component {
 
   getDefaultValueText = (param) => {
     if (param.options !== undefined && param.options.length > 0) {
-      const defaultOption = param.options.find(o => o.value === param.default_value);
+      const defaultOption = param.options.find((o) => o.value === param.default_value);
       if (defaultOption !== undefined) {
         return defaultOption.name;
       }
@@ -100,13 +102,7 @@ class AddOnsParametersModal extends Component {
   };
 
   getFieldProps = (param) => {
-    const {
-      cluster,
-      quota,
-      addOn,
-      addOnInstallation,
-      isUpdateForm,
-    } = this.props;
+    const { cluster, quota, addOn, addOnInstallation, isUpdateForm } = this.props;
     if (param.options !== undefined && param.options.length > 0) {
       let paramOptions;
       if (param.value_type === 'resource') {
@@ -119,28 +115,28 @@ class AddOnsParametersModal extends Component {
       } else {
         paramOptions = param.options;
       }
-      return ({
+      return {
         component: ReduxFormDropdown,
         options: [{ name: '-- Please Select --', value: undefined }, ...paramOptions],
         type: 'text',
-      });
+      };
     }
     switch (param.value_type) {
       case 'number':
-        return ({
+        return {
           component: ReduxVerticalFormGroup,
           type: 'text',
-        });
+        };
       case 'boolean':
-        return ({
+        return {
           component: ReduxCheckbox,
           isHelperTextBeforeField: true,
-        });
+        };
       default:
-        return ({
+        return {
           component: ReduxVerticalFormGroup,
           type: 'text',
-        });
+        };
     }
   };
 
@@ -177,48 +173,38 @@ class AddOnsParametersModal extends Component {
         validate={this.validationsForParameterField(param)}
       />
     );
-  }
+  };
 
   render() {
-    const {
-      isOpen,
-      handleSubmit,
-      addOn,
-      isUpdateForm,
-      submitClusterAddOnResponse,
-      pristine,
-    } = this.props;
+    const { isOpen, handleSubmit, addOn, isUpdateForm, submitClusterAddOnResponse, pristine } =
+      this.props;
 
     const isPending = submitClusterAddOnResponse.pending;
 
-    return isOpen && (
-      <Modal
-        title={`Configure ${addOn.name}`}
-        width={810}
-        variant="large"
-        onClose={this.handleClose}
-        primaryText={isUpdateForm ? 'Update' : 'Install'}
-        secondaryText="Cancel"
-        onPrimaryClick={handleSubmit}
-        onSecondaryClick={this.handleClose}
-        isPrimaryDisabled={isUpdateForm && pristine}
-        isPending={isPending}
-      >
+    return (
+      isOpen && (
+        <Modal
+          title={`Configure ${addOn.name}`}
+          width={810}
+          variant="large"
+          onClose={this.handleClose}
+          primaryText={isUpdateForm ? 'Update' : 'Install'}
+          secondaryText="Cancel"
+          onPrimaryClick={handleSubmit}
+          onSecondaryClick={this.handleClose}
+          isPrimaryDisabled={isUpdateForm && pristine}
+          isPending={isPending}
+        >
+          {submitClusterAddOnResponse.error && (
+            <ErrorBox message="Error adding add-ons" response={submitClusterAddOnResponse} />
+          )}
 
-        {submitClusterAddOnResponse.error && (
-          <ErrorBox message="Error adding add-ons" response={submitClusterAddOnResponse} />
-        )}
-
-        <Form id={`form-addon-${addOn.id}`}>
-          {getParameters(addOn).map(param => (
-            <FormGroup
-              key={param.id}
-            >
-              {this.fieldForParam(param)}
-              {
-                ((isUpdateForm && param.editable && param.default_value)
-                  || (!isUpdateForm && param.default_value))
-                && (
+          <Form id={`form-addon-${addOn.id}`}>
+            {getParameters(addOn).map((param) => (
+              <FormGroup key={param.id}>
+                {this.fieldForParam(param)}
+                {((isUpdateForm && param.editable && param.default_value) ||
+                  (!isUpdateForm && param.default_value)) && (
                   <Button
                     onClick={() => this.setDefaultParamValue(param)}
                     id={`reset-addon-${param.id}`}
@@ -227,18 +213,14 @@ class AddOnsParametersModal extends Component {
                     iconPosition="right"
                     className="addon-parameter-default-button"
                   >
-                    Use default:
-                    {' '}
-                    {this.getDefaultValueText(param)}
+                    Use default: {this.getDefaultValueText(param)}
                   </Button>
-                )
-              }
-
-            </FormGroup>
-          ))}
-        </Form>
-
-      </Modal>
+                )}
+              </FormGroup>
+            ))}
+          </Form>
+        </Modal>
+      )
     );
   }
 }

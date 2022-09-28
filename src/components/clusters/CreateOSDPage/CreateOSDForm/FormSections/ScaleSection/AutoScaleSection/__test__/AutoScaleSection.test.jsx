@@ -34,9 +34,11 @@ describe('<AutoScaleSection />', () => {
   });
 
   it('Set min nodes correctly when enabling autoscale for multiAZ', () => {
-    autoscaleDisabledWrapper.setProps(
-      { autoscalingEnabled: true, isMultiAz: true, isDefaultMachinePool: true },
-    );
+    autoscaleDisabledWrapper.setProps({
+      autoscalingEnabled: true,
+      isMultiAz: true,
+      isDefaultMachinePool: true,
+    });
     expect(change).toBeCalledWith('min_replicas', '3');
   });
 });

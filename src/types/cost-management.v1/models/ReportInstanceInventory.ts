@@ -5,4 +5,3 @@
 import type { Report } from './Report';
 
 export type ReportInstanceInventory = Report;
-

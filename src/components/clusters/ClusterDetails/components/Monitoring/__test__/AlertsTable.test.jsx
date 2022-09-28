@@ -18,10 +18,9 @@ describe('<AlertsTable />', () => {
   });
 
   it('should render table with links there are alerts and a console URL', () => {
-    wrapper = shallow(<AlertsTable
-      clusterConsole={{ url: 'http://example.com/' }}
-      alerts={mockAlerts.data}
-    />);
+    wrapper = shallow(
+      <AlertsTable clusterConsole={{ url: 'http://example.com/' }} alerts={mockAlerts.data} />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 });

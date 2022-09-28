@@ -1,12 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card,
-  CardTitle,
-  Split,
-  SplitItem,
-  Title,
-} from '@patternfly/react-core';
+import { Card, CardTitle, Split, SplitItem, Title } from '@patternfly/react-core';
 
 import {
   CheckCircleIcon,
@@ -49,11 +43,7 @@ function ClusterHealthCard({
       icon = <ExclamationCircleIcon className="status-icon danger" />;
       title = (
         <Title headingLevel="h2">
-          {discoveredIssues}
-          {' '}
-          {discoveredIssues === 1 ? 'issue' : 'issues'}
-          {' '}
-          detected
+          {discoveredIssues} {discoveredIssues === 1 ? 'issue' : 'issues'} detected
         </Title>
       );
       break;
@@ -66,19 +56,15 @@ function ClusterHealthCard({
     <Card className="ocm-c-monitoring-health__card">
       <CardTitle className="ocm-c-monitoring-health__card--header">
         <Split>
-          <SplitItem>
-            {icon}
-          </SplitItem>
-          <SplitItem isFilled>
-            {title}
-          </SplitItem>
+          <SplitItem>{icon}</SplitItem>
+          <SplitItem isFilled>{title}</SplitItem>
           <SplitItem className="last-checkin">
-            {status === monitoringStatuses.UNKNOWN && <ExclamationCircleIcon className="danger" size="md" />}
+            {status === monitoringStatuses.UNKNOWN && (
+              <ExclamationCircleIcon className="danger" size="md" />
+            )}
             {lastCheckIn !== undefined && (
               <>
-                Last check-in:
-                {' '}
-                <DateFormat date={lastCheckIn} type="relative" />
+                Last check-in: <DateFormat date={lastCheckIn} type="relative" />
               </>
             )}
           </SplitItem>

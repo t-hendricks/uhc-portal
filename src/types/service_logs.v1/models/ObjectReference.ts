@@ -3,8 +3,7 @@
 /* eslint-disable */
 
 export type ObjectReference = {
-    href?: string;
-    id?: string;
-    kind?: string;
+  href?: string;
+  id?: string;
+  kind?: string;
 };
-

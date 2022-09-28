@@ -1,6 +1,9 @@
 import get from 'lodash/get';
 
-import { hasCapability, subscriptionCapabilities } from '../../../../common/subscriptionCapabilities';
+import {
+  hasCapability,
+  subscriptionCapabilities,
+} from '../../../../common/subscriptionCapabilities';
 
 const { SUBSCRIBED_OCP, SUBSCRIBED_OCP_MARKETPLACE } = subscriptionCapabilities;
 

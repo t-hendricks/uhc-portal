@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 
-import {
-  Form,
-} from '@patternfly/react-core';
+import { Form } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
@@ -12,9 +10,7 @@ import ErrorBox from '../../../common/ErrorBox';
 
 class ResumeClusterModal extends Component {
   componentDidUpdate() {
-    const {
-      resumeClusterResponse, resetResponse, closeModal, onClose,
-    } = this.props;
+    const { resumeClusterResponse, resetResponse, closeModal, onClose } = this.props;
     if (resumeClusterResponse.fulfilled) {
       resetResponse();
       closeModal();
@@ -24,8 +20,13 @@ class ResumeClusterModal extends Component {
 
   render() {
     const {
-      closeModal, submit, resumeClusterResponse, resetResponse,
-      clusterID, clusterName, shouldDisplayClusterName,
+      closeModal,
+      submit,
+      resumeClusterResponse,
+      resetResponse,
+      clusterID,
+      clusterName,
+      shouldDisplayClusterName,
     } = this.props;
 
     const cancelResumeCluster = () => {
@@ -57,8 +58,7 @@ class ResumeClusterModal extends Component {
           <Form onSubmit={() => handleSubmit()}>
             {error}
             <p>
-              cluster will move out of Hibernating state
-              and all cluster operations will be resumed.
+              cluster will move out of Hibernating state and all cluster operations will be resumed.
             </p>
           </Form>
         </>

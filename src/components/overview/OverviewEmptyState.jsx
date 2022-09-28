@@ -44,19 +44,18 @@ function OverviewEmptyState() {
                 </Title>
               </FlexItem>
               <FlexItem spacer={{ default: 'spacer2xl' }}>
-                <div className="ocm-c-width-limiter" style={{ '--ocm-c-width-limiter--MaxWidth': '600px' }}>
-                  <Title headingLevel="h2" size="lg" className="pf-u-mb-xs">Download, install and configure Red Hat OpenShift 4 for free now.</Title>
+                <div
+                  className="ocm-c-width-limiter"
+                  style={{ '--ocm-c-width-limiter--MaxWidth': '600px' }}
+                >
+                  <Title headingLevel="h2" size="lg" className="pf-u-mb-xs">
+                    Download, install and configure Red Hat OpenShift 4 for free now.
+                  </Title>
                 </div>
               </FlexItem>
               <FlexItem>
-                <Button
-                  isLarge
-                  component="a"
-                  variant="primary"
-                >
-                  <Link to="/create">
-                    Create an OpenShift cluster
-                  </Link>
+                <Button isLarge component="a" variant="primary">
+                  <Link to="/create">Create an OpenShift cluster</Link>
                 </Button>
               </FlexItem>
               <FlexItem />
@@ -66,17 +65,21 @@ function OverviewEmptyState() {
       </MarketingBanner>
 
       <PageSection>
-        <Title size="xl" headingLevel="h1" className="pf-u-mt-lg pf-u-mb-lg">Get productive with OpenShift</Title>
+        <Title size="xl" headingLevel="h1" className="pf-u-mt-lg pf-u-mb-lg">
+          Get productive with OpenShift
+        </Title>
         <Flex id="overview-emptystate-get-productive">
           <Flex className="flex-pair">
             <FlexItem>
               <Card className="dashboard-emptystate-card">
                 <CardTitle>
-                  <Title headingLevel="h2" size="lg" className="card-title">OpenShift Serverless</Title>
+                  <Title headingLevel="h2" size="lg" className="card-title">
+                    OpenShift Serverless
+                  </Title>
                 </CardTitle>
                 <CardBody>
-                  Help developers simplify the process of delivering
-                  code from development to production.
+                  Help developers simplify the process of delivering code from development to
+                  production.
                   <a href={links.SERVERLESS_ABOUT} rel="noreferrer noopener" target="_blank">
                     <Button variant="link" icon={<ArrowRightIcon />}>
                       Get started
@@ -88,11 +91,13 @@ function OverviewEmptyState() {
             <FlexItem>
               <Card className="dashboard-emptystate-card">
                 <CardTitle>
-                  <Title headingLevel="h2" size="lg" className="card-title">Red Hat OpenShift Service Mesh</Title>
+                  <Title headingLevel="h2" size="lg" className="card-title">
+                    Red Hat OpenShift Service Mesh
+                  </Title>
                 </CardTitle>
                 <CardBody>
-                  Connect, secure and monitor microservices in your
-                  OpenShift Container Platform environment.
+                  Connect, secure and monitor microservices in your OpenShift Container Platform
+                  environment.
                   <a href={links.SERVICE_MESH_ABOUT} rel="noreferrer noopener" target="_blank">
                     <Button variant="link" icon={<ArrowRightIcon />}>
                       Get started
@@ -106,7 +111,9 @@ function OverviewEmptyState() {
             <FlexItem>
               <Card className="dashboard-emptystate-card">
                 <CardTitle>
-                  <Title headingLevel="h2" size="lg">OpenShift Virtualization</Title>
+                  <Title headingLevel="h2" size="lg">
+                    OpenShift Virtualization
+                  </Title>
                 </CardTitle>
                 <CardBody>
                   Run and manage virtual machine workloads alongside your container workloads.
@@ -121,7 +128,9 @@ function OverviewEmptyState() {
             <FlexItem>
               <Card className="dashboard-emptystate-card">
                 <CardTitle>
-                  <Title headingLevel="h2" size="lg">Migrating OpenShift Container Platform 3 to 4</Title>
+                  <Title headingLevel="h2" size="lg">
+                    Migrating OpenShift Container Platform 3 to 4
+                  </Title>
                 </CardTitle>
                 <CardBody>
                   Plan your transition and migrate from OpenShift Container Platform 3 to 4.
@@ -138,7 +147,9 @@ function OverviewEmptyState() {
         <Grid>
           <GridItem>
             <div id="dashboard-emptystate-osd" className="top-row pf-u-mt-lg">
-              <Title headingLevel="h2" size="lg" className="card-title">Let Red Hat run it for you</Title>
+              <Title headingLevel="h2" size="lg" className="card-title">
+                Let Red Hat run it for you
+              </Title>
               Red hat OpenShift Dedicated is a single-tenant, high availability Kubernetes clusters,
               managed by Red Hat on Amazon Web Services or Google Cloud Platform.
               <a
@@ -152,18 +163,54 @@ function OverviewEmptyState() {
             </div>
           </GridItem>
         </Grid>
-        <Title className="pf-u-mt-lg pf-u-mb-lg" size="lg" headingLevel="h1">Learn more about the platform</Title>
+        <Title className="pf-u-mt-lg pf-u-mb-lg" size="lg" headingLevel="h1">
+          Learn more about the platform
+        </Title>
         <div id="emptystate-learn-more">
           <div>
-            <iframe title="learn more" width="560" height="315" src={VIDEO_URL} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+            <iframe
+              title="learn more"
+              width="560"
+              height="315"
+              src={VIDEO_URL}
+              frameBorder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
           </div>
           <div>
-            <Title headingLevel="h2" size="lg" className="pf-u-ml-lg pf-u-mb-md">Other resources</Title>
+            <Title headingLevel="h2" size="lg" className="pf-u-ml-lg pf-u-mb-md">
+              Other resources
+            </Title>
             <List>
-              <ListItem><a href={links.DOCS_ENTRY} rel="noreferrer noopener" target="_blank">Official documents</a></ListItem>
-              <ListItem><a href="https://cloud.redhat.com/blog" rel="noreferrer noopener" target="_blank">Blog</a></ListItem>
-              <ListItem><a href="https://developers.redhat.com/learn/openshift" rel="noreferrer noopener" target="_blank">Tutorials with live playgrounds!</a></ListItem>
-              <ListItem><a href="https://www.twitch.tv/redhatopenshift" rel="noreferrer noopener" target="_blank">Twitch</a></ListItem>
+              <ListItem>
+                <a href={links.DOCS_ENTRY} rel="noreferrer noopener" target="_blank">
+                  Official documents
+                </a>
+              </ListItem>
+              <ListItem>
+                <a href="https://cloud.redhat.com/blog" rel="noreferrer noopener" target="_blank">
+                  Blog
+                </a>
+              </ListItem>
+              <ListItem>
+                <a
+                  href="https://developers.redhat.com/learn/openshift"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  Tutorials with live playgrounds!
+                </a>
+              </ListItem>
+              <ListItem>
+                <a
+                  href="https://www.twitch.tv/redhatopenshift"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  Twitch
+                </a>
+              </ListItem>
             </List>
           </div>
         </div>

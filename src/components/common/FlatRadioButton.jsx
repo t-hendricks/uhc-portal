@@ -33,7 +33,9 @@ function FlatRadioButton({
       variant="tertiary"
       {...extraProps}
     >
-      <Title headingLevel="h4" size="lg">{titleText}</Title>
+      <Title headingLevel="h4" size="lg">
+        {titleText}
+      </Title>
       {secondaryText && secondaryText}
     </ButtonWithTooltip>
   );

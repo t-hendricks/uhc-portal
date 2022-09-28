@@ -5,22 +5,15 @@ import ExternalLink from '../../../../../common/ExternalLink';
 
 const isMachinePoolUsingSpotInstances = (machinePoolId, machinePoolsList) => {
   const selectedMachinePool = machinePoolsList.data.find(
-    machinePool => (machinePool.id || machinePool.name) === machinePoolId,
+    (machinePool) => (machinePool.id || machinePool.name) === machinePoolId,
   );
   return selectedMachinePool ? selectedMachinePool?.aws : false;
 };
 
 const SpotInstanceInfoAlert = () => (
   <>
-    <InfoCircleIcon fill="var(--pf-global--info-color--100)" />
-    {' '}
-    This machine pool is using
-    {' '}
-    <ExternalLink href={links.AWS_SPOT_INSTANCES}>
-      Spot instances
-    </ExternalLink>
-    {' '}
-    for cost savings
+    <InfoCircleIcon fill="var(--pf-global--info-color--100)" /> This machine pool is using{' '}
+    <ExternalLink href={links.AWS_SPOT_INSTANCES}>Spot instances</ExternalLink> for cost savings
   </>
 );
 

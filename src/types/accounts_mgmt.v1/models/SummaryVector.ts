@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type SummaryVector = {
-    time?: string;
-    value?: number;
+  time?: string;
+  value?: number;
 };
-

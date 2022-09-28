@@ -5,7 +5,6 @@
 import type { SummaryVector } from './SummaryVector';
 
 export type SummaryMetrics = {
-    name?: string;
-    vector?: Array<SummaryVector>;
+  name?: string;
+  vector?: Array<SummaryVector>;
 };
-

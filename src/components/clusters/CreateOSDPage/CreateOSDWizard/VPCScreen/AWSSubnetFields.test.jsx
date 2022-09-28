@@ -16,7 +16,11 @@ describe('<AWSSubnetFields />', () => {
 
   it('single AZ, private + public', () => {
     const wrapper = shallow(
-      <AWSSubnetFields selectedRegion="fake-region" isMultiAz={false} privateLinkSelected={false} />,
+      <AWSSubnetFields
+        selectedRegion="fake-region"
+        isMultiAz={false}
+        privateLinkSelected={false}
+      />,
     );
     expect(wrapper).toMatchSnapshot();
   });

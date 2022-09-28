@@ -1,6 +1,9 @@
 import produce from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 import { githubReleasesToFetch } from '../../common/installLinks.mjs';

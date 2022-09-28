@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type ClusterTransferPatchRequest = {
-    status?: string;
+  status?: string;
 };
-

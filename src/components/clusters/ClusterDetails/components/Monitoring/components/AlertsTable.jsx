@@ -1,16 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableVariant,
-} from '@patternfly/react-table';
-import {
-  Title,
-  EmptyState,
-  EmptyStateIcon,
-} from '@patternfly/react-core';
+import { Table, TableHeader, TableBody, TableVariant } from '@patternfly/react-table';
+import { Title, EmptyState, EmptyStateIcon } from '@patternfly/react-core';
 import {
   ExclamationCircleIcon,
   ExclamationTriangleIcon,
@@ -19,11 +10,7 @@ import {
 } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 
-import {
-  alertsSeverity,
-  monitoringItemLinkProps,
-  monitoringItemTypes,
-} from '../monitoringHelper';
+import { alertsSeverity, monitoringItemLinkProps, monitoringItemTypes } from '../monitoringHelper';
 
 function AlertsTable({ alerts = [], clusterConsole }) {
   const errorIcon = (
@@ -46,51 +33,58 @@ function AlertsTable({ alerts = [], clusterConsole }) {
     </>
   );
 
-  const columns = [
-    { title: 'Name' },
-    { title: 'Severity' },
-  ];
+  const columns = [{ title: 'Name' }, { title: 'Severity' }];
 
-  const isNotRealAlert = name => name === 'Watchdog' || name === 'DeadMansSwitch';
+  const isNotRealAlert = (name) => name === 'Watchdog' || name === 'DeadMansSwitch';
 
-  if (alerts.every(alert => isNotRealAlert(alert.name))) {
+  if (alerts.every((alert) => isNotRealAlert(alert.name))) {
     return (
       <EmptyState>
         <EmptyStateIcon icon={CheckCircleIcon} />
-        <Title headingLevel="h5" size="lg">No alerts firing</Title>
+        <Title headingLevel="h5" size="lg">
+          No alerts firing
+        </Title>
       </EmptyState>
     );
   }
 
-  const rows = alerts.map((alert) => {
-    if (isNotRealAlert(alert.name)) {
-      return null;
-    }
-    let severityIcon = null;
-    if (alert.severity === alertsSeverity.WARNING) {
-      severityIcon = warningIcon;
-    }
-    if (alert.severity === alertsSeverity.CRITICAL) {
-      severityIcon = errorIcon;
-    }
-    if (alert.severity === alertsSeverity.INFO) {
-      severityIcon = infoIcon;
-    }
+  const rows = alerts
+    .map((alert) => {
+      if (isNotRealAlert(alert.name)) {
+        return null;
+      }
+      let severityIcon = null;
+      if (alert.severity === alertsSeverity.WARNING) {
+        severityIcon = warningIcon;
+      }
+      if (alert.severity === alertsSeverity.CRITICAL) {
+        severityIcon = errorIcon;
+      }
+      if (alert.severity === alertsSeverity.INFO) {
+        severityIcon = infoIcon;
+      }
 
-    const alertLinkProps = monitoringItemLinkProps(
-      clusterConsole, monitoringItemTypes.ALERT, alert.name,
-    );
-    const alertName = alertLinkProps !== null
-      ? (<a {...alertLinkProps}>{alert.name}</a>) : alert.name;
-    return (
-      {
-        cells:
-        [{ title: alertName }, { title: severityIcon }],
-      });
-  }).filter(Boolean);
+      const alertLinkProps = monitoringItemLinkProps(
+        clusterConsole,
+        monitoringItemTypes.ALERT,
+        alert.name,
+      );
+      const alertName =
+        alertLinkProps !== null ? <a {...alertLinkProps}>{alert.name}</a> : alert.name;
+      return {
+        cells: [{ title: alertName }, { title: severityIcon }],
+      };
+    })
+    .filter(Boolean);
 
   return (
-    <Table variant={TableVariant.compact} borders={false} cells={columns} rows={rows} aria-label="alerts">
+    <Table
+      variant={TableVariant.compact}
+      borders={false}
+      cells={columns}
+      rows={rows}
+      aria-label="alerts"
+    >
       <TableHeader />
       <TableBody />
     </Table>
@@ -98,10 +92,12 @@ function AlertsTable({ alerts = [], clusterConsole }) {
 }
 
 AlertsTable.propTypes = {
-  alerts: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    severity: PropTypes.string,
-  })),
+  alerts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      severity: PropTypes.string,
+    }),
+  ),
   clusterConsole: PropTypes.shape({
     url: PropTypes.string,
   }),

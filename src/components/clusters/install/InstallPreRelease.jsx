@@ -23,11 +23,12 @@ export class InstallPreRelease extends Component {
   render() {
     const { token } = this.props;
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'Pre-Release Builds' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'Pre-Release Builds' },
+        ]}
       />
     );
 
@@ -47,6 +48,6 @@ InstallPreRelease.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({ token: state.tollbooth.token });
+const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
 export default connect(mapStateToProps)(InstallPreRelease);

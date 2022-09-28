@@ -4,7 +4,6 @@
 
 import type { Report } from './Report';
 
-export type ReportStorageInventory = (Report & {
-    data: Array<any>;
-});
-
+export type ReportStorageInventory = Report & {
+  data: Array<any>;
+};

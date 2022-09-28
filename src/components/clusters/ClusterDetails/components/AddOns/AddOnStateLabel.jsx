@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Label,
-} from '@patternfly/react-core';
+import { Label } from '@patternfly/react-core';
 import {
   CheckCircleIcon,
   ExclamationCircleIcon,
@@ -18,11 +16,7 @@ import AddOnsConstants from './AddOnsConstants';
 
 // returns label based on current state of installed addon
 function AddOnStateLabel(props) {
-  const {
-    addOn,
-    installedAddOn,
-    requirements,
-  } = props;
+  const { addOn, installedAddOn, requirements } = props;
 
   if (hasRequirements(addOn) && !requirements.fulfilled) {
     return (

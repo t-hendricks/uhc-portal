@@ -1,11 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormSelect,
-  FormSelectOption,
-  FormGroup,
-  Tooltip,
-} from '@patternfly/react-core';
+import { FormSelect, FormSelectOption, FormGroup, Tooltip } from '@patternfly/react-core';
 import range from 'lodash/range';
 
 import PopoverHint from '../../../common/PopoverHint';
@@ -48,15 +43,8 @@ class NodeCountInput extends React.Component {
   }
 
   getAvailableQuota() {
-    const {
-      quota,
-      isByoc,
-      machineType,
-      machineTypesByID,
-      cloudProviderID,
-      product,
-      billingModel,
-    } = this.props;
+    const { quota, isByoc, machineType, machineTypesByID, cloudProviderID, product, billingModel } =
+      this.props;
 
     const machineTypeResource = machineTypesByID[machineType];
     if (!machineTypeResource) {
@@ -76,8 +64,17 @@ class NodeCountInput extends React.Component {
 
   render() {
     const {
-      input, isMultiAz, isDisabled, isEditingCluster, currentNodeCount,
-      label, helpText, extendedHelpText, machineType, isByoc, isMachinePool,
+      input,
+      isMultiAz,
+      isDisabled,
+      isEditingCluster,
+      currentNodeCount,
+      label,
+      helpText,
+      extendedHelpText,
+      machineType,
+      isByoc,
+      isMachinePool,
     } = this.props;
 
     const included = this.getIncludedNodes();
@@ -85,7 +82,7 @@ class NodeCountInput extends React.Component {
     const minimum = this.getMinimumValue();
     const increment = isMultiAz ? 3 : 1; // MultiAz requires nodes to be a multiple of 3
     // no extra node quota = only base cluster size is available
-    const optionsAvailable = (available > 0 || isEditingCluster);
+    const optionsAvailable = available > 0 || isEditingCluster;
     let maxValue = isEditingCluster ? available + currentNodeCount : available + included;
     if (maxValue > MAX_NODES) {
       maxValue = MAX_NODES;
@@ -102,13 +99,13 @@ class NodeCountInput extends React.Component {
     const disabled = isDisabled || notEnoughQuota;
 
     // Set up options for load balancers
-    const option = value => (
+    const option = (value) => (
       <FormSelectOption
         key={value}
         value={value}
-      // we want the value to be the actual value sent to the server,
-      // but for multiAz the user selects the amount of nodes per zone, instead of total
-      // so it needs to be divided by 3 for display
+        // we want the value to be the actual value sent to the server,
+        // but for multiAz the user selects the amount of nodes per zone, instead of total
+        // so it needs to be divided by 3 for display
         label={isMultiAz ? (value / 3).toString() : value.toString()}
       />
     );
@@ -120,7 +117,7 @@ class NodeCountInput extends React.Component {
         className="quota-dropdown"
         {...input}
       >
-        {options.map(value => option(value))}
+        {options.map((value) => option(value))}
       </FormSelect>
     );
 
@@ -129,27 +126,16 @@ class NodeCountInput extends React.Component {
         fieldId={input.name}
         label={label}
         helperText={helpText}
-        labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
+        labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
       >
         {notEnoughQuota ? (
-          <Tooltip
-            content={noQuotaTooltip}
-            position="right"
-          >
-            <div>
-              {formSelect}
-            </div>
+          <Tooltip content={noQuotaTooltip} position="right">
+            <div>{formSelect}</div>
           </Tooltip>
-        ) : formSelect}
-        { isMultiAz && (
-        <span>
-          × 3 zones =
-          {' '}
-          {input.value}
-          {' '}
-          compute nodes
-        </span>
+        ) : (
+          formSelect
         )}
+        {isMultiAz && <span>× 3 zones = {input.value} compute nodes</span>}
       </FormGroup>
     );
   }

@@ -8,10 +8,7 @@ import {
   clusterHealthSelector,
   issuesAndWarningsSelector,
 } from './MonitoringSelectors';
-import {
-  hasData,
-  hasResourceUsageMetrics,
-} from './monitoringHelper';
+import { hasData, hasResourceUsageMetrics } from './monitoringHelper';
 
 const mapDispatchToProps = {
   clearMonitoringState,
@@ -28,7 +25,7 @@ const mapStateToProps = (state) => {
   const lastCheckIn = lastCheckInSelector(state);
   const healthStatus = clusterHealthSelector(state, lastCheckIn, totalIssuesCount);
 
-  return ({
+  return {
     alerts: {
       ...alerts,
       numOfIssues: issues.alerts,
@@ -54,7 +51,7 @@ const mapStateToProps = (state) => {
     discoveredIssues: issues.totalCount,
     lastCheckIn,
     healthStatus,
-  });
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Monitoring);

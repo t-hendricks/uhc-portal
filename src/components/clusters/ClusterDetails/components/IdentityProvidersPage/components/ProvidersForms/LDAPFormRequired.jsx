@@ -8,9 +8,9 @@ import { required } from '../../../../../../../common/validators';
 import ReduxFieldArray from '../../../../../../common/ReduxFormComponents/ReduxFieldArray';
 
 class LDAPFormRequired extends React.Component {
-  state={
+  state = {
     hasBindDN: false,
-  }
+  };
 
   componentDidMount() {
     const { isEditForm, idpEdited } = this.props;
@@ -25,7 +25,7 @@ class LDAPFormRequired extends React.Component {
     } else {
       this.setState({ hasBindDN: false });
     }
-  }
+  };
 
   render() {
     const { isPending } = this.props;
@@ -62,7 +62,11 @@ class LDAPFormRequired extends React.Component {
             name="bind_password"
             label="Bind password"
             type="password"
-            helpText={!hasBindDN ? 'Cannot be used if Bind DN is not set' : 'Password to bind with during the search phase.'}
+            helpText={
+              !hasBindDN
+                ? 'Cannot be used if Bind DN is not set'
+                : 'Password to bind with during the search phase.'
+            }
             disabled={!hasBindDN || isPending}
             validate={hasBindDN ? required : undefined}
             isRequired={hasBindDN}
@@ -73,9 +77,7 @@ class LDAPFormRequired extends React.Component {
           <Title headingLevel="h3" size="xl" className="idp-helptext-heading">
             Attributes
           </Title>
-          <p>
-            Attributes map LDAP attributes to identities.
-          </p>
+          <p>Attributes map LDAP attributes to identities.</p>
         </GridItem>
         <ReduxFieldArray
           fieldName="ldap_id"

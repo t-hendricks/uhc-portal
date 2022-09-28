@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  setFilter: filter => dispatch(onListFilterSet(filter, ownProps.view)),
+  setFilter: (filter) => dispatch(onListFilterSet(filter, ownProps.view)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterListFilter);

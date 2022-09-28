@@ -13,6 +13,10 @@
     "id": "aws",
     "href": "/api/clusters_mgmt/v1/cloud_providers/aws"
   },
+  "proxy": {
+    "http_proxy_url": "http://www.google.com",
+    "https_proxy_url": "https://www.google.com"
+  },
   "subscription": {
     "kind": "SubscriptionLink",
     "id": "1MmOwBoTq1uDmcpBk0NBqJ3dXej",

@@ -8,11 +8,17 @@ import { noQuotaTooltip } from '../../../../../../common/helpers';
 import PopoverHint from '../../../../../common/PopoverHint';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
-import validators, { clusterNameValidation, createPessimisticValidator } from '../../../../../../common/validators';
+import validators, {
+  clusterNameValidation,
+  createPessimisticValidator,
+} from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
 import { PLACEHOLDER_VALUE as AVAILABILITY_ZONE_PLACEHOLDER } from '../NetworkingSection/AvailabilityZoneSelection';
 import VersionSelection from './VersionSelection';
-import { getNodesCount, getMinReplicasCount } from '../ScaleSection/AutoScaleSection/AutoScaleHelper';
+import {
+  getNodesCount,
+  getMinReplicasCount,
+} from '../ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 import { createOperatorRolesHashPrefix } from '../../../../CreateROSAPage/CreateROSAWizard/ClusterRolesScreen/ClusterRolesScreen';
 
@@ -69,7 +75,10 @@ function BasicFieldsSection({
           disabled={pending}
           isRequired
           extendedHelpText={constants.clusterNameHint}
-          onChange={value => isRosa && change('custom_operator_roles_prefix', `${value}-${createOperatorRolesHashPrefix()}`)}
+          onChange={(value) =>
+            isRosa &&
+            change('custom_operator_roles_prefix', `${value}-${createOperatorRolesHashPrefix()}`)
+          }
         />
       </GridItem>
       <GridItem md={6} />
@@ -85,7 +94,7 @@ function BasicFieldsSection({
               type="text"
               validate={validators.checkBaseDNSDomain}
               disabled={pending}
-              normalize={value => value.toLowerCase()}
+              normalize={(value) => value.toLowerCase()}
             />
           </GridItem>
           <GridItem md={6} />
@@ -100,7 +109,7 @@ function BasicFieldsSection({
             name="cluster_version"
             label="Version"
             isRequired
-            validate={value => (value ? undefined : ' ')}
+            validate={(value) => (value ? undefined : ' ')}
             isRosa={isRosa}
           />
         </GridItem>
@@ -133,12 +142,7 @@ function BasicFieldsSection({
       {showAvailability && (
         <>
           <GridItem md={6}>
-            <FormGroup
-              label="Availability"
-              isRequired
-              isInline
-              fieldId="availability-toggle"
-            >
+            <FormGroup label="Availability" isRequired isInline fieldId="availability-toggle">
               <Field
                 component={RadioButtons}
                 name="multi_az"
@@ -151,7 +155,6 @@ function BasicFieldsSection({
                     disabled: !hasSingleAzQuota,
                     tooltipText: singleAzTooltip,
                     extendedHelpText: constants.availabilityHintSingleZone,
-
                   },
                   {
                     value: 'true',

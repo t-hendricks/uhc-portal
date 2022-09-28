@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  TextContent,
-  TextList,
-  TextListVariants,
-} from '@patternfly/react-core';
+import { TextContent, TextList, TextListVariants } from '@patternfly/react-core';
 
 import './Instructions.scss';
 

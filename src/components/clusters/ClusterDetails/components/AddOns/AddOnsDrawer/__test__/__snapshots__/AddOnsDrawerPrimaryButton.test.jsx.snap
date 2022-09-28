@@ -9,8 +9,7 @@ exports[`<AddOnsPrimaryButton /> should render 1`] = `
     target="_blank"
     variant="primary"
   >
-    Open in Console
-     
+    Open in Console 
     <ExternalLinkAltIcon
       className="link-icon"
       color="currentColor"

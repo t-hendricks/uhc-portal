@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import {
-  Form, GridItem, Grid, FormGroup,
-} from '@patternfly/react-core';
+import { Form, GridItem, Grid, FormGroup } from '@patternfly/react-core';
 
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
@@ -15,11 +13,7 @@ import CostSavingsSection from './CostSavingsSection';
 
 class AddMachinePoolModal extends Component {
   componentDidMount() {
-    const {
-      getOrganizationAndQuota,
-      machineTypes,
-      getMachineTypes,
-    } = this.props;
+    const { getOrganizationAndQuota, machineTypes, getMachineTypes } = this.props;
     if (!machineTypes.fulfilled && !machineTypes.pending) {
       getMachineTypes();
     }
@@ -28,7 +22,10 @@ class AddMachinePoolModal extends Component {
 
   componentDidUpdate(prevProps) {
     const {
-      addMachinePoolResponse, clearAddMachinePoolResponse, closeModal, getOrganizationAndQuota,
+      addMachinePoolResponse,
+      clearAddMachinePoolResponse,
+      closeModal,
+      getOrganizationAndQuota,
     } = this.props;
     if (!prevProps.addMachinePoolResponse.fulfilled && addMachinePoolResponse.fulfilled) {
       closeModal();
@@ -69,7 +66,8 @@ class AddMachinePoolModal extends Component {
       <ErrorBox message="Error adding machine pool" response={addMachinePoolResponse} />
     );
 
-    const modalDescription = 'A machine pool is a group of machines that are all clones of the same configuration, that can be used on demand by an application running on a pod.';
+    const modalDescription =
+      'A machine pool is a group of machines that are all clones of the same configuration, that can be used on demand by an application running on a pod.';
 
     const isPending = addMachinePoolResponse.pending || (organization && organization.pending);
 
@@ -88,7 +86,13 @@ class AddMachinePoolModal extends Component {
       >
         <>
           {hasError}
-          <Form className="control-form-cursor" onSubmit={(e) => { submit(); e.preventDefault(); }}>
+          <Form
+            className="control-form-cursor"
+            onSubmit={(e) => {
+              submit();
+              e.preventDefault();
+            }}
+          >
             <Grid>
               <GridItem md={6}>
                 <FormGroup label="Machine pool name" className="pf-u-mb-md" isRequired>
@@ -121,8 +125,7 @@ class AddMachinePoolModal extends Component {
                 billingModel={billingModel}
               />
               {/* Cost savings */}
-              { canUseSpotInstances
-              && (
+              {canUseSpotInstances && (
                 <>
                   <CostSavingsSection
                     useSpotInstances={useSpotInstances}
@@ -169,7 +172,7 @@ AddMachinePoolModal.defaultProps = {
   autoScaleMinNodesValue: '0',
   autoScaleMaxNodesValue: '0',
   spotInstancePricing: 'onDemand',
-  spotInstanceMaxHourlyPrice: 0.00,
+  spotInstanceMaxHourlyPrice: 0.0,
 };
 
 export default AddMachinePoolModal;

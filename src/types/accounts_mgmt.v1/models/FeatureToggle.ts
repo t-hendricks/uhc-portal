@@ -4,7 +4,6 @@
 
 import type { ObjectReference } from './ObjectReference';
 
-export type FeatureToggle = (ObjectReference & {
-    enabled: boolean;
-});
-
+export type FeatureToggle = ObjectReference & {
+  enabled: boolean;
+};

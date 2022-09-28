@@ -12,15 +12,11 @@ describe('<ClusterListFilter />', () => {
 
   beforeEach(() => {
     setFilter = jest.fn();
-    wrapper = shallow(<ClusterListFilter
-      setFilter={setFilter}
-      currentFilter=""
-    />);
+    wrapper = shallow(<ClusterListFilter setFilter={setFilter} currentFilter="" />);
 
-    wrapperWithPrefilledText = shallow(<ClusterListFilter
-      setFilter={setFilter}
-      currentFilter="hello"
-    />);
+    wrapperWithPrefilledText = shallow(
+      <ClusterListFilter setFilter={setFilter} currentFilter="hello" />,
+    );
   });
 
   it('renders correctly', () => {

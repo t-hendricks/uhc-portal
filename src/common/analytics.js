@@ -11,10 +11,7 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
  * @see subscriptionTypes.normalizedProducts
  */
 const ocmResourceTypeByProduct = Object.fromEntries(
-  Object.entries(normalizedProducts)
-    .map(([key, value]) => (
-      [key, String(value).toLowerCase()]
-    )),
+  Object.entries(normalizedProducts).map(([key, value]) => [key, String(value).toLowerCase()]),
 );
 
 const ocmResourceType = {
@@ -34,6 +31,7 @@ const eventNames = {
   LINK_CLICKED: 'Link Clicked',
   ARNS_REFRESHED: 'ARNs Refreshed',
   CHECKBOX_CLICKED: 'Checkbox Clicked',
+  RADIOBUTTON_CLICKED: 'Radiobutton Clicked',
 };
 
 /**
@@ -234,6 +232,16 @@ const trackEvents = {
     event: eventNames.CHECKBOX_CLICKED,
     link_name: 'configure-cluster-wide-proxy',
   },
+  RosaCreationMode: {
+    event: eventNames.RADIOBUTTON_CLICKED,
+    link_name: 'rosa-creation-mode',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
+  OCMRoleRefreshed: {
+    event: eventNames.BUTTON_CLICKED,
+    link_name: 'refresh-to-enable-auto-mode',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
   WizardNext: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-next',
@@ -268,24 +276,15 @@ const trackEvents = {
  *
  * @returns {Object} Object {[event]: string, [properties]: Object}
  */
-const getTrackEvent = (trackEvent, options = {}) => (
-  {
-    event: trackEvent.event,
-    properties: {
-      link_name: trackEvent.link_name,
-      ...(options.url && { link_url: options.url }),
-      current_path: options.path || window.location.pathname,
-      ocm_resource_type:
-        options.resourceType ?? trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
-      ...options.customProperties,
-    },
-  }
-);
+const getTrackEvent = (trackEvent, options = {}) => ({
+  event: trackEvent.event,
+  properties: {
+    link_name: trackEvent.link_name,
+    ...(options.url && { link_url: options.url }),
+    current_path: options.path || window.location.pathname,
+    ocm_resource_type: options.resourceType ?? trackEvent?.ocm_resource_type ?? ocmResourceType.ALL,
+    ...options.customProperties,
+  },
+});
 
-export {
-  eventNames,
-  trackEvents,
-  getTrackEvent,
-  ocmResourceType,
-  ocmResourceTypeByProduct,
-};
+export { eventNames, trackEvents, getTrackEvent, ocmResourceType, ocmResourceTypeByProduct };

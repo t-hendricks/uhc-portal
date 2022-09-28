@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Alert, FormGroup, FormSelect, FormSelectOption,
-} from '@patternfly/react-core';
+import { Alert, FormGroup, FormSelect, FormSelectOption } from '@patternfly/react-core';
 
 class GCPVPCSubnet extends React.Component {
   componentDidMount() {
@@ -21,14 +19,12 @@ class GCPVPCSubnet extends React.Component {
 
   getVPCSubnets = () => {
     const { vpcs, vpcName } = this.props;
-    const selectedVPC = vpcs?.data?.items?.find(item => item.name === vpcName);
+    const selectedVPC = vpcs?.data?.items?.find((item) => item.name === vpcName);
     return selectedVPC?.subnets || [];
   };
 
   currentValueIrrelevant = () => {
-    const {
-      hasDependencies, matchesDependencies, vpcs, input,
-    } = this.props;
+    const { hasDependencies, matchesDependencies, vpcs, input } = this.props;
     if (!input.value) {
       // Blank/placeholder always legitimate.
       return false;
@@ -40,21 +36,14 @@ class GCPVPCSubnet extends React.Component {
     if (matchesDependencies && vpcs.fulfilled) {
       // Made request and current value is no longer valid.
       const items = this.getVPCSubnets();
-      return !items.some(item => item === input.value);
+      return !items.some((item) => item === input.value);
     }
     return false;
-  }
+  };
 
   render() {
-    const {
-      vpcs,
-      matchesDependencies,
-      input,
-      label,
-      placeholder,
-      emptyPlaceholder,
-      meta,
-    } = this.props;
+    const { vpcs, matchesDependencies, input, label, placeholder, emptyPlaceholder, meta } =
+      this.props;
     const show = matchesDependencies && vpcs.fulfilled;
     const items = this.getVPCSubnets();
 
@@ -64,24 +53,18 @@ class GCPVPCSubnet extends React.Component {
         options = (
           <>
             <FormSelectOption isDisabled isPlaceholder value="" label={placeholder} />
-            {items.map(item => (
+            {items.map((item) => (
               <FormSelectOption key={item} value={item} label={item} />
             ))}
           </>
         );
       } else {
-        options = (
-          <FormSelectOption isDisabled isPlaceholder value="" label={emptyPlaceholder} />
-        );
+        options = <FormSelectOption isDisabled isPlaceholder value="" label={emptyPlaceholder} />;
       }
     } else if (vpcs.pending) {
-      options = (
-        <FormSelectOption isDisabled value="" label="Loading..." />
-      );
+      options = <FormSelectOption isDisabled value="" label="Loading..." />;
     } else {
-      options = (
-        <FormSelectOption isDisabled value="" label="" />
-      );
+      options = <FormSelectOption isDisabled value="" label="" />;
     }
 
     // Prevent FormSelect from picking wrong option when valid options changed.
@@ -96,7 +79,11 @@ class GCPVPCSubnet extends React.Component {
         fieldId={input.name}
       >
         {matchesDependencies && vpcs.error && (
-          <Alert variant="danger" isInline title="Failed to list existing VPC subnets using your GCP credentials">
+          <Alert
+            variant="danger"
+            isInline
+            title="Failed to list existing VPC subnets using your GCP credentials"
+          >
             Verify that your entered service account details are correct
           </Alert>
         )}

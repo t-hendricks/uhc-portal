@@ -13,11 +13,14 @@ import { isEmptyReduxArray } from '../../IdentityProvidersHelper';
 class OpenIDFormRequired extends React.Component {
   state = {
     isGroupError: false,
-  }
+  };
 
   validate = (_, allValues) => {
-    if (isEmptyReduxArray(allValues.openid_preferred_username, 'openid_preferred_username')
-    && isEmptyReduxArray(allValues.openid_name, 'openid_name') && isEmptyReduxArray(allValues.openid_email, 'openid_email')) {
+    if (
+      isEmptyReduxArray(allValues.openid_preferred_username, 'openid_preferred_username') &&
+      isEmptyReduxArray(allValues.openid_name, 'openid_name') &&
+      isEmptyReduxArray(allValues.openid_email, 'openid_email')
+    ) {
       return 'At least one claim is required';
     }
     return undefined;
@@ -25,7 +28,7 @@ class OpenIDFormRequired extends React.Component {
 
   onValueChange = () => {
     this.setState({ isGroupError: true });
-  }
+  };
 
   render() {
     const { isPending } = this.props;

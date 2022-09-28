@@ -9,15 +9,10 @@ import { detectOS, architecturesForToolOS } from '../../../downloads/DownloadsPa
 
 function DownloadOcCliButton() {
   // Determine the latest stable release URL for the OC CLI.
-  const githubReleases = useSelector(state => state.githubReleases) || {};
+  const githubReleases = useSelector((state) => state.githubReleases) || {};
   const urls = urlsSelector(githubReleases);
   const detectedOs = detectOS();
-  const osArchitectures = architecturesForToolOS(
-    urls,
-    tools.OC,
-    channels.STABLE,
-    detectedOs,
-  );
+  const osArchitectures = architecturesForToolOS(urls, tools.OC, channels.STABLE, detectedOs);
   let detectedOsArchitecture;
   let href;
 

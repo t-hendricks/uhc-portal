@@ -1,31 +1,24 @@
 import React from 'react';
-import {
-  List,
-  ListItem,
-  Text,
-  TextContent,
-} from '@patternfly/react-core';
+import { List, ListItem, Text, TextContent } from '@patternfly/react-core';
 
 const SubscriptionAndSupport = () => {
   const bullet1 = (
     <span>
-      Choose &quot;Edit subscriptions settings &quot; from the actions menu in
-      the upper right of the cluster details pages.
+      Choose &quot;Edit subscriptions settings &quot; from the actions menu in the upper right of
+      the cluster details pages.
     </span>
   );
   const bullet2 = (
-    <span>
-      Select the options that apply to your cluster in the dialog and save.
-    </span>
+    <span>Select the options that apply to your cluster in the dialog and save.</span>
   );
   return (
     <TextContent>
       <Text component="h2">Subscription and support</Text>
       <Text component="p">
-        Your cluster will be automatically registered with a 60 day evaluation subscription
-        which does not include support. In order to receive support for your cluster, you
-        will need to edit the subscription settings from the cluster details page here in
-        OpenShift Cluster Manager.
+        Your cluster will be automatically registered with a 60 day evaluation subscription which
+        does not include support. In order to receive support for your cluster, you will need to
+        edit the subscription settings from the cluster details page here in OpenShift Cluster
+        Manager.
       </Text>
       <List>
         <ListItem>{bullet1}</ListItem>

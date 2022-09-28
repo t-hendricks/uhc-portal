@@ -13,17 +13,19 @@ describe('<EditDisplayNameDialog />', () => {
   const resetResponse = jest.fn();
 
   beforeEach(() => {
-    wrapper = shallow(<EditDisplayNameDialog
-      isOpen
-      closeModal={closeModal}
-      onClose={onClose}
-      submit={submit}
-      resetResponse={resetResponse}
-      displayName="some-name"
-      clusterID="some-id"
-      subscriptionID="some-other-id"
-      editClusterResponse={{ errorMessage: '', error: false }}
-    />);
+    wrapper = shallow(
+      <EditDisplayNameDialog
+        isOpen
+        closeModal={closeModal}
+        onClose={onClose}
+        submit={submit}
+        resetResponse={resetResponse}
+        displayName="some-name"
+        clusterID="some-id"
+        subscriptionID="some-other-id"
+        editClusterResponse={{ errorMessage: '', error: false }}
+      />,
+    );
   });
 
   it('renders correctly', () => {
@@ -45,17 +47,19 @@ describe('<EditDisplayNameDialog />', () => {
 
   describe('mounted ', () => {
     beforeEach(() => {
-      wrapper = mount(<EditDisplayNameDialog
-        isOpen
-        closeModal={closeModal}
-        onClose={onClose}
-        submit={submit}
-        resetResponse={resetResponse}
-        displayName="some-name"
-        clusterID="some-id"
-        subscriptionID="some-other-id"
-        editClusterResponse={{ errorMessage: '', error: false }}
-      />);
+      wrapper = mount(
+        <EditDisplayNameDialog
+          isOpen
+          closeModal={closeModal}
+          onClose={onClose}
+          submit={submit}
+          resetResponse={resetResponse}
+          displayName="some-name"
+          clusterID="some-id"
+          subscriptionID="some-other-id"
+          editClusterResponse={{ errorMessage: '', error: false }}
+        />,
+      );
     });
 
     it('when cancelled, calls closeModal but not onClose ', () => {

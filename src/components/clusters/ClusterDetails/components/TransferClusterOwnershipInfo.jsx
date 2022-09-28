@@ -8,33 +8,27 @@ import { normalizedProducts, subscriptionStatuses } from '../../../../common/sub
 import ExternalLink from '../../../common/ExternalLink';
 
 function TransferClusterOwnershipInfo({ subscription = {} }) {
-  const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(get(subscription, 'plan.type', false));
+  const isAllowedProducts = [normalizedProducts.OCP, normalizedProducts.ARO].includes(
+    get(subscription, 'plan.type', false),
+  );
   if (!isAllowedProducts || !subscription.released) {
     return null;
   }
 
   const changePullSecretUrl = 'https://access.redhat.com/solutions/4902871';
-  const alertText = subscription.status === subscriptionStatuses.DISCONNECTED ? (
-    <>
-      The transfer process will complete after
-      {' '}
-      <Link to="/register">
-        registering
-      </Link>
-      {' '}
-      the cluster again using the same id.
-    </>
-  ) : (
-    <>
-      The transfer process will complete once the pull secret has been changed in the cluster. See
-      {' '}
-      <ExternalLink href={changePullSecretUrl}>
-        this knowledgebase article
-      </ExternalLink>
-      {' '}
-      for instructions on how to change the pull secret.
-    </>
-  );
+  const alertText =
+    subscription.status === subscriptionStatuses.DISCONNECTED ? (
+      <>
+        The transfer process will complete after <Link to="/register">registering</Link> the cluster
+        again using the same id.
+      </>
+    ) : (
+      <>
+        The transfer process will complete once the pull secret has been changed in the cluster. See{' '}
+        <ExternalLink href={changePullSecretUrl}>this knowledgebase article</ExternalLink> for
+        instructions on how to change the pull secret.
+      </>
+    );
 
   return (
     <Alert

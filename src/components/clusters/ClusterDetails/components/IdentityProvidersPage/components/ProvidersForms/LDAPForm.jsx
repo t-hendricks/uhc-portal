@@ -10,12 +10,10 @@ class LDAPForm extends React.Component {
   state = {
     isInsecure: false,
     caDisabledHelpText: '',
-  }
+  };
 
   componentDidMount() {
-    const {
-      isEditForm, idpEdited,
-    } = this.props;
+    const { isEditForm, idpEdited } = this.props;
     this.setState({
       isInsecure: isEditForm ? idpEdited.ldap.insecure : false,
       caDisabledHelpText: '',
@@ -44,7 +42,6 @@ class LDAPForm extends React.Component {
             helpText={`PEM encoded certificate bundle to use to validate server certificates for the configured URL. ${caDisabledHelpText}`}
             isDisabled={isInsecure || isPending}
             certValue={isEditForm && !isInsecure ? idpEdited.ldap.ca : ''}
-
           />
         </GridItem>
         <GridItem span={8}>

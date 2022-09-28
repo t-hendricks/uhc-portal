@@ -5,7 +5,6 @@
 import type { List } from './List';
 import type { Subscription } from './Subscription';
 
-export type SubscriptionList = (List & {
-    items?: Array<Subscription>;
-});
-
+export type SubscriptionList = List & {
+  items?: Array<Subscription>;
+};

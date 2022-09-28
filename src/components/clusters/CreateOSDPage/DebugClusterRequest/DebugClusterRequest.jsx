@@ -1,17 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Banner,
-  ExpandableSection,
-  GridItem,
-} from '@patternfly/react-core';
+import { Banner, ExpandableSection, GridItem } from '@patternfly/react-core';
 
 import { createClusterRequest, upgradeScheduleRequest } from '../submitOSDRequest';
 
 /** Displays the to-be-sent requests - to be shown only in debug mode */
-const DebugClusterRequest = ({
-  formValues, isWizard, cloudProviderID, product,
-}) => {
+const DebugClusterRequest = ({ formValues, isWizard, cloudProviderID, product }) => {
   let clusterRequest;
   try {
     clusterRequest = createClusterRequest({ isWizard, cloudProviderID, product }, formValues);
@@ -33,14 +27,10 @@ const DebugClusterRequest = ({
     <GridItem>
       <Banner variant="info">
         <ExpandableSection toggleText="Debug: cluster request to be sent">
-          <pre>
-            {JSON.stringify(clusterRequest, null, 2)}
-          </pre>
+          <pre>{JSON.stringify(clusterRequest, null, 2)}</pre>
         </ExpandableSection>
         <ExpandableSection toggleText="Debug: upgrade schedule request to be sent">
-          <pre>
-            {JSON.stringify(upgradeSchedule, null, 2)}
-          </pre>
+          <pre>{JSON.stringify(upgradeSchedule, null, 2)}</pre>
         </ExpandableSection>
       </Banner>
     </GridItem>

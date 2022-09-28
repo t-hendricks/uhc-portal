@@ -17,9 +17,9 @@ export const isVPCInquiryValid = (state) => {
   const credentials = ccsCredentialsSelector(cloudProviderID, state);
   const region = valueSelector(state, 'region');
   return (
-    vpcs.cloudProvider === cloudProviderID
-    && isEqual(vpcs.credentials, credentials)
-    && vpcs.region === region
+    vpcs.cloudProvider === cloudProviderID &&
+    isEqual(vpcs.credentials, credentials) &&
+    vpcs.region === region
   );
 };
 
@@ -30,13 +30,13 @@ export const isVPCInquiryValid = (state) => {
  */
 export const useAWSVPCInquiry = () => {
   const dispatch = useDispatch();
-  const cloudProviderID = useSelector(state => valueSelector(state, 'cloud_provider'));
+  const cloudProviderID = useSelector((state) => valueSelector(state, 'cloud_provider'));
   const credentials = useSelector(
-    state => ccsCredentialsSelector(cloudProviderID, state),
+    (state) => ccsCredentialsSelector(cloudProviderID, state),
     isEqual, // TODO: memoize ccsCredentialsSelector itself?
   );
-  const region = useSelector(state => valueSelector(state, 'region'));
-  const vpcs = useSelector(state => state.ccsInquiries.vpcs);
+  const region = useSelector((state) => valueSelector(state, 'region'));
+  const vpcs = useSelector((state) => state.ccsInquiries.vpcs);
 
   useEffect(() => {
     // The action works similarly for AWS and GCP,

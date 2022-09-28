@@ -1,18 +1,7 @@
 import React from 'react';
-import {
-  Grid,
-  GridItem,
-  LabelGroup,
-  Label,
-} from '@patternfly/react-core';
+import { Grid, GridItem, LabelGroup, Label } from '@patternfly/react-core';
 import { billingModels } from '../../../../../common/subscriptionTypes';
 import { humanizeValueWithUnitGiB } from '../../../../../common/units';
-import {
-  MACHINE_CIDR_PLACEHOLDER,
-  SERVICE_CIDR_PLACEHOLDER,
-  HOST_PREFIX_PLACEHOLDER,
-  podCidrPlaceholder,
-} from '../../CreateOSDForm/FormSections/NetworkingSection/networkingPlaceholders';
 import parseUpdateSchedule from '../../../common/Upgrades/parseUpdateSchedule';
 
 /**
@@ -39,25 +28,27 @@ const reviewValues = {
     title: 'Subscription type',
     values: {
       [billingModels.STANDARD]: 'Annual: Fixed capacity subscription from Red Hat',
-      [billingModels.MARKETPLACE]: 'On-Demand: Flexible usage billed through the Red Hat Marketplace',
+      [billingModels.MARKETPLACE]:
+        'On-Demand: Flexible usage billed through the Red Hat Marketplace',
       'standard-trial': 'Free trial (upgradeable)',
     },
   },
   byoc: {
     title: 'Infrastructure type',
     isBoolean: true,
-    values: { // note: keys here are strings, on purpose, to match redux-form behaviour
+    values: {
+      // note: keys here are strings, on purpose, to match redux-form behaviour
       true: 'Customer cloud subscription',
       false: 'Red Hat cloud account',
     },
   },
   disable_scp_checks: {
     title: 'AWS service control policy (SCP) checks',
-    valueTransform: value => (value ? 'Disabled' : 'Enabled'),
+    valueTransform: (value) => (value ? 'Disabled' : 'Enabled'),
   },
   cloud_provider: {
     title: 'Cloud provider',
-    valueTransform: value => value.toUpperCase(),
+    valueTransform: (value) => value?.toUpperCase(),
   },
   name: {
     title: 'Cluster name',
@@ -70,7 +61,7 @@ const reviewValues = {
   },
   cluster_version: {
     title: 'Version',
-    valueTransform: value => value.raw_id,
+    valueTransform: (value) => value?.raw_id,
   },
   region: {
     title: 'Region',
@@ -103,20 +94,20 @@ const reviewValues = {
   },
   upgrade_policy: {
     title: 'Update strategy',
-    valueTransform: value => (value === 'manual' ? 'Individual updates' : 'Recurring updates'),
+    valueTransform: (value) => (value === 'manual' ? 'Individual updates' : 'Recurring updates'),
   },
   automatic_upgrade_schedule: {
     title: 'Recurring update schedule',
     valueTransform: (value) => {
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const hours = [...Array(24).keys()].map(hour => `${hour.toString().padStart(2, 0)}:00`);
+      const hours = [...Array(24).keys()].map((hour) => `${hour.toString().padStart(2, 0)}:00`);
       const [hour, day] = parseUpdateSchedule(value);
       return `Every ${days[day]} at ${hours[hour]} UTC`;
     },
   },
   node_drain_grace_period: {
     title: 'Node draining',
-    valueTransform: value => `${value} minutes`,
+    valueTransform: (value) => `${value} minutes`,
   },
   etcd_encryption: {
     title: 'Additional etcd encryption',
@@ -167,33 +158,27 @@ const reviewValues = {
       <>
         <span>
           Minimum nodes
-          {allValues.multi_az === 'true' ? ' per zone' : ''}
-          :
-        </span>
-        {' '}
+          {allValues.multi_az === 'true' ? ' per zone' : ''}:
+        </span>{' '}
         {value}
         <span className="pf-u-ml-lg">
           Maximum nodes
-          {allValues.multi_az === 'true' ? ' per zone' : ''}
-          :
-        </span>
-        {' '}
+          {allValues.multi_az === 'true' ? ' per zone' : ''}:
+        </span>{' '}
         {allValues.max_replicas}
       </>
     ),
   },
   node_labels: {
     title: 'Node labels',
-    valueTransform: labels => (
+    valueTransform: (labels) => (
       <LabelGroup>
         {
-            // eslint-disable-next-line react/destructuring-assignment
-            labels.map(label => (
-              <Label color="blue">
-                {`${label.key} = ${label.value || ''}`}
-              </Label>
-            ))
-          }
+          // eslint-disable-next-line react/destructuring-assignment
+          labels.map((label) => (
+            <Label color="blue">{`${label.key} = ${label.value || ''}`}</Label>
+          ))
+        }
       </LabelGroup>
     ),
   },
@@ -240,13 +225,19 @@ const reviewValues = {
       }
       return (
         <Grid>
-          <GridItem md={3}><strong>Availability zone</strong></GridItem>
-          <GridItem md={3}><strong>Private subnet ID</strong></GridItem>
-          {!allValues.use_privatelink
-            ? <GridItem md={3}><strong>Public subnet ID</strong></GridItem>
-            : null}
+          <GridItem md={3}>
+            <strong>Availability zone</strong>
+          </GridItem>
+          <GridItem md={3}>
+            <strong>Private subnet ID</strong>
+          </GridItem>
+          {!allValues.use_privatelink ? (
+            <GridItem md={3}>
+              <strong>Public subnet ID</strong>
+            </GridItem>
+          ) : null}
           <GridItem md={allValues.use_privatelink ? 6 : 3} />
-          {vpcs.map(vpc => (
+          {vpcs.map((vpc) => (
             <>
               <GridItem md={3}>{vpc.az}</GridItem>
               <GridItem md={3}>{vpc.privateSubnet}</GridItem>
@@ -262,9 +253,15 @@ const reviewValues = {
     title: 'VPC subnet settings',
     valueTransform: (value, allValues) => (
       <Grid>
-        <GridItem md={3}><strong>Existing VPC name</strong></GridItem>
-        <GridItem md={3}><strong>Control plane subnet name</strong></GridItem>
-        <GridItem md={3}><strong>Compute subnet name</strong></GridItem>
+        <GridItem md={3}>
+          <strong>Existing VPC name</strong>
+        </GridItem>
+        <GridItem md={3}>
+          <strong>Control plane subnet name</strong>
+        </GridItem>
+        <GridItem md={3}>
+          <strong>Compute subnet name</strong>
+        </GridItem>
         <GridItem md={3} />
         <GridItem md={3}>{allValues.vpc_name}</GridItem>
         <GridItem md={3}>{allValues.control_plane_subnet}</GridItem>
@@ -298,39 +295,16 @@ const reviewValues = {
   },
   network_machine_cidr: {
     title: 'Machine CIDR',
-    valueTransform: (value) => {
-      if (value) {
-        return value;
-      }
-      return `${MACHINE_CIDR_PLACEHOLDER} (default)`;
-    },
   },
   network_service_cidr: {
     title: 'Service CIDR',
-    valueTransform: (value) => {
-      if (value) {
-        return value;
-      }
-      return `${SERVICE_CIDR_PLACEHOLDER} (default)`;
-    },
   },
   network_pod_cidr: {
     title: 'Pod CIDR',
-    valueTransform: (value, allValues) => {
-      if (value) {
-        return value;
-      }
-      return `${podCidrPlaceholder(allValues.cloud_provider)} (default)`;
-    },
   },
   network_host_prefix: {
     title: 'Host prefix',
-    valueTransform: (value) => {
-      if (value) {
-        return `/${value}`;
-      }
-      return `${HOST_PREFIX_PLACEHOLDER} (default)`;
-    },
+    valueTransform: (value) => (value.includes('/') ? value : `/${value}`),
   },
   cluster_privacy: {
     title: 'Cluster privacy',

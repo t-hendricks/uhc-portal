@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableVariant,
-} from '@patternfly/react-table';
+import { Table, TableHeader, TableBody, TableVariant } from '@patternfly/react-table';
 
 import {
-  ExclamationCircleIcon, InProgressIcon, UnknownIcon, CheckCircleIcon, ExclamationTriangleIcon,
+  ExclamationCircleIcon,
+  InProgressIcon,
+  UnknownIcon,
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
 } from '@patternfly/react-icons';
 
 import {
@@ -18,11 +17,7 @@ import {
 } from '../monitoringHelper';
 
 function ClusterOperatorsTable({ operators = [], clusterConsole }) {
-  const columns = [
-    { title: 'Name' },
-    { title: 'Status' },
-    { title: 'Version' },
-  ];
+  const columns = [{ title: 'Name' }, { title: 'Status' }, { title: 'Version' }];
 
   const operatorStatus = (status) => {
     let icon;
@@ -51,31 +46,36 @@ function ClusterOperatorsTable({ operators = [], clusterConsole }) {
     return (
       <>
         {icon}
-        <span>{statusStr}</span>
-        {' '}
+        <span>{statusStr}</span>{' '}
       </>
     );
   };
 
   const rows = operators.map((operator) => {
     const operatorLinkProps = monitoringItemLinkProps(
-      clusterConsole, monitoringItemTypes.OPERATOR, operator.name,
+      clusterConsole,
+      monitoringItemTypes.OPERATOR,
+      operator.name,
     );
-    const operatorName = operatorLinkProps !== null
-      ? (<a {...operatorLinkProps}>{operator.name}</a>) : operator.name;
-    return (
-      {
-        cells: [
-          { title: operatorName },
-          { title: operatorStatus(operator.condition) },
-          { title: operator.version },
-        ],
-      }
-    );
+    const operatorName =
+      operatorLinkProps !== null ? <a {...operatorLinkProps}>{operator.name}</a> : operator.name;
+    return {
+      cells: [
+        { title: operatorName },
+        { title: operatorStatus(operator.condition) },
+        { title: operator.version },
+      ],
+    };
   });
 
   return (
-    <Table variant={TableVariant.compact} borders={false} cells={columns} rows={rows} aria-label="operators">
+    <Table
+      variant={TableVariant.compact}
+      borders={false}
+      cells={columns}
+      rows={rows}
+      aria-label="operators"
+    >
       <TableHeader />
       <TableBody />
     </Table>

@@ -22,28 +22,26 @@ import {
   global_primary_color_200,
 } from '@patternfly/react-tokens';
 import get from 'lodash/get';
-import {
-  ChartBar,
-  ChartStack,
-  ChartLegend,
-  createContainer,
-} from '@patternfly/react-charts';
+import { ChartBar, ChartStack, ChartLegend, createContainer } from '@patternfly/react-charts';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 import { severity } from '@redhat-cloud-services/rule-components/RuleTable/constants';
 import PropTypes from 'prop-types';
 import { RemoteHealthPopover } from '../EmptyTableMessage';
 import { severityMapping } from '../helpers';
 
-const groupRulesByRisk = data => data.reduce(
-  (acc, { total_risk: totalRisk }) => ({
-    ...acc,
-    [totalRisk]: acc[totalRisk] ? acc[totalRisk] + 1 : 1,
-  }),
-  {
-    1: 0, 2: 0, 3: 0, 4: 0,
-  },
-
-);
+const groupRulesByRisk = (data) =>
+  data.reduce(
+    (acc, { total_risk: totalRisk }) => ({
+      ...acc,
+      [totalRisk]: acc[totalRisk] ? acc[totalRisk] + 1 : 1,
+    }),
+    {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+    },
+  );
 
 const colorScale = [
   global_palette_blue_50.value,
@@ -59,7 +57,7 @@ const legendColorScale = [
   global_palette_red_200.value,
 ];
 
-const mouseOverClickMutation = props => ({
+const mouseOverClickMutation = (props) => ({
   style: {
     ...props.style,
     fill: global_primary_color_200.value,
@@ -69,9 +67,7 @@ const mouseOverClickMutation = props => ({
 });
 
 const TotalRiskCard = ({ insightsData, batteryClicked }) => {
-  const filteredData = insightsData.data
-    ? insightsData.data.filter(val => !val.disabled)
-    : [];
+  const filteredData = insightsData.data ? insightsData.data.filter((val) => !val.disabled) : [];
   const groupedRules = groupRulesByRisk(filteredData);
   const issueCount = filteredData.length;
   const lastChecked = get(insightsData, 'meta.last_checked_at', 0);
@@ -85,13 +81,8 @@ const TotalRiskCard = ({ insightsData, batteryClicked }) => {
           <StackItem>
             <Split>
               <SplitItem isFilled>
-                <Title
-                  headingLevel="h2"
-                  size="xl"
-                >
-                  {`${issueCount} potential issue${
-                    issueCount > 1 ? 's' : ''
-                  } identified`}
+                <Title headingLevel="h2" size="xl">
+                  {`${issueCount} potential issue${issueCount > 1 ? 's' : ''} identified`}
                 </Title>
               </SplitItem>
               <SplitItem className="cluster-insights-description">
@@ -106,12 +97,12 @@ const TotalRiskCard = ({ insightsData, batteryClicked }) => {
             <ChartStack
               ariaDesc="Total risk chart"
               ariaTitle="Total risk chart"
-              containerComponent={(
+              containerComponent={
                 <CursorVoronoiContainer
                   mouseFollowTooltips
                   labels={({ datum }) => `${datum.name}: ${datum.y}`}
                 />
-              )}
+              }
               height={40}
               width={550}
               padding={{
@@ -159,32 +150,39 @@ const TotalRiskCard = ({ insightsData, batteryClicked }) => {
                   fill: c_button_m_control_active_after_BorderBottomColor.value,
                 },
               }}
-              events={[{
-                target: 'labels',
-                eventHandlers: {
-                  onMouseOver: () => [{
-                    mutation: props => mouseOverClickMutation(props),
-                  }],
-                  onMouseOut: () => [{
-                    mutation: () => null,
-                  }],
-                  onClick: () => [{
-                    mutation: (props) => {
-                      // eslint-disable-next-line react/prop-types
-                      batteryClicked(severityMapping[parseInt(props.datum.severity, 10) - 1]);
-                      return mouseOverClickMutation(props);
-                    },
-                  }],
+              events={[
+                {
+                  target: 'labels',
+                  eventHandlers: {
+                    onMouseOver: () => [
+                      {
+                        mutation: (props) => mouseOverClickMutation(props),
+                      },
+                    ],
+                    onMouseOut: () => [
+                      {
+                        mutation: () => null,
+                      },
+                    ],
+                    onClick: () => [
+                      {
+                        mutation: (props) => {
+                          // eslint-disable-next-line react/prop-types
+                          batteryClicked(severityMapping[parseInt(props.datum.severity, 10) - 1]);
+                          return mouseOverClickMutation(props);
+                        },
+                      },
+                    ],
+                  },
                 },
-              }]}
-              data={
-                Object.entries(groupedRules).reverse()
-                  .map(([risk, count]) => ({
-                    name: `${count} ${severity[severityMapping[risk - 1]]}`,
-                    severity: risk,
-                    symbol: { type: 'circle', fill: legendColorScale[risk - 1] },
-                  }))
-              }
+              ]}
+              data={Object.entries(groupedRules)
+                .reverse()
+                .map(([risk, count]) => ({
+                  name: `${count} ${severity[severityMapping[risk - 1]]}`,
+                  severity: risk,
+                  symbol: { type: 'circle', fill: legendColorScale[risk - 1] },
+                }))}
             />
           </StackItem>
           <StackItem>

@@ -193,9 +193,7 @@ const baseState = {
           master: 3,
           infra: 2,
           compute: 4,
-          availability_zones: [
-            'us-east-1a',
-          ],
+          availability_zones: ['us-east-1a'],
           master_machine_type: {
             kind: 'MachineTypeLink',
             id: 'm5.xlarge',

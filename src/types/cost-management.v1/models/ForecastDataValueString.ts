@@ -3,13 +3,12 @@
 /* eslint-disable */
 
 export type ForecastDataValueString = {
-    /**
-     * A value.
-     */
-    value?: string;
-    /**
-     * The value's units.
-     */
-    units?: string;
+  /**
+   * A value.
+   */
+  value?: string;
+  /**
+   * The value's units.
+   */
+  units?: string;
 };
-

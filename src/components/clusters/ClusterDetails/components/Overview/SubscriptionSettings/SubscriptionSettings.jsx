@@ -16,9 +16,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import {
-  ExclamationCircleIcon, ExclamationTriangleIcon,
-} from '@patternfly/react-icons';
+import { ExclamationCircleIcon, ExclamationTriangleIcon } from '@patternfly/react-icons';
 
 import {
   subscriptionSupportLevels,
@@ -33,8 +31,10 @@ import {
 import ExternalLink from '../../../../../common/ExternalLink';
 
 function SubscriptionSettings({
-  subscription, openModal,
-  canEdit = false, canSubscribeOCP = false,
+  subscription,
+  openModal,
+  canEdit = false,
+  canSubscribeOCP = false,
 }) {
   const product = get(subscription, 'plan.type');
   if (product !== normalizedProducts.OCP) {
@@ -46,9 +46,10 @@ function SubscriptionSettings({
   };
 
   const status = get(subscription, 'status');
-  const isEditViewable = canEdit
-    && status !== subscriptionStatuses.ARCHIVED
-    && status !== subscriptionStatuses.DEPROVISIONED;
+  const isEditViewable =
+    canEdit &&
+    status !== subscriptionStatuses.ARCHIVED &&
+    status !== subscriptionStatuses.DEPROVISIONED;
 
   // SUPPORT_LEVEL
   const supportLevel = get(subscription, subscriptionSettings.SUPPORT_LEVEL, 'Not set');
@@ -103,10 +104,12 @@ function SubscriptionSettings({
     systemUnitsStr = 'Cores/vCPUs ';
   }
   const displayObligation = cpuTotal !== undefined || socketTotal !== undefined;
-  const obligationLabel = systemUnits === subscriptionSystemUnits.SOCKETS
-    ? 'Number of compute sockets' : 'Number of compute cores';
-  const obligationStr = systemUnits === subscriptionSystemUnits.SOCKETS
-    ? socketTotalStr : cpuTotalStr;
+  const obligationLabel =
+    systemUnits === subscriptionSystemUnits.SOCKETS
+      ? 'Number of compute sockets'
+      : 'Number of compute cores';
+  const obligationStr =
+    systemUnits === subscriptionSystemUnits.SOCKETS ? socketTotalStr : cpuTotalStr;
 
   const salesURL = 'https://www.redhat.com/en/contact';
 
@@ -126,9 +129,7 @@ function SubscriptionSettings({
             isInline
             title="Your organization doesn't have an active subscription. Purchase an OpenShift subscription by contacting sales."
           >
-            <ExternalLink href={salesURL}>
-              Contact sales
-            </ExternalLink>
+            <ExternalLink href={salesURL}>Contact sales</ExternalLink>
           </Alert>
         </CardBody>
       )}
@@ -149,7 +150,14 @@ function SubscriptionSettings({
                 <DescriptionListDescription>{serviceLevelStr}</DescriptionListDescription>
                 {isEditViewable && (
                   <DescriptionListDescription>
-                    <Button variant="link" isDisabled={!canSubscribeOCP} isInline onClick={handleEditSettings}>Edit subscription settings</Button>
+                    <Button
+                      variant="link"
+                      isDisabled={!canSubscribeOCP}
+                      isInline
+                      onClick={handleEditSettings}
+                    >
+                      Edit subscription settings
+                    </Button>
                   </DescriptionListDescription>
                 )}
               </DescriptionListGroup>
@@ -165,14 +173,12 @@ function SubscriptionSettings({
                 <DescriptionListTerm>Subscription units</DescriptionListTerm>
                 <DescriptionListDescription>{systemUnitsStr}</DescriptionListDescription>
               </DescriptionListGroup>
-              {
-                displayObligation && (
-                  <DescriptionListGroup>
-                    <DescriptionListTerm>{obligationLabel}</DescriptionListTerm>
-                    <DescriptionListDescription>{obligationStr}</DescriptionListDescription>
-                  </DescriptionListGroup>
-                )
-              }
+              {displayObligation && (
+                <DescriptionListGroup>
+                  <DescriptionListTerm>{obligationLabel}</DescriptionListTerm>
+                  <DescriptionListDescription>{obligationStr}</DescriptionListDescription>
+                </DescriptionListGroup>
+              )}
             </DescriptionList>
           </GridItem>
         </Grid>

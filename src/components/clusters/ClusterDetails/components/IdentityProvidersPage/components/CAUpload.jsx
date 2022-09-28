@@ -1,17 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormGroup,
-  TextInput,
-  InputGroup,
-  TextArea,
-  Button,
-} from '@patternfly/react-core';
+import { FormGroup, TextInput, InputGroup, TextArea, Button } from '@patternfly/react-core';
 import PopoverHint from '../../../../../common/PopoverHint';
 import './CAUpload.scss';
 
 export const MAX_FILE_SIZE = 4000000; // 4MB
-export const ACCEPT = '.pem,.crt,.ca,.cert,application/x-pem-file,application/x-x509-ca-cert,text/plain';
+export const ACCEPT =
+  '.pem,.crt,.ca,.cert,application/x-pem-file,application/x-x509-ca-cert,text/plain';
 
 // To be used inside redux-form Field component.
 class CAUpload extends React.Component {
@@ -20,12 +15,10 @@ class CAUpload extends React.Component {
     errorMessage: '',
     certValue: '',
     showCAText: false,
-  }
+  };
 
   componentDidMount() {
-    const {
-      certValue,
-    } = this.props;
+    const { certValue } = this.props;
     if (certValue && certValue !== '') {
       this.setState({ showCAText: true, certValue });
     }
@@ -49,7 +42,7 @@ class CAUpload extends React.Component {
       };
       reader.readAsText(file, 'UTF-8');
     }
-  }
+  };
 
   // This method updates the value to space if the user removes the CA value
   // When the user clears the CA value redux form removes the field from value
@@ -60,28 +53,19 @@ class CAUpload extends React.Component {
     const { input } = this.props;
     input.onChange(value || ' ');
     this.setState({ fileName: '', certValue: value });
-  }
+  };
 
   revealValue(status) {
     this.setState({ showCAText: status });
   }
 
   render() {
-    const {
-      label,
-      helpText,
-      extendedHelpText,
-      isRequired,
-      input,
-      isDisabled,
-    } = this.props;
-    const {
-      errorMessage, fileName, certValue, showCAText,
-    } = this.state;
+    const { label, helpText, extendedHelpText, isRequired, input, isDisabled } = this.props;
+    const { errorMessage, fileName, certValue, showCAText } = this.state;
 
     const baseButtonClass = 'pf-c-button pf-m-tertiary co-btn-file';
     const buttonClass = isDisabled ? `${baseButtonClass} pf-m-disabled` : baseButtonClass;
-    const shouldShowCAText = (!isDisabled && certValue !== '' && showCAText);
+    const shouldShowCAText = !isDisabled && certValue !== '' && showCAText;
 
     return (
       <FormGroup
@@ -93,9 +77,7 @@ class CAUpload extends React.Component {
         helperTextInvalid={errorMessage}
         isRequired={isRequired}
       >
-        { extendedHelpText && (
-          <PopoverHint hint={extendedHelpText} />
-        )}
+        {extendedHelpText && <PopoverHint hint={extendedHelpText} />}
         <InputGroup>
           <TextInput
             value={fileName}
@@ -105,34 +87,36 @@ class CAUpload extends React.Component {
             isReadOnly
           />
           <span className={buttonClass}>
-            <input
-              type="file"
-              onChange={this.fileUpload}
-              disabled={isDisabled}
-              accept={ACCEPT}
-            />
+            <input type="file" onChange={this.fileUpload} disabled={isDisabled} accept={ACCEPT} />
             Browse&hellip;
           </span>
         </InputGroup>
 
-        {shouldShowCAText
-          ? (
-            <>
-              <Button variant="link" onClick={() => this.revealValue(false)}>Hide</Button>
+        {shouldShowCAText ? (
+          <>
+            <Button variant="link" onClick={() => this.revealValue(false)}>
+              Hide
+            </Button>
 
-              <TextArea
-                value={certValue}
-                id={`${input.name}_text`}
-                name={`${input.name}_text`}
-                onChange={this.updateCertificateValue}
-                className="ca-textarea"
-              />
-            </>
-          ) : (
-            <>
-              <Button variant="link" onClick={() => this.revealValue(true)} isDisabled={certValue === '' || isDisabled}>Reveal</Button>
-            </>
-          )}
+            <TextArea
+              value={certValue}
+              id={`${input.name}_text`}
+              name={`${input.name}_text`}
+              onChange={this.updateCertificateValue}
+              className="ca-textarea"
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              variant="link"
+              onClick={() => this.revealValue(true)}
+              isDisabled={certValue === '' || isDisabled}
+            >
+              Reveal
+            </Button>
+          </>
+        )}
       </FormGroup>
     );
   }

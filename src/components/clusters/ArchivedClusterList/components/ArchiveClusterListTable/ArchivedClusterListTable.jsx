@@ -1,12 +1,7 @@
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  EmptyState,
-  EmptyStateBody,
-  EmptyStateIcon,
-  Title,
-} from '@patternfly/react-core';
+import { EmptyState, EmptyStateBody, EmptyStateIcon, Title } from '@patternfly/react-core';
 import {
   cellWidth,
   classNames,
@@ -46,8 +41,11 @@ function ArchivedClusterListTable(props) {
     );
   }
 
-  const hiddenOnMdOrSmaller = classNames(Visibility.visibleOnLg, Visibility.hiddenOnMd,
-    Visibility.hiddenOnSm);
+  const hiddenOnMdOrSmaller = classNames(
+    Visibility.visibleOnLg,
+    Visibility.hiddenOnMd,
+    Visibility.hiddenOnSm,
+  );
 
   const columns = [
     { title: 'Name', transforms: [sortable, cellWidth(30)] },
@@ -80,28 +78,31 @@ function ArchivedClusterListTable(props) {
     const provider = get(cluster, 'cloud_provider.id', 'N/A');
     const name = getClusterName(cluster);
 
-    const clusterName = (
-      <Link to={`/details/s/${cluster.subscription.id}`}>{name}</Link>
-    );
+    const clusterName = <Link to={`/details/s/${cluster.subscription.id}`}>{name}</Link>;
 
     const clusterStatus = getClusterStateAndDescription(cluster).description;
 
-    const openUnarchiveModal = () => openModal(modals.UNARCHIVE_CLUSTER,
-      {
+    const openUnarchiveModal = () =>
+      openModal(modals.UNARCHIVE_CLUSTER, {
         subscriptionID: cluster.subscription ? cluster.subscription.id : '',
         name,
         shouldDisplayClusterName: true,
       });
 
-    const canNotEditReason = !cluster.canEdit && 'You do not have permissions to unarchive this cluster';
+    const canNotEditReason =
+      !cluster.canEdit && 'You do not have permissions to unarchive this cluster';
 
     const unarchiveBtn = (
-      <ButtonWithTooltip variant="secondary" onClick={openUnarchiveModal} disableReason={canNotEditReason}>
+      <ButtonWithTooltip
+        variant="secondary"
+        onClick={openUnarchiveModal}
+        disableReason={canNotEditReason}
+      >
         Unarchive
       </ButtonWithTooltip>
     );
-    const unarchiveBtnCondition = cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED
-      && unarchiveBtn;
+    const unarchiveBtnCondition =
+      cluster.subscription.status !== subscriptionStatuses.DEPROVISIONED && unarchiveBtn;
 
     return [
       { title: clusterName },
@@ -110,10 +111,12 @@ function ArchivedClusterListTable(props) {
         title: <span className="cluster-status-string">{clusterStatus}</span>,
       },
       {
-        title: <ClusterLocationLabel
-          regionID={get(cluster, 'region.id', 'N/A')}
-          cloudProviderID={provider}
-        />,
+        title: (
+          <ClusterLocationLabel
+            regionID={get(cluster, 'region.id', 'N/A')}
+            cloudProviderID={provider}
+          />
+        ),
       },
       {
         title: unarchiveBtnCondition,
@@ -124,7 +127,7 @@ function ArchivedClusterListTable(props) {
   return (
     <Table
       cells={columns}
-      rows={clusters.map(cluster => clusterRow(cluster))}
+      rows={clusters.map((cluster) => clusterRow(cluster))}
       onSort={onSortToggle}
       sortBy={sortBy}
     >

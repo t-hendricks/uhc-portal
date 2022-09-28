@@ -5,4 +5,3 @@
 import type { RegistryRequest } from './RegistryRequest';
 
 export type RegistryCreateRequest = RegistryRequest;
-

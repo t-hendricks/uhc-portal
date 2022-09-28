@@ -1,11 +1,14 @@
 import { connect } from 'react-redux';
 
-import { deleteIDP, resetDeletedIDPResponse } from '../IdentityProvidersPage/IdentityProvidersActions';
+import {
+  deleteIDP,
+  resetDeletedIDPResponse,
+} from '../IdentityProvidersPage/IdentityProvidersActions';
 import { closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 import DeleteIDPDialog from './DeleteIDPDialog';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isOpen: shouldShowModal(state, 'delete-idp'),
   modalData: state.modal.data,
   deletedIDPResponse: state.identityProviders.deletedIDP,

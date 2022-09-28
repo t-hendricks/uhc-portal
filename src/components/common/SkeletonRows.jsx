@@ -9,11 +9,7 @@ import React from 'react';
 
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
-function skeletonRows(
-  count = 10,
-  colSpan = 6,
-  size = 'lg',
-) {
+function skeletonRows(count = 10, colSpan = 6, size = 'lg') {
   const row = {
     cells: [
       {

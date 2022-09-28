@@ -47,7 +47,7 @@ function SupportReducer(state = initialState, action) {
           ...baseRequestState,
           fulfilled: true,
           subscriptionID: action.meta?.subscriptionID,
-          contacts: items.map(contact => ({
+          contacts: items.map((contact) => ({
             userID: contact.id,
             username: contact.username,
             email: contact.email,
@@ -73,7 +73,7 @@ function SupportReducer(state = initialState, action) {
         draft.deleteContactResponse.fulfilled = true;
         // Remove deleted user from contacts to have a proper display before fetch will finish
         draft.notificationContacts.contacts = draft.notificationContacts.contacts.filter(
-          contact => contact.userID !== draft.deleteContactResponse.accountID,
+          (contact) => contact.userID !== draft.deleteContactResponse.accountID,
         );
         break;
       case REJECTED_ACTION(SupportConstants.DELETE_NOTIFICATION_CONTACT):
@@ -100,13 +100,15 @@ function SupportReducer(state = initialState, action) {
         data = Array.isArray(data) ? data : [data];
         draft.addContactResponse.count = data.length;
         // add the new users to contacts to display them before fetch will finish
-        data.forEach(contact => draft.notificationContacts.contacts.push({
-          userID: contact.id,
-          username: contact.username,
-          email: contact.email,
-          firstName: contact.first_name,
-          lastName: contact.last_name,
-        }));
+        data.forEach((contact) =>
+          draft.notificationContacts.contacts.push({
+            userID: contact.id,
+            username: contact.username,
+            email: contact.email,
+            firstName: contact.first_name,
+            lastName: contact.last_name,
+          }),
+        );
         break;
       case REJECTED_ACTION(SupportConstants.ADD_NOTIFICATION_CONTACT):
         draft.addContactResponse = {
@@ -115,8 +117,8 @@ function SupportReducer(state = initialState, action) {
           ...getErrorState(action),
         };
         // User-friendly message is in `reason` field
-        draft.addContactResponse.errorMessage = action.payload?.response?.data?.reason
-          || draft.addContactResponse.errorMessage;
+        draft.addContactResponse.errorMessage =
+          action.payload?.response?.data?.reason || draft.addContactResponse.errorMessage;
         break;
       case INVALIDATE_ACTION(SupportConstants.ADD_NOTIFICATION_CONTACT):
         draft.addContactResponse = {
@@ -133,7 +135,7 @@ function SupportReducer(state = initialState, action) {
           ...baseRequestState,
           fulfilled: true,
           subscriptionID: action.meta?.subscriptionID,
-          cases: cases.map(supportCase => ({
+          cases: cases.map((supportCase) => ({
             summary: supportCase.case_summary,
             caseID: supportCase.case_number,
             ownerID: supportCase.case_owner,

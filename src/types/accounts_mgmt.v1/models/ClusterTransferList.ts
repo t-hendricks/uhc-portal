@@ -5,7 +5,6 @@
 import type { ClusterTransfer } from './ClusterTransfer';
 import type { List } from './List';
 
-export type ClusterTransferList = (List & {
-    items?: Array<ClusterTransfer>;
-});
-
+export type ClusterTransferList = List & {
+  items?: Array<ClusterTransfer>;
+};

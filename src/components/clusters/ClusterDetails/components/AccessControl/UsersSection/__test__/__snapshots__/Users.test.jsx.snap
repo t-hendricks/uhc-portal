@@ -117,9 +117,7 @@ exports[`<Users /> with users should render 1`] = `
                 aria-label="Groups"
                 bodyContent={
                   <p>
-                    Groups are mapped to role bindings on the cluster.
-                     
-                    For more information check the
+                    Groups are mapped to role bindings on the cluster. For more information check the
                      
                     <a
                       href="https://docs.openshift.com/container-platform/4.11/authentication/understanding-authentication.html"

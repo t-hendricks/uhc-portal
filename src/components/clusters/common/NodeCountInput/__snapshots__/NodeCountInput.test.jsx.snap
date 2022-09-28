@@ -26,10 +26,8 @@ exports[`<NodeCountInput> Multi AZ renders with no quota 1`] = `
     />
   </FormSelect>
   <span>
-    × 3 zones =
-     
-     
-    compute nodes
+    × 3 zones = 
+     compute nodes
   </span>
 </FormGroup>
 `;
@@ -65,10 +63,8 @@ exports[`<NodeCountInput> Multi AZ renders with some quota 1`] = `
     />
   </FormSelect>
   <span>
-    × 3 zones =
-     
-     
-    compute nodes
+    × 3 zones = 
+     compute nodes
   </span>
 </FormGroup>
 `;
@@ -1219,10 +1215,8 @@ exports[`<NodeCountInput> scaling dialog behavior multiAz renders with no quota 
     />
   </FormSelect>
   <span>
-    × 3 zones =
-     
-     
-    compute nodes
+    × 3 zones = 
+     compute nodes
   </span>
 </FormGroup>
 `;

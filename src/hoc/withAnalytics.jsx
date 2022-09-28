@@ -13,8 +13,11 @@ import { getTrackEvent } from '~/common/analytics';
  * - track - a convenience function that composes the track event parsing and the actual tracking.
  * - analytics - the analytics API instance
  */
-const withAnalytics = AnalyticsContext => (props) => {
-  const { analytics, segment: { setPageMetadata } } = useChrome();
+const withAnalytics = (AnalyticsContext) => (props) => {
+  const {
+    analytics,
+    segment: { setPageMetadata },
+  } = useChrome();
 
   const track = (...args) => {
     const eventObj = getTrackEvent(...args);

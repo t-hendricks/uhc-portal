@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card,
-  CardBody,
-  Text,
-} from '@patternfly/react-core';
+import { Card, CardBody, Text } from '@patternfly/react-core';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
 import SubscriptionAndSupport from './components/SubscriptionAndSupport';
 import GetStarted from './components/GetStarted';

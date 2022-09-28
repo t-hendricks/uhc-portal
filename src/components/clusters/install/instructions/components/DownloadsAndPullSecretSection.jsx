@@ -1,11 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Stack,
-  StackItem,
-  Text,
-  TextContent,
-} from '@patternfly/react-core';
+import { Stack, StackItem, Text, TextContent } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 
 import PullSecretSection from './PullSecretSection';
@@ -46,12 +41,14 @@ function DownloadsAndPullSecretSection({
                 </Text>
                 {showPreReleaseDocs && (
                   <Text component="p">
-                    For pre-release documentation, refer to the
-                    {' '}
-                    <Text component="a" href={preReleaseDocsLink} rel="noreferrer noopener" target="_blank">
-                      latest installer documentation
-                      {' '}
-                      <ExternalLinkAltIcon size="sm" />
+                    For pre-release documentation, refer to the{' '}
+                    <Text
+                      component="a"
+                      href={preReleaseDocsLink}
+                      rel="noreferrer noopener"
+                      target="_blank"
+                    >
+                      latest installer documentation <ExternalLinkAltIcon size="sm" />
                     </Text>
                     .
                   </Text>
@@ -80,23 +77,14 @@ function DownloadsAndPullSecretSection({
         <StackItem key="cli">
           <TextContent>
             <Text component="h3">Command line interface</Text>
-            <CLISection
-              token={token}
-              pendoID={pendoID}
-              channel={channel}
-              isBMIPI={isBMIPI}
-            />
+            <CLISection token={token} pendoID={pendoID} channel={channel} isBMIPI={isBMIPI} />
           </TextContent>
         </StackItem>
         {rhcos && (
           <StackItem key="rhcos">
             <TextContent>
               <Text component="h3">Red Hat Enterprise Linux CoreOS (RHCOS)</Text>
-              <RHCOSSection
-                token={token}
-                pendoID={pendoID}
-                rhcos={rhcos}
-              />
+              <RHCOSSection token={token} pendoID={pendoID} rhcos={rhcos} />
             </TextContent>
           </StackItem>
         )}

@@ -6,14 +6,12 @@ import React from 'react';
  * PF table renders automatically.
  * @param {*} subscription             The subscription object corresponding to the current row
  */
-function actionResolver(
-  subscription,
-) {
+function actionResolver(subscription) {
   const baseProps = {
     component: 'button',
   };
   const consoleDisabledMessage = <span>Admin console is not yet available for this cluster</span>;
-  const getKey = item => `${subscription.id}.menu.${item}`;
+  const getKey = (item) => `${subscription.id}.menu.${item}`;
   const consoleURL = subscription.console_url;
   const adminConsoleEnabled = {
     component: 'a',

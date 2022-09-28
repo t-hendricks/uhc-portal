@@ -419,9 +419,15 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
             "current": null,
           }
         }
+        clusterHistoryTabRef={
+          Object {
+            "current": null,
+          }
+        }
         displayAccessControlTab={true}
         displayAddAssistedHosts={false}
         displayAddOnsTab={true}
+        displayClusterHistoryTab={false}
         displayMachinePoolsTab={true}
         displayMonitoringTab={false}
         displayNetworkingTab={true}
@@ -1020,7 +1026,6 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
               },
             }
           }
-          displayClusterLogs={false}
           history={
             Object {
               "push": [MockFunction],
@@ -1435,7 +1440,7 @@ exports[`<ClusterDetails /> Cluster Details - OSD should render 1`] = `
     </ForwardRef>
     <ForwardRef
       aria-label="Networking"
-      eventKey={4}
+      eventKey={5}
       hidden={true}
       id="networkingTabContent"
     >

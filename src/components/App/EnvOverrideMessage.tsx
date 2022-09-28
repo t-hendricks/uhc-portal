@@ -19,11 +19,7 @@ const EnvOverrideMessage = ({ env }: Props) => {
       title="Environment override active"
       actionLinks={<AlertActionLink onClick={goBackToNormal}>Go back to normal</AlertActionLink>}
     >
-      You&apos;re now using the
-      {' '}
-      <b>{env}</b>
-      {' '}
-      environment API.
+      You&apos;re now using the <b>{env}</b> environment API.
     </Alert>
   );
 };

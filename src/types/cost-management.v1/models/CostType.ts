@@ -3,8 +3,7 @@
 /* eslint-disable */
 
 export type CostType = {
-    code: string;
-    name: string;
-    description: string;
+  code: string;
+  name: string;
+  description: string;
 };
-

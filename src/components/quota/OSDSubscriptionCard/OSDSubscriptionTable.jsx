@@ -1,24 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-  Table,
-  TableHeader,
-  TableBody,
-} from '@patternfly/react-table';
+import { Table, TableHeader, TableBody } from '@patternfly/react-table';
 import orderBy from 'lodash/orderBy';
 
 import PopoverHint from '../../common/PopoverHint';
 
 function OSDSubscriptionTable({ rows, children }) {
-  const sortedRows = orderBy(rows, [0, 1]).map(cells => ({ cells }));
+  const sortedRows = orderBy(rows, [0, 1]).map((cells) => ({ cells }));
   const tipText = (
     <>
-      <p>
-        Standard: Cluster infrastructure costs paid by Red Hat
-      </p>
-      <p>
-        CCS: Cluster infrastructure costs paid by the customer
-      </p>
+      <p>Standard: Cluster infrastructure costs paid by Red Hat</p>
+      <p>CCS: Cluster infrastructure costs paid by the customer</p>
     </>
   );
   const planType = (

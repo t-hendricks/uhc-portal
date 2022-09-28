@@ -114,7 +114,8 @@ const getOauthCallbackURL = (consoleURL, IDPName) => {
  * this function will need to be modified to account for it.
  * @param {String} IDPType the identity provider type
  */
-const IDPNeedsOAuthURL = IDPType => ![IDPformValues.LDAP, IDPformValues.HTPASSWD].includes(IDPType);
+const IDPNeedsOAuthURL = (IDPType) =>
+  ![IDPformValues.LDAP, IDPformValues.HTPASSWD].includes(IDPType);
 
 /**
  * Generate a usable IDP name, based on the IDP Type and already-configured IDPs.
@@ -126,7 +127,7 @@ const IDPNeedsOAuthURL = IDPType => ![IDPformValues.LDAP, IDPformValues.HTPASSWD
  * @param {Array<Object>} IDPList An array of IDP objects returned from the server
  */
 const generateIDPName = (IDPType, IDPList) => {
-  const idpNameList = IDPList.map(idp => idp.name);
+  const idpNameList = IDPList.map((idp) => idp.name);
   let idpNumber = 0;
 
   const baseName = IDPTypeNames[IDPType];
@@ -156,8 +157,12 @@ const getCreateIDPRequestData = (formData) => {
   const githubData = () => ({
     client_id: formData.client_id.trim(),
     client_secret: formData.client_secret.trim(),
-    organizations: formData.github_auth_mode === 'organizations' ? multiInputToCleanArray(formData, 'organizations') : undefined,
-    teams: formData.github_auth_mode === 'teams' ? multiInputToCleanArray(formData, 'teams') : undefined,
+    organizations:
+      formData.github_auth_mode === 'organizations'
+        ? multiInputToCleanArray(formData, 'organizations')
+        : undefined,
+    teams:
+      formData.github_auth_mode === 'teams' ? multiInputToCleanArray(formData, 'teams') : undefined,
     hostname: formData.hostname,
     ca: formData.github_ca ? formData.github_ca.trim() : formData.github_ca,
   });
@@ -202,12 +207,10 @@ const getCreateIDPRequestData = (formData) => {
     issuer: formData.issuer,
   });
 
-  const htpasswdData = () => (
-    {
-      username: formData.htpasswd_username,
-      password: formData.htpasswd_password,
-    }
-  );
+  const htpasswdData = () => ({
+    username: formData.htpasswd_username,
+    password: formData.htpasswd_password,
+  });
 
   const IDPs = {
     GithubIdentityProvider: { name: 'github', data: githubData },
@@ -375,8 +378,8 @@ const getGitHubTeamsAndOrgsData = (type) => {
  * @param {String} key Field name of the `ReduxFieldArray`
  */
 
-const isEmptyReduxArray = (arr, key) => (arr ? arr.map(currentValue => isEmpty(currentValue[key]))
-  .every(item => item) : false);
+const isEmptyReduxArray = (arr, key) =>
+  arr ? arr.map((currentValue) => isEmpty(currentValue[key])).every((item) => item) : false;
 
 export {
   getCreateIDPRequestData,

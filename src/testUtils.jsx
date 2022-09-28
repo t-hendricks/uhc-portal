@@ -7,11 +7,7 @@ import '@testing-library/jest-dom';
 
 import { store } from './redux/store';
 
-const TestWrapper = ({ children }) => (
-  <Provider store={store}>
-    {children}
-  </Provider>
-);
+const TestWrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
 
 TestWrapper.propTypes = {
   children: PropTypes.arrayOf(PropTypes.node),

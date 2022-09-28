@@ -11,9 +11,9 @@ export const mockQuotaList = userActions.processQuota({ data: mockQuotaCost });
 
 export const emptyQuotaList = userActions.processQuota({ data: { items: [] } });
 
-export const ROSAQuotaList = userActions.processQuota(
-  { data: { items: quotaCostFixtures.unlimitedROSA } },
-);
+export const ROSAQuotaList = userActions.processQuota({
+  data: { items: quotaCostFixtures.unlimitedROSA },
+});
 export const CCSQuotaList = userActions.processQuota({
   data: { items: quotaCostFixtures.dedicatedCCS },
 });
@@ -71,10 +71,10 @@ export const addonsQuota = userActions.processQuota({
   },
 });
 
-export const storageQuotaList = userActions.processQuota(
-  { data: { items: quotaCostFixtures.storage } },
-);
+export const storageQuotaList = userActions.processQuota({
+  data: { items: quotaCostFixtures.storage },
+});
 
-export const loadBalancerQuotaList = userActions.processQuota(
-  { data: { items: quotaCostFixtures.loadBalancers } },
-);
+export const loadBalancerQuotaList = userActions.processQuota({
+  data: { items: quotaCostFixtures.loadBalancers },
+});

@@ -15,28 +15,28 @@ import { hasResourceUsageMetrics } from '../monitoringHelper';
 import { subscriptionStatuses } from '../../../../../../common/subscriptionTypes';
 
 class MonitoringList extends React.Component {
-    state = {
-      expanded: [],
-    }
+  state = {
+    expanded: [],
+  };
 
   toggle = (sectionId) => {
     const { expanded } = this.state;
     const index = expanded.indexOf(sectionId);
-    const newExpanded = index >= 0
-      ? [...expanded.slice(0, index), ...expanded.slice(index + 1, expanded.length)]
-      : [...expanded, sectionId];
+    const newExpanded =
+      index >= 0
+        ? [...expanded.slice(0, index), ...expanded.slice(index + 1, expanded.length)]
+        : [...expanded, sectionId];
     this.setState(() => ({ expanded: newExpanded }));
   };
 
   render() {
-    const {
-      cluster, alerts, nodes, operators, resourceUsage,
-    } = this.props;
+    const { cluster, alerts, nodes, operators, resourceUsage } = this.props;
     const { expanded } = this.state;
 
     const metricsAvailable = hasResourceUsageMetrics(cluster);
     const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED;
-    const metricsStatusMessage = isArchived ? metricsStatusMessages.archived
+    const metricsStatusMessage = isArchived
+      ? metricsStatusMessages.archived
       : metricsStatusMessages[cluster.state] || metricsStatusMessages.default;
 
     const EmptyState = (
@@ -55,8 +55,11 @@ class MonitoringList extends React.Component {
           expanded={expanded}
           hasData={alerts.hasData}
         >
-          {alerts.hasData
-            ? <AlertsTable alerts={alerts.data} clusterConsole={cluster.console} /> : EmptyState}
+          {alerts.hasData ? (
+            <AlertsTable alerts={alerts.data} clusterConsole={cluster.console} />
+          ) : (
+            EmptyState
+          )}
         </MonitoringListItem>
         {nodes.hasData && (
           // hide nodes if not available, this metric is missing in OpenShift >= 4.3.8
@@ -78,9 +81,11 @@ class MonitoringList extends React.Component {
           expanded={expanded}
           hasData={operators.hasData}
         >
-          {operators.hasData
-            ? <ClusterOperators operators={operators.data} clusterConsole={cluster.console} />
-            : EmptyState }
+          {operators.hasData ? (
+            <ClusterOperators operators={operators.data} clusterConsole={cluster.console} />
+          ) : (
+            EmptyState
+          )}
         </MonitoringListItem>
         <MonitoringListItem
           title="Resource usage"
@@ -90,24 +95,25 @@ class MonitoringList extends React.Component {
           expanded={expanded}
           hasData={resourceUsage.hasData}
         >
-          {resourceUsage.hasData
-            ? (
-              <div className="metrics-chart">
-                <ResourceUsage
-                  cpu={{
-                    used: cluster.metrics.cpu.used,
-                    total: cluster.metrics.cpu.total,
-                  }}
-                  memory={{
-                    used: cluster.metrics.memory.used,
-                    total: cluster.metrics.memory.total,
-                  }}
-                  metricsAvailable={metricsAvailable}
-                  metricsStatusMessage={metricsStatusMessage}
-                  type="threshold"
-                />
-              </div>
-            ) : EmptyState}
+          {resourceUsage.hasData ? (
+            <div className="metrics-chart">
+              <ResourceUsage
+                cpu={{
+                  used: cluster.metrics.cpu.used,
+                  total: cluster.metrics.cpu.total,
+                }}
+                memory={{
+                  used: cluster.metrics.memory.used,
+                  total: cluster.metrics.memory.total,
+                }}
+                metricsAvailable={metricsAvailable}
+                metricsStatusMessage={metricsStatusMessage}
+                type="threshold"
+              />
+            </div>
+          ) : (
+            EmptyState
+          )}
         </MonitoringListItem>
       </DataList>
     );

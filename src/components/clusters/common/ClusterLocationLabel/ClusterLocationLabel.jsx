@@ -14,9 +14,10 @@ class ClusterLocationLabel extends React.Component {
 
   render() {
     const { regionID, cloudProviderID, cloudProviders } = this.props;
-    const provider = cloudProviders.fulfilled && cloudProviders.providers[cloudProviderID]
-      ? cloudProviders.providers[cloudProviderID].display_name
-      : cloudProviderID.toUpperCase();
+    const provider =
+      cloudProviders.fulfilled && cloudProviders.providers[cloudProviderID]
+        ? cloudProviders.providers[cloudProviderID].display_name
+        : cloudProviderID.toUpperCase();
 
     return (
       <>

@@ -8,63 +8,52 @@ import ErrorBox from '../../../../common/ErrorBox';
 
 class CancelUpgradeModal extends React.Component {
   componentDidUpdate() {
-    const {
-      deleteScheduleRequest,
-    } = this.props;
+    const { deleteScheduleRequest } = this.props;
     if (deleteScheduleRequest.fulfilled) {
       this.close();
     }
   }
 
   close = () => {
-    const {
-      clearDeleteScheduleResponse, closeModal,
-    } = this.props;
+    const { clearDeleteScheduleResponse, closeModal } = this.props;
     clearDeleteScheduleResponse();
     closeModal();
-  }
+  };
 
   deleteSchedule = () => {
     const { schedule, deleteSchedule } = this.props;
     deleteSchedule(schedule.cluster_id, schedule.id);
-  }
+  };
 
   render() {
-    const {
-      isOpen, deleteScheduleRequest, schedule,
-    } = this.props;
+    const { isOpen, deleteScheduleRequest, schedule } = this.props;
 
     const error = deleteScheduleRequest.error ? (
       <ErrorBox message="Error cancelling update" response={deleteScheduleRequest} />
     ) : null;
 
-    return isOpen && (
-      <Modal
-        title="Cancel update"
-        onClose={this.close}
-        primaryText="Cancel this update"
-        secondaryText="Close"
-        onPrimaryClick={this.deleteSchedule}
-        isPending={deleteScheduleRequest.pending}
-        onSecondaryClick={this.close}
-      >
-        <>
-          {error}
-          <Form onSubmit={this.deleteSchedule}>
-            <p>
-              This update to version
-              {' '}
-              {schedule.version}
-              {' '}
-              is scheduled for
-              {' '}
-              <DateFormat type="exact" date={Date.parse(schedule.next_run)} />
-              .
-              {' '}
-            </p>
-          </Form>
-        </>
-      </Modal>
+    return (
+      isOpen && (
+        <Modal
+          title="Cancel update"
+          onClose={this.close}
+          primaryText="Cancel this update"
+          secondaryText="Close"
+          onPrimaryClick={this.deleteSchedule}
+          isPending={deleteScheduleRequest.pending}
+          onSecondaryClick={this.close}
+        >
+          <>
+            {error}
+            <Form onSubmit={this.deleteSchedule}>
+              <p>
+                This update to version {schedule.version} is scheduled for{' '}
+                <DateFormat type="exact" date={Date.parse(schedule.next_run)} />.{' '}
+              </p>
+            </Form>
+          </>
+        </Modal>
+      )
     );
   }
 }

@@ -7,16 +7,16 @@ import { getModalDataFromState, getAutomaticUpgradePolicyId } from '../UpgradeAc
 import { setClusterUpgradeGate } from '../../../../../../redux/actions/upgradeGateActions';
 import { setAutomaticUpgradePolicy } from '../../clusterUpgradeActions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isOpen: shouldShowModal(state, 'ack-upgrade'),
   modalData: getModalDataFromState(state),
   automaticUpgradePolicyId: getAutomaticUpgradePolicyId(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   closeModal: () => dispatch(modalActions.closeModal()),
-  setGate: upgradeUpdateId => dispatch(setClusterUpgradeGate(upgradeUpdateId)),
-  setUpgradePolicy: upgradePolicy => dispatch(setAutomaticUpgradePolicy(upgradePolicy)),
+  setGate: (upgradeUpdateId) => dispatch(setClusterUpgradeGate(upgradeUpdateId)),
+  setUpgradePolicy: (upgradePolicy) => dispatch(setAutomaticUpgradePolicy(upgradePolicy)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UpgradeAcknowledgeModal);

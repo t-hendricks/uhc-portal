@@ -24,10 +24,12 @@ import { clusterLogActions, getClusterHistory } from './components/ClusterLogs/c
 import { getClusterRouters } from './components/Networking/NetworkingActions';
 import { getSchedules } from '../common/Upgrades/clusterUpgradeActions';
 import { viewConstants } from '../../../redux/constants';
+import { onClearFiltersAndFlags } from '~/redux/actions/viewOptionsActions';
+import { fetchClusterInsights } from './components/Insights/InsightsActions';
 import {
-  fetchClusterInsights,
-} from './components/Insights/InsightsActions';
-import { getMachinePools, clearGetMachinePoolsResponse } from './components/MachinePools/MachinePoolsActions';
+  getMachinePools,
+  clearGetMachinePoolsResponse,
+} from './components/MachinePools/MachinePoolsActions';
 import canSubscribeOCPSelector from '../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 import { canTransferClusterOwnershipSelector } from '../common/TransferClusterOwnershipDialog/TransferClusterOwnershipDialogSelectors';
 import { issuesAndWarningsSelector } from './components/Monitoring/MonitoringSelectors';
@@ -50,8 +52,8 @@ const mapStateToProps = (state, { location }) => {
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
   const { insightsData } = state.insightsData;
-  const logsPresent = state.clusterLogs.clusterLogInitialized
-    === state.clusterLogs.externalClusterID;
+  const logsPresent =
+    state.clusterLogs.clusterLogInitialized === state.clusterLogs.externalClusterID;
   const hideClusterLogs = !logsPresent || errorCode === 403 || errorCode === 404;
   const {
     notificationContacts = {
@@ -64,7 +66,7 @@ const mapStateToProps = (state, { location }) => {
   const clusterId = get(details, 'cluster.external_id');
   const insightsIssuesCount = issuesCountSelector(state, clusterId);
 
-  return ({
+  return {
     cloudProviders,
     clusterDetails: details,
     addOns,
@@ -87,39 +89,44 @@ const mapStateToProps = (state, { location }) => {
     userAccess: state.cost.userAccess,
     gotRouters: get(clusterRouters, 'getRouters.routers.length', 0) > 0,
     upgradeGates: getUpgradeGates(state),
-  });
+  };
 };
 
-const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
-  fetchDetails: fetchClusterDetails,
-  fetchClusterInsights,
-  getCloudProviders: cloudProviderActions.getCloudProviders,
-  getOrganizationAndQuota: userActions.getOrganizationAndQuota,
-  invalidateClusters,
-  openModal: modalActions.openModal,
-  closeModal: modalActions.closeModal,
-  getClusterIdentityProviders,
-  getUsers: usersActions.getUsers,
-  resetIdentityProvidersState,
-  resetClusterHistory: clusterLogActions.resetClusterHistory,
-  clearGlobalError,
-  setGlobalError,
-  getOnDemandMetrics,
-  getAddOns,
-  getClusterAddOns,
-  getGrants,
-  getClusterRouters,
-  getMachinePools,
-  clearGetMachinePoolsResponse,
-  setOpenedTab: tabKey => push(`${getBaseName()}${location.pathname}#${tabKey}`),
-  getClusterHistory,
-  toggleSubscriptionReleased,
-  getNotificationContacts: supportActions.getNotificationContacts,
-  getSupportCases: supportActions.getSupportCases,
-  getSchedules,
-  getUserAccess,
-  addNotification,
-  fetchUpgradeGates,
-}, dispatch);
+const mapDispatchToProps = (dispatch, { location }) =>
+  bindActionCreators(
+    {
+      fetchDetails: fetchClusterDetails,
+      fetchClusterInsights,
+      getCloudProviders: cloudProviderActions.getCloudProviders,
+      getOrganizationAndQuota: userActions.getOrganizationAndQuota,
+      invalidateClusters,
+      openModal: modalActions.openModal,
+      closeModal: modalActions.closeModal,
+      getClusterIdentityProviders,
+      getUsers: usersActions.getUsers,
+      resetIdentityProvidersState,
+      resetClusterHistory: clusterLogActions.resetClusterHistory,
+      clearGlobalError,
+      setGlobalError,
+      getOnDemandMetrics,
+      getAddOns,
+      getClusterAddOns,
+      getGrants,
+      getClusterRouters,
+      getMachinePools,
+      clearGetMachinePoolsResponse,
+      setOpenedTab: (tabKey) => push(`${getBaseName()}${location.pathname}#${tabKey}`),
+      getClusterHistory,
+      toggleSubscriptionReleased,
+      getNotificationContacts: supportActions.getNotificationContacts,
+      getSupportCases: supportActions.getSupportCases,
+      getSchedules,
+      getUserAccess,
+      addNotification,
+      fetchUpgradeGates,
+      clearFiltersAndFlags: () => onClearFiltersAndFlags(viewConstants.CLUSTER_LOGS_VIEW),
+    },
+    dispatch,
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClusterDetails);

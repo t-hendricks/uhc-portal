@@ -14,21 +14,23 @@ import {
 
 describe('resourceUsageIssuesHelper', () => {
   it('should count resource usage issues', () => {
-    expect(resourceUsageIssuesHelper(
-      resourceUsageWithIssues.cpu,
-      resourceUsageWithIssues.memory,
-      thresholds.DANGER,
-    ))
-      .toEqual(2);
+    expect(
+      resourceUsageIssuesHelper(
+        resourceUsageWithIssues.cpu,
+        resourceUsageWithIssues.memory,
+        thresholds.DANGER,
+      ),
+    ).toEqual(2);
   });
 
   it('should find no issues', () => {
-    expect(resourceUsageIssuesHelper(
-      resourceUsageWithoutIssues.cpu,
-      resourceUsageWithoutIssues.memory,
-      thresholds.DANGER,
-    ))
-      .toEqual(0);
+    expect(
+      resourceUsageIssuesHelper(
+        resourceUsageWithoutIssues.cpu,
+        resourceUsageWithoutIssues.memory,
+        thresholds.DANGER,
+      ),
+    ).toEqual(0);
   });
 });
 

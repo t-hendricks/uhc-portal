@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, Fields, FieldArray } from 'redux-form';
-import {
-  FormGroup,
-  GridItem,
-  ExpandableSection,
-  Title,
-} from '@patternfly/react-core';
+import { FormGroup, GridItem, ExpandableSection, Title } from '@patternfly/react-core';
 
 import MachineTypeSelection from './MachineTypeSelection';
 
@@ -50,15 +45,18 @@ function ScaleSection({
       toggleTextExpanded={expandableSectionTitle}
       className="pf-u-mt-md"
     >
-      <Title headingLevel="h3" className="pf-u-mb-md">Node labels</Title>
+      <Title headingLevel="h3" className="pf-u-mb-md">
+        Node labels
+      </Title>
       <FieldArray name="node_labels" component={ReduxFormKeyValueList} />
-      {isMachinePool
-        && (
-          <>
-            <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">Taints</Title>
-            <FieldArray name="taints" component={ReduxFormTaints} />
-          </>
-        )}
+      {isMachinePool && (
+        <>
+          <Title headingLevel="h3" className="pf-u-mb-md pf-u-mt-lg">
+            Taints
+          </Title>
+          <FieldArray name="taints" component={ReduxFormTaints} />
+        </>
+      )}
     </ExpandableSection>
   );
 
@@ -82,24 +80,23 @@ function ScaleSection({
       </GridItem>
       <GridItem md={6} />
       {/* autoscale */}
-      {canAutoScale
-        && (
-          <>
-            <GridItem md={12}>
-              <AutoScaleSection
-                autoscalingEnabled={autoscalingEnabled}
-                isMultiAz={isMultiAz}
-                change={change}
-                autoScaleMinNodesValue={autoScaleMinNodesValue}
-                autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-                product={product}
-                isBYOC={isBYOC}
-                isDefaultMachinePool={!isMachinePool}
-              />
-            </GridItem>
-            {autoscalingEnabled && labelsAndTaintsSection}
-          </>
-        )}
+      {canAutoScale && (
+        <>
+          <GridItem md={12}>
+            <AutoScaleSection
+              autoscalingEnabled={autoscalingEnabled}
+              isMultiAz={isMultiAz}
+              change={change}
+              autoScaleMinNodesValue={autoScaleMinNodesValue}
+              autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+              product={product}
+              isBYOC={isBYOC}
+              isDefaultMachinePool={!isMachinePool}
+            />
+          </GridItem>
+          {autoscalingEnabled && labelsAndTaintsSection}
+        </>
+      )}
       {/* Worker nodes */}
       {!autoscalingEnabled && (
         <>
@@ -112,15 +109,14 @@ function ScaleSection({
               isByoc={isBYOC}
               machineType={machineType}
               isDisabled={pending}
-              extendedHelpText={(
+              extendedHelpText={
                 <>
-                  {constants.computeNodeCountHint}
-                  {' '}
+                  {constants.computeNodeCountHint}{' '}
                   <ExternalLink href={links.OSD_SERVICE_DEFINITION_COMPUTE}>
                     Learn more about compute node count
                   </ExternalLink>
                 </>
-              )}
+              }
               cloudProviderID={cloudProviderID}
               product={product}
               minNodes={minNodes}
@@ -132,7 +128,7 @@ function ScaleSection({
         </>
       )}
       {/* Persistent Storage & Load Balancers */}
-      { showStorageAndLoadBalancers && !isBYOC && (
+      {showStorageAndLoadBalancers && !isBYOC && (
         <>
           <GridItem md={6}>
             <FormGroup

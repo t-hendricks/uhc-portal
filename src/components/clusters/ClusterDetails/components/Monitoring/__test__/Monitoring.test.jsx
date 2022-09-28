@@ -8,14 +8,16 @@ describe('<Monitoring />', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<Monitoring
-      cluster={{}}
-      alerts={{}}
-      nodes={{}}
-      operators={{}}
-      lastCheckIn={new Date('2020-02-02')}
-      discoveredIssues={0}
-    />);
+    wrapper = shallow(
+      <Monitoring
+        cluster={{}}
+        alerts={{}}
+        nodes={{}}
+        operators={{}}
+        lastCheckIn={new Date('2020-02-02')}
+        discoveredIssues={0}
+      />,
+    );
   });
 
   it('should render correctly with every health status', () => {

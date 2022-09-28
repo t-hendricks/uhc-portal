@@ -3,18 +3,12 @@ import PropTypes from 'prop-types';
 import { Alert, ExpandableSection } from '@patternfly/react-core';
 import { formatErrorDetails } from '../../common/errors';
 
-function ErrorBox({
-  message,
-  variant = 'danger',
-  response,
-  children,
-  isExpandable,
-}) {
+function ErrorBox({ message, variant = 'danger', response, children, isExpandable }) {
   const errorDetails = formatErrorDetails(response.errorDetails);
   const detailsDisplay = (
     <>
       <span>{response.errorMessage}</span>
-      { errorDetails }
+      {errorDetails}
       <br />
       <span>{`Operation ID: ${response.operationID || 'N/A'}`}</span>
     </>
@@ -31,7 +25,9 @@ function ErrorBox({
         <ExpandableSection toggleText={children ? 'More details' : 'Error details'}>
           {detailsDisplay}
         </ExpandableSection>
-      ) : detailsDisplay}
+      ) : (
+        detailsDisplay
+      )}
     </Alert>
   );
 }
@@ -39,11 +35,8 @@ function ErrorBox({
 ErrorBox.propTypes = {
   message: PropTypes.string.isRequired,
   response: PropTypes.shape({
-    errorMessage: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.node,
-      PropTypes.element,
-    ]).isRequired,
+    errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element])
+      .isRequired,
     errorDetails: PropTypes.array,
     operationID: PropTypes.string,
   }),

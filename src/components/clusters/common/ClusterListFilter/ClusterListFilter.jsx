@@ -15,7 +15,7 @@ class ClusterListFilter extends React.Component {
     // This is done to allow some delay between the user's input and
     // the actual filtering, to give them time to finish typing.
     currentValue: '',
-  }
+  };
 
   componentDidMount() {
     const { currentFilter } = this.props;
@@ -48,7 +48,7 @@ class ClusterListFilter extends React.Component {
         className="cluster-list-filter"
         value={currentValue}
         placeholder="Filter by name or ID..."
-        onChange={value => this.updateCurrentValue(value)}
+        onChange={(value) => this.updateCurrentValue(value)}
         isDisabled={isDisabled}
       />
     );

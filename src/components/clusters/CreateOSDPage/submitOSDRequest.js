@@ -13,7 +13,6 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
   // But to avoid bugs where we ignore user's choices, when both are present, the field should win.
   const actualCloudProviderID = formData.cloud_provider || cloudProviderID;
   const actualProduct = formData.product || product;
-
   const clusterRequest = {
     name: formData.name,
     region: {
@@ -81,8 +80,9 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
       host_prefix: parseInt(formData.network_host_prefix, 10),
     };
 
-    const wasClusterPrivacyShown = actualCloudProviderID === 'aws'
-                                || (actualCloudProviderID === 'gcp' && formData.byoc === 'true');
+    const wasClusterPrivacyShown =
+      actualCloudProviderID === 'aws' ||
+      (actualCloudProviderID === 'gcp' && formData.byoc === 'true');
     if (wasClusterPrivacyShown) {
       clusterRequest.api = {
         listening: formData.cluster_privacy,
@@ -156,16 +156,10 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
         }
         clusterRequest.aws.subnet_ids = subnetIds;
 
-        let AZs = [
-          formData.az_0,
-        ];
+        let AZs = [formData.az_0];
 
         if (isMultiAz) {
-          AZs = [
-            ...AZs,
-            formData.az_1,
-            formData.az_2,
-          ];
+          AZs = [...AZs, formData.az_1, formData.az_2];
         }
         clusterRequest.nodes.availability_zones = AZs;
       }
@@ -235,18 +229,21 @@ export const createClusterRequest = ({ isWizard, cloudProviderID, product }, for
   return clusterRequest;
 };
 
-export const upgradeScheduleRequest = formData => (
-  formData.upgrade_policy === 'manual' ? null : {
-    schedule_type: formData.upgrade_policy,
-    schedule: formData.automatic_upgrade_schedule,
-  }
-);
+export const upgradeScheduleRequest = (formData) =>
+  formData.upgrade_policy === 'manual'
+    ? null
+    : {
+        schedule_type: formData.upgrade_policy,
+        schedule: formData.automatic_upgrade_schedule,
+      };
 
 // Returning a function that takes (formData) is convenient for redux-form `onSubmit` prop.
-const submitOSDRequest = (dispatch, { isWizard, cloudProviderID, product }) => (formData) => {
-  const clusterRequest = createClusterRequest({ isWizard, cloudProviderID, product }, formData);
-  const upgradeSchedule = upgradeScheduleRequest(formData);
-  dispatch(createCluster(clusterRequest, upgradeSchedule));
-};
+const submitOSDRequest =
+  (dispatch, { isWizard, cloudProviderID, product }) =>
+  (formData) => {
+    const clusterRequest = createClusterRequest({ isWizard, cloudProviderID, product }, formData);
+    const upgradeSchedule = upgradeScheduleRequest(formData);
+    dispatch(createCluster(clusterRequest, upgradeSchedule));
+  };
 
 export default submitOSDRequest;
