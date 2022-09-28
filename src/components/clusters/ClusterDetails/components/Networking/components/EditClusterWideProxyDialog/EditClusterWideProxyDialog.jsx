@@ -18,7 +18,8 @@ import {
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components/CAUpload';
 
-const validateUrlHttps = (value) => validateUrl(value, ['http', 'https']);
+const validateUrlHttp = (value) => validateUrl(value, 'http');
+const validateUrlHttps = (value) => validateUrl(value, 'https');
 const validateAtLeastOne = (value, allValues) => {
   if (!allValues.httpProxyUrl && !allValues.httpsProxyUrl && !allValues.additionalTrustBundle) {
     return 'Configure at least one of the cluster-wide proxy fields.';
@@ -118,7 +119,7 @@ const EditClusterWideProxyDialog = (props) => {
                 label="HTTP proxy URL"
                 placeholder={HTTPS_PROXY_PLACEHOLDER}
                 type="text"
-                validate={[validateAtLeastOne, validateUrlHttps]}
+                validate={[validateUrlHttp, validateAtLeastOne]}
                 helpText="Specify a proxy URL to use for HTTP connections outside the cluster."
                 showHelpTextOnError={false}
               />
