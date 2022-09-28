@@ -119,7 +119,7 @@ const EditClusterWideProxyDialog = (props) => {
                 label="HTTP proxy URL"
                 placeholder={HTTPS_PROXY_PLACEHOLDER}
                 type="text"
-                validate={[validateAtLeastOne, validateUrlHttp]}
+                validate={[validateUrlHttp, validateAtLeastOne]}
                 helpText="Specify a proxy URL to use for HTTP connections outside the cluster."
                 showHelpTextOnError={false}
               />
