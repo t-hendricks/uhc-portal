@@ -3,8 +3,13 @@ import { reduxForm, formValueSelector } from 'redux-form';
 import isEmpty from 'lodash/isEmpty';
 import UpgradeSettingsTab from './UpgradeSettingsTab';
 import {
-  getSchedules, postSchedule, editSchedule, deleteSchedule, replaceSchedule,
-  clearPostedUpgradeScheduleResponse, clearDeleteScheduleResponse,
+  getSchedules,
+  postSchedule,
+  editSchedule,
+  deleteSchedule,
+  replaceSchedule,
+  clearPostedUpgradeScheduleResponse,
+  clearDeleteScheduleResponse,
 } from '../../../common/Upgrades/clusterUpgradeActions';
 import { editCluster, fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { isHibernating } from '../../../common/clusterStates';
@@ -22,7 +27,9 @@ const reduxFormUpgradeSettingsTab = reduxForm(reduxFormConfig)(UpgradeSettingsTa
 const valueSelector = formValueSelector('ClusterUpgradeSettings');
 
 const mapStateToProps = (state) => {
-  const automaticUpgradePolicy = state.clusterUpgrades.schedules.items.find(policy => policy.schedule_type === 'automatic');
+  const automaticUpgradePolicy = state.clusterUpgrades.schedules.items.find(
+    (policy) => policy.schedule_type === 'automatic',
+  );
   const { cluster } = state.clusters.details;
   return {
     cluster,
@@ -42,26 +49,39 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   clearResponses: () => {
     dispatch(clearPostedUpgradeScheduleResponse());
     dispatch(clearDeleteScheduleResponse());
   },
   openModal: (modal, data) => dispatch(openModal(modal, data)),
-  getSchedules: clusterID => dispatch(getSchedules(clusterID)),
-  getClusterDetails: clusterID => dispatch(fetchClusterDetails(clusterID)),
-  onSubmit: (formData, clusterID, existingSchedules, existingGracePeriod,
-    enableUserWorkloadMonitoring) => {
-    const currentAutomaticUpgradePolicy = existingSchedules.items.find(policy => policy.schedule_type === 'automatic');
-    const currentManualUpgradePolicy = existingSchedules.items.find(policy => policy.schedule_type === 'manual');
+  getSchedules: (clusterID) => dispatch(getSchedules(clusterID)),
+  getClusterDetails: (clusterID) => dispatch(fetchClusterDetails(clusterID)),
+  onSubmit: (
+    formData,
+    clusterID,
+    existingSchedules,
+    existingGracePeriod,
+    enableUserWorkloadMonitoring,
+  ) => {
+    const currentAutomaticUpgradePolicy = existingSchedules.items.find(
+      (policy) => policy.schedule_type === 'automatic',
+    );
+    const currentManualUpgradePolicy = existingSchedules.items.find(
+      (policy) => policy.schedule_type === 'manual',
+    );
 
     if (formData.upgrade_policy === 'automatic') {
-      if (currentAutomaticUpgradePolicy
-          && currentAutomaticUpgradePolicy !== formData.automatic_upgrade_schedule) {
+      if (
+        currentAutomaticUpgradePolicy &&
+        currentAutomaticUpgradePolicy !== formData.automatic_upgrade_schedule
+      ) {
         // automatic policy needs an update
-        dispatch(editSchedule(clusterID, currentAutomaticUpgradePolicy.id, {
-          schedule: formData.automatic_upgrade_schedule,
-        }));
+        dispatch(
+          editSchedule(clusterID, currentAutomaticUpgradePolicy.id, {
+            schedule: formData.automatic_upgrade_schedule,
+          }),
+        );
       } else if (!currentAutomaticUpgradePolicy) {
         const newSchedule = {
           schedule_type: 'automatic',
@@ -105,13 +125,16 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
       !stateProps.cluster.disable_user_workload_monitoring,
     );
   };
-  return ({
+  return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
     onSubmit,
-  });
+  };
 };
 
-export default connect(mapStateToProps,
-  mapDispatchToProps, mergeProps)(reduxFormUpgradeSettingsTab);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps,
+)(reduxFormUpgradeSettingsTab);

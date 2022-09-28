@@ -44,9 +44,7 @@ export const ReviewItem = ({ name, formValues }) => {
   const formattedDisplayValue = reviewValue.isMonospace ? <pre>{displayValue}</pre> : displayValue;
 
   const description = reviewValue.isExpandable ? (
-    <ExpandableReviewItem
-      initiallyExpanded={reviewValue.initiallyExpanded}
-    >
+    <ExpandableReviewItem initiallyExpanded={reviewValue.initiallyExpanded}>
       {formattedDisplayValue}
     </ExpandableReviewItem>
   ) : (

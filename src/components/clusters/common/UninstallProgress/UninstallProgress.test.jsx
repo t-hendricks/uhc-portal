@@ -4,7 +4,10 @@ import { shallow } from 'enzyme';
 import UninstallProgress from './UninstallProgress';
 
 import fixtures from '../../ClusterDetails/__test__/ClusterDetails.fixtures';
-import { mockAddOns, mockClusterAddOnsWithExternalResources } from '../../ClusterDetails/components/AddOns/__test__/AddOns.fixtures';
+import {
+  mockAddOns,
+  mockClusterAddOnsWithExternalResources,
+} from '../../ClusterDetails/components/AddOns/__test__/AddOns.fixtures';
 import AddOnsConstants from '../../ClusterDetails/components/AddOns/AddOnsConstants';
 
 describe('<UninstallProgress />', () => {
@@ -14,12 +17,14 @@ describe('<UninstallProgress />', () => {
   const { clusterDetails } = fixtures;
 
   beforeEach(() => {
-    wrapper = shallow(<UninstallProgress
-      cluster={clusterDetails.cluster}
-      getClusterAddOns={getClusterAddOns}
-      addOns={mockAddOns}
-      clusterAddOns={mockClusterAddOnsWithExternalResources}
-    />);
+    wrapper = shallow(
+      <UninstallProgress
+        cluster={clusterDetails.cluster}
+        getClusterAddOns={getClusterAddOns}
+        addOns={mockAddOns}
+        clusterAddOns={mockClusterAddOnsWithExternalResources}
+      />,
+    );
   });
 
   it('should render', () => {
@@ -32,8 +37,8 @@ describe('<UninstallProgress />', () => {
   });
 
   it('should be removing add-ons when an addon is deleting', () => {
-    mockClusterAddOnsWithExternalResources.items[0].state = AddOnsConstants
-      .INSTALLATION_STATE.DELETING;
+    mockClusterAddOnsWithExternalResources.items[0].state =
+      AddOnsConstants.INSTALLATION_STATE.DELETING;
     wrapper.setProps({
       clusterAddOns: mockClusterAddOnsWithExternalResources,
     });
@@ -42,8 +47,8 @@ describe('<UninstallProgress />', () => {
   });
 
   it('should be completed when addon is deleted', () => {
-    mockClusterAddOnsWithExternalResources.items[0].state = AddOnsConstants
-      .INSTALLATION_STATE.DELETED;
+    mockClusterAddOnsWithExternalResources.items[0].state =
+      AddOnsConstants.INSTALLATION_STATE.DELETED;
     wrapper.setProps({
       clusterAddOns: mockClusterAddOnsWithExternalResources,
     });

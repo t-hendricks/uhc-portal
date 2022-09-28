@@ -5,7 +5,6 @@
 import type { AccountGroup } from './AccountGroup';
 import type { List } from './List';
 
-export type AccountGroupList = (List & {
-    items?: Array<AccountGroup>;
-});
-
+export type AccountGroupList = List & {
+  items?: Array<AccountGroup>;
+};

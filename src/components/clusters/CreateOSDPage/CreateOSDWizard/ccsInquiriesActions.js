@@ -1,6 +1,10 @@
 import pick from 'lodash/pick';
 import {
-  listAWSVPCs, listGCPVPCs, listGCPKeyRings, listGCPKeys, listAWSRegions,
+  listAWSVPCs,
+  listGCPVPCs,
+  listGCPKeyRings,
+  listGCPKeys,
+  listAWSRegions,
 } from '../../../../services/clusterService';
 
 export const VALIDATE_CLOUD_PROVIDER_CREDENTIALS = 'VALIDATE_CLOUD_PROVIDER_CREDENTIALS';
@@ -44,8 +48,8 @@ export const getAWSCloudProviderVPCs = (awsCredentials, region) => ({
 
 export const getGCPCloudProviderVPCs = (type, gcpCredentialsJSON, region) => ({
   type,
-  payload: () => credentialsFromJSON(gcpCredentialsJSON)
-    .then(creds => listGCPVPCs(creds, region)),
+  payload: () =>
+    credentialsFromJSON(gcpCredentialsJSON).then((creds) => listGCPVPCs(creds, region)),
   // parameters can be used to check if we need to query again.
   meta: { credentials: gcpCredentialsJSON, cloudProvider: 'gcp', region },
 });
@@ -54,7 +58,7 @@ export const getGCPCloudProviderVPCs = (type, gcpCredentialsJSON, region) => ({
  * Validate AWS credentials.
  * @param {*} awsCredentials { accountID, accessKey, secretKey } object
  */
-export const getAWSCloudProviderRegions = awsCredentials => ({
+export const getAWSCloudProviderRegions = (awsCredentials) => ({
   type: VALIDATE_CLOUD_PROVIDER_CREDENTIALS,
   payload: listAWSRegions(awsCredentials),
   meta: {
@@ -65,8 +69,8 @@ export const getAWSCloudProviderRegions = awsCredentials => ({
 
 export const getGCPKeyRings = (gcpCredentialsJSON, keyLocation) => ({
   type: LIST_GCP_KEY_RINGS,
-  payload: () => credentialsFromJSON(gcpCredentialsJSON)
-    .then(creds => listGCPKeyRings(creds, keyLocation)),
+  payload: () =>
+    credentialsFromJSON(gcpCredentialsJSON).then((creds) => listGCPKeyRings(creds, keyLocation)),
   // parameters can be used to check if we need to query again.
   meta: {
     credentials: gcpCredentialsJSON,
@@ -77,8 +81,10 @@ export const getGCPKeyRings = (gcpCredentialsJSON, keyLocation) => ({
 
 export const getGCPKeys = (gcpCredentialsJSON, keyLocation, keyRing) => ({
   type: LIST_GCP_KEYS,
-  payload: () => credentialsFromJSON(gcpCredentialsJSON)
-    .then(creds => listGCPKeys(creds, keyLocation, keyRing)),
+  payload: () =>
+    credentialsFromJSON(gcpCredentialsJSON).then((creds) =>
+      listGCPKeys(creds, keyLocation, keyRing),
+    ),
   // parameters can be used to check if we need to query again.
   meta: {
     credentials: gcpCredentialsJSON,

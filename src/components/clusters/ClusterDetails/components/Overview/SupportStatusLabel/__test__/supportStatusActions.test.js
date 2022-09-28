@@ -2,7 +2,7 @@ import getSupportStatus from '../supportStatusActions';
 import getOCPLifeCycleStatus from '../../../../../../../services/productLifeCycleService';
 import GET_SUPPORT_STATUS from '../supportStatusConstants';
 
-jest.mock('../../../../../../../services/productLifeCycleService.js');
+jest.mock('../../../../../../../services/productLifeCycleService');
 
 describe('getSupportStatus action', () => {
   let mockDispatch;

@@ -1,7 +1,10 @@
 import produce from 'immer';
 import get from 'lodash/get';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  baseRequestState,
 } from '../../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../../common/errors';
 import UsersConstants from './UsersConstants';
@@ -34,8 +37,8 @@ function UsersReducer(state = initialState, action) {
         const users = [];
 
         // attach group to each user and merge users from all groups into one array
-        action.payload.data.items.forEach(
-          group => get(group, 'users.items', []).forEach(user => users.push({ ...user, group: group.id })),
+        action.payload.data.items.forEach((group) =>
+          get(group, 'users.items', []).forEach((user) => users.push({ ...user, group: group.id })),
         );
 
         draft.groupUsers = {

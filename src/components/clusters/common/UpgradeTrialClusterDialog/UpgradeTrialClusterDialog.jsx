@@ -16,10 +16,7 @@ import './UpgradeTrialClusterDialog.scss';
 
 class UpgradeTrialClusterDialog extends Component {
   componentDidMount() {
-    const {
-      organization,
-      getOrganizationAndQuota,
-    } = this.props;
+    const { organization, getOrganizationAndQuota } = this.props;
 
     if (!organization.pending) {
       getOrganizationAndQuota();
@@ -27,9 +24,7 @@ class UpgradeTrialClusterDialog extends Component {
   }
 
   componentDidUpdate() {
-    const {
-      upgradeTrialClusterResponse, resetResponse, closeModal, onClose,
-    } = this.props;
+    const { upgradeTrialClusterResponse, resetResponse, closeModal, onClose } = this.props;
     if (upgradeTrialClusterResponse.fulfilled) {
       resetResponse();
       closeModal();
@@ -39,11 +34,13 @@ class UpgradeTrialClusterDialog extends Component {
 
   buttonLinkClick = (link) => {
     window.open(link, '_blank');
-  }
+  };
 
   upgradeModalQuota() {
     const {
-      cluster, machineTypesByID, organization: { quotaList },
+      cluster,
+      machineTypesByID,
+      organization: { quotaList },
     } = this.props;
     const { OSD } = normalizedProducts;
     const { STANDARD, MARKETPLACE } = billingModels;
@@ -93,7 +90,8 @@ class UpgradeTrialClusterDialog extends Component {
     const marketplaceQuotaEnabled = availableQuota.MARKETPLACE;
     const button = {
       primaryText: 'Contact sales',
-      onPrimaryClick: () => this.buttonLinkClick('https://cloud.redhat.com/products/dedicated/contact/'),
+      onPrimaryClick: () =>
+        this.buttonLinkClick('https://cloud.redhat.com/products/dedicated/contact/'),
     };
 
     if (availableQuota.STANDARD && !availableQuota.MARKETPLACE) {
@@ -122,7 +120,10 @@ class UpgradeTrialClusterDialog extends Component {
 
     button.secondaryText = 'Enable Marketplace billing';
     button.showSecondary = true;
-    button.onSecondaryClick = () => this.buttonLinkClick('https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated');
+    button.onSecondaryClick = () =>
+      this.buttonLinkClick(
+        'https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated',
+      );
 
     if (availableQuota.MARKETPLACE && availableQuota.STANDARD) {
       button.secondaryText = 'Upgrade using quota';
@@ -153,7 +154,11 @@ class UpgradeTrialClusterDialog extends Component {
 
   render() {
     const {
-      submit, upgradeTrialClusterResponse, clusterID, shouldDisplayClusterName, clusterDisplayName,
+      submit,
+      upgradeTrialClusterResponse,
+      clusterID,
+      shouldDisplayClusterName,
+      clusterDisplayName,
     } = this.props;
 
     const error = upgradeTrialClusterResponse.error ? (
@@ -184,16 +189,11 @@ class UpgradeTrialClusterDialog extends Component {
         <p>{error}</p>
         <Form onSubmit={() => submit(clusterID)}>
           <p>
-
-            {!noQuota && (
-              <img className="upgrade-trial-logo" src={MechTraining} alt="Red Hat" />
-            )}
+            {!noQuota && <img className="upgrade-trial-logo" src={MechTraining} alt="Red Hat" />}
             Convert this trial cluster to a fully supported OpenShift Dedicated cluster.
             <br />
             <br />
-            <ExternalLink href={links.OCM_DOCS_UPGRADING_OSD_TRIAL}>
-              Learn more
-            </ExternalLink>
+            <ExternalLink href={links.OCM_DOCS_UPGRADING_OSD_TRIAL}>Learn more</ExternalLink>
             {noQuota && (
               <Alert
                 variant="warning"

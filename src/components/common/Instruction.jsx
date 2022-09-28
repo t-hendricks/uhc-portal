@@ -6,9 +6,7 @@ import './Instruction.scss';
 
 const Instruction = ({ children }) => (
   <TextListItem className="ocm-instructions__list-item">
-    <div className="ocm-instructions__list-item-contents">
-      {children}
-    </div>
+    <div className="ocm-instructions__list-item-contents">{children}</div>
   </TextListItem>
 );
 

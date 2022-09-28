@@ -27,9 +27,9 @@ function TermsError({ error, restore }) {
         This action is blocked.
       </Title>
       <EmptyStateBody>
-        You must accept the Terms and Conditions in order to make changes to
-        this cluster. Your cluster will remain unaffected until then.
-        Once you accept the terms, you will need to retry the action that was blocked.
+        You must accept the Terms and Conditions in order to make changes to this cluster. Your
+        cluster will remain unaffected until then. Once you accept the terms, you will need to retry
+        the action that was blocked.
       </EmptyStateBody>
       <Button variant="primary" component="a" href={tncAppURL}>
         View Terms and Conditions

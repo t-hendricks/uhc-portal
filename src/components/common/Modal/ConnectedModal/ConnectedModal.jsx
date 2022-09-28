@@ -7,9 +7,7 @@ function ConnectedModal({ ModalComponent, isOpen, ...props }) {
     throw new Error('Modal component missing name');
   }
 
-  return isOpen && (
-    <ModalComponent {...props} />
-  );
+  return isOpen && <ModalComponent {...props} />;
 }
 
 ConnectedModal.propTypes = {

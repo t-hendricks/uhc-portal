@@ -52,6 +52,7 @@ exports[`<MachineTypeSelection /> when the machine types list contains unknown c
     isCreatable={false}
     isCreateSelectOptionObject={false}
     isDisabled={false}
+    isFlipEnabled={false}
     isGrouped={false}
     isInputFilterPersisted={false}
     isInputValuePersisted={false}
@@ -75,6 +76,7 @@ exports[`<MachineTypeSelection /> when the machine types list contains unknown c
     toggleAriaLabel="Options menu"
     toggleIcon={null}
     toggleId={null}
+    typeAheadAriaDescribedby=""
     typeAheadAriaLabel=""
     validated="default"
     variant="single"
@@ -179,6 +181,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
     isCreatable={false}
     isCreateSelectOptionObject={false}
     isDisabled={false}
+    isFlipEnabled={false}
     isGrouped={false}
     isInputFilterPersisted={false}
     isInputValuePersisted={false}
@@ -202,6 +205,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
     toggleAriaLabel="Options menu"
     toggleIcon={null}
     toggleId={null}
+    typeAheadAriaDescribedby=""
     typeAheadAriaLabel=""
     validated="default"
     variant="single"
@@ -306,6 +310,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     isCreatable={false}
     isCreateSelectOptionObject={false}
     isDisabled={false}
+    isFlipEnabled={false}
     isGrouped={false}
     isInputFilterPersisted={false}
     isInputValuePersisted={false}
@@ -329,6 +334,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     toggleAriaLabel="Options menu"
     toggleIcon={null}
     toggleId={null}
+    typeAheadAriaDescribedby=""
     typeAheadAriaLabel=""
     validated="default"
     variant="single"
@@ -474,6 +480,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     isCreatable={false}
     isCreateSelectOptionObject={false}
     isDisabled={false}
+    isFlipEnabled={false}
     isGrouped={false}
     isInputFilterPersisted={false}
     isInputValuePersisted={false}
@@ -497,6 +504,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     toggleAriaLabel="Options menu"
     toggleIcon={null}
     toggleId={null}
+    typeAheadAriaDescribedby=""
     typeAheadAriaLabel=""
     validated="default"
     variant="single"
@@ -642,6 +650,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     isCreatable={false}
     isCreateSelectOptionObject={false}
     isDisabled={false}
+    isFlipEnabled={false}
     isGrouped={false}
     isInputFilterPersisted={false}
     isInputValuePersisted={false}
@@ -665,6 +674,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     toggleAriaLabel="Options menu"
     toggleIcon={null}
     toggleId={null}
+    typeAheadAriaDescribedby=""
     typeAheadAriaLabel=""
     validated="default"
     variant="single"

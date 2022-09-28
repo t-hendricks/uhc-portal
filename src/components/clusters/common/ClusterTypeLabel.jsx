@@ -42,12 +42,8 @@ function ClusterTypeLabel({ cluster }) {
 
   const type = clusterTypes[planType] || clusterTypes[normalizedProducts.UNKNOWN];
   return (
-    <Tooltip
-      content={type.tooltip}
-    >
-      <span>
-        {type.name}
-      </span>
+    <Tooltip content={type.tooltip}>
+      <span>{type.name}</span>
     </Tooltip>
   );
 }

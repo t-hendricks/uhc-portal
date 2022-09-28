@@ -5,11 +5,12 @@ import RegisterCluster from './RegisterCluster';
 import { openModal, closeModal } from '../../common/Modal/ModalActions';
 import shouldShowModal from '../../common/Modal/ModalSelectors';
 import { getOrganizationAndQuota } from '../../../redux/actions/userActions';
-import { registerDisconnectedCluster, resetCreatedClusterResponse } from '../../../redux/actions/clustersActions';
-import hasOrgLevelsubscribeOCPCapability from './RegisterClusterSelectors';
 import {
-  subscriptionSystemUnits,
-} from '../../../common/subscriptionTypes';
+  registerDisconnectedCluster,
+  resetCreatedClusterResponse,
+} from '../../../redux/actions/clustersActions';
+import hasOrgLevelsubscribeOCPCapability from './RegisterClusterSelectors';
+import { subscriptionSystemUnits } from '../../../common/subscriptionTypes';
 
 const reduxFormConfig = {
   form: 'RegisterCluster',
@@ -19,7 +20,7 @@ const reduxFormRegisterCluster = reduxForm(reduxFormConfig)(RegisterCluster);
 
 const mapStateToProps = (state) => {
   const canSubscribeOCP = hasOrgLevelsubscribeOCPCapability(state);
-  return ({
+  return {
     canSubscribeOCP,
     registerClusterResponse: state.clusters.createdCluster,
     isOpen: shouldShowModal(state, 'register-cluster-error'),
@@ -35,12 +36,16 @@ const mapStateToProps = (state) => {
       cpu_total: '',
       socket_total: '',
     },
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
-  closeModal: (name) => { dispatch(closeModal(name)); },
-  openModal: (name) => { dispatch(openModal(name)); },
+const mapDispatchToProps = (dispatch) => ({
+  closeModal: (name) => {
+    dispatch(closeModal(name));
+  },
+  openModal: (name) => {
+    dispatch(openModal(name));
+  },
   onSubmit: (registrationRequest, subscriptionRequest) => {
     // This request goes to account-manager,
     dispatch(registerDisconnectedCluster(registrationRequest, subscriptionRequest));

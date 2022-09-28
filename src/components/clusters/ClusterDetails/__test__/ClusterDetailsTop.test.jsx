@@ -25,9 +25,7 @@ describe('<ClusterDetailsTop />', () => {
       canHibernateCluster: fixtures.canHibernateCluster,
       toggleSubscriptionReleased: functions.toggleSubscriptionReleased,
     };
-    wrapper = shallow(
-      <ClusterDetailsTop {...props} />,
-    );
+    wrapper = shallow(<ClusterDetailsTop {...props} />);
   });
 
   it('should render', () => {
@@ -66,7 +64,10 @@ describe('<ClusterDetailsTop />', () => {
   });
 
   it('should show only Unarchive button if the cluster is archived', () => {
-    const cluster = { ...fixtures.clusterDetails.cluster, subscription: { status: 'Archived', id: 'fake' } };
+    const cluster = {
+      ...fixtures.clusterDetails.cluster,
+      subscription: { status: 'Archived', id: 'fake' },
+    };
     wrapper.setProps({ cluster }, () => {
       const unarchiveButton = wrapper.find(ButtonWithTooltip).at(0);
       expect(unarchiveButton.props().variant).toEqual('secondary');
@@ -74,7 +75,10 @@ describe('<ClusterDetailsTop />', () => {
       expect(wrapper.find('ClusterActionsDropdown').length).toEqual(0); // no cluster actions dropdown
       expect(wrapper.find('RefreshBtn').length).toEqual(0); // no refresh button
       unarchiveButton.simulate('click');
-      expect(functions.openModal).toBeCalledWith('unarchive-cluster', { subscriptionID: 'fake', name: cluster.name });
+      expect(functions.openModal).toBeCalledWith('unarchive-cluster', {
+        subscriptionID: 'fake',
+        name: cluster.name,
+      });
     });
   });
 

@@ -23,13 +23,12 @@
  * - 1 PiB = 2^50 bytes
  */
 export type Value = {
-    /**
-     * Name of the unit used to measure the value.
-     */
-    unit?: string;
-    /**
-     * Numeric value.
-     */
-    value?: number;
+  /**
+   * Name of the unit used to measure the value.
+   */
+  unit?: string;
+  /**
+   * Numeric value.
+   */
+  value?: number;
 };
-

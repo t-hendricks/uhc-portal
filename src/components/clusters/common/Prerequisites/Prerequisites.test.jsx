@@ -35,9 +35,7 @@ describe('<Prerequisites/>', () => {
   });
 
   it('<Prerequisites toggleText="Cluster Prerequisites"/>', () => {
-    wrapper = shallow(
-      <Prerequisites toggleText="Cluster Prerequisites" />,
-    );
+    wrapper = shallow(<Prerequisites toggleText="Cluster Prerequisites" />);
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('ExpandableSection').props().toggleText).toBe('Cluster Prerequisites');
   });

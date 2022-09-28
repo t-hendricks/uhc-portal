@@ -433,7 +433,10 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('does not display ccs_only machine types, only machines with quota', () => {
-        const types = wrapper.find('SelectOption').getElements().map(e => e.key);
+        const types = wrapper
+          .find('SelectOption')
+          .getElements()
+          .map((e) => e.key);
         expect(types).not.toContain('m5.12xlarge');
         expect(types).not.toContain('g4dn.2xlarge');
       });
@@ -475,7 +478,10 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('does not display ccs_only machine types, only machines with quota', () => {
-        const types = wrapper.find('SelectOption').getElements().map(e => e.key);
+        const types = wrapper
+          .find('SelectOption')
+          .getElements()
+          .map((e) => e.key);
         expect(types).toContain('m5.xlarge');
         expect(types).toContain('m5.4xlarge');
         expect(types).not.toContain('m5.12xlarge');
@@ -519,7 +525,10 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('does not display ccs_only machine types, only machines with quota', () => {
-        const types = wrapper.find('SelectOption').getElements().map(e => e.key);
+        const types = wrapper
+          .find('SelectOption')
+          .getElements()
+          .map((e) => e.key);
         expect(types).not.toContain('m5.12xlarge');
         expect(types).not.toContain('g4dn.2xlarge');
       });
@@ -562,7 +571,10 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('displays only machine types with quota', () => {
-        const types = wrapper.find('SelectOption').getElements().map(e => e.key);
+        const types = wrapper
+          .find('SelectOption')
+          .getElements()
+          .map((e) => e.key);
         expect(types).toContain('m5.xlarge');
       });
     });
@@ -606,10 +618,7 @@ describe('<MachineTypeSelection />', () => {
 
   describe('when the machine types list contains unknown categories', () => {
     const moreTypes = {
-      aws: [
-        ...machineTypes.aws,
-        ...unknownCategoryMachineTypes,
-      ],
+      aws: [...machineTypes.aws, ...unknownCategoryMachineTypes],
     };
     const state = {
       ...baseState,
@@ -660,7 +669,10 @@ describe('<MachineTypeSelection />', () => {
       });
 
       it('displays only machine types with quota from known categories', () => {
-        const types = wrapper.find('SelectOption').getElements().map(e => e.key);
+        const types = wrapper
+          .find('SelectOption')
+          .getElements()
+          .map((e) => e.key);
         expect(types).toContain('m5.xlarge');
         expect(types).not.toContain('foo.2xbar');
       });

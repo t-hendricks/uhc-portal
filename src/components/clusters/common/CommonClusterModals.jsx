@@ -22,24 +22,15 @@ function CommonClusterModals({ onClose, onClusterDeleted }) {
     <>
       <ConnectedModal ModalComponent={EditDisplayNameDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={EditConsoleURLDialog} onClose={onClose} />
-      <ConnectedModal
-        ModalComponent={TransferClusterOwnershipDialog}
-        onClose={onClose}
-      />
+      <ConnectedModal ModalComponent={TransferClusterOwnershipDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={EditSubscriptionSettingsDialog} onClose={onClose} isDialog />
       <ConnectedModal ModalComponent={ScaleClusterDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={EditNodeCountModal} onClose={onClose} />
       <ConnectedModal ModalComponent={ArchiveClusterDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={HibernateClusterModal} onClose={onClose} />
       <ConnectedModal ModalComponent={ResumeClusterModal} onClose={onClose} />
-      <ConnectedModal
-        ModalComponent={UnarchiveClusterDialog}
-        onClose={onClose}
-      />
-      <ConnectedModal
-        ModalComponent={UpgradeTrialClusterDialog}
-        onClose={onClose}
-      />
+      <ConnectedModal ModalComponent={UnarchiveClusterDialog} onClose={onClose} />
+      <ConnectedModal ModalComponent={UpgradeTrialClusterDialog} onClose={onClose} />
       <ConnectedModal ModalComponent={UpgradeWizard} />
       <ConnectedModal
         ModalComponent={DeleteClusterDialog}

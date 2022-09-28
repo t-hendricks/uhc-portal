@@ -29,13 +29,11 @@ describe('<VersionCard>', () => {
   });
 
   it('should render correctly when selected & not recommended', () => {
-    wrapper.setProps(
-      {
-        isSelected: true,
-        version: '4.5.16',
-        isRecommended: false,
-      },
-    );
+    wrapper.setProps({
+      isSelected: true,
+      version: '4.5.16',
+      isRecommended: false,
+    });
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -44,11 +42,9 @@ describe('<VersionCard>', () => {
   });
 
   it('should render tooltip when has unmet cluster acknowledgements', () => {
-    wrapper.setProps(
-      {
-        getUnMetClusterAcknowledgements: () => [{ id: 'someUpgradeGateId' }],
-      },
-    );
+    wrapper.setProps({
+      getUnMetClusterAcknowledgements: () => [{ id: 'someUpgradeGateId' }],
+    });
 
     expect(wrapper).toMatchSnapshot();
   });

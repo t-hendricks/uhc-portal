@@ -17,9 +17,10 @@ const isCCSCredentialsValidationNeeded = (cloudProviderID, state) => {
   // if the details change, we need to run validations again.
   const credentialsKey = ccsCredentialsSelector(cloudProviderID, state);
 
-  const areCCSCredentialsValid = ccsCredentialsValidityResponse.fulfilled
-    && ccsCredentialsValidityResponse.cloudProvider === cloudProviderID
-    && isEqual(ccsCredentialsValidityResponse.credentials, credentialsKey);
+  const areCCSCredentialsValid =
+    ccsCredentialsValidityResponse.fulfilled &&
+    ccsCredentialsValidityResponse.cloudProvider === cloudProviderID &&
+    isEqual(ccsCredentialsValidityResponse.credentials, credentialsKey);
 
   return valueSelector(state, 'byoc') === 'true' && !areCCSCredentialsValid;
 };

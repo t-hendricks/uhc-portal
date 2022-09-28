@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type Source = {
-    id: number;
-    source_type: string;
+  id: number;
+  source_type: string;
 };
-

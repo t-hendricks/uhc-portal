@@ -38,51 +38,29 @@ const {
   SOCKET_TOTAL,
 } = subscriptionSettings;
 
-const {
-  EVAL,
-  PREMIUM,
-  STANDARD,
-  SELF_SUPPORT,
-  NONE,
-} = subscriptionSupportLevels;
+const { EVAL, PREMIUM, STANDARD, SELF_SUPPORT, NONE } = subscriptionSupportLevels;
 
-const {
-  L1_L3,
-  L3_ONLY,
-} = subscriptionServiceLevels;
+const { L1_L3, L3_ONLY } = subscriptionServiceLevels;
 
-const {
-  PRODUCTION,
-  DEV_TEST,
-  DISASTER_RECOVERY,
-} = subscriptionUsages;
+const { PRODUCTION, DEV_TEST, DISASTER_RECOVERY } = subscriptionUsages;
 
-const {
-  OPENSHIFT,
-  JBOSS_MIDDLEWARE,
-  IBM_CLOUDPAK,
-} = subscriptionProductBundles;
+const { OPENSHIFT, JBOSS_MIDDLEWARE, IBM_CLOUDPAK } = subscriptionProductBundles;
 
-const {
-  CORES_VCPU,
-  SOCKETS,
-} = subscriptionSystemUnits;
+const { CORES_VCPU, SOCKETS } = subscriptionSystemUnits;
 
-const {
-  STANDARD: STANDARD_BILLING_MODEL,
-  MARKETPLACE: MARKETPLACE_BILLING_MODEL,
-} = billingModels;
+const { STANDARD: STANDARD_BILLING_MODEL, MARKETPLACE: MARKETPLACE_BILLING_MODEL } = billingModels;
 
 const { DISCONNECTED } = subscriptionStatuses;
 
 const standardBillingModelLabel = 'Annual: Fixed capacity subscription from Red Hat';
-const marketplaceBillingModelLabel = 'On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace';
+const marketplaceBillingModelLabel =
+  'On-Demand (Hourly): Flexible usage billed through the Red Hat Marketplace';
 
 const MIN_VAL = 1;
 const MAX_VAL = 999;
 
 class EditSubscriptionSettingsFields extends Component {
-  state = { }
+  state = {};
 
   options = {
     [SUPPORT_LEVEL]: [],
@@ -90,7 +68,7 @@ class EditSubscriptionSettingsFields extends Component {
     [USAGE]: [],
     [SYSTEM_UNITS]: [],
     [CLUSTER_BILLING_MODEL]: [],
-  }
+  };
 
   componentDidMount() {
     const { initialSettings } = this.props;
@@ -123,18 +101,12 @@ class EditSubscriptionSettingsFields extends Component {
         this.publishChange();
       }
     });
-  }
+  };
 
   resetOptions = (subscription) => {
     const nextState = {};
 
-    [
-      SUPPORT_LEVEL,
-      USAGE,
-      SERVICE_LEVEL,
-      SYSTEM_UNITS,
-      CLUSTER_BILLING_MODEL,
-    ].forEach(
+    [SUPPORT_LEVEL, USAGE, SERVICE_LEVEL, SYSTEM_UNITS, CLUSTER_BILLING_MODEL].forEach(
       (setting) => {
         const options = this.getOptions(subscription, setting);
         this.options[setting] = options;
@@ -146,7 +118,7 @@ class EditSubscriptionSettingsFields extends Component {
     );
 
     return nextState;
-  }
+  };
 
   getOptions = (subscription, setting) => {
     const value = get(subscription, setting);
@@ -166,7 +138,9 @@ class EditSubscriptionSettingsFields extends Component {
           });
         } else if (value === NONE) {
           options.push({
-            label: <span className="subscription-settings expired-eval-option">Expired evaluation</span>,
+            label: (
+              <span className="subscription-settings expired-eval-option">Expired evaluation</span>
+            ),
             value: NONE,
           });
         }
@@ -206,7 +180,8 @@ class EditSubscriptionSettingsFields extends Component {
           options[0].isDefault = true;
         } else if (canSubscribeMarketplaceOCP) {
           options[1].isDefault = true;
-        } else { // default to standard if both are missing
+        } else {
+          // default to standard if both are missing
           options[0].isDefault = true;
         }
         break;
@@ -224,7 +199,7 @@ class EditSubscriptionSettingsFields extends Component {
       }
     }
     return options;
-  }
+  };
 
   validateSystemUnitsNumericField = (inputVal = null) => {
     const {
@@ -257,7 +232,7 @@ class EditSubscriptionSettingsFields extends Component {
     }
 
     return { isValid: true, errorMsg: '' };
-  }
+  };
 
   publishChange = () => {
     // support_level must be valid
@@ -273,7 +248,7 @@ class EditSubscriptionSettingsFields extends Component {
     }
     const { onSettingsChange } = this.props;
     onSettingsChange({ ...this.state, isValid });
-  }
+  };
 
   handleChange = (name, value) => {
     if (name === CLUSTER_BILLING_MODEL && value === MARKETPLACE_BILLING_MODEL) {
@@ -317,14 +292,11 @@ class EditSubscriptionSettingsFields extends Component {
     return handler;
   };
 
-  isDisconnected = settings => (get(settings, 'status') === DISCONNECTED || !get(settings, 'id', false));
+  isDisconnected = (settings) =>
+    get(settings, 'status') === DISCONNECTED || !get(settings, 'id', false);
 
   render() {
-    const {
-      initialSettings,
-      canSubscribeStandardOCP,
-      canSubscribeMarketplaceOCP,
-    } = this.props;
+    const { initialSettings, canSubscribeStandardOCP, canSubscribeMarketplaceOCP } = this.props;
 
     const {
       [CLUSTER_BILLING_MODEL]: clusterBillingModel,
@@ -333,22 +305,22 @@ class EditSubscriptionSettingsFields extends Component {
     } = this.state;
 
     const isDisabled = !canSubscribeStandardOCP && !canSubscribeMarketplaceOCP;
-    const isDisabledBySupportLevel = supportLevel !== PREMIUM
-      && supportLevel !== STANDARD
-      && supportLevel !== SELF_SUPPORT;
+    const isDisabledBySupportLevel =
+      supportLevel !== PREMIUM && supportLevel !== STANDARD && supportLevel !== SELF_SUPPORT;
     const isDisabledByBillingModel = clusterBillingModel === MARKETPLACE_BILLING_MODEL;
 
     // the billing_model options are visible only when,
     // (1) it has both capabilities, and
     // (2) it's not already set.
     const billingModel = get(initialSettings, CLUSTER_BILLING_MODEL);
-    const isBillingModelVisible = canSubscribeStandardOCP
-      && canSubscribeMarketplaceOCP
-      && billingModel !== STANDARD_BILLING_MODEL
-      && billingModel !== MARKETPLACE_BILLING_MODEL;
+    const isBillingModelVisible =
+      canSubscribeStandardOCP &&
+      canSubscribeMarketplaceOCP &&
+      billingModel !== STANDARD_BILLING_MODEL &&
+      billingModel !== MARKETPLACE_BILLING_MODEL;
 
     // provide alert text per its context
-    let billingModelAlertText = 'Your subscription type can\'t be altered after you set it.';
+    let billingModelAlertText = "Your subscription type can't be altered after you set it.";
     if (!isBillingModelVisible) {
       if (billingModel === STANDARD_BILLING_MODEL) {
         billingModelAlertText = `Cluster subscription type is ${standardBillingModelLabel}`;
@@ -368,9 +340,7 @@ class EditSubscriptionSettingsFields extends Component {
         title={billingModelAlertText}
       >
         <a href={links.OCM_DOCS_SUBSCRIPTIONS} target="_blank" rel="noreferrer noopener">
-          Learn more about subscriptions
-          {' '}
-          <ExternalLinkAltIcon color="#0066cc" size="sm" />
+          Learn more about subscriptions <ExternalLinkAltIcon color="#0066cc" size="sm" />
         </a>
       </Alert>
     );
@@ -383,7 +353,7 @@ class EditSubscriptionSettingsFields extends Component {
       const radioGroupSelector = `.${radioGroupClasses.join('.')} .pf-c-form__group-control`;
       // we need the tip on all the 4 form groups
       const startPos = isBillingModelVisible ? 1 : 0;
-      const radioGroupComponents = [0, 1, 2, 3].map(idx => (
+      const radioGroupComponents = [0, 1, 2, 3].map((idx) => (
         <Tooltip
           key={idx}
           content={
@@ -397,7 +367,9 @@ class EditSubscriptionSettingsFields extends Component {
               return groupEls[groupPos];
             }
             // eslint-disable-next-line no-console
-            console.error(`Edit Subscription tooltip: error selecting ${radioGroupSelector} (${groupPos})`);
+            console.error(
+              `Edit Subscription tooltip: error selecting ${radioGroupSelector} (${groupPos})`,
+            );
             return null;
           }}
         />
@@ -431,11 +403,11 @@ class EditSubscriptionSettingsFields extends Component {
         <PopoverHint
           id="subscripiton-settings-support-level-hint"
           headerContent="Service level agreement (SLA)"
-          hint={(
+          hint={
             <TextContent>
               <Text component={TextVariants.p}>
-                How your subscription is supported, including the hours
-                of support coverage and support ticket response times.
+                How your subscription is supported, including the hours of support coverage and
+                support ticket response times.
               </Text>
               <Text component={TextVariants.p}>
                 <ExternalLink href="https://access.redhat.com/support/">
@@ -443,7 +415,7 @@ class EditSubscriptionSettingsFields extends Component {
                 </ExternalLink>
               </Text>
             </TextContent>
-          )}
+          }
           iconClassName={labelIconClass}
           hasAutoWidth
           maxWidth="30.0rem"
@@ -456,13 +428,11 @@ class EditSubscriptionSettingsFields extends Component {
         <PopoverHint
           id="subscripiton-settings-service-level-hit"
           headerContent="Support type"
-          hint={(
+          hint={
             <TextContent>
-              <Text component={TextVariants.p}>
-                Who you can call for primary support.
-              </Text>
+              <Text component={TextVariants.p}>Who you can call for primary support.</Text>
             </TextContent>
-          )}
+          }
           iconClassName={labelIconClass}
         />
       </>
@@ -473,13 +443,11 @@ class EditSubscriptionSettingsFields extends Component {
         <PopoverHint
           id="subscripiton-settings-usage-hint"
           headerContent="Cluster usage"
-          hint={(
+          hint={
             <TextContent>
-              <Text component={TextVariants.p}>
-                How you are using this cluster.
-              </Text>
+              <Text component={TextVariants.p}>How you are using this cluster.</Text>
             </TextContent>
-          )}
+          }
           iconClassName={labelIconClass}
         />
       </>
@@ -490,13 +458,11 @@ class EditSubscriptionSettingsFields extends Component {
         <PopoverHint
           id="subscripiton-settings-system-units-hint"
           headerContent="Subscription units"
-          hint={(
+          hint={
             <TextContent>
-              <Text component={TextVariants.p}>
-                How usage is measured for your subscription.
-              </Text>
+              <Text component={TextVariants.p}>How usage is measured for your subscription.</Text>
             </TextContent>
-          )}
+          }
           iconClassName={labelIconClass}
         />
       </>
@@ -510,20 +476,24 @@ class EditSubscriptionSettingsFields extends Component {
         min={MIN_VAL}
         max={MAX_VAL}
         inputName={systemUnits === SOCKETS ? SOCKET_TOTAL : CPU_TOTAL}
-        isDisabled={isDisabled
-          || isDisabledByBillingModel
-          || isDisabledBySupportLevel}
+        isDisabled={isDisabled || isDisabledByBillingModel || isDisabledBySupportLevel}
         onMinus={this.handleUnitsNumberDelta(-1)}
         onPlus={this.handleUnitsNumberDelta(1)}
         onChange={this.handleUnitsNumberChange}
-        inputAriaLabel={systemUnits === SOCKETS ? 'Number of sockets' : 'Number of compute cores (excluding control plane nodes)'}
+        inputAriaLabel={
+          systemUnits === SOCKETS
+            ? 'Number of sockets'
+            : 'Number of compute cores (excluding control plane nodes)'
+        }
         minusBtnAriaLabel="decrement the number by 1"
         plusBtnAriaLabel="increment the number by 1"
         widthChars={MAX_VAL.toString().length}
       />
     ) : (
       <>
-        <span id="cpu-socket-value">{`${cpuSocketValue} ${systemUnits === SOCKETS ? 'Sockets' : 'Cores/vCPU'}`}</span>
+        <span id="cpu-socket-value">{`${cpuSocketValue} ${
+          systemUnits === SOCKETS ? 'Sockets' : 'Cores/vCPU'
+        }`}</span>
         <PopoverHint
           id="cpu-socket-value-hint"
           hint="This data is gathered directly from the telemetry metrics submitted by the cluster and cannot be changed."
@@ -586,9 +556,17 @@ class EditSubscriptionSettingsFields extends Component {
           isInline
         />
         <FormGroup
-          label={systemUnits === SOCKETS ? 'Number of sockets' : 'Number of compute cores (excluding control plane nodes)'}
+          label={
+            systemUnits === SOCKETS
+              ? 'Number of sockets'
+              : 'Number of compute cores (excluding control plane nodes)'
+          }
           isRequired={isDisconnectedSub}
-          helperText={isDisconnectedSub ? `${systemUnits} value can be any integer number between ${MIN_VAL}-${MAX_VAL}` : ''}
+          helperText={
+            isDisconnectedSub
+              ? `${systemUnits} value can be any integer number between ${MIN_VAL}-${MAX_VAL}`
+              : ''
+          }
           helperTextInvalid={systemUnitsNumericErrorMsg}
           validated={systemUnitsNumericIsValid ? 'default' : 'error'}
         >

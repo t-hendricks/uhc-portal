@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Form, TextContent, Text, TextVariants,
-} from '@patternfly/react-core';
+import { Form, TextContent, Text, TextVariants } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
 import modals from '../../../common/Modal/modals';
 import EditSubscriptionSettingsRequestState from './EditSubscriptionSettingsRequestState';
 import EditSubscriptionSettingsFields from './EditSubscriptionSettingsFields';
-import { hasCapability, subscriptionCapabilities } from '../../../../common/subscriptionCapabilities';
+import {
+  hasCapability,
+  subscriptionCapabilities,
+} from '../../../../common/subscriptionCapabilities';
 
 const { SUBSCRIBED_OCP, SUBSCRIBED_OCP_MARKETPLACE } = subscriptionCapabilities;
 
 class EditSubscriptionSettingsDialog extends Component {
-  state = { isValid: true }
+  state = { isValid: true };
 
   handleSubmit = () => {
     const { submit, subscription } = this.props;
@@ -23,24 +24,17 @@ class EditSubscriptionSettingsDialog extends Component {
   handleClose = () => {
     const { closeModal } = this.props;
     closeModal();
-  }
+  };
 
   handleSettingsChange = (newSettings) => {
     this.setState(newSettings);
-  }
+  };
 
   render() {
-    const {
-      requestState,
-      onClose,
-      subscription,
-      clusterDisplayName,
-      shouldDisplayClusterName,
-    } = this.props;
+    const { requestState, onClose, subscription, clusterDisplayName, shouldDisplayClusterName } =
+      this.props;
 
-    const {
-      isValid,
-    } = this.state;
+    const { isValid } = this.state;
 
     return (
       <Modal
@@ -57,9 +51,18 @@ class EditSubscriptionSettingsDialog extends Component {
       >
         <EditSubscriptionSettingsRequestState
           requestState={requestState}
-          onFulfilled={() => { this.handleClose(); onClose(); }}
+          onFulfilled={() => {
+            this.handleClose();
+            onClose();
+          }}
         />
-        <Form onSubmit={(e) => { this.handleSubmit(); e.preventDefault(); }} className="subscription-settings form">
+        <Form
+          onSubmit={(e) => {
+            this.handleSubmit();
+            e.preventDefault();
+          }}
+          className="subscription-settings form"
+        >
           <TextContent>
             <Text component={TextVariants.p}>
               Edit your subscription settings to receive the correct level of cluster support.

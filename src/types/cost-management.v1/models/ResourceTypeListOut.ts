@@ -3,8 +3,7 @@
 /* eslint-disable */
 
 export type ResourceTypeListOut = {
-    value?: string;
-    path?: string;
-    count?: number;
+  value?: string;
+  path?: string;
+  count?: number;
 };
-

@@ -34,8 +34,7 @@ exports[`<ButtonWithTooltip> with node disableReason renders 1`] = `
 <Tooltip
   content={
     <Text>
-      Unsupported.
-       
+      Unsupported. 
       <Link
         to="http://example.com"
       >

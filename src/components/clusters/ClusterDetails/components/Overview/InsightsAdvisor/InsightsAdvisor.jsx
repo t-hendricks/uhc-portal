@@ -9,9 +9,7 @@ import Chart from './Chart';
 import './InsightsAdvisor.scss';
 
 const InsightsAdvisor = ({ insightsData, externalId }) => {
-  const filteredData = insightsData.data
-    ? insightsData.data.filter(val => !val.disabled)
-    : [];
+  const filteredData = insightsData.data ? insightsData.data.filter((val) => !val.disabled) : [];
   const entries = Object.entries(groupRulesByRisk(filteredData)).reverse();
 
   return (

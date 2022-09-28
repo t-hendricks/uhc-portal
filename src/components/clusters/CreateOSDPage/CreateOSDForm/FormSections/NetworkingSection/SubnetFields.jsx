@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  GridItem,
-} from '@patternfly/react-core';
+import { GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import AvailabilityZoneSelection, { PLACEHOLDER_VALUE } from './AvailabilityZoneSelection';
-import { required, validateUniqueAZ, validateValueNotPlaceholder } from '../../../../../../common/validators';
+import {
+  required,
+  validateUniqueAZ,
+  validateValueNotPlaceholder,
+} from '../../../../../../common/validators';
 
 import './SubnetFields.scss';
 
@@ -61,11 +63,7 @@ const SingleSubnetFieldsRow = ({
   );
 };
 
-const SubnetFields = ({
-  selectedRegion,
-  isMultiAz,
-  privateLinkSelected,
-}) => (
+const SubnetFields = ({ selectedRegion, isMultiAz, privateLinkSelected }) => (
   <>
     <SingleSubnetFieldsRow
       showLabels
@@ -74,8 +72,7 @@ const SubnetFields = ({
       isMultiAz={isMultiAz}
       privateLinkSelected={privateLinkSelected}
     />
-    {
-    isMultiAz && (
+    {isMultiAz && (
       <>
         <SingleSubnetFieldsRow
           index={1}
@@ -90,8 +87,7 @@ const SubnetFields = ({
           privateLinkSelected={privateLinkSelected}
         />
       </>
-    )
-  }
+    )}
   </>
 );
 

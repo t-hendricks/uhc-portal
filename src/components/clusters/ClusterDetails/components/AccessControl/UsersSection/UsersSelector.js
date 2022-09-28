@@ -4,7 +4,11 @@ import clusterStates from '../../../../common/clusterStates';
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';
 
 const canAllowAdminSelector = (state) => {
-  const product = get(state, 'clusters.details.cluster.subscription.plan.type', normalizedProducts.OSD);
+  const product = get(
+    state,
+    'clusters.details.cluster.subscription.plan.type',
+    normalizedProducts.OSD,
+  );
   const clusterState = get(state, 'clusters.details.cluster.state');
 
   if (product === normalizedProducts.RHMI || clusterState !== clusterStates.READY) {
@@ -16,7 +20,9 @@ const canAllowAdminSelector = (state) => {
   }
 
   const capabilites = get(state, 'clusters.details.cluster.subscription.capabilities', []);
-  const manageClusterAdminCapability = capabilites.find(capability => capability.name === 'capability.cluster.manage_cluster_admin');
+  const manageClusterAdminCapability = capabilites.find(
+    (capability) => capability.name === 'capability.cluster.manage_cluster_admin',
+  );
 
   return !!(manageClusterAdminCapability && manageClusterAdminCapability.value === 'true');
 };

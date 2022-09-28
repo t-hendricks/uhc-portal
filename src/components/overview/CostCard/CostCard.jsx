@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Title,
-} from '@patternfly/react-core';
+import { Card, CardBody, CardFooter, CardTitle, Title } from '@patternfly/react-core';
 
 import CostEmptyState from './CostEmptyState';
 import CostSummary from './CostSummary';
@@ -32,10 +26,7 @@ class CostCard extends Component {
   };
 
   refresh = () => {
-    const {
-      getReport,
-      getSources,
-    } = this.props;
+    const { getReport, getSources } = this.props;
 
     getReport();
     getSources({ type: 'OCP' });
@@ -53,17 +44,11 @@ class CostCard extends Component {
           </Title>
         </CardTitle>
         <CardBody className="ocm--cost-card__body">
-          { !hasSources && sources.fulfilled ? (
-            <CostEmptyState />
-          ) : (
-            <CostSummary report={report} />
-          )}
+          {!hasSources && sources.fulfilled ? <CostEmptyState /> : <CostSummary report={report} />}
         </CardBody>
-        { hasSources && report.fulfilled && (
+        {hasSources && report.fulfilled && (
           <CardFooter>
-            <a href={`${this.getBaseName()}/cost-management`}>
-              View more in Cost management
-            </a>
+            <a href={`${this.getBaseName()}/cost-management`}>View more in Cost management</a>
           </CardFooter>
         )}
       </Card>

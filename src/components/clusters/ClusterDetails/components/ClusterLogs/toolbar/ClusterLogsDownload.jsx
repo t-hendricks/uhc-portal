@@ -10,7 +10,9 @@ import './ClusterLogsDownload.scss';
 class ClusterLogsDownload extends React.Component {
   options = [
     {
-      label: 'JSON', value: 'json', isChecked: true,
+      label: 'JSON',
+      value: 'json',
+      isChecked: true,
     },
     { label: 'CSV', value: 'csv' },
   ];
@@ -20,30 +22,26 @@ class ClusterLogsDownload extends React.Component {
   };
 
   closeModal = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       isOpen: !state.isOpen,
     }));
-  }
+  };
 
   handleChange = () => {
-    this.options.forEach(
-      (option, index) => {
-        this.options[index].isChecked = !option.isChecked;
-      },
-    );
+    this.options.forEach((option, index) => {
+      this.options[index].isChecked = !option.isChecked;
+    });
     this.handleClick(false);
-  }
+  };
 
   getFormat = () => {
     const option = find(this.options, ['isChecked', true]);
     const format = option.value;
     return format;
-  }
+  };
 
   handleClick = (withModal) => {
-    const {
-      externalClusterID, downloadClusterLogs, viewOptions,
-    } = this.props;
+    const { externalClusterID, downloadClusterLogs, viewOptions } = this.props;
 
     downloadClusterLogs(
       externalClusterID,
@@ -55,7 +53,7 @@ class ClusterLogsDownload extends React.Component {
       this.getFormat(),
     );
     if (withModal) {
-      this.setState(state => ({
+      this.setState((state) => ({
         isOpen: !state.isOpen,
       }));
     }
@@ -68,8 +66,7 @@ class ClusterLogsDownload extends React.Component {
 
     let url;
     let download;
-    const timestamp = moment()
-      .format('YYYY-MM-DD HHmm');
+    const timestamp = moment().format('YYYY-MM-DD HHmm');
 
     const format = this.getFormat();
     if (format === 'json') {
@@ -85,44 +82,38 @@ class ClusterLogsDownload extends React.Component {
       return `Unsupported format ${format}`;
     }
 
-    return (
-      [
-        (
-          <Button
-            id="cluster-logs-download-button"
-            key="download"
-            variant="primary"
-            component="a"
-            href={url}
-            target="_blank"
-            download={download}
-            onClick={() => this.closeModal()}
-            isDisabled={!data}
-          >
-            Download
-          </Button>
-        ),
-        (
-          <Button
-            key="close"
-            variant="link"
-            onClick={() => this.closeModal()}
-          >
-            Cancel
-          </Button>
-        ),
-      ]
-    );
+    return [
+      <Button
+        id="cluster-logs-download-button"
+        key="download"
+        variant="primary"
+        component="a"
+        href={url}
+        target="_blank"
+        download={download}
+        onClick={() => this.closeModal()}
+        isDisabled={!data}
+      >
+        Download
+      </Button>,
+      <Button key="close" variant="link" onClick={() => this.closeModal()}>
+        Cancel
+      </Button>,
+    ];
   }
 
   render() {
     const {
-      clusterLogs: { requestDownloadState: { error } },
+      clusterLogs: {
+        requestDownloadState: { error },
+      },
     } = this.props;
     const { isOpen } = this.state;
     return (
       <>
-        <Button variant="primary" onClick={() => this.handleClick(true)}>Download history</Button>
+        <Button variant="primary" onClick={() => this.handleClick(true)}>
+          Download history
+        </Button>
         <Modal
           variant="small"
           title="Download cluster history"
@@ -137,18 +128,16 @@ class ClusterLogsDownload extends React.Component {
             items={this.options}
             onChange={this.handleChange}
           />
-          {
-        error && (
-          <>
-            <ErrorTriangle
-              item="records"
-              errorMessage="Unable to download"
-              className="cluster-list-warning"
-            />
-            Unable to download records
-          </>
-        )
-      }
+          {error && (
+            <>
+              <ErrorTriangle
+                item="records"
+                errorMessage="Unable to download"
+                className="cluster-list-warning"
+              />
+              Unable to download records
+            </>
+          )}
         </Modal>
       </>
     );

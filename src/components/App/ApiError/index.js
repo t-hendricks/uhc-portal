@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ApiError from './ApiError';
 import { apiErrorActions } from './ApiErrorActions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   apiError: state.apiError,
 });
 

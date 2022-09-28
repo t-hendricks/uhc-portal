@@ -7,9 +7,7 @@ import {
   viewPaginationConstants,
   viewOptionsConstants,
 } from '../constants';
-import {
-  GET_CLUSTER_LOGS,
-} from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
+import { GET_CLUSTER_LOGS } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
 
 const INITIAL_VIEW_STATE = {
   currentPage: 1,
@@ -127,9 +125,9 @@ const viewOptionsReducer = (state = initialState, action) => {
 
     case viewPaginationConstants.VIEW_PAGE_NUMBER:
       if (
-        !Number.isInteger(action.pageNumber)
-        || action.pageNumber < 1
-        || action.pageNumber > state[action.viewType].totalPages
+        !Number.isInteger(action.pageNumber) ||
+        action.pageNumber < 1 ||
+        action.pageNumber > state[action.viewType].totalPages
       ) {
         return state;
       }

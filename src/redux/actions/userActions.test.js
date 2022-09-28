@@ -1,7 +1,7 @@
 import { userActions } from './userActions';
 import { userConstants } from '../constants';
 
-jest.mock('../../services/accountsService.js');
+jest.mock('../../services/accountsService');
 
 // See also quotaSelectors.test.js checking processQuota -> selectors together.
 

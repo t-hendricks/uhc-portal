@@ -22,19 +22,15 @@ exports[`<ActionRequiredModal /> should render correctly 1`] = `
     hasGutter={true}
   >
     <StackItem>
-      You must create the
-       
+      You must create the 
       <b>
         operator roles
       </b>
-       
-      and
-       
+       and 
       <b>
         OIDC provider
       </b>
-       
-      to complete cluster installation.
+       to complete cluster installation.
     </StackItem>
     <StackItem>
       Use one of the following methods:

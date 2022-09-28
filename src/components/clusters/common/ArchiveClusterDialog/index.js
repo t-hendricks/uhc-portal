@@ -9,15 +9,15 @@ import { closeModal } from '../../../common/Modal/ModalActions';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;
-  return ({
+  return {
     archiveClusterResponse: state.clusters.archivedCluster,
     subscriptionID: modalData.subscriptionID ? modalData.subscriptionID : '',
     name: modalData.name ? modalData.name : '',
     shouldDisplayClusterName: modalData.shouldDisplayClusterName || false,
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   submit: (subscriptionID, name) => {
     dispatch(archiveCluster(subscriptionID, name));
   },

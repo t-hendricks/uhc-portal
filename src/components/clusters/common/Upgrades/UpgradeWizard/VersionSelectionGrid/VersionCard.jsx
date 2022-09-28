@@ -17,27 +17,25 @@ import ExternalLink from '../../../../../common/ExternalLink';
 
 const getReleaseNotesLink = (version) => {
   const { groups: parts } = versionRegEx.exec(version);
-  const {
-    major, minor, revision, patch,
-  } = parts;
+  const { major, minor, revision, patch } = parts;
   if (major !== '4' || patch !== undefined) {
     return null;
   }
   const docURL = `https://docs.openshift.com/container-platform/${major}.${minor}/release_notes/ocp-${major}-${minor}-release-notes.html#ocp-${major}-${minor}-${revision}`;
   return (
     <Button variant="link" className="card-footer-button">
-      <ExternalLink href={docURL}>
-        View release notes
-      </ExternalLink>
+      <ExternalLink href={docURL}>View release notes</ExternalLink>
     </Button>
   );
 };
 
-const VersionAcknowledgementPopover = version => (
+const VersionAcknowledgementPopover = (version) => (
   <Tooltip
     content={`All clusters require an administrator acknowledgement before updating to OpenShift Container Platform ${version}`}
   >
-    <Button variant="link" isInline><InfoCircleIcon /></Button>
+    <Button variant="link" isInline>
+      <InfoCircleIcon />
+    </Button>
   </Tooltip>
 );
 
@@ -65,29 +63,23 @@ const VersionCard = (props) => {
       <CardTitle>
         <Split>
           <SplitItem>
-            {version}
-            {' '}
+            {version}{' '}
             {getUnMetClusterAcknowledgements(version).length > 0
-              ? VersionAcknowledgementPopover(version) : null}
+              ? VersionAcknowledgementPopover(version)
+              : null}
           </SplitItem>
           <SplitItem isFilled />
           {isRecommended && (
-          <SplitItem>
-            <Label color="blue" icon={<StarIcon />}>
-              Recommended
-            </Label>
-          </SplitItem>
+            <SplitItem>
+              <Label color="blue" icon={<StarIcon />}>
+                Recommended
+              </Label>
+            </SplitItem>
           )}
         </Split>
       </CardTitle>
-      {children && (
-      <CardBody>
-        {children}
-      </CardBody>
-      )}
-      <CardFooter>
-        {getReleaseNotesLink(version)}
-      </CardFooter>
+      {children && <CardBody>{children}</CardBody>}
+      <CardFooter>{getReleaseNotesLink(version)}</CardFooter>
     </Card>
   );
 };

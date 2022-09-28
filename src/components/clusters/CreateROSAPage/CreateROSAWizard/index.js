@@ -1,10 +1,16 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import {
-  isValid, reset, formValueSelector, getFormValues, touch, getFormSyncErrors,
+  isValid,
+  reset,
+  formValueSelector,
+  getFormValues,
+  touch,
+  getFormSyncErrors,
 } from 'redux-form';
 import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
+import { clearFormDataFromPersistor } from '../../../../redux/store';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 import { getCloudProviders } from '../../../../redux/actions/cloudProviderActions';
 import { getUserRole, clearGetUserRoleResponse } from './rosaActions';
@@ -20,7 +26,7 @@ const mapStateToProps = (state) => {
   const { getUserRoleResponse } = state.rosaReducer;
   const valueSelector = formValueSelector('CreateCluster');
 
-  return ({
+  return {
     isValid: isValid('CreateCluster')(state),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'), // TODO: change 'osd' to 'rosa'
     cloudProviderID: 'aws',
@@ -34,21 +40,27 @@ const mapStateToProps = (state) => {
     hasProductQuota: hasManagedQuotaSelector(state, normalizedProducts.ROSA),
     formErrors: getFormSyncErrors('CreateCluster')(state),
     getUserRoleResponse,
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
-  onSubmit: () => dispatch((_, getState) => {
-    const formData = getFormValues('CreateCluster')(getState());
-    // If changing these params, keep test & DebugClusterRequest props synced.
-    const params = { isWizard: true };
-    return submitOSDRequest(dispatch, params)(formData); // TODO: change to submitROSARequest(...
-  }),
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: () =>
+    dispatch((_, getState) => {
+      const formData = getFormValues('CreateCluster')(getState());
+      // If changing these params, keep test & DebugClusterRequest props synced.
+      const params = { isWizard: true };
+      clearFormDataFromPersistor();
+      return submitOSDRequest(dispatch, params)(formData); // TODO: change to submitROSARequest(...
+    }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),
-  openModal: (modalName) => { dispatch(openModal(modalName)); },
-  closeModal: () => { dispatch(closeModal()); },
-  touch: fieldNames => dispatch(touch('CreateCluster', ...fieldNames)),
+  openModal: (modalName) => {
+    dispatch(openModal(modalName));
+  },
+  closeModal: () => {
+    dispatch(closeModal());
+  },
+  touch: (fieldNames) => dispatch(touch('CreateCluster', ...fieldNames)),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getUserRole: () => dispatch(getUserRole()),
   getMachineTypes: () => dispatch(getMachineTypes()),

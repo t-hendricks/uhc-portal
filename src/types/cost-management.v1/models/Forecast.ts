@@ -5,7 +5,6 @@
 import type { ForecastData } from './ForecastData';
 import type { ListPagination } from './ListPagination';
 
-export type Forecast = (ListPagination & {
-    data: Array<ForecastData>;
-});
-
+export type Forecast = ListPagination & {
+  data: Array<ForecastData>;
+};

@@ -19,7 +19,10 @@ function ChartByRisks({ riskHits }) {
           justifyContent={{ default: 'justifyContentFlexStart' }}
           fullWidth={{ default: '50%' }}
           spaceItems={{
-            sm: 'spaceItemsXl', md: 'spaceItemsLg', lg: 'spaceItems2xl', '2xl': 'spaceItems4xl',
+            sm: 'spaceItemsXl',
+            md: 'spaceItemsLg',
+            lg: 'spaceItems2xl',
+            '2xl': 'spaceItems4xl',
           }}
         >
           {Object.entries({
@@ -28,29 +31,32 @@ function ChartByRisks({ riskHits }) {
             3: 0,
             4: 0,
             ...riskHits,
-          }).reverse().map(([riskNumber, count]) => (
-            <FlexItem className="ocm-insights--items__risk-item" key={riskNumber}>
-              <Flex
-                direction={{ default: 'column' }}
-                alignItems={{ default: 'alignItemsCenter' }}
-                spaceItems={{ default: 'spaceItemsNone' }}
-              >
-                <FlexItem className="ocm-insights--risk-item__count">
-                  <Title size="2xl" headingLevel="h1">
-                    <a
-                      href={`${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor/recommendations?total_risk=${riskNumber}`}
-                    >
-                      {count}
-                    </a>
-
-                  </Title>
-                </FlexItem>
-                <FlexItem className="ocm-insights--risk-item__label">
-                  {getSeverityName(riskNumber)}
-                </FlexItem>
-              </Flex>
-            </FlexItem>
-          ))}
+          })
+            .reverse()
+            .map(([riskNumber, count]) => (
+              <FlexItem className="ocm-insights--items__risk-item" key={riskNumber}>
+                <Flex
+                  direction={{ default: 'column' }}
+                  alignItems={{ default: 'alignItemsCenter' }}
+                  spaceItems={{ default: 'spaceItemsNone' }}
+                >
+                  <FlexItem className="ocm-insights--risk-item__count">
+                    <Title size="2xl" headingLevel="h1">
+                      <a
+                        href={`${window.location.origin}/${
+                          APP_BETA ? 'beta/' : ''
+                        }openshift/insights/advisor/recommendations?total_risk=${riskNumber}`}
+                      >
+                        {count}
+                      </a>
+                    </Title>
+                  </FlexItem>
+                  <FlexItem className="ocm-insights--risk-item__label">
+                    {getSeverityName(riskNumber)}
+                  </FlexItem>
+                </Flex>
+              </FlexItem>
+            ))}
         </Flex>
       </FlexItem>
     </Flex>

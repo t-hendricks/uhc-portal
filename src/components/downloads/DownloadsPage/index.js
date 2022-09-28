@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import DownloadsPage from './DownloadsPage';
 import { tollboothActions, githubActions } from '../../../redux/actions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   token: state.tollbooth.token || {},
   githubReleases: state.githubReleases,
 });

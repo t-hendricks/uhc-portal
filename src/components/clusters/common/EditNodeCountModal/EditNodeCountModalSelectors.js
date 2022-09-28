@@ -10,8 +10,12 @@ const masterResizeThresholds = {
 
 // Determine the master machine type size according to the
 // current nodes and the requested nodes.
-const masterResizeAlertThresholdSelector = (selectedMachinePoolID,
-  requestedNodes, cluster, machinePools) => {
+const masterResizeAlertThresholdSelector = (
+  selectedMachinePoolID,
+  requestedNodes,
+  cluster,
+  machinePools,
+) => {
   const nodes = totalNodesDataSelector(cluster, machinePools);
   const currentNodes = nodes.totalMaxNodesCount;
   let totalRequestedNodes;
@@ -19,26 +23,31 @@ const masterResizeAlertThresholdSelector = (selectedMachinePoolID,
     totalRequestedNodes = nodes.totalMaxNodesCount + (requestedNodes - nodes.totalDefaultMaxNodes);
   } else {
     const selectedMachinePool = machinePools.find(
-      machinePool => machinePool.id === selectedMachinePoolID,
+      (machinePool) => machinePool.id === selectedMachinePoolID,
     );
     if (selectedMachinePool) {
       if (selectedMachinePool.autoscaling) {
-        totalRequestedNodes = nodes.totalMaxNodesCount
-        + (requestedNodes - selectedMachinePool.autoscaling.max_replicas);
+        totalRequestedNodes =
+          nodes.totalMaxNodesCount +
+          (requestedNodes - selectedMachinePool.autoscaling.max_replicas);
       } else {
-        totalRequestedNodes = nodes.totalMaxNodesCount
-        + (requestedNodes - selectedMachinePool.replicas);
+        totalRequestedNodes =
+          nodes.totalMaxNodesCount + (requestedNodes - selectedMachinePool.replicas);
       }
     }
   }
 
   if (requestedNodes && currentNodes) {
-    if (currentNodes <= masterResizeThresholds.large
-          && totalRequestedNodes > masterResizeThresholds.large) {
+    if (
+      currentNodes <= masterResizeThresholds.large &&
+      totalRequestedNodes > masterResizeThresholds.large
+    ) {
       return masterResizeThresholds.large;
     }
-    if (currentNodes <= masterResizeThresholds.medium
-          && totalRequestedNodes > masterResizeThresholds.medium) {
+    if (
+      currentNodes <= masterResizeThresholds.medium &&
+      totalRequestedNodes > masterResizeThresholds.medium
+    ) {
       return masterResizeThresholds.medium;
     }
   }

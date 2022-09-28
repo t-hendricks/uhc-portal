@@ -7,3 +7,9 @@
     }
   }
 }
+.cluster-log__toolbar {
+  .pf-c-toolbar__group,
+  .pf-c-toolbar__content-section {
+    align-items: start;
+  }
+}

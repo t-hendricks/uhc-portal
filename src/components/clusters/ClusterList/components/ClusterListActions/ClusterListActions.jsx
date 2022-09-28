@@ -79,14 +79,8 @@ const toolbarCreateCluster = (
 );
 const toolbarRegisterCluster = (
   <ToolbarItem key="registercluster">
-    <Link
-      to="/register"
-      rel="noopener noreferrer"
-    >
-      <Button
-        variant="secondary"
-        data-testid="register-cluster-item"
-      >
+    <Link to="/register" rel="noopener noreferrer">
+      <Button variant="secondary" data-testid="register-cluster-item">
         Register cluster
       </Button>
     </Link>
@@ -114,10 +108,7 @@ const useItems = (aiEnabled) => {
   return [dropdownItems, toolbarItems];
 };
 
-const ClusterListActions = ({
-  className,
-  aiEnabled,
-}) => {
+const ClusterListActions = ({ className, aiEnabled }) => {
   const [isOpen, onToggle] = useState(false);
   const [dropdownItems, toolbarItems] = useItems(aiEnabled);
 

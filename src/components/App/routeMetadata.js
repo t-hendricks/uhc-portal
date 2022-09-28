@@ -4,12 +4,18 @@ import { ocmResourceType } from '~/common/analytics';
  * match pathname to analytics metadata
  * https://docs.google.com/spreadsheets/d/1C_WJWPy3sgE2ICaYHgWpWngj0A3Z3zl5GcstWySG9WE/edit#gid=0
  */
-export const metadataByRoute = (pathname, planType) => {
+export const metadataByRoute = (pathname, planType, clusterId, externalClusterId) => {
   /**
-     * Note: Order matters here
-     * Statements are sorted by the matcher clause, from more specific to less specific
-     * i.e. check for "osdtrial" must precede "osd"
-     */
+   * Note: Order matters here
+   * Statements are sorted by the matcher clause, from more specific to less specific
+   * i.e. check for "osdtrial" must precede "osd"
+   */
+
+  const clusterDetails = {
+    ocm_cluster_id: clusterId,
+    ...(externalClusterId ? { resource_id: externalClusterId } : {}),
+  };
+
   if (pathname.startsWith('/archived')) {
     return { ocm_resource_type: ocmResourceType.ALL };
   }
@@ -33,6 +39,7 @@ export const metadataByRoute = (pathname, planType) => {
       ocm_resource_type: ocmResourceType[planType],
       title: 'Add IdP',
       path: '/openshift/details/s/add-idp',
+      ...clusterDetails,
     };
   }
   if (pathname.match(/\/details\/s\/.*\/edit-idp/)) {
@@ -40,6 +47,7 @@ export const metadataByRoute = (pathname, planType) => {
       ocm_resource_type: ocmResourceType[planType],
       title: 'Edit IdP',
       path: '/openshift/details/s/edit-idp',
+      ...clusterDetails,
     };
   }
   if (pathname.startsWith('/details/s/')) {
@@ -47,6 +55,7 @@ export const metadataByRoute = (pathname, planType) => {
       ocm_resource_type: ocmResourceType[planType],
       title: 'View Cluster',
       path: '/openshift/details/s',
+      ...clusterDetails,
     };
   }
   if (pathname.startsWith('/install/azure/aro-provisioned')) {

@@ -6,6 +6,6 @@
  * The units to apply to the report. Default time_scope_units is day.
  */
 export enum ReportTimeScopeUnits {
-    DAY = 'day',
-    MONTH = 'month',
+  DAY = 'day',
+  MONTH = 'month',
 }

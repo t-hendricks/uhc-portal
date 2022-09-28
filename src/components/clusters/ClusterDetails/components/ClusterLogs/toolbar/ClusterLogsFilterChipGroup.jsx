@@ -2,13 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 
-import {
-  Button,
-  Chip,
-  ChipGroup,
-  Split,
-  SplitItem,
-} from '@patternfly/react-core';
+import { Button, Chip, ChipGroup, Split, SplitItem } from '@patternfly/react-core';
 
 import { SEVERITY_TYPES } from '../clusterLogConstants';
 import { buildFilterURLParams } from '../../../../../../common/queryHelpers';
@@ -61,7 +55,7 @@ const mapFlagsGroup = (group, currentFlags, setFlags, history) => {
         const deleteItem = () => {
           setFilterAndQueryParams({
             ...currentFlags,
-            [group.key]: currentFlag.filter(item => item !== value),
+            [group.key]: currentFlag.filter((item) => item !== value),
           });
         };
         return (
@@ -94,7 +88,12 @@ const groupFlags = [
 ];
 
 function ClusterLogsFilterChipGroup({
-  currentFilter, setFilter, currentFlags, setFlags, clearFiltersAndFlags, history,
+  currentFilter,
+  setFilter,
+  currentFlags,
+  setFlags,
+  clearFiltersAndFlags,
+  history,
 }) {
   const groupFilters = [
     {
@@ -103,32 +102,31 @@ function ClusterLogsFilterChipGroup({
     },
   ];
 
-  if (helpers.nestedIsEmpty(currentFilter) && helpers.nestedIsEmpty(currentFlags)) {
+  // Do not count the timestamps filters
+  const { timestampFrom, timestampTo, ...currentFilterNoTimestamps } = currentFilter;
+  if (helpers.nestedIsEmpty(currentFilterNoTimestamps) && helpers.nestedIsEmpty(currentFlags)) {
     return null;
   }
-
   return (
     <Split>
       <SplitItem>
         {/* Filters */}
         <ChipGroup>
-          {
-            groupFilters.map(group => mapFilterGroup(group, currentFilter, setFilter, history))
-              .filter(Boolean)
-          }
+          {groupFilters
+            .map((group) => mapFilterGroup(group, currentFilter, setFilter, history))
+            .filter(Boolean)}
         </ChipGroup>
         {/* Flags */}
         <ChipGroup>
-          {
-            groupFlags.map(group => mapFlagsGroup(
-              group, currentFlags, setFlags, history,
-            ))
-              .filter(Boolean)
-          }
+          {groupFlags
+            .map((group) => mapFlagsGroup(group, currentFlags, setFlags, history))
+            .filter(Boolean)}
         </ChipGroup>
       </SplitItem>
       <SplitItem>
-        <Button variant="link" onClick={() => clearFilters(history, clearFiltersAndFlags)}>Clear filters</Button>
+        <Button variant="link" onClick={() => clearFilters(history, clearFiltersAndFlags)}>
+          Clear filters
+        </Button>
       </SplitItem>
     </Split>
   );
@@ -138,6 +136,8 @@ ClusterLogsFilterChipGroup.propTypes = {
   setFilter: PropTypes.func.isRequired,
   currentFilter: PropTypes.shape({
     description: PropTypes.string,
+    timestampFrom: PropTypes.string,
+    timestampTo: PropTypes.string,
   }).isRequired,
   setFlags: PropTypes.func.isRequired,
   currentFlags: PropTypes.shape({

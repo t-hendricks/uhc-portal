@@ -37,7 +37,9 @@ describe('<LimitedSupportAlert />', () => {
   it('All limited support items are shown if multiple', () => {
     expect(wrapper.isEmptyRender()).toBeFalsy();
 
-    expect(wrapper.find('Alert').props().title).toEqual('This cluster has limited support due to multiple reasons.');
+    expect(wrapper.find('Alert').props().title).toEqual(
+      'This cluster has limited support due to multiple reasons.',
+    );
 
     // Check for correct number of reasons
     expect(wrapper.find('Alert DescriptionListGroup')).toHaveLength(reasons.length);
@@ -59,12 +61,16 @@ describe('<LimitedSupportAlert />', () => {
   it('OSD link is shown for OSD cluster', () => {
     wrapper.setProps({ isOSD: true });
     expect(wrapper.find('Alert').props().actionLinks).not.toBeNull();
-    expect(wrapper.find('Alert').props().actionLinks.props.href).toEqual('https://docs.openshift.com/dedicated/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition');
+    expect(wrapper.find('Alert').props().actionLinks.props.href).toEqual(
+      'https://docs.openshift.com/dedicated/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition',
+    );
   });
 
   it('ROSA link is shown for ROSA cluster', () => {
     wrapper.setProps({ isROSA: true });
     expect(wrapper.find('Alert').props().actionLinks).not.toBeNull();
-    expect(wrapper.find('Alert').props().actionLinks.props.href).toEqual('https://docs.openshift.com/rosa/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-limited-support_rosa-service-definition');
+    expect(wrapper.find('Alert').props().actionLinks.props.href).toEqual(
+      'https://docs.openshift.com/rosa/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-limited-support_rosa-service-definition',
+    );
   });
 });

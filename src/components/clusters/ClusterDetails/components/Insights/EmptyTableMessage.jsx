@@ -3,7 +3,8 @@ import {
   Button,
   EmptyState,
   EmptyStateBody,
-  EmptyStateIcon, EmptyStateSecondaryActions,
+  EmptyStateIcon,
+  EmptyStateSecondaryActions,
   EmptyStateVariant,
   Title,
   Popover,
@@ -23,26 +24,26 @@ export const RemoteHealthPopover = ({ variant }) => (
   <Popover
     position="right"
     maxWidth="22rem"
-    bodyContent={(
+    bodyContent={
       <>
         <p className="paragraph-margin-bottom">
-          Insights identifies and prioritizes risks to security, performance, availability,
-          and stability of your clusters.
+          Insights identifies and prioritizes risks to security, performance, availability, and
+          stability of your clusters.
         </p>
         <p>
-          This feature uses the Remote Health functionality of OpenShift Container Platform.
-          For further details about Insights, see the
-          {' '}
-          <a href={links.GETTING_SUPPORT}>OpenShift documentation</a>
-          .
+          This feature uses the Remote Health functionality of OpenShift Container Platform. For
+          further details about Insights, see the{' '}
+          <a href={links.GETTING_SUPPORT}>OpenShift documentation</a>.
         </p>
       </>
-    )}
+    }
     aria-label="What is Insights?"
     boundary="viewport"
     enableFlip
   >
-    <Button style={variant === 'link' ? { padding: '0' } : undefined} variant={variant}>What is Insights?</Button>
+    <Button style={variant === 'link' ? { padding: '0' } : undefined} variant={variant}>
+      What is Insights?
+    </Button>
   </Popover>
 );
 
@@ -54,13 +55,7 @@ RemoteHealthPopover.defaultProps = {
   variant: 'link',
 };
 
-const EmptyTableMessage = ({
-  icon,
-  header,
-  body,
-  iconClassName,
-  showPopover,
-}) => (
+const EmptyTableMessage = ({ icon, header, body, iconClassName, showPopover }) => (
   <EmptyState className="empty-table-message" variant={EmptyStateVariant.large}>
     <EmptyStateIcon className={iconClassName} icon={icon} />
 
@@ -68,18 +63,13 @@ const EmptyTableMessage = ({
       {header}
     </Title>
 
-    <EmptyStateBody>
-      {body}
-    </EmptyStateBody>
+    <EmptyStateBody>{body}</EmptyStateBody>
 
-    {
-      showPopover
-      && (
+    {showPopover && (
       <EmptyStateSecondaryActions>
         <RemoteHealthPopover variant="primary" />
       </EmptyStateSecondaryActions>
-      )
-    }
+    )}
   </EmptyState>
 );
 
@@ -97,17 +87,12 @@ export const NoRulesMessage = () => (
     header="No recommendations to display"
     iconClassName="info-color"
     body={
-      (
-        <>
-          Insights identifies and prioritizes risks to security, performance, availability,
-          and stability of your clusters. This feature uses the Remote Health
-          functionality of OpenShift Container Platform. For further details about Insights,
-          see the
-          {' '}
-          <a href={links.GETTING_SUPPORT}>OpenShift documentation</a>
-          .
-        </>
-)
+      <>
+        Insights identifies and prioritizes risks to security, performance, availability, and
+        stability of your clusters. This feature uses the Remote Health functionality of OpenShift
+        Container Platform. For further details about Insights, see the{' '}
+        <a href={links.GETTING_SUPPORT}>OpenShift documentation</a>.
+      </>
     }
   />
 );
@@ -116,14 +101,12 @@ export const NoIssuesMessage = ({ lastChecked }) => {
   const body = (
     <>
       <div>No issues have been identified.</div>
-      {
-        lastChecked && (
-          <div>
-            <span>Last check: </span>
-            <DateFormat date={new Date(lastChecked)} />
-          </div>
-        )
-      }
+      {lastChecked && (
+        <div>
+          <span>Last check: </span>
+          <DateFormat date={new Date(lastChecked)} />
+        </div>
+      )}
     </>
   );
 
@@ -159,14 +142,11 @@ export const AnalysisInProgressMessage = () => (
 export const ErrorMessage = () => {
   const body = (
     <>
-      Try refreshing the page.
-      {' '}
-      If the problem persists,
-      {' '}
-      contact your Organization Administrator or visit our
-      {' '}
-      <a target="_blank" rel="noopener noreferrer" href="https://status.redhat.com/">status page</a>
-      {' '}
+      Try refreshing the page. If the problem persists, contact your Organization Administrator or
+      visit our{' '}
+      <a target="_blank" rel="noopener noreferrer" href="https://status.redhat.com/">
+        status page
+      </a>{' '}
       for known outages.
     </>
   );

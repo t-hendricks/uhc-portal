@@ -4,7 +4,7 @@ import { subscriptionsActions } from '../../../redux/actions/subscriptionsAction
 import OSDSubscriptionCard from './OSDSubscriptionCard';
 
 const mapDispatchToProps = {
-  fetchQuotaCost: organizationID => subscriptionsActions.fetchQuotaCost(organizationID),
+  fetchQuotaCost: (organizationID) => subscriptionsActions.fetchQuotaCost(organizationID),
 };
 
 function mapStateToProps(state) {

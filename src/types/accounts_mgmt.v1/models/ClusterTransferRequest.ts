@@ -3,8 +3,7 @@
 /* eslint-disable */
 
 export type ClusterTransferRequest = {
-    cluster_uuid?: string;
-    owner?: string;
-    recipient?: string;
+  cluster_uuid?: string;
+  owner?: string;
+  recipient?: string;
 };
-

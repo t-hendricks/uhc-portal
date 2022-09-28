@@ -20,5 +20,5 @@ const reduxFormConfig = {
   touchOnChange: true,
 };
 
-const wizardConnector = component => reduxForm(reduxFormConfig)(component);
+const wizardConnector = (component) => reduxForm(reduxFormConfig)(component);
 export default wizardConnector;

@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type FeatureReviewResponse = {
-    enabled: boolean;
-    feature_id: string;
+  enabled: boolean;
+  feature_id: string;
 };
-

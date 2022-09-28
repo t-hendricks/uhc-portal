@@ -9,7 +9,7 @@ const mapDispatchToProps = {
   getUnhealthyClusters,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   unhealthyClusters: state.dashboards.unhealthyClusters,
   viewOptions: state.viewOptions[viewConstants.OVERVIEW_VIEW],
 });

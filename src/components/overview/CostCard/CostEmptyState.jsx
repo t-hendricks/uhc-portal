@@ -1,6 +1,11 @@
 import React from 'react';
 import {
-  EmptyState, EmptyStateBody, EmptyStateSecondaryActions, EmptyStateIcon, EmptyStateVariant, Title,
+  EmptyState,
+  EmptyStateBody,
+  EmptyStateSecondaryActions,
+  EmptyStateIcon,
+  EmptyStateVariant,
+  Title,
 } from '@patternfly/react-core';
 import CostIcon from './CostIcon';
 import ExternalLink from '../../common/ExternalLink';
@@ -13,8 +18,8 @@ const CostEmptyState = () => (
       Track your OpenShift spending!
     </Title>
     <EmptyStateBody>
-      Add an OpenShift Container Platform cluster to see a total cost breakdown of
-      your pods by cluster, node, project, or labels.
+      Add an OpenShift Container Platform cluster to see a total cost breakdown of your pods by
+      cluster, node, project, or labels.
     </EmptyStateBody>
     <EmptyStateSecondaryActions>
       <ExternalLink href={links.COSTMGMT_ADDING_OCP}>

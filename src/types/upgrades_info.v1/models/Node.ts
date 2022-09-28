@@ -3,8 +3,7 @@
 /* eslint-disable */
 
 export type Node = {
-    version: string;
-    payload: string;
-    metadata: Record<string, string>;
+  version: string;
+  payload: string;
+  metadata: Record<string, string>;
 };
-

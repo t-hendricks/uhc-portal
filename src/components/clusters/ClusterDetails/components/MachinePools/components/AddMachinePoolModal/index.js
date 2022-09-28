@@ -9,7 +9,10 @@ import { getMachineTypes } from '../../../../../../../redux/actions/machineTypes
 import { getOrganizationAndQuota } from '../../../../../../../redux/actions/userActions';
 import { addMachinePool, clearAddMachinePoolResponse } from '../../MachinePoolsActions';
 
-import { parseReduxFormKeyValueList, parseReduxFormTaints } from '../../../../../../../common/helpers';
+import {
+  parseReduxFormKeyValueList,
+  parseReduxFormTaints,
+} from '../../../../../../../common/helpers';
 
 const reduxFormConfig = {
   form: 'AddMachinePool',
@@ -20,7 +23,7 @@ const reduxFormAddMachinePool = reduxForm(reduxFormConfig)(AddMachinePoolModal);
 const mapStateToProps = (state, ownProps) => {
   const valueSelector = formValueSelector('AddMachinePool');
 
-  return ({
+  return {
     addMachinePoolResponse: state.machinePools.addMachinePoolResponse,
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,
@@ -39,7 +42,7 @@ const mapStateToProps = (state, ownProps) => {
       node_labels: [{}],
       taints: [{ effect: 'NoSchedule' }],
     },
-  });
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -75,9 +78,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
     if (formData.spot_instances) {
       machinePoolRequest.aws = {
-        spot_market_options: (formData.spot_instance_pricing === 'maximum' && formData.spot_instance_max_hourly_price !== undefined)
-          ? { max_price: formData.spot_instance_max_hourly_price }
-          : {},
+        spot_market_options:
+          formData.spot_instance_pricing === 'maximum' &&
+          formData.spot_instance_max_hourly_price !== undefined
+            ? { max_price: formData.spot_instance_max_hourly_price }
+            : {},
       };
     }
 

@@ -5,6 +5,5 @@
 import type { Account } from './Account';
 
 export type TokenAuthorizationResponse = {
-    account?: Account;
+  account?: Account;
 };
-

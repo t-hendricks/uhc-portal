@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  GridItem,
-} from '@patternfly/react-core';
+import { GridItem } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
 import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';

@@ -7,9 +7,9 @@ describe('<AddOnsFailedBox />', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<AddOnsFailedBox
-      installedAddOn={{ state: 'failed', state_description: 'failed message' }}
-    />);
+    wrapper = shallow(
+      <AddOnsFailedBox installedAddOn={{ state: 'failed', state_description: 'failed message' }} />,
+    );
   });
 
   it('should render', () => {

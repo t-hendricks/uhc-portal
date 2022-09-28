@@ -15,24 +15,24 @@ const mapStateToProps = (state) => {
     addContactResponse,
   } = state.clusterSupport;
 
-  return ({
+  return {
     subscriptionID: cluster.subscription?.id,
     canEdit: cluster.canEdit,
     hasContacts: notificationContacts.contacts.length > 0,
     notificationContacts,
     addContactResponse,
     deleteContactResponse,
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   clearNotificationContacts: () => dispatch(supportActions.clearNotificationContacts()),
   clearDeleteNotificationContacts: () => dispatch(supportActions.clearDeleteNotificationContacts()),
-  getNotificationContacts: clusterID => dispatch(supportActions.getNotificationContacts(clusterID)),
-  deleteNotificationContact: (clusterID, userID) => dispatch(
-    supportActions.deleteNotificationContact(clusterID, userID),
-  ),
-  addNotification: data => dispatch(addNotification(data)),
+  getNotificationContacts: (clusterID) =>
+    dispatch(supportActions.getNotificationContacts(clusterID)),
+  deleteNotificationContact: (clusterID, userID) =>
+    dispatch(supportActions.deleteNotificationContact(clusterID, userID)),
+  addNotification: (data) => dispatch(addNotification(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationContactsCard);

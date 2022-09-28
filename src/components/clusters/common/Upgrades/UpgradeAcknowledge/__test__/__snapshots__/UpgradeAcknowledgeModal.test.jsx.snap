@@ -46,14 +46,14 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
           >
             Approve and continue
           </Button>,
-          undefined,
+          null,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          undefined,
+          null,
           false,
         ]
       }
@@ -224,14 +224,14 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
               >
                 Approve and continue
               </Button>,
-              undefined,
+              null,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              undefined,
+              null,
               false,
             ]
           }
@@ -263,6 +263,9 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                 focusTrapOptions={
                   Object {
                     "clickOutsideDeactivates": true,
+                    "tabbableOptions": Object {
+                      "displayCheck": "none",
+                    },
                   }
                 }
                 paused={false}
@@ -612,14 +615,14 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
           >
             Approve and continue
           </Button>,
-          undefined,
+          null,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          undefined,
+          null,
           false,
         ]
       }
@@ -836,14 +839,14 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
               >
                 Approve and continue
               </Button>,
-              undefined,
+              null,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              undefined,
+              null,
               false,
             ]
           }
@@ -875,6 +878,9 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                 focusTrapOptions={
                   Object {
                     "clickOutsideDeactivates": true,
+                    "tabbableOptions": Object {
+                      "displayCheck": "none",
+                    },
                   }
                 }
                 paused={false}

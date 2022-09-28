@@ -10,16 +10,18 @@ import { scrollToTop } from '../../../common/helpers';
 class InstallRHV extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Red Hat Virtualization';
+    document.title =
+      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | Red Hat Virtualization';
   }
 
   render() {
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'Red Hat Virtualization' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'Red Hat Virtualization' },
+        ]}
       />
     );
 

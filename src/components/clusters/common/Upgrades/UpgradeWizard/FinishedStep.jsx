@@ -17,11 +17,13 @@ import { global_success_color_100 } from '@patternfly/react-tokens';
 
 import ErrorBox from '../../../../common/ErrorBox';
 
-function FinishedStep({
-  requestStatus, close, scheduleType, upgradeTimestamp,
-}) {
+function FinishedStep({ requestStatus, close, scheduleType, upgradeTimestamp }) {
   if (requestStatus.error) {
-    return <Bullseye><ErrorBox message="Failed to schedule upgrade" response={requestStatus} /></Bullseye>;
+    return (
+      <Bullseye>
+        <ErrorBox message="Failed to schedule upgrade" response={requestStatus} />
+      </Bullseye>
+    );
   }
   if (requestStatus.pending || !requestStatus.fulfilled) {
     return <Spinner className="wizard-step-body" centered />;
@@ -33,21 +35,18 @@ function FinishedStep({
         Scheduled cluster update
       </Title>
       <EmptyStateBody>
-        Your update was successfully scheduled to start within
-        {' '}
-        { scheduleType === 'now' ? 'the next hour' : (
+        Your update was successfully scheduled to start within{' '}
+        {scheduleType === 'now' ? (
+          'the next hour'
+        ) : (
           <>
-            one hour of
-            {' '}
-            <DateFormat type="exact" date={new Date(upgradeTimestamp)} />
+            one hour of <DateFormat type="exact" date={new Date(upgradeTimestamp)} />
           </>
         )}
         .
       </EmptyStateBody>
       <EmptyStateSecondaryActions>
-        <Button onClick={close}>
-          Close
-        </Button>
+        <Button onClick={close}>Close</Button>
       </EmptyStateSecondaryActions>
     </EmptyState>
   );

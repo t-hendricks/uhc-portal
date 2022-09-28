@@ -1,6 +1,9 @@
 import produce from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  baseRequestState,
 } from '../reduxHelpers';
 import CREATE_ENTITLEMENT_CONFIG from '../constants/entitlementConfigConstants';
 

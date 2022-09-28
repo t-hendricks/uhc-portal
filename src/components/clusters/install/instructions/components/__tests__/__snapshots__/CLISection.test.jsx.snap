@@ -5,8 +5,7 @@ exports[`CLISection renders correctly 1`] = `
   <Text
     component="p"
   >
-    Download the OpenShift command-line tools and add them to your
-     
+    Download the OpenShift command-line tools and add them to your 
     <code>
       PATH
     </code>
@@ -31,19 +30,15 @@ exports[`CLISection renders correctly 1`] = `
   <Text
     component="p"
   >
-    When the installer is complete you will see the console URL and credentials for accessing your new cluster. A
-     
+    When the installer is complete you will see the console URL and credentials for accessing your new cluster. A 
     <code>
       kubeconfig
     </code>
-     
-    file will also be generated for you to use with the
-     
+     file will also be generated for you to use with the 
     <code>
       oc
     </code>
-     
-    CLI tools you downloaded.
+     CLI tools you downloaded.
   </Text>
 </Fragment>
 `;

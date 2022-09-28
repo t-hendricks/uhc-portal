@@ -169,7 +169,8 @@ const fakeAIClusterFromSubscription = (subscription, aiCluster) => {
     cluster.metrics.nodes.total = clusterWorkers + clusterMasters;
     cluster.metrics.nodes.master = clusterMasters;
     cluster.metrics.nodes.compute = clusterWorkers;
-    cluster.metrics.openshift_version = cluster.metrics.openshift_version || (aiCluster ? aiCluster.openshift_version : 'N/A');
+    cluster.metrics.openshift_version =
+      cluster.metrics.openshift_version || (aiCluster ? aiCluster.openshift_version : 'N/A');
     cluster.metrics.state = aiCluster?.status || 'N/A';
 
     cluster.state = cluster.metrics.state;
@@ -179,7 +180,7 @@ const fakeAIClusterFromSubscription = (subscription, aiCluster) => {
   return cluster;
 };
 
-const normalizeSubscription = subscription => ({
+const normalizeSubscription = (subscription) => ({
   ...subscription,
   plan: {
     // Omit other properties like "href", we only use the id and type
@@ -192,17 +193,13 @@ const normalizeSubscription = subscription => ({
  * Normalize a single element of QuotaCostList (which may contain multiple related_resources).
  * @param {Object} quotaCost - a QuotaCost.
 g */
-const normalizeQuotaCost = quotaCost => (
-  {
-    ...quotaCost,
-    related_resources: get(quotaCost, 'related_resources', []).map(resource => (
-      {
-        ...resource,
-        product: normalizeProductID(resource.product),
-      }
-    )),
-  }
-);
+const normalizeQuotaCost = (quotaCost) => ({
+  ...quotaCost,
+  related_resources: get(quotaCost, 'related_resources', []).map((resource) => ({
+    ...resource,
+    product: normalizeProductID(resource.product),
+  })),
+});
 
 /**
  * Applies a function to each item in .data.items.
@@ -210,11 +207,10 @@ const normalizeQuotaCost = quotaCost => (
  *   .data is where Axios puts the parsed JSON body, and this function is applicable
  *   to responses like ClusterList that contain an .items array.
  */
-const mapListResponse = (response, itemFunc) => (
+const mapListResponse = (response, itemFunc) =>
   produce(response, (draft) => {
     draft.data.items = draft.data.items.map(itemFunc);
-  })
-);
+  });
 
 export {
   normalizeProductID,

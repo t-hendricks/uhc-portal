@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type PullSecretRequest = {
-    external_resource_id: string;
+  external_resource_id: string;
 };
-

@@ -16,19 +16,16 @@ import {
   StackItem,
   Tooltip,
 } from '@patternfly/react-core';
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableVariant,
-  cellWidth,
-} from '@patternfly/react-table';
+import { Table, TableHeader, TableBody, TableVariant, cellWidth } from '@patternfly/react-table';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import ClipboardCopyLinkButton from '../../../../../common/ClipboardCopyLinkButton';
 
 import links from '../../../../../../common/installLinks.mjs';
 import {
-  IDPTypeNames, getOauthCallbackURL, IDPNeedsOAuthURL, IDPformValues,
+  IDPTypeNames,
+  getOauthCallbackURL,
+  IDPNeedsOAuthURL,
+  IDPformValues,
 } from '../../IdentityProvidersPage/IdentityProvidersHelper';
 
 class IDPSection extends React.Component {
@@ -36,8 +33,15 @@ class IDPSection extends React.Component {
 
   render() {
     const {
-      clusterID, subscriptionID, clusterConsoleURL, identityProviders, openModal,
-      canEdit, clusterHibernating, isReadOnly, history,
+      clusterID,
+      subscriptionID,
+      clusterConsoleURL,
+      identityProviders,
+      openModal,
+      canEdit,
+      clusterHibernating,
+      isReadOnly,
+      history,
     } = this.props;
 
     const columns = [
@@ -46,17 +50,21 @@ class IDPSection extends React.Component {
       { title: 'Auth callback URL', transforms: [cellWidth(30)] },
     ];
 
-    const idpRow = idp => ({
+    const idpRow = (idp) => ({
       cells: [
         idp.name,
         get(IDPTypeNames, idp.type, idp.type),
         {
           title: IDPNeedsOAuthURL(idp.type) ? (
-            <ClipboardCopyLinkButton className="access-control-tables-copy" text={getOauthCallbackURL(clusterConsoleURL, idp.name)}>
+            <ClipboardCopyLinkButton
+              className="access-control-tables-copy"
+              text={getOauthCallbackURL(clusterConsoleURL, idp.name)}
+            >
               Copy URL to clipboard
             </ClipboardCopyLinkButton>
-          ) : 'N/A'
-          ,
+          ) : (
+            'N/A'
+          ),
         },
       ],
       idpID: idp.id,
@@ -74,12 +82,13 @@ class IDPSection extends React.Component {
       };
       const deleteIDPAction = {
         title: 'Delete',
-        onClick: (_, __, row) => openModal('delete-idp', {
-          clusterID,
-          idpID: row.idpID,
-          idpName: row.name.title,
-          idpType: row.type.title,
-        }),
+        onClick: (_, __, row) =>
+          openModal('delete-idp', {
+            clusterID,
+            idpID: row.idpID,
+            idpName: row.name.title,
+            idpType: row.type.title,
+          }),
         className: 'hand-pointer',
       };
       if (rowData.type.title === IDPTypeNames[IDPformValues.HTPASSWD]) {
@@ -88,87 +97,88 @@ class IDPSection extends React.Component {
       return [editIDPAction, deleteIDPAction];
     };
 
-    const learnMoreLink = <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER} target="_blank">Learn more.</a>;
+    const learnMoreLink = (
+      <a rel="noopener noreferrer" href={links.UNDERSTANDING_IDENTITY_PROVIDER} target="_blank">
+        Learn more.
+      </a>
+    );
 
-    const pending = (!identityProviders.fulfilled && !identityProviders.error)
-                    || identityProviders.pending;
+    const pending =
+      (!identityProviders.fulfilled && !identityProviders.error) || identityProviders.pending;
 
     const hasIDPs = !!identityProviders.clusterIDPList.length;
 
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
-    const hibernatingReason = clusterHibernating && 'This operation is not available while cluster is hibernating';
-    const canNotEditReason = !canEdit && 'You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers.';
+    const hibernatingReason =
+      clusterHibernating && 'This operation is not available while cluster is hibernating';
+    const canNotEditReason =
+      !canEdit &&
+      'You do not have permission to add an identity provider. Only cluster owners, cluster editors, and Organization Administrators can add identity providers.';
     const disableReason = readOnlyReason || hibernatingReason || canNotEditReason;
 
-    const IDPDropdownOptions = Object.values(IDPTypeNames).map(idpName => (
+    const IDPDropdownOptions = Object.values(IDPTypeNames).map((idpName) => (
       <DropdownItem
-        component={(
-          <Link to={{
-            pathname: `/details/s/${subscriptionID}/add-idp/${idpName.toLowerCase()}`,
-            state: { allLoaded: true },
-          }}
+        component={
+          <Link
+            to={{
+              pathname: `/details/s/${subscriptionID}/add-idp/${idpName.toLowerCase()}`,
+              state: { allLoaded: true },
+            }}
           >
             {idpName}
           </Link>
-        )}
+        }
       />
     ));
     const { dropdownOpen } = this.state;
     let addIDPDropdown = (
       <Dropdown
-        toggle={(
+        toggle={
           <DropdownToggle
             id="add-identity-provider"
             isDisabled={disableReason}
-            onToggle={(isOpen) => { this.setState({ dropdownOpen: isOpen }); }}
+            onToggle={(isOpen) => {
+              this.setState({ dropdownOpen: isOpen });
+            }}
           >
             Add identity provider
           </DropdownToggle>
-        )}
+        }
         isOpen={dropdownOpen}
         dropdownItems={IDPDropdownOptions}
       />
     );
     if (disableReason) {
-      addIDPDropdown = (
-        <Tooltip content={disableReason}>
-          {addIDPDropdown}
-        </Tooltip>
-      );
+      addIDPDropdown = <Tooltip content={disableReason}>{addIDPDropdown}</Tooltip>;
     }
 
-    return (
-      pending ? (
-        <Card>
-          <CardTitle>
-            <Skeleton size="md" />
-          </CardTitle>
-          <CardBody>
-            <Skeleton size="lg" />
-          </CardBody>
-          <CardFooter>
-            <Skeleton size="md" />
-          </CardFooter>
-        </Card>
-      ) : (
-        <Card>
-          <CardBody>
-            <Stack hasGutter>
-              <StackItem>
-                <Title headingLevel="h2" size="lg" className="card-title">
-                  Identity providers
-                </Title>
-                <p>
-                  Configure identity providers to allow users to log into the cluster.
-                  {' '}
-                  {learnMoreLink}
-                </p>
-              </StackItem>
-              <StackItem>
-                {addIDPDropdown}
-              </StackItem>
-              <StackItem>
-                { hasIDPs && (
+    return pending ? (
+      <Card>
+        <CardTitle>
+          <Skeleton size="md" />
+        </CardTitle>
+        <CardBody>
+          <Skeleton size="lg" />
+        </CardBody>
+        <CardFooter>
+          <Skeleton size="md" />
+        </CardFooter>
+      </Card>
+    ) : (
+      <Card>
+        <CardBody>
+          <Stack hasGutter>
+            <StackItem>
+              <Title headingLevel="h2" size="lg" className="card-title">
+                Identity providers
+              </Title>
+              <p>
+                Configure identity providers to allow users to log into the cluster. {learnMoreLink}
+              </p>
+            </StackItem>
+            <StackItem>{addIDPDropdown}</StackItem>
+            <StackItem>
+              {hasIDPs && (
                 <Table
                   aria-label="Identity Providers"
                   actionResolver={idpActionResolver}
@@ -180,12 +190,11 @@ class IDPSection extends React.Component {
                   <TableHeader />
                   <TableBody />
                 </Table>
-                )}
-              </StackItem>
-            </Stack>
-          </CardBody>
-        </Card>
-      )
+              )}
+            </StackItem>
+          </Stack>
+        </CardBody>
+      </Card>
     );
   }
 }

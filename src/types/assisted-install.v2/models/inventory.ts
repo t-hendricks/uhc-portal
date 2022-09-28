@@ -12,29 +12,25 @@ import type { route } from './route';
 import type { system_vendor } from './system_vendor';
 
 export type inventory = {
-    bmc_address?: string;
-    bmc_v6address?: string;
-    boot?: boot;
-    cpu?: cpu;
-    disks?: Array<disk>;
-    gpus?: Array<gpu>;
-    hostname?: string;
-    interfaces?: Array<interface_>;
-    memory?: memory;
-    routes?: Array<route>;
-    system_vendor?: system_vendor;
-    timestamp?: number;
-    tpm_version?: inventory.tpm_version;
+  bmc_address?: string;
+  bmc_v6address?: string;
+  boot?: boot;
+  cpu?: cpu;
+  disks?: Array<disk>;
+  gpus?: Array<gpu>;
+  hostname?: string;
+  interfaces?: Array<interface_>;
+  memory?: memory;
+  routes?: Array<route>;
+  system_vendor?: system_vendor;
+  timestamp?: number;
+  tpm_version?: inventory.tpm_version;
 };
 
 export namespace inventory {
-
-    export enum tpm_version {
-        NONE = 'none',
-        _1_2 = '1.2',
-        _2_0 = '2.0',
-    }
-
-
+  export enum tpm_version {
+    NONE = 'none',
+    _1_2 = '1.2',
+    _2_0 = '2.0',
+  }
 }
-

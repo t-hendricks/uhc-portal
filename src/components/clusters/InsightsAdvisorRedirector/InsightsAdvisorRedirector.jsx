@@ -7,9 +7,12 @@ import { validate as isUuid } from 'uuid';
 import ExternalRedirect from './ExternalRedirect';
 
 // expects the pluginName and errorKey to construct the ruleId recognized by OCP Advisor
-export const composeRuleId = (pluginName, errorKey) => encodeURIComponent(`${
-  decodeURIComponent(pluginName).replace(/\|/g, '.').split('.report')[0]
-}|${decodeURIComponent(errorKey)}`);
+export const composeRuleId = (pluginName, errorKey) =>
+  encodeURIComponent(
+    `${decodeURIComponent(pluginName).replace(/\|/g, '.').split('.report')[0]}|${decodeURIComponent(
+      errorKey,
+    )}`,
+  );
 
 class InsightsAdvisorRedirector extends React.Component {
   componentDidMount() {
@@ -20,12 +23,11 @@ class InsightsAdvisorRedirector extends React.Component {
   }
 
   render() {
-    const {
-      clusterDetails, match, location, setGlobalError,
-    } = this.props;
-    const externalId = (match.params?.id && isUuid(match.params.id))
-      ? match.params.id
-      : clusterDetails?.cluster?.external_id;
+    const { clusterDetails, match, location, setGlobalError } = this.props;
+    const externalId =
+      match.params?.id && isUuid(match.params.id)
+        ? match.params.id
+        : clusterDetails?.cluster?.external_id;
     const path = location.pathname;
 
     if (externalId) {
@@ -33,21 +35,26 @@ class InsightsAdvisorRedirector extends React.Component {
         matchPath(path, {
           path: '/details/:clusterId',
           exact: true,
-        })
-        || matchPath(path, {
+        }) ||
+        matchPath(path, {
           path: '/details/s/:id',
           exact: true,
         })
       ) {
         return (
-          <ExternalRedirect url={`${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor/clusters/${externalId}`} />
+          <ExternalRedirect
+            url={`${window.location.origin}/${
+              APP_BETA ? 'beta/' : ''
+            }openshift/insights/advisor/clusters/${externalId}`}
+          />
         );
-      } if (
+      }
+      if (
         matchPath(path, {
           path: '/details/:id/insights/:reportId/:errorKey',
           exact: true,
-        })
-        || matchPath(path, {
+        }) ||
+        matchPath(path, {
           path: '/details/s/:id/insights/:reportId/:errorKey',
           exact: true,
           strict: true,
@@ -56,7 +63,11 @@ class InsightsAdvisorRedirector extends React.Component {
         const { reportId, errorKey } = match.params;
         const ruleId = composeRuleId(reportId, errorKey);
         return (
-          <ExternalRedirect url={`${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor/clusters/${externalId}?first=${ruleId}`} />
+          <ExternalRedirect
+            url={`${window.location.origin}/${
+              APP_BETA ? 'beta/' : ''
+            }openshift/insights/advisor/clusters/${externalId}?first=${ruleId}`}
+          />
         );
       }
     }
@@ -65,11 +76,7 @@ class InsightsAdvisorRedirector extends React.Component {
       // Cluster not found or no permission to see it - redirect to cluster list with error on top
       setGlobalError(
         <>
-          Cluster with the subscription ID
-          {' '}
-          <b>{match.params?.id}</b>
-          {' '}
-          was not found, it might have
+          Cluster with the subscription ID <b>{match.params?.id}</b> was not found, it might have
           been deleted or you don&apos;t have permission to see it.
         </>,
         'clusterDetails',
@@ -82,11 +89,8 @@ class InsightsAdvisorRedirector extends React.Component {
       // Could not find external id for the given cluster
       setGlobalError(
         <>
-          There is no external ID for the cluster with the
-          {' '}
-          <b>{match.params?.id}</b>
-          {' '}
-          subscription ID.
+          There is no external ID for the cluster with the <b>{match.params?.id}</b> subscription
+          ID.
         </>,
         'clusterDetails',
         clusterDetails?.errorMessage,
@@ -118,11 +122,7 @@ InsightsAdvisorRedirector.propTypes = {
     cluster: PropTypes.object,
     error: PropTypes.bool,
     errorCode: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    errorMessage: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.node,
-      PropTypes.element,
-    ]),
+    errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
     fulfilled: PropTypes.bool,
     history: PropTypes.object,
   }),

@@ -4,8 +4,14 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import { Field } from 'redux-form';
 import {
-  Alert, Button,
-  ExpandableSection, Grid, GridItem, Text, TextVariants, Title,
+  Alert,
+  Button,
+  ExpandableSection,
+  Grid,
+  GridItem,
+  Text,
+  TextVariants,
+  Title,
 } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import useAnalytics from '~/hooks/useAnalytics';
@@ -38,16 +44,19 @@ function AccountRolesARNsSection({
   const { track } = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
-  const [installerRoleOptions, setInstallerRoleOptions] = useState([{
-    name: NO_ROLE_DETECTED,
-    value: NO_ROLE_DETECTED,
-  }]);
+  const [installerRoleOptions, setInstallerRoleOptions] = useState([
+    {
+      name: NO_ROLE_DETECTED,
+      value: NO_ROLE_DETECTED,
+    },
+  ]);
   const [selectedInstallerRole, setSelectedInstallerRole] = useState(NO_ROLE_DETECTED);
   const [allARNsFound, setAllARNsFound] = useState(false);
   const [hasARNsError, setHasARNsError] = useState(false);
 
-  const hasNoTrustedRelationshipOnClusterRoleError = ({ errorDetails }) => errorDetails?.length
-    && errorDetails.some(error => error?.Error_Key === 'NoTrustedRelationshipOnClusterRole');
+  const hasNoTrustedRelationshipOnClusterRoleError = ({ errorDetails }) =>
+    errorDetails?.length &&
+    errorDetails.some((error) => error?.Error_Key === 'NoTrustedRelationshipOnClusterRole');
 
   useEffect(() => {
     // this is required to show any validation error messages for the 4 disabled ARNs fields
@@ -66,7 +75,7 @@ function AccountRolesARNsSection({
         change('support_role_arn', role.Support || NO_ROLE_DETECTED);
         change('control_plane_role_arn', role.ControlPlane || NO_ROLE_DETECTED);
         change('worker_role_arn', role.Worker || NO_ROLE_DETECTED);
-        change('rosa_max_os_version', semver.coerce(role.version));
+        change('rosa_max_os_version', role.version);
       }
     });
   }, [selectedInstallerRole]);
@@ -94,16 +103,15 @@ function AccountRolesARNsSection({
     }
     setInstallerRoleOptions(installerOptions);
     // default to currently selected, first installer role, or 'No Role Detected'
-    setSelectedInstallerRole(selectedInstallerRoleARN
-      || accountRolesARNs[0]?.Installer
-      || NO_ROLE_DETECTED);
+    setSelectedInstallerRole(
+      selectedInstallerRoleARN || accountRolesARNs[0]?.Installer || NO_ROLE_DETECTED,
+    );
   };
 
-  const resolveARNsErrorTitle = response => (
+  const resolveARNsErrorTitle = (response) =>
     hasNoTrustedRelationshipOnClusterRoleError(response)
       ? 'Cannot detect an OCM role'
-      : 'Error getting AWS account ARNs'
-  );
+      : 'Error getting AWS account ARNs';
 
   const trackArnsRefreshed = (response) => {
     track(trackEvents.ARNsRefreshed, {
@@ -120,9 +128,11 @@ function AccountRolesARNsSection({
   };
 
   useEffect(() => {
-    if (!getAWSAccountRolesARNsResponse.pending
-      && !getAWSAccountRolesARNsResponse.fulfilled
-      && !getAWSAccountRolesARNsResponse.error) {
+    if (
+      !getAWSAccountRolesARNsResponse.pending &&
+      !getAWSAccountRolesARNsResponse.fulfilled &&
+      !getAWSAccountRolesARNsResponse.error
+    ) {
       getAWSAccountRolesARNs(selectedAWSAccountID);
     } else if (getAWSAccountRolesARNsResponse.pending) {
       setHasARNsError(false);
@@ -153,7 +163,8 @@ function AccountRolesARNsSection({
     setSelectedInstallerRole(value);
   };
 
-  const roleARNRequired = value => (value && value !== NO_ROLE_DETECTED ? undefined : 'ARN field is required.');
+  const roleARNRequired = (value) =>
+    value && value !== NO_ROLE_DETECTED ? undefined : 'ARN field is required.';
 
   const refreshARNs = () => {
     clearGetAWSAccountRolesARNsResponse();
@@ -182,169 +193,163 @@ function AccountRolesARNsSection({
         </GridItem>
       )}
       {!getAWSAccountRolesARNsResponse.pending && !allARNsFound && !hasARNsError && (
-      <GridItem>
-        <Alert
-          isInline
-          variant="info"
-          title="Some account roles ARNs were not detected."
-        >
-          <br />
-          Create the account roles using the following command in the ROSA CLI
-          <InstructionCommand textAriaLabel="Copyable ROSA login command">
-            rosa create account-roles
-          </InstructionCommand>
-          <br />
-          After running the command, you may need to refresh using the
-          {' '}
-          <strong>Refresh ARNs</strong>
-          {' '}
-          button below to populate the ARN fields.
-        </Alert>
-      </GridItem>
+        <GridItem>
+          <Alert isInline variant="info" title="Some account roles ARNs were not detected.">
+            <br />
+            Create the account roles using the following command in the ROSA CLI
+            <InstructionCommand textAriaLabel="Copyable ROSA login command">
+              rosa create account-roles
+            </InstructionCommand>
+            <br />
+            After running the command, you may need to refresh using the{' '}
+            <strong>Refresh ARNs</strong> button below to populate the ARN fields.
+          </Alert>
+        </GridItem>
       )}
       {getAWSAccountRolesARNsResponse.pending && (
-      <GridItem>
-        <div className="spinner-fit-container"><Spinner /></div>
-        <div className="spinner-loading-text">Loading account roles ARNs...</div>
-      </GridItem>
+        <GridItem>
+          <div className="spinner-fit-container">
+            <Spinner />
+          </div>
+          <div className="spinner-loading-text">Loading account roles ARNs...</div>
+        </GridItem>
       )}
       {!getAWSAccountRolesARNsResponse.pending && (
-      <GridItem span={12}>
-        <ExpandableSection
-          isExpanded={isExpanded}
-          onToggle={onToggle}
-          toggleText="Account roles ARNs"
-        >
-          <Text component={TextVariants.p}>
-            The following roles were detected in your AWS account.
-            {' '}
-            <ExternalLink href={links.ROSA_AWS_IAM_RESOURCES}>
-              Learn more about account roles
-            </ExternalLink>
-            .
-          </Text>
-          <br />
-          <Button
-            variant="secondary"
-            onClick={() => {
-              track(trackEvents.RefreshARNs);
-              refreshARNs();
-            }}
+        <GridItem span={12}>
+          <ExpandableSection
+            isExpanded={isExpanded}
+            onToggle={onToggle}
+            toggleText="Account roles ARNs"
           >
-            Refresh ARNs
-
-          </Button>
-          <br />
-          <br />
-          <Grid>
-            <GridItem span={8}>
-              <Field
-                component={ReduxFormDropdown}
-                name="installer_role_arn"
-                label="Installer role"
-                type="text"
-                options={installerRoleOptions}
-                onChange={handInstallerRoleChange}
-                isDisabled={installerRoleOptions.length <= 1}
-                validate={roleARNRequired}
-                isRequired
-                helpText=""
-                extendedHelpText={(
-                  <>
-                    An IAM role used by the ROSA installer.
-                    <br />
-                    For more information see
-                    {' '}
-                    <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
-                      Table 1 about the installer role policy
-                    </ExternalLink>
-                    .
-                  </>
-                )}
-              />
-              <br />
-              <Field
-                component={ReduxVerticalFormGroup}
-                name="support_role_arn"
-                label="Support role"
-                type="text"
-                validate={roleARNRequired}
-                isRequired
-                // An IAM role used by the Red Hat Site Reliability Engineering (SRE) support team.
-                extendedHelpText={(
-                  <>
-                    An IAM role used by the Red Hat Site Reliability Engineering (SRE) support team.
-                    <br />
-                    For more information see
-                    {' '}
-                    <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
-                      Table 4 about the support role policy
-                    </ExternalLink>
-                    .
-                  </>
-                )}
-                isDisabled
-              />
-              <br />
-              <Field
-                component={ReduxVerticalFormGroup}
-                name="worker_role_arn"
-                label="Worker role"
-                type="text"
-                validate={roleARNRequired}
-                isRequired
-                extendedHelpText={(
-                  <>
-                    An IAM role used by the ROSA compute instances.
-                    <br />
-                    For more information see
-                    {' '}
-                    <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
-                      Table 3 about the worker/compute role policy
-                    </ExternalLink>
-                    .
-                  </>
-                )}
-                isDisabled
-              />
-              <br />
-              <Field
-                component={ReduxVerticalFormGroup}
-                name="control_plane_role_arn"
-                label="Control plane role"
-                type="text"
-                validate={roleARNRequired}
-                isRequired
-                extendedHelpText={(
-                  <>
-                    An IAM role used by the ROSA control plane.
-                    <br />
-                    For more information see
-                    {' '}
-                    <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
-                      Table 2 about the control plane role policy
-                    </ExternalLink>
-                    .
-                  </>
-                )}
-                isDisabled
-              />
-            </GridItem>
-            {rosaMaxOSVersion && (
+            <Text component={TextVariants.p}>
+              The following roles were detected in your AWS account.{' '}
+              <ExternalLink href={links.ROSA_AWS_IAM_RESOURCES}>
+                Learn more about account roles
+              </ExternalLink>
+              .
+            </Text>
+            <br />
+            <Button
+              variant="secondary"
+              onClick={() => {
+                track(trackEvents.RefreshARNs);
+                refreshARNs();
+              }}
+            >
+              Refresh ARNs
+            </Button>
+            <br />
+            <br />
+            <Grid>
               <GridItem span={8}>
+                <Field
+                  component={ReduxFormDropdown}
+                  name="installer_role_arn"
+                  label="Installer role"
+                  type="text"
+                  options={installerRoleOptions}
+                  onChange={handInstallerRoleChange}
+                  isDisabled={installerRoleOptions.length <= 1}
+                  validate={roleARNRequired}
+                  isRequired
+                  helpText=""
+                  extendedHelpText={
+                    <>
+                      An IAM role used by the ROSA installer.
+                      <br />
+                      For more information see{' '}
+                      <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                        Table 1 about the installer role policy
+                      </ExternalLink>
+                      .
+                    </>
+                  }
+                />
                 <br />
-                <Alert
-                  variant="info"
-                  isInline
-                  isPlain
-                  title={`The selected account-wide roles are compatible with OpenShift version ${semver.major(rosaMaxOSVersion)}.${semver.minor(rosaMaxOSVersion)} and earlier.`}
+                <Field
+                  component={ReduxVerticalFormGroup}
+                  name="support_role_arn"
+                  label="Support role"
+                  type="text"
+                  validate={roleARNRequired}
+                  isRequired
+                  // An IAM role used by the Red Hat Site Reliability Engineering (SRE) support team.
+                  extendedHelpText={
+                    <>
+                      An IAM role used by the Red Hat Site Reliability Engineering (SRE) support
+                      team.
+                      <br />
+                      For more information see{' '}
+                      <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                        Table 4 about the support role policy
+                      </ExternalLink>
+                      .
+                    </>
+                  }
+                  isDisabled
+                />
+                <br />
+                <Field
+                  component={ReduxVerticalFormGroup}
+                  name="worker_role_arn"
+                  label="Worker role"
+                  type="text"
+                  validate={roleARNRequired}
+                  isRequired
+                  extendedHelpText={
+                    <>
+                      An IAM role used by the ROSA compute instances.
+                      <br />
+                      For more information see{' '}
+                      <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                        Table 3 about the worker/compute role policy
+                      </ExternalLink>
+                      .
+                    </>
+                  }
+                  isDisabled
+                />
+                <br />
+                <Field
+                  component={ReduxVerticalFormGroup}
+                  name="control_plane_role_arn"
+                  label="Control plane role"
+                  type="text"
+                  validate={roleARNRequired}
+                  isRequired
+                  extendedHelpText={
+                    <>
+                      An IAM role used by the ROSA control plane.
+                      <br />
+                      For more information see{' '}
+                      <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>
+                        Table 2 about the control plane role policy
+                      </ExternalLink>
+                      .
+                    </>
+                  }
+                  isDisabled
                 />
               </GridItem>
-            )}
-          </Grid>
-          <GridItem span={4} />
-        </ExpandableSection>
-      </GridItem>
+              {rosaMaxOSVersion && (
+                <GridItem span={8}>
+                  <br />
+                  <Alert
+                    variant="info"
+                    isInline
+                    isPlain
+                    title={`The selected account-wide roles are compatible with OpenShift version 
+                    ${semver.major(semver.coerce(rosaMaxOSVersion))}.${semver.minor(
+                      semver.coerce(rosaMaxOSVersion),
+                    )} 
+                    and earlier.`}
+                  />
+                </GridItem>
+              )}
+            </Grid>
+            <GridItem span={4} />
+          </ExpandableSection>
+        </GridItem>
       )}
     </>
   );

@@ -14,7 +14,7 @@ type Props = {
 };
 
 const Insights = ({ history }: Props) => {
-  const ocmListeners = React.useRef<{[event: string]: Function[]}>({ APP_REFRESH: [] });
+  const ocmListeners = React.useRef<{ [event: string]: Function[] }>({ APP_REFRESH: [] });
   React.useEffect(() => {
     const highlightNavItem = (location: Location) => {
       insights.chrome.appNavClick(getNavClickParams(location.pathname));
@@ -53,7 +53,7 @@ const Insights = ({ history }: Props) => {
     };
 
     const dispatchOcmEvent = (event: string) => {
-      ocmListeners.current[event].forEach(callback => callback());
+      ocmListeners.current[event].forEach((callback) => callback());
     };
 
     const cleanupInsightsListener = insights.chrome.on('APP_NAVIGATION', navigateToApp);

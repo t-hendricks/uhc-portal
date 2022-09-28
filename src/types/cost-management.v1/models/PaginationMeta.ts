@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type PaginationMeta = {
-    count?: number;
+  count?: number;
 };
-

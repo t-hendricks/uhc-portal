@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type CapabilityReview = {
-    result: string;
+  result: string;
 };
-

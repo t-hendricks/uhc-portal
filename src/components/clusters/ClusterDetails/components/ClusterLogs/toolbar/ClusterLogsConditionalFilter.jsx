@@ -46,16 +46,20 @@ class ClusterLogsConditionalFilter extends Component {
   }
 
   updateFilter() {
-    const { setFilter } = this.props;
+    const { currentFilter, setFilter } = this.props;
     const { description } = this.state;
 
     setFilter({
+      ...currentFilter,
       description,
     });
   }
 
   updateFlags(value, field) {
-    const { setFlags, history: { push } } = this.props;
+    const {
+      setFlags,
+      history: { push },
+    } = this.props;
 
     this.setState({ [field]: value }, () => {
       const { severityTypes } = this.state;
@@ -75,10 +79,7 @@ class ClusterLogsConditionalFilter extends Component {
   }
 
   render() {
-    const {
-      description,
-      severityTypes,
-    } = this.state;
+    const { description, severityTypes } = this.state;
 
     const descriptionFilter = {
       type: conditionalFilterType.text,
@@ -97,7 +98,7 @@ class ClusterLogsConditionalFilter extends Component {
       value: 'Severity',
       filterValues: {
         onChange: (event, value) => this.updateFlags(value, 'severityTypes'),
-        items: SEVERITY_TYPES.map(key => ({
+        items: SEVERITY_TYPES.map((key) => ({
           label: key,
           value: key,
         })),
@@ -105,20 +106,15 @@ class ClusterLogsConditionalFilter extends Component {
       },
     };
 
-    return (
-      <ConditionalFilter
-        items={[
-          descriptionFilter,
-          severityTypesCheckbox,
-        ]}
-      />
-    );
+    return <ConditionalFilter items={[descriptionFilter, severityTypesCheckbox]} />;
   }
 }
 
 ClusterLogsConditionalFilter.propTypes = {
   currentFilter: PropTypes.shape({
     description: PropTypes.string,
+    timestampFrom: PropTypes.string,
+    timestampTo: PropTypes.string,
   }).isRequired,
   currentFlags: PropTypes.shape({
     severityTypes: PropTypes.arrayOf(PropTypes.string),

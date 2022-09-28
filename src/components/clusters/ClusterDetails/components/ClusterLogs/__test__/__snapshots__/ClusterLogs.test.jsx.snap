@@ -36,6 +36,7 @@ exports[`<ClusterLogs /> should render 1`] = `
         view="CLUSTER_LOGS_VIEW"
       />
       <LogTable
+        pending={false}
         setSorting={[MockFunction]}
       />
       <Connect(ViewPaginationRow)

@@ -120,14 +120,16 @@ const GatedRosaCreationWizard = withFeatureGate(
 
 interface RouterProps extends RouteComponentProps {
   planType: string;
+  clusterId: string;
+  externalClusterId: string;
 }
 
-const Router: React.FC<RouterProps> = ({ history, planType }) => {
+const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalClusterId }) => {
   const { pathname } = useLocation();
   const { setPageMetadata } = useAnalytics();
   useEffect(() => {
     setPageMetadata({
-      ...metadataByRoute(pathname, planType),
+      ...metadataByRoute(pathname, planType, clusterId, externalClusterId),
       ...(is404() ? { title: '404 Not Found' } : {}),
     });
   }, [pathname]);
@@ -340,6 +342,8 @@ const mapStateToProps = (state: RouterState) => {
   const { cluster } = state.clusters.details;
   return {
     planType: get(cluster, 'subscription.plan.type', normalizedProducts.UNKNOWN),
+    clusterId: get(cluster, 'subscription.cluster_id'),
+    externalClusterId: get(cluster, 'subscription.external_cluster_id'),
   };
 };
 

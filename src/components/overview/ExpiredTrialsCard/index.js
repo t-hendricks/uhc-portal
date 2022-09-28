@@ -9,7 +9,7 @@ const mapDispatchToProps = {
   openModal,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   subscriptions: state.subscriptions.subscriptions,
   viewOptions: state.viewOptions[viewConstants.OVERVIEW_EXPIRED_TRIALS],
 });

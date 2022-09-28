@@ -17,16 +17,18 @@ import { subscriptionSettingsConstants } from '../constants';
 import { accountsService } from '../../services';
 
 function editSubscriptionSettings(subscriptionID, data) {
-  return dispatch => dispatch({
-    type: subscriptionSettingsConstants.EDIT_SUBSCRIPTION_SETTINGS,
-    payload: accountsService.editSubscription(subscriptionID, data),
-  });
+  return (dispatch) =>
+    dispatch({
+      type: subscriptionSettingsConstants.EDIT_SUBSCRIPTION_SETTINGS,
+      payload: accountsService.editSubscription(subscriptionID, data),
+    });
 }
 
 function clearEditSubscriptionSettingsResponse() {
-  return dispatch => dispatch({
-    type: subscriptionSettingsConstants.CLEAR_EDIT_SUBSCRIPTION_SETTINGS_RESPONSE,
-  });
+  return (dispatch) =>
+    dispatch({
+      type: subscriptionSettingsConstants.CLEAR_EDIT_SUBSCRIPTION_SETTINGS_RESPONSE,
+    });
 }
 
 const subscriptionSettingsActions = {

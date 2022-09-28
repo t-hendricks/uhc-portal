@@ -7,12 +7,11 @@ describe('<AddOnsRequirementContent />', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<AddOnsRequirementContent
-      activeCardRequirements={[
-        'first requirement',
-        'second requirement',
-      ]}
-    />);
+    wrapper = shallow(
+      <AddOnsRequirementContent
+        activeCardRequirements={['first requirement', 'second requirement']}
+      />,
+    );
   });
 
   it('should render', () => {

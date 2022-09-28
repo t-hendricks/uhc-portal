@@ -54,9 +54,7 @@ describe('isAvailable', () => {
   });
 
   it('should determine that free add-on is available', () => {
-    const available = isAvailable(
-      crcWorkspaces, OSDCluster, org, crcWorkspacesAddonQuota,
-    );
+    const available = isAvailable(crcWorkspaces, OSDCluster, org, crcWorkspacesAddonQuota);
     expect(available).toBe(true);
   });
 
@@ -72,9 +70,7 @@ describe('isAvailable', () => {
 
   it('should determine that add-on is available for non-OSD cluster', () => {
     // addon-crw-operator has product 'any'
-    let available = isAvailable(
-      crcWorkspaces, RHMICluster, org, crcWorkspacesAddonQuota,
-    );
+    let available = isAvailable(crcWorkspaces, RHMICluster, org, crcWorkspacesAddonQuota);
     expect(available).toBe(true);
     available = isAvailable(crcWorkspaces, ROSACluster, org, crcWorkspacesAddonQuota);
     expect(available).toBe(true);
@@ -154,16 +150,28 @@ describe('hasQuota', () => {
 
 describe('availableAddOns', () => {
   it('should return an empty list', () => {
-    const addOns = availableAddOns({ items: [] }, OSDCluster, mockClusterAddOns, {
-      fulfilled: true,
-    }, addonsQuota);
+    const addOns = availableAddOns(
+      { items: [] },
+      OSDCluster,
+      mockClusterAddOns,
+      {
+        fulfilled: true,
+      },
+      addonsQuota,
+    );
     expect(addOns).toEqual([]);
   });
 
   it('should return a list of available add-ons', () => {
-    const addOns = availableAddOns(mockAddOns, OSDCluster, mockClusterAddOns, {
-      fulfilled: true,
-    }, addonsQuota);
+    const addOns = availableAddOns(
+      mockAddOns,
+      OSDCluster,
+      mockClusterAddOns,
+      {
+        fulfilled: true,
+      },
+      addonsQuota,
+    );
     expect(addOns).toEqual([crcWorkspaces, serviceMesh, dbaOperator, loggingOperator]);
   });
 });
@@ -239,10 +247,12 @@ describe('parameterValuesForEditing', () => {
           {
             id: 'my-string',
             value_type: 'string',
-            options: [{
-              name: 'option 1',
-              value: 'options 1',
-            }],
+            options: [
+              {
+                name: 'option 1',
+                value: 'options 1',
+              },
+            ],
           },
         ],
       },
@@ -258,13 +268,16 @@ describe('parameterValuesForEditing', () => {
           {
             id: 'my-string',
             value_type: 'string',
-            options: [{
-              name: 'option 1',
-              value: 'options 1',
-            }, {
-              name: 'option 2',
-              value: 'options 2',
-            }],
+            options: [
+              {
+                name: 'option 1',
+                value: 'options 1',
+              },
+              {
+                name: 'option 2',
+                value: 'options 2',
+              },
+            ],
           },
         ],
       },
@@ -286,20 +299,32 @@ describe('parameterValuesForEditing', () => {
 
 describe('quotaCostOptions', () => {
   it('returns all options when allowed quota greater than all values', () => {
-    const allOptions = [{ name: 'Option 1', value: '1' }, { name: 'Option 2', value: '15' }];
+    const allOptions = [
+      { name: 'Option 1', value: '1' },
+      { name: 'Option 2', value: '15' },
+    ];
     // crcWorkspacesAddonQuota allowed: 15, consumed: 0
     const quotaOptions = quotaCostOptions(
-      'addon-crw-operator', OSDCluster, crcWorkspacesAddonQuota,
-      allOptions, 0,
+      'addon-crw-operator',
+      OSDCluster,
+      crcWorkspacesAddonQuota,
+      allOptions,
+      0,
     );
     expect(quotaOptions).toEqual(allOptions);
   });
   it('removes options that are greater than allowed quota', () => {
-    const allOptions = [{ name: 'Option 1', value: '15' }, { name: 'Option 2', value: '16' }];
+    const allOptions = [
+      { name: 'Option 1', value: '15' },
+      { name: 'Option 2', value: '16' },
+    ];
     // crcWorkspacesAddonQuota allowed: 15, consumed: 0
     const quotaOptions = quotaCostOptions(
-      'addon-crw-operator', OSDCluster, crcWorkspacesAddonQuota,
-      allOptions, 0,
+      'addon-crw-operator',
+      OSDCluster,
+      crcWorkspacesAddonQuota,
+      allOptions,
+      0,
     );
     expect(quotaOptions).toEqual([{ name: 'Option 1', value: '15' }]);
   });
@@ -311,8 +336,11 @@ describe('quotaCostOptions', () => {
     ];
     // loggingAddonQuota allowed: 5, consumed: 5
     const quotaOptions = quotaCostOptions(
-      'addon-cluster-logging-operator', OSDCluster, loggingAddonQuota,
-      allOptions, 0,
+      'addon-cluster-logging-operator',
+      OSDCluster,
+      loggingAddonQuota,
+      allOptions,
+      0,
     );
     expect(quotaOptions).toEqual([]);
   });
@@ -324,8 +352,11 @@ describe('quotaCostOptions', () => {
     ];
     // loggingAddonQuota allowed: 5, consumed: 5
     const quotaOptions = quotaCostOptions(
-      'addon-cluster-logging-operator', OSDCluster, loggingAddonQuota,
-      allOptions, 2,
+      'addon-cluster-logging-operator',
+      OSDCluster,
+      loggingAddonQuota,
+      allOptions,
+      2,
     );
     expect(quotaOptions).toEqual([
       { name: 'Option 1', value: '1' },
@@ -333,11 +364,17 @@ describe('quotaCostOptions', () => {
     ]);
   });
   it('returns all options when unknown resource name', () => {
-    const allOptions = [{ name: 'Option 1', value: '1' }, { name: 'Option 2', value: '15' }];
+    const allOptions = [
+      { name: 'Option 1', value: '1' },
+      { name: 'Option 2', value: '15' },
+    ];
     // crcWorkspacesAddonQuota allowed: 15, consumed: 0
     const quotaOptions = quotaCostOptions(
-      'not-a-valid-resource-name', OSDCluster, crcWorkspacesAddonQuota,
-      allOptions, 0,
+      'not-a-valid-resource-name',
+      OSDCluster,
+      crcWorkspacesAddonQuota,
+      allOptions,
+      0,
     );
     expect(quotaOptions).toEqual(allOptions);
   });
@@ -414,10 +451,8 @@ describe('validateAddOnRequirements', () => {
 
   it('should return true for addon with no requirements', () => {
     const status = validateAddOnRequirements(tstAddOn);
-    expect(status.fulfilled)
-      .toEqual(true);
-    expect(status.errorMsgs)
-      .toEqual([]);
+    expect(status.fulfilled).toEqual(true);
+    expect(status.errorMsgs).toEqual([]);
   });
 
   describe('cluster', () => {
@@ -440,27 +475,25 @@ describe('validateAddOnRequirements', () => {
 
     it('should return true for addon with fulfilled cluster requirements', () => {
       const status = validateAddOnRequirements(tstAddOn);
-      expect(status.fulfilled)
-        .toEqual(true);
-      expect(status.errorMsgs)
-        .toEqual([]);
+      expect(status.fulfilled).toEqual(true);
+      expect(status.errorMsgs).toEqual([]);
     });
     it('should return false for addon with unfulfilled cluster requirements', () => {
       tstAddOn.requirements[0].status.fulfilled = false;
       const status = validateAddOnRequirements(tstAddOn);
-      expect(status.fulfilled)
-        .toEqual(false);
-      expect(status.errorMsgs)
-        .toEqual(['This addon requires a cluster where product.id is osd']);
+      expect(status.fulfilled).toEqual(false);
+      expect(status.errorMsgs).toEqual(['This addon requires a cluster where product.id is osd']);
     });
     it('should return error messages from status', () => {
       tstAddOn.requirements[0].status.fulfilled = false;
-      tstAddOn.requirements[0].status.error_msgs = ["This addon is not supported on clusters with a value of 'osd' for 'product.id'"];
+      tstAddOn.requirements[0].status.error_msgs = [
+        "This addon is not supported on clusters with a value of 'osd' for 'product.id'",
+      ];
       const status = validateAddOnRequirements(tstAddOn);
-      expect(status.fulfilled)
-        .toEqual(false);
-      expect(status.errorMsgs)
-        .toEqual(["This addon is not supported on clusters with a value of 'osd' for 'product.id'"]);
+      expect(status.fulfilled).toEqual(false);
+      expect(status.errorMsgs).toEqual([
+        "This addon is not supported on clusters with a value of 'osd' for 'product.id'",
+      ]);
     });
   });
 
@@ -475,19 +508,27 @@ describe('validateAddOnRequirements', () => {
     });
     it('should return existing values', () => {
       const param = parameterAndValue(mockClusterAddOnsParams.items[1], managedIntegration);
-      expect(param).toEqual({ parameters: { 'cidr-range': mockAddOnsInstallParamAndValues.items[0] } });
+      expect(param).toEqual({
+        parameters: { 'cidr-range': mockAddOnsInstallParamAndValues.items[0] },
+      });
     });
     it('should return only existing values for current addon parameters', () => {
       const param = parameterAndValue(mockClusterAddOnsParams.items[2], managedIntegration);
-      expect(param).toEqual({ parameters: { 'cidr-range': mockAddOnsInstallParamAndValues.items[0] } });
+      expect(param).toEqual({
+        parameters: { 'cidr-range': mockAddOnsInstallParamAndValues.items[0] },
+      });
     });
     it('should return false for boolean addon param with installation param value of "false"', () => {
       const param = parameterAndValue(mockClusterAddOnsParams.items[3], loggingOperator);
-      expect(param).toEqual({ parameters: { 'use-cloudwatch': mockAddOnsInstallParamAndValues.items[1] } });
+      expect(param).toEqual({
+        parameters: { 'use-cloudwatch': mockAddOnsInstallParamAndValues.items[1] },
+      });
     });
     it('should return false for boolean addon param with installation param value of "true"', () => {
       const param = parameterAndValue(mockClusterAddOnsParams.items[4], loggingOperator);
-      expect(param).toEqual({ parameters: { 'use-cloudwatch': mockAddOnsInstallParamAndValues.items[2] } });
+      expect(param).toEqual({
+        parameters: { 'use-cloudwatch': mockAddOnsInstallParamAndValues.items[2] },
+      });
     });
     it('should return current param name for param with options and installation param value', () => {
       const mockAddOnsParams = {
@@ -496,13 +537,16 @@ describe('validateAddOnRequirements', () => {
             {
               id: 'my-string',
               value_type: 'string',
-              options: [{
-                name: 'option 1 name',
-                value: 'options 1 value',
-              }, {
-                name: 'option 2 name',
-                value: 'options 2 value',
-              }],
+              options: [
+                {
+                  name: 'option 1 name',
+                  value: 'options 1 value',
+                },
+                {
+                  name: 'option 2 name',
+                  value: 'options 2 value',
+                },
+              ],
             },
           ],
         },
@@ -550,9 +594,7 @@ describe('getParameters', () => {
   });
 
   it('should return an empty array', () => {
-    const params = getParameters(
-      tstAddOn, tstCluster,
-    );
+    const params = getParameters(tstAddOn, tstCluster);
     expect(params).toEqual([]);
   });
 

@@ -6,7 +6,7 @@
  * Severity of a cluster alert received via telemetry.
  */
 export enum AlertSeverity {
-    CRITICAL = 'critical',
-    NONE = 'none',
-    WARNING = 'warning',
+  CRITICAL = 'critical',
+  NONE = 'none',
+  WARNING = 'warning',
 }

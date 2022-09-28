@@ -15,11 +15,12 @@ class InstallASH extends Component {
 
   render() {
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'Microsoft Azure Stack Hub' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'Microsoft Azure Stack Hub' },
+        ]}
       />
     );
 

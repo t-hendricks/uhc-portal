@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Tabs, Tab, TabTitleText, TabTitleIcon,
-} from '@patternfly/react-core';
+import { Tabs, Tab, TabTitleText, TabTitleIcon } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 
 class TabsRow extends React.Component {
@@ -18,9 +16,7 @@ class TabsRow extends React.Component {
 
   componentDidUpdate() {
     const { activeTabKey, initialTabKey } = this.state;
-    const {
-      overviewTabRef,
-    } = this.props;
+    const { overviewTabRef } = this.props;
     const activeTab = this.getTabs()[activeTabKey];
     if (!activeTab.show) {
       this.handleTabClick(undefined, 0);
@@ -39,7 +35,7 @@ class TabsRow extends React.Component {
 
   getInitTab() {
     const { initTabOpen } = this.props;
-    const tabIndex = this.getTabs().findIndex(tab => tab.id === initTabOpen);
+    const tabIndex = this.getTabs().findIndex((tab) => tab.id === initTabOpen);
     if (tabIndex === -1) {
       return 0;
     }
@@ -51,6 +47,7 @@ class TabsRow extends React.Component {
       displayMonitoringTab,
       displayAccessControlTab,
       displayAddOnsTab,
+      displayClusterHistoryTab,
       displayNetworkingTab,
       displaySupportTab,
       displayMachinePoolsTab,
@@ -60,6 +57,7 @@ class TabsRow extends React.Component {
       monitoringTabRef,
       accessControlTabRef,
       addOnsTabRef,
+      clusterHistoryTabRef,
       networkingTabRef,
       supportTabRef,
       machinePoolsTabRef,
@@ -78,12 +76,16 @@ class TabsRow extends React.Component {
       },
       {
         key: 1,
-        title:
-  <>
-    <TabTitleText>Monitoring</TabTitleText>
-    {hasIssues
-    && <TabTitleIcon id="monitoring-issues-icon"><ExclamationCircleIcon className="danger" /></TabTitleIcon>}
-  </>,
+        title: (
+          <>
+            <TabTitleText>Monitoring</TabTitleText>
+            {hasIssues && (
+              <TabTitleIcon id="monitoring-issues-icon">
+                <ExclamationCircleIcon className="danger" />
+              </TabTitleIcon>
+            )}
+          </>
+        ),
         contentId: 'monitoringTabContent',
         id: 'monitoring',
         show: displayMonitoringTab,
@@ -107,6 +109,14 @@ class TabsRow extends React.Component {
       },
       {
         key: 4,
+        title: 'Cluster history',
+        contentId: 'clusterHistoryTabContent',
+        id: 'clusterHistory',
+        show: displayClusterHistoryTab,
+        ref: clusterHistoryTabRef,
+      },
+      {
+        key: 5,
         title: 'Networking',
         contentId: 'networkingTabContent',
         id: 'networking',
@@ -114,7 +124,7 @@ class TabsRow extends React.Component {
         ref: networkingTabRef,
       },
       {
-        key: 5,
+        key: 6,
         title: 'Machine pools',
         contentId: 'machinePoolsTabContent',
         id: 'machinePools',
@@ -122,7 +132,7 @@ class TabsRow extends React.Component {
         ref: machinePoolsTabRef,
       },
       {
-        key: 6,
+        key: 7,
         title: 'Support',
         contentId: 'supportTabContent',
         id: 'support',
@@ -130,7 +140,7 @@ class TabsRow extends React.Component {
         ref: supportTabRef,
       },
       {
-        key: 7,
+        key: 8,
         title: 'Settings',
         contentId: 'upgradeSettingsTabContent',
         id: 'updateSettings',
@@ -138,7 +148,7 @@ class TabsRow extends React.Component {
         ref: upgradeSettingsTabRef,
       },
       {
-        key: 8,
+        key: 9,
         title: 'Add Hosts',
         contentId: 'addHostsContent',
         id: 'addAssistedHosts',
@@ -151,15 +161,18 @@ class TabsRow extends React.Component {
   handleTabClick = (event, tabIndex) => {
     const { setOpenedTab, onTabSelected } = this.props;
     const tabs = this.getTabs();
-    this.setState(state => ({
-      activeTabKey: tabIndex,
-      initialTabKey: state.initialTabKey === tabIndex ? null : state.initialTabKey,
-    }), () => {
-      const { initialTabKey } = this.state;
-      if (initialTabKey === null) {
-        setOpenedTab(tabs[tabIndex].id);
-      }
-    });
+    this.setState(
+      (state) => ({
+        activeTabKey: tabIndex,
+        initialTabKey: state.initialTabKey === tabIndex ? null : state.initialTabKey,
+      }),
+      () => {
+        const { initialTabKey } = this.state;
+        if (initialTabKey === null) {
+          setOpenedTab(tabs[tabIndex].id);
+        }
+      },
+    );
     tabs.forEach((tab) => {
       if (tab.ref && tab.ref.current) {
         if (tab.key !== tabIndex) {
@@ -177,8 +190,9 @@ class TabsRow extends React.Component {
   /* use browser API (window) as a temporary workaround to change
      the active tab when hash is changed inside URL */
   onPopState = ({ target }) => {
-    const targetTabKey = this.getTabs()
-      .find(t => t.id === target.location.hash.substring(1))?.key;
+    const targetTabKey = this.getTabs().find(
+      (t) => t.id === target.location.hash.substring(1),
+    )?.key;
     if (targetTabKey) {
       this.handleTabClick(undefined, targetTabKey);
     }
@@ -187,11 +201,11 @@ class TabsRow extends React.Component {
   render() {
     const { activeTabKey } = this.state;
 
-    const tabsToDisplay = this.getTabs().filter(tab => tab.show);
+    const tabsToDisplay = this.getTabs().filter((tab) => tab.show);
 
     return (
       <Tabs activeKey={activeTabKey} onSelect={this.handleTabClick}>
-        {tabsToDisplay.map(tab => (
+        {tabsToDisplay.map((tab) => (
           <Tab
             key={tab.key}
             eventKey={tab.key}
@@ -209,6 +223,7 @@ TabsRow.propTypes = {
   displayMonitoringTab: PropTypes.bool,
   displayAccessControlTab: PropTypes.bool,
   displayAddOnsTab: PropTypes.bool,
+  displayClusterHistoryTab: PropTypes.bool,
   displayNetworkingTab: PropTypes.bool,
   displaySupportTab: PropTypes.bool,
   displayMachinePoolsTab: PropTypes.bool,
@@ -218,6 +233,7 @@ TabsRow.propTypes = {
   monitoringTabRef: PropTypes.object.isRequired,
   accessControlTabRef: PropTypes.object.isRequired,
   addOnsTabRef: PropTypes.object.isRequired,
+  clusterHistoryTabRef: PropTypes.object.isRequired,
   machinePoolsTabRef: PropTypes.object.isRequired,
   networkingTabRef: PropTypes.object.isRequired,
   supportTabRef: PropTypes.object.isRequired,
@@ -233,6 +249,7 @@ TabsRow.defaultProps = {
   displayMonitoringTab: true,
   displayAccessControlTab: false,
   displayAddOnsTab: false,
+  displayClusterHistoryTab: false,
   displayNetworkingTab: false,
   displayMachinePoolsTab: false,
   displayAddAssistedHosts: false,

@@ -2,12 +2,19 @@ import produce from 'immer';
 import sortBy from 'lodash/sortBy';
 
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  baseRequestState,
 } from '../../../../../../redux/reduxHelpers';
 import { getErrorState } from '../../../../../../common/errors';
 
 import {
-  GET_ROLES, GET_GRANTS, ADD_GRANT, CLEAR_ADD_GRANT_RESPONSE, DELETE_GRANT,
+  GET_ROLES,
+  GET_GRANTS,
+  ADD_GRANT,
+  CLEAR_ADD_GRANT_RESPONSE,
+  DELETE_GRANT,
 } from './NetworkSelfServiceConstants';
 
 const initialState = {
@@ -41,13 +48,11 @@ function NetworkSelfServiceReducer(state = initialState, action) {
         draft.roles = {
           ...initialState.roles,
           fulfilled: true,
-          data: action.payload.data.items.map(
-            role => ({
-              id: role.id,
-              displayName: role.display_name || role.id,
-              description: role.description,
-            }),
-          ),
+          data: action.payload.data.items.map((role) => ({
+            id: role.id,
+            displayName: role.display_name || role.id,
+            description: role.description,
+          })),
         };
         break;
 

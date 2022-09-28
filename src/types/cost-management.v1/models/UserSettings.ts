@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type UserSettings = {
-    currency?: string;
-    cost_type?: string;
+  currency?: string;
+  cost_type?: string;
 };
-

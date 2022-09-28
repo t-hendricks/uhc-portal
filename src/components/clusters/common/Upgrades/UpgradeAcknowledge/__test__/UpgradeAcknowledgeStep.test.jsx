@@ -9,8 +9,16 @@ describe('<UpgradeAcknowledgeStep>', () => {
   const confirmedMock = jest.fn();
 
   const ackArray = [
-    { description: 'my upgrade gate', warning_message: 'my ack warning message', documentation_url: 'my doc url' },
-    { description: 'my other upgrade gate', warning_message: 'my other ack warning message', documentation_url: 'my other doc url' },
+    {
+      description: 'my upgrade gate',
+      warning_message: 'my ack warning message',
+      documentation_url: 'my doc url',
+    },
+    {
+      description: 'my other upgrade gate',
+      warning_message: 'my other ack warning message',
+      documentation_url: 'my other doc url',
+    },
   ];
 
   beforeEach(() => {
@@ -38,7 +46,9 @@ describe('<UpgradeAcknowledgeStep>', () => {
   });
 
   it('should not be confirmed if wrong confirm word is typed', () => {
-    wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')('notCorrectWord');
+    wrapper.find('TextInput[data-testid="acknowledgeTextInput"]').invoke('onChange')(
+      'notCorrectWord',
+    );
     wrapper.update();
     expect(confirmedMock.mock.calls[confirmedMock.mock.calls.length - 1][0]).toEqual(false);
   });

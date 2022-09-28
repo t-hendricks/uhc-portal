@@ -28,23 +28,12 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
     >
       <Stack hasGutter>
         <StackItem>
-          You must create the
-          {' '}
-          <b>operator roles</b>
-          {' '}
-          and
-          {' '}
-          <b>OIDC provider</b>
-          {' '}
-          to complete cluster installation.
+          You must create the <b>operator roles</b> and <b>OIDC provider</b> to complete cluster
+          installation.
         </StackItem>
         <StackItem>Use one of the following methods:</StackItem>
         <StackItem>
-          <Tabs
-            activeKey={activeTab}
-            onSelect={(_, tab) => setActiveTab(tab)}
-            isBox
-          >
+          <Tabs activeKey={activeTab} onSelect={(_, tab) => setActiveTab(tab)} isBox>
             {/* Hide the CloudFormation tab until the templates are published to a URL.
             <Tab
               eventKey={0}
@@ -96,8 +85,8 @@ function ActionRequiredModal({ cluster, isOpen, onClose }) {
           </TabContent>
         </StackItem>
         <StackItem>
-          The options above will be available until the operator roles and OIDC
-          provider are detected.
+          The options above will be available until the operator roles and OIDC provider are
+          detected.
         </StackItem>
       </Stack>
     </Modal>

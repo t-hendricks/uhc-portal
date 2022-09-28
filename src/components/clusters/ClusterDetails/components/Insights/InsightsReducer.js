@@ -21,10 +21,7 @@ import {
   PENDING_ACTION,
 } from '../../../../../redux/reduxHelpers';
 
-import {
-  GET_CLUSTER_INSIGHTS,
-  GET_ORGANIZATION_INSIGHTS,
-} from './InsightsConstants';
+import { GET_CLUSTER_INSIGHTS, GET_ORGANIZATION_INSIGHTS } from './InsightsConstants';
 
 const initialState = {
   insightsData: {},

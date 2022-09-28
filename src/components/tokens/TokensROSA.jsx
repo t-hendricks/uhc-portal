@@ -18,10 +18,7 @@ limitations under the License.
 // they can copy it and use it with the rosa command line utitility.
 
 import React from 'react';
-import {
-  Text,
-  Title,
-} from '@patternfly/react-core';
+import { Text, Title } from '@patternfly/react-core';
 import ExternalLink from '../common/ExternalLink';
 import Tokens from './Tokens';
 import links, { tools } from '../../common/installLinks.mjs';
@@ -30,9 +27,9 @@ import links, { tools } from '../../common/installLinks.mjs';
 // cause breakage if ever we change the <Tokens> component heavily, but in the
 // meantime prevents unnecessary code duplication with minimal effort.
 class TokensROSA extends Tokens {
-  commandName = 'rosa'
+  commandName = 'rosa';
 
-  commandTool = tools.ROSA
+  commandTool = tools.ROSA;
 
   // Some methods here don't use `this`, but we can't convert to Class.method() calls,
   // wouldn't allow TokensROSA which inhertis from Tokens to override them.
@@ -41,14 +38,13 @@ class TokensROSA extends Tokens {
     return (
       <>
         <Text component="p">
-          Red Hat OpenShift Service on AWS is a managed service that
-          makes it easy for you to use OpenShift on AWS without needing to
-          install, operate or upgrade your own OpenShift (Kubernetes) cluster.
+          Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use
+          OpenShift on AWS without needing to install, operate or upgrade your own OpenShift
+          (Kubernetes) cluster.
         </Text>
         <Title headingLevel="h3">Your API token</Title>
         <Text component="p">
-          Use this API token to authenticate against your
-          Red Hat OpenShift Service on AWS account.
+          Use this API token to authenticate against your Red Hat OpenShift Service on AWS account.
         </Text>
       </>
     );

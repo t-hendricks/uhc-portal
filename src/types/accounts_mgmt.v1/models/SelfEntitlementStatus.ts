@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type SelfEntitlementStatus = {
-    product?: string;
-    status?: string;
+  product?: string;
+  status?: string;
 };
-

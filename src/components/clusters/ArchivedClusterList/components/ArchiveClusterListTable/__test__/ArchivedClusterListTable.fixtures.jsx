@@ -36,8 +36,4 @@ const clusters = [
   },
 ];
 
-export {
-  clusters,
-  setSorting,
-  openModal,
-};
+export { clusters, setSorting, openModal };

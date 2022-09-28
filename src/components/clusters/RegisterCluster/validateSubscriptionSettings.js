@@ -4,23 +4,11 @@ import {
   subscriptionSystemUnits,
 } from '../../../common/subscriptionTypes';
 
-const {
-  PREMIUM,
-  STANDARD,
-  SELF_SUPPORT,
-} = subscriptionSupportLevels;
+const { PREMIUM, STANDARD, SELF_SUPPORT } = subscriptionSupportLevels;
 
-const {
-  SUPPORT_LEVEL,
-  SYSTEM_UNITS,
-  CPU_TOTAL,
-  SOCKET_TOTAL,
-} = subscriptionSettings;
+const { SUPPORT_LEVEL, SYSTEM_UNITS, CPU_TOTAL, SOCKET_TOTAL } = subscriptionSettings;
 
-const {
-  CORES_VCPU,
-  SOCKETS,
-} = subscriptionSystemUnits;
+const { CORES_VCPU, SOCKETS } = subscriptionSystemUnits;
 
 const validateSubscriptionSettings = (settings) => {
   const {

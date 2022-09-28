@@ -63,9 +63,7 @@ const clusterIDPs = {
       mapping_method: 'claim',
       github: {
         client_id: 'asdasd',
-        organizations: [
-          'sdfsdf',
-        ],
+        organizations: ['sdfsdf'],
       },
     },
   ],
@@ -106,10 +104,4 @@ const funcs = {
   getClusterIDPs,
 };
 
-export {
-  clusterDetails,
-  submitIDPResponse,
-  clusterIDPs,
-  match,
-  funcs,
-};
+export { clusterDetails, submitIDPResponse, clusterIDPs, match, funcs };

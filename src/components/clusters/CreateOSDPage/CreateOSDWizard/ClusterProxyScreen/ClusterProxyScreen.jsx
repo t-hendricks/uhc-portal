@@ -13,10 +13,7 @@ import {
 } from '@patternfly/react-core';
 
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
-import {
-  validateUrl,
-  validateCA,
-} from '../../../../../common/validators';
+import { validateUrl, validateCA } from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
 import ExternalLink from '../../../../common/ExternalLink';
@@ -27,9 +24,12 @@ import {
   HTTP_PROXY_PLACEHOLDER,
   HTTPS_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_PLACEHOLDER,
-} from '../../CreateOSDForm/FormSections/NetworkingSection/networkingPlaceholders';
+} from '../../CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 
-import { MAX_FILE_SIZE, ACCEPT } from '../../../ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
+import {
+  MAX_FILE_SIZE,
+  ACCEPT,
+} from '../../../ClusterDetails/components/IdentityProvidersPage/components/CAUpload';
 
 function ClusterProxyScreen({
   product,
@@ -39,8 +39,10 @@ function ClusterProxyScreen({
   sendError,
 }) {
   const [anyTouched, setAnyTouched] = React.useState(false);
-  const configureProxyUrl = product === normalizedProducts.ROSA
-    ? links.ROSA_CLUSTER_WIDE_PROXY : links.OSD_CLUSTER_WIDE_PROXY;
+  const configureProxyUrl =
+    product === normalizedProducts.ROSA
+      ? links.ROSA_CLUSTER_WIDE_PROXY
+      : links.OSD_CLUSTER_WIDE_PROXY;
 
   const onTouched = () => {
     // this lets us know that one of the fields was touched
@@ -49,31 +51,35 @@ function ClusterProxyScreen({
     }
   };
   const noValues = () => !httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle;
-  const validateUrlHttp = value => validateUrl(value, 'http');
-  const validateUrlHttps = value => validateUrl(value, ['http', 'https']);
+  const validateUrlHttp = (value) => validateUrl(value, 'http');
+  const validateUrlHttps = (value) => validateUrl(value, ['http', 'https']);
   const validateAtLeastOne = (value, allValues) => {
     if (
-      !allValues.http_proxy_url
-      && !allValues.https_proxy_url
-      && !allValues.additional_trust_bundle
+      !allValues.http_proxy_url &&
+      !allValues.https_proxy_url &&
+      !allValues.additional_trust_bundle
     ) {
       return 'Configure at least one of the cluster-wide proxy fields.';
     }
     return undefined;
   };
 
-  const AtLeastOneAlert = (
+  const atLeastOneAlert = (
     <Alert
       isInline
       variant="warning"
-      title={(
+      title={
         <span>
-          {'Complete at least 1 of the fields above. If you don\'t want to set a cluster-wide proxy, disable this option in the '}
-          <strong style={{ fontSize: 'var(--pf-global--FontSize--md)' }}>{'Networking > Configuration'}</strong>
+          {
+            "Complete at least 1 of the fields above. If you don't want to set a cluster-wide proxy, disable this option in the "
+          }
+          <strong style={{ fontSize: 'var(--pf-global--FontSize--md)' }}>
+            {'Networking > Configuration'}
+          </strong>
           {' step.'}
         </span>
-      )}
-      actionLinks={(
+      }
+      actionLinks={
         <WizardContext.Consumer>
           {({ goToStepByName }) => (
             <AlertActionLink onClick={() => goToStepByName('Configuration')}>
@@ -81,7 +87,7 @@ function ClusterProxyScreen({
             </AlertActionLink>
           )}
         </WizardContext.Consumer>
-      )}
+      }
     />
   );
 
@@ -163,9 +169,7 @@ function ClusterProxyScreen({
           />
         </GridItem>
         <GridItem sm={0} md={2} xl2={4} />
-        <GridItem>
-          {anyTouched && noValues() && AtLeastOneAlert}
-        </GridItem>
+        <GridItem>{anyTouched && noValues() && atLeastOneAlert}</GridItem>
       </Grid>
     </Form>
   );

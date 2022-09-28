@@ -17,7 +17,10 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     initialValues: createOSDInitialValues({
-      cloudProviderID, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
+      cloudProviderID,
+      isMultiAz,
+      isByoc,
+      isTrialDefault: ownProps.isTrialDefault,
     }),
     byocSelected: isByoc,
     billingModel,

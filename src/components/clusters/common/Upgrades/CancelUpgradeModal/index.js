@@ -1,14 +1,11 @@
 import { connect } from 'react-redux';
 
-import {
-  deleteSchedule,
-  clearDeleteScheduleResponse,
-} from '../clusterUpgradeActions';
+import { deleteSchedule, clearDeleteScheduleResponse } from '../clusterUpgradeActions';
 import CancelUpgradeModal from './CancelUpgradeModal';
 import { closeModal } from '../../../../common/Modal/ModalActions';
 import shouldShowModal from '../../../../common/Modal/ModalSelectors';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isOpen: shouldShowModal(state, 'cancel-upgrade'),
   schedule: state.modal.data.schedule,
   deleteScheduleRequest: state.clusterUpgrades.deleteScheduleRequest,

@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type TokenAuthorizationRequest = {
-    authorization_token?: string;
+  authorization_token?: string;
 };
-
