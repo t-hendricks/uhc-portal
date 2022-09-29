@@ -31,13 +31,13 @@ export const getAWSIDsFromARNs = (arns) => {
 export const normalizeSTSUsersByAWSAccounts = (stsUserRoles) => {
   // Ex stsUserRoles = "arn:aws:iam::000000000006:role/ManagedOpenShift-User-dtaylor-ocm-Role, ..."
   //                '268733382466' above ^^ is an example AWS account ID
-  if (stsUserRoles === undefined || stsUserRoles.length === 0) {
+  if (stsUserRoles === undefined || stsUserRoles.length === 0){
     return [];
   }
   const ids = stsUserRoles.split(',').map((stsUser) => {
     let awsAcctId = stsUser.substr(stsUser.indexOf('::') + 2);
     awsAcctId = awsAcctId.substr(0, awsAcctId.indexOf(':'));
-    return { aws_id: awsAcctId, sts_user: stsUser.substr(stsUser.indexOf(':role/') + 6) };
+    return {aws_id: awsAcctId, sts_user: stsUser.substr(stsUser.indexOf(':role/') + 6)}
   });
   return [...new Set(ids)]; // convert to Set to remove duplicates, spread to convert back to array
 };
@@ -106,7 +106,7 @@ const fetchUserRolesByOCMAccountID = async () => {
   const ocmAccount = await accountsService.getCurrentAccount();
   const userRole = await accountsService.getUserRole(ocmAccount?.data?.id);
   return normalizeSTSUsersByAWSAccounts(userRole?.data.value);
-};
+}
 
 export const getUserRole = () => ({
   type: GET_USER_ROLE,

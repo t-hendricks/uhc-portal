@@ -31,9 +31,8 @@ describe('AccountRolesScreen', () => {
     });
 
     it('returns true when multiple users detected and one matches selected aws account', () => {
-      const users =
-        'arn:aws:iam::000000000006:role/ManagedOpenShift-User-dtaylor-ocm-Role,' +
-        'arn:aws:iam::119733383044:role/ManagedOpenShift-User-foobar-ocm-Role';
+      const users = 'arn:aws:iam::000000000006:role/ManagedOpenShift-User-dtaylor-ocm-Role,' +
+                    'arn:aws:iam::119733383044:role/ManagedOpenShift-User-foobar-ocm-Role';
       const selectedAwsAcctId = '119733383044';
       const usersByAcctIds = rosaActions.normalizeSTSUsersByAWSAccounts(users);
       expect(usersByAcctIds.length).toEqual(2);
