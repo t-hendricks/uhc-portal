@@ -79,8 +79,9 @@ const EditClusterWideProxyDialog = (props) => {
     isOpen && (
       <Modal
         onClose={handleClose}
-        title="Edit cluster-wide proxy"
+        title="Edit cluster-wide Proxy"
         onPrimaryClick={handleSubmit}
+        primaryText="Save"
         onSecondaryClick={handleClose}
         isPending={editClusterProxyResponse.pending}
         width="max(30%, 600px)"
@@ -88,9 +89,6 @@ const EditClusterWideProxyDialog = (props) => {
         {clusterProxyError}
         <Form>
           <Grid hasGutter>
-            <GridItem>
-              <Title headingLevel="h3">Cluster-wide proxy</Title>
-            </GridItem>
             <GridItem>
               <Text>
                 Enable an HTTP or HTTPS proxy to deny direct access to the Internet from your
@@ -116,7 +114,7 @@ const EditClusterWideProxyDialog = (props) => {
               <Field
                 component={ReduxVerticalFormGroup}
                 name="httpProxyUrl"
-                label="HTTP proxy URL"
+                label="HTTP Proxy URL"
                 placeholder={HTTPS_PROXY_PLACEHOLDER}
                 type="text"
                 validate={[validateUrlHttp, validateAtLeastOne]}
@@ -129,7 +127,7 @@ const EditClusterWideProxyDialog = (props) => {
               <Field
                 component={ReduxVerticalFormGroup}
                 name="httpsProxyUrl"
-                label="HTTPS proxy URL"
+                label="HTTPS Proxy URL"
                 placeholder={HTTPS_PROXY_PLACEHOLDER}
                 type="text"
                 validate={[validateUrlHttps, validateAtLeastOne]}

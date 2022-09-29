@@ -63,7 +63,7 @@ const VPCDetailsCard = (props) => {
           </>
         ) : null}
         <Title headingLevel="h3" className="pf-l-stack__item --">
-          Cluster-wide proxy
+          Cluster-wide Proxy
         </Title>
         <DescriptionList isHorizontal className="pf-l-stack__item details-card-dl">
           <DescriptionListGroup>
