@@ -1148,6 +1148,9 @@ exports[` 1`] = `
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "returnFocusOnDeactivate": true,
+                                                              "tabbableOptions": Object {
+                                                                "displayCheck": "none",
+                                                              },
                                                             }
                                                           }
                                                           onMouseDown={[Function]}
@@ -1344,6 +1347,9 @@ exports[` 1`] = `
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "returnFocusOnDeactivate": true,
+                                                              "tabbableOptions": Object {
+                                                                "displayCheck": "none",
+                                                              },
                                                             }
                                                           }
                                                           onMouseDown={[Function]}
@@ -3293,6 +3299,9 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "returnFocusOnDeactivate": true,
+                                                              "tabbableOptions": Object {
+                                                                "displayCheck": "none",
+                                                              },
                                                             }
                                                           }
                                                           onMouseDown={[Function]}
@@ -3489,6 +3498,9 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                               "clickOutsideDeactivates": true,
                                                               "fallbackFocus": [Function],
                                                               "returnFocusOnDeactivate": true,
+                                                              "tabbableOptions": Object {
+                                                                "displayCheck": "none",
+                                                              },
                                                             }
                                                           }
                                                           onMouseDown={[Function]}
@@ -5926,10 +5938,13 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                           onFocus={[Function]}
                                                           onMouseEnter={[Function]}
                                                           onMouseLeave={[Function]}
+                                                          onPopperMouseEnter={[Function]}
+                                                          onPopperMouseLeave={[Function]}
                                                           onTriggerEnter={[Function]}
                                                           placement="top"
                                                           popper={
                                                             <div
+                                                              aria-live="off"
                                                               className="pf-c-tooltip"
                                                               id="pf-tooltip-1"
                                                               role="tooltip"
@@ -6893,10 +6908,13 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                           onFocus={[Function]}
                                                           onMouseEnter={[Function]}
                                                           onMouseLeave={[Function]}
+                                                          onPopperMouseEnter={[Function]}
+                                                          onPopperMouseLeave={[Function]}
                                                           onTriggerEnter={[Function]}
                                                           placement="top"
                                                           popper={
                                                             <div
+                                                              aria-live="off"
                                                               className="pf-c-tooltip"
                                                               id="pf-tooltip-2"
                                                               role="tooltip"
@@ -7862,10 +7880,13 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                           onFocus={[Function]}
                                                           onMouseEnter={[Function]}
                                                           onMouseLeave={[Function]}
+                                                          onPopperMouseEnter={[Function]}
+                                                          onPopperMouseLeave={[Function]}
                                                           onTriggerEnter={[Function]}
                                                           placement="top"
                                                           popper={
                                                             <div
+                                                              aria-live="off"
                                                               className="pf-c-tooltip"
                                                               id="pf-tooltip-3"
                                                               role="tooltip"

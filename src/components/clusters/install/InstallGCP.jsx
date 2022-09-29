@@ -15,11 +15,12 @@ class InstallGCP extends Component {
 
   render() {
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'Google Cloud Platform' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'Google Cloud Platform' },
+        ]}
       />
     );
 

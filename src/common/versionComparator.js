@@ -1,4 +1,5 @@
-export const versionRegEx = /(?<major>\d+).(?<minor>\d+).(?<revision>\d+)(?:-(rc|fc).(?<patch>\d+))?/;
+export const versionRegEx =
+  /(?<major>\d+).(?<minor>\d+).(?<revision>\d+)(?:-(rc|fc).(?<patch>\d+))?/;
 
 export const versionComparator = (v1, v2) => {
   const { groups: g1 } = versionRegEx.exec(v1);

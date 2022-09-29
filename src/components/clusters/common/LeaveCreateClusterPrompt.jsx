@@ -3,10 +3,8 @@ import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { Modal, ModalVariant, Button } from '@patternfly/react-core';
 
-import {
-  trackEvents,
-  ocmResourceTypeByProduct,
-} from '~/common/analytics';
+import { clearFormDataFromPersistor } from '../../../redux/store';
+import { trackEvents, ocmResourceTypeByProduct } from '~/common/analytics';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import useAnalytics from '~/hooks/useAnalytics';
 
@@ -48,6 +46,7 @@ function LeaveCreateClusterPrompt({ product }) {
     });
     history.push(destinationLocation);
     setIsOpen(false);
+    clearFormDataFromPersistor();
   };
 
   return isOpen ? (
@@ -58,12 +57,7 @@ function LeaveCreateClusterPrompt({ product }) {
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
       actions={[
-        <Button
-          key="leave"
-          variant="primary"
-          onClick={onLeave}
-          data-testid="submit-button"
-        >
+        <Button key="leave" variant="primary" onClick={onLeave} data-testid="submit-button">
           Leave
         </Button>,
         <Button

@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  AlertActionLink,
-  Alert,
-  Button,
-} from '@patternfly/react-core';
+import { AlertActionLink, Alert, Button } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons';
 
 import UpgradeAcknowledgeModal from '../UpgradeAcknowledgeModal';
@@ -43,27 +39,23 @@ const UpgradeAcknowledgeWarning = (props) => {
 
   const [clusterUnmetAcks, clusterMetAcks] = getAcks;
 
-  const showConfirmMessage = (
-    showConfirm
-    && clusterUnmetAcks.length === 0
-    && clusterMetAcks.length > 0
-  );
+  const showConfirmMessage =
+    showConfirm && clusterUnmetAcks.length === 0 && clusterMetAcks.length > 0;
 
   return (
     <>
       {clusterUnmetAcks.length > 0 && isManual && isInfo && !hasScheduledManual ? (
-        <div className="ocm-upgrade-additional-versions-available" data-testid="infoMessageUnmetAcks">
-          <InfoCircleIcon />
-          {' '}
-          {infoTitle}
+        <div
+          className="ocm-upgrade-additional-versions-available"
+          data-testid="infoMessageUnmetAcks"
+        >
+          <InfoCircleIcon /> {infoTitle}
         </div>
       ) : null}
 
       {clusterUnmetAcks.length > 0 && !isManual ? (
         <>
-          <UpgradeAcknowledgeModal
-            clusterId={clusterId}
-          />
+          <UpgradeAcknowledgeModal clusterId={clusterId} />
           <Alert
             id="upgrade-ack-alert"
             isInline
@@ -72,20 +64,25 @@ const UpgradeAcknowledgeWarning = (props) => {
             title={infoTitle}
             data-testid="alertMessageUnmetAcks"
             className={isPlain ? '' : 'automatic-cluster-updates-alert'}
-            actionLinks={!isPlain ? (
-              <>
-                <AlertActionLink
-                  onClick={() => handleButtonClick()}
-                >
-                  Provide approval
-                </AlertActionLink>
-              </>
-            ) : null}
+            actionLinks={
+              !isPlain ? (
+                <>
+                  <AlertActionLink onClick={() => handleButtonClick()}>
+                    Provide approval
+                  </AlertActionLink>
+                </>
+              ) : null
+            }
           />
           {isPlain ? (
-            <Button variant="secondary" className="ocm-upgrade-approval__provide-button" onClick={() => handleButtonClick()}>Provide approval</Button>
+            <Button
+              variant="secondary"
+              className="ocm-upgrade-approval__provide-button"
+              onClick={() => handleButtonClick()}
+            >
+              Provide approval
+            </Button>
           ) : null}
-
         </>
       ) : null}
 

@@ -37,9 +37,7 @@ describe('<ProgressList />', () => {
 
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(
-      <ProgressList cluster={firstStepPending} />,
-    );
+    wrapper = shallow(<ProgressList cluster={firstStepPending} />);
   });
 
   it('should render when first step in progress', () => {

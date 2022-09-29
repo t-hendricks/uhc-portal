@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type UserAccessTypeOut = {
-    type?: string;
-    access?: boolean;
+  type?: string;
+  access?: boolean;
 };
-

@@ -1,10 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card,
-  CardBody,
-  Title, CardTitle,
-} from '@patternfly/react-core';
+import { Card, CardBody, Title, CardTitle } from '@patternfly/react-core';
 import ClusterHealthCard from './components/ClusterHealthCard';
 import MonitoringList from './components/MonitoringList';
 import MonitoringEmptyState from './components/MonitoringEmptyState';
@@ -20,7 +16,14 @@ class Monitoring extends React.Component {
 
   render() {
     const {
-      cluster, alerts, nodes, operators, lastCheckIn, resourceUsage, healthStatus, discoveredIssues,
+      cluster,
+      alerts,
+      nodes,
+      operators,
+      lastCheckIn,
+      resourceUsage,
+      healthStatus,
+      discoveredIssues,
     } = this.props;
 
     if (healthStatus === monitoringStatuses.DISCONNECTED) {
@@ -40,11 +43,11 @@ class Monitoring extends React.Component {
       return (
         <MonitoringEmptyState lastCheckIn={lastCheckIn}>
           <p>
-            Monitoring data is not available if a cluster goes more than
-            three hours without sending metrics.
+            Monitoring data is not available if a cluster goes more than three hours without sending
+            metrics.
             <br />
-            Check the cluster&apos;s web console if you think that this cluster should
-            be sending metrics.
+            Check the cluster&apos;s web console if you think that this cluster should be sending
+            metrics.
           </p>
         </MonitoringEmptyState>
       );
@@ -56,8 +59,8 @@ class Monitoring extends React.Component {
           <p>
             Monitoring data is not available - cluster did not send any metrics.
             <br />
-            Check the cluster&apos;s web console if you think that this cluster should
-            be sending metrics.
+            Check the cluster&apos;s web console if you think that this cluster should be sending
+            metrics.
           </p>
         </MonitoringEmptyState>
       );
@@ -72,7 +75,9 @@ class Monitoring extends React.Component {
         />
         <Card className="ocm-c-monitoring-status__card">
           <CardTitle className="ocm-c-monitoring-status__card--header">
-            <Title headingLevel="h2" className="card-title">Status</Title>
+            <Title headingLevel="h2" className="card-title">
+              Status
+            </Title>
           </CardTitle>
           <CardBody className="ocm-c-monitoring-status__card--body">
             <MonitoringList

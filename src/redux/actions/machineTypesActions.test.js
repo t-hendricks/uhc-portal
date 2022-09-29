@@ -1,7 +1,7 @@
 import { machineTypesActions } from './machineTypesActions';
 import { clusterService } from '../../services';
 
-jest.mock('../../services/clusterService.js');
+jest.mock('../../services/clusterService');
 
 describe('machineTypesActions', () => {
   let mockDispatch;

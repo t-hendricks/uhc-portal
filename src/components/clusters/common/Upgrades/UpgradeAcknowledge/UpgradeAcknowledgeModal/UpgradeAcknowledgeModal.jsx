@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {
-  ModalVariant,
-} from '@patternfly/react-core';
+import { ModalVariant } from '@patternfly/react-core';
 import UpgradeAcknowledgeStep from '../UpgradeAcknowledgeStep';
 import Modal from '../../../../../common/Modal/Modal';
 import { getErrorState } from '../../../../../../common/errors';
@@ -59,15 +57,16 @@ const UpgradeAcknowledgeModal = (props) => {
     }
 
     if (foundErrors.length === 0) {
-      const ids = unmetAcknowledgements.map(ack => ack.id);
+      const ids = unmetAcknowledgements.map((ack) => ack.id);
 
-      const promises = ids.map(upgradeUpdateId => (
-        clusterService.postClusterGateAgreement(clusterId, upgradeUpdateId)
+      const promises = ids.map((upgradeUpdateId) =>
+        clusterService
+          .postClusterGateAgreement(clusterId, upgradeUpdateId)
           .then(() => {
             setGate(upgradeUpdateId);
           })
-          .catch(e => Promise.reject(e))
-      ));
+          .catch((e) => Promise.reject(e)),
+      );
 
       const response = await Promise.allSettled(promises);
 
@@ -109,11 +108,14 @@ const UpgradeAcknowledgeModal = (props) => {
           fromVersion={fromVersion}
           toVersion={toVersion}
           unmetAcknowledgements={unmetAcknowledgements}
-          confirmed={isConfirmed => setConfirmed(isConfirmed)}
+          confirmed={(isConfirmed) => setConfirmed(isConfirmed)}
         />
       ) : (
-        errors.map(error => (
-          <ErrorBox message="Failed to save administrator acknowledgement." response={getErrorState({ payload: error })} />
+        errors.map((error) => (
+          <ErrorBox
+            message="Failed to save administrator acknowledgement."
+            response={getErrorState({ payload: error })}
+          />
         ))
       )}
     </Modal>
@@ -130,7 +132,6 @@ UpgradeAcknowledgeModal.propTypes = {
   setUpgradePolicy: PropTypes.func,
 };
 
-UpgradeAcknowledgeModal.defaultProps = {
-};
+UpgradeAcknowledgeModal.defaultProps = {};
 
 export default UpgradeAcknowledgeModal;

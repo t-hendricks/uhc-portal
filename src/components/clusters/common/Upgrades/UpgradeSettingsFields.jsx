@@ -3,9 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import {
-  Divider, Title, GridItem, TextContent, TextVariants, Text,
-} from '@patternfly/react-core';
+import { Divider, Title, GridItem, TextContent, TextVariants, Text } from '@patternfly/react-core';
 
 import ExternalLink from '../../../common/ExternalLink';
 import RadioButtons from '../../../common/ReduxFormComponents/RadioButtons';
@@ -16,21 +14,24 @@ import links from '../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../common/subscriptionTypes';
 
 function UpgradeSettingsFields({
-  isDisabled, isAutomatic, showDivider, change, initialSceduleValue, product,
+  isDisabled,
+  isAutomatic,
+  showDivider,
+  change,
+  initialSceduleValue,
+  product,
 }) {
   const isRosa = product === normalizedProducts.ROSA;
   return (
     <>
       <GridItem>
         <Text component="p">
-          Note: In the event of
-          {' '}
-          <ExternalLink href="https://access.redhat.com/security/updates/classification/#critical">Critical security concerns</ExternalLink>
-          {' '}
-          (CVEs) that significantly impact the security or stability of the cluster, updates may be
-          {' '}
-          automatically scheduled by Red Hat SRE to the latest z-stream version not impacted by the
-          {' '}
+          Note: In the event of{' '}
+          <ExternalLink href="https://access.redhat.com/security/updates/classification/#critical">
+            Critical security concerns
+          </ExternalLink>{' '}
+          (CVEs) that significantly impact the security or stability of the cluster, updates may be{' '}
+          automatically scheduled by Red Hat SRE to the latest z-stream version not impacted by the{' '}
           CVE within 48 hours after customer notifications.
         </Text>
       </GridItem>
@@ -50,45 +51,29 @@ function UpgradeSettingsFields({
               label: 'Individual updates',
               description: (
                 <>
-                  Schedule each update individually. Take into consideration end of life dates from
-                  {' '}
-                  the
-                  {' '}
-                  <ExternalLink
-                    href={isRosa ? links.ROSA_LIFE_CYCLE : links.OSD_LIFE_CYCLE}
-                  >
+                  Schedule each update individually. Take into consideration end of life dates from{' '}
+                  the{' '}
+                  <ExternalLink href={isRosa ? links.ROSA_LIFE_CYCLE : links.OSD_LIFE_CYCLE}>
                     lifecycle policy
-                  </ExternalLink>
-                  {' '}
+                  </ExternalLink>{' '}
                   when planning updates.
                 </>
               ),
-
             },
             {
               value: 'automatic',
               label: 'Recurring updates',
               description: (
                 <>
-                  The cluster will be automatically updated based on your
-                  {' '}
-                  preferred day and start time when new patch updates
-                  {' '}
-                  (
-                  <ExternalLink
-                    href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}
-                  >
+                  The cluster will be automatically updated based on your preferred day and start
+                  time when new patch updates (
+                  <ExternalLink href={isRosa ? links.ROSA_Z_STREAM : links.OSD_Z_STREAM}>
                     z-stream
                   </ExternalLink>
-                  )
-                  {' '}
-                  are available. When a new minor version is available,
-                  {' '}
-                  you'll be notified and must manually allow the cluster
-                  {' '}
-                  {' '}
-                  to update to the next minor version.
-                </>),
+                  ) are available. When a new minor version is available, you'll be notified and
+                  must manually allow the cluster to update to the next minor version.
+                </>
+              ),
               extraField: isAutomatic && (
                 <>
                   <Field
@@ -111,13 +96,10 @@ function UpgradeSettingsFields({
         </Title>
         <TextContent>
           <Text component={TextVariants.p}>
-            You may set a grace period for how long pod disruption budget-protected workloads will
-            {' '}
-            be respected during updates. After this grace period, any workloads protected by
-            {' '}
-            pod disruption budgets that have not been successfully drained from a node will be
-            {' '}
-            forcibly evicted.
+            You may set a grace period for how long pod disruption budget-protected workloads will{' '}
+            be respected during updates. After this grace period, any workloads protected by pod
+            disruption budgets that have not been successfully drained from a node will be forcibly
+            evicted.
           </Text>
         </TextContent>
         <Field
@@ -137,7 +119,6 @@ UpgradeSettingsFields.propTypes = {
   change: PropTypes.func,
   product: PropTypes.string,
   initialSceduleValue: PropTypes.string,
-
 };
 
 export default UpgradeSettingsFields;

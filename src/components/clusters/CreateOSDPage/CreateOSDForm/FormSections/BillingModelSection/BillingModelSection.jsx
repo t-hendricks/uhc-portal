@@ -22,7 +22,10 @@ import { normalizedProducts, billingModels } from '../../../../../../common/subs
 
 import CreateOSDWizardIntro from '../../../../../../styles/images/CreateOSDWizard-intro.png';
 
-import { getNodesCount, getMinReplicasCount } from '../ScaleSection/AutoScaleSection/AutoScaleHelper';
+import {
+  getNodesCount,
+  getMinReplicasCount,
+} from '../ScaleSection/AutoScaleSection/AutoScaleHelper';
 
 import './BillingModelSection.scss';
 
@@ -45,12 +48,10 @@ function BillingModelSection({
 
   const marketplaceQuotaDescription = (
     <p>
-      Use
-      {' '}
+      Use{' '}
       <ExternalLink href="https://marketplace.redhat.com" noIcon>
         Red Hat Marketplace
-      </ExternalLink>
-      {' '}
+      </ExternalLink>{' '}
       to subscribe and pay based on the services you use
     </p>
   );
@@ -62,7 +63,7 @@ function BillingModelSection({
         <Popover
           position={PopoverPosition.right}
           headerContent="On-Demand subscription"
-          bodyContent={(
+          bodyContent={
             <>
               <p>Billing based on cluster consumption and charged via Red Hat Marketplace.</p>
               <p>
@@ -71,13 +72,11 @@ function BillingModelSection({
                 </ExternalLink>
               </p>
             </>
-          )}
+          }
           aria-label="help"
         >
           <Button variant="link">
-            <OutlinedQuestionCircleIcon />
-            {' '}
-            How can I purchase a subscription via Marketplace?
+            <OutlinedQuestionCircleIcon /> How can I purchase a subscription via Marketplace?
           </Button>
         </Popover>
       </p>
@@ -88,8 +87,7 @@ function BillingModelSection({
     <p>
       <ExternalLink href="https://access.redhat.com/articles/5990101" noIcon noTarget>
         Try OpenShift Dedicated
-      </ExternalLink>
-      {' '}
+      </ExternalLink>{' '}
       for free for 60 days. Upgrade anytime
     </p>
   );
@@ -102,8 +100,11 @@ function BillingModelSection({
   // Select marketplace billing if user only has marketplace quota
   // Also, if the selected default billing model is disabled
   // Default to marketplace
-  if ((!showOSDTrial || defaultBillingModel === STANDARD)
-    && hasMarketplaceQuota && !hasStandardOSDQuota) {
+  if (
+    (!showOSDTrial || defaultBillingModel === STANDARD) &&
+    hasMarketplaceQuota &&
+    !hasStandardOSDQuota
+  ) {
     defaultBillingModel = billingModels.MARKETPLACE;
   }
 
@@ -151,51 +152,48 @@ function BillingModelSection({
   ];
 
   if (showOSDTrial) {
-    subscriptionOptions.unshift(
-      {
-        value: 'standard-trial',
-        label: 'Free trial (upgradeable)',
-        // 60 days may be updated later based on an account capability
-        // https://issues.redhat.com/browse/SDB-1846
-        description: trialDescription,
-      },
-    );
+    subscriptionOptions.unshift({
+      value: 'standard-trial',
+      label: 'Free trial (upgradeable)',
+      // 60 days may be updated later based on an account capability
+      // https://issues.redhat.com/browse/SDB-1846
+      description: trialDescription,
+    });
   }
 
   const marketplaceDisabled = !(hasMarketplaceQuota && hasMarketplaceQuota);
-  subscriptionOptions.push(
-    {
-      disabled: marketplaceDisabled,
-      value: billingModels.MARKETPLACE,
-      label: 'On-Demand: Flexible usage billed through the Red Hat Marketplace',
-      description: marketplaceDisabled
-        ? marketplaceDisabledDescription : marketplaceQuotaDescription,
-    },
-  );
+  subscriptionOptions.push({
+    disabled: marketplaceDisabled,
+    value: billingModels.MARKETPLACE,
+    label: 'On-Demand: Flexible usage billed through the Red Hat Marketplace',
+    description: marketplaceDisabled ? marketplaceDisabledDescription : marketplaceQuotaDescription,
+  });
 
   return (
     <>
       <GridItem span={8}>
-        <Title headingLevel="h2" className="pf-u-pb-md">Welcome to Red Hat OpenShift Dedicated</Title>
+        <Title headingLevel="h2" className="pf-u-pb-md">
+          Welcome to Red Hat OpenShift Dedicated
+        </Title>
         <Text component="p" id="welcome-osd-text">
-          Reduce operational complexity and focus on building applications
-          that add more value to your business with Red Hat OpenShift Dedicated,
-          a fully managed service of Red Hat OpenShift on
-          Amazon Web Services (AWS) and Google Cloud.
+          Reduce operational complexity and focus on building applications that add more value to
+          your business with Red Hat OpenShift Dedicated, a fully managed service of Red Hat
+          OpenShift on Amazon Web Services (AWS) and Google Cloud.
         </Text>
       </GridItem>
       <GridItem span={4}>
-        <img src={CreateOSDWizardIntro} className="ocm-c-wizard-intro-image" aria-hidden="true" alt="" />
+        <img
+          src={CreateOSDWizardIntro}
+          className="ocm-c-wizard-intro-image"
+          aria-hidden="true"
+          alt=""
+        />
       </GridItem>
       <GridItem>
         <Stack hasGutter>
           <StackItem>
             <Title headingLevel="h3">Subscription type:</Title>
-            <FormGroup
-              isRequired
-              fieldId="billing_model"
-              className="sub-infra-billing-model"
-            >
+            <FormGroup isRequired fieldId="billing_model" className="sub-infra-billing-model">
               <Field
                 component={RadioButtons}
                 name="billing_model"
@@ -210,29 +208,28 @@ function BillingModelSection({
           </StackItem>
           <StackItem>
             <Title headingLevel="h3">Infrastructure type:</Title>
-            <FormGroup
-              isRequired
-              fieldId="byoc"
-              className="sub-infra-billing-model"
-            >
+            <FormGroup isRequired fieldId="byoc" className="sub-infra-billing-model">
               <Field
                 component={RadioButtons}
                 name="byoc"
                 className="radio-button"
                 defaultValue={!isRhInfraQuotaDisabled ? 'false' : 'true'}
                 disableDefaultValueHandling
-                options={[{
-                  label: 'Customer cloud subscription',
-                  description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',
-                  value: 'true',
-                  disabled: isBYOCQuotaDisabled,
-                },
-                {
-                  label: 'Red Hat cloud account',
-                  description: 'Deploy in cloud provider accounts owned by Red Hat',
-                  value: 'false',
-                  disabled: isRhInfraQuotaDisabled,
-                }]}
+                options={[
+                  {
+                    label: 'Customer cloud subscription',
+                    description:
+                      'Leverage your existing cloud provider account (AWS or Google Cloud)',
+                    value: 'true',
+                    disabled: isBYOCQuotaDisabled,
+                  },
+                  {
+                    label: 'Red Hat cloud account',
+                    description: 'Deploy in cloud provider accounts owned by Red Hat',
+                    value: 'false',
+                    disabled: isRhInfraQuotaDisabled,
+                  },
+                ]}
                 onChange={onWizardBYOCToggle}
               />
             </FormGroup>

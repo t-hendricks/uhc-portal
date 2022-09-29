@@ -7,13 +7,7 @@ let wrapper;
 
 describe('<UpgradeAcknowledgeLink>', () => {
   beforeEach(() => {
-    wrapper = shallow(
-      <UpgradeAcknowledgeLink
-        clusterId="myClusterId"
-        hasAcks={false}
-      />,
-
-    );
+    wrapper = shallow(<UpgradeAcknowledgeLink clusterId="myClusterId" hasAcks={false} />);
   });
 
   it('should show nothing if there is not unmet acknowledgements', () => {

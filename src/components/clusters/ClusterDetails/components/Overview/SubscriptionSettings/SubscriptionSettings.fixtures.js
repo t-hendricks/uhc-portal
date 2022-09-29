@@ -32,9 +32,4 @@ const subscription = {
   updated_at: '2019-01-02T18:28:14.851121Z',
 };
 
-export {
-  subscription,
-  openModal,
-  canEdit,
-  canSubscribeOCP,
-};
+export { subscription, openModal, canEdit, canSubscribeOCP };

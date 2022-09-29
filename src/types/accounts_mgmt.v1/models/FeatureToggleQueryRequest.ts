@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type FeatureToggleQueryRequest = {
-    organization_id: string;
+  organization_id: string;
 };
-

@@ -64,8 +64,7 @@ exports[`<DownloadsPage> renders 1`] = `
             channel="stable"
             description={
               <Text>
-                Create applications and manage OpenShift projects from the command line using the OpenShift client
-                 
+                Create applications and manage OpenShift projects from the command line using the OpenShift client 
                 <code>
                   oc
                 </code>
@@ -563,8 +562,7 @@ exports[`<DownloadsPage> renders 1`] = `
             description={
               <TextContent>
                 <Text>
-                  Manage your OpenShift clusters from the command line using the OpenShift Cluster Manager API client
-                   
+                  Manage your OpenShift clusters from the command line using the OpenShift Cluster Manager API client 
                   <code>
                     ocm
                   </code>
@@ -1555,8 +1553,7 @@ exports[`<DownloadsPage> renders 1`] = `
             channel="stable"
             description={
               <Text>
-                Interact with Knative components on OpenShift Container Platform with the Knative client for OpenShift Serverless
-                 
+                Interact with Knative components on OpenShift Container Platform with the Knative client for OpenShift Serverless 
                 <code>
                   kn
                 </code>
@@ -2052,9 +2049,7 @@ exports[`<DownloadsPage> renders 1`] = `
             channel="stable"
             description={
               <Text>
-                Manage and interact with CI pipelines on OpenShift Container Platform
-                 
-                with the Tekton CLI for OpenShift Pipelines.
+                Manage and interact with CI pipelines on OpenShift Container Platform with the Tekton CLI for OpenShift Pipelines.
                  
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.11/cli_reference/tkn_cli/installing-tkn.html#installing-tkn"
@@ -2567,8 +2562,7 @@ exports[`<DownloadsPage> renders 1`] = `
             channel="stable"
             description={
               <Text>
-                Write, build, and deploy applications on OpenShift with
-                 
+                Write, build, and deploy applications on OpenShift with 
                 <code>
                   odo
                 </code>
@@ -3064,8 +3058,7 @@ exports[`<DownloadsPage> renders 1`] = `
             channel="stable"
             description={
               <Text>
-                Define, install, and upgrade application packages as Helm charts using Helm 3, a package manager for Kubernetes.
-                 
+                Define, install, and upgrade application packages as Helm charts using Helm 3, a package manager for Kubernetes. 
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.11/applications/working_with_helm_charts/understanding-helm.html"
                 >
@@ -3556,8 +3549,7 @@ exports[`<DownloadsPage> renders 1`] = `
             channel="stable"
             description={
               <Text>
-                Create and maintain catalogs of Operators from a list of bundles with the Operator Package Manager.
-                 
+                Create and maintain catalogs of Operators from a list of bundles with the Operator Package Manager. 
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.11/cli_reference/opm/cli-opm-install.html"
                 >
@@ -4591,8 +4583,7 @@ exports[`<DownloadsPage> renders 1`] = `
                 <code>
                   rhoas
                 </code>
-                )
-                 
+                ) 
                 <DevPreviewBadge />
               </React.Fragment>
             }
@@ -5044,15 +5035,13 @@ exports[`<DownloadsPage> renders 1`] = `
         category="INSTALLATION"
         description={
           <Text>
-            Install OpenShift based on your infrastructure. For the installer matching your infrastructure type, select the operating system and architecture on which you wish to run the installer.  Then follow the steps provided within your infrastructure's tab on the
-             
+            Install OpenShift based on your infrastructure. For the installer matching your infrastructure type, select the operating system and architecture on which you wish to run the installer. Then follow the steps provided within your infrastructure's tab on the 
             <Link
               to="/create"
             >
               create cluster
             </Link>
-             
-            page to install an OpenShift cluster.
+             page to install an OpenShift cluster.
           </Text>
         }
         selectedCategory="ALL"
@@ -5073,12 +5062,10 @@ exports[`<DownloadsPage> renders 1`] = `
                   >
                     documentation
                   </ExternalLink>
-                   
-                  as a guide.
+                   as a guide.
                 </Text>
                 <Text>
-                  Learn how to deploy in the
-                   
+                  Learn how to deploy in the 
                   <Link
                     to="/create"
                   >
@@ -5578,12 +5565,10 @@ exports[`<DownloadsPage> renders 1`] = `
                   >
                     documentation
                   </ExternalLink>
-                   
-                  as a guide.
+                   as a guide.
                 </Text>
                 <Text>
-                  Learn how to deploy in
-                   
+                  Learn how to deploy in 
                   <Link
                     to="/install/aws/arm"
                   >
@@ -6083,8 +6068,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   >
                     documentation
                   </ExternalLink>
-                   
-                  as a guide.
+                   as a guide.
                 </Text>
                 <Text>
                   Learn how to deploy in your
@@ -6581,8 +6565,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   >
                     documentation
                   </ExternalLink>
-                   
-                  as a guide.
+                   as a guide.
                 </Text>
                 <Text>
                   Learn how to deploy in your
@@ -7079,8 +7062,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   >
                     documentation
                   </ExternalLink>
-                   
-                  as a guide.
+                   as a guide.
                 </Text>
                 <Text>
                   Learn how to deploy in
@@ -7586,8 +7568,7 @@ exports[`<DownloadsPage> renders 1`] = `
                   >
                     Create a minimal cluster on your desktop
                   </Link>
-                   
-                  for local development and testing.
+                   for local development and testing.
                 </Text>
               </TextContent>
             }
@@ -10599,15 +10580,13 @@ exports[`<DownloadsPage> renders 1`] = `
                   An image pull secret provides authentication for the cluster to access services and registries which serve the container images for OpenShift components. Every individual user gets a single pull secret generated. The pull secret can be used when installing clusters, based on the required infrastructure.
                 </Text>
                 <Text>
-                  Learn how to
-                   
+                  Learn how to 
                   <Link
                     to="/create"
                   >
                     create a cluster
                   </Link>
-                   
-                  or
+                   or
                    
                   <ExternalLink
                     href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets"

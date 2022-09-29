@@ -6,6 +6,6 @@
  * Image availability result.
  */
 export enum container_image_availability_result {
-    SUCCESS = 'success',
-    FAILURE = 'failure',
+  SUCCESS = 'success',
+  FAILURE = 'failure',
 }

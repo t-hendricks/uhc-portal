@@ -1,8 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Card, CardBody, CardFooter, CardTitle,
-  Form, Flex, FlexItem, Grid, GridItem, Modal,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardTitle,
+  Form,
+  Flex,
+  FlexItem,
+  Grid,
+  GridItem,
+  Modal,
   Alert,
 } from '@patternfly/react-core';
 import UpgradeStatus from '../../../common/Upgrades/UpgradeStatus';
@@ -18,7 +27,7 @@ import MinorVersionUpgradeAlert from '../../../common/Upgrades/MinorVersionUpgra
 import UpgradeAcknowledgeWarning from '../../../common/Upgrades/UpgradeAcknowledge/UpgradeAcknowledgeWarning';
 
 class UpgradeSettingsTab extends React.Component {
-  state = { confirmationModalOpen: false }
+  state = { confirmationModalOpen: false };
 
   componentDidMount() {
     const { getSchedules, cluster, upgradeScheduleRequest } = this.props;
@@ -28,15 +37,11 @@ class UpgradeSettingsTab extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      isAutomatic,
-      schedules,
-      pristine,
-      getClusterDetails,
-      editClusterRequest,
-      cluster,
-    } = this.props;
-    const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual' && schedule.upgrade_type === 'OSD');
+    const { isAutomatic, schedules, pristine, getClusterDetails, editClusterRequest, cluster } =
+      this.props;
+    const scheduledManualUpgrade = schedules.items.find(
+      (schedule) => schedule.schedule_type === 'manual' && schedule.upgrade_type === 'OSD',
+    );
     if (!prevProps.isAutomatic && isAutomatic && !pristine && scheduledManualUpgrade) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ confirmationModalOpen: true });
@@ -53,13 +58,13 @@ class UpgradeSettingsTab extends React.Component {
 
   closeConfirmationModal = () => {
     this.setState({ confirmationModalOpen: false });
-  }
+  };
 
   closeConfirmationModalAndReset = () => {
     const { reset } = this.props;
     this.closeConfirmationModal();
     reset();
-  }
+  };
 
   render() {
     const {
@@ -80,30 +85,34 @@ class UpgradeSettingsTab extends React.Component {
     } = this.props;
     const { confirmationModalOpen } = this.state;
 
-    const isDisabled = !schedules.fulfilled
-      || upgradeScheduleRequest.pending;
+    const isDisabled = !schedules.fulfilled || upgradeScheduleRequest.pending;
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
-    const hibernatingReason = clusterHibernating && (
-      'This operation is not available while cluster is hibernating'
-    );
+    const hibernatingReason =
+      clusterHibernating && 'This operation is not available while cluster is hibernating';
     // a superset of hibernatingReason.
     const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
     const pristineReason = pristine && 'No changes to save';
     const formDisableReason = readOnlyReason || hibernatingReason;
 
-    const scheduledManualUpgrade = schedules.items.find(schedule => schedule.schedule_type === 'manual' && schedule.upgrade_type === 'OSD');
+    const scheduledManualUpgrade = schedules.items.find(
+      (schedule) => schedule.schedule_type === 'manual' && schedule.upgrade_type === 'OSD',
+    );
 
-    const scheduledUpgrade = schedules.items.find(schedule => ['manual', 'automatic'].includes(schedule.schedule_type) && schedule.upgrade_type === 'OSD');
+    const scheduledUpgrade = schedules.items.find(
+      (schedule) =>
+        ['manual', 'automatic'].includes(schedule.schedule_type) && schedule.upgrade_type === 'OSD',
+    );
     // eslint-disable-next-line camelcase
     const availableUpgrades = cluster?.version?.available_upgrades;
 
-    const showUpdateButton = !!cluster.openshift_version
-      && availableUpgrades?.length > 0
-      && !scheduledUpgrade && !clusterHibernating;
+    const showUpdateButton =
+      !!cluster.openshift_version &&
+      availableUpgrades?.length > 0 &&
+      !scheduledUpgrade &&
+      !clusterHibernating;
 
-    const isPending = upgradeScheduleRequest.pending
-      || deleteScheduleRequest.pending
-      || editClusterRequest.pending;
+    const isPending =
+      upgradeScheduleRequest.pending || deleteScheduleRequest.pending || editClusterRequest.pending;
 
     const saveButton = (
       <ButtonWithTooltip
@@ -117,11 +126,7 @@ class UpgradeSettingsTab extends React.Component {
       </ButtonWithTooltip>
     );
     const resetButton = (
-      <ButtonWithTooltip
-        isDisabled={pristine}
-        variant="link"
-        onClick={reset}
-      >
+      <ButtonWithTooltip isDisabled={pristine} variant="link" onClick={reset}>
         Cancel
       </ButtonWithTooltip>
     );
@@ -146,7 +151,11 @@ class UpgradeSettingsTab extends React.Component {
           )}
           <Card>
             <CardBody>
-              <UserWorkloadMonitoringSection parent="details" disableUVM={disableUVM} planType={cluster.subscription?.plan?.type} />
+              <UserWorkloadMonitoringSection
+                parent="details"
+                disableUVM={disableUVM}
+                planType={cluster.subscription?.plan?.type}
+              />
             </CardBody>
           </Card>
         </GridItem>
@@ -159,21 +168,28 @@ class UpgradeSettingsTab extends React.Component {
                   variant="small"
                   title="Recurring updates"
                   isOpen
-                  onClose={() => { this.closeConfirmationModal(); reset(); }}
+                  onClose={() => {
+                    this.closeConfirmationModal();
+                    reset();
+                  }}
                   actions={[
                     <Button key="confirm" variant="primary" onClick={this.closeConfirmationModal}>
                       Yes, cancel scheduled update
                     </Button>,
-                    <Button key="cancel" variant="secondary" onClick={() => { this.closeConfirmationModal(); reset(); }}>
+                    <Button
+                      key="cancel"
+                      variant="secondary"
+                      onClick={() => {
+                        this.closeConfirmationModal();
+                        reset();
+                      }}
+                    >
                       No, keep scheduled update
                     </Button>,
                   ]}
                 >
-                  By choosing recurring updates, any individually scheduled update will be
-                  {' '}
-                  cancelled.
-                  {' '}
-                  Are you sure you want to continue?
+                  By choosing recurring updates, any individually scheduled update will be{' '}
+                  cancelled. Are you sure you want to continue?
                 </Modal>
               )}
               {clusterHibernating && hibernatingClusterInfo}
@@ -201,21 +217,15 @@ class UpgradeSettingsTab extends React.Component {
             </CardBody>
             <CardFooter>
               <Flex>
-                <FlexItem>
-                  {saveButton}
-                </FlexItem>
-                <FlexItem>
-                  {resetButton}
-                </FlexItem>
+                <FlexItem>{saveButton}</FlexItem>
+                <FlexItem>{resetButton}</FlexItem>
               </Flex>
             </CardFooter>
           </Card>
         </GridItem>
         <GridItem lg={3} md={12} className="ocm-c-upgrade-monitoring-top">
           <Card>
-            <CardTitle>
-              Update status
-            </CardTitle>
+            <CardTitle>Update status</CardTitle>
             <CardBody>
               <UpgradeStatus
                 clusterID={cluster.id}
@@ -229,11 +239,12 @@ class UpgradeSettingsTab extends React.Component {
               {showUpdateButton && (
                 <Button
                   variant="secondary"
-                  onClick={() => openModal(modals.UPGRADE_WIZARD,
-                    {
+                  onClick={() =>
+                    openModal(modals.UPGRADE_WIZARD, {
                       clusterName: getClusterName(cluster),
                       subscriptionID: cluster.subscription.id,
-                    })}
+                    })
+                  }
                 >
                   Update
                 </Button>

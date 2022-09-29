@@ -84,9 +84,12 @@ class Overview extends Component {
       userAccess,
     } = this.props;
 
-    const isError = (summaryDashboard.error || unhealthyClusters.error);
-    const isPending = (!summaryDashboard.fulfilled || summaryDashboard.pending
-       || !unhealthyClusters.fulfilled || unhealthyClusters.pending);
+    const isError = summaryDashboard.error || unhealthyClusters.error;
+    const isPending =
+      !summaryDashboard.fulfilled ||
+      summaryDashboard.pending ||
+      !unhealthyClusters.fulfilled ||
+      unhealthyClusters.pending;
     // TODO: should show only when at least one cluster is connected and sends Insights
     const showInsightsAdvisorWidget = insightsOverview.fulfilled && insightsOverview.overview;
 
@@ -99,11 +102,7 @@ class Overview extends Component {
       }
       const { errorMessage, errorCode, operationID } = errorSource;
       const response = { errorMessage, errorCode, operationID };
-      return (
-        <Unavailable
-          response={response}
-        />
-      );
+      return <Unavailable response={response} />;
     }
 
     // Show spinner if while waiting for responses.
@@ -119,9 +118,7 @@ class Overview extends Component {
 
     // Revert to an "empty" state if there are no clusters to show.
     if (summaryDashboard.fulfilled && !totalClusters) {
-      return (
-        <OverviewEmptyState />
-      );
+      return <OverviewEmptyState />;
     }
 
     return (
@@ -142,31 +139,25 @@ class Overview extends Component {
               usedMem={usedMem}
             />
             {totalConnectedClusters > 0 && (
-            <GridItem md={6}>
-              <ClustersWithIssuesTableCard
-                unhealthyClusters={unhealthyClusters}
-                viewOptions={viewOptions}
-              />
-            </GridItem>
+              <GridItem md={6}>
+                <ClustersWithIssuesTableCard
+                  unhealthyClusters={unhealthyClusters}
+                  viewOptions={viewOptions}
+                />
+              </GridItem>
             )}
             {showInsightsAdvisorWidget && (
               <GridItem md={6}>
-                <InsightsAdvisorCard
-                  overview={insightsOverview.overview}
-                />
+                <InsightsAdvisorCard overview={insightsOverview.overview} />
               </GridItem>
             )}
             <GridItem md={6}>
               <Card className="ocm-overview-clusters__card">
-                <CardTitle>
-                  Telemetry
-                </CardTitle>
+                <CardTitle>Telemetry</CardTitle>
                 <CardBody>
                   {!totalConnectedClusters && !totalClusters ? (
                     <EmptyState>
-                      <EmptyStateBody>
-                        No data available
-                      </EmptyStateBody>
+                      <EmptyStateBody>No data available</EmptyStateBody>
                     </EmptyState>
                   ) : (
                     <SmallClusterChart
@@ -188,28 +179,22 @@ class Overview extends Component {
             )}
             <GridItem md={6}>
               <Card className="ocm-overview-clusters__card">
-                <CardTitle>
-                  Update status
-                </CardTitle>
+                <CardTitle>Update status</CardTitle>
                 <CardBody>
-                  {!upgradeAvailable.value && !upToDate.value
-                    ? (
-                      <EmptyState>
-                        <EmptyStateBody>
-                          No data available
-                        </EmptyStateBody>
-                      </EmptyState>
-                    )
-                    : (
-                      <SmallClusterChart
-                        donutId="update_available_donut"
-                        used={upToDate.value}
-                        total={upgradeAvailable.value + upToDate.value}
-                        unit="clusters"
-                        availableTitle="Update available"
-                        usedTitle="Up-to-date"
-                      />
-                    )}
+                  {!upgradeAvailable.value && !upToDate.value ? (
+                    <EmptyState>
+                      <EmptyStateBody>No data available</EmptyStateBody>
+                    </EmptyState>
+                  ) : (
+                    <SmallClusterChart
+                      donutId="update_available_donut"
+                      used={upToDate.value}
+                      total={upgradeAvailable.value + upToDate.value}
+                      unit="clusters"
+                      availableTitle="Update available"
+                      usedTitle="Up-to-date"
+                    />
+                  )}
                 </CardBody>
               </Card>
             </GridItem>

@@ -5,7 +5,7 @@ import { modalActions } from '../../../../../common/Modal/ModalActions';
 import SubscriptionSettings from './SubscriptionSettings';
 import canSubscribeOCPSelector from '../../../../common/EditSubscriptionSettingsDialog/CanSubscribeOCPSelector';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   canEdit: get(state, 'clusters.details.cluster.canEdit', false),
   canSubscribeOCP: canSubscribeOCPSelector(state),
   subscription: get(state, 'clusters.details.cluster.subscription', {}),

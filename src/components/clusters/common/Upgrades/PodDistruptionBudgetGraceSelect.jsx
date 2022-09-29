@@ -1,30 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Select, SelectOption, FormGroup,
-} from '@patternfly/react-core';
+import { Select, SelectOption, FormGroup } from '@patternfly/react-core';
 
 class PodDistruptionBudgetGraceSelect extends React.Component {
   state = { isOpen: false };
 
   onToggle = (isOpen) => {
     this.setState({ isOpen });
-  }
+  };
 
   onSelect = (_, selection) => {
     const { input } = this.props;
     this.setState({ isOpen: false });
     input.onChange(selection);
-  }
+  };
 
   render() {
     const { isOpen } = this.state;
     const { input, isDisabled } = this.props;
     return (
-      <FormGroup
-        label="Grace period"
-        className="ocm-c-upgrades-pdb-select"
-      >
+      <FormGroup label="Grace period" className="ocm-c-upgrades-pdb-select">
         <Select
           isOpen={isOpen}
           selections={input.value}

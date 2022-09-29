@@ -8,33 +8,15 @@ const dashboardState = {
     fulfilled: true,
     pending: false,
     metrics: {
-      clusters_total: [
-        { value: 30 },
-      ],
-      connected_clusters_total: [
-        { value: 10 },
-      ],
-      unhealthy_clusters_total: [
-        { value: 5 },
-      ],
-      sum_total_cpu: [
-        { value: 150 },
-      ],
-      sum_used_cpu: [
-        { value: 10 },
-      ],
-      sum_total_memory: [
-        { value: 100 },
-      ],
-      sum_used_memory: [
-        { value: 10 },
-      ],
-      clusters_up_to_date_total: [
-        { value: 10 },
-      ],
-      clusters_upgrade_available_total: [
-        { value: 1 },
-      ],
+      clusters_total: [{ value: 30 }],
+      connected_clusters_total: [{ value: 10 }],
+      unhealthy_clusters_total: [{ value: 5 }],
+      sum_total_cpu: [{ value: 150 }],
+      sum_used_cpu: [{ value: 10 }],
+      sum_total_memory: [{ value: 100 }],
+      sum_used_memory: [{ value: 10 }],
+      clusters_up_to_date_total: [{ value: 10 }],
+      clusters_upgrade_available_total: [{ value: 1 }],
     },
     error: false,
   },

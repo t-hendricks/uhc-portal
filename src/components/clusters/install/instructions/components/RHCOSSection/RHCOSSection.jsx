@@ -1,40 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
-import {
-  Stack, StackItem, Text,
-} from '@patternfly/react-core';
+import { Stack, StackItem, Text } from '@patternfly/react-core';
 import { tools } from '../../../../../../common/installLinks.mjs';
 import RHCOSDownloadAndSelect from './RHCOSDownloadAndSelect';
 import DownloadButton from '../DownloadButton';
 
 const RHCOSSection = (props) => {
-  const {
-    token,
-    pendoID,
-    rhcos,
-  } = props;
+  const { token, pendoID, rhcos } = props;
   const downloadButtons = (rhcosDownloads) => {
     // rhcosDownloads is an array where each item corresponds to a row of buttons
     const buttons = rhcosDownloads.map((item) => {
-      const {
-        url,
-        archURL,
-        buttonText,
-        name,
-      } = item;
+      const { url, archURL, buttonText, name } = item;
       /** item may be an object with field archURL when there are multi-arch variants available
        * for it. It may also be an array of such objects, which corresponds to a row of buttons
        * controlled by the same architecture selector,  */
       if ((!url && archURL) || Array.isArray(item)) {
-        const key = Array.isArray(item) ? item.map(i => i.name).join('|') : name;
+        const key = Array.isArray(item) ? item.map((i) => i.name).join('|') : name;
         return (
-          <RHCOSDownloadAndSelect
-            key={key}
-            rhcosDownloads={item}
-            pendoID={pendoID}
-            token={token}
-          />
+          <RHCOSDownloadAndSelect key={key} rhcosDownloads={item} pendoID={pendoID} token={token} />
         );
       }
       return (
@@ -60,35 +44,19 @@ const RHCOSSection = (props) => {
     <>
       <Text component="p">
         Download RHCOS to create machines for your cluster to use during installation.
-        {rhcos.additionalInstructions
-          && typeof rhcos.additionalInstructions === 'string'
-          && (
-            <>
-              {' '}
-              {rhcos.additionalInstructions}
-            </>
-          )}
-        {' '}
+        {rhcos.additionalInstructions && typeof rhcos.additionalInstructions === 'string' && (
+          <> {rhcos.additionalInstructions}</>
+        )}{' '}
         {rhcos.learnMoreURL && (
           <Text component="a" href={rhcos.learnMoreURL} rel="noreferrer noopener" target="_blank">
-            Learn more
-            {' '}
-            <ExternalLinkAltIcon size="sm" />
-            .
+            Learn more <ExternalLinkAltIcon size="sm" />.
           </Text>
         )}
       </Text>
-      { rhcos.additionalInstructions
-        && typeof rhcos.additionalInstructions !== 'string'
-        && (
-          <>
-            {' '}
-            {rhcos.additionalInstructions}
-          </>
-        )}
-      {
-        downloadButtons(rhcos.downloads)
-      }
+      {rhcos.additionalInstructions && typeof rhcos.additionalInstructions !== 'string' && (
+        <> {rhcos.additionalInstructions}</>
+      )}
+      {downloadButtons(rhcos.downloads)}
     </>
   );
 };

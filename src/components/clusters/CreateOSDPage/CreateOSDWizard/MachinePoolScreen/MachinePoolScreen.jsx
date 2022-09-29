@@ -1,12 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Grid,
-  GridItem,
-  Title,
-  Form,
-  Text,
-} from '@patternfly/react-core';
+import { Grid, GridItem, Title, Form, Text } from '@patternfly/react-core';
 import { normalizedProducts, billingModels } from '../../../../../common/subscriptionTypes';
 import ScaleSection from '../../CreateOSDForm/FormSections/ScaleSection/ScaleSection';
 
@@ -24,12 +18,15 @@ function DefaultMachinePoolScreen({
   billingModel,
 }) {
   return (
-    <Form onSubmit={(event) => { event.preventDefault(); return false; }}>
+    <Form
+      onSubmit={(event) => {
+        event.preventDefault();
+        return false;
+      }}
+    >
       <Grid hasGutter>
         <GridItem>
-          <Title headingLevel="h3">
-            Default machine pool
-          </Title>
+          <Title headingLevel="h3">Default machine pool</Title>
         </GridItem>
         <GridItem>
           <Text component="p">

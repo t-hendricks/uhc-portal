@@ -47,8 +47,7 @@ exports[`InstallIBM renders correctly 1`] = `
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                  Learn more
-                   
+                  Learn more 
                   <ExternalLinkAltIcon
                     color="currentColor"
                     noVerticalAlign={false}
@@ -66,8 +65,7 @@ exports[`InstallIBM renders correctly 1`] = `
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                  Learn more
-                   
+                  Learn more 
                   <ExternalLinkAltIcon
                     color="currentColor"
                     noVerticalAlign={false}

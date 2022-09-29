@@ -20,7 +20,9 @@ function getOIDCEndpointNoScheme(cluster) {
 
 // Build the OIDC provider ARN for this cluster.
 function getOIDCProviderARN(cluster) {
-  return `arn:aws:iam::${getAWSAccountID(cluster)}:oidc-provider/${getOIDCEndpointNoScheme(cluster)}`;
+  return `arn:aws:iam::${getAWSAccountID(cluster)}:oidc-provider/${getOIDCEndpointNoScheme(
+    cluster,
+  )}`;
 }
 
 export { getAWSAccountID, getOIDCEndpointNoScheme, getOIDCProviderARN };

@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import {
-  Button,
-  Flex,
-  Popover,
-} from '@patternfly/react-core';
+import { Button, Flex, Popover } from '@patternfly/react-core';
 
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
 import SupportStatusLabel from '../SupportStatusLabel';
@@ -38,26 +34,22 @@ class ClusterVersionInfo extends React.Component {
   }
 
   render() {
-    const {
-      cluster, openModal, schedules,
-    } = this.props;
+    const { cluster, openModal, schedules } = this.props;
     const { popoverOpen } = this.state;
     const isUpgrading = get(cluster, 'metrics.upgrade.state') === 'running';
-    const clusterVersion = (isUpgrading ? cluster.version?.raw_id : cluster.openshift_version) || 'N/A';
+    const clusterVersion =
+      (isUpgrading ? cluster.version?.raw_id : cluster.openshift_version) || 'N/A';
     const channel = get(cluster, 'metrics.channel');
 
     const scheduledUpdate = schedules.items.find(
-      schedule => schedule.version !== cluster.version?.raw_id,
+      (schedule) => schedule.version !== cluster.version?.raw_id,
     );
 
     return (
       <div>
         <dl className="pf-l-stack">
           <Flex>
-            <dt>
-              OpenShift:
-              {' '}
-            </dt>
+            <dt>OpenShift: </dt>
             <dd>
               {clusterVersion}
               <ClusterUpdateLink
@@ -65,11 +57,12 @@ class ClusterVersionInfo extends React.Component {
                 openModal={openModal}
                 hideOSDUpdates={!!scheduledUpdate}
               />
-              { scheduledUpdate && scheduledUpdate.schedule_type === 'automatic' && !isUpgrading
-                ? (<UpgradeAcknowledgeLink clusterId={cluster.id} />) : null}
+              {scheduledUpdate && scheduledUpdate.schedule_type === 'automatic' && !isUpgrading ? (
+                <UpgradeAcknowledgeLink clusterId={cluster.id} />
+              ) : null}
             </dd>
           </Flex>
-          { scheduledUpdate && scheduledUpdate.schedule_type === 'manual' && (
+          {scheduledUpdate && scheduledUpdate.schedule_type === 'manual' && (
             <div>
               <Flex>
                 <dt>Update scheduled: </dt>
@@ -79,7 +72,7 @@ class ClusterVersionInfo extends React.Component {
                     isVisible={popoverOpen}
                     shouldOpen={() => this.setState({ popoverOpen: true })}
                     shouldClose={() => this.setState({ popoverOpen: false })}
-                    bodyContent={(
+                    bodyContent={
                       <UpgradeStatus
                         clusterID={cluster.id}
                         canEdit={cluster.canEdit}
@@ -91,35 +84,33 @@ class ClusterVersionInfo extends React.Component {
                         availableUpgrades={cluster.version?.available_upgrades}
                         onCancelClick={() => this.setState({ popoverOpen: false })}
                       />
-                    )}
+                    }
                   >
                     <Button variant="link">
-                      View details
-                      {' '}
-                      <OutlinedQuestionCircleIcon />
+                      View details <OutlinedQuestionCircleIcon />
                     </Button>
                   </Popover>
                 </dd>
               </Flex>
             </div>
           )}
-          { !cluster.managed && !isUpgrading && (
-          <div>
-            <Flex>
-              <dt>Life cycle state: </dt>
-              <dd>
-                <SupportStatusLabel clusterVersion={clusterVersion} />
-              </dd>
-            </Flex>
-          </div>
+          {!cluster.managed && !isUpgrading && (
+            <div>
+              <Flex>
+                <dt>Life cycle state: </dt>
+                <dd>
+                  <SupportStatusLabel clusterVersion={clusterVersion} />
+                </dd>
+              </Flex>
+            </div>
           )}
-          { channel && (
-          <div>
-            <Flex>
-              <dt>Update channel: </dt>
-              <dd>{channel}</dd>
-            </Flex>
-          </div>
+          {channel && (
+            <div>
+              <Flex>
+                <dt>Update channel: </dt>
+                <dd>{channel}</dd>
+              </Flex>
+            </div>
           )}
         </dl>
       </div>

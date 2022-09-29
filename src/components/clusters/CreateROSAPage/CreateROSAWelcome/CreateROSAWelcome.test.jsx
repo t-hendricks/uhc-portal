@@ -7,7 +7,7 @@ describe('<CreateROSAWelcome>', () => {
   it('renders', () => {
     const props = {
       token: { auths: { foo: 'bar' } },
-      getAuthToken: () => { },
+      getAuthToken: () => {},
     };
 
     const wrapper = shallow(<CreateROSAWelcome {...props} />);

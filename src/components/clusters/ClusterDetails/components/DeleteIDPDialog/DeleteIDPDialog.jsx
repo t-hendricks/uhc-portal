@@ -23,19 +23,9 @@ class DeleteIDPDialog extends React.Component {
   }
 
   render() {
-    const {
-      isOpen,
-      modalData,
-      deleteIDP,
-      deletedIDPResponse,
-    } = this.props;
+    const { isOpen, modalData, deleteIDP, deletedIDPResponse } = this.props;
 
-    const {
-      clusterID,
-      idpID,
-      idpName,
-      idpType,
-    } = modalData;
+    const { clusterID, idpID, idpName, idpType } = modalData;
 
     const errorContainer = deletedIDPResponse.error && (
       <ErrorBox message="Error removing identity provider" response={deletedIDPResponse} />
@@ -44,39 +34,33 @@ class DeleteIDPDialog extends React.Component {
     const isPending = deletedIDPResponse.pending;
     const close = () => this.closeDialog(false);
 
-    return isOpen && (
-      <Modal
-        onClose={close}
-        primaryText="Remove"
-        primaryVariant="danger"
-        onPrimaryClick={() => deleteIDP(clusterID, idpID)}
-        onSecondaryClick={close}
-        title="Remove identity provider"
-        isPending={isPending}
-      >
-        {errorContainer}
-        <p>
-          You&apos;re about to remove the
-          {' '}
-          <b>
-            {idpType}
-          </b>
-          {' '}
-          identity provider
-          {' '}
-          <b>
-            &quot;
-            {idpName}
-            &quot;
-          </b>
-          {' '}
-          from this cluster.
-        </p>
-        <p>
-          You may lose access to this cluster if you remove this identity provider.
-          At least one identity provider is required to access the cluster.
-        </p>
-      </Modal>
+    return (
+      isOpen && (
+        <Modal
+          onClose={close}
+          primaryText="Remove"
+          primaryVariant="danger"
+          onPrimaryClick={() => deleteIDP(clusterID, idpID)}
+          onSecondaryClick={close}
+          title="Remove identity provider"
+          isPending={isPending}
+        >
+          {errorContainer}
+          <p>
+            You&apos;re about to remove the <b>{idpType}</b> identity provider{' '}
+            <b>
+              &quot;
+              {idpName}
+              &quot;
+            </b>{' '}
+            from this cluster.
+          </p>
+          <p>
+            You may lose access to this cluster if you remove this identity provider. At least one
+            identity provider is required to access the cluster.
+          </p>
+        </Modal>
+      )
     );
   }
 }

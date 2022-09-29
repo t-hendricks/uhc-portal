@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 export enum disk_role {
-    NONE = 'none',
-    INSTALL = 'install',
+  NONE = 'none',
+  INSTALL = 'install',
 }

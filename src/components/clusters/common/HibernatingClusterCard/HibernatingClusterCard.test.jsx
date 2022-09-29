@@ -17,10 +17,7 @@ describe('<HibernateClusterModal />', () => {
   };
 
   beforeEach(() => {
-    wrapper = shallow(<HibernatingClusterCard
-      cluster={cluster}
-      openModal={openModal}
-    />);
+    wrapper = shallow(<HibernatingClusterCard cluster={cluster} openModal={openModal} />);
   });
 
   it('renders correctly', () => {

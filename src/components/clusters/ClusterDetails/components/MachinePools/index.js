@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
     defaultMachinePool.desired = nodes.compute;
   }
 
-  return ({
+  return {
     isAddMachinePoolModalOpen: shouldShowModal(state, 'add-machine-pool'),
     isEditTaintsModalOpen: shouldShowModal(state, modals.EDIT_TAINTS),
     isEditLabelsModalOpen: shouldShowModal(state, modals.EDIT_LABELS),
@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
     hasMachinePoolsQuota: hasMachinePoolsQuotaSelector(state),
     machineTypes: state.machineTypes,
     organization: state.userProfile.organization,
-  });
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -59,9 +59,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   submit: (params) => {
     dispatch(addMachinePool(ownProps.clusterID, params));
   },
-  deleteMachinePool: machinePoolID => dispatch(
-    deleteMachinePool(ownProps.cluster.id, machinePoolID),
-  ),
+  deleteMachinePool: (machinePoolID) =>
+    dispatch(deleteMachinePool(ownProps.cluster.id, machinePoolID)),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes: () => dispatch(getMachineTypes()),
 });

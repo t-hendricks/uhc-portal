@@ -6,9 +6,8 @@
  * Version metadata.
  */
 export type Metadata = {
-    /**
-     * Version of the server.
-     */
-    server_version?: string;
+  /**
+   * Version of the server.
+   */
+  server_version?: string;
 };
-

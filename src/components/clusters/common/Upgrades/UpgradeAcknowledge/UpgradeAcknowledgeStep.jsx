@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Alert, Divider, Form, FormGroup, Grid, GridItem, TextInput, Title,
+  Alert,
+  Divider,
+  Form,
+  FormGroup,
+  Grid,
+  GridItem,
+  TextInput,
+  Title,
 } from '@patternfly/react-core';
 
 import ExternalLink from '../../../../common/ExternalLink';
@@ -14,13 +21,7 @@ const ackWord = 'Acknowledge';
 const UpgradeAcknowledgeStep = (props) => {
   const [typedWord, setTypedWord] = useState('');
 
-  const {
-    initiallyConfirmed,
-    confirmed,
-    fromVersion,
-    toVersion,
-    unmetAcknowledgements,
-  } = props;
+  const { initiallyConfirmed, confirmed, fromVersion, toVersion, unmetAcknowledgements } = props;
 
   useEffect(() => {
     if (initiallyConfirmed) {
@@ -42,9 +43,9 @@ const UpgradeAcknowledgeStep = (props) => {
           1. Review and prevent update issues
         </Title>
         <ul className="wizard-step-body">
-          {unmetAcknowledgements.map(ack => (
+          {unmetAcknowledgements.map((ack) => (
             <li data-testid="unmetAcknowledgement">
-              {ack.description ? (<p>{ack.description}</p>) : null}
+              {ack.description ? <p>{ack.description}</p> : null}
               <Alert
                 id="upgrade-ack-alert"
                 isPlain
@@ -53,11 +54,8 @@ const UpgradeAcknowledgeStep = (props) => {
                 title={ack.warning_message}
               >
                 {ack.documentation_url ? (
-                  <ExternalLink href={ack.documentation_url}>
-                    Learn more
-                  </ExternalLink>
+                  <ExternalLink href={ack.documentation_url}>Learn more</ExternalLink>
                 ) : null}
-
               </Alert>
             </li>
           ))}
@@ -66,7 +64,9 @@ const UpgradeAcknowledgeStep = (props) => {
 
       <Divider />
       <GridItem>
-        <Title className="wizard-step-title" size="lg" headingLevel="h3">2. Acknowledge</Title>
+        <Title className="wizard-step-title" size="lg" headingLevel="h3">
+          2. Acknowledge
+        </Title>
         <div className="wizard-step-body">
           <p>
             {`
@@ -82,15 +82,11 @@ const UpgradeAcknowledgeStep = (props) => {
             }}
           >
             <FormGroup
-              label={(
+              label={
                 <span className="ocm-upgrade-ack-step_text-input-label">
-                  Confirm the above by typing
-                  {' '}
-                  <strong>{ackWord}</strong>
-                  {' '}
-                  below:
+                  Confirm the above by typing <strong>{ackWord}</strong> below:
                 </span>
-              )}
+              }
               isRequired
               fieldId="upgradeAcknowledgementModalText"
             >
@@ -99,7 +95,7 @@ const UpgradeAcknowledgeStep = (props) => {
                 isRequired
                 id="upgradeAcknowledgementModalText"
                 type="text"
-                onChange={val => setTypedWord(val)}
+                onChange={(val) => setTypedWord(val)}
                 placeholder="Type here"
                 data-testid="acknowledgeTextInput"
               />

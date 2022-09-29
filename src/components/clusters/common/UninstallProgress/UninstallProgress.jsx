@@ -14,9 +14,7 @@ import {
   ProgressStep,
 } from '@patternfly/react-core';
 
-import {
-  ExclamationCircleIcon,
-} from '@patternfly/react-icons';
+import { ExclamationCircleIcon } from '@patternfly/react-icons';
 
 import AddOnsConstants from '../../ClusterDetails/components/AddOns/AddOnsConstants';
 
@@ -28,12 +26,8 @@ class UninstallProgress extends React.Component {
   };
 
   componentDidMount() {
-    const {
-      cluster,
-      clusterAddOns,
-      getClusterAddOns,
-    } = this.props;
-    if (clusterAddOns.clusterID !== cluster.id || (!clusterAddOns.pending)) {
+    const { cluster, clusterAddOns, getClusterAddOns } = this.props;
+    if (clusterAddOns.clusterID !== cluster.id || !clusterAddOns.pending) {
       getClusterAddOns(cluster.id);
     }
   }
@@ -52,15 +46,9 @@ class UninstallProgress extends React.Component {
   };
 
   render() {
-    const {
-      clusterAddOns,
-      addOns,
-      children,
-    } = this.props;
+    const { clusterAddOns, addOns, children } = this.props;
 
-    const {
-      showPopover,
-    } = this.state;
+    const { showPopover } = this.state;
 
     // check if a cluster has addons with external resources
     const getBlockingAddons = () => {
@@ -80,17 +68,17 @@ class UninstallProgress extends React.Component {
 
     // check if addon are currently deleting
     const anyAddonsDeleting = blockingAddons.some(
-      addOn => addOn.state === AddOnsConstants.INSTALLATION_STATE.DELETING,
+      (addOn) => addOn.state === AddOnsConstants.INSTALLATION_STATE.DELETING,
     );
 
     // check if any addons are not deleted
     const anyAddonsNotDeleted = blockingAddons.some(
-      addOn => addOn.state !== AddOnsConstants.INSTALLATION_STATE.DELETED,
+      (addOn) => addOn.state !== AddOnsConstants.INSTALLATION_STATE.DELETED,
     );
 
     // check if any blocking addons are in error state
     const anyAddonsError = blockingAddons.some(
-      addOn => addOn.state === AddOnsConstants.INSTALLATION_STATE.FAILED,
+      (addOn) => addOn.state === AddOnsConstants.INSTALLATION_STATE.FAILED,
     );
 
     const getFailedAddons = () => {
@@ -113,21 +101,18 @@ class UninstallProgress extends React.Component {
         shouldClose={() => this.popOverShouldClose()}
         shouldOpen={() => this.popOverShouldOpen()}
         headerContent={<div>Add-on uninstallation status</div>}
-        bodyContent={(
+        bodyContent={
           <div>
-            <Button
-              isInline
-              variant="link"
-              onClick={() => this.navToAddOns()}
-            >
+            <Button isInline variant="link" onClick={() => this.navToAddOns()}>
               {failedAddons[0].id}
-            </Button>
-            {' '}
+            </Button>{' '}
             add-on failed to uninstall
           </div>
-        )}
+        }
       >
-        <Button isInline variant="link">Failed</Button>
+        <Button isInline variant="link">
+          Failed
+        </Button>
       </Popover>
     );
 
@@ -137,28 +122,24 @@ class UninstallProgress extends React.Component {
         shouldClose={() => this.popOverShouldClose()}
         shouldOpen={() => this.popOverShouldOpen()}
         headerContent={<div>Add-on uninstallation status</div>}
-        bodyContent={(
+        bodyContent={
           <div>
             The following add-ons failed to uninstall:
-            <List
-              className="uninstall-progress-list--error-list"
-            >
-              {failedAddons.map(addOn => (
+            <List className="uninstall-progress-list--error-list">
+              {failedAddons.map((addOn) => (
                 <ListItem>
-                  <Button
-                    isInline
-                    variant="link"
-                    onClick={() => this.navToAddOns()}
-                  >
+                  <Button isInline variant="link" onClick={() => this.navToAddOns()}>
                     {addOn.id}
                   </Button>
                 </ListItem>
               ))}
             </List>
           </div>
-                )}
+        }
       >
-        <Button isInline variant="link">Failed</Button>
+        <Button isInline variant="link">
+          Failed
+        </Button>
       </Popover>
     );
 
@@ -188,7 +169,7 @@ class UninstallProgress extends React.Component {
       const completed = { variant: 'success', text: 'Completed' };
       const inProgress = { variant: 'info', text: 'Uninstalling', isCurrent: true };
 
-      const hasAddOns = ((blockingAddons.length !== 0) && (clusterAddOns.items.length !== 0));
+      const hasAddOns = blockingAddons.length !== 0 && clusterAddOns.items.length !== 0;
       if (!hasAddOns || !anyAddonsNotDeleted) {
         return {
           addOnCleanUp: completed,

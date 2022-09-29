@@ -9,6 +9,7 @@ const modals = {
   EDIT_NODE_COUNT: 'edit-node-count',
   EDIT_DISPLAY_NAME: 'edit-display-name',
   EDIT_CONSOLE_URL: 'edit-console-url',
+  EDIT_CLUSTER_INGRESS: 'edit-cluster-ingress',
   DELETE_CLUSTER: 'delete-cluster',
   UPGRADE_WIZARD: 'upgrade-wizard',
   TRANSFER_CLUSTER_OWNERSHIP: 'transfer-cluster-ownership',

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { selfTermsReview } from '../../../../../redux/actions/userActions';
 import TermsAlert from './TermsAlert';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   selfTermsReviewResult: state.userProfile.selfTermsReviewResult,
 });
 

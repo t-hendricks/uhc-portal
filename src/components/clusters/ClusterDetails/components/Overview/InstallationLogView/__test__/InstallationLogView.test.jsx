@@ -9,21 +9,24 @@ jest.useFakeTimers('legacy'); // TODO 'modern'
 
 describe('<InstallationLogView />', () => {
   const { clusterDetails } = fixtures;
-  let wrapper; let clearLogs; let
-    getLogs;
+  let wrapper;
+  let clearLogs;
+  let getLogs;
 
   beforeEach(() => {
     clearLogs = jest.fn();
     getLogs = jest.fn();
-    wrapper = shallow(<InstallationLogView
-      cluster={clusterDetails.cluster}
-      clearLogs={clearLogs}
-      getLogs={getLogs}
-      refresh={jest.fn()}
-      logType="install"
-      lines="lorem ipsum"
-      len={1}
-    />);
+    wrapper = shallow(
+      <InstallationLogView
+        cluster={clusterDetails.cluster}
+        clearLogs={clearLogs}
+        getLogs={getLogs}
+        refresh={jest.fn()}
+        logType="install"
+        lines="lorem ipsum"
+        len={1}
+      />,
+    );
   });
 
   it('should render with logs', () => {
@@ -65,13 +68,15 @@ describe('<InstallationLogView />', () => {
     beforeEach(() => {
       clearLogs = jest.fn();
       getLogs = jest.fn();
-      wrapper = shallow(<InstallationLogView
-        cluster={clusterDetails.cluster}
-        clearLogs={clearLogs}
-        getLogs={getLogs}
-        lines=""
-        len={0}
-      />);
+      wrapper = shallow(
+        <InstallationLogView
+          cluster={clusterDetails.cluster}
+          clearLogs={clearLogs}
+          getLogs={getLogs}
+          lines=""
+          len={0}
+        />,
+      );
     });
 
     it('should render', () => {
@@ -91,15 +96,17 @@ describe('<InstallationLogView />', () => {
   });
 
   it('should not show any message when cluster status is error', () => {
-    wrapper = shallow(<InstallationLogView
-      cluster={{ ...clusterDetails.cluster, state: clusterStates.ERROR }}
-      clearLogs={clearLogs}
-      getLogs={getLogs}
-      refresh={jest.fn()}
-      logType="install"
-      len={1}
-      lines="lorem ipsum"
-    />);
+    wrapper = shallow(
+      <InstallationLogView
+        cluster={{ ...clusterDetails.cluster, state: clusterStates.ERROR }}
+        clearLogs={clearLogs}
+        getLogs={getLogs}
+        refresh={jest.fn()}
+        logType="install"
+        len={1}
+        lines="lorem ipsum"
+      />,
+    );
     expect(wrapper).toMatchSnapshot();
     expect(wrapper.find('p').length).toEqual(0);
   });

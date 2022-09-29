@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormGroup, FormSelect, FormSelectOption,
-} from '@patternfly/react-core';
+import { FormGroup, FormSelect, FormSelectOption } from '@patternfly/react-core';
 
 import ErrorBox from '../../../../../../common/ErrorBox';
 
@@ -24,21 +22,14 @@ class KMSKeySelect extends React.Component {
   }
 
   loadIfNeeded = () => {
-    const {
-      hasDependencies,
-      matchesDependencies,
-      requestStatus,
-      loadData,
-    } = this.props;
+    const { hasDependencies, matchesDependencies, requestStatus, loadData } = this.props;
     if (hasDependencies && !matchesDependencies && !requestStatus.pending) {
       loadData();
     }
-  }
+  };
 
   currentValueIrrelevant = () => {
-    const {
-      hasDependencies, matchesDependencies, requestStatus, items, input,
-    } = this.props;
+    const { hasDependencies, matchesDependencies, requestStatus, items, input } = this.props;
     if (!input.value) {
       // Blank/placeholder always legitimate.
       return false;
@@ -52,7 +43,7 @@ class KMSKeySelect extends React.Component {
       return !items.includes(input.value);
     }
     return false;
-  }
+  };
 
   render() {
     const {
@@ -76,24 +67,18 @@ class KMSKeySelect extends React.Component {
         options = (
           <>
             <FormSelectOption isDisabled isPlaceholder value="" label={placeholder} />
-            {items.map(item => (
+            {items.map((item) => (
               <FormSelectOption key={item} value={item} label={item} />
             ))}
           </>
         );
       } else {
-        options = (
-          <FormSelectOption isDisabled isPlaceholder value="" label={emptyPlaceholder} />
-        );
+        options = <FormSelectOption isDisabled isPlaceholder value="" label={emptyPlaceholder} />;
       }
     } else if (requestStatus.pending) {
-      options = (
-        <FormSelectOption isDisabled value="" label="Loading..." />
-      );
+      options = <FormSelectOption isDisabled value="" label="Loading..." />;
     } else {
-      options = (
-        <FormSelectOption isDisabled value="" label="" />
-      );
+      options = <FormSelectOption isDisabled value="" label="" />;
     }
 
     // Prevent FormSelect from picking wrong option when valid options changed.

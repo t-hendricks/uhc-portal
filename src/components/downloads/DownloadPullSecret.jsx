@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-} from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
 import Download from '@axetroy/react-download';
 import isEmpty from 'lodash/isEmpty';
 
@@ -11,7 +9,7 @@ import { trackEvents } from '~/common/analytics';
 
 function DownloadPullSecret({ token, pendoID, text }) {
   const { track } = useAnalytics();
-  const isDisabled = (!token || !!token.error || isEmpty(token));
+  const isDisabled = !token || !!token.error || isEmpty(token);
   const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
 
   const downloadButton = (
@@ -26,7 +24,9 @@ function DownloadPullSecret({ token, pendoID, text }) {
     </Button>
   );
 
-  return isDisabled ? downloadButton : (
+  return isDisabled ? (
+    downloadButton
+  ) : (
     <Download file="pull-secret" content={tokenView} style={{ display: 'inline' }}>
       {downloadButton}
     </Download>

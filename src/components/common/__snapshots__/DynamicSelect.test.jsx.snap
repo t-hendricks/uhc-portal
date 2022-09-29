@@ -6,6 +6,13 @@ exports[`<DynamicSelect> empty data: empty 1`] = `
   label="Label"
   validated="default"
 >
+  <Alert
+    isInline={true}
+    title="No foos"
+    variant="danger"
+  >
+    <TextContent />
+  </Alert>
   <FormSelect
     aria-label="Label"
     className=""
@@ -22,7 +29,7 @@ exports[`<DynamicSelect> empty data: empty 1`] = `
     <FormSelectOption
       isDisabled={true}
       isPlaceholder={true}
-      label="No foos"
+      label=""
       value=""
     />
   </FormSelect>

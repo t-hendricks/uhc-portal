@@ -21,7 +21,7 @@ class LogWindow extends React.Component {
     userScrolled: false,
     isFullScreen: false,
     isExpanded: false,
-  }
+  };
 
   componentDidMount() {
     if (this.isShown()) {
@@ -39,15 +39,15 @@ class LogWindow extends React.Component {
     // avoid rendering on every prop/state change by manually comparing the ones we care about.
     // effectively this avoids rendering when a completed request has no new lines.
     return (
-      nextState.userScrolled !== this.state.userScrolled
-      || nextState.isExpanded !== this.state.isExpanded
-      || nextState.isFullScreen !== this.state.isFullScreen
-      || nextProps.lines !== this.props.lines
-      || nextProps.cluster.state !== this.props.cluster.state
-      || nextProps.cluster.id !== this.props.cluster.id
-      || nextProps.errorCode !== this.props.errorCode
-      || nextProps.logType !== this.props.logType
-      || nextProps.isExpandable !== this.props.isExpandable
+      nextState.userScrolled !== this.state.userScrolled ||
+      nextState.isExpanded !== this.state.isExpanded ||
+      nextState.isFullScreen !== this.state.isFullScreen ||
+      nextProps.lines !== this.props.lines ||
+      nextProps.cluster.state !== this.props.cluster.state ||
+      nextProps.cluster.id !== this.props.cluster.id ||
+      nextProps.errorCode !== this.props.errorCode ||
+      nextProps.logType !== this.props.logType ||
+      nextProps.isExpandable !== this.props.isExpandable
     );
   }
 
@@ -61,8 +61,10 @@ class LogWindow extends React.Component {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ userScrolled: false });
     }
-    if ((prevProps.errorCode !== 403 && errorCode === 403)
-        || cluster.state === clusterStates.ERROR) {
+    if (
+      (prevProps.errorCode !== 403 && errorCode === 403) ||
+      cluster.state === clusterStates.ERROR
+    ) {
       if (this.updateTimer !== null) {
         window.clearInterval(this.updateTimer);
       }
@@ -98,12 +100,12 @@ class LogWindow extends React.Component {
   isShown = () => {
     const { isExpanded } = this.state;
     const { isExpandable } = this.props;
-    return (!isExpandable || isExpanded);
-  }
+    return !isExpandable || isExpanded;
+  };
 
   toggleExpanded = (isExpanded) => {
     this.setState({ isExpanded });
-  }
+  };
 
   scrollToEnd = () => {
     const { lines } = this.props;
@@ -113,16 +115,18 @@ class LogWindow extends React.Component {
         pane.scrollTo({ top: pane.scrollHeight });
       }
     }
-  }
+  };
 
   onScroll = (event) => {
     const { userScrolled } = this.state;
     const view = event.target;
-    const currentScrollDiff = (view.scrollHeight - view.clientHeight) - view.scrollTop;
-    if (!userScrolled
-        && currentScrollDiff > AUTOSCROLL_THRESHOLD
-        && this.isPageVisible
-        && this.isShown()) {
+    const currentScrollDiff = view.scrollHeight - view.clientHeight - view.scrollTop;
+    if (
+      !userScrolled &&
+      currentScrollDiff > AUTOSCROLL_THRESHOLD &&
+      this.isPageVisible &&
+      this.isShown()
+    ) {
       // user scrolled to anywhere which isn't the very bottom, stop auto-scrolling
       this.setState({ userScrolled: true });
     }
@@ -130,7 +134,7 @@ class LogWindow extends React.Component {
       // user scrolled to the bottom (approximately), start auto-scrolling again
       this.setState({ userScrolled: false });
     }
-  }
+  };
 
   onFullscreenChange = () => {
     const { userScrolled } = this.state;
@@ -139,7 +143,7 @@ class LogWindow extends React.Component {
     if (!userScrolled) {
       this.scrollToEnd();
     }
-  }
+  };
 
   onVisibilityChange = () => {
     if (this.updateTimer !== null) {
@@ -158,20 +162,20 @@ class LogWindow extends React.Component {
         this.updateTimer = window.setInterval(this.update, 15000);
       }
     }
-  }
+  };
 
   update = () => {
-    const {
-      getLogs, cluster, lines, len, logType, pending, errorCode,
-    } = this.props;
+    const { getLogs, cluster, lines, len, logType, pending, errorCode } = this.props;
     if (!pending && errorCode !== 403) {
       const requestLogType = cluster.state !== clusterStates.UNINSTALLING ? 'install' : 'uninstall';
       let offset = lines ? len : 0;
-      if (logType !== requestLogType) { offset = 0; }
+      if (logType !== requestLogType) {
+        offset = 0;
+      }
 
       getLogs(cluster.id, offset, requestLogType);
     }
-  }
+  };
 
   fullScreen = () => {
     const { userScrolled } = this.state;
@@ -192,12 +196,10 @@ class LogWindow extends React.Component {
         this.setState({ isFullScreen: false });
       });
     }
-  }
+  };
 
   render() {
-    const {
-      lines, len, errorCode, cluster, isExpandable,
-    } = this.props;
+    const { lines, len, errorCode, cluster, isExpandable } = this.props;
     const { userScrolled, isFullScreen, isExpanded } = this.state;
     const totalLines = lines ? len - 1 : 0;
     if (!userScrolled && !!totalLines && this.isShown()) {
@@ -207,70 +209,61 @@ class LogWindow extends React.Component {
 
     let message;
     if (cluster.state === clusterStates.UNINSTALLING) {
-      message = errorCode === 403
-        ? metricsStatusMessages.uninstalling
-        : 'Cluster uninstallation has started. Uninstallation log will appear here once it becomes available.';
+      message =
+        errorCode === 403
+          ? metricsStatusMessages.uninstalling
+          : 'Cluster uninstallation has started. Uninstallation log will appear here once it becomes available.';
     } else {
-      message = errorCode === 403
-        ? metricsStatusMessages.installing
-        : 'Cluster installation has started. Installation log will appear here once it becomes available.';
+      message =
+        errorCode === 403
+          ? metricsStatusMessages.installing
+          : 'Cluster installation has started. Installation log will appear here once it becomes available.';
     }
 
     const view = (
       <div
-        className={
-          cx('log-window-container', !!totalLines && 'log-window-container--with-lines')
-        }
+        className={cx('log-window-container', !!totalLines && 'log-window-container--with-lines')}
         ref={this.cardRef}
       >
-        { !!totalLines && screenfull.isEnabled && (
-        <div className="logview-buttons">
-          <Button
-            onClick={this.fullScreen}
-            variant="link"
-            icon={<ExpandIcon />}
-          >
-            { isFullScreen ? 'Exit full screen' : 'Full screen' }
-          </Button>
-        </div>
+        {!!totalLines && screenfull.isEnabled && (
+          <div className="logview-buttons">
+            <Button onClick={this.fullScreen} variant="link" icon={<ExpandIcon />}>
+              {isFullScreen ? 'Exit full screen' : 'Full screen'}
+            </Button>
+          </div>
         )}
-        { totalLines ? (
+        {totalLines ? (
           <div className="log-window">
-            <div className="log-window__header">
-              {totalLines}
-              {' '}
-              lines
-            </div>
+            <div className="log-window__header">{totalLines} lines</div>
             <div className="log-window__body">
-              <div className="log-window__scroll-pane" ref={this.logPaneRef} onScroll={this.onScroll}>
-                <div className="log-window__contents">
-                  {lines || ''}
-                </div>
+              <div
+                className="log-window__scroll-pane"
+                ref={this.logPaneRef}
+                onScroll={this.onScroll}
+              >
+                <div className="log-window__contents">{lines || ''}</div>
               </div>
             </div>
           </div>
         ) : (
-          cluster.state !== clusterStates.ERROR && (
-            <p className="pf-u-mt-sm">
-              {message}
-            </p>
-          )
+          cluster.state !== clusterStates.ERROR && <p className="pf-u-mt-sm">{message}</p>
         )}
       </div>
     );
-    return isExpandable
-      ? (
-        <ExpandableSection
-          id="toggle-logs"
-          toggleTextCollapsed="View logs"
-          toggleTextExpanded="Hide logs"
-          onToggle={this.toggleExpanded}
-          isExpanded={isExpanded}
-          isActive={!isFullScreen}
-        >
-          {view}
-        </ExpandableSection>
-      ) : view;
+    return isExpandable ? (
+      <ExpandableSection
+        id="toggle-logs"
+        toggleTextCollapsed="View logs"
+        toggleTextExpanded="Hide logs"
+        onToggle={this.toggleExpanded}
+        isExpanded={isExpanded}
+        isActive={!isFullScreen}
+      >
+        {view}
+      </ExpandableSection>
+    ) : (
+      view
+    );
   }
 }
 

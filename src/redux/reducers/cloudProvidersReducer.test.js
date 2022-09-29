@@ -38,11 +38,13 @@ describe('cloudProvidersReducer', () => {
       };
       const result = cloudProvidersReducer(initialState, action);
 
-      expect(result).toEqual(expect.objectContaining({
-        error: expect.anything(),
-        errorMessage: 'some error',
-        pending: false,
-      }));
+      expect(result).toEqual(
+        expect.objectContaining({
+          error: expect.anything(),
+          errorMessage: 'some error',
+          pending: false,
+        }),
+      );
     });
   });
 

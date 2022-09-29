@@ -6,10 +6,7 @@ import { Banner, Wizard, PageSection } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
 import config from '~/config';
-import {
-  shouldRefetchQuota,
-  scrollToFirstError,
-} from '~/common/helpers';
+import { shouldRefetchQuota, scrollToFirstError } from '~/common/helpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents, ocmResourceType } from '~/common/analytics';
 import { persistor } from '~/redux/store';
@@ -45,7 +42,7 @@ class CreateROSAWizardInternal extends React.Component {
     // Dictionary of step IDs; { [stepId: number]: boolean },
     // where entry values indicate the latest form validation state for those respective steps.
     validatedSteps: {},
-  }
+  };
 
   componentDidMount() {
     const {
@@ -71,12 +68,7 @@ class CreateROSAWizardInternal extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {
-      createClusterResponse,
-      isErrorModalOpen,
-      openModal,
-      isValid,
-    } = this.props;
+    const { createClusterResponse, isErrorModalOpen, openModal, isValid } = this.props;
     const { currentStepId } = this.state;
 
     // Track validity of individual steps by id
@@ -123,30 +115,26 @@ class CreateROSAWizardInternal extends React.Component {
 
   canJumpTo = (id) => {
     const { stepIdReached, currentStepId, validatedSteps } = this.state;
-    const hasPrevStepError = Object.entries(validatedSteps).some((
-      [validatedStepId, isStepValid],
-    ) => (
-      isStepValid === false && validatedStepId < id
-    ));
+    const hasPrevStepError = Object.entries(validatedSteps).some(
+      ([validatedStepId, isStepValid]) => isStepValid === false && validatedStepId < id,
+    );
 
     // Allow step navigation forward when the current step is valid and backwards regardless.
     return (stepIdReached >= id && !hasPrevStepError) || id <= currentStepId;
-  }
+  };
 
   getUserRoleInfo = () => {
     const { getUserRole } = this.props;
     return getUserRole();
-  }
+  };
 
   onBeforeSubmit = (onSubmit) => {
     this.trackWizardNavigation(trackEvents.WizardSubmit);
     onSubmit();
-  }
+  };
 
   onBeforeNext = async (onNext) => {
-    const {
-      touch, formErrors, getUserRoleResponse,
-    } = this.props;
+    const { touch, formErrors, getUserRoleResponse } = this.props;
     const { validatedSteps, currentStepId } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorFieldNames = Object.keys(formErrors);
@@ -157,12 +145,11 @@ class CreateROSAWizardInternal extends React.Component {
       scrollToFirstError(formErrors);
       return;
     }
-    if (currentStepId === stepId.ACCOUNTS_AND_ROLES
-      && !getUserRoleResponse?.fulfilled) {
+    if (currentStepId === stepId.ACCOUNTS_AND_ROLES && !getUserRoleResponse?.fulfilled) {
       await this.getUserRoleInfo();
     }
     onNext();
-  }
+  };
 
   trackWizardNavigation = (event, currentStepId = '') => {
     const { track } = this.props;
@@ -173,7 +160,7 @@ class CreateROSAWizardInternal extends React.Component {
         step_name: stepNameById[currentStepId],
       },
     });
-  }
+  };
 
   render() {
     const {
@@ -323,16 +310,11 @@ class CreateROSAWizardInternal extends React.Component {
       // unblock history in order to not show a confirmation prompt.
       history.block(() => {});
 
-      return (
-        <Redirect to={`/details/s/${createClusterResponse.cluster.subscription.id}`} />
-      );
+      return <Redirect to={`/details/s/${createClusterResponse.cluster.subscription.id}`} />;
     }
 
-    if (orgWasFetched
-      && !hasProductQuota) {
-      return (
-        <Redirect to="/create" />
-      );
+    if (orgWasFetched && !hasProductQuota) {
+      return <Redirect to="/create" />;
     }
 
     const requests = [
@@ -345,7 +327,7 @@ class CreateROSAWizardInternal extends React.Component {
         name: 'Organization & Quota',
       },
     ];
-    const anyRequestPending = requests.some(request => request.data.pending);
+    const anyRequestPending = requests.some((request) => request.data.pending);
 
     const breadcrumbs = [
       { label: 'Clusters' },
@@ -354,12 +336,7 @@ class CreateROSAWizardInternal extends React.Component {
     ];
 
     const title = (
-      <PageTitle
-        title="Create a ROSA Cluster"
-        breadcrumbs={(
-          <Breadcrumbs path={breadcrumbs} />
-        )}
-      />
+      <PageTitle title="Create a ROSA Cluster" breadcrumbs={<Breadcrumbs path={breadcrumbs} />} />
     );
 
     if (anyRequestPending || (!organization.fulfilled && !organization.error)) {
@@ -373,22 +350,20 @@ class CreateROSAWizardInternal extends React.Component {
       );
     }
 
-    const anyErrors = requests.some(request => request.data.error);
+    const anyErrors = requests.some((request) => request.data.error);
 
     if (anyErrors) {
       return (
         <>
           <PageSection>
             <Unavailable
-              errors={
-                requests
-                  .filter(request => request.data.error)
-                  .map(request => ({
-                    key: request.name,
-                    message: `Error while loading required form data (${request.name})`,
-                    response: request.data,
-                  }))
-              }
+              errors={requests
+                .filter((request) => request.data.error)
+                .map((request) => ({
+                  key: request.name,
+                  message: `Error while loading required form data (${request.name})`,
+                  response: request.data,
+                }))}
             />
           </PageSection>
         </>
@@ -400,9 +375,7 @@ class CreateROSAWizardInternal extends React.Component {
         {title}
         <PageSection>
           {config.fakeOSD && ( // TODO Is ?fake=true supported for ROSA clusters?
-            <Banner variant="warning">
-              On submit, a fake ROSA cluster will be created.
-            </Banner>
+            <Banner variant="warning">On submit, a fake ROSA cluster will be created.</Banner>
           )}
           <div className="ocm-page">
             {isErrorModalOpen && <CreateClusterErrorModal />}
@@ -417,14 +390,17 @@ class CreateROSAWizardInternal extends React.Component {
                 onBack={this.onBack}
                 onGoToStep={this.onGoToStep}
                 onClose={() => history.push('/')}
-                footer={(!createClusterResponse.pending ? (
-                  <CreateRosaWizardFooter
-                    onSubmit={onSubmit}
-                    onBeforeNext={this.onBeforeNext}
-                    onBeforeSubmit={this.onBeforeSubmit}
-                  />
-                ) : <></>
-                )}
+                footer={
+                  !createClusterResponse.pending ? (
+                    <CreateRosaWizardFooter
+                      onSubmit={onSubmit}
+                      onBeforeNext={this.onBeforeNext}
+                      onBeforeSubmit={this.onBeforeSubmit}
+                    />
+                  ) : (
+                    <></>
+                  )
+                }
               />
             </PersistGate>
           </div>

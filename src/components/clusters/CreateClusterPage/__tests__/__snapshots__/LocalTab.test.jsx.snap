@@ -75,24 +75,20 @@ exports[`<LocalTab /> renders correctly 1`] = `
         <Text
           component="p"
         >
-          Run
-           
+          Run 
           <code>
             crc setup
           </code>
-           
-          to set up your host operating system for the OpenShift Local virtual machine.
+           to set up your host operating system for the OpenShift Local virtual machine.
         </Text>
         <Text
           component="p"
         >
-          Then, run
-           
+          Then, run 
           <code>
             crc start
           </code>
-           
-          to create a minimal OpenShift 4 cluster on your computer.
+           to create a minimal OpenShift 4 cluster on your computer.
         </Text>
         <Text
           component="p"

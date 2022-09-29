@@ -1,12 +1,10 @@
 import get from 'lodash/get';
 
-const routeSelectorsToString = (routeSelectors) => {
-  const selectorStrings = [];
-  Object.keys(routeSelectors).forEach((key) => {
-    selectorStrings.push(`${key}=${routeSelectors[key]}`);
-  });
-  return selectorStrings.join(',');
-};
+export const routeSelectorPairsAsStrings = (routeSelectors = {}) =>
+  Object.entries(routeSelectors).map((entry) => entry.join('=')) || [];
+
+export const routeSelectorsAsString = (routeSelectors) =>
+  routeSelectorPairsAsStrings(routeSelectors).join(',') || null;
 
 const NetworkingSelector = (state) => {
   const { clusterRouters } = state;
@@ -20,7 +18,7 @@ const NetworkingSelector = (state) => {
     };
     const routeSelectors = !router.isDefault ? r.route_selectors : null;
     if (routeSelectors) {
-      router.routeSelectors = routeSelectorsToString(routeSelectors);
+      router.routeSelectors = routeSelectors;
     }
     if (router.isDefault) {
       routers.default = router;

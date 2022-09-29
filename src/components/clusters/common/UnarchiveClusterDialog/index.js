@@ -10,16 +10,16 @@ import shouldShowModal from '../../../common/Modal/ModalSelectors';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;
-  return ({
+  return {
     isOpen: shouldShowModal(state, 'unarchive-cluster'),
     unarchiveClusterResponse: state.clusters.unarchivedCluster,
     subscriptionID: modalData.subscriptionID ? modalData.subscriptionID : '',
     name: modalData.name ? modalData.name : '',
     shouldDisplayClusterName: modalData.shouldDisplayClusterName || false,
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   submit: (subscriptionID, name) => {
     dispatch(unarchiveCluster(subscriptionID, name));
   },

@@ -17,7 +17,10 @@ limitations under the License.
 import get from 'lodash/get';
 import keyBy from 'lodash/keyBy';
 import {
-  REJECTED_ACTION, FULFILLED_ACTION, PENDING_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  FULFILLED_ACTION,
+  PENDING_ACTION,
+  baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 
@@ -30,10 +33,7 @@ const initialState = {
 };
 
 function mapMachineTypesById(types) {
-  const machineTypes = [].concat(
-    get(types, 'aws', []),
-    get(types, 'gcp', []),
-  );
+  const machineTypes = [].concat(get(types, 'aws', []), get(types, 'gcp', []));
   return keyBy(machineTypes, 'id');
 }
 

@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type ratingSchema = {
-    rating?: number;
-    rule?: string;
+  rating?: number;
+  rule?: string;
 };
-

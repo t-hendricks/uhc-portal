@@ -5,7 +5,6 @@
 import type { List } from './List';
 import type { ResourceQuota } from './ResourceQuota';
 
-export type ResourceQuotaList = (List & {
-    items?: Array<ResourceQuota>;
-});
-
+export type ResourceQuotaList = List & {
+  items?: Array<ResourceQuota>;
+};

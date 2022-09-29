@@ -3,9 +3,8 @@
 /* eslint-disable */
 
 export type List = {
-    kind: string;
-    page: number;
-    size: number;
-    total: number;
+  kind: string;
+  page: number;
+  size: number;
+  total: number;
 };
-

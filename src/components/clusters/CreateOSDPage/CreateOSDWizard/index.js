@@ -18,9 +18,7 @@ import CreateOSDWizard from './CreateOSDWizard';
 import shouldShowModal from '../../../common/Modal/ModalSelectors';
 import { openModal, closeModal } from '../../../common/Modal/ModalActions';
 
-import {
-  hasManagedQuotaSelector,
-} from '../../common/quotaSelectors';
+import { hasManagedQuotaSelector } from '../../common/quotaSelectors';
 import isCCSCredentialsValidationNeeded from './isCCSCredentialsValidationNeeded';
 import ccsCredentialsSelector from './credentialsSelector';
 import { getGCPCloudProviderVPCs, getAWSCloudProviderRegions } from './ccsInquiriesActions';
@@ -41,7 +39,7 @@ const mapStateToProps = (state, ownProps) => {
 
   const isCCS = valueSelector(state, 'byoc') === 'true';
 
-  return ({
+  return {
     isValid: isValid('CreateCluster')(state),
     isErrorModalOpen: shouldShowModal(state, 'osd-create-error'),
     ccsCredentials: ccsCredentialsSelector(cloudProviderID, state),
@@ -60,32 +58,32 @@ const mapStateToProps = (state, ownProps) => {
     persistentStorageValues: state.persistentStorageValues,
     hasProductQuota: hasManagedQuotaSelector(state, product),
     formErrors: getFormSyncErrors('CreateCluster')(state),
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
-  onSubmit: () => dispatch((_, getState) => {
-    const formData = getFormValues('CreateCluster')(getState());
-    // If changing these params, keep test & DebugClusterRequest props synced.
-    const params = { isWizard: true };
-    return submitOSDRequest(dispatch, params)(formData);
-  }),
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: () =>
+    dispatch((_, getState) => {
+      const formData = getFormValues('CreateCluster')(getState());
+      // If changing these params, keep test & DebugClusterRequest props synced.
+      const params = { isWizard: true };
+      return submitOSDRequest(dispatch, params)(formData);
+    }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),
   resetForm: () => dispatch(reset('CreateCluster')),
-  openModal: modalName => dispatch(openModal(modalName)),
-  closeModal: () => { dispatch(closeModal()); },
-  touch: fieldNames => dispatch(touch('CreateCluster', ...fieldNames)),
+  openModal: (modalName) => dispatch(openModal(modalName)),
+  closeModal: () => {
+    dispatch(closeModal());
+  },
+  touch: (fieldNames) => dispatch(touch('CreateCluster', ...fieldNames)),
   getOrganizationAndQuota: () => dispatch(getOrganizationAndQuota()),
   getMachineTypes: () => dispatch(getMachineTypes()),
   getCloudProviders: () => dispatch(getCloudProviders()),
   getPersistentStorage: () => dispatch(getPersistentStorageValues()),
   getLoadBalancers: () => dispatch(getLoadBalancerValues()),
-  getGCPCloudProviderVPCs: (type, credentials, region) => dispatch(
-    getGCPCloudProviderVPCs(type, credentials, region),
-  ),
-  getAWSCloudProviderRegions: credentials => dispatch(
-    getAWSCloudProviderRegions(credentials),
-  ),
+  getGCPCloudProviderVPCs: (type, credentials, region) =>
+    dispatch(getGCPCloudProviderVPCs(type, credentials, region)),
+  getAWSCloudProviderRegions: (credentials) => dispatch(getAWSCloudProviderRegions(credentials)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateOSDWizard));

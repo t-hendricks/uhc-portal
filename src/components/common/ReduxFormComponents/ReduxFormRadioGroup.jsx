@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormGroup,
-  Radio,
-} from '@patternfly/react-core';
+import { FormGroup, Radio } from '@patternfly/react-core';
 
 // To be used inside redux-form Field component.
 class ReduxFormRadioGroup extends React.Component {
@@ -17,18 +14,12 @@ class ReduxFormRadioGroup extends React.Component {
   };
 
   render() {
-    const {
-      name,
-      items,
-      onChange,
-      isDisabled = false,
-      ...formGroupProps
-    } = this.props;
+    const { name, items, onChange, isDisabled = false, ...formGroupProps } = this.props;
     const { value } = this.state;
 
     return (
       <FormGroup {...formGroupProps}>
-        {items.map(item => (
+        {items.map((item) => (
           <Radio
             isChecked={value === null ? item.isChecked === true : value === item.value}
             onChange={this.handleChange}
@@ -46,20 +37,14 @@ class ReduxFormRadioGroup extends React.Component {
 }
 
 ReduxFormRadioGroup.propTypes = {
-  name: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.node,
-    PropTypes.element,
-  ]).isRequired,
-  items: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.node,
-      PropTypes.element,
-    ]).isRequired,
-    value: PropTypes.string.isRequired,
-    isChecked: PropTypes.bool,
-  })).isRequired,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]).isRequired,
+      value: PropTypes.string.isRequired,
+      isChecked: PropTypes.bool,
+    }),
+  ).isRequired,
   isDisabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
 };

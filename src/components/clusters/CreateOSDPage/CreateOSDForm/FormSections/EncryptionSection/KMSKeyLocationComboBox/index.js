@@ -17,9 +17,9 @@ const mapStateToProps = (state, ownProps) => {
     kmsRegionsArray = kmsRegions.split(',');
   }
   kmsRegionsArray.push(ownProps.selectedRegion);
-  return ({
+  return {
     kmsRegionsArray,
-  });
+  };
 };
 
 export default connect(mapStateToProps, null)(KMSKeyLocationComboBox);

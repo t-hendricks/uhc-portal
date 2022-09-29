@@ -55,6 +55,4 @@ function humanizeValueWithUnitGiB(bytes) {
   return roundValueWithUnit(bytes / GiB, 'GiB');
 }
 
-export {
-  parseValueWithUnit, humanizeValueWithUnit, roundValueWithUnit, humanizeValueWithUnitGiB,
-};
+export { parseValueWithUnit, humanizeValueWithUnit, roundValueWithUnit, humanizeValueWithUnitGiB };

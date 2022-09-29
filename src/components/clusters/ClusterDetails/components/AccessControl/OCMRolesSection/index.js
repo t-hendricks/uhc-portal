@@ -9,15 +9,11 @@ import { openModal, closeModal } from '../../../../../common/Modal/ModalActions'
 import modals from '../../../../../common/Modal/modals';
 
 const mapStateToProps = (state) => {
-  const {
-    getOCMRolesResponse,
-    grantOCMRoleResponse,
-    editOCMRoleResponse,
-    deleteOCMRoleResponse,
-  } = state.ocmRoles;
+  const { getOCMRolesResponse, grantOCMRoleResponse, editOCMRoleResponse, deleteOCMRoleResponse } =
+    state.ocmRoles;
   const canGrantClusterViewer = canGrantClusterViewerSelector(state);
 
-  return ({
+  return {
     canGrantClusterViewer,
     getOCMRolesResponse,
     grantOCMRoleResponse,
@@ -25,36 +21,23 @@ const mapStateToProps = (state) => {
     deleteOCMRoleResponse,
     isOCMRolesDialogOpen: shouldShowModal(state, modals.OCM_ROLES),
     modalData: get(state, 'modal.data', {}),
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   openModal: (modalId, data) => dispatch(openModal(modalId, data)),
   closeModal: () => dispatch(closeModal()),
-  getOCMRoles: subID => dispatch(
-    OCMRolesActions.getOCMRoles(subID),
-  ),
-  grantOCMRole: (subID, username, roleID) => dispatch(
-    OCMRolesActions.grantOCMRole(subID, username, roleID),
-  ),
-  editOCMRole: (subID, roleBindingID, newRoleID) => dispatch(
-    OCMRolesActions.editOCMRole(subID, roleBindingID, newRoleID),
-  ),
-  deleteOCMRole: (subID, roleBindingID) => dispatch(
-    OCMRolesActions.deleteOCMRole(subID, roleBindingID),
-  ),
-  clearGetOCMRolesResponse: () => dispatch(
-    OCMRolesActions.clearGetOCMRolesResponse(),
-  ),
-  clearGrantOCMRoleResponse: () => dispatch(
-    OCMRolesActions.clearGrantOCMRoleResponse(),
-  ),
-  clearEditOCMRoleResponse: () => dispatch(
-    OCMRolesActions.clearEditOCMRoleResponse(),
-  ),
-  clearDeleteOCMRoleResponse: () => dispatch(
-    OCMRolesActions.clearDeleteOCMRoleResponse(),
-  ),
+  getOCMRoles: (subID) => dispatch(OCMRolesActions.getOCMRoles(subID)),
+  grantOCMRole: (subID, username, roleID) =>
+    dispatch(OCMRolesActions.grantOCMRole(subID, username, roleID)),
+  editOCMRole: (subID, roleBindingID, newRoleID) =>
+    dispatch(OCMRolesActions.editOCMRole(subID, roleBindingID, newRoleID)),
+  deleteOCMRole: (subID, roleBindingID) =>
+    dispatch(OCMRolesActions.deleteOCMRole(subID, roleBindingID)),
+  clearGetOCMRolesResponse: () => dispatch(OCMRolesActions.clearGetOCMRolesResponse()),
+  clearGrantOCMRoleResponse: () => dispatch(OCMRolesActions.clearGrantOCMRoleResponse()),
+  clearEditOCMRoleResponse: () => dispatch(OCMRolesActions.clearEditOCMRoleResponse()),
+  clearDeleteOCMRoleResponse: () => dispatch(OCMRolesActions.clearDeleteOCMRoleResponse()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OCMRolesSection);

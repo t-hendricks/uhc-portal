@@ -3,14 +3,8 @@ import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 import pullAt from 'lodash/pullAt';
 import last from 'lodash/last';
-import {
-  Button,
-  GridItem,
-} from '@patternfly/react-core';
-import {
-  PlusCircleIcon,
-  MinusCircleIcon,
-} from '@patternfly/react-icons';
+import { Button, GridItem } from '@patternfly/react-core';
+import { PlusCircleIcon, MinusCircleIcon } from '@patternfly/react-icons';
 import ReduxVerticalFormGroup from './ReduxVerticalFormGroup';
 import { getRandomID } from '../../../common/helpers';
 import './ReduxFieldArray.scss';
@@ -20,7 +14,10 @@ class RenderFields extends React.Component {
   state = { areFieldsFilled: [], touched: false };
 
   componentDidMount() {
-    const { fields, meta: { submitFailed } } = this.props;
+    const {
+      fields,
+      meta: { submitFailed },
+    } = this.props;
     if (submitFailed) {
       this.setState({ touched: true });
     }
@@ -28,12 +25,14 @@ class RenderFields extends React.Component {
       this.addNewField();
     } else {
       // fields on mount = default values, populate internal state to account for them
-      this.setState({ areFieldsFilled: fields.map(field => !!field) });
+      this.setState({ areFieldsFilled: fields.map((field) => !!field) });
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { meta: { submitFailed } } = this.props;
+    const {
+      meta: { submitFailed },
+    } = this.props;
     const prevSubmitFailed = prevProps.meta.submitFailed;
     // Make sure that the field array is set as touched when form is submitted and it's invalid
     if (submitFailed && !prevSubmitFailed) {
@@ -66,7 +65,7 @@ class RenderFields extends React.Component {
       pullAt(newFilledStatus, index);
       return { areFieldsFilled: newFilledStatus };
     });
-  }
+  };
 
   addNewField = () => {
     const { fields } = this.props;
@@ -76,7 +75,7 @@ class RenderFields extends React.Component {
       newFilledStatus.push(false);
       return { areFieldsFilled: newFilledStatus };
     });
-  }
+  };
 
   render() {
     const {
@@ -98,17 +97,13 @@ class RenderFields extends React.Component {
           <GridItem className="field-array-title" span={fieldSpan}>
             <p className="pf-c-form__label-text" id="field-array-label">
               {label}
-              {
-                isRequired
-                  ? <span className="pf-c-form__label-required">*</span>
-                  : null
-              }
+              {isRequired ? <span className="pf-c-form__label-required">*</span> : null}
             </p>
-            {
-              helpText
-                ? <p className="pf-c-form__helper-text" id="field-array-help-text">{helpText}</p>
-                : null
-            }
+            {helpText ? (
+              <p className="pf-c-form__helper-text" id="field-array-help-text">
+                {helpText}
+              </p>
+            ) : null}
           </GridItem>
         );
       }
@@ -164,7 +159,9 @@ class RenderFields extends React.Component {
       const { isGroupError } = this.props;
       if (errorMessage && index === 0 && (touched || isGroupError)) {
         return (
-          <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">{errorMessage}</GridItem>
+          <GridItem className="field-grid-item pf-c-form__helper-text pf-m-error">
+            {errorMessage}
+          </GridItem>
         );
       }
       return null;
@@ -187,17 +184,15 @@ class RenderFields extends React.Component {
 
     return (
       <>
-        {
-          fields.map((item, index) => (
-            <React.Fragment key={`${fields.get(index).id}`}>
-              {labelGridItem(index)}
-              {fieldGridItem(item, index)}
-              {minusButtonGridItem(index)}
-              {fieldArrayErrorGridItem(index, error)}
-              {addMoreButtonGridItem(index)}
-            </React.Fragment>
-          ))
-        }
+        {fields.map((item, index) => (
+          <React.Fragment key={`${fields.get(index).id}`}>
+            {labelGridItem(index)}
+            {fieldGridItem(item, index)}
+            {minusButtonGridItem(index)}
+            {fieldArrayErrorGridItem(index, error)}
+            {addMoreButtonGridItem(index)}
+          </React.Fragment>
+        ))}
       </>
     );
   }

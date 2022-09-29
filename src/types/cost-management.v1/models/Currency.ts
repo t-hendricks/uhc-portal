@@ -5,7 +5,6 @@
 import type { Currencies } from './Currencies';
 import type { ListPagination } from './ListPagination';
 
-export type Currency = (ListPagination & {
-    data: Array<Currencies>;
-});
-
+export type Currency = ListPagination & {
+  data: Array<Currencies>;
+};

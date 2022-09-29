@@ -7,7 +7,7 @@ const mapDispatchToProps = {
   getSources,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   report: state.cost.report,
   sources: state.cost.sources,
 });

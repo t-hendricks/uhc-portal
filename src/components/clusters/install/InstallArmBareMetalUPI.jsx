@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  PageSection,
-} from '@patternfly/react-core';
+import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { tollboothActions } from '../../../redux/actions';
@@ -15,7 +13,8 @@ import PageTitle from '../../common/PageTitle';
 export class InstallArmBareMetalUPI extends Component {
   componentDidMount() {
     scrollToTop();
-    document.title = 'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | ARM Bare Metal User-Provisioned Infrastructure';
+    document.title =
+      'Install OpenShift 4 | Red Hat OpenShift Cluster Manager | ARM Bare Metal User-Provisioned Infrastructure';
 
     const { dispatch } = this.props;
     dispatch(tollboothActions.createAuthToken());
@@ -24,12 +23,13 @@ export class InstallArmBareMetalUPI extends Component {
   render() {
     const { token } = this.props;
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'ARM Bare Metal', path: '/install/arm' },
-        { label: 'User-provisioned infrastructure' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'ARM Bare Metal', path: '/install/arm' },
+          { label: 'User-provisioned infrastructure' },
+        ]}
       />
     );
 
@@ -55,6 +55,6 @@ InstallArmBareMetalUPI.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({ token: state.tollbooth.token });
+const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
 export default connect(mapStateToProps)(InstallArmBareMetalUPI);

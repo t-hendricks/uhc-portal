@@ -36,14 +36,14 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
           >
             Initiate transfer
           </Button>,
-          undefined,
+          null,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          undefined,
+          null,
           false,
         ]
       }
@@ -164,9 +164,9 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                             >
                                (new window or tab)
                             </span>
-                             
                             <svg
                               aria-hidden="true"
+                              class="pf-u-ml-sm"
                               fill="#0066cc"
                               height="1em"
                               role="img"
@@ -244,14 +244,14 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
               >
                 Initiate transfer
               </Button>,
-              undefined,
+              null,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              undefined,
+              null,
               false,
             ]
           }
@@ -284,6 +284,9 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                 focusTrapOptions={
                   Object {
                     "clickOutsideDeactivates": true,
+                    "tabbableOptions": Object {
+                      "displayCheck": "none",
+                    },
                   }
                 }
                 paused={false}
@@ -467,8 +470,8 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                                           >
                                              (new window or tab)
                                           </span>
-                                           
                                           <ExternalLinkAltIcon
+                                            className="pf-u-ml-sm"
                                             color="#0066cc"
                                             noVerticalAlign={false}
                                             size="sm"
@@ -476,6 +479,7 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                                             <svg
                                               aria-hidden={true}
                                               aria-labelledby={null}
+                                              className="pf-u-ml-sm"
                                               fill="#0066cc"
                                               height="1em"
                                               role="img"
@@ -648,14 +652,14 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
           >
             Initiate transfer
           </Button>,
-          undefined,
+          null,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          undefined,
+          null,
           false,
         ]
       }
@@ -776,9 +780,9 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                             >
                                (new window or tab)
                             </span>
-                             
                             <svg
                               aria-hidden="true"
+                              class="pf-u-ml-sm"
                               fill="#0066cc"
                               height="1em"
                               role="img"
@@ -856,14 +860,14 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
               >
                 Initiate transfer
               </Button>,
-              undefined,
+              null,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              undefined,
+              null,
               false,
             ]
           }
@@ -896,6 +900,9 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                 focusTrapOptions={
                   Object {
                     "clickOutsideDeactivates": true,
+                    "tabbableOptions": Object {
+                      "displayCheck": "none",
+                    },
                   }
                 }
                 paused={false}
@@ -1079,8 +1086,8 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                                           >
                                              (new window or tab)
                                           </span>
-                                           
                                           <ExternalLinkAltIcon
+                                            className="pf-u-ml-sm"
                                             color="#0066cc"
                                             noVerticalAlign={false}
                                             size="sm"
@@ -1088,6 +1095,7 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                                             <svg
                                               aria-hidden={true}
                                               aria-labelledby={null}
+                                              className="pf-u-ml-sm"
                                               fill="#0066cc"
                                               height="1em"
                                               role="img"
@@ -1260,14 +1268,14 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
           >
             Initiate transfer
           </Button>,
-          undefined,
+          null,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          undefined,
+          null,
           false,
         ]
       }
@@ -1388,9 +1396,9 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                             >
                                (new window or tab)
                             </span>
-                             
                             <svg
                               aria-hidden="true"
+                              class="pf-u-ml-sm"
                               fill="#0066cc"
                               height="1em"
                               role="img"
@@ -1459,14 +1467,14 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
               >
                 Initiate transfer
               </Button>,
-              undefined,
+              null,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              undefined,
+              null,
               false,
             ]
           }
@@ -1499,6 +1507,9 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                 focusTrapOptions={
                   Object {
                     "clickOutsideDeactivates": true,
+                    "tabbableOptions": Object {
+                      "displayCheck": "none",
+                    },
                   }
                 }
                 paused={false}
@@ -1682,8 +1693,8 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                                           >
                                              (new window or tab)
                                           </span>
-                                           
                                           <ExternalLinkAltIcon
+                                            className="pf-u-ml-sm"
                                             color="#0066cc"
                                             noVerticalAlign={false}
                                             size="sm"
@@ -1691,6 +1702,7 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                                             <svg
                                               aria-hidden={true}
                                               aria-labelledby={null}
+                                              className="pf-u-ml-sm"
                                               fill="#0066cc"
                                               height="1em"
                                               role="img"
@@ -1848,14 +1860,14 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
           >
             Initiate transfer
           </Button>,
-          undefined,
+          null,
           <Button
             onClick={[Function]}
             variant="secondary"
           >
             Cancel
           </Button>,
-          undefined,
+          null,
           false,
         ]
       }
@@ -2022,9 +2034,9 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                             >
                                (new window or tab)
                             </span>
-                             
                             <svg
                               aria-hidden="true"
+                              class="pf-u-ml-sm"
                               fill="#0066cc"
                               height="1em"
                               role="img"
@@ -2102,14 +2114,14 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
               >
                 Initiate transfer
               </Button>,
-              undefined,
+              null,
               <Button
                 onClick={[Function]}
                 variant="secondary"
               >
                 Cancel
               </Button>,
-              undefined,
+              null,
               false,
             ]
           }
@@ -2142,6 +2154,9 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                 focusTrapOptions={
                   Object {
                     "clickOutsideDeactivates": true,
+                    "tabbableOptions": Object {
+                      "displayCheck": "none",
+                    },
                   }
                 }
                 paused={false}
@@ -2405,8 +2420,8 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                                           >
                                              (new window or tab)
                                           </span>
-                                           
                                           <ExternalLinkAltIcon
+                                            className="pf-u-ml-sm"
                                             color="#0066cc"
                                             noVerticalAlign={false}
                                             size="sm"
@@ -2414,6 +2429,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                                             <svg
                                               aria-hidden={true}
                                               aria-labelledby={null}
+                                              className="pf-u-ml-sm"
                                               fill="#0066cc"
                                               height="1em"
                                               role="img"

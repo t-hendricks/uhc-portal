@@ -1,10 +1,12 @@
 import { checkLabels } from '../../../../../common/validators';
 
-const actionResolver = (rowData,
+const actionResolver = (
+  rowData,
   onClickDelete,
   onClickScale,
   onClickEditTaints,
-  onClickEditLaebls) => {
+  onClickEditLaebls,
+) => {
   // hide actions kebab for expandable rows
   if (!rowData.machinePool) {
     return [];
@@ -28,11 +30,7 @@ const actionResolver = (rowData,
     className: 'hand-pointer',
   };
 
-  const additionalMachinePoolActions = [
-    editLabelsAction,
-    editTaintsAction,
-    deleteAction,
-  ];
+  const additionalMachinePoolActions = [editLabelsAction, editTaintsAction, deleteAction];
 
   return [
     {
@@ -59,7 +57,8 @@ const findDuplicateKey = (labels) => {
   return duplicateKey;
 };
 
-const parseLabels = labelsObj => (labelsObj ? Object.keys(labelsObj).map(labelKey => `${labelKey}=${labelsObj[labelKey]}`) : []);
+const parseLabels = (labelsObj) =>
+  labelsObj ? Object.keys(labelsObj).map((labelKey) => `${labelKey}=${labelsObj[labelKey]}`) : [];
 
 const parseTags = (tags) => {
   const labels = {};
@@ -82,9 +81,4 @@ const validateDuplicateLabels = (labels) => {
   return undefined;
 };
 
-export {
-  parseTags,
-  parseLabels,
-  actionResolver,
-  validateDuplicateLabels,
-};
+export { parseTags, parseLabels, actionResolver, validateDuplicateLabels };

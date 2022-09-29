@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  List,
-  ListItem,
-  Title,
-  TextContent,
-} from '@patternfly/react-core';
+import { List, ListItem, Title, TextContent } from '@patternfly/react-core';
 
 import links from '../../../../../../common/installLinks.mjs';
 import ExternalLink from '../../../../../common/ExternalLink';
@@ -17,65 +12,65 @@ const contentByCloudProvider = (cloudProviderID) => {
     return (
       <>
         <TextContent>
-          With this subscription option, the cluster will be provisioned in an AWS account
-          owned by you or your company. This allows you to pay AWS directly for public cloud costs,
+          With this subscription option, the cluster will be provisioned in an AWS account owned by
+          you or your company. This allows you to pay AWS directly for public cloud costs,
           leveraging your existing relationship.
         </TextContent>
-        <Title headingLevel="h3" size="lg" className="pf-u-mt-sm">Important</Title>
+        <Title headingLevel="h3" size="lg" className="pf-u-mt-sm">
+          Important
+        </Title>
         <TextContent>
           In order for the cluster provisioning to succeed, you must ensure the following:
         </TextContent>
         <TextContent>
           <List>
             <ListItem>
-              Your AWS account has the necessary limits to support the desired
-              cluster size.
-              {' '}
+              Your AWS account has the necessary limits to support the desired cluster size.{' '}
               <ExternalLink noIcon href={links.OSD_CCS_AWS_LIMITS}>
                 See resource requirements.
-              </ExternalLink>
-              {' '}
+              </ExternalLink>{' '}
             </ListItem>
             <ListItem>
               An IAM user called “osdCcsAdmin” exists with the AdministratorAccess policy.
             </ListItem>
             <ListItem>
-              An Organization service control policy (SCP) is set up according to the
-              {' '}
-              <ExternalLink noIcon href={links.OSD_CCS_AWS_SCP}>documentation</ExternalLink>
+              An Organization service control policy (SCP) is set up according to the{' '}
+              <ExternalLink noIcon href={links.OSD_CCS_AWS_SCP}>
+                documentation
+              </ExternalLink>
               .
             </ListItem>
           </List>
         </TextContent>
         <TextContent>
-          It is also recommended that you have at least Business Support from AWS. Refer to the
-          {' '}
-          <ExternalLink noIcon href={links.OSD_CCS_AWS}>documentation</ExternalLink>
-          {' '}
-          for more detail around the requirements for Customer Cloud
-          Subscription.
+          It is also recommended that you have at least Business Support from AWS. Refer to the{' '}
+          <ExternalLink noIcon href={links.OSD_CCS_AWS}>
+            documentation
+          </ExternalLink>{' '}
+          for more detail around the requirements for Customer Cloud Subscription.
         </TextContent>
       </>
     );
-  } return (
+  }
+  return (
     <>
       <TextContent>
         With this subscription option, the cluster will be provisioned in a Google Cloud account
-        owned by you or your company. This allows you to pay Google Cloud directly for public
-        cloud costs, leveraging your existing relationship.
+        owned by you or your company. This allows you to pay Google Cloud directly for public cloud
+        costs, leveraging your existing relationship.
       </TextContent>
-      <Title headingLevel="h3" size="lg" className="pf-u-mt-sm">Important</Title>
+      <Title headingLevel="h3" size="lg" className="pf-u-mt-sm">
+        Important
+      </Title>
       <TextContent>
         In order for the cluster provisioning to succeed, you must ensure the following:
       </TextContent>
       <TextContent>
         <List>
           <ListItem>
-            Your Google Cloud account has the necessary resource quotas and limits to support
-            the desired cluster size.
-            {' '}
-            <ExternalLink href={links.OSD_CCS_GCP_LIMITS}>See resource requirements.</ExternalLink>
-            {' '}
+            Your Google Cloud account has the necessary resource quotas and limits to support the
+            desired cluster size.{' '}
+            <ExternalLink href={links.OSD_CCS_GCP_LIMITS}>See resource requirements.</ExternalLink>{' '}
           </ListItem>
           <ListItem>
             An IAM service account called “osd-ccs-admin” exists with the following roles attached:
@@ -92,15 +87,13 @@ const contentByCloudProvider = (cloudProviderID) => {
         </List>
       </TextContent>
       <TextContent>
-        It is also recommended that you have at least Production support from GCP.
-        To prevent potential conflicts, we also recommend that you have no other resources
-        provisioned in the project prior to provisioning OpenShift Dedicated.
-        Refer to
-        {' '}
-        <ExternalLink noIcon href={links.OSD_CCS_GCP}>the documentation</ExternalLink>
-        {' '}
-        for more detail around the requirements for
-        Customer Cloud Subscription.
+        It is also recommended that you have at least Production support from GCP. To prevent
+        potential conflicts, we also recommend that you have no other resources provisioned in the
+        project prior to provisioning OpenShift Dedicated. Refer to{' '}
+        <ExternalLink noIcon href={links.OSD_CCS_GCP}>
+          the documentation
+        </ExternalLink>{' '}
+        for more detail around the requirements for Customer Cloud Subscription.
       </TextContent>
     </>
   );

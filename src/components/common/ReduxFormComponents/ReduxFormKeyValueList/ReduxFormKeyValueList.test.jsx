@@ -14,14 +14,16 @@ export default class MockFields extends Array {
 
 describe('<ReduxFormKeyValueList />', () => {
   const emptyListFields = new MockFields({});
-  const listWithItemsFields = new MockFields({ key: 'aa', value: 'bb' }, { key: 'cc', value: 'dd' });
+  const listWithItemsFields = new MockFields(
+    { key: 'aa', value: 'bb' },
+    { key: 'cc', value: 'dd' },
+  );
 
   let wrapper;
   beforeEach(() => {
-    wrapper = shallow(<ReduxFormKeyValueList
-      fields={emptyListFields}
-      meta={{ error: '', submitFailed: false }}
-    />);
+    wrapper = shallow(
+      <ReduxFormKeyValueList fields={emptyListFields} meta={{ error: '', submitFailed: false }} />,
+    );
   });
 
   it('should render when there is no input - initial reder', () => {

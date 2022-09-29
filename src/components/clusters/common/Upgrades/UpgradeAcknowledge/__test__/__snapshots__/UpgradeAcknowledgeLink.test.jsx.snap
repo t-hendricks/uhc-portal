@@ -15,7 +15,6 @@ exports[`<UpgradeAcknowledgeLink> should show link if has unmet acknowledgements
   >
     Warning
   </span>
-   
-  Approval required
+   Approval required
 </Link>
 `;

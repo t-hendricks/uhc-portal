@@ -10,6 +10,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
         <DropdownItem>
           <Checkbox
             className="pf-c-dropdown__menu-item"
+            component="div"
             id="OCP"
             isChecked={false}
             isDisabled={false}
@@ -22,6 +23,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
         <DropdownItem>
           <Checkbox
             className="pf-c-dropdown__menu-item"
+            component="div"
             id="OSD"
             isChecked={false}
             isDisabled={false}
@@ -34,6 +36,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
         <DropdownItem>
           <Checkbox
             className="pf-c-dropdown__menu-item"
+            component="div"
             id="ROSA"
             isChecked={false}
             isDisabled={false}
@@ -46,6 +49,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
         <DropdownItem>
           <Checkbox
             className="pf-c-dropdown__menu-item"
+            component="div"
             id="ARO"
             isChecked={false}
             isDisabled={false}
@@ -69,8 +73,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
         noVerticalAlign={false}
         size="sm"
       />
-       
-      Cluster type
+       Cluster type
     </DropdownToggle>
   }
 />

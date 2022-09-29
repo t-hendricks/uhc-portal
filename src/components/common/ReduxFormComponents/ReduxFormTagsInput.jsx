@@ -15,15 +15,16 @@ class ReduxFormTagsInput extends Component {
 
   render() {
     const {
-      input, meta: { error, dirty }, tags, inputPlaceholder = 'Add a tag',
+      input,
+      meta: { error, dirty },
+      tags,
+      inputPlaceholder = 'Add a tag',
     } = this.props;
 
-    const renderTag = ({
-      tag, key, onRemove, getTagDisplayValue,
-    }) => (
+    const renderTag = ({ tag, key, onRemove, getTagDisplayValue }) => (
       <span className="pf-c-label pf-m-blue" key={key}>
         <span className="pf-c-label__content">{getTagDisplayValue(tag)}</span>
-         &nbsp;
+        &nbsp;
         <Button variant="plain" aria-label="remove-label" onClick={() => onRemove(key)}>
           <TimesIcon />
         </Button>

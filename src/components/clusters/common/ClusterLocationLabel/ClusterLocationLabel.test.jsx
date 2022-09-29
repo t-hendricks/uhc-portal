@@ -13,7 +13,10 @@ describe('<ClusterLocationLabel />', () => {
         cloudProviderID="aws"
         regionID="us-east-1"
         cloudProviders={{
-          pending: false, fulfilled: false, error: false, providers: {},
+          pending: false,
+          fulfilled: false,
+          error: false,
+          providers: {},
         }}
       />,
     );
@@ -22,7 +25,7 @@ describe('<ClusterLocationLabel />', () => {
     expect(getCloudProviders).toBeCalled();
   });
 
-  it('renders correctly when there\'s no provider data available', () => {
+  it("renders correctly when there's no provider data available", () => {
     expect(wrapper.text()).toEqual('AWS (us-east-1)');
     expect(wrapper).toMatchSnapshot();
   });

@@ -2,9 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Select, SelectOption, FormGroup,
-} from '@patternfly/react-core';
+import { Select, SelectOption, FormGroup } from '@patternfly/react-core';
 
 const PLACEHOLDER_VALUE = 'Select availability zone';
 
@@ -13,18 +11,22 @@ class AvailabilityZoneSelection extends React.Component {
 
   onToggle = (isOpen) => {
     this.setState({ isOpen });
-  }
+  };
 
   onSelect = (_, selection) => {
     const { input } = this.props;
     this.setState({ isOpen: false });
     input.onChange(selection);
-  }
+  };
 
   render() {
     const { isOpen } = this.state;
     const {
-      input, isDisabled, region, label, meta: { error, touched },
+      input,
+      isDisabled,
+      region,
+      label,
+      meta: { error, touched },
     } = this.props;
     return (
       <FormGroup
@@ -48,7 +50,12 @@ class AvailabilityZoneSelection extends React.Component {
             // followed by a single letter. For more information please see:
             // https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones
             const avalabilityZone = region + letter;
-            return <SelectOption key={letter} value={avalabilityZone}>{`${avalabilityZone}`}</SelectOption>;
+            return (
+              <SelectOption
+                key={letter}
+                value={avalabilityZone}
+              >{`${avalabilityZone}`}</SelectOption>
+            );
           })}
         </Select>
       </FormGroup>
@@ -69,8 +76,6 @@ AvailabilityZoneSelection.propTypes = {
   }),
 };
 
-export {
-  PLACEHOLDER_VALUE,
-};
+export { PLACEHOLDER_VALUE };
 
 export default AvailabilityZoneSelection;

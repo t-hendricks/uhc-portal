@@ -10,8 +10,7 @@ exports[`<GetStarted /> GetStarted for UPI should render 1`] = `
         <Text
           component="p"
         >
-          The installer will take about 45 minutes to run.
-           
+          The installer will take about 45 minutes to run. 
         </Text>
       </TextContent>
     </StackItem>
@@ -44,8 +43,7 @@ exports[`<GetStarted /> GetStarted w/ customizations should render 1`] = `
         <Text
           component="p"
         >
-          The installer will take about 45 minutes to run.
-           
+          The installer will take about 45 minutes to run. 
         </Text>
       </TextContent>
     </StackItem>
@@ -122,8 +120,7 @@ exports[`<GetStarted /> GetStarted w/o customizations should render 1`] = `
         <Text
           component="p"
         >
-          The installer will take about 45 minutes to run.
-           
+          The installer will take about 45 minutes to run. 
         </Text>
       </TextContent>
     </StackItem>

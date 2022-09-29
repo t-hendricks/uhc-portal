@@ -8,7 +8,7 @@ const mapDispatchToProps = {
   getUserAccess,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   report: state.cost.report,
   sources: state.cost.sources,
   userAccess: state.cost.userAccess,

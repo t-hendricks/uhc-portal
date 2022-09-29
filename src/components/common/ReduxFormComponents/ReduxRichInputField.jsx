@@ -18,7 +18,9 @@ const ValidationItem = ({ itemText, isValid, touched }) => {
   let variant;
   let iconAlt = '';
 
-  if (!itemText) { return null; }
+  if (!itemText) {
+    return null;
+  }
 
   if (touched) {
     variant = isValid ? 'success' : 'error';
@@ -39,12 +41,26 @@ const ValidationIconButton = ({ isValid, touched, onClick }) => {
   let className = 'redux-rich-input-field-button_info';
 
   if (touched) {
-    icon = isValid ? (<CheckCircleIcon className="redux-rich-input-field-icon_success" />) : (<ExclamationCircleIcon className="redux-rich-input-field-icon_danger" />);
+    icon = isValid ? (
+      <CheckCircleIcon className="redux-rich-input-field-icon_success" />
+    ) : (
+      <ExclamationCircleIcon className="redux-rich-input-field-icon_danger" />
+    );
     label = isValid ? 'All validation rules met' : 'Not all validation rules met';
-    className = isValid ? 'redux-rich-input-field-button_valid' : 'redux-rich-input-field-button_not-valid';
+    className = isValid
+      ? 'redux-rich-input-field-button_valid'
+      : 'redux-rich-input-field-button_not-valid';
   }
   return (
-    <Button variant="control" aria-label={label} onClick={onClick} tabindex="-1" className={`${className} redux-rich-input-field-button`}>{icon}</Button>
+    <Button
+      variant="control"
+      aria-label={label}
+      onClick={onClick}
+      tabindex="-1"
+      className={`${className} redux-rich-input-field-button`}
+    >
+      {icon}
+    </Button>
   );
 };
 
@@ -81,7 +97,7 @@ const ReduxRichInputField = (props) => {
     }
   }, []);
 
-  const isValid = !touched || !validation(inputValue).some(item => !item.validated);
+  const isValid = !touched || !validation(inputValue).some((item) => !item.validated);
 
   const textInputRef = React.createRef();
 
@@ -96,11 +112,10 @@ const ReduxRichInputField = (props) => {
       validated={isValid ? 'default' : 'error'}
       label={label}
       isRequired={isRequired}
-      labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
+      labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
       className={`${formGroupClass || ''}`}
       helperText={helpText}
       helperTextInvalid={helpText}
-
     >
       <Popover
         aria-label={helpTitle}
@@ -108,20 +123,23 @@ const ReduxRichInputField = (props) => {
         isVisible={showPopover}
         position="top-end"
         shouldClose={() => {
-          if (isFocused) { setIsFocused(false); } else { setShowPopover(false); }
+          if (isFocused) {
+            setIsFocused(false);
+          } else {
+            setShowPopover(false);
+          }
         }}
-        bodyContent={(
+        bodyContent={
           <>
             <HelperText component="ul" id={`redux-rich-input-popover-${inputName}`}>
-              {validation(inputValue).map(item => (
+              {validation(inputValue).map((item) => (
                 <ValidationItem itemText={item.text} isValid={item.validated} touched={touched} />
               ))}
             </HelperText>
           </>
-      )}
+        }
         footerContent={helpExample}
       >
-
         <InputGroup>
           <TextInput
             value={inputValue}
@@ -133,9 +151,19 @@ const ReduxRichInputField = (props) => {
             type={type}
             autocomplete="off"
             aria-invalid={!isValid}
-            onBlur={() => { setIsFocused(false); setShowPopover(false); setTouched(true); }}
-            onClick={() => { setIsFocused(true); setShowPopover(true); }}
-            onFocus={() => { setIsFocused(true); setShowPopover(true); }}
+            onBlur={() => {
+              setIsFocused(false);
+              setShowPopover(false);
+              setTouched(true);
+            }}
+            onClick={() => {
+              setIsFocused(true);
+              setShowPopover(true);
+            }}
+            onFocus={() => {
+              setIsFocused(true);
+              setShowPopover(true);
+            }}
             onChange={(val) => {
               inputOnChange(val);
               if (!touched && val.length > 0) {
@@ -155,7 +183,6 @@ const ReduxRichInputField = (props) => {
               textInputRef.current.focus();
             }}
           />
-
         </InputGroup>
       </Popover>
     </FormGroup>
@@ -176,7 +203,7 @@ ValidationItem.propTypes = {
 
 ReduxRichInputField.defaultProps = {
   type: 'text',
-  validation: () => ([]),
+  validation: () => [],
   helpText: '',
   helpTitle: '',
   helpExample: '',

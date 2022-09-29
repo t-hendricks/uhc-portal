@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type SubscriptionMetric = {
-    _id?: string;
+  _id?: string;
 };
-

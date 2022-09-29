@@ -7,9 +7,7 @@ describe('withAnalytics', () => {
   let wrapper;
 
   beforeEach(() => {
-    const AnalyticsContext = withAnalytics(() => (
-      <div>test</div>
-    ));
+    const AnalyticsContext = withAnalytics(() => <div>test</div>);
     wrapper = shallow(<AnalyticsContext />);
   });
 

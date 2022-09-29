@@ -16,35 +16,31 @@ class ClusterDetailsRedirector extends React.Component {
   }
 
   render() {
-    const {
-      subscriptionIDResponse,
-      setGlobalError,
-      match,
-      location,
-    } = this.props;
+    const { subscriptionIDResponse, setGlobalError, match, location } = this.props;
 
     if (subscriptionIDResponse.error) {
       if (subscriptionIDResponse.errorCode === 404 || subscriptionIDResponse.errorCode === 403) {
         // Cluster not found / no permission to see it - redirect to cluster list with error on top
-        setGlobalError((
+        setGlobalError(
           <>
-            Cluster with ID
-            {' '}
-            <b>{match.params.id}</b>
-            {' '}
-            was not found, it might have been deleted or you don&apos;t have permission to see it.
-          </>
-        ), 'clusterDetails', subscriptionIDResponse.errorMessage);
-        return (<Redirect to="/" />);
+            Cluster with ID <b>{match.params.id}</b> was not found, it might have been deleted or
+            you don&apos;t have permission to see it.
+          </>,
+          'clusterDetails',
+          subscriptionIDResponse.errorMessage,
+        );
+        return <Redirect to="/" />;
       }
       // other errors = Unavailable
-      return (<Unavailable message="Error retrieving cluster details" response={subscriptionIDResponse} />);
+      return (
+        <Unavailable message="Error retrieving cluster details" response={subscriptionIDResponse} />
+      );
     }
     if (subscriptionIDResponse.fulfilled) {
       return <Redirect to={`/details/s/${subscriptionIDResponse.id}${location.hash}`} />;
     }
 
-    return (<Spinner centered />);
+    return <Spinner centered />;
   }
 }
 

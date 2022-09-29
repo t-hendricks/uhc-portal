@@ -18,7 +18,7 @@ const lastCheckInSelector = (state) => {
   return new Date(timestamp);
 };
 
-const invalidDate = date => date.getUTCFullYear() <= 1;
+const invalidDate = (date) => date.getUTCFullYear() <= 1;
 
 const clusterHealthSelector = (state, lastCheckIn, discoveredIssues) => {
   const cluster = get(state, 'clusters.details.cluster', null);
@@ -92,10 +92,10 @@ const issuesAndWarningsSelector = (state) => {
       operators: operatorsIssuesAndWarnings.issuesCount,
       resourceUsage: resourceUsageIssuesAndWarnings.issuesCount,
       totalCount:
-        alertsIssuesAndWarnings.issuesCount
-        + nodesIssues.issuesCount
-        + operatorsIssuesAndWarnings.issuesCount
-        + resourceUsageIssuesAndWarnings.issuesCount,
+        alertsIssuesAndWarnings.issuesCount +
+        nodesIssues.issuesCount +
+        operatorsIssuesAndWarnings.issuesCount +
+        resourceUsageIssuesAndWarnings.issuesCount,
     },
     warnings: {
       alerts: alertsIssuesAndWarnings.warningsCount,
@@ -105,8 +105,4 @@ const issuesAndWarningsSelector = (state) => {
   };
 };
 
-export {
-  lastCheckInSelector,
-  clusterHealthSelector,
-  issuesAndWarningsSelector,
-};
+export { lastCheckInSelector, clusterHealthSelector, issuesAndWarningsSelector };

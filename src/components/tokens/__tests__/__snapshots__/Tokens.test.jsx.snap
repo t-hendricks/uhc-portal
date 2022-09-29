@@ -66,13 +66,11 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                 component="ol"
               >
                 <ListItem>
-                  Download and install the
-                   
+                  Download and install the 
                   <code>
                     ocm
                   </code>
-                   
-                  command-line tool:
+                   command-line tool:
                    
                   <DevPreviewBadge />
                   <Text
@@ -104,15 +102,12 @@ exports[`<Tokens /> Renders loading screen 1`] = `
               <Text
                 component="p"
               >
-                Run
-                 
+                Run 
                 <code>
                   ocm
-                   
-                  login --help
+                   login --help
                 </code>
-                 
-                for in-terminal guidance, or
+                 for in-terminal guidance, or
                  
                 <ExternalLink
                   href="https://access.redhat.com/articles/6114701"
@@ -120,14 +115,12 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                 >
                   read more about setting up the ocm CLI
                 </ExternalLink>
-                 
-                for more information about setting up the
+                 for more information about setting up the
                  
                 <code>
                   ocm
                 </code>
-                 
-                CLI.
+                 CLI.
               </Text>
             </TextContent>
           </CardBody>
@@ -168,17 +161,14 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                   page.
                 </ListItem>
                 <ListItem>
-                  Locate the
-                   
+                  Locate the 
                   <b>
                     cloud-services
                   </b>
-                   
-                  application.
+                   application.
                 </ListItem>
                 <ListItem>
-                  Select
-                   
+                  Select 
                   <b>
                     Revoke grant
                   </b>
@@ -303,17 +293,14 @@ exports[`<Tokens /> Renders screen with button 1`] = `
                   page.
                 </ListItem>
                 <ListItem>
-                  Locate the
-                   
+                  Locate the 
                   <b>
                     cloud-services
                   </b>
-                   
-                  application.
+                   application.
                 </ListItem>
                 <ListItem>
-                  Select
-                   
+                  Select 
                   <b>
                     Revoke grant
                   </b>
@@ -401,13 +388,11 @@ exports[`<Tokens /> Renders token 1`] = `
                 component="ol"
               >
                 <ListItem>
-                  Download and install the
-                   
+                  Download and install the 
                   <code>
                     ocm
                   </code>
-                   
-                  command-line tool:
+                   command-line tool:
                    
                   <DevPreviewBadge />
                   <Text
@@ -439,15 +424,12 @@ exports[`<Tokens /> Renders token 1`] = `
               <Text
                 component="p"
               >
-                Run
-                 
+                Run 
                 <code>
                   ocm
-                   
-                  login --help
+                   login --help
                 </code>
-                 
-                for in-terminal guidance, or
+                 for in-terminal guidance, or
                  
                 <ExternalLink
                   href="https://access.redhat.com/articles/6114701"
@@ -455,14 +437,12 @@ exports[`<Tokens /> Renders token 1`] = `
                 >
                   read more about setting up the ocm CLI
                 </ExternalLink>
-                 
-                for more information about setting up the
+                 for more information about setting up the
                  
                 <code>
                   ocm
                 </code>
-                 
-                CLI.
+                 CLI.
               </Text>
             </TextContent>
           </CardBody>
@@ -503,17 +483,14 @@ exports[`<Tokens /> Renders token 1`] = `
                   page.
                 </ListItem>
                 <ListItem>
-                  Locate the
-                   
+                  Locate the 
                   <b>
                     cloud-services
                   </b>
-                   
-                  application.
+                   application.
                 </ListItem>
                 <ListItem>
-                  Select
-                   
+                  Select 
                   <b>
                     Revoke grant
                   </b>

@@ -23,19 +23,19 @@ function Modal({
   showSecondary = true,
   secondaryText = 'Cancel',
   showTertiary = false,
-  tertiaryText,
+  tertiaryText = null,
   onPrimaryClick = noop,
   onSecondaryClick = noop,
   onTertiaryClick = noop,
   isSmall = true,
-  modalSize,
+  modalSize = 'default',
   isPrimaryDisabled = false,
   isSecondaryDisabled = false,
   isPending = false,
-  children = null,
+  children,
   primaryVariant = 'primary',
-  primaryLink,
-  secondaryLink,
+  primaryLink = null,
+  secondaryLink = null,
   ...extraProps
 }) {
   const header = secondaryTitle ? (
@@ -45,12 +45,8 @@ function Modal({
       </StackItem>
       <StackItem className="modal-secondary-title">
         <Split>
-          <SplitItem>
-            Cluster
-          </SplitItem>
-          <SplitItem>
-            {secondaryTitle}
-          </SplitItem>
+          <SplitItem>Cluster</SplitItem>
+          <SplitItem>{secondaryTitle}</SplitItem>
         </Split>
       </StackItem>
     </Stack>
@@ -67,53 +63,57 @@ function Modal({
       header={header}
       isOpen
       onClose={onClose}
-      actions={isPending ? [] : [
-        showPrimary && !primaryLink && (
-          <Button
-            key="confirm"
-            variant={primaryVariant}
-            onClick={onPrimaryClick}
-            type="submit"
-            isDisabled={isPrimaryDisabled}
-          >
-            {primaryText}
-          </Button>
-        ),
-        showPrimary && primaryLink && (
-          <Button
-            key="confirm"
-            variant={primaryVariant}
-            component="a"
-            target="_blank"
-            href={primaryLink}
-            isDisabled={isPrimaryDisabled}
-          >
-            {primaryText}
-          </Button>
-        ),
-        showSecondary && !secondaryLink && (
-          <Button key="secondary" variant="secondary" onClick={onSecondaryClick}>
-            {secondaryText}
-          </Button>
-        ),
-        showSecondary && secondaryLink && (
-          <Button
-            key="secondary"
-            variant="secondary"
-            component="a"
-            target="_blank"
-            href={secondaryLink}
-            isDisabled={isSecondaryDisabled}
-          >
-            {secondaryText}
-          </Button>
-        ),
-        showTertiary && (
-          <Button key="tertiary" variant="secondary" onClick={onTertiaryClick}>
-            {tertiaryText}
-          </Button>
-        ),
-      ]}
+      actions={
+        isPending
+          ? []
+          : [
+              showPrimary && !primaryLink && (
+                <Button
+                  key="confirm"
+                  variant={primaryVariant}
+                  onClick={onPrimaryClick}
+                  type="submit"
+                  isDisabled={isPrimaryDisabled}
+                >
+                  {primaryText}
+                </Button>
+              ),
+              showPrimary && primaryLink && (
+                <Button
+                  key="confirm"
+                  variant={primaryVariant}
+                  component="a"
+                  target="_blank"
+                  href={primaryLink}
+                  isDisabled={isPrimaryDisabled}
+                >
+                  {primaryText}
+                </Button>
+              ),
+              showSecondary && !secondaryLink && (
+                <Button key="secondary" variant="secondary" onClick={onSecondaryClick}>
+                  {secondaryText}
+                </Button>
+              ),
+              showSecondary && secondaryLink && (
+                <Button
+                  key="secondary"
+                  variant="secondary"
+                  component="a"
+                  target="_blank"
+                  href={secondaryLink}
+                  isDisabled={isSecondaryDisabled}
+                >
+                  {secondaryText}
+                </Button>
+              ),
+              showTertiary && (
+                <Button key="tertiary" variant="secondary" onClick={onTertiaryClick}>
+                  {tertiaryText}
+                </Button>
+              ),
+            ]
+      }
       {...extraProps}
     >
       {isPending ? <Spinner centered /> : children}

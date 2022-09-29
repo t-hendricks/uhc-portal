@@ -6,7 +6,7 @@
  * Machine type size.
  */
 export enum MachineTypeSize {
-    LARGE = 'large',
-    MEDIUM = 'medium',
-    SMALL = 'small',
+  LARGE = 'large',
+  MEDIUM = 'medium',
+  SMALL = 'small',
 }

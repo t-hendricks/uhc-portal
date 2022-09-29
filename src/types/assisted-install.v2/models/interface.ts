@@ -3,17 +3,16 @@
 /* eslint-disable */
 
 export type interface_ = {
-    biosdevname?: string;
-    client_id?: string;
-    flags?: Array<string>;
-    has_carrier?: boolean;
-    ipv4_addresses?: Array<string>;
-    ipv6_addresses?: Array<string>;
-    mac_address?: string;
-    mtu?: number;
-    name?: string;
-    product?: string;
-    speed_mbps?: number;
-    vendor?: string;
+  biosdevname?: string;
+  client_id?: string;
+  flags?: Array<string>;
+  has_carrier?: boolean;
+  ipv4_addresses?: Array<string>;
+  ipv6_addresses?: Array<string>;
+  mac_address?: string;
+  mtu?: number;
+  name?: string;
+  product?: string;
+  speed_mbps?: number;
+  vendor?: string;
 };
-

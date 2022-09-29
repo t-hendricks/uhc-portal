@@ -9,10 +9,20 @@ import {
   DataListItemCells,
   Title,
 } from '@patternfly/react-core';
-import { CheckCircleIcon, ExclamationTriangleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
+import {
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
+  ExclamationCircleIcon,
+} from '@patternfly/react-icons';
 
 function MonitoringListItem({
-  title = '', numOfIssues = null, numOfWarnings = null, toggle, expanded, hasData, children,
+  title = '',
+  numOfIssues = null,
+  numOfWarnings = null,
+  toggle,
+  expanded,
+  hasData,
+  children,
 }) {
   const id = title.replace(/\s+/g, '-').toLowerCase();
 
@@ -33,11 +43,7 @@ function MonitoringListItem({
         <>
           <ExclamationCircleIcon className="status-icon danger" />
           <span>
-            {numOfIssues}
-            {' '}
-            discovered
-            {' '}
-            {numOfIssues === 1 ? 'issue' : 'issues'}
+            {numOfIssues} discovered {numOfIssues === 1 ? 'issue' : 'issues'}
           </span>
         </>
       );
@@ -49,9 +55,7 @@ function MonitoringListItem({
         <>
           <ExclamationTriangleIcon className="status-icon warning" />
           <span>
-            {numOfWarnings}
-            {' '}
-            {numOfWarnings === 1 ? 'warning' : 'warnings' }
+            {numOfWarnings} {numOfWarnings === 1 ? 'warning' : 'warnings'}
           </span>
         </>
       );
@@ -61,11 +65,7 @@ function MonitoringListItem({
     return (
       <>
         <CheckCircleIcon className="status-icon success" />
-        <span>
-          {numOfIssues}
-          {' '}
-          discovered issues
-        </span>
+        <span>{numOfIssues} discovered issues</span>
       </>
     );
   };
@@ -82,7 +82,9 @@ function MonitoringListItem({
         <DataListItemCells
           dataListCells={[
             <DataListCell key={`title-${id}`}>
-              <Title headingLevel="h4" className="item-title">{title}</Title>
+              <Title headingLevel="h4" className="item-title">
+                {title}
+              </Title>
             </DataListCell>,
             <DataListCell key={`summary-${id}`} className="item-summary">
               {getSummary()}

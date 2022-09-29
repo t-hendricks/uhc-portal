@@ -21,14 +21,29 @@ import type { ReportOpenShiftGrouping } from './ReportOpenShiftGrouping';
 import type { ReportOrdering } from './ReportOrdering';
 
 export type ReportPaginationMeta = {
-    count?: number;
-    delta?: ReportDelta;
-    group_by?: (ReportGrouping | ReportAzureGrouping | ReportOpenShiftGrouping | ReportOpenShiftAWSGrouping | ReportOpenShiftAzureGrouping);
-    order_by?: (ReportOrdering | ReportAzureOrdering | ReportCostsOpenShiftOrdering | ReportInventoryOpenShiftOrdering | ReportOpenShiftAWSOrdering | ReportOpenShiftAzureOrdering);
-    filter?: (ReportFilter | ReportAzureFilter | ReportOpenShiftFilter | ReportOpenShiftAWSFilter | ReportOpenShiftAzureFilter);
-    /**
-     * The units for the output data.
-     */
-    units?: string;
+  count?: number;
+  delta?: ReportDelta;
+  group_by?:
+    | ReportGrouping
+    | ReportAzureGrouping
+    | ReportOpenShiftGrouping
+    | ReportOpenShiftAWSGrouping
+    | ReportOpenShiftAzureGrouping;
+  order_by?:
+    | ReportOrdering
+    | ReportAzureOrdering
+    | ReportCostsOpenShiftOrdering
+    | ReportInventoryOpenShiftOrdering
+    | ReportOpenShiftAWSOrdering
+    | ReportOpenShiftAzureOrdering;
+  filter?:
+    | ReportFilter
+    | ReportAzureFilter
+    | ReportOpenShiftFilter
+    | ReportOpenShiftAWSFilter
+    | ReportOpenShiftAzureFilter;
+  /**
+   * The units for the output data.
+   */
+  units?: string;
 };
-

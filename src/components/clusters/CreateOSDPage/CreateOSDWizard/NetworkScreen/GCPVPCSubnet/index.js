@@ -14,20 +14,19 @@ const mapStateToProps = (state) => {
   const region = valueSelector(state, 'region');
   const vpcName = valueSelector(state, 'vpc_name');
   const hasDependencies = !!(credentials && region && vpcName);
-  const matchesDependencies = (
-    vpcs.cloudProvider === 'gcp'
-    && isEqual(vpcs.credentials, credentials)
-    && vpcs.region === region
-    // TODO: && === vpcName missing here?
-  );
-  return ({
+  const matchesDependencies =
+    vpcs.cloudProvider === 'gcp' &&
+    isEqual(vpcs.credentials, credentials) &&
+    vpcs.region === region;
+  // TODO: && === vpcName missing here?
+  return {
     vpcs,
     credentials,
     region,
     vpcName,
     hasDependencies,
     matchesDependencies,
-  });
+  };
 };
 
 const mapDispatchToProps = {

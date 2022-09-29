@@ -8,7 +8,10 @@ const mapStateToProps = (state) => {
   const nodesSectionData = totalNodesDataSelector(cluster, machinePools);
 
   const {
-    hasMachinePoolWithAutoscaling, totalMinNodesCount, totalMaxNodesCount, totalDesiredComputeNodes,
+    hasMachinePoolWithAutoscaling,
+    totalMinNodesCount,
+    totalMaxNodesCount,
+    totalDesiredComputeNodes,
   } = nodesSectionData;
 
   if (hasMachinePoolWithAutoscaling) {

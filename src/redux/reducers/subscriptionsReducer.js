@@ -15,7 +15,11 @@ limitations under the License.
 */
 import produce from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, INVALIDATE_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  INVALIDATE_ACTION,
+  baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 

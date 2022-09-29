@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  PageSection,
-  Title,
-  Button,
-  Stack,
-  StackItem,
-} from '@patternfly/react-core';
-import {
-  Table, TableHeader, TableBody, expandable, cellWidth,
-} from '@patternfly/react-table';
+import { PageSection, Title, Button, Stack, StackItem } from '@patternfly/react-core';
+import { Table, TableHeader, TableBody, expandable, cellWidth } from '@patternfly/react-table';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import { OCM } from 'openshift-assisted-ui-lib';
@@ -22,7 +14,7 @@ import links from './CreateClusterConsts';
 
 const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
-const getColumns = () => ([
+const getColumns = () => [
   {
     title: '',
     cellFormatters: [expandable],
@@ -43,11 +35,17 @@ const getColumns = () => ([
   {
     title: 'Get started',
   },
-]);
+];
 
 const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = false) => {
   let contents = (
-    <Button component="a" href={links.OSD_LEARN_MORE} variant="secondary" rel="noopener noreferrer" target="_blank">
+    <Button
+      component="a"
+      href={links.OSD_LEARN_MORE}
+      variant="secondary"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
       Learn more
     </Button>
   );
@@ -60,9 +58,7 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = 
     }
     contents = (
       <Link id="create-cluster" to="/create/osd">
-        <Button className={buttonWidth}>
-          Create cluster
-        </Button>
+        <Button className={buttonWidth}>Create cluster</Button>
       </Link>
     );
   }
@@ -76,20 +72,14 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = 
           </>
         ),
       },
-      (
-        <>
-          <a href={links.OSD_LEARN_MORE} rel="noopener noreferrer" target="_blank">
-            Red Hat OpenShift Dedicated
-          </a>
-        </>
-      ),
+      <>
+        <a href={links.OSD_LEARN_MORE} rel="noopener noreferrer" target="_blank">
+          Red Hat OpenShift Dedicated
+        </a>
+      </>,
       'Red Hat',
       'Available on AWS and GCP',
-      (
-        <>
-          {contents}
-        </>
-      ),
+      <>{contents}</>,
     ],
   };
   const descriptionRow = {
@@ -100,17 +90,15 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = 
         title: (
           <Stack hasGutter>
             <StackItem>
-              A complete OpenShift cluster provided as a fully-managed cloud service
-              dedicated to a single customer. Reduce operational complexity and focus
-              on building and scaling applications that add more value to your business.
+              A complete OpenShift cluster provided as a fully-managed cloud service dedicated to a
+              single customer. Reduce operational complexity and focus on building and scaling
+              applications that add more value to your business.
               <br />
               Hosted on Amazon Web Services (AWS) and Google Cloud.
             </StackItem>
             <StackItem>
               <a href={links.OSD_LEARN_MORE} rel="noopener noreferrer" target="_blank">
-                Learn more about Red Hat OpenShift Dedicated
-                {' '}
-                <ArrowRightIcon />
+                Learn more about Red Hat OpenShift Dedicated <ArrowRightIcon />
               </a>
             </StackItem>
           </Stack>
@@ -128,9 +116,7 @@ const osdRow = (shouldExpand = true, isOpen = true, hasQuota = true, hasTrial = 
 const osdTrialRow = () => {
   const contents = (
     <Link id="create-trial-cluster" to="/create/osdtrial?trial=osd">
-      <Button className="create-trial-cluster">
-        Create trial cluster
-      </Button>
+      <Button className="create-trial-cluster">Create trial cluster</Button>
     </Link>
   );
 
@@ -143,20 +129,14 @@ const osdTrialRow = () => {
           </>
         ),
       },
-      (
-        <>
-          <a href={links.OSD_LEARN_MORE} rel="noopener noreferrer" target="_blank">
-            Red Hat OpenShift Dedicated Trial
-          </a>
-        </>
-      ),
+      <>
+        <a href={links.OSD_LEARN_MORE} rel="noopener noreferrer" target="_blank">
+          Red Hat OpenShift Dedicated Trial
+        </a>
+      </>,
       'Red Hat',
       'Available on AWS and GCP',
-      (
-        <>
-          {contents}
-        </>
-      ),
+      <>{contents}</>,
     ],
   };
   return offeringRow;
@@ -192,41 +172,38 @@ const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
     if (open) {
       setOpenRows([...openRows, rowKey]);
     } else {
-      setOpenRows(openRows.filter(row => row !== rowKey));
+      setOpenRows(openRows.filter((row) => row !== rowKey));
     }
   };
 
-  const rowKeys = (hasQuota || trialEnabled)
-    ? {
-      azure: 0,
-      ibm: 2,
-      aws: 4,
-    } : {
-      osd: 0,
-      azure: 2,
-      ibm: 4,
-      aws: 6,
-    };
+  const rowKeys =
+    hasQuota || trialEnabled
+      ? {
+          azure: 0,
+          ibm: 2,
+          aws: 4,
+        }
+      : {
+          osd: 0,
+          azure: 2,
+          ibm: 4,
+          aws: 6,
+        };
 
-  const defaultRows = [{
-    isOpen: openRows.includes(rowKeys.azure),
-    cells: [
-      (
+  const defaultRows = [
+    {
+      isOpen: openRows.includes(rowKeys.azure),
+      cells: [
         <>
           <img className="partner-logo" src={MicrosoftLogo} alt="Microsoft" />
-        </>
-      )
-      ,
-      (
+        </>,
         <>
           <a href={links.AZURE} target="_blank" rel="noopener noreferrer">
             Azure Red Hat Openshift
           </a>
-        </>
-      ),
-      'Microsoft Azure',
-      'Flexible hourly billing',
-      (
+        </>,
+        'Microsoft Azure',
+        'Flexible hourly billing',
         <>
           <Button
             component="a"
@@ -238,53 +215,45 @@ const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
           >
             Try it on Azure
           </Button>
-        </>
-      ),
-    ],
-  },
-  {
-    parent: rowKeys.azure,
-    fullWidth: true,
-    cells: [
-      {
-        title: (
-          <Stack hasGutter>
-            <StackItem>
-              A flexible, self-service deployment of OpenShift clusters provided as a fully-managed
-              cloud service by Microsoft and Red Hat.
-              <br />
-              Hosted on Microsoft Azure.
-            </StackItem>
-            <StackItem>
-              <a href={links.AZURE} target="_blank" rel="noopener noreferrer">
-                Learn more about Azure Red Hat OpenShift
-                {' '}
-                <ArrowRightIcon />
-              </a>
-            </StackItem>
-          </Stack>
-        ),
-      },
-    ],
-  },
-  {
-    isOpen: openRows.includes(rowKeys.ibm),
-    cells: [
-      (
+        </>,
+      ],
+    },
+    {
+      parent: rowKeys.azure,
+      fullWidth: true,
+      cells: [
+        {
+          title: (
+            <Stack hasGutter>
+              <StackItem>
+                A flexible, self-service deployment of OpenShift clusters provided as a
+                fully-managed cloud service by Microsoft and Red Hat.
+                <br />
+                Hosted on Microsoft Azure.
+              </StackItem>
+              <StackItem>
+                <a href={links.AZURE} target="_blank" rel="noopener noreferrer">
+                  Learn more about Azure Red Hat OpenShift <ArrowRightIcon />
+                </a>
+              </StackItem>
+            </Stack>
+          ),
+        },
+      ],
+    },
+    {
+      isOpen: openRows.includes(rowKeys.ibm),
+      cells: [
         <>
           <img className="partner-logo" src={IBMCloudLogo} alt="IBM Cloud" />
-        </>
-      ),
-      (
+        </>,
         <>
           <a href={links.IBM_CLOUD_LEARN_MORE} target="_blank" rel="noopener noreferrer">
             Red Hat OpenShift on IBM Cloud
           </a>
-        </>
-      ),
-      'IBM',
-      'Flexible hourly billing',
-      (
+        </>,
+        'IBM',
+        'Flexible hourly billing',
         <>
           <Button
             component="a"
@@ -296,95 +265,90 @@ const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
           >
             Try it on IBM
           </Button>
-        </>
-      ),
-    ],
-  },
-  {
-    parent: rowKeys.ibm,
-    fullWidth: true,
-    cells: [
-      {
-        title: (
-          <Stack hasGutter>
-            <StackItem>
-              A preconfigured OpenShift environment provided as a fully-managed cloud
-              service at enterprise scale.
-              <br />
-              Hosted on IBM Cloud.
-            </StackItem>
-            <StackItem>
-              <a href={links.IBM_CLOUD_LEARN_MORE} target="_blank" rel="noopener noreferrer">
-                Learn more about Red Hat OpenShift on IBM Cloud
-                {' '}
-                <ArrowRightIcon />
-              </a>
-            </StackItem>
-          </Stack>
-        ),
-      },
-    ],
-  },
-  {
-    isOpen: openRows.includes(rowKeys.aws),
-    cells: [
-      (
+        </>,
+      ],
+    },
+    {
+      parent: rowKeys.ibm,
+      fullWidth: true,
+      cells: [
+        {
+          title: (
+            <Stack hasGutter>
+              <StackItem>
+                A preconfigured OpenShift environment provided as a fully-managed cloud service at
+                enterprise scale.
+                <br />
+                Hosted on IBM Cloud.
+              </StackItem>
+              <StackItem>
+                <a href={links.IBM_CLOUD_LEARN_MORE} target="_blank" rel="noopener noreferrer">
+                  Learn more about Red Hat OpenShift on IBM Cloud <ArrowRightIcon />
+                </a>
+              </StackItem>
+            </Stack>
+          ),
+        },
+      ],
+    },
+    {
+      isOpen: openRows.includes(rowKeys.aws),
+      cells: [
         <>
           <img className="partner-logo" src={AWSLogo} alt="AWS" />
-        </>
-      ),
-      (
+        </>,
         <>
           <a href={links.AWS} target="_blank" rel="noopener noreferrer">
             Red Hat OpenShift Service on AWS (ROSA)
           </a>
-        </>
-      ),
-      'Amazon Web Services',
-      'Flexible hourly billing',
-      (
+        </>,
+        'Amazon Web Services',
+        'Flexible hourly billing',
         <>
           <Button
-            component={props => <Link {...props} to={`/create/rosa/${rosaCreationWizardFeature ? 'wizard' : 'welcome'}`} />}
+            component={(props) => (
+              <Link
+                {...props}
+                to={`/create/rosa/${rosaCreationWizardFeature ? 'wizard' : 'welcome'}`}
+              />
+            )}
             variant="primary"
             className="get-started-button"
           >
             Create cluster
           </Button>
-        </>
-      ),
-    ],
-  },
-  {
-    parent: rowKeys.aws,
-    fullWidth: true,
-    cells: [
-      {
-        title: (
-          <Stack hasGutter>
-            <StackItem>
-              Build, deploy, and manage Kubernetes applications with Red Hat OpenShift
-              running natively on AWS.
-              <br />
-              Hosted on AWS.
-            </StackItem>
-            <StackItem>
-              <a href={links.AWS} target="_blank" rel="noopener noreferrer">
-                Learn more about Red Hat OpenShift Service on AWS
-                {' '}
-                <ArrowRightIcon />
-              </a>
-            </StackItem>
-          </Stack>
-        ),
-      },
-    ],
-  },
+        </>,
+      ],
+    },
+    {
+      parent: rowKeys.aws,
+      fullWidth: true,
+      cells: [
+        {
+          title: (
+            <Stack hasGutter>
+              <StackItem>
+                Build, deploy, and manage Kubernetes applications with Red Hat OpenShift running
+                natively on AWS.
+                <br />
+                Hosted on AWS.
+              </StackItem>
+              <StackItem>
+                <a href={links.AWS} target="_blank" rel="noopener noreferrer">
+                  Learn more about Red Hat OpenShift Service on AWS <ArrowRightIcon />
+                </a>
+              </StackItem>
+            </Stack>
+          ),
+        },
+      ],
+    },
   ];
 
-  const rows = (hasQuota || trialEnabled)
-    ? defaultRows
-    : osdRow(true, openRows.includes(rowKeys.osd), hasQuota).concat(defaultRows);
+  const rows =
+    hasQuota || trialEnabled
+      ? defaultRows
+      : osdRow(true, openRows.includes(rowKeys.osd), hasQuota).concat(defaultRows);
 
   return (
     <Table
@@ -404,53 +368,64 @@ const runItYourself = () => {
   const rows = [
     [
       <>
-        <Link to="/install/alibaba/installer-provisioned" className="pf-u-mr-xs">Alibaba Cloud</Link>
+        <Link to="/install/alibaba/installer-provisioned" className="pf-u-mr-xs">
+          Alibaba Cloud
+        </Link>
         <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Full stack automation',
     ],
     [
-      <><Link to="/install/aws">AWS (x86_64)</Link></>,
-      'Full stack automation and pre-existing infrastructure',
-    ],
-    [
-      <><Link to="/install/aws/arm">AWS (ARM)</Link></>,
-      'Full stack automation and pre-existing infrastructure',
-    ],
-    [
-      <><Link to="/install/azure">Azure (x86_64)</Link></>,
+      <>
+        <Link to="/install/aws">AWS (x86_64)</Link>
+      </>,
       'Full stack automation and pre-existing infrastructure',
     ],
     [
       <>
-        <Link to="/install/azure/multi/installer-provisioned" className="pf-u-mr-xs">Azure (heterogeneous)</Link>
-        <TechnologyPreview position={PreviewBadgePosition.inline} />
+        <Link to="/install/aws/arm">AWS (ARM)</Link>
       </>,
-      'Full stack automation',
-    ],
-    [
-      <><Link to="/install/gcp">Google Cloud</Link></>,
       'Full stack automation and pre-existing infrastructure',
     ],
     [
       <>
-        <Link to="/install/ibm-cloud" className="pf-u-mr-xs">IBM Cloud</Link>
+        <Link to="/install/azure">Azure (x86_64)</Link>
+      </>,
+      'Full stack automation and pre-existing infrastructure',
+    ],
+    [
+      <>
+        <Link to="/install/azure/multi/installer-provisioned" className="pf-u-mr-xs">
+          Azure (heterogeneous)
+        </Link>
         <TechnologyPreview position={PreviewBadgePosition.inline} />
       </>,
       'Full stack automation',
     ],
     [
-      <><Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link></>,
+      <>
+        <Link to="/install/gcp">Google Cloud</Link>
+      </>,
+      'Full stack automation and pre-existing infrastructure',
+    ],
+    [
+      <>
+        <Link to="/install/ibm-cloud" className="pf-u-mr-xs">
+          IBM Cloud
+        </Link>
+        <TechnologyPreview position={PreviewBadgePosition.inline} />
+      </>,
+      'Full stack automation',
+    ],
+    [
+      <>
+        <Link to="/install/platform-agnostic">Platform agnostic (x86_64)</Link>
+      </>,
       'Pre-existing infrastructure',
     ],
   ];
   return (
-    <Table
-      className="run-it-yourself"
-      aria-label="Run it yourself"
-      cells={columns}
-      rows={rows}
-    >
+    <Table className="run-it-yourself" aria-label="Run it yourself" cells={columns} rows={rows}>
       <TableHeader />
       <TableBody />
     </Table>
@@ -459,35 +434,27 @@ const runItYourself = () => {
 
 const CloudTab = ({ hasOSDQuota, rosaCreationWizardFeature, trialEnabled }) => (
   <>
-    {
-    (hasOSDQuota || trialEnabled) && (
+    {(hasOSDQuota || trialEnabled) && (
       <PageSection variant="light">
         <Stack hasGutter>
           <StackItem>
-            <Title headingLevel="h2">
-              Active subscriptions
-            </Title>
+            <Title headingLevel="h2">Active subscriptions</Title>
           </StackItem>
           <StackItem>
             {activeSubscriptionsTable(hasOSDQuota, trialEnabled)}
             <Link to="/quota">
               <Button id="subscriptions" variant="link">
-                View your available quota
-                {' '}
-                <ArrowRightIcon />
+                View your available quota <ArrowRightIcon />
               </Button>
             </Link>
           </StackItem>
         </Stack>
       </PageSection>
-    )
-    }
+    )}
     <PageSection>
       <Stack hasGutter>
         <StackItem>
-          <Title headingLevel="h2">
-            Managed services
-          </Title>
+          <Title headingLevel="h2">Managed services</Title>
         </StackItem>
         <StackItem>
           Create clusters in the cloud using a managed service.
@@ -498,9 +465,7 @@ const CloudTab = ({ hasOSDQuota, rosaCreationWizardFeature, trialEnabled }) => (
     <PageSection>
       <Stack hasGutter>
         <StackItem>
-          <Title headingLevel="h2">
-            Run it yourself
-          </Title>
+          <Title headingLevel="h2">Run it yourself</Title>
         </StackItem>
         <StackItem>
           Run OpenShift clusters on your own by installing from another cloud provider.

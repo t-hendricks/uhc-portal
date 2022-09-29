@@ -39,14 +39,20 @@ const InsightsTitleComponent = ({ style, ...props }) => (
 
 const InsightsLabelComponent = ({ style, ...props }) => {
   const { datum, externalId } = props;
-  const link = `${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor/clusters/${externalId}?total_risk=${datum.id}`;
+  const link = `${window.location.origin}/${
+    APP_BETA ? 'beta/' : ''
+  }openshift/insights/advisor/clusters/${externalId}?total_risk=${datum.id}`;
 
   return (
     <a href={link}>
       <ChartLabel
         {...props}
         style={{ ...style, fontSize: 15 }}
-        className={(externalId && datum.value > 0) ? 'ocm-c-overview-advisor--enabled-link' : 'ocm-c-overview-advisor--disabled-link'}
+        className={
+          externalId && datum.value > 0
+            ? 'ocm-c-overview-advisor--enabled-link'
+            : 'ocm-c-overview-advisor--disabled-link'
+        }
       />
     </a>
   );
@@ -59,11 +65,18 @@ const InsightsLegendIconComponent = ({ x, y, datum }) => {
 };
 
 const InsightsSubtitleComponent = ({ externalId, style, ...props }) => {
-  const link = `${window.location.origin}/${APP_BETA ? 'beta/' : ''}openshift/insights/advisor/clusters/${externalId}`;
+  const link = `${window.location.origin}/${
+    APP_BETA ? 'beta/' : ''
+  }openshift/insights/advisor/clusters/${externalId}`;
 
   return (
     <a href={link}>
-      <ChartLabel {...props} style={{ ...style, fontSize: 15 }} dy={5} className="ocm-c-overview-advisor--enabled-link" />
+      <ChartLabel
+        {...props}
+        style={{ ...style, fontSize: 15 }}
+        dy={5}
+        className="ocm-c-overview-advisor--enabled-link"
+      />
     </a>
   );
 };
@@ -77,7 +90,6 @@ InsightsLabelComponent.propTypes = {
   datum: PropTypes.shape({ value: PropTypes.number, id: PropTypes.string }).isRequired,
   externalId: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
-
 };
 
 InsightsTitleComponent.propTypes = {

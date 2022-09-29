@@ -15,11 +15,12 @@ class InstallOSP extends Component {
 
   render() {
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'Red Hat OpenStack Platform' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'Red Hat OpenStack Platform' },
+        ]}
       />
     );
 

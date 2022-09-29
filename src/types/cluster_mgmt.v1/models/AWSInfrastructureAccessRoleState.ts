@@ -6,7 +6,7 @@
  * State of an AWS infrastructure access role.
  */
 export enum AWSInfrastructureAccessRoleState {
-    INVALID = 'invalid',
-    REMOVED = 'removed',
-    VALID = 'valid',
+  INVALID = 'invalid',
+  REMOVED = 'removed',
+  VALID = 'valid',
 }

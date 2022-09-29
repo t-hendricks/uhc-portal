@@ -1,4 +1,8 @@
-import { hasMachinePoolsQuotaSelector, hasOrgLevelAutoscaleCapability, canAutoScaleSelector } from '../MachinePoolsSelectors';
+import {
+  hasMachinePoolsQuotaSelector,
+  hasOrgLevelAutoscaleCapability,
+  canAutoScaleSelector,
+} from '../MachinePoolsSelectors';
 import { baseRequestState } from '../../../../../../redux/reduxHelpers';
 import { stateWithQuota, stateWithNoQuota } from './MachinePools.fixtures';
 import { normalizedProducts } from '../../../../../../common/subscriptionTypes';

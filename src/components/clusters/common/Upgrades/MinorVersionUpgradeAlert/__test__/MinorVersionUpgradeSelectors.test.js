@@ -1,10 +1,17 @@
-import { getEnableMinorVersionUpgrades, isNextMinorVersionAvailable } from '../MinorVersionUpgradeSelectors';
+import {
+  getEnableMinorVersionUpgrades,
+  isNextMinorVersionAvailable,
+} from '../MinorVersionUpgradeSelectors';
 
 describe('Minor Version Upgrade Selectors', () => {
   let state = {};
   beforeEach(() => {
     state = {
-      clusters: { details: { cluster: { version: { raw_id: '1.2.3', available_upgrades: ['1.2.4', '1.2.5'] } } } },
+      clusters: {
+        details: {
+          cluster: { version: { raw_id: '1.2.3', available_upgrades: ['1.2.4', '1.2.5'] } },
+        },
+      },
       clusterUpgrades: {
         schedules: {
           items: [
@@ -48,7 +55,12 @@ describe('Minor Version Upgrade Selectors', () => {
     test('Returns true when latest available is y/minor update', () => {
       state.clusters.details.cluster.version.raw_id = '1.2.3';
       state.clusterUpgrades.schedules.items[0].version = '';
-      state.clusters.details.cluster.version.available_upgrades = ['1.2.4', '1.2.5', '1.2.6', '1.3.1'];
+      state.clusters.details.cluster.version.available_upgrades = [
+        '1.2.4',
+        '1.2.5',
+        '1.2.6',
+        '1.3.1',
+      ];
       expect(isNextMinorVersionAvailable(state)).toBe(true);
     });
   });

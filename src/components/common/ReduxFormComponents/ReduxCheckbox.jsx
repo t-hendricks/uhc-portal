@@ -16,9 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Checkbox, FormGroup, Switch, Split, SplitItem,
-} from '@patternfly/react-core';
+import { Checkbox, FormGroup, Switch, Split, SplitItem } from '@patternfly/react-core';
 import PopoverHint from '../PopoverHint';
 import './ReduxCheckbox.scss';
 
@@ -27,9 +25,7 @@ function ReduxCheckbox(props) {
   const {
     label,
     meta: { error, touched },
-    input: {
-      name, value, ...restInput
-    },
+    input: { name, value, ...restInput },
     isSwitch = false,
     isHelperTextBeforeField = false,
     helpText,
@@ -69,7 +65,9 @@ function ReduxCheckbox(props) {
         </SplitItem>
         {isRequired && (
           <SplitItem>
-            <span className="pf-c-form__label-required redux-checkbox-required" aria-hidden="true">*</span>
+            <span className="pf-c-form__label-required redux-checkbox-required" aria-hidden="true">
+              *
+            </span>
           </SplitItem>
         )}
         {extendedHelpText && (

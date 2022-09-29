@@ -14,18 +14,19 @@ class SupportStatusLabel extends React.Component {
   }
 
   render() {
-    const {
-      pending,
-      error,
-      supportStatus,
-      clusterVersion,
-    } = this.props;
+    const { pending, error, supportStatus, clusterVersion } = this.props;
     if (pending) {
       return <Skeleton className="inline-skeleton" size="sm" />;
     }
     const supportedVersionRegex = /^[4-6]\.\d{1,3}(\.\d{1,3})?$/;
     const status = supportStatus[clusterVersion.split('.', 2).join('.')];
-    if (!clusterVersion || clusterVersion === 'N/A' || error || !status || !supportedVersionRegex.test(clusterVersion)) {
+    if (
+      !clusterVersion ||
+      clusterVersion === 'N/A' ||
+      error ||
+      !status ||
+      !supportedVersionRegex.test(clusterVersion)
+    ) {
       return 'N/A';
     }
 

@@ -568,8 +568,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-s390x-upi 1`] = `
                         rel="noreferrer noopener"
                         target="_blank"
                       >
-                        Learn more
-                         
+                        Learn more 
                         <ExternalLinkAltIcon
                           color="currentColor"
                           noVerticalAlign={false}
@@ -587,8 +586,7 @@ exports[`Every OCP instruction page should render:  Bare Metal-s390x-upi 1`] = `
                         rel="noreferrer noopener"
                         target="_blank"
                       >
-                        Learn more
-                         
+                        Learn more 
                         <ExternalLinkAltIcon
                           color="currentColor"
                           noVerticalAlign={false}

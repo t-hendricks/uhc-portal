@@ -3,7 +3,7 @@ import MachineTypeSelection from './MachineTypeSelection';
 import { getMachineTypes } from '../../../../../../../redux/actions/machineTypesActions';
 import { getDefaultFlavour } from '../../../../../../../redux/actions/flavourActions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   flavours: state.flavours,
   machineTypes: state.machineTypes,
   organization: state.userProfile.organization,

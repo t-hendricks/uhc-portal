@@ -40,9 +40,7 @@ function Timestamp(props) {
       text = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
     }
   }
-  return (
-    <span>{text}</span>
-  );
+  return <span>{text}</span>;
 }
 
 Timestamp.propTypes = {

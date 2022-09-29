@@ -17,7 +17,10 @@ limitations under the License.
 import produce from 'immer';
 import get from 'lodash/get';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 

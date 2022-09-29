@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card, CardBody, Stack, StackItem, TextContent, Title,
-} from '@patternfly/react-core';
+import { Card, CardBody, Stack, StackItem, TextContent, Title } from '@patternfly/react-core';
 import TelemetryDisclaimer from './components/TelemetryDisclaimer';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import PullSecretSection from './components/PullSecretSection';

@@ -9,11 +9,8 @@ import { required } from '../../../../../../../common/validators';
 
 import CAUpload from '../CAUpload';
 
-function GitlabFormRequired({
-  isPending, isEditForm, idpEdited,
-}) {
+function GitlabFormRequired({ isPending, isEditForm, idpEdited }) {
   return (
-
     <>
       <IDPBasicFields />
 

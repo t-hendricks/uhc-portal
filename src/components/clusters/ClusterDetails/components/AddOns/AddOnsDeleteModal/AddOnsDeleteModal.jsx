@@ -11,7 +11,7 @@ import '../AddOns.scss';
 class AddOnsDeleteModal extends Component {
   state = {
     addOnNameInput: '',
-  }
+  };
 
   componentDidUpdate(prevProps) {
     const { deleteClusterAddOnResponse } = this.props;
@@ -24,7 +24,7 @@ class AddOnsDeleteModal extends Component {
     this.setState({
       addOnNameInput: newInput,
     });
-  }
+  };
 
   handleClose = () => {
     const { closeModal, clearClusterAddOnsResponses } = this.props;
@@ -33,25 +33,14 @@ class AddOnsDeleteModal extends Component {
       addOnNameInput: '',
     });
     closeModal();
-  }
+  };
 
   render() {
-    const {
-      isOpen,
-      modalData,
-      deleteClusterAddOn,
-      deleteClusterAddOnResponse,
-    } = this.props;
+    const { isOpen, modalData, deleteClusterAddOn, deleteClusterAddOnResponse } = this.props;
 
-    const {
-      addOnNameInput,
-    } = this.state;
+    const { addOnNameInput } = this.state;
 
-    const {
-      addOnName,
-      addOnID,
-      clusterID,
-    } = modalData;
+    const { addOnName, addOnID, clusterID } = modalData;
 
     const isValid = addOnNameInput === addOnName;
 
@@ -72,39 +61,38 @@ class AddOnsDeleteModal extends Component {
 
     const isPending = deleteClusterAddOnResponse.pending;
 
-    return isOpen && (
-    <Modal
-      title={`Uninstall ${addOnName}`}
-      onClose={this.handleClose}
-      primaryText="Uninstall"
-      primaryVariant="danger"
-      isPrimaryDisabled={!isValid}
-      onPrimaryClick={handleSubmit}
-      onSecondaryClick={this.handleClose}
-      isPending={isPending}
-    >
-      <p>
-        {errorContainer}
-        This action will uninstall the add-on,
-        removing add-on data from cluster can not be undone.
-      </p>
-      <Form onSubmit={submitForm}>
-        <p>
-          Confirm deletion by typing
-          {' '}
-          <span className="addon-delete-modal-textinput">{addOnName}</span>
-          {' '}
-          below:
-        </p>
-        <TextInput
-          type="text"
-          value={addOnNameInput}
-          placeholder="Enter name"
-          onChange={this.setValue}
-          aria-label="addon name"
-        />
-      </Form>
-    </Modal>
+    return (
+      isOpen && (
+        <Modal
+          title={`Uninstall ${addOnName}`}
+          onClose={this.handleClose}
+          primaryText="Uninstall"
+          primaryVariant="danger"
+          isPrimaryDisabled={!isValid}
+          onPrimaryClick={handleSubmit}
+          onSecondaryClick={this.handleClose}
+          isPending={isPending}
+        >
+          <p>
+            {errorContainer}
+            This action will uninstall the add-on, removing add-on data from cluster can not be
+            undone.
+          </p>
+          <Form onSubmit={submitForm}>
+            <p>
+              Confirm deletion by typing{' '}
+              <span className="addon-delete-modal-textinput">{addOnName}</span> below:
+            </p>
+            <TextInput
+              type="text"
+              value={addOnNameInput}
+              placeholder="Enter name"
+              onChange={this.setValue}
+              aria-label="addon name"
+            />
+          </Form>
+        </Modal>
+      )
     );
   }
 }

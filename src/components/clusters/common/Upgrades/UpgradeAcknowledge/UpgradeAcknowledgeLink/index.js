@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { getHasUnMetClusterAcks } from '../UpgradeAcknowledgeSelectors';
 import UpgradeAcknowledgeLink from './UpgradeAcknowledgeLink';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   hasAcks: getHasUnMetClusterAcks(state),
 });
 

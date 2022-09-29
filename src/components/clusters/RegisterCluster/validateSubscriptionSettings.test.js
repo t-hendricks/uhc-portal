@@ -7,51 +7,28 @@ import {
 } from '../../../common/subscriptionTypes';
 import validateSubscriptionSettings from './validateSubscriptionSettings';
 
-const {
-  SUPPORT_LEVEL,
-  SERVICE_LEVEL,
-  USAGE,
-  SYSTEM_UNITS,
-  CPU_TOTAL,
-  SOCKET_TOTAL,
-} = subscriptionSettings;
+const { SUPPORT_LEVEL, SERVICE_LEVEL, USAGE, SYSTEM_UNITS, CPU_TOTAL, SOCKET_TOTAL } =
+  subscriptionSettings;
 
-const {
-  EVAL,
-  PREMIUM,
-  STANDARD,
-  SELF_SUPPORT,
-} = subscriptionSupportLevels;
+const { EVAL, PREMIUM, STANDARD, SELF_SUPPORT } = subscriptionSupportLevels;
 
-const {
-  L1_L3,
-  L3_ONLY,
-} = subscriptionServiceLevels;
+const { L1_L3, L3_ONLY } = subscriptionServiceLevels;
 
-const {
-  PRODUCTION,
-  DEV_TEST,
-  DISASTER_RECOVERY,
-} = subscriptionUsages;
+const { PRODUCTION, DEV_TEST, DISASTER_RECOVERY } = subscriptionUsages;
 
-const {
-  CORES_VCPU,
-  SOCKETS,
-} = subscriptionSystemUnits;
+const { CORES_VCPU, SOCKETS } = subscriptionSystemUnits;
 
-const expectedCpuTotal = settings => (
+const expectedCpuTotal = (settings) =>
   settings[SYSTEM_UNITS] === CORES_VCPU
     ? settings[CPU_TOTAL]
-    // default cpu_total is socket_total
-    : settings[SOCKET_TOTAL]
-);
+    : // default cpu_total is socket_total
+      settings[SOCKET_TOTAL];
 
-const expectedSocketTotal = settings => (
+const expectedSocketTotal = (settings) =>
   settings[SYSTEM_UNITS] === SOCKETS
     ? settings[SOCKET_TOTAL]
-    // default socket_total is 1
-    : 1
-);
+    : // default socket_total is 1
+      1;
 
 const getRandInt = () => Math.floor(Math.random() * 1000) + 1;
 

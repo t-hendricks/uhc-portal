@@ -16,8 +16,7 @@ exports[`TokenErrorAlert renders correctly 1`] = `
     rel="noreferrer noopener"
     target="_blank"
   >
-    ocm-feedback@redhat.com
-     
+    ocm-feedback@redhat.com 
     <ExternalLinkAltIcon
       color="#0066cc"
       noVerticalAlign={false}

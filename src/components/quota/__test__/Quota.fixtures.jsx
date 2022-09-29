@@ -1,4 +1,8 @@
-import { dedicatedRhInfra, unlimitedROSA, dbaAddon } from '../../clusters/common/__test__/quota_cost.fixtures';
+import {
+  dedicatedRhInfra,
+  unlimitedROSA,
+  dbaAddon,
+} from '../../clusters/common/__test__/quota_cost.fixtures';
 import { subscriptionsReducer } from '../../../redux/reducers/subscriptionsReducer';
 
 const fetchAccount = jest.fn();

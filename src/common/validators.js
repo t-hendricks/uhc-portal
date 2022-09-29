@@ -21,7 +21,8 @@ const DNS_SUBDOMAIN_REGEXP = /^([a-z]([-a-z0-9]*[a-z0-9])?)+(\.[a-z]([-a-z0-9]*[
 const UUID_REGEXP = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 // Regular expression used to check whether input is a valid IPv4 CIDR range
-const CIDR_REGEXP = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[1-9]))$/;
+const CIDR_REGEXP =
+  /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(3[0-2]|[1-2][0-9]|[1-9]))$/;
 const SERVICE_CIDR_MAX = 24;
 const POD_CIDR_MAX = 21;
 const POD_NODES_MIN = 32;
@@ -37,7 +38,8 @@ const HOST_PREFIX_MAX = 26;
 const DOCKER_CIDR_RANGE = '172.17.0.0/16';
 
 // Regular expression for a valid URL for a console in a self managed cluster.
-const CONSOLE_URL_REGEXP = /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?([a-z0-9_/-]+)?$/i;
+const CONSOLE_URL_REGEXP =
+  /^https?:\/\/(([0-9]{1,3}\.){3}[0-9]{1,3}|([a-z0-9-]+\.)+[a-z]{2,})(:[0-9]+)?([a-z0-9_/-]+)?$/i;
 
 // Maximum length for a cluster name
 const MAX_CLUSTER_NAME_LENGTH = 15;
@@ -63,7 +65,8 @@ const AWS_NUMERIC_ACCOUNT_ID_REGEX = /^\d{12}$/;
 
 const GCP_KMS_SERVICE_ACCOUNT_REGEX = /^[a-z0-9.+-]+@[\w.-]+\.[a-z]{2,4}$/;
 
-const AWS_KMS_SERVICE_ACCOUNT_REGEX = /^arn:aws:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+const AWS_KMS_SERVICE_ACCOUNT_REGEX =
+  /^arn:aws:kms:[\w-]+:\d{12}:key\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 
 /**
  * A valid label key name must consist of alphanumeric characters, '-', '_' or '.',
@@ -84,14 +87,17 @@ const LABEL_VALUE_REGEX = /^(([a-z0-9][a-z0-9-_.]*)?[a-z0-9])?$/i;
 const MAX_CUSTOM_OPERATOR_ROLES_PREFIX_LENGTH = 32;
 
 // Function to validate that a field is mandatory, i.e. must be a non whitespace string
-const required = value => (value && value.trim() ? undefined : 'Field is required');
+const required = (value) => (value && value.trim() ? undefined : 'Field is required');
 
 // Function to validate that a field has a true value.
 // Use with checkbox to ensure it is selected on a form, e.g. Ts&Cs agreement
-const requiredTrue = value => (value && value === true ? undefined : 'Field must be selected');
+const requiredTrue = (value) => (value && value === true ? undefined : 'Field must be selected');
 
 // Function to validate that user has acknowledged prerequisites by clicking checkbox.
-const acknowledgePrerequisites = value => (value && value === true ? undefined : 'Acknowledge that you have read and completed all prerequisites.');
+const acknowledgePrerequisites = (value) =>
+  value && value === true
+    ? undefined
+    : 'Acknowledge that you have read and completed all prerequisites.';
 
 // Function to validate that the identity provider name field doesn't include whitespaces:
 const checkIdentityProviderName = (value) => {
@@ -150,14 +156,25 @@ const checkObjectName = (value, objectName, maxLen) => {
 
 const checkObjectNameValidation = (value, objectName, maxLen) => [
   { text: `1 - ${maxLen} characters`, validated: value?.length > 0 && value?.length <= maxLen },
-  { text: 'Consist of lower-case alphanumeric characters, or hyphen (-)', validated: !!value && DNS_ONLY_ALPHANUMERIC_HYPHEN.test(value) },
-  { text: 'Start with a lower-case alphabetic character', validated: !!value && DNS_START_ALPHA.test(value) },
-  { text: 'End with a lower-case alphanumeric character', validated: !!value && DNS_END_ALPHANUMERIC.test(value) },
+  {
+    text: 'Consist of lower-case alphanumeric characters, or hyphen (-)',
+    validated: !!value && DNS_ONLY_ALPHANUMERIC_HYPHEN.test(value),
+  },
+  {
+    text: 'Start with a lower-case alphabetic character',
+    validated: !!value && DNS_START_ALPHA.test(value),
+  },
+  {
+    text: 'End with a lower-case alphanumeric character',
+    validated: !!value && DNS_END_ALPHANUMERIC.test(value),
+  },
 ];
 
-const clusterNameValidation = value => checkObjectNameValidation(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
+const clusterNameValidation = (value) =>
+  checkObjectNameValidation(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
 
-const checkMachinePoolName = value => checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
+const checkMachinePoolName = (value) =>
+  checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
 
 /**
  * creates a validator function that exits on first failure (and returns its error message),
@@ -170,11 +187,10 @@ const checkMachinePoolName = value => checkObjectName(value, 'Machine pool', MAX
  * @returns {function(*): *} a validator function that exits on the first failed validation,
  *          outputting its error message.
  */
-const createPessimisticValidator = (validationProvider = () => {}) => (...validationArgs) => (
-  validationProvider(...validationArgs)?.find(validator => (
-    validator.validated === false
-  ))?.text
-);
+const createPessimisticValidator =
+  (validationProvider = () => {}) =>
+  (...validationArgs) =>
+    validationProvider(...validationArgs)?.find((validator) => validator.validated === false)?.text;
 
 const checkCustomOperatorRolesPrefix = (value) => {
   const label = 'Custom operator roles prefix';
@@ -222,21 +238,19 @@ const checkGithubTeams = (value) => {
 };
 
 const parseNodeLabelKey = (labelKey) => {
-  const [name, prefix] = labelKey
-    // split at the first delimiter, and only keep the first two segments,
-    // to get rid of the empty match at the end
-    ?.split(/\/(.+)/, 2)
-    // reverse order before destructuring to ensure the name is always defined,
-    // while the prefix is left undefined if missing
-    ?.reverse() ?? [];
+  const [name, prefix] =
+    labelKey
+      // split at the first delimiter, and only keep the first two segments,
+      // to get rid of the empty match at the end
+      ?.split(/\/(.+)/, 2)
+      // reverse order before destructuring to ensure the name is always defined,
+      // while the prefix is left undefined if missing
+      ?.reverse() ?? [];
 
   return { name, prefix };
 };
 
-const parseNodeLabelTags = labels => (
-  [].concat(labels)
-    .map(pair => pair.split('='))
-);
+const parseNodeLabelTags = (labels) => [].concat(labels).map((pair) => pair.split('='));
 
 const parseNodeLabels = (input) => {
   // avoid processing falsy values (and specifically, empty strings)
@@ -244,9 +258,7 @@ const parseNodeLabels = (input) => {
     return undefined;
   }
   // turn the input into an array, if necessary
-  const labels = typeof input === 'string'
-    ? input.split(',')
-    : input;
+  const labels = typeof input === 'string' ? input.split(',') : input;
 
   return parseNodeLabelTags(labels);
 };
@@ -254,7 +266,7 @@ const parseNodeLabels = (input) => {
 const labelKeyValidations = (value) => {
   const { prefix, name } = parseNodeLabelKey(value);
 
-  return ([
+  return [
     {
       validated: typeof prefix === 'undefined' || DNS_SUBDOMAIN_REGEXP.test(prefix),
       text: 'Key prefix must be a DNS subdomain: a series of DNS labels separated by dots (.)',
@@ -271,10 +283,10 @@ const labelKeyValidations = (value) => {
       validated: typeof name !== 'undefined' && name.length <= LABEL_KEY_NAME_MAX_LENGTH,
       text: `A valid key name must be ${LABEL_KEY_NAME_MAX_LENGTH} characters or less`,
     },
-  ]);
+  ];
 };
 
-const labelValueValidations = value => ([
+const labelValueValidations = (value) => [
   {
     validated: typeof value === 'undefined' || value.length <= LABEL_VALUE_MAX_LENGTH,
     text: `A valid value must be ${LABEL_VALUE_MAX_LENGTH} characters or less`,
@@ -283,22 +295,20 @@ const labelValueValidations = value => ([
     validated: typeof value === 'undefined' || LABEL_VALUE_REGEX.test(value),
     text: "A valid value must consist of alphanumeric characters, '-', '.' or '_' and must start and end with an alphanumeric character",
   },
-]);
+];
 
 const checkLabelKey = createPessimisticValidator(labelKeyValidations);
 
 const checkLabelValue = createPessimisticValidator(labelValueValidations);
 
-const checkLabels = input => (
+const checkLabels = (input) =>
   parseNodeLabels(input)
     // collect the first error found
-    ?.reduce((accum, [key, value]) => (
-      accum
-      ?? checkLabelKey(key)
-      ?? checkLabelValue(value)
+    ?.reduce(
+      (accum, [key, value]) => accum ?? checkLabelKey(key) ?? checkLabelValue(value),
       // defaulting to undefined
-    ), undefined)
-);
+      undefined,
+    );
 
 const checkRouteSelectors = checkLabels;
 
@@ -332,26 +342,26 @@ const checkUser = (value) => {
     return 'cannot contain leading and trailing spaces';
   }
   if (value.includes('/')) {
-    return 'cannot contain \'/\'.';
+    return "cannot contain '/'.";
   }
   if (value.includes(':')) {
-    return 'cannot contain \':\'.';
+    return "cannot contain ':'.";
   }
   if (value.includes('%')) {
-    return 'cannot contain \'%\'.';
+    return "cannot contain '%'.";
   }
   if (value === '~') {
-    return 'cannot be \'~\'.';
+    return "cannot be '~'.";
   }
   if (value === '.') {
-    return 'cannot be \'.\'.';
+    return "cannot be '.'.";
   }
   if (value === '..') {
-    return 'cannot be \'..\'.';
+    return "cannot be '..'.";
   }
   // User cluster-admin is reserved for internal use with the HTPasswd IdP
   if (value === 'cluster-admin') {
-    return 'cannot be \'cluster-admin\'.';
+    return "cannot be 'cluster-admin'.";
   }
   return undefined;
 };
@@ -383,7 +393,7 @@ const validateUrl = (value, protocol = 'http') => {
   } finally {
     const valueStart = value.substring(0, value.indexOf('://'));
     if (!protocolArr.includes(valueStart)) {
-      const protocolStr = protocolArr.map(p => `${p}://`).join(', ');
+      const protocolStr = protocolArr.map((p) => `${p}://`).join(', ');
       // eslint-disable-next-line no-unsafe-finally
       return `The URL should include the scheme prefix (${protocolStr})`;
     }
@@ -404,7 +414,7 @@ const validateCA = (value) => {
 // Function to validate the cluster console URL
 const checkClusterConsoleURL = (value, isRequired) => {
   if (!value) {
-    return (isRequired ? 'Cluster console URL should not be empty' : undefined);
+    return isRequired ? 'Cluster console URL should not be empty' : undefined;
   }
   let url;
   try {
@@ -545,7 +555,10 @@ const validateRange = (value) => {
     return undefined;
   }
   const parts = value.split('/');
-  const cidrBinaryString = parts[0].split('.').map(octet => Number(octet).toString(2).padEnd(8, '0')).join('');
+  const cidrBinaryString = parts[0]
+    .split('.')
+    .map((octet) => Number(octet).toString(2).padEnd(8, '0'))
+    .join('');
   const maskBits = parseInt(parts[1], 10);
   const maskedBinaryString = cidrBinaryString.slice(0, maskBits).padEnd(32, '0');
 
@@ -555,7 +568,7 @@ const validateRange = (value) => {
   return undefined;
 };
 
-const disjointSubnets = fieldName => (value, formData) => {
+const disjointSubnets = (fieldName) => (value, formData) => {
   if (!value) {
     return undefined;
   }
@@ -579,7 +592,9 @@ const disjointSubnets = fieldName => (value, formData) => {
   }
   const plural = overlappingFields.length > 1;
   if (overlappingFields.length > 0) {
-    return `This subnet overlaps with the subnet${plural ? 's' : ''} in the ${overlappingFields.join(', ')} field${plural ? 's' : ''}.`;
+    return `This subnet overlaps with the subnet${
+      plural ? 's' : ''
+    } in the ${overlappingFields.join(', ')} field${plural ? 's' : ''}.`;
   }
   return undefined;
 };
@@ -589,7 +604,7 @@ const privateAddress = (value) => {
     return undefined;
   }
   const parts = value.split('/');
-  const octets = parts[0].split('.').map(octet => (parseInt(octet, 10)));
+  const octets = parts[0].split('.').map((octet) => parseInt(octet, 10));
   const maskBits = parseInt(parts[1], 10);
 
   // 10.0.0.0/8 – 10.255.255.255
@@ -624,7 +639,7 @@ const disjointFromDockerRange = (value) => {
   }
 };
 
-const awsSubnetMask = fieldName => (value) => {
+const awsSubnetMask = (fieldName) => (value) => {
   if (cidr(value) !== undefined || !value) {
     return undefined;
   }
@@ -682,7 +697,7 @@ const hostPrefix = (value) => {
  */
 const nodes = (value, min, max = MAX_NODE_COUNT) => {
   if (value === undefined || value < min.value) {
-    return (min.validationMsg || `The minimum number of nodes is ${min.value}.`);
+    return min.validationMsg || `The minimum number of nodes is ${min.value}.`;
   }
   if (value > max) {
     return `Maximum number allowed is ${max}.`;
@@ -712,13 +727,8 @@ const nodesMultiAz = (value) => {
  * @param {*} allowZero       true if input number may be 0, otherwise false
  */
 const validateNumericInput = (
-  input, {
-    allowDecimal = false,
-    allowNeg = false,
-    allowZero = false,
-    max = NaN,
-    min = NaN,
-  } = {},
+  input,
+  { allowDecimal = false, allowNeg = false, allowZero = false, max = NaN, min = NaN } = {},
 ) => {
   if (!input) {
     return undefined; // accept empty input. Further validation done according to field
@@ -745,15 +755,14 @@ const validateNumericInput = (
   return undefined;
 };
 
-const checkDisconnectedConsoleURL = value => checkClusterConsoleURL(value, false);
+const checkDisconnectedConsoleURL = (value) => checkClusterConsoleURL(value, false);
 
-const checkDisconnectedvCPU = value => validateNumericInput(value, { max: 16000 });
+const checkDisconnectedvCPU = (value) => validateNumericInput(value, { max: 16000 });
 
-const checkDisconnectedSockets = value => validateNumericInput(value, { max: 2000 });
+const checkDisconnectedSockets = (value) => validateNumericInput(value, { max: 2000 });
 
-const checkDisconnectedMemCapacity = value => (
-  validateNumericInput(value, { allowDecimal: true, max: 256000 })
-);
+const checkDisconnectedMemCapacity = (value) =>
+  validateNumericInput(value, { allowDecimal: true, max: 256000 });
 
 const checkDisconnectedNodeCount = (value) => {
   if (value === '') {
@@ -787,7 +796,7 @@ const validateARN = (value) => {
  *
  * @param {*} values array of value objects, from redux-form
  */
-const atLeastOneRequired = fieldName => (fields) => {
+const atLeastOneRequired = (fieldName) => (fields) => {
   if (!fields) {
     return undefined;
   }
@@ -837,7 +846,8 @@ const validateServiceAccountObject = (obj) => {
         format: 'email',
         pattern: '^osd-ccs-admin@([\\S]*)\\.iam\\.gserviceaccount\\.com$',
       },
-      client_id: { // maybe numeric?
+      client_id: {
+        // maybe numeric?
         type: 'string',
       },
       auth_uri: {
@@ -915,34 +925,34 @@ const validateGCPServiceAccount = (content) => {
  * @returns {function(*, object, object, string): string|Error|undefined}
  * A field-level validation function that checks uniqueness.
  */
-const createUniqueFieldValidator = (
-  error,
-  otherValuesSelector = () => {},
-) => (
-  value, allValues, _, name,
-) => {
-  const otherValues = otherValuesSelector(name, allValues) ?? [];
-  if (otherValues.includes(value)) {
-    return error;
-  }
-  return undefined;
-};
+const createUniqueFieldValidator =
+  (error, otherValuesSelector = () => {}) =>
+  (value, allValues, _, name) => {
+    const otherValues = otherValuesSelector(name, allValues) ?? [];
+    if (otherValues.includes(value)) {
+      return error;
+    }
+    return undefined;
+  };
 
 const validateUniqueAZ = createUniqueFieldValidator(
   'Must select 3 different AZs.',
-  (currentFieldName, allValues) => Object.entries(allValues)
-    .filter(([fieldKey]) => fieldKey.startsWith('az_') && fieldKey !== currentFieldName)
-    .map(([, fieldValue]) => fieldValue),
+  (currentFieldName, allValues) =>
+    Object.entries(allValues)
+      .filter(([fieldKey]) => fieldKey.startsWith('az_') && fieldKey !== currentFieldName)
+      .map(([, fieldValue]) => fieldValue),
 );
 
 const validateUniqueNodeLabel = createUniqueFieldValidator(
   'Each label must have a different key.',
-  (currentFieldName, allValues) => Object.entries(allValues.node_labels)
-    .filter(([fieldKey]) => !currentFieldName.includes(`[${fieldKey}]`))
-    .map(([, fieldValue]) => fieldValue.key),
+  (currentFieldName, allValues) =>
+    Object.entries(allValues.node_labels)
+      .filter(([fieldKey]) => !currentFieldName.includes(`[${fieldKey}]`))
+      .map(([, fieldValue]) => fieldValue.key),
 );
 
-const validateValueNotPlaceholder = placeholder => value => (value !== placeholder ? undefined : 'Field is required');
+const validateValueNotPlaceholder = (placeholder) => (value) =>
+  value !== placeholder ? undefined : 'Field is required';
 
 // AWS VPC validators expect the known vpcs to be passed as prop to the form —
 // specifically, the component wrappeed by reduxForm().
@@ -977,7 +987,7 @@ const validateAWSSubnet = (value, allValues, formProps, name) => {
     }
 
     const allInfos = awsVPCSubnetInfos(allValues, vpcs.data.bySubnetID);
-    const usedVPCs = new Set(allInfos.map(info => info.vpc_id));
+    const usedVPCs = new Set(allInfos.map((info) => info.vpc_id));
     if (usedVPCs.size > 1) {
       const vpc = subnetInfo.vpc_name || subnetInfo.vpc_id; // prefer Name tag, not always available
       return `All subnets must belong to the same VPC (provided subnet VPC: ${vpc}).`;
@@ -1038,8 +1048,10 @@ const validateGCPKMSServiceAccount = (value) => {
     return 'Field must not contain whitespaces.';
   }
   if (!GCP_KMS_SERVICE_ACCOUNT_REGEX.test(value)) {
-    return 'Field start with lowercase letter and can only contain hyphens (-), at (@) and dot (.).'
-    + 'For e.g. "myserviceaccount@myproj.iam.gserviceaccount.com" or "<projectnumericid>-compute@developer.gserviceaccount.com".';
+    return (
+      'Field start with lowercase letter and can only contain hyphens (-), at (@) and dot (.).' +
+      'For e.g. "myserviceaccount@myproj.iam.gserviceaccount.com" or "<projectnumericid>-compute@developer.gserviceaccount.com".'
+    );
   }
   return undefined;
 };
@@ -1070,9 +1082,9 @@ const validateHTPasswdPassword = (password) => {
     return errors;
   }
   if (
-    (password.match(/[^\x20-\x7E]/g) || []).length !== 0
-    || password.indexOf(' ') !== -1
-    || password.length < 14
+    (password.match(/[^\x20-\x7E]/g) || []).length !== 0 ||
+    password.indexOf(' ') !== -1 ||
+    password.length < 14
   ) {
     errors.baseRequirements = true;
   }
@@ -1085,7 +1097,7 @@ const validateHTPasswdPassword = (password) => {
   if (/^[a-zA-Z ]+$/.test(password)) {
     errors.numbersOrSymbols = true;
   }
-  if (Object.values(errors).every(item => item === false)) {
+  if (Object.values(errors).every((item) => item === false)) {
     return undefined;
   }
   return errors;
@@ -1093,9 +1105,9 @@ const validateHTPasswdPassword = (password) => {
 
 const validateHTPasswdUsername = (username) => {
   if (
-    indexOf(username, '%') !== -1
-    || indexOf(username, ':') !== -1
-    || indexOf(username, '/') !== -1
+    indexOf(username, '%') !== -1 ||
+    indexOf(username, ':') !== -1 ||
+    indexOf(username, '/') !== -1
   ) {
     return 'Username contains disallowed characters.';
   }
@@ -1107,7 +1119,7 @@ const shouldSkipLabelKeyValidation = (allValues) => {
   // filling the first and only label key/value pair is optional -it serves as a placeholder.
   // if empty, it won't be taken into account in the request payload.
   const [{ key: firstLabelKey, value: firstLabelValue }] = nodeLabels;
-  return (nodeLabels.length === 1 && !firstLabelKey && !firstLabelValue);
+  return nodeLabels.length === 1 && !firstLabelKey && !firstLabelValue;
 };
 
 const validateLabelKey = (key, allValues, ...rest) => {

@@ -4,9 +4,8 @@
 
 import type { ObjectReference } from './ObjectReference';
 
-export type SkuRules = (ObjectReference & {
-    allowed?: number;
-    quota_id?: string;
-    sku?: string;
-});
-
+export type SkuRules = ObjectReference & {
+  allowed?: number;
+  quota_id?: string;
+  sku?: string;
+};

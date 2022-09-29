@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 
 import './AddOnsDrawer.scss';
 
-import {
-  Button,
-} from '@patternfly/react-core';
+import { Button } from '@patternfly/react-core';
 
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { hasParameters } from '../AddOnsHelper';
@@ -44,14 +42,13 @@ function AddOnsPrimaryButton(props) {
     }
   };
 
-  const canNotEditReason = !cluster.canEdit && (
-    'You do not have permission to install add ons. Only cluster owners, cluster editors, and Organization Administrators can install add ons.'
-  );
+  const canNotEditReason =
+    !cluster.canEdit &&
+    'You do not have permission to install add ons. Only cluster owners, cluster editors, and Organization Administrators can install add ons.';
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
-  const hibernatingReason = isHibernating(cluster.state) && (
-    'This operation is not available while cluster is hibernating'
-  );
+  const hibernatingReason =
+    isHibernating(cluster.state) && 'This operation is not available while cluster is hibernating';
   // a superset of hibernatingReason.
   const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
   const requirementsReason = !activeCardRequirementsFulfilled && 'Prerequisites not met';
@@ -63,11 +60,13 @@ function AddOnsPrimaryButton(props) {
       ouiaId={`uninstall-addon-${activeCard?.id}`}
       variant="link"
       disableReason={readOnlyReason || hibernatingReason || notReadyReason || canNotEditReason}
-      onClick={() => openModal('add-ons-delete-modal', {
-        addOnName: activeCard?.name,
-        addOnID: activeCard?.id,
-        clusterID: cluster.id,
-      })}
+      onClick={() =>
+        openModal('add-ons-delete-modal', {
+          addOnName: activeCard?.name,
+          addOnID: activeCard?.id,
+          clusterID: cluster.id,
+        })
+      }
     >
       Uninstall
     </ButtonWithTooltip>
@@ -78,8 +77,15 @@ function AddOnsPrimaryButton(props) {
     const pendingReason = addClusterAddOnResponse.pending && 'installing...';
     return (
       <ButtonWithTooltip
-        disableReason={readOnlyReason || hibernatingReason || notReadyReason || requirementsReason
-          || canNotEditReason || quotaReason || pendingReason}
+        disableReason={
+          readOnlyReason ||
+          hibernatingReason ||
+          notReadyReason ||
+          requirementsReason ||
+          canNotEditReason ||
+          quotaReason ||
+          pendingReason
+        }
         ouiaId={`install-addon-${activeCard?.id}`}
         variant="primary"
         aria-label="Install"
@@ -96,9 +102,7 @@ function AddOnsPrimaryButton(props) {
     case AddOnsConstants.INSTALLATION_STATE.PENDING:
     case AddOnsConstants.INSTALLATION_STATE.INSTALLING:
     case AddOnsConstants.INSTALLATION_STATE.UPDATING:
-      return (
-        <>{uninstallAddonAction}</>
-      );
+      return <>{uninstallAddonAction}</>;
     case undefined:
       // undefined state implies that the user just started
       // the installation and there is no state available yet
@@ -115,8 +119,7 @@ function AddOnsPrimaryButton(props) {
             rel="noopener noreferrer"
           >
             Contact support
-          </Button>
-          {' '}
+          </Button>{' '}
           {uninstallAddonAction}
         </>
       );
@@ -132,11 +135,8 @@ function AddOnsPrimaryButton(props) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Open in Console
-              {' '}
-              <ExternalLinkAltIcon className="link-icon" />
-            </Button>
-            {' '}
+              Open in Console <ExternalLinkAltIcon className="link-icon" />
+            </Button>{' '}
             {uninstallAddonAction}
           </>
         );

@@ -19,7 +19,7 @@ const reduxFormEditTaints = reduxForm(reduxFormConfig)(EditTaintsModal);
 
 const valueSelector = formValueSelector('editTaints');
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   machinePoolsList: state.machinePools.getMachinePools,
   selectedMachinePoolId: valueSelector(state, 'machinePoolId') || state.modal.data.machinePool?.id,
   editTaintsResponse: state.machinePools.scaleMachinePoolResponse,
@@ -35,11 +35,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse(ownProps.clusterId)),
   resetEditTaintsResponse: () => dispatch(clearScaleMachinePoolResponse(ownProps.clusterId)),
   onSubmit: (formData) => {
-    dispatch(editTaints(
-      ownProps.clusterId,
-      formData.machinePoolId,
-      { taints: formData.taints },
-    ));
+    dispatch(editTaints(ownProps.clusterId, formData.machinePoolId, { taints: formData.taints }));
   },
 });
 

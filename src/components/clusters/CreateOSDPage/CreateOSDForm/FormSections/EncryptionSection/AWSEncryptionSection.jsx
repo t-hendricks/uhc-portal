@@ -19,12 +19,14 @@ function AWSCustomerManagedEncryption() {
           validate={validateAWSKMSKeyARN}
           isRequired
           helpText="Unique, fully qualified identifier (Amazon Resource Name (ARN)) for your KMS Key."
-          extendedHelpText={(
+          extendedHelpText={
             <>
               <p className="pf-u-mb-sm">{constants.awsKeyARN}</p>
-              <ExternalLink href="https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html">Finding the key ID and ARN</ExternalLink>
+              <ExternalLink href="https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html">
+                Finding the key ID and ARN
+              </ExternalLink>
             </>
-            )}
+          }
           showHelpTextOnError={false}
         />
       </GridItem>

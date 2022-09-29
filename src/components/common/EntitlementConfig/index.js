@@ -2,12 +2,12 @@ import { connect } from 'react-redux';
 import EntitlementConfig from './EntitlementConfig';
 import { createRosaEntitlement } from '../../../redux/actions/tokensActions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   fulfilled: state.entitlementConfig.fulfilled,
   pending: state.entitlementConfig.pending,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   createRosaEntitlement: () => dispatch(createRosaEntitlement()),
 });
 

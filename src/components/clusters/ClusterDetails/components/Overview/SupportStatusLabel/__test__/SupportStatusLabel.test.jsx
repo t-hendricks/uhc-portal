@@ -16,7 +16,9 @@ describe('<SupportStatusLabel />', () => {
   let getSupportStatus;
   beforeEach(() => {
     getSupportStatus = jest.fn();
-    wrapper = shallow(<SupportStatusLabel getSupportStatus={getSupportStatus} clusterVersion="4.5" />);
+    wrapper = shallow(
+      <SupportStatusLabel getSupportStatus={getSupportStatus} clusterVersion="4.5" />,
+    );
   });
 
   it('should render', () => {

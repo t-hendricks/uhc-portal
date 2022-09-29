@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type UserSetting = {
-    setting?: string;
+  setting?: string;
 };
-

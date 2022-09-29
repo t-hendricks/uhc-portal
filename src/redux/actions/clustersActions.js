@@ -18,7 +18,10 @@ import isEmpty from 'lodash/isEmpty';
 
 import { clustersConstants } from '../constants';
 import {
-  accountsService, assistedService, authorizationsService, clusterService,
+  accountsService,
+  assistedService,
+  authorizationsService,
+  clusterService,
 } from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
 import { subscriptionStatuses } from '../../common/subscriptionTypes';
@@ -30,16 +33,15 @@ import {
   mapListResponse,
   normalizeMetrics,
 } from '../../common/normalize';
-import {
-  postSchedule,
-} from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
+import { postSchedule } from '../../components/clusters/common/Upgrades/clusterUpgradeActions';
 import { editSubscriptionSettings } from './subscriptionSettingsActions';
 import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
 
-const invalidateClusters = () => dispatch => dispatch({
-  type: INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
-});
+const invalidateClusters = () => (dispatch) =>
+  dispatch({
+    type: INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
+  });
 
 const createClusterAndUpgradeSchedule = async (cluster, upgradeSchedule, dispatch) => {
   const clusterResponse = await clusterService.postNewCluster(cluster);
@@ -51,13 +53,16 @@ const createClusterAndUpgradeSchedule = async (cluster, upgradeSchedule, dispatc
   return clusterResponse;
 };
 
-const createCluster = (params, upgradeSchedule) => dispatch => dispatch({
-  type: clustersConstants.CREATE_CLUSTER,
-  payload: createClusterAndUpgradeSchedule(params, upgradeSchedule, dispatch),
-});
+const createCluster = (params, upgradeSchedule) => (dispatch) =>
+  dispatch({
+    type: clustersConstants.CREATE_CLUSTER,
+    payload: createClusterAndUpgradeSchedule(params, upgradeSchedule, dispatch),
+  });
 
 const registerClusterAndUpdateSubscription = async (
-  registrationRequest, subscriptionRequest, dispatch,
+  registrationRequest,
+  subscriptionRequest,
+  dispatch,
 ) => {
   const registerClusterResponse = await accountsService.registerDisconnected(registrationRequest);
 
@@ -68,28 +73,32 @@ const registerClusterAndUpdateSubscription = async (
   return registerClusterResponse;
 };
 
-const registerDisconnectedCluster = (registrationRequest, subscriptionRequest) => dispatch => (
+const registerDisconnectedCluster = (registrationRequest, subscriptionRequest) => (dispatch) =>
   dispatch({
     type: clustersConstants.CREATE_CLUSTER,
     payload: registerClusterAndUpdateSubscription(
-      registrationRequest, subscriptionRequest, dispatch,
+      registrationRequest,
+      subscriptionRequest,
+      dispatch,
     ),
-  })
-);
+  });
 
-const clearClusterResponse = () => dispatch => dispatch({
-  type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
-});
+const clearClusterResponse = () => (dispatch) =>
+  dispatch({
+    type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
+  });
 
-const editCluster = (id, cluster) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER,
-  payload: clusterService.editCluster(id, cluster),
-});
+const editCluster = (id, cluster) => (dispatch) =>
+  dispatch({
+    type: clustersConstants.EDIT_CLUSTER,
+    payload: clusterService.editCluster(id, cluster),
+  });
 
-const editClusterDisplayName = (subscriptionID, displayName) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER,
-  payload: accountsService.editSubscription(subscriptionID, { display_name: displayName }),
-});
+const editClusterDisplayName = (subscriptionID, displayName) => (dispatch) =>
+  dispatch({
+    type: clustersConstants.EDIT_CLUSTER,
+    payload: accountsService.editSubscription(subscriptionID, { display_name: displayName }),
+  });
 
 /** Build a notification
  * Meta object with notifications. Notifications middleware uses it to get prepared to response to:
@@ -114,59 +123,70 @@ const buildNotificationsMeta = (name, action) => ({
   },
 });
 
-const archiveCluster = (id, name) => dispatch => dispatch({
-  type: clustersConstants.ARCHIVE_CLUSTER,
-  payload: clusterService.archiveCluster(id),
-  meta: buildNotificationsMeta(name, 'archive'),
-});
+const archiveCluster = (id, name) => (dispatch) =>
+  dispatch({
+    type: clustersConstants.ARCHIVE_CLUSTER,
+    payload: clusterService.archiveCluster(id),
+    meta: buildNotificationsMeta(name, 'archive'),
+  });
 
-const clearClusterArchiveResponse = () => dispatch => dispatch({
-  type: clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE,
-});
+const clearClusterArchiveResponse = () => (dispatch) =>
+  dispatch({
+    type: clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE,
+  });
 
-const upgradeTrialCluster = (id, params) => dispatch => dispatch({
-  type: clustersConstants.UPGRADE_TRIAL_CLUSTER,
-  payload: clusterService.upgradeTrialCluster(id, params),
-});
+const upgradeTrialCluster = (id, params) => (dispatch) =>
+  dispatch({
+    type: clustersConstants.UPGRADE_TRIAL_CLUSTER,
+    payload: clusterService.upgradeTrialCluster(id, params),
+  });
 
-const clearUpgradeTrialClusterResponse = () => dispatch => dispatch({
-  type: clustersConstants.CLEAR_UPGRADE_TRIAL_CLUSTER_RESPONSE,
-});
+const clearUpgradeTrialClusterResponse = () => (dispatch) =>
+  dispatch({
+    type: clustersConstants.CLEAR_UPGRADE_TRIAL_CLUSTER_RESPONSE,
+  });
 
-const hibernateCluster = id => dispatch => dispatch({
-  type: clustersConstants.HIBERNATE_CLUSTER,
-  payload: clusterService.hibernateCluster(id),
-});
+const hibernateCluster = (id) => (dispatch) =>
+  dispatch({
+    type: clustersConstants.HIBERNATE_CLUSTER,
+    payload: clusterService.hibernateCluster(id),
+  });
 
-const clearHibernateClusterResponse = () => dispatch => dispatch({
-  type: clustersConstants.CLEAR_CLUSTER_HIBERNATE_RESPONSE,
-});
+const clearHibernateClusterResponse = () => (dispatch) =>
+  dispatch({
+    type: clustersConstants.CLEAR_CLUSTER_HIBERNATE_RESPONSE,
+  });
 
-const resumeCluster = id => dispatch => dispatch({
-  type: clustersConstants.RESUME_CLUSTER,
-  payload: clusterService.resumeCluster(id),
-});
+const resumeCluster = (id) => (dispatch) =>
+  dispatch({
+    type: clustersConstants.RESUME_CLUSTER,
+    payload: clusterService.resumeCluster(id),
+  });
 
-const clearResumeClusterResponse = () => dispatch => dispatch({
-  type: clustersConstants.CLEAR_RESUME_CLUSTER_RESPONSE,
-});
+const clearResumeClusterResponse = () => (dispatch) =>
+  dispatch({
+    type: clustersConstants.CLEAR_RESUME_CLUSTER_RESPONSE,
+  });
 
-const unarchiveCluster = (id, name) => dispatch => dispatch({
-  type: clustersConstants.UNARCHIVE_CLUSTER,
-  payload: clusterService.unarchiveCluster(id),
-  meta: buildNotificationsMeta(name, 'unarchive'),
-});
+const unarchiveCluster = (id, name) => (dispatch) =>
+  dispatch({
+    type: clustersConstants.UNARCHIVE_CLUSTER,
+    payload: clusterService.unarchiveCluster(id),
+    meta: buildNotificationsMeta(name, 'unarchive'),
+  });
 
-const clearClusterUnarchiveResponse = () => dispatch => dispatch({
-  type: clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE,
-});
+const clearClusterUnarchiveResponse = () => (dispatch) =>
+  dispatch({
+    type: clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE,
+  });
 
-const editClusterConsoleURL = (id, subscriptionID, consoleURL) => dispatch => dispatch({
-  type: clustersConstants.EDIT_CLUSTER,
-  payload: clusterService.editCluster(id, { console: { url: consoleURL } }).then(
-    () => accountsService.editSubscription(subscriptionID, { console_url: consoleURL }),
-  ),
-});
+const editClusterConsoleURL = (id, subscriptionID, consoleURL) => (dispatch) =>
+  dispatch({
+    type: clustersConstants.EDIT_CLUSTER,
+    payload: clusterService
+      .editCluster(id, { console: { url: consoleURL } })
+      .then(() => accountsService.editSubscription(subscriptionID, { console_url: consoleURL })),
+  });
 
 /**
  * Collect a list of object IDs and build a SQL-like query searching for these IDs.
@@ -191,9 +211,12 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
   const result = [];
   subscriptionMap.forEach((entry) => {
     let cluster;
-    if (entry.subscription.managed
-      && entry.subscription.status !== subscriptionStatuses.DEPROVISIONED
-      && !!entry?.cluster && !isEmpty(entry?.cluster)) {
+    if (
+      entry.subscription.managed &&
+      entry.subscription.status !== subscriptionStatuses.DEPROVISIONED &&
+      !!entry?.cluster &&
+      !isEmpty(entry?.cluster)
+    ) {
       // managed cluster, with data from Clusters Service
       cluster = normalizeCluster(entry.cluster);
       cluster.metrics = normalizeMetrics(entry.subscription.metrics);
@@ -206,7 +229,10 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
     // mark this as a clusters service cluster with partial data (happens when CS is down)
     cluster.partialCS = cluster.managed && (!entry?.cluster || isEmpty(entry?.cluster));
 
-    cluster.canEdit = !cluster.partialCS && ((canEdit['*'] || !!canEdit[cluster.id]) && entry.subscription.status !== subscriptionStatuses.DEPROVISIONED);
+    cluster.canEdit =
+      !cluster.partialCS &&
+      (canEdit['*'] || !!canEdit[cluster.id]) &&
+      entry.subscription.status !== subscriptionStatuses.DEPROVISIONED;
     cluster.canDelete = !cluster.partialCS && (canDelete['*'] || !!canDelete[cluster.id]);
     cluster.subscription = entry.subscription;
     result.push(cluster);
@@ -223,120 +249,130 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
     accountsService.getSubscriptions(clusterRequestParams).then((response) => {
       subscriptions = mapListResponse(response, normalizeSubscription);
     }),
-    authorizationsService.selfResourceReview(
-      { action: 'delete', resource_type: 'Cluster' },
-    ).then((response) => { canDelete = buildPermissionDict(response); }),
-    authorizationsService.selfResourceReview(
-      { action: 'update', resource_type: 'Cluster' },
-    ).then((response) => { canEdit = buildPermissionDict(response); }),
+    authorizationsService
+      .selfResourceReview({ action: 'delete', resource_type: 'Cluster' })
+      .then((response) => {
+        canDelete = buildPermissionDict(response);
+      }),
+    authorizationsService
+      .selfResourceReview({ action: 'update', resource_type: 'Cluster' })
+      .then((response) => {
+        canEdit = buildPermissionDict(response);
+      }),
   ];
 
-  return Promise.all(promises)
-    .then(() => {
-      const items = subscriptions?.data?.items.filter(
-        item => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
-      );
+  return Promise.all(promises).then(() => {
+    const items = subscriptions?.data?.items.filter(
+      (item) => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
+    );
 
-      if (!items) {
-        return subscriptions;
+    if (!items) {
+      return subscriptions;
+    }
+
+    // map subscription ID to subscription info
+    // Note: Map keeps order of insertions.
+    // Will display them in order returned by getSubscriptions().
+    const subscriptionMap = new Map();
+    items.forEach((item) =>
+      subscriptionMap.set(item.cluster_id, {
+        subscription: item,
+      }),
+    );
+
+    const enrichForClusterService = () => {
+      // clusters-service only needed for managed clusters.
+      const managedSubsriptions = items.filter(
+        (s) => s.managed && s.status !== subscriptionStatuses.DEPROVISIONED,
+      );
+      if (managedSubsriptions.length === 0) {
+        return {
+          data: {
+            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
+            page: subscriptions.data.page,
+            total: subscriptions.data.total || 0,
+            queryParams: { ...clusterRequestParams },
+          },
+        };
       }
 
-      // map subscription ID to subscription info
-      // Note: Map keeps order of insertions.
-      // Will display them in order returned by getSubscriptions().
-      const subscriptionMap = new Map();
-      items.forEach(item => subscriptionMap.set(item.cluster_id, {
-        subscription: item,
-      }));
-
-      const enrichForClusterService = () => {
-        // clusters-service only needed for managed clusters.
-        const managedSubsriptions = items.filter(s => s.managed
-          && s.status !== subscriptionStatuses.DEPROVISIONED);
-        if (managedSubsriptions.length === 0) {
+      // fetch managed clusters by subscription
+      const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
+      return clusterService
+        .getClusters(clustersQuery)
+        .then((response) => {
+          const clusters = response?.data?.items;
+          clusters.forEach((cluster) => {
+            const entry = subscriptionMap.get(cluster.id);
+            if (entry !== undefined) {
+              // store cluster into subscription map
+              entry.cluster = cluster;
+              subscriptionMap.set(cluster.id, entry);
+            }
+          });
           return {
             data: {
               items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
               page: subscriptions.data.page,
               total: subscriptions.data.total || 0,
               queryParams: { ...clusterRequestParams },
+              meta: {
+                clustersServiceError: false,
+              },
             },
           };
-        }
-
-        // fetch managed clusters by subscription
-        const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
-        return clusterService.getClusters(clustersQuery)
-          .then((response) => {
-            const clusters = response?.data?.items;
-            clusters.forEach((cluster) => {
-              const entry = subscriptionMap.get(cluster.id);
-              if (entry !== undefined) {
-                // store cluster into subscription map
-                entry.cluster = cluster;
-                subscriptionMap.set(cluster.id, entry);
-              }
-            });
-            return {
-              data: {
-                items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-                page: subscriptions.data.page,
-                total: subscriptions.data.total || 0,
-                queryParams: { ...clusterRequestParams },
-                meta: {
-                  clustersServiceError: false,
-                },
-              },
-            };
-          }).catch(e => ({
-            // When clusters service is down, return AMS data only
-            data: {
-              items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
-              page: subscriptions.data.page,
-              total: subscriptions.data.total || 0,
-              queryParams: { ...clusterRequestParams },
-              meta: {
-                clustersServiceError: e,
-              },
+        })
+        .catch((e) => ({
+          // When clusters service is down, return AMS data only
+          data: {
+            items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
+            page: subscriptions.data.page,
+            total: subscriptions.data.total || 0,
+            queryParams: { ...clusterRequestParams },
+            meta: {
+              clustersServiceError: e,
             },
-          }));
-      };
+          },
+        }));
+    };
 
-      const subscriptionIds = [];
-      if (aiMergeListsFeatureFlag) {
-        subscriptionMap.forEach(({ subscription }) => {
-          if (isAssistedInstallSubscription(subscription)) {
-            subscriptionIds.push(subscription.id);
-          }
-        });
-      }
+    const subscriptionIds = [];
+    if (aiMergeListsFeatureFlag) {
+      subscriptionMap.forEach(({ subscription }) => {
+        if (isAssistedInstallSubscription(subscription)) {
+          subscriptionIds.push(subscription.id);
+        }
+      });
+    }
 
-      // Performing a batch request to obtain the AI clusters data.
-      const aiClustersRequest = subscriptionIds.length === 0
+    // Performing a batch request to obtain the AI clusters data.
+    const aiClustersRequest =
+      subscriptionIds.length === 0
         ? Promise.resolve({ data: [] })
         : assistedService.getAIClustersBySubscription(subscriptionIds);
-      return aiClustersRequest.then((res) => {
-        const aiClusters = res.data || [];
-        aiClusters.forEach((aiCluster) => {
-          const clusterId = aiCluster.id;
-          const entry = subscriptionMap.get(clusterId);
-          if (entry) {
-            entry.cluster = aiCluster;
-            subscriptionMap.set(clusterId, entry);
-          }
-        });
-        return enrichForClusterService();
+    return aiClustersRequest.then((res) => {
+      const aiClusters = res.data || [];
+      aiClusters.forEach((aiCluster) => {
+        const clusterId = aiCluster.id;
+        const entry = subscriptionMap.get(clusterId);
+        if (entry) {
+          entry.cluster = aiCluster;
+          subscriptionMap.set(clusterId, entry);
+        }
       });
+      return enrichForClusterService();
     });
+  });
 };
 
-const fetchClusters = params => (dispatch, getState) => dispatch({
-  type: clustersConstants.GET_CLUSTERS,
-  payload: fetchClustersAndPermissions(
-    params,
-    getState().features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE],
-  ),
-});
+const fetchClusters = (params) => (dispatch, getState) =>
+  dispatch({
+    type: clustersConstants.GET_CLUSTERS,
+    payload: fetchClustersAndPermissions(
+      params,
+      getState().features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE],
+    ),
+  });
 
 const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   let canEdit;
@@ -347,33 +383,57 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   subscription.data = normalizeSubscription(subscription.data);
 
   if (subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
-    await authorizationsService.selfAccessReview(
-      { action: 'update', resource_type: 'Subscription', subscription_id: subscriptionID },
-    ).then((response) => { canEdit = response.data.allowed; });
-    await authorizationsService.selfAccessReview(
-      { action: 'create', resource_type: 'SubscriptionRoleBinding', subscription_id: subscriptionID },
-    ).then((response) => { canEditOCMRoles = response.data.allowed; });
-    await authorizationsService.selfAccessReview(
-      { action: 'get', resource_type: 'SubscriptionRoleBinding', subscription_id: subscriptionID },
-    ).then((response) => { canViewOCMRoles = response.data.allowed; });
+    await authorizationsService
+      .selfAccessReview({
+        action: 'update',
+        resource_type: 'Subscription',
+        subscription_id: subscriptionID,
+      })
+      .then((response) => {
+        canEdit = response.data.allowed;
+      });
+    await authorizationsService
+      .selfAccessReview({
+        action: 'create',
+        resource_type: 'SubscriptionRoleBinding',
+        subscription_id: subscriptionID,
+      })
+      .then((response) => {
+        canEditOCMRoles = response.data.allowed;
+      });
+    await authorizationsService
+      .selfAccessReview({
+        action: 'get',
+        resource_type: 'SubscriptionRoleBinding',
+        subscription_id: subscriptionID,
+      })
+      .then((response) => {
+        canViewOCMRoles = response.data.allowed;
+      });
   }
 
-  if (subscription.data.managed
-    && subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
+  if (
+    subscription.data.managed &&
+    subscription.data.status !== subscriptionStatuses.DEPROVISIONED
+  ) {
     const cluster = await clusterService.getClusterDetails(subscription.data.cluster_id);
     cluster.data = normalizeCluster(cluster.data);
 
-    const upgradeGates = await clusterService
-      .getClusterGateAgreements(subscription.data.cluster_id);
+    const upgradeGates = await clusterService.getClusterGateAgreements(
+      subscription.data.cluster_id,
+    );
 
     cluster.data.upgradeGates = upgradeGates.data?.items || [];
 
-    const canDeleteAccessReviewResponse = await authorizationsService.selfAccessReview(
-      { action: 'delete', resource_type: 'Cluster', cluster_id: subscription.data.cluster_id },
-    );
+    const canDeleteAccessReviewResponse = await authorizationsService.selfAccessReview({
+      action: 'delete',
+      resource_type: 'Cluster',
+      cluster_id: subscription.data.cluster_id,
+    });
 
-    const limitedSupportReasons = await clusterService
-      .getLimitedSupportReasons(subscription.data.cluster_id);
+    const limitedSupportReasons = await clusterService.getLimitedSupportReasons(
+      subscription.data.cluster_id,
+    );
     cluster.data.limitedSupportReasons = limitedSupportReasons.data?.items || [];
 
     cluster.data.canEdit = canEdit;
@@ -400,7 +460,10 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
       if (e.response?.status === 404) {
         // The cluster is garbage collected or the user does not have privileges
         // eslint-disable-next-line no-console
-        console.info('Failed to query assisted-installer cluster id: ', subscription.data.cluster_id);
+        console.info(
+          'Failed to query assisted-installer cluster id: ',
+          subscription.data.cluster_id,
+        );
         cluster.data = fakeClusterFromSubscription(subscription.data);
       } else {
         throw e;
@@ -410,7 +473,9 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
       const { data: featureSupportLevels } = await assistedService.getAIFeatureSupportLevels();
       cluster.data.aiSupportLevels = featureSupportLevels;
     } catch (e) {
-      Sentry.captureException(new Error(`Failed to query feature support levels: ${JSON.stringify(e.response?.data)}`));
+      Sentry.captureException(
+        new Error(`Failed to query feature support levels: ${JSON.stringify(e.response?.data)}`),
+      );
     }
   } else {
     cluster.data = fakeClusterFromSubscription(subscription.data);
@@ -424,34 +489,41 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   return cluster;
 };
 
-const fetchClusterDetails = subscriptionID => (dispatch) => {
+const fetchClusterDetails = (subscriptionID) => (dispatch) => {
   dispatch({
     type: clustersConstants.GET_CLUSTER_DETAILS,
     payload: fetchSingleClusterAndPermissions(subscriptionID),
   });
 };
 
-const setClusterDetails = (cluster, mergeDetails = false) => dispatch => dispatch({
-  type: clustersConstants.SET_CLUSTER_DETAILS,
-  payload: { cluster, mergeDetails },
-});
+const setClusterDetails =
+  (cluster, mergeDetails = false) =>
+  (dispatch) =>
+    dispatch({
+      type: clustersConstants.SET_CLUSTER_DETAILS,
+      payload: { cluster, mergeDetails },
+    });
 
-const clearClusterDetails = () => dispatch => dispatch({
-  type: clustersConstants.CLEAR_CLUSTER_DETAILS,
-});
-const resetCreatedClusterResponse = () => dispatch => dispatch({
-  type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
-});
+const clearClusterDetails = () => (dispatch) =>
+  dispatch({
+    type: clustersConstants.CLEAR_CLUSTER_DETAILS,
+  });
+const resetCreatedClusterResponse = () => (dispatch) =>
+  dispatch({
+    type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
+  });
 
-const getClusterStatus = clusterID => dispatch => dispatch({
-  type: clustersConstants.GET_CLUSTER_STATUS,
-  payload: clusterService.getClusterStatus(clusterID),
-});
+const getClusterStatus = (clusterID) => (dispatch) =>
+  dispatch({
+    type: clustersConstants.GET_CLUSTER_STATUS,
+    payload: clusterService.getClusterStatus(clusterID),
+  });
 
-const getInstallableVersions = isRosa => dispatch => dispatch({
-  type: clustersConstants.GET_CLUSTER_VERSIONS,
-  payload: clusterService.getInstallableVersions(isRosa),
-});
+const getInstallableVersions = (isRosa) => (dispatch) =>
+  dispatch({
+    type: clustersConstants.GET_CLUSTER_VERSIONS,
+    payload: clusterService.getInstallableVersions(isRosa),
+  });
 
 const clustersActions = {
   clearClusterResponse,

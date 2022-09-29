@@ -1,13 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  AlertActionLink, Grid, GridItem, Text, TextContent, TextVariants,
+  AlertActionLink,
+  Grid,
+  GridItem,
+  Text,
+  TextContent,
+  TextVariants,
 } from '@patternfly/react-core';
 
 import { trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import InstructionCommand from '../../../../common/InstructionCommand';
-import { rosaOcmRoleCLICommands } from './AssociateAWSAccountModal/OCMRoleScreen/OCMRoleScreen';
+import { RosaCliCommand } from './constants/cliCommands';
 
 const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
   <TextContent className="ocm-alert-text">
@@ -20,62 +25,58 @@ const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
     <Grid>
       <GridItem sm={12} md={5}>
         <strong>
-          Basic OCM role
-          {' '}
-          <PopoverHint
-            bodyContent="One basic OCM role is needed per Red Hat organization to allow OpenShift Cluster Manager to detect the presence of AWS roles and policies required for ROSA."
-          />
+          Basic OCM role{' '}
+          <PopoverHint bodyContent="One basic OCM role is needed per Red Hat organization to allow OpenShift Cluster Manager to detect the presence of AWS roles and policies required for ROSA." />
         </strong>
-        <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role" trackEvent={trackEvents.CopyOCMRoleCreateBasic}>
-          {rosaOcmRoleCLICommands.ocmRole}
+        <InstructionCommand
+          textAriaLabel="Copyable ROSA create ocm-role"
+          trackEvent={trackEvents.CopyOCMRoleCreateBasic}
+        >
+          {RosaCliCommand.OcmRole}
         </InstructionCommand>
       </GridItem>
       <GridItem sm={12} md={1} className="ocm-wizard-or-container">
-        <p>
-          OR
-        </p>
+        <p>OR</p>
       </GridItem>
       <GridItem sm={12} md={6}>
         <strong>
-          Admin OCM role
-          {' '}
-          <PopoverHint
-            bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually during deployment"
-          />
+          Admin OCM role{' '}
+          <PopoverHint bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually during deployment" />
         </strong>
-        <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --admin" trackEvent={trackEvents.CopyOCMRoleCreateAdmin}>
-          {rosaOcmRoleCLICommands.adminOcmRole}
+        <InstructionCommand
+          textAriaLabel="Copyable ROSA create ocm-role --admin"
+          trackEvent={trackEvents.CopyOCMRoleCreateAdmin}
+        >
+          {RosaCliCommand.AdminOcmRole}
         </InstructionCommand>
       </GridItem>
     </Grid>
     <br />
-    <Text component={TextVariants.p}>
-      If a role exists but is not linked, link it with:
-    </Text>
+    <Text component={TextVariants.p}>If a role exists but is not linked, link it with:</Text>
     <Grid>
       <GridItem sm={7} md={5}>
-        <InstructionCommand textAriaLabel="Copyable ROSA create ocm-role --arn" trackEvent={trackEvents.CopyOCMRoleLink}>
-          {rosaOcmRoleCLICommands.linkOcmRole}
+        <InstructionCommand
+          textAriaLabel="Copyable ROSA create ocm-role --arn"
+          trackEvent={trackEvents.CopyOCMRoleLink}
+        >
+          {RosaCliCommand.LinkOcmRole}
         </InstructionCommand>
       </GridItem>
       <GridItem sm={1} md={1}>
         <PopoverHint
           iconClassName="ocm-instructions__command-help-icon"
           hint="Check if the role is linked to your Red Hat organization by running the following command:"
-          footer={(
+          footer={
             <InstructionCommand textAriaLabel="Copyable ROSA rosa list ocm-role">
               rosa list ocm-role
             </InstructionCommand>
-          )}
+          }
         />
       </GridItem>
     </Grid>
     <Text component={TextVariants.h6}>
-      After creating and linking your OCM role, click
-      {' '}
-      <strong>Refresh ARNs</strong>
-      {' '}
-      to populate the ARN fields and continue creating your cluster.
+      After creating and linking your OCM role, click <strong>Refresh ARNs</strong> to populate the
+      ARN fields and continue creating your cluster.
     </Text>
     <AlertActionLink onClick={() => openOcmRoleInstructionsModal()}>
       See more information about configuring OCM roles

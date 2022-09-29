@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormSelect, FormSelectOption,
-} from '@patternfly/react-core';
+import { FormSelect, FormSelectOption } from '@patternfly/react-core';
 
 class KMSKeyLocationComboBox extends React.Component {
   componentDidMount() {
@@ -20,16 +18,9 @@ class KMSKeyLocationComboBox extends React.Component {
   render() {
     const { kmsRegionsArray, input } = this.props;
     return (
-      <FormSelect
-        aria-label="KMS location"
-        {...input}
-      >
-        {kmsRegionsArray.map(location => (
-          <FormSelectOption
-            key={location}
-            value={location}
-            label={location}
-          />
+      <FormSelect aria-label="KMS location" {...input}>
+        {kmsRegionsArray.map((location) => (
+          <FormSelectOption key={location} value={location} label={location} />
         ))}
       </FormSelect>
     );

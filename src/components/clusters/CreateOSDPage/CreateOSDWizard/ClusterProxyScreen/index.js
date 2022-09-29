@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   sendError: () => {
     // 'invalid file' is a magic string that triggers a validation error
     // in src/common/validators.js validateCA function

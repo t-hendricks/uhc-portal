@@ -96,15 +96,19 @@ describe('rosaActions', () => {
       expect(AWSAccountRoles.length).toEqual(2);
 
       // prefix = 'croche-test'
-      expect(AWSAccountRoles[0].Installer)
-        .toEqual('arn:aws:iam::765374464689:role/croche-test-Installer-Role');
-      expect(AWSAccountRoles[0].ControlPlane)
-        .toEqual('arn:aws:iam::765374464689:role/croche-test-ControlPlane-Role');
+      expect(AWSAccountRoles[0].Installer).toEqual(
+        'arn:aws:iam::765374464689:role/croche-test-Installer-Role',
+      );
+      expect(AWSAccountRoles[0].ControlPlane).toEqual(
+        'arn:aws:iam::765374464689:role/croche-test-ControlPlane-Role',
+      );
       // prefix = 'ManagedOpenShift'
-      expect(AWSAccountRoles[1].Installer)
-        .toEqual('arn:aws:iam::765374464689:role/ManagedOpenShift-Installer-Role');
-      expect(AWSAccountRoles[1].Support)
-        .toEqual('arn:aws:iam::765374464689:role/ManagedOpenShift-Support-Role');
+      expect(AWSAccountRoles[1].Installer).toEqual(
+        'arn:aws:iam::765374464689:role/ManagedOpenShift-Installer-Role',
+      );
+      expect(AWSAccountRoles[1].Support).toEqual(
+        'arn:aws:iam::765374464689:role/ManagedOpenShift-Support-Role',
+      );
     });
   });
 });

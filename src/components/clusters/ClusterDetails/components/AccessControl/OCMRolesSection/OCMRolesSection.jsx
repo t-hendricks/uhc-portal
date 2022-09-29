@@ -5,14 +5,16 @@ import map from 'lodash/map';
 import get from 'lodash/get';
 import { HelpIcon } from '@patternfly/react-icons';
 import {
-  Title, Button, Popover, PopoverPosition, Card, CardTitle, CardBody, CardFooter,
+  Title,
+  Button,
+  Popover,
+  PopoverPosition,
+  Card,
+  CardTitle,
+  CardBody,
+  CardFooter,
 } from '@patternfly/react-core';
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableVariant,
-} from '@patternfly/react-table';
+import { Table, TableHeader, TableBody, TableVariant } from '@patternfly/react-table';
 
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 
@@ -88,9 +90,13 @@ function OCMRolesSection({
     }
 
     if (!canViewOCMRoles) {
-      setDisableReason("You don't have permission to view user roles in your organization. Only the Cluster Owner, Cluster Editor, and the Organization Admin have the permission.");
+      setDisableReason(
+        "You don't have permission to view user roles in your organization. Only the Cluster Owner, Cluster Editor, and the Organization Admin have the permission.",
+      );
     } else if (!canEditOCMRoles) {
-      setDisableReason("You don't have permission to configure user roles in your organization. Only the Cluster Owner and the Organization Admin have the permission.");
+      setDisableReason(
+        "You don't have permission to configure user roles in your organization. Only the Cluster Owner and the Organization Admin have the permission.",
+      );
     } else {
       setDisableReason('');
     }
@@ -120,19 +126,15 @@ function OCMRolesSection({
       // update the rows
       setPageLoading(null);
       const items = get(getOCMRolesResponse, 'data.items', []);
-      const updatedRows = map(
-        items,
-        (item, rowIdx) => (new OCMRolesRow(item, rowIdx)),
-      );
+      const updatedRows = map(items, (item, rowIdx) => new OCMRolesRow(item, rowIdx));
       setRows(updatedRows);
       setErrorBox(null);
     } else if (getOCMRolesResponse.error) {
       // display error
       setPageLoading(null);
-      setErrorBox(<ErrorBox
-        message="Error getting OCM roles and access"
-        response={getOCMRolesResponse}
-      />);
+      setErrorBox(
+        <ErrorBox message="Error getting OCM roles and access" response={getOCMRolesResponse} />,
+      );
       clearPendingRow();
     }
   }, [getOCMRolesResponse]);
@@ -160,10 +162,12 @@ function OCMRolesSection({
       setErrorBox(null);
     } else if (editOCMRoleResponse.error) {
       // display error
-      setErrorBox(<ErrorBox
-        message="Error updating the access for the user"
-        response={editOCMRoleResponse}
-      />);
+      setErrorBox(
+        <ErrorBox
+          message="Error updating the access for the user"
+          response={editOCMRoleResponse}
+        />,
+      );
       clearPendingRow();
     }
   }, [editOCMRoleResponse]);
@@ -178,10 +182,12 @@ function OCMRolesSection({
       setErrorBox(null);
     } else if (deleteOCMRoleResponse.error) {
       // display error
-      setErrorBox(<ErrorBox
-        message="Error removing the role from the user"
-        response={deleteOCMRoleResponse}
-      />);
+      setErrorBox(
+        <ErrorBox
+          message="Error removing the role from the user"
+          response={deleteOCMRoleResponse}
+        />,
+      );
       clearPendingRow();
     }
   }, [deleteOCMRoleResponse]);
@@ -193,11 +199,9 @@ function OCMRolesSection({
         position={PopoverPosition.top}
         aria-label="Username"
         id="ocm-roles-section-username"
-        bodyContent={(
-          <p>
-            The username is the Red Hat login that is used to access the Red Hat account.
-          </p>
-        )}
+        bodyContent={
+          <p>The username is the Red Hat login that is used to access the Red Hat account.</p>
+        }
       >
         <Button variant="plain" isInline>
           <HelpIcon size="sm" />
@@ -214,11 +218,7 @@ function OCMRolesSection({
         position={PopoverPosition.top}
         aria-label="Role"
         id="ocm-roles-section-role"
-        bodyContent={(
-          <p>
-            The OpenShift Cluster Manager role that is granted to this user.
-          </p>
-        )}
+        bodyContent={<p>The OpenShift Cluster Manager role that is granted to this user.</p>}
       >
         <Button variant="plain" isInline>
           <HelpIcon size="sm" />
@@ -287,10 +287,12 @@ function OCMRolesSection({
   ) : (
     <Card>
       <CardBody>
-        <Title className="card-title" headingLevel="h3" size="lg">OCM Roles and Access</Title>
+        <Title className="card-title" headingLevel="h3" size="lg">
+          OCM Roles and Access
+        </Title>
         <p>
-          Allow users in your organization to edit clusters.
-          These permissions only apply to cluster management in OpenShift Cluster Manager.
+          Allow users in your organization to edit clusters. These permissions only apply to cluster
+          management in OpenShift Cluster Manager.
         </p>
         <ButtonWithTooltip
           onClick={handleGrantRoleButtonClick}
@@ -302,8 +304,15 @@ function OCMRolesSection({
         </ButtonWithTooltip>
       </CardBody>
       <CardBody>
-        { errorBox }
-        <Table aria-label="OCM Roles and Access" actions={actions} variant={TableVariant.compact} cells={columns} rows={rows} areActionsDisabled={() => !!disableReason}>
+        {errorBox}
+        <Table
+          aria-label="OCM Roles and Access"
+          actions={actions}
+          variant={TableVariant.compact}
+          cells={columns}
+          rows={rows}
+          areActionsDisabled={() => !!disableReason}
+        >
           <TableHeader />
           <TableBody />
         </Table>

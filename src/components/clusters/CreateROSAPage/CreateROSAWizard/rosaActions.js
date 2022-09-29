@@ -28,34 +28,39 @@ export const getAWSIDsFromARNs = (arns) => {
  *   { Installer: 'arn:..croche-test-Installer-Role', ControlPlane: 'arn:...' ...}
  * ]
  */
-export const normalizeAWSAccountRoles = accountRoles => (accountRoles?.items || [])
-  .map(accountRole => (accountRole?.items || []).reduce((roleObj, { type, arn, roleVersion }) => ({
-    ...roleObj,
-    version: roleVersion,
-    [type]: arn,
-  }),
-  {
-    prefix: accountRole.prefix,
-  }));
+export const normalizeAWSAccountRoles = (accountRoles) =>
+  (accountRoles?.items || []).map((accountRole) =>
+    (accountRole?.items || []).reduce(
+      (roleObj, { type, arn, roleVersion }) => ({
+        ...roleObj,
+        version: roleVersion,
+        [type]: arn,
+      }),
+      {
+        prefix: accountRole.prefix,
+      },
+    ),
+  );
 
-export const getAWSAccountIDs = organizationID => dispatch => dispatch({
-  type: LIST_ASSOCIATED_AWS_IDS,
-  payload: accountsService.getOrganizationLabels(organizationID).then((response) => {
-    if (!response.data || !response.data.items) {
-      return [];
-    }
-    // "key": "sts_ocm_role",
-    // value is a comma separated list of ARNs:
-    // Ex: "value": "arn:aws:iam::268733382466:role/ManagedOpenShift-OCM-Role-15212158, ...",
-    const stsOCMRoleLabel = response.data.items.filter(label => label.key === 'sts_ocm_role');
-    const stsOCMRoleValue = stsOCMRoleLabel[0]?.value ?? '';
-    const arns = stsOCMRoleValue === '' ? [] : stsOCMRoleValue.split(',');
-    const awsAccountIDs = getAWSIDsFromARNs(arns);
-    return awsAccountIDs;
-  }),
-});
+export const getAWSAccountIDs = (organizationID) => (dispatch) =>
+  dispatch({
+    type: LIST_ASSOCIATED_AWS_IDS,
+    payload: accountsService.getOrganizationLabels(organizationID).then((response) => {
+      if (!response.data || !response.data.items) {
+        return [];
+      }
+      // "key": "sts_ocm_role",
+      // value is a comma separated list of ARNs:
+      // Ex: "value": "arn:aws:iam::268733382466:role/ManagedOpenShift-OCM-Role-15212158, ...",
+      const stsOCMRoleLabel = response.data.items.filter((label) => label.key === 'sts_ocm_role');
+      const stsOCMRoleValue = stsOCMRoleLabel[0]?.value ?? '';
+      const arns = stsOCMRoleValue === '' ? [] : stsOCMRoleValue.split(',');
+      const awsAccountIDs = getAWSIDsFromARNs(arns);
+      return awsAccountIDs;
+    }),
+  });
 
-export const getAWSAccountRolesARNs = awsAccountID => (dispatch) => {
+export const getAWSAccountRolesARNs = (awsAccountID) => (dispatch) => {
   const accountRoles = [];
   dispatch({
     type: GET_AWS_ACCOUNT_ROLES_ARNS,
@@ -68,19 +73,20 @@ export const getAWSAccountRolesARNs = awsAccountID => (dispatch) => {
   });
 };
 
-export const getOCMRole = awsAccountID => (dispatch) => {
+export const getOCMRole = (awsAccountID) => (dispatch) => {
   dispatch({
     type: GET_OCM_ROLE,
-    payload: accountsService.getOCMRole(awsAccountID).then(response => response?.data),
+    payload: accountsService.getOCMRole(awsAccountID).then((response) => response?.data),
   });
 };
 
 export const getUserRole = () => ({
   type: GET_USER_ROLE,
-  payload: () => accountsService.getCurrentAccount().then(async (accountResponse) => {
-    const accountID = accountResponse?.data?.id;
-    await accountsService.getUserRole(accountID).then(response => response?.data);
-  }),
+  payload: () =>
+    accountsService.getCurrentAccount().then(async (accountResponse) => {
+      const accountID = accountResponse?.data?.id;
+      await accountsService.getUserRole(accountID).then((response) => response?.data);
+    }),
 });
 
 export const clearGetAWSAccountIDsResponse = () => ({

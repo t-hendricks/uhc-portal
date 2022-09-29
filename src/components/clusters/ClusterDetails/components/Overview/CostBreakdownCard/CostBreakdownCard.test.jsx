@@ -27,9 +27,7 @@ const availableState = {
             values: [
               {
                 cluster: 'a94ea9bc-9e4f-4b91-89c2-c7099ec08427',
-                clusters: [
-                  'OCP-OnPrem01',
-                ],
+                clusters: ['OCP-OnPrem01'],
                 infrastructure: {
                   raw: {
                     value: 0,
