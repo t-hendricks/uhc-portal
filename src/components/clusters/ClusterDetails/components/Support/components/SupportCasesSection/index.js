@@ -12,17 +12,17 @@ const mapStateToProps = (state) => {
     },
   } = state.clusterSupport;
 
-  return ({
+  return {
     subscriptionID: cluster.subscription?.id,
     clusterUUID: cluster.external_id,
     product: cluster.subscription?.plan?.type,
     version: cluster.openshift_version,
     supportCases,
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
-  getSupportCases: clusterID => dispatch(supportActions.getSupportCases(clusterID)),
+const mapDispatchToProps = (dispatch) => ({
+  getSupportCases: (clusterID) => dispatch(supportActions.getSupportCases(clusterID)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SupportCasesCard);

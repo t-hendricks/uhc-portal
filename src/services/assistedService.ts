@@ -2,10 +2,7 @@ import { OCM } from 'openshift-assisted-ui-lib';
 
 const {
   Services: {
-    APIs: {
-      ClustersAPI,
-      FeatureSupportLevelsAPI,
-    },
+    APIs: { ClustersAPI, FeatureSupportLevelsAPI },
   },
 } = OCM;
 

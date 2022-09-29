@@ -16,9 +16,7 @@ describe('<Overview />', () => {
       insightsData: {},
       userAccess: fixtures.userAccess,
     };
-    const wrapper = shallow(
-      <Overview {...props} />,
-    );
+    const wrapper = shallow(<Overview {...props} />);
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
@@ -35,9 +33,7 @@ describe('<Overview />', () => {
       insightsData: fixtures.insightsData,
       userAccess: fixtures.userAccess,
     };
-    const wrapper = shallow(
-      <Overview {...props} />,
-    );
+    const wrapper = shallow(<Overview {...props} />);
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -63,9 +59,7 @@ describe('<Overview />', () => {
       insightsData: {},
       userAccess: fixtures.userAccess,
     };
-    const wrapper = shallow(
-      <Overview {...props} />,
-    );
+    const wrapper = shallow(<Overview {...props} />);
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
     });
@@ -87,9 +81,7 @@ describe('<Overview />', () => {
       insightsData: fixtures.insightsData,
       userAccess: fixtures.userAccess,
     };
-    const wrapper = shallow(
-      <Overview {...props} />,
-    );
+    const wrapper = shallow(<Overview {...props} />);
     it('should not render side panel', () => {
       expect(wrapper.find('ResourceUsage').length).toEqual(0);
       expect(wrapper.find('InsightsAdvisor').length).toEqual(0);
@@ -111,9 +103,7 @@ describe('<Overview />', () => {
       insightsData: {},
       userAccess: fixtures.userAccess,
     };
-    const wrapper = shallow(
-      <Overview {...props} />,
-    );
+    const wrapper = shallow(<Overview {...props} />);
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();
     });

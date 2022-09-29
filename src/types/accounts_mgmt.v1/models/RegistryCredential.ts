@@ -4,13 +4,12 @@
 
 import type { ObjectReference } from './ObjectReference';
 
-export type RegistryCredential = (ObjectReference & {
-    account?: ObjectReference;
-    created_at?: string;
-    external_resource_id?: string;
-    registry?: ObjectReference;
-    token?: string;
-    updated_at?: string;
-    username?: string;
-});
-
+export type RegistryCredential = ObjectReference & {
+  account?: ObjectReference;
+  created_at?: string;
+  external_resource_id?: string;
+  registry?: ObjectReference;
+  token?: string;
+  updated_at?: string;
+  username?: string;
+};

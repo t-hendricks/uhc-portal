@@ -11,12 +11,7 @@ import {
   EmptyStateBody,
 } from '@patternfly/react-core';
 
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableVariant,
-} from '@patternfly/react-table';
+import { Table, TableHeader, TableBody, TableVariant } from '@patternfly/react-table';
 
 import ViewPaginationRow from '../../clusters/common/ViewPaginationRow/viewPaginationRow';
 import { viewConstants } from '../../../redux/constants';
@@ -36,8 +31,10 @@ class ExpiredTrialsCard extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { getSubscriptions, subscriptions, viewOptions } = this.props;
-    if ((!subscriptions.pending && !subscriptions.valid)
-        || viewPropsChanged(viewOptions, prevProps.viewOptions)) {
+    if (
+      (!subscriptions.pending && !subscriptions.valid) ||
+      viewPropsChanged(viewOptions, prevProps.viewOptions)
+    ) {
       getSubscriptions(createOverviewQueryObject(viewOptions, expiredTrialsFilter));
     }
   }
@@ -48,14 +45,10 @@ class ExpiredTrialsCard extends React.Component {
     if (subscriptions.error) {
       return (
         <Card className="ocm-overview-clusters__card">
-          <CardTitle>
-            Expired trials
-          </CardTitle>
+          <CardTitle>Expired trials</CardTitle>
           <CardBody>
             <EmptyState>
-              <Title headingLevel="h2">
-                No data available
-              </Title>
+              <Title headingLevel="h2">No data available</Title>
               <EmptyStateBody>
                 There was an error fetching the data. Try refreshing the page.
               </EmptyStateBody>
@@ -72,21 +65,15 @@ class ExpiredTrialsCard extends React.Component {
     const expiredTrialRow = (subscription) => {
       const name = subscription.display_name || subscription.external_cluster_id;
 
-      const clusterName = (
-        <Link to={`/details/s/${subscription.id}`}>{name}</Link>
-      );
+      const clusterName = <Link to={`/details/s/${subscription.id}`}>{name}</Link>;
 
       return {
-        cells: [
-          { title: clusterName },
-        ],
+        cells: [{ title: clusterName }],
         subscription,
       };
     };
 
-    const columns = [
-      { title: 'Name' },
-    ];
+    const columns = [{ title: 'Name' }];
 
     const actionResolver = ({ subscription }) => [
       {
@@ -95,26 +82,26 @@ class ExpiredTrialsCard extends React.Component {
       },
       {
         title: 'Archive cluster',
-        onClick: () => openModal(modals.ARCHIVE_CLUSTER, {
-          subscriptionID: subscription.id,
-          name: subscription.display_name || subscription.external_cluster_id,
-        }),
+        onClick: () =>
+          openModal(modals.ARCHIVE_CLUSTER, {
+            subscriptionID: subscription.id,
+            name: subscription.display_name || subscription.external_cluster_id,
+          }),
       },
     ];
 
     const areActionsDisabled = ({ subscription }) => !subscription.canEdit;
 
-    const showSkeleton = subscriptions.pending
-      && (subscriptions.items && subscriptions.items.length > 0);
+    const showSkeleton =
+      subscriptions.pending && subscriptions.items && subscriptions.items.length > 0;
 
-    const rows = showSkeleton ? skeletonRows(viewOptions.pageSize)
-      : subscriptions.items.map(subscription => expiredTrialRow(subscription));
+    const rows = showSkeleton
+      ? skeletonRows(viewOptions.pageSize)
+      : subscriptions.items.map((subscription) => expiredTrialRow(subscription));
 
     return (
       <Card className="ocm-overview-clusters__card">
-        <CardTitle>
-          Expired Trials
-        </CardTitle>
+        <CardTitle>Expired Trials</CardTitle>
         <CardBody>
           <Table
             aria-label="Expired Trials"

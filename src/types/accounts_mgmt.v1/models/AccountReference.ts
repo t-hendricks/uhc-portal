@@ -4,9 +4,8 @@
 
 import type { ObjectReference } from './ObjectReference';
 
-export type AccountReference = (ObjectReference & {
-    email?: string;
-    name?: string;
-    username?: string;
-});
-
+export type AccountReference = ObjectReference & {
+  email?: string;
+  name?: string;
+  username?: string;
+};

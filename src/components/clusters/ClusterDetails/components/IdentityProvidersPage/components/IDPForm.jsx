@@ -3,11 +3,19 @@ import PropTypes from 'prop-types';
 
 import { Field } from 'redux-form';
 import {
-  Form, Grid, GridItem, ExpandableSection, Title, ClipboardCopy,
+  Form,
+  Grid,
+  GridItem,
+  ExpandableSection,
+  Title,
+  ClipboardCopy,
 } from '@patternfly/react-core';
 import ErrorBox from '../../../../../common/ErrorBox';
 
-import { ReduxVerticalFormGroup, ReduxFormDropdown } from '../../../../../common/ReduxFormComponents';
+import {
+  ReduxVerticalFormGroup,
+  ReduxFormDropdown,
+} from '../../../../../common/ReduxFormComponents';
 import links from '../../../../../../common/installLinks.mjs';
 import { checkIdentityProviderName } from '../../../../../../common/validators';
 
@@ -39,9 +47,7 @@ class IDPForm extends React.Component {
   };
 
   componentDidMount() {
-    const {
-      selectedIDP, isEditForm, idpEdited, idpName,
-    } = this.props;
+    const { selectedIDP, isEditForm, idpEdited, idpName } = this.props;
     this.setState({ IDPName: idpName });
     if (isEditForm) {
       this.setState({ isExpanded: this.checkIfExpandable(selectedIDP, idpEdited) });
@@ -49,9 +55,7 @@ class IDPForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      selectedIDP, change, IDPList, isEditForm,
-    } = this.props;
+    const { selectedIDP, change, IDPList, isEditForm } = this.props;
     const { IDPName } = this.state;
     if (!isEditForm) {
       if (selectedIDP !== prevProps.selectedIDP) {
@@ -67,12 +71,12 @@ class IDPForm extends React.Component {
 
   checkDuplicateName = (IDPName) => {
     const { IDPList, isEditForm } = this.props;
-    const idpNameList = IDPList.map(idp => idp.name);
+    const idpNameList = IDPList.map((idp) => idp.name);
     if (idpNameList.includes(IDPName) && !isEditForm) {
       return `The name "${IDPName}" is already taken. Identity provider names must not be duplicate.`;
     }
     return undefined;
-  }
+  };
 
   checkIfExpandable = (selectedIDP, idpEdited) => {
     if (selectedIDP === IDPformValues.OPENID) {
@@ -90,12 +94,20 @@ class IDPForm extends React.Component {
   updateIsExpanded = () => {
     const { isExpanded } = this.state;
     this.setState({ isExpanded: !isExpanded });
-  }
+  };
 
   render() {
     const {
-      submitIDPResponse, selectedMappingMethod, clusterConsoleURL, isEditForm,
-      idpEdited, change, selectedIDP, idpTypeName, formTitle, HTPasswdPasswordErrors,
+      submitIDPResponse,
+      selectedMappingMethod,
+      clusterConsoleURL,
+      isEditForm,
+      idpEdited,
+      change,
+      selectedIDP,
+      idpTypeName,
+      formTitle,
+      HTPasswdPasswordErrors,
     } = this.props;
     const { IDPName, isExpanded } = this.state;
 
@@ -103,9 +115,13 @@ class IDPForm extends React.Component {
     let submissionError;
     if (submitIDPResponse.error) {
       if (!isEditForm) {
-        submissionError = <ErrorBox title="Error creating Identity Provider" response={submitIDPResponse} />;
+        submissionError = (
+          <ErrorBox title="Error creating Identity Provider" response={submitIDPResponse} />
+        );
       } else {
-        submissionError = <ErrorBox title="Error updating Identity Provider" response={submitIDPResponse} />;
+        submissionError = (
+          <ErrorBox title="Error updating Identity Provider" response={submitIDPResponse} />
+        );
       }
     }
 
@@ -141,19 +157,12 @@ class IDPForm extends React.Component {
         case IDPformValues.HTPASSWD:
           text = (
             <>
-              Define an
-              {' '}
-              <code>htpasswd</code>
-              {' '}
-              identity provider for your managed cluster
-              to create a single, static user that can log in to your cluster
-              and troubleshoot it. If this user needs elevated permissions,
-              add it to an
-              {' '}
+              Define an <code>htpasswd</code> identity provider for your managed cluster to create a
+              single, static user that can log in to your cluster and troubleshoot it. If this user
+              needs elevated permissions, add it to an{' '}
               <ExternalLink href={links.OSD_DEDICATED_ADMIN_ROLE}>
                 administrative group
-              </ExternalLink>
-              {' '}
+              </ExternalLink>{' '}
               within your organization.
             </>
           );
@@ -161,12 +170,8 @@ class IDPForm extends React.Component {
         case IDPformValues.OPENID:
           text = (
             <>
-              Configure an
-              {' '}
-              <code>oidc</code>
-              {' '}
-              identity provider to integrate with an OpenID Connect identity provider using an
-              {' '}
+              Configure an <code>oidc</code> identity provider to integrate with an OpenID Connect
+              identity provider using an{' '}
               <ExternalLink href="http://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth">
                 Authorization Code Flow
               </ExternalLink>
@@ -177,53 +182,32 @@ class IDPForm extends React.Component {
         case IDPformValues.LDAP:
           text = (
             <>
-              Configure the
-              {' '}
-              <code>ldap</code>
-              {' '}
-              identity provider to validate user names and passwords against an LDAPv3 server,
-              using simple bind authentication.
+              Configure the <code>ldap</code> identity provider to validate user names and passwords
+              against an LDAPv3 server, using simple bind authentication.
             </>
           );
           break;
         case IDPformValues.GITHUB:
           text = (
             <>
-              Configure a
-              {' '}
-              <code>github</code>
-              {' '}
-              identity provider to validate user names and passwords against GitHub or
-              GitHub Enterprise’s OAuth authentication server.
+              Configure a <code>github</code> identity provider to validate user names and passwords
+              against GitHub or GitHub Enterprise’s OAuth authentication server.
             </>
           );
           break;
         case IDPformValues.GITLAB:
           text = (
             <>
-              Configure a
-              {' '}
-              <code>gitlab</code>
-              {' '}
-              identity provider to use
-              {' '}
-              <ExternalLink href="https://gitlab.com/">
-                GitLab.com
-              </ExternalLink>
-              {' '}
-              or any other GitLab instance as an identity provider.
+              Configure a <code>gitlab</code> identity provider to use{' '}
+              <ExternalLink href="https://gitlab.com/">GitLab.com</ExternalLink> or any other GitLab
+              instance as an identity provider.
             </>
           );
           break;
         case IDPformValues.GOOGLE:
           text = (
             <>
-              Configure a
-              {' '}
-              <code>google</code>
-              {' '}
-              identity provider using
-              {' '}
+              Configure a <code>google</code> identity provider using{' '}
               <ExternalLink href="https://developers.google.com/identity/protocols/OpenIDConnect">
                 Google’s OpenID Connect integration
               </ExternalLink>
@@ -234,38 +218,26 @@ class IDPForm extends React.Component {
         default:
           return null;
       }
-      return (
-        <GridItem span={9}>
-          {text}
-        </GridItem>
-      );
+      return <GridItem span={9}>{text}</GridItem>;
     };
 
     return (
       <Form>
         <Grid id="identity-provider-form" hasGutter>
           <GridItem span={8}>
-            <Title headingLevel="h3" size="xl">{formTitle}</Title>
+            <Title headingLevel="h3" size="xl">
+              {formTitle}
+            </Title>
           </GridItem>
-          { submissionError && (
+          {submissionError && <GridItem span={8}>{submissionError}</GridItem>}
+          {topText(selectedIDP)}
+          {!isEditForm && (
             <GridItem span={8}>
-              {submissionError}
+              <ExternalLink href={providerDocumentationLink[selectedIDP]}>
+                Learn more about {idpTypeName} identity providers
+              </ExternalLink>
             </GridItem>
           )}
-          {topText(selectedIDP)}
-          {
-            !isEditForm && (
-              <GridItem span={8}>
-                <ExternalLink href={providerDocumentationLink[selectedIDP]}>
-                  Learn more about
-                  {' '}
-                  {idpTypeName}
-                  {' '}
-                  identity providers
-                </ExternalLink>
-              </GridItem>
-            )
-          }
           <GridItem span={8}>
             <Field
               component={ReduxVerticalFormGroup}
@@ -279,44 +251,45 @@ class IDPForm extends React.Component {
               helpText="Unique name for the identity provider. This cannot be changed later."
             />
           </GridItem>
-          { IDPNeedsOAuthURL(selectedIDP) && (
-          <GridItem span={8}>
-            <div>
-              <span className="pf-c-form__label pf-c-form__label-text pf-u-mb-sm">OAuth callback URL</span>
-              <ClipboardCopy isReadOnly>
-                {getOauthCallbackURL(clusterConsoleURL, IDPName)}
-              </ClipboardCopy>
-            </div>
-          </GridItem>
-
+          {IDPNeedsOAuthURL(selectedIDP) && (
+            <GridItem span={8}>
+              <div>
+                <span className="pf-c-form__label pf-c-form__label-text pf-u-mb-sm">
+                  OAuth callback URL
+                </span>
+                <ClipboardCopy isReadOnly>
+                  {getOauthCallbackURL(clusterConsoleURL, IDPName)}
+                </ClipboardCopy>
+              </div>
+            </GridItem>
           )}
           {selectedIDP !== IDPformValues.HTPASSWD && (
-          <GridItem span={8}>
-            <Field
-              component={ReduxFormDropdown}
-              options={mappingMethods}
-              name="mappingMethod"
-              label="Mapping method"
-              helpText="Specifies how new identities are mapped to users when they log in. Claim is recommended in most cases."
-              value={idpEdited.mapping_method}
-            />
-          </GridItem>
+            <GridItem span={8}>
+              <Field
+                component={ReduxFormDropdown}
+                options={mappingMethods}
+                name="mappingMethod"
+                label="Mapping method"
+                helpText="Specifies how new identities are mapped to users when they log in. Claim is recommended in most cases."
+                value={idpEdited.mapping_method}
+              />
+            </GridItem>
           )}
-          {SelectedProviderRequiredFields
-        && (
-          <SelectedProviderRequiredFields
-            isPending={isPending}
-            // make google required form optional when mapping method is lookup
-            isRequired={selectedIDP === IDPformValues.GOOGLE
-            && !(selectedMappingMethod === mappingMethodsformValues.LOOKUP)}
-            isEditForm={isEditForm}
-            idpEdited={idpEdited}
-            change={change}
-            HTPasswdPasswordErrors={HTPasswdPasswordErrors}
-          />
-        )}
-          {SelectedProviderAdvancedOptions
-          && (
+          {SelectedProviderRequiredFields && (
+            <SelectedProviderRequiredFields
+              isPending={isPending}
+              // make google required form optional when mapping method is lookup
+              isRequired={
+                selectedIDP === IDPformValues.GOOGLE &&
+                !(selectedMappingMethod === mappingMethodsformValues.LOOKUP)
+              }
+              isEditForm={isEditForm}
+              idpEdited={idpEdited}
+              change={change}
+              HTPasswdPasswordErrors={HTPasswdPasswordErrors}
+            />
+          )}
+          {SelectedProviderAdvancedOptions && (
             <GridItem span={8}>
               <ExpandableSection
                 toggleTextCollapsed="Show advanced options"

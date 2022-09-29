@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 export enum DetectionType {
-    AUTO = 'auto',
-    MANUAL = 'manual',
+  AUTO = 'auto',
+  MANUAL = 'manual',
 }

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import {
-  Form, FormGroup, Alert, Grid, GridItem,
-} from '@patternfly/react-core';
+import { Form, FormGroup, Alert, Grid, GridItem } from '@patternfly/react-core';
 
 import Modal from '../../../common/Modal/Modal';
 
@@ -34,18 +32,15 @@ class ScaleClusterDialog extends Component {
   }
 
   componentDidUpdate() {
-    const {
-      editClusterResponse,
-      resetResponse,
-      closeModal,
-      onClose,
-      getOrganizationAndQuota,
-    } = this.props;
+    const { editClusterResponse, resetResponse, closeModal, onClose, getOrganizationAndQuota } =
+      this.props;
 
     // Only finalize when all responses are out of their pending state
-    if (editClusterResponse.fulfilled
-        && !editClusterResponse.pending
-        && !editClusterResponse.error) {
+    if (
+      editClusterResponse.fulfilled &&
+      !editClusterResponse.pending &&
+      !editClusterResponse.error
+    ) {
       resetResponse();
       onClose();
       closeModal();
@@ -85,8 +80,17 @@ class ScaleClusterDialog extends Component {
       <ErrorBox message="Error editing cluster" response={editClusterResponse} />
     ) : null;
 
-    const usageLink = consoleURL
-      ? <a href={`${consoleURL}/k8s/ns/default/resourcequotas`} target="_blank" rel="noopener noreferrer">Check your usage</a> : 'Check your usage';
+    const usageLink = consoleURL ? (
+      <a
+        href={`${consoleURL}/k8s/ns/default/resourcequotas`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Check your usage
+      </a>
+    ) : (
+      'Check your usage'
+    );
 
     const scalingAlert = (
       <Alert
@@ -96,19 +100,22 @@ class ScaleClusterDialog extends Component {
       >
         <div>
           <p>
-            {usageLink}
-            {' '}
-            before proceeding to be sure you are not
-            scaling below what is currently being used.
+            {usageLink} before proceeding to be sure you are not scaling below what is currently
+            being used.
           </p>
         </div>
       </Alert>
     );
 
-    const pending = loadBalancerValues.pending || persistentStorageValues.pending
-     || editClusterResponse.pending || organization.pending;
+    const pending =
+      loadBalancerValues.pending ||
+      persistentStorageValues.pending ||
+      editClusterResponse.pending ||
+      organization.pending;
 
-    const className = isByoc ? 'edit-cluster-modal' : 'edit-cluster-modal edit-cluster-modal-rhinfra';
+    const className = isByoc
+      ? 'edit-cluster-modal'
+      : 'edit-cluster-modal edit-cluster-modal-rhinfra';
     const title = 'Edit load balancers and persistent storage';
     return (
       <Modal
@@ -127,13 +134,10 @@ class ScaleClusterDialog extends Component {
           {error}
           <Form onSubmit={handleSubmit}>
             <Grid hasGutter>
-              { !isByoc && (
+              {!isByoc && (
                 <>
                   <GridItem span={8}>
-                    <FormGroup
-                      fieldId="load_balancers"
-                      label="Load balancers"
-                    >
+                    <FormGroup fieldId="load_balancers" label="Load balancers">
                       <Field
                         label="Load balancers"
                         name="load_balancers"
@@ -151,10 +155,7 @@ class ScaleClusterDialog extends Component {
                   <GridItem span={4} />
                   {showLoadBalancerAlert && scalingAlert}
                   <GridItem span={8}>
-                    <FormGroup
-                      fieldId="persistent_storage"
-                      label="Persistent storage"
-                    >
+                    <FormGroup fieldId="persistent_storage" label="Persistent storage">
                       <Field
                         label="Persistent storage"
                         name="persistent_storage"

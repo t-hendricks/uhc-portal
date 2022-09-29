@@ -5,7 +5,6 @@
 import type { List } from './List';
 import type { Quota } from './Quota';
 
-export type QuotaList = (List & {
-    items?: Array<Quota>;
-});
-
+export type QuotaList = List & {
+  items?: Array<Quota>;
+};

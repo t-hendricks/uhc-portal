@@ -1,12 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import {
-  GridItem,
-  Alert,
-  List,
-  ListItem,
-} from '@patternfly/react-core';
+import { GridItem, Alert, List, ListItem } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -87,19 +82,20 @@ function CIDRFields({
     ? validators.AWS_MACHINE_CIDR_MAX_MULTI_AZ
     : validators.AWS_MACHINE_CIDR_MAX_SINGLE_AZ;
 
-  const privateRangesHint = cloudProviderID === 'gcp' ? (
-    <>
-      <br />
-      <span>
-        The address must be a private IPv4 address, belonging to one of the following ranges:
-        <List>
-          <ListItem>10.0.0.0 – 10.255.255.255</ListItem>
-          <ListItem>172.16.0.0 – 172.31.255.255</ListItem>
-          <ListItem>192.168.0.0 – 192.168.255.255</ListItem>
-        </List>
-      </span>
-    </>
-  ) : null;
+  const privateRangesHint =
+    cloudProviderID === 'gcp' ? (
+      <>
+        <br />
+        <span>
+          The address must be a private IPv4 address, belonging to one of the following ranges:
+          <List>
+            <ListItem>10.0.0.0 – 10.255.255.255</ListItem>
+            <ListItem>172.16.0.0 – 172.31.255.255</ListItem>
+            <ListItem>192.168.0.0 – 192.168.255.255</ListItem>
+          </List>
+        </span>
+      </>
+    ) : null;
 
   const onDefaultValuesToggle = (isChecked) => {
     if (isChecked) {
@@ -147,7 +143,7 @@ function CIDRFields({
           type="text"
           validate={machineCidrValidators}
           disabled={isFieldDisabled}
-          helpText={(
+          helpText={
             <div className="pf-c-form__helper-text">
               {cloudProviderID === 'aws'
                 ? `Subnet mask must be between /${validators.AWS_MACHINE_CIDR_MIN} and /${awsMachineCIDRMax}.`
@@ -161,13 +157,13 @@ function CIDRFields({
                 />
               )}
             </div>
-          )}
-          extendedHelpText={(
+          }
+          extendedHelpText={
             <>
               {constants.machineCIDRHint}
               {privateRangesHint}
             </>
-          )}
+          }
           showHelpTextOnError={false}
         />
       </GridItem>
@@ -186,12 +182,12 @@ function CIDRFields({
               ? `Subnet mask must be at most /${validators.SERVICE_CIDR_MAX}.`
               : `Range must be private. Subnet mask must be at most /${validators.SERVICE_CIDR_MAX}.`
           }
-          extendedHelpText={(
+          extendedHelpText={
             <>
               {constants.serviceCIDRHint}
               {privateRangesHint}
             </>
-          )}
+          }
           showHelpTextOnError={false}
         />
       </GridItem>
@@ -210,12 +206,12 @@ function CIDRFields({
               ? `Subnet mask must allow for at least ${validators.POD_NODES_MIN} nodes.`
               : `Range must be private. Subnet mask must allow for at least ${validators.POD_NODES_MIN} nodes.`
           }
-          extendedHelpText={(
+          extendedHelpText={
             <>
               {constants.podCIDRHint}
               {privateRangesHint}
             </>
-          )}
+          }
           showHelpTextOnError={false}
         />
       </GridItem>

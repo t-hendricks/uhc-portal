@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { DateFormat } from '@redhat-cloud-services/frontend-components/DateFormat';
 
 class LiveDateFormat extends React.Component {
-  state = { now: new Date() }
+  state = { now: new Date() };
 
   constructor(props) {
     super(props);
@@ -27,9 +27,7 @@ class LiveDateFormat extends React.Component {
   render() {
     const { now } = this.state;
     const { timestamp } = this.props;
-    return (
-      <DateFormat type="relative" date={timestamp} now={now} />
-    );
+    return <DateFormat type="relative" date={timestamp} now={now} />;
   }
 }
 

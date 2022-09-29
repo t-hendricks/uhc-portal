@@ -13,17 +13,16 @@ const mapStateToProps = (state) => {
   const credentials = ccsCredentialsSelector('gcp', state);
   const keyLocation = valueSelector(state, 'key_location');
   const hasDependencies = !!(credentials && keyLocation);
-  const matchesDependencies = (
-    gcpKeyRings.cloudProvider === 'gcp'
-    && isEqual(gcpKeyRings.credentials, credentials)
-    && gcpKeyRings.keyLocation === keyLocation
-  );
-  return ({
+  const matchesDependencies =
+    gcpKeyRings.cloudProvider === 'gcp' &&
+    isEqual(gcpKeyRings.credentials, credentials) &&
+    gcpKeyRings.keyLocation === keyLocation;
+  return {
     hasDependencies,
     matchesDependencies,
     requestStatus: gcpKeyRings,
-    items: (gcpKeyRings.data?.items || []).map(ring => ring.name),
-  });
+    items: (gcpKeyRings.data?.items || []).map((ring) => ring.name),
+  };
 };
 
 const mapDispatchToProps = {

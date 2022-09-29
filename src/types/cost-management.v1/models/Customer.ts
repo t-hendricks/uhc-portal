@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type Customer = {
-    account_id: string;
+  account_id: string;
 };
-

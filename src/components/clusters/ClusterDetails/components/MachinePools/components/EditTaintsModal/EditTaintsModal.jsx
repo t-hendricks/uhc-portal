@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
-import {
-  Form, Grid, GridItem,
-} from '@patternfly/react-core';
+import { Form, Grid, GridItem } from '@patternfly/react-core';
 
 import Modal from '../../../../../../common/Modal/Modal';
 import ErrorBox from '../../../../../../common/ErrorBox';
@@ -13,10 +11,7 @@ import { ReduxFormDropdown, ReduxFormTaints } from '../../../../../../common/Red
 
 class EditTaintsModal extends Component {
   componentDidMount() {
-    const {
-      machinePoolsList,
-      getMachinePools,
-    } = this.props;
+    const { machinePoolsList, getMachinePools } = this.props;
 
     if (!machinePoolsList.pending) {
       getMachinePools();
@@ -26,28 +21,22 @@ class EditTaintsModal extends Component {
   componentDidUpdate() {
     const { editTaintsResponse } = this.props;
 
-    if (editTaintsResponse.fulfilled
-      && !editTaintsResponse.pending
-      && !editTaintsResponse.error) {
+    if (editTaintsResponse.fulfilled && !editTaintsResponse.pending && !editTaintsResponse.error) {
       this.cancelEdit();
     }
   }
 
   handleMachinePoolChange = (_, value) => {
     const { change, machinePoolsList } = this.props;
-    const selectedMachinePoolTaints = machinePoolsList.data
-      .find(machinePool => machinePool.id === value)?.taints;
+    const selectedMachinePoolTaints = machinePoolsList.data.find(
+      (machinePool) => machinePool.id === value,
+    )?.taints;
 
     change('taints', selectedMachinePoolTaints || [{ effect: 'NoSchedule' }]);
   };
 
   cancelEdit = () => {
-    const {
-      resetEditTaintsResponse,
-      resetGetMachinePoolsResponse,
-      closeModal,
-      reset,
-    } = this.props;
+    const { resetEditTaintsResponse, resetGetMachinePoolsResponse, closeModal, reset } = this.props;
     resetEditTaintsResponse();
     resetGetMachinePoolsResponse();
     closeModal();
@@ -55,13 +44,8 @@ class EditTaintsModal extends Component {
   };
 
   render() {
-    const {
-      machinePoolsList,
-      handleSubmit,
-      editTaintsResponse,
-      pristine,
-      selectedMachinePoolId,
-    } = this.props;
+    const { machinePoolsList, handleSubmit, editTaintsResponse, pristine, selectedMachinePoolId } =
+      this.props;
 
     const error = editTaintsResponse.error ? (
       <ErrorBox message="Error editing taints" response={editTaintsResponse} />
@@ -89,7 +73,7 @@ class EditTaintsModal extends Component {
                   component={ReduxFormDropdown}
                   name="machinePoolId"
                   label="Machine pool"
-                  options={machinePoolsList.data.map(machinePool => ({
+                  options={machinePoolsList.data.map((machinePool) => ({
                     name: machinePool.id,
                     value: machinePool.id,
                   }))}
@@ -100,8 +84,7 @@ class EditTaintsModal extends Component {
               <GridItem>
                 <FieldArray name="taints" component={ReduxFormTaints} isEditing />
               </GridItem>
-              {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList)
-              && (
+              {isMachinePoolUsingSpotInstances(selectedMachinePoolId, machinePoolsList) && (
                 <>
                   <GridItem>
                     <SpotInstanceInfoAlert />

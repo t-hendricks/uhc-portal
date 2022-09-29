@@ -1,9 +1,6 @@
 import produce from 'immer';
 import clusterStates from '../../common/clusterStates';
-import {
-  normalizedProducts,
-  billingModels,
-} from '../../../../common/subscriptionTypes';
+import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
 
 const match = { params: { id: '1msoogsgTLQ4PePjrTOt3UqvMzX' } };
 const funcs = () => ({
@@ -288,8 +285,7 @@ const clusterDetails = {
       status: 'Active',
       provenance: 'Provisioning',
       last_reconcile_date: '0001-01-01T00:00:00Z',
-      console_url:
-        'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
+      console_url: 'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
       capabilities: [
         {
           name: 'capability.cluster.subscribed_ocp',
@@ -398,8 +394,7 @@ const clusterDetails = {
           open_shift_version: '4.6.8',
           cloud_provider: 'aws',
           region: 'us-east-1',
-          console_url:
-            'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
+          console_url: 'https://console-openshift-console.apps.test-liza.wiex.s1.devshift.org',
           critical_alerts_firing: 0,
           operators_condition_failing: 0,
           subscription_cpu_total: 8,
@@ -445,13 +440,14 @@ const ROSAManualClusterDetails = produce(ROSAClusterDetails, (draft) => {
   draft.cluster.aws = {
     sts: {
       auto_mode: false,
-      oidc_endpoint_url: 'https://rh-oidc.s3.us-east-1.amazonaws.com/1ricsv5bio0domn5gofgaar07aifjpr0',
+      oidc_endpoint_url:
+        'https://rh-oidc.s3.us-east-1.amazonaws.com/1ricsv5bio0domn5gofgaar07aifjpr0',
       role_arn: 'arn:aws:iam::123456789012:role/ManagedOpenShift-Installer-Role',
       operator_iam_roles: [
         {
           namespace: 'openshift-machine-api',
           role_arn:
-          'arn:aws:iam::123456789012:role/cluster-test-openshift-machine-api-aws-cloud-credentials',
+            'arn:aws:iam::123456789012:role/cluster-test-openshift-machine-api-aws-cloud-credentials',
         },
       ],
     },
@@ -482,8 +478,7 @@ const insightsData = {
   },
   data: [
     {
-      rule_id:
-        'ccx_rules_ocp.external.rules.nodes_kubelet_version_check.report',
+      rule_id: 'ccx_rules_ocp.external.rules.nodes_kubelet_version_check.report',
       description: 'Some rule description',
       details:
         'Minimum resource requirements...\n\n[Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=qwerty#minimum-resource-requirements_installing-bare-metal). Anything else here... [Knowledgebase Article](https://docs.openshift.com/container-platform/4.1/installing/installing_bare_metal/installing-bare-metal.html?test=42), [Knowledge Article](https://access.redhat.com/solutions/4972291?test=qwerty#amazing), [not doc link](https://google.com/test)',

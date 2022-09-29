@@ -48,8 +48,10 @@ import './Tokens.scss';
 /**
  * Generates a box for containing the value of a token.
  */
-const tokenBox = token => (
-  token === null ? <Skeleton size="md" /> : (
+const tokenBox = (token) =>
+  token === null ? (
+    <Skeleton size="md" />
+  ) : (
     <Text component="pre">
       <ClipboardCopy
         isReadOnly
@@ -59,14 +61,15 @@ const tokenBox = token => (
         {token}
       </ClipboardCopy>
     </Text>
-  )
-);
+  );
 
 /**
  * Generates a text box for login snippet of code for the given token.
  */
-const snippetBox = (token, commandName) => (
-  token === null ? <Skeleton size="md" /> : (
+const snippetBox = (token, commandName) =>
+  token === null ? (
+    <Skeleton size="md" />
+  ) : (
     <Text component="pre">
       <ClipboardCopy
         isReadOnly
@@ -77,10 +80,9 @@ const snippetBox = (token, commandName) => (
         {`${commandName} login --token="${token}"`}
       </ClipboardCopy>
     </Text>
-  )
-);
+  );
 
-const manageTokensCard = show => (
+const manageTokensCard = (show) => (
   <Card className="ocm-c-api-token__card">
     <CardTitle>
       <Title headingLevel="h2">Revoke previous tokens</Title>
@@ -91,41 +93,28 @@ const manageTokensCard = show => (
 
         <List component="ol">
           <ListItem>
-            Navigate to the
-            {' '}
+            Navigate to the{' '}
             <ExternalLink href="https://sso.redhat.com/auth/realms/redhat-external/account/applications">
               <b>offline API token management</b>
-            </ExternalLink>
-            {' '}
+            </ExternalLink>{' '}
             page.
           </ListItem>
           <ListItem>
-            Locate the
-            {' '}
-            <b>cloud-services</b>
-            {' '}
-            application.
+            Locate the <b>cloud-services</b> application.
           </ListItem>
           <ListItem>
-            Select
-            {' '}
-            <b>Revoke grant</b>
-            .
+            Select <b>Revoke grant</b>.
           </ListItem>
         </List>
 
         <Text>
-          Refresh tokens will stop working immediately after you revoke them,
-          but existing access tokens may take up to 15 minutes to expire.
+          Refresh tokens will stop working immediately after you revoke them, but existing access
+          tokens may take up to 15 minutes to expire.
         </Text>
 
         {show ? (
           <Text>
-            To display a copiable version of your token, select the
-            {' '}
-            <b>Load token</b>
-            {' '}
-            button.
+            To display a copiable version of your token, select the <b>Load token</b> button.
           </Text>
         ) : (
           <Text>Refreshing this page will generate a new token.</Text>
@@ -147,32 +136,35 @@ const manageTokensCard = show => (
  * The callback gets the failure reason string as a parameter.
  */
 const loadOfflineToken = (onLoad, onError) => {
-  insights.chrome.auth.getOfflineToken().then((response) => {
-    // eslint-disable-next-line no-console
-    console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
-    onLoad(response.data.refresh_token);
-  }).catch((reason) => {
-    if (onError) {
-      onError(reason);
-    }
-  });
+  insights.chrome.auth
+    .getOfflineToken()
+    .then((response) => {
+      // eslint-disable-next-line no-console
+      console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
+      onLoad(response.data.refresh_token);
+    })
+    .catch((reason) => {
+      if (onError) {
+        onError(reason);
+      }
+    });
 };
 
 class Tokens extends React.Component {
   state = {
     offlineAccessToken: null,
-  }
+  };
 
-  commandName = 'ocm'
+  commandName = 'ocm';
 
-  commandTool = tools.OCM
+  commandTool = tools.OCM;
 
   // Should title or breadcrumbs differ for TokensROSA?
   // Maybe but but both pages show same API token, only instructions differ,
   // so should NOT say things like "rosa token" vs "ocm-cli token".
-  pageTitle = 'OpenShift Cluster Manager API Token'
+  pageTitle = 'OpenShift Cluster Manager API Token';
 
-  windowTitle = 'API Token | OpenShift Cluster Manager'
+  windowTitle = 'API Token | OpenShift Cluster Manager';
 
   // After requesting token, we might need to reload page doing stronger auth;
   // after that we want the token to show, but we just loaded.
@@ -192,7 +184,7 @@ class Tokens extends React.Component {
     if (tokenOrFailureReason) {
       that.setState({ offlineAccessToken: tokenOrFailureReason });
     }
-  }
+  };
 
   onError = (reason) => {
     if (reason === 'not available') {
@@ -204,7 +196,7 @@ class Tokens extends React.Component {
       console.log('Tokens: getOfflineToken failed =>', reason);
       this.onLoad(reason);
     }
-  }
+  };
 
   // Some methods here don't use `this`, but we can't convert to Class.method() calls,
   // wouldn't allow TokensROSA which inhertis from Tokens to override them.
@@ -213,14 +205,12 @@ class Tokens extends React.Component {
     return (
       <>
         <Text component="p">
-          Red Hat OpenShift Cluster Manager is a managed service that
-          makes it easy for you to use OpenShift without needing to
-          install or upgrade your own OpenShift (Kubernetes) cluster.
+          Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you to use
+          OpenShift without needing to install or upgrade your own OpenShift (Kubernetes) cluster.
         </Text>
         <Title headingLevel="h3">Your API token</Title>
         <Text component="p">
-          Use this API token to authenticate against your
-          Red Hat OpenShift Cluster Manager account.
+          Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
         </Text>
       </>
     );
@@ -244,18 +234,10 @@ class Tokens extends React.Component {
         <Title headingLevel="h3">Using your token in the command line</Title>
         <List component="ol">
           <ListItem>
-            Download and install the
-            {' '}
-            <code>{this.commandName}</code>
-            {' '}
-            command-line tool:
-            {' '}
+            Download and install the <code>{this.commandName}</code> command-line tool:{' '}
             {this.commandTool === tools.OCM && <DevPreviewBadge />}
             <Text component="p" />
-            <DownloadAndOSSelection
-              tool={this.commandTool}
-              channel={channels.STABLE}
-            />
+            <DownloadAndOSSelection tool={this.commandTool} channel={channels.STABLE} />
             <Text component="p" />
           </ListItem>
           <ListItem>
@@ -267,23 +249,9 @@ class Tokens extends React.Component {
 
         <Title headingLevel="h3">Need help connecting with your offline token?</Title>
         <Text component="p">
-          Run
-          {' '}
-          <code>
-            {this.commandName}
-            {' '}
-            login --help
-          </code>
-          {' '}
-          for in-terminal guidance, or
-          {' '}
-          {this.docsLink()}
-          {' '}
-          for more information about setting up the
-          {' '}
-          <code>{this.commandName}</code>
-          {' '}
-          CLI.
+          Run <code>{this.commandName} login --help</code> for in-terminal guidance, or{' '}
+          {this.docsLink()} for more information about setting up the{' '}
+          <code>{this.commandName}</code> CLI.
         </Text>
       </>
     );
@@ -291,7 +259,9 @@ class Tokens extends React.Component {
 
   buttonOrTokenDetails() {
     const { show, showPath } = this.props;
-    return show ? this.tokenDetails() : (
+    return show ? (
+      this.tokenDetails()
+    ) : (
       <Link to={showPath}>
         <Button variant="primary" onClick={() => loadOfflineToken(this.onLoad, this.onError)}>
           Load token
@@ -303,10 +273,8 @@ class Tokens extends React.Component {
   render() {
     const header = (
       <PageHeader>
-        <Breadcrumbs path={[
-          { label: 'Downloads', path: '/downloads' },
-          { label: this.pageTitle },
-        ]}
+        <Breadcrumbs
+          path={[{ label: 'Downloads', path: '/downloads' }, { label: this.pageTitle }]}
         />
         <PageHeaderTitle title={this.pageTitle} />
       </PageHeader>
@@ -331,9 +299,7 @@ class Tokens extends React.Component {
               </Card>
             </StackItem>
 
-            <StackItem>
-              {manageTokensCard()}
-            </StackItem>
+            <StackItem>{manageTokensCard()}</StackItem>
           </Stack>
         </PageSection>
       </>
@@ -350,9 +316,4 @@ Tokens.propTypes = {
 };
 
 export default Tokens;
-export {
-  snippetBox,
-  tokenBox,
-  manageTokensCard,
-  loadOfflineToken,
-};
+export { snippetBox, tokenBox, manageTokensCard, loadOfflineToken };

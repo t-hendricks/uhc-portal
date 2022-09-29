@@ -31,18 +31,23 @@ function DetailsRight({
   limitedSupport,
 }) {
   const memoryTotalWithUnit = humanizeValueWithUnit(
-    get(cluster, 'metrics.memory.total.value', 0), get(cluster, 'metrics.memory.total.unit', 'B'),
+    get(cluster, 'metrics.memory.total.value', 0),
+    get(cluster, 'metrics.memory.total.unit', 'B'),
   );
 
-  const isDisconnected = get(cluster, 'subscription.status', '') === subscriptionStatuses.DISCONNECTED;
+  const isDisconnected =
+    get(cluster, 'subscription.status', '') === subscriptionStatuses.DISCONNECTED;
 
   const showDesiredNodes = cluster.managed;
-  const showInfraNodes = (!cluster.managed && get(cluster, 'metrics.nodes.infra', null))
-    || get(cluster, 'nodes.infra', 0) > 0;
+  const showInfraNodes =
+    (!cluster.managed && get(cluster, 'metrics.nodes.infra', null)) ||
+    get(cluster, 'nodes.infra', 0) > 0;
   const hasSockets = get(cluster, 'metrics.sockets.total.value', 0) > 0;
 
-  const humanizedPersistentStorage = cluster.managed && cluster.storage_quota
-    && humanizeValueWithUnitGiB(cluster.storage_quota.value);
+  const humanizedPersistentStorage =
+    cluster.managed &&
+    cluster.storage_quota &&
+    humanizeValueWithUnitGiB(cluster.storage_quota.value);
   const showVCPU = !isDisconnected && !hasSockets;
 
   const controlPlaneActualNodes = get(cluster, 'metrics.nodes.master', '-');
@@ -58,36 +63,29 @@ function DetailsRight({
     <>
       <DescriptionList>
         <DescriptionListGroup>
-          <DescriptionListTerm>
-            Status
-          </DescriptionListTerm>
+          <DescriptionListTerm>Status</DescriptionListTerm>
           <DescriptionListDescription style={cluster.state.style}>
-            {isAISubscriptionWithoutMetrics(cluster.subscription)
-              ? <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
-              : (
-                <>
-                  <ClusterStateIcon
-                    clusterState={cluster.state.state}
-                    limitedSupport={limitedSupport}
-                    animated
-                  />
-                  {' '}
-                  {cluster.state.description}
-                  {limitedSupport ? ' - Limited support' : null}
-                </>
-              )}
+            {isAISubscriptionWithoutMetrics(cluster.subscription) ? (
+              <AIClusterStatus status={cluster.metrics.state} className="clusterstate" />
+            ) : (
+              <>
+                <ClusterStateIcon
+                  clusterState={cluster.state.state}
+                  limitedSupport={limitedSupport}
+                  animated
+                />{' '}
+                {cluster.state.description}
+                {limitedSupport ? ' - Limited support' : null}
+              </>
+            )}
           </DescriptionListDescription>
         </DescriptionListGroup>
         {showVCPU && (
           <>
             <DescriptionListGroup>
-              <DescriptionListTerm>
-                Total vCPU
-              </DescriptionListTerm>
+              <DescriptionListTerm>Total vCPU</DescriptionListTerm>
               <DescriptionListDescription>
-                {cluster.metrics.cpu.total.value}
-                {' '}
-                vCPU
+                {cluster.metrics.cpu.total.value} vCPU
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>
@@ -95,13 +93,9 @@ function DetailsRight({
         {!isDisconnected && (
           <>
             <DescriptionListGroup>
-              <DescriptionListTerm>
-                Total memory
-              </DescriptionListTerm>
+              <DescriptionListTerm>Total memory</DescriptionListTerm>
               <DescriptionListDescription>
-                {memoryTotalWithUnit.value}
-                {' '}
-                {memoryTotalWithUnit.unit}
+                {memoryTotalWithUnit.value} {memoryTotalWithUnit.unit}
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>
@@ -109,17 +103,13 @@ function DetailsRight({
         {cluster.managed && !cluster.ccs?.enabled && (
           <>
             <DescriptionListGroup>
-              <DescriptionListTerm>
-                Load balancers
-              </DescriptionListTerm>
+              <DescriptionListTerm>Load balancers</DescriptionListTerm>
               <DescriptionListDescription>
                 {cluster.load_balancer_quota || 'N/A'}
               </DescriptionListDescription>
             </DescriptionListGroup>
             <DescriptionListGroup>
-              <DescriptionListTerm>
-                Persistent storage
-              </DescriptionListTerm>
+              <DescriptionListTerm>Persistent storage</DescriptionListTerm>
               <DescriptionListDescription>
                 {humanizedPersistentStorage
                   ? `${humanizedPersistentStorage.value}  ${humanizedPersistentStorage.unit}`
@@ -143,10 +133,7 @@ function DetailsRight({
               <DescriptionListDescription>
                 <dl className="pf-l-stack">
                   <Flex>
-                    <dt>
-                      Control plane:
-                      {' '}
-                    </dt>
+                    <dt>Control plane: </dt>
                     <dd>
                       {controlPlaneActualNodes !== '-' || controlPlaneDesiredNodes !== '-'
                         ? `${controlPlaneActualNodes}/${controlPlaneDesiredNodes}`
@@ -156,10 +143,7 @@ function DetailsRight({
                   {showInfraNodes && (
                     <>
                       <Flex>
-                        <dt>
-                          Infra:
-                          {' '}
-                        </dt>
+                        <dt>Infra: </dt>
                         <dd>
                           {infraActualNodes !== '-' || infraDesiredNodes !== '-'
                             ? `${infraActualNodes}/${infraDesiredNodes}`
@@ -169,10 +153,7 @@ function DetailsRight({
                     </>
                   )}
                   <Flex>
-                    <dt>
-                      Compute:
-                      {' '}
-                    </dt>
+                    <dt>Compute: </dt>
                     <dd>
                       {workerActualNodes !== '-' || workerDesiredNodes !== '-'
                         ? `${workerActualNodes}/${workerDesiredNodes}`
@@ -183,51 +164,33 @@ function DetailsRight({
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>
-        )
-          : (
-            <>
-              <DescriptionListGroup>
-                <DescriptionListTerm>
-                  Nodes
-                </DescriptionListTerm>
-                <DescriptionListDescription>
-                  <dl className="pf-l-stack">
-                    <Flex>
-                      <dt>
-                        Control plane:
-                        {' '}
-                      </dt>
-                      <dd>
-                        {get(cluster, 'metrics.nodes.master', 'N/A')}
-                      </dd>
-                    </Flex>
-                    {showInfraNodes && (
-                      <>
-                        <Flex>
-                          <dt>
-                            Infra:
-                            {' '}
-                          </dt>
-                          <dd>
-                            {get(cluster, 'metrics.nodes.infra', 'N/A')}
-                          </dd>
-                        </Flex>
-                      </>
-                    )}
-                    <Flex>
-                      <dt>
-                        Compute:
-                        {' '}
-                      </dt>
-                      <dd>
-                        {get(cluster, 'metrics.nodes.compute', 'N/A')}
-                      </dd>
-                    </Flex>
-                  </dl>
-                </DescriptionListDescription>
-              </DescriptionListGroup>
-            </>
-          )}
+        ) : (
+          <>
+            <DescriptionListGroup>
+              <DescriptionListTerm>Nodes</DescriptionListTerm>
+              <DescriptionListDescription>
+                <dl className="pf-l-stack">
+                  <Flex>
+                    <dt>Control plane: </dt>
+                    <dd>{get(cluster, 'metrics.nodes.master', 'N/A')}</dd>
+                  </Flex>
+                  {showInfraNodes && (
+                    <>
+                      <Flex>
+                        <dt>Infra: </dt>
+                        <dd>{get(cluster, 'metrics.nodes.infra', 'N/A')}</dd>
+                      </Flex>
+                    </>
+                  )}
+                  <Flex>
+                    <dt>Compute: </dt>
+                    <dd>{get(cluster, 'metrics.nodes.compute', 'N/A')}</dd>
+                  </Flex>
+                </dl>
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        )}
         {cluster.aiCluster && (
           <>
             <DescriptionListGroup>
@@ -239,50 +202,39 @@ function DetailsRight({
             <DescriptionListGroup>
               <DescriptionListTerm>Owner</DescriptionListTerm>
               <DescriptionListDescription>
-                {get(cluster, 'subscription.creator.name') || get(cluster, 'subscription.creator.username', 'N/A')}
+                {get(cluster, 'subscription.creator.name') ||
+                  get(cluster, 'subscription.creator.username', 'N/A')}
               </DescriptionListDescription>
             </DescriptionListGroup>
           </>
-
         )}
         {/* Autoscaling */}
-        {
-          autoscaleEnabled
-          && (
-            <>
-              <DescriptionListGroup>
-                <DescriptionListTerm>
-                  Autoscale
-                  <PopoverHint
-                    iconClassName="nodes-hint"
-                    hint={(
-                      <>
-                        {constants.autoscaleHint}
-                        {' '}
-                        <ExternalLink href={links.APPLYING_AUTOSCALING}>
-                          Learn more about autoscaling
-                        </ExternalLink>
-                      </>
-                    )}
-                  />
-                </DescriptionListTerm>
-                <DescriptionListDescription>
-                  Enabled
-                </DescriptionListDescription>
-                <DescriptionListDescription>
-                  <span className="autoscale-data-t">Min:</span>
-                  {' '}
-                  {totalMinNodesCount}
-                  <span className="pf-u-ml-lg autoscale-data-t">
-                    Max:
-                    {' '}
-                  </span>
-                  {totalMaxNodesCount}
-                </DescriptionListDescription>
-              </DescriptionListGroup>
-            </>
-          )
-        }
+        {autoscaleEnabled && (
+          <>
+            <DescriptionListGroup>
+              <DescriptionListTerm>
+                Autoscale
+                <PopoverHint
+                  iconClassName="nodes-hint"
+                  hint={
+                    <>
+                      {constants.autoscaleHint}{' '}
+                      <ExternalLink href={links.APPLYING_AUTOSCALING}>
+                        Learn more about autoscaling
+                      </ExternalLink>
+                    </>
+                  }
+                />
+              </DescriptionListTerm>
+              <DescriptionListDescription>Enabled</DescriptionListDescription>
+              <DescriptionListDescription>
+                <span className="autoscale-data-t">Min:</span> {totalMinNodesCount}
+                <span className="pf-u-ml-lg autoscale-data-t">Max: </span>
+                {totalMaxNodesCount}
+              </DescriptionListDescription>
+            </DescriptionListGroup>
+          </>
+        )}
         {/* Network */}
         <ClusterNetwork cluster={cluster} />
       </DescriptionList>

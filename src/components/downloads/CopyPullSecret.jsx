@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  Tooltip,
-} from '@patternfly/react-core';
+import { Button, Tooltip } from '@patternfly/react-core';
 import { CopyIcon } from '@patternfly/react-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import isEmpty from 'lodash/isEmpty';
@@ -28,23 +25,18 @@ class CopyPullSecret extends React.Component {
         this.timer = null;
       }, 2500);
     });
-  }
+  };
 
   render() {
-    const {
-      token, text, variant, pendoID, track,
-    } = this.props;
-    const isDisabled = (!token || !!token.error || isEmpty(token));
+    const { token, text, variant, pendoID, track } = this.props;
+    const isDisabled = !token || !!token.error || isEmpty(token);
     const { clicked } = this.state;
     const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
 
-    const linkText = (variant === 'link-inplace' && clicked) ? 'Copied!' : text;
+    const linkText = variant === 'link-inplace' && clicked ? 'Copied!' : text;
 
     const button = (
-      <CopyToClipboard
-        text={isDisabled ? '' : tokenView}
-        onCopy={this.onCopy}
-      >
+      <CopyToClipboard text={isDisabled ? '' : tokenView} onCopy={this.onCopy}>
         <Button
           variant="link"
           type="button"
@@ -64,12 +56,7 @@ class CopyPullSecret extends React.Component {
       return button;
     }
     return (
-      <Tooltip
-        trigger="manual"
-        content="Copied!"
-        position="right"
-        isVisible={clicked}
-      >
+      <Tooltip trigger="manual" content="Copied!" position="right" isVisible={clicked}>
         {button}
       </Tooltip>
     );

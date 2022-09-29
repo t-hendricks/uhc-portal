@@ -3,13 +3,12 @@ import isEmpty from 'lodash/isEmpty';
 
 import { productFilterOptions } from './subscriptionTypes';
 
-const viewPropsChanged = (nextViewOptions, currentViewOptions) => (
-  nextViewOptions.currentPage !== currentViewOptions.currentPage
-    || nextViewOptions.pageSize !== currentViewOptions.pageSize
-    || !isEqual(nextViewOptions.sorting, currentViewOptions.sorting)
-    || !isEqual(nextViewOptions.filter, currentViewOptions.filter)
-    || !isEqual(nextViewOptions.flags, currentViewOptions.flags)
-);
+const viewPropsChanged = (nextViewOptions, currentViewOptions) =>
+  nextViewOptions.currentPage !== currentViewOptions.currentPage ||
+  nextViewOptions.pageSize !== currentViewOptions.pageSize ||
+  !isEqual(nextViewOptions.sorting, currentViewOptions.sorting) ||
+  !isEqual(nextViewOptions.filter, currentViewOptions.filter) ||
+  !isEqual(nextViewOptions.flags, currentViewOptions.flags);
 
 // The backend accepts queries in https://github.com/yaacov/tree-search-language syntax,
 // which is effectively a subset of SQL.
@@ -25,7 +24,10 @@ const sqlString = (s) => {
 const getOrder = (sortField, isAscending) => {
   const direction = isAscending ? 'asc' : 'desc';
   // i.e. turns 'username,created_by' into 'username asc, created_by asc'
-  return sortField.split(',').map(f => `${f.trim()} ${direction}`).join(', ');
+  return sortField
+    .split(',')
+    .map((f) => `${f.trim()} ${direction}`)
+    .join(', ');
 };
 
 const createViewQueryObject = (viewOptions, username) => {
@@ -66,7 +68,9 @@ const createViewQueryObject = (viewOptions, username) => {
     // If we got a search string from the user, format it as a LIKE query.
     if (viewOptions.filter) {
       const likePattern = sqlString(`%${viewOptions.filter}%`);
-      clauses.push(`display_name ILIKE ${likePattern} OR external_cluster_id ILIKE ${likePattern} OR cluster_id ILIKE ${likePattern}`);
+      clauses.push(
+        `display_name ILIKE ${likePattern} OR external_cluster_id ILIKE ${likePattern} OR cluster_id ILIKE ${likePattern}`,
+      );
     }
 
     if (!isEmpty(viewOptions.flags.subscriptionFilter)) {
@@ -77,15 +81,18 @@ const createViewQueryObject = (viewOptions, username) => {
       if (!isEmpty(items)) {
         // The values we got are internal normalizedProducts values,
         // but we have to query backend with pre-normalization values.
-        const backendValues = items.flatMap(v => (
-          productFilterOptions.find(opt => opt.key === v).plansToQuery
-        ));
+        const backendValues = items.flatMap(
+          (v) => productFilterOptions.find((opt) => opt.key === v).plansToQuery,
+        );
 
         const quotedItems = backendValues.map(sqlString);
         clauses.push(`plan_id IN (${quotedItems.join(',')})`);
       }
     }
-    queryObject.filter = clauses.map(c => `(${c})`).join(' AND ').trim();
+    queryObject.filter = clauses
+      .map((c) => `(${c})`)
+      .join(' AND ')
+      .trim();
   }
 
   return queryObject;
@@ -131,7 +138,8 @@ const createServiceLogQueryObject = (viewOptions, queryObj) => {
     }
 
     if (clauses.length > 0) {
-      queryObject.filter = clauses.map(c => `(${c})`)
+      queryObject.filter = clauses
+        .map((c) => `(${c})`)
         .join(' AND ')
         .trim();
     }
@@ -154,32 +162,38 @@ const createOverviewQueryObject = (viewOptions, queryObj) => {
   return queryObject;
 };
 
-const buildUrlParams = params => Object.keys(params)
-  .map(key => `${key}=${encodeURIComponent(params[key])}`)
-  .join('&');
+const buildUrlParams = (params) =>
+  Object.keys(params)
+    .map((key) => `${key}=${encodeURIComponent(params[key])}`)
+    .join('&');
 
 /**
  * Create URL params for the cluster list filter.
  * The resulting filters are not escaped, comma separated, and empty arrays are omitted.
  *
-* For example:
+ * For example:
  * ```
  * buildFilterURLParams({ a: ['a', 'b'], c: [], d: ['e'] }) = 'a=a,b&d=e'
  * ```
  * @param {Object} params
  */
-const buildFilterURLParams = params => Object.keys(params).map(
-  key => (!isEmpty(params[key]) && `${key}=${params[key].join(',')}`),
-).filter(Boolean).join('&');
+const buildFilterURLParams = (params) =>
+  Object.keys(params)
+    .map((key) => !isEmpty(params[key]) && `${key}=${params[key].join(',')}`)
+    .filter(Boolean)
+    .join('&');
 
 const getQueryParam = (param) => {
   let ret;
-  window.location.search.substring(1).split('&').forEach((queryString) => {
-    const [key, val] = queryString.split('=');
-    if (key === param) {
-      ret = val;
-    }
-  });
+  window.location.search
+    .substring(1)
+    .split('&')
+    .forEach((queryString) => {
+      const [key, val] = queryString.split('=');
+      if (key === param) {
+        ret = val;
+      }
+    });
   return ret;
 };
 

@@ -1,11 +1,15 @@
 import React from 'react';
 import { Field } from 'redux-form';
 import {
-  GridItem, Radio, Stack, StackItem, Alert, HelperText, HelperTextItem,
+  GridItem,
+  Radio,
+  Stack,
+  StackItem,
+  Alert,
+  HelperText,
+  HelperTextItem,
 } from '@patternfly/react-core';
-import {
-  CheckCircleIcon, ExclamationCircleIcon,
-} from '@patternfly/react-icons';
+import { CheckCircleIcon, ExclamationCircleIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 import { randAlphanumString } from '../../../../../../../common/helpers';
 import ReduxVerticalFormGroup from '../../../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
@@ -36,9 +40,7 @@ const generatePassword = () => {
   };
 
   // baseline password
-  const suggestion = new Array(passwordLength).fill(null).map(
-    () => getRandom(all).value,
-  );
+  const suggestion = new Array(passwordLength).fill(null).map(() => getRandom(all).value);
 
   // make sure at least 1 upper, 1 lower, 1 symbol/digit
   const availableIndices = suggestion.map((_, i) => i);
@@ -65,7 +67,7 @@ class HTPasswdForm extends React.Component {
     suggestedUsername: `admin-${randAlphanumString(6)}`,
     useSuggestedPassword: true,
     suggestedPassword: generatePassword(),
-  }
+  };
 
   componentDidMount() {
     const { change } = this.props;
@@ -84,12 +86,8 @@ class HTPasswdForm extends React.Component {
     isPending,
     ...additionalProps
   }) => {
-    const {
-      useSuggestedPassword,
-      useSuggestedUsername,
-      suggestedPassword,
-      suggestedUsername,
-    } = this.state;
+    const { useSuggestedPassword, useSuggestedUsername, suggestedPassword, suggestedUsername } =
+      this.state;
 
     const suggestedValue = isPassword ? suggestedPassword : suggestedUsername;
     const useSuggestionIsChecked = isPassword ? useSuggestedPassword : useSuggestedUsername;
@@ -109,7 +107,9 @@ class HTPasswdForm extends React.Component {
               id={`use-suggested-${label.toLowerCase()}`}
               isChecked={useSuggestionIsChecked}
               onChange={() => {
-                this.setState({ [isPassword ? 'useSuggestedPassword' : 'useSuggestedUsername']: true });
+                this.setState({
+                  [isPassword ? 'useSuggestedPassword' : 'useSuggestedUsername']: true,
+                });
                 input.onChange(suggestedValue);
               }}
             />
@@ -120,24 +120,26 @@ class HTPasswdForm extends React.Component {
               id={`create-own-${label.toLowerCase()}`}
               isChecked={!useSuggestionIsChecked}
               onChange={() => {
-                this.setState({ [isPassword ? 'useSuggestedPassword' : 'useSuggestedUsername']: false });
+                this.setState({
+                  [isPassword ? 'useSuggestedPassword' : 'useSuggestedUsername']: false,
+                });
                 input.onChange('');
               }}
             />
           </StackItem>
-          { !useSuggestionIsChecked && (
-          <StackItem>
-            <ReduxVerticalFormGroup
-              name={input.name}
-              type="text"
-              disabled={isPending}
-              validate={required}
-              helpText={helpText}
-              input={input}
-              isPassword={isPassword}
-              {...additionalProps}
-            />
-          </StackItem>
+          {!useSuggestionIsChecked && (
+            <StackItem>
+              <ReduxVerticalFormGroup
+                name={input.name}
+                type="text"
+                disabled={isPending}
+                validate={required}
+                helpText={helpText}
+                input={input}
+                isPassword={isPassword}
+                {...additionalProps}
+              />
+            </StackItem>
           )}
         </Stack>
       </>
@@ -145,15 +147,9 @@ class HTPasswdForm extends React.Component {
   };
 
   render() {
-    const {
-      isPending,
-      HTPasswdPasswordErrors,
-    } = this.props;
+    const { isPending, HTPasswdPasswordErrors } = this.props;
 
-    const {
-      suggestedUsername,
-      suggestedPassword,
-    } = this.state;
+    const { suggestedUsername, suggestedPassword } = this.state;
 
     const helpTextItemVariant = (errName) => {
       const emptyPassword = HTPasswdPasswordErrors?.emptyPassword || false;
@@ -171,11 +167,11 @@ class HTPasswdForm extends React.Component {
       const variant = helpTextItemVariant(errName);
       switch (variant) {
         case 'success':
-          return (<CheckCircleIcon />);
+          return <CheckCircleIcon />;
         case 'error':
-          return (<ExclamationCircleIcon />);
+          return <ExclamationCircleIcon />;
         default:
-          return (<span>•</span>);
+          return <span>•</span>;
       }
     };
 
@@ -217,13 +213,11 @@ class HTPasswdForm extends React.Component {
         <GridItem span={8} className="htpasswd-form">
           <Field
             component={this.radioControlledInputGroup}
-            suggestedValueRadioLabel={(
+            suggestedValueRadioLabel={
               <span>
-                Use suggested username:
-                {' '}
-                <span className="suggestion">{suggestedUsername}</span>
+                Use suggested username: <span className="suggestion">{suggestedUsername}</span>
               </span>
-          )}
+            }
             createOwnRadioLabel="Create your own username"
             name="htpasswd_username"
             label="Username"
@@ -239,13 +233,11 @@ class HTPasswdForm extends React.Component {
             component={this.radioControlledInputGroup}
             isPassword
             hasOtherValidation
-            suggestedValueRadioLabel={(
+            suggestedValueRadioLabel={
               <span>
-                Use suggested password:
-                {' '}
-                <span className="suggestion">{suggestedPassword}</span>
+                Use suggested password: <span className="suggestion">{suggestedPassword}</span>
               </span>
-            )}
+            }
             createOwnRadioLabel="Create your own password"
             name="htpasswd_password"
             label="Password"
@@ -257,13 +249,9 @@ class HTPasswdForm extends React.Component {
           />
         </GridItem>
         <GridItem span={8}>
-          <Alert
-            isInline
-            variant="info"
-            title="Securely store your username and password"
-          >
-            If you lose these credentials, you will have to delete and
-            recreate the cluster admin user.
+          <Alert isInline variant="info" title="Securely store your username and password">
+            If you lose these credentials, you will have to delete and recreate the cluster admin
+            user.
           </Alert>
         </GridItem>
       </>

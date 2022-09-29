@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     addContactResponse,
   } = state.clusterSupport;
 
-  return ({
+  return {
     clusterCreator: cluster.subscription?.creator,
     subscriptionID: cluster.subscription?.id,
     canEdit: cluster.canEdit,
@@ -33,23 +33,21 @@ const mapStateToProps = (state) => {
     deleteContactResponse,
     isAddNotificationContactModalOpen: shouldShowModal(state, 'add-notification-contact'),
     supportCases,
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   clearNotificationContacts: () => dispatch(supportActions.clearNotificationContacts()),
   clearDeleteNotificationContacts: () => dispatch(supportActions.clearDeleteNotificationContacts()),
-  getNotificationContacts:
-    subscriptionID => dispatch(supportActions.getNotificationContacts(subscriptionID)),
-  deleteNotificationContact: (subscriptionID, userID) => dispatch(
-    supportActions.deleteNotificationContact(subscriptionID, userID),
-  ),
-  openModal: modalId => dispatch(openModal(modalId)),
-  addNotificationContact: (subscriptionID, username) => dispatch(
-    supportActions.addNotificationContact(subscriptionID, username),
-  ),
-  addNotificationToaster: data => dispatch(addNotification(data)),
-  getSupportCases: subscriptionID => dispatch(supportActions.getSupportCases(subscriptionID)),
+  getNotificationContacts: (subscriptionID) =>
+    dispatch(supportActions.getNotificationContacts(subscriptionID)),
+  deleteNotificationContact: (subscriptionID, userID) =>
+    dispatch(supportActions.deleteNotificationContact(subscriptionID, userID)),
+  openModal: (modalId) => dispatch(openModal(modalId)),
+  addNotificationContact: (subscriptionID, username) =>
+    dispatch(supportActions.addNotificationContact(subscriptionID, username)),
+  addNotificationToaster: (data) => dispatch(addNotification(data)),
+  getSupportCases: (subscriptionID) => dispatch(supportActions.getSupportCases(subscriptionID)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Support);

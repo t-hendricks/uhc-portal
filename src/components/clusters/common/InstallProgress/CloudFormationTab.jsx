@@ -66,9 +66,12 @@ function getRolePolicyARN(cluster, role) {
 function getOperatorRoleParameters(cluster) {
   const parameters = cluster.aws.sts.operator_iam_roles.reduce((acc, role) => {
     const { nameKey, policyARNKey } = parameterKeys[role.namespace] || {};
-    return [...acc, `\
+    return [
+      ...acc,
+      `\
 ParameterKey=${nameKey},ParameterValue=${getFullRoleName(role)} \
-ParameterKey=${policyARNKey},ParameterValue=${getRolePolicyARN(cluster, role)}`];
+ParameterKey=${policyARNKey},ParameterValue=${getRolePolicyARN(cluster, role)}`,
+    ];
   }, []);
   return parameters.join(' ');
 }
@@ -110,7 +113,5 @@ CloudFormationTab.propTypes = {
   cluster: PropTypes.object.isRequired,
 };
 
-export {
-  getAWSAccountID, getOIDCEndpointNoScheme, getOIDCProviderARN, getAccountRolePrefix,
-};
+export { getAWSAccountID, getOIDCEndpointNoScheme, getOIDCProviderARN, getAccountRolePrefix };
 export default CloudFormationTab;

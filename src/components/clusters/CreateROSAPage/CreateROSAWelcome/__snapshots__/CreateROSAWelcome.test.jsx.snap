@@ -38,8 +38,7 @@ exports[`<CreateROSAWelcome> renders 1`] = `
             <strong>
               ROSA
             </strong>
-             
-            is a fully managed Red Hat OpenShift service running natively on Amazon Web Services (AWS), which allows customers to quickly and easily build, deploy, and manage Kubernetes applications on the industry's most comprehensive Kubernetes platform in the AWS public cloud.
+             is a fully managed Red Hat OpenShift service running natively on Amazon Web Services (AWS), which allows customers to quickly and easily build, deploy, and manage Kubernetes applications on the industry's most comprehensive Kubernetes platform in the AWS public cloud.
           </Text>
         </TextContent>
       </GridItem>
@@ -60,8 +59,7 @@ exports[`<CreateROSAWelcome> renders 1`] = `
               target="_blank"
               variant="link"
             >
-              Learn more about ROSA
-               
+              Learn more about ROSA 
               <ArrowRightIcon
                 color="currentColor"
                 noVerticalAlign={false}

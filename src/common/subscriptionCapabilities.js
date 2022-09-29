@@ -35,7 +35,7 @@ const hasCapability = (subscription, name) => {
   }
 
   const capabilities = get(subscription, 'capabilities', []);
-  const found = capabilities.find(capability => capability.name === name);
+  const found = capabilities.find((capability) => capability.name === name);
   return get(found, 'value', false) === 'true';
 };
 
@@ -51,8 +51,4 @@ const haveCapabilities = (clusters, name) => {
   return results;
 };
 
-export {
-  subscriptionCapabilities,
-  hasCapability,
-  haveCapabilities,
-};
+export { subscriptionCapabilities, hasCapability, haveCapabilities };

@@ -19,21 +19,23 @@ describe('<AddOnsDrawer />', () => {
   const { clusterDetails, organization } = fixtures;
 
   beforeEach(() => {
-    wrapper = shallow(<AddOnsDrawer
-      addOnsList={mockAddOns.items}
-      mockClusterAddOns={mockClusterAddOns}
-      cluster={clusterDetails.cluster}
-      clusterAddOns={mockClusterAddOns}
-      organization={organization}
-      quota={addonsQuota}
-      openModal={openModal}
-      clusterMachinePools={{}}
-      addClusterAddOn={addClusterAddOn}
-      addClusterAddOnResponse={addClusterAddOnResponse}
-      deleteClusterAddOnResponse={deleteClusterAddOnResponse}
-      clearClusterAddOnsResponses={clearClusterAddOnsResponses}
-      submitClusterAddOnResponse={submitClusterAddOnResponse}
-    />);
+    wrapper = shallow(
+      <AddOnsDrawer
+        addOnsList={mockAddOns.items}
+        mockClusterAddOns={mockClusterAddOns}
+        cluster={clusterDetails.cluster}
+        clusterAddOns={mockClusterAddOns}
+        organization={organization}
+        quota={addonsQuota}
+        openModal={openModal}
+        clusterMachinePools={{}}
+        addClusterAddOn={addClusterAddOn}
+        addClusterAddOnResponse={addClusterAddOnResponse}
+        deleteClusterAddOnResponse={deleteClusterAddOnResponse}
+        clearClusterAddOnsResponses={clearClusterAddOnsResponses}
+        submitClusterAddOnResponse={submitClusterAddOnResponse}
+      />,
+    );
   });
 
   it('should render', () => {

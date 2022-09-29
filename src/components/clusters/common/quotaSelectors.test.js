@@ -5,13 +5,18 @@ import {
 } from './quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import {
-  mockQuotaList, emptyQuotaList,
-  ROSAQuotaList, CCSQuotaList, TrialQuotaList,
-  ROSACCSQuotaList, CCSROSAQuotaList,
-  rhQuotaList, negativeQuotaList,
+  mockQuotaList,
+  emptyQuotaList,
+  ROSAQuotaList,
+  CCSQuotaList,
+  TrialQuotaList,
+  ROSACCSQuotaList,
+  CCSROSAQuotaList,
+  rhQuotaList,
+  negativeQuotaList,
 } from './__test__/quota.fixtures';
 
-const state = quotaList => ({ userProfile: { organization: { quotaList } } });
+const state = (quotaList) => ({ userProfile: { organization: { quotaList } } });
 
 describe('quotaSelectors', () => {
   describe('hasManagedQuotaSelector', () => {
@@ -76,17 +81,14 @@ describe('quotaSelectors', () => {
       expect(availableClustersFromQuota(CCSQuotaList, paramsTrial)).toBe(0);
 
       expect(availableClustersFromQuota(emptyQuotaList, paramsROSA)).toBe(0);
-      expect(availableClustersFromQuota(ROSACCSQuotaList, paramsROSA))
-        .toBe(Infinity);
-      expect(availableClustersFromQuota(CCSROSAQuotaList, paramsROSA))
-        .toBe(Infinity);
+      expect(availableClustersFromQuota(ROSACCSQuotaList, paramsROSA)).toBe(Infinity);
+      expect(availableClustersFromQuota(CCSROSAQuotaList, paramsROSA)).toBe(Infinity);
       expect(availableClustersFromQuota(mockQuotaList, paramsROSA)).toBe(Infinity);
     });
   });
 
   describe('availableNodesFromQuota', () => {
-    it('0 without quota', () => {
-    });
+    it('0 without quota', () => {});
 
     it('selects OSD on rhInfra', () => {
       expect(availableNodesFromQuota(emptyQuotaList, paramsRhInfra)).toBe(0);

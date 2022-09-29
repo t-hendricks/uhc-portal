@@ -115,11 +115,14 @@ describe('<LoadBalancersDropdown />', () => {
     });
 
     it('does not call getLoadBalancers again if request returns an error', () => {
-      wrapper.setProps({
-        loadBalancerValues: { ...state, error: true, pending: false },
-      }, () => {
-        expect(getLoadBalancers).not.toBeCalled();
-      });
+      wrapper.setProps(
+        {
+          loadBalancerValues: { ...state, error: true, pending: false },
+        },
+        () => {
+          expect(getLoadBalancers).not.toBeCalled();
+        },
+      );
     });
   });
 

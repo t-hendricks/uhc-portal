@@ -7,7 +7,8 @@ import {
   Bullseye,
   GridItem,
   EmptyStateBody,
-  EmptyState, CardTitle,
+  EmptyState,
+  CardTitle,
 } from '@patternfly/react-core';
 import { Link } from 'react-router-dom';
 import ResourceUsage from '../../clusters/common/ResourceUsage/ResourceUsage';
@@ -26,9 +27,7 @@ const TopOverviewSection = ({
   const errorBody = (
     <CardBody>
       <EmptyState>
-        <Title headingLevel="h2">
-          No data available
-        </Title>
+        <Title headingLevel="h2">No data available</Title>
         <EmptyStateBody>
           There was an error fetching the data. Try refreshing the page.
         </EmptyStateBody>
@@ -41,18 +40,14 @@ const TopOverviewSection = ({
       <>
         <GridItem md={3}>
           <Card className="ocm-overview-clusters__card">
-            <CardTitle>
-              Clusters
-            </CardTitle>
-            { errorBody }
+            <CardTitle>Clusters</CardTitle>
+            {errorBody}
           </Card>
         </GridItem>
         <GridItem md={9} rowSpan={2}>
           <Card className="ocm-c-metrics-charts__card">
-            <CardTitle>
-              CPU and Memory utilization
-            </CardTitle>
-            { errorBody }
+            <CardTitle>CPU and Memory utilization</CardTitle>
+            {errorBody}
           </Card>
         </GridItem>
         <GridItem md={3}>
@@ -66,7 +61,7 @@ const TopOverviewSection = ({
     );
   }
 
-  const dataAvailable = (totalConnectedClusters > 0 && (totalCPU > 0 || totalMem.value > 0));
+  const dataAvailable = totalConnectedClusters > 0 && (totalCPU > 0 || totalMem.value > 0);
 
   const resourceUsageBody = dataAvailable ? (
     <CardBody>
@@ -92,9 +87,7 @@ const TopOverviewSection = ({
   ) : (
     <CardBody>
       <EmptyState>
-        <Title headingLevel="h2">
-          No data available
-        </Title>
+        <Title headingLevel="h2">No data available</Title>
         <EmptyStateBody>
           Check individual clusters web console if you expect that they should be sending metrics.
           Note that data is not available for clusters that are installing.
@@ -108,9 +101,7 @@ const TopOverviewSection = ({
       <GridItem md={3}>
         <Link to="/" className="overview-clusters-link">
           <Card className="ocm-overview-clusters__card">
-            <CardTitle>
-              Clusters
-            </CardTitle>
+            <CardTitle>Clusters</CardTitle>
             <CardBody>
               <Bullseye>
                 <Title headingLevel="h1" size="3xl">
@@ -123,10 +114,8 @@ const TopOverviewSection = ({
       </GridItem>
       <GridItem md={9} rowSpan={2}>
         <Card className="ocm-c-metrics-charts__card">
-          <CardTitle>
-            CPU and Memory utilization
-          </CardTitle>
-          { resourceUsageBody }
+          <CardTitle>CPU and Memory utilization</CardTitle>
+          {resourceUsageBody}
         </Card>
       </GridItem>
       <GridItem md={3}>

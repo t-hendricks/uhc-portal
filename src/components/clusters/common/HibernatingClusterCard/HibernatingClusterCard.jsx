@@ -36,7 +36,9 @@ function HibernatingClusterCard({ cluster, openModal }) {
 
   const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
   const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
-  const canNotEditReason = !cluster.canEdit && 'You do not have permission to resume from hibernation. Only cluster owners, cluster editors, and Organization Administrators can change hibernation state.';
+  const canNotEditReason =
+    !cluster.canEdit &&
+    'You do not have permission to resume from hibernation. Only cluster owners, cluster editors, and Organization Administrators can change hibernation state.';
 
   switch (cluster.state) {
     case clusterStates.RESUMING:
@@ -46,14 +48,17 @@ function HibernatingClusterCard({ cluster, openModal }) {
       break;
     case clusterStates.POWERING_DOWN:
       title = 'Cluster is powering down and moving to a hibernating state';
-      body = 'The cluster will not utilize any infrastructure and all operations will not be available';
+      body =
+        'The cluster will not utilize any infrastructure and all operations will not be available';
       icon = InProgressIcon;
       showButton = true;
-      buttonDisableReason = 'This cluster is powering down; you will be able to resume after it reaches hibernating state.';
+      buttonDisableReason =
+        'This cluster is powering down; you will be able to resume after it reaches hibernating state.';
       break;
     default:
       title = 'Cluster is currently hibernating';
-      body = 'The cluster is not utilizing any infrastructure and all operations will not be available';
+      body =
+        'The cluster is not utilizing any infrastructure and all operations will not be available';
       icon = AsleepIcon;
       showButton = true;
       buttonDisableReason = readOnlyReason || canNotEditReason;
@@ -68,12 +73,14 @@ function HibernatingClusterCard({ cluster, openModal }) {
           <Title headingLevel="h4" size="lg">
             {title}
           </Title>
-          <EmptyStateBody>
-            {body}
-          </EmptyStateBody>
+          <EmptyStateBody>{body}</EmptyStateBody>
           <EmptyStateSecondaryActions>
             {showButton && (
-              <ButtonWithTooltip variant="link" disableReason={buttonDisableReason} onClick={openResumeClusterModal}>
+              <ButtonWithTooltip
+                variant="link"
+                disableReason={buttonDisableReason}
+                onClick={openResumeClusterModal}
+              >
                 Resume from Hibernation
               </ButtonWithTooltip>
             )}

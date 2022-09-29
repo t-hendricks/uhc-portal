@@ -29,7 +29,11 @@ const mapStateToProps = (state, ownProps) => {
     autoScaleMinNodesValue: valueSelector(state, 'min_replicas'),
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     initialValues: createOSDInitialValues({
-      cloudProviderID, product, isMultiAz, isByoc, isTrialDefault: ownProps.isTrialDefault,
+      cloudProviderID,
+      product,
+      isMultiAz,
+      isByoc,
+      isTrialDefault: ownProps.isTrialDefault,
     }),
   };
 };

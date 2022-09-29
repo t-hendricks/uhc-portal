@@ -9,53 +9,55 @@ import DownloadsPage, {
   downloadChoice,
 } from './DownloadsPage';
 import {
-  tools, channels, operatingSystems, architectures, urls,
+  tools,
+  channels,
+  operatingSystems,
+  architectures,
+  urls,
 } from '../../../common/installLinks.mjs';
 
 const { linux, mac, windows } = operatingSystems;
-const {
-  arm, ppc, s390x, x86,
-} = architectures;
+const { arm, ppc, s390x, x86 } = architectures;
 
 // These tests depend on installLinks.mjs data.
 describe('allOperatingSystemsForTool', () => {
   it('excludes Windows for installer', () => {
-    const values = allOperatingSystemsForTool(urls, tools.X86INSTALLER,
-      channels.STABLE).map(o => o.value);
+    const values = allOperatingSystemsForTool(urls, tools.X86INSTALLER, channels.STABLE).map(
+      (o) => o.value,
+    );
     expect(values).toEqual([linux, mac]);
   });
 
   it('includes all OSes for oc', () => {
-    const values = allOperatingSystemsForTool(urls, tools.OC, channels.STABLE)
-      .map(o => o.value);
+    const values = allOperatingSystemsForTool(urls, tools.OC, channels.STABLE).map((o) => o.value);
     expect(values).toEqual([linux, mac, windows]);
   });
 });
 
 describe('allArchitecturesForTool', () => {
   it('includes arm for odo', () => {
-    const values = allArchitecturesForTool(urls, tools.ODO, channels.STABLE)
-      .map(o => o.value);
+    const values = allArchitecturesForTool(urls, tools.ODO, channels.STABLE).map((o) => o.value);
     expect(values).toEqual([x86, arm, ppc, s390x]);
   });
 
   it('has only x86 for rosa', () => {
-    const values = allArchitecturesForTool(urls, tools.ROSA, channels.STABLE)
-      .map(o => o.value);
+    const values = allArchitecturesForTool(urls, tools.ROSA, channels.STABLE).map((o) => o.value);
     expect(values).toEqual([x86]);
   });
 });
 
 describe('architecturesForToolOS', () => {
   it('includes arm for odo Linux', () => {
-    const values = architecturesForToolOS(urls, tools.ODO, channels.STABLE, linux)
-      .map(o => o.value);
+    const values = architecturesForToolOS(urls, tools.ODO, channels.STABLE, linux).map(
+      (o) => o.value,
+    );
     expect(values).toEqual([x86, arm, ppc, s390x]);
   });
 
   it('has only x86 for odo Windows', () => {
-    const values = architecturesForToolOS(urls, tools.ODO, channels.STABLE, windows)
-      .map(o => o.value);
+    const values = architecturesForToolOS(urls, tools.ODO, channels.STABLE, windows).map(
+      (o) => o.value,
+    );
     expect(values).toEqual([x86]);
   });
 });
@@ -64,10 +66,11 @@ describe('downloadChoice', () => {
   // For this test we only want the button from the last cell.
   Object.values(tools).forEach((tool) => {
     const selections = {};
-    const setSelections = () => { };
+    const setSelections = () => {};
     const chooser = downloadChoice(selections, setSelections, urls, tool, channels.STABLE, 'text');
 
-    if (urls[tool]) { // skip tools that have no data yet
+    if (urls[tool]) {
+      // skip tools that have no data yet
       it(`initially ${tool} button has a url`, () => {
         const wrapper = shallow(chooser.downloadButton);
         wrapper.find('DownloadButton').forEach((w) => {
@@ -112,9 +115,9 @@ describe('<DownloadsPage>', () => {
   it('renders', () => {
     const props = {
       location: { hash: '' },
-      history: { replace: () => { } },
+      history: { replace: () => {} },
       token: { auths: { foo: 'bar' } },
-      getAuthToken: () => { },
+      getAuthToken: () => {},
       githubReleases: {
         'redhat-developer/app-services-cli': {
           fulfilled: true,
@@ -127,7 +130,7 @@ describe('<DownloadsPage>', () => {
           fulfilled: false,
         },
       },
-      getLatestRelease: () => { },
+      getLatestRelease: () => {},
     };
 
     const wrapper = shallow(<DownloadsPage {...props} />);

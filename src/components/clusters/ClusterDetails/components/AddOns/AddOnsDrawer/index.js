@@ -3,7 +3,7 @@ import AddOnsDrawer from './AddOnsDrawer';
 import { addClusterAddOn } from '../AddOnsActions';
 import { modalActions } from '../../../../../common/Modal/ModalActions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   cluster: state.clusters.details.cluster,
   addClusterAddOnResponse: state.addOns.addClusterAddOnResponse,
   deleteClusterAddOnResponse: state.addOns.deleteClusterAddOnResponse,

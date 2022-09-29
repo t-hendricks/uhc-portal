@@ -16,17 +16,19 @@ describe('<EditConsoleURLDialog />', () => {
     onClose = jest.fn();
     submit = jest.fn();
     resetResponse = jest.fn();
-    wrapper = shallow(<EditConsoleURLDialog
-      isOpen
-      closeModal={closeModal}
-      onClose={onClose}
-      submit={submit}
-      resetResponse={resetResponse}
-      clusterID="some-id"
-      subscriptionID="some-sub-id"
-      consoleURL="http://www.example.com"
-      editClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
-    />);
+    wrapper = shallow(
+      <EditConsoleURLDialog
+        isOpen
+        closeModal={closeModal}
+        onClose={onClose}
+        submit={submit}
+        resetResponse={resetResponse}
+        clusterID="some-id"
+        subscriptionID="some-sub-id"
+        consoleURL="http://www.example.com"
+        editClusterResponse={{ errorMessage: '', error: false, fulfilled: false }}
+      />,
+    );
   });
   it('renders correctly', () => {
     expect(wrapper).toMatchSnapshot();

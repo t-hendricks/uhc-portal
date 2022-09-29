@@ -3,8 +3,8 @@
 /* eslint-disable */
 
 export enum host_role {
-    AUTO_ASSIGN = 'auto-assign',
-    MASTER = 'master',
-    WORKER = 'worker',
-    BOOTSTRAP = 'bootstrap',
+  AUTO_ASSIGN = 'auto-assign',
+  MASTER = 'master',
+  WORKER = 'worker',
+  BOOTSTRAP = 'bootstrap',
 }

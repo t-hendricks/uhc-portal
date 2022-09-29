@@ -32,16 +32,10 @@ class TitleWithLink extends React.Component {
     if (shouldScroll) {
       this.setState({ shouldScroll: false });
     }
-  }
+  };
 
   render() {
-    const {
-      headingLevel,
-      size,
-      id,
-      text,
-      pathname,
-    } = this.props;
+    const { headingLevel, size, id, text, pathname } = this.props;
     const { shouldScroll } = this.state;
     if (shouldScroll) {
       // requestAnimationFrame so this happens *after* render
@@ -54,19 +48,12 @@ class TitleWithLink extends React.Component {
           {/* ref on the span cause it can't be on a function component
           and the Link is visible only on hover */}
           <span ref={this.titleRef} />
-          <Title
-            id={id}
-            headingLevel={headingLevel}
-            size={size}
-          >
+          <Title id={id} headingLevel={headingLevel} size={size}>
             {text}
           </Title>
         </SplitItem>
         <SplitItem className="show-on-hover">
-          <Link
-            to={`${pathname}#${id}`}
-            smooth
-          >
+          <Link to={`${pathname}#${id}`} smooth>
             <LinkIcon />
           </Link>
         </SplitItem>

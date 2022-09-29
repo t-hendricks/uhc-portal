@@ -8,12 +8,14 @@ describe('<ErrorModal />', () => {
   const errorResponse = { errorMessage: 'Error Message', operationID: '1337' };
   const resetResponse = () => {};
   const closeModal = () => {};
-  const wrapper = shallow(<ErrorModal
-    title={title}
-    errorResponse={errorResponse}
-    resetResponse={resetResponse}
-    closeModal={closeModal}
-  />);
+  const wrapper = shallow(
+    <ErrorModal
+      title={title}
+      errorResponse={errorResponse}
+      resetResponse={resetResponse}
+      closeModal={closeModal}
+    />,
+  );
   it('should render', () => {
     expect(wrapper).toMatchSnapshot();
   });

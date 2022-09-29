@@ -2,6 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type ntp_synchronization_response = {
-};
-
+export type ntp_synchronization_response = {};

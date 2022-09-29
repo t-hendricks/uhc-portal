@@ -27,7 +27,7 @@
     "@sentry/browser": "5.19.1",
     "@sentry/integrations": "^5.19.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
-    "axios": "^0.19.2",
+    "axios": ">=0.22.0 <1.0.0",
     "cidr-tools": "^3.0.0",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.8.0",

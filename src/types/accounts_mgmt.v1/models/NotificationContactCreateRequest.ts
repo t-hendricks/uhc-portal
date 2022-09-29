@@ -3,6 +3,5 @@
 /* eslint-disable */
 
 export type NotificationContactCreateRequest = {
-    account_identifier?: string;
+  account_identifier?: string;
 };
-

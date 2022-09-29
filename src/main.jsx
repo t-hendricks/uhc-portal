@@ -22,20 +22,14 @@ const renderDevEnvError = () => {
     <div style={{ margin: '25px' }}>
       <h1>Development environment error</h1>
       <h2>You&apos;re accessing the webpack dev server directly</h2>
+      <p>This app is designed to run within the Insights Chrome, and can&apos;t run without it.</p>
       <p>
-        This app is designed to run within the Insights Chrome, and can&apos;t run without it.
+        If you&apos;re already running the Insights Chrome Proxy, you just got the URL wrong.{' '}
+        <a href="https://qa.foo.redhat.com:1337/openshift">Click here to access the app.</a>
       </p>
       <p>
-        If you&apos;re already running the Insights Chrome Proxy, you just got the URL wrong.
-        {' '}
-        <a href="https://qa.foo.redhat.com:1337/openshift">
-          Click here to access the app.
-        </a>
-      </p>
-      <p>
-        If you don&apos;t know what the Insights Chrome Proxy is or how to run it,
-        {' '}
-        consult README.md and README-tldr.md
+        If you don&apos;t know what the Insights Chrome Proxy is or how to run it, consult README.md
+        and README-tldr.md
       </p>
     </div>,
     document.body,
@@ -47,12 +41,8 @@ const renderUnsupportedEnvError = () => {
     <div style={{ margin: '25px' }}>
       <h1>Unsupported environment</h1>
       <h2>OCM does not support this environment</h2>
-      <p>
-        Please use one of our supported environments.
-      </p>
-      <p>
-        OCM is only being deployed to this environment to ensure navigation keeps working.
-      </p>
+      <p>Please use one of our supported environments.</p>
+      <p>OCM is only being deployed to this environment to ensure navigation keeps working.</p>
     </div>,
     document.getElementById('root'),
   );

@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Tabs, Tab, TabTitleText, TabTitleIcon,
-} from '@patternfly/react-core';
+import { Tabs, Tab, TabTitleText, TabTitleIcon } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 
 class TabsRow extends React.Component {
@@ -18,9 +16,7 @@ class TabsRow extends React.Component {
 
   componentDidUpdate() {
     const { activeTabKey, initialTabKey } = this.state;
-    const {
-      overviewTabRef,
-    } = this.props;
+    const { overviewTabRef } = this.props;
     const activeTab = this.getTabs()[activeTabKey];
     if (!activeTab.show) {
       this.handleTabClick(undefined, 0);
@@ -39,7 +35,7 @@ class TabsRow extends React.Component {
 
   getInitTab() {
     const { initTabOpen } = this.props;
-    const tabIndex = this.getTabs().findIndex(tab => tab.id === initTabOpen);
+    const tabIndex = this.getTabs().findIndex((tab) => tab.id === initTabOpen);
     if (tabIndex === -1) {
       return 0;
     }
@@ -80,12 +76,16 @@ class TabsRow extends React.Component {
       },
       {
         key: 1,
-        title:
-  <>
-    <TabTitleText>Monitoring</TabTitleText>
-    {hasIssues
-    && <TabTitleIcon id="monitoring-issues-icon"><ExclamationCircleIcon className="danger" /></TabTitleIcon>}
-  </>,
+        title: (
+          <>
+            <TabTitleText>Monitoring</TabTitleText>
+            {hasIssues && (
+              <TabTitleIcon id="monitoring-issues-icon">
+                <ExclamationCircleIcon className="danger" />
+              </TabTitleIcon>
+            )}
+          </>
+        ),
         contentId: 'monitoringTabContent',
         id: 'monitoring',
         show: displayMonitoringTab,
@@ -161,15 +161,18 @@ class TabsRow extends React.Component {
   handleTabClick = (event, tabIndex) => {
     const { setOpenedTab, onTabSelected } = this.props;
     const tabs = this.getTabs();
-    this.setState(state => ({
-      activeTabKey: tabIndex,
-      initialTabKey: state.initialTabKey === tabIndex ? null : state.initialTabKey,
-    }), () => {
-      const { initialTabKey } = this.state;
-      if (initialTabKey === null) {
-        setOpenedTab(tabs[tabIndex].id);
-      }
-    });
+    this.setState(
+      (state) => ({
+        activeTabKey: tabIndex,
+        initialTabKey: state.initialTabKey === tabIndex ? null : state.initialTabKey,
+      }),
+      () => {
+        const { initialTabKey } = this.state;
+        if (initialTabKey === null) {
+          setOpenedTab(tabs[tabIndex].id);
+        }
+      },
+    );
     tabs.forEach((tab) => {
       if (tab.ref && tab.ref.current) {
         if (tab.key !== tabIndex) {
@@ -187,8 +190,9 @@ class TabsRow extends React.Component {
   /* use browser API (window) as a temporary workaround to change
      the active tab when hash is changed inside URL */
   onPopState = ({ target }) => {
-    const targetTabKey = this.getTabs()
-      .find(t => t.id === target.location.hash.substring(1))?.key;
+    const targetTabKey = this.getTabs().find(
+      (t) => t.id === target.location.hash.substring(1),
+    )?.key;
     if (targetTabKey) {
       this.handleTabClick(undefined, targetTabKey);
     }
@@ -197,11 +201,11 @@ class TabsRow extends React.Component {
   render() {
     const { activeTabKey } = this.state;
 
-    const tabsToDisplay = this.getTabs().filter(tab => tab.show);
+    const tabsToDisplay = this.getTabs().filter((tab) => tab.show);
 
     return (
       <Tabs activeKey={activeTabKey} onSelect={this.handleTabClick}>
-        {tabsToDisplay.map(tab => (
+        {tabsToDisplay.map((tab) => (
           <Tab
             key={tab.key}
             eventKey={tab.key}

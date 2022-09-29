@@ -18,9 +18,7 @@ import withFeatureGate from '../../../features/with-feature-gate';
 const AssistedInstallerLink = withFeatureGate(
   () => (
     <Link to="/assisted-installer">
-      <Button variant="link">
-        Assisted Installer clusters
-      </Button>
+      <Button variant="link">Assisted Installer clusters</Button>
     </Link>
   ),
   ASSISTED_INSTALLER_FEATURE,
@@ -35,9 +33,8 @@ function ClusterListEmptyState() {
         No OpenShift clusters to display
       </Title>
       <EmptyStateBody>
-        The Red Hat OpenShift Cluster Manager helps you create,
-        register, and manage OpenShift 4 clusters. To get started,
-        create your first cluster.
+        The Red Hat OpenShift Cluster Manager helps you create, register, and manage OpenShift 4
+        clusters. To get started, create your first cluster.
       </EmptyStateBody>
       <Link to="/create">
         <Button className="pf-u-mt-xl">Create cluster</Button>

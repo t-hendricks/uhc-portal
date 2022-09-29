@@ -96,15 +96,47 @@ describe('rosaActions', () => {
       expect(AWSAccountRoles.length).toEqual(2);
 
       // prefix = 'croche-test'
-      expect(AWSAccountRoles[0].Installer)
-        .toEqual('arn:aws:iam::765374464689:role/croche-test-Installer-Role');
-      expect(AWSAccountRoles[0].ControlPlane)
-        .toEqual('arn:aws:iam::765374464689:role/croche-test-ControlPlane-Role');
+      expect(AWSAccountRoles[0].Installer).toEqual(
+        'arn:aws:iam::765374464689:role/croche-test-Installer-Role',
+      );
+      expect(AWSAccountRoles[0].ControlPlane).toEqual(
+        'arn:aws:iam::765374464689:role/croche-test-ControlPlane-Role',
+      );
       // prefix = 'ManagedOpenShift'
-      expect(AWSAccountRoles[1].Installer)
-        .toEqual('arn:aws:iam::765374464689:role/ManagedOpenShift-Installer-Role');
-      expect(AWSAccountRoles[1].Support)
-        .toEqual('arn:aws:iam::765374464689:role/ManagedOpenShift-Support-Role');
+      expect(AWSAccountRoles[1].Installer).toEqual(
+        'arn:aws:iam::765374464689:role/ManagedOpenShift-Installer-Role',
+      );
+      expect(AWSAccountRoles[1].Support).toEqual(
+        'arn:aws:iam::765374464689:role/ManagedOpenShift-Support-Role',
+      );
+    });
+  });
+
+  describe('normalizeSTSUsersByAWSAccounts', () => {
+    it('return empty array when no users provided', () => {
+      const users = '';
+      const usersByAcctIds = rosaActions.normalizeSTSUsersByAWSAccounts(users);
+      expect(usersByAcctIds.length).toEqual(0);
+    });
+
+    it('return single user and account id', () => {
+      const users = 'arn:aws:iam::000000000006:role/ManagedOpenShift-User-dtaylor-ocm-Role';
+      const usersByAcctIds = rosaActions.normalizeSTSUsersByAWSAccounts(users);
+      expect(usersByAcctIds.length).toEqual(1);
+      expect(usersByAcctIds[0].aws_id).toEqual('000000000006');
+      expect(usersByAcctIds[0].sts_user).toEqual('ManagedOpenShift-User-dtaylor-ocm-Role');
+    });
+
+    it('return two users and account ids', () => {
+      const users =
+        'arn:aws:iam::000000000006:role/ManagedOpenShift-User-dtaylor-ocm-Role,' +
+        'arn:aws:iam::119733383044:role/ManagedOpenShift-User-foobar-ocm-Role';
+      const usersByAcctIds = rosaActions.normalizeSTSUsersByAWSAccounts(users);
+      expect(usersByAcctIds.length).toEqual(2);
+      expect(usersByAcctIds[0].aws_id).toEqual('000000000006');
+      expect(usersByAcctIds[0].sts_user).toEqual('ManagedOpenShift-User-dtaylor-ocm-Role');
+      expect(usersByAcctIds[1].aws_id).toEqual('119733383044');
+      expect(usersByAcctIds[1].sts_user).toEqual('ManagedOpenShift-User-foobar-ocm-Role');
     });
   });
 });

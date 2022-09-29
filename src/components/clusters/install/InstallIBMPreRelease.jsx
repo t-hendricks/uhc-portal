@@ -23,18 +23,22 @@ export class InstallIBMPreRelease extends Component {
   render() {
     const { token } = this.props;
     const breadcrumbs = (
-      <Breadcrumbs path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: 'IBM Z', path: '/install/ibmz/user-provisioned' },
-        { label: 'Pre-Release Builds' },
-      ]}
+      <Breadcrumbs
+        path={[
+          { label: 'Clusters' },
+          { label: 'Create', path: '/create' },
+          { label: 'IBM Z', path: '/install/ibmz/user-provisioned' },
+          { label: 'Pre-Release Builds' },
+        ]}
       />
     );
 
     return (
       <>
-        <PageTitle title="Install OpenShift on IBM Z with user-provisioned infrastructure" breadcrumbs={breadcrumbs} />
+        <PageTitle
+          title="Install OpenShift on IBM Z with user-provisioned infrastructure"
+          breadcrumbs={breadcrumbs}
+        />
         <PageSection>
           <InstructionsPreRelease token={token} installer={tools.IBMZINSTALLER} />
         </PageSection>
@@ -48,6 +52,6 @@ InstallIBMPreRelease.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({ token: state.tollbooth.token });
+const mapStateToProps = (state) => ({ token: state.tollbooth.token });
 
 export default connect(mapStateToProps)(InstallIBMPreRelease);

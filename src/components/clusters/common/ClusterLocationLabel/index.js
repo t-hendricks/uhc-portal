@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { cloudProviderActions } from '../../../../redux/actions/cloudProviderActions';
 import ClusterLocationLabel from './ClusterLocationLabel';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   cloudProviders: state.cloudProviders,
 });
 

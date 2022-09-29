@@ -6,6 +6,6 @@
  * Cluster components listening method.
  */
 export enum ListeningMethod {
-    EXTERNAL = 'external',
-    INTERNAL = 'internal',
+  EXTERNAL = 'external',
+  INTERNAL = 'internal',
 }

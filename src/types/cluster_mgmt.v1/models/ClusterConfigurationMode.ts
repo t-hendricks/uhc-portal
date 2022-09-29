@@ -6,6 +6,6 @@
  * Configuration mode of a cluster.
  */
 export enum ClusterConfigurationMode {
-    FULL = 'full',
-    READ_ONLY = 'read_only',
+  FULL = 'full',
+  READ_ONLY = 'read_only',
 }

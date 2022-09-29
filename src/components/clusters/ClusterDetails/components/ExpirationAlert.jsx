@@ -29,15 +29,9 @@ function ExpirationAlert({
         title={`This cluster should have been deleted ${timeUntilExpiryString}.`}
       >
         <>
-          Please contact OCM support at
-          {' '}
-          <a
-            href="mailto: ocm-feedback@redhat.com"
-          >
-            ocm-feedback@redhat.com
-          </a>
-          {' '}
-          to let us know about this issue.
+          Please contact OCM support at{' '}
+          <a href="mailto: ocm-feedback@redhat.com">ocm-feedback@redhat.com</a> to let us know about
+          this issue.
         </>
       </Alert>
     );
@@ -64,13 +58,11 @@ function ExpirationAlert({
       <>
         Your cluster subscription was purchased from Red Hat Marketplace and will expire on
         {` ${expirationTimeString}. `}
-        Once expired, the cluster will be deleted permanently.
-        To avoid deletion, please purchase a new subscription from the
-        {' '}
+        Once expired, the cluster will be deleted permanently. To avoid deletion, please purchase a
+        new subscription from the{' '}
         <ExternalLink href="https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated">
           Red Hat Marketplace
-        </ExternalLink>
-        {' '}
+        </ExternalLink>{' '}
         before the expiration date.
       </>
     );
@@ -90,11 +82,15 @@ function ExpirationAlert({
       isInline
       title={`This cluster will be deleted ${timeUntilExpiryString}.`}
     >
-      <p>
-        {contents}
-      </p>
+      <p>{contents}</p>
       {trialExpiration && (
-        <Button variant="secondary" className="pf-u-mt-sm" onClick={() => openModal(modals.UPGRADE_TRIAL_CLUSTER, upgradeTrialProps)}>Upgrade from trial</Button>
+        <Button
+          variant="secondary"
+          className="pf-u-mt-sm"
+          onClick={() => openModal(modals.UPGRADE_TRIAL_CLUSTER, upgradeTrialProps)}
+        >
+          Upgrade from trial
+        </Button>
       )}
     </Alert>
   );

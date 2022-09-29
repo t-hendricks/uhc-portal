@@ -11,7 +11,7 @@ import { checkClusterDisplayName } from '../../../../common/validators';
 class EditDisplayNameDialog extends Component {
   state = {
     currentValue: '',
-  }
+  };
 
   componentDidMount() {
     const { displayName } = this.props;
@@ -19,9 +19,7 @@ class EditDisplayNameDialog extends Component {
   }
 
   componentDidUpdate() {
-    const {
-      editClusterResponse, resetResponse, closeModal, onClose,
-    } = this.props;
+    const { editClusterResponse, resetResponse, closeModal, onClose } = this.props;
     if (editClusterResponse.fulfilled) {
       resetResponse();
       closeModal();
@@ -37,8 +35,13 @@ class EditDisplayNameDialog extends Component {
 
   render() {
     const {
-      closeModal, submit, editClusterResponse, resetResponse, subscriptionID,
-      shouldDisplayClusterName, displayName,
+      closeModal,
+      submit,
+      editClusterResponse,
+      resetResponse,
+      subscriptionID,
+      shouldDisplayClusterName,
+      displayName,
     } = this.props;
     const { currentValue } = this.state;
 
@@ -75,18 +78,23 @@ class EditDisplayNameDialog extends Component {
       >
         <>
           {hasError}
-          <Form onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
+          <Form
+            onSubmit={(e) => {
+              handleSubmit();
+              e.preventDefault();
+            }}
+          >
             <FormGroup
               helperTextInvalid={validationMessage}
-              validated={(!validationMessage) ? 'default' : 'error'}
+              validated={!validationMessage ? 'default' : 'error'}
               fieldId="edit-display-name-input"
             >
               <TextInput
                 type="text"
-                validated={(!validationMessage) ? 'default' : 'error'}
+                validated={!validationMessage ? 'default' : 'error'}
                 value={currentValue}
                 placeholder="Enter display name"
-                onChange={newValue => this.setValue(newValue)}
+                onChange={(newValue) => this.setValue(newValue)}
                 aria-label="Edit display name"
                 id="edit-display-name-input"
               />

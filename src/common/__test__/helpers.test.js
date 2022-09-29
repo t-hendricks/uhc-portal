@@ -1,4 +1,8 @@
-import helpers, { parseReduxFormKeyValueList, parseReduxFormTaints, goZeroTime2Null } from '../helpers';
+import helpers, {
+  parseReduxFormKeyValueList,
+  parseReduxFormTaints,
+  goZeroTime2Null,
+} from '../helpers';
 
 describe('nestedIsEmpty()', () => {
   it('returns true for an empty object', () => {
@@ -17,19 +21,28 @@ describe('nestedIsEmpty()', () => {
 
 describe('parseReduxFormKeyValueList', () => {
   it('returns a key value pair', () => {
-    const reduxFormInput = [{ key: 'foo', value: 'bar' }, { key: 'hello', value: 'world' }];
+    const reduxFormInput = [
+      { key: 'foo', value: 'bar' },
+      { key: 'hello', value: 'world' },
+    ];
     const expected = { foo: 'bar', hello: 'world' };
     expect(parseReduxFormKeyValueList(reduxFormInput)).toEqual(expected);
   });
 
   it('only returns pairs with non empty keys', () => {
-    const reduxFormInput = [{ key: 'foo', value: 'bar' }, { key: undefined, value: 'world' }];
+    const reduxFormInput = [
+      { key: 'foo', value: 'bar' },
+      { key: undefined, value: 'world' },
+    ];
     const expected = { foo: 'bar' };
     expect(parseReduxFormKeyValueList(reduxFormInput)).toEqual(expected);
   });
 
   it('returns empty values as empty strings', () => {
-    const reduxFormInput = [{ key: 'foo', value: 'bar' }, { key: 'hello', undefined: 'world' }];
+    const reduxFormInput = [
+      { key: 'foo', value: 'bar' },
+      { key: 'hello', undefined: 'world' },
+    ];
     const expected = { foo: 'bar', hello: '' };
     expect(parseReduxFormKeyValueList(reduxFormInput)).toEqual(expected);
   });
@@ -48,7 +61,10 @@ describe('parseReduxFormKeyValueList', () => {
 
 describe('parseReduxFormTaints', () => {
   it('returns the valid input', () => {
-    const reduxFormInput = [{ key: 'foo', value: 'bar', effect: 'NoExecute' }, { key: 'hello', value: 'world', effect: 'NoSchedule' }];
+    const reduxFormInput = [
+      { key: 'foo', value: 'bar', effect: 'NoExecute' },
+      { key: 'hello', value: 'world', effect: 'NoSchedule' },
+    ];
     const expected = reduxFormInput;
     expect(parseReduxFormTaints(reduxFormInput)).toEqual(expected);
   });

@@ -6,7 +6,7 @@
  * Represents the operator state.
  */
 export enum operator_status {
-    FAILED = 'failed',
-    PROGRESSING = 'progressing',
-    AVAILABLE = 'available',
+  FAILED = 'failed',
+  PROGRESSING = 'progressing',
+  AVAILABLE = 'available',
 }

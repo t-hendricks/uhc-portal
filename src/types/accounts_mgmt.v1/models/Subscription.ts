@@ -10,18 +10,17 @@ import type { OneMetric } from './OneMetric';
 import type { Plan } from './Plan';
 import type { SubscriptionCommonFields } from './SubscriptionCommonFields';
 
-export type Subscription = (SubscriptionCommonFields & {
-    capabilities?: Array<Capability>;
-    created_at?: string;
-    creator?: AccountReference;
-    /**
-     * Calulated as the subscription created date + 60 days
-     */
-    eval_expiration_date?: string;
-    labels?: Array<Label>;
-    metrics?: Array<OneMetric>;
-    notification_contacts?: Array<Account>;
-    plan?: Plan;
-    updated_at?: string;
-});
-
+export type Subscription = SubscriptionCommonFields & {
+  capabilities?: Array<Capability>;
+  created_at?: string;
+  creator?: AccountReference;
+  /**
+   * Calulated as the subscription created date + 60 days
+   */
+  eval_expiration_date?: string;
+  labels?: Array<Label>;
+  metrics?: Array<OneMetric>;
+  notification_contacts?: Array<Account>;
+  plan?: Plan;
+  updated_at?: string;
+};

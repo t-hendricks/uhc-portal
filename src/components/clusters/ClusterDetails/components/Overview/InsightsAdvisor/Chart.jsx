@@ -29,7 +29,7 @@ const Chart = ({ entries, issueCount, externalId }) => (
     width={350}
     height={200}
     colorScale={chartColorScale}
-    legendComponent={(
+    legendComponent={
       <ChartLegend
         data={entries.map(([k, v]) => ({
           name: `${v} ${riskLabels[k]}`,
@@ -40,7 +40,7 @@ const Chart = ({ entries, issueCount, externalId }) => (
         dataComponent={<InsightsLegendIconComponent />}
         x={200}
       />
-    )}
+    }
     radius={80}
     padAngle={0}
     padding={{
@@ -49,7 +49,6 @@ const Chart = ({ entries, issueCount, externalId }) => (
       right: 170, // Adjusted to accommodate legend
       top: 20,
     }}
-
   />
 );
 

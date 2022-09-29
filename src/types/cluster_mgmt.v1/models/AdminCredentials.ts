@@ -7,13 +7,12 @@
  * cluster.
  */
 export type AdminCredentials = {
-    /**
-     * Cluster administrator password.
-     */
-    password?: string;
-    /**
-     * Cluster administrator user name.
-     */
-    user?: string;
+  /**
+   * Cluster administrator password.
+   */
+  password?: string;
+  /**
+   * Cluster administrator user name.
+   */
+  user?: string;
 };
-

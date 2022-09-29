@@ -47,25 +47,31 @@ describe('clusterHealthSelector', () => {
     };
 
     it('should return DISCONNECTED when subscription Disconnected and metrics are stale', () => {
-      expect(clusterHealthSelector(stateWithOCPDisconnected, makeStaleCheckIn(), null))
-        .toBe(monitoringStatuses.DISCONNECTED);
+      expect(clusterHealthSelector(stateWithOCPDisconnected, makeStaleCheckIn(), null)).toBe(
+        monitoringStatuses.DISCONNECTED,
+      );
     });
 
-    it.todo("if fresh metrics arrived for a Disconnected cluster, but subscription didn't yet switch to Active, what should we return?");
+    it.todo(
+      "if fresh metrics arrived for a Disconnected cluster, but subscription didn't yet switch to Active, what should we return?",
+    );
 
     it('should return NO_METRICS when metrics are stale', () => {
-      expect(clusterHealthSelector(stateWithOCPActive, makeStaleCheckIn(), null))
-        .toBe(monitoringStatuses.NO_METRICS);
+      expect(clusterHealthSelector(stateWithOCPActive, makeStaleCheckIn(), null)).toBe(
+        monitoringStatuses.NO_METRICS,
+      );
     });
 
     it('should return HEALTHY when metrics are fresh & good', () => {
-      expect(clusterHealthSelector(stateWithOCPActive, makeFreshCheckIn(), 0))
-        .toBe(monitoringStatuses.HEALTHY);
+      expect(clusterHealthSelector(stateWithOCPActive, makeFreshCheckIn(), 0)).toBe(
+        monitoringStatuses.HEALTHY,
+      );
     });
 
     it("handles timestamp in future (relative to browser's clock)", () => {
-      expect(clusterHealthSelector(stateWithOCPActive, makeFutureDate(), 0))
-        .toBe(monitoringStatuses.HEALTHY);
+      expect(clusterHealthSelector(stateWithOCPActive, makeFutureDate(), 0)).toBe(
+        monitoringStatuses.HEALTHY,
+      );
     });
   });
 

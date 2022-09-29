@@ -4,11 +4,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormSelect,
-  FormSelectOption,
-  Tooltip,
-} from '@patternfly/react-core';
+import { FormSelect, FormSelectOption, Tooltip } from '@patternfly/react-core';
 
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../common/ErrorBox';
@@ -19,12 +15,12 @@ import { noQuotaTooltip } from '../../../../common/helpers';
 
 class PersistentStorageDropdown extends React.Component {
   componentDidMount() {
-    const {
-      getPersistentStorage, persistentStorageValues,
-    } = this.props;
-    if (!persistentStorageValues.pending
-      && !persistentStorageValues.fulfilled
-      && !persistentStorageValues.error) {
+    const { getPersistentStorage, persistentStorageValues } = this.props;
+    if (
+      !persistentStorageValues.pending &&
+      !persistentStorageValues.fulfilled &&
+      !persistentStorageValues.error
+    ) {
       // fetch persistent storage from server only if needed.
       getPersistentStorage();
     }
@@ -32,8 +28,16 @@ class PersistentStorageDropdown extends React.Component {
 
   render() {
     const {
-      input, persistentStorageValues, disabled, currentValue, quotaList,
-      billingModel, product, cloudProviderID, isBYOC, isMultiAZ,
+      input,
+      persistentStorageValues,
+      disabled,
+      currentValue,
+      quotaList,
+      billingModel,
+      product,
+      cloudProviderID,
+      isBYOC,
+      isMultiAZ,
     } = this.props;
 
     // Set up options for storage values
@@ -64,8 +68,11 @@ class PersistentStorageDropdown extends React.Component {
         resourceName: 'gp2',
       });
 
-      const filteredStorageValues = filterPersistentStorageValuesByQuota(currentValue,
-        persistentStorageValues, storageQuota);
+      const filteredStorageValues = filterPersistentStorageValuesByQuota(
+        currentValue,
+        persistentStorageValues,
+        storageQuota,
+      );
       const notEnoughQuota = filteredStorageValues.values.length <= 1;
       const isDisabled = disabled || notEnoughQuota;
 
@@ -76,19 +83,14 @@ class PersistentStorageDropdown extends React.Component {
           isDisabled={isDisabled}
           {...input}
         >
-          {filteredStorageValues.values.map(value => storageOption(value))}
+          {filteredStorageValues.values.map((value) => storageOption(value))}
         </FormSelect>
       );
 
       if (notEnoughQuota) {
         return (
-          <Tooltip
-            content={noQuotaTooltip}
-            position="right"
-          >
-            <div>
-              {formSelect}
-            </div>
+          <Tooltip content={noQuotaTooltip} position="right">
+            <div>{formSelect}</div>
           </Tooltip>
         );
       }
@@ -96,10 +98,15 @@ class PersistentStorageDropdown extends React.Component {
     }
 
     return persistentStorageValues.error ? (
-      <ErrorBox message="Error loading persistent storage list" response={persistentStorageValues} />
+      <ErrorBox
+        message="Error loading persistent storage list"
+        response={persistentStorageValues}
+      />
     ) : (
       <>
-        <div className="spinner-fit-container"><Spinner /></div>
+        <div className="spinner-fit-container">
+          <Spinner />
+        </div>
         <div className="spinner-loading-text">Loading persistent storage list...</div>
       </>
     );

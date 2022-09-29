@@ -66,13 +66,11 @@ exports[`<TokensROSA /> Renders loading screen 1`] = `
                 component="ol"
               >
                 <ListItem>
-                  Download and install the
-                   
+                  Download and install the 
                   <code>
                     rosa
                   </code>
-                   
-                  command-line tool:
+                   command-line tool:
                    
                   <Text
                     component="p"
@@ -103,15 +101,12 @@ exports[`<TokensROSA /> Renders loading screen 1`] = `
               <Text
                 component="p"
               >
-                Run
-                 
+                Run 
                 <code>
                   rosa
-                   
-                  login --help
+                   login --help
                 </code>
-                 
-                for in-terminal guidance, or
+                 for in-terminal guidance, or
                  
                 <ExternalLink
                   href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
@@ -119,14 +114,12 @@ exports[`<TokensROSA /> Renders loading screen 1`] = `
                 >
                   read more about setting up the rosa CLI
                 </ExternalLink>
-                 
-                for more information about setting up the
+                 for more information about setting up the
                  
                 <code>
                   rosa
                 </code>
-                 
-                CLI.
+                 CLI.
               </Text>
             </TextContent>
           </CardBody>
@@ -167,17 +160,14 @@ exports[`<TokensROSA /> Renders loading screen 1`] = `
                   page.
                 </ListItem>
                 <ListItem>
-                  Locate the
-                   
+                  Locate the 
                   <b>
                     cloud-services
                   </b>
-                   
-                  application.
+                   application.
                 </ListItem>
                 <ListItem>
-                  Select
-                   
+                  Select 
                   <b>
                     Revoke grant
                   </b>
@@ -302,17 +292,14 @@ exports[`<TokensROSA /> Renders screen with button 1`] = `
                   page.
                 </ListItem>
                 <ListItem>
-                  Locate the
-                   
+                  Locate the 
                   <b>
                     cloud-services
                   </b>
-                   
-                  application.
+                   application.
                 </ListItem>
                 <ListItem>
-                  Select
-                   
+                  Select 
                   <b>
                     Revoke grant
                   </b>
@@ -400,13 +387,11 @@ exports[`<TokensROSA /> Renders token 1`] = `
                 component="ol"
               >
                 <ListItem>
-                  Download and install the
-                   
+                  Download and install the 
                   <code>
                     rosa
                   </code>
-                   
-                  command-line tool:
+                   command-line tool:
                    
                   <Text
                     component="p"
@@ -437,15 +422,12 @@ exports[`<TokensROSA /> Renders token 1`] = `
               <Text
                 component="p"
               >
-                Run
-                 
+                Run 
                 <code>
                   rosa
-                   
-                  login --help
+                   login --help
                 </code>
-                 
-                for in-terminal guidance, or
+                 for in-terminal guidance, or
                  
                 <ExternalLink
                   href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
@@ -453,14 +435,12 @@ exports[`<TokensROSA /> Renders token 1`] = `
                 >
                   read more about setting up the rosa CLI
                 </ExternalLink>
-                 
-                for more information about setting up the
+                 for more information about setting up the
                  
                 <code>
                   rosa
                 </code>
-                 
-                CLI.
+                 CLI.
               </Text>
             </TextContent>
           </CardBody>
@@ -501,17 +481,14 @@ exports[`<TokensROSA /> Renders token 1`] = `
                   page.
                 </ListItem>
                 <ListItem>
-                  Locate the
-                   
+                  Locate the 
                   <b>
                     cloud-services
                   </b>
-                   
-                  application.
+                   application.
                 </ListItem>
                 <ListItem>
-                  Select
-                   
+                  Select 
                   <b>
                     Revoke grant
                   </b>

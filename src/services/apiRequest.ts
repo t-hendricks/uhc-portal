@@ -1,14 +1,16 @@
 import axios from 'axios';
+import type { AxiosRequestConfig, AxiosInstance } from 'axios';
 import * as Sentry from '@sentry/browser';
 
 import config from '../config';
 
-export const authInterceptor = (client) => {
+export const authInterceptor = (client: AxiosInstance): AxiosInstance => {
   client.interceptors.request.use(async (cfg) => {
     await insights.chrome.auth.getUser();
     const token = await insights.chrome.auth.getToken();
-    const BASE_URL = cfg.baseURL || (config.configData.apiGateway ? config.configData.apiGateway : '');
-    const updatedCfg = { ...cfg, url: `${BASE_URL}${cfg.url}` };
+    const BASE_URL =
+      cfg.baseURL || (config.configData.apiGateway ? config.configData.apiGateway : '');
+    const updatedCfg: AxiosRequestConfig = { ...cfg, url: `${BASE_URL}${cfg.url}` };
     if (token) {
       updatedCfg.headers = {
         ...updatedCfg.headers,
@@ -27,6 +29,7 @@ export const authInterceptor = (client) => {
         });
       }, 15000);
     }
+    // @ts-ignore
     delete updatedCfg.customHost;
     return updatedCfg;
   });

@@ -1,7 +1,5 @@
 import { connect } from 'react-redux';
-import {
-  isValid, reduxForm, formValueSelector, resetSection,
-} from 'redux-form';
+import { isValid, reduxForm, formValueSelector, resetSection } from 'redux-form';
 import get from 'lodash/get';
 
 import EditNodeCountModal from './EditNodeCountModal';
@@ -35,9 +33,10 @@ const mapStateToProps = (state) => {
   const modalData = state.modal.data;
   const cluster = modalData?.cluster;
 
-  const selectedMachinePool = valueSelector(state, 'machine_pool')
-  || modalData.machinePool?.id
-  || (modalData.isDefaultMachinePool && 'Default');
+  const selectedMachinePool =
+    valueSelector(state, 'machine_pool') ||
+    modalData.machinePool?.id ||
+    (modalData.isDefaultMachinePool && 'Default');
 
   const cloudProviderID = get(cluster, 'cloud_provider.id', '');
 
@@ -52,7 +51,7 @@ const mapStateToProps = (state) => {
   }
 
   const commonProps = {
-    resetSection: values => resetSection(reduxFormConfig.form, values),
+    resetSection: (values) => resetSection(reduxFormConfig.form, values),
     isValid: isValid(reduxFormConfig.form)(state),
     clusterID: get(cluster, 'id', ''),
     machinePoolsList: {
@@ -64,7 +63,7 @@ const mapStateToProps = (state) => {
           machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
           nodes: get(cluster, 'nodes.compute', null),
         },
-        ...state.machinePools.getMachinePools.data.map(machinePool => ({
+        ...state.machinePools.getMachinePools.data.map((machinePool) => ({
           name: machinePool.id,
           value: machinePool.id,
           machineType: machinePool.instance_type,
@@ -91,7 +90,8 @@ const mapStateToProps = (state) => {
     autoScaleMaxNodesValue: valueSelector(state, 'max_replicas'),
     billingModel: get(cluster, 'billing_model', ''),
     shouldDisplayClusterName: modalData.shouldDisplayClusterName
-      ? modalData.shouldDisplayClusterName : false,
+      ? modalData.shouldDisplayClusterName
+      : false,
     clusterDisplayName: getClusterName(cluster),
   };
 
@@ -101,10 +101,10 @@ const mapStateToProps = (state) => {
     const min = autoscaleObj.min_replicas;
     const max = autoscaleObj.max_replicas;
 
-    return ({
+    return {
       min_replicas: isMultiAz ? (min / 3).toString() : min.toString(),
       max_replicas: isMultiAz ? (max / 3).toString() : max.toString(),
-    });
+    };
   };
 
   const initialValuesNodesCompute = getNodesCount(commonProps.isByoc, isMultiAz);
@@ -113,44 +113,48 @@ const mapStateToProps = (state) => {
   if (selectedMachinePool === 'Default') {
     // eslint-disable-next-line camelcase
     machinePoolWithAutoscale = cluster.nodes?.autoscale_compute;
-    return ({
+    return {
       ...commonProps,
       editNodeCountResponse: state.clusters.editedCluster,
       machineType: get(cluster, 'nodes.compute_machine_type.id', ''),
       machinePoolId: 'Default',
       initialValues: {
-        nodes_compute: get(cluster, 'nodes.compute', null)
-          || get(cluster, 'nodes.autoscale_compute.min_replicas')
-          || initialValuesNodesCompute,
+        nodes_compute:
+          get(cluster, 'nodes.compute', null) ||
+          get(cluster, 'nodes.autoscale_compute.min_replicas') ||
+          initialValuesNodesCompute,
         machine_pool: 'Default',
         autoscalingEnabled: machinePoolWithAutoscale,
         ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(cluster.nodes.autoscale_compute)),
       },
-    });
+    };
   }
   // Any other machine pool
-  const selectedMachinePoolData = get(state, 'machinePools.getMachinePools.data', [])
-    .find(machinePool => machinePool.id === selectedMachinePool) || {};
+  const selectedMachinePoolData =
+    get(state, 'machinePools.getMachinePools.data', []).find(
+      (machinePool) => machinePool.id === selectedMachinePool,
+    ) || {};
 
   machinePoolWithAutoscale = selectedMachinePoolData.autoscaling;
 
-  return ({
+  return {
     ...commonProps,
     editNodeCountResponse: state.machinePools.scaleMachinePoolResponse,
     machineType: get(selectedMachinePoolData, 'instance_type', ''),
     machinePoolId: selectedMachinePool,
     initialValues: {
-      nodes_compute: get(selectedMachinePoolData, 'replicas', null)
-      || get(machinePoolWithAutoscale, 'min_replicas', null)
-      || 0,
+      nodes_compute:
+        get(selectedMachinePoolData, 'replicas', null) ||
+        get(machinePoolWithAutoscale, 'min_replicas', null) ||
+        0,
       machine_pool: selectedMachinePool,
       autoscalingEnabled: machinePoolWithAutoscale,
       ...(machinePoolWithAutoscale && getMinAndMaxNodesValues(selectedMachinePoolData.autoscaling)),
     },
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onSubmit: (formData, clusterID, isMultiAz) => {
     const machinePoolRequest = {};
     const nodesCount = parseInt(formData.nodes_compute, 10);
@@ -165,7 +169,8 @@ const mapDispatchToProps = dispatch => ({
 
     if (formData.machine_pool === 'Default') {
       machinePoolRequest.nodes = formData.autoscalingEnabled
-        ? { autoscale_compute: autoScaleLimits } : { compute: nodesCount };
+        ? { autoscale_compute: autoScaleLimits }
+        : { compute: nodesCount };
       dispatch(editCluster(clusterID, machinePoolRequest));
     } else {
       if (formData.autoscalingEnabled) {
@@ -176,7 +181,7 @@ const mapDispatchToProps = dispatch => ({
       dispatch(scaleMachinePool(clusterID, formData.machine_pool, machinePoolRequest));
     }
   },
-  getMachinePools: clusterID => dispatch(getMachinePools(clusterID)),
+  getMachinePools: (clusterID) => dispatch(getMachinePools(clusterID)),
   resetScaleMachinePoolResponse: () => dispatch(clearScaleMachinePoolResponse()),
   resetScaleDefaultMachinePoolResponse: () => dispatch(clearClusterResponse()),
   resetGetMachinePoolsResponse: () => dispatch(clearGetMachinePoolsResponse()),
@@ -189,12 +194,12 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const onSubmit = (formData) => {
     dispatchProps.onSubmit(formData, stateProps.clusterID, stateProps.isMultiAz);
   };
-  return ({
+  return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
     onSubmit,
-  });
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(reduxFormEditNodeCount);

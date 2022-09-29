@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormGroup,
-  Radio,
-} from '@patternfly/react-core';
+import { FormGroup, Radio } from '@patternfly/react-core';
 
 // To be used inside redux-form Field component.
 class ReduxFormRadioToggle extends React.Component {
@@ -15,9 +12,7 @@ class ReduxFormRadioToggle extends React.Component {
       input,
       ...extraProps // any extra props not specified above
     } = this.props;
-    const {
-      value,
-    } = this.state;
+    const { value } = this.state;
 
     return (
       <FormGroup controlId={input.name} validationState={touched && error ? 'error' : null}>
@@ -29,8 +24,7 @@ class ReduxFormRadioToggle extends React.Component {
           onChange={this.handleChange}
           label={label1}
           id={`${input.name}-1`}
-        />
-        {' '}
+        />{' '}
         <Radio
           value="advanced"
           isChecked={value === 'advanced'}

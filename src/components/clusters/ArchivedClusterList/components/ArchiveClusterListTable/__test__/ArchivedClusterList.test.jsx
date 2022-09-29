@@ -6,13 +6,15 @@ import ArchivedClusterList from '../../../ArchivedClusterList';
 
 describe('<ArchivedClusterList />', () => {
   describe('ArchivedClusterList', () => {
-    const wrapper = shallow(<ArchivedClusterList
-      viewOptions={{
-        flags: {},
-        fields: {},
-      }}
-      {...Fixtures}
-    />);
+    const wrapper = shallow(
+      <ArchivedClusterList
+        viewOptions={{
+          flags: {},
+          fields: {},
+        }}
+        {...Fixtures}
+      />,
+    );
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();

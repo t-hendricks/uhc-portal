@@ -32,12 +32,14 @@ const hasMachinePoolsQuotaSelector = (state) => {
   };
 
   const types = get(state.machineTypes.types, cloudProviderID, []);
-  return types.some(type => hasNodesQuotaForType(type.id));
+  return types.some((type) => hasNodesQuotaForType(type.id));
 };
 
 const hasOrgLevelAutoscaleCapability = (state) => {
   const capabilites = get(state, 'userProfile.organization.details.capabilities', []);
-  const autoScaleClusters = capabilites.find(capability => capability.name === 'capability.cluster.autoscale_clusters');
+  const autoScaleClusters = capabilites.find(
+    (capability) => capability.name === 'capability.cluster.autoscale_clusters',
+  );
 
   return !!(autoScaleClusters && autoScaleClusters.value === 'true');
 };
@@ -48,24 +50,31 @@ const hasClusterLevelAutoscaleCapability = (state) => {
     return false;
   }
   const subCapabilities = get(cluster, 'subscription.capabilities', []);
-  const autoScaleClusters = subCapabilities.find(capability => capability.name === 'capability.cluster.autoscale_clusters');
+  const autoScaleClusters = subCapabilities.find(
+    (capability) => capability.name === 'capability.cluster.autoscale_clusters',
+  );
 
   return !!(autoScaleClusters && autoScaleClusters.value === 'true');
 };
 
 // on the OSD creation page don't check cluster level capability for autoscaling
-const canAutoScaleOnCreateSelector = (state, product) => product === normalizedProducts.ROSA
-    || (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
+const canAutoScaleOnCreateSelector = (state, product) =>
+  product === normalizedProducts.ROSA ||
+  (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
 
-const canAutoScaleSelector = (state, product) => product === normalizedProducts.ROSA
-    || (product === normalizedProducts.OSD && hasClusterLevelAutoscaleCapability(state))
-    || (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
+const canAutoScaleSelector = (state, product) =>
+  product === normalizedProducts.ROSA ||
+  (product === normalizedProducts.OSD && hasClusterLevelAutoscaleCapability(state)) ||
+  (product === normalizedProducts.OSD && hasOrgLevelAutoscaleCapability(state));
 
 const canUseSpotInstances = (state, product) => {
   const { cluster } = state.clusters.details;
   const cloudProviderID = cluster.cloud_provider?.id;
-  return cloudProviderID === 'aws' && (product === normalizedProducts.ROSA
-    || (product === normalizedProducts.OSD && state.clusters.details?.cluster?.ccs?.enabled));
+  return (
+    cloudProviderID === 'aws' &&
+    (product === normalizedProducts.ROSA ||
+      (product === normalizedProducts.OSD && state.clusters.details?.cluster?.ccs?.enabled))
+  );
 };
 
 export {

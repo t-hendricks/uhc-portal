@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type host_network = {
-    cidr?: string;
-    host_ids?: Array<string>;
+  cidr?: string;
+  host_ids?: Array<string>;
 };
-

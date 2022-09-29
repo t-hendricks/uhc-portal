@@ -3,13 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import get from 'lodash/get';
 import startCase from 'lodash/startCase';
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  Stack,
-  StackItem,
-} from '@patternfly/react-core';
+import { Card, CardBody, CardTitle, Stack, StackItem } from '@patternfly/react-core';
 import {
   ExclamationTriangleIcon,
   ResourcesAlmostEmptyIcon,
@@ -33,7 +27,7 @@ class OSDSubscriptionCard extends Component {
   refresh = () => {
     const { organizationID, fetchQuotaCost } = this.props;
     fetchQuotaCost(organizationID);
-  }
+  };
 
   getCapacityIcon = (used, max) => {
     let icon = <ResourcesAlmostEmptyIcon />;
@@ -47,20 +41,30 @@ class OSDSubscriptionCard extends Component {
       icon = <OutlinedCircleIcon />;
     }
     return icon;
-  }
+  };
 
   getZoneType = (zoneType) => {
-    if (zoneType === 'multi') { return 'multi-zone'; }
-    if (zoneType === 'single') { return 'single zone'; }
+    if (zoneType === 'multi') {
+      return 'multi-zone';
+    }
+    if (zoneType === 'single') {
+      return 'single zone';
+    }
     return 'N/A';
-  }
+  };
 
   getPlanType = (byoc) => {
-    if (byoc === 'rhinfra') { return 'Standard'; }
-    if (byoc === 'byoc') { return 'CCS'; }
-    if (byoc === 'any') { return 'Any'; }
+    if (byoc === 'rhinfra') {
+      return 'Standard';
+    }
+    if (byoc === 'byoc') {
+      return 'CCS';
+    }
+    if (byoc === 'any') {
+      return 'Any';
+    }
     return 'N/A';
-  }
+  };
 
   render() {
     // quota resource limits displays on demand marketplace quota
@@ -68,12 +72,9 @@ class OSDSubscriptionCard extends Component {
     let content;
     let rows = [];
 
-    let subscriptionLink = (
-      <Link to="/quota/resource-limits">
-        Dedicated (On-Demand Limits)
-      </Link>
-    );
-    let subscriptionsDescription = 'The summary of all annual subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat. For On-Demand resources, see';
+    let subscriptionLink = <Link to="/quota/resource-limits">Dedicated (On-Demand Limits)</Link>;
+    let subscriptionsDescription =
+      'The summary of all annual subscriptions for OpenShift Dedicated purchased by your organization or granted by Red Hat. For On-Demand resources, see';
     if (marketplace) {
       // add link
       subscriptionLink = (
@@ -81,7 +82,8 @@ class OSDSubscriptionCard extends Component {
           Dedicated (On-Demand)
         </ExternalLink>
       );
-      subscriptionsDescription = 'Active subscriptions allow your organization to use up to a certain number of OpenShift Dedicated clusters. Overall OSD subscription capacity and usage can be viewed in';
+      subscriptionsDescription =
+        'Active subscriptions allow your organization to use up to a certain number of OpenShift Dedicated clusters. Overall OSD subscription capacity and usage can be viewed in';
     }
 
     if (quotaCost.fulfilled) {
@@ -92,7 +94,9 @@ class OSDSubscriptionCard extends Component {
         }
 
         // filter out zero cost related resources
-        const relatedResources = get(quotaItem, 'related_resources', []).filter(resource => resource.cost !== 0);
+        const relatedResources = get(quotaItem, 'related_resources', []).filter(
+          (resource) => resource.cost !== 0,
+        );
         if (relatedResources.length === 0) {
           return [];
         }
@@ -107,24 +111,32 @@ class OSDSubscriptionCard extends Component {
             return [];
           }
         }
-        if (!marketplace && (billingModel === MARKETPLACE || resourceName === 'addon-open-data-hub')) {
+        if (
+          !marketplace &&
+          (billingModel === MARKETPLACE || resourceName === 'addon-open-data-hub')
+        ) {
           return [];
         }
 
         // CCS compute.node resource name should show as vCPU
-        if (get(relatedResources[0], 'resource_type') === 'compute.node' && get(relatedResources[0], 'byoc') === 'byoc') {
+        if (
+          get(relatedResources[0], 'resource_type') === 'compute.node' &&
+          get(relatedResources[0], 'byoc') === 'byoc'
+        ) {
           resourceName = 'vCPU';
         }
 
-        return [[
-          get(relatedResources[0], 'resource_type'),
-          resourceName,
-          { title: this.getZoneType(get(relatedResources[0], 'availability_zone_type')) },
-          this.getPlanType(get(relatedResources[0], 'byoc')),
-          startCase(get(relatedResources[0], 'product')),
-          `${quotaItem.consumed} of ${quotaItem.allowed}`,
-          { title: this.getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
-        ]];
+        return [
+          [
+            get(relatedResources[0], 'resource_type'),
+            resourceName,
+            { title: this.getZoneType(get(relatedResources[0], 'availability_zone_type')) },
+            this.getPlanType(get(relatedResources[0], 'byoc')),
+            startCase(get(relatedResources[0], 'product')),
+            `${quotaItem.consumed} of ${quotaItem.allowed}`,
+            { title: this.getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
+          ],
+        ];
       });
     }
 
@@ -132,9 +144,7 @@ class OSDSubscriptionCard extends Component {
     if (rows.length > 0) {
       content = (
         <>
-          <StackItem className="content-header">
-            Quota
-          </StackItem>
+          <StackItem className="content-header">Quota</StackItem>
           <StackItem className="table-container">
             <OSDSubscriptionTable rows={rows} />
           </StackItem>
@@ -148,11 +158,7 @@ class OSDSubscriptionCard extends Component {
         empty: true,
       };
       content = (
-        <SubscriptionNotFulfilled
-          data={data}
-          refresh={this.refresh}
-          marketplace={marketplace}
-        />
+        <SubscriptionNotFulfilled data={data} refresh={this.refresh} marketplace={marketplace} />
       );
     }
 
@@ -162,9 +168,7 @@ class OSDSubscriptionCard extends Component {
         <CardBody>
           <Stack hasGutter>
             <StackItem>
-              {subscriptionsDescription}
-              {' '}
-              {subscriptionLink}
+              {subscriptionsDescription} {subscriptionLink}
             </StackItem>
             {content}
           </Stack>

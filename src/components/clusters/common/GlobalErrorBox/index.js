@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import GlobalErrorBox from './GlobalErrorBox';
 import { clearGlobalError } from '../../../../redux/actions/globalErrorActions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   errorMessage: state.globalError.errorMessage,
   errorTitle: state.globalError.errorTitle,
 });

@@ -41,20 +41,14 @@ describe('<NodeCountInput>', () => {
 
     it('renders with some quota', () => {
       mockAvailableNodes.mockReturnValue(10);
-      const wrapper = shallow(<NodeCountInput
-        {...baseProps}
-        machineType="fake"
-      />);
+      const wrapper = shallow(<NodeCountInput {...baseProps} machineType="fake" />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
     });
 
     it('renders with extremely high quota (should only allow up to MAX_NODES)', () => {
       mockAvailableNodes.mockReturnValue(10000);
-      const wrapper = shallow(<NodeCountInput
-        {...baseProps}
-        machineType="fake"
-      />);
+      const wrapper = shallow(<NodeCountInput {...baseProps} machineType="fake" />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
     });
@@ -63,11 +57,9 @@ describe('<NodeCountInput>', () => {
       mockAvailableNodes.mockReturnValue(10);
       const onChange = jest.fn();
       const inputProps = { ...baseProps.input, onChange };
-      const wrapper = shallow(<NodeCountInput
-        {...baseProps}
-        input={inputProps}
-        machineType="fake"
-      />);
+      const wrapper = shallow(
+        <NodeCountInput {...baseProps} input={inputProps} machineType="fake" />,
+      );
       // now let's set a higher value and make sure it works...
       wrapper.setProps({ input: { ...inputProps, value: 10 } }, () => {
         // props set, check the value
@@ -83,11 +75,7 @@ describe('<NodeCountInput>', () => {
     describe('BYOC', () => {
       it('renders with quota granted but insufficient amount', () => {
         mockAvailableNodes.mockReturnValue(0);
-        const wrapper = shallow(<NodeCountInput
-          {...baseProps}
-          isByoc
-          machineType=""
-        />);
+        const wrapper = shallow(<NodeCountInput {...baseProps} isByoc machineType="" />);
         expect(wrapper).toMatchSnapshot();
         expect(wrapper.find('FormSelect').props().isDisabled).toBeTruthy();
       });
@@ -95,12 +83,9 @@ describe('<NodeCountInput>', () => {
       describe('and is editing cluster', () => {
         it('renders enabled', () => {
           mockAvailableNodes.mockReturnValue(0);
-          const wrapper = shallow(<NodeCountInput
-            {...baseProps}
-            isByoc
-            machineType="fake"
-            isEditingCluster
-          />);
+          const wrapper = shallow(
+            <NodeCountInput {...baseProps} isByoc machineType="fake" isEditingCluster />,
+          );
           expect(wrapper).toMatchSnapshot();
           expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
         });
@@ -109,12 +94,9 @@ describe('<NodeCountInput>', () => {
       describe('and is editing a machine pool', () => {
         it('renders enabled', () => {
           mockAvailableNodes.mockReturnValue(0);
-          const wrapper = shallow(<NodeCountInput
-            {...baseProps}
-            isByoc
-            machineType="fake"
-            isMachinePool
-          />);
+          const wrapper = shallow(
+            <NodeCountInput {...baseProps} isByoc machineType="fake" isMachinePool />,
+          );
           expect(wrapper).toMatchSnapshot();
           expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
         });
@@ -132,11 +114,7 @@ describe('<NodeCountInput>', () => {
 
     it('renders with some quota', () => {
       mockAvailableNodes.mockReturnValue(3);
-      const wrapper = shallow(<NodeCountInput
-        {...baseProps}
-        machineType="fake"
-        isMultiAz
-      />);
+      const wrapper = shallow(<NodeCountInput {...baseProps} machineType="fake" isMultiAz />);
       expect(wrapper).toMatchSnapshot();
       expect(wrapper.find('FormSelect').props().isDisabled).toBeFalsy();
     });
@@ -146,12 +124,14 @@ describe('<NodeCountInput>', () => {
     mockAvailableNodes.mockReturnValue(3);
     const onChange = jest.fn();
     const inputProps = { ...baseProps.input, onChange };
-    const wrapper = shallow(<NodeCountInput
-      {...baseProps}
-      input={{ ...baseProps.input, onChange }}
-      machineType="fake"
-      isMultiAz
-    />);
+    const wrapper = shallow(
+      <NodeCountInput
+        {...baseProps}
+        input={{ ...baseProps.input, onChange }}
+        machineType="fake"
+        isMultiAz
+      />,
+    );
     // now let's set a higher value and make sure it works...
     wrapper.setProps({ input: { ...inputProps, value: 15 } }, () => {
       // props set, check the value

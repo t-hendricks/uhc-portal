@@ -1,17 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Radio, Tooltip, Split, SplitItem,
-} from '@patternfly/react-core';
+import { Radio, Tooltip, Split, SplitItem } from '@patternfly/react-core';
 import PopoverHint from '../PopoverHint';
 
 class RadioButtons extends React.Component {
   componentDidMount() {
-    const {
-      defaultValue,
-      disableDefaultValueHandling,
-      input,
-    } = this.props;
+    const { defaultValue, disableDefaultValueHandling, input } = this.props;
 
     if (!disableDefaultValueHandling || this.isCurrentValueDisabled()) {
       input.onChange(defaultValue);
@@ -19,12 +13,10 @@ class RadioButtons extends React.Component {
   }
 
   componentDidUpdate() {
-    const {
-      defaultValue, input, disableDefaultValueHandling,
-    } = this.props;
+    const { defaultValue, input, disableDefaultValueHandling } = this.props;
 
     if (!disableDefaultValueHandling) {
-    // when we set the default value dynamically in the parent file
+      // when we set the default value dynamically in the parent file
       // it was not updated until it is rendered.
       if (input.value === '') {
         input.onChange(defaultValue);
@@ -48,17 +40,13 @@ class RadioButtons extends React.Component {
 
   isCurrentValueDisabled() {
     const { options, input, defaultValue } = this.props;
-    return options.some(option => input.value === option.value && option.disabled
-      && option.value !== defaultValue);
+    return options.some(
+      (option) => input.value === option.value && option.disabled && option.value !== defaultValue,
+    );
   }
 
   render() {
-    const {
-      options,
-      className,
-      input,
-      isDisabled,
-    } = this.props;
+    const { options, className, input, isDisabled } = this.props;
 
     return (
       <>
@@ -88,7 +76,9 @@ class RadioButtons extends React.Component {
                 <Tooltip content={option.tooltipText} position="right">
                   {button}
                 </Tooltip>
-              ) : button }
+              ) : (
+                button
+              )}
               {option.extendedHelpText ? (
                 <SplitItem>
                   <PopoverHint hint={option.extendedHelpText} />
@@ -114,17 +104,15 @@ RadioButtons.propTypes = {
   }).isRequired,
   className: PropTypes.string,
   options: PropTypes.arrayOf(
-    PropTypes.shape(
-      {
-        label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-        ariaLabel: PropTypes.string,
-        value: PropTypes.string.isRequired,
-        disabled: PropTypes.bool,
-        description: PropTypes.node,
-        extraField: PropTypes.node,
-        extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-      },
-    ),
+    PropTypes.shape({
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+      ariaLabel: PropTypes.string,
+      value: PropTypes.string.isRequired,
+      disabled: PropTypes.bool,
+      description: PropTypes.node,
+      extraField: PropTypes.node,
+      extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    }),
   ).isRequired,
 };
 

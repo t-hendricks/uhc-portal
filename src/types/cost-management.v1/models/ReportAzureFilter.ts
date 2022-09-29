@@ -8,22 +8,21 @@ import type { ReportTimeScopeUnits } from './ReportTimeScopeUnits';
 import type { ReportTimeScopeValue } from './ReportTimeScopeValue';
 
 export type ReportAzureFilter = {
-    /**
-     * Limits the data points returns and aggregates remaining data.
-     */
-    limit?: number;
-    /**
-     * Offsets the data points returned when using limit.
-     */
-    offset?: number;
-    resolution?: ReportResolution;
-    time_scope_value?: ReportTimeScopeValue;
-    time_scope_units?: ReportTimeScopeUnits;
-    resource_scope?: Array<ReportResourceScope>;
-    subscription_guid?: Array<string>;
-    service_name?: Array<string>;
-    resource_location?: Array<string>;
-    instance_type?: Array<string>;
-    tag?: Array<string>;
+  /**
+   * Limits the data points returns and aggregates remaining data.
+   */
+  limit?: number;
+  /**
+   * Offsets the data points returned when using limit.
+   */
+  offset?: number;
+  resolution?: ReportResolution;
+  time_scope_value?: ReportTimeScopeValue;
+  time_scope_units?: ReportTimeScopeUnits;
+  resource_scope?: Array<ReportResourceScope>;
+  subscription_guid?: Array<string>;
+  service_name?: Array<string>;
+  resource_location?: Array<string>;
+  instance_type?: Array<string>;
+  tag?: Array<string>;
 };
-

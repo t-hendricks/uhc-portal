@@ -51,10 +51,8 @@ export const downloadsCategories = [
     tools: [expandKeys.PULL_SECRET, expandKeys.TOKEN_OCM],
   },
 ];
-downloadsCategories.unshift(
-  {
-    key: 'ALL',
-    title: 'All categories',
-    tools: [].concat(...downloadsCategories.map(c => c.tools)),
-  },
-);
+downloadsCategories.unshift({
+  key: 'ALL',
+  title: 'All categories',
+  tools: [].concat(...downloadsCategories.map((c) => c.tools)),
+});

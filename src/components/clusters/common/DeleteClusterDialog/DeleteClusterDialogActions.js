@@ -1,7 +1,7 @@
 import { deleteClusterDialogConstants } from './DeleteClusterDialogConstants';
 import { clusterService } from '../../../../services';
 
-const deleteCluster = clusterID => ({
+const deleteCluster = (clusterID) => ({
   type: deleteClusterDialogConstants.DELETE_CLUSTER,
   payload: clusterService.deleteCluster(clusterID),
 });
@@ -15,8 +15,4 @@ const deleteClusterDialogActions = {
   deletedClusterResponse,
 };
 
-export {
-  deleteClusterDialogActions,
-  deleteCluster,
-  deletedClusterResponse,
-};
+export { deleteClusterDialogActions, deleteCluster, deletedClusterResponse };

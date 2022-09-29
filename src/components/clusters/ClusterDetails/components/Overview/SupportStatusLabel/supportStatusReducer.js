@@ -1,7 +1,10 @@
 import get from 'lodash/get';
 import produce from 'immer';
 import {
-  REJECTED_ACTION, PENDING_ACTION, FULFILLED_ACTION, baseRequestState,
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  baseRequestState,
 } from '../../../../../../redux/reduxHelpers';
 import GET_SUPPORT_STATUS from './supportStatusConstants';
 
@@ -30,12 +33,14 @@ function supportStatusReducer(state = initialState, action) {
         return {
           ...initialState,
           fulfilled: true,
-          supportStatus: get(action.payload, 'data.data[0].versions', [])
-            .reduce((result, versionInfo) => {
+          supportStatus: get(action.payload, 'data.data[0].versions', []).reduce(
+            (result, versionInfo) => {
               // eslint-disable-next-line no-param-reassign
               result[versionInfo.name] = versionInfo.type;
               return result;
-            }, {}),
+            },
+            {},
+          ),
         };
     }
   });

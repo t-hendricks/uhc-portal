@@ -12,8 +12,7 @@ describe('ClusterDetails SupportReducer', () => {
       const action = { type: 'HOLY_GUACAMOLE' };
       const result = reducer(initialState, action);
 
-      expect(result)
-        .toEqual(initialState);
+      expect(result).toEqual(initialState);
     });
   });
   describe('should handle actions', () => {
@@ -24,8 +23,10 @@ describe('ClusterDetails SupportReducer', () => {
       };
       const result = reducer(initialState, action);
 
-      expect(result)
-        .toHaveProperty('notificationContacts.contacts', mockGetNotificationContactsList);
+      expect(result).toHaveProperty(
+        'notificationContacts.contacts',
+        mockGetNotificationContactsList,
+      );
     });
   });
 });

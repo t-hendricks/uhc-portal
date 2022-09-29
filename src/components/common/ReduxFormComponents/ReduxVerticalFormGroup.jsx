@@ -8,17 +8,14 @@ import {
   InputGroupText,
   Button,
 } from '@patternfly/react-core';
-import {
-  EyeIcon,
-  EyeSlashIcon,
-} from '@patternfly/react-icons';
+import { EyeIcon, EyeSlashIcon } from '@patternfly/react-icons';
 import PopoverHint from '../PopoverHint';
 
 // To be used inside redux-form Field component.
 class ReduxVerticalFormGroup extends React.Component {
   state = {
     inputValueHidden: true,
-  }
+  };
 
   render() {
     const {
@@ -67,18 +64,11 @@ class ReduxVerticalFormGroup extends React.Component {
         helperText={helpText}
         helperTextInvalid={helperTextInvalid()}
         isRequired={isRequired}
-        labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
+        labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
         className={formGroupClass}
       >
         <InputGroup className={isValid && 'valid-field'}>
-          {
-          inputPrefix
-            ? (
-              <InputGroupText>
-                {inputPrefix}
-              </InputGroupText>
-            ) : null
-        }
+          {inputPrefix ? <InputGroupText>{inputPrefix}</InputGroupText> : null}
           <InputComponent
             value={input.value}
             isRequired={isRequired}
@@ -90,24 +80,17 @@ class ReduxVerticalFormGroup extends React.Component {
             {...extraProps}
             type={isPassword && inputValueHidden ? 'password' : extraProps.type}
           />
-          {
-            isPassword && (
-              <Button
-                aria-label={inputValueHidden ? 'show-password' : 'hide-password'}
-                variant="control"
-                onClick={() => this.setState(
-                  prevState => ({ inputValueHidden: !prevState.inputValueHidden }),
-                )}
-              >
-                { inputValueHidden
-                  ? (
-                    <EyeSlashIcon />
-                  ) : (
-                    <EyeIcon />
-                  )}
-              </Button>
-            )
-          }
+          {isPassword && (
+            <Button
+              aria-label={inputValueHidden ? 'show-password' : 'hide-password'}
+              variant="control"
+              onClick={() =>
+                this.setState((prevState) => ({ inputValueHidden: !prevState.inputValueHidden }))
+              }
+            >
+              {inputValueHidden ? <EyeSlashIcon /> : <EyeIcon />}
+            </Button>
+          )}
         </InputGroup>
       </FormGroup>
     );

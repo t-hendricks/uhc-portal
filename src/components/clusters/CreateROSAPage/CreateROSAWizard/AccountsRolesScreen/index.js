@@ -15,15 +15,13 @@ import {
   getUserRole,
 } from '../rosaActions';
 
-const mapDispatchToProps = dispatch => ({
-  openAssociateAWSAccountModal: token => dispatch(openModal('associate-aws-modal', token)),
+const mapDispatchToProps = (dispatch) => ({
+  openAssociateAWSAccountModal: (token) => dispatch(openModal('associate-aws-modal', token)),
   openUserRoleInstructionsModal: () => dispatch(openModal('user-role-instructions-modal')),
   openOcmRoleInstructionsModal: () => dispatch(openModal('ocm-role-instructions-modal')),
   closeModal: () => dispatch(closeModal()),
-  getAWSAccountIDs: organizationID => dispatch(getAWSAccountIDs(organizationID)),
-  getAWSAccountRolesARNs: awsAccountID => dispatch(
-    getAWSAccountRolesARNs(awsAccountID),
-  ),
+  getAWSAccountIDs: (organizationID) => dispatch(getAWSAccountIDs(organizationID)),
+  getAWSAccountRolesARNs: (awsAccountID) => dispatch(getAWSAccountRolesARNs(awsAccountID)),
   clearGetAWSAccountIDsResponse: () => dispatch(clearGetAWSAccountIDsResponse()),
   clearGetAWSAccountRolesARNsResponse: () => dispatch(clearGetAWSAccountRolesARNsResponse()),
   clearGetUserRoleResponse: () => dispatch(clearGetUserRoleResponse()),
@@ -37,11 +35,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = (state) => {
-  const {
-    getAWSAccountIDsResponse,
-    getAWSAccountRolesARNsResponse,
-    getUserRoleResponse,
-  } = state.rosaReducer;
+  const { getAWSAccountIDsResponse, getAWSAccountRolesARNsResponse, getUserRoleResponse } =
+    state.rosaReducer;
   const valueSelector = formValueSelector('CreateCluster');
 
   return {

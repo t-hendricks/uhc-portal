@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import {
-  Form, Alert, Grid, GridItem,
-} from '@patternfly/react-core';
+import { Form, Alert, Grid, GridItem } from '@patternfly/react-core';
 
 import NodeCountInput from '../NodeCountInput';
 import { ReduxFormDropdown } from '../../../common/ReduxFormComponents';
 import { normalizedProducts, billingModels } from '../../../../common/subscriptionTypes';
-import { SpotInstanceInfoAlert, isMachinePoolUsingSpotInstances } from '../../ClusterDetails/components/MachinePools/components/SpotInstanceHelper';
+import {
+  SpotInstanceInfoAlert,
+  isMachinePoolUsingSpotInstances,
+} from '../../ClusterDetails/components/MachinePools/components/SpotInstanceHelper';
 
 import Modal from '../../../common/Modal/Modal';
 import ErrorBox from '../../../common/ErrorBox';
@@ -40,15 +41,13 @@ class EditNodeCountModal extends Component {
   }
 
   componentDidUpdate() {
-    const {
-      getOrganizationAndQuota,
-      onClose,
-      editNodeCountResponse,
-    } = this.props;
+    const { getOrganizationAndQuota, onClose, editNodeCountResponse } = this.props;
 
-    if (editNodeCountResponse.fulfilled
-        && !editNodeCountResponse.pending
-        && !editNodeCountResponse.error) {
+    if (
+      editNodeCountResponse.fulfilled &&
+      !editNodeCountResponse.pending &&
+      !editNodeCountResponse.error
+    ) {
       this.cancelEdit();
       getOrganizationAndQuota();
       onClose();
@@ -57,7 +56,7 @@ class EditNodeCountModal extends Component {
 
   getSelectedMachinePoolNodes(machinePoolId) {
     const { machinePoolsList } = this.props;
-    return machinePoolsList.data.find(machinePool => machinePool.name === machinePoolId)?.nodes;
+    return machinePoolsList.data.find((machinePool) => machinePool.name === machinePoolId)?.nodes;
   }
 
   handleMachinePoolChange = (_, value) => {
@@ -71,7 +70,13 @@ class EditNodeCountModal extends Component {
     this.resetResponse();
 
     closeModal();
-    resetSection('machine_pool', 'nodes_compute', 'autoscalingEnabled', 'min_replicas', 'max_replicas');
+    resetSection(
+      'machine_pool',
+      'nodes_compute',
+      'autoscalingEnabled',
+      'min_replicas',
+      'max_replicas',
+    );
   };
 
   resetResponse() {
@@ -120,7 +125,7 @@ class EditNodeCountModal extends Component {
       <ErrorBox message="Error editing machine pool" response={editNodeCountResponse} />
     ) : null;
 
-    const resizingAlert = nodes => (
+    const resizingAlert = (nodes) => (
       <Alert
         variant="warning"
         isInline
@@ -128,20 +133,14 @@ class EditNodeCountModal extends Component {
       >
         <div>
           <p>
-            In order to scale to more than
-            {' '}
-            {nodes}
-            {' '}
-            nodes, the cluster&apos;s control plane nodes have
-            to be manually resized by a Red Hat SRE.
-            This process will take about 24 hours.
+            In order to scale to more than {nodes} nodes, the cluster&apos;s control plane nodes
+            have to be manually resized by a Red Hat SRE. This process will take about 24 hours.
           </p>
         </div>
       </Alert>
     );
-    const pending = editNodeCountResponse.pending
-      || organization.pending
-      || machinePoolsList.pending;
+    const pending =
+      editNodeCountResponse.pending || organization.pending || machinePoolsList.pending;
 
     return (
       <Modal
@@ -170,24 +169,23 @@ class EditNodeCountModal extends Component {
                 />
               </GridItem>
               <GridItem span={4} />
-              {canAutoScale
-                && (
-                  <>
-                    <GridItem>
-                      <AutoScaleSection
-                        autoscalingEnabled={autoscalingEnabled}
-                        isMultiAz={isMultiAz}
-                        change={change}
-                        autoScaleMinNodesValue={autoScaleMinNodesValue}
-                        autoScaleMaxNodesValue={autoScaleMaxNodesValue}
-                        product={product}
-                        isBYOC={isByoc}
-                        isDefaultMachinePool={machinePoolId === 'Default'}
-                      />
-                    </GridItem>
-                  </>
-                )}
-              { !autoscalingEnabled && (
+              {canAutoScale && (
+                <>
+                  <GridItem>
+                    <AutoScaleSection
+                      autoscalingEnabled={autoscalingEnabled}
+                      isMultiAz={isMultiAz}
+                      change={change}
+                      autoScaleMinNodesValue={autoScaleMinNodesValue}
+                      autoScaleMaxNodesValue={autoScaleMaxNodesValue}
+                      product={product}
+                      isBYOC={isByoc}
+                      isDefaultMachinePool={machinePoolId === 'Default'}
+                    />
+                  </GridItem>
+                </>
+              )}
+              {!autoscalingEnabled && (
                 <>
                   <GridItem span={8}>
                     <Field
@@ -211,8 +209,7 @@ class EditNodeCountModal extends Component {
                 </>
               )}
               {!!masterResizeAlertThreshold && resizingAlert(masterResizeAlertThreshold)}
-              {isMachinePoolUsingSpotInstances(machinePoolId, machinePoolsList)
-              && (
+              {isMachinePoolUsingSpotInstances(machinePoolId, machinePoolsList) && (
                 <>
                   <GridItem span={7} />
                   <GridItem>

@@ -11,11 +11,15 @@ import {
   Text,
   TextContent,
 } from '@patternfly/react-core';
+import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import {
-  PageHeader, PageHeaderTitle,
-} from '@redhat-cloud-services/frontend-components/PageHeader';
-import {
-  TableComposable, Thead, Tbody, Tr, Th, Td, ExpandableRowContent,
+  TableComposable,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  ExpandableRowContent,
 } from '@patternfly/react-table';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import { Link } from 'react-router-dom';
@@ -82,34 +86,29 @@ export function detectOS() {
 /**
  * Returns relevant subset of `operatingSystemOptions`.
  */
-export const allOperatingSystemsForTool = (urls, tool, channel) => (
-  operatingSystemOptions.filter(({ value: OS }) => (
-    architectureOptions.find(({ value: architecture }) => (
-      has(urls, [tool, channel, architecture, OS])
-    ))
-  ))
-);
+export const allOperatingSystemsForTool = (urls, tool, channel) =>
+  operatingSystemOptions.filter(({ value: OS }) =>
+    architectureOptions.find(({ value: architecture }) =>
+      has(urls, [tool, channel, architecture, OS]),
+    ),
+  );
 
 /**
  * Returns relevant subset of `architectureOptions`
  * (not all of them valid for currently chosen OS, but form _some_ OS).
  */
-export const allArchitecturesForTool = (urls, tool, channel) => (
-  architectureOptions.filter(({ value: architecture }) => (
-    operatingSystemOptions.find(({ value: OS }) => (
-      has(urls, [tool, channel, architecture, OS])
-    ))
-  ))
-);
+export const allArchitecturesForTool = (urls, tool, channel) =>
+  architectureOptions.filter(({ value: architecture }) =>
+    operatingSystemOptions.find(({ value: OS }) => has(urls, [tool, channel, architecture, OS])),
+  );
 
 /**
  * Returns relevant subset from `architectureOptions`.
  */
-export const architecturesForToolOS = (urls, tool, channel, OS) => (
-  architectureOptions.filter(({ value: architecture }) => (
-    has(urls, [tool, channel, architecture, OS])
-  ))
-);
+export const architecturesForToolOS = (urls, tool, channel, OS) =>
+  architectureOptions.filter(({ value: architecture }) =>
+    has(urls, [tool, channel, architecture, OS]),
+  );
 
 export const operatingSystemDropdown = (urls, tool, channel, OS, setOS) => (
   <FormSelect value={OS} onChange={setOS} aria-label="Select OS dropdown">
@@ -130,11 +129,12 @@ export const architectureDropdown = (urls, tool, channel, OS, architecture, setA
       isDisabled={optionsForOS.length <= 1}
     >
       <FormSelectOption key="select" value="select" label="Select architecture" isDisabled />
-      {allArchitecturesForTool(urls, tool, channel).map(({ value, label }) => (
-        has(urls, [tool, channel, value, OS]) && (
-          <FormSelectOption key={value} value={value} label={label} />
-        )
-      ))}
+      {allArchitecturesForTool(urls, tool, channel).map(
+        ({ value, label }) =>
+          has(urls, [tool, channel, value, OS]) && (
+            <FormSelectOption key={value} value={value} label={label} />
+          ),
+      )}
     </FormSelect>
   );
 };
@@ -147,8 +147,8 @@ export const architectureDropdown = (urls, tool, channel, OS, architecture, setA
 export const initialSelection = (urls, tool, channel, detectedOS) => {
   // Start with an OS and architecture chosen so that some users can
   // click Download directly without having to change selections.
-  const OSes = allOperatingSystemsForTool(urls, tool, channel).map(os => os.value);
-  const OS = (detectedOS && OSes.includes(detectedOS)) ? detectedOS : OSes?.[0];
+  const OSes = allOperatingSystemsForTool(urls, tool, channel).map((os) => os.value);
+  const OS = detectedOS && OSes.includes(detectedOS) ? detectedOS : OSes?.[0];
   const architecture = architecturesForToolOS(urls, tool, channel, OS)?.[0]?.value;
   return { OS, architecture };
 };
@@ -166,11 +166,15 @@ export const initialSelection = (urls, tool, channel, detectedOS) => {
  * @returns { osDropdown, archDropdown, downloadButton }
  */
 export const downloadChoice = (
-  selections, setSelections, urls, tool, channel, downloadButtonProps,
+  selections,
+  setSelections,
+  urls,
+  tool,
+  channel,
+  downloadButtonProps,
 ) => {
-  const { OS, architecture } = (
-    selections[tool] || initialSelection(urls, tool, channel, detectOS())
-  );
+  const { OS, architecture } =
+    selections[tool] || initialSelection(urls, tool, channel, detectOS());
   // Callbacks for dropdowns:
   const onChangeOS = (newOS) => {
     let newArchitecture = architecture;
@@ -202,18 +206,14 @@ export const downloadChoice = (
   return {
     osDropdown: operatingSystemDropdown(urls, tool, channel, OS, onChangeOS),
     archDropdown: architectureDropdown(urls, tool, channel, OS, architecture, onChangeArchitecture),
-    downloadButton: (
-      <DownloadButton url={url} tool={tool} {...downloadButtonProps} />
-    ),
+    downloadButton: <DownloadButton url={url} tool={tool} {...downloadButtonProps} />,
   };
 };
 
-const rowId = expandKey => `tool-${expandKey}`;
+const rowId = (expandKey) => `tool-${expandKey}`;
 
 /** An expandable pair of table rows. */
-const ExpandableRowPair = ({
-  expanded, setExpanded, expandKey, cells, description, toolRefs,
-}) => {
+const ExpandableRowPair = ({ expanded, setExpanded, expandKey, cells, description, toolRefs }) => {
   const isExpanded = !!expanded[expandKey];
   const onToggle = (event, rowIndex, newOpen) => {
     setExpanded({ ...expanded, [expandKey]: newOpen });
@@ -249,10 +249,20 @@ ExpandableRowPair.propTypes = {
 
 /** Row pair for a tool. */
 const ToolAndDescriptionRows = ({
-  expanded, setExpanded, selections, setSelections, toolRefs,
-  urls, tool, channel, name, description,
+  expanded,
+  setExpanded,
+  selections,
+  setSelections,
+  toolRefs,
+  urls,
+  tool,
+  channel,
+  name,
+  description,
 }) => {
-  const chooser = downloadChoice(selections, setSelections, urls, tool, channel, { text: 'Download' });
+  const chooser = downloadChoice(selections, setSelections, urls, tool, channel, {
+    text: 'Download',
+  });
 
   return (
     <ExpandableRowPair
@@ -261,14 +271,13 @@ const ToolAndDescriptionRows = ({
       toolRefs={toolRefs}
       expandKey={tool}
       cells={[
-        <Td dataLabel="Name"><span>{name}</span></Td>,
+        <Td dataLabel="Name">
+          <span>{name}</span>
+        </Td>,
         <Td dataLabel="OS">{chooser.osDropdown}</Td>,
         <Td dataLabel="Architecture">{chooser.archDropdown}</Td>,
         <Td dataLabel="">
-          <AlignRight>
-            {chooser.downloadButton}
-            {' '}
-          </AlignRight>
+          <AlignRight>{chooser.downloadButton} </AlignRight>
         </Td>,
       ]}
       description={description}
@@ -304,7 +313,12 @@ ToolAndDescriptionRows.propTypes = {
 
 const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
   const commonProps = {
-    expanded, setExpanded, selections, setSelections, toolRefs, urls,
+    expanded,
+    setExpanded,
+    selections,
+    setSelections,
+    toolRefs,
+    urls,
   };
   return (
     <>
@@ -312,126 +326,95 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         {...commonProps}
         tool={tools.OC}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            OpenShift command-line interface (
-            <code>oc</code>
-            )
+            OpenShift command-line interface (<code>oc</code>)
           </>
-        )}
-        description={(
+        }
+        description={
           <Text>
-            Create applications and manage OpenShift projects from the command line
-            using the OpenShift client
-            {' '}
-            <code>oc</code>
-            .
-            {' '}
+            Create applications and manage OpenShift projects from the command line using the
+            OpenShift client <code>oc</code>.{' '}
             <ExternalLink ExternalLink href={links.CLI_TOOLS_OCP_GETTING_STARTED}>
               Get started
             </ExternalLink>
           </Text>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.OCM}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            OpenShift Cluster Manager API command-line interface (
-            <code>ocm</code>
-            )
-            {' '}
+            OpenShift Cluster Manager API command-line interface (<code>ocm</code>){' '}
             <DevPreviewBadge />
           </>
-        )}
-        description={(
+        }
+        description={
           <TextContent>
             <Text>
-              Manage your OpenShift clusters from the command line using the
-              OpenShift Cluster Manager API client
-              {' '}
-              <code>ocm</code>
-              .
-              {' '}
-              <ExternalLink href={links.OCM_CLI_DOCS}>
-                Get started
-              </ExternalLink>
+              Manage your OpenShift clusters from the command line using the OpenShift Cluster
+              Manager API client <code>ocm</code>.{' '}
+              <ExternalLink href={links.OCM_CLI_DOCS}>Get started</ExternalLink>
             </Text>
           </TextContent>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.ROSA}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            Red Hat OpenShift Service on AWS command-line interface (
-            <code>rosa</code>
-            )
+            Red Hat OpenShift Service on AWS command-line interface (<code>rosa</code>)
           </>
-        )}
-        description={(
+        }
+        description={
           <Text>
-            Manage your Red Hat OpenShift Service on AWS (ROSA) clusters
-            from the command line using the ROSA client for OCM and AWS APIs.
-            {' '}
-            <ExternalLink href={links.ROSA_CLI_DOCS}>
-              Get started
-            </ExternalLink>
+            Manage your Red Hat OpenShift Service on AWS (ROSA) clusters from the command line using
+            the ROSA client for OCM and AWS APIs.{' '}
+            <ExternalLink href={links.ROSA_CLI_DOCS}>Get started</ExternalLink>
           </Text>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.KN}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            Knative command-line interface for OpenShift Serverless (
-            <code>kn</code>
-            )
+            Knative command-line interface for OpenShift Serverless (<code>kn</code>)
           </>
-        )}
-        description={(
+        }
+        description={
           <Text>
-            Interact with Knative components on OpenShift Container Platform with
-            the Knative client for OpenShift Serverless
-            {' '}
-            <code>kn</code>
-            .
-            {' '}
+            Interact with Knative components on OpenShift Container Platform with the Knative client
+            for OpenShift Serverless <code>kn</code>.{' '}
             <ExternalLink href={links.KN_DOCS}>Learn more</ExternalLink>
           </Text>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.TKN}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            Tekton command-line interface for OpenShift Pipelines (
-            <code>tkn</code>
-            )
+            Tekton command-line interface for OpenShift Pipelines (<code>tkn</code>)
           </>
-        )}
-        description={(
+        }
+        description={
           <Text>
-            Manage and interact with CI pipelines on OpenShift Container Platform
-            {' '}
-            with the Tekton CLI for OpenShift Pipelines.
-            {' '}
+            Manage and interact with CI pipelines on OpenShift Container Platform with the Tekton
+            CLI for OpenShift Pipelines.{' '}
             <ExternalLink href={links.TKN_DOCS}>Get started</ExternalLink>
-
           </Text>
-        )}
+        }
       />
     </>
   );
@@ -439,7 +422,12 @@ const cliToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
 
 const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
   const commonProps = {
-    expanded, setExpanded, selections, setSelections, toolRefs, urls,
+    expanded,
+    setExpanded,
+    selections,
+    setSelections,
+    toolRefs,
+    urls,
   };
   return (
     <>
@@ -447,117 +435,91 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
         {...commonProps}
         tool={tools.ODO}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            Developer-focused CLI for OpenShift (
-            <code>odo</code>
-            )
+            Developer-focused CLI for OpenShift (<code>odo</code>)
           </>
-        )}
-        description={(
+        }
+        description={
           <Text>
-            Write, build, and deploy applications on OpenShift with
-            {' '}
-            <code>odo</code>
-            , a fast, iterative,
-            and straightforward CLI tool for developers.
-            {' '}
+            Write, build, and deploy applications on OpenShift with <code>odo</code>, a fast,
+            iterative, and straightforward CLI tool for developers.{' '}
             <ExternalLink href={links.ODO_DOCS}>Learn more</ExternalLink>
           </Text>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.HELM}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            Helm 3 CLI (
-            <code>helm</code>
-            )
+            Helm 3 CLI (<code>helm</code>)
           </>
-        )}
-        description={(
+        }
+        description={
           <Text>
-            Define, install, and upgrade application packages as Helm charts using Helm 3,
-            a package manager for Kubernetes.
-            {' '}
-            <ExternalLink href={links.HELM_DOCS}>Learn more</ExternalLink>
+            Define, install, and upgrade application packages as Helm charts using Helm 3, a package
+            manager for Kubernetes. <ExternalLink href={links.HELM_DOCS}>Learn more</ExternalLink>
           </Text>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.OPM}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            Operator Package Manager (
-            <code>opm</code>
-            )
+            Operator Package Manager (<code>opm</code>)
           </>
-        )}
-        description={(
+        }
+        description={
           <Text>
-            Create and maintain catalogs of Operators from a list of bundles with the
-            Operator Package Manager.
-            {' '}
-            <ExternalLink href={links.OPM_DOCS}>Learn more</ExternalLink>
+            Create and maintain catalogs of Operators from a list of bundles with the Operator
+            Package Manager. <ExternalLink href={links.OPM_DOCS}>Learn more</ExternalLink>
           </Text>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.OPERATOR_SDK}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            Operator SDK CLI (
-            <code>operator-sdk</code>
-            )
+            Operator SDK CLI (<code>operator-sdk</code>)
           </>
-        )}
-        description={(
+        }
+        description={
           <Text>
-            Build, test, and deploy Operators with the Operator SDK CLI.
-            {' '}
+            Build, test, and deploy Operators with the Operator SDK CLI.{' '}
             <ExternalLink href={links.OSDK_DOCS}>Learn more</ExternalLink>
           </Text>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.RHOAS}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            Red Hat OpenShift Application Services CLI (
-            <code>rhoas</code>
-            )
-            {' '}
-            <DevPreviewBadge />
+            Red Hat OpenShift Application Services CLI (<code>rhoas</code>) <DevPreviewBadge />
           </>
-        )}
-        description={(
+        }
+        description={
           <TextContent>
             <Text>
-              Create and manage Kafka instances and topics, service accounts, and more
-              using
-              {' '}
-              <code>rhoas</code>
-              .
+              Create and manage Kafka instances and topics, service accounts, and more using{' '}
+              <code>rhoas</code>.
             </Text>
             <Text>
-              <ExternalLink href={links.RHOAS_CLI_DOCS}>
-                Get started
-              </ExternalLink>
+              <ExternalLink href={links.RHOAS_CLI_DOCS}>Get started</ExternalLink>
             </Text>
           </TextContent>
-        )}
+        }
       />
     </>
   );
@@ -565,7 +527,12 @@ const devToolRows = (expanded, setExpanded, selections, setSelections, toolRefs,
 
 const installationRows = (expanded, setExpanded, selections, setSelections, toolRefs, urls) => {
   const commonProps = {
-    expanded, setExpanded, selections, setSelections, toolRefs, urls,
+    expanded,
+    setExpanded,
+    selections,
+    setSelections,
+    toolRefs,
+    urls,
   };
   return (
     <>
@@ -574,28 +541,20 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         tool={tools.X86INSTALLER}
         channel={channels.STABLE}
         name="OpenShift for x86_64 Installer"
-        description={(
+        description={
           <TextContent>
             <Text>
-              Download and extract your operating system&apos;s installation program and
-              place the file in the directory where you&apos;ll store your configuration details.
-              Then, create clusters on supported x86_64 infrastructure using our
-              {' '}
-              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
-              {' '}
-              as a guide.
+              Download and extract your operating system&apos;s installation program and place the
+              file in the directory where you&apos;ll store your configuration details. Then, create
+              clusters on supported x86_64 infrastructure using our{' '}
+              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink> as a guide.
             </Text>
             <Text>
-              Learn how to deploy in the
-              {' '}
-              <Link to="/create">cloud</Link>
-              , or in your
-              {' '}
-              <Link to="/create/datacenter">data center</Link>
-              .
+              Learn how to deploy in the <Link to="/create">cloud</Link>, or in your{' '}
+              <Link to="/create/datacenter">data center</Link>.
             </Text>
           </TextContent>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
@@ -603,28 +562,20 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         tool={tools.ARMINSTALLER}
         channel={channels.STABLE}
         name="OpenShift for ARM Installer"
-        description={(
+        description={
           <TextContent>
             <Text>
-              Download and extract your operating system&apos;s installation program and
-              place the file in the directory where you&apos;ll store your configuration details.
-              Then, create clusters on supported ARM infrastructure using our
-              {' '}
-              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
-              {' '}
-              as a guide.
+              Download and extract your operating system&apos;s installation program and place the
+              file in the directory where you&apos;ll store your configuration details. Then, create
+              clusters on supported ARM infrastructure using our{' '}
+              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink> as a guide.
             </Text>
             <Text>
-              Learn how to deploy in
-              {' '}
-              <Link to="/install/aws/arm">AWS</Link>
-              , or in your
-              {' '}
-              <Link to="/install/arm">data center</Link>
-              .
+              Learn how to deploy in <Link to="/install/aws/arm">AWS</Link>, or in your{' '}
+              <Link to="/install/arm">data center</Link>.
             </Text>
           </TextContent>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
@@ -632,25 +583,20 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         tool={tools.IBMZINSTALLER}
         channel={channels.STABLE}
         name="OpenShift for IBM Z Installer"
-        description={(
+        description={
           <TextContent>
             <Text>
-              Download and extract your operating system&apos;s installation program and
-              place the file in the directory where you&apos;ll store your configuration details.
-              Then, create clusters on supported IBM Z infrastructure using our
-              {' '}
-              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
-              {' '}
-              as a guide.
+              Download and extract your operating system&apos;s installation program and place the
+              file in the directory where you&apos;ll store your configuration details. Then, create
+              clusters on supported IBM Z infrastructure using our{' '}
+              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink> as a guide.
             </Text>
             <Text>
-              Learn how to deploy in your
-              {' '}
-              <Link to="/install/ibmz/user-provisioned">data center</Link>
-              .
+              Learn how to deploy in your{' '}
+              <Link to="/install/ibmz/user-provisioned">data center</Link>.
             </Text>
           </TextContent>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
@@ -658,83 +604,69 @@ const installationRows = (expanded, setExpanded, selections, setSelections, tool
         tool={tools.PPCINSTALLER}
         channel={channels.STABLE}
         name="OpenShift for Power Installer"
-        description={(
+        description={
           <TextContent>
             <Text>
-              Download and extract your operating system&apos;s installation program and
-              place the file in the directory where you&apos;ll store your configuration details.
-              Then, create clusters on supported Power infrastructure using our
-              {' '}
-              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
-              {' '}
-              as a guide.
+              Download and extract your operating system&apos;s installation program and place the
+              file in the directory where you&apos;ll store your configuration details. Then, create
+              clusters on supported Power infrastructure using our{' '}
+              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink> as a guide.
             </Text>
             <Text>
-              Learn how to deploy in your
-              {' '}
-              <Link to="/install/power/user-provisioned">data center</Link>
-              .
+              Learn how to deploy in your{' '}
+              <Link to="/install/power/user-provisioned">data center</Link>.
             </Text>
           </TextContent>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.MULTIINSTALLER}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            OpenShift Installer for heterogeneous clusters
-            {' '}
+            OpenShift Installer for heterogeneous clusters{' '}
             <TechnologyPreview position={PreviewBadgePosition.inline} />
           </>
-        )}
-        description={(
+        }
+        description={
           <TextContent>
             <Text>
-              Download and extract your operating system&apos;s installation program and
-              place the file in the directory where you&apos;ll store your configuration details.
-              Then, create clusters on supported infrastructure using our
-              {' '}
-              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink>
-              {' '}
-              as a guide.
+              Download and extract your operating system&apos;s installation program and place the
+              file in the directory where you&apos;ll store your configuration details. Then, create
+              clusters on supported infrastructure using our{' '}
+              <ExternalLink href={links.INSTALL_DOCS_ENTRY}>documentation</ExternalLink> as a guide.
             </Text>
             <Text>
-              Learn how to deploy in
-              {' '}
-              <Link to="/install/azure/multi/installer-provisioned">Azure</Link>
-              .
+              Learn how to deploy in{' '}
+              <Link to="/install/azure/multi/installer-provisioned">Azure</Link>.
             </Text>
           </TextContent>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.CRC}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            OpenShift Local (
-            <code>crc</code>
-            )
+            OpenShift Local (<code>crc</code>)
           </>
-        )}
-        description={(
+        }
+        description={
           <TextContent>
             <Text>
-              Download and open the OpenShift Local file to automatically start
-              a step-by-step installation guide.
+              Download and open the OpenShift Local file to automatically start a step-by-step
+              installation guide.
             </Text>
             <Text>
-              <Link to="/create/local">Create a minimal cluster on your desktop</Link>
-              {' '}
-              for local development and testing.
+              <Link to="/create/local">Create a minimal cluster on your desktop</Link> for local
+              development and testing.
             </Text>
           </TextContent>
-        )}
+        }
       />
     </>
   );
@@ -749,7 +681,12 @@ const disconnectedInstallationRows = (
   urls,
 ) => {
   const commonProps = {
-    expanded, setExpanded, selections, setSelections, toolRefs, urls,
+    expanded,
+    setExpanded,
+    selections,
+    setSelections,
+    toolRefs,
+    urls,
   };
   return (
     <>
@@ -758,43 +695,35 @@ const disconnectedInstallationRows = (
         tool={tools.MIRROR_REGISTRY}
         channel={channels.STABLE}
         name="mirror registry for Red Hat OpenShift"
-        description={(
+        description={
           <TextContent>
             <Text>
               Download and install a local, minimal single instance deployment of Red Hat Quay to
-              aid bootstrapping the first disconnected cluster.
-              {' '}
-              <ExternalLink
-                href={links.INSTALL_MIRROR_REGISTRY_LEARN_MORE}
-              >
+              aid bootstrapping the first disconnected cluster.{' '}
+              <ExternalLink href={links.INSTALL_MIRROR_REGISTRY_LEARN_MORE}>
                 Learn more
               </ExternalLink>
             </Text>
           </TextContent>
-        )}
+        }
       />
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.OC_MIRROR_PLUGIN}
         channel={channels.STABLE}
         name="OpenShift Client (oc) mirror plugin"
-        description={(
+        description={
           <TextContent>
             <Text>
-              The &quot;mirror&quot; plugin for the OpenShift CLI client (oc) controls the process
-              {' '}
-              of mirroring all relevant container image for a full disconnected OpenShift
-              {' '}
-              installation in a central, declarative tool.
-              {' '}
-              <ExternalLink
-                href={links.INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE}
-              >
+              The &quot;mirror&quot; plugin for the OpenShift CLI client (oc) controls the process{' '}
+              of mirroring all relevant container image for a full disconnected OpenShift{' '}
+              installation in a central, declarative tool.{' '}
+              <ExternalLink href={links.INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE}>
                 Learn more
               </ExternalLink>
             </Text>
           </TextContent>
-        )}
+        }
       />
     </>
   );
@@ -809,7 +738,12 @@ const customInstallationRows = (
   urls,
 ) => {
   const commonProps = {
-    expanded, setExpanded, selections, setSelections, toolRefs, urls,
+    expanded,
+    setExpanded,
+    selections,
+    setSelections,
+    toolRefs,
+    urls,
   };
   return (
     <>
@@ -818,16 +752,15 @@ const customInstallationRows = (
         tool={tools.BUTANE}
         channel={channels.STABLE}
         name="Butane config transpiler CLI"
-        description={(
+        description={
           <TextContent>
             <Text>
-              Write and validate machine configs in a convenient short-hand syntax
-              with the Butane config transpiler CLI tool.
-              {' '}
+              Write and validate machine configs in a convenient short-hand syntax with the Butane
+              config transpiler CLI tool.{' '}
               <ExternalLink href={links.BUTANE_DOCS}>Learn more</ExternalLink>
             </Text>
           </TextContent>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
@@ -835,39 +768,35 @@ const customInstallationRows = (
         tool={tools.COREOS_INSTALLER}
         channel={channels.STABLE}
         name="CoreOS Installer CLI"
-        description={(
+        description={
           <TextContent>
             <Text>
-              Download and install RHCOS disk images with the coreos-installer CLI tool.
-              {' '}
+              Download and install RHCOS disk images with the coreos-installer CLI tool.{' '}
               <ExternalLink href={links.COREOS_INSTALLER_DOCS}>Learn more</ExternalLink>
             </Text>
           </TextContent>
-        )}
+        }
       />
 
       <ToolAndDescriptionRows
         {...commonProps}
         tool={tools.CCOCTL}
         channel={channels.STABLE}
-        name={(
+        name={
           <>
-            Cloud Credential Operator CLI utility (
-            <code>ccoctl</code>
-            )
+            Cloud Credential Operator CLI utility (<code>ccoctl</code>)
           </>
-        )}
-        description={(
+        }
+        description={
           <TextContent>
             <Text>
-              The ccoctl tool provides various commands to assist with the creating and
-              maintenance of cloud credentials from outside the cluster (necessary when
-              Cloud Credential Operator is put in Manual mode).
-              {' '}
+              The ccoctl tool provides various commands to assist with the creating and maintenance
+              of cloud credentials from outside the cluster (necessary when Cloud Credential
+              Operator is put in Manual mode).{' '}
               <ExternalLink href={links.CCO_MANUAL_MODE}>Learn more</ExternalLink>
             </Text>
           </TextContent>
-        )}
+        }
       />
     </>
   );
@@ -906,30 +835,23 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
           </AlignRight>
         </Td>,
       ]}
-      description={(
+      description={
         <TextContent>
           <Text>
             An image pull secret provides authentication for the cluster to access services and
-            registries which serve the container images for OpenShift components.
-            Every individual user gets a single pull secret generated. The pull secret
-            can be used when installing clusters, based on the required infrastructure.
+            registries which serve the container images for OpenShift components. Every individual
+            user gets a single pull secret generated. The pull secret can be used when installing
+            clusters, based on the required infrastructure.
           </Text>
           <Text>
-            Learn how to
-            {' '}
-            <Link to="/create">
-              create a cluster
-            </Link>
-            {' '}
-            or
-            {' '}
+            Learn how to <Link to="/create">create a cluster</Link> or{' '}
             <ExternalLink href={links.OCM_DOCS_PULL_SECRETS}>
               learn more about pull secrets
             </ExternalLink>
             .
           </Text>
         </TextContent>
-      )}
+      }
     />
 
     <ExpandableRowPair
@@ -949,11 +871,11 @@ const tokenRows = (expanded, setExpanded, toolRefs, token) => (
           </AlignRight>
         </Td>,
       ]}
-      description={(
+      description={
         <Text>
           Use your API token to authenticate against your OpenShift Cluster Manager account.
         </Text>
-      )}
+      }
     />
   </>
 );
@@ -979,9 +901,9 @@ class DownloadsPage extends React.Component {
     selectedCategory: 'ALL', // one of `downloadsCategories` key
     expanded: DownloadsPage.initialExpanded(), // { [tool]: isOpen }
     selections: {}, // { [tool]: {OS, architecture} }
-  }
+  };
 
-  toolRefs = DownloadsPage.makeRefs() // { [tool]: ref }
+  toolRefs = DownloadsPage.makeRefs(); // { [tool]: ref }
 
   componentDidMount() {
     document.title = 'Downloads | Red Hat OpenShift Cluster Manager';
@@ -1006,17 +928,17 @@ class DownloadsPage extends React.Component {
     const { expanded } = this.state;
     this.setState({ selectedCategory });
     this.updateURL(selectedCategory, expanded);
-  }
+  };
 
   setExpanded = (expanded) => {
     const { selectedCategory } = this.state;
     this.setState({ expanded });
     this.updateURL(selectedCategory, expanded);
-  }
+  };
 
   setSelections = (selections) => {
     this.setState({ selections });
-  }
+  };
 
   /** "Advertise" link targets by setting #tool-foo URL.
    *
@@ -1026,7 +948,7 @@ class DownloadsPage extends React.Component {
    */
   updateURL = (selectedCategory, expanded) => {
     let lastExpanded = null;
-    const shownKeys = downloadsCategories.find(c => c.key === selectedCategory).tools;
+    const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory).tools;
     shownKeys.forEach((key) => {
       if (expanded[key]) {
         lastExpanded = key;
@@ -1040,12 +962,12 @@ class DownloadsPage extends React.Component {
       // avoiding undesired effects like scrolling.
       history.replace({ ...location, hash });
     }
-  }
+  };
 
   focusRowByHash = () => {
     const { location } = this.props;
     const hash = location.hash.replace('#', '');
-    const key = Object.values(expandKeys).find(k => rowId(k) === hash);
+    const key = Object.values(expandKeys).find((k) => rowId(k) === hash);
     if (key) {
       // Expand to draw attention.  setState() directly to bypass updateHash().
       const { expanded } = this.state;
@@ -1064,7 +986,7 @@ class DownloadsPage extends React.Component {
         }
       }
     }
-  }
+  };
 
   render() {
     const { token, githubReleases } = this.props;
@@ -1073,16 +995,18 @@ class DownloadsPage extends React.Component {
     const urls = urlsSelector(githubReleases);
 
     // Expand if at least one collapsed, collapse if all expanded.
-    const shownKeys = downloadsCategories.find(c => c.key === selectedCategory).tools;
-    const allExpanded = shownKeys.every(key => expanded[key]);
+    const shownKeys = downloadsCategories.find((c) => c.key === selectedCategory).tools;
+    const allExpanded = shownKeys.every((key) => expanded[key]);
     const willExpandAll = !allExpanded;
 
     const expandCollapseAll = () => {
-      this.setExpanded(produce(expanded, (draft) => {
-        shownKeys.forEach((key) => {
-          draft[key] = willExpandAll;
-        });
-      }));
+      this.setExpanded(
+        produce(expanded, (draft) => {
+          shownKeys.forEach((key) => {
+            draft[key] = willExpandAll;
+          });
+        }),
+      );
     };
 
     return (
@@ -1113,74 +1037,93 @@ class DownloadsPage extends React.Component {
         </PageHeader>
 
         <PageSection className="downloads-page-body">
-          <PageSection variant="light" padding={{ default: 'noPadding' }} className="downloads-page-body">
+          <PageSection
+            variant="light"
+            padding={{ default: 'noPadding' }}
+            className="downloads-page-body"
+          >
             <DownloadsSection
               selectedCategory={selectedCategory}
               category="CLI"
-              description={(
+              description={
                 <Text>
                   Download command line tools to manage and work with OpenShift from your terminal.
                 </Text>
-              )}
+              }
             >
               <TableComposable aria-label="CLI tools table">
                 <ColumnHeadings />
-                {cliToolRows(expanded, this.setExpanded, selections, this.setSelections,
-                  this.toolRefs, urls)}
+                {cliToolRows(
+                  expanded,
+                  this.setExpanded,
+                  selections,
+                  this.setSelections,
+                  this.toolRefs,
+                  urls,
+                )}
               </TableComposable>
             </DownloadsSection>
 
             <DownloadsSection
               selectedCategory={selectedCategory}
               category="DEV"
-              description={(
+              description={
                 <Text>
-                  Access all the powers of Kubernetes through a simplified workflow with
-                  Red Hat’s developer tools.
-                  {' '}
-                  <ExternalLink href="https://developers.redhat.com/topics/developer-tools">Learn more</ExternalLink>
+                  Access all the powers of Kubernetes through a simplified workflow with Red Hat’s
+                  developer tools.{' '}
+                  <ExternalLink href="https://developers.redhat.com/topics/developer-tools">
+                    Learn more
+                  </ExternalLink>
                 </Text>
-              )}
+              }
             >
               <TableComposable aria-label="Developer tools table">
                 <ColumnHeadings />
-                {devToolRows(expanded, this.setExpanded, selections, this.setSelections,
-                  this.toolRefs, urls)}
+                {devToolRows(
+                  expanded,
+                  this.setExpanded,
+                  selections,
+                  this.setSelections,
+                  this.toolRefs,
+                  urls,
+                )}
               </TableComposable>
             </DownloadsSection>
 
             <DownloadsSection
               selectedCategory={selectedCategory}
               category="INSTALLATION"
-              description={(
+              description={
                 <Text>
-                  Install OpenShift based on your infrastructure.
-                  For the installer matching your infrastructure type, select
-                  the operating system and architecture on which you wish to
-                  run the installer.  Then follow the steps provided
-                  within your infrastructure&apos;s tab on the
-                  {' '}
-                  <Link to="/create">create cluster</Link>
-                  {' '}
-                  page to install an OpenShift cluster.
+                  Install OpenShift based on your infrastructure. For the installer matching your
+                  infrastructure type, select the operating system and architecture on which you
+                  wish to run the installer. Then follow the steps provided within your
+                  infrastructure&apos;s tab on the <Link to="/create">create cluster</Link> page to
+                  install an OpenShift cluster.
                 </Text>
-              )}
+              }
             >
               <TableComposable aria-label="OpenShift installation table">
                 <ColumnHeadings />
-                {installationRows(expanded, this.setExpanded, selections, this.setSelections,
-                  this.toolRefs, urls)}
+                {installationRows(
+                  expanded,
+                  this.setExpanded,
+                  selections,
+                  this.setSelections,
+                  this.toolRefs,
+                  urls,
+                )}
               </TableComposable>
             </DownloadsSection>
 
             <DownloadsSection
               selectedCategory={selectedCategory}
               category="DISCONNECTED_INSTALLATION"
-              description={(
+              description={
                 <Text>
                   Utilities to simplify preparation of disconnected cluster installations.
                 </Text>
-              )}
+              }
             >
               <TableComposable aria-label="OpenShift disconnected installation tools table">
                 <ColumnHeadings />
@@ -1198,24 +1141,28 @@ class DownloadsPage extends React.Component {
             <DownloadsSection
               selectedCategory={selectedCategory}
               category="CUSTOM_INSTALLATION"
-              description={(
+              description={
                 <Text>
-                  Customize OpenShift and Red Hat Enterprise Linux CoreOS (RHCOS) installation
-                  with these tools.
+                  Customize OpenShift and Red Hat Enterprise Linux CoreOS (RHCOS) installation with
+                  these tools.
                 </Text>
-              )}
+              }
             >
               <TableComposable aria-label="OpenShift installation customization downloads table">
                 <ColumnHeadings />
-                {customInstallationRows(expanded, this.setExpanded, selections, this.setSelections,
-                  this.toolRefs, urls)}
+                {customInstallationRows(
+                  expanded,
+                  this.setExpanded,
+                  selections,
+                  this.setSelections,
+                  this.toolRefs,
+                  urls,
+                )}
               </TableComposable>
             </DownloadsSection>
 
             <DownloadsSection category="TOKENS" selectedCategory={selectedCategory}>
-              <TableComposable
-                aria-label="Tokens table"
-              >
+              <TableComposable aria-label="Tokens table">
                 <TokensHeadings />
                 {tokenRows(expanded, this.setExpanded, this.toolRefs, token)}
               </TableComposable>

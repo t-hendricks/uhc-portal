@@ -5,7 +5,6 @@
 import type { ListPagination } from './ListPagination';
 import type { ResourceTypeListOut } from './ResourceTypeListOut';
 
-export type ResourceTypeListPagination = (ListPagination & {
-    data: Array<ResourceTypeListOut>;
-});
-
+export type ResourceTypeListPagination = ListPagination & {
+  data: Array<ResourceTypeListOut>;
+};

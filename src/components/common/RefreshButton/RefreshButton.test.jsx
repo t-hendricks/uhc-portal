@@ -24,7 +24,7 @@ describe('<RefreshButton />', () => {
     expect(onClickFunc).toBeCalled();
   });
 
-  it('doesn\'t call setInterval when autoRefresh is disabled', () => {
+  it("doesn't call setInterval when autoRefresh is disabled", () => {
     expect(setInterval).not.toBeCalled();
   });
 
@@ -32,7 +32,9 @@ describe('<RefreshButton />', () => {
     it('calls clickRefreshFunc when clicked', () => {
       refreshFunc = jest.fn();
       onClickFunc = jest.fn();
-      wrapper = shallow(<RefreshButton id="id" refreshFunc={refreshFunc} clickRefreshFunc={onClickFunc} />);
+      wrapper = shallow(
+        <RefreshButton id="id" refreshFunc={refreshFunc} clickRefreshFunc={onClickFunc} />,
+      );
       wrapper.find(Button).simulate('click');
       expect(refreshFunc).not.toBeCalled();
       expect(onClickFunc).toBeCalled();

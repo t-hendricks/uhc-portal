@@ -28,7 +28,4 @@ const getTrialEndDate = (cluster) => {
   return 'unknown date';
 };
 
-export {
-  getTrialExpiresInDays,
-  getTrialEndDate,
-};
+export { getTrialExpiresInDays, getTrialEndDate };

@@ -3,8 +3,7 @@
 /* eslint-disable */
 
 export type SelfTermsReview = {
-    check_optional_terms?: boolean;
-    event_code?: string;
-    site_code?: string;
+  check_optional_terms?: boolean;
+  event_code?: string;
+  site_code?: string;
 };
-

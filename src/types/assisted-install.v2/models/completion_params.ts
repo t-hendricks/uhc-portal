@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type completion_params = {
-    error_info?: string;
-    is_success: boolean;
+  error_info?: string;
+  is_success: boolean;
 };
-

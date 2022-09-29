@@ -2,6 +2,4 @@ const GET_CLOUD_PROVIDERS = 'GET_CLOUD_PROVIDERS';
 
 export default GET_CLOUD_PROVIDERS;
 
-export {
-  GET_CLOUD_PROVIDERS,
-};
+export { GET_CLOUD_PROVIDERS };

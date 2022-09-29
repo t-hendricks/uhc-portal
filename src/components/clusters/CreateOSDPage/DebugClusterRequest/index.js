@@ -8,7 +8,7 @@ import { getFormValues } from 'redux-form';
 
 import DebugClusterRequest from './DebugClusterRequest';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   formValues: getFormValues('CreateCluster')(state),
 });
 

@@ -70,10 +70,9 @@ class TermsGuard extends Component {
         </Text>
         <Text component={TextVariants.p}>
           <b>
-            If you do not accept the terms, you will not be able to create new clusters or
-            to alter existing clusters.
-          </b>
-          {' '}
+            If you do not accept the terms, you will not be able to create new clusters or to alter
+            existing clusters.
+          </b>{' '}
           Existing clusters will not be affected, however access will be read-only.
         </Text>
       </TextContent>
@@ -103,7 +102,7 @@ class TermsGuard extends Component {
           onClose={this.handleCancel}
           actions={actions}
         >
-          { dialogText }
+          {dialogText}
         </Modal>
         {React.cloneElement(React.Children.only(children), { blockedByTerms: true })}
       </>

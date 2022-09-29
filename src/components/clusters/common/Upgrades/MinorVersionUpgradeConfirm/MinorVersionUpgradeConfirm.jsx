@@ -11,10 +11,10 @@ const MinorVersionUpgradeConfirm = ({
   const [clusterUnmetAcks] = getAcks;
 
   if (
-    !isAutomatic
-    || !isNextMinorVersionAvailable
-    || !isMinorVersionUpgradesEnabled
-    || clusterUnmetAcks.length !== 0
+    !isAutomatic ||
+    !isNextMinorVersionAvailable ||
+    !isMinorVersionUpgradesEnabled ||
+    clusterUnmetAcks.length !== 0
   ) {
     return null;
   }

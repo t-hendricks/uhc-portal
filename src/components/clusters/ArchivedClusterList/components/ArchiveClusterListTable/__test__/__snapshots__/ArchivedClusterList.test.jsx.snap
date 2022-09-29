@@ -49,6 +49,7 @@ exports[`<ArchivedClusterList /> ArchivedClusterList should render 1`] = `
               className="pf-l-split__item split-margin-left"
             >
               <Connect(ViewOnlyMyClustersToggle)
+                bodyContent="Show only the clusters you previously archived, or all archived clusters in your organization."
                 view="ARCHIVED_CLUSTERS_VIEW"
               />
             </ToolbarItem>

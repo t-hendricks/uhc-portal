@@ -5,4 +5,3 @@
 import type { ReportOpenShiftAWSInstanceInventory } from './ReportOpenShiftAWSInstanceInventory';
 
 export type ReportOpenShiftAllInstanceInventory = ReportOpenShiftAWSInstanceInventory;
-

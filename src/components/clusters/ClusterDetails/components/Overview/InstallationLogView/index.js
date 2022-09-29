@@ -3,7 +3,7 @@ import InstallationLogView from './InstallationLogView';
 import { clearLogs, getLogs } from './InstallationLogActions';
 import shouldShowLogs from './shouldShowLogs';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   lines: state.logs.lines,
   len: state.logs.len,
   pending: state.logs.pending,

@@ -204,8 +204,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                             rel="noreferrer noopener"
                             target="_blank"
                           >
-                            Learn more about subscriptions
-                             
+                            Learn more about subscriptions 
                             <svg
                               aria-hidden="true"
                               fill="#0066cc"
@@ -1047,8 +1046,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly 1`] = `
                                         rel="noreferrer noopener"
                                         target="_blank"
                                       >
-                                        Learn more about subscriptions
-                                         
+                                        Learn more about subscriptions 
                                         <ExternalLinkAltIcon
                                           color="#0066cc"
                                           noVerticalAlign={false}
@@ -3251,8 +3249,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                             rel="noreferrer noopener"
                             target="_blank"
                           >
-                            Learn more about subscriptions
-                             
+                            Learn more about subscriptions 
                             <svg
                               aria-hidden="true"
                               fill="#0066cc"
@@ -4174,8 +4171,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly when an erorr occu
                                         rel="noreferrer noopener"
                                         target="_blank"
                                       >
-                                        Learn more about subscriptions
-                                         
+                                        Learn more about subscriptions 
                                         <ExternalLinkAltIcon
                                           color="#0066cc"
                                           noVerticalAlign={false}
@@ -6411,8 +6407,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                             rel="noreferrer noopener"
                             target="_blank"
                           >
-                            Learn more about subscriptions
-                             
+                            Learn more about subscriptions 
                             <svg
                               aria-hidden="true"
                               fill="#0066cc"
@@ -7425,8 +7420,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders correctly with billing_model
                                         rel="noreferrer noopener"
                                         target="_blank"
                                       >
-                                        Learn more about subscriptions
-                                         
+                                        Learn more about subscriptions 
                                         <ExternalLinkAltIcon
                                           color="#0066cc"
                                           noVerticalAlign={false}
@@ -9626,8 +9620,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                             rel="noreferrer noopener"
                             target="_blank"
                           >
-                            Learn more about subscriptions
-                             
+                            Learn more about subscriptions 
                             <svg
                               aria-hidden="true"
                               fill="#0066cc"
@@ -10498,8 +10491,7 @@ exports[`<EditSubscriptionSettingsDialog /> renders eval support correctly 1`] =
                                         rel="noreferrer noopener"
                                         target="_blank"
                                       >
-                                        Learn more about subscriptions
-                                         
+                                        Learn more about subscriptions 
                                         <ExternalLinkAltIcon
                                           color="#0066cc"
                                           noVerticalAlign={false}

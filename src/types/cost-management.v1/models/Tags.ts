@@ -5,7 +5,6 @@
 import type { TagsFilter } from './TagsFilter';
 
 export type Tags = {
-    filter?: TagsFilter;
-    data?: Array<any>;
+  filter?: TagsFilter;
+  data?: Array<any>;
 };
-

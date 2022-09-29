@@ -5,4 +5,3 @@
 import type { RoleBindingRequest } from './RoleBindingRequest';
 
 export type RoleBindingCreateRequest = RoleBindingRequest;
-

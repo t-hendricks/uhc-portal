@@ -41,22 +41,17 @@ const Releases = () => {
   }, []);
 
   const allVersions = statusData[0]?.versions;
-  const filteredVersions = allVersions?.filter(version => !version.name.includes('EUS'));
+  const filteredVersions = allVersions?.filter((version) => !version.name.includes('EUS'));
   const versionsToDisplay = filteredVersions?.splice(0, 6);
   const hasEUSChannel = (versionName) => {
     const parsed = semver.coerce(versionName);
     const { minor } = parsed;
     return minor > 5 && minor % 2 === 0;
   };
-  const hasEUSLifeCycle = versionName => allVersions?.find(v => v.name.includes(`${versionName} EUS`));
+  const hasEUSLifeCycle = (versionName) =>
+    allVersions?.find((v) => v.name.includes(`${versionName} EUS`));
   const latestVersion = versionsToDisplay ? versionsToDisplay[0]?.name : '4.7';
-  const renderProductName = versionName => (
-    <>
-      OpenShift
-      {' '}
-      {versionName}
-    </>
-  );
+  const renderProductName = (versionName) => <>OpenShift {versionName}</>;
 
   return (
     <>
@@ -67,43 +62,32 @@ const Releases = () => {
         <Stack hasGutter>
           <StackItem className="ocm-l-ocp-releases__section">
             <Card>
-              <CardTitle>
-                Latest OpenShift releases
-              </CardTitle>
+              <CardTitle>Latest OpenShift releases</CardTitle>
               <CardBody>
                 <Stack hasGutter>
                   <StackItem>
-                    View general information on the most recent OpenShift Container Platform
-                    release versions that you can install. Versions are only supported when
-                    released to the fast, stable, or eus channels.
-                    {' '}
+                    View general information on the most recent OpenShift Container Platform release
+                    versions that you can install. Versions are only supported when released to the
+                    fast, stable, or eus channels.{' '}
                     <Popover
                       aria-label="Version help"
                       bodyContent={
-                        (
-                          <>
-                            <p className="pf-u-mb-md">
-                              The most recent versions aren&apos;t always available for every
-                              cluster. To keep your cluster up to date with the recommended
-                              version, run regular updates from the
-                              {' '}
-                              <Link to="/">clusters list</Link>
-                              .
-                            </p>
-                            <p>
-                              <em>Note:</em>
-                              {' '}
-                              Disconnected clusters won&apos;t show available recommended
-                              updates on the clusters list.
-                            </p>
-                          </>
-                        )
+                        <>
+                          <p className="pf-u-mb-md">
+                            The most recent versions aren&apos;t always available for every cluster.
+                            To keep your cluster up to date with the recommended version, run
+                            regular updates from the <Link to="/">clusters list</Link>.
+                          </p>
+                          <p>
+                            <em>Note:</em> Disconnected clusters won&apos;t show available
+                            recommended updates on the clusters list.
+                          </p>
+                        </>
                       }
                       id="version-help"
                     >
                       <Button variant="link" isInline>
-                        I don&apos;t see these versions as upgrade options for my cluster.
-                        {' '}
+                        I don&apos;t see these versions as upgrade options for my cluster.{' '}
                         <OutlinedQuestionCircleIcon />
                       </Button>
                     </Popover>
@@ -117,7 +101,7 @@ const Releases = () => {
                       default: '340px',
                     }}
                   >
-                    {versionsToDisplay?.map(version => (
+                    {versionsToDisplay?.map((version) => (
                       <GalleryItem key={version.name}>
                         <Card isFlat className="ocm-l-ocp-releases__card">
                           <CardTitle>
@@ -133,12 +117,16 @@ const Releases = () => {
                             <Divider className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm" />
                           </CardTitle>
                           <CardBody>
-                            <div className="ocm-l-ocp-releases__subheading">
-                              Channel details
-                            </div>
+                            <div className="ocm-l-ocp-releases__subheading">Channel details</div>
                             <dl className="ocm-l-ocp-releases__channels">
-                              <ReleaseChannel channel={`stable-${version.name}`} status={version.type} />
-                              <ReleaseChannel channel={`fast-${version.name}`} status={version.type} />
+                              <ReleaseChannel
+                                channel={`stable-${version.name}`}
+                                status={version.type}
+                              />
+                              <ReleaseChannel
+                                channel={`fast-${version.name}`}
+                                status={version.type}
+                              />
                               {hasEUSChannel(version.name) ? (
                                 <ReleaseChannel
                                   channel={`eus-${version.name}`}
@@ -169,9 +157,7 @@ const Releases = () => {
           </StackItem>
           <StackItem className="ocm-l-osd-releases__section">
             <Card>
-              <CardTitle>
-                Channels
-              </CardTitle>
+              <CardTitle>Channels</CardTitle>
               <CardBody>
                 <Stack hasGutter>
                   <StackItem>

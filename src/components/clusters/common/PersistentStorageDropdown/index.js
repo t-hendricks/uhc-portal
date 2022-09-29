@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import getPersistentStorage from '../../../../redux/actions/persistentStorageActions';
 import PersistentStorageDropdown from './PersistentStorageDropdown';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   persistentStorageValues: state.persistentStorageValues,
   quotaList: state.userProfile.organization.quotaList,
 });

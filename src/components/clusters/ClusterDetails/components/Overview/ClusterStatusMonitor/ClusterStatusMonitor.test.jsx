@@ -25,13 +25,15 @@ describe('<ClusterStatusMonitor />', () => {
     getClusterStatus = jest.fn();
     refresh = jest.fn();
     history = { push: jest.fn() };
-    wrapper = shallow(<ClusterStatusMonitor
-      cluster={{ ...clusterDetails.cluster, state: 'installing' }}
-      getClusterStatus={getClusterStatus}
-      status={status}
-      refresh={refresh}
-      history={history}
-    />);
+    wrapper = shallow(
+      <ClusterStatusMonitor
+        cluster={{ ...clusterDetails.cluster, state: 'installing' }}
+        getClusterStatus={getClusterStatus}
+        status={status}
+        refresh={refresh}
+        history={history}
+      />,
+    );
   });
 
   it('calls getClusterStatus on mount', () => {
@@ -39,27 +41,23 @@ describe('<ClusterStatusMonitor />', () => {
   });
 
   it('sets the timeout when cluster is installing', () => {
-    wrapper.setProps(
-      {
-        status: {
-          ...status,
-          pending: true,
-        },
+    wrapper.setProps({
+      status: {
+        ...status,
+        pending: true,
       },
-    ); // set pending: true first since the logic depends on the pending -> fulfilled transition
+    }); // set pending: true first since the logic depends on the pending -> fulfilled transition
 
-    wrapper.setProps(
-      {
+    wrapper.setProps({
+      status: {
+        fulfilled: true,
+        pending: false,
         status: {
-          fulfilled: true,
-          pending: false,
-          status: {
-            id: clusterDetails.cluster.id,
-            state: 'installing',
-          },
+          id: clusterDetails.cluster.id,
+          state: 'installing',
         },
       },
-    );
+    });
     expect(setTimeout).toBeCalled();
     jest.runOnlyPendingTimers();
     expect(getClusterStatus).toHaveBeenLastCalledWith(clusterDetails.cluster.id);
@@ -72,65 +70,57 @@ describe('<ClusterStatusMonitor />', () => {
   });
 
   it('Displays warning when install takes longer', () => {
-    wrapper.setProps(
-      {
+    wrapper.setProps({
+      status: {
+        fulfilled: true,
+        pending: false,
         status: {
-          fulfilled: true,
-          pending: false,
-          status: {
-            id: clusterDetails.cluster.id,
-            state: 'installing',
-            provision_error_code: '',
-            provision_error_message: 'Install taking longer than expected',
-          },
+          id: clusterDetails.cluster.id,
+          state: 'installing',
+          provision_error_code: '',
+          provision_error_message: 'Install taking longer than expected',
         },
       },
-    );
+    });
     expect(wrapper).toMatchSnapshot();
   });
 
   it('calls refresh when the status changes', () => {
-    wrapper.setProps(
-      {
-        status: {
-          ...status,
-          pending: true,
-        },
+    wrapper.setProps({
+      status: {
+        ...status,
+        pending: true,
       },
-    ); // set pending: true first since the logic depends on the pending -> fulfilled transition
+    }); // set pending: true first since the logic depends on the pending -> fulfilled transition
 
-    wrapper.setProps(
-      {
+    wrapper.setProps({
+      status: {
+        fulfilled: true,
+        pending: false,
         status: {
-          fulfilled: true,
-          pending: false,
-          status: {
-            id: clusterDetails.cluster.id,
-            state: 'error',
-            provision_error_code: 'OCM1002',
-            provision_error_message: 'Invalid AWS credentials (authentication)',
-          },
+          id: clusterDetails.cluster.id,
+          state: 'error',
+          provision_error_code: 'OCM1002',
+          provision_error_message: 'Invalid AWS credentials (authentication)',
         },
       },
-    );
+    });
     expect(refresh).toBeCalled();
   });
 
   it('renders an alert when cluster is errored', () => {
-    wrapper.setProps(
-      {
+    wrapper.setProps({
+      status: {
+        fulfilled: true,
+        pending: false,
         status: {
-          fulfilled: true,
-          pending: false,
-          status: {
-            id: clusterDetails.cluster.id,
-            state: 'error',
-            provision_error_code: 'OCM1002',
-            provision_error_message: 'Invalid AWS credentials (authentication)',
-          },
+          id: clusterDetails.cluster.id,
+          state: 'error',
+          provision_error_code: 'OCM1002',
+          provision_error_message: 'Invalid AWS credentials (authentication)',
         },
       },
-    );
+    });
     expect(wrapper).toMatchSnapshot();
   });
 });

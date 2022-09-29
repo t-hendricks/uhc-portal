@@ -44,8 +44,7 @@ import clusterStates, { isHibernating } from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
 import Support from './components/Support';
-import AddNotificationContactDialog
-  from './components/Support/components/AddNotificationContactDialog';
+import AddNotificationContactDialog from './components/Support/components/AddNotificationContactDialog';
 import UpgradeSettingsTab from './components/UpgradeSettings';
 import { isUninstalledAICluster } from '../../../common/isAssistedInstallerCluster';
 import { hasCapability, subscriptionCapabilities } from '../../../common/subscriptionCapabilities';
@@ -80,12 +79,7 @@ class ClusterDetails extends Component {
     document.title = 'Red Hat OpenShift Cluster Manager';
     scrollToTop();
 
-    const {
-      cloudProviders,
-      getCloudProviders,
-      clearGlobalError,
-      getUserAccess,
-    } = this.props;
+    const { cloudProviders, getCloudProviders, clearGlobalError, getUserAccess } = this.props;
 
     clearGlobalError('clusterDetails');
     this.refresh();
@@ -97,10 +91,7 @@ class ClusterDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      match,
-      clusterDetails,
-    } = this.props;
+    const { match, clusterDetails } = this.props;
     const subscriptionID = match.params.id;
 
     if (get(clusterDetails, 'cluster.subscription.id') === subscriptionID) {
@@ -108,9 +99,11 @@ class ClusterDetails extends Component {
       document.title = `${clusterName} | Red Hat OpenShift Cluster Manager`;
     }
 
-    if (!prevProps.clusterDetails?.cluster?.id
-      && clusterDetails.fulfilled
-      && clusterDetails?.cluster?.id) {
+    if (
+      !prevProps.clusterDetails?.cluster?.id &&
+      clusterDetails.fulfilled &&
+      clusterDetails?.cluster?.id
+    ) {
       /* we only know the Cluster Service `cluster_id` after the subscription request has returned.
       only then we can fetch Cluster Service specific data */
       this.refreshRelatedResources();
@@ -143,11 +136,7 @@ class ClusterDetails extends Component {
   };
 
   refresh(clicked) {
-    const {
-      match,
-      clusterDetails,
-      fetchDetails,
-    } = this.props;
+    const { match, clusterDetails, fetchDetails } = this.props;
     const { cluster } = clusterDetails;
     const subscriptionID = match.params.id;
 
@@ -166,9 +155,11 @@ class ClusterDetails extends Component {
     const { clusterDetails, clusterIdentityProviders, getClusterIdentityProviders } = this.props;
     const clusterID = clusterDetails?.cluster?.id;
 
-    if (isValid(clusterID)
-      && !clusterIdentityProviders.pending
-      && !clusterIdentityProviders.error) {
+    if (
+      isValid(clusterID) &&
+      !clusterIdentityProviders.pending &&
+      !clusterIdentityProviders.error
+    ) {
       getClusterIdentityProviders(clusterID);
     }
   }
@@ -297,7 +288,8 @@ class ClusterDetails extends Component {
     // the redux state will have the data for the previous cluster. We want to ensure we only
     // show data for the requested cluster, so different data should be marked as pending.
 
-    const isPending = (get(cluster, 'subscription.id') !== requestedSubscriptionID && !clusterDetails.error);
+    const isPending =
+      get(cluster, 'subscription.id') !== requestedSubscriptionID && !clusterDetails.error;
 
     const errorState = () => (
       <>
@@ -320,18 +312,20 @@ class ClusterDetails extends Component {
 
     // show a full error state only if we don't have data at all,
     // or when we only have data for a different cluster
-    if (clusterDetails.error && (!cluster || get(cluster, 'subscription.id') !== requestedSubscriptionID)) {
+    if (
+      clusterDetails.error &&
+      (!cluster || get(cluster, 'subscription.id') !== requestedSubscriptionID)
+    ) {
       if (clusterDetails.errorCode === 404 || clusterDetails.errorCode === 403) {
-        setGlobalError((
+        setGlobalError(
           <>
-            Cluster with subscription ID
-            {' '}
-            <b>{requestedSubscriptionID}</b>
-            {' '}
-            was not found, it might have been deleted or you don&apos;t have permission to see it.
-          </>
-        ), 'clusterDetails', clusterDetails.errorMessage);
-        return (<Redirect to="/" />);
+            Cluster with subscription ID <b>{requestedSubscriptionID}</b> was not found, it might
+            have been deleted or you don&apos;t have permission to see it.
+          </>,
+          'clusterDetails',
+          clusterDetails.errorMessage,
+        );
+        return <Redirect to="/" />;
       }
       return errorState();
     }
@@ -341,8 +335,9 @@ class ClusterDetails extends Component {
     };
 
     const clusterHibernating = isHibernating(cluster.state);
-    const isArchived = get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED
-      || get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
+    const isArchived =
+      get(cluster, 'subscription.status', false) === subscriptionStatuses.ARCHIVED ||
+      get(cluster, 'subscription.status', false) === subscriptionStatuses.DEPROVISIONED;
     const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
     const isOSDTrial = get(cluster, 'subscription.plan.type', '') === knownProducts.OSDTrial;
     const isManaged = cluster.managed;
@@ -352,37 +347,42 @@ class ClusterDetails extends Component {
     const isClusterReady = cluster.state === clusterStates.READY;
     const isClusterUpdating = cluster.state === clusterStates.UPDATING;
     const isReadOnly = cluster?.status?.configuration_mode === 'read_only';
-    const isPrivateCluster = cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
+    const isPrivateCluster =
+      cluster.aws && get(cluster, 'ccs.enabled') && get(cluster, 'aws.private_link');
     const canCreateGCPNonCCSCluster = hasCapability(
       organization.details,
       subscriptionCapabilities.CREATE_GCP_NON_CCS_CLUSTER,
     );
-    const displayAddOnsTab = !isClusterInstalling && !isClusterPending && !isClusterWaiting
-      && cluster.managed && !isArchived;
+    const displayAddOnsTab =
+      !isClusterInstalling &&
+      !isClusterPending &&
+      !isClusterWaiting &&
+      cluster.managed &&
+      !isArchived;
     const consoleURL = get(cluster, 'console.url');
-    const displayMonitoringTab = !isArchived && !cluster.managed && !isAROCluster
-      && !isUninstalledAICluster(cluster);
+    const displayMonitoringTab =
+      !isArchived && !cluster.managed && !isAROCluster && !isUninstalledAICluster(cluster);
     const displayAccessControlTab = !isArchived;
     const cloudProvider = get(cluster, 'cloud_provider.id');
-    const displayNetworkingTab = (isClusterReady || isClusterUpdating || clusterHibernating)
-      && cluster.managed
-      && !!get(cluster, 'api.url')
-      && (
-        (cloudProvider === 'aws' && !isPrivateCluster)
-        || (cloudProvider === 'gcp' && (get(cluster, 'ccs.enabled') || (gotRouters && canCreateGCPNonCCSCluster)))
-      )
-      && !isArchived;
-    const displayMachinePoolsTab = cluster.managed
-      && (isClusterReady || clusterHibernating)
-      && !isArchived;
-    const hideSupportTab = cluster.managed
+    const displayNetworkingTab =
+      (isClusterReady || isClusterUpdating || clusterHibernating) &&
+      cluster.managed &&
+      !!get(cluster, 'api.url') &&
+      ((cloudProvider === 'aws' && !isPrivateCluster) ||
+        (cloudProvider === 'gcp' &&
+          (get(cluster, 'ccs.enabled') || (gotRouters && canCreateGCPNonCCSCluster)))) &&
+      !isArchived;
+    const displayMachinePoolsTab =
+      cluster.managed && (isClusterReady || clusterHibernating) && !isArchived;
+    const hideSupportTab =
+      cluster.managed &&
       // The (managed) cluster has not yet reported its cluster ID to AMS
       // eslint-disable-next-line camelcase
-      && cluster.subscription?.external_cluster_id === undefined;
+      cluster.subscription?.external_cluster_id === undefined;
     const displaySupportTab = !hideSupportTab && !isOSDTrial;
     const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit && !isArchived;
-    const displayAddAssistedHosts = assistedInstallerEnabled && canAddHost({ cluster })
-      && !isArchived;
+    const displayAddAssistedHosts =
+      assistedInstallerEnabled && canAddHost({ cluster }) && !isArchived;
 
     return (
       <>
@@ -451,50 +451,50 @@ class ClusterDetails extends Component {
               />
             </ErrorBoundary>
           </TabContent>
-          { displayMonitoringTab && (
-          <TabContent
-            eventKey={1}
-            id="monitoringTabContent"
-            ref={this.monitoringTabRef}
-            aria-label="Monitoring"
-            hidden
-          >
-            <ErrorBoundary>
-              <Monitoring cluster={cluster} />
-            </ErrorBoundary>
-          </TabContent>
+          {displayMonitoringTab && (
+            <TabContent
+              eventKey={1}
+              id="monitoringTabContent"
+              ref={this.monitoringTabRef}
+              aria-label="Monitoring"
+              hidden
+            >
+              <ErrorBoundary>
+                <Monitoring cluster={cluster} />
+              </ErrorBoundary>
+            </TabContent>
           )}
           {displayAccessControlTab && (
-          <TabContent
-            eventKey={2}
-            id="accessControlTabContent"
-            ref={this.accessControlTabRef}
-            aria-label="Access Control"
-            hidden
-          >
-            <ErrorBoundary>
-              <AccessControl
-                cluster={cluster}
-                clusterConsoleURL={consoleURL}
-                cloudProvider={get(cluster, 'cloud_provider.id')}
-                history={history}
-                refreshEvent={refreshEvent}
-              />
-            </ErrorBoundary>
-          </TabContent>
+            <TabContent
+              eventKey={2}
+              id="accessControlTabContent"
+              ref={this.accessControlTabRef}
+              aria-label="Access Control"
+              hidden
+            >
+              <ErrorBoundary>
+                <AccessControl
+                  cluster={cluster}
+                  clusterConsoleURL={consoleURL}
+                  cloudProvider={get(cluster, 'cloud_provider.id')}
+                  history={history}
+                  refreshEvent={refreshEvent}
+                />
+              </ErrorBoundary>
+            </TabContent>
           )}
           {isManaged && (
-          <TabContent
-            eventKey={3}
-            id="addOnsTabContent"
-            ref={this.addOnsTabRef}
-            aria-label="Add-ons"
-            hidden
-          >
-            <ErrorBoundary>
-              <AddOns clusterID={cluster.id} />
-            </ErrorBoundary>
-          </TabContent>
+            <TabContent
+              eventKey={3}
+              id="addOnsTabContent"
+              ref={this.addOnsTabRef}
+              aria-label="Add-ons"
+              hidden
+            >
+              <ErrorBoundary>
+                <AddOns clusterID={cluster.id} />
+              </ErrorBoundary>
+            </TabContent>
           )}
           {displayClusterLogs && (
             <TabContent
@@ -510,17 +510,17 @@ class ClusterDetails extends Component {
             </TabContent>
           )}
           {displayNetworkingTab && (
-          <TabContent
-            eventKey={5}
-            id="networkingTabContent"
-            ref={this.networkingTabRef}
-            aria-label="Networking"
-            hidden
-          >
-            <ErrorBoundary>
-              <Networking clusterID={cluster.id} refreshCluster={this.refresh} />
-            </ErrorBoundary>
-          </TabContent>
+            <TabContent
+              eventKey={5}
+              id="networkingTabContent"
+              ref={this.networkingTabRef}
+              aria-label="Networking"
+              hidden
+            >
+              <ErrorBoundary>
+                <Networking clusterID={cluster.id} refreshCluster={this.refresh} />
+              </ErrorBoundary>
+            </TabContent>
           )}
           <TabContent
             eventKey={7}
@@ -534,46 +534,46 @@ class ClusterDetails extends Component {
             </ErrorBoundary>
           </TabContent>
           {displayMachinePoolsTab && (
-          <TabContent
-            eventKey={6}
-            id="machinePoolsContent"
-            ref={this.machinePoolsTabRef}
-            aria-label="Machine pools"
-            hidden
-          >
-            <ErrorBoundary>
-              <MachinePools cluster={cluster} />
-            </ErrorBoundary>
-          </TabContent>
+            <TabContent
+              eventKey={6}
+              id="machinePoolsContent"
+              ref={this.machinePoolsTabRef}
+              aria-label="Machine pools"
+              hidden
+            >
+              <ErrorBoundary>
+                <MachinePools cluster={cluster} />
+              </ErrorBoundary>
+            </TabContent>
           )}
           {displayUpgradeSettingsTab && (
-          <TabContent
-            eventKey={8}
-            id="upgradeSettingsContent"
-            ref={this.upgradeSettingsTabRef}
-            aria-label="Upgrade settings"
-            hidden
-          >
-            <ErrorBoundary>
-              <UpgradeSettingsTab />
-            </ErrorBoundary>
-          </TabContent>
+            <TabContent
+              eventKey={8}
+              id="upgradeSettingsContent"
+              ref={this.upgradeSettingsTabRef}
+              aria-label="Upgrade settings"
+              hidden
+            >
+              <ErrorBoundary>
+                <UpgradeSettingsTab />
+              </ErrorBoundary>
+            </TabContent>
           )}
           {displayAddAssistedHosts && (
-          <TabContent
-            eventKey={9}
-            id="addHostsContent"
-            ref={this.addAssistedTabRef}
-            aria-label="Add Hosts"
-            hidden
-          >
-            <ErrorBoundary>
-              <HostsClusterDetailTab
-                cluster={cluster}
-                isVisible={selectedTab === 'addAssistedHosts'}
-              />
-            </ErrorBoundary>
-          </TabContent>
+            <TabContent
+              eventKey={9}
+              id="addHostsContent"
+              ref={this.addAssistedTabRef}
+              aria-label="Add Hosts"
+              hidden
+            >
+              <ErrorBoundary>
+                <HostsClusterDetailTab
+                  cluster={cluster}
+                  isVisible={selectedTab === 'addAssistedHosts'}
+                />
+              </ErrorBoundary>
+            </TabContent>
           )}
           <CommonClusterModals
             onClose={this.onDialogClose}
@@ -618,11 +618,7 @@ ClusterDetails.propTypes = {
     cluster: PropTypes.object,
     error: PropTypes.bool,
     errorCode: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    errorMessage: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.node,
-      PropTypes.element,
-    ]),
+    errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
     fulfilled: PropTypes.bool,
     history: PropTypes.object,
     pending: PropTypes.bool.isRequired,

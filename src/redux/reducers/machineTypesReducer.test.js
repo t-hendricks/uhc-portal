@@ -78,12 +78,8 @@ describe('clusterMachineTypesReducer', () => {
     it('maps the machine types by ID', () => {
       const action = {
         payload: {
-          aws: [
-            { id: 'foo' },
-          ],
-          gcp: [
-            { id: 'bar' },
-          ],
+          aws: [{ id: 'foo' }],
+          gcp: [{ id: 'bar' }],
         },
         type: `${type}_FULFILLED`,
       };

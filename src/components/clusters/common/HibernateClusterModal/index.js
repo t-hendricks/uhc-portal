@@ -8,21 +8,24 @@ import {
 
 import HibernateClusterModal from './HibernateClusterModal';
 import { closeModal } from '../../../common/Modal/ModalActions';
-import { getSchedules, clearPostedUpgradeScheduleResponse } from '../Upgrades/clusterUpgradeActions';
+import {
+  getSchedules,
+  clearPostedUpgradeScheduleResponse,
+} from '../Upgrades/clusterUpgradeActions';
 
 const mapStateToProps = (state) => {
   const modalData = state.modal.data;
-  return ({
+  return {
     hibernateClusterResponse: state.clusters.hibernatingCluster,
     clusterID: modalData.clusterID ? modalData.clusterID : '',
     clusterName: modalData.clusterName ? modalData.clusterName : '',
     clusterUpgrades: state.clusterUpgrades.schedules,
     subscriptionID: modalData.subscriptionID ? modalData.subscriptionID : '',
     shouldDisplayClusterName: modalData.shouldDisplayClusterName || false,
-  });
+  };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   submit: (clusterID) => {
     dispatch(hibernateCluster(clusterID));
   },
@@ -30,7 +33,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(clearHibernateClusterResponse());
     dispatch(clearPostedUpgradeScheduleResponse());
   },
-  getSchedules: clusterID => dispatch(getSchedules(clusterID)),
+  getSchedules: (clusterID) => dispatch(getSchedules(clusterID)),
   closeModal: () => dispatch(closeModal()),
 });
 

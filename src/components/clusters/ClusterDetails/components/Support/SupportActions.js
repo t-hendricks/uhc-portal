@@ -27,7 +27,7 @@ export const SupportConstants = {
  *
  * @see https://github.com/RedHatInsights/frontend-components/blob/master/packages/notifications/doc/notifications.md
  */
-const buildNotificationsMeta = title => ({
+const buildNotificationsMeta = (title) => ({
   notifications: {
     fulfilled: {
       variant: 'success',
@@ -38,19 +38,22 @@ const buildNotificationsMeta = title => ({
   },
 });
 
-const clearNotificationContacts = () => dispatch => dispatch({
-  type: INVALIDATE_ACTION(NOTIFICATION_CONTACTS),
-});
+const clearNotificationContacts = () => (dispatch) =>
+  dispatch({
+    type: INVALIDATE_ACTION(NOTIFICATION_CONTACTS),
+  });
 
-const clearAddNotificationContacts = () => dispatch => dispatch({
-  type: INVALIDATE_ACTION(ADD_NOTIFICATION_CONTACT),
-});
+const clearAddNotificationContacts = () => (dispatch) =>
+  dispatch({
+    type: INVALIDATE_ACTION(ADD_NOTIFICATION_CONTACT),
+  });
 
-const clearDeleteNotificationContacts = () => dispatch => dispatch({
-  type: INVALIDATE_ACTION(DELETE_NOTIFICATION_CONTACT),
-});
+const clearDeleteNotificationContacts = () => (dispatch) =>
+  dispatch({
+    type: INVALIDATE_ACTION(DELETE_NOTIFICATION_CONTACT),
+  });
 
-const getNotificationContacts = subscriptionID => ({
+const getNotificationContacts = (subscriptionID) => ({
   type: GET_NOTIFICATION_CONTACTS,
   payload: accountsService.getNotificationContacts(subscriptionID),
   meta: {
@@ -58,22 +61,24 @@ const getNotificationContacts = subscriptionID => ({
   },
 });
 
-const addNotificationContact = (subscriptionID, username) => dispatch => dispatch({
-  type: ADD_NOTIFICATION_CONTACT,
-  payload: accountsService.addNotificationContact(subscriptionID, username),
-  // This Notification is called directly as it's title depends on number of contacts
-  // that was really added
-  // meta: ^^^
-});
+const addNotificationContact = (subscriptionID, username) => (dispatch) =>
+  dispatch({
+    type: ADD_NOTIFICATION_CONTACT,
+    payload: accountsService.addNotificationContact(subscriptionID, username),
+    // This Notification is called directly as it's title depends on number of contacts
+    // that was really added
+    // meta: ^^^
+  });
 
-const deleteNotificationContact = (subscriptionID, accountID) => dispatch => dispatch({
-  type: DELETE_NOTIFICATION_CONTACT,
-  accountID,
-  payload: accountsService.deleteNotificationContact(subscriptionID, accountID),
-  meta: buildNotificationsMeta('Notification contact deleted successfully'),
-});
+const deleteNotificationContact = (subscriptionID, accountID) => (dispatch) =>
+  dispatch({
+    type: DELETE_NOTIFICATION_CONTACT,
+    accountID,
+    payload: accountsService.deleteNotificationContact(subscriptionID, accountID),
+    meta: buildNotificationsMeta('Notification contact deleted successfully'),
+  });
 
-const getSupportCases = subscriptionID => ({
+const getSupportCases = (subscriptionID) => ({
   type: GET_SUPPORT_CASES,
   payload: accountsService.getSupportCases(subscriptionID),
   meta: {

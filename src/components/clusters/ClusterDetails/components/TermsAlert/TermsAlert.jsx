@@ -34,7 +34,8 @@ class TermsAlert extends Component {
     const product = get(subscription, 'plan.type');
     const status = get(subscription, 'status');
 
-    return status !== subscriptionStatuses.DEPROVISIONED && (
+    return (
+      status !== subscriptionStatuses.DEPROVISIONED &&
       [normalizedProducts.OSD, normalizedProducts.RHMI, normalizedProducts.ROSA].includes(product)
     );
   }
@@ -42,9 +43,11 @@ class TermsAlert extends Component {
   render() {
     const { selfTermsReviewResult } = this.props;
 
-    if (this.isTermsReviewRequired()
-      && selfTermsReviewResult.fulfilled
-      && selfTermsReviewResult.terms_required) {
+    if (
+      this.isTermsReviewRequired() &&
+      selfTermsReviewResult.fulfilled &&
+      selfTermsReviewResult.terms_required
+    ) {
       const tncAppURL = this.getTncAppURL(selfTermsReviewResult.redirect_url);
       const redirectToTerms = (
         <AlertActionLink key="terms-alert-link" component="a" href={tncAppURL}>
@@ -60,9 +63,7 @@ class TermsAlert extends Component {
           title="You must accept the Terms and Conditions"
           actionLinks={redirectToTerms}
         >
-          <p>
-            Access to this cluster will be read-only until you accept the Terms and Conditions.
-          </p>
+          <p>Access to this cluster will be read-only until you accept the Terms and Conditions.</p>
         </Alert>
       );
     }

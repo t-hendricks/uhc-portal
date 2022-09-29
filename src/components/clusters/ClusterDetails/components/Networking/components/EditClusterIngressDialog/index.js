@@ -32,7 +32,8 @@ const mapStateToProps = (state) => {
     controlPlaneAPIEndpoint: cluster.api.url,
     defaultRouterAddress: clusterRouters.default.address,
     additionalRouterAddress: hasAdditionalRouter
-      ? clusterRouters.additional.address : `apps2${clusterRouters.default.address.substr(4)}`,
+      ? clusterRouters.additional.address
+      : `apps2${clusterRouters.default.address.substr(4)}`,
     initialValues: {
       private_api: APIPrivate,
       private_default_router: clusterRouters.default.isPrivate,
@@ -50,12 +51,15 @@ const mapStateToProps = (state) => {
      * an alert should appear if both routers are enabled, at least one is private,
      * and there are no route selectors applied to the additional router.
      */
-    showRouterVisibilityWarning: additionalRouterEnabled && !valueSelector(state, 'labels_additional_router')
-      && (valueSelector(state, 'private_default_router') || valueSelector(state, 'private_additional_router')),
+    showRouterVisibilityWarning:
+      additionalRouterEnabled &&
+      !valueSelector(state, 'labels_additional_router') &&
+      (valueSelector(state, 'private_default_router') ||
+        valueSelector(state, 'private_additional_router')),
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   resetResponse: () => dispatch(resetEditRoutersResponse()),
   closeModal: () => dispatch(closeModal(modals.EDIT_CLUSTER_INGRESS)),
   onSubmit: (formData, clusterRouters, APIPrivate, clusterID) => {
@@ -73,12 +77,12 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
       stateProps.clusterID,
     );
   };
-  return ({
+  return {
     ...ownProps,
     ...stateProps,
     ...dispatchProps,
     onSubmit,
-  });
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(reduxFormEditIngress);

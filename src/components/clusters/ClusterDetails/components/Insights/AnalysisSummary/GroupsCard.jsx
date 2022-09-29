@@ -1,14 +1,7 @@
 /* eslint-disable camelcase */
 
 import React from 'react';
-import {
-  Card,
-  CardBody,
-  Stack,
-  StackItem,
-  Title,
-  Popover,
-} from '@patternfly/react-core';
+import { Card, CardBody, Stack, StackItem, Title, Popover } from '@patternfly/react-core';
 import {
   c_button_m_control_active_after_BorderBottomColor,
   global_primary_color_200,
@@ -18,23 +11,25 @@ import { ChartPie, ChartLegend } from '@patternfly/react-charts';
 import { HelpIcon } from '@patternfly/react-icons';
 import PropTypes from 'prop-types';
 
-export const groupRulesByGroups = (data, groups) => groups
-  .sort((a, b) => a.title.localeCompare(b.title))
-  .reduce(
-    (acc, { tags, title }) => ({
-      ...acc,
-      [title]: {
-        count: data.reduce((a, v) => (!v.disabled && v.tags.filter(x => tags.includes(x)).length > 0
-          ? a + 1
-          : a),
-        0),
-        tags: tags.join(','),
-      },
-    }),
-    {},
-  );
+export const groupRulesByGroups = (data, groups) =>
+  groups
+    .sort((a, b) => a.title.localeCompare(b.title))
+    .reduce(
+      (acc, { tags, title }) => ({
+        ...acc,
+        [title]: {
+          count: data.reduce(
+            (a, v) =>
+              !v.disabled && v.tags.filter((x) => tags.includes(x)).length > 0 ? a + 1 : a,
+            0,
+          ),
+          tags: tags.join(','),
+        },
+      }),
+      {},
+    );
 
-const mouseOverClickMutation = props => ({
+const mouseOverClickMutation = (props) => ({
   style: {
     ...props.style,
     fill: global_primary_color_200.value,
@@ -57,11 +52,7 @@ const GroupsCard = ({ insightsData, groups, groupClicked }) => {
             <Popover
               position="right"
               maxWidth="22rem"
-              bodyContent={(
-                <p>
-                  Insights recommendations grouped by the category
-                </p>
-              )}
+              bodyContent={<p>Insights recommendations grouped by the category</p>}
               aria-label="What is Grouping?"
               boundary="viewport"
               enableFlip
@@ -74,14 +65,19 @@ const GroupsCard = ({ insightsData, groups, groupClicked }) => {
               ariaDesc="Groups statistics"
               ariaTitle="Groups statistics"
               constrainToVisibleArea
-              data={Object.entries(groupedRulesByGroups)
-                .map(([title, group]) => ({ x: title, y: group.count }))}
+              data={Object.entries(groupedRulesByGroups).map(([title, group]) => ({
+                x: title,
+                y: group.count,
+              }))}
               height={140}
               labels={({ datum }) => `${datum.x}: ${datum.y}`}
-              legendData={Object.entries(groupedRulesByGroups).map(([title, group]) => ({ name: `${title}: ${group.count}`, tags: group.tags }))}
+              legendData={Object.entries(groupedRulesByGroups).map(([title, group]) => ({
+                name: `${title}: ${group.count}`,
+                tags: group.tags,
+              }))}
               legendOrientation="vertical"
               legendPosition="right"
-              legendComponent={(
+              legendComponent={
                 <ChartLegend
                   responsive={false}
                   height={140}
@@ -92,26 +88,34 @@ const GroupsCard = ({ insightsData, groups, groupClicked }) => {
                       fill: c_button_m_control_active_after_BorderBottomColor.value,
                     },
                   }}
-                  events={[{
-                    target: 'labels',
-                    eventHandlers: {
-                      onMouseOver: () => [{
-                        mutation: props => mouseOverClickMutation(props),
-                      }],
-                      onMouseOut: () => [{
-                        mutation: () => null,
-                      }],
-                      onClick: () => [{
-                        mutation: (props) => {
-                          // eslint-disable-next-line react/prop-types
-                          groupClicked(props.datum.tags);
-                          return mouseOverClickMutation(props);
-                        },
-                      }],
+                  events={[
+                    {
+                      target: 'labels',
+                      eventHandlers: {
+                        onMouseOver: () => [
+                          {
+                            mutation: (props) => mouseOverClickMutation(props),
+                          },
+                        ],
+                        onMouseOut: () => [
+                          {
+                            mutation: () => null,
+                          },
+                        ],
+                        onClick: () => [
+                          {
+                            mutation: (props) => {
+                              // eslint-disable-next-line react/prop-types
+                              groupClicked(props.datum.tags);
+                              return mouseOverClickMutation(props);
+                            },
+                          },
+                        ],
+                      },
                     },
-                  }]}
+                  ]}
                 />
-              )}
+              }
               padding={{
                 bottom: 25,
                 left: -20,

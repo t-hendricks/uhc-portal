@@ -2,6 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type bind_host_params = {
-};
-
+export type bind_host_params = {};

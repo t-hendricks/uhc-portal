@@ -10,17 +10,13 @@ const UpgradeAcknowledgeLink = (props) => {
   const { clusterId, hasAcks } = props;
 
   return hasAcks ? (
-    <Link to={`/details/${clusterId}#updateSettings`} className="ocm-upgrade-approval__required-link">
+    <Link
+      to={`/details/${clusterId}#updateSettings`}
+      className="ocm-upgrade-approval__required-link"
+    >
       <ExclamationTriangleIcon color={global_warning_color_100.value} />
-      <span
-        className="pf-u-screen-reader"
-      >
-        Warning
-      </span>
-      {' '}
-      Approval required
+      <span className="pf-u-screen-reader">Warning</span> Approval required
     </Link>
-
   ) : null;
 };
 

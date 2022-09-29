@@ -28,23 +28,19 @@ class ClusterIngressCard extends React.Component {
   handleEditSettings = () => {
     const { openModal } = this.props;
     openModal(modals.EDIT_CLUSTER_INGRESS);
-  }
+  };
 
   resolveDisableEditReason() {
-    const {
-      canEdit,
-      isReadOnly,
-      isSTSEnabled,
-      clusterHibernating,
-    } = this.props;
+    const { canEdit, isReadOnly, isSTSEnabled, clusterHibernating } = this.props;
     const readOnlyReason = isReadOnly && 'This operation is not available during maintenance';
-    const STSEnabledReason = isSTSEnabled && 'This operation is not available for clusters using Security Token Service (STS)';
-    const hibernatingReason = clusterHibernating && (
-      'This operation is not available while cluster is hibernating'
-    );
-    const canNotEditReason = !canEdit && (
-      'You do not have permission to edit routers. Only cluster owners, cluster editors, and organization administrators can edit routers.'
-    );
+    const STSEnabledReason =
+      isSTSEnabled &&
+      'This operation is not available for clusters using Security Token Service (STS)';
+    const hibernatingReason =
+      clusterHibernating && 'This operation is not available while cluster is hibernating';
+    const canNotEditReason =
+      !canEdit &&
+      'You do not have permission to edit routers. Only cluster owners, cluster editors, and organization administrators can edit routers.';
     return STSEnabledReason || readOnlyReason || hibernatingReason || canNotEditReason;
   }
 
@@ -68,16 +64,10 @@ class ClusterIngressCard extends React.Component {
 
     return (
       <Card className="ocm-c-networking-cluster-ingress__card">
-        <CardTitle>
-          Cluster ingress
-        </CardTitle>
+        <CardTitle>Cluster ingress</CardTitle>
         <CardBody className="ocm-c-networking-cluster-ingress__card--body">
           <Form isHorizontal>
-            <FormGroup
-              fieldId="console_url"
-              label="Cluster console URL"
-              isStack
-            >
+            <FormGroup fieldId="console_url" label="Cluster console URL" isStack>
               <ClipboardCopy name="console_url" isReadOnly>
                 {consoleURL}
               </ClipboardCopy>
@@ -105,11 +95,7 @@ class ClusterIngressCard extends React.Component {
                 </Text>
               </TextContent>
             </FormGroup>
-            <FormGroup
-              fieldId="default_router_address"
-              label="Default application router"
-              isStack
-            >
+            <FormGroup fieldId="default_router_address" label="Default application router" isStack>
               <TextInput
                 id="default_router_address"
                 value={`*.${defaultRouterAddress}`}
@@ -121,47 +107,34 @@ class ClusterIngressCard extends React.Component {
                 </Text>
               </TextContent>
             </FormGroup>
-            {
-              hasAdditionalRouter && (
-                <>
-                  <FormGroup
-                    fieldId="additional_router_address"
-                    label="Additional router"
-                    isStack
-                  >
-                    <TextInput
-                      id="additional_router_address"
-                      value={`*.${additionalRouterAddress}`}
-                      isReadOnly
-                    />
-                    <TextContent>
-                      <Text component={TextVariants.small}>
-                        {`${isAdditionalRouterPrivate ? 'Private' : 'Public'} router`}
-                      </Text>
-                    </TextContent>
-                  </FormGroup>
-                  <FormGroup
-                    fieldId="labels_additional_router"
-                    label="Label match"
-                    isStack
-                  >
-                    {
-                      Array.isArray(additionalRouterLabels) && (
-                        <LabelGroup isCompact>
-                          {additionalRouterLabels.map(text => (
-                            <Label isCompact color="blue">{text}</Label>
-                          ))}
-                        </LabelGroup>
-                      )
-                    }
-                  </FormGroup>
-                </>
-              )
-            }
-            <EditClusterIngressDialog
-              provider={provider}
-              refreshCluster={refreshCluster}
-            />
+            {hasAdditionalRouter && (
+              <>
+                <FormGroup fieldId="additional_router_address" label="Additional router" isStack>
+                  <TextInput
+                    id="additional_router_address"
+                    value={`*.${additionalRouterAddress}`}
+                    isReadOnly
+                  />
+                  <TextContent>
+                    <Text component={TextVariants.small}>
+                      {`${isAdditionalRouterPrivate ? 'Private' : 'Public'} router`}
+                    </Text>
+                  </TextContent>
+                </FormGroup>
+                <FormGroup fieldId="labels_additional_router" label="Label match" isStack>
+                  {Array.isArray(additionalRouterLabels) && (
+                    <LabelGroup isCompact>
+                      {additionalRouterLabels.map((text) => (
+                        <Label isCompact color="blue">
+                          {text}
+                        </Label>
+                      ))}
+                    </LabelGroup>
+                  )}
+                </FormGroup>
+              </>
+            )}
+            <EditClusterIngressDialog provider={provider} refreshCluster={refreshCluster} />
           </Form>
         </CardBody>
         <CardFooter>

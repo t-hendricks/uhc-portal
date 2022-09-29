@@ -6,11 +6,7 @@ import { dropDownItems } from './ClusterActionsDropdownItems';
 import * as Fixtures from './ClusterActionsDropdown.fixtures';
 
 function DropDownItemsRenderHelper(props) {
-  return (
-    <>
-      {dropDownItems(props).map(item => item)}
-    </>
-  );
+  return <>{dropDownItems(props).map((item) => item)}</>;
 }
 
 describe('Cluster Actions Dropdown Items', () => {
@@ -26,7 +22,10 @@ describe('Cluster Actions Dropdown Items', () => {
 
     it('should open edit display name modal', () => {
       wrapper.find(DropdownItem).at(1).simulate('click');
-      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-display-name', Fixtures.cluster);
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith(
+        'edit-display-name',
+        Fixtures.cluster,
+      );
     });
 
     it('should open edit cluster modal', () => {
@@ -36,23 +35,32 @@ describe('Cluster Actions Dropdown Items', () => {
 
     it('should open edit node count modal', () => {
       wrapper.find(DropdownItem).at(3).simulate('click');
-      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-node-count', { cluster: Fixtures.cluster, isDefaultMachinePool: true });
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('edit-node-count', {
+        cluster: Fixtures.cluster,
+        isDefaultMachinePool: true,
+      });
     });
 
     it('should open hibernate cluster modal', () => {
       wrapper.find(DropdownItem).at(4).simulate('click');
-      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('hibernate-cluster', Fixtures.hibernateClusterModalData);
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith(
+        'hibernate-cluster',
+        Fixtures.hibernateClusterModalData,
+      );
     });
 
     it('should open delete modal', () => {
       wrapper.find(DropdownItem).at(5).simulate('click');
-      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith('delete-cluster', Fixtures.deleteModalData);
+      expect(Fixtures.managedReadyProps.openModal).toBeCalledWith(
+        'delete-cluster',
+        Fixtures.deleteModalData,
+      );
     });
 
     it('menu buttons should be enabled', () => {
-      const actions = wrapper.find(DropdownItem).map(
-        a => [a.props().title, a.props().isAriaDisabled === true],
-      );
+      const actions = wrapper
+        .find(DropdownItem)
+        .map((a) => [a.props().title, a.props().isAriaDisabled === true]);
       expect(actions).toEqual([
         ['Open console', false],
         ['Edit display name', false],
@@ -81,18 +89,16 @@ describe('Cluster Actions Dropdown Items', () => {
   });
 
   describe('cluster with state uninstalling', () => {
-    const wrapper = shallow(<DropDownItemsRenderHelper
-      {...Fixtures.clusterUninstallingProps}
-    />);
+    const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.clusterUninstallingProps} />);
 
     it('should render (uninstalling)', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
     it('menu buttons should be disabled', () => {
-      const actions = wrapper.find(DropdownItem).map(
-        a => [a.props().title, a.props().isAriaDisabled === true],
-      );
+      const actions = wrapper
+        .find(DropdownItem)
+        .map((a) => [a.props().title, a.props().isAriaDisabled === true]);
       expect(actions).toEqual([
         ['Open console', true],
         ['Edit display name', true],
@@ -112,9 +118,9 @@ describe('Cluster Actions Dropdown Items', () => {
     });
 
     it('disable open console & edit cluster, enable edit display name and delete cluster', () => {
-      const actions = wrapper.find(DropdownItem).map(
-        a => [a.props().title, a.props().isAriaDisabled === true],
-      );
+      const actions = wrapper
+        .find(DropdownItem)
+        .map((a) => [a.props().title, a.props().isAriaDisabled === true]);
       expect(actions).toEqual([
         ['Open console', true],
         ['Edit display name', false],
@@ -127,18 +133,16 @@ describe('Cluster Actions Dropdown Items', () => {
   });
 
   describe('cluster state hibernating', () => {
-    const wrapper = shallow(<DropDownItemsRenderHelper
-      {...Fixtures.clusterHibernatingProps}
-    />);
+    const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.clusterHibernatingProps} />);
 
     it('should render (hibernating)', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
     it('disable open console & edit cluster, enable edit display name and delete cluster', () => {
-      const actions = wrapper.find(DropdownItem).map(
-        a => [a.props().title, a.props().isAriaDisabled === true],
-      );
+      const actions = wrapper
+        .find(DropdownItem)
+        .map((a) => [a.props().title, a.props().isAriaDisabled === true]);
       expect(actions).toEqual([
         ['Open console', true],
         ['Edit display name', false],
@@ -151,18 +155,16 @@ describe('Cluster Actions Dropdown Items', () => {
   });
 
   describe('cluster configuration_mode read_only', () => {
-    const wrapper = shallow(<DropDownItemsRenderHelper
-      {...Fixtures.clusterReadOnlyProps}
-    />);
+    const wrapper = shallow(<DropDownItemsRenderHelper {...Fixtures.clusterReadOnlyProps} />);
 
     it('should render (read_only)', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
     it('disable provisioning actions, enable console and edit display name', () => {
-      const actions = wrapper.find(DropdownItem).map(
-        a => [a.props().title, a.props().isAriaDisabled === true],
-      );
+      const actions = wrapper
+        .find(DropdownItem)
+        .map((a) => [a.props().title, a.props().isAriaDisabled === true]);
       expect(actions).toEqual([
         ['Open console', false],
         ['Edit display name', false],

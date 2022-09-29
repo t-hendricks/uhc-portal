@@ -73,8 +73,7 @@ exports[`<ClusterListFilterDropdown /> should render 1`] = `
         noVerticalAlign={false}
         size="sm"
       />
-       
-      Cluster type
+       Cluster type
     </DropdownToggle>
   }
 />

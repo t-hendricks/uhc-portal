@@ -7,4 +7,5 @@ export const TRUST_BUNDLE_PLACEHOLDER = `-----BEGIN CERTIFICATE-----
 <MY_TRUSTED_CA_CERT>
 -----END CERTIFICATE-----`;
 
-export const podCidrDefaultValue = cloudProviderID => `10.128.0.0/${cloudProviderID === 'aws' ? '16' : '14'}`;
+export const podCidrDefaultValue = (cloudProviderID) =>
+  `10.128.0.0/${cloudProviderID === 'aws' ? '16' : '14'}`;

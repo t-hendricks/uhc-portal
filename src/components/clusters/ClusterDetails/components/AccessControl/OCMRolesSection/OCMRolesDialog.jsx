@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Form, TextInput, FormGroup, Text, TextContent, TextVariants, Alert,
+  Form,
+  TextInput,
+  FormGroup,
+  Text,
+  TextContent,
+  TextVariants,
+  Alert,
 } from '@patternfly/react-core';
 
 import modals from '../../../../../common/Modal/modals';
@@ -53,7 +59,11 @@ function OCMRolesDialog({
     } else if (grantOCMRoleResponse.error) {
       if (grantOCMRoleResponse.errorCode === 404) {
         setAPIErrorMsg('This Red Hat login could not be found.');
-      } else if (grantOCMRoleResponse.errorCode === 400 && grantOCMRoleResponse.errorMessage && grantOCMRoleResponse.errorMessage.includes('belong to different organizations')) {
+      } else if (
+        grantOCMRoleResponse.errorCode === 400 &&
+        grantOCMRoleResponse.errorMessage &&
+        grantOCMRoleResponse.errorMessage.includes('belong to different organizations')
+      ) {
         setAPIErrorMsg('This Red Hat login is not part of your organization.');
       } else {
         const errMsg = grantOCMRoleResponse.errorMessage || 'Unknow Error';
@@ -93,64 +103,72 @@ function OCMRolesDialog({
   // and add radio selection for roles.
   const title = row.isCreating ? 'Grant role' : 'Edit role';
   const btnText = row.isCreating ? 'Grant role' : 'Edit role';
-  return isOpen && (
-    <Modal
-      title={title}
-      onClose={handleClose}
-      primaryText={btnText}
-      secondaryText="Cancel"
-      onPrimaryClick={handleSubmit}
-      onSecondaryClick={handleClose}
-      isPrimaryDisabled={isPrimaryDisabled}
-      id="ocm-roles-access-dialog"
-    >
-      <p className="pf-u-mb-xl">
-        Allow users in your organization to edit clusters.
-        These permissions only apply to cluster management in OpenShift Cluster Manager.
-      </p>
-      <Form className="control-form-cursor" onSubmit={(e) => { handleSubmit(); e.preventDefault(); }}>
-        <FormGroup
-          label={(
-            <>
-              <span>Red Hat login</span>
-              <PopoverHint
-                id="ocm-roles-section-username-tooltip"
-                hint={(
-                  <TextContent>
-                    <Text component={TextVariants.p}>
-                      Your Red Hat login is the username you use to access your Red Hat account.
-                    </Text>
-                  </TextContent>
-                )}
-                iconClassName="text-input-tootip-icon"
-                hasAutoWidth
-                maxWidth="20.0rem"
-              />
-            </>
-          )}
-          isRequired
-          fieldId="username"
-          validated={(usernameValidationMsg || APIErrorMsg) ? 'error' : 'default'}
-          helperTextInvalid={usernameValidationMsg || APIErrorMsg}
+  return (
+    isOpen && (
+      <Modal
+        title={title}
+        onClose={handleClose}
+        primaryText={btnText}
+        secondaryText="Cancel"
+        onPrimaryClick={handleSubmit}
+        onSecondaryClick={handleClose}
+        isPrimaryDisabled={isPrimaryDisabled}
+        id="ocm-roles-access-dialog"
+      >
+        <p className="pf-u-mb-xl">
+          Allow users in your organization to edit clusters. These permissions only apply to cluster
+          management in OpenShift Cluster Manager.
+        </p>
+        <Form
+          className="control-form-cursor"
+          onSubmit={(e) => {
+            handleSubmit();
+            e.preventDefault();
+          }}
         >
-          <TextInput
-            value={username}
+          <FormGroup
+            label={
+              <>
+                <span>Red Hat login</span>
+                <PopoverHint
+                  id="ocm-roles-section-username-tooltip"
+                  hint={
+                    <TextContent>
+                      <Text component={TextVariants.p}>
+                        Your Red Hat login is the username you use to access your Red Hat account.
+                      </Text>
+                    </TextContent>
+                  }
+                  iconClassName="text-input-tootip-icon"
+                  hasAutoWidth
+                  maxWidth="20.0rem"
+                />
+              </>
+            }
             isRequired
-            id="username"
-            type="text"
-            onChange={handleUsernameChange}
-            isDisabled={!row.isCreating}
-            validated={(usernameValidationMsg || APIErrorMsg) ? 'error' : 'default'}
-            aria-label="username"
+            fieldId="username"
+            validated={usernameValidationMsg || APIErrorMsg ? 'error' : 'default'}
+            helperTextInvalid={usernameValidationMsg || APIErrorMsg}
+          >
+            <TextInput
+              value={username}
+              isRequired
+              id="username"
+              type="text"
+              onChange={handleUsernameChange}
+              isDisabled={!row.isCreating}
+              validated={usernameValidationMsg || APIErrorMsg ? 'error' : 'default'}
+              aria-label="username"
+            />
+          </FormGroup>
+          <Alert
+            variant="info"
+            isInline
+            title="This user will be granted with Cluster Editor role and will be able to manage and configure the cluster."
           />
-        </FormGroup>
-        <Alert
-          variant="info"
-          isInline
-          title="This user will be granted with Cluster Editor role and will be able to manage and configure the cluster."
-        />
-      </Form>
-    </Modal>
+        </Form>
+      </Modal>
+    )
   );
 }
 

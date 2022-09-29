@@ -4,10 +4,12 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
-  Select, SelectOption,
+  Select,
+  SelectOption,
   FormGroup,
   Title,
-  EmptyStateBody, EmptyState,
+  EmptyStateBody,
+  EmptyState,
 } from '@patternfly/react-core';
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
@@ -21,10 +23,10 @@ const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 function NoAssociatedAWSAccounts() {
   return (
     <EmptyState className="no-associated-aws-accounts_empty-state">
-      <Title headingLevel="h6" size="md">No associated accounts were found.</Title>
-      <EmptyStateBody>
-        Associate an AWS account to your Red Hat account.
-      </EmptyStateBody>
+      <Title headingLevel="h6" size="md">
+        No associated accounts were found.
+      </Title>
+      <EmptyStateBody>Associate an AWS account to your Red Hat account.</EmptyStateBody>
     </EmptyState>
   );
 }
@@ -101,9 +103,7 @@ function AWSAccountSelection({
 
   const footer = (
     <>
-      {AWSAccountIDs.length === 0 && (
-      <NoAssociatedAWSAccounts />
-      )}
+      {AWSAccountIDs.length === 0 && <NoAssociatedAWSAccounts />}
       <Button
         ref={associateAWSAccountBtnRef}
         variant="secondary"
@@ -113,7 +113,6 @@ function AWSAccountSelection({
         }}
       >
         Associate AWS account
-
       </Button>
     </>
   );
@@ -121,7 +120,7 @@ function AWSAccountSelection({
   return (
     <FormGroup
       label={label}
-      labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
+      labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
       validated={error ? 'error' : undefined}
       helperTextInvalid={touched && error}
       isRequired
@@ -129,7 +128,7 @@ function AWSAccountSelection({
       <Select
         {...inputProps}
         label={label}
-        labelIcon={extendedHelpText && (<PopoverHint hint={extendedHelpText} />)}
+        labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
         isOpen={isOpen}
         selections={inputProps.value || initialValue || ''}
         onToggle={onToggle}
@@ -138,7 +137,13 @@ function AWSAccountSelection({
         placeholderText={AWS_ACCT_ID_PLACEHOLDER}
         footer={footer}
       >
-        {AWSAccountIDs.map(awsId => <SelectOption className="pf-c-dropdown__menu-item" key={awsId} value={awsId}>{`${awsId}`}</SelectOption>)}
+        {AWSAccountIDs.map((awsId) => (
+          <SelectOption
+            className="pf-c-dropdown__menu-item"
+            key={awsId}
+            value={awsId}
+          >{`${awsId}`}</SelectOption>
+        ))}
       </Select>
     </FormGroup>
   );
@@ -163,8 +168,6 @@ AWSAccountSelection.propTypes = {
   }),
 };
 
-export {
-  AWS_ACCT_ID_PLACEHOLDER,
-};
+export { AWS_ACCT_ID_PLACEHOLDER };
 
 export default AWSAccountSelection;

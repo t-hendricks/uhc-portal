@@ -42,11 +42,7 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
 
   const breadcrumbs = (
     <Breadcrumbs
-      path={[
-        { label: 'Clusters' },
-        { label: 'Create', path: '/create' },
-        { label: name },
-      ]}
+      path={[{ label: 'Clusters' }, { label: 'Create', path: '/create' }, { label: name }]}
     />
   );
   const pendoID = window.location.pathname;
@@ -58,12 +54,10 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
           <GridItem md={8} xl2={9}>
             <TextContent>
               <Text component={TextVariants.p}>
-                <strong>ROSA</strong>
-                {' '}
-                is a fully managed Red Hat OpenShift service running natively on Amazon Web Services
-                (AWS), which allows customers to quickly and easily build, deploy, and manage
-                Kubernetes applications on the industry&apos;s most comprehensive Kubernetes
-                platform in the AWS public cloud.
+                <strong>ROSA</strong> is a fully managed Red Hat OpenShift service running natively
+                on Amazon Web Services (AWS), which allows customers to quickly and easily build,
+                deploy, and manage Kubernetes applications on the industry&apos;s most comprehensive
+                Kubernetes platform in the AWS public cloud.
               </Text>
             </TextContent>
           </GridItem>
@@ -79,9 +73,7 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                   isLarge
                   isInline
                 >
-                  Learn more about ROSA
-                  {' '}
-                  <ArrowRightIcon />
+                  Learn more about ROSA <ArrowRightIcon />
                 </Button>
               </Text>
             </TextContent>
@@ -93,14 +85,11 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
           <StackItem className="ocm-p-rosa-welcome__section">
             <Card>
               <CardBody>
-                <Title headingLevel="h2">
-                  Getting started with ROSA
-                </Title>
+                <Title headingLevel="h2">Getting started with ROSA</Title>
                 <TextContent>
                   <Text component={TextVariants.p}>
                     Before getting started, please review the prerequisites found in the
-                    documentation at
-                    {' '}
+                    documentation at{' '}
                     <ExternalLink href={installLinks.ROSA_AWS_PREREQUISITES}>
                       AWS Prerequisites for ROSA
                     </ExternalLink>
@@ -116,33 +105,23 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                 )}
                 <Instructions>
                   <Instruction>
-                    <Title headingLevel="h3">
-                      Enable ROSA in your AWS account
-                    </Title>
+                    <Title headingLevel="h3">Enable ROSA in your AWS account</Title>
                     <Text component={TextVariants.p}>
-                      If you haven’t done so already, visit
-                      {' '}
+                      If you haven’t done so already, visit{' '}
                       <ExternalLink href="https://console.aws.amazon.com/rosa/home">
                         https://console.aws.amazon.com/rosa/home
-                      </ExternalLink>
-                      {' '}
-                      to enable ROSA in your AWS account.
-                      {' '}
+                      </ExternalLink>{' '}
+                      to enable ROSA in your AWS account.{' '}
                       <ExternalLink href="https://www.rosaworkshop.io/rosa/1-account_setup/#3-enable-rosa">
                         Help
                       </ExternalLink>
                     </Text>
                   </Instruction>
                   <Instruction>
-                    <Title headingLevel="h3">
-                      Download and install the ROSA command line tool
-                    </Title>
+                    <Title headingLevel="h3">Download and install the ROSA command line tool</Title>
                     <Text component={TextVariants.p}>
-                      Download the ROSA command line (CLI) tools and add them to your
-                      {' '}
-                      <strong>PATH</strong>
-                      .
-                      {' '}
+                      Download the ROSA command line (CLI) tools and add them to your{' '}
+                      <strong>PATH</strong>.{' '}
                       <ExternalLink href={installLinks.ROSA_INSTALLING}>Help</ExternalLink>
                     </Text>
                     <Text component={TextVariants.p}>
@@ -154,42 +133,28 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                       />
                     </Text>
                     <Text component={TextVariants.p} className="ocm-secondary-text">
-                      Note: If you haven’t done so already, also
-                      {' '}
+                      Note: If you haven’t done so already, also{' '}
                       <ExternalLink href={installLinks.AWS_CLI}>
                         install and configure the AWS CLI
-                      </ExternalLink>
-                      {' '}
+                      </ExternalLink>{' '}
                       as per your operating system.
                     </Text>
                   </Instruction>
                   <Instruction>
-                    <Title headingLevel="h3">
-                      Log in to the command line
-                    </Title>
+                    <Title headingLevel="h3">Log in to the command line</Title>
                     <Text component={TextVariants.p}>
-                      Run the authentication command in your terminal.
-                      {' '}
-                      <Link
-                        to="/token/rosa"
-                      >
-                        Help
-                      </Link>
+                      Run the authentication command in your terminal.{' '}
+                      <Link to="/token/rosa">Help</Link>
                     </Text>
                     <InstructionCommand textAriaLabel="Copyable ROSA login command">
                       rosa login
                     </InstructionCommand>
                   </Instruction>
                   <Instruction>
-                    <Title headingLevel="h3">
-                      Verify your credentials and quota
-                    </Title>
+                    <Title headingLevel="h3">Verify your credentials and quota</Title>
                     <Text component={TextVariants.p}>
-                      Verify that your credentials are set up correctly.
-                      {' '}
-                      <ExternalLink
-                        href="https://www.rosaworkshop.io/rosa/1-account_setup/#verify-credentials"
-                      >
+                      Verify that your credentials are set up correctly.{' '}
+                      <ExternalLink href="https://www.rosaworkshop.io/rosa/1-account_setup/#verify-credentials">
                         Help
                       </ExternalLink>
                     </Text>
@@ -198,11 +163,8 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                     </InstructionCommand>
                     <Text component={TextVariants.p}>
                       Verify that your AWS account has ample quota in the region you will be
-                      deploying your cluster.
-                      {' '}
-                      <ExternalLink
-                        href="https://www.rosaworkshop.io/rosa/1-account_setup/#verify-quota"
-                      >
+                      deploying your cluster.{' '}
+                      <ExternalLink href="https://www.rosaworkshop.io/rosa/1-account_setup/#verify-quota">
                         Help
                       </ExternalLink>
                     </Text>
@@ -211,12 +173,10 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                     </InstructionCommand>
                   </Instruction>
                   <Instruction>
-                    <Title headingLevel="h3">
-                      Deploy the cluster and set up access
-                    </Title>
+                    <Title headingLevel="h3">Deploy the cluster and set up access</Title>
                     <Text component={TextVariants.p}>
-                      Follow instructions to deploy your cluster and set up access using
-                      the ROSA CLI.
+                      Follow instructions to deploy your cluster and set up access using the ROSA
+                      CLI.
                     </Text>
                     <Button
                       component="a"
@@ -235,32 +195,23 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
           <StackItem className="ocm-p-rosa-welcome__section">
             <Card>
               <CardBody>
-                <Title headingLevel="h2">
-                  Next steps
-                </Title>
+                <Title headingLevel="h2">Next steps</Title>
                 <Divider className="pf-u-mt-lg pf-u-mb-xl" />
                 <Instructions>
                   <Instruction>
-                    <Title headingLevel="h3">
-                      Accessing the cluster
-                    </Title>
+                    <Title headingLevel="h3">Accessing the cluster</Title>
                     <Text component={TextVariants.p}>
-                      Learn how to
-                      {' '}
+                      Learn how to{' '}
                       <ExternalLink href="https://www.rosaworkshop.io/rosa/6-access_cluster/">
                         access your cluster
-                      </ExternalLink>
-                      {' '}
+                      </ExternalLink>{' '}
                       and more in the ROSA workshop.
                     </Text>
                   </Instruction>
                   <Instruction>
-                    <Title headingLevel="h3">
-                      Getting support
-                    </Title>
+                    <Title headingLevel="h3">Getting support</Title>
                     <Text component={TextVariants.p}>
-                      Having trouble getting started?
-                      {' '}
+                      Having trouble getting started?{' '}
                       <ExternalLink href="https://support.redhat.com/">
                         Contact Red Hat Support
                       </ExternalLink>
@@ -268,28 +219,19 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                     </Text>
                   </Instruction>
                   <Instruction>
-                    <Title headingLevel="h3">
-                      Getting familiar with ROSA
-                    </Title>
+                    <Title headingLevel="h3">Getting familiar with ROSA</Title>
                     <Text component={TextVariants.p}>
-                      View the complete
-                      {' '}
-                      <ExternalLink href="https://www.rosaworkshop.io/">
-                        ROSA workshop
-                      </ExternalLink>
-                      , browse the
-                      {' '}
+                      View the complete{' '}
+                      <ExternalLink href="https://www.rosaworkshop.io/">ROSA workshop</ExternalLink>
+                      , browse the{' '}
                       <ExternalLink href={installLinks.ROSA_DOCS_ENTRY}>
                         ROSA documentation
                       </ExternalLink>
-                      , view the
-                      {' '}
+                      , view the{' '}
                       <ExternalLink href={installLinks.ROSA_SERVICE_DEFINITION}>
                         ROSA Service Definition
-                      </ExternalLink>
-                      {' '}
-                      or
-                      {' '}
+                      </ExternalLink>{' '}
+                      or{' '}
                       <ExternalLink href={installLinks.ROSA_RESPONSIBILITY_MATRIX}>
                         Responsibility Assignment Matrix
                       </ExternalLink>

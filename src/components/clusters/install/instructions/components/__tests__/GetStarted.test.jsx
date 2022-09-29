@@ -1,16 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import {
-  Button,
-  ClipboardCopy,
-} from '@patternfly/react-core';
+import { Button, ClipboardCopy } from '@patternfly/react-core';
 
 import GetStarted from '../GetStarted';
 import ExternalLink from '../../../../../common/ExternalLink';
 
 describe('<GetStarted />', () => {
   describe('GetStarted w/ customizations', () => {
-    const wrapper = shallow(<GetStarted docURL="" cloudProviderID="" customizations="example.doc.link" />);
+    const wrapper = shallow(
+      <GetStarted docURL="" cloudProviderID="" customizations="example.doc.link" />,
+    );
 
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();

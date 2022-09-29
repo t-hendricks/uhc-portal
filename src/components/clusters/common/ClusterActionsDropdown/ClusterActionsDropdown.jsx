@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Dropdown, DropdownToggle, KebabToggle, DropdownPosition, Tooltip,
+  Dropdown,
+  DropdownToggle,
+  KebabToggle,
+  DropdownPosition,
+  Tooltip,
 } from '@patternfly/react-core';
 import { dropDownItems } from './ClusterActionsDropdownItems';
 
@@ -14,7 +18,7 @@ class ClusterActionsDropdown extends React.Component {
       });
     };
     this.onSelect = () => {
-      this.setState(state => ({
+      this.setState((state) => ({
         isOpen: !state.isOpen,
       }));
     };
@@ -22,7 +26,7 @@ class ClusterActionsDropdown extends React.Component {
 
   state = {
     isOpen: false,
-  }
+  };
 
   render() {
     const {
@@ -39,9 +43,13 @@ class ClusterActionsDropdown extends React.Component {
     } = this.props;
     const { isOpen } = this.state;
 
-    const toggleComponent = isKebab
-      ? <KebabToggle isDisabled={disabled} onToggle={this.onToggle} />
-      : <DropdownToggle isDisabled={disabled} onToggle={this.onToggle}>Actions</DropdownToggle>;
+    const toggleComponent = isKebab ? (
+      <KebabToggle isDisabled={disabled} onToggle={this.onToggle} />
+    ) : (
+      <DropdownToggle isDisabled={disabled} onToggle={this.onToggle}>
+        Actions
+      </DropdownToggle>
+    );
 
     const menuItems = dropDownItems({
       cluster,
