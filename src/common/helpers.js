@@ -21,6 +21,14 @@ const multiInputToCleanArray = (formData, fieldName) => {
     .map((item) => item.trim());
 };
 
+const stringToArray = (str) => {
+  return str && str.trim().split(',');
+};
+
+const arrayToString = (arr) => {
+  return arr && arr.join(',');
+};
+
 /**
  * Parses comma separated key<delimiter>value pairs into an object.
  * @param {*} str Comma separated string of kay:val pairs
@@ -203,6 +211,8 @@ export {
   parseReduxFormKeyValueList,
   parseReduxFormTaints,
   goZeroTime2Null,
+  stringToArray,
+  arrayToString,
 };
 
 export default helpers;

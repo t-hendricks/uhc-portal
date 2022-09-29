@@ -6,9 +6,12 @@ export const HTTPS_PROXY_PLACEHOLDER = 'http(s)://<user>:<password>@<ipaddr>:<po
 export const TRUST_BUNDLE_PLACEHOLDER = `-----BEGIN CERTIFICATE-----
 <MY_TRUSTED_CA_CERT>
 -----END CERTIFICATE-----`;
-export const TRUST_BUNDLE_HELPER_TEXT = 'An additional trust bundle is a PEM encoded X.509 certificate bundle that will be added to the nodes\' trusted certificate store.';
-export const NO_PROXY_PLACEHOLDER = isDisabled => (isDisabled ? 'HTTP/HTTPS URL must be provided' : 'domain.com, second.domain.com');
-export const NO_PROXY_HELPER_TEXT = 'Preface a domain with . to match subdomains only. For example, .y.com matches x.y.com, but not y.com. Use * to bypass proxy for all destinations.';
+export const TRUST_BUNDLE_HELPER_TEXT =
+  "An additional trust bundle is a PEM encoded X.509 certificate bundle that will be added to the nodes' trusted certificate store.";
+export const DISABLED_NO_PROXY_PLACEHOLDER = 'HTTP/HTTPS URL must be provided';
+export const NO_PROXY_PLACEHOLDER = 'domain.com, second.domain.com';
+export const NO_PROXY_HELPER_TEXT =
+  'Preface a domain with . to match subdomains only. For example, .y.com matches x.y.com, but not y.com. Use * to bypass proxy for all destinations.';
 
 export const podCidrDefaultValue = (cloudProviderID) =>
   `10.128.0.0/${cloudProviderID === 'aws' ? '16' : '14'}`;

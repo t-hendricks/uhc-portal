@@ -500,12 +500,18 @@ const checkBaseDNSDomain = (value) => {
 };
 
 const checkInvalidDNS = (value) => {
-  if (value) {
-    const invalidDomains = value.filter(domain => (
-      !(BASE_DOMAIN_REGEXP.test(domain) && DNS_SUBDOMAIN_REGEXP.test(domain)) && domain !== ''
-    ));
+  if (value && value.length > 0) {
+    const invalidDomains = value.filter(
+      (domain) =>
+        !!domain && !(BASE_DOMAIN_REGEXP.test(domain) && DNS_SUBDOMAIN_REGEXP.test(domain)),
+    );
     const plural = invalidDomains.length > 1;
-    if (invalidDomains.length > 0) return `The domain${plural ? 's' : ''} '${invalidDomains.join(', ')}' ${plural ? 'aren\'t' : 'isn\'t'} valid, must contain at least two valid lower-case DNS labels separated by dots, for example 'domain.com' or 'sub.domain.com'.`;
+    if (invalidDomains.length > 0) {
+      return `The domain${plural ? 's' : ''} '${invalidDomains.join(', ')}' ${
+        plural ? "aren't" : "isn't"
+      } valid, 
+      must contain at least two valid lower-case DNS labels separated by dots, for example 'domain.com' or 'sub.domain.com'.`;
+    }
   }
   return undefined;
 };

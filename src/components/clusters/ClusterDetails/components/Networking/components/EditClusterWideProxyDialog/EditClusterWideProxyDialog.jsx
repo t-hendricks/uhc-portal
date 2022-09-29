@@ -12,10 +12,13 @@ import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
 import ReduxFileUpload from '~/components/common/ReduxFormComponents/ReduxFileUpload';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
+import { stringToArray, arrayToString } from '~/common/helpers';
 import {
   HTTPS_PROXY_PLACEHOLDER,
+  HTTP_PROXY_PLACEHOLDER,
   TRUST_BUNDLE_PLACEHOLDER,
   TRUST_BUNDLE_HELPER_TEXT,
+  DISABLED_NO_PROXY_PLACEHOLDER,
   NO_PROXY_PLACEHOLDER,
   NO_PROXY_HELPER_TEXT,
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
@@ -54,8 +57,6 @@ const EditClusterWideProxyDialog = (props) => {
   const [openFileUpload, setOpenFileUpload] = useState(!additionalTrustBundle);
 
   const noValues = !httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle;
-
-  const noProxyStringToArray = value => value.trim().split(',');
 
   const handleClose = () => {
     closeModal();
@@ -107,104 +108,105 @@ const EditClusterWideProxyDialog = (props) => {
             </Text>
           </GridItem>
 
-        <GridItem>
-          <Alert
-            variant="info"
-            isInline
-            isPlain
-            title="Configure at least 1 of the following fields:"
-          />
-        </GridItem>
-
-        <GridItem sm={12} md={10} xl2={11}>
-          <Field
-            component={ReduxVerticalFormGroup}
-            name="httpProxyUrl"
-            label="HTTP proxy URL"
-            placeholder={HTTPS_PROXY_PLACEHOLDER}
-            type="text"
-            validate={[validateUrlHttp, validateAtLeastOne]}
-            helpText="Specify a proxy URL to use for HTTP connections outside the cluster."
-            showHelpTextOnError={false}
-          />
-        </GridItem>
-
-        <GridItem sm={12} md={10} xl2={11}>
-            <Field
-              component={ReduxVerticalFormGroup}
-              name="httpsProxyUrl"
-              label="HTTPS proxy URL"
-              placeholder={HTTPS_PROXY_PLACEHOLDER}
-              type="text"
-              validate={[validateUrlHttps, validateAtLeastOne]}
-              helpText="Specify a proxy URL to use for HTTPS connections outside the cluster."
-              showHelpTextOnError={false}
-            />
-          </GridItem>
-          <GridItem sm={12} md={10} xl2={11}>
-            <Field
-              component={ReduxVerticalFormGroup}
-              name="noProxyDomains"
-              label="No Proxy domains"
-              placeholder={NO_PROXY_PLACEHOLDER(
-                !formValues.httpProxyUrl && !formValues.httpsProxyUrl
-              )}
-              type="text"
-              validate={checkInvalidDNS}
-              helpText={NO_PROXY_HELPER_TEXT}
-              showHelpTextOnError={false}
-              parse={noProxyStringToArray}
-              isDisabled={
-                !formValues.httpProxyUrl && !formValues.httpsProxyUrl
-              }
-            />
-          </GridItem>
-          <GridItem sm={12} md={10} xl2={11}>
-            {!openFileUpload ? (
-              <>
-                <Text className="ocm-c-networking-vpc-details__card pf-c-form__label-text pf-c-form__group-label">
-                  Additional Trust Bundle{' '}
-                  <PopoverHint
-                    headerContent="Additional trust bundle"
-                    bodyContent={TRUST_BUNDLE_HELPER_TEXT}
-                  />
-                </Text>
-                <Text>
-                  File Uploaded Successfully{' '}
-                  <Button
-                    // opens field to replace addition trust bundle
-                    onClick={() => setOpenFileUpload(true)}
-                    variant="link"
-                    isInline
-                    className="ocm-c-networking-vpc-details__card--replace-button"
-                  >
-                    Replace file
-                  </Button>
-                </Text>
-              </>
-            ) : (
-              <Field
-                component={ReduxFileUpload}
-                name="additionalTrustBundle"
-                label="Additional trust bundle"
-                placeholder={TRUST_BUNDLE_PLACEHOLDER}
-                extendedHelpTitle="Additional trust bundle"
-                extendedHelpText="An additional trust bundle is a PEM encoded X.509 certificate bundle that will be added to the nodes' trusted certificate store."
-                validate={[validateCA, validateAtLeastOne]}
-                dropzoneProps={{
-                  accept: ACCEPT,
-                  maxSize: MAX_FILE_SIZE,
-                  onDropRejected: onFileRejected,
-                }}
-                helpText="Upload or paste a PEM encoded X.509 certificate."
+            <GridItem>
+              <Alert
+                variant="info"
+                isInline
+                isPlain
+                title="Configure at least 1 of the following fields:"
               />
-            )}
-          </GridItem>
-          <GridItem sm={0} md={2} xl2={4} />
-          <GridItem>{anyTouched && noValues && atLeastOneAlert}</GridItem>
-        </Grid>
-      </Form>
-    </Modal>
+            </GridItem>
+
+            <GridItem sm={12} md={10} xl2={11}>
+              <Field
+                component={ReduxVerticalFormGroup}
+                name="httpProxyUrl"
+                label="HTTP proxy URL"
+                placeholder={HTTP_PROXY_PLACEHOLDER}
+                type="text"
+                validate={[validateUrlHttp, validateAtLeastOne]}
+                helpText="Specify a proxy URL to use for HTTP connections outside the cluster."
+                showHelpTextOnError={false}
+              />
+            </GridItem>
+
+            <GridItem sm={12} md={10} xl2={11}>
+              <Field
+                component={ReduxVerticalFormGroup}
+                name="httpsProxyUrl"
+                label="HTTPS proxy URL"
+                placeholder={HTTPS_PROXY_PLACEHOLDER}
+                type="text"
+                validate={[validateUrlHttps, validateAtLeastOne]}
+                helpText="Specify a proxy URL to use for HTTPS connections outside the cluster."
+                showHelpTextOnError={false}
+              />
+            </GridItem>
+            <GridItem sm={12} md={10} xl2={11}>
+              <Field
+                component={ReduxVerticalFormGroup}
+                name="noProxyDomains"
+                label="No Proxy domains"
+                placeholder={
+                  !formValues.httpProxyUrl && !formValues.httpsProxyUrl
+                    ? DISABLED_NO_PROXY_PLACEHOLDER
+                    : NO_PROXY_PLACEHOLDER
+                }
+                type="text"
+                parse={stringToArray}
+                validate={checkInvalidDNS}
+                helpText={NO_PROXY_HELPER_TEXT}
+                showHelpTextOnError={false}
+                isDisabled={!formValues.httpProxyUrl && !formValues.httpsProxyUrl}
+              />
+            </GridItem>
+            <GridItem sm={12} md={10} xl2={11}>
+              {!openFileUpload ? (
+                <>
+                  <Text className="ocm-c-networking-vpc-details__card pf-c-form__label-text pf-c-form__group-label">
+                    Additional Trust Bundle{' '}
+                    <PopoverHint
+                      headerContent="Additional trust bundle"
+                      bodyContent={TRUST_BUNDLE_HELPER_TEXT}
+                    />
+                  </Text>
+                  <Text>
+                    File Uploaded Successfully{' '}
+                    <Button
+                      // opens field to replace addition trust bundle
+                      onClick={() => setOpenFileUpload(true)}
+                      variant="link"
+                      isInline
+                      className="ocm-c-networking-vpc-details__card--replace-button"
+                    >
+                      Replace file
+                    </Button>
+                  </Text>
+                </>
+              ) : (
+                <Field
+                  component={ReduxFileUpload}
+                  name="additionalTrustBundle"
+                  label="Additional trust bundle"
+                  placeholder={TRUST_BUNDLE_PLACEHOLDER}
+                  extendedHelpTitle="Additional trust bundle"
+                  extendedHelpText="An additional trust bundle is a PEM encoded X.509 certificate bundle that will be added to the nodes' trusted certificate store."
+                  validate={[validateCA, validateAtLeastOne]}
+                  dropzoneProps={{
+                    accept: ACCEPT,
+                    maxSize: MAX_FILE_SIZE,
+                    onDropRejected: onFileRejected,
+                  }}
+                  helpText="Upload or paste a PEM encoded X.509 certificate."
+                />
+              )}
+            </GridItem>
+            <GridItem sm={0} md={2} xl2={4} />
+            <GridItem>{anyTouched && noValues && atLeastOneAlert}</GridItem>
+          </Grid>
+        </Form>
+      </Modal>
+    )
   );
 };
 
@@ -213,11 +215,7 @@ EditClusterWideProxyDialog.propTypes = {
   isOpen: PropTypes.bool,
   reset: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  initialValues: PropTypes.shape({
-    httpProxyUrl: PropTypes.string,
-    httpsProxyUrl: PropTypes.string,
-    noProxyDomains: PropTypes.array,
-  }),
+  formValues: PropTypes.object,
   httpProxyUrl: PropTypes.string,
   httpsProxyUrl: PropTypes.string,
   noProxyDomains: PropTypes.array,

@@ -13,20 +13,17 @@ import {
 } from '@patternfly/react-core';
 
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
-import {
-  validateUrl,
-  validateCA,
-  checkInvalidDNS,
-} from '../../../../../common/validators';
+import { validateUrl, validateCA, checkInvalidDNS } from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
 import ExternalLink from '../../../../common/ExternalLink';
 import links from '../../../../../common/installLinks.mjs';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-
+import { stringToArray } from '~/common/helpers';
 import {
   HTTP_PROXY_PLACEHOLDER,
   HTTPS_PROXY_PLACEHOLDER,
+  DISABLED_NO_PROXY_PLACEHOLDER,
   NO_PROXY_PLACEHOLDER,
   NO_PROXY_HELPER_TEXT,
   TRUST_BUNDLE_PLACEHOLDER,
@@ -71,7 +68,6 @@ function ClusterProxyScreen({
     return undefined;
   };
 
-  const noProxyStringToArray = value => value.trim().split(',');
   const atLeastOneAlert = (
     <Alert
       isInline
@@ -163,12 +159,14 @@ function ClusterProxyScreen({
             component={ReduxVerticalFormGroup}
             name="no_proxy"
             label="No Proxy domains"
-            placeholder={NO_PROXY_PLACEHOLDER(!httpProxyUrl && !httpsProxyUrl)}
+            placeholder={
+              !httpProxyUrl && !httpsProxyUrl ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER
+            }
             type="text"
             validate={checkInvalidDNS}
             helpText={NO_PROXY_HELPER_TEXT}
             showHelpTextOnError={false}
-            parse={noProxyStringToArray}
+            parse={stringToArray}
             isDisabled={!httpProxyUrl && !httpsProxyUrl}
           />
         </GridItem>

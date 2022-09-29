@@ -1,14 +1,12 @@
 import { connect } from 'react-redux';
-import {
-  change, reduxForm, getFormMeta, getFormValues,
-} from 'redux-form';
+import { change, reduxForm, getFormMeta, getFormValues } from 'redux-form';
 
 import modals from '~/components/common/Modal/modals';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import { editCluster, clearClusterResponse } from '~/redux/actions/clustersActions';
 import EditClusterWideProxyDialog from './EditClusterWideProxyDialog';
-import { noProxyDomainsArray, noProxyDomainsString } from '../../NetworkingSelector';
+import { arrayToString, stringToArray } from '~/common/helpers';
 
 const reduxFormConfig = {
   form: 'EditClusterWideProxy',
@@ -29,9 +27,8 @@ const mapStateToProps = (state) => {
       clusterID: cluster.id,
       httpProxyUrl: cluster.proxy?.http_proxy,
       httpsProxyUrl: cluster.proxy?.https_proxy,
-      noproxyDomains: cluster.no_proxy,
+      noProxyDomains: stringToArray(cluster.proxy?.no_proxy),
     },
-    formValues,
     additionalTrustBundle: cluster?.additional_trust_bundle,
     editClusterProxyResponse: state.clusters.editedCluster,
     meta: getFormMeta('EditClusterWideProxy')(state),
@@ -43,12 +40,11 @@ const mapDispatchToProps = (dispatch) => ({
   clearClusterProxyResponse: () => dispatch(clearClusterResponse()),
   closeModal: () => dispatch(closeModal()),
   onSubmit: (formData) => {
-    console.log(formData);
     const clusterProxyBody = {
       proxy: {
         http_proxy: formData.httpProxyUrl,
         https_proxy: formData.httpsProxyUrl,
-        no_proxy: formData.noProxyDomains ? formData.noProxyDomains.join(',') : null,
+        no_proxy: arrayToString(formData.noProxyDomains),
       },
       additional_trust_bundle: formData.additionalTrustBundle,
     };
@@ -56,7 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   sendError: () => {
     // 'invalid file' is a magic string that triggers a validation error
-    // in src/c4ommon/validators.js validateCA function
+    // in src/common/validators.js validateCA function
     dispatch(change('EditClusterWideProxy', 'additional_trust_bundle', 'invalid file'));
   },
 });
