@@ -2,6 +2,8 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import { connectRouter } from 'connected-react-router';
 
+// TODO remove ignore statement once frontend-components-notifications has types
+// @ts-ignore
 import { notificationsReducer } from '@redhat-cloud-services/frontend-components-notifications/redux';
 import { clustersReducer } from './clustersReducer';
 import { clusterLogReducer } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogReducer';
@@ -84,7 +86,7 @@ const reducers = {
   rosaReducer,
 };
 
-const reduxReducers = (history) =>
+const reduxReducers = (history: Parameters<typeof connectRouter>[0]) =>
   combineReducers({
     ...reducers,
     router: connectRouter(history),

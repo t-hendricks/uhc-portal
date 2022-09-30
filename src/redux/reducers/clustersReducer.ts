@@ -24,8 +24,56 @@ import {
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 import { versionComparator } from '../../common/versionComparator';
-
 import { clustersConstants } from '../constants';
+import type { PromiseActionType, PromiseReducerState } from '../types';
+import type { ClusterAction } from '../actions/clustersActions';
+import type { UpgradeGateAction } from '../actions/upgradeGateActions';
+import type { Cluster, ClusterStatus, VersionGate, Version } from '../../types/clusters_mgmt.v1';
+import type { ErrorState, AugmentedCluster, ClusterWithPermissions } from '../../types/types';
+
+type State = {
+  clusters: PromiseReducerState & {
+    valid: boolean;
+    meta: {
+      clustersServiceError?: ErrorState;
+    };
+    clusters: ClusterWithPermissions[];
+    queryParams?: {
+      page: number;
+      ['page_size']: number;
+      filter?: string | undefined;
+      fields?: string | undefined;
+      order?: string | undefined;
+    };
+  };
+  clusterStatus: PromiseReducerState & {
+    status: ClusterStatus;
+  };
+  clusterVersions: PromiseReducerState & {
+    versions: Version[];
+  };
+  details: PromiseReducerState & {
+    cluster: AugmentedCluster;
+  };
+  createdCluster: PromiseReducerState & {
+    cluster: Cluster;
+  };
+  editedCluster: PromiseReducerState;
+  archivedCluster: PromiseReducerState;
+  unarchivedCluster: PromiseReducerState;
+  hibernatingCluster: PromiseReducerState & {
+    cluster: Cluster;
+  };
+  resumeHibernatingCluster: PromiseReducerState & {
+    cluster: Cluster;
+  };
+  upgradeGates: PromiseReducerState & {
+    gates: VersionGate[];
+  };
+  upgradedCluster: PromiseReducerState & {
+    cluster: Cluster;
+  };
+};
 
 const baseState = {
   ...baseRequestState,
@@ -41,13 +89,16 @@ const emptyCluster = {
   },
 };
 
-const initialState = {
+const initialState: State = {
   clusters: {
     ...baseState,
     valid: false,
     meta: {},
     clusters: [],
-    queryParams: {},
+    queryParams: {
+      page: 0,
+      page_size: 0,
+    },
   },
   clusterStatus: {
     ...baseState,
@@ -59,7 +110,8 @@ const initialState = {
   },
   details: {
     ...baseState,
-    cluster: emptyCluster,
+    // TODO cast required due to missing metrics
+    cluster: emptyCluster as AugmentedCluster,
   },
   createdCluster: {
     ...baseState,
@@ -67,15 +119,12 @@ const initialState = {
   },
   editedCluster: {
     ...baseState,
-    cluster: emptyCluster,
   },
   archivedCluster: {
     ...baseState,
-    cluster: emptyCluster,
   },
   unarchivedCluster: {
     ...baseState,
-    cluster: emptyCluster,
   },
   hibernatingCluster: {
     ...baseState,
@@ -89,24 +138,31 @@ const initialState = {
     ...baseState,
     gates: [],
   },
+  upgradedCluster: {
+    ...baseState,
+    cluster: emptyCluster,
+  },
 };
 
-function filterAndSortClusterVersions(versions) {
+const filterAndSortClusterVersions = (versions: Version[]) => {
   const now = Date.now();
   const filteredVersions = versions.filter((version) => {
     if (!version.end_of_life_timestamp) {
       return true;
     }
-    const eolTimestamp = new Date(version.end_of_life_timestamp);
+    const eolTimestamp = new Date(version.end_of_life_timestamp).getTime();
     return eolTimestamp > now;
   });
   // descending version numbers
-  return filteredVersions.sort((e1, e2) => versionComparator(e2.raw_id, e1.raw_id));
-}
+  return filteredVersions.sort((e1, e2) => versionComparator(e2.raw_id!, e1.raw_id!));
+};
 
-function clustersReducer(state = initialState, action) {
+const clustersReducer = (
+  state = initialState,
+  action: PromiseActionType<ClusterAction | UpgradeGateAction>,
+): State =>
   // eslint-disable-next-line consistent-return
-  return produce(state, (draft) => {
+  produce(state, (draft) => {
     switch (action.type) {
       // GET_CLUSTERS
       case INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS):
@@ -131,14 +187,16 @@ function clustersReducer(state = initialState, action) {
       case FULFILLED_ACTION(clustersConstants.GET_CLUSTERS): {
         const { data } = action.payload;
         const clustersServiceError =
-          !!data?.meta?.clustersServiceError &&
-          getErrorState({ payload: data.meta.clustersServiceError });
+          'meta' in data && !!data.meta?.clustersServiceError
+            ? getErrorState({ payload: data.meta.clustersServiceError })
+            : undefined;
         draft.clusters = {
           ...initialState.clusters,
           clusters: data.items,
           queryParams: data.queryParams,
           meta: {
-            clustersServiceError: clustersServiceError || undefined,
+            clustersServiceError:
+              clustersServiceError?.error === true ? clustersServiceError : undefined,
           },
           pending: false,
           fulfilled: true,
@@ -152,7 +210,6 @@ function clustersReducer(state = initialState, action) {
           ...initialState.details,
           cluster: mergeDetails ? merge({}, state.details.cluster, cluster) : cluster,
           fulfilled: true,
-          incomplete: true,
         };
         break;
       }
@@ -175,7 +232,6 @@ function clustersReducer(state = initialState, action) {
         draft.details = {
           ...initialState.details,
           fulfilled: true,
-          incomplete: false,
           cluster: action.payload.data,
         };
         break;
@@ -226,7 +282,6 @@ function clustersReducer(state = initialState, action) {
       case FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER):
         draft.editedCluster = {
           ...initialState.editedCluster,
-          cluster: action.payload.data,
           fulfilled: true,
         };
         break;
@@ -239,8 +294,7 @@ function clustersReducer(state = initialState, action) {
       // Archive cluster
       case FULFILLED_ACTION(clustersConstants.ARCHIVE_CLUSTER):
         draft.archivedCluster = {
-          ...initialState.editedCluster,
-          cluster: action.payload.data,
+          ...initialState.archivedCluster,
           fulfilled: true,
         };
         break;
@@ -278,6 +332,7 @@ function clustersReducer(state = initialState, action) {
         break;
       case PENDING_ACTION(clustersConstants.HIBERNATE_CLUSTER):
         draft.hibernatingCluster = {
+          ...initialState.hibernatingCluster,
           pending: true,
         };
         break;
@@ -302,6 +357,7 @@ function clustersReducer(state = initialState, action) {
         break;
       case PENDING_ACTION(clustersConstants.RESUME_CLUSTER):
         draft.resumeHibernatingCluster = {
+          ...initialState.resumeHibernatingCluster,
           pending: true,
         };
         break;
@@ -315,7 +371,6 @@ function clustersReducer(state = initialState, action) {
       case FULFILLED_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
         draft.unarchivedCluster = {
           ...initialState.unarchivedCluster,
-          cluster: action.payload.data,
           fulfilled: true,
         };
         break;
@@ -352,7 +407,7 @@ function clustersReducer(state = initialState, action) {
         };
         break;
       case PENDING_ACTION(clustersConstants.UPGRADE_TRIAL_CLUSTER):
-        draft.upgradeCluster = {
+        draft.upgradedCluster = {
           ...initialState.upgradedCluster,
           pending: true,
         };
@@ -402,7 +457,9 @@ function clustersReducer(state = initialState, action) {
         draft.clusterVersions = {
           ...initialState.clusterVersions,
           fulfilled: true,
-          versions: filterAndSortClusterVersions(action.payload.data.items),
+          versions: action.payload.data.items
+            ? filterAndSortClusterVersions(action.payload.data.items)
+            : [],
         };
         break;
 
@@ -418,14 +475,15 @@ function clustersReducer(state = initialState, action) {
 
       case FULFILLED_ACTION(clustersConstants.GET_UPGRADE_GATES):
         draft.upgradeGates = {
-          gates: action.payload,
+          ...initialState.upgradeGates,
+          gates: action.payload ?? [],
           fulfilled: true,
         };
         break;
 
       case clustersConstants.SET_CLUSTER_UPGRADE_GATE:
         draft.details.cluster.upgradeGates = [
-          ...state.details.cluster.upgradeGates,
+          ...(state.details.cluster.upgradeGates ?? []),
           { version_gate: { id: action.payload } },
         ];
         break;
@@ -434,7 +492,6 @@ function clustersReducer(state = initialState, action) {
         return state;
     }
   });
-}
 
 clustersReducer.initialState = initialState;
 

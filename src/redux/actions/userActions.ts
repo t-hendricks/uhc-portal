@@ -1,71 +1,73 @@
-import get from 'lodash/get';
-import { store } from '../store';
-
+import { action, ActionType } from 'typesafe-actions';
+import type { AxiosResponse } from 'axios';
 import { userConstants } from '../constants';
 import { accountsService, authorizationsService } from '../../services';
 import { normalizeQuotaCost } from '../../common/normalize';
+import type { QuotaCostList, Organization, QuotaCost } from '../../types/accounts_mgmt.v1';
+import type { UserInfo } from '../../types/types';
+import type { AppThunk } from '../types';
 
-const userInfoResponse = (payload) => ({
-  payload,
-  type: userConstants.USER_INFO_RESPONSE,
-});
+const userInfoResponse = (payload: UserInfo) => action(userConstants.USER_INFO_RESPONSE, payload);
 
 /** Normalize incoming quota. */
-const processQuota = (response) => ({
-  items: get(response.data, 'items', []).map(normalizeQuotaCost),
+const processQuota = (
+  response: AxiosResponse<QuotaCostList>,
+): {
+  items?: QuotaCost[] | undefined;
+} => ({
+  items: (response.data?.items ?? []).map(normalizeQuotaCost),
 });
 
-const fetchQuota = (organizationID) =>
+const fetchQuota = (organizationID: string) =>
   accountsService.getOrganizationQuota(organizationID).then(processQuota);
 
-const fetchQuotaAndOrganization = (organizationID, organization) => {
-  const ret = {
-    quota: undefined,
-    organization: organization !== undefined ? organization.details : organization,
-  };
-  const promises = [
-    fetchQuota(organizationID).then((quota) => {
-      ret.quota = quota;
-    }),
+const fetchQuotaAndOrganization = (
+  organizationID: string,
+  organization?: Organization,
+): Promise<{ quota: { items?: QuotaCost[] }; organization: Organization }> => {
+  const promises: [ReturnType<typeof fetchQuota>, Promise<{ data: Organization }>] = [
+    fetchQuota(organizationID),
+    organization
+      ? Promise.resolve({ data: organization })
+      : accountsService.getOrganization(organizationID),
   ];
-  if (organization === undefined) {
-    promises.push(
-      accountsService.getOrganization(organizationID).then((fetchedOrganization) => {
-        ret.organization = fetchedOrganization.data;
-      }),
-    );
-  }
-  return Promise.all(promises).then(() => ret);
+  return Promise.all(promises).then(([quota, organizationResponse]) => ({
+    quota,
+    organization: organizationResponse.data,
+  }));
 };
 
 const fetchAccountThenQuotaAndOrganization = () =>
   accountsService.getCurrentAccount().then((response) => {
-    const organizationID = get(response.data, 'organization.id');
+    const organizationID = response.data?.organization?.id;
     return organizationID !== undefined
       ? fetchQuotaAndOrganization(organizationID)
       : Promise.reject(Error('No organization'));
   });
 
-const getOrganizationAndQuota = () => {
-  const { userProfile } = store.getState();
-  const organizationID = userProfile?.organization?.details?.id;
-  return (dispatch) =>
-    dispatch({
-      payload:
-        organizationID !== undefined
-          ? fetchQuotaAndOrganization(organizationID, userProfile?.organization)
-          : fetchAccountThenQuotaAndOrganization(),
-      type: userConstants.GET_ORGANIZATION,
-    });
+const getOrganizationAndQuotaAction = (
+  payload: Promise<{ quota: { items?: QuotaCost[] }; organization: Organization }>,
+) => action(userConstants.GET_ORGANIZATION, payload);
+
+const getOrganizationAndQuota = (): AppThunk => (dispatch, getState) => {
+  const { userProfile } = getState();
+  const organizationDetails = userProfile?.organization.fulfilled
+    ? userProfile?.organization?.details
+    : undefined;
+  const organizationID = organizationDetails?.id;
+  dispatch(
+    getOrganizationAndQuotaAction(
+      organizationID !== undefined
+        ? fetchQuotaAndOrganization(organizationID, organizationDetails)
+        : fetchAccountThenQuotaAndOrganization(),
+    ),
+  );
 };
 
-function selfTermsReview() {
-  return (dispatch) =>
-    dispatch({
-      type: userConstants.SELF_TERMS_REVIEW,
-      payload: authorizationsService.selfTermsReview(),
-    });
-}
+const selfTermsReviewAction = () =>
+  action(userConstants.SELF_TERMS_REVIEW, authorizationsService.selfTermsReview());
+
+const selfTermsReview = (): AppThunk => (dispatch) => dispatch(selfTermsReviewAction());
 
 const userActions = {
   userInfoResponse,
@@ -74,4 +76,8 @@ const userActions = {
   selfTermsReview,
 };
 
-export { userActions, userInfoResponse, getOrganizationAndQuota, selfTermsReview };
+type UserAction = ActionType<
+  typeof userInfoResponse | typeof getOrganizationAndQuotaAction | typeof selfTermsReviewAction
+>;
+
+export { userActions, userInfoResponse, getOrganizationAndQuota, selfTermsReview, UserAction };

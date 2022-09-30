@@ -1,15 +1,15 @@
-// @ts-nocheck
-// TODO, Both 'history' & '@redhat-cloud-services' modules implicitly have an 'any' type.
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import { routerMiddleware } from 'connected-react-router';
+// TODO, Both 'history' & '@redhat-cloud-services' modules implicitly have an 'any' type.
+// @ts-ignore
 import { createBrowserHistory } from 'history';
+// @ts-ignore
 import { notificationsMiddleware } from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
 
 import { reduxReducers } from './reducers';
 import sentryMiddleware from './sentryMiddleware';
-import { GlobalState } from './types';
 
 declare global {
   interface Window {
@@ -17,7 +17,6 @@ declare global {
   }
 }
 
-const emptyState = {} as GlobalState;
 const defaultOptions = {
   dispatchDefaultFailure: false, // automatic error notifications
 };
@@ -36,5 +35,14 @@ const store = createStore(
     ),
   ),
 );
+
+export type GlobalState = ReturnType<typeof store.getState> & {
+  // TODO temporary overrides for reducers that aren't written in typescript
+  rosaReducer: {
+    getAWSAccountIDsResponse: {
+      data: any[];
+    };
+  };
+};
 
 export { store as default, store, history };

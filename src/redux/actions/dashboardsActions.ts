@@ -1,21 +1,23 @@
 /*
 Copyright (c) 2020 Red Hat, Inc.
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the 'License');
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
   http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
+distributed under the License is distributed on an 'AS IS' BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
+import { action, ActionType } from 'typesafe-actions';
 import { dashboardsConstants } from '../constants';
 import { accountManager, accountsService } from '../../services';
+import type { SummaryVector } from '../../types/accounts_mgmt.v1/models/SummaryVector';
+import type { AppThunk } from '../types';
 
 const getDashboard = () =>
   accountsService
@@ -28,22 +30,27 @@ const getDashboard = () =>
       return Promise.reject(new Error('No logged in user'));
     })
     .then((dashboardResponse) => {
-      const dashboard = {};
-      const metrics = {};
+      const metrics: { [name: string]: SummaryVector[] } = {};
+      const dashboard: { [name: string]: typeof metrics } = {};
       dashboardResponse.data.metrics.forEach((metric) => {
-        metrics[metric.name] = metric.vector;
+        if (metric.name) {
+          metrics[metric.name] = metric.vector ?? [];
+        }
       });
-      dashboard[dashboardResponse.data.name] = metrics;
+      if (dashboardResponse.data.name) {
+        dashboard[dashboardResponse.data.name] = metrics;
+      }
       return dashboard;
     });
 
-const getSummaryDashboard = () => (dispatch) =>
-  dispatch({
-    type: dashboardsConstants.GET_SUMMARY_DASHBOARD,
-    payload: getDashboard(),
-  });
+const getSummaryDashboardAction = () =>
+  action(dashboardsConstants.GET_SUMMARY_DASHBOARD, getDashboard());
 
-const getUnhealthy = (params) =>
+const getSummaryDashboard = (): AppThunk => (dispatch) => dispatch(getSummaryDashboardAction());
+
+type QueryParams = Parameters<typeof accountsService.getUnhealthyClusters>[1];
+
+const getUnhealthy = (params: QueryParams) =>
   accountsService
     .getCurrentAccount()
     .then((organizationResponse) => organizationResponse.data?.organization?.id)
@@ -54,11 +61,13 @@ const getUnhealthy = (params) =>
       return Promise.reject(new Error('No logged in user'));
     });
 
-const getUnhealthyClusters = (params) => (dispatch) =>
-  dispatch({
-    type: dashboardsConstants.GET_UNHEALTHY_CLUSTERS,
-    payload: getUnhealthy(params),
-  });
+const getUnhealthyClustersAction = (params: QueryParams) =>
+  action(dashboardsConstants.GET_UNHEALTHY_CLUSTERS, getUnhealthy(params));
+
+const getUnhealthyClusters =
+  (params: QueryParams): AppThunk =>
+  (dispatch) =>
+    dispatch(getUnhealthyClustersAction(params));
 
 export { getSummaryDashboard, getUnhealthyClusters };
 
@@ -66,5 +75,9 @@ const dashboardsActions = {
   getSummaryDashboard,
   getUnhealthyClusters,
 };
+
+export type DashboardsAction = ActionType<
+  typeof getSummaryDashboardAction | typeof getUnhealthyClustersAction
+>;
 
 export default dashboardsActions;

@@ -1,12 +1,16 @@
 import { SET_FEATURE } from '../constants/featureConstants';
-import { features } from '../actions/featureActions';
+import { FeatureAction, features } from '../actions/featureActions';
 
-const initialState = {};
+type State = {
+  [feature: string]: boolean;
+};
+
+const initialState: State = {};
 features.forEach((f) => {
   initialState[f.name] = false;
 });
 
-const featuresReducer = (state = initialState, action) => {
+const featuresReducer = (state = initialState, action: FeatureAction): State => {
   switch (action.type) {
     case SET_FEATURE:
       return {

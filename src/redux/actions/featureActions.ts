@@ -1,3 +1,4 @@
+import { action, ActionType } from 'typesafe-actions';
 import {
   SET_FEATURE,
   ASSISTED_INSTALLER_FEATURE,
@@ -11,13 +12,13 @@ import {
   ROSA_CREATION_WIZARD_FEATURE,
 } from '../constants/featureConstants';
 import authorizationsService from '../../services/authorizationsService';
+import { SelfAccessReview } from '../../types/authorizations.v1/models/SelfAccessReview';
+import type { AppThunk } from '../types';
 
-const setFeature = (feature, enabled) => ({
-  type: SET_FEATURE,
-  payload: { feature, enabled },
-});
+const setFeatureAction = (feature: string, enabled: boolean) =>
+  action(SET_FEATURE, { feature, enabled });
 
-const getSimpleUnleashFeature = (unleashFeatureName, name) => ({
+const getSimpleUnleashFeature = (unleashFeatureName: string, name: string) => ({
   name,
   action: () =>
     authorizationsService
@@ -46,7 +47,8 @@ export const features = [
     action: () =>
       Promise.all([
         authorizationsService.selfAccessReview({
-          action: 'create',
+          action: SelfAccessReview.action.CREATE,
+          // @ts-ignore 'BareMetalCluster' does not exist on SelfAccessReview.resource_type
           resource_type: 'BareMetalCluster',
         }),
         authorizationsService.selfFeatureReview('assisted-installer'),
@@ -54,10 +56,12 @@ export const features = [
   },
 ];
 
-export const detectFeatures = () => (dispatch) => {
-  features.forEach(({ name, action }) =>
-    action()
-      .then((enabled) => dispatch(setFeature(name, enabled)))
-      .catch(() => dispatch(setFeature(name, false))),
+export const detectFeatures = (): AppThunk => (dispatch) => {
+  features.forEach(({ name, action: featureAction }) =>
+    featureAction()
+      .then((enabled) => dispatch(setFeatureAction(name, enabled)))
+      .catch(() => dispatch(setFeatureAction(name, false))),
   );
 };
+
+export type FeatureAction = ActionType<typeof setFeatureAction>;

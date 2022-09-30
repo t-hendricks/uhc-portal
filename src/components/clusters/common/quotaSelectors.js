@@ -90,7 +90,7 @@ const availableQuota = (quotaList, params) => {
     resource_name: resourceName || any,
   };
   let available = 0;
-  quotaList.items.forEach((quotaCostItem) => {
+  quotaList.items?.forEach((quotaCostItem) => {
     available += availableFromQuotaCostItem(quotaCostItem, query);
   });
   return available;

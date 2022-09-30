@@ -1,4 +1,3 @@
-import produce from 'immer';
 import {
   REJECTED_ACTION,
   PENDING_ACTION,
@@ -6,35 +5,43 @@ import {
   baseRequestState,
 } from '../reduxHelpers';
 import CREATE_ENTITLEMENT_CONFIG from '../constants/entitlementConfigConstants';
+import type { PromiseActionType, PromiseReducerState } from '../types';
+import type { TokensAction } from '../actions/tokensActions';
 
-const initialState = {
+type State = PromiseReducerState;
+
+const initialState: State = {
   ...baseRequestState,
-  entitlementConfig: {},
 };
 
-function entitlementConfigReducer(state = initialState, action) {
-  // eslint-disable-next-line consistent-return
-  return produce(state, (draft) => {
-    // eslint-disable-next-line default-case
-    switch (action.type) {
-      case REJECTED_ACTION(CREATE_ENTITLEMENT_CONFIG):
-        return {
-          ...initialState,
-          // can't use getErrorState here - this is not using an OCM api.
-          error: true,
-        };
+function entitlementConfigReducer(
+  state = initialState,
+  action: PromiseActionType<TokensAction>,
+): State {
+  switch (action.type) {
+    case REJECTED_ACTION(CREATE_ENTITLEMENT_CONFIG):
+      return {
+        ...initialState,
+        // can't use getErrorState here - this is not using an OCM api.
+        error: true,
+        errorCode: -1,
+        fulfilled: false,
+      };
 
-      case PENDING_ACTION(CREATE_ENTITLEMENT_CONFIG):
-        draft.pending = true;
-        break;
+    case PENDING_ACTION(CREATE_ENTITLEMENT_CONFIG):
+      return {
+        ...state,
+        pending: true,
+      };
 
-      case FULFILLED_ACTION(CREATE_ENTITLEMENT_CONFIG):
-        return {
-          ...initialState,
-          fulfilled: true,
-        };
-    }
-  });
+    case FULFILLED_ACTION(CREATE_ENTITLEMENT_CONFIG):
+      return {
+        ...initialState,
+        fulfilled: true,
+      };
+    default:
+      return state;
+  }
 }
 
 export { initialState };

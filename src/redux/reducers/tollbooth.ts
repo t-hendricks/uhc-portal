@@ -1,16 +1,33 @@
-import { ACTION_TYPE as tollboothActionType } from '../actions/tollbooth';
+import { TollboothAction, ACTION_TYPE } from '../actions/tollbooth';
 import { getErrorState } from '../../common/errors';
+import type { AccessTokenCfg } from '../../types/accounts_mgmt.v1';
+import { PromiseActionType } from '../types';
+import { FULFILLED_ACTION, REJECTED_ACTION } from '../reduxHelpers';
+import { ErrorState } from '../../types/types';
 
-const initialState = { token: {} };
+// TODO should follow the same pattern as other promise based reducers
+// see https://issues.redhat.com/browse/HAC-485
+export type State = {
+  token: AccessTokenCfg | ErrorState;
+};
 
-const tollboothReducer = (state = initialState, action) => {
+const initialState: State = {
+  token: {
+    auths: undefined,
+  },
+};
+
+const tollboothReducer = (
+  state = initialState,
+  action: PromiseActionType<TollboothAction>,
+): State => {
   switch (action.type) {
-    case `${tollboothActionType}_FULFILLED`:
+    case FULFILLED_ACTION(ACTION_TYPE):
       return { ...state, token: action.payload.data };
-    case `${tollboothActionType}_REJECTED`:
+    case REJECTED_ACTION(ACTION_TYPE):
       return {
         ...state,
-        token: getErrorState(action),
+        token: getErrorState(action) as ErrorState,
       };
     default:
       return state;

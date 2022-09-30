@@ -396,7 +396,6 @@ const baseState = {
         canEdit: true,
         canDelete: true,
       },
-      incomplete: false,
     },
   },
   userProfile: {

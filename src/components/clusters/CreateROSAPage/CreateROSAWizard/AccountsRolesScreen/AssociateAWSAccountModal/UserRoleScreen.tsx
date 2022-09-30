@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import {
   Accordion,
@@ -16,7 +15,6 @@ import {
   TextVariants,
 } from '@patternfly/react-core';
 
-import { GlobalState } from '~/redux/types';
 import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
@@ -24,13 +22,14 @@ import links from '~/common/installLinks.mjs';
 import { trackEvents } from '~/common/analytics';
 import { RosaCliCommand } from '../constants/cliCommands';
 import MultipleAccountsInfoBox from './MultipleAccountsInfoBox';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 interface UserRoleScreenProps {
   hideTitle?: boolean;
 }
 
 export const UserRoleScreen = ({ hideTitle = false }: UserRoleScreenProps) => {
-  const hasAwsAccounts = useSelector<GlobalState>(
+  const hasAwsAccounts = useGlobalState(
     (state) => !!state.rosaReducer.getAWSAccountIDsResponse?.data?.length,
   );
   const [isAlertShown, setIsAlertShown] = useState(true);

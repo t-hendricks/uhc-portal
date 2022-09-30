@@ -14,26 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { action, ActionType } from 'typesafe-actions';
 import { costConstants } from '../constants';
 import { costService } from '../../services';
+import type { AppThunk } from '../types';
 
-const getReport = (params) => (dispatch) =>
-  dispatch({
-    type: costConstants.GET_REPORT,
-    payload: costService.getReport(params),
-  });
+const getReportAction = (params: Parameters<typeof costService.getReport>[0]) =>
+  action(costConstants.GET_REPORT, costService.getReport(params));
 
-const getSources = (params) => (dispatch) =>
-  dispatch({
-    type: costConstants.GET_SOURCES,
-    payload: costService.getSources(params),
-  });
+const getReport =
+  (params: Parameters<typeof getReportAction>[0]): AppThunk =>
+  (dispatch) =>
+    dispatch(getReportAction(params));
 
-const getUserAccess = (params) => (dispatch) =>
-  dispatch({
-    type: costConstants.GET_USER_ACCESS,
-    payload: costService.getUserAccess(params),
-  });
+const getSourcesAction = (params: Parameters<typeof costService.getSources>[0]) =>
+  action(costConstants.GET_SOURCES, costService.getSources(params));
+
+const getSources =
+  (params: Parameters<typeof costService.getSources>[0]): AppThunk =>
+  (dispatch) =>
+    dispatch(getSourcesAction(params));
+
+const getUserAccessAction = (params: Parameters<typeof costService.getUserAccess>[0]) =>
+  action(costConstants.GET_USER_ACCESS, costService.getUserAccess(params));
+
+const getUserAccess =
+  (params: Parameters<typeof costService.getUserAccess>[0]): AppThunk =>
+  (dispatch) =>
+    dispatch(getUserAccessAction(params));
 
 const costActions = {
   getReport,
@@ -41,4 +49,8 @@ const costActions = {
   getUserAccess,
 };
 
-export { costActions, getReport, getSources, getUserAccess };
+type CostAction = ActionType<
+  typeof getReportAction | typeof getSourcesAction | typeof getUserAccessAction
+>;
+
+export { costActions, getReport, getSources, getUserAccess, CostAction };

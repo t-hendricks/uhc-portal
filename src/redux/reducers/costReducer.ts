@@ -24,8 +24,19 @@ import {
 import { getErrorState } from '../../common/errors';
 
 import { costConstants } from '../constants';
+import type { CostAction } from '../actions/costActions';
+import type { PromiseActionType, PromiseReducerState } from '../types';
+import type { ReportCost } from '../../types/cost-management.v1/models/ReportCost';
+import type { SourcePagination } from '../../types/cost-management.v1/models/SourcePagination';
+import type { UserAccessListPagination } from '../../types/cost-management.v1/models/UserAccessListPagination';
 
-const initialState = {
+type State = {
+  report: PromiseReducerState<ReportCost>;
+  sources: PromiseReducerState<SourcePagination>;
+  userAccess: PromiseReducerState<UserAccessListPagination>;
+};
+
+const initialState: State = {
   report: {
     ...baseRequestState,
   },
@@ -37,7 +48,7 @@ const initialState = {
   },
 };
 
-function costReducer(state = initialState, action) {
+function costReducer(state = initialState, action: PromiseActionType<CostAction>): State {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case

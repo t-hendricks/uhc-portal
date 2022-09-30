@@ -1,15 +1,17 @@
+import { action, ActionType } from 'typesafe-actions';
 import { createAuthorizationToken } from '../../services/accountManager';
+import type { AppThunk } from '../types';
 
 const ACTION_TYPE = 'FETCH_AUTHORIZATION_TOKEN';
 
-const createAuthToken = () => (dispatch) =>
-  dispatch({
-    type: ACTION_TYPE,
-    payload: createAuthorizationToken(),
-  });
+const createAuthTokenAction = () => action(ACTION_TYPE, createAuthorizationToken());
+
+const createAuthToken = (): AppThunk => (dispatch) => dispatch(createAuthTokenAction());
 
 const tollboothActions = {
   createAuthToken,
 };
 
-export { tollboothActions, ACTION_TYPE };
+type TollboothAction = ActionType<typeof createAuthTokenAction>;
+
+export { tollboothActions, ACTION_TYPE, TollboothAction };

@@ -6,19 +6,26 @@ import {
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
 
-import { DEFAULT_FLAVOUR_ID } from '../actions/flavourActions';
+import { DEFAULT_FLAVOUR_ID, FlavourAction } from '../actions/flavourActions';
 import { GET_DEFAULT_FLAVOUR } from '../constants/flavourConstants';
+import type { PromiseActionType, PromiseReducerState } from '../types';
+import type { Flavour } from '../../types/clusters_mgmt.v1/models/Flavour';
 
-export const initialState = {
+type State = PromiseReducerState<{
+  byID: { [id: string]: Flavour };
+}>;
+
+export const initialState: State = {
   ...baseRequestState,
-  // Presently we fetch only one flavour, 'osd-4', but data organized by id
+  // Presently we fetch only one flavour, 'osd-4' (DEFAULT_FLAVOUR_ID), but data organized by id
   // so in future we can switch to fetching all if more than 1 needed.
-  byID: {
-    [DEFAULT_FLAVOUR_ID]: null,
-  },
+  byID: {},
 };
 
-export default function flavoursReducer(state = initialState, action) {
+export default function flavoursReducer(
+  state = initialState,
+  action: PromiseActionType<FlavourAction>,
+): State {
   switch (action.type) {
     case PENDING_ACTION(GET_DEFAULT_FLAVOUR):
       return {

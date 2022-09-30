@@ -1,17 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-
 import { Card, CardBody, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
 import { tokenBox } from '~/components/tokens/Tokens';
-
 import { trackEvents } from '~/common/analytics';
-import { GlobalState } from '~/redux/types';
 import ExternalLink from '../../../../../common/ExternalLink';
 import DownloadAndOSSelection from '../../../../install/instructions/components/DownloadAndOSSelection';
 import links, { channels, tools } from '../../../../../../common/installLinks.mjs';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 const AuthenticateScreen = () => {
-  const token = useSelector<GlobalState>((state) => state.rosaReducer.offlineToken);
+  const token = useGlobalState((state) => state.rosaReducer.offlineToken);
   const loginCommand = `rosa login --token="${token}"`;
 
   return (

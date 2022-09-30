@@ -15,6 +15,9 @@ limitations under the License.
 */
 import * as Sentry from '@sentry/browser';
 import isEmpty from 'lodash/isEmpty';
+import { action, ActionType } from 'typesafe-actions';
+import type { AxiosError, AxiosResponse } from 'axios';
+import type { OCM } from 'openshift-assisted-ui-lib';
 
 import { clustersConstants } from '../constants';
 import {
@@ -38,67 +41,103 @@ import { editSubscriptionSettings } from './subscriptionSettingsActions';
 import isAssistedInstallSubscription from '../../common/isAssistedInstallerCluster';
 import { ASSISTED_INSTALLER_MERGE_LISTS_FEATURE } from '../constants/featureConstants';
 
-const invalidateClusters = () => (dispatch) =>
-  dispatch({
-    type: INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
-  });
+import type { Cluster } from '../../types/clusters_mgmt.v1';
+import {
+  SelfResourceReview,
+  SelfAccessReview,
+  SelfResourceReviewRequest,
+} from '../../types/authorizations.v1';
+import type {
+  Subscription,
+  SubscriptionList,
+  SubscriptionCreateRequest,
+  SubscriptionPatchRequest,
+} from '../../types/accounts_mgmt.v1';
+import type {
+  AugmentedCluster,
+  AugmentedClusterResponse,
+  ClusterWithPermissions,
+} from '../../types/types';
+import type { AppThunk, AppThunkDispatch } from '../types';
 
-const createClusterAndUpgradeSchedule = async (cluster, upgradeSchedule, dispatch) => {
+const invalidateClustersAction = () => action(INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS));
+const invalidateClusters = (): AppThunk => (dispatch) => dispatch(invalidateClustersAction());
+
+const createClusterAndUpgradeSchedule = async (
+  cluster: Cluster,
+  upgradeSchedule: boolean,
+  dispatch: AppThunkDispatch,
+) => {
   const clusterResponse = await clusterService.postNewCluster(cluster);
   if (upgradeSchedule) {
     const clusterID = clusterResponse.data.id;
     dispatch(postSchedule(clusterID, upgradeSchedule));
   }
-  invalidateClusters()(dispatch);
+  dispatch(invalidateClusters());
   return clusterResponse;
 };
 
-const createCluster = (params, upgradeSchedule) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.CREATE_CLUSTER,
-    payload: createClusterAndUpgradeSchedule(params, upgradeSchedule, dispatch),
-  });
+const createClusterAction = (clusterResponse: Promise<AxiosResponse<Cluster, any>>) =>
+  action(clustersConstants.CREATE_CLUSTER, clusterResponse);
+
+const createCluster =
+  (params: Cluster, upgradeSchedule: boolean): AppThunk =>
+  (dispatch) =>
+    dispatch(
+      createClusterAction(createClusterAndUpgradeSchedule(params, upgradeSchedule, dispatch)),
+    );
 
 const registerClusterAndUpdateSubscription = async (
-  registrationRequest,
-  subscriptionRequest,
-  dispatch,
+  registrationRequest: SubscriptionCreateRequest,
+  subscriptionRequest: SubscriptionPatchRequest,
+  dispatch: AppThunkDispatch,
 ) => {
   const registerClusterResponse = await accountsService.registerDisconnected(registrationRequest);
 
-  if (subscriptionRequest && registerClusterResponse.status === 201) {
+  if (
+    subscriptionRequest &&
+    registerClusterResponse.status === 201 &&
+    registerClusterResponse.data.id
+  ) {
     dispatch(editSubscriptionSettings(registerClusterResponse.data.id, subscriptionRequest));
   }
   dispatch(invalidateClusters());
   return registerClusterResponse;
 };
 
-const registerDisconnectedCluster = (registrationRequest, subscriptionRequest) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.CREATE_CLUSTER,
-    payload: registerClusterAndUpdateSubscription(
-      registrationRequest,
-      subscriptionRequest,
-      dispatch,
-    ),
-  });
+const registerDisconnectedCluster =
+  (
+    registrationRequest: SubscriptionCreateRequest,
+    subscriptionRequest: SubscriptionPatchRequest,
+  ): AppThunk =>
+  (dispatch) =>
+    dispatch(
+      action(
+        clustersConstants.CREATE_CLUSTER,
+        registerClusterAndUpdateSubscription(registrationRequest, subscriptionRequest, dispatch),
+      ),
+    );
 
-const clearClusterResponse = () => (dispatch) =>
-  dispatch({
-    type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
-  });
+const clearClusterResponseAction = () => action(clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE);
+const clearClusterResponse = (): AppThunk => (dispatch) => dispatch(clearClusterResponseAction());
 
-const editCluster = (id, cluster) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.EDIT_CLUSTER,
-    payload: clusterService.editCluster(id, cluster),
-  });
+const editClusterAction = (id: string, cluster: Cluster) =>
+  action(clustersConstants.EDIT_CLUSTER, clusterService.editCluster(id, cluster));
+const editCluster =
+  (id: string, cluster: Cluster): AppThunk =>
+  (dispatch) =>
+    dispatch(editClusterAction(id, cluster));
 
-const editClusterDisplayName = (subscriptionID, displayName) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.EDIT_CLUSTER,
-    payload: accountsService.editSubscription(subscriptionID, { display_name: displayName }),
-  });
+// TODO create a new action and separate reducer eg. EDIT_SUBSCRIPTION_DISPLAY_NAME
+const editClusterDisplayNameAction = (subscriptionID: string, displayName: string) =>
+  action(
+    clustersConstants.EDIT_CLUSTER,
+    accountsService.editSubscription(subscriptionID, { display_name: displayName }),
+  );
+const editClusterDisplayName =
+  (subscriptionID: string, displayName: string): AppThunk =>
+  (dispatch) =>
+    dispatch(editClusterDisplayNameAction(subscriptionID, displayName));
 
 /** Build a notification
  * Meta object with notifications. Notifications middleware uses it to get prepared to response to:
@@ -107,86 +146,106 @@ const editClusterDisplayName = (subscriptionID, displayName) => (dispatch) =>
  * - <type>_PENDING (not used) - once promise is rejected
  *
  * @param {string} name - name of a cluster
- * @param {string} action - action to display notification for (archive/unarchive)
+ * @param {boolean} archived - action to display notification for (archive/unarchive)
  * @returns {object} - notification object
  *
  * @see https://github.com/RedHatInsights/frontend-components/blob/master/packages/notifications/doc/notifications.md
  */
-const buildNotificationsMeta = (name, action) => ({
+const buildArchiveNotificationsMeta = (name: string, archived: boolean) => ({
   notifications: {
     fulfilled: {
       variant: 'success',
-      title: `Cluster ${name} has been ${action}d`,
+      title: `Cluster ${name} has been ${archived ? 'archived' : 'unarchived'}`,
       dismissDelay: 8000,
       dismissable: false,
     },
   },
 });
 
-const archiveCluster = (id, name) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.ARCHIVE_CLUSTER,
-    payload: clusterService.archiveCluster(id),
-    meta: buildNotificationsMeta(name, 'archive'),
-  });
+const archiveClusterAction = (id: string, name: string) =>
+  action(
+    clustersConstants.ARCHIVE_CLUSTER,
+    clusterService.archiveCluster(id),
+    buildArchiveNotificationsMeta(name, true),
+  );
+const archiveCluster =
+  (id: string, name: string): AppThunk =>
+  (dispatch) =>
+    dispatch(archiveClusterAction(id, name));
 
-const clearClusterArchiveResponse = () => (dispatch) =>
-  dispatch({
-    type: clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE,
-  });
+const clearClusterArchiveResponseAction = () =>
+  action(clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE);
+const clearClusterArchiveResponse = (): AppThunk => (dispatch) =>
+  dispatch(clearClusterArchiveResponseAction());
 
-const upgradeTrialCluster = (id, params) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.UPGRADE_TRIAL_CLUSTER,
-    payload: clusterService.upgradeTrialCluster(id, params),
-  });
+const upgradeTrialClusterAction = (id: string, params: Cluster) =>
+  action(clustersConstants.UPGRADE_TRIAL_CLUSTER, clusterService.upgradeTrialCluster(id, params));
+const upgradeTrialCluster =
+  (id: string, params: Cluster): AppThunk =>
+  (dispatch) =>
+    dispatch(upgradeTrialClusterAction(id, params));
 
-const clearUpgradeTrialClusterResponse = () => (dispatch) =>
-  dispatch({
-    type: clustersConstants.CLEAR_UPGRADE_TRIAL_CLUSTER_RESPONSE,
-  });
+const clearUpgradeTrialClusterResponseAction = () =>
+  action(clustersConstants.CLEAR_UPGRADE_TRIAL_CLUSTER_RESPONSE);
 
-const hibernateCluster = (id) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.HIBERNATE_CLUSTER,
-    payload: clusterService.hibernateCluster(id),
-  });
+const clearUpgradeTrialClusterResponse = (): AppThunk => (dispatch) =>
+  dispatch(clearUpgradeTrialClusterResponseAction());
 
-const clearHibernateClusterResponse = () => (dispatch) =>
-  dispatch({
-    type: clustersConstants.CLEAR_CLUSTER_HIBERNATE_RESPONSE,
-  });
+const hibernateClusterAction = (id: string) =>
+  action(clustersConstants.HIBERNATE_CLUSTER, clusterService.hibernateCluster(id));
+const hibernateCluster =
+  (id: string): AppThunk =>
+  (dispatch) =>
+    dispatch(hibernateClusterAction(id));
 
-const resumeCluster = (id) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.RESUME_CLUSTER,
-    payload: clusterService.resumeCluster(id),
-  });
+const clearHibernateClusterResponseAction = () =>
+  action(clustersConstants.CLEAR_CLUSTER_HIBERNATE_RESPONSE);
 
-const clearResumeClusterResponse = () => (dispatch) =>
-  dispatch({
-    type: clustersConstants.CLEAR_RESUME_CLUSTER_RESPONSE,
-  });
+const clearHibernateClusterResponse = (): AppThunk => (dispatch) =>
+  dispatch(clearHibernateClusterResponseAction());
 
-const unarchiveCluster = (id, name) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.UNARCHIVE_CLUSTER,
-    payload: clusterService.unarchiveCluster(id),
-    meta: buildNotificationsMeta(name, 'unarchive'),
-  });
+const resumeClusterAction = (id: string) =>
+  action(clustersConstants.RESUME_CLUSTER, clusterService.resumeCluster(id));
 
-const clearClusterUnarchiveResponse = () => (dispatch) =>
-  dispatch({
-    type: clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE,
-  });
+const resumeCluster =
+  (id: string): AppThunk =>
+  (dispatch) =>
+    dispatch(resumeClusterAction(id));
 
-const editClusterConsoleURL = (id, subscriptionID, consoleURL) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.EDIT_CLUSTER,
-    payload: clusterService
+const clearResumeClusterResponseAction = () =>
+  action(clustersConstants.CLEAR_RESUME_CLUSTER_RESPONSE);
+
+const clearResumeClusterResponse = (): AppThunk => (dispatch) =>
+  dispatch(clearResumeClusterResponseAction());
+
+const unarchiveClusterAction = (id: string, name: string) =>
+  action(
+    clustersConstants.UNARCHIVE_CLUSTER,
+    clusterService.unarchiveCluster(id),
+    buildArchiveNotificationsMeta(name, false),
+  );
+
+const unarchiveCluster =
+  (id: string, name: string): AppThunk =>
+  (dispatch) =>
+    dispatch(unarchiveClusterAction(id, name));
+
+const clearClusterUnarchiveResponseAction = () =>
+  action(clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE);
+const clearClusterUnarchiveResponse = (): AppThunk => (dispatch) =>
+  dispatch(clearClusterUnarchiveResponseAction());
+
+const editClusterConsoleURLAction = (id: string, subscriptionID: string, consoleURL: string) =>
+  action(
+    clustersConstants.EDIT_CLUSTER,
+    clusterService
       .editCluster(id, { console: { url: consoleURL } })
       .then(() => accountsService.editSubscription(subscriptionID, { console_url: consoleURL })),
-  });
+  );
+const editClusterConsoleURL =
+  (id: string, subscriptionID: string, consoleURL: string): AppThunk =>
+  (dispatch) =>
+    dispatch(editClusterConsoleURLAction(id, subscriptionID, consoleURL));
 
 /**
  * Collect a list of object IDs and build a SQL-like query searching for these IDs.
@@ -195,7 +254,7 @@ const editClusterConsoleURL = (id, subscriptionID, consoleURL) => (dispatch) =>
  * @param {*} items A collection of items
  * @param {string} field The field containing the ID to collect for the search
  */
-const buildSearchQuery = (items, field) => {
+const buildSearchQuery = (items: { [field: string]: unknown }[], field: string): string => {
   const IDs = new Set();
   items.forEach((item) => {
     const objectID = item[field];
@@ -207,10 +266,18 @@ const buildSearchQuery = (items, field) => {
 };
 
 // Builds an array in the order things were inserted into `subscriptionMap`.
-const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => {
-  const result = [];
+const createResponseForFetchClusters = (
+  subscriptionMap: Map<string, { cluster?: Cluster; subscription: Subscription }>,
+  canEdit: {
+    [clusterID: string]: boolean;
+  },
+  canDelete: {
+    [clusterID: string]: boolean;
+  },
+) => {
+  const result: ClusterWithPermissions[] = [];
   subscriptionMap.forEach((entry) => {
-    let cluster;
+    let cluster: ClusterWithPermissions;
     if (
       entry.subscription.managed &&
       entry.subscription.status !== subscriptionStatuses.DEPROVISIONED &&
@@ -218,11 +285,19 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
       !isEmpty(entry?.cluster)
     ) {
       // managed cluster, with data from Clusters Service
-      cluster = normalizeCluster(entry.cluster);
-      cluster.metrics = normalizeMetrics(entry.subscription.metrics);
+      cluster = {
+        ...normalizeCluster(entry.cluster),
+        subscription: entry.subscription,
+        // TODO <bug #> entry.subscription.metrics is an array but normalizeMetrics wants a single metric
+        // @ts-ignore
+        metrics: normalizeMetrics(entry.subscription.metrics),
+      };
     } else {
       cluster = isAssistedInstallSubscription(entry.subscription)
-        ? fakeAIClusterFromSubscription(entry.subscription, entry.cluster)
+        ? // TODO mismatched cluster types
+          // update when subscriptionMap contains separation of cluster and aiCluster
+          // remove cast to OCM.Cluster
+          fakeAIClusterFromSubscription(entry.subscription, entry.cluster as OCM.Cluster)
         : fakeClusterFromSubscription(entry.subscription);
     }
 
@@ -231,56 +306,80 @@ const createResponseForFetchClusters = (subscriptionMap, canEdit, canDelete) => 
 
     cluster.canEdit =
       !cluster.partialCS &&
-      (canEdit['*'] || !!canEdit[cluster.id]) &&
+      (canEdit['*'] || (!!cluster.id && !!canEdit[cluster.id])) &&
       entry.subscription.status !== subscriptionStatuses.DEPROVISIONED;
-    cluster.canDelete = !cluster.partialCS && (canDelete['*'] || !!canDelete[cluster.id]);
+    cluster.canDelete =
+      !cluster.partialCS && (canDelete['*'] || (!!cluster.id && !!canDelete[cluster.id!]));
     cluster.subscription = entry.subscription;
     result.push(cluster);
   });
   return result;
 };
 
-const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFlag) => {
-  let subscriptions;
-  let canEdit;
-  let canDelete;
+const fetchClustersAndPermissions = async (
+  clusterRequestParams: Parameters<typeof accountsService.getSubscriptions>[0],
+  aiMergeListsFeatureFlag: boolean,
+) => {
+  let subscriptions: AxiosResponse<SubscriptionList, any>;
+  let canEdit: {
+    [clusterID: string]: boolean;
+  };
+  let canDelete: {
+    [clusterID: string]: boolean;
+  };
 
   const promises = [
     accountsService.getSubscriptions(clusterRequestParams).then((response) => {
       subscriptions = mapListResponse(response, normalizeSubscription);
     }),
     authorizationsService
-      .selfResourceReview({ action: 'delete', resource_type: 'Cluster' })
+      .selfResourceReview({
+        action: SelfResourceReviewRequest.action.DELETE,
+        resource_type: SelfResourceReview.resource_type.CLUSTER,
+      })
       .then((response) => {
         canDelete = buildPermissionDict(response);
       }),
     authorizationsService
-      .selfResourceReview({ action: 'update', resource_type: 'Cluster' })
+      .selfResourceReview({
+        action: SelfResourceReviewRequest.action.UPDATE,
+        resource_type: SelfResourceReview.resource_type.CLUSTER,
+      })
       .then((response) => {
         canEdit = buildPermissionDict(response);
       }),
   ];
 
-  return Promise.all(promises).then(() => {
-    const items = subscriptions?.data?.items.filter(
+  const handler = () => {
+    const items = subscriptions?.data?.items?.filter(
       (item) => aiMergeListsFeatureFlag || !isAssistedInstallSubscription(item),
     );
 
     if (!items) {
-      return subscriptions;
+      return {
+        data: {
+          items: [] as ClusterWithPermissions[],
+          page: 0,
+          total: 0,
+          queryParams: { ...clusterRequestParams },
+        },
+      };
     }
 
     // map subscription ID to subscription info
     // Note: Map keeps order of insertions.
     // Will display them in order returned by getSubscriptions().
-    const subscriptionMap = new Map();
-    items.forEach((item) =>
-      subscriptionMap.set(item.cluster_id, {
-        subscription: item,
-      }),
-    );
+    // TODO Should subscriptMap contain `cluster` and `aiCluster` properties
+    const subscriptionMap = new Map<string, { cluster?: Cluster; subscription: Subscription }>();
+    items.forEach((item) => {
+      if (item.cluster_id) {
+        subscriptionMap.set(item.cluster_id, {
+          subscription: item,
+        });
+      }
+    });
 
-    const enrichForClusterService = () => {
+    const enrichForClusterService = async () => {
       // clusters-service only needed for managed clusters.
       const managedSubsriptions = items.filter(
         (s) => s.managed && s.status !== subscriptionStatuses.DEPROVISIONED,
@@ -298,16 +397,17 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
 
       // fetch managed clusters by subscription
       const clustersQuery = buildSearchQuery(managedSubsriptions, 'cluster_id');
-      return clusterService
-        .getClusters(clustersQuery)
-        .then((response) => {
+      try {
+        return await clusterService.getClusters(clustersQuery).then((response) => {
           const clusters = response?.data?.items;
-          clusters.forEach((cluster) => {
-            const entry = subscriptionMap.get(cluster.id);
-            if (entry !== undefined) {
-              // store cluster into subscription map
-              entry.cluster = cluster;
-              subscriptionMap.set(cluster.id, entry);
+          clusters?.forEach((cluster) => {
+            if (cluster.id) {
+              const entry = subscriptionMap.get(cluster.id);
+              if (entry !== undefined) {
+                // store cluster into subscription map
+                entry.cluster = cluster;
+                subscriptionMap.set(cluster.id, entry);
+              }
             }
           });
           return {
@@ -316,13 +416,11 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
               page: subscriptions.data.page,
               total: subscriptions.data.total || 0,
               queryParams: { ...clusterRequestParams },
-              meta: {
-                clustersServiceError: false,
-              },
             },
           };
-        })
-        .catch((e) => ({
+        });
+      } catch (e) {
+        return {
           // When clusters service is down, return AMS data only
           data: {
             items: createResponseForFetchClusters(subscriptionMap, canEdit, canDelete),
@@ -330,16 +428,17 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
             total: subscriptions.data.total || 0,
             queryParams: { ...clusterRequestParams },
             meta: {
-              clustersServiceError: e,
+              clustersServiceError: e as AxiosError,
             },
           },
-        }));
+        };
+      }
     };
 
-    const subscriptionIds = [];
+    const subscriptionIds: string[] = [];
     if (aiMergeListsFeatureFlag) {
       subscriptionMap.forEach(({ subscription }) => {
-        if (isAssistedInstallSubscription(subscription)) {
+        if (isAssistedInstallSubscription(subscription) && subscription.id) {
           subscriptionIds.push(subscription.id);
         }
       });
@@ -356,28 +455,39 @@ const fetchClustersAndPermissions = (clusterRequestParams, aiMergeListsFeatureFl
         const clusterId = aiCluster.id;
         const entry = subscriptionMap.get(clusterId);
         if (entry) {
+          // TODO different cluster types?
+          // Possibly assign to entry.aiCluster to keep separate types
+          // @ts-ignore
           entry.cluster = aiCluster;
           subscriptionMap.set(clusterId, entry);
         }
       });
       return enrichForClusterService();
     });
-  });
+  };
+
+  await Promise.all(promises);
+  return handler();
 };
 
-const fetchClusters = (params) => (dispatch, getState) =>
-  dispatch({
-    type: clustersConstants.GET_CLUSTERS,
-    payload: fetchClustersAndPermissions(
-      params,
-      getState().features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE],
-    ),
-  });
+const fetchClustersAction = (
+  params: Parameters<typeof fetchClustersAndPermissions>[0],
+  feature: boolean,
+) => action(clustersConstants.GET_CLUSTERS, fetchClustersAndPermissions(params, feature));
 
-const fetchSingleClusterAndPermissions = async (subscriptionID) => {
-  let canEdit;
-  let canEditOCMRoles;
-  let canViewOCMRoles;
+const fetchClusters =
+  (params: Parameters<typeof fetchClustersAndPermissions>[0]): AppThunk =>
+  (dispatch, getState) =>
+    dispatch(
+      fetchClustersAction(params, getState().features[ASSISTED_INSTALLER_MERGE_LISTS_FEATURE]),
+    );
+
+const fetchSingleClusterAndPermissions = async (
+  subscriptionID: string,
+): Promise<AugmentedClusterResponse> => {
+  let canEdit = false;
+  let canEditOCMRoles = false;
+  let canViewOCMRoles = false;
 
   const subscription = await accountsService.getSubscription(subscriptionID);
   subscription.data = normalizeSubscription(subscription.data);
@@ -386,8 +496,8 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   if (subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
     await authorizationsService
       .selfAccessReview({
-        action: 'update',
-        resource_type: 'Subscription',
+        action: SelfAccessReview.action.UPDATE,
+        resource_type: SelfAccessReview.resource_type.SUBSCRIPTION,
         subscription_id: subscriptionID,
       })
       .then((response) => {
@@ -395,8 +505,8 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
       });
     await authorizationsService
       .selfAccessReview({
-        action: 'create',
-        resource_type: 'SubscriptionRoleBinding',
+        action: SelfAccessReview.action.CREATE,
+        resource_type: SelfAccessReview.resource_type.SUBSCRIPTION_ROLE_BINDING,
         subscription_id: subscriptionID,
       })
       .then((response) => {
@@ -404,8 +514,8 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
       });
     await authorizationsService
       .selfAccessReview({
-        action: 'get',
-        resource_type: 'SubscriptionRoleBinding',
+        action: SelfAccessReview.action.GET,
+        resource_type: SelfAccessReview.resource_type.SUBSCRIPTION_ROLE_BINDING,
         subscription_id: subscriptionID,
       })
       .then((response) => {
@@ -417,23 +527,35 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
     (subscription.data.managed || isAROCluster) &&
     subscription.data.status !== subscriptionStatuses.DEPROVISIONED
   ) {
-    const cluster = await clusterService.getClusterDetails(subscription.data.cluster_id);
-    cluster.data = normalizeCluster(cluster.data);
+    // TODO cluster_id is optional in the schema, remove cast
+    const clusterResponse = await clusterService.getClusterDetails(
+      subscription.data.cluster_id as string,
+    );
+
+    const cluster: AugmentedClusterResponse = {
+      data: {
+        ...normalizeCluster(clusterResponse.data),
+        subscription: subscription.data,
+        // take metrics from AMS (even for OSD)
+        metrics: normalizeMetrics(subscription.data.metrics?.[0]),
+      },
+    };
 
     const upgradeGates = await clusterService.getClusterGateAgreements(
-      subscription.data.cluster_id,
+      subscription.data.cluster_id as string,
     );
 
     cluster.data.upgradeGates = upgradeGates.data?.items || [];
 
     const canDeleteAccessReviewResponse = await authorizationsService.selfAccessReview({
-      action: 'delete',
-      resource_type: 'Cluster',
+      action: SelfAccessReview.action.DELETE,
+      resource_type: SelfAccessReview.resource_type.CLUSTER,
       cluster_id: subscription.data.cluster_id,
     });
 
     const limitedSupportReasons = await clusterService.getLimitedSupportReasons(
-      subscription.data.cluster_id,
+      // TODO cluster_id is optional in the schema, remove cast
+      subscription.data.cluster_id as string,
     );
     cluster.data.limitedSupportReasons = limitedSupportReasons.data?.items || [];
 
@@ -441,90 +563,119 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
     cluster.data.canEditOCMRoles = canEditOCMRoles;
     cluster.data.canViewOCMRoles = canViewOCMRoles;
     cluster.data.canDelete = !!canDeleteAccessReviewResponse?.data?.allowed;
-    if (subscription.data.metrics !== undefined) {
-      [cluster.data.metrics] = subscription.data.metrics; // take metrics from AMS (even for OSD)
-    }
-    cluster.data.metrics = normalizeMetrics(cluster.data.metrics);
 
-    // TODO later, refactor, this should return subscription as the base resource
-    cluster.data.subscription = subscription.data;
     return cluster;
   }
 
-  const cluster = {};
-  if (isAssistedInstallSubscription(subscription.data)) {
+  let cluster: AugmentedCluster;
+  if (isAssistedInstallSubscription(subscription.data) && subscription.data.cluster_id) {
     try {
       const aiCluster = await assistedService.getAICluster(subscription.data.cluster_id);
-      cluster.data = fakeAIClusterFromSubscription(subscription.data, aiCluster?.data || null);
-      cluster.data.aiCluster = aiCluster.data;
+      cluster = fakeAIClusterFromSubscription(subscription.data, aiCluster?.data || null);
+      cluster.aiCluster = aiCluster.data;
     } catch (e) {
-      if (e.response?.status === 404) {
+      if ((e as AxiosError)?.response?.status === 404) {
         // The cluster is garbage collected or the user does not have privileges
         // eslint-disable-next-line no-console
         console.info(
           'Failed to query assisted-installer cluster id: ',
           subscription.data.cluster_id,
         );
-        cluster.data = fakeClusterFromSubscription(subscription.data);
+        cluster = fakeClusterFromSubscription(subscription.data);
       } else {
         throw e;
       }
     }
     try {
       const { data: featureSupportLevels } = await assistedService.getAIFeatureSupportLevels();
-      cluster.data.aiSupportLevels = featureSupportLevels;
+      cluster.aiSupportLevels = featureSupportLevels;
     } catch (e) {
       Sentry.captureException(
-        new Error(`Failed to query feature support levels: ${JSON.stringify(e.response?.data)}`),
+        new Error(
+          `Failed to query feature support levels: ${JSON.stringify(
+            (e as AxiosError).response?.data,
+          )}`,
+        ),
       );
     }
   } else {
-    cluster.data = fakeClusterFromSubscription(subscription.data);
+    cluster = fakeClusterFromSubscription(subscription.data);
   }
 
-  cluster.data.canEdit = canEdit;
-  cluster.data.canEditOCMRoles = canEditOCMRoles;
-  cluster.data.canViewOCMRoles = canViewOCMRoles;
-  cluster.data.canDelete = false; // OCP clusters can't be deleted
-  cluster.data.subscription = subscription.data;
-  return cluster;
+  cluster.canEdit = canEdit;
+  cluster.canEditOCMRoles = canEditOCMRoles;
+  cluster.canViewOCMRoles = canViewOCMRoles;
+  cluster.canDelete = false; // OCP clusters can't be deleted
+  cluster.subscription = subscription.data;
+  return {
+    data: cluster,
+  };
 };
 
-const fetchClusterDetails = (subscriptionID) => (dispatch) => {
-  dispatch({
-    type: clustersConstants.GET_CLUSTER_DETAILS,
-    payload: fetchSingleClusterAndPermissions(subscriptionID),
-  });
-};
-
-const setClusterDetails =
-  (cluster, mergeDetails = false) =>
+const fetchClusterDetailsAction = (subscriptionID: string) =>
+  action(clustersConstants.GET_CLUSTER_DETAILS, fetchSingleClusterAndPermissions(subscriptionID));
+const fetchClusterDetails =
+  (subscriptionID: string): AppThunk =>
   (dispatch) =>
-    dispatch({
-      type: clustersConstants.SET_CLUSTER_DETAILS,
-      payload: { cluster, mergeDetails },
-    });
+    dispatch(fetchClusterDetailsAction(subscriptionID));
 
-const clearClusterDetails = () => (dispatch) =>
-  dispatch({
-    type: clustersConstants.CLEAR_CLUSTER_DETAILS,
-  });
-const resetCreatedClusterResponse = () => (dispatch) =>
-  dispatch({
-    type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
-  });
+const setClusterDetailsAction = (cluster: AugmentedCluster, mergeDetails = false) =>
+  action(clustersConstants.SET_CLUSTER_DETAILS, { cluster, mergeDetails });
+const setClusterDetails =
+  (cluster: AugmentedCluster, mergeDetails = false): AppThunk =>
+  (dispatch) =>
+    dispatch(setClusterDetailsAction(cluster, mergeDetails));
 
-const getClusterStatus = (clusterID) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.GET_CLUSTER_STATUS,
-    payload: clusterService.getClusterStatus(clusterID),
-  });
+const clearClusterDetailsAction = () => action(clustersConstants.CLEAR_CLUSTER_DETAILS);
+const clearClusterDetails = (): AppThunk => (dispatch) => dispatch(clearClusterDetailsAction());
 
-const getInstallableVersions = (isRosa) => (dispatch) =>
-  dispatch({
-    type: clustersConstants.GET_CLUSTER_VERSIONS,
-    payload: clusterService.getInstallableVersions(isRosa),
-  });
+const resetCreatedClusterResponseAction = () =>
+  action(clustersConstants.RESET_CREATED_CLUSTER_RESPONSE);
+const resetCreatedClusterResponse = (): AppThunk => (dispatch) =>
+  dispatch(resetCreatedClusterResponseAction());
+
+const getClusterStatusAction = (clusterID: string) =>
+  action(clustersConstants.GET_CLUSTER_STATUS, clusterService.getClusterStatus(clusterID));
+
+const getClusterStatus =
+  (clusterID: string): AppThunk =>
+  (dispatch) =>
+    dispatch(getClusterStatusAction(clusterID));
+
+const getInstallableVersionsAction = (isRosa: boolean) =>
+  action(clustersConstants.GET_CLUSTER_VERSIONS, clusterService.getInstallableVersions(isRosa));
+
+const getInstallableVersions =
+  (isRosa: boolean): AppThunk =>
+  (dispatch) =>
+    dispatch(getInstallableVersionsAction(isRosa));
+
+type ClusterAction = ActionType<
+  | typeof fetchClusterDetailsAction
+  | typeof setClusterDetailsAction
+  | typeof invalidateClustersAction
+  | typeof createClusterAction
+  | typeof clearClusterResponseAction
+  | typeof editClusterAction
+  | typeof editClusterDisplayNameAction
+  | typeof archiveClusterAction
+  | typeof clearClusterArchiveResponseAction
+  | typeof upgradeTrialClusterAction
+  | typeof clearUpgradeTrialClusterResponseAction
+  | typeof hibernateClusterAction
+  | typeof clearHibernateClusterResponseAction
+  | typeof resumeClusterAction
+  | typeof clearResumeClusterResponseAction
+  | typeof unarchiveClusterAction
+  | typeof clearClusterUnarchiveResponseAction
+  | typeof editClusterConsoleURLAction
+  | typeof fetchClustersAction
+  | typeof fetchClusterDetailsAction
+  | typeof clearClusterDetailsAction
+  | typeof resetCreatedClusterResponseAction
+  | typeof getClusterStatusAction
+  | typeof getInstallableVersionsAction
+>;
 
 const clustersActions = {
   clearClusterResponse,
@@ -568,4 +719,5 @@ export {
   getClusterStatus,
   upgradeTrialCluster,
   clearUpgradeTrialClusterResponse,
+  ClusterAction,
 };

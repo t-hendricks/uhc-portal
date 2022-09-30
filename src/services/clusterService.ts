@@ -75,14 +75,16 @@ const editCluster = (clusterID: string, data: Cluster) =>
   apiRequest.patch<Cluster>(`/api/clusters_mgmt/v1/clusters/${clusterID}`, data);
 
 const deleteCluster = (clusterID: string) =>
-  apiRequest.delete(`/api/clusters_mgmt/v1/clusters/${clusterID}`);
+  apiRequest.delete<unknown>(`/api/clusters_mgmt/v1/clusters/${clusterID}`);
 
 const getCloudProviders = () =>
   apiRequest.get<{
     /**
      * Retrieved list of cloud providers.
+     * Includes additional `regions` property since `fetchRegions = true`.
      */
-    items?: Array<CloudProvider>;
+    // TODO is CloudProvider schema not up to date?
+    items?: Array<CloudProvider & { regions?: CloudRegion[] }>;
     /**
      * Index of the requested page, where one corresponds to the first page.
      */
@@ -116,7 +118,9 @@ const getIdentityProviders = (clusterID: string) =>
   );
 
 const deleteIdentityProvider = (clusterID: string, idpID: string) =>
-  apiRequest.delete(`/api/clusters_mgmt/v1/clusters/${clusterID}/identity_providers/${idpID}`);
+  apiRequest.delete<unknown>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/identity_providers/${idpID}`,
+  );
 
 const createClusterIdentityProvider = (clusterID: string, data: IdentityProvider) =>
   apiRequest.post<IdentityProvider>(
@@ -160,7 +164,7 @@ const addClusterGroupUser = (clusterID: string, groupID: string, userID: string)
   });
 
 const deleteClusterGroupUser = (clusterID: string, groupID: string, userID: string) =>
-  apiRequest.delete(
+  apiRequest.delete<unknown>(
     `/api/clusters_mgmt/v1/clusters/${clusterID}/groups/${groupID}/users/${encodeURIComponent(
       userID,
     )}`,
@@ -213,10 +217,10 @@ const unarchiveCluster = (subscriptionID: string) =>
   );
 
 const hibernateCluster = (clusterID: string) =>
-  apiRequest.post(`/api/clusters_mgmt/v1/clusters/${clusterID}/hibernate`);
+  apiRequest.post<unknown>(`/api/clusters_mgmt/v1/clusters/${clusterID}/hibernate`);
 
 const resumeCluster = (clusterID: string) =>
-  apiRequest.post(`/api/clusters_mgmt/v1/clusters/${clusterID}/resume`);
+  apiRequest.post<unknown>(`/api/clusters_mgmt/v1/clusters/${clusterID}/resume`);
 
 const getAddOns = (clusterID: string) =>
   apiRequest.get<{
@@ -252,7 +256,7 @@ const updateClusterAddOn = (clusterID: string, addOnID: string, data: AddOnInsta
   );
 
 const deleteClusterAddOn = (clusterID: string, addOnID: string) =>
-  apiRequest.delete(`/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`);
+  apiRequest.delete<unknown>(`/api/clusters_mgmt/v1/clusters/${clusterID}/addons/${addOnID}`);
 
 const getInstallableVersions = (isRosa: boolean) =>
   apiRequest.get<{
@@ -328,7 +332,7 @@ const getGrants = (clusterID: string) =>
   }>(`/api/clusters_mgmt/v1/clusters/${clusterID}/aws_infrastructure_access_role_grants`);
 
 const addGrant = (clusterID: string, roleId: string, arn: string) =>
-  apiRequest.post(
+  apiRequest.post<AWSInfrastructureAccessRoleGrant>(
     `/api/clusters_mgmt/v1/clusters/${clusterID}/aws_infrastructure_access_role_grants/`,
     {
       role: {
@@ -339,7 +343,7 @@ const addGrant = (clusterID: string, roleId: string, arn: string) =>
   );
 
 const deleteGrant = (clusterID: string, grantId: string) =>
-  apiRequest.delete(
+  apiRequest.delete<unknown>(
     `/api/clusters_mgmt/v1/clusters/${clusterID}/aws_infrastructure_access_role_grants/${grantId}`,
   );
 
@@ -376,7 +380,7 @@ const addAdditionalIngress = (clusterID: string, data: Ingress) =>
   apiRequest.post<Ingress>(`/api/clusters_mgmt/v1/clusters/${clusterID}/ingresses`, data);
 
 const deleteAdditionalIngress = (clusterID: string, routerID: string) =>
-  apiRequest.delete(`/api/clusters_mgmt/v1/clusters/${clusterID}/ingresses/${routerID}`);
+  apiRequest.delete<unknown>(`/api/clusters_mgmt/v1/clusters/${clusterID}/ingresses/${routerID}`);
 
 const postUpgradeSchedule = (clusterID: string, schedule: UpgradePolicy) =>
   apiRequest.post<UpgradePolicy>(
@@ -421,7 +425,9 @@ const getUpgradeScheduleState = (clusterID: string, policyID: string) =>
   );
 
 const deleteUpgradeSchedule = (clusterID: string, policyID: string) =>
-  apiRequest.delete(`/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}`);
+  apiRequest.delete<unknown>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/upgrade_policies/${policyID}`,
+  );
 
 const getMachinePools = (clusterID: string) =>
   apiRequest.get<{
@@ -453,7 +459,9 @@ const scaleMachinePool = (clusterID: string, machinePoolID: string, data: Machin
   );
 
 const deleteMachinePool = (clusterID: string, machinePoolID: string) =>
-  apiRequest.delete(`/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools/${machinePoolID}`);
+  apiRequest.delete<unknown>(
+    `/api/clusters_mgmt/v1/clusters/${clusterID}/machine_pools/${machinePoolID}`,
+  );
 
 const upgradeTrialCluster = (clusterID: string, data: Cluster) =>
   apiRequest.patch<Cluster>(`/api/clusters_mgmt/v1/clusters/${clusterID}`, data);
@@ -507,7 +515,29 @@ const listAWSVPCs = (credentials: AWS, region: string) =>
   });
 
 const listGCPVPCs = (credentials: GCP, region: string) =>
-  apiRequest.post('/api/clusters_mgmt/v1/gcp_inquiries/vpcs', {
+  apiRequest.post<{
+    /**
+     * Retrieved list of cloud VPC.
+     */
+    items?: Array<CloudVPC>;
+    /**
+     * Index of the returned page, where one corresponds to the first page. As this
+     * collection doesn't support paging the result will always be `1`.
+     */
+    page?: number;
+    /**
+     * Number of items that will be contained in the returned page. As this collection
+     * doesn't support paging or searching the result will always be the total number of
+     * vpcs of the provider.
+     */
+    size?: number;
+    /**
+     * Total number of items of the collection that match the search criteria,
+     * regardless of the size of the page. As this collection doesn't support paging or
+     * searching the result will always be the total number of available vpcs of the provider.
+     */
+    total?: number;
+  }>('/api/clusters_mgmt/v1/gcp_inquiries/vpcs', {
     gcp: credentials,
     region: {
       id: region,
@@ -659,6 +689,7 @@ const getOperatorRoleCommands = (
   clusterID: string,
   installerRoleARN: string,
 ) =>
+  // TODO response type?
   apiRequest.post(`/api/clusters_mgmt/v1/clusters/${clusterID}/sts_commands`, {
     account_id: awsAccountID,
     sts: {

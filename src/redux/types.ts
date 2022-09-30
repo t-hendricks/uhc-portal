@@ -1,62 +1,50 @@
-/**
- * TODO, update API related types when generated API types are available
- */
-import { RouterState } from 'connected-react-router';
+import type { AxiosError } from 'axios';
+import type { AnyAction } from 'redux';
+import type { ActionType as PActionType } from 'redux-promise-middleware';
+import type { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import type { Action, TypeConstant } from 'typesafe-actions';
+import type { ErrorState } from '../types/types';
+import type { GlobalState } from './store';
 
-export interface ApiRequest {
-  details: string;
-  error: boolean;
-  errorDetails: any[];
-  errorMessage: string;
-  fulfilled: boolean;
-  pending: boolean;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, GlobalState, unknown, AnyAction>;
+
+export type AppThunkDispatch = ThunkDispatch<GlobalState, unknown, AnyAction>;
+
+export type BaseRequestState = {
+  fulfilled: false;
+  error: false;
+  pending: false;
+  errorMessage: '';
+  errorDetails: null;
+};
+
+export type PromiseReducerState<T = unknown> =
+  | (Partial<T> & { pending: boolean; fulfilled: false; error: false })
+  // Should error state have access to the Partial<T> or should it be only ErrorState?
+  | (Partial<T> & ErrorState)
+  | (T & { pending: boolean; fulfilled: true; error: boolean });
+
+interface AsyncAction extends Action {
+  payload?: Promise<any>;
 }
 
-export interface QuotaList {
-  items: any[];
-}
+export type Merge<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
 
-export interface Organization extends ApiRequest {
-  quotaList: QuotaList;
-}
+type PromiseAction<TAction extends AsyncAction, TActionType extends PActionType> = Merge<
+  Omit<TAction, 'type' | 'payload'> & {
+    type: `${TAction['type']}_${TActionType}`;
+    payload: TActionType extends PActionType.Rejected
+      ? AxiosError<Awaited<TAction['payload']>['data']>
+      : Awaited<TAction['payload']>;
+  }
+>;
 
-export interface UserProfile {
-  organization: Organization;
+export type PromiseActionType<T> = T extends {
+  type: TypeConstant;
+  payload: Promise<any>;
 }
-
-export interface Modal {
-  data: any;
-}
-
-export interface RosaApi {
-  getAWSAccountIDsResponse: {
-    data: any[];
-  };
-  offlineToken: string;
-}
-
-export interface CcsCredentialsValidity extends ApiRequest {
-  cloudProvider: string;
-  credentials: any;
-}
-
-export interface CcsInquiries {
-  ccsCredentialsValidity: CcsCredentialsValidity;
-}
-
-// eslint-disable-next-line camelcase
-export type Version = { id: string; raw_id: string; default: boolean };
-
-export interface Clusters {
-  clusterVersions: { versions: Version[] } & ApiRequest;
-}
-
-export interface GlobalState {
-  modal: Modal;
-  rosaReducer: RosaApi;
-  features: Record<string, boolean>;
-  userProfile: UserProfile;
-  router: RouterState;
-  ccsInquiries: CcsInquiries;
-  clusters: Clusters;
-}
+  ?
+      | PromiseAction<T, PActionType.Fulfilled>
+      | PromiseAction<T, PActionType.Pending>
+      | PromiseAction<T, PActionType.Rejected>
+  : T;

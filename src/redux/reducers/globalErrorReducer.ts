@@ -1,19 +1,22 @@
+import { GlobalErrorAction } from '../actions/globalErrorActions';
 import { SET_GLOBAL_ERROR, CLEAR_GLOBAL_ERROR } from '../constants/globalErrorConstants';
 
-const initialState = {
+type State = {
+  errorMessage?: string;
+  errorTitle?: string;
+  sourceComponent?: string;
+};
+
+const initialState: State = {
   errorMessage: undefined,
   errorTitle: undefined,
   sourceComponent: undefined,
 };
 
-function globalErrorReducer(state = initialState, action) {
+function globalErrorReducer(state = initialState, action: GlobalErrorAction): State {
   switch (action.type) {
     case SET_GLOBAL_ERROR:
-      return {
-        errorMessage: action.payload.errorMessage,
-        errorTitle: action.payload.errorTitle,
-        sourceComponent: action.payload.sourceComponent,
-      };
+      return action.payload;
     case CLEAR_GLOBAL_ERROR:
       /*
       The "Clear" action suppots two modes - if requestingComponent is set, this is
@@ -23,10 +26,7 @@ function globalErrorReducer(state = initialState, action) {
       When requestingComponent is not set, clear the state uncodintionally - this is for
       allowing the user to close the error alert by clicking the X button.
       */
-      if (
-        !action.payload.requestingComponent ||
-        action.payload.requestingComponent === state.sourceComponent
-      ) {
+      if (!action.payload || action.payload === state.sourceComponent) {
         return initialState;
       }
       return state;

@@ -171,7 +171,7 @@ const normalizeMetrics = (metrics: OneMetric | undefined): OneMetric => {
   return ret;
 };
 
-const normalizeCluster = <C extends Pick<Cluster, 'product' | 'version'>>(cluster: C): C => {
+const normalizeCluster = <C extends Cluster>(cluster: C): C => {
   const result = { ...cluster };
 
   result.product = {

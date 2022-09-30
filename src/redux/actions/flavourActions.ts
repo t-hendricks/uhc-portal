@@ -1,3 +1,4 @@
+import { action, ActionType } from 'typesafe-actions';
 import { flavourConstants } from '../constants';
 import { clusterService } from '../../services';
 
@@ -5,7 +6,7 @@ import { clusterService } from '../../services';
 // use same flavour 'osd-4'.  Save a bit of traffic by fetching only it.
 export const DEFAULT_FLAVOUR_ID = 'osd-4';
 
-export const getDefaultFlavour = () => ({
-  type: flavourConstants.GET_DEFAULT_FLAVOUR,
-  payload: clusterService.getFlavour(DEFAULT_FLAVOUR_ID),
-});
+export const getDefaultFlavour = () =>
+  action(flavourConstants.GET_DEFAULT_FLAVOUR, clusterService.getFlavour(DEFAULT_FLAVOUR_ID));
+
+export type FlavourAction = ActionType<typeof getDefaultFlavour>;

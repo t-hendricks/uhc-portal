@@ -13,8 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
-import get from 'lodash/get';
 import keyBy from 'lodash/keyBy';
 import {
   REJECTED_ACTION,
@@ -25,19 +23,30 @@ import {
 import { getErrorState } from '../../common/errors';
 
 import { machineTypesConstants } from '../constants';
+import { PromiseActionType, PromiseReducerState } from '../types';
+import { MachineTypesAction } from '../actions/machineTypesActions';
+import { MachineType } from '../../types/clusters_mgmt.v1/models/MachineType';
 
-const initialState = {
+type State = PromiseReducerState<{
+  types: {
+    [key: string]: MachineType[];
+  };
+  typesByID: { [id: string]: any };
+}>;
+
+const initialState: State = {
   ...baseRequestState,
   types: {},
   typesByID: {},
 };
 
-function mapMachineTypesById(types) {
-  const machineTypes = [].concat(get(types, 'aws', []), get(types, 'gcp', []));
-  return keyBy(machineTypes, 'id');
-}
+const mapMachineTypesById = (types: { [id: string]: MachineType[] }) =>
+  keyBy([...(types.aws ?? []), ...(types.gcp ?? [])], 'id');
 
-function machineTypesReducer(state = initialState, action) {
+function machineTypesReducer(
+  state = initialState,
+  action: PromiseActionType<MachineTypesAction>,
+): State {
   switch (action.type) {
     case REJECTED_ACTION(machineTypesConstants.GET_MACHINE_TYPES):
       return {

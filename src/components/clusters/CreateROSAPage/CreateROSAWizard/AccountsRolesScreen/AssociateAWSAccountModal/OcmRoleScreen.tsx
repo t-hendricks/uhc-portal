@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-
 import {
   Accordion,
   AccordionItem,
@@ -16,8 +14,6 @@ import {
   TextVariants,
   Title,
 } from '@patternfly/react-core';
-
-import { GlobalState } from '~/redux/types';
 import { trackEvents } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
 import PopoverHintWithTitle from '~/components/common/PopoverHintWithTitle';
@@ -25,9 +21,10 @@ import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { RosaCliCommand } from '../constants/cliCommands';
 import MultipleAccountsInfoBox from './MultipleAccountsInfoBox';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 export const OcmRoleScreen = () => {
-  const hasAwsAccounts = useSelector<GlobalState>(
+  const hasAwsAccounts = useGlobalState(
     (state) => !!state.rosaReducer.getAWSAccountIDsResponse?.data?.length,
   );
   const [isAlertShown, setIsAlertShown] = useState(true);

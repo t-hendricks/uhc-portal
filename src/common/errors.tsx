@@ -91,7 +91,7 @@ const getErrorMessage = (action: { type?: string; payload?: AxiosError<any> }): 
  * and it can be presented by ApiError.
  * @param {*} response The error response.
  */
-const hasOwnErrorPage = (response: AxiosResponse<any, any> | undefined) =>
+const hasOwnErrorPage = (response: AxiosResponse | undefined) =>
   response?.data?.code === TERMS_REQUIRED_CODE;
 
 /**

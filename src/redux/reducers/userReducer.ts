@@ -7,26 +7,48 @@ import {
   baseRequestState,
 } from '../reduxHelpers';
 import { getErrorState } from '../../common/errors';
+import { UserAction } from '../actions/userActions';
+import { PromiseActionType, PromiseReducerState } from '../types';
+import { Organization, QuotaCost } from '../../types/accounts_mgmt.v1';
+import { UserInfo } from '../../types/types';
 
-const initialState = {
+export type OrganizationState = {
+  details: Organization;
+  quotaList: {
+    items?: QuotaCost[];
+  };
+  timestamp: number;
+};
+
+export type State = {
+  keycloakProfile: Partial<UserInfo>;
+  organization: PromiseReducerState<OrganizationState>;
+  selfTermsReviewResult: PromiseReducerState<{
+    ['terms_available']: boolean;
+    ['terms_required']: boolean;
+    ['redirect_url']: string;
+  }>;
+};
+
+const initialState: State = {
   keycloakProfile: {},
   organization: {
-    details: null,
+    ...baseRequestState,
     quotaList: {
       items: [],
     },
-    ...baseRequestState,
+    timestamp: 0,
   },
   selfTermsReviewResult: {
+    ...baseRequestState,
     terms_available: false,
     terms_required: false,
     redirect_url: '',
-    ...baseRequestState,
   },
 };
 
-function userProfile(state = initialState, action) {
-  return produce(state, (draft) => {
+const userProfile = (state = initialState, action: PromiseActionType<UserAction>): State =>
+  produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
       case userConstants.USER_INFO_RESPONSE:
@@ -49,7 +71,7 @@ function userProfile(state = initialState, action) {
           fulfilled: true,
           details: action.payload.organization,
           quotaList: action.payload.quota,
-          timestamp: new Date(),
+          timestamp: new Date().getTime(),
         };
         break;
       // SELF_TERMS_REVIEW
@@ -67,10 +89,10 @@ function userProfile(state = initialState, action) {
           ...initialState.selfTermsReviewResult,
           fulfilled: true,
           ...action.payload.data,
+          redirect_url: action.payload.data.redirect_url ?? '',
         };
         break;
     }
   });
-}
 
 export default userProfile;

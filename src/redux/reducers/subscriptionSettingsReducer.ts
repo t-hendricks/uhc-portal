@@ -24,13 +24,26 @@ import {
 import { getErrorState } from '../../common/errors';
 
 import { subscriptionSettingsConstants } from '../constants';
+import { PromiseActionType, PromiseReducerState } from '../types';
+import { SubscriptionSettingsAction } from '../actions/subscriptionSettingsActions';
+import { Subscription } from '../../types/clusters_mgmt.v1/models/Subscription';
 
-const initialState = {
+// TODO requestState separated from data is inconsistent with other reducers
+// although the separation is a better pattern
+type State = {
+  requestState: PromiseReducerState<{}>;
+  data: Subscription;
+};
+
+const initialState: State = {
   requestState: baseRequestState,
   data: {},
 };
 
-function subscriptionSettingsReducer(state = initialState, action) {
+function subscriptionSettingsReducer(
+  state = initialState,
+  action: PromiseActionType<SubscriptionSettingsAction>,
+): State {
   // eslint-disable-next-line consistent-return
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
