@@ -15,7 +15,7 @@ const getClusterInsights = (clusterId: string) =>
       };
     };
     status?: string;
-  }>(`/clusters/${clusterId}/report`, {
+  }>(`/cluster/${clusterId}/reports`, {
     baseURL: `${config.configData.insightsGateway}/insights-results-aggregator/v2`,
   });
 
