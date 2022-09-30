@@ -20,7 +20,7 @@ import {
 import { GlobalState } from '~/redux/store';
 import { trackEvents } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
-import PopoverHint from '~/components/common/PopoverHint';
+import RoleTypesPopover from './RoleTypesPopover';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { RosaCliCommand } from '../constants/cliCommands';
@@ -66,11 +66,7 @@ export const OcmRoleScreen = () => {
             Run one of the following two commands to create an OCM role. View the required AWS
             policy permissions for the{' '}
             <ExternalLink noIcon href={links.ROSA_AWS_ACCOUNT_ROLES}>
-              basic OCM role{' '}
-            </ExternalLink>
-            and the{' '}
-            <ExternalLink noIcon href={links.ROSA_AWS_ACCOUNT_ROLES}>
-              admin OCM role
+              basic OCM role and the admin OCM role
             </ExternalLink>
             .
           </Text>
@@ -80,10 +76,7 @@ export const OcmRoleScreen = () => {
           <div className="ocm-instruction-block">
             <Grid>
               <GridItem sm={12} md={5}>
-                <strong>
-                  Basic OCM role{' '}
-                  <PopoverHint bodyContent="One basic OCM role is needed per Red Hat organization to allow OpenShift Cluster Manager to detect the presence of AWS roles and policies required for ROSA." />
-                </strong>
+                <strong>Basic OCM role</strong>
                 <InstructionCommand
                   textAriaLabel="Copyable ROSA create ocm-role"
                   trackEvent={trackEvents.CopyOCMRoleCreateBasic}
@@ -95,10 +88,7 @@ export const OcmRoleScreen = () => {
                 <p>OR</p>
               </GridItem>
               <GridItem sm={12} md={6}>
-                <strong>
-                  Admin OCM role{' '}
-                  <PopoverHint bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually during deployment" />
-                </strong>
+                <strong>Admin OCM role</strong>
                 <InstructionCommand
                   textAriaLabel="Copyable ROSA create ocm-role --admin"
                   trackEvent={trackEvents.CopyOCMRoleCreateAdmin}
@@ -106,6 +96,7 @@ export const OcmRoleScreen = () => {
                   {RosaCliCommand.AdminOcmRole}
                 </InstructionCommand>
               </GridItem>
+              <RoleTypesPopover />
             </Grid>
           </div>
         </TextContent>
