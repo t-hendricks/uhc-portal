@@ -28,7 +28,7 @@ type Props = {
 const App = ({ children }: Props) => (
   <>
     <span id="scrollToTop" />
-    {config.override && <EnvOverrideMessage env={String(config.override)} />}
+    {config.envOverride && <EnvOverrideMessage env={config.envOverride} />}
     <ErrorBoundary>{children || <Router />}</ErrorBoundary>
   </>
 );
