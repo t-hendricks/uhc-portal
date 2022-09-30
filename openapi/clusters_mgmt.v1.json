@@ -9371,6 +9371,10 @@
           "name": {
             "description": "Human friendly identifier of the cloud provider, for example `aws`.",
             "type": "string"
+          },
+          "regions": {
+            "description": "Region",
+            "$ref": "#/components/schemas/CloudRegion"
           }
         }
       },
@@ -9452,6 +9456,14 @@
           "supports_multi_az": {
             "description": "Whether the region supports multiple availability zones.",
             "type": "boolean"
+          },
+          "kms_location_name": {
+            "description": "kms_location_name",
+            "type": "string"
+          },
+          "kms_location_id": {
+            "description": "kms_location_id",
+            "type": "string"
           }
         }
       },
