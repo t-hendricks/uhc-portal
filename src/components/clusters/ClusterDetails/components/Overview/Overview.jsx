@@ -108,9 +108,6 @@ class Overview extends React.Component {
       cluster.aiCluster && !isArchived && isAssistedInstallSubscription(cluster.subscription);
     const showDetailsCard = !cluster.aiCluster || !isUninstalledAICluster(cluster);
     const showSubscriptionSettings = !isDeprovisioned && !isArchived;
-    const clusterAIPermissions = showAssistedInstallerDetailCard
-      ? getClusterAIPermissions(cluster)
-      : {};
 
     if (isHibernating(cluster.state)) {
       topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
@@ -172,7 +169,7 @@ class Overview extends React.Component {
             {topCard}
             {showAssistedInstallerDetailCard && (
               <GatedAIDetailCard
-                permissions={clusterAIPermissions}
+                permissions={getClusterAIPermissions(cluster)}
                 aiClusterId={cluster.aiCluster.id}
               />
             )}
