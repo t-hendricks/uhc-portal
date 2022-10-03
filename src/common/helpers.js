@@ -21,13 +21,9 @@ const multiInputToCleanArray = (formData, fieldName) => {
     .map((item) => item.trim());
 };
 
-const stringToArray = (str) => {
-  return str && str.trim().split(',');
-};
+const stringToArray = (str) => str && str.trim().split(',');
 
-const arrayToString = (arr) => {
-  return arr && arr.join(',');
-};
+const arrayToString = (arr) => arr && arr.join(',');
 
 /**
  * Parses comma separated key<delimiter>value pairs into an object.

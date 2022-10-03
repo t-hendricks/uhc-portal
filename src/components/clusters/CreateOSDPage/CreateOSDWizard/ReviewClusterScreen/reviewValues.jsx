@@ -289,10 +289,13 @@ const reviewValues = {
   no_proxy: {
     title: 'No Proxy domains',
     isOptional: true,
-    valueTransform: noProxyDomains => (
+    valueTransform: (noProxyDomains) => (
       <LabelGroup>
-        {noProxyDomains.map(domain => (
-          <Label isCompact color="blue">{domain}</Label>
+        {/* eslint-disable-next-line react/destructuring-assignment */}
+        {noProxyDomains.map((domain) => (
+          <Label isCompact color="blue">
+            {domain}
+          </Label>
         ))}
       </LabelGroup>
     ),

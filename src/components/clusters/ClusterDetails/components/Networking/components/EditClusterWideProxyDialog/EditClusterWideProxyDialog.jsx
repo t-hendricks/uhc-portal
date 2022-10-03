@@ -12,7 +12,7 @@ import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
 import ReduxFileUpload from '~/components/common/ReduxFormComponents/ReduxFileUpload';
 import ReduxVerticalFormGroup from '~/components/common/ReduxFormComponents/ReduxVerticalFormGroup';
-import { stringToArray, arrayToString } from '~/common/helpers';
+import { stringToArray } from '~/common/helpers';
 import {
   HTTPS_PROXY_PLACEHOLDER,
   HTTP_PROXY_PLACEHOLDER,
@@ -44,7 +44,6 @@ const EditClusterWideProxyDialog = (props) => {
     clearClusterProxyResponse,
     httpProxyUrl,
     httpsProxyUrl,
-    noProxyDomains,
     formValues,
     additionalTrustBundle,
     anyTouched,
@@ -218,7 +217,6 @@ EditClusterWideProxyDialog.propTypes = {
   formValues: PropTypes.object,
   httpProxyUrl: PropTypes.string,
   httpsProxyUrl: PropTypes.string,
-  noProxyDomains: PropTypes.array,
   additionalTrustBundle: PropTypes.string,
   editClusterProxyResponse: PropTypes.shape({
     error: PropTypes.bool,
