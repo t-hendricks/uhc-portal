@@ -20,7 +20,7 @@ import {
 import { GlobalState } from '~/redux/store';
 import { trackEvents } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
-import RoleTypesPopover from './RoleTypesPopover';
+import PopoverHintWithTitle from '~/components/common/PopoverHintWithTitle';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
 import { RosaCliCommand } from '../constants/cliCommands';
@@ -96,7 +96,7 @@ export const OcmRoleScreen = () => {
                   {RosaCliCommand.AdminOcmRole}
                 </InstructionCommand>
               </GridItem>
-              <RoleTypesPopover />
+              <PopoverHintWithTitle />
             </Grid>
           </div>
         </TextContent>

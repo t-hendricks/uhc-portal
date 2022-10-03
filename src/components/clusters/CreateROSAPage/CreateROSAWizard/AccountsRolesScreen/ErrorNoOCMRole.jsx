@@ -13,7 +13,7 @@ import { trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import { RosaCliCommand } from './constants/cliCommands';
-import RoleTypesPopover from './AssociateAWSAccountModal/RoleTypesPopover';
+import PopoverHintWithTitle from '../../../../common/PopoverHintWithTitle';
 
 const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
   <TextContent className="ocm-alert-text">
@@ -45,7 +45,7 @@ const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
           {RosaCliCommand.AdminOcmRole}
         </InstructionCommand>
       </GridItem>
-      <RoleTypesPopover />
+      <PopoverHintWithTitle />
     </Grid>
     <br />
     <Text component={TextVariants.p}>If a role exists but is not linked, link it with:</Text>

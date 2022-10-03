@@ -1,32 +1,36 @@
 import React from 'react';
 import { Button, Popover, PopoverProps, Text, TextVariants } from '@patternfly/react-core';
 import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
-import './RoleTypesPopover.scss';
+import './PopoverHintWithTitle.scss';
 
 interface PopoverHintProps extends Omit<PopoverProps, 'bodyContent'> {
+  title?: string;
   footer?: React.ReactNode;
   bodyContent?: React.ReactNode | ((hide: () => void) => React.ReactNode);
 }
-const RoleTypesPopover = ({ footer, bodyContent, ...popoverProps }: PopoverHintProps) => (
-  <div className="roletypes-popover-div">
+
+const PopoverHintWithTitle = ({
+  title,
+  bodyContent,
+  footer,
+  ...popoverProps
+}: PopoverHintProps) => (
+  <div className="popover-with-title-div">
     <Text component={TextVariants.p}>
       <Popover bodyContent={bodyContent} footerContent={footer} aria-label="help" {...popoverProps}>
-        <Button
-          className="roletypes-popover-hint-button"
-          aria-label="More information"
-          variant="plain"
-          color="#0066CC"
-        >
-          <span>
-            <OutlinedQuestionCircleIcon color="#0066CC" />
+        <Button className="popover-with-title-button" aria-label="More information" variant="plain">
+          <span className="popover-with-title-span">
+            <OutlinedQuestionCircleIcon />
+            {` ${title}`}
           </span>
         </Button>
-      </Popover>{' '}
-      Understand the OCM role types
+      </Popover>
     </Text>
   </div>
 );
-RoleTypesPopover.defaultProps = {
+
+PopoverHintWithTitle.defaultProps = {
+  title: 'Understand the OCM role types',
   bodyContent: (
     <Text component={TextVariants.p}>
       The <strong>basic role</strong> enables OpenShift Cluster Manager to detect the AWS IAM roles
@@ -41,4 +45,5 @@ RoleTypesPopover.defaultProps = {
     </Text>
   ),
 };
-export default RoleTypesPopover;
+
+export default PopoverHintWithTitle;
