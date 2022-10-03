@@ -380,7 +380,7 @@ class ClusterDetails extends Component {
       // eslint-disable-next-line camelcase
       cluster.subscription?.external_cluster_id === undefined;
     const displaySupportTab = !hideSupportTab && !isOSDTrial;
-    const displayUpgradeSettingsTab = cluster.managed && cluster.canEdit && !isArchived;
+    const displayUpgradeSettingsTab = (cluster.managed || isAROCluster) && cluster.canEdit && !isArchived;
     const displayAddAssistedHosts =
       assistedInstallerEnabled && canAddHost({ cluster }) && !isArchived;
 
