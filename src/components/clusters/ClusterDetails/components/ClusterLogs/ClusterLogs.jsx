@@ -12,6 +12,7 @@ import {
 } from '@patternfly/react-core';
 import size from 'lodash/size';
 import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
 
 import { viewPropsChanged, getQueryParam } from '../../../../../common/queryHelpers';
 import ClusterLogsToolbar from './toolbar';
@@ -40,15 +41,23 @@ class ClusterLogs extends React.Component {
       ...viewOptions.filter,
       timestampFrom: `${symbol} '${date}'`,
     };
-    setFilter(filterObject);
+
+    let hasChanged = false;
+    if (!isEqual(filterObject, viewOptions.filter)) {
+      hasChanged = true;
+      setFilter(filterObject);
+    }
 
     const severityTypes = getQueryParam('severityTypes') || '';
     if (!isEmpty(severityTypes)) {
+      hasChanged = true;
       setListFlag('conditionalFilterFlags', {
         severityTypes: severityTypes.split(',').filter((type) => SEVERITY_TYPES.includes(type)),
       });
-    } else {
-      // only call refresh if we're not setting the filter flag. When the flag is set, refresh
+    }
+
+    if (!hasChanged) {
+      // only call refresh if we're not setting the filter/list flag. When the flag is set, refresh
       // will be called via componentDidUpdate() after the redux state transition
       this.refresh();
     }
@@ -67,7 +76,9 @@ class ClusterLogs extends React.Component {
 
   refresh() {
     const { externalClusterID, getClusterHistory, viewOptions } = this.props;
-    getClusterHistory(externalClusterID, viewOptions);
+    if (externalClusterID) {
+      getClusterHistory(externalClusterID, viewOptions);
+    }
   }
 
   render() {
@@ -82,23 +93,6 @@ class ClusterLogs extends React.Component {
       setSorting,
       externalClusterID,
     } = this.props;
-    if (error && !size(logs)) {
-      return (
-        <>
-          <PageSection>
-            <EmptyState>
-              <ErrorBox
-                message="Error retrieving cluster logs"
-                response={{
-                  errorMessage,
-                  operationID,
-                }}
-              />
-            </EmptyState>
-          </PageSection>
-        </>
-      );
-    }
 
     const hasNoFilters =
       isEmpty(viewOptions.filter) && helpers.nestedIsEmpty(viewOptions.flags.severityTypes);
@@ -126,16 +120,34 @@ class ClusterLogs extends React.Component {
               externalClusterID={externalClusterID}
               isPendingNoData={isPendingNoData}
             />
-            <LogTable pending={pending} logs={logs} setSorting={setSorting} />
-            <ViewPaginationRow
-              viewType={viewConstants.CLUSTER_LOGS_VIEW}
-              currentPage={viewOptions.currentPage}
-              pageSize={viewOptions.pageSize}
-              totalCount={viewOptions.totalCount}
-              totalPages={viewOptions.totalPages}
-              variant="bottom"
-              isDisabled={isPendingNoData}
-            />
+            {error && !size(logs) ? (
+              <>
+                <PageSection>
+                  <EmptyState>
+                    <ErrorBox
+                      message="Error retrieving cluster logs"
+                      response={{
+                        errorMessage,
+                        operationID,
+                      }}
+                    />
+                  </EmptyState>
+                </PageSection>
+              </>
+            ) : (
+              <>
+                <LogTable pending={pending} logs={logs} setSorting={setSorting} />
+                <ViewPaginationRow
+                  viewType={viewConstants.CLUSTER_LOGS_VIEW}
+                  currentPage={viewOptions.currentPage}
+                  pageSize={viewOptions.pageSize}
+                  totalCount={viewOptions.totalCount}
+                  totalPages={viewOptions.totalPages}
+                  variant="bottom"
+                  isDisabled={isPendingNoData}
+                />
+              </>
+            )}
           </CardBody>
         </Card>
       </>

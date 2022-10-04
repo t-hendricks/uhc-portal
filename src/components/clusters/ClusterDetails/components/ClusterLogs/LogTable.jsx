@@ -50,7 +50,7 @@ const sortColumns = {
   Description: 'summary',
   Date: 'timestamp',
   Severity: 'severity',
-  'Logged by': 'username,created_by',
+  'Logged by': 'username||created_by',
 };
 
 const emptyState = [
