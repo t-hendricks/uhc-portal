@@ -45,7 +45,22 @@ const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
           {RosaCliCommand.AdminOcmRole}
         </InstructionCommand>
       </GridItem>
-      <PopoverHintWithTitle />
+      <PopoverHintWithTitle
+        title="Understand the OCM role types"
+        bodyContent={
+          <Text component={TextVariants.p}>
+            The <strong>basic role</strong> enables OpenShift Cluster Manager to detect the AWS IAM
+            roles and policies required by ROSA.
+          </Text>
+        }
+        footer={
+          <Text component={TextVariants.p}>
+            The <strong>admin role</strong> also enables the detection of the roles and policies. In
+            addition, the admin role enables automatic deployment of the cluster specific Operator
+            roles and the OpenID Connect (OIDC) provider by using OpenShift Cluster Manager.
+          </Text>
+        }
+      />
     </Grid>
     <br />
     <Text component={TextVariants.p}>If a role exists but is not linked, link it with:</Text>
