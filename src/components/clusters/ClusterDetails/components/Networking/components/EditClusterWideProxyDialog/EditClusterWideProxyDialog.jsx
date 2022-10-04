@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form, Grid, GridItem, Title, Text, Alert, Button } from '@patternfly/react-core';
+import { Form, Grid, GridItem, Text, Alert, Button } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import { validateUrl, validateCA } from '~/common/validators';
