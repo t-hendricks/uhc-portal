@@ -1,3 +1,11 @@
 .no-associated-aws-accounts_empty-state {
   padding: 0px 0px 16px;
 }
+
+.aws-account-selection .pf-c-form__group-control .pf-c-select {
+  padding-right: var(--pf-global--spacer--md);
+}
+
+.aws-account-selection .pf-c-button.pf-m-secondary.pf-m-small {
+  position: absolute;
+}

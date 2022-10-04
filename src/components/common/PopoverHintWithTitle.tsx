@@ -1,18 +1,20 @@
 import React from 'react';
 import { Button, Popover, PopoverProps, Text, TextVariants } from '@patternfly/react-core';
-import { OutlinedQuestionCircleIcon } from '@patternfly/react-icons';
+import {ExclamationCircleIcon, OutlinedQuestionCircleIcon} from '@patternfly/react-icons';
 import './PopoverHintWithTitle.scss';
 
 interface PopoverHintProps extends Omit<PopoverProps, 'bodyContent'> {
   title: string;
   footer?: React.ReactNode;
   bodyContent?: React.ReactNode | ((hide: () => void) => React.ReactNode);
+  isErrorHint?: boolean;
 }
 
 const PopoverHintWithTitle = ({
   title,
   bodyContent,
   footer,
+  isErrorHint,
   ...popoverProps
 }: PopoverHintProps) => (
   <div className="popover-with-title-div">
@@ -24,8 +26,18 @@ const PopoverHintWithTitle = ({
           variant="plain"
         >
           <span className="popover-with-title-span">
-            <OutlinedQuestionCircleIcon />
-            {` ${title}`}
+            {isErrorHint ? (
+                <Button isInline variant="link">
+                  <ExclamationCircleIcon className="status-icon danger" />
+                  {` ${title}`}
+                </Button>
+            ) : (
+                <>
+                  <OutlinedQuestionCircleIcon />
+                  {` ${title}`}
+                </>
+            )
+            }
           </span>
         </Button>
       </Popover>
