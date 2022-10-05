@@ -58,7 +58,7 @@ const parseFakeQueryParam = () => {
 
 const config = {
   configData: {} as EnvConfig,
-  override: false,
+  envOverride: undefined as string | undefined,
   fakeOSD: false,
 
   loadConfig(data: EnvConfig) {
@@ -87,7 +87,7 @@ const config = {
           this.loadConfig(data);
           // eslint-disable-next-line no-console
           console.info(`Loaded override config: ${queryEnv}`);
-          that.override = !!queryEnv;
+          that.envOverride = queryEnv;
           localStorage.setItem(ENV_OVERRIDE_LOCALSTORAGE_KEY, queryEnv);
           resolve();
         });
