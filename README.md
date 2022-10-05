@@ -419,6 +419,8 @@ output has all the info you’ll need.
 
 # Merge Request review
 
+  - For external contributors: If you need a merge request review, please message the OCM UI team at the `#ocm-osd-ui` slack channel.
+
   - Code that changes behavior requires a test
 
   - When you touch a component without tests add one
