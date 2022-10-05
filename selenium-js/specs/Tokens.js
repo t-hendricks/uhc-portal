@@ -1,7 +1,7 @@
 import LoginPage from '../pageobjects/login.page';
 import TokenPages from '../pageobjects/Tokens.page';
 
-describe('Token pages', async () => {
+describe.skip('Token pages', async () => {
   it('login', async () => {
     await LoginPage.open();
     await LoginPage.login();
