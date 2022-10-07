@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InstallArmAzureIPI renders correctly 1`] = `
+<Fragment>
+  <PageTitle
+    breadcrumbs={
+      <Breadcrumbs
+        path={
+          Array [
+            Object {
+              "label": "Clusters",
+            },
+            Object {
+              "label": "Cluster Type",
+              "path": "/create",
+            },
+            Object {
+              "label": "Microsoft Azure (ARM)",
+            },
+          ]
+        }
+      />
+    }
+    title="Install OpenShift on Azure with installer-provisioned ARM infrastructure"
+  />
+  <PageSection>
+    <OCPInstructions
+      channel="stable"
+      cloudProviderID="azure"
+      customizations="https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-customizations.html"
+      docURL="https://docs.openshift.com/container-platform/4.12/installing/installing_azure/installing-azure-default.html"
+      installer="aarch64-openshift-install"
+      isBMIPI={false}
+      isUPI={false}
+      preReleasePageLink="/install/arm/pre-release"
+      title="Install OpenShift on Azure with installer-provisioned ARM infrastructure"
+      token={Object {}}
+    />
+  </PageSection>
+</Fragment>
+`;
