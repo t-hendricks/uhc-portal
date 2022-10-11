@@ -8,6 +8,10 @@ exports[`<InstallProgress /> should render correclty installing cluster 1`] = `
       headingLevel="h2"
       size="lg"
     >
+      <Spinner
+        className="progressing-icon"
+        size="sm"
+      />
       Installing cluster
     </Title>
     <CancelClusterButton
@@ -373,6 +377,12 @@ exports[`<InstallProgress /> should render correclty installing cluster 1`] = `
       }
     />
     <DownloadOcCliButton />
+    <Text
+      className="expected-cluster-installation-text"
+      component="p"
+    >
+      Expect cluster installation to be completed within 60 minutes.
+    </Text>
   </CardTitle>
   <CardBody>
     <ProgressList
@@ -750,6 +760,10 @@ exports[`<InstallProgress /> should render correclty uninstalling cluster 1`] = 
       headingLevel="h2"
       size="lg"
     >
+      <Spinner
+        className="progressing-icon"
+        size="sm"
+      />
       Uninstallation logs
     </Title>
     <CancelClusterButton
@@ -1115,6 +1129,12 @@ exports[`<InstallProgress /> should render correclty uninstalling cluster 1`] = 
       }
     />
     <DownloadOcCliButton />
+    <Text
+      className="expected-cluster-installation-text"
+      component="p"
+    >
+      Expect cluster installation to be completed within 60 minutes.
+    </Text>
   </CardTitle>
   <CardBody />
 </Card>
