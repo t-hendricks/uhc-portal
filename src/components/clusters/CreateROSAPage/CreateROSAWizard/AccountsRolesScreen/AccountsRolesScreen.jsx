@@ -5,6 +5,7 @@ import get from 'lodash/get';
 import {
   Alert,
   AlertActionLink,
+  Button,
   Form,
   Grid,
   GridItem,
@@ -15,15 +16,11 @@ import {
 } from '@patternfly/react-core';
 import { Field } from 'redux-form';
 
-import { Link } from 'react-router-dom';
 import AWSLogo from '../../../../../styles/images/AWS.png';
 import RedHat from '../../../../../styles/images/Logo-RedHat-Hat-Color-RGB.png';
-import Prerequisites from '../../../common/Prerequisites/Prerequisites';
 import AWSAccountSelection from './AWSAccountSelection';
-import ExternalLink from '../../../../common/ExternalLink';
 import AccountRolesARNsSection from './AccountRolesARNsSection';
 import ErrorBox from '../../../../common/ErrorBox';
-import links from '../../../../../common/installLinks.mjs';
 import { required } from '../../../../../common/validators';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
 import UserRoleInstructionsModal from './UserRoleInstructionsModal';
@@ -31,6 +28,10 @@ import OCMRoleInstructionsModal from './OCMRoleInstructionsModal';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { RosaCliCommand } from './constants/cliCommands';
+import { trackEvents } from '~/common/analytics';
+import { persistor } from '~/redux/store';
+import { loadOfflineToken } from '~/components/tokens/Tokens';
+import useAnalytics from '~/hooks/useAnalytics';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
@@ -63,14 +64,20 @@ function AccountsRolesScreen({
   const [isAssocAwsAccountModalOpen, setIsAssocAwsAccountModalOpen] = useState(false);
   const title = 'Welcome to Red Hat OpenShift Service on AWS (ROSA)';
   const hasAWSAccounts = AWSAccountIDs.length > 0;
+  const { track } = useAnalytics();
 
-  // default product and cloud_provider form values
   useEffect(() => {
+    // default product and cloud_provider form values
     change('cloud_provider', 'aws');
     change('product', normalizedProducts.ROSA);
     change('byoc', 'true');
     clearGetAWSAccountIDsResponse();
     clearGetAWSAccountRolesARNsResponse();
+    // in case we reloaded the page after loading the offline token, reopen the assoc aws acct modal
+    if (window.localStorage.getItem('token-reload') === 'true') {
+      window.localStorage.removeItem('token-reload');
+      loadOfflineToken(onTokenLoad, onTokenError);
+    }
   }, []);
 
   useEffect(() => {
@@ -114,6 +121,33 @@ function AccountsRolesScreen({
     getAWSAccountIDs(organizationID);
   };
 
+  const onTokenLoad = (token) => {
+    openAssociateAWSAccountModal(token);
+    setIsAssocAwsAccountModalOpen(true);
+  };
+
+  const onTokenError = (reason) => {
+    if (reason === 'not available') {
+      // set token-reload to true, so that on reload we know to restore previously entered data
+      window.localStorage.setItem('token-reload', 'true');
+      // write state to localStorage
+      persistor.flush().then(() => {
+        insights.chrome.auth.doOffline();
+      });
+    } else {
+      // open the modal anyways
+      openAssociateAWSAccountModal(reason);
+      setIsAssocAwsAccountModalOpen(true)
+    }
+  };
+
+  const getTokenThenOpen = () => {
+    // will cause window reload on first time
+    loadOfflineToken(onTokenLoad, onTokenError);
+    // Reset window onbeforeunload event so a browser confirmation dialog do not appear.
+    window.onbeforeunload = null;
+  }
+
   return (
     <Form onSubmit={() => false}>
       <Grid hasGutter className="pf-u-mt-md">
@@ -133,65 +167,20 @@ function AccountsRolesScreen({
             />
           </GridItem>
         </GridItem>
-        <GridItem>
-          <Prerequisites initiallyExpanded acknowledgementRequired>
-            <TextContent>
-              <Text component={TextVariants.p} className="ocm-secondary-text">
-                Before continuing, complete all prerequisites:
-              </Text>
-              <ul>
-                <li>
-                  <Text component={TextVariants.p} className="ocm-secondary-text">
-                    Install and configure the latest{' '}
-                    <ExternalLink noIcon href={links.AWS_CLI}>
-                      AWS
-                    </ExternalLink>
-                    ,{' '}
-                    <Link target="_blank" to="/downloads#tool-rosa">
-                      ROSA
-                    </Link>
-                    , and{' '}
-                    <Link target="_blank" to="/downloads#tool-oc">
-                      oc
-                    </Link>{' '}
-                    CLIs on your workstation.
-                  </Text>
-                </li>
-                <li>
-                  <Text component={TextVariants.p} className="ocm-secondary-text">
-                    Enable{' '}
-                    <ExternalLink noIcon href={links.AWS_CONSOLE}>
-                      ROSA in the AWS Console.
-                    </ExternalLink>
-                  </Text>
-                </li>
-                <li>
-                  <Text component={TextVariants.p} className="ocm-secondary-text">
-                    Ensure you have available{' '}
-                    <ExternalLink noIcon href={links.ROSA_AWS_SERVICE_QUOTAS}>
-                      AWS quota.
-                    </ExternalLink>
-                  </Text>
-                </li>
-                <li>
-                  <Text component={TextVariants.p} className="ocm-secondary-text">
-                    Review and configure the{' '}
-                    <ExternalLink noIcon href={links.ROSA_AWS_STS_PREREQUISITES}>
-                      AWS prerequisites for STS with ROSA
-                    </ExternalLink>
-                    .
-                  </Text>
-                </li>
-              </ul>
-            </TextContent>
-          </Prerequisites>
-        </GridItem>
         <GridItem span={8}>
           <Title headingLevel="h3">AWS account</Title>
           <Text component={TextVariants.p}>
-            Use an AWS account that is linked to your account.{' '}
-            {!hasAWSAccounts &&
-              'Alternatively, create an AWS account and validate all prerequisites.'}
+            Select an AWS account that is linked to your Red Hat account, or{" "}
+            <Button
+              variant="link"
+              isInline
+              onClick={(event) => {
+                track(trackEvents.AssociateAWS);
+                getTokenThenOpen(event);
+              }}
+            >
+              associate an AWS account
+            </Button>.
           </Text>
         </GridItem>
         <GridItem span={4} />
@@ -201,10 +190,7 @@ function AccountsRolesScreen({
             component={AWSAccountSelection}
             name="associated_aws_id"
             label="Associated AWS accounts"
-            openAssociateAWSAccountModal={(token) => {
-              openAssociateAWSAccountModal(token);
-              setIsAssocAwsAccountModalOpen(true);
-            }}
+            launchAssocAWSAcctModal={() => {getTokenThenOpen()}}
             validate={required}
             extendedHelpText={
               <>
