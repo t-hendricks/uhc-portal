@@ -26,11 +26,10 @@ function InstallProgress({ cluster, children }) {
           {!isWaitingROSAManual && <Spinner size="sm" className="progressing-icon" />}
           {titleText}
         </Title>
-        <CancelClusterButton cluster={cluster} />
         <DownloadOcCliButton />
         {!isWaitingROSAManual && (
           <Text component={TextVariants.p} className="expected-cluster-installation-text">
-            Expect cluster installation to be completed within 60 minutes.
+            Cluster creation usually takes 30 to 60 minutes to complete.
           </Text>)
         }
       </CardTitle>
