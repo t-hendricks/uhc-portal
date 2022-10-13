@@ -6,10 +6,10 @@ import { Grid, GridItem, Card, CardBody, Title, Alert, CardTitle } from '@patter
 
 import { OCM } from 'openshift-assisted-ui-lib';
 import clusterStates, {
+  getClusterAIPermissions,
   getClusterStateAndDescription,
   isHibernating,
 } from '../../../common/clusterStates';
-
 import ResourceUsage from '../../../common/ResourceUsage/ResourceUsage';
 import DetailsRight from './DetailsRight';
 import DetailsLeft from './DetailsLeft';
@@ -168,7 +168,10 @@ class Overview extends React.Component {
           <Grid hasGutter>
             {topCard}
             {showAssistedInstallerDetailCard && (
-              <GatedAIDetailCard aiClusterId={cluster.aiCluster.id} />
+              <GatedAIDetailCard
+                permissions={getClusterAIPermissions(cluster)}
+                aiClusterId={cluster.aiCluster.id}
+              />
             )}
             {showResourceUsage && !showSidePanel && resourceUsage}
             {showDetailsCard && (

@@ -1569,6 +1569,7 @@ exports[`<DetailsLeft /> should show the extra AI cluster details 1`] = `
                 "items": null,
                 "kind": "AWSInfrastructureAccessRoleGrantLink",
               },
+              "canEdit": false,
               "ccs": Object {
                 "disable_scp_checks": false,
                 "enabled": true,
@@ -1963,6 +1964,7 @@ exports[`<DetailsLeft /> should show the extra AI cluster details 1`] = `
                 "items": null,
                 "kind": "AWSInfrastructureAccessRoleGrantLink",
               },
+              "canEdit": false,
               "ccs": Object {
                 "disable_scp_checks": false,
                 "enabled": true,
@@ -2351,6 +2353,7 @@ exports[`<DetailsLeft /> should show the extra AI cluster details 1`] = `
                 "items": null,
                 "kind": "AWSInfrastructureAccessRoleGrantLink",
               },
+              "canEdit": false,
               "ccs": Object {
                 "disable_scp_checks": false,
                 "enabled": true,
@@ -2721,6 +2724,7 @@ exports[`<DetailsLeft /> should show the extra AI cluster details 1`] = `
                 "items": null,
                 "kind": "AWSInfrastructureAccessRoleGrantLink",
               },
+              "canEdit": false,
               "ccs": Object {
                 "disable_scp_checks": false,
                 "enabled": true,
