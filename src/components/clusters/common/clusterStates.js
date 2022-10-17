@@ -100,6 +100,10 @@ const isWaitingROSAManualMode = (cluster) =>
 
 const isOffline = (state) => isHibernating(state) || state === clusterStates.UNINSTALLING;
 
+const getClusterAIPermissions = cluster => ({
+  canEdit: cluster.canEdit,
+});
+
 export {
   getClusterStateAndDescription,
   isHibernating,
@@ -107,5 +111,6 @@ export {
   isROSA,
   isROSAManualMode,
   isWaitingROSAManualMode,
+  getClusterAIPermissions,
 };
 export default clusterStates;

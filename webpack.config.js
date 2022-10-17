@@ -106,6 +106,7 @@ module.exports = async (_env, argv) => {
       new webpack.EnvironmentPlugin({
         REACT_APP_API_ROOT: '',
         REACT_APP_BUILD_MODE: argv.mode || 'development',
+        REACT_APP_CLUSTER_PERMISSIONS: '',
       }),
       new CopyWebpackPlugin({
         patterns: [{ from: 'public', to: outDir, toType: 'dir' }],
