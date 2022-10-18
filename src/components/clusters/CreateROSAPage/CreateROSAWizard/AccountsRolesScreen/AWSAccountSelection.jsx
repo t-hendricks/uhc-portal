@@ -15,8 +15,6 @@ import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import './AccountsRolesScreen.scss';
-import { loadOfflineToken } from '../../../../tokens/Tokens';
-import { persistor } from '../../../../../redux/store';
 
 const AWS_ACCT_ID_PLACEHOLDER = 'Select an account';
 
@@ -43,38 +41,12 @@ function AWSAccountSelection({
   extendedHelpText,
   selectedAWSAccountID,
   AWSAccountIDs,
-  openAssociateAWSAccountModal,
+  launchAssocAWSAcctModal,
   initialValue,
 }) {
   const { track } = useAnalytics();
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = React.createRef();
-
-  const onLoad = (token) => {
-    openAssociateAWSAccountModal(token);
-  };
-
-  const onError = (reason) => {
-    if (reason === 'not available') {
-      // set token-reload to true, so that on reload we know to restore previously entered data
-      window.localStorage.setItem('token-reload', 'true');
-      // write state to localStorage
-      persistor.flush().then(() => {
-        insights.chrome.auth.doOffline();
-      });
-    } else {
-      // open the modal anyways
-      openAssociateAWSAccountModal(reason);
-    }
-  };
-
-  useEffect(() => {
-    // in case we reloaded the page after loading the offline token, reopen the modal
-    if (window.localStorage.getItem('token-reload') === 'true') {
-      window.localStorage.removeItem('token-reload');
-      loadOfflineToken(onLoad, onError);
-    }
-  }, []);
 
   useEffect(() => {
     // only scroll to associateAWSAccountBtn when no AWS account id selected
@@ -92,13 +64,11 @@ function AWSAccountSelection({
     inputProps.onChange(selection);
   };
 
-  const onClick = () => {
+  const launchModal = () => {
+    // close dropdown
     setIsOpen(false);
-    // will cause window reload on first time
-    loadOfflineToken(onLoad, onError);
-
-    // Reset window onbeforeunload event so a browser confirmation dialog do not appear.
-    window.onbeforeunload = null;
+    // will cause window reload on first time, then open assoc aws modal with new token
+    launchAssocAWSAcctModal();
   };
 
   const footer = (
@@ -109,7 +79,7 @@ function AWSAccountSelection({
         variant="secondary"
         onClick={(event) => {
           track(trackEvents.AssociateAWS);
-          onClick(event);
+          launchModal(event);
         }}
       >
         Associate AWS account
@@ -160,7 +130,7 @@ AWSAccountSelection.propTypes = {
   extendedHelpText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   AWSAccountIDs: PropTypes.arrayOf(PropTypes.string),
   selectedAWSAccountID: PropTypes.string,
-  openAssociateAWSAccountModal: PropTypes.func.isRequired,
+  launchAssocAWSAcctModal: PropTypes.func.isRequired,
   initialValue: PropTypes.string,
   meta: PropTypes.shape({
     touched: PropTypes.bool,

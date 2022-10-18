@@ -15,6 +15,7 @@ import { OcmRoleScreen } from './OcmRoleScreen';
 import { UserRoleScreen } from './UserRoleScreen';
 
 import './associateAwsAccountModal.scss';
+import {RosaServiceScreen} from "./RosaServiceScreen";
 
 interface Props {
   isOpen: boolean;
@@ -42,6 +43,9 @@ export const AssociateAwsAccountModal = ({ isOpen, onClose }: Props) => (
         />
       }
     >
+      <WizardStep name="Enable ROSA service" id="enable-rosa-service">
+        <RosaServiceScreen />
+      </WizardStep>
       <WizardStep name="Authenticate" id="auth">
         <AuthenticateScreen />
       </WizardStep>
