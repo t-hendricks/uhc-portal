@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ProgressStepper, ProgressStep } from '@patternfly/react-core';
+import { ProgressStepper, ProgressStep, Spinner } from '@patternfly/react-core';
 import UnknownIcon from '@patternfly/react-icons/dist/js/icons/unknown-icon';
-import InProgressIcon from '@patternfly/react-icons/dist/js/icons/in-progress-icon';
-import PendingIcon from '@patternfly/react-icons/dist/js/icons/pending-icon';
 import './ProgressList.scss';
 import ActionRequiredLink from './ActionRequiredLink';
 import clusterStates, { isROSA, isWaitingROSAManualMode } from '../clusterStates';
@@ -13,7 +11,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
   const isWaitingAndROSAManualMode = isWaitingROSAManualMode(cluster);
 
   const getProgressData = () => {
-    const pending = { variant: 'pending', icon: <PendingIcon />, text: 'Pending' };
+    const pending = { variant: 'pending' };
+    const inProcess = {variant: 'info', icon: <Spinner size="sm" />, isCurrent: true};
     const completed = { variant: 'success', text: 'Completed' };
     const unknown = { icon: <UnknownIcon className="icon-space-right" />, text: 'Unknown' };
 
@@ -24,10 +23,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
     ) {
       return {
         awsAccountSetup: {
-          variant: 'info',
           text: 'Preparing account',
-          isCurrent: true,
-          icon: <InProgressIcon />,
+          ...inProcess,
         },
         DNSSetup: pending,
         clusterInstallation: pending,
@@ -57,10 +54,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
         return {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: {
-            variant: 'info',
             text: 'Pending',
-            isCurrent: true,
-            icon: <InProgressIcon />,
+            ...inProcess,
           },
           DNSSetup: pending,
           clusterInstallation: pending,
@@ -75,10 +70,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
           awsAccountSetup: completed,
           oidcAndOperatorRolesSetup: completed,
           DNSSetup: {
-            variant: 'info',
             text: 'Setting up DNS',
-            isCurrent: true,
-            icon: <InProgressIcon />,
+            ...inProcess,
           },
           clusterInstallation: pending,
         };
@@ -89,10 +82,8 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
         oidcAndOperatorRolesSetup: completed,
         DNSSetup: completed,
         clusterInstallation: {
-          variant: 'info',
           text: 'Installing cluster',
-          isCurrent: true,
-          icon: <InProgressIcon />,
+          ...inProcess,
         },
       };
     }
