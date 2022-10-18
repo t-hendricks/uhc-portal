@@ -148,7 +148,7 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                   .
                    
                   <ExternalLink
-                    href="https://docs.openshift.com/rosa/rosa_install_access_delete_clusters/rosa_getting_started_iam/rosa-installing-rosa.html"
+                    href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
                   >
                     Help
                   </ExternalLink>
