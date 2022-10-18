@@ -6,7 +6,6 @@ import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import clusterStates, { isWaitingROSAManualMode } from '../clusterStates';
 import ProgressList from './ProgressList';
 import DownloadOcCliButton from './DownloadOcCliButton';
-import CancelClusterButton from './CancelClusterButton';
 
 function InstallProgress({ cluster, children }) {
   const isWaitingROSAManual = isWaitingROSAManualMode(cluster);
