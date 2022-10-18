@@ -2,3 +2,15 @@
 .icon-space-right {
   margin-right: 5px;
 }
+
+.progressing-icon {
+  vertical-align: middle;
+  padding-right: 10px;
+}
+
+.expected-cluster-installation-text {
+  color: var(--pf-global--Color--400);
+  padding-top: var(--pf-global--spacer--sm);
+  font-size: var(--pf-global--FontSize--md);
+  font-weight: var(--pf-global--FontWeight--light);
+}
