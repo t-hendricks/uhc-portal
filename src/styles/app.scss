@@ -346,8 +346,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   }
 
   // hide if there's single tab item
-  &.single-tab .pf-c-tabs  {
+  &.single-tab .pf-c-tabs {
     display: none;
+  }
+  &.single-tab section {
+    display: block;
   }
 }
 
