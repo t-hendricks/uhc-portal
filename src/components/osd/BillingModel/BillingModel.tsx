@@ -1,0 +1,245 @@
+import React from 'react';
+import { useFormikContext, FormikValues } from 'formik';
+import { RadioButtonField } from 'formik-pf';
+
+import {
+  Title,
+  Text,
+  Stack,
+  StackItem,
+  Flex,
+  FlexItem,
+  Popover,
+  PopoverPosition,
+  Button,
+} from '@patternfly/react-core';
+import OutlinedQuestionCircleIcon from '@patternfly/react-icons/dist/esm/icons/outlined-question-circle-icon';
+
+import CreateOSDWizardIntro from '~/styles/images/CreateOSDWizard-intro.png';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { OSD_TRIAL_FEATURE } from '~/redux/constants/featureConstants';
+import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
+import ExternalLink from '~/components/common/ExternalLink';
+import {
+  getMinReplicasCount,
+  getNodesCount,
+} from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
+import { FieldId } from '../constants';
+
+import './billingModel.scss';
+
+interface BillingModelProps {
+  quotas: Record<string, boolean>;
+}
+
+export const BillingModel = ({ quotas }: BillingModelProps) => {
+  const { values, setFieldValue } = useFormikContext<FormikValues>();
+  const showOsdTrial = useGlobalState(
+    (state) => state.features[OSD_TRIAL_FEATURE] && quotas.osdTrial,
+  );
+  const billingModel = values[FieldId.BillingModel];
+
+  let isRhInfraQuotaDisabled = false;
+  let isBYOCQuotaDisabled = false;
+  let defaultBillingModel = !billingModel ? billingModels.STANDARD : billingModel;
+
+  const trialDescription = (
+    <p>
+      <ExternalLink href="https://access.redhat.com/articles/5990101" noIcon noTarget>
+        Try OpenShift Dedicated
+      </ExternalLink>{' '}
+      for free for 60 days. Upgrade anytime
+    </p>
+  );
+
+  const marketplaceQuotaDescription = (
+    <p>
+      Use{' '}
+      <ExternalLink href="https://marketplace.redhat.com" noIcon>
+        Red Hat Marketplace
+      </ExternalLink>{' '}
+      to subscribe and pay based on the services you use
+    </p>
+  );
+
+  const marketplaceDisabledDescription = (
+    <>
+      {marketplaceQuotaDescription}
+      <p>
+        <Popover
+          position={PopoverPosition.right}
+          headerContent="On-Demand subscription"
+          bodyContent={
+            <>
+              <p>Billing based on cluster consumption and charged via Red Hat Marketplace.</p>
+              <p>
+                <ExternalLink href="https://marketplace.redhat.com/en-us/products/red-hat-openshift-dedicated">
+                  Purchase this option
+                </ExternalLink>
+              </p>
+            </>
+          }
+          aria-label="help"
+        >
+          <Button variant="link">
+            <OutlinedQuestionCircleIcon /> How can I purchase a subscription via Marketplace?
+          </Button>
+        </Popover>
+      </p>
+    </>
+  );
+
+  const subOptions = [
+    ...(showOsdTrial
+      ? [
+          {
+            value: 'standard-trial',
+            label: 'Free trial (upgradeable)',
+            // 60 days may be updated later based on an account capability
+            // https://issues.redhat.com/browse/SDB-1846
+            description: trialDescription,
+          },
+        ]
+      : []),
+    {
+      disabled: !quotas.standardOsd,
+      value: billingModels.STANDARD,
+      label: 'Annual: Fixed capacity subscription from Red Hat',
+      description: 'Use the quota pre-purchased by your organization',
+    },
+    {
+      disabled: !quotas.marketplace,
+      value: billingModels.MARKETPLACE,
+      label: 'On-Demand: Flexible usage billed through the Red Hat Marketplace',
+      description: !quotas.marketplace
+        ? marketplaceDisabledDescription
+        : marketplaceQuotaDescription,
+    },
+  ];
+
+  if (values[FieldId.Product] === normalizedProducts.OSDTrial) {
+    defaultBillingModel = 'standard-trial';
+  }
+
+  // Select marketplace billing if user only has marketplace quota
+  // Also, if the selected default billing model is disabled
+  // Default to marketplace
+  if (
+    (!showOsdTrial || defaultBillingModel === billingModels.STANDARD) &&
+    quotas.marketplace &&
+    !quotas.standardOsd
+  ) {
+    defaultBillingModel = billingModels.MARKETPLACE;
+  }
+
+  if (defaultBillingModel === billingModels.STANDARD || defaultBillingModel === 'standard-trial') {
+    isRhInfraQuotaDisabled = !quotas.rhInfra;
+    isBYOCQuotaDisabled = !quotas.byoc;
+  } else {
+    isRhInfraQuotaDisabled = !quotas.marketplaceRhInfra;
+    isBYOCQuotaDisabled = !quotas.marketplaceByoc;
+  }
+
+  const infraOptions = [
+    {
+      label: 'Customer cloud subscription',
+      description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',
+      value: 'true',
+      disabled: isBYOCQuotaDisabled,
+    },
+    {
+      label: 'Red Hat cloud account',
+      description: 'Deploy in cloud provider accounts owned by Red Hat',
+      value: 'false',
+      disabled: isRhInfraQuotaDisabled,
+    },
+  ];
+
+  const onBillingModelChange = (event: React.ChangeEvent<any>) => {
+    const { value } = event.target;
+    let selectedProduct;
+
+    if (value === 'standard-trial') {
+      selectedProduct = normalizedProducts.OSDTrial;
+      setFieldValue(FieldId.Byoc, 'true');
+    } else {
+      selectedProduct = normalizedProducts.OSD;
+    }
+
+    setFieldValue(FieldId.Product, selectedProduct);
+  };
+
+  const onByocChange = (event: React.ChangeEvent<any>) => {
+    const { value } = event.target;
+    const isBYOC = value === 'true';
+    const isMultiAz = values[FieldId.MultiAz] === 'true';
+
+    setFieldValue('nodes_compute', getNodesCount(isBYOC, isMultiAz, true));
+    setFieldValue('min_replicas', getMinReplicasCount(isBYOC, isMultiAz, true));
+    setFieldValue('max_replicas', '');
+  };
+
+  return (
+    <Flex alignItems={{ default: 'alignItemsFlexStart' }}>
+      <FlexItem flex={{ default: 'flex_3' }}>
+        <Stack hasGutter>
+          <StackItem>
+            <Title headingLevel="h2" className="pf-u-pb-md">
+              Welcome to Red Hat OpenShift Dedicated
+            </Title>
+            <Text component="p" id="welcome-osd-text">
+              Reduce operational complexity and focus on building applications that add more value
+              to your business with Red Hat OpenShift Dedicated, a fully managed service of Red Hat
+              OpenShift on Amazon Web Services (AWS) and Google Cloud.
+            </Text>
+          </StackItem>
+
+          <StackItem>
+            <Title headingLevel="h3" className="pf-u-mb-sm">
+              Subscription type
+            </Title>
+            <div onChange={onBillingModelChange}>
+              {subOptions.map((option) => (
+                <RadioButtonField
+                  name={FieldId.BillingModel}
+                  label={option.label}
+                  value={option.value}
+                  className="pf-u-mb-md"
+                  description={option.description}
+                  isRequired
+                />
+              ))}
+            </div>
+          </StackItem>
+
+          <StackItem>
+            <Title headingLevel="h3" className="pf-u-mb-sm">
+              Infrastructure type
+            </Title>
+            <div onChange={onByocChange}>
+              {infraOptions.map((option) => (
+                <RadioButtonField
+                  key={option.value}
+                  name={FieldId.Byoc}
+                  label={option.label}
+                  value={option.value}
+                  className="pf-u-mb-md"
+                  description={option.description}
+                />
+              ))}
+            </div>
+          </StackItem>
+        </Stack>
+      </FlexItem>
+
+      <FlexItem flex={{ default: 'flex_1' }}>
+        <img
+          src={CreateOSDWizardIntro}
+          className="billing-model_osd-logo"
+          aria-hidden="true"
+          alt=""
+        />
+      </FlexItem>
+    </Flex>
+  );
+};

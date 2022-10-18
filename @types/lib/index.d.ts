@@ -13,3 +13,8 @@ declare const APP_DEVMODE: boolean;
 declare const APP_DEV_SERVER: boolean;
 declare const APP_API_ENV: string;
 declare const BASE_PATH: string;
+
+declare module '*.png' {
+  const value: any;
+  export = value;
+}

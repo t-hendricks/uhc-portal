@@ -15,8 +15,14 @@ limitations under the License.
 */
 
 import React, { useEffect } from 'react';
-import type { RouteComponentProps } from 'react-router-dom';
-import { Route, Redirect, Switch, withRouter, useLocation } from 'react-router-dom';
+import {
+  Route,
+  RouteComponentProps,
+  Redirect,
+  Switch,
+  withRouter,
+  useLocation,
+} from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
 import get from 'lodash/get';
 import { connect } from 'react-redux';
@@ -82,6 +88,7 @@ import withFeatureGate from '../features/with-feature-gate';
 import {
   ASSISTED_INSTALLER_FEATURE,
   ROSA_CREATION_WIZARD_FEATURE,
+  OSD_WIZARD_V2_FEATURE,
 } from '../../redux/constants/featureConstants';
 import InstallBMUPI from '../clusters/install/InstallBareMetalUPI';
 import InstallBMIPI from '../clusters/install/InstallBareMetalIPI';
@@ -98,6 +105,8 @@ import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDeta
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import useAnalytics from '~/hooks/useAnalytics';
 import { metadataByRoute, is404 } from './routeMetadata';
+import { CreateOsdWizard } from '../osd';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 const { AssistedUiRouter } = OCM;
 
@@ -127,12 +136,37 @@ interface RouterProps extends RouteComponentProps {
 const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalClusterId }) => {
   const { pathname } = useLocation();
   const { setPageMetadata } = useAnalytics();
+  const featureQuery = useGlobalState((state) => state.router.location.query.features);
+
+  const features = React.useMemo(() => {
+    if (featureQuery) {
+      const parsedFeatures: Record<string, string> = JSON.parse(decodeURI(featureQuery)) || {};
+
+      if (Object.keys(parsedFeatures).length > 0) {
+        return Object.entries(parsedFeatures).reduce(
+          (acc: Record<string, boolean>, [name, value]) => {
+            // eslint-disable-next-line no-param-reassign
+            acc[name] = value === 'true';
+
+            return acc;
+          },
+          {},
+        );
+      }
+    }
+
+    return {};
+  }, [featureQuery]);
+
+  const isOsdWizardV2Enabled = features[OSD_WIZARD_V2_FEATURE];
+
   useEffect(() => {
     setPageMetadata({
       ...metadataByRoute(pathname, planType, clusterId, externalClusterId),
       ...(is404() ? { title: '404 Not Found' } : {}),
     });
-  }, [pathname]);
+  }, [pathname, planType, setPageMetadata]);
+
   return (
     <>
       <Insights history={history} />
@@ -275,12 +309,18 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
               render={() => <CreateOSDWizard product={normalizedProducts.OSDTrial} />}
               history={history}
             />
-            <TermsGuardedRoute
-              path="/create/osd"
-              gobackPath="/create"
-              render={() => <CreateOSDWizard product={normalizedProducts.OSD} />}
-              history={history}
-            />
+
+            {isOsdWizardV2Enabled ? (
+              <Route path="/create/osd" exact component={CreateOsdWizard} />
+            ) : (
+              <TermsGuardedRoute
+                path="/create/osd"
+                gobackPath="/create"
+                render={() => <CreateOSDWizard product={normalizedProducts.OSD} />}
+                history={history}
+              />
+            )}
+
             <Route
               path="/create/cloud"
               render={(props) => <CreateClusterPage activeTab="cloud" {...props} />}

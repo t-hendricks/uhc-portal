@@ -12,6 +12,7 @@ import storage from 'redux-persist/lib/storage';
 
 import { reduxReducers } from './reducers';
 import sentryMiddleware from './sentryMiddleware';
+import { GlobalState } from './types';
 
 declare global {
   interface Window {

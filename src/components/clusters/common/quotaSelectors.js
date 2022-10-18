@@ -74,10 +74,10 @@ const availableFromQuotaCostItem = (quotaCostItem, query) => {
  * Returns remaining matching quota (integer, possibly 0 or Infinity).
  * resourceType is required; other query fields may be omitted, default to 'any'.
  */
-const availableQuota = (
-  quotaList,
-  { resourceType, product, billingModel, cloudProviderID, isBYOC, isMultiAz, resourceName },
-) => {
+const availableQuota = (quotaList, params) => {
+  const { resourceType, resourceName, product, billingModel, cloudProviderID, isBYOC, isMultiAz } =
+    params;
+
   const normalizedBillingModel =
     billingModel === 'standard-trial' ? billingModels.STANDARD : billingModel;
   const query = {

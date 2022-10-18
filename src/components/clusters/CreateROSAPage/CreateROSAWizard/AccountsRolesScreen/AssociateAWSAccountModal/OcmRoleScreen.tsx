@@ -17,7 +17,7 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import { GlobalState } from '~/redux/store';
+import { GlobalState } from '~/redux/types';
 import { trackEvents } from '~/common/analytics';
 import links from '~/common/installLinks.mjs';
 import PopoverHint from '~/components/common/PopoverHint';
