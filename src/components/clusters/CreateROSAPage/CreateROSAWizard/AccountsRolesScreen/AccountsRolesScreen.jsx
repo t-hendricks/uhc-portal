@@ -170,7 +170,7 @@ function AccountsRolesScreen({
         <GridItem span={8}>
           <Title headingLevel="h3">AWS account</Title>
           <Text component={TextVariants.p}>
-            Select an AWS account that is linked to your Red Hat account, or{" "}
+            Select an AWS account that is associated with your Red Hat account, or{" "}
             <Button
               variant="link"
               isInline

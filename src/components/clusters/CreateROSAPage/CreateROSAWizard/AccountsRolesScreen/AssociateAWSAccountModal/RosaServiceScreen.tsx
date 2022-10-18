@@ -33,7 +33,7 @@ export const RosaServiceScreen = ({ hideTitle = false }: RosaServiceScreenProps)
       <CardBody>
         <TextContent>
           <Text component={TextVariants.p} className="pf-u-pl-lg">
-            <input type="checkbox" className="pf-u-pr-md"/> I&apos;ve enabled ROSA service in my AWS account and am ready to continue creating my cluster.
+            <input type="checkbox" className="pf-u-pr-md"/> I&apos;ve enabled ROSA service in my AWS account.
           </Text>
         </ TextContent>
       </CardBody>
