@@ -89,13 +89,20 @@ function AccessControl({
           onSelect={(event, key) => setActiveKey(key)}
           isVertical={isVerticalTab}
           className={tabClass}
+          isBox
         >
-          <Tab eventKey={0} title={<TabTitleText>OCM Roles and Access</TabTitleText>}>
-            <OCMRolesSection
-              subscription={cluster.subscription}
-              canEditOCMRoles={cluster.canEditOCMRoles}
-              canViewOCMRoles={cluster.canViewOCMRoles}
-              refreshEvent={refreshEvent}
+          <Tab
+            eventKey={0}
+            title={<TabTitleText>Identity providers</TabTitleText>}
+            isHidden={identityProvidersIsHidden}
+          >
+            <IDPSection
+              clusterID={get(cluster, 'id')}
+              history={history}
+              clusterConsoleURL={clusterConsoleURL}
+              canEdit={cluster.canEdit}
+              clusterHibernating={isHibernating(cluster.state)}
+              isReadOnly={isReadOnly}
             />
           </Tab>
           <Tab
@@ -109,18 +116,12 @@ function AccessControl({
               isReadOnly={isReadOnly}
             />
           </Tab>
-          <Tab
-            eventKey={2}
-            title={<TabTitleText>Identity providers</TabTitleText>}
-            isHidden={identityProvidersIsHidden}
-          >
-            <IDPSection
-              clusterID={get(cluster, 'id')}
-              history={history}
-              clusterConsoleURL={clusterConsoleURL}
-              canEdit={cluster.canEdit}
-              clusterHibernating={isHibernating(cluster.state)}
-              isReadOnly={isReadOnly}
+          <Tab eventKey={2} title={<TabTitleText>OCM Roles and Access</TabTitleText>}>
+            <OCMRolesSection
+              subscription={cluster.subscription}
+              canEditOCMRoles={cluster.canEditOCMRoles}
+              canViewOCMRoles={cluster.canViewOCMRoles}
+              refreshEvent={refreshEvent}
             />
           </Tab>
           <Tab

@@ -122,7 +122,7 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                     <Text component={TextVariants.p}>
                       Download the ROSA command line (CLI) tools and add them to your{' '}
                       <strong>PATH</strong>.{' '}
-                      <ExternalLink href={installLinks.ROSA_INSTALLING}>Help</ExternalLink>
+                      <ExternalLink href={installLinks.ROSA_CLI_DOCS}>Help</ExternalLink>
                     </Text>
                     <Text component={TextVariants.p}>
                       <DownloadAndOSSelection

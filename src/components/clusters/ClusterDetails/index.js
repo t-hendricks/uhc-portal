@@ -47,14 +47,10 @@ import { fetchUpgradeGates } from '../../../redux/actions/upgradeGateActions';
 const mapStateToProps = (state, { location }) => {
   const { details } = state.clusters;
   const { cloudProviders, clusterRouters } = state;
-  const { errorCode } = state.clusterLogs.requestState;
   const { addOns } = state.addOns;
   const { clusterIdentityProviders } = state.identityProviders;
   const { organization } = state.userProfile;
   const { insightsData } = state.insightsData;
-  const logsPresent =
-    state.clusterLogs.clusterLogInitialized === state.clusterLogs.externalClusterID;
-  const hideClusterLogs = !logsPresent || errorCode === 403 || errorCode === 404;
   const {
     notificationContacts = {
       pending: false,
@@ -72,7 +68,7 @@ const mapStateToProps = (state, { location }) => {
     addOns,
     clusterIdentityProviders,
     organization,
-    displayClusterLogs: !hideClusterLogs,
+    displayClusterLogs: !!clusterId,
     clusterLogsViewOptions: state.viewOptions[viewConstants.CLUSTER_LOGS_VIEW],
     insightsData,
     canSubscribeOCP: canSubscribeOCPSelector(state),

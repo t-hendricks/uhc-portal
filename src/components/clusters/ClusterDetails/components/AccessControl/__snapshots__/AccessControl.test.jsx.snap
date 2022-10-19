@@ -11,7 +11,7 @@ exports[`<AccessControl /> should render 1`] = `
       className=""
       component="div"
       hasBorderBottom={true}
-      isBox={false}
+      isBox={true}
       isFilled={false}
       isSecondary={false}
       isVertical={true}
@@ -26,14 +26,19 @@ exports[`<AccessControl /> should render 1`] = `
     >
       <Tab
         eventKey={0}
+        isHidden={false}
         title={
           <TabTitleText>
-            OCM Roles and Access
+            Identity providers
           </TabTitleText>
         }
       >
-        <Connect(OCMRolesSection)
-          refreshEvent={null}
+        <Connect(IDPSection)
+          canEdit={true}
+          clusterConsoleURL="https://console-openshift-console.apps.example.com"
+          clusterHibernating={false}
+          clusterID="fake id"
+          isReadOnly={false}
         />
       </Tab>
       <Tab
@@ -58,19 +63,14 @@ exports[`<AccessControl /> should render 1`] = `
       </Tab>
       <Tab
         eventKey={2}
-        isHidden={false}
         title={
           <TabTitleText>
-            Identity providers
+            OCM Roles and Access
           </TabTitleText>
         }
       >
-        <Connect(IDPSection)
-          canEdit={true}
-          clusterConsoleURL="https://console-openshift-console.apps.example.com"
-          clusterHibernating={false}
-          clusterID="fake id"
-          isReadOnly={false}
+        <Connect(OCMRolesSection)
+          refreshEvent={null}
         />
       </Tab>
       <Tab
