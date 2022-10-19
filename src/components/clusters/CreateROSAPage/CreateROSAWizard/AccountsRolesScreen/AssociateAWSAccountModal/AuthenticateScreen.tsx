@@ -21,7 +21,7 @@ const AuthenticateScreen = () => {
           <Title headingLevel="h2">Download and install the ROSA command line tool</Title>
           <Text component="p">
             Download the ROSA command line (CLI) tools and add them to your <strong>PATH</strong>.{' '}
-            <ExternalLink href={links.ROSA_INSTALLING}>Help</ExternalLink>
+            <ExternalLink href={links.ROSA_CLI_DOCS}>Help</ExternalLink>
           </Text>
           <Text component="p">
             <DownloadAndOSSelection
