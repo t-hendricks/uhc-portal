@@ -16,7 +16,6 @@ import { getErrorState } from '../../../../../common/errors';
 const initialState = {
   requestState: baseRequestState,
   requestDownloadState: baseRequestState,
-  externalClusterID: undefined,
   logs: [],
   data: undefined,
   format: '',
@@ -36,8 +35,6 @@ function clusterLogReducer(state = initialState, action) {
         break;
 
       case FULFILLED_ACTION(GET_CLUSTER_LOGS):
-        draft.externalClusterID = action.payload.externalClusterID;
-        draft.clusterLogInitialized = draft.externalClusterID; // This cluster *has* logs
         draft.requestState = {
           ...baseRequestState,
           fulfilled: true,
@@ -47,7 +44,6 @@ function clusterLogReducer(state = initialState, action) {
         break;
 
       case REJECTED_ACTION(GET_CLUSTER_LOGS):
-        draft.externalClusterID = action.payload.externalClusterID;
         draft.logs = [];
         draft.requestState = { ...getErrorState(action) };
         break;

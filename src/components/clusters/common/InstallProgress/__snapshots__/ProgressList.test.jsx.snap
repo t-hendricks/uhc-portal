@@ -388,14 +388,6 @@ exports[`<ProgressList /> should render for ROSA manual mode 1`] = `
     OIDC and operator roles
   </ProgressStep>
   <ProgressStep
-    description="Pending"
-    icon={
-      <PendingIcon
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-      />
-    }
     id="DNSSetup"
     titleId="DNSSetup-title"
     variant="pending"
@@ -403,14 +395,6 @@ exports[`<ProgressList /> should render for ROSA manual mode 1`] = `
     DNS setup
   </ProgressStep>
   <ProgressStep
-    description="Pending"
-    icon={
-      <PendingIcon
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-      />
-    }
     id="clusterInstallation"
     titleId="clusterInstallation-title"
     variant="pending"
@@ -441,9 +425,7 @@ exports[`<ProgressList /> should render when first step completed 1`] = `
   <ProgressStep
     description="Installing cluster"
     icon={
-      <InProgressIcon
-        color="currentColor"
-        noVerticalAlign={false}
+      <Spinner
         size="sm"
       />
     }
@@ -462,9 +444,7 @@ exports[`<ProgressList /> should render when first step in progress 1`] = `
   <ProgressStep
     description="Preparing account"
     icon={
-      <InProgressIcon
-        color="currentColor"
-        noVerticalAlign={false}
+      <Spinner
         size="sm"
       />
     }
@@ -476,14 +456,6 @@ exports[`<ProgressList /> should render when first step in progress 1`] = `
     Account setup
   </ProgressStep>
   <ProgressStep
-    description="Pending"
-    icon={
-      <PendingIcon
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-      />
-    }
     id="DNSSetup"
     titleId="DNSSetup-title"
     variant="pending"
@@ -491,14 +463,6 @@ exports[`<ProgressList /> should render when first step in progress 1`] = `
     DNS setup
   </ProgressStep>
   <ProgressStep
-    description="Pending"
-    icon={
-      <PendingIcon
-        color="currentColor"
-        noVerticalAlign={false}
-        size="sm"
-      />
-    }
     id="clusterInstallation"
     titleId="clusterInstallation-title"
     variant="pending"
@@ -529,9 +493,7 @@ exports[`<ProgressList /> should render when second step completed 1`] = `
   <ProgressStep
     description="Installing cluster"
     icon={
-      <InProgressIcon
-        color="currentColor"
-        noVerticalAlign={false}
+      <Spinner
         size="sm"
       />
     }

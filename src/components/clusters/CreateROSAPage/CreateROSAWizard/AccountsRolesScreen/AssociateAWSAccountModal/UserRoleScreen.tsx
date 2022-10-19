@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
+  Accordion,
+  AccordionItem,
+  AccordionToggle,
+  AccordionContent,
   Card,
   CardBody,
   Grid,
@@ -30,6 +34,15 @@ export const UserRoleScreen = ({ hideTitle = false }: UserRoleScreenProps) => {
     (state) => !!state.rosaReducer.getAWSAccountIDsResponse?.data?.length,
   );
   const [isAlertShown, setIsAlertShown] = useState(true);
+  const [expanded, setExpanded] = useState('');
+
+  const onToggle = (id: string) => {
+    if (id === expanded) {
+      setExpanded('');
+    } else {
+      setExpanded(id);
+    }
+  };
 
   return (
     <Card isCompact isPlain>
@@ -65,39 +78,56 @@ export const UserRoleScreen = ({ hideTitle = false }: UserRoleScreenProps) => {
               {RosaCliCommand.UserRole}
             </InstructionCommand>
           </div>
-          <Title headingLevel="h3">
-            Ensure that you associate the user role with your Red Hat user account
-          </Title>
-          <Text component={TextVariants.p}>
-            If not yet linked, run the following command to associate the user role with your Red
-            Hat user account.
-          </Text>
-          <Grid className="ocm-instruction-block">
-            <GridItem sm={7} md={6}>
-              <InstructionCommand
-                textAriaLabel="Copyable ROSA link user-role --arn"
-                trackEvent={trackEvents.CopyUserRoleLink}
-              >
-                {RosaCliCommand.LinkUserRole}
-              </InstructionCommand>
-            </GridItem>
-            <GridItem sm={1} md={1}>
-              <PopoverHint
-                iconClassName="ocm-instructions__command-help-icon"
-                hint="Check if the role is linked to your
-                      Red Hat user account by running the following command:"
-                footer={
+        </TextContent>
+        <br />
+        <Accordion displaySize="large">
+          <AccordionItem>
+            <AccordionToggle
+              onClick={() => {
+                onToggle('associate-user-role');
+              }}
+              isExpanded={expanded === 'associate-user-role'}
+              id="associate-user-role"
+            >
+              <Title headingLevel="h3">Check if the User role is linked</Title>
+            </AccordionToggle>
+            <AccordionContent
+              id="associate-user-role-expand"
+              isHidden={expanded !== 'associate-user-role'}
+            >
+              <Grid hasGutter>
+                <GridItem>
+                  <Text component={TextVariants.p}>
+                    If not yet linked, run the following command to associate the user role with
+                    your Red Hat user account.
+                  </Text>
+                </GridItem>
+
+                <GridItem sm={7} md={7}>
+                  <Text component={TextVariants.p}>Check if the role is linked with:</Text>
                   <InstructionCommand
                     textAriaLabel="Copyable ROSA rosa list user-role"
                     trackEvent={trackEvents.CopyUserRoleList}
                   >
                     rosa list user-role
                   </InstructionCommand>
-                }
-              />
-            </GridItem>
-          </Grid>
-        </TextContent>
+                </GridItem>
+
+                <GridItem sm={7} md={7}>
+                  <Text component={TextVariants.p}>
+                    If a role exists but is not linked, link it with:
+                  </Text>
+                  <InstructionCommand
+                    textAriaLabel="Copyable ROSA link user-role --arn"
+                    trackEvent={trackEvents.CopyUserRoleLink}
+                  >
+                    {RosaCliCommand.LinkUserRole}
+                  </InstructionCommand>
+                </GridItem>
+              </Grid>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </CardBody>
     </Card>
   );

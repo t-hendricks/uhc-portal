@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
-import { Form, Grid, GridItem, Title, Text, Alert, Button } from '@patternfly/react-core';
+import { Form, Grid, GridItem, Text, Alert, Button } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import { validateUrl, validateCA } from '~/common/validators';
@@ -18,7 +18,8 @@ import {
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/networkingConstants';
 import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components/CAUpload';
 
-const validateUrlHttps = (value) => validateUrl(value, ['http', 'https']);
+const validateUrlHttp = (value) => validateUrl(value, 'http');
+const validateUrlHttps = (value) => validateUrl(value, 'https');
 const validateAtLeastOne = (value, allValues) => {
   if (!allValues.httpProxyUrl && !allValues.httpsProxyUrl && !allValues.additionalTrustBundle) {
     return 'Configure at least one of the cluster-wide proxy fields.';
@@ -78,8 +79,9 @@ const EditClusterWideProxyDialog = (props) => {
     isOpen && (
       <Modal
         onClose={handleClose}
-        title="Edit cluster-wide proxy"
+        title="Edit cluster-wide Proxy"
         onPrimaryClick={handleSubmit}
+        primaryText="Save"
         onSecondaryClick={handleClose}
         isPending={editClusterProxyResponse.pending}
         width="max(30%, 600px)"
@@ -87,9 +89,6 @@ const EditClusterWideProxyDialog = (props) => {
         {clusterProxyError}
         <Form>
           <Grid hasGutter>
-            <GridItem>
-              <Title headingLevel="h3">Cluster-wide proxy</Title>
-            </GridItem>
             <GridItem>
               <Text>
                 Enable an HTTP or HTTPS proxy to deny direct access to the Internet from your
@@ -115,10 +114,10 @@ const EditClusterWideProxyDialog = (props) => {
               <Field
                 component={ReduxVerticalFormGroup}
                 name="httpProxyUrl"
-                label="HTTP proxy URL"
+                label="HTTP Proxy URL"
                 placeholder={HTTPS_PROXY_PLACEHOLDER}
                 type="text"
-                validate={[validateAtLeastOne, validateUrlHttps]}
+                validate={[validateUrlHttp, validateAtLeastOne]}
                 helpText="Specify a proxy URL to use for HTTP connections outside the cluster."
                 showHelpTextOnError={false}
               />
@@ -128,7 +127,7 @@ const EditClusterWideProxyDialog = (props) => {
               <Field
                 component={ReduxVerticalFormGroup}
                 name="httpsProxyUrl"
-                label="HTTPS proxy URL"
+                label="HTTPS Proxy URL"
                 placeholder={HTTPS_PROXY_PLACEHOLDER}
                 type="text"
                 validate={[validateUrlHttps, validateAtLeastOne]}

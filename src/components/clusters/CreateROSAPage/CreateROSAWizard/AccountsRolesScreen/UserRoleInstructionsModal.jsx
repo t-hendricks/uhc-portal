@@ -11,6 +11,7 @@ function UserRoleInstructionsModal(props) {
     isOpen && (
       <Modal
         title="Create and Link User Role"
+        modalSize="medium"
         onClose={() => closeModal()}
         showPrimary={false}
         secondaryText="Ok"
