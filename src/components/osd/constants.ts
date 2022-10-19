@@ -30,6 +30,7 @@ export const breadcrumbs = [
 ];
 
 export const initialValues = {
-  billing_model: billingModels.STANDARD,
-  byoc: 'false',
+  [FieldId.Product]: 'OSD',
+  [FieldId.BillingModel]: billingModels.STANDARD,
+  [FieldId.Byoc]: 'false',
 };

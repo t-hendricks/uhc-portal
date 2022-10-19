@@ -23,8 +23,7 @@ export const CreateOsdWizard: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   usePreventBrowserNav();
 
-  const onSubmit = async (values: FormikValues) =>
-    submitOSDRequest(dispatch, { isWizard: true })(values);
+  const onSubmit = (values: FormikValues) => submitOSDRequest(dispatch, { isWizard: true })(values);
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>

@@ -10,7 +10,7 @@ export interface ApiRequest {
 }
 
 export interface QuotaList {
-  items: string[];
+  items: any[];
 }
 
 export interface Organization extends ApiRequest {
