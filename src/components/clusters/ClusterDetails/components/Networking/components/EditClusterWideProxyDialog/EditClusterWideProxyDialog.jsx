@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Form, Grid, GridItem, Text, Alert, Button } from '@patternfly/react-core';
@@ -26,12 +26,6 @@ import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components
 
 const validateUrlHttp = (value) => validateUrl(value, 'http');
 const validateUrlHttps = (value) => validateUrl(value, 'https');
-const validateAtLeastOne = (value, allValues) => {
-  if (!allValues.httpProxyUrl && !allValues.httpsProxyUrl && !allValues.additionalTrustBundle) {
-    return 'Configure at least one of the cluster-wide proxy fields.';
-  }
-  return undefined;
-};
 
 const EditClusterWideProxyDialog = (props) => {
   const {
@@ -47,6 +41,7 @@ const EditClusterWideProxyDialog = (props) => {
     formValues,
     additionalTrustBundle,
     anyTouched,
+    formValues,
   } = props;
 
   const clusterProxyError = editClusterProxyResponse.error && (
@@ -55,7 +50,23 @@ const EditClusterWideProxyDialog = (props) => {
   // sets trust bundle file upload depending on whether or not a trust bundle is already uploaded
   const [openFileUpload, setOpenFileUpload] = useState(!additionalTrustBundle);
 
-  const noValues = !httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle;
+  const noValues =
+    !formValues?.httpProxyUrl &&
+    !formValues?.httpsProxyUrl &&
+    !formValues?.additionalTrustBundle &&
+    !additionalTrustBundle;
+
+  const validateAtLeastOne = useCallback((value, allValues) => {
+    if (
+      !allValues.httpProxyUrl &&
+      !allValues.httpsProxyUrl &&
+      !allValues.additionalTrustBundle &&
+      !additionalTrustBundle
+    ) {
+      return 'Configure at least one of the cluster-wide proxy fields.';
+    }
+    return undefined;
+  }, []);
 
   const handleClose = () => {
     closeModal();
@@ -227,6 +238,7 @@ EditClusterWideProxyDialog.propTypes = {
   sendError: PropTypes.func,
   anyTouched: PropTypes.bool,
   clearClusterProxyResponse: PropTypes.func,
+  formValues: PropTypes.object,
 };
 
 export default EditClusterWideProxyDialog;
