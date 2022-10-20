@@ -25,23 +25,23 @@ import {
   getNodesCount,
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { FieldId } from '../constants';
+import { useGetBillingQuotas } from './useGetBillingQuotas';
 
 import './billingModel.scss';
 
-interface BillingModelProps {
-  quotas: Record<string, boolean>;
-}
-
-export const BillingModel = ({ quotas }: BillingModelProps) => {
-  const { values, setFieldValue } = useFormikContext<FormikValues>();
+export const BillingModel = () => {
+  const {
+    values: { [FieldId.Product]: product, [FieldId.BillingModel]: billingModel },
+    values,
+    setFieldValue,
+  } = useFormikContext<FormikValues>();
+  const quotas = useGetBillingQuotas(product);
   const showOsdTrial = useGlobalState(
     (state) => state.features[OSD_TRIAL_FEATURE] && quotas.osdTrial,
   );
-  const billingModel = values[FieldId.BillingModel];
 
   let isRhInfraQuotaDisabled = false;
-  let isBYOCQuotaDisabled = false;
-  let defaultBillingModel = !billingModel ? billingModels.STANDARD : billingModel;
+  let isByocQuotaDisabled = false;
 
   const trialDescription = (
     <p>
@@ -117,27 +117,29 @@ export const BillingModel = ({ quotas }: BillingModelProps) => {
     },
   ];
 
-  if (values[FieldId.Product] === normalizedProducts.OSDTrial) {
-    defaultBillingModel = 'standard-trial';
-  }
+  React.useEffect(() => {
+    if (product === normalizedProducts.OSDTrial) {
+      setFieldValue(FieldId.BillingModel, billingModels.STANDARD_TRIAL);
+    }
 
-  // Select marketplace billing if user only has marketplace quota
-  // Also, if the selected default billing model is disabled
-  // Default to marketplace
-  if (
-    (!showOsdTrial || defaultBillingModel === billingModels.STANDARD) &&
-    quotas.marketplace &&
-    !quotas.standardOsd
-  ) {
-    defaultBillingModel = billingModels.MARKETPLACE;
-  }
+    // Select marketplace billing if user only has marketplace quota
+    // Also, if the selected default billing model is disabled
+    // Default to marketplace
+    if (
+      (!showOsdTrial || billingModel === billingModels.STANDARD) &&
+      quotas.marketplace &&
+      !quotas.standardOsd
+    ) {
+      setFieldValue(FieldId.BillingModel, billingModels.MARKETPLACE);
+    }
+  }, [product, billingModel, showOsdTrial, quotas.marketplace, quotas.standardOsd]);
 
-  if (defaultBillingModel === billingModels.STANDARD || defaultBillingModel === 'standard-trial') {
-    isRhInfraQuotaDisabled = !quotas.rhInfra;
-    isBYOCQuotaDisabled = !quotas.byoc;
-  } else {
+  if (billingModel === billingModels.MARKETPLACE) {
     isRhInfraQuotaDisabled = !quotas.marketplaceRhInfra;
-    isBYOCQuotaDisabled = !quotas.marketplaceByoc;
+    isByocQuotaDisabled = !quotas.marketplaceByoc;
+  } else {
+    isRhInfraQuotaDisabled = !quotas.rhInfra;
+    isByocQuotaDisabled = !quotas.byoc;
   }
 
   const infraOptions = [
@@ -145,13 +147,13 @@ export const BillingModel = ({ quotas }: BillingModelProps) => {
       label: 'Customer cloud subscription',
       description: 'Leverage your existing cloud provider account (AWS or Google Cloud)',
       value: 'true',
-      disabled: isBYOCQuotaDisabled,
+      isDisabled: isByocQuotaDisabled,
     },
     {
       label: 'Red Hat cloud account',
       description: 'Deploy in cloud provider accounts owned by Red Hat',
       value: 'false',
-      disabled: isRhInfraQuotaDisabled,
+      isDisabled: isRhInfraQuotaDisabled,
     },
   ];
 
@@ -159,9 +161,12 @@ export const BillingModel = ({ quotas }: BillingModelProps) => {
     const { value } = event.target;
     let selectedProduct;
 
-    if (value === 'standard-trial') {
-      selectedProduct = normalizedProducts.OSDTrial;
+    if (value !== billingModels.STANDARD) {
       setFieldValue(FieldId.Byoc, 'true');
+
+      if (value === billingModels.STANDARD_TRIAL) {
+        selectedProduct = normalizedProducts.OSDTrial;
+      }
     } else {
       selectedProduct = normalizedProducts.OSD;
     }
@@ -201,12 +206,10 @@ export const BillingModel = ({ quotas }: BillingModelProps) => {
             <div onChange={onBillingModelChange}>
               {subOptions.map((option) => (
                 <RadioButtonField
+                  {...option}
+                  key={option.value}
                   name={FieldId.BillingModel}
-                  label={option.label}
-                  value={option.value}
                   className="pf-u-mb-md"
-                  description={option.description}
-                  isRequired
                 />
               ))}
             </div>
@@ -219,12 +222,10 @@ export const BillingModel = ({ quotas }: BillingModelProps) => {
             <div onChange={onByocChange}>
               {infraOptions.map((option) => (
                 <RadioButtonField
+                  {...option}
                   key={option.value}
                   name={FieldId.Byoc}
-                  label={option.label}
-                  value={option.value}
                   className="pf-u-mb-md"
-                  description={option.description}
                 />
               ))}
             </div>

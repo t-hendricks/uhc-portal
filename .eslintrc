@@ -48,7 +48,8 @@
         "tsx": "never"
       }
     ],
-    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
+    "no-shadow": 0
   },
   "overrides": [
     {

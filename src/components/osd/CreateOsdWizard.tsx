@@ -12,12 +12,12 @@ import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import PageTitle from '~/components/common/PageTitle';
 import Breadcrumbs from '~/components/common/Breadcrumbs';
 import { breadcrumbs, FieldId, initialValues, StepId, StepName, UrlPath } from './constants';
-import { useGetQuotas } from './utils';
 import { BillingModel } from './BillingModel';
 import { ReviewAndCreate } from './ReviewAndCreate';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import LeaveCreateClusterPrompt from '../clusters/common/LeaveCreateClusterPrompt';
 import submitOSDRequest from '../clusters/CreateOSDPage/submitOSDRequest';
+import { getOrganizationAndQuota } from '~/redux/actions/userActions';
 
 export const CreateOsdWizard: React.FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -44,12 +44,16 @@ export const CreateOsdWizard: React.FunctionComponent = () => {
 };
 
 const CreateOsdWizardInternal = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const { values } = useFormikContext<FormikValues>();
   const product = values[FieldId.Product];
-  const quotas = useGetQuotas(product);
   const userProfile = useGlobalState((state) => state.userProfile);
   const isLoading = userProfile.organization.pending;
+
+  React.useEffect(() => {
+    dispatch(getOrganizationAndQuota());
+  }, []);
 
   const onClose = () => history.push(UrlPath.CreateCloud);
 
@@ -65,7 +69,7 @@ const CreateOsdWizardInternal = () => {
     <>
       <Wizard onClose={onClose} nav={{ forceStepVisit: true, isExpandable: true }}>
         <WizardStep name={StepName.BillingModel} id={StepId.BillingModel}>
-          <BillingModel quotas={quotas} />
+          <BillingModel />
         </WizardStep>
         <WizardStep name={StepName.Review} id={StepId.Review}>
           <ReviewAndCreate />
