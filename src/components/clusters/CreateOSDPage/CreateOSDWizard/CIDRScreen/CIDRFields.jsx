@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Field } from 'redux-form';
-import { GridItem, Alert, List, ListItem } from '@patternfly/react-core';
+import { GridItem, Alert, List, ListItem, Text, TextVariants } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
 import ExternalLink from '~/components/common/ExternalLink';
@@ -162,6 +162,9 @@ function CIDRFields({
             <>
               {constants.machineCIDRHint}
               {privateRangesHint}
+              <Text component={TextVariants.p}>
+                <ExternalLink href={links.OSD_CIDR_MACHINE}>Learn more</ExternalLink>
+              </Text>
             </>
           }
           showHelpTextOnError={false}
@@ -186,6 +189,9 @@ function CIDRFields({
             <>
               {constants.serviceCIDRHint}
               {privateRangesHint}
+              <Text component={TextVariants.p}>
+                <ExternalLink href={links.OSD_CIDR_SERVICE}>Learn more</ExternalLink>
+              </Text>
             </>
           }
           showHelpTextOnError={false}
@@ -210,6 +216,9 @@ function CIDRFields({
             <>
               {constants.podCIDRHint}
               {privateRangesHint}
+              <Text component={TextVariants.p}>
+                <ExternalLink href={links.OSD_CIDR_POD}>Learn more</ExternalLink>
+              </Text>
             </>
           }
           showHelpTextOnError={false}
@@ -228,7 +237,14 @@ function CIDRFields({
           validate={[required, validators.hostPrefix]}
           disabled={isFieldDisabled}
           helpText={`Must be between /${validators.HOST_PREFIX_MIN} and /${validators.HOST_PREFIX_MAX}.`}
-          extendedHelpText={constants.hostPrefixHint}
+          extendedHelpText={
+            <>
+              {constants.hostPrefixHint}
+              <Text component={TextVariants.p}>
+                <ExternalLink href={links.OSD_CIDR_HOST}>Learn more</ExternalLink>
+              </Text>
+            </>
+          }
           showHelpTextOnError={false}
         />
       </GridItem>
