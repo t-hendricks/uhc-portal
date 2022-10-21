@@ -104,9 +104,9 @@ import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
 import useAnalytics from '~/hooks/useAnalytics';
-import { metadataByRoute, is404 } from './routeMetadata';
 import { CreateOsdWizard } from '../osd';
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { metadataByRoute, is404 } from './routeMetadata';
+import { useFeatures } from './hooks';
 
 const { AssistedUiRouter } = OCM;
 
@@ -136,36 +136,14 @@ interface RouterProps extends RouteComponentProps {
 const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalClusterId }) => {
   const { pathname } = useLocation();
   const { setPageMetadata } = useAnalytics();
-  const featureQuery = useGlobalState((state) => state.router.location.query.features);
-
-  const features = React.useMemo(() => {
-    if (featureQuery) {
-      const parsedFeatures: Record<string, string> = JSON.parse(decodeURI(featureQuery)) || {};
-
-      if (Object.keys(parsedFeatures).length > 0) {
-        return Object.entries(parsedFeatures).reduce(
-          (acc: Record<string, boolean>, [name, value]) => {
-            // eslint-disable-next-line no-param-reassign
-            acc[name] = value === 'true';
-
-            return acc;
-          },
-          {},
-        );
-      }
-    }
-
-    return {};
-  }, [featureQuery]);
-
-  const isOsdWizardV2Enabled = features[OSD_WIZARD_V2_FEATURE];
+  const { [OSD_WIZARD_V2_FEATURE]: isOsdWizardV2Enabled } = useFeatures();
 
   useEffect(() => {
     setPageMetadata({
       ...metadataByRoute(pathname, planType, clusterId, externalClusterId),
       ...(is404() ? { title: '404 Not Found' } : {}),
     });
-  }, [pathname, planType, setPageMetadata]);
+  }, [pathname, planType, clusterId, externalClusterId, setPageMetadata]);
 
   return (
     <>

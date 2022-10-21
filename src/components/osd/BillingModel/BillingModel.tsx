@@ -27,7 +27,7 @@ import {
 import { FieldId } from '../constants';
 import { useGetBillingQuotas } from './useGetBillingQuotas';
 
-import './billingModel.scss';
+import './BillingModel.scss';
 
 export const BillingModel = () => {
   const {
@@ -39,9 +39,6 @@ export const BillingModel = () => {
   const showOsdTrial = useGlobalState(
     (state) => state.features[OSD_TRIAL_FEATURE] && quotas.osdTrial,
   );
-
-  let isRhInfraQuotaDisabled = false;
-  let isByocQuotaDisabled = false;
 
   const trialDescription = (
     <p>
@@ -93,7 +90,7 @@ export const BillingModel = () => {
     ...(showOsdTrial
       ? [
           {
-            value: 'standard-trial',
+            value: billingModels.STANDARD_TRIAL,
             label: 'Free trial (upgradeable)',
             // 60 days may be updated later based on an account capability
             // https://issues.redhat.com/browse/SDB-1846
@@ -133,6 +130,9 @@ export const BillingModel = () => {
       setFieldValue(FieldId.BillingModel, billingModels.MARKETPLACE);
     }
   }, [product, billingModel, showOsdTrial, quotas.marketplace, quotas.standardOsd]);
+
+  let isRhInfraQuotaDisabled = false;
+  let isByocQuotaDisabled = false;
 
   if (billingModel === billingModels.MARKETPLACE) {
     isRhInfraQuotaDisabled = !quotas.marketplaceRhInfra;
