@@ -16,7 +16,7 @@ import {
   TextVariants,
 } from '@patternfly/react-core';
 
-import { GlobalState } from '~/redux/store';
+import { GlobalState } from '~/redux/types';
 import PopoverHint from '~/components/common/PopoverHint';
 import ExternalLink from '~/components/common/ExternalLink';
 import InstructionCommand from '~/components/common/InstructionCommand';
