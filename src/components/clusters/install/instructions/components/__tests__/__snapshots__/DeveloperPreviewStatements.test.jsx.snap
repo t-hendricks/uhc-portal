@@ -5,7 +5,16 @@ exports[`DeveloperPreviewStatements renders correctly 1`] = `
   <Text
     component="p"
   >
-    Because these are developer preview builds:
+    Because these are
+     
+    <ExternalLink
+      href="https://access.redhat.com/support/offerings/devpreview"
+      noIcon={true}
+    >
+      developer preview
+    </ExternalLink>
+     
+    builds:
   </Text>
   <TextList>
     <TextListItem>
@@ -15,7 +24,7 @@ exports[`DeveloperPreviewStatements renders correctly 1`] = `
       Installation and use is not eligible for Red Hat production support.
     </TextListItem>
     <TextListItem>
-      Clusters installed at pre-release versions cannot be upgraded. As we approach a GA milestone with these nightly builds, we will allow upgrades from a nightly to a nightly; however, we will not support an upgrade from a nightly to the final GA build of OCP.
+      Upgrades to, from, or between developer preview versions are not supported.
     </TextListItem>
   </TextList>
 </Fragment>
