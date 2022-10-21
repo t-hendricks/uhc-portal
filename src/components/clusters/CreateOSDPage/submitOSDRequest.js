@@ -238,12 +238,11 @@ export const upgradeScheduleRequest = (formData) =>
       };
 
 // Returning a function that takes (formData) is convenient for redux-form `onSubmit` prop.
-const submitOSDRequest =
-  (dispatch, { isWizard, cloudProviderID, product }) =>
-  (formData) => {
-    const clusterRequest = createClusterRequest({ isWizard, cloudProviderID, product }, formData);
-    const upgradeSchedule = upgradeScheduleRequest(formData);
-    dispatch(createCluster(clusterRequest, upgradeSchedule));
-  };
+const submitOSDRequest = (dispatch, params) => (formData) => {
+  const { isWizard, cloudProviderID, product } = params;
+  const clusterRequest = createClusterRequest({ isWizard, cloudProviderID, product }, formData);
+  const upgradeSchedule = upgradeScheduleRequest(formData);
+  dispatch(createCluster(clusterRequest, upgradeSchedule));
+};
 
 export default submitOSDRequest;

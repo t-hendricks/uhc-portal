@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Card, CardBody, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
 
 import { trackEvents } from '~/common/analytics';
-import { GlobalState } from '~/redux/store';
+import { GlobalState } from '~/redux/types';
 import ExternalLink from '../../../../../common/ExternalLink';
 import DownloadAndOSSelection from '../../../../install/instructions/components/DownloadAndOSSelection';
 import links, { channels, tools } from '../../../../../../common/installLinks.mjs';
