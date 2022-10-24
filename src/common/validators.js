@@ -1,8 +1,8 @@
-import get from 'lodash/get';
-import inRange from 'lodash/inRange';
+import { get, indexOf, inRange } from 'lodash';
 import cidrTools from 'cidr-tools';
-import { Validator, ValidationError } from 'jsonschema';
-import { indexOf } from 'lodash';
+import { ValidationError, Validator } from 'jsonschema';
+
+import { clusterService } from '~/services';
 
 // Valid RFC-1035 labels must consist of lower case alphanumeric characters or '-', start with an
 // alphabetic character, and end with an alphanumeric character (e.g. 'my-name',  or 'abc-123').
@@ -155,7 +155,10 @@ const checkObjectName = (value, objectName, maxLen) => {
 };
 
 const checkObjectNameValidation = (value, objectName, maxLen) => [
-  { text: `1 - ${maxLen} characters`, validated: value?.length > 0 && value?.length <= maxLen },
+  {
+    text: `1 - ${maxLen} characters`,
+    validated: value?.length > 0 && value?.length <= maxLen,
+  },
   {
     text: 'Consist of lower-case alphanumeric characters, or hyphen (-)',
     validated: !!value && DNS_ONLY_ALPHANUMERIC_HYPHEN.test(value),
@@ -170,18 +173,63 @@ const checkObjectNameValidation = (value, objectName, maxLen) => [
   },
 ];
 
+const checkObjectNameAsyncValidation = (value) => [
+  {
+    text: 'Globally unique name in your organization',
+    validator: async () => {
+      if (!value?.length) {
+        return false;
+      }
+      const { data } = await clusterService.getCluster(`name = '${value}'`);
+      return !data?.size;
+    },
+  },
+];
+
 const clusterNameValidation = (value) =>
   checkObjectNameValidation(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
 
+const clusterNameAsyncValidation = (value) =>
+  checkObjectNameAsyncValidation(value, 'Cluster', MAX_CLUSTER_NAME_LENGTH);
+
 const checkMachinePoolName = (value) =>
   checkObjectName(value, 'Machine pool', MAX_MACHINE_POOL_NAME_LENGTH);
+
+/**
+ * executes cluster-name async validations.
+ * to be used at the form level hook (asyncValidate).
+ *
+ * @see asyncValidate in the wizard's redux-form config.
+ * @param value the value to be validated
+ * @returns {Promise<void>} a promise which resolves quietly, or rejects with a form errors map.
+ */
+const asyncValidateClusterName = async (value) => {
+  const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(value);
+  return findFirstFailureMessage(evaluatedAsyncValidation);
+};
+
+const createAsyncValidationEvaluator = (asyncValidation) => async (value) => {
+  const populatedValidation = asyncValidation(value);
+  const validationResults = await Promise.all(
+    populatedValidation.map(({ validator }) => validator?.()),
+  );
+
+  return populatedValidation.map((item, i) => ({
+    ...item,
+    validated: validationResults[i],
+  }));
+};
+
+const evaluateClusterNameAsyncValidation = createAsyncValidationEvaluator(
+  clusterNameAsyncValidation,
+);
 
 /**
  * creates a validator function that exits on first failure (and returns its error message),
  * using the validation provider output collection as its input.
  *
  * @param validationProvider {function(*, object, object, object): array}
- *        a redux-form validation function that returns a collection of validations,
+ *        a function that returns a collection of validations,
  *        and can be passed to a Field's validation attribute.
  *        first argument is the value, second is allValues, etc. (see the redux-form docs).
  * @returns {function(*): *} a validator function that exits on the first failed validation,
@@ -190,7 +238,10 @@ const checkMachinePoolName = (value) =>
 const createPessimisticValidator =
   (validationProvider = () => {}) =>
   (...validationArgs) =>
-    validationProvider(...validationArgs)?.find((validator) => validator.validated === false)?.text;
+    findFirstFailureMessage(validationProvider(...validationArgs));
+
+const findFirstFailureMessage = (populatedValidation) =>
+  populatedValidation?.find((validation) => validation.validated === false)?.text;
 
 const checkCustomOperatorRolesPrefix = (value) => {
   const label = 'Custom operator roles prefix';
@@ -1221,6 +1272,9 @@ export {
   validateLabelValue,
   createPessimisticValidator,
   clusterNameValidation,
+  clusterNameAsyncValidation,
+  evaluateClusterNameAsyncValidation,
+  asyncValidateClusterName,
 };
 
 export default validators;

@@ -26,6 +26,7 @@ import validators, {
   validateHTPasswdPassword,
   validateHTPasswdUsername,
   clusterNameValidation,
+  clusterNameAsyncValidation,
   checkCustomOperatorRolesPrefix,
   createPessimisticValidator,
 } from '../validators';
@@ -55,6 +56,11 @@ test('Field is a valid cluster name', () => {
   const alphanumericMsg = 'Consist of lower-case alphanumeric characters, or hyphen (-)';
   const startCharMsg = 'Start with a lower-case alphabetic character';
   const endCharMsg = 'End with a lower-case alphanumeric character';
+  const uniqueMsg = 'Globally unique name in your organization';
+
+  expect(clusterNameAsyncValidation(undefined)[0].text).toEqual(uniqueMsg);
+
+  expect(clusterNameAsyncValidation(undefined)[0].validator).toBeInstanceOf(Function);
 
   expect(clusterNameValidation('')).toEqual([
     { text: numCharsMsg, validated: false },
