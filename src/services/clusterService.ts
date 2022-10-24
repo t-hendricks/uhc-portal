@@ -30,7 +30,9 @@ import type {
 } from '../types/cluster_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
 
-const getClusters = (search: string) =>
+const getCluster = (search: string) => getClusters(search, 1);
+
+const getClusters = (search: string, size: number = -1) =>
   apiRequest.post<{
     /**
      * Retrieved list of clusters.
@@ -55,7 +57,7 @@ const getClusters = (search: string) =>
     // the backend does not have a /search endpoint,
     // and we might need to send a query that is longer than the GET length limit
     {
-      size: -1,
+      size,
       search,
     },
   );
@@ -685,6 +687,7 @@ const getLimitedSupportReasons = (clusterId: string) =>
   }>(`/api/clusters_mgmt/v1/clusters/${clusterId}/limited_support_reasons`);
 
 const clusterService = {
+  getCluster,
   getClusters,
   postNewCluster,
   getClusterDetails,

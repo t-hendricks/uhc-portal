@@ -151,15 +151,15 @@ class UpgradeSettingsTab extends React.Component {
             <ErrorBox response={editClusterRequest} message="Error processing request" />
           )}
           {!isAROCluster && (
-          <Card>
-            <CardBody>
-              <UserWorkloadMonitoringSection
-                parent="details"
-                disableUVM={disableUVM}
-                planType={cluster.subscription?.plan?.type}
-              />
-            </CardBody>
-          </Card>
+            <Card>
+              <CardBody>
+                <UserWorkloadMonitoringSection
+                  parent="details"
+                  disableUVM={disableUVM}
+                  planType={cluster.subscription?.plan?.type}
+                />
+              </CardBody>
+            </Card>
           )}
         </GridItem>
         <GridItem lg={9} md={12} className="ocm-c-upgrade-monitoring-top">

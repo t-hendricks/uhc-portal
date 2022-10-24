@@ -10,6 +10,7 @@ import ReduxVerticalFormGroup from '../../../../../common/ReduxFormComponents/Re
 import ReduxRichInputField from '../../../../../common/ReduxFormComponents/ReduxRichInputField';
 import validators, {
   clusterNameValidation,
+  clusterNameAsyncValidation,
   createPessimisticValidator,
 } from '../../../../../../common/validators';
 import RadioButtons from '../../../../../common/ReduxFormComponents/RadioButtons';
@@ -72,6 +73,7 @@ function BasicFieldsSection({
           type="text"
           validate={createPessimisticValidator(clusterNameValidation)}
           validation={clusterNameValidation}
+          asyncValidation={clusterNameAsyncValidation}
           disabled={pending}
           isRequired
           extendedHelpText={constants.clusterNameHint}

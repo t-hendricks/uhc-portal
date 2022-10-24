@@ -413,7 +413,8 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
       });
   }
 
-  if ((subscription.data.managed || isAROCluster) &&
+  if (
+    (subscription.data.managed || isAROCluster) &&
     subscription.data.status !== subscriptionStatuses.DEPROVISIONED
   ) {
     const cluster = await clusterService.getClusterDetails(subscription.data.cluster_id);
