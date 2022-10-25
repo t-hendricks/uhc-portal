@@ -82,30 +82,31 @@ const EditClusterWideProxyDialog = (props) => {
     <Alert isInline variant="warning" title="Complete at least 1 of the fields above." />
   );
 
-  return isOpen && (
-    <Modal
-      onClose={handleClose}
-      title="Edit cluster-wide Proxy"
-      onPrimaryClick={handleSubmit}
-      primaryText="Save"
-      onSecondaryClick={handleClose}
-      isPending={editClusterProxyResponse.pending}
-      width="max(30%, 600px)"
-    >
-      {clusterProxyError}
-      <Form>
-        <Grid hasGutter>
-          <GridItem>
-            <Text>
-              Enable an HTTP or HTTPS proxy to deny direct access to the Internet from your
-              cluster
-            </Text>
-            <Text className="pf-u-mt-sm">
-              <ExternalLink href={links.CONFIGURE_PROXY_URL}>
-                Learn more about configuring a cluster-wide proxy
-              </ExternalLink>
-            </Text>
-          </GridItem>
+  return (
+    isOpen && (
+      <Modal
+        onClose={handleClose}
+        title="Edit cluster-wide Proxy"
+        onPrimaryClick={handleSubmit}
+        primaryText="Save"
+        onSecondaryClick={handleClose}
+        isPending={editClusterProxyResponse.pending}
+        width="max(30%, 600px)"
+      >
+        {clusterProxyError}
+        <Form>
+          <Grid hasGutter>
+            <GridItem>
+              <Text>
+                Enable an HTTP or HTTPS proxy to deny direct access to the Internet from your
+                cluster
+              </Text>
+              <Text className="pf-u-mt-sm">
+                <ExternalLink href={links.CONFIGURE_PROXY_URL}>
+                  Learn more about configuring a cluster-wide proxy
+                </ExternalLink>
+              </Text>
+            </GridItem>
 
             <GridItem>
               <Alert
