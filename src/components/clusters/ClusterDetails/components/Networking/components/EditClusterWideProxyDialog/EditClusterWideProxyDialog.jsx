@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import { Form, Grid, GridItem, Text, Alert, Button } from '@patternfly/react-core';
 
 import links from '~/common/installLinks.mjs';
-import { validateUrl, validateCA, checkInvalidDNS } from '~/common/validators';
+import { validateUrl, validateCA, checkDNSDomain } from '~/common/validators';
 
 import Modal from '~/components/common/Modal/Modal';
 import ErrorBox from '~/components/common/ErrorBox';
@@ -153,7 +153,7 @@ const EditClusterWideProxyDialog = (props) => {
                 }
                 type="text"
                 parse={stringToArray}
-                validate={checkInvalidDNS}
+                validate={checkDNSDomain}
                 helpText={NO_PROXY_HELPER_TEXT}
                 showHelpTextOnError={false}
                 isDisabled={!formValues.httpProxyUrl && !formValues.httpsProxyUrl}

@@ -109,6 +109,7 @@ const normalizeCluster = (cluster) => {
   if (cluster.version && cluster.version.available_upgrades) {
     result.version.available_upgrades.sort(versionComparator);
   }
+
   return result;
 };
 

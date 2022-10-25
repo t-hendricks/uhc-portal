@@ -499,7 +499,7 @@ const checkBaseDNSDomain = (value) => {
   return undefined;
 };
 
-const checkInvalidDNS = (value) => {
+const checkDNSDomain = (value) => {
   if (value && value.length > 0) {
     const invalidDomains = value.filter(
       (domain) =>
@@ -1257,7 +1257,7 @@ export {
   validateRHITUsername,
   validateUrl,
   validateCA,
-  checkInvalidDNS,
+  checkDNSDomain,
   checkClusterConsoleURL,
   checkOpenIDIssuer,
   validateNumericInput,

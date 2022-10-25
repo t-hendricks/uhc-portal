@@ -13,7 +13,7 @@ import {
 } from '@patternfly/react-core';
 
 import { constants } from '../../CreateOSDForm/CreateOSDFormConstants';
-import { validateUrl, validateCA, checkInvalidDNS } from '../../../../../common/validators';
+import { validateUrl, validateCA, checkDNSDomain } from '../../../../../common/validators';
 import ReduxVerticalFormGroup from '../../../../common/ReduxFormComponents/ReduxVerticalFormGroup';
 import ReduxFileUpload from '../../../../common/ReduxFormComponents/ReduxFileUpload';
 import ExternalLink from '../../../../common/ExternalLink';
@@ -163,7 +163,7 @@ function ClusterProxyScreen({
               !httpProxyUrl && !httpsProxyUrl ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER
             }
             type="text"
-            validate={checkInvalidDNS}
+            validate={checkDNSDomain}
             helpText={NO_PROXY_HELPER_TEXT}
             showHelpTextOnError={false}
             parse={stringToArray}
