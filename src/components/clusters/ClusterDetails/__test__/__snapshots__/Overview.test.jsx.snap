@@ -12,6 +12,11 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
     >
       <Connect(Component)
         aiClusterId="1i4counta3holamvo1g5tp6n8p3a03bq"
+        permissions={
+          Object {
+            "canEdit": false,
+          }
+        }
       />
       <Card
         className="ocm-c-overview-details__card"
@@ -237,6 +242,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
+                    "canEdit": false,
                     "ccs": Object {
                       "disable_scp_checks": false,
                       "enabled": true,
@@ -605,6 +611,7 @@ exports[`<Overview /> for an AI cluster should render 1`] = `
                       "items": null,
                       "kind": "AWSInfrastructureAccessRoleGrantLink",
                     },
+                    "canEdit": false,
                     "ccs": Object {
                       "disable_scp_checks": false,
                       "enabled": true,
