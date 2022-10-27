@@ -1,5 +1,19 @@
 import { tools } from './installLinks.mjs';
-import { normalizedProducts } from '~/common/subscriptionTypes';
+import { normalizedProducts } from './subscriptionTypes';
+
+export type TrackEvent = {
+  event: string;
+  link_name: string;
+  deprecated_name?: string;
+  ocm_resource_type?: string;
+};
+
+export type TrackEventOptions = {
+  url?: string;
+  path?: string;
+  resourceType?: string;
+  customProperties?: JSON;
+};
 
 /**
  * a dictionary for mapping product keys to subscription plan ID values.
@@ -12,7 +26,8 @@ import { normalizedProducts } from '~/common/subscriptionTypes';
  */
 const ocmResourceTypeByProduct = Object.fromEntries(
   Object.entries(normalizedProducts).map(([key, value]) => [key, String(value).toLowerCase()]),
-);
+  // same type as `normalizedProducts` but the values are lowercase
+) as typeof normalizedProducts;
 
 const ocmResourceType = {
   ...ocmResourceTypeByProduct,
@@ -37,7 +52,7 @@ const eventNames = {
 /**
  * OCM track events, see https://docs.google.com/spreadsheets/d/1C_WJWPy3sgE2ICaYHgWpWngj0A3Z3zl5GcstWySG9WE
  */
-const trackEvents = {
+const trackEvents: { [key: string]: TrackEvent } = {
   [tools.OC]: {
     deprecated_name: 'OCP-Download-CLITools',
     event: eventNames.FILE_DOWNLOADED,
@@ -276,7 +291,7 @@ const trackEvents = {
  *
  * @returns {Object} Object {[event]: string, [properties]: Object}
  */
-const getTrackEvent = (trackEvent, options = {}) => ({
+const getTrackEvent = (trackEvent: TrackEvent, options: TrackEventOptions = {}) => ({
   event: trackEvent.event,
   properties: {
     link_name: trackEvent.link_name,

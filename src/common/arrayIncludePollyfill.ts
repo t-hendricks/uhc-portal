@@ -3,7 +3,7 @@
 if (!Array.prototype.includes) {
   // eslint-disable-next-line no-extend-native
   Object.defineProperty(Array.prototype, 'includes', {
-    value(searchElement, fromIndex) {
+    value(searchElement: unknown, fromIndex: number) {
       if (this == null) {
         throw new TypeError('"this" is null or not defined');
       }
@@ -32,7 +32,7 @@ if (!Array.prototype.includes) {
       //  b. If k < 0, let k be 0.
       let k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
 
-      function sameValueZero(x, y) {
+      function sameValueZero(x: unknown, y: unknown) {
         // eslint-disable-next-line no-restricted-globals
         return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
       }

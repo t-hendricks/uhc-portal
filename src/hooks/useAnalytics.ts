@@ -1,9 +1,9 @@
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
-import { getTrackEvent } from '~/common/analytics';
+import { getTrackEvent, TrackEvent, TrackEventOptions } from '~/common/analytics';
 
 interface useAnalyticsReturn {
   /** a convenience function that composes the track event parsing and the actual tracking. */
-  track: (trackEvent: object, options: object) => void;
+  track: (trackEvent: TrackEvent, options?: TrackEventOptions) => void;
   /** the analytics API instance */
   analytics: any;
   /**
@@ -22,8 +22,8 @@ const useAnalytics = (): useAnalyticsReturn => {
     segment: { setPageMetadata },
   } = useChrome();
 
-  const track = (trackEvent: object, options = {}) => {
-    const eventObj: any = getTrackEvent(trackEvent, options);
+  const track = (trackEvent: TrackEvent, options?: TrackEventOptions) => {
+    const eventObj = getTrackEvent(trackEvent, options);
     analytics.track(eventObj.event, eventObj.properties);
   };
 
