@@ -41,10 +41,12 @@ const getAssistedUILibVersion = async (revision) => {
 
 // Helpers returning a promise, should resolve to an object containing *at least* .src_hash.
 
-const gitBranch = async (branch) => {
+const gitRev = async (branchOrCommit) => {
   try {
-    // this hash-parsing should match the implementation at /push_to_insights.sh
-    const r = await execFilePromise('git', ['rev-parse', '--short', branch]);
+    // Normalizes hash length to be unique in local repo.
+    // Sometimes may differ from similar normalization by push_to_insights.sh at build time,
+    // so good to apply to all hashes.
+    const r = await execFilePromise('git', ['rev-parse', '--short', branchOrCommit]);
     return { src_hash: r.stdout.trimRight() };
   } catch (err) {
     return { ERROR: err };
@@ -56,7 +58,10 @@ const appInfo = async (url) => {
   const r = await execFilePromise('curl', ['--silent', '--show-error', '--fail', url]);
   try {
     // Some contain a trailing comma, making it invalid JSON, so use JSON5.
-    return JSON5.parse(r.stdout);
+    const data = JSON5.parse(r.stdout);
+    
+    const normalizedHash = await gitRev(data.src_hash);
+    return {...data, ...normalizedHash};
   } catch (err) {
     return { ERROR: `${err} - ${r.stdout}` };
   }
@@ -68,7 +73,7 @@ const getEnvs = async (upstream) => {
     {
       name: `${upstream}/master`,
       comment: 'https://gitlab.cee.redhat.com/service/uhc-portal/commits/master',
-      info: gitBranch(`${upstream}/master`),
+      info: gitRev(`${upstream}/master`),
     },
     {
       name: 'build_pushed_master',
@@ -97,7 +102,7 @@ const getEnvs = async (upstream) => {
     {
       name: `${upstream}/candidate`,
       comment: 'https://gitlab.cee.redhat.com/service/uhc-portal/commits/candidate',
-      info: gitBranch(`${upstream}/candidate`),
+      info: gitRev(`${upstream}/candidate`),
     },
     {
       name: 'build_pushed_candidate',
@@ -115,7 +120,7 @@ const getEnvs = async (upstream) => {
     {
       name: `${upstream}/stable`,
       comment: 'https://gitlab.cee.redhat.com/service/uhc-portal/commits/stable',
-      info: gitBranch(`${upstream}/stable`),
+      info: gitRev(`${upstream}/stable`),
     },
     {
       name: 'build_pushed_stable',
