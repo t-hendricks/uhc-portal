@@ -33,10 +33,12 @@
     "react/state-in-constructor": [2, "never"],
     "no-param-reassign": [
       "error",
-      { "props": true, "ignorePropertyModificationsFor": ["draft", "response"] }
+      { "props": true, "ignorePropertyModificationsFor": ["draft", "response", "acc"] }
     ],
     "no-use-before-define": "off",
     "import/prefer-default-export": 0,
+    "no-shadow": "off",
+    "react/jsx-wrap-multilines": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -48,8 +50,7 @@
         "tsx": "never"
       }
     ],
-    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
-    "no-shadow": 0
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }]
   },
   "overrides": [
     {

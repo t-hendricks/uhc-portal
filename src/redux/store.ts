@@ -20,18 +20,6 @@ declare global {
   }
 }
 
-// TODO, update types to be more exact
-export interface GlobalState {
-  modal: {
-    data: any;
-  };
-  rosaReducer: {
-    getAWSAccountIDsResponse: {
-      data: any[];
-    };
-  };
-}
-
 const emptyState = {} as GlobalState;
 const defaultOptions = {
   dispatchDefaultFailure: false, // automatic error notifications

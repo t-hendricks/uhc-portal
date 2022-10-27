@@ -1,6 +1,7 @@
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { availableQuota, quotaTypes } from '~/components/clusters/common/quotaSelectors';
 import { QuotaList } from '~/redux/types';
+import { CloudProviderType } from '../ClusterSettings/CloudProvider/types';
 
 interface QuotaParams {
   resourceType: string;
@@ -20,12 +21,14 @@ export enum QuotaType {
   RhInfra = 'rhInfra',
   MarketplaceByoc = 'marketplaceByoc',
   MarketplaceRhInfra = 'marketplaceRhInfra',
+  GcpResources = 'gcpResources',
+  AwsResources = 'awsResources',
 }
 
 export const hasAvailableQuota = (quotaList: QuotaList, params: QuotaParams) =>
   availableQuota(quotaList, params) > 0;
 
-export const getQuotaParams = (product: string) => ({
+export const quotaParams = {
   [QuotaType.OsdTrial]: {
     resourceType: quotaTypes.CLUSTER,
     product: normalizedProducts.OSDTrial,
@@ -43,13 +46,11 @@ export const getQuotaParams = (product: string) => ({
   [QuotaType.Byoc]: {
     resourceType: quotaTypes.CLUSTER,
     billingModel: billingModels.STANDARD,
-    product,
     isBYOC: true,
   },
   [QuotaType.RhInfra]: {
     resourceType: quotaTypes.CLUSTER,
     billingModel: billingModels.STANDARD,
-    product,
     isBYOC: false,
   },
   [QuotaType.MarketplaceByoc]: {
@@ -64,4 +65,12 @@ export const getQuotaParams = (product: string) => ({
     product: normalizedProducts.OSD,
     isBYOC: false,
   },
-});
+  [QuotaType.GcpResources]: {
+    resourceType: quotaTypes.CLUSTER,
+    cloudProviderID: CloudProviderType.Gcp,
+  },
+  [QuotaType.AwsResources]: {
+    resourceType: quotaTypes.CLUSTER,
+    cloudProviderID: CloudProviderType.Aws,
+  },
+};
