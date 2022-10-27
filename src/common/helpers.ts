@@ -105,25 +105,35 @@ const shouldRefetchQuota = (organization: any) => {
 };
 
 /**
- * Scroll to the first error found in formErrors.
- * @param {Object} formErrors { [key: fieldName]: string }
+ * Scroll to and focus on the first error found in the record of errors.
+ * @param errors Record of errors
+ * @param focusSelector Used to discover element to focus on, defaults to form elements;
+ * input, select, textarea
  */
+const scrollToFirstError = (
+  errors: Record<string, string>,
+  focusSelector = 'input,select,textarea',
+) => {
+  const errorIds = Object.keys(errors);
 
-const scrollToFirstError = (formErrors: { [key: string]: string }): void => {
-  const errorFieldNames = Object.keys(formErrors);
-
-  if (!errorFieldNames?.length) {
+  if (!errorIds?.length) {
     return;
   }
 
-  // Use all error field selectors, where the first matching element in the document is returned.
-  const input = document.querySelector(
-    errorFieldNames.map((fieldName) => `[name*="${fieldName}"]`).join(','),
-  );
+  // Use all error selectors, where the first matching element in the document is returned.
+  const scrollElement = document.querySelector(errorIds.map((id) => `[id*="${id}"]`).join(','));
 
-  input?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  if (input instanceof HTMLElement) {
-    (input as HTMLElement)?.focus();
+  if (scrollElement instanceof HTMLElement) {
+    let focusElement: HTMLElement | null = scrollElement;
+
+    // Find the element to focus on if the focusSelector does not include the element to scroll to.
+    if (!focusSelector.includes(scrollElement.tagName.toLowerCase())) {
+      focusElement = scrollElement?.querySelector(focusSelector);
+    }
+
+    // Scroll and focus
+    setTimeout(() => scrollElement.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+    focusElement?.focus({ preventScroll: true });
   }
 };
 

@@ -159,16 +159,14 @@ export const BillingModel = () => {
 
   const onBillingModelChange = (event: React.ChangeEvent<any>) => {
     const { value } = event.target;
-    let selectedProduct;
+    let selectedProduct = normalizedProducts.OSD;
 
     if (value !== billingModels.STANDARD) {
       setFieldValue(FieldId.Byoc, 'true');
+    }
 
-      if (value === billingModels.STANDARD_TRIAL) {
-        selectedProduct = normalizedProducts.OSDTrial;
-      }
-    } else {
-      selectedProduct = normalizedProducts.OSD;
+    if (value === billingModels.STANDARD_TRIAL) {
+      selectedProduct = normalizedProducts.OSDTrial;
     }
 
     setFieldValue(FieldId.Product, selectedProduct);
@@ -179,9 +177,9 @@ export const BillingModel = () => {
     const isBYOC = value === 'true';
     const isMultiAz = values[FieldId.MultiAz] === 'true';
 
-    setFieldValue('nodes_compute', getNodesCount(isBYOC, isMultiAz, true));
-    setFieldValue('min_replicas', getMinReplicasCount(isBYOC, isMultiAz, true));
-    setFieldValue('max_replicas', '');
+    setFieldValue(FieldId.NodesCompute, getNodesCount(isBYOC, isMultiAz, true));
+    setFieldValue(FieldId.MinReplicas, getMinReplicasCount(isBYOC, isMultiAz, true));
+    setFieldValue(FieldId.MaxReplicas, '');
   };
 
   return (

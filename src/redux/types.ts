@@ -31,10 +31,20 @@ export interface RosaApi {
   };
 }
 
+export interface CcsCredentialsValidity extends ApiRequest {
+  cloudProvider: string;
+  credentials: any;
+}
+
+export interface CcsInquiries {
+  ccsCredentialsValidity: CcsCredentialsValidity;
+}
+
 export interface GlobalState {
   modal: Modal;
   rosaReducer: RosaApi;
   features: Record<string, boolean>;
   userProfile: UserProfile;
   router: RouterState;
+  ccsInquiries: CcsInquiries;
 }
