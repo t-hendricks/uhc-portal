@@ -8,6 +8,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
+    "urijs": "^1.19.11",
+    "keycloak-js": "^18.0.0",
     "@axetroy/react-download": "^1.1.1",
     "@babel/eslint-parser": "^7.13.14",
     "@patternfly/patternfly": "^4.210.2",
@@ -81,6 +83,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/urijs": "^1.19.19",
     "@babel/core": "^7.10.4",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.10.4",

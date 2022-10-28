@@ -544,7 +544,7 @@ const checkBaseDNSDomain = (value: string): string | undefined => {
   return undefined;
 };
 
-const checkDNSDomain = (value) => {
+const checkDNSDomain = (value: any[]) => {
   if (value && value.length > 0) {
     const invalidDomains = value.filter(
       (domain) =>

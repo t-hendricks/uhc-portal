@@ -5,10 +5,10 @@ import useAnalytics from '~/hooks/useAnalytics';
 
 import './InstructionCommand.scss';
 
-const InstructionCommand = ({ children, textAriaLabel, trackEvent }) => {
+const InstructionCommand = ({ children, textAriaLabel, trackEvent, className, short = true }) => {
   const { track } = useAnalytics();
   return (
-    <Text component="pre" className="ocm-instructions__command">
+    <Text component="pre" className={short ? 'ocm-instructions__command' : ''}>
       <ClipboardCopy
         isReadOnly
         textAriaLabel={textAriaLabel}
@@ -20,6 +20,7 @@ const InstructionCommand = ({ children, textAriaLabel, trackEvent }) => {
               }
             : undefined
         }
+        className={className}
       >
         {children}
       </ClipboardCopy>
@@ -31,6 +32,8 @@ InstructionCommand.propTypes = {
   children: PropTypes.node,
   textAriaLabel: PropTypes.string,
   trackEvent: PropTypes.object,
+  className: PropTypes.string,
+  short: PropTypes.bool,
 };
 
 export default InstructionCommand;

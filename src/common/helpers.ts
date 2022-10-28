@@ -26,9 +26,9 @@ const multiInputToCleanArray = (
     : [];
 };
 
-const stringToArray = (str) => str && str.trim().split(',');
+const stringToArray = (str: string) => str && str.trim().split(',');
 
-const arrayToString = (arr) => arr && arr.join(',');
+const arrayToString = (arr: any[]) => arr && arr.join(',');
 
 /**
  * Parses comma separated key<delimiter>value pairs into an object.

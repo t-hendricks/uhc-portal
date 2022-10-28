@@ -23,19 +23,11 @@ import ExternalLink from '../common/ExternalLink';
 import Tokens from './Tokens';
 import links, { tools } from '../../common/installLinks.mjs';
 
-// The <TokensROSA> component inherits from the <Tokens> component. This may
-// cause breakage if ever we change the <Tokens> component heavily, but in the
-// meantime prevents unnecessary code duplication with minimal effort.
-class TokensROSA extends Tokens {
-  commandName = 'rosa';
-
-  commandTool = tools.ROSA;
-
-  // Some methods here don't use `this`, but we can't convert to Class.method() calls,
-  // wouldn't allow TokensROSA which inhertis from Tokens to override them.
-  /* eslint-disable class-methods-use-this */
-  leadingInfo() {
-    return (
+const TokensROSA = (props) => (
+  <Tokens
+    commandName="rosa"
+    commandTool={tools.ROSA}
+    leadingInfo={() => (
       <>
         <Text component="p">
           Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use
@@ -47,16 +39,14 @@ class TokensROSA extends Tokens {
           Use this API token to authenticate against your Red Hat OpenShift Service on AWS account.
         </Text>
       </>
-    );
-  }
-
-  docsLink() {
-    return (
+    )}
+    docsLink={() => (
       <ExternalLink href={links.ROSA_CLI_DOCS} noIcon>
         read more about setting up the rosa CLI
       </ExternalLink>
-    );
-  }
-}
+    )}
+    {...props}
+  />
+);
 
 export default TokensROSA;
