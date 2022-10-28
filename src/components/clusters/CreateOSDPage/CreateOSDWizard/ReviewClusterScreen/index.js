@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
   const autoscalingEnabled = canAutoScale && !!valueSelector(state, 'autoscalingEnabled');
   const installToVPCSelected = valueSelector(state, 'install_to_vpc');
   const configureProxySelected = valueSelector(state, 'configure_proxy');
+
   return {
     formValues: getFormValues('CreateCluster')(state),
     canAutoScale,

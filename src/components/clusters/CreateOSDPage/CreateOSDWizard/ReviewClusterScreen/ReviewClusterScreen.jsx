@@ -104,15 +104,10 @@ function ReviewClusterScreen({
           isGCP &&
           ReviewItem({ name: 'gpc_vpc', formValues })}
         {installToVPCSelected && ReviewItem({ name: 'configure_proxy', formValues })}
-        {installToVPCSelected &&
-          configureProxySelected &&
-          ReviewItem({ name: 'http_proxy_url', formValues })}
-        {installToVPCSelected &&
-          configureProxySelected &&
-          ReviewItem({ name: 'https_proxy_url', formValues })}
-        {installToVPCSelected &&
-          configureProxySelected &&
-          ReviewItem({ name: 'additional_trust_bundle', formValues })}
+        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'http_proxy_url', formValues })}
+        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'https_proxy_url', formValues })}
+        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'no_proxy', formValues })}
+        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'additional_trust_bundle', formValues })}
         {ReviewItem({ name: 'network_machine_cidr', formValues })}
         {ReviewItem({ name: 'network_service_cidr', formValues })}
         {ReviewItem({ name: 'network_pod_cidr', formValues })}

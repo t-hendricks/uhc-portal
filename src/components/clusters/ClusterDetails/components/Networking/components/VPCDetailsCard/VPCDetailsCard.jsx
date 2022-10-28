@@ -11,6 +11,8 @@ import {
   DescriptionListGroup,
   DescriptionListTerm,
   Button,
+  LabelGroup,
+  Label,
 } from '@patternfly/react-core';
 
 import modals from '~/components/common/Modal/modals';
@@ -19,14 +21,27 @@ import EditClusterWideProxyDialog from '../EditClusterWideProxyDialog';
 import './VPCDetailsCard.scss';
 
 const VPCDetailsCard = (props) => {
-  const { privateLink, httpProxyUrl, httpsProxyUrl, additionalTrustBundle, openModal, gcpVPCName } =
-    props;
+  const {
+    privateLink,
+    httpProxyUrl,
+    httpsProxyUrl,
+    noProxyDomains,
+    additionalTrustBundle,
+    openModal,
+    gcpVPCName,
+  } = props;
 
   const isPrivateLinkInitialized = typeof privateLink !== 'undefined';
 
   const handleEditClusterProxy = () => {
     openModal(modals.EDIT_CLUSTER_WIDE_PROXY);
   };
+
+  const renderNoProxyDomains = noProxyDomains ? (
+    noProxyDomains.map(domain => (
+      <Label isCompact color="blue">{domain}</Label>
+    ))
+  ) : 'N/A';
 
   return (
     <Card className="ocm-c-networking-vpc-details__card">
@@ -80,6 +95,14 @@ const VPCDetailsCard = (props) => {
               {(additionalTrustBundle === 'REDACTED' ? 'Uploaded' : additionalTrustBundle) || 'N/A'}
             </DescriptionListDescription>
           </DescriptionListGroup>
+          <DescriptionListGroup>
+            <DescriptionListTerm>No Proxy domains</DescriptionListTerm>
+            <DescriptionListDescription>
+              <LabelGroup isCompact>
+                {renderNoProxyDomains}
+              </LabelGroup>
+            </DescriptionListDescription>
+          </DescriptionListGroup>
         </DescriptionList>
         <EditClusterWideProxyDialog />
       </CardBody>
@@ -97,6 +120,7 @@ VPCDetailsCard.propTypes = {
   privateLink: PropTypes.bool,
   httpProxyUrl: PropTypes.string,
   httpsProxyUrl: PropTypes.string,
+  noProxyDomains: PropTypes.string,
   additionalTrustBundle: PropTypes.string,
   gcpVPCName: PropTypes.string,
 };

@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
-import { change, reduxForm, getFormMeta } from 'redux-form';
+import { change, reduxForm, getFormMeta, getFormValues } from 'redux-form';
 
 import modals from '~/components/common/Modal/modals';
 import shouldShowModal from '~/components/common/Modal/ModalSelectors';
 import { closeModal } from '~/components/common/Modal/ModalActions';
 import { editCluster, clearClusterResponse } from '~/redux/actions/clustersActions';
 import EditClusterWideProxyDialog from './EditClusterWideProxyDialog';
+import { arrayToString, stringToArray } from '~/common/helpers';
 
 const reduxFormConfig = {
   form: 'EditClusterWideProxy',
@@ -18,6 +19,7 @@ const reduxFormEditCWProxy = reduxForm(reduxFormConfig)(EditClusterWideProxyDial
 
 const mapStateToProps = (state) => {
   const { cluster } = state.clusters.details;
+  const formValues = getFormValues('EditClusterWideProxy')(state);
 
   return {
     isOpen: shouldShowModal(state, modals.EDIT_CLUSTER_WIDE_PROXY),
@@ -25,10 +27,12 @@ const mapStateToProps = (state) => {
       clusterID: cluster.id,
       httpProxyUrl: cluster.proxy?.http_proxy,
       httpsProxyUrl: cluster.proxy?.https_proxy,
+      noProxyDomains: stringToArray(cluster.proxy?.no_proxy),
     },
     additionalTrustBundle: cluster?.additional_trust_bundle,
     editClusterProxyResponse: state.clusters.editedCluster,
     meta: getFormMeta('EditClusterWideProxy')(state),
+    formValues,
   };
 };
 
@@ -40,6 +44,7 @@ const mapDispatchToProps = (dispatch) => ({
       proxy: {
         http_proxy: formData.httpProxyUrl,
         https_proxy: formData.httpsProxyUrl,
+        no_proxy: arrayToString(formData.noProxyDomains),
       },
       additional_trust_bundle: formData.additionalTrustBundle,
     };
