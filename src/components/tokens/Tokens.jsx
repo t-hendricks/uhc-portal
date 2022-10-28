@@ -38,16 +38,15 @@ import {
   Title,
 } from '@patternfly/react-core';
 import { connect } from 'react-redux';
-import { setOfflineToken } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaActions.js';
+import { setOfflineToken } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaActions';
 import links, { tools, channels } from '../../common/installLinks.mjs';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
 import DevPreviewBadge from '../common/DevPreviewBadge';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
-import { doOffline } from '~/components/tokens/TokenUtils';
 import './Tokens.scss';
-import InstructionCommand from '../common/InstructionCommand.jsx';
-import { loadOfflineToken } from './TokenUtils';
+import InstructionCommand from '../common/InstructionCommand';
+import { doOffline, loadOfflineToken } from './TokenUtils';
 
 /**
  * Generates a box for containing the value of a token.
@@ -59,8 +58,8 @@ const tokenBox = ({
   className = 'ocm-c-api-token-limit-width',
   short = true,
   ...props
-}) => {
-  return token === null ? (
+}) =>
+  token === null ? (
     <Skeleton size="md" />
   ) : (
     <InstructionCommand
@@ -72,7 +71,6 @@ const tokenBox = ({
       {command || token}
     </InstructionCommand>
   );
-};
 
 /**
  * Generates a text box for login snippet of code for the given token.
@@ -135,28 +133,24 @@ const manageTokensCard = (show) => (
   </Card>
 );
 
-const leadingInfo = () => {
-  return (
-    <>
-      <Text component="p">
-        Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you to use
-        OpenShift without needing to install or upgrade your own OpenShift (Kubernetes) cluster.
-      </Text>
-      <Title headingLevel="h3">Your API token</Title>
-      <Text component="p">
-        Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
-      </Text>
-    </>
-  );
-};
+const leadingInfo = () => (
+  <>
+    <Text component="p">
+      Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you to use
+      OpenShift without needing to install or upgrade your own OpenShift (Kubernetes) cluster.
+    </Text>
+    <Title headingLevel="h3">Your API token</Title>
+    <Text component="p">
+      Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
+    </Text>
+  </>
+);
 
-const docsLink = () => {
-  return (
-    <ExternalLink href={links.OCM_CLI_DOCS} noIcon>
-      read more about setting up the ocm CLI
-    </ExternalLink>
-  );
-};
+const docsLink = () => (
+  <ExternalLink href={links.OCM_CLI_DOCS} noIcon>
+    read more about setting up the ocm CLI
+  </ExternalLink>
+);
 
 class Tokens extends React.Component {
   // Should title or breadcrumbs differ for TokensROSA?
@@ -195,7 +189,7 @@ class Tokens extends React.Component {
   };
 
   tokenDetails() {
-    const { offlineToken } = this.props;
+    const { offlineToken, commandName, commandTool, docsLink } = this.props;
 
     return (
       <>
@@ -204,24 +198,23 @@ class Tokens extends React.Component {
         <Title headingLevel="h3">Using your token in the command line</Title>
         <List component="ol">
           <ListItem>
-            Download and install the <code>{this.props.commandName}</code> command-line tool:{' '}
-            {this.props.commandTool === tools.OCM && <DevPreviewBadge />}
+            Download and install the <code>{commandName}</code> command-line tool:{' '}
+            {commandTool === tools.OCM && <DevPreviewBadge />}
             <Text component="p" />
-            <DownloadAndOSSelection tool={this.props.commandTool} channel={channels.STABLE} />
+            <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
             <Text component="p" />
           </ListItem>
           <ListItem>
             Copy and paste the authentication command in your terminal:
             <Text component="p" />
-            {snippetBox(offlineToken, this.props.commandName)}
+            {snippetBox(offlineToken, commandName)}
           </ListItem>
         </List>
 
         <Title headingLevel="h3">Need help connecting with your offline token?</Title>
         <Text component="p">
-          Run <code>{this.props.commandName} login --help</code> for in-terminal guidance, or{' '}
-          {this.props.docsLink()} for more information about setting up the{' '}
-          <code>{this.props.commandName}</code> CLI.
+          Run <code>{commandName} login --help</code> for in-terminal guidance, or {docsLink()} for
+          more information about setting up the <code>{commandName}</code> CLI.
         </Text>
       </>
     );
@@ -241,7 +234,7 @@ class Tokens extends React.Component {
   }
 
   render() {
-    const { offlineToken } = this.props;
+    const { leadingInfo } = this.props;
     const header = (
       <PageHeader>
         <Breadcrumbs
@@ -263,7 +256,7 @@ class Tokens extends React.Component {
                 </CardTitle>
                 <CardBody className="ocm-c-api-token__card--body">
                   <TextContent>
-                    {this.props.leadingInfo()}
+                    {leadingInfo()}
                     {this.buttonOrTokenDetails()}
                   </TextContent>
                 </CardBody>
@@ -292,6 +285,8 @@ Tokens.propTypes = {
   commandTool: PropTypes.string,
   leadingInfo: PropTypes.func,
   docsLink: PropTypes.func,
+  offlineToken: PropTypes.string,
+  setOfflineToken: PropTypes.func,
 };
 
 export { snippetBox, tokenBox, manageTokensCard };

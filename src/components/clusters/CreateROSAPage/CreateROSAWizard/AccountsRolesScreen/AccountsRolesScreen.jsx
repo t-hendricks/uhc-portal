@@ -29,7 +29,6 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { RosaCliCommand } from './constants/cliCommands';
 import { trackEvents } from '~/common/analytics';
-import { persistor } from '~/redux/store';
 import useAnalytics from '~/hooks/useAnalytics';
 import { loadOfflineToken, doOffline } from '~/components/tokens/TokenUtils';
 
@@ -164,7 +163,7 @@ function AccountsRolesScreen({
             <Button
               variant="link"
               isInline
-              onClick={(event) => {
+              onClick={() => {
                 track(trackEvents.AssociateAWS);
                 openAssociateAWSAccountModal();
                 setIsAssocAwsAccountModalOpen(true);
@@ -296,6 +295,8 @@ AccountsRolesScreen.propTypes = {
   isUserRoleModalOpen: PropTypes.bool,
   isOCMRoleModalOpen: PropTypes.bool,
   closeModal: PropTypes.func,
+  offlineToken: PropTypes.string,
+  setOfflineToken: PropTypes.func,
 };
 
 export default AccountsRolesScreen;
