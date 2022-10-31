@@ -37,6 +37,7 @@ function AWSAccountSelection({
     ...inputProps
   },
   isDisabled,
+  isLoading,
   label,
   meta: { error, touched },
   extendedHelpText,
@@ -123,11 +124,13 @@ function AWSAccountSelection({
         <Tooltip
           content={
             <p>
-              Click icon to refresh the associated aws accounts dropdown.
+              Click icon to refresh associated aws accounts and account-roles.
             </p>
           }
         >
           <Button
+            isLoading={isLoading}
+            isDisabled={isDisabled}
             isInline
             isSmall
             variant="secondary"
@@ -145,6 +148,7 @@ function AWSAccountSelection({
 
 AWSAccountSelection.propTypes = {
   isDisabled: PropTypes.bool,
+  isLoading: PropTypes.bool,
   label: PropTypes.string,
   input: PropTypes.shape({
     value: PropTypes.string,

@@ -65,6 +65,7 @@ function AccountsRolesScreen({
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
   const [isAssocAwsAccountModalOpen, setIsAssocAwsAccountModalOpen] = useState(false);
+  const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
   const title = 'Welcome to Red Hat OpenShift Service on AWS (ROSA)';
   const hasAWSAccounts = AWSAccountIDs.length > 0;
   const { track } = useAnalytics();
@@ -203,8 +204,11 @@ function AccountsRolesScreen({
             name="associated_aws_id"
             label="Associated AWS accounts"
             launchAssocAWSAcctModal={() => {getTokenThenOpen()}}
-            onRefresh={resetAWSAccountFields}
-            validate={required}
+            onRefresh={() => {
+              setRefreshButtonClicked(true);
+              resetAWSAccountFields()}
+            }
+            validate={!getAWSAccountIDsResponse.fulfilled ? undefined : required}
             extendedHelpText={
               <>
                 A list of associated AWS accounts. You must associate at least one account to
@@ -213,7 +217,8 @@ function AccountsRolesScreen({
             }
             AWSAccountIDs={AWSAccountIDs}
             selectedAWSAccountID={selectedAWSAccountID}
-            disabled={getAWSAccountIDsResponse.pending}
+            isLoading={refreshButtonClicked && getAWSAccountIDsResponse.pending}
+            isDisabled={getAWSAccountIDsResponse.pending}
           />
         </GridItem>
         <GridItem span={7} />

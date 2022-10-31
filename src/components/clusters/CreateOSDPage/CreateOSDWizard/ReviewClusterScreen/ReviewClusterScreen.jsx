@@ -119,8 +119,8 @@ function ReviewClusterScreen({
           <ReduxHiddenCheckbox name="detected_ocm_and_user_roles" />
           <ReviewSection title="Accounts and roles" initiallyExpanded={errorWithAWSAccountRoles}>
             {ReviewItem({ name: 'associated_aws_id', formValues })}
-            {ReviewRoleItem({ name: 'ocm-role', response: getOCMRoleResponse, value: ocmRole})}
-            {ReviewRoleItem({ name: 'user-role', response: getUserRoleResponse, value: userRole})}
+            {ReviewRoleItem({ name: 'ocm-role', getRoleResponse: getOCMRoleResponse, content: ocmRole})}
+            {ReviewRoleItem({ name: 'user-role', getRoleResponse: getUserRoleResponse, content: userRole})}
             {ReviewItem({ name: 'installer_role_arn', formValues })}
             {ReviewItem({ name: 'support_role_arn', formValues })}
             {ReviewItem({ name: 'control_plane_role_arn', formValues })}

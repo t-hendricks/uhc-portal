@@ -37,7 +37,6 @@ const CreateRosaWizardFooter = ({ onBeforeNext, onBeforeSubmit, onSubmit }) => {
                 variant="primary"
                 type="submit"
                 onClick={() => onBeforeNext(onNext)}
-                isLoading={areAwsResourcesLoading}
                 isDisabled={areAwsResourcesLoading}
               >
                 Next
