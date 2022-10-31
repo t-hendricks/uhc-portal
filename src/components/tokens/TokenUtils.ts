@@ -79,6 +79,18 @@ const insightsUrl = async (env: typeof DEFAULT_ROUTES) => {
   return 'https://sso.qa.redhat.com/auth';
 };
 
+const getPartnerScope = (pathname: string) => {
+  // replace beta and leading "/"
+  const sanitizedPathname = pathname.replace(/^\/beta\//, '/').replace(/^\//, '');
+  // check if the pathname is connect/:partner
+  if (sanitizedPathname.match(/^connect\/.+/)) {
+    // return :partner param
+    return `api.partner_link.${sanitizedPathname.split('/')[1]}`;
+  }
+
+  return undefined;
+};
+
 /**
  * Tries to load the offline token
  *
@@ -133,14 +145,16 @@ export const doOffline = (onDone: (token: string) => void) => {
     };
 
     const kc = new Keycloak(options);
-
     await kc.init(options);
+
+    const partnerScope = getPartnerScope(window.location.pathname);
 
     // Open an iframe to the token sso URL and with a redirect of the current page
     const iframe = document.createElement('iframe');
     const src = kc.createLoginUrl({
       prompt: 'none',
       redirectUri: url.toString(),
+      scope: `offline_access${partnerScope ? ` ${partnerScope}` : ''}`,
     });
     iframe.setAttribute('src', src);
     iframe.setAttribute('title', 'keycloak-silent-check-sso');

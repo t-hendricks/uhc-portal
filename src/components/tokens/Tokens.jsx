@@ -37,8 +37,6 @@ import {
   TextContent,
   Title,
 } from '@patternfly/react-core';
-import { connect } from 'react-redux';
-import { setOfflineToken } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaActions';
 import links, { tools, channels } from '../../common/installLinks.mjs';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
@@ -291,16 +289,4 @@ Tokens.propTypes = {
 
 export { snippetBox, tokenBox, manageTokensCard };
 
-const mapDispatchToProps = (dispatch) => ({
-  setOfflineToken: (token) => dispatch(setOfflineToken(token)),
-});
-
-const mapStateToProps = (state) => {
-  const { offlineToken } = state.rosaReducer;
-
-  return {
-    offlineToken,
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Tokens);
+export default Tokens;

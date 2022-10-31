@@ -20,7 +20,7 @@ limitations under the License.
 import React from 'react';
 import { Text, Title } from '@patternfly/react-core';
 import ExternalLink from '../common/ExternalLink';
-import Tokens from './Tokens';
+import Tokens from './index';
 import links, { tools } from '../../common/installLinks.mjs';
 
 const TokensROSA = (props) => (
