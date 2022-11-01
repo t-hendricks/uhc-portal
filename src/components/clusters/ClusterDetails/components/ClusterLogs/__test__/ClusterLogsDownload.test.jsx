@@ -23,7 +23,7 @@ window.URL = {
 };
 
 // So snapshots are not changed since the Download button uses moment() to get a timestamp
-Date.now = jest.fn(() => new Date('2022-01-01T12:33:37.000Z'));
+Date.now = jest.fn(() => new Date(Date.UTC(96, 1, 2, 3, 4, 5)));
 
 describe('<ClusterLogsDownload />', () => {
   it('Renders modal with download button', () => {
