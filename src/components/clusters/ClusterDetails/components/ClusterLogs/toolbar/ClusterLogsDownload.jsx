@@ -74,6 +74,7 @@ class ClusterLogsDownload extends React.Component {
       const json = JSON.stringify(data);
       const blob = new Blob([json], { type: 'octet/stream' });
       url = window.URL.createObjectURL(blob);
+      debugger;
       download = `${externalClusterID}.${timestamp}.json`;
     } else if (format === 'csv') {
       const blob = new Blob([data], { type: 'octet/stream' });

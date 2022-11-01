@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ClusterLogsDownload /> Renders modal with download button 1`] = `
+<Fragment>
+  <Button
+    onClick={[Function]}
+    variant="primary"
+  >
+    Download history
+  </Button>
+  <Modal
+    actions={
+      Array [
+        Array [
+          <Button
+            component="a"
+            download="031fb349-fa84-421a-9c7a-af47e34559e1.2022-11-01 1337.json"
+            href={[MockFunction]}
+            id="cluster-logs-download-button"
+            isDisabled={false}
+            onClick={[Function]}
+            target="_blank"
+            variant="primary"
+          >
+            Download
+          </Button>,
+          <Button
+            onClick={[Function]}
+            variant="link"
+          >
+            Cancel
+          </Button>,
+        ],
+      ]
+    }
+    appendTo={[Function]}
+    aria-describedby=""
+    aria-label=""
+    aria-labelledby=""
+    className=""
+    hasNoBodyWrapper={false}
+    isOpen={false}
+    onClose={[Function]}
+    ouiaSafe={true}
+    showClose={true}
+    title="Download cluster history"
+    titleIconVariant={null}
+    titleLabel=""
+    variant="small"
+  >
+    <ReduxFormRadioGroup
+      fieldId="export_history"
+      items={
+        Array [
+          Object {
+            "isChecked": true,
+            "label": "JSON",
+            "value": "json",
+          },
+          Object {
+            "label": "CSV",
+            "value": "csv",
+          },
+        ]
+      }
+      label="Choose a file type"
+      name="export_history"
+      onChange={[Function]}
+    />
+  </Modal>
+</Fragment>
+`;
