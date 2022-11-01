@@ -15,6 +15,7 @@ import {
 import { CodeIcon } from '@patternfly/react-icons';
 
 import links, { tools, channels } from '../../../../common/installLinks.mjs';
+import ExternalLink from '../../../common/ExternalLink';
 import TelemetryDisclaimer from './components/TelemetryDisclaimer';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
@@ -79,19 +80,14 @@ function InstructionsPreRelease({ token, installer }) {
                 <Text component="p">
                   If you are a Red Hat customer or partner and have feedback about these developer
                   preview versions, file an issue via{' '}
-                  <Text component="a" href={links.INSTALL_PRE_RELEASE_FEEDBACK}>
+                  <ExternalLink href={links.INSTALL_PRE_RELEASE_FEEDBACK}>
                     the OpenShift Bugs tracker
-                  </Text>
+                  </ExternalLink>
                   . Do not use the formal Red Hat support service ticket process. You can read more
                   about support handling in the following{' '}
-                  <Text
-                    component="a"
-                    href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS}
-                    rel="noreferrer noopener"
-                    target="_blank"
-                  >
+                  <ExternalLink href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS}>
                     knowledge article
-                  </Text>
+                  </ExternalLink>
                   .
                 </Text>
               </TextContent>
