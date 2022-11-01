@@ -10,7 +10,7 @@ const mockProps = {
   externalClusterID: fixtures[0].cluster_uuid,
   viewOptions: {},
   clusterLogs: {
-    data: ['a', 'b', 'c'],
+    data: fixtures,
     requestDownloadState: {
       error: null,
     },
@@ -21,6 +21,9 @@ const mockProps = {
 window.URL = {
   createObjectURL: () => jest.fn(),
 };
+
+// So snapshots are not changed since the Download button uses moment() to get a timestamp
+Date.now = jest.fn(() => new Date('2022-01-01T12:33:37.000Z'));
 
 describe('<ClusterLogsDownload />', () => {
   it('Renders modal with download button', () => {
