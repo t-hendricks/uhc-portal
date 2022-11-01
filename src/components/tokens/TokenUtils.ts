@@ -153,7 +153,7 @@ export const doOffline = (onDone: (token: string) => void) => {
     const iframe = document.createElement('iframe');
     const src = kc.createLoginUrl({
       prompt: 'none',
-      redirectUri: url.toString(),
+      redirectUri,
       scope: `offline_access${partnerScope ? ` ${partnerScope}` : ''}`,
     });
     iframe.setAttribute('src', src);
