@@ -81,7 +81,7 @@ function AccountsRolesScreen({
     // Inside the iframe, this same wizard step is loaded, and the loadOfflineToken function is called again
     // This time it will succeed, and the iframe child sends the token to the parent
     // Once the parent receives the token, it executes a function callback to pass the token into local state
-    if (!offlineToken) {
+    if (!offlineToken || offlineToken instanceof Error) {
       loadOfflineToken(onTokenError);
     }
   }, []);

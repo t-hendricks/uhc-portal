@@ -37,6 +37,7 @@ import {
   TextContent,
   Title,
 } from '@patternfly/react-core';
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import links, { tools, channels } from '../../common/installLinks.mjs';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
@@ -58,7 +59,13 @@ const tokenBox = ({
   ...props
 }) =>
   token === null ? (
-    <Skeleton size="md" />
+    <>
+      <div className="pf-u-mb-xs">
+        <Spinner size="sm" className="progressing-icon" />
+        <span>Loading token, this might take up to a minute</span>
+      </div>
+      <Skeleton size="md" />
+    </>
   ) : (
     <InstructionCommand
       className={className}
@@ -162,9 +169,8 @@ class Tokens extends React.Component {
   // after that we want the token to show, but we just loaded.
   componentDidMount() {
     document.title = this.windowTitle;
-
     const { blockedByTerms, show, offlineToken } = this.props;
-    if (!blockedByTerms && show && !offlineToken) {
+    if (!blockedByTerms && show && (!offlineToken || offlineToken instanceof Error)) {
       // eslint-disable-next-line no-console
       console.log('Tokens: componentDidMount, props =', this.props);
       loadOfflineToken(this.onError);
@@ -188,7 +194,6 @@ class Tokens extends React.Component {
 
   tokenDetails() {
     const { offlineToken, commandName, commandTool, docsLink } = this.props;
-
     return (
       <>
         {tokenBox({ token: offlineToken, short: false })}
@@ -220,7 +225,7 @@ class Tokens extends React.Component {
 
   buttonOrTokenDetails() {
     const { show, showPath, offlineToken } = this.props;
-    return show || offlineToken ? (
+    return show || (offlineToken && !(offlineToken instanceof Error)) ? (
       this.tokenDetails()
     ) : (
       <Link to={showPath}>

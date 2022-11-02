@@ -111,10 +111,15 @@ export const loadOfflineToken = (onError: (reason: string) => void) => {
         });
       }
     })
-    .catch((reason: string) => {
+    .catch((reason: string | Error) => {
       // First time this method is called it will error out
-      if (onError) {
+      if (reason === 'not available' && onError) {
         onError(reason);
+      } else if (window.self !== window.top) {
+        // We are inside an iframe, pass the token up to the parent
+        window.parent.postMessage({
+          token: reason,
+        });
       }
     });
 };
