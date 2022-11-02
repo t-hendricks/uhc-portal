@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import { Title, Bullseye, Stack, StackItem, Spinner } from '@patternfly/react-core';
-
+import {
+  Title,
+  Bullseye,
+  Stack,
+  StackItem,
+  Spinner,
+} from '@patternfly/react-core';
 import DebugClusterRequest from '../../DebugClusterRequest';
 import config from '../../../../../config';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
-
 import './ReviewClusterScreen.scss';
-import ReviewSection, { ReviewItem } from './ReviewSection';
+import ReviewSection, { ReviewItem, ReviewRoleItem } from './ReviewSection';
+import ReduxHiddenCheckbox from '../../../../common/ReduxFormComponents/ReduxHiddenCheckbox';
+import { getUserRoleForSelectedAWSAccount } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/AccountsRolesScreen/AccountsRolesScreen';
 
 function ReviewClusterScreen({
+  change,
   clusterRequestParams,
   formValues,
   canAutoScale,
@@ -18,6 +25,12 @@ function ReviewClusterScreen({
   isCreateClusterPending,
   installToVPCSelected,
   configureProxySelected,
+  getUserRole,
+  getOCMRole,
+  getUserRoleResponse,
+  getOCMRoleResponse,
+  clearGetUserRoleResponse,
+  clearGetOcmRoleResponse,
 }) {
   const isByoc = formValues.byoc === 'true';
   const isAWS = formValues.cloud_provider === 'aws';
@@ -56,19 +69,64 @@ function ReviewClusterScreen({
     );
   }
 
+  const [userRole, setUserRole] = useState('');
+  const [ocmRole, setOcmRole] = useState('');
+
+  useEffect(() => {
+    clearGetUserRoleResponse();
+    clearGetOcmRoleResponse();
+    // reset hidden form field to false
+    change('detected_ocm_and_user_roles', false);
+  }, []);
+
+  useEffect(() => {
+    if(!isROSA) {
+      return;
+    }
+    if (getUserRoleResponse.fulfilled) {
+      const userRoleForAWSAccount = getUserRoleForSelectedAWSAccount(getUserRoleResponse.data, formValues.associated_aws_id);
+      setUserRole(userRoleForAWSAccount?.sts_user);
+    }
+    if (!getUserRoleResponse.fulfilled && !getUserRoleResponse.pending && !getUserRoleResponse.error ) {
+      getUserRole();
+    }
+  }, [getUserRoleResponse]);
+
+  useEffect(() => {
+    if(!isROSA) {
+      return;
+    }
+    if (getOCMRoleResponse.fulfilled) {
+      setOcmRole(getOCMRoleResponse.data?.arn);
+    }
+    if (!getOCMRoleResponse.fulfilled && !getOCMRoleResponse.pending && !getOCMRoleResponse.error ) {
+      getOCMRole(formValues.associated_aws_id);
+    }
+  }, [getOCMRoleResponse]);
+
+  const errorWithAWSAccountRoles = getUserRoleResponse?.error || !userRole
+    || getOCMRoleResponse?.error || !ocmRole;
+  // setting hidden form field for field level validation
+  change('detected_ocm_and_user_roles', !errorWithAWSAccountRoles);
+
   return (
     <div className="ocm-create-osd-review-screen">
       <Title headingLevel="h2" className="pf-u-pb-md">
         Review your {isROSA ? 'ROSA' : 'dedicated'} cluster
       </Title>
       {isROSA && (
-        <ReviewSection title="Accounts and roles" initiallyExpanded={false}>
-          {ReviewItem({ name: 'associated_aws_id', formValues })}
-          {ReviewItem({ name: 'installer_role_arn', formValues })}
-          {ReviewItem({ name: 'support_role_arn', formValues })}
-          {ReviewItem({ name: 'control_plane_role_arn', formValues })}
-          {ReviewItem({ name: 'worker_role_arn', formValues })}
-        </ReviewSection>
+        <>
+          <ReduxHiddenCheckbox name="detected_ocm_and_user_roles" />
+          <ReviewSection title="Accounts and roles" initiallyExpanded={errorWithAWSAccountRoles}>
+            {ReviewItem({ name: 'associated_aws_id', formValues })}
+            {ReviewRoleItem({ name: 'ocm-role', getRoleResponse: getOCMRoleResponse, content: ocmRole})}
+            {ReviewRoleItem({ name: 'user-role', getRoleResponse: getUserRoleResponse, content: userRole})}
+            {ReviewItem({ name: 'installer_role_arn', formValues })}
+            {ReviewItem({ name: 'support_role_arn', formValues })}
+            {ReviewItem({ name: 'control_plane_role_arn', formValues })}
+            {ReviewItem({ name: 'worker_role_arn', formValues })}
+          </ReviewSection>
+        </>
       )}
       {!isROSA && (
         <ReviewSection title="Billing Model">
@@ -131,6 +189,7 @@ function ReviewClusterScreen({
   );
 }
 ReviewClusterScreen.propTypes = {
+  change: PropTypes.func,
   clusterRequestParams: PropTypes.object.isRequired,
   formValues: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
@@ -140,6 +199,12 @@ ReviewClusterScreen.propTypes = {
   autoscalingEnabled: PropTypes.bool,
   installToVPCSelected: PropTypes.bool,
   configureProxySelected: PropTypes.bool,
+  getUserRole: PropTypes.func.isRequired,
+  getOCMRole: PropTypes.func.isRequired,
+  getOCMRoleResponse: PropTypes.func.isRequired,
+  getUserRoleResponse: PropTypes.object.isRequired,
+  clearGetUserRoleResponse: PropTypes.func.isRequired,
+  clearGetOcmRoleResponse: PropTypes.func.isRequired,
 };
 
 export default ReviewClusterScreen;
