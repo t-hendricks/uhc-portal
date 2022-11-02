@@ -117,9 +117,16 @@ class CreateROSAWizardInternal extends React.Component {
 
   canJumpTo = (id) => {
     const { stepIdReached, currentStepId, validatedSteps } = this.state;
+    const { selectedAWSAccountID } = this.props;
+
     const hasPrevStepError = Object.entries(validatedSteps).some(
       ([validatedStepId, isStepValid]) => isStepValid === false && validatedStepId < id,
     );
+
+    // disable all future wizard step links if no assoc. aws acct. selected
+    if (id > stepId.ACCOUNTS_AND_ROLES && !selectedAWSAccountID) {
+      return false;
+    }
 
     // Allow step navigation forward when the current step is valid and backwards regardless.
     return (stepIdReached >= id && !hasPrevStepError) || id <= currentStepId;
@@ -130,13 +137,8 @@ class CreateROSAWizardInternal extends React.Component {
     return getUserRole();
   };
 
-  onBeforeSubmit = (onSubmit) => {
-    this.trackWizardNavigation(trackEvents.WizardSubmit);
-    onSubmit();
-  };
-
-  onBeforeNext = async (onNext) => {
-    const { touch, formErrors, getUserRoleResponse, selectedAWSAccountID } = this.props;
+  scrolledToFirstError = () => {
+    const { touch, formErrors } = this.props;
     const { validatedSteps, currentStepId } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
     const errorFieldNames = Object.keys(formErrors);
@@ -145,9 +147,33 @@ class CreateROSAWizardInternal extends React.Component {
     if (errorFieldNames?.length > 0 && !isCurrentStepValid) {
       touch(errorFieldNames);
       scrollToFirstError(formErrors);
+      return true;
+    }
+    return false;
+  };
+
+  onBeforeSubmit = (onSubmit) => {
+    this.trackWizardNavigation(trackEvents.WizardSubmit);
+    if (this.scrolledToFirstError()) {
       return;
     }
-    if (currentStepId === stepId.ACCOUNTS_AND_ROLES && !getUserRoleResponse?.fulfilled) {
+    onSubmit();
+  };
+
+  onBeforeNext = async (onNext) => {
+    const { getUserRoleResponse, selectedAWSAccountID } = this.props;
+    const { currentStepId } = this.state;
+
+    if (this.scrolledToFirstError()) {
+      return;
+    }
+    // when navigating back to step 1 from link in no user-role error messages on review screen
+    // even though we're hitting [Next] on step 1, currentStepId is set to review step.
+    // TODO: figure out how to update currentStepId externally from WizardContextConsumer.goToStepById()
+    if (
+      [stepId.ACCOUNTS_AND_ROLES, stepId.REVIEW_AND_CREATE].includes(currentStepId) &&
+      !getUserRoleResponse?.fulfilled
+    ) {
       const data = await this.getUserRoleInfo();
       const gotoNextStep = isUserRoleForSelectedAWSAccount(data.value, selectedAWSAccountID);
       if (!gotoNextStep) {

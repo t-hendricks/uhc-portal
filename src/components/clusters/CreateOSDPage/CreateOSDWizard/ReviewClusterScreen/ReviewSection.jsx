@@ -7,9 +7,16 @@ import {
   DescriptionListTerm,
   ExpandableSection,
   GridItem,
+  Spinner,
+  Text,
+  TextContent,
+  TextVariants,
 } from '@patternfly/react-core';
+import { ExclamationCircleIcon } from '@patternfly/react-icons';
 import reviewValues from './reviewValues';
 import { ExpandableReviewItem } from './ExpandableReviewItem';
+import { BackToAssociateAwsAccountLink } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/common/BackToAssociateAwsAccountLink';
+import PopoverHintWithTitle from '~/components/common/PopoverHintWithTitle';
 
 export const ReviewItem = ({ name, formValues }) => {
   const reviewValue = reviewValues[name];
@@ -59,6 +66,43 @@ export const ReviewItem = ({ name, formValues }) => {
   );
 };
 
+export const ReviewRoleItem = ({ name, getRoleResponse, content }) => (
+  <DescriptionListGroup key={name}>
+    <DescriptionListTerm>{name} ARN</DescriptionListTerm>
+    <DescriptionListDescription>
+      {getRoleResponse?.pending && (
+        <div className="spinner-fit-container">
+          <Spinner size="md" />
+        </div>
+      )}
+      {(getRoleResponse?.error || (!content && getRoleResponse?.fulfilled)) && (
+        <PopoverHintWithTitle
+          isErrorHint
+          title={`${name} could not be detected`}
+          bodyContent={
+            <>
+              <TextContent>
+                <Text component={TextVariants.p}>
+                  <span className="danger">
+                    <ExclamationCircleIcon className="status-icon danger" />
+                    <strong>{`${name} is no longer linked to your Red Hat organization.`}</strong>
+                  </span>
+                </Text>
+                <Text component={TextVariants.p}>
+                  <p>Follow the AWS account association instructions and try again</p>
+                </Text>
+              </TextContent>
+            </>
+          }
+          footer={<BackToAssociateAwsAccountLink />}
+          iconClassName="hand-pointer"
+        />
+      )}
+      {getRoleResponse?.fulfilled ? content : null}
+    </DescriptionListDescription>
+  </DescriptionListGroup>
+);
+
 function ReviewSection({ initiallyExpanded, title, children = null }) {
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -98,6 +142,12 @@ ReviewItem.propTypes = {
   formValues: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   ),
+};
+
+ReviewRoleItem.propTypes = {
+  name: PropTypes.string,
+  getRoleResponse: PropTypes.object,
+  content: PropTypes.string,
 };
 
 ReviewSection.propTypes = {
