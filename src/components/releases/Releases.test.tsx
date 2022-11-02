@@ -1,23 +1,12 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
-import PropTypes from 'prop-types';
-
 import Releases from './index';
 import ReleaseChannel from './ReleaseChannel';
 import ocpLifeCycleStatuses from './__mocks__/ocpLifeCycleStatuses';
 
 jest.mock('axios');
-
-const MockReleaseChannel = ({ channel }) => {
-  React.useEffect(() => {});
-  return <dt className="pf-c-description-list__term pf-u-mt-md">{channel}</dt>;
-};
-
-MockReleaseChannel.propTypes = {
-  channel: PropTypes.string.isRequired,
-};
 
 jest.mock('./ReleaseChannel', () => ({
   __esModule: true,
@@ -25,11 +14,17 @@ jest.mock('./ReleaseChannel', () => ({
   default: jest.fn(),
 }));
 
+const MockReleaseChannel = ReleaseChannel as jest.Mock;
+
 describe('<Releases />', () => {
-  let wrapper;
+  let wrapper: ReactWrapper;
 
   beforeAll(() => {
-    ReleaseChannel.mockImplementation(MockReleaseChannel);
+    MockReleaseChannel.mockImplementation(
+      ({ channel }: React.ComponentProps<typeof ReleaseChannel>) => (
+        <dt className="pf-c-description-list__term pf-u-mt-md">{channel}</dt>
+      ),
+    );
   });
 
   // clear all mocks
@@ -39,7 +34,9 @@ describe('<Releases />', () => {
 
   it('should render', async () => {
     await act(async () => {
-      await axios.get.mockImplementationOnce(() => Promise.resolve(ocpLifeCycleStatuses));
+      await (axios.get as jest.Mock).mockImplementationOnce(() =>
+        Promise.resolve(ocpLifeCycleStatuses),
+      );
       wrapper = mount(<Releases />);
     });
 

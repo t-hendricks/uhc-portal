@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
 
@@ -9,7 +9,7 @@ import ocpReleases from './__mocks__/ocpReleases';
 jest.mock('axios');
 
 describe('<ReleaseChannel />', () => {
-  let wrapper;
+  let wrapper: ReactWrapper;
 
   // clear all mocks
   afterEach(() => {
@@ -18,7 +18,7 @@ describe('<ReleaseChannel />', () => {
 
   it('should render', async () => {
     await act(async () => {
-      await axios.get.mockImplementationOnce(() => Promise.resolve(ocpReleases));
+      await (axios.get as jest.Mock).mockImplementationOnce(() => Promise.resolve(ocpReleases));
       wrapper = mount(<ReleaseChannel channel="stable-4.6" />);
     });
 
