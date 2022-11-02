@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Button } from '@patternfly/react-core';
-import moment from 'moment-timezone';
 import ClusterLogsDownload from '../toolbar/ClusterLogsDownload';
 import fixtures from './ClusterLogs.fixtures';
 
@@ -26,8 +25,7 @@ window.URL = {
 describe('<ClusterLogsDownload />', () => {
   it('Renders modal with download button', () => {
     // So snapshots are not changed since the Download button uses moment() to get a timestamp
-    Date.now = jest.fn(() => new Date(Date.UTC(96, 1, 2, 3, 4, 5)));
-    moment.tz.setDefault('EST');
+    Date.now = jest.fn(() => new Date(Date.UTC(2017, 7, 9, 8)).valueOf());
 
     const component = shallow(<ClusterLogsDownload {...mockProps} />);
     expect(component).toMatchSnapshot();

@@ -14,7 +14,7 @@ exports[`<ClusterLogsDownload /> Renders modal with download button 1`] = `
         Array [
           <Button
             component="a"
-            download="031fb349-fa84-421a-9c7a-af47e34559e1.1996-02-01 2204.json"
+            download="031fb349-fa84-421a-9c7a-af47e34559e1.2017-08-09 0400.json"
             href={[MockFunction]}
             id="cluster-logs-download-button"
             isDisabled={false}
