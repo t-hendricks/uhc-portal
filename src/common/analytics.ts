@@ -277,6 +277,14 @@ const trackEvents: { [key: string]: TrackEvent } = {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-nav',
   },
+  RosaTrackExternalLink: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'rosa-external-link',
+  },
+  TrackExternalLink: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'external-link',
+  },
 };
 
 /**
