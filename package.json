@@ -215,7 +215,7 @@
     "dev-server": "webpack serve $(run/progress-flag-if-tty.sh)",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
-    "lint": "eslint src --ext js,jsx,tx,tsx",
+    "lint": "eslint src --ext js,jsx,tx,tsx && yarn  prettier",
     "prettier": "prettier --check 'src/**/*.{js,ts,mjs,jsx,tsx}'",
     "prettier:fix": "prettier --write 'src/**/*.{js,ts,mjs,jsx,tsx}'",
     "test": "jest --env=jsdom",
