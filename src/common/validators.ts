@@ -1,10 +1,9 @@
 import { get, indexOf, inRange } from 'lodash';
 import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
-import { NodeLabelParams } from 'openshift-assisted-ui-lib/cim';
 import { clusterService } from '~/services';
-import { GCP } from '../types/cluster_mgmt.v1';
-import { AugmentedSubnetwork, SubnetFormProps } from '../types/types';
+import type { GCP } from '../types/cluster_mgmt.v1';
+import type { AugmentedSubnetwork, SubnetFormProps } from '../types/types';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
 
@@ -1082,7 +1081,15 @@ const validateUniqueAZ = createUniqueFieldValidator(
 
 const validateUniqueNodeLabel = createUniqueFieldValidator(
   'Each label must have a different key.',
-  (currentFieldName: string, allValues: { ['node_labels']: NodeLabelParams[] }) =>
+  (
+    currentFieldName: string,
+    allValues: {
+      ['node_labels']: {
+        key: string;
+        value: string;
+      }[];
+    },
+  ) =>
     Object.entries(allValues.node_labels)
       .filter(([fieldKey]) => !currentFieldName.includes(`[${fieldKey}]`))
       .map(([, fieldValue]) => fieldValue.key),
@@ -1289,7 +1296,10 @@ const validateHTPasswdUsername = (username: string): string | undefined => {
 };
 
 const shouldSkipLabelKeyValidation = (allValues: Record<string, unknown>): boolean => {
-  const nodeLabels = (allValues?.node_labels as NodeLabelParams[]) ?? [{}];
+  const nodeLabels = (allValues?.node_labels as {
+    key: string;
+    value: string;
+  }[]) ?? [{}];
   // filling the first and only label key/value pair is optional -it serves as a placeholder.
   // if empty, it won't be taken into account in the request payload.
   const [{ key: firstLabelKey, value: firstLabelValue }] = nodeLabels;
