@@ -32,6 +32,7 @@ export interface RosaApi {
   getAWSAccountIDsResponse: {
     data: any[];
   };
+  offlineToken: string;
 }
 
 export interface CcsCredentialsValidity extends ApiRequest {

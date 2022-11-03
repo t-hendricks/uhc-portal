@@ -29,9 +29,8 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { RosaCliCommand } from './constants/cliCommands';
 import { trackEvents } from '~/common/analytics';
-import { persistor } from '~/redux/store';
-import { loadOfflineToken } from '~/components/tokens/Tokens';
 import useAnalytics from '~/hooks/useAnalytics';
+import { loadOfflineToken, doOffline } from '~/components/tokens/TokenUtils';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
@@ -60,6 +59,8 @@ function AccountsRolesScreen({
   isUserRoleModalOpen,
   isOCMRoleModalOpen,
   closeModal,
+  offlineToken,
+  setOfflineToken,
 }) {
   const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
@@ -85,10 +86,15 @@ function AccountsRolesScreen({
     change('product', normalizedProducts.ROSA);
     change('byoc', 'true');
     resetAWSAccountFields();
-    // in case we reloaded the page after loading the offline token, reopen the assoc aws acct modal
-    if (window.localStorage.getItem('token-reload') === 'true') {
-      window.localStorage.removeItem('token-reload');
-      loadOfflineToken(onTokenLoad, onTokenError);
+
+    // Load token async as soon as this wizard step is opened (unless it's been loaded before, retrieve from redux store)
+    // Initially it will error out and call onTokenError
+    // This will call doOffline which creates an iframe that goes out to the token API and redirects back to this page
+    // Inside the iframe, this same wizard step is loaded, and the loadOfflineToken function is called again
+    // This time it will succeed, and the iframe child sends the token to the parent
+    // Once the parent receives the token, it executes a function callback to pass the token into local state
+    if (!offlineToken || offlineToken instanceof Error) {
+      loadOfflineToken(onTokenError);
     }
   }, []);
 
@@ -134,31 +140,14 @@ function AccountsRolesScreen({
     clearGetAWSAccountIDsResponse();
   };
 
-  const onTokenLoad = (token) => {
-    openAssociateAWSAccountModal(token);
-    setIsAssocAwsAccountModalOpen(true);
-  };
-
   const onTokenError = (reason) => {
     if (reason === 'not available') {
-      // set token-reload to true, so that on reload we know to restore previously entered data
-      window.localStorage.setItem('token-reload', 'true');
-      // write state to localStorage
-      persistor.flush().then(() => {
-        insights.chrome.auth.doOffline();
+      doOffline((token) => {
+        setOfflineToken(token);
       });
     } else {
-      // open the modal anyways
-      openAssociateAWSAccountModal(reason);
-      setIsAssocAwsAccountModalOpen(true);
+      setOfflineToken(reason);
     }
-  };
-
-  const getTokenThenOpen = () => {
-    // will cause window reload on first time
-    loadOfflineToken(onTokenLoad, onTokenError);
-    // Reset window onbeforeunload event so a browser confirmation dialog do not appear.
-    window.onbeforeunload = null;
   };
 
   return (
@@ -187,9 +176,10 @@ function AccountsRolesScreen({
             <Button
               variant="link"
               isInline
-              onClick={(event) => {
+              onClick={() => {
                 track(trackEvents.AssociateAWS);
-                getTokenThenOpen(event);
+                openAssociateAWSAccountModal();
+                setIsAssocAwsAccountModalOpen(true);
               }}
             >
               associate an AWS account
@@ -205,7 +195,8 @@ function AccountsRolesScreen({
             name="associated_aws_id"
             label="Associated AWS accounts"
             launchAssocAWSAcctModal={() => {
-              getTokenThenOpen();
+              openAssociateAWSAccountModal();
+              setIsAssocAwsAccountModalOpen(true);
             }}
             onRefresh={() => {
               setRefreshButtonClicked(true);
@@ -322,6 +313,8 @@ AccountsRolesScreen.propTypes = {
   isUserRoleModalOpen: PropTypes.bool,
   isOCMRoleModalOpen: PropTypes.bool,
   closeModal: PropTypes.func,
+  offlineToken: PropTypes.string,
+  setOfflineToken: PropTypes.func,
 };
 
 export default AccountsRolesScreen;
