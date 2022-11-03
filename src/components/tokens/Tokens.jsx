@@ -55,14 +55,14 @@ const tokenBox = ({
   command = '',
   textAriaLabel = 'Copyable token',
   className = 'ocm-c-api-token-limit-width',
-  short = true,
+  limitWidth = true,
   ...props
 }) =>
   token === null ? (
     <>
       <div className="pf-u-mb-xs">
         <Spinner size="sm" className="progressing-icon" />
-        <span>Loading token, this might take up to a minute</span>
+        <span>Loading token, this might take a minute</span>
       </div>
       <Skeleton size="md" />
     </>
@@ -70,7 +70,7 @@ const tokenBox = ({
     <InstructionCommand
       className={className}
       textAriaLabel={textAriaLabel}
-      short={short}
+      limitWidth={limitWidth}
       {...props}
     >
       {command || token}
@@ -196,7 +196,7 @@ class Tokens extends React.Component {
     const { offlineToken, commandName, commandTool, docsLink } = this.props;
     return (
       <>
-        {tokenBox({ token: offlineToken, short: false })}
+        {tokenBox({ token: offlineToken, limitWidth: false })}
 
         <Title headingLevel="h3">Using your token in the command line</Title>
         <List component="ol">
