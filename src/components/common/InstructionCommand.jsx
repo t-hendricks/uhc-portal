@@ -39,7 +39,7 @@ InstructionCommand.propTypes = {
   textAriaLabel: PropTypes.string,
   trackEvent: PropTypes.object,
   className: PropTypes.string,
-  short: PropTypes.bool,
+  limitWidth: PropTypes.bool,
 };
 
 export default InstructionCommand;

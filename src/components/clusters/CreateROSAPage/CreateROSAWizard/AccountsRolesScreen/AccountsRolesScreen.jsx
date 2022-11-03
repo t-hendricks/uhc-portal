@@ -35,6 +35,9 @@ import { loadOfflineToken, doOffline } from '~/components/tokens/TokenUtils';
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
 
+export const getUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
+  users.find((user) => user.aws_id === awsAcctId);
+
 function AccountsRolesScreen({
   change,
   touchARNsFields,
@@ -63,17 +66,26 @@ function AccountsRolesScreen({
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
   const [isAssocAwsAccountModalOpen, setIsAssocAwsAccountModalOpen] = useState(false);
+  const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
   const title = 'Welcome to Red Hat OpenShift Service on AWS (ROSA)';
   const hasAWSAccounts = AWSAccountIDs.length > 0;
-  const { track } = useAnalytics();
+  const track = useAnalytics();
 
+  const resetAWSAccountFields = () => {
+    // clear certain responses; causes refetch of AWS acct info.
+    clearGetAWSAccountIDsResponse();
+    clearGetAWSAccountRolesARNsResponse();
+    change('associated_aws_id', '');
+    change('installer_role_arn', '');
+  };
+
+  // default product and cloud_provider form values
   useEffect(() => {
     // default product and cloud_provider form values
     change('cloud_provider', 'aws');
     change('product', normalizedProducts.ROSA);
     change('byoc', 'true');
-    clearGetAWSAccountIDsResponse();
-    clearGetAWSAccountRolesARNsResponse();
+    resetAWSAccountFields();
 
     // Load token async as soon as this wizard step is opened (unless it's been loaded before, retrieve from redux store)
     // Initially it will error out and call onTokenError
@@ -94,9 +106,11 @@ function AccountsRolesScreen({
     }
   }, [getUserRoleResponse.fulfilled]);
 
-  // default to first available aws account
+  // if no aws acct ids then clear selectedAWSAccountID, else default to first available aws account
   useEffect(() => {
-    if (!selectedAWSAccountID && hasAWSAccounts) {
+    if (!hasAWSAccounts) {
+      change('associated_aws_id', '');
+    } else if (!selectedAWSAccountID) {
       change('associated_aws_id', AWSAccountIDs[0]);
     }
   }, [hasAWSAccounts, selectedAWSAccountID]);
@@ -124,7 +138,6 @@ function AccountsRolesScreen({
   const onAssociateAwsAccountModalClose = () => {
     setIsAssocAwsAccountModalOpen(false);
     clearGetAWSAccountIDsResponse();
-    getAWSAccountIDs(organizationID);
   };
 
   const onTokenError = (reason) => {
@@ -185,7 +198,11 @@ function AccountsRolesScreen({
               openAssociateAWSAccountModal();
               setIsAssocAwsAccountModalOpen(true);
             }}
-            validate={required}
+            onRefresh={() => {
+              setRefreshButtonClicked(true);
+              resetAWSAccountFields();
+            }}
+            validate={!getAWSAccountIDsResponse.fulfilled ? undefined : required}
             extendedHelpText={
               <>
                 A list of associated AWS accounts. You must associate at least one account to
@@ -194,11 +211,12 @@ function AccountsRolesScreen({
             }
             AWSAccountIDs={AWSAccountIDs}
             selectedAWSAccountID={selectedAWSAccountID}
-            disabled={getAWSAccountIDsResponse.pending}
+            isLoading={refreshButtonClicked && getAWSAccountIDsResponse.pending}
+            isDisabled={getAWSAccountIDsResponse.pending}
           />
         </GridItem>
         <GridItem span={7} />
-        {selectedAWSAccountID && (
+        {selectedAWSAccountID && hasAWSAccounts && (
           <AccountRolesARNsSection
             selectedAWSAccountID={selectedAWSAccountID}
             selectedInstallerRoleARN={selectedInstallerRoleARN}

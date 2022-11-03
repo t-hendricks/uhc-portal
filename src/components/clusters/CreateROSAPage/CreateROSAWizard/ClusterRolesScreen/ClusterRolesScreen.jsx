@@ -26,6 +26,8 @@ import PopoverHint from '../../../../common/PopoverHint';
 import links from '../../../../../common/installLinks.mjs';
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
+import ReduxHiddenCheckbox from '~/components/common/ReduxFormComponents/ReduxHiddenCheckbox';
+import { BackToAssociateAwsAccountLink } from '../common/BackToAssociateAwsAccountLink';
 
 export const createOperatorRolesHashPrefix = () => {
   // random 4 alphanumeric hash
@@ -54,7 +56,7 @@ function ClusterRolesScreen({
 }) {
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
-  const { track } = useAnalytics();
+  const track = useAnalytics();
 
   useEffect(() => {
     if (!customOperatorRolesPrefix) {
@@ -65,6 +67,7 @@ function ClusterRolesScreen({
   useEffect(() => {
     // clearing the ocm_role_response results in ocm role being re-fetched
     // when navigating to this step (from Next or Back)
+    change('detected_ocm_role', false);
     clearGetOcmRoleResponse();
   }, []);
 
@@ -82,16 +85,22 @@ function ClusterRolesScreen({
       setGetOCMRoleErrorBox(null);
     } else if (getOCMRoleResponse.fulfilled) {
       change('rosa_creator_arn', getOCMRoleResponse.data?.arn);
+      change('detected_ocm_role', true);
       const isAdmin = getOCMRoleResponse.data?.isAdmin;
       setIsAutoModeAvailable(isAdmin);
       setGetOCMRoleErrorBox(null);
     } else if (getOCMRoleResponse.error) {
       // display error
       setGetOCMRoleErrorBox(
-        <ErrorBox
-          message="Error getting OCM role to determine administrator role"
-          response={getOCMRoleResponse}
-        />,
+        <>
+          <ErrorBox
+            message="ocm-role is no longer linked to your Red Hat organization"
+            response={getOCMRoleResponse}
+            isExpandable
+          >
+            <BackToAssociateAwsAccountLink />
+          </ErrorBox>
+        </>,
       );
     } else {
       getOCMRole(awsAccountID);
@@ -193,6 +202,7 @@ function ClusterRolesScreen({
             <ExternalLink href={links.ROSA_AWS_IAM_ROLES}>Learn more about ROSA roles</ExternalLink>
           </Text>
         </GridItem>
+        <ReduxHiddenCheckbox name="detected_ocm_role" />
         {getOCMRoleErrorBox && <GridItem>{getOCMRoleErrorBox}</GridItem>}
         {getOCMRoleResponse.pending && (
           <GridItem>

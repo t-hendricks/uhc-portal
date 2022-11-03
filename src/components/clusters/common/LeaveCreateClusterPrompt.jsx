@@ -9,7 +9,7 @@ import useAnalytics from '~/hooks/useAnalytics';
 
 function LeaveCreateClusterPrompt({ product }) {
   const history = useHistory();
-  const { track } = useAnalytics();
+  const track = useAnalytics();
 
   const [isOpen, setIsOpen] = useState(false);
   const [destinationLocation, setDestinationLocation] = useState('');
