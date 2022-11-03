@@ -80,7 +80,7 @@ import ConnectedInstallPower from '../clusters/install/InstallPower';
 import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
 import ConnectedInstallArmPreRelease from '../clusters/install/InstallArmPreRelease';
 import DownloadsPage from '../downloads/DownloadsPage';
-import Tokens from '../tokens/Tokens';
+import Tokens from '../tokens';
 import TokensROSA from '../tokens/TokensROSA';
 import NotFoundError from './NotFoundError';
 import Quota from '../quota';

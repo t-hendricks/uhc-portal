@@ -13,10 +13,11 @@ import {
   clearGetAWSAccountRolesARNsResponse,
   clearGetUserRoleResponse,
   getUserRole,
+  setOfflineToken,
 } from '../rosaActions';
 
 const mapDispatchToProps = (dispatch) => ({
-  openAssociateAWSAccountModal: (token) => dispatch(openModal('associate-aws-modal', token)),
+  openAssociateAWSAccountModal: () => dispatch(openModal('associate-aws-modal')),
   openUserRoleInstructionsModal: () => dispatch(openModal('user-role-instructions-modal')),
   openOcmRoleInstructionsModal: () => dispatch(openModal('ocm-role-instructions-modal')),
   closeModal: () => dispatch(closeModal()),
@@ -32,11 +33,16 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(touch('CreateCluster', 'control_plane_role_arn'));
     dispatch(touch('CreateCluster', 'worker_role_arn'));
   },
+  setOfflineToken: (token) => dispatch(setOfflineToken(token)),
 });
 
 const mapStateToProps = (state) => {
-  const { getAWSAccountIDsResponse, getAWSAccountRolesARNsResponse, getUserRoleResponse } =
-    state.rosaReducer;
+  const {
+    getAWSAccountIDsResponse,
+    getAWSAccountRolesARNsResponse,
+    getUserRoleResponse,
+    offlineToken,
+  } = state.rosaReducer;
   const valueSelector = formValueSelector('CreateCluster');
 
   return {
@@ -48,6 +54,7 @@ const mapStateToProps = (state) => {
     getUserRoleResponse,
     isUserRoleModalOpen: shouldShowModal(state, 'user-role-instructions-modal'),
     isOCMRoleModalOpen: shouldShowModal(state, 'ocm-role-instructions-modal'),
+    offlineToken,
   };
 };
 

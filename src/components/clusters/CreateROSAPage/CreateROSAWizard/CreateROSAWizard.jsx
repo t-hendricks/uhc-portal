@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router';
-import { PersistGate } from 'redux-persist/integration/react';
 import { Banner, Wizard, PageSection } from '@patternfly/react-core';
 import { Spinner } from '@redhat-cloud-services/frontend-components';
 
@@ -9,7 +8,6 @@ import config from '~/config';
 import { shouldRefetchQuota, scrollToFirstError } from '~/common/helpers';
 import { normalizedProducts } from '~/common/subscriptionTypes';
 import { trackEvents, ocmResourceType } from '~/common/analytics';
-import { persistor } from '~/redux/store';
 import withAnalytics from '~/hoc/withAnalytics';
 import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import { stepId, stepNameById } from './rosaWizardConstants';
@@ -411,30 +409,28 @@ class CreateROSAWizardInternal extends React.Component {
           )}
           <div className="ocm-page">
             {isErrorModalOpen && <CreateClusterErrorModal />}
-            <PersistGate persistor={persistor}>
-              <Wizard
-                className="rosa-wizard"
-                navAriaLabel={`${ariaTitle} steps`}
-                mainAriaLabel={`${ariaTitle} content`}
-                steps={steps}
-                isNavExpandable
-                onNext={this.onNext}
-                onBack={this.onBack}
-                onGoToStep={this.onGoToStep}
-                onClose={() => history.push('/')}
-                footer={
-                  !createClusterResponse.pending ? (
-                    <CreateRosaWizardFooter
-                      onSubmit={onSubmit}
-                      onBeforeNext={this.onBeforeNext}
-                      onBeforeSubmit={this.onBeforeSubmit}
-                    />
-                  ) : (
-                    <></>
-                  )
-                }
-              />
-            </PersistGate>
+            <Wizard
+              className="rosa-wizard"
+              navAriaLabel={`${ariaTitle} steps`}
+              mainAriaLabel={`${ariaTitle} content`}
+              steps={steps}
+              isNavExpandable
+              onNext={this.onNext}
+              onBack={this.onBack}
+              onGoToStep={this.onGoToStep}
+              onClose={() => history.push('/')}
+              footer={
+                !createClusterResponse.pending ? (
+                  <CreateRosaWizardFooter
+                    onSubmit={onSubmit}
+                    onBeforeNext={this.onBeforeNext}
+                    onBeforeSubmit={this.onBeforeSubmit}
+                  />
+                ) : (
+                  <></>
+                )
+              }
+            />
           </div>
         </PageSection>
       </>
