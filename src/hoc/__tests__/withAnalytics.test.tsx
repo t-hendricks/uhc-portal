@@ -1,10 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, ShallowWrapper } from 'enzyme';
 
 import withAnalytics from '../withAnalytics';
 
 describe('withAnalytics', () => {
-  let wrapper;
+  let wrapper: ShallowWrapper;
 
   beforeEach(() => {
     const AnalyticsContext = withAnalytics(() => <div>test</div>);
@@ -18,7 +18,7 @@ describe('withAnalytics', () => {
   });
 
   describe('contents', () => {
-    let contents;
+    let contents: ShallowWrapper;
 
     beforeAll(() => {
       contents = wrapper.dive();

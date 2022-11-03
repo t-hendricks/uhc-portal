@@ -45,7 +45,7 @@ function NetworkScreen(props) {
   // automatically checks the "Install into an existing VPC" checkbox in the UI
   const showConfigureProxy = showClusterWideProxyCheckbox || isByocOSD;
 
-  const { track } = useAnalytics();
+  const track = useAnalytics();
 
   const trackOcmResourceType =
     product === normalizedProducts.ROSA ? ocmResourceType.MOA : ocmResourceType.OSD;

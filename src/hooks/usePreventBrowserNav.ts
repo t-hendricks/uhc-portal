@@ -7,14 +7,12 @@ import React from 'react';
  *
  * @param {Boolean} when condition in which the confirmation dialog should appear. Defaults to true.
  */
-function usePreventBrowserNav(when = true) {
+const usePreventBrowserNav = (when = true) => {
   React.useEffect(() => {
     if (when) {
-      window.onbeforeunload = (e) => {
-        // eslint-disable-next-line react/destructuring-assignment
-        const target = e?.target || {};
+      window.onbeforeunload = () => {
         // Don't trigger dialogs when elements with download attributes are clicked
-        if (!target.activeElement?.hasAttribute('download')) {
+        if (!document.activeElement?.hasAttribute('download')) {
           return true;
         }
 
@@ -30,6 +28,6 @@ function usePreventBrowserNav(when = true) {
       window.onbeforeunload = null;
     };
   }, [when]);
-}
+};
 
 export default usePreventBrowserNav;

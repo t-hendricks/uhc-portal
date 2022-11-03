@@ -46,7 +46,7 @@ function AWSAccountSelection({
   launchAssocAWSAcctModal,
   onRefresh,
 }) {
-  const { track } = useAnalytics();
+  const track = useAnalytics();
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = React.createRef();
   const hasAWSAccounts = AWSAccountIDs.length > 0;

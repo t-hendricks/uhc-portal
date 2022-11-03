@@ -68,7 +68,7 @@ function AccountsRolesScreen({
   const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
   const title = 'Welcome to Red Hat OpenShift Service on AWS (ROSA)';
   const hasAWSAccounts = AWSAccountIDs.length > 0;
-  const { track } = useAnalytics();
+  const track = useAnalytics();
 
   const resetAWSAccountFields = () => {
     // clear certain responses; causes refetch of AWS acct info.
