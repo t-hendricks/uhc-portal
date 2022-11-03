@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import {
-  Title,
-  Bullseye,
-  Stack,
-  StackItem,
-  Spinner,
-} from '@patternfly/react-core';
+import { Title, Bullseye, Stack, StackItem, Spinner } from '@patternfly/react-core';
 import DebugClusterRequest from '../../DebugClusterRequest';
 import config from '../../../../../config';
 import { normalizedProducts } from '../../../../../common/subscriptionTypes';
@@ -80,32 +74,39 @@ function ReviewClusterScreen({
   }, []);
 
   useEffect(() => {
-    if(!isROSA) {
+    if (!isROSA) {
       return;
     }
     if (getUserRoleResponse.fulfilled) {
-      const userRoleForAWSAccount = getUserRoleForSelectedAWSAccount(getUserRoleResponse.data, formValues.associated_aws_id);
+      const userRoleForAWSAccount = getUserRoleForSelectedAWSAccount(
+        getUserRoleResponse.data,
+        formValues.associated_aws_id,
+      );
       setUserRole(userRoleForAWSAccount?.sts_user);
     }
-    if (!getUserRoleResponse.fulfilled && !getUserRoleResponse.pending && !getUserRoleResponse.error ) {
+    if (
+      !getUserRoleResponse.fulfilled &&
+      !getUserRoleResponse.pending &&
+      !getUserRoleResponse.error
+    ) {
       getUserRole();
     }
   }, [getUserRoleResponse]);
 
   useEffect(() => {
-    if(!isROSA) {
+    if (!isROSA) {
       return;
     }
     if (getOCMRoleResponse.fulfilled) {
       setOcmRole(getOCMRoleResponse.data?.arn);
     }
-    if (!getOCMRoleResponse.fulfilled && !getOCMRoleResponse.pending && !getOCMRoleResponse.error ) {
+    if (!getOCMRoleResponse.fulfilled && !getOCMRoleResponse.pending && !getOCMRoleResponse.error) {
       getOCMRole(formValues.associated_aws_id);
     }
   }, [getOCMRoleResponse]);
 
-  const errorWithAWSAccountRoles = getUserRoleResponse?.error || !userRole
-    || getOCMRoleResponse?.error || !ocmRole;
+  const errorWithAWSAccountRoles =
+    getUserRoleResponse?.error || !userRole || getOCMRoleResponse?.error || !ocmRole;
   // setting hidden form field for field level validation
   change('detected_ocm_and_user_roles', !errorWithAWSAccountRoles);
 
@@ -119,8 +120,16 @@ function ReviewClusterScreen({
           <ReduxHiddenCheckbox name="detected_ocm_and_user_roles" />
           <ReviewSection title="Accounts and roles" initiallyExpanded={errorWithAWSAccountRoles}>
             {ReviewItem({ name: 'associated_aws_id', formValues })}
-            {ReviewRoleItem({ name: 'ocm-role', getRoleResponse: getOCMRoleResponse, content: ocmRole})}
-            {ReviewRoleItem({ name: 'user-role', getRoleResponse: getUserRoleResponse, content: userRole})}
+            {ReviewRoleItem({
+              name: 'ocm-role',
+              getRoleResponse: getOCMRoleResponse,
+              content: ocmRole,
+            })}
+            {ReviewRoleItem({
+              name: 'user-role',
+              getRoleResponse: getUserRoleResponse,
+              content: userRole,
+            })}
             {ReviewItem({ name: 'installer_role_arn', formValues })}
             {ReviewItem({ name: 'support_role_arn', formValues })}
             {ReviewItem({ name: 'control_plane_role_arn', formValues })}
@@ -162,10 +171,18 @@ function ReviewClusterScreen({
           isGCP &&
           ReviewItem({ name: 'gpc_vpc', formValues })}
         {installToVPCSelected && ReviewItem({ name: 'configure_proxy', formValues })}
-        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'http_proxy_url', formValues })}
-        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'https_proxy_url', formValues })}
-        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'no_proxy', formValues })}
-        {installToVPCSelected && configureProxySelected && ReviewItem({ name: 'additional_trust_bundle', formValues })}
+        {installToVPCSelected &&
+          configureProxySelected &&
+          ReviewItem({ name: 'http_proxy_url', formValues })}
+        {installToVPCSelected &&
+          configureProxySelected &&
+          ReviewItem({ name: 'https_proxy_url', formValues })}
+        {installToVPCSelected &&
+          configureProxySelected &&
+          ReviewItem({ name: 'no_proxy', formValues })}
+        {installToVPCSelected &&
+          configureProxySelected &&
+          ReviewItem({ name: 'additional_trust_bundle', formValues })}
         {ReviewItem({ name: 'network_machine_cidr', formValues })}
         {ReviewItem({ name: 'network_service_cidr', formValues })}
         {ReviewItem({ name: 'network_pod_cidr', formValues })}

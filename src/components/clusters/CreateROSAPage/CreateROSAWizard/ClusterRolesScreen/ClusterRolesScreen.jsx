@@ -100,7 +100,7 @@ function ClusterRolesScreen({
           >
             <BackToAssociateAwsAccountLink />
           </ErrorBox>
-        </>
+        </>,
       );
     } else {
       getOCMRole(awsAccountID);

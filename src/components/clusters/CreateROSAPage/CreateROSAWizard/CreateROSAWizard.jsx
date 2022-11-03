@@ -170,7 +170,10 @@ class CreateROSAWizardInternal extends React.Component {
     // when navigating back to step 1 from link in no user-role error messages on review screen
     // even though we're hitting [Next] on step 1, currentStepId is set to review step.
     // TODO: figure out how to update currentStepId externally from WizardContextConsumer.goToStepById()
-    if ([stepId.ACCOUNTS_AND_ROLES, stepId.REVIEW_AND_CREATE].includes(currentStepId) && !getUserRoleResponse?.fulfilled) {
+    if (
+      [stepId.ACCOUNTS_AND_ROLES, stepId.REVIEW_AND_CREATE].includes(currentStepId) &&
+      !getUserRoleResponse?.fulfilled
+    ) {
       const data = await this.getUserRoleInfo();
       const gotoNextStep = isUserRoleForSelectedAWSAccount(data.value, selectedAWSAccountID);
       if (!gotoNextStep) {

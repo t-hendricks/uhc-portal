@@ -37,11 +37,13 @@ const VPCDetailsCard = (props) => {
     openModal(modals.EDIT_CLUSTER_WIDE_PROXY);
   };
 
-  const renderNoProxyDomains = noProxyDomains ? (
-    noProxyDomains.map(domain => (
-      <Label isCompact color="blue">{domain}</Label>
-    ))
-  ) : 'N/A';
+  const renderNoProxyDomains = noProxyDomains
+    ? noProxyDomains.map((domain) => (
+        <Label isCompact color="blue">
+          {domain}
+        </Label>
+      ))
+    : 'N/A';
 
   return (
     <Card className="ocm-c-networking-vpc-details__card">
@@ -98,9 +100,7 @@ const VPCDetailsCard = (props) => {
           <DescriptionListGroup>
             <DescriptionListTerm>No Proxy domains</DescriptionListTerm>
             <DescriptionListDescription>
-              <LabelGroup isCompact>
-                {renderNoProxyDomains}
-              </LabelGroup>
+              <LabelGroup isCompact>{renderNoProxyDomains}</LabelGroup>
             </DescriptionListDescription>
           </DescriptionListGroup>
         </DescriptionList>

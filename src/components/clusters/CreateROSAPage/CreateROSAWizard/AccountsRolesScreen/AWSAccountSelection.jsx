@@ -121,13 +121,7 @@ function AWSAccountSelection({
         ))}
       </Select>
       {onRefresh && (
-        <Tooltip
-          content={
-            <p>
-              Click icon to refresh associated aws accounts and account-roles.
-            </p>
-          }
-        >
+        <Tooltip content={<p>Click icon to refresh associated aws accounts and account-roles.</p>}>
           <Button
             isLoading={isLoading}
             isDisabled={isDisabled}

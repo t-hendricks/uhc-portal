@@ -89,23 +89,19 @@ export const ReviewRoleItem = ({ name, getRoleResponse, content }) => (
                   </span>
                 </Text>
                 <Text component={TextVariants.p}>
-                  <p>
-                    Follow the AWS account association instructions and try again
-                  </p>
+                  <p>Follow the AWS account association instructions and try again</p>
                 </Text>
               </TextContent>
             </>
           }
-          footer={
-            <BackToAssociateAwsAccountLink />
-          }
+          footer={<BackToAssociateAwsAccountLink />}
           iconClassName="hand-pointer"
-          />
+        />
       )}
       {getRoleResponse?.fulfilled ? content : null}
     </DescriptionListDescription>
   </DescriptionListGroup>
-)
+);
 
 function ReviewSection({ initiallyExpanded, title, children = null }) {
   const [isExpanded, setIsExpanded] = useState(true);
