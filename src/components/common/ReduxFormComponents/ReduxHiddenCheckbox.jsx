@@ -9,13 +9,15 @@ import ReduxCheckbox from '~/components/common/ReduxFormComponents/ReduxCheckbox
    Validation can be handled asynchronously and set programmatically via:
      Ex: change('detected_ocm_and_user_roles', false|true);
 */
-const ReduxHiddenCheckbox = ({ name }) => <span className="pf-u-display-none">
-  <Field
-    component={ReduxCheckbox}
-    name={`${name}`}
-    validate={(value) => value ? undefined : ' '}
-  />
-</span>
+const ReduxHiddenCheckbox = ({ name }) => (
+  <span className="pf-u-display-none">
+    <Field
+      component={ReduxCheckbox}
+      name={`${name}`}
+      validate={(value) => (value ? undefined : ' ')}
+    />
+  </span>
+);
 
 ReduxHiddenCheckbox.propTypes = {
   name: PropTypes.string.isRequired,

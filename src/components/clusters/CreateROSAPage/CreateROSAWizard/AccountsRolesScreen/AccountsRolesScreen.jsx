@@ -76,7 +76,7 @@ function AccountsRolesScreen({
     clearGetAWSAccountRolesARNsResponse();
     change('associated_aws_id', '');
     change('installer_role_arn', '');
-  }
+  };
 
   // default product and cloud_provider form values
   useEffect(() => {
@@ -102,7 +102,7 @@ function AccountsRolesScreen({
 
   // if no aws acct ids then clear selectedAWSAccountID, else default to first available aws account
   useEffect(() => {
-    if(!hasAWSAccounts) {
+    if (!hasAWSAccounts) {
       change('associated_aws_id', '');
     } else if (!selectedAWSAccountID) {
       change('associated_aws_id', AWSAccountIDs[0]);
@@ -150,7 +150,7 @@ function AccountsRolesScreen({
     } else {
       // open the modal anyways
       openAssociateAWSAccountModal(reason);
-      setIsAssocAwsAccountModalOpen(true)
+      setIsAssocAwsAccountModalOpen(true);
     }
   };
 
@@ -159,7 +159,7 @@ function AccountsRolesScreen({
     loadOfflineToken(onTokenLoad, onTokenError);
     // Reset window onbeforeunload event so a browser confirmation dialog do not appear.
     window.onbeforeunload = null;
-  }
+  };
 
   return (
     <Form onSubmit={() => false}>
@@ -183,7 +183,7 @@ function AccountsRolesScreen({
         <GridItem span={8}>
           <Title headingLevel="h3">AWS account</Title>
           <Text component={TextVariants.p}>
-            Select an AWS account that is associated with your Red Hat account, or{" "}
+            Select an AWS account that is associated with your Red Hat account, or{' '}
             <Button
               variant="link"
               isInline
@@ -193,7 +193,8 @@ function AccountsRolesScreen({
               }}
             >
               associate an AWS account
-            </Button>.
+            </Button>
+            .
           </Text>
         </GridItem>
         <GridItem span={4} />
@@ -203,11 +204,13 @@ function AccountsRolesScreen({
             component={AWSAccountSelection}
             name="associated_aws_id"
             label="Associated AWS accounts"
-            launchAssocAWSAcctModal={() => {getTokenThenOpen()}}
+            launchAssocAWSAcctModal={() => {
+              getTokenThenOpen();
+            }}
             onRefresh={() => {
               setRefreshButtonClicked(true);
-              resetAWSAccountFields()}
-            }
+              resetAWSAccountFields();
+            }}
             validate={!getAWSAccountIDsResponse.fulfilled ? undefined : required}
             extendedHelpText={
               <>
