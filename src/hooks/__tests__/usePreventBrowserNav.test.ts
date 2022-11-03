@@ -6,7 +6,7 @@ describe('usePreventBrowserNav', () => {
     renderHook(usePreventBrowserNav);
 
     expect(window.onbeforeunload).toBeInstanceOf(Function);
-    expect(window.onbeforeunload()).toEqual(true);
+    expect(window.onbeforeunload?.({} as any)).toEqual(true);
   });
 
   it('onbeforeunload event is null if "when" condition is false', () => {

@@ -9,7 +9,7 @@ import TelemetryDisclaimer from './TelemetryDisclaimer';
 import instructionsMapping from '../instructionsMapping';
 
 const GetStarted = ({ docURL, pendoID, cloudProviderID, customizations, isBMIPI, isUPI }) => {
-  const { track } = useAnalytics();
+  const track = useAnalytics();
   return (
     <>
       <Stack hasGutter>

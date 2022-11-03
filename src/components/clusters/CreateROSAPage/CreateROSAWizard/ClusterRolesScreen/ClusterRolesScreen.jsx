@@ -54,7 +54,7 @@ function ClusterRolesScreen({
 }) {
   const [isAutoModeAvailable, setIsAutoModeAvailable] = useState(false);
   const [getOCMRoleErrorBox, setGetOCMRoleErrorBox] = useState(null);
-  const { track } = useAnalytics();
+  const track = useAnalytics();
 
   useEffect(() => {
     if (!customOperatorRolesPrefix) {

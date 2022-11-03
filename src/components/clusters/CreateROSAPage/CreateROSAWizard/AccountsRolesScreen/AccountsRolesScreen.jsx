@@ -64,7 +64,7 @@ function AccountsRolesScreen({
   const [isAssocAwsAccountModalOpen, setIsAssocAwsAccountModalOpen] = useState(false);
   const title = 'Welcome to Red Hat OpenShift Service on AWS (ROSA)';
   const hasAWSAccounts = AWSAccountIDs.length > 0;
-  const { track } = useAnalytics();
+  const track = useAnalytics();
 
   useEffect(() => {
     // default product and cloud_provider form values

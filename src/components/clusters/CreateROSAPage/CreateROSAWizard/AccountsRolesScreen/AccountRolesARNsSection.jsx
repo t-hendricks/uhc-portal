@@ -41,7 +41,7 @@ function AccountRolesARNsSection({
 }) {
   const NO_ROLE_DETECTED = 'No role detected';
 
-  const { track } = useAnalytics();
+  const track = useAnalytics();
   const [isExpanded, setIsExpanded] = useState(true);
   const [accountRoles, setAccountRoles] = useState([]);
   const [installerRoleOptions, setInstallerRoleOptions] = useState([
