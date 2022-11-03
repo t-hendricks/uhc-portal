@@ -12,20 +12,18 @@ const InstructionCommand = ({
   className,
   limitWidth = true,
 }) => {
-  const { track } = useAnalytics();
+  const track = useAnalytics();
   return (
     <Text component="pre" className={limitWidth ? 'ocm-instructions__command' : ''}>
       <ClipboardCopy
         isReadOnly
         textAriaLabel={textAriaLabel}
-        onCopy={
-          trackEvent
-            ? (event, text) => {
-                track(trackEvent);
-                clipboardCopyFunc(event, text);
-              }
-            : undefined
-        }
+        onCopy={(event, text) => {
+          if (trackEvent) {
+            track(trackEvent);
+          }
+          clipboardCopyFunc(event, text);
+        }}
         className={className}
       >
         {children}
