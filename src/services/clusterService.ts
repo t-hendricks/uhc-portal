@@ -27,7 +27,7 @@ import type {
   GCP,
   Flavour,
   LimitedSupportReason,
-} from '../types/cluster_mgmt.v1';
+} from '../types/clusters_mgmt.v1';
 import type { Subscription } from '../types/accounts_mgmt.v1';
 
 const getCluster = (search: string) => getClusters(search, 1);
