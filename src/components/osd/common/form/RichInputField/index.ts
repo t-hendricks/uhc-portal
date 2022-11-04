@@ -1,0 +1,1 @@
+export { RichInputField } from './RichInputField';

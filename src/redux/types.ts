@@ -1,9 +1,12 @@
+/**
+ * TODO, update API related types when generated API types are available
+ */
 import { RouterState } from 'connected-react-router';
 
 export interface ApiRequest {
   details: string;
   error: boolean;
-  errorDetails: string;
+  errorDetails: any[];
   errorMessage: string;
   fulfilled: boolean;
   pending: boolean;
@@ -41,6 +44,13 @@ export interface CcsInquiries {
   ccsCredentialsValidity: CcsCredentialsValidity;
 }
 
+// eslint-disable-next-line camelcase
+export type Version = { id: string; raw_id: string; default: boolean };
+
+export interface Clusters {
+  clusterVersions: { versions: Version[] } & ApiRequest;
+}
+
 export interface GlobalState {
   modal: Modal;
   rosaReducer: RosaApi;
@@ -48,4 +58,5 @@ export interface GlobalState {
   userProfile: UserProfile;
   router: RouterState;
   ccsInquiries: CcsInquiries;
+  clusters: Clusters;
 }
