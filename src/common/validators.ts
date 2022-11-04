@@ -2,7 +2,7 @@ import { get, indexOf, inRange } from 'lodash';
 import cidrTools from 'cidr-tools';
 import { ValidationError, Validator } from 'jsonschema';
 import { clusterService } from '~/services';
-import type { GCP } from '../types/cluster_mgmt.v1';
+import type { GCP } from '../types/clusters_mgmt.v1';
 import type { AugmentedSubnetwork, SubnetFormProps } from '../types/types';
 
 type Networks = Parameters<typeof cidrTools['overlap']>[0];
