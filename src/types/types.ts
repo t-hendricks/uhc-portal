@@ -37,6 +37,7 @@ export type FakeCluster = // AICluster &
     state?: /* ClusterState | AICluster['status'] | */ string;
     ['subscription_id']?: string;
     ['activity_timestamp']?: string;
+    ['cpu_architecture']?: string;
     product?: Cluster['product'] & { type?: string };
   };
 
