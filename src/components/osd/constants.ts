@@ -18,6 +18,14 @@ export enum FieldId {
   MachineTypeForceChoice = 'machine_type_force_choice',
   MachineType = 'machine_type',
   AcknowledgePrereq = 'acknowledge_prerequisites',
+  CustomerManagedKey = 'customer_managed_key',
+  CustomerOperatorRolesPrefix = 'custom_operator_roles_prefix',
+  ClusterVersion = 'cluster_version',
+  PersistentStorage = 'persistent_storage',
+  ClusterName = 'name',
+  LoadBalancers = 'load_balancers',
+  EnableUserWorkloadMonitoring = 'enable_user_workload_monitoring',
+  EtcdEncryption = 'etcd_encryption',
 }
 
 export enum StepName {
@@ -64,4 +72,9 @@ export const initialValues = {
   [FieldId.Byoc]: 'false',
   [FieldId.CloudProvider]: CloudProviderType.Aws,
   [FieldId.AcknowledgePrereq]: false,
+  [FieldId.MultiAz]: 'false',
+  [FieldId.EnableUserWorkloadMonitoring]: true,
 };
+
+export const clusterNameHint =
+  'This name identifies your cluster in OpenShift Cluster Manager and forms part of the cluster console subdomain.';

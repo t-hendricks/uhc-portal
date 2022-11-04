@@ -1,0 +1,19 @@
+.rich-input-field,
+.rich-input-field[aria-invalid='true'] {
+  background-image: none; // Hides default PatternFly icon
+}
+
+.rich-input-field {
+  border-right: none;
+  border-bottom-width: var(--pf-c-form-control--invalid--BorderBottomWidth);
+
+  &_not-valid {
+    border-bottom-color: var(--pf-global--danger-color--100);
+  }
+  &_valid {
+    border-bottom-color: var(--pf-global--success-color--100);
+  }
+  &_info {
+    border-bottom-color: var(--pf-global--info-color--100);
+  }
+}

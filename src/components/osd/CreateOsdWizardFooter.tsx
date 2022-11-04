@@ -12,12 +12,13 @@ import { StepId } from './constants';
 
 export const CreateOsdWizardFooter = () => {
   const dispatch = useDispatch();
-  const ccsInquiries = useGlobalState((state) => state.ccsInquiries);
+  const ccsCredentialsValidity = useGlobalState(
+    (state) => state.ccsInquiries.ccsCredentialsValidity,
+  );
   const { onNext, onBack, onClose, activeStep, steps } = useWizardContext();
   const { values, validateForm, setTouched } = useFormikContext<FormikValues>();
 
   const onValidateNext = async () => {
-    const { ccsCredentialsValidity } = ccsInquiries;
     const validateCcsCredentials = shouldValidateCcsCredentials(values, ccsCredentialsValidity);
     const errors = await validateForm(values);
     const touched = Object.keys(errors).reduce((acc: Record<string, boolean>, fieldName) => {
