@@ -2,7 +2,11 @@ import React from 'react';
 import { useFormikContext, FormikValues } from 'formik';
 
 import { Button } from '@patternfly/react-core';
-import { useWizardContext, useWizardFooter } from '@patternfly/react-core/dist/esm/next';
+import {
+  useWizardContext,
+  useWizardFooter,
+  WizardFooterWrapper,
+} from '@patternfly/react-core/dist/esm/next';
 
 export const ReviewAndCreate = () => {
   const { onBack, onClose } = useWizardContext();
@@ -11,7 +15,7 @@ export const ReviewAndCreate = () => {
   useWizardFooter(
     React.useMemo(
       () => (
-        <footer className="pf-c-wizard__footer">
+        <WizardFooterWrapper>
           <Button variant="primary" onClick={submitForm}>
             Create cluster
           </Button>
@@ -21,7 +25,7 @@ export const ReviewAndCreate = () => {
           <Button variant="link" onClick={onClose}>
             Cancel
           </Button>
-        </footer>
+        </WizardFooterWrapper>
       ),
       [onBack, onClose, submitForm],
     ),
