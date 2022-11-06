@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { FormikValues, useFormikContext } from 'formik';
+import { FormikValues, useFormikContext, setNestedObjectValues } from 'formik';
 
 import { Button } from '@patternfly/react-core';
 import { useWizardContext } from '@patternfly/react-core/dist/esm/next';
@@ -20,14 +20,10 @@ export const CreateOsdWizardFooter = () => {
 
   const onValidateNext = async () => {
     const validateCcsCredentials = shouldValidateCcsCredentials(values, ccsCredentialsValidity);
-    const errors = await validateForm(values);
-    const touched = Object.keys(errors).reduce((acc: Record<string, boolean>, fieldName) => {
-      acc[fieldName] = true;
-      return acc;
-    }, {});
+    const errors = await validateForm();
 
     if (Object.keys(errors || {}).length > 0) {
-      setTouched(touched);
+      setTouched(setNestedObjectValues(errors, true));
       scrollToFirstError(errors as Record<string, string>);
       return;
     }

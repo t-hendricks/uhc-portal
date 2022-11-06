@@ -11,7 +11,7 @@ import type {
   ClusterMetricsNodes,
   ClusterResource,
 } from '../types/accounts_mgmt.v1';
-import type { Cluster } from '../types/cluster_mgmt.v1';
+import type { Cluster } from '../types/clusters_mgmt.v1';
 import type { FakeCluster } from '../types/types';
 
 const {
