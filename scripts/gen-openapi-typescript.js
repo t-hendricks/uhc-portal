@@ -36,6 +36,7 @@ fs.readdir(sourceDir, (err, files) => {
         exportServices: false,
         exportModels: true,
         exportSchemas: false,
+        indent: '2',
       });
     }
   });
