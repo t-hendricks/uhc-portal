@@ -1,10 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<AddOnsPrimaryButton /> should render 1`] = `
-<Fragment>
+<div>
   <Button
     component="a"
     href="https://example.com/veryfakeconsole/k8s/ns/redhat-rhmi-operator/operators.coreos.com~v1alpha1~ClusterServiceVersion/fake-addon.0.0.1"
+    isSmall={true}
     rel="noopener noreferrer"
     target="_blank"
     variant="primary"
@@ -19,12 +20,15 @@ exports[`<AddOnsPrimaryButton /> should render 1`] = `
   </Button>
    
   <ButtonWithTooltip
+    className="pf-u-ml-xs"
     disableReason={false}
+    isDanger={true}
+    isSmall={true}
     onClick={[Function]}
     ouiaId="uninstall-addon-managed-integration"
-    variant="link"
+    variant="secondary"
   >
     Uninstall
   </ButtonWithTooltip>
-</Fragment>
+</div>
 `;

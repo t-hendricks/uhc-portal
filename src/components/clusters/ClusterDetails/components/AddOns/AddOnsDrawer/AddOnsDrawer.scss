@@ -11,6 +11,11 @@ body .ocm-c-addons__drawer {
 
   &--panel-content {
     z-index: 2;
+
+    /* Undo the margin set in app.scss */
+    .pf-c-card {
+      margin-top: 0 !important;
+    }
   }
 
   &--panel-gallery {
@@ -46,6 +51,24 @@ body .ocm-c-addons__drawer {
 
   &--drawer-panel-body {
     padding-top: 24px;
+
+    .addons-radio {
+      display: flex;
+      align-items: center;
+
+      input {
+        margin-top: 0;
+      }
+    }
+
+    .info-icon {
+      color: var(--pf-global--info-color--100);
+      cursor: pointer;
+    }
+
+    .info-button {
+      padding: 0 0 0 2px;
+    }
   }
 }
 

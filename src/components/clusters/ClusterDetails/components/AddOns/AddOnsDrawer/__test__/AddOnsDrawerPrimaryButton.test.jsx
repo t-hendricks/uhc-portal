@@ -10,6 +10,13 @@ describe('<AddOnsPrimaryButton />', () => {
   const addClusterAddOn = jest.fn();
   const addClusterAddOnResponse = {};
   const openModal = jest.fn();
+  const subscriptionModels = {
+    [managedIntegration.id]: {
+      addOn: managedIntegration.id,
+      billingModel: 'standard',
+      cloudAccount: '',
+    },
+  };
 
   beforeEach(() => {
     wrapper = shallow(
@@ -27,6 +34,7 @@ describe('<AddOnsPrimaryButton />', () => {
         hasQuota
         installedAddOn={{ state: 'ready', operator_version: '0.0.1', csv_name: 'fake-addon.0.0.1' }}
         openModal={openModal}
+        subscriptionModels={subscriptionModels}
       />,
     );
   });

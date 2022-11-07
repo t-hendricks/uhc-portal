@@ -8,22 +8,18 @@ import ExternalLink from '../../../../../common/ExternalLink';
 function AddOnsMetaDataItem(props) {
   const { activeCardDocsLink, installedAddOnOperatorVersion } = props;
 
-  return (
+  return installedAddOnOperatorVersion || activeCardDocsLink ? (
     <FlexItem>
-      {installedAddOnOperatorVersion ? (
+      {installedAddOnOperatorVersion && (
         <>
           <b>Current Version </b> {installedAddOnOperatorVersion}{' '}
         </>
-      ) : (
-        ''
       )}
-      {activeCardDocsLink ? (
+      {activeCardDocsLink && (
         <ExternalLink href={activeCardDocsLink}>View Documentation</ExternalLink>
-      ) : (
-        ''
       )}
     </FlexItem>
-  );
+  ) : null;
 }
 
 AddOnsMetaDataItem.propTypes = {
