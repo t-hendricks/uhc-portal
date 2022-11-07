@@ -16,6 +16,7 @@ const reduxFormAddOnParameters = reduxForm(reduxFormConfig)(AddOnsParametersModa
 const mapStateToProps = (state) => ({
   isOpen: shouldShowModal(state, 'add-ons-parameters-modal'),
   addOn: state.modal.data.addOn,
+  subscriptionModel: state.addOns.drawer.subscriptionModels,
   addOnInstallation: state.modal.data.addOnInstallation,
   isUpdateForm: state.modal.data.isUpdateForm,
   submitClusterAddOnResponse: state.modal.data.isUpdateForm
@@ -37,9 +38,16 @@ const mapDispatchToProps = (dispatch) => ({
   clearClusterAddOnsResponses: () => dispatch(clearClusterAddOnsResponses()),
   resetForm: () => dispatch(reset('AddOnsParameters')),
   onSubmit: (formData, _, props) => {
+    const { billingModel } = props.subscriptionModel[props.addOn.id];
     const addOnRequest = {
       addon: {
         id: props.addOn.id,
+      },
+      billing: {
+        billing_model: billingModel,
+        ...(props.subscriptionModel[props.addOn.id].cloudAccount && {
+          billing_marketplace_account: props.subscriptionModel[props.addOn.id].cloudAccount,
+        }),
       },
     };
 

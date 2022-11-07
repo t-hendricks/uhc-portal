@@ -2,6 +2,8 @@ import {
   hasManagedQuotaSelector,
   availableClustersFromQuota,
   availableNodesFromQuota,
+  addOnBillingQuota,
+  quotaTypes,
 } from './quotaSelectors';
 import { normalizedProducts, billingModels } from '../../../common/subscriptionTypes';
 import {
@@ -14,6 +16,7 @@ import {
   CCSROSAQuotaList,
   rhQuotaList,
   negativeQuotaList,
+  addonsQuotaList,
 } from './__test__/quota.fixtures';
 
 const state = (quotaList) => ({ userProfile: { organization: { quotaList } } });
@@ -46,6 +49,14 @@ describe('quotaSelectors', () => {
     isBYOC: true,
     billingModel: billingModels.STANDARD,
   };
+  const paramsCCSOnDemand = {
+    product: normalizedProducts.OSD,
+    cloudProviderID: 'aws',
+    resourceName: 'standard-4',
+    isMultiAz: true,
+    isBYOC: true,
+    billingModel: billingModels.MARKETPLACE,
+  };
   const paramsTrial = {
     product: normalizedProducts.OSDTrial,
     cloudProviderID: 'aws',
@@ -58,6 +69,44 @@ describe('quotaSelectors', () => {
     ...paramsCCS,
     product: normalizedProducts.ROSA,
   };
+
+  describe('addOnBillingQuota', () => {
+    it('returns addon billing quota information', () => {
+      expect(
+        addOnBillingQuota(addonsQuotaList, {
+          ...paramsCCSOnDemand,
+          resourceType: quotaTypes.ADD_ON,
+          resourceName: 'addon-open-data-hub',
+        }),
+      ).toStrictEqual({
+        marketplace: {
+          allowed: 15,
+          consumed: 0,
+          cost: 1,
+          cloudAccounts: {
+            rhm: [
+              {
+                cloud_account_id: 'fakeRHMarketplaceAccount',
+                cloud_provider_id: 'rhm',
+              },
+            ],
+            aws: [
+              {
+                cloud_account_id: '000000000004',
+                cloud_provider_id: 'aws',
+              },
+            ],
+            azure: [
+              {
+                cloud_account_id: 'fakeAzureSubscriptionId',
+                cloud_provider_id: 'azure',
+              },
+            ],
+          },
+        },
+      });
+    });
+  });
 
   describe('availableClustersFromQuota', () => {
     it('selects OSD on rhInfra', () => {

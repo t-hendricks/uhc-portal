@@ -1,6 +1,11 @@
 import { connect } from 'react-redux';
 import AddOns from './AddOns';
-import { getClusterAddOns, addClusterAddOn, clearClusterAddOnsResponses } from './AddOnsActions';
+import {
+  getAddOns,
+  getClusterAddOns,
+  addClusterAddOn,
+  clearClusterAddOnsResponses,
+} from './AddOnsActions';
 import { getOrganizationAndQuota } from '../../../../../redux/actions/userActions';
 import { modalActions } from '../../../../common/Modal/ModalActions';
 import { getMachinePools } from '../MachinePools/MachinePoolsActions';
@@ -19,6 +24,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getOrganizationAndQuota,
+  getAddOns,
   getClusterAddOns,
   getMachinePools,
   addClusterAddOn,
