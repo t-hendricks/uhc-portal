@@ -64,10 +64,8 @@ const getOrganizationAndQuota = (): AppThunk => (dispatch, getState) => {
   );
 };
 
-const selfTermsReviewAction = () =>
+const selfTermsReview = () =>
   action(userConstants.SELF_TERMS_REVIEW, authorizationsService.selfTermsReview());
-
-const selfTermsReview = (): AppThunk => (dispatch) => dispatch(selfTermsReviewAction());
 
 const userActions = {
   userInfoResponse,
@@ -77,7 +75,7 @@ const userActions = {
 };
 
 type UserAction = ActionType<
-  typeof userInfoResponse | typeof getOrganizationAndQuotaAction | typeof selfTermsReviewAction
+  typeof userInfoResponse | typeof getOrganizationAndQuotaAction | typeof selfTermsReview
 >;
 
 export { userActions, userInfoResponse, getOrganizationAndQuota, selfTermsReview, UserAction };

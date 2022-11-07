@@ -17,7 +17,6 @@ import { action, ActionType } from 'typesafe-actions';
 import { dashboardsConstants } from '../constants';
 import { accountManager, accountsService } from '../../services';
 import type { SummaryVector } from '../../types/accounts_mgmt.v1/models/SummaryVector';
-import type { AppThunk } from '../types';
 
 const getDashboard = () =>
   accountsService
@@ -43,10 +42,7 @@ const getDashboard = () =>
       return dashboard;
     });
 
-const getSummaryDashboardAction = () =>
-  action(dashboardsConstants.GET_SUMMARY_DASHBOARD, getDashboard());
-
-const getSummaryDashboard = (): AppThunk => (dispatch) => dispatch(getSummaryDashboardAction());
+const getSummaryDashboard = () => action(dashboardsConstants.GET_SUMMARY_DASHBOARD, getDashboard());
 
 type QueryParams = Parameters<typeof accountsService.getUnhealthyClusters>[1];
 
@@ -61,13 +57,8 @@ const getUnhealthy = (params: QueryParams) =>
       return Promise.reject(new Error('No logged in user'));
     });
 
-const getUnhealthyClustersAction = (params: QueryParams) =>
+const getUnhealthyClusters = (params: QueryParams) =>
   action(dashboardsConstants.GET_UNHEALTHY_CLUSTERS, getUnhealthy(params));
-
-const getUnhealthyClusters =
-  (params: QueryParams): AppThunk =>
-  (dispatch) =>
-    dispatch(getUnhealthyClustersAction(params));
 
 export { getSummaryDashboard, getUnhealthyClusters };
 
@@ -76,8 +67,6 @@ const dashboardsActions = {
   getUnhealthyClusters,
 };
 
-export type DashboardsAction = ActionType<
-  typeof getSummaryDashboardAction | typeof getUnhealthyClustersAction
->;
+export type DashboardsAction = ActionType<typeof dashboardsActions>;
 
 export default dashboardsActions;

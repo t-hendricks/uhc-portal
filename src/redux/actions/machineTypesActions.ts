@@ -2,7 +2,6 @@ import { action, ActionType } from 'typesafe-actions';
 import { machineTypesConstants } from '../constants';
 import { clusterService } from '../../services';
 import type { MachineType } from '../../types/clusters_mgmt.v1';
-import type { AppThunk } from '../types';
 
 // Group machine types by cloud provider
 const groupByCloudProvider = (machineTypes?: MachineType[]): { [id: string]: MachineType[] } => {
@@ -20,27 +19,16 @@ const groupByCloudProvider = (machineTypes?: MachineType[]): { [id: string]: Mac
   return byProvider;
 };
 
-const getMachineTypesAction = () =>
+const getMachineTypes = () =>
   action(
     machineTypesConstants.GET_MACHINE_TYPES,
     clusterService.getMachineTypes().then((response) => groupByCloudProvider(response.data.items)),
   );
 
-const getMachineTypes = (): AppThunk => (dispatch) =>
-  dispatch(
-    action(
-      machineTypesConstants.GET_MACHINE_TYPES,
-      clusterService
-        .getMachineTypes()
-        .then((response) => groupByCloudProvider(response.data.items)),
-    ),
-  );
-
-type MachineTypesAction = ActionType<typeof getMachineTypesAction>;
-
 const machineTypesActions = {
   getMachineTypes,
-  groupByCloudProvider,
 };
+
+type MachineTypesAction = ActionType<typeof machineTypesActions>;
 
 export { machineTypesActions, getMachineTypes, groupByCloudProvider, MachineTypesAction };

@@ -2,7 +2,6 @@ import { action, ActionType } from 'typesafe-actions';
 import { cloudProviderConstants } from '../constants';
 import { clusterService } from '../../services';
 import type { CloudProvider, CloudRegion } from '../../types/clusters_mgmt.v1';
-import type { AppThunk } from '../types';
 
 const getCloudProvidersAndRegions = () =>
   clusterService.getCloudProviders().then((cloudProvidersResponse) => {
@@ -40,13 +39,11 @@ const getCloudProvidersAndRegions = () =>
     return cloudProviders;
   });
 
-const getCloudProvidersAction = () =>
+const getCloudProviders = () =>
   action(cloudProviderConstants.GET_CLOUD_PROVIDERS, getCloudProvidersAndRegions());
-
-const getCloudProviders = (): AppThunk => (dispatch) => dispatch(getCloudProvidersAction());
 
 const cloudProviderActions = { getCloudProviders };
 
-type CloudProviderAction = ActionType<typeof getCloudProvidersAction>;
+type CloudProviderAction = ActionType<typeof getCloudProviders>;
 
 export { cloudProviderActions, getCloudProviders, CloudProviderAction };

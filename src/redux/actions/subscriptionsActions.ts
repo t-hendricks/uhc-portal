@@ -22,12 +22,9 @@ import { accountsService, authorizationsService, clusterService } from '../../se
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
 import { SelfResourceReviewRequest } from '../../types/authorizations.v1/models/SelfResourceReviewRequest';
 import type { SubscriptionWithPermissionsList } from '../../types/types';
-import type { AppThunk } from '../types';
 
-const fetchAccountAction = () =>
+const fetchAccount = () =>
   action(subscriptionsConstants.GET_ACCOUNT, accountsService.getCurrentAccount());
-
-const fetchAccount = (): AppThunk => (dispatch) => dispatch(fetchAccountAction());
 
 const getSubscriptionsAndPermissions = async (
   params: Parameters<typeof accountsService.getSubscriptions>[0],
@@ -55,30 +52,17 @@ const getSubscriptionsAndPermissions = async (
   );
 };
 
-const getSubscriptionsAction = (params: Parameters<typeof accountsService.getSubscriptions>[0]) =>
+const getSubscriptions = (params: Parameters<typeof accountsService.getSubscriptions>[0]) =>
   action(subscriptionsConstants.GET_SUBSCRIPTIONS, getSubscriptionsAndPermissions(params));
 
-const getSubscriptions =
-  (params: Parameters<typeof accountsService.getSubscriptions>[0]): AppThunk =>
-  (dispatch) =>
-    dispatch(getSubscriptionsAction(params));
-
-const invalidateSubscriptionsAction = () =>
+const invalidateSubscriptions = () =>
   action(INVALIDATE_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS));
 
-const invalidateSubscriptions = (): AppThunk => (dispatch) =>
-  dispatch(invalidateSubscriptionsAction());
-
-const fetchQuotaCostAction = (organizationID: string) =>
+const fetchQuotaCost = (organizationID: string) =>
   action(
     subscriptionsConstants.GET_QUOTA_COST,
     accountsService.getOrganizationQuota(organizationID),
   );
-
-const fetchQuotaCost =
-  (organizationID: string): AppThunk =>
-  (dispatch) =>
-    dispatch(fetchQuotaCostAction(organizationID));
 
 const getSubscriptionIDForCluster = (clusterID: string) => {
   if (isUuid(clusterID)) {
@@ -89,25 +73,16 @@ const getSubscriptionIDForCluster = (clusterID: string) => {
   return clusterService.getClusterDetails(clusterID).then((result) => result.data.subscription?.id);
 };
 
-const fetchSubscriptionIDForClusterAction = (clusterID: string) =>
-  action(subscriptionsConstants.GET_SUBSCRIPTION_ID, getSubscriptionIDForCluster(clusterID));
-
 /**
  * Redux action creator, get a subscription ID using a cluster's id / uuid,
  * for redirecting requests from `/details/<id>` to `/details/s/<subscription_id>`
  *
  * @param {String} clusterID Either a Clusters Service cluster ID or a cluster's external_id (uuid)
  */
-const fetchSubscriptionIDForCluster =
-  (clusterID: string): AppThunk =>
-  (dispatch) =>
-    dispatch(fetchSubscriptionIDForClusterAction(clusterID));
+const fetchSubscriptionIDForCluster = (clusterID: string) =>
+  action(subscriptionsConstants.GET_SUBSCRIPTION_ID, getSubscriptionIDForCluster(clusterID));
 
-const clearSubscriptionIDForClusterAction = () =>
-  action(subscriptionsConstants.CLEAR_SUBSCRIPTION_ID);
-
-const clearSubscriptionIDForCluster = (): AppThunk => (dispatch) =>
-  dispatch(clearSubscriptionIDForClusterAction());
+const clearSubscriptionIDForCluster = () => action(subscriptionsConstants.CLEAR_SUBSCRIPTION_ID);
 
 const subscriptionsActions = {
   fetchAccount,
@@ -118,14 +93,7 @@ const subscriptionsActions = {
   clearSubscriptionIDForCluster,
 };
 
-type SubscriptionsAction = ActionType<
-  | typeof fetchAccountAction
-  | typeof getSubscriptionsAction
-  | typeof invalidateSubscriptionsAction
-  | typeof fetchQuotaCostAction
-  | typeof fetchSubscriptionIDForClusterAction
-  | typeof clearSubscriptionIDForClusterAction
->;
+type SubscriptionsAction = ActionType<typeof subscriptionsActions>;
 
 export {
   subscriptionsActions,

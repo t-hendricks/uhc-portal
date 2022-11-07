@@ -60,8 +60,7 @@ import type {
 } from '../../types/types';
 import type { AppThunk, AppThunkDispatch } from '../types';
 
-const invalidateClustersAction = () => action(INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS));
-const invalidateClusters = (): AppThunk => (dispatch) => dispatch(invalidateClustersAction());
+const invalidateClusters = () => action(INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS));
 
 const createClusterAndUpgradeSchedule = async (
   cluster: Cluster,
@@ -112,32 +111,24 @@ const registerDisconnectedCluster =
   ): AppThunk =>
   (dispatch) =>
     dispatch(
+      // FIXME how can the payload be a subscription when creating a cluster?
       action(
         clustersConstants.CREATE_CLUSTER,
         registerClusterAndUpdateSubscription(registrationRequest, subscriptionRequest, dispatch),
       ),
     );
 
-const clearClusterResponseAction = () => action(clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE);
-const clearClusterResponse = (): AppThunk => (dispatch) => dispatch(clearClusterResponseAction());
+const clearClusterResponse = () => action(clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE);
 
-const editClusterAction = (id: string, cluster: Cluster) =>
+const editCluster = (id: string, cluster: Cluster) =>
   action(clustersConstants.EDIT_CLUSTER, clusterService.editCluster(id, cluster));
-const editCluster =
-  (id: string, cluster: Cluster): AppThunk =>
-  (dispatch) =>
-    dispatch(editClusterAction(id, cluster));
 
 // TODO create a new action and separate reducer eg. EDIT_SUBSCRIPTION_DISPLAY_NAME
-const editClusterDisplayNameAction = (subscriptionID: string, displayName: string) =>
+const editClusterDisplayName = (subscriptionID: string, displayName: string) =>
   action(
     clustersConstants.EDIT_CLUSTER,
     accountsService.editSubscription(subscriptionID, { display_name: displayName }),
   );
-const editClusterDisplayName =
-  (subscriptionID: string, displayName: string): AppThunk =>
-  (dispatch) =>
-    dispatch(editClusterDisplayNameAction(subscriptionID, displayName));
 
 /** Build a notification
  * Meta object with notifications. Notifications middleware uses it to get prepared to response to:
@@ -162,90 +153,49 @@ const buildArchiveNotificationsMeta = (name: string, archived: boolean) => ({
   },
 });
 
-const archiveClusterAction = (id: string, name: string) =>
+const archiveCluster = (id: string, name: string) =>
   action(
     clustersConstants.ARCHIVE_CLUSTER,
     clusterService.archiveCluster(id),
     buildArchiveNotificationsMeta(name, true),
   );
-const archiveCluster =
-  (id: string, name: string): AppThunk =>
-  (dispatch) =>
-    dispatch(archiveClusterAction(id, name));
 
-const clearClusterArchiveResponseAction = () =>
-  action(clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE);
-const clearClusterArchiveResponse = (): AppThunk => (dispatch) =>
-  dispatch(clearClusterArchiveResponseAction());
+const clearClusterArchiveResponse = () => action(clustersConstants.CLEAR_CLUSTER_ARCHIVE_RESPONSE);
 
-const upgradeTrialClusterAction = (id: string, params: Cluster) =>
+const upgradeTrialCluster = (id: string, params: Cluster) =>
   action(clustersConstants.UPGRADE_TRIAL_CLUSTER, clusterService.upgradeTrialCluster(id, params));
-const upgradeTrialCluster =
-  (id: string, params: Cluster): AppThunk =>
-  (dispatch) =>
-    dispatch(upgradeTrialClusterAction(id, params));
 
-const clearUpgradeTrialClusterResponseAction = () =>
+const clearUpgradeTrialClusterResponse = () =>
   action(clustersConstants.CLEAR_UPGRADE_TRIAL_CLUSTER_RESPONSE);
 
-const clearUpgradeTrialClusterResponse = (): AppThunk => (dispatch) =>
-  dispatch(clearUpgradeTrialClusterResponseAction());
-
-const hibernateClusterAction = (id: string) =>
+const hibernateCluster = (id: string) =>
   action(clustersConstants.HIBERNATE_CLUSTER, clusterService.hibernateCluster(id));
-const hibernateCluster =
-  (id: string): AppThunk =>
-  (dispatch) =>
-    dispatch(hibernateClusterAction(id));
 
-const clearHibernateClusterResponseAction = () =>
+const clearHibernateClusterResponse = () =>
   action(clustersConstants.CLEAR_CLUSTER_HIBERNATE_RESPONSE);
 
-const clearHibernateClusterResponse = (): AppThunk => (dispatch) =>
-  dispatch(clearHibernateClusterResponseAction());
-
-const resumeClusterAction = (id: string) =>
+const resumeCluster = (id: string) =>
   action(clustersConstants.RESUME_CLUSTER, clusterService.resumeCluster(id));
 
-const resumeCluster =
-  (id: string): AppThunk =>
-  (dispatch) =>
-    dispatch(resumeClusterAction(id));
+const clearResumeClusterResponse = () => action(clustersConstants.CLEAR_RESUME_CLUSTER_RESPONSE);
 
-const clearResumeClusterResponseAction = () =>
-  action(clustersConstants.CLEAR_RESUME_CLUSTER_RESPONSE);
-
-const clearResumeClusterResponse = (): AppThunk => (dispatch) =>
-  dispatch(clearResumeClusterResponseAction());
-
-const unarchiveClusterAction = (id: string, name: string) =>
+const unarchiveCluster = (id: string, name: string) =>
   action(
     clustersConstants.UNARCHIVE_CLUSTER,
     clusterService.unarchiveCluster(id),
     buildArchiveNotificationsMeta(name, false),
   );
 
-const unarchiveCluster =
-  (id: string, name: string): AppThunk =>
-  (dispatch) =>
-    dispatch(unarchiveClusterAction(id, name));
-
-const clearClusterUnarchiveResponseAction = () =>
+const clearClusterUnarchiveResponse = () =>
   action(clustersConstants.CLEAR_CLUSTER_UNARCHIVE_RESPONSE);
-const clearClusterUnarchiveResponse = (): AppThunk => (dispatch) =>
-  dispatch(clearClusterUnarchiveResponseAction());
 
-const editClusterConsoleURLAction = (id: string, subscriptionID: string, consoleURL: string) =>
+const editClusterConsoleURL = (id: string, subscriptionID: string, consoleURL: string) =>
   action(
     clustersConstants.EDIT_CLUSTER,
     clusterService
       .editCluster(id, { console: { url: consoleURL } })
       .then(() => accountsService.editSubscription(subscriptionID, { console_url: consoleURL })),
   );
-const editClusterConsoleURL =
-  (id: string, subscriptionID: string, consoleURL: string): AppThunk =>
-  (dispatch) =>
-    dispatch(editClusterConsoleURLAction(id, subscriptionID, consoleURL));
 
 /**
  * Collect a list of object IDs and build a SQL-like query searching for these IDs.
@@ -612,69 +562,47 @@ const fetchSingleClusterAndPermissions = async (
   };
 };
 
-const fetchClusterDetailsAction = (subscriptionID: string) =>
+const fetchClusterDetails = (subscriptionID: string) =>
   action(clustersConstants.GET_CLUSTER_DETAILS, fetchSingleClusterAndPermissions(subscriptionID));
-const fetchClusterDetails =
-  (subscriptionID: string): AppThunk =>
-  (dispatch) =>
-    dispatch(fetchClusterDetailsAction(subscriptionID));
 
-const setClusterDetailsAction = (cluster: AugmentedCluster, mergeDetails = false) =>
+const setClusterDetails = (cluster: AugmentedCluster, mergeDetails = false) =>
   action(clustersConstants.SET_CLUSTER_DETAILS, { cluster, mergeDetails });
-const setClusterDetails =
-  (cluster: AugmentedCluster, mergeDetails = false): AppThunk =>
-  (dispatch) =>
-    dispatch(setClusterDetailsAction(cluster, mergeDetails));
 
-const clearClusterDetailsAction = () => action(clustersConstants.CLEAR_CLUSTER_DETAILS);
-const clearClusterDetails = (): AppThunk => (dispatch) => dispatch(clearClusterDetailsAction());
+const clearClusterDetails = () => action(clustersConstants.CLEAR_CLUSTER_DETAILS);
 
-const resetCreatedClusterResponseAction = () =>
-  action(clustersConstants.RESET_CREATED_CLUSTER_RESPONSE);
-const resetCreatedClusterResponse = (): AppThunk => (dispatch) =>
-  dispatch(resetCreatedClusterResponseAction());
+const resetCreatedClusterResponse = () => action(clustersConstants.RESET_CREATED_CLUSTER_RESPONSE);
 
-const getClusterStatusAction = (clusterID: string) =>
+const getClusterStatus = (clusterID: string) =>
   action(clustersConstants.GET_CLUSTER_STATUS, clusterService.getClusterStatus(clusterID));
 
-const getClusterStatus =
-  (clusterID: string): AppThunk =>
-  (dispatch) =>
-    dispatch(getClusterStatusAction(clusterID));
-
-const getInstallableVersionsAction = (isRosa: boolean) =>
+const getInstallableVersions = (isRosa: boolean) =>
   action(clustersConstants.GET_CLUSTER_VERSIONS, clusterService.getInstallableVersions(isRosa));
 
-const getInstallableVersions =
-  (isRosa: boolean): AppThunk =>
-  (dispatch) =>
-    dispatch(getInstallableVersionsAction(isRosa));
-
 type ClusterAction = ActionType<
-  | typeof fetchClusterDetailsAction
-  | typeof setClusterDetailsAction
-  | typeof invalidateClustersAction
+  | typeof fetchClusterDetails
+  | typeof setClusterDetails
+  | typeof invalidateClusters
   | typeof createClusterAction
-  | typeof clearClusterResponseAction
-  | typeof editClusterAction
-  | typeof editClusterDisplayNameAction
-  | typeof archiveClusterAction
-  | typeof clearClusterArchiveResponseAction
-  | typeof upgradeTrialClusterAction
-  | typeof clearUpgradeTrialClusterResponseAction
-  | typeof hibernateClusterAction
-  | typeof clearHibernateClusterResponseAction
-  | typeof resumeClusterAction
-  | typeof clearResumeClusterResponseAction
-  | typeof unarchiveClusterAction
-  | typeof clearClusterUnarchiveResponseAction
-  | typeof editClusterConsoleURLAction
+  | typeof clearClusterResponse
+  | typeof editCluster
+  | typeof editClusterDisplayName
+  | typeof archiveCluster
+  | typeof clearClusterArchiveResponse
+  | typeof upgradeTrialCluster
+  | typeof clearUpgradeTrialClusterResponse
+  | typeof hibernateCluster
+  | typeof clearHibernateClusterResponse
+  | typeof resumeCluster
+  | typeof clearResumeClusterResponse
+  | typeof unarchiveCluster
+  | typeof clearClusterUnarchiveResponse
+  | typeof editClusterConsoleURL
   | typeof fetchClustersAction
-  | typeof fetchClusterDetailsAction
-  | typeof clearClusterDetailsAction
-  | typeof resetCreatedClusterResponseAction
-  | typeof getClusterStatusAction
-  | typeof getInstallableVersionsAction
+  | typeof fetchClusterDetails
+  | typeof clearClusterDetails
+  | typeof resetCreatedClusterResponse
+  | typeof getClusterStatus
+  | typeof getInstallableVersions
 >;
 
 const clustersActions = {

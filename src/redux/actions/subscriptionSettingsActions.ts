@@ -17,33 +17,22 @@ import { action, ActionType } from 'typesafe-actions';
 import { subscriptionSettingsConstants } from '../constants';
 import { accountsService } from '../../services';
 import type { SubscriptionPatchRequest } from '../../types/accounts_mgmt.v1/models/SubscriptionPatchRequest';
-import type { AppThunk } from '../types';
 
-const editSubscriptionSettingsAction = (subscriptionID: string, data: SubscriptionPatchRequest) =>
+const editSubscriptionSettings = (subscriptionID: string, data: SubscriptionPatchRequest) =>
   action(
     subscriptionSettingsConstants.EDIT_SUBSCRIPTION_SETTINGS,
     accountsService.editSubscription(subscriptionID, data),
   );
 
-const editSubscriptionSettings =
-  (subscriptionID: string, data: SubscriptionPatchRequest): AppThunk =>
-  (dispatch) =>
-    dispatch(editSubscriptionSettingsAction(subscriptionID, data));
-
-const clearEditSubscriptionSettingsResponseAction = () =>
+const clearEditSubscriptionSettingsResponse = () =>
   action(subscriptionSettingsConstants.CLEAR_EDIT_SUBSCRIPTION_SETTINGS_RESPONSE);
-
-const clearEditSubscriptionSettingsResponse = (): AppThunk => (dispatch) =>
-  dispatch(clearEditSubscriptionSettingsResponseAction());
 
 const subscriptionSettingsActions = {
   editSubscriptionSettings,
   clearEditSubscriptionSettingsResponse,
 };
 
-type SubscriptionSettingsAction = ActionType<
-  typeof editSubscriptionSettingsAction | typeof clearEditSubscriptionSettingsResponseAction
->;
+type SubscriptionSettingsAction = ActionType<typeof subscriptionSettingsActions>;
 
 export {
   subscriptionSettingsActions,
