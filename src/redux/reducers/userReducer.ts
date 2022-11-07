@@ -67,7 +67,7 @@ const userProfile = (state = initialState, action: PromiseActionType<UserAction>
         break;
       case FULFILLED_ACTION(userConstants.GET_ORGANIZATION):
         draft.organization = {
-          ...initialState.organization,
+          ...baseRequestState,
           fulfilled: true,
           details: action.payload.organization,
           quotaList: action.payload.quota,
@@ -86,7 +86,7 @@ const userProfile = (state = initialState, action: PromiseActionType<UserAction>
         break;
       case FULFILLED_ACTION(userConstants.SELF_TERMS_REVIEW):
         draft.selfTermsReviewResult = {
-          ...initialState.selfTermsReviewResult,
+          ...baseRequestState,
           fulfilled: true,
           ...action.payload.data,
           redirect_url: action.payload.data.redirect_url ?? '',

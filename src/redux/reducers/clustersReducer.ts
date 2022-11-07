@@ -61,12 +61,8 @@ type State = {
   editedCluster: PromiseReducerState;
   archivedCluster: PromiseReducerState;
   unarchivedCluster: PromiseReducerState;
-  hibernatingCluster: PromiseReducerState & {
-    cluster: Cluster;
-  };
-  resumeHibernatingCluster: PromiseReducerState & {
-    cluster: Cluster;
-  };
+  hibernatingCluster: PromiseReducerState;
+  resumeHibernatingCluster: PromiseReducerState;
   upgradeGates: PromiseReducerState & {
     gates: VersionGate[];
   };
@@ -128,11 +124,9 @@ const initialState: State = {
   },
   hibernatingCluster: {
     ...baseState,
-    cluster: emptyCluster,
   },
   resumeHibernatingCluster: {
     ...baseState,
-    cluster: emptyCluster,
   },
   upgradeGates: {
     ...baseState,
@@ -191,23 +185,21 @@ const clustersReducer = (
             ? getErrorState({ payload: data.meta.clustersServiceError })
             : undefined;
         draft.clusters = {
-          ...initialState.clusters,
+          ...baseState,
           clusters: data.items,
           queryParams: data.queryParams,
           meta: {
             clustersServiceError:
               clustersServiceError?.error === true ? clustersServiceError : undefined,
           },
-          pending: false,
           fulfilled: true,
-          valid: true,
         };
         break;
       }
       case clustersConstants.SET_CLUSTER_DETAILS: {
         const { cluster, mergeDetails } = action.payload;
         draft.details = {
-          ...initialState.details,
+          ...baseState,
           cluster: mergeDetails ? merge({}, state.details.cluster, cluster) : cluster,
           fulfilled: true,
         };
@@ -230,7 +222,7 @@ const clustersReducer = (
         break;
       case FULFILLED_ACTION(clustersConstants.GET_CLUSTER_DETAILS):
         draft.details = {
-          ...initialState.details,
+          ...baseState,
           fulfilled: true,
           cluster: action.payload.data,
         };
@@ -255,7 +247,7 @@ const clustersReducer = (
         break;
       case FULFILLED_ACTION(clustersConstants.CREATE_CLUSTER):
         draft.createdCluster = {
-          ...initialState.createdCluster,
+          ...baseState,
           cluster: action.payload.data,
           fulfilled: true,
         };
@@ -281,7 +273,7 @@ const clustersReducer = (
         break;
       case FULFILLED_ACTION(clustersConstants.EDIT_CLUSTER):
         draft.editedCluster = {
-          ...initialState.editedCluster,
+          ...baseState,
           fulfilled: true,
         };
         break;
@@ -294,7 +286,7 @@ const clustersReducer = (
       // Archive cluster
       case FULFILLED_ACTION(clustersConstants.ARCHIVE_CLUSTER):
         draft.archivedCluster = {
-          ...initialState.archivedCluster,
+          ...baseState,
           fulfilled: true,
         };
         break;
@@ -319,8 +311,7 @@ const clustersReducer = (
       // Hibernate cluster
       case FULFILLED_ACTION(clustersConstants.HIBERNATE_CLUSTER):
         draft.hibernatingCluster = {
-          ...initialState.hibernatingCluster,
-          cluster: action.payload.data,
+          ...baseState,
           fulfilled: true,
         };
         break;
@@ -345,7 +336,7 @@ const clustersReducer = (
       // Resume cluster
       case FULFILLED_ACTION(clustersConstants.RESUME_CLUSTER):
         draft.resumeHibernatingCluster = {
-          ...initialState.resumeHibernatingCluster,
+          ...baseState,
           fulfilled: true,
         };
         break;
@@ -370,7 +361,7 @@ const clustersReducer = (
       // UnArchive cluster
       case FULFILLED_ACTION(clustersConstants.UNARCHIVE_CLUSTER):
         draft.unarchivedCluster = {
-          ...initialState.unarchivedCluster,
+          ...baseState,
           fulfilled: true,
         };
         break;
@@ -395,7 +386,7 @@ const clustersReducer = (
       // Upgrade trial cluster
       case FULFILLED_ACTION(clustersConstants.UPGRADE_TRIAL_CLUSTER):
         draft.upgradedCluster = {
-          ...initialState.upgradedCluster,
+          ...baseState,
           cluster: action.payload.data,
           fulfilled: true,
         };
@@ -434,7 +425,7 @@ const clustersReducer = (
         break;
       case FULFILLED_ACTION(clustersConstants.GET_CLUSTER_STATUS):
         draft.clusterStatus = {
-          ...initialState.clusterStatus,
+          ...baseState,
           fulfilled: true,
           status: action.payload.data,
         };
@@ -455,7 +446,7 @@ const clustersReducer = (
         break;
       case FULFILLED_ACTION(clustersConstants.GET_CLUSTER_VERSIONS):
         draft.clusterVersions = {
-          ...initialState.clusterVersions,
+          ...baseState,
           fulfilled: true,
           versions: action.payload.data.items
             ? filterAndSortClusterVersions(action.payload.data.items)
@@ -475,7 +466,7 @@ const clustersReducer = (
 
       case FULFILLED_ACTION(clustersConstants.GET_UPGRADE_GATES):
         draft.upgradeGates = {
-          ...initialState.upgradeGates,
+          ...baseState,
           gates: action.payload ?? [],
           fulfilled: true,
         };

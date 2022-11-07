@@ -22,7 +22,7 @@ export type PromiseReducerState<T = unknown> =
   | (Partial<T> & { pending: boolean; fulfilled: false; error: false })
   // Should error state have access to the Partial<T> or should it be only ErrorState?
   | (Partial<T> & ErrorState)
-  | (T & { pending: boolean; fulfilled: true; error: boolean });
+  | (T & { pending: boolean; fulfilled: true; error: false });
 
 interface AsyncAction extends Action {
   payload?: Promise<any>;

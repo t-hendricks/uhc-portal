@@ -34,7 +34,7 @@ function githubReducer(state = initialState, action: PromiseActionType<GithubAct
         break;
       case FULFILLED_ACTION(GITHUB_GET_LATEST_RELEASE):
         draft[action.meta.repo] = {
-          ...initialState[action.meta.repo],
+          ...baseRequestState,
           fulfilled: true,
           data: action.payload.data,
         };

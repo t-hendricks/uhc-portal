@@ -74,7 +74,7 @@ function dashboardsReducer(
         break;
       case FULFILLED_ACTION(dashboardsConstants.GET_SUMMARY_DASHBOARD):
         draft.summary = {
-          ...initialState.summary,
+          ...baseRequestState,
           fulfilled: true,
           metrics: action.payload.summary,
         };
@@ -100,7 +100,7 @@ function dashboardsReducer(
           };
         });
         draft.unhealthyClusters = {
-          ...initialState.unhealthyClusters,
+          ...baseRequestState,
           fulfilled: true,
           subscriptions: items ?? [],
         };

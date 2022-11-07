@@ -100,7 +100,7 @@ function subscriptionsReducer(
         break;
       case FULFILLED_ACTION(subscriptionsConstants.GET_ACCOUNT):
         draft.account = {
-          ...initialState.account,
+          ...baseRequestState,
           fulfilled: true,
           valid: true,
           data: action.payload.data,
@@ -126,7 +126,7 @@ function subscriptionsReducer(
         break;
       case FULFILLED_ACTION(subscriptionsConstants.GET_SUBSCRIPTIONS):
         draft.subscriptions = {
-          ...initialState.subscriptions,
+          ...baseRequestState,
           fulfilled: true,
           valid: true,
           items: action.payload.data.items ?? [],
@@ -140,14 +140,11 @@ function subscriptionsReducer(
         };
         break;
       case PENDING_ACTION(subscriptionsConstants.GET_SUBSCRIPTION_ID):
-        draft.subscriptionID = {
-          ...initialState.subscriptionID,
-          pending: true,
-        };
+        draft.subscriptionID.pending = true;
         break;
       case FULFILLED_ACTION(subscriptionsConstants.GET_SUBSCRIPTION_ID):
         draft.subscriptionID = {
-          ...initialState.subscriptionID,
+          ...baseRequestState,
           fulfilled: true,
           id: action.payload,
         };
@@ -170,7 +167,7 @@ function subscriptionsReducer(
         break;
       case FULFILLED_ACTION(subscriptionsConstants.GET_QUOTA_COST):
         draft.quotaCost = {
-          ...initialState.quotaCost,
+          ...baseRequestState,
           fulfilled: true,
           valid: true,
           items: action.payload.data.items?.map(normalizeQuotaCost) ?? [],

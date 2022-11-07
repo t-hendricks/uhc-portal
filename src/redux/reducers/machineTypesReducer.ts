@@ -64,11 +64,9 @@ function machineTypesReducer(
 
     case FULFILLED_ACTION(machineTypesConstants.GET_MACHINE_TYPES):
       return {
-        ...initialState,
-        ...state,
+        ...baseRequestState,
         types: action.payload,
         typesByID: mapMachineTypesById(action.payload),
-        pending: false,
         fulfilled: true,
       };
 

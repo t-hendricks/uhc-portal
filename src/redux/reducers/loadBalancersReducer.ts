@@ -38,7 +38,7 @@ function loadBalancersReducer(
 
     case FULFILLED_ACTION(loadBalancerConstants.GET_LOAD_BALANCER_VALUES):
       return {
-        ...initialState,
+        ...baseRequestState,
         fulfilled: true,
         values: action.payload,
       };

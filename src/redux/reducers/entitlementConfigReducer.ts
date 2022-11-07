@@ -26,6 +26,7 @@ function entitlementConfigReducer(
         error: true,
         errorCode: -1,
         fulfilled: false,
+        errorMessage: '',
       };
 
     case PENDING_ACTION(CREATE_ENTITLEMENT_CONFIG):
@@ -36,7 +37,7 @@ function entitlementConfigReducer(
 
     case FULFILLED_ACTION(CREATE_ENTITLEMENT_CONFIG):
       return {
-        ...initialState,
+        ...baseRequestState,
         fulfilled: true,
       };
     default:

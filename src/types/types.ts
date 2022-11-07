@@ -84,8 +84,8 @@ export type ErrorState = {
   error: true;
   errorCode?: number;
   internalErrorCode?: string;
-  errorMessage?: string | React.ReactNode;
-  errorDetails?: string | null;
+  errorMessage: NonNullable<React.ReactNode>;
+  errorDetails?: { kind: string; items?: any }[];
   operationID?: string;
 };
 

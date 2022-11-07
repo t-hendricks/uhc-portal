@@ -65,7 +65,7 @@ function costReducer(state = initialState, action: PromiseActionType<CostAction>
         break;
       case FULFILLED_ACTION(costConstants.GET_REPORT):
         draft.report = {
-          ...initialState.report,
+          ...baseRequestState,
           fulfilled: true,
           ...action.payload.data,
         };
@@ -83,7 +83,7 @@ function costReducer(state = initialState, action: PromiseActionType<CostAction>
         break;
       case FULFILLED_ACTION(costConstants.GET_SOURCES):
         draft.sources = {
-          ...initialState.sources,
+          ...baseRequestState,
           fulfilled: true,
           ...action.payload.data,
         };
@@ -101,7 +101,7 @@ function costReducer(state = initialState, action: PromiseActionType<CostAction>
         break;
       case FULFILLED_ACTION(costConstants.GET_USER_ACCESS):
         draft.userAccess = {
-          ...initialState.userAccess,
+          ...baseRequestState,
           fulfilled: true,
           ...action.payload.data,
         };

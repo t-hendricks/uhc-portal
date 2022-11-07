@@ -41,8 +41,7 @@ export default function flavoursReducer(
 
     case FULFILLED_ACTION(GET_DEFAULT_FLAVOUR):
       return {
-        ...initialState,
-        pending: false,
+        ...baseRequestState,
         fulfilled: true,
         byID: {
           [DEFAULT_FLAVOUR_ID]: action.payload.data,

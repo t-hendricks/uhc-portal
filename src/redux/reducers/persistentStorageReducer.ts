@@ -36,7 +36,7 @@ function persistentStorageReducer(
       };
     case FULFILLED_ACTION(persistentStorageConstants.GET_PERSISTENT_STORAGE_VALUES):
       return {
-        ...initialState,
+        ...baseRequestState,
         fulfilled: true,
         values: action.payload,
       };

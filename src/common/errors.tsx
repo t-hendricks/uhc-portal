@@ -7,7 +7,7 @@ import { ErrorState } from '../types/types';
 const BANNED_USER_CODE = 'ACCT-MGMT-22';
 const TERMS_REQUIRED_CODE = 'CLUSTERS-MGMT-451';
 
-const overrideErrorMessage = (payload: any, actionType?: string): string | React.ReactNode => {
+const overrideErrorMessage = (payload: any, actionType?: string): NonNullable<React.ReactNode> => {
   if (!payload) {
     return '';
   }
@@ -64,7 +64,10 @@ const overrideErrorMessage = (payload: any, actionType?: string): string | React
   return message;
 };
 
-const getErrorMessage = (action: { type?: string; payload?: AxiosError<any> }): React.ReactNode => {
+const getErrorMessage = (action: {
+  type?: string;
+  payload?: AxiosError<any>;
+}): NonNullable<React.ReactNode> => {
   if (action.payload?.response === undefined) {
     // Handle edge cases in which `payload` might be an Error type
     return String(action.payload);
