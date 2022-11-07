@@ -130,6 +130,7 @@ const getOrganizationQuota = (organizationID: string) =>
     {
       params: {
         fetchRelatedResources: true,
+        fetchCloudAccounts: true,
       },
     },
   );

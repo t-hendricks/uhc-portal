@@ -21,14 +21,21 @@ exports[`<AddOnsDrawer /> should render 1`] = `
             >
               <GridItem
                 span={3}
-              />
+              >
+                <img
+                  alt="Red Hat CodeReady Workspaces"
+                  src="data:image/png;base64,SNIPPED"
+                />
+              </GridItem>
               <GridItem
                 span={9}
               >
                 <Title
                   headingLevel="h2"
                   size="xl"
-                />
+                >
+                  Red Hat CodeReady Workspaces
+                </Title>
               </GridItem>
             </Grid>
             <DrawerActions>
@@ -39,8 +46,26 @@ exports[`<AddOnsDrawer /> should render 1`] = `
           </DrawerHead>
           <DrawerPanelBody>
             <AddOnStateLabel
-              addOn={null}
-              installedAddOn={null}
+              addOn={
+                Object {
+                  "description": "A collaborative Kubernetes-native development solution that delivers OpenShift workspaces and in-browser IDE for rapid cloud application development. This add-on installs PostgreSQL, Red Hat SSO, and the Red Hat CodeReady Workspaces server, as well as configures all three services.",
+                  "docs_link": "https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces",
+                  "enabled": true,
+                  "has_external_resources": false,
+                  "hidden": false,
+                  "href": "/api/clusters_mgmt/v1/addons/codeready-workspaces",
+                  "icon": "SNIPPED",
+                  "id": "codeready-workspaces",
+                  "install_mode": "single_namespace",
+                  "kind": "AddOn",
+                  "label": "api.openshift.com/addon-codeready-workspaces-operator",
+                  "name": "Red Hat CodeReady Workspaces",
+                  "operator_name": "crwoperator",
+                  "resource_cost": 0,
+                  "resource_name": "addon-crw-operator",
+                  "target_namespace": "codeready-workspaces-operator",
+                }
+              }
               requirements={
                 Object {
                   "errorMsgs": Array [],
@@ -48,9 +73,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
                 }
               }
             />
-            <AddOnsFailedBox
-              installedAddOn={null}
-            />
+            <AddOnsFailedBox />
           </DrawerPanelBody>
           <div>
             <Tabs
@@ -101,10 +124,34 @@ exports[`<AddOnsDrawer /> should render 1`] = `
                       }
                     }
                   >
-                    <FlexItem />
-                    <AddOnsMetaDataItem />
+                    <FlexItem>
+                      A collaborative Kubernetes-native development solution that delivers OpenShift workspaces and in-browser IDE for rapid cloud application development. This add-on installs PostgreSQL, Red Hat SSO, and the Red Hat CodeReady Workspaces server, as well as configures all three services.
+                    </FlexItem>
+                    <AddOnsMetaDataItem
+                      activeCardDocsLink="https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces"
+                    />
                     <AddOnsParameterList
-                      activeCard={null}
+                      activeCard={
+                        Object {
+                          "description": "A collaborative Kubernetes-native development solution that delivers OpenShift workspaces and in-browser IDE for rapid cloud application development. This add-on installs PostgreSQL, Red Hat SSO, and the Red Hat CodeReady Workspaces server, as well as configures all three services.",
+                          "docs_link": "https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces",
+                          "enabled": true,
+                          "has_external_resources": false,
+                          "hidden": false,
+                          "href": "/api/clusters_mgmt/v1/addons/codeready-workspaces",
+                          "icon": "SNIPPED",
+                          "id": "codeready-workspaces",
+                          "install_mode": "single_namespace",
+                          "kind": "AddOn",
+                          "label": "api.openshift.com/addon-codeready-workspaces-operator",
+                          "name": "Red Hat CodeReady Workspaces",
+                          "operator_name": "crwoperator",
+                          "resource_cost": 0,
+                          "resource_name": "addon-crw-operator",
+                          "target_namespace": "codeready-workspaces-operator",
+                        }
+                      }
+                      activeCardID="codeready-workspaces"
                       cluster={
                         Object {
                           "activity_timestamp": "2021-01-11T11:55:29Z",
@@ -465,15 +512,35 @@ exports[`<AddOnsDrawer /> should render 1`] = `
                           },
                         }
                       }
-                      installedAddOn={null}
                       openModal={[MockFunction]}
+                    />
+                    <AddOnsSubscription
+                      activeCardId="codeready-workspaces"
                     />
                   </Flex>
                 </DrawerPanelBody>
                 <DrawerPanelBody>
                   <AddOnsPrimaryButton
-                    activeCard={null}
-                    activeCardRequirementsFulfilled={true}
+                    activeCard={
+                      Object {
+                        "description": "A collaborative Kubernetes-native development solution that delivers OpenShift workspaces and in-browser IDE for rapid cloud application development. This add-on installs PostgreSQL, Red Hat SSO, and the Red Hat CodeReady Workspaces server, as well as configures all three services.",
+                        "docs_link": "https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces",
+                        "enabled": true,
+                        "has_external_resources": false,
+                        "hidden": false,
+                        "href": "/api/clusters_mgmt/v1/addons/codeready-workspaces",
+                        "icon": "SNIPPED",
+                        "id": "codeready-workspaces",
+                        "install_mode": "single_namespace",
+                        "kind": "AddOn",
+                        "label": "api.openshift.com/addon-codeready-workspaces-operator",
+                        "name": "Red Hat CodeReady Workspaces",
+                        "operator_name": "crwoperator",
+                        "resource_cost": 0,
+                        "resource_name": "addon-crw-operator",
+                        "target_namespace": "codeready-workspaces-operator",
+                      }
+                    }
                     addClusterAddOn={[MockFunction]}
                     addClusterAddOnResponse={Object {}}
                     cluster={
@@ -836,10 +903,38 @@ exports[`<AddOnsDrawer /> should render 1`] = `
                         },
                       }
                     }
-                    hasQuota={false}
-                    installedAddOn={null}
+                    hasQuota={true}
                     openModal={[MockFunction]}
                   />
+                </DrawerPanelBody>
+              </Tab>
+              <Tab
+                eventKey={1}
+                title={
+                  <TabTitleText>
+                    Prerequisites
+                  </TabTitleText>
+                }
+              >
+                <DrawerPanelBody
+                  className="ocm-addons-tab--drawer-panel-body"
+                >
+                  <Flex
+                    direction={
+                      Object {
+                        "default": "column",
+                      }
+                    }
+                    spaceItems={
+                      Object {
+                        "default": "spaceItemsLg",
+                      }
+                    }
+                  >
+                    <FlexItem>
+                      <AddOnsRequirementContent />
+                    </FlexItem>
+                  </Flex>
                 </DrawerPanelBody>
               </Tab>
             </Tabs>
@@ -852,6 +947,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
           hasGutter={true}
         >
           <Connect(AddOnsCard)
+            activeCard="codeready-workspaces"
             addOn={
               Object {
                 "description": "A collaborative Kubernetes-native development solution that delivers OpenShift workspaces and in-browser IDE for rapid cloud application development. This add-on installs PostgreSQL, Red Hat SSO, and the Red Hat CodeReady Workspaces server, as well as configures all three services.",
@@ -882,6 +978,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
             }
           />
           <Connect(AddOnsCard)
+            activeCard="codeready-workspaces"
             addOn={
               Object {
                 "description": "Red Hat managed integration, based on the integreatly project, is an opinionated installation of a number of independent middleware services and tools into an OpenShift Dedicated cluster.",
@@ -932,6 +1029,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
             }
           />
           <Connect(AddOnsCard)
+            activeCard="codeready-workspaces"
             addOn={
               Object {
                 "description": "Based on the open source Istio project, Red Hat OpenShift Service Mesh provides an easy way to create a network of deployed services that provides discovery, load balancing, service-to-service authentication, failure recovery, metrics, and monitoring.",
@@ -969,6 +1067,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
             }
           />
           <Connect(AddOnsCard)
+            activeCard="codeready-workspaces"
             addOn={
               Object {
                 "description": "DBA Operator description",
@@ -996,6 +1095,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
             }
           />
           <Connect(AddOnsCard)
+            activeCard="codeready-workspaces"
             addOn={
               Object {
                 "description": "Install and configure the integreatly suite of Software",
@@ -1024,6 +1124,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
             }
           />
           <Connect(AddOnsCard)
+            activeCard="codeready-workspaces"
             addOn={
               Object {
                 "description": "Manage Prow CRDs",
@@ -1052,6 +1153,7 @@ exports[`<AddOnsDrawer /> should render 1`] = `
             }
           />
           <Connect(AddOnsCard)
+            activeCard="codeready-workspaces"
             addOn={
               Object {
                 "description": "The Cluster Logging Operator for OKD provides a means for configuring and managing your aggregated logging stack.",

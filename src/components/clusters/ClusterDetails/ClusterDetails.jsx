@@ -191,6 +191,7 @@ class ClusterDetails extends Component {
       fetchClusterInsights,
       fetchUpgradeGates,
     } = this.props;
+    const manualRefresh = clicked === 'clicked';
     const clusterID = get(clusterDetails, 'cluster.id');
     const isManaged = get(clusterDetails, 'cluster.managed', false);
 
@@ -203,16 +204,16 @@ class ClusterDetails extends Component {
       this.fetchSupportData();
     }
 
-    if (externalClusterID && clicked === 'clicked') {
+    if (externalClusterID && manualRefresh) {
       getClusterHistory(externalClusterID, clusterLogsViewOptions);
     }
 
     if (isManaged) {
       // All managed-cluster-specific requests
       getAddOns(clusterID);
+      getClusterAddOns(clusterID);
       getUsers(clusterID);
       getClusterRouters(clusterID);
-      getClusterAddOns(clusterID);
       this.refreshIDP();
       getMachinePools(clusterID);
       getSchedules(clusterID);
