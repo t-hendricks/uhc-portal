@@ -1001,9 +1001,6 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/QueryDelta"
-          },
-          {
             "$ref": "#/components/parameters/QueryFilter"
           },
           {
@@ -1011,6 +1008,9 @@
           },
           {
             "$ref": "#/components/parameters/ReportQueryLimit"
+          },
+          {
+            "$ref": "#/components/parameters/OrganizationFilter"
           }
         ],
         "responses": {
@@ -1440,9 +1440,6 @@
             "$ref": "#/components/parameters/QueryOrderBy"
           },
           {
-            "$ref": "#/components/parameters/ReportQueryUnits"
-          },
-          {
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
@@ -1518,9 +1515,6 @@
             "$ref": "#/components/parameters/QueryOrderBy"
           },
           {
-            "$ref": "#/components/parameters/ReportQueryUnits"
-          },
-          {
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
@@ -1591,9 +1585,6 @@
           },
           {
             "$ref": "#/components/parameters/QueryOrderBy"
-          },
-          {
-            "$ref": "#/components/parameters/ReportQueryUnits"
           },
           {
             "$ref": "#/components/parameters/QueryOffset"
@@ -1671,9 +1662,6 @@
             "$ref": "#/components/parameters/QueryOrderBy"
           },
           {
-            "$ref": "#/components/parameters/ReportQueryUnits"
-          },
-          {
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
@@ -1744,9 +1732,6 @@
           },
           {
             "$ref": "#/components/parameters/QueryOrderBy"
-          },
-          {
-            "$ref": "#/components/parameters/ReportQueryUnits"
           },
           {
             "$ref": "#/components/parameters/QueryOffset"
@@ -1821,9 +1806,6 @@
             "$ref": "#/components/parameters/QueryOrderBy"
           },
           {
-            "$ref": "#/components/parameters/ReportQueryUnits"
-          },
-          {
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
@@ -1896,9 +1878,6 @@
             "$ref": "#/components/parameters/QueryOrderBy"
           },
           {
-            "$ref": "#/components/parameters/ReportQueryUnits"
-          },
-          {
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
@@ -1969,9 +1948,6 @@
           },
           {
             "$ref": "#/components/parameters/QueryOrderBy"
-          },
-          {
-            "$ref": "#/components/parameters/ReportQueryUnits"
           },
           {
             "$ref": "#/components/parameters/QueryOffset"
@@ -2337,9 +2313,6 @@
             "$ref": "#/components/parameters/QueryOrderBy"
           },
           {
-            "$ref": "#/components/parameters/ReportQueryUnits"
-          },
-          {
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
@@ -2410,9 +2383,6 @@
           },
           {
             "$ref": "#/components/parameters/QueryOrderBy"
-          },
-          {
-            "$ref": "#/components/parameters/ReportQueryUnits"
           },
           {
             "$ref": "#/components/parameters/QueryOffset"
@@ -2562,9 +2532,6 @@
             "$ref": "#/components/parameters/QueryOrderBy"
           },
           {
-            "$ref": "#/components/parameters/ReportQueryUnits"
-          },
-          {
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
@@ -2635,9 +2602,6 @@
           },
           {
             "$ref": "#/components/parameters/QueryOrderBy"
-          },
-          {
-            "$ref": "#/components/parameters/ReportQueryUnits"
           },
           {
             "$ref": "#/components/parameters/QueryOffset"
@@ -2787,9 +2751,6 @@
             "$ref": "#/components/parameters/QueryOrderBy"
           },
           {
-            "$ref": "#/components/parameters/ReportQueryUnits"
-          },
-          {
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
@@ -2860,9 +2821,6 @@
           },
           {
             "$ref": "#/components/parameters/QueryOrderBy"
-          },
-          {
-            "$ref": "#/components/parameters/ReportQueryUnits"
           },
           {
             "$ref": "#/components/parameters/QueryOffset"
@@ -3012,9 +2970,6 @@
             "$ref": "#/components/parameters/QueryOrderBy"
           },
           {
-            "$ref": "#/components/parameters/ReportQueryUnits"
-          },
-          {
             "$ref": "#/components/parameters/QueryOffset"
           },
           {
@@ -3085,9 +3040,6 @@
           },
           {
             "$ref": "#/components/parameters/QueryOrderBy"
-          },
-          {
-            "$ref": "#/components/parameters/ReportQueryUnits"
           },
           {
             "$ref": "#/components/parameters/QueryOffset"
@@ -4008,83 +3960,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Unexpected Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Sources"
-        ],
-        "summary": "Update a source",
-        "operationId": "updateSource",
-        "parameters": [
-          {
-            "name": "source_id",
-            "in": "path",
-            "description": "ID of source to update",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64",
-              "example": 1
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SourceIn"
-              }
-            }
-          },
-          "required": true
-        },
-        "security": [
-          {
-            "basic_auth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A Source object",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SourceOut"
-                }
-              }
-            }
-          },
-          "424": {
-            "description": "Dependency not available",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DependencyError"
-                }
-              }
-            }
           },
           "404": {
             "description": "Not Found",
@@ -5566,6 +5441,15 @@
           ]
         }
       },
+      "OrganizationFilter": {
+        "name": "org_unit_id",
+        "required": false,
+        "in": "query",
+        "description": "String to indicate org unit id",
+        "schema": {
+          "$ref": "#/components/schemas/OrganizationFilter"
+        }
+      },
       "QueryComputeCount": {
         "name": "compute_count",
         "required": false,
@@ -5669,15 +5553,6 @@
           "default": 100,
           "minimum": 0,
           "maximum": 1000
-        }
-      },
-      "ReportQueryUnits": {
-        "required": false,
-        "name": "units",
-        "in": "query",
-        "description": "The units used to report data.",
-        "schema": {
-          "type": "string"
         }
       },
       "QueryKeyOnly": {
@@ -9652,12 +9527,14 @@
             "type": "object",
             "example": {
               "settings": {
-                "openshift": {
-                  "tag-management": {
-                    "enabled": [
-                      "tag_key1"
-                    ]
-                  }
+                "tag-management": {
+                  "enabled": [
+                    "aws-tag_key1",
+                    "aws-tag_key2",
+                    "azure-tag_key1",
+                    "azure-tag_key2",
+                    "azure-tag_key3"
+                  ]
                 }
               }
             }

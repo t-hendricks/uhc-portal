@@ -1531,6 +1531,14 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "name": "dry_run",
+            "description": "Dry run flag is used to check if the operation can be completed, but won't delete.",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -2647,6 +2655,254 @@
         }
       }
     },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/external_configuration/manifests": {
+      "post": {
+        "description": "Adds a new manifest to a cluster.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Manifest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Manifest"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the list of manifests.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "description": "Index of the requested page, where one corresponds to the first page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "size",
+            "description": "Number of items contained in the returned page.",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "description": "Retrieved list of Manifests.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Manifest"
+                      }
+                    },
+                    "page": {
+                      "description": "Index of the requested page, where one corresponds to the first page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "size": {
+                      "description": "Number of items contained in the returned page.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total": {
+                      "description": "Total number of items of the collection.",
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/external_configuration/manifests/{manifest_id}": {
+      "delete": {
+        "description": "Deletes the manifest.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "manifest_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Retrieves the details of the manifest.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "manifest_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Manifest"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Update the manifest.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "manifest_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Manifest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Manifest"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/clusters_mgmt/v1/clusters/{cluster_id}/external_configuration/syncsets": {
       "post": {
         "description": "Adds a new syncset to the cluster.",
@@ -3423,6 +3679,42 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clusters_mgmt/v1/clusters/{cluster_id}/hypershift": {
+      "get": {
+        "description": "Retrieves the Hypershift details for a single cluster.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HypershiftConfig"
                 }
               }
             }
@@ -5209,6 +5501,33 @@
       }
     },
     "/api/clusters_mgmt/v1/clusters/{cluster_id}/provision_shard": {
+      "delete": {
+        "description": "Delete the provision shard.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "description": "Retrieves the details of the provision shard.",
         "parameters": [
@@ -5220,6 +5539,49 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProvisionShard"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates the details of the provision shard.",
+        "parameters": [
+          {
+            "name": "cluster_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProvisionShard"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success.",
@@ -6783,6 +7145,40 @@
       }
     },
     "/api/clusters_mgmt/v1/provision_shards": {
+      "post": {
+        "description": "Adds a provision shard.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProvisionShard"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProvisionShard"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "parameters": [
           {
@@ -6792,6 +7188,14 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "search",
+            "description": "Search criteria.\n\nThe syntax of this parameter is similar to the syntax of the _where_ clause of a\nSQL statement, but using the names of the attributes of the cluster instead of\nthe names of the columns of a table. For example, in order to retrieve all the\nclusters with a name starting with `my` in the `us-east-1` region the value\nshould be:\n\n```sql\nname like 'my%' and region.id = 'us-east-1'\n```\n\nIf the parameter isn't provided, or if the value is empty, then all the\nprovision shards that the user has permission to see will be returned.",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           },
           {
@@ -6853,6 +7257,33 @@
       }
     },
     "/api/clusters_mgmt/v1/provision_shards/{provision_shard_id}": {
+      "delete": {
+        "description": "Delete the provision shard.",
+        "parameters": [
+          {
+            "name": "provision_shard_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success."
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
       "get": {
         "description": "Retrieves the details of the provision shard.",
         "parameters": [
@@ -6864,6 +7295,49 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProvisionShard"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates the details of the provision shard.",
+        "parameters": [
+          {
+            "name": "provision_shard_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProvisionShard"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success.",
@@ -7420,10 +7894,6 @@
             "description": "Volume size in Gib.",
             "type": "integer",
             "format": "int32"
-          },
-          "type": {
-            "description": "Volume Type\n\nPossible values are: 'io1', 'gp2', 'st1', 'sc1', 'standard'",
-            "type": "string"
           }
         }
       },
@@ -7558,6 +8028,27 @@
           }
         }
       },
+      "GCPEncryptionKey": {
+        "description": "GCP Encryption Key for CCS clusters.",
+        "properties": {
+          "kms_key_service_account": {
+            "description": "Service account used to access the KMS key",
+            "type": "string"
+          },
+          "key_location": {
+            "description": "Location of the encryption key ring",
+            "type": "string"
+          },
+          "key_name": {
+            "description": "Name of the encryption key",
+            "type": "string"
+          },
+          "key_ring": {
+            "description": "Name of the key ring the encryption key is located on",
+            "type": "string"
+          }
+        }
+      },
       "GCPFlavour": {
         "description": "Specification for different classes of nodes inside a flavour.",
         "properties": {
@@ -7569,9 +8060,21 @@
             "description": "GCP default instance type for the infra volume.",
             "type": "string"
           },
+          "infra_volume": {
+            "description": "Infra volume specification.",
+            "$ref": "#/components/schemas/GCPVolume"
+          },
           "master_instance_type": {
             "description": "GCP default instance type for the master volume.",
             "type": "string"
+          },
+          "master_volume": {
+            "description": "Master volume specification.",
+            "$ref": "#/components/schemas/GCPVolume"
+          },
+          "worker_volume": {
+            "description": "Worker volume specification.",
+            "$ref": "#/components/schemas/GCPVolume"
           }
         }
       },
@@ -7589,6 +8092,16 @@
           "control_plane_subnet": {
             "description": "Control plane subnet used by the cluster.",
             "type": "string"
+          }
+        }
+      },
+      "GCPVolume": {
+        "description": "Holds settings for an GCP storage volume.",
+        "properties": {
+          "size": {
+            "description": "Volume size in Gib.",
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -7919,6 +8432,13 @@
             "items": {
               "$ref": "#/components/schemas/AddOnEnvironmentVariable"
             }
+          },
+          "secret_propagations": {
+            "description": "List of secret propagations for the addon",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AddOnSecretPropagation"
+            }
           }
         }
       },
@@ -7978,6 +8498,10 @@
             "description": "Link to the installed version of this add-on.",
             "$ref": "#/components/schemas/AddOnVersion"
           },
+          "billing": {
+            "description": "Billing details for add-on installation resource ",
+            "$ref": "#/components/schemas/AddOnInstallationBilling"
+          },
           "cluster": {
             "description": "ID used to identify the cluster that this add-on is attached to.",
             "$ref": "#/components/schemas/Cluster"
@@ -8010,6 +8534,31 @@
             "description": "Date and time when the add-on installation information was last updated.",
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "AddOnInstallationBilling": {
+        "description": "Representation of an add-on installation billing.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'AddOnInstallationBilling' if this is a complete object or 'AddOnInstallationBillingLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "billing_marketplace_account": {
+            "description": "Account ID for billing market place",
+            "type": "string"
+          },
+          "billing_model": {
+            "description": "Billing Model for addon resources",
+            "$ref": "#/components/schemas/BillingModel"
           }
         }
       },
@@ -8064,6 +8613,13 @@
             "description": "Link to add-on.",
             "$ref": "#/components/schemas/AddOn"
           },
+          "conditions": {
+            "description": "Conditions in which this parameter is valid for",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AddOnRequirement"
+            }
+          },
           "default_value": {
             "description": "Indicates the value default for the add-on parameter.",
             "type": "string"
@@ -8075,6 +8631,10 @@
           "editable": {
             "description": "Indicates if this parameter can be edited after creation.",
             "type": "boolean"
+          },
+          "editable_direction": {
+            "description": "Restricts if the parameter can be upscaled/downscaled\nExpected values are \"up\", \"down\", or \"\" (no restriction).",
+            "type": "string"
           },
           "enabled": {
             "description": "Indicates if this parameter is enabled for the add-on.",
@@ -8115,6 +8675,11 @@
           "name": {
             "description": "Name of the add-on parameter option.",
             "type": "string"
+          },
+          "rank": {
+            "description": "Rank of option to be used in cases where editable direction should be restricted.",
+            "type": "integer",
+            "format": "int32"
           },
           "requirements": {
             "description": "List of add-on requirements for this parameter option.",
@@ -8173,6 +8738,27 @@
           }
         }
       },
+      "AddOnSecretPropagation": {
+        "description": "Representation of an addon secret propagation",
+        "properties": {
+          "id": {
+            "description": "ID of the secret propagation",
+            "type": "string"
+          },
+          "destination_secret": {
+            "description": "DestinationSecret is location of the secret to be added",
+            "type": "string"
+          },
+          "enabled": {
+            "description": "Indicates is this secret propagation is enabled for the addon",
+            "type": "boolean"
+          },
+          "source_secret": {
+            "description": "SourceSecret is location of the source secret",
+            "type": "string"
+          }
+        }
+      },
       "AddOnSubOperator": {
         "description": "Representation of an add-on sub operator. A sub operator is an operator\nwho's life cycle is controlled by the add-on umbrella operator. ",
         "properties": {
@@ -8205,6 +8791,13 @@
             "description": "Self link.",
             "type": "string"
           },
+          "additional_catalog_sources": {
+            "description": "Additional catalog sources associated with this addon version",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalCatalogSource"
+            }
+          },
           "available_upgrades": {
             "description": "AvailableUpgrades is the list of versions this version can be upgraded to.",
             "type": "array",
@@ -8231,6 +8824,10 @@
               "$ref": "#/components/schemas/AddOnParameter"
             }
           },
+          "pull_secret_name": {
+            "description": "The pull secret name used for this addon version.",
+            "type": "string"
+          },
           "requirements": {
             "description": "List of requirements for this add-on version.",
             "type": "array",
@@ -8248,6 +8845,27 @@
             "items": {
               "$ref": "#/components/schemas/AddOnSubOperator"
             }
+          }
+        }
+      },
+      "AdditionalCatalogSource": {
+        "description": "Representation of an addon catalog source object used by addon versions.",
+        "properties": {
+          "id": {
+            "description": "ID of the additional catalog source",
+            "type": "string"
+          },
+          "enabled": {
+            "description": "Indicates is this additional catalog source is enabled for the addon",
+            "type": "boolean"
+          },
+          "image": {
+            "description": "Image of the additional catalog source.",
+            "type": "string"
+          },
+          "name": {
+            "description": "Name of the additional catalog source.",
+            "type": "string"
           }
         }
       },
@@ -8302,6 +8920,9 @@
         "type": "string",
         "enum": [
           "marketplace",
+          "marketplace-aws",
+          "marketplace-rhm",
+          "marketplace-azure",
           "standard"
         ]
       },
@@ -8368,6 +8989,13 @@
             "description": "Google cloud platform settings.",
             "$ref": "#/components/schemas/GCP"
           },
+          "availability_zones": {
+            "description": "Availability zone",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "key_location": {
             "description": "Key location",
             "type": "string"
@@ -8379,6 +9007,10 @@
           "region": {
             "description": "Region",
             "$ref": "#/components/schemas/CloudRegion"
+          },
+          "version": {
+            "description": "Openshift version",
+            "$ref": "#/components/schemas/Version"
           }
         }
       },
@@ -8469,6 +9101,10 @@
             "description": "Google cloud platform settings of the cluster.",
             "$ref": "#/components/schemas/GCP"
           },
+          "gcp_encryption_key": {
+            "description": "Key used for encryption of GCP cluster nodes.",
+            "$ref": "#/components/schemas/GCPEncryptionKey"
+          },
           "gcp_network": {
             "description": "GCP Network.",
             "$ref": "#/components/schemas/GCPNetwork"
@@ -8505,10 +9141,6 @@
             "description": "Indicates whether the User workload monitoring is enabled or not\nIt is enabled by default",
             "type": "boolean"
           },
-          "display_name": {
-            "description": "Name of the cluster for display purposes. It can contain any\ncharacters, including spaces.",
-            "type": "string"
-          },
           "etcd_encryption": {
             "description": "Indicates whether that etcd is encrypted or not.\nThis is set only during cluster creation.",
             "type": "boolean"
@@ -8542,8 +9174,8 @@
             "$ref": "#/components/schemas/ClusterHealthState"
           },
           "hypershift": {
-            "description": "HyperShift configuration.",
-            "$ref": "#/components/schemas/HyperShift"
+            "description": "Hypershift configuration.",
+            "$ref": "#/components/schemas/Hypershift"
           },
           "identity_providers": {
             "description": "Link to the collection of identity providers of the cluster.",
@@ -8558,6 +9190,10 @@
             "items": {
               "$ref": "#/components/schemas/InflightCheck"
             }
+          },
+          "infra_id": {
+            "description": "InfraID is used for example to name the VPCs.",
+            "type": "string"
           },
           "ingresses": {
             "description": "List of ingresses on this cluster.",
@@ -8845,14 +9481,18 @@
         }
       },
       "ClusterRegistration": {
-        "description": "Registration of a new cluster to the service.",
+        "description": "Registration of a new cluster to the service.\n\nFor example, to register a cluster that has been provisioned outside\nof this service, send a a request like this:\n\n```http\nPOST /api/clusters_mgmt/v1/register_cluster HTTP/1.1\n```\n\nWith a request body like this:\n\n```json\n{\n  \"external_id\": \"d656aecf-11a6-4782-ad86-8f72638449ba\",\n  \"subscription_id\": \"...\",\n  \"organization_id\": \"...\"\n}\n```",
         "properties": {
+          "console_url": {
+            "description": "Optional Console URL of the cluster.",
+            "type": "string"
+          },
           "external_id": {
-            "description": "Identifier of the cluster generated by the installer.\n\nFor example, to register a cluster that has been provisioned outside\nof this service, send a a request like this:\n\n```http\nPOST /api/clusters_mgmt/v1/register_cluster HTTP/1.1\n```\n\nWith a request body like this:\n\n```json\n{\n  \"external_id\": \"d656aecf-11a6-4782-ad86-8f72638449ba\"\n}\n```",
+            "description": "Identifier of the cluster generated by the installer.",
             "type": "string"
           },
           "organization_id": {
-            "description": "Optional Organization identifier of the cluster generated by the\naccount manager.",
+            "description": "Organization identifier of the cluster generated by the\naccount manager.",
             "type": "string"
           },
           "subscription_id": {
@@ -9058,6 +9698,13 @@
               "$ref": "#/components/schemas/Label"
             }
           },
+          "manifests": {
+            "description": "list of manifest externally configured for a hosted cluster.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Manifest"
+            }
+          },
           "syncsets": {
             "description": "list of syncsets externally configured on the cluster.",
             "type": "array",
@@ -9211,18 +9858,30 @@
           }
         }
       },
-      "HyperShift": {
-        "description": "HyperShift configuration.",
+      "Hypershift": {
+        "description": "Hypershift configuration.",
         "properties": {
           "enabled": {
-            "description": "Boolean flag indicating if the cluster should be creating using _HyperShift_.\n\nBy default this is `false`.\n\nTo enable it the cluster needs to be ROSA cluster and the organization of the user needs\nto have the `hypershift` capability enabled.",
+            "description": "Boolean flag indicating if the cluster should be creating using _Hypershift_.\n\nBy default this is `false`.\n\nTo enable it the cluster needs to be ROSA cluster and the organization of the user needs\nto have the `hypershift` capability enabled.",
             "type": "boolean"
+          }
+        }
+      },
+      "HypershiftConfig": {
+        "description": "Hypershift configuration.",
+        "properties": {
+          "enabled": {
+            "description": "Boolean flag indicating if the cluster should be creating using _Hypershift_.\n\nBy default this is `false`.\n\nTo enable it the cluster needs to be ROSA cluster and the organization of the user needs\nto have the `hypershift` capability enabled.",
+            "type": "boolean"
+          },
+          "management_cluster": {
+            "description": "Contains the name of the current management cluster for this Hypershift cluster.\nEmpty for non Hypershift clusters.",
+            "type": "string"
           }
         }
       },
       "IdentityProvider": {
         "description": "Representation of an identity provider.",
-        "type": "object",
         "properties": {
           "kind": {
             "description": "Indicates the type of this object. Will be 'IdentityProvider' if this is a complete object or 'IdentityProviderLink' if it is just a link.",
@@ -9511,7 +10170,7 @@
             "type": "string"
           },
           "details": {
-            "description": "URL with a link to a detailed description of the reason.",
+            "description": "A detailed description of the reason.",
             "type": "string"
           },
           "summary": {
@@ -9604,6 +10263,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/MachinePoolSecurityGroupFilter"
+            }
+          },
+          "subnets": {
+            "description": "The subnets upon which the nodes are created.",
+            "type": "array",
+            "items": {
+              "type": "string"
             }
           },
           "taints": {
@@ -9727,6 +10393,30 @@
           "enabled": {
             "description": "Indicates whether the cluster belongs to a managed service\nThis should only be set by the \"Managed Service\" service.\nclusters with this set can only be modified by the \"Managed Service\" service.",
             "type": "boolean"
+          }
+        }
+      },
+      "Manifest": {
+        "description": "Representation of a manifestwork.",
+        "properties": {
+          "kind": {
+            "description": "Indicates the type of this object. Will be 'Manifest' if this is a complete object or 'ManifestLink' if it is just a link.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier of the object.",
+            "type": "string"
+          },
+          "href": {
+            "description": "Self link.",
+            "type": "string"
+          },
+          "workloads": {
+            "description": "List of k8s objects to deploy on a hosted cluster.",
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
           }
         }
       },
@@ -9924,36 +10614,54 @@
             "type": "string"
           },
           "aws_account_operator_config": {
-            "description": "Contains the configuration for the AWS account operator",
+            "description": "Contains the configuration for the AWS account operator.",
             "$ref": "#/components/schemas/ServerConfig"
           },
           "aws_base_domain": {
-            "description": "Contains the AWS base domain",
+            "description": "Contains the AWS base domain.",
             "type": "string"
           },
           "gcp_base_domain": {
-            "description": "Contains the GCP base domain",
+            "description": "Contains the GCP base domain.",
             "type": "string"
           },
           "gcp_project_operator": {
-            "description": "Contains the configuration for the GCP project operator",
+            "description": "Contains the configuration for the GCP project operator.",
             "$ref": "#/components/schemas/ServerConfig"
           },
           "cloud_provider": {
-            "description": "Contains the cloud provider name",
+            "description": "Contains the cloud provider name.",
             "$ref": "#/components/schemas/CloudProvider"
           },
+          "creation_timestamp": {
+            "description": "Date and time when the provision shard was initially created, using the\nformat defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).",
+            "type": "string",
+            "format": "date-time"
+          },
           "hive_config": {
-            "description": "Contains the configuration for Hive",
+            "description": "Contains the configuration for Hive.",
             "$ref": "#/components/schemas/ServerConfig"
           },
+          "hypershift_config": {
+            "description": "Contains the configuration for Hypershift.",
+            "$ref": "#/components/schemas/ServerConfig"
+          },
+          "last_update_timestamp": {
+            "description": "Date and time when the provision shard was last updated, using the\nformat defined in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt).",
+            "type": "string",
+            "format": "date-time"
+          },
           "management_cluster": {
-            "description": "Contains the name of the managment cluster for Hypershift clusters that are assigned to this shard.\nThis field is populated by OCM, and must not be overwritten via API.",
+            "description": "Contains the name of the management cluster for Hypershift clusters that are assigned to this shard.\nThis field is populated by OCM, and must not be overwritten via API.",
             "type": "string"
           },
           "region": {
-            "description": "Contains the cloud-provider region in which the provisioner spins up the cluster",
+            "description": "Contains the cloud-provider region in which the provisioner spins up the cluster.",
             "$ref": "#/components/schemas/CloudRegion"
+          },
+          "status": {
+            "description": "Status of the provision shard. Possible values: active/maintenance/offline.",
+            "type": "string"
           }
         }
       },
@@ -9987,6 +10695,10 @@
           },
           "href": {
             "description": "Self link.",
+            "type": "string"
+          },
+          "kubeconfig": {
+            "description": "The kubeconfig of the server",
             "type": "string"
           },
           "server": {
@@ -10041,6 +10753,10 @@
           "name": {
             "description": "Name of the subnet according to its `Name` tag on AWS",
             "type": "string"
+          },
+          "public": {
+            "description": "Whether it is a public subnet",
+            "type": "boolean"
           },
           "subnet_id": {
             "description": "The subnet id to be used while installing a cluster",

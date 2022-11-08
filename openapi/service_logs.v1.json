@@ -617,9 +617,14 @@
                 "schema": {
                   "$ref": "#/components/schemas/ClusterLogList"
                 }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
               }
             },
-            "description": "A JSON array of Cluster Service records"
+            "description": "A JSON array or CSV of Cluster Service records"
           },
           "401": {
             "content": {
@@ -663,16 +668,16 @@
   },
   "servers": [
     {
+      "description": "current domain",
+      "url": "http://localhost:8000"
+    },
+    {
       "description": "Main (production) server",
       "url": "https://api.openshift.com"
     },
     {
       "description": "Staging server",
       "url": "https://api.stage.openshift.com"
-    },
-    {
-      "description": "current domain",
-      "url": "/"
     }
   ]
 }

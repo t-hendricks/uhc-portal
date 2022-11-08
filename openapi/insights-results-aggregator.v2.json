@@ -354,11 +354,6 @@
               "0",
               "1"
             ],
-            "x-enum-varnames": [
-              "DISLIKE",
-              "NO_VOTE",
-              "LIKE"
-            ],
             "format": "int32",
             "type": "integer"
           }
@@ -769,6 +764,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "description": "If true, disabled rules will be sent too.",
+            "in": "query",
+            "name": "get_disabled",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -780,7 +784,7 @@
                 }
               }
             },
-            "description": "Latest available report for the given cluster IDs. Returns rules and their descriptions that were hit by the cluster."
+            "description": "Latest available report for the given organization and cluster combination. Returns rules and their descriptions that were hit by the cluster. Disabled rules are ommitted by default unless the get_disabled query param is provided."
           },
           "400": {
             "description": "Invalid request, usually caused when some cluster belongs to different organization."

@@ -213,11 +213,6 @@
               "0",
               "1"
             ],
-            "x-enum-varnames": [
-              "DISLIKE",
-              "NO_VOTE",
-              "LIKE"
-            ],
             "format": "int32",
             "type": "integer"
           }
@@ -623,7 +618,7 @@
                 }
               }
             },
-            "description": "Latest available report for the given organization and cluster combination. Returns rules and their descriptions that were hit by the cluster."
+            "description": "Latest available report for the given organization and cluster combination. Returns rules and their descriptions that were hit by the cluster. Disabled rules are ommitted by default unless the get_disabled query param is provided."
           }
         },
         "summary": "Returns the latest insights report for a cluster.",
@@ -755,6 +750,12 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/status"
+          },
+          "400": {
+            "description": "Invalid request, usually caused when some cluster belongs to different organization."
+          },
+          "404": {
+            "description": "Resource not found, usually caused when the rule ID and error key combination doesn't exist in the content service"
           }
         },
         "summary": "Disables a rule/health check recommendation for specified cluster",
@@ -814,6 +815,12 @@
               }
             },
             "description": "Status ok"
+          },
+          "400": {
+            "description": "Invalid request, usually caused when some cluster belongs to different organization."
+          },
+          "404": {
+            "description": "Resource not found, usually caused when the rule ID and error key combination doesn't exist in the content service"
           }
         },
         "summary": "Returns rule/health check's disable feedback",
@@ -841,6 +848,12 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/status"
+          },
+          "400": {
+            "description": "Invalid request, usually caused when some cluster belongs to different organization."
+          },
+          "404": {
+            "description": "Resource not found, usually caused when the rule ID and error key combination doesn't exist in the content service"
           }
         },
         "summary": "Puts dislike for the rule with cluster for current user",
@@ -868,6 +881,12 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/status"
+          },
+          "400": {
+            "description": "Invalid request, usually caused when some cluster belongs to different organization."
+          },
+          "404": {
+            "description": "Resource not found, usually caused when the rule ID and error key combination doesn't exist in the content service"
           }
         },
         "summary": "Re-enables a rule/health check recommendation for specified cluster",
@@ -895,6 +914,12 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/status"
+          },
+          "400": {
+            "description": "Invalid request, usually caused when some cluster belongs to different organization."
+          },
+          "404": {
+            "description": "Resource not found, usually caused when the rule ID and error key combination doesn't exist in the content service"
           }
         },
         "summary": "Puts like for the rule with cluster for current user",
@@ -922,6 +947,12 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/status"
+          },
+          "400": {
+            "description": "Invalid request, usually caused when some cluster belongs to different organization."
+          },
+          "404": {
+            "description": "Resource not found, usually caused when the rule ID and error key combination doesn't exist in the content service"
           }
         },
         "summary": "Resets vote for the rule with cluster for current user",

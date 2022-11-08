@@ -1079,6 +1079,24 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "description": "A comma-separated list of subscription statuses. Subscriptions with these statuses will be excluded from results. This options is mutually exclusive with includeSubscriptionStatuses.",
+            "in": "query",
+            "name": "excludeSubscriptionStatuses",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A comma-separated list of subscription statuses. Only subscriptions with these statuses will be included into results. This options is mutually exclusive with excludeSubscriptionStatuses.",
+            "in": "query",
+            "name": "includeSubscriptionStatuses",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -1328,6 +1346,24 @@
             "required": false,
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "description": "A comma-separated list of subscription statuses. Subscriptions with these statuses will be excluded from results. This options is mutually exclusive with includeSubscriptionStatuses.",
+            "in": "query",
+            "name": "excludeSubscriptionStatuses",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "A comma-separated list of subscription statuses. Only subscriptions with these statuses will be included into results. This options is mutually exclusive with excludeSubscriptionStatuses.",
+            "in": "query",
+            "name": "includeSubscriptionStatuses",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           }
         ],
