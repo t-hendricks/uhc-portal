@@ -19,7 +19,7 @@ export type LimitedSupportReasonTemplate = {
    */
   href?: string;
   /**
-   * URL with a link to a detailed description of the reason.
+   * A detailed description of the reason.
    */
   details?: string;
   /**

@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { GCPVolume } from './GCPVolume';
+
 /**
  * Specification for different classes of nodes inside a flavour.
  */
@@ -17,7 +19,19 @@ export type GCPFlavour = {
    */
   infra_instance_type?: string;
   /**
+   * Infra volume specification.
+   */
+  infra_volume?: GCPVolume;
+  /**
    * GCP default instance type for the master volume.
    */
   master_instance_type?: string;
+  /**
+   * Master volume specification.
+   */
+  master_volume?: GCPVolume;
+  /**
+   * Worker volume specification.
+   */
+  worker_volume?: GCPVolume;
 };

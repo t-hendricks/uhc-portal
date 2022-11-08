@@ -2,10 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export type { AdditionalCatalogSource } from './models/AdditionalCatalogSource';
 export type { AddOn } from './models/AddOn';
 export type { AddOnConfig } from './models/AddOnConfig';
 export type { AddOnEnvironmentVariable } from './models/AddOnEnvironmentVariable';
 export type { AddOnInstallation } from './models/AddOnInstallation';
+export type { AddOnInstallationBilling } from './models/AddOnInstallationBilling';
 export type { AddOnInstallationParameter } from './models/AddOnInstallationParameter';
 export { AddOnInstallationState } from './models/AddOnInstallationState';
 export { AddOnInstallMode } from './models/AddOnInstallMode';
@@ -13,6 +15,7 @@ export type { AddOnParameter } from './models/AddOnParameter';
 export type { AddOnParameterOption } from './models/AddOnParameterOption';
 export type { AddOnRequirement } from './models/AddOnRequirement';
 export type { AddOnRequirementStatus } from './models/AddOnRequirementStatus';
+export type { AddOnSecretPropagation } from './models/AddOnSecretPropagation';
 export type { AddOnSubOperator } from './models/AddOnSubOperator';
 export type { AddOnVersion } from './models/AddOnVersion';
 export type { AdminCredentials } from './models/AdminCredentials';
@@ -63,15 +66,18 @@ export type { ExternalConfiguration } from './models/ExternalConfiguration';
 export type { Flavour } from './models/Flavour';
 export type { FlavourNodes } from './models/FlavourNodes';
 export type { GCP } from './models/GCP';
+export type { GCPEncryptionKey } from './models/GCPEncryptionKey';
 export type { GCPFlavour } from './models/GCPFlavour';
 export type { GCPNetwork } from './models/GCPNetwork';
+export type { GCPVolume } from './models/GCPVolume';
 export type { GithubIdentityProvider } from './models/GithubIdentityProvider';
 export type { GitlabIdentityProvider } from './models/GitlabIdentityProvider';
 export type { GoogleIdentityProvider } from './models/GoogleIdentityProvider';
 export type { Group } from './models/Group';
 export type { HTPasswdIdentityProvider } from './models/HTPasswdIdentityProvider';
 export type { HTPasswdUser } from './models/HTPasswdUser';
-export type { HyperShift } from './models/HyperShift';
+export type { Hypershift } from './models/Hypershift';
+export type { HypershiftConfig } from './models/HypershiftConfig';
 export type { IdentityProvider } from './models/IdentityProvider';
 export { IdentityProviderMappingMethod } from './models/IdentityProviderMappingMethod';
 export { IdentityProviderType } from './models/IdentityProviderType';
@@ -94,6 +100,7 @@ export type { MachineType } from './models/MachineType';
 export { MachineTypeCategory } from './models/MachineTypeCategory';
 export { MachineTypeSize } from './models/MachineTypeSize';
 export type { ManagedService } from './models/ManagedService';
+export type { Manifest } from './models/Manifest';
 export type { Metadata } from './models/Metadata';
 export type { Network } from './models/Network';
 export type { NodeInfo } from './models/NodeInfo';

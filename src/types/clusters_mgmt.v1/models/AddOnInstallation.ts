@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 import type { AddOn } from './AddOn';
+import type { AddOnInstallationBilling } from './AddOnInstallationBilling';
 import type { AddOnInstallationParameter } from './AddOnInstallationParameter';
 import type { AddOnInstallationState } from './AddOnInstallationState';
 import type { AddOnVersion } from './AddOnVersion';
@@ -32,6 +33,10 @@ export type AddOnInstallation = {
    * Link to the installed version of this add-on.
    */
   addon_version?: AddOnVersion;
+  /**
+   * Billing details for add-on installation resource
+   */
+  billing?: AddOnInstallationBilling;
   /**
    * ID used to identify the cluster that this add-on is attached to.
    */

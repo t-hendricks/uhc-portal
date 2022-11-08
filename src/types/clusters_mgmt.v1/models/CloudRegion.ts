@@ -47,4 +47,12 @@ export type CloudRegion = {
    * Whether the region supports multiple availability zones.
    */
   supports_multi_az?: boolean;
+  /**
+   * kms_location_name
+   */
+  kms_location_name?: string;
+  /**
+   * kms_location_id
+   */
+  kms_location_id?: string;
 };

@@ -19,6 +19,10 @@ export type ServerConfig = {
    */
   href?: string;
   /**
+   * The kubeconfig of the server
+   */
+  kubeconfig?: string;
+  /**
    * The URL of the server
    */
   server?: string;
