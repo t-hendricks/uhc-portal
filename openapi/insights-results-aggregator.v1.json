@@ -213,6 +213,11 @@
               "0",
               "1"
             ],
+            "x-enum-varnames": [
+              "DISLIKE",
+              "NO_VOTE",
+              "LIKE"
+            ],
             "format": "int32",
             "type": "integer"
           }
