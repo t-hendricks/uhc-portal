@@ -6,7 +6,9 @@
         "in": "query",
         "name": "reduceClusterList",
         "required": false,
-        "schema": { "type": "boolean" }
+        "schema": {
+          "type": "boolean"
+        }
       }
     },
     "schemas": {
@@ -21,14 +23,28 @@
           "subscription_id": "subscription_id"
         },
         "properties": {
-          "account_username": { "type": "string" },
-          "action": {
-            "enum": ["get", "list", "create", "delete", "update"],
+          "account_username": {
             "type": "string"
           },
-          "cluster_id": { "type": "string" },
-          "cluster_uuid": { "type": "string" },
-          "organization_id": { "type": "string" },
+          "action": {
+            "enum": [
+              "get",
+              "list",
+              "create",
+              "delete",
+              "update"
+            ],
+            "type": "string"
+          },
+          "cluster_id": {
+            "type": "string"
+          },
+          "cluster_uuid": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "string"
+          },
           "resource_type": {
             "enum": [
               "AddOn",
@@ -74,9 +90,15 @@
             ],
             "type": "string"
           },
-          "subscription_id": { "type": "string" }
+          "subscription_id": {
+            "type": "string"
+          }
         },
-        "required": ["account_username", "action", "resource_type"],
+        "required": [
+          "account_username",
+          "action",
+          "resource_type"
+        ],
         "type": "object"
       },
       "AccessReviewResponse": {
@@ -91,15 +113,31 @@
           "subscription_id": "subscription_id"
         },
         "properties": {
-          "account_id": { "type": "string" },
-          "action": {
-            "enum": ["get", "list", "create", "delete", "update"],
+          "account_id": {
             "type": "string"
           },
-          "allowed": { "type": "boolean" },
-          "cluster_id": { "type": "string" },
-          "cluster_uuid": { "type": "string" },
-          "organization_id": { "type": "string" },
+          "action": {
+            "enum": [
+              "get",
+              "list",
+              "create",
+              "delete",
+              "update"
+            ],
+            "type": "string"
+          },
+          "allowed": {
+            "type": "boolean"
+          },
+          "cluster_id": {
+            "type": "string"
+          },
+          "cluster_uuid": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "string"
+          },
           "resource_type": {
             "enum": [
               "AddOn",
@@ -145,15 +183,27 @@
             ],
             "type": "string"
           },
-          "subscription_id": { "type": "string" }
+          "subscription_id": {
+            "type": "string"
+          }
         },
-        "required": ["allowed"],
+        "required": [
+          "allowed"
+        ],
         "type": "object"
       },
       "CapabilityReview": {
-        "example": { "result": "result" },
-        "properties": { "result": { "type": "string" } },
-        "required": ["result"],
+        "example": {
+          "result": "result"
+        },
+        "properties": {
+          "result": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "result"
+        ],
         "type": "object"
       },
       "CapabilityReviewRequest": {
@@ -166,34 +216,74 @@
           "type": "Cluster"
         },
         "properties": {
-          "account_username": { "type": "string" },
-          "capability": { "enum": ["manage_cluster_admin"], "type": "string" },
-          "cluster_id": { "type": "string" },
-          "organization_id": { "type": "string" },
-          "subscription_id": { "type": "string" },
-          "type": { "enum": ["Cluster"], "type": "string" }
+          "account_username": {
+            "type": "string"
+          },
+          "capability": {
+            "enum": [
+              "manage_cluster_admin"
+            ],
+            "type": "string"
+          },
+          "cluster_id": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "string"
+          },
+          "subscription_id": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "Cluster"
+            ],
+            "type": "string"
+          }
         },
-        "required": ["account_username", "capability", "type"],
+        "required": [
+          "account_username",
+          "capability",
+          "type"
+        ],
         "type": "object"
       },
       "Error": {
         "allOf": [
-          { "$ref": "#/components/schemas/ObjectReference" },
-          { "$ref": "#/components/schemas/Error_allOf" }
+          {
+            "$ref": "#/components/schemas/ObjectReference"
+          },
+          {
+            "$ref": "#/components/schemas/Error_allOf"
+          }
         ]
       },
       "Error_allOf": {
         "properties": {
-          "code": { "type": "string" },
-          "operation_id": { "type": "string" },
-          "reason": { "type": "string" }
+          "code": {
+            "type": "string"
+          },
+          "operation_id": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
         },
         "type": "object"
       },
       "ExportControlReview": {
-        "example": { "restricted": true },
-        "properties": { "restricted": { "type": "boolean" } },
-        "required": ["restricted"],
+        "example": {
+          "restricted": true
+        },
+        "properties": {
+          "restricted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "restricted"
+        ],
         "type": "object"
       },
       "ExportControlReviewRequest": {
@@ -202,10 +292,16 @@
           "ignore_cache": true
         },
         "properties": {
-          "account_username": { "type": "string" },
-          "ignore_cache": { "type": "boolean" }
+          "account_username": {
+            "type": "string"
+          },
+          "ignore_cache": {
+            "type": "boolean"
+          }
         },
-        "required": ["account_username"],
+        "required": [
+          "account_username"
+        ],
         "type": "object"
       },
       "FeatureReview": {
@@ -215,27 +311,52 @@
           "organization_id": "organization_id"
         },
         "properties": {
-          "account_username": { "type": "string" },
-          "feature": { "type": "string" },
-          "organization_id": { "type": "string" }
+          "account_username": {
+            "type": "string"
+          },
+          "feature": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "string"
+          }
         },
-        "required": ["feature"],
+        "required": [
+          "feature"
+        ],
         "type": "object"
       },
       "FeatureReviewResponse": {
-        "example": { "enabled": false, "feature_id": "feature_id" },
-        "properties": {
-          "enabled": { "default": false, "type": "boolean" },
-          "feature_id": { "type": "string" }
+        "example": {
+          "enabled": false,
+          "feature_id": "feature_id"
         },
-        "required": ["enabled", "feature_id"],
+        "properties": {
+          "enabled": {
+            "default": false,
+            "type": "boolean"
+          },
+          "feature_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "enabled",
+          "feature_id"
+        ],
         "type": "object"
       },
       "ObjectReference": {
         "properties": {
-          "href": { "type": "string" },
-          "id": { "type": "string" },
-          "kind": { "type": "string" }
+          "href": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          }
         },
         "type": "object"
       },
@@ -243,29 +364,69 @@
         "example": {
           "account_username": "account_username",
           "action": "get",
-          "cluster_ids": ["cluster_ids", "cluster_ids"],
-          "cluster_uuids": ["cluster_uuids", "cluster_uuids"],
-          "organization_ids": ["organization_ids", "organization_ids"],
+          "cluster_ids": [
+            "cluster_ids",
+            "cluster_ids"
+          ],
+          "cluster_uuids": [
+            "cluster_uuids",
+            "cluster_uuids"
+          ],
+          "organization_ids": [
+            "organization_ids",
+            "organization_ids"
+          ],
           "resource_type": "Cluster",
-          "subscription_ids": ["subscription_ids", "subscription_ids"]
+          "subscription_ids": [
+            "subscription_ids",
+            "subscription_ids"
+          ]
         },
         "properties": {
-          "account_username": { "type": "string" },
-          "action": {
-            "enum": ["get", "list", "create", "delete", "update"],
+          "account_username": {
             "type": "string"
           },
-          "cluster_ids": { "items": { "type": "string" }, "type": "array" },
-          "cluster_uuids": { "items": { "type": "string" }, "type": "array" },
+          "action": {
+            "enum": [
+              "get",
+              "list",
+              "create",
+              "delete",
+              "update"
+            ],
+            "type": "string"
+          },
+          "cluster_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "cluster_uuids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
           "organization_ids": {
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "type": "array"
           },
           "resource_type": {
-            "enum": ["Cluster", "Subscription"],
+            "enum": [
+              "Cluster",
+              "Subscription"
+            ],
             "type": "string"
           },
-          "subscription_ids": { "items": { "type": "string" }, "type": "array" }
+          "subscription_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
         },
         "required": [
           "account_username",
@@ -285,10 +446,22 @@
           "resource_type": "Cluster"
         },
         "properties": {
-          "account_username": { "type": "string" },
-          "action": { "enum": ["get", "delete", "update"], "type": "string" },
+          "account_username": {
+            "type": "string"
+          },
+          "action": {
+            "enum": [
+              "get",
+              "delete",
+              "update"
+            ],
+            "type": "string"
+          },
           "resource_type": {
-            "enum": ["Cluster", "Subscription"],
+            "enum": [
+              "Cluster",
+              "Subscription"
+            ],
             "type": "string"
           }
         },
@@ -305,12 +478,24 @@
         },
         "properties": {
           "action": {
-            "enum": ["get", "list", "create", "delete", "update"],
+            "enum": [
+              "get",
+              "list",
+              "create",
+              "delete",
+              "update"
+            ],
             "type": "string"
           },
-          "cluster_id": { "type": "string" },
-          "cluster_uuid": { "type": "string" },
-          "organization_id": { "type": "string" },
+          "cluster_id": {
+            "type": "string"
+          },
+          "cluster_uuid": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "string"
+          },
           "resource_type": {
             "enum": [
               "AddOn",
@@ -356,42 +541,93 @@
             ],
             "type": "string"
           },
-          "subscription_id": { "type": "string" }
+          "subscription_id": {
+            "type": "string"
+          }
         },
-        "required": ["action", "resource_type"],
+        "required": [
+          "action",
+          "resource_type"
+        ],
         "type": "object"
       },
       "SelfFeatureReview": {
-        "example": { "feature": "feature" },
-        "properties": { "feature": { "type": "string" } },
-        "required": ["feature"],
+        "example": {
+          "feature": "feature"
+        },
+        "properties": {
+          "feature": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "feature"
+        ],
         "type": "object"
       },
       "SelfResourceReview": {
         "example": {
           "action": "get",
-          "cluster_ids": ["cluster_ids", "cluster_ids"],
-          "cluster_uuids": ["cluster_uuids", "cluster_uuids"],
-          "organization_ids": ["organization_ids", "organization_ids"],
+          "cluster_ids": [
+            "cluster_ids",
+            "cluster_ids"
+          ],
+          "cluster_uuids": [
+            "cluster_uuids",
+            "cluster_uuids"
+          ],
+          "organization_ids": [
+            "organization_ids",
+            "organization_ids"
+          ],
           "resource_type": "Cluster",
-          "subscription_ids": ["subscription_ids", "subscription_ids"]
+          "subscription_ids": [
+            "subscription_ids",
+            "subscription_ids"
+          ]
         },
         "properties": {
           "action": {
-            "enum": ["get", "list", "create", "delete", "update"],
+            "enum": [
+              "get",
+              "list",
+              "create",
+              "delete",
+              "update"
+            ],
             "type": "string"
           },
-          "cluster_ids": { "items": { "type": "string" }, "type": "array" },
-          "cluster_uuids": { "items": { "type": "string" }, "type": "array" },
+          "cluster_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "cluster_uuids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
           "organization_ids": {
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "type": "array"
           },
           "resource_type": {
-            "enum": ["Cluster", "Subscription"],
+            "enum": [
+              "Cluster",
+              "Subscription"
+            ],
             "type": "string"
           },
-          "subscription_ids": { "items": { "type": "string" }, "type": "array" }
+          "subscription_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
         },
         "required": [
           "action",
@@ -404,11 +640,24 @@
         "type": "object"
       },
       "SelfResourceReviewRequest": {
-        "example": { "action": "get", "resource_type": "Cluster" },
+        "example": {
+          "action": "get",
+          "resource_type": "Cluster"
+        },
         "properties": {
-          "action": { "enum": ["get", "delete", "update"], "type": "string" },
+          "action": {
+            "enum": [
+              "get",
+              "delete",
+              "update"
+            ],
+            "type": "string"
+          },
           "resource_type": {
-            "enum": ["Cluster", "Subscription"],
+            "enum": [
+              "Cluster",
+              "Subscription"
+            ],
             "type": "string"
           }
         },
@@ -421,9 +670,16 @@
           "site_code": "site_code"
         },
         "properties": {
-          "check_optional_terms": { "default": true, "type": "boolean" },
-          "event_code": { "type": "string" },
-          "site_code": { "type": "string" }
+          "check_optional_terms": {
+            "default": true,
+            "type": "boolean"
+          },
+          "event_code": {
+            "type": "string"
+          },
+          "site_code": {
+            "type": "string"
+          }
         },
         "type": "object"
       },
@@ -435,12 +691,23 @@
           "site_code": "site_code"
         },
         "properties": {
-          "account_username": { "type": "string" },
-          "check_optional_terms": { "default": true, "type": "boolean" },
-          "event_code": { "type": "string" },
-          "site_code": { "type": "string" }
+          "account_username": {
+            "type": "string"
+          },
+          "check_optional_terms": {
+            "default": true,
+            "type": "boolean"
+          },
+          "event_code": {
+            "type": "string"
+          },
+          "site_code": {
+            "type": "string"
+          }
         },
-        "required": ["account_username"],
+        "required": [
+          "account_username"
+        ],
         "type": "object"
       },
       "TermsReviewResponse": {
@@ -452,11 +719,21 @@
           "terms_required": true
         },
         "properties": {
-          "account_id": { "type": "string" },
-          "organization_id": { "type": "string" },
-          "redirect_url": { "type": "string" },
-          "terms_available": { "type": "boolean" },
-          "terms_required": { "type": "boolean" }
+          "account_id": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "string"
+          },
+          "redirect_url": {
+            "type": "string"
+          },
+          "terms_available": {
+            "type": "boolean"
+          },
+          "terms_required": {
+            "type": "boolean"
+          }
         },
         "required": [
           "account_id",
@@ -474,7 +751,11 @@
         "name": "Authorization",
         "type": "apiKey"
       },
-      "Bearer": { "bearerFormat": "JWT", "scheme": "bearer", "type": "http" }
+      "Bearer": {
+        "bearerFormat": "JWT",
+        "scheme": "bearer",
+        "type": "http"
+      }
     }
   },
   "info": {
@@ -489,7 +770,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/AccessReview" }
+              "schema": {
+                "$ref": "#/components/schemas/AccessReview"
+              }
             }
           },
           "description": "Access review data",
@@ -509,7 +792,9 @@
           "400": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Validation errors occurred"
@@ -517,7 +802,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -525,7 +812,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -533,7 +822,9 @@
           "422": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unsupported action, non-existent resource type, or non-existent account"
@@ -541,13 +832,19 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred while generating access review"
           }
         },
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "summary": "Review an account's access to perform an action on a particular resource or resource type"
       }
     },
@@ -568,7 +865,9 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/CapabilityReview" }
+                "schema": {
+                  "$ref": "#/components/schemas/CapabilityReview"
+                }
               }
             },
             "description": "Successful review"
@@ -576,7 +875,9 @@
           "400": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Validation errors occurred"
@@ -584,7 +885,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -592,7 +895,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform capability reviews"
@@ -600,13 +905,19 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred while generating capability review"
           }
         },
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "summary": "Review an account's capabilities"
       }
     },
@@ -627,7 +938,9 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ExportControlReview" }
+                "schema": {
+                  "$ref": "#/components/schemas/ExportControlReview"
+                }
               }
             },
             "description": "Successful review"
@@ -635,7 +948,9 @@
           "400": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Validation errors occurred"
@@ -643,7 +958,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -651,7 +968,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -659,13 +978,19 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred while generating access review"
           }
         },
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "summary": "Determine whether a user is restricted from downloading Red Hat software based on export control compliance.\n"
       }
     },
@@ -674,7 +999,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/FeatureReview" }
+              "schema": {
+                "$ref": "#/components/schemas/FeatureReview"
+              }
             }
           },
           "description": "Feature review data",
@@ -694,7 +1021,9 @@
           "400": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Validation errors occurred"
@@ -702,7 +1031,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -710,7 +1041,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -718,13 +1051,19 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred while generating feature review"
           }
         },
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "summary": "Review feature to perform an action on it such as toggle a feature on/off"
       }
     },
@@ -737,13 +1076,17 @@
             "in": "query",
             "name": "reduceClusterList",
             "required": false,
-            "schema": { "type": "boolean" }
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/ResourceReviewRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/ResourceReviewRequest"
+              }
             }
           },
           "description": "Resource review data",
@@ -753,7 +1096,9 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ResourceReview" }
+                "schema": {
+                  "$ref": "#/components/schemas/ResourceReview"
+                }
               }
             },
             "description": "Successful review"
@@ -761,7 +1106,9 @@
           "400": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Validation errors occurred"
@@ -769,7 +1116,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -777,7 +1126,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform resource reviews"
@@ -785,7 +1136,9 @@
           "422": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unsupported action or non-existent resource type"
@@ -793,13 +1146,19 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred while generating access review"
           }
         },
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "summary": "Obtain resource ids for resources an account may perform the specified action upon. Resource ids returned as [\"*\"] is shorthand for all ids."
       }
     },
@@ -808,7 +1167,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/SelfAccessReview" }
+              "schema": {
+                "$ref": "#/components/schemas/SelfAccessReview"
+              }
             }
           },
           "description": "Self access review data",
@@ -828,7 +1189,9 @@
           "400": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Validation errors occurred"
@@ -836,7 +1199,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -844,7 +1209,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -852,7 +1219,9 @@
           "422": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unsupported action or non-existent resource type"
@@ -860,13 +1229,19 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred while generating access review"
           }
         },
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "summary": "Review your ability to perform an action on a particular resource or resource type"
       }
     },
@@ -875,7 +1250,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/SelfFeatureReview" }
+              "schema": {
+                "$ref": "#/components/schemas/SelfFeatureReview"
+              }
             }
           },
           "description": "Self feature review data",
@@ -895,7 +1272,9 @@
           "400": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Validation errors occurred"
@@ -903,7 +1282,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -911,7 +1292,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -919,13 +1302,19 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred while generating feature review"
           }
         },
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "summary": "Review your ability to toggle a feature"
       }
     },
@@ -937,7 +1326,9 @@
             "in": "query",
             "name": "reduceClusterList",
             "required": false,
-            "schema": { "type": "boolean" }
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "requestBody": {
@@ -955,7 +1346,9 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/SelfResourceReview" }
+                "schema": {
+                  "$ref": "#/components/schemas/SelfResourceReview"
+                }
               }
             },
             "description": "Successful review"
@@ -963,7 +1356,9 @@
           "400": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Validation errors occurred"
@@ -971,7 +1366,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -979,7 +1376,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform self resource reviews"
@@ -987,7 +1386,9 @@
           "422": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unsupported action or non-existent resource type"
@@ -995,13 +1396,19 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred while generating access review"
           }
         },
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "summary": "Obtain resource ids for resources you may perform the specified action upon. Resource ids returned as [\"*\"] is shorthand for all ids."
       }
     },
@@ -1010,7 +1417,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/SelfTermsReview" }
+              "schema": {
+                "$ref": "#/components/schemas/SelfTermsReview"
+              }
             }
           },
           "description": "Data to check self terms for",
@@ -1020,7 +1429,9 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/TermsReviewResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/TermsReviewResponse"
+                }
               }
             },
             "description": "Review successfully generated"
@@ -1028,7 +1439,9 @@
           "400": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Validation errors occurred"
@@ -1036,7 +1449,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -1044,7 +1459,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -1052,7 +1469,9 @@
           "422": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unsupported action or non-existent resource type"
@@ -1060,13 +1479,19 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred while generating terms review"
           }
         },
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "summary": "Review your status of Terms"
       }
     },
@@ -1075,7 +1500,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/TermsReview" }
+              "schema": {
+                "$ref": "#/components/schemas/TermsReview"
+              }
             }
           },
           "description": "Data to check terms for",
@@ -1085,7 +1512,9 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/TermsReviewResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/TermsReviewResponse"
+                }
               }
             },
             "description": "Review successfully generated"
@@ -1093,7 +1522,9 @@
           "400": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Validation errors occurred"
@@ -1101,7 +1532,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -1109,7 +1542,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -1117,7 +1552,9 @@
           "422": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unsupported action, non-existent resource type, or non-existent account"
@@ -1125,13 +1562,19 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred while generating terms review"
           }
         },
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "summary": "Review an account's status of Terms"
       }
     }
@@ -1145,6 +1588,9 @@
       "description": "Staging server",
       "url": "https://api.stage.openshift.com"
     },
-    { "description": "current domain", "url": "/" }
+    {
+      "description": "current domain",
+      "url": "/"
+    }
   ]
 }

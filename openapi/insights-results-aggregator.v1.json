@@ -7,7 +7,9 @@
         "in": "path",
         "name": "clusterId",
         "required": true,
-        "schema": { "$ref": "#/components/schemas/clusterId" }
+        "schema": {
+          "$ref": "#/components/schemas/clusterId"
+        }
       },
       "errorKey": {
         "description": "ID of the error key",
@@ -15,13 +17,18 @@
         "in": "path",
         "name": "errorKey",
         "required": true,
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       },
       "osdEligible": {
         "description": "If true, only OSD eligible rules will be sent.",
         "in": "query",
         "name": "osd_eligible",
-        "schema": { "default": false, "type": "boolean" }
+        "schema": {
+          "default": false,
+          "type": "boolean"
+        }
       },
       "ruleId": {
         "description": "ID of a rule.",
@@ -29,7 +36,9 @@
         "in": "path",
         "name": "ruleId",
         "required": true,
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       }
     },
     "responses": {
@@ -37,7 +46,12 @@
         "content": {
           "application/json": {
             "schema": {
-              "properties": { "status": { "example": "ok", "type": "string" } },
+              "properties": {
+                "status": {
+                  "example": "ok",
+                  "type": "string"
+                }
+              },
               "type": "object"
             }
           }
@@ -45,7 +59,9 @@
         "description": "Status ok"
       },
       "unavailable": {
-        "content": { "text/plain": {} },
+        "content": {
+          "text/plain": {}
+        },
         "description": "Content service is unavailable"
       }
     },
@@ -85,7 +101,10 @@
             },
             "type": "object"
           },
-          "status": { "example": "ok", "type": "string" }
+          "status": {
+            "example": "ok",
+            "type": "string"
+          }
         },
         "type": "object"
       },
@@ -98,18 +117,27 @@
           "disable_feedback": "",
           "disabled": false,
           "disabled_at": "",
-          "extra_data": { "error_key": "TUTORIAL_ERROR", "type": "rule" },
+          "extra_data": {
+            "error_key": "TUTORIAL_ERROR",
+            "type": "rule"
+          },
           "internal": false,
           "reason": "",
           "resolution": "",
           "risk_of_change": 0,
           "rule_id": "ccx_rules_ocm.tutorial_rule.report",
-          "tags": ["openshift", "service_availability"],
+          "tags": [
+            "openshift",
+            "service_availability"
+          ],
           "total_risk": 1,
           "user_vote": 0
         },
         "properties": {
-          "created_at": { "format": "date-time", "type": "string" },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
           "description": {
             "description": "The title of the rule, a short description.",
             "type": "string"
@@ -118,18 +146,26 @@
             "description": "Details of the rule - templates rendered on frontend.",
             "type": "string"
           },
-          "disable_feedback": { "type": "string" },
+          "disable_feedback": {
+            "type": "string"
+          },
           "disabled": {
             "description": "If this rule result disabled or not. This field can be used in the UI to show only specific set of rules results.",
             "type": "boolean"
           },
-          "disabled_at": { "type": "string" },
+          "disabled_at": {
+            "type": "string"
+          },
           "extra_data": {
             "description": "Used as templating data for other content (details, resolution, etc.), has varying structure depending on the rules in the report.",
             "type": "object"
           },
-          "internal": { "type": "boolean" },
-          "more_info": { "type": "string" },
+          "internal": {
+            "type": "boolean"
+          },
+          "more_info": {
+            "type": "string"
+          },
           "reason": {
             "description": "Reason for the issue, giving the user more accurate description of the cause.",
             "type": "string"
@@ -140,24 +176,48 @@
           },
           "risk_of_change": {
             "description": "Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.",
-            "enum": [0, 1, 2, 3, 4],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
             "type": "integer"
           },
-          "rule_id": { "description": "ID of a rule.", "type": "string" },
+          "rule_id": {
+            "description": "ID of a rule.",
+            "type": "string"
+          },
           "tags": {
             "description": "List of tags that the rule contains, forming rule groups.",
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "type": "array"
           },
           "total_risk": {
             "description": "Total risk - calculated from rule impact and likelihood.",
-            "enum": [1, 2, 3, 4],
+            "enum": [
+              1,
+              2,
+              3,
+              4
+            ],
             "type": "integer"
           },
           "user_vote": {
             "description": "User vote - value of user voting. -1 is dislike vote, 0 is no vote, 1 is like vote.",
-            "enum": ["-1", "0", "1"],
-            "x-enum-varnames": ["DISLIKE", "NO_VOTE", "LIKE"],
+            "enum": [
+              "-1",
+              "0",
+              "1"
+            ],
+            "x-enum-varnames": [
+              "DISLIKE",
+              "NO_VOTE",
+              "LIKE"
+            ],
             "format": "int32",
             "type": "integer"
           }
@@ -166,38 +226,80 @@
       },
       "reportsComponent": {
         "properties": {
-          "component": { "type": "string" },
-          "details": { "type": "object" },
-          "info_id": { "type": "string" },
-          "key": { "type": "string" },
-          "links": {
-            "additionalProperties": { "items": { "type": "string" }, "type": "array" },
+          "component": {
+            "type": "string"
+          },
+          "details": {
             "type": "object"
           },
-          "rule_id": { "type": "string" },
-          "tags": { "items": { "type": "string" }, "type": "array" },
-          "type": { "type": "string" }
+          "info_id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "links": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object"
+          },
+          "rule_id": {
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "type": {
+            "type": "string"
+          }
         },
         "type": "object"
       },
       "reportsResponse": {
         "description": "Reports for a set of clusters",
         "properties": {
-          "clusters": { "items": { "type": "string" }, "type": "array" },
-          "errors": { "nullable": true, "type": "string" },
-          "generated_at": { "type": "string" },
+          "clusters": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "errors": {
+            "nullable": true,
+            "type": "string"
+          },
+          "generated_at": {
+            "type": "string"
+          },
           "reports": {
             "additionalProperties": {
               "properties": {
                 "analysis_metadata": {
                   "properties": {
-                    "execution_context": { "type": "string" },
-                    "finish": { "format": "date-time", "type": "string" },
+                    "execution_context": {
+                      "type": "string"
+                    },
+                    "finish": {
+                      "format": "date-time",
+                      "type": "string"
+                    },
                     "plugin_sets": {
                       "additionalProperties": {
                         "properties": {
-                          "commit": { "nullable": true, "type": "string" },
-                          "version": { "type": "string" }
+                          "commit": {
+                            "nullable": true,
+                            "type": "string"
+                          },
+                          "version": {
+                            "type": "string"
+                          }
                         },
                         "type": "object"
                       },
@@ -209,17 +311,29 @@
                       },
                       "type": "object"
                     },
-                    "start": { "format": "date-time", "type": "string" }
+                    "start": {
+                      "format": "date-time",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 },
-                "fingerprints": { "items": { "type": "string" }, "type": "array" },
+                "fingerprints": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
                 "info": {
-                  "items": { "$ref": "#/components/schemas/reportsComponent" },
+                  "items": {
+                    "$ref": "#/components/schemas/reportsComponent"
+                  },
                   "type": "array"
                 },
                 "reports": {
-                  "items": { "$ref": "#/components/schemas/reportsComponent" },
+                  "items": {
+                    "$ref": "#/components/schemas/reportsComponent"
+                  },
                   "type": "array"
                 },
                 "skips": {
@@ -231,10 +345,18 @@
                       "type": "skip"
                     },
                     "properties": {
-                      "details": { "type": "string" },
-                      "reason": { "type": "string" },
-                      "rule_fqdn": { "type": "string" },
-                      "type": { "type": "string" }
+                      "details": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "rule_fqdn": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
                     },
                     "title": "Root Type for reportsSkipsDetails",
                     "type": "object"
@@ -243,8 +365,13 @@
                 },
                 "system": {
                   "properties": {
-                    "hostname": { "nullable": true, "type": "string" },
-                    "metadata": { "type": "object" }
+                    "hostname": {
+                      "nullable": true,
+                      "type": "string"
+                    },
+                    "metadata": {
+                      "type": "object"
+                    }
                   },
                   "type": "object"
                 }
@@ -253,55 +380,125 @@
             },
             "type": "object"
           },
-          "status": { "type": "string" }
+          "status": {
+            "type": "string"
+          }
         },
         "type": "object"
       },
       "ruleContent": {
         "properties": {
-          "HasReason": { "type": "boolean" },
+          "HasReason": {
+            "type": "boolean"
+          },
           "error_keys": {
-            "additionalProperties": { "$ref": "#/components/schemas/ruleContentErrorKey" },
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ruleContentErrorKey"
+            },
             "type": "object"
           },
-          "generic": { "type": "string" },
-          "more_info": { "type": "string" },
-          "plugin": { "$ref": "#/components/schemas/ruleContentPlugin" },
-          "reason": { "type": "string" },
-          "resolution": { "type": "string" },
-          "summary": { "type": "string" }
+          "generic": {
+            "type": "string"
+          },
+          "more_info": {
+            "type": "string"
+          },
+          "plugin": {
+            "$ref": "#/components/schemas/ruleContentPlugin"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "resolution": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          }
         },
         "type": "object"
       },
       "ruleContentErrorKey": {
         "properties": {
-          "HasReason": { "type": "boolean" },
-          "generic": { "type": "string" },
+          "HasReason": {
+            "type": "boolean"
+          },
+          "generic": {
+            "type": "string"
+          },
           "metadata": {
             "properties": {
-              "description": { "type": "string" },
-              "impact": { "type": "string" },
-              "likelihood": { "enum": [0, 1, 2, 3, 4], "type": "integer" },
-              "publish_date": { "type": "string" },
-              "status": { "type": "string" },
-              "tags": { "items": { "type": "string" }, "nullable": true, "type": "array" }
+              "description": {
+                "type": "string"
+              },
+              "impact": {
+                "type": "string"
+              },
+              "likelihood": {
+                "enum": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4
+                ],
+                "type": "integer"
+              },
+              "publish_date": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "tags": {
+                "items": {
+                  "type": "string"
+                },
+                "nullable": true,
+                "type": "array"
+              }
             },
             "type": "object"
           },
-          "more_info": { "type": "string" },
-          "reason": { "type": "string" },
-          "resolution": { "type": "string" },
-          "summary": { "type": "string" },
-          "total_risk": { "enum": [0, 1, 2, 3, 4], "type": "integer" }
+          "more_info": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "resolution": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "total_risk": {
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "type": "integer"
+          }
         },
         "type": "object"
       },
       "ruleContentPlugin": {
         "properties": {
-          "name": { "type": "string" },
-          "node_id": { "type": "string" },
-          "product_code": { "type": "string" },
-          "python_module": { "type": "string" }
+          "name": {
+            "type": "string"
+          },
+          "node_id": {
+            "type": "string"
+          },
+          "product_code": {
+            "type": "string"
+          },
+          "python_module": {
+            "type": "string"
+          }
         },
         "type": "object"
       }
@@ -326,7 +523,9 @@
               "schema": {
                 "properties": {
                   "clusters": {
-                    "items": { "$ref": "#/components/schemas/clusterId" },
+                    "items": {
+                      "$ref": "#/components/schemas/clusterId"
+                    },
                     "type": "array"
                   }
                 },
@@ -340,7 +539,11 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/reportsResponse" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/reportsResponse"
+                }
+              }
             },
             "description": "Latest available report for the given list of cluster IDs. Returns rules and their descriptions that were hit by the cluster."
           },
@@ -349,7 +552,9 @@
           }
         },
         "summary": "Returns the latest reports for the given list of clusters.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/clusters/{clusterId}/report": {
@@ -357,13 +562,20 @@
         "description": "The report is specified by the cluster ID from params and information about the org_id and user_id is taken from the token. The latest report available for the given combination will be returned.",
         "operationId": "getReportForCluster",
         "parameters": [
-          { "$ref": "#/components/parameters/clusterId" },
-          { "$ref": "#/components/parameters/osdEligible" },
+          {
+            "$ref": "#/components/parameters/clusterId"
+          },
+          {
+            "$ref": "#/components/parameters/osdEligible"
+          },
           {
             "description": "If true, disabled rules will be sent too.",
             "in": "query",
             "name": "get_disabled",
-            "schema": { "default": false, "type": "boolean" }
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -376,13 +588,21 @@
                     "report": {
                       "properties": {
                         "data": {
-                          "items": { "$ref": "#/components/schemas/reportData" },
+                          "items": {
+                            "$ref": "#/components/schemas/reportData"
+                          },
                           "type": "array"
                         },
                         "meta": {
-                          "example": { "count": 9, "last_checked_at": "2020-12-08T09:45:23Z" },
+                          "example": {
+                            "count": 9,
+                            "last_checked_at": "2020-12-08T09:45:23Z"
+                          },
                           "properties": {
-                            "count": { "format": "int32", "type": "integer" },
+                            "count": {
+                              "format": "int32",
+                              "type": "integer"
+                            },
                             "last_checked_at": {
                               "description": "[Optional] Timestamp of the last analysis",
                               "format": "date-time",
@@ -394,7 +614,10 @@
                       },
                       "type": "object"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -404,14 +627,20 @@
           }
         },
         "summary": "Returns the latest insights report for a cluster.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/clusters/{clusterId}/report/info": {
       "get": {
         "description": "The report is specified by the cluster ID. Metainformation about the latest report available for the given combination will be returned.",
         "operationId": "getReportMetainfoForCluster",
-        "parameters": [{ "$ref": "#/components/parameters/clusterId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clusterId"
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -441,7 +670,10 @@
                       },
                       "type": "object"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -451,7 +683,9 @@
           }
         },
         "summary": "Returns metainformations about the latest report for the given cluster.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/clusters/{clusterId}/rules/{ruleIdAndErrorKey}/report": {
@@ -459,15 +693,21 @@
         "description": "The rule is specified by the cluster ID and rule ID from params and information about the org_id and user_id is taken from the token. The latest rule report available for the given combination will be returned.",
         "operationId": "getSingleReportForCluster",
         "parameters": [
-          { "$ref": "#/components/parameters/clusterId" },
+          {
+            "$ref": "#/components/parameters/clusterId"
+          },
           {
             "description": "ruleId and errorKey separated by \"|\"",
             "in": "path",
             "name": "ruleIdAndErrorKey",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           },
-          { "$ref": "#/components/parameters/osdEligible" }
+          {
+            "$ref": "#/components/parameters/osdEligible"
+          }
         ],
         "responses": {
           "200": {
@@ -476,8 +716,13 @@
                 "schema": {
                   "description": "Response data type for GET /clusters/{clusterId}/rules/{ruleIdAndErrorKey}/report endpoint",
                   "properties": {
-                    "report": { "$ref": "#/components/schemas/reportData" },
-                    "status": { "example": "ok", "type": "string" }
+                    "report": {
+                      "$ref": "#/components/schemas/reportData"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -487,7 +732,9 @@
           }
         },
         "summary": "Returns the latest single rule report for a cluster that contains information and content.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/clusters/{clusterId}/rules/{ruleId}/error_key/{errorKey}/disable": {
@@ -495,13 +742,26 @@
         "description": "Disables a rule (ruleId) for cluster (clusterId) for current organization/user",
         "operationId": "disableRule",
         "parameters": [
-          { "$ref": "#/components/parameters/clusterId" },
-          { "$ref": "#/components/parameters/ruleId" },
-          { "$ref": "#/components/parameters/errorKey" }
+          {
+            "$ref": "#/components/parameters/clusterId"
+          },
+          {
+            "$ref": "#/components/parameters/ruleId"
+          },
+          {
+            "$ref": "#/components/parameters/errorKey"
+          }
         ],
-        "responses": { "200": { "$ref": "#/components/responses/status" } },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/status"
+          }
+        },
         "summary": "Disables a rule/health check recommendation for specified cluster",
-        "tags": ["rule", "prod"]
+        "tags": [
+          "rule",
+          "prod"
+        ]
       }
     },
     "/clusters/{clusterId}/rules/{ruleId}/error_key/{errorKey}/disable_feedback": {
@@ -509,14 +769,27 @@
         "description": "Returns rule/health check's disable feedback",
         "operationId": "disableRuleFeedback",
         "parameters": [
-          { "$ref": "#/components/parameters/clusterId" },
-          { "$ref": "#/components/parameters/ruleId" },
-          { "$ref": "#/components/parameters/errorKey" }
+          {
+            "$ref": "#/components/parameters/clusterId"
+          },
+          {
+            "$ref": "#/components/parameters/ruleId"
+          },
+          {
+            "$ref": "#/components/parameters/errorKey"
+          }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "properties": { "message": { "type": "string" } }, "type": "object" }
+              "schema": {
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
             }
           },
           "required": true
@@ -527,8 +800,14 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "message": { "example": "test", "type": "string" },
-                    "status": { "example": "ok", "type": "string" }
+                    "message": {
+                      "example": "test",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -538,7 +817,10 @@
           }
         },
         "summary": "Returns rule/health check's disable feedback",
-        "tags": ["rule", "prod"]
+        "tags": [
+          "rule",
+          "prod"
+        ]
       }
     },
     "/clusters/{clusterId}/rules/{ruleId}/error_key/{errorKey}/dislike": {
@@ -546,13 +828,26 @@
         "description": "Puts dislike for the rule(ruleId) with cluster(clusterId) for current user(from auth token)",
         "operationId": "addDislikeToRule",
         "parameters": [
-          { "$ref": "#/components/parameters/clusterId" },
-          { "$ref": "#/components/parameters/ruleId" },
-          { "$ref": "#/components/parameters/errorKey" }
+          {
+            "$ref": "#/components/parameters/clusterId"
+          },
+          {
+            "$ref": "#/components/parameters/ruleId"
+          },
+          {
+            "$ref": "#/components/parameters/errorKey"
+          }
         ],
-        "responses": { "200": { "$ref": "#/components/responses/status" } },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/status"
+          }
+        },
         "summary": "Puts dislike for the rule with cluster for current user",
-        "tags": ["rule", "prod"]
+        "tags": [
+          "rule",
+          "prod"
+        ]
       }
     },
     "/clusters/{clusterId}/rules/{ruleId}/error_key/{errorKey}/enable": {
@@ -560,13 +855,26 @@
         "description": "Enables a rule (ruleId) for cluster (clusterId) for current organization/user",
         "operationId": "enableRule",
         "parameters": [
-          { "$ref": "#/components/parameters/clusterId" },
-          { "$ref": "#/components/parameters/ruleId" },
-          { "$ref": "#/components/parameters/errorKey" }
+          {
+            "$ref": "#/components/parameters/clusterId"
+          },
+          {
+            "$ref": "#/components/parameters/ruleId"
+          },
+          {
+            "$ref": "#/components/parameters/errorKey"
+          }
         ],
-        "responses": { "200": { "$ref": "#/components/responses/status" } },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/status"
+          }
+        },
         "summary": "Re-enables a rule/health check recommendation for specified cluster",
-        "tags": ["rule", "prod"]
+        "tags": [
+          "rule",
+          "prod"
+        ]
       }
     },
     "/clusters/{clusterId}/rules/{ruleId}/error_key/{errorKey}/like": {
@@ -574,13 +882,26 @@
         "description": "Puts like for the rule(ruleId) with cluster(clusterId) for current user(from auth token)",
         "operationId": "addLikeToRule",
         "parameters": [
-          { "$ref": "#/components/parameters/clusterId" },
-          { "$ref": "#/components/parameters/ruleId" },
-          { "$ref": "#/components/parameters/errorKey" }
+          {
+            "$ref": "#/components/parameters/clusterId"
+          },
+          {
+            "$ref": "#/components/parameters/ruleId"
+          },
+          {
+            "$ref": "#/components/parameters/errorKey"
+          }
         ],
-        "responses": { "200": { "$ref": "#/components/responses/status" } },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/status"
+          }
+        },
         "summary": "Puts like for the rule with cluster for current user",
-        "tags": ["rule", "prod"]
+        "tags": [
+          "rule",
+          "prod"
+        ]
       }
     },
     "/clusters/{clusterId}/rules/{ruleId}/error_key/{errorKey}/reset_vote": {
@@ -588,13 +909,26 @@
         "description": "Resets vote for the rule(ruleId) with cluster(clusterId) for current user(from auth token)",
         "operationId": "resetVoteForRule",
         "parameters": [
-          { "$ref": "#/components/parameters/clusterId" },
-          { "$ref": "#/components/parameters/ruleId" },
-          { "$ref": "#/components/parameters/errorKey" }
+          {
+            "$ref": "#/components/parameters/clusterId"
+          },
+          {
+            "$ref": "#/components/parameters/ruleId"
+          },
+          {
+            "$ref": "#/components/parameters/errorKey"
+          }
         ],
-        "responses": { "200": { "$ref": "#/components/responses/status" } },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/status"
+          }
+        },
         "summary": "Resets vote for the rule with cluster for current user",
-        "tags": ["rule", "prod"]
+        "tags": [
+          "rule",
+          "prod"
+        ]
       }
     },
     "/clusters/{clusterList}/reports": {
@@ -608,13 +942,22 @@
             "in": "path",
             "name": "clusterList",
             "required": true,
-            "schema": { "items": { "$ref": "#/components/schemas/clusterId" }, "type": "array" }
+            "schema": {
+              "items": {
+                "$ref": "#/components/schemas/clusterId"
+              },
+              "type": "array"
+            }
           }
         ],
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/reportsResponse" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/reportsResponse"
+                }
+              }
             },
             "description": "Latest available report for the given list of cluster IDs. Returns rules and their descriptions that were hit by the cluster."
           },
@@ -623,7 +966,9 @@
           }
         },
         "summary": "Returns the latest reports for the given list of clusters.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/content": {
@@ -637,10 +982,15 @@
                 "schema": {
                   "properties": {
                     "content": {
-                      "items": { "$ref": "#/components/schemas/ruleContent" },
+                      "items": {
+                        "$ref": "#/components/schemas/ruleContent"
+                      },
                       "type": "array"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -650,7 +1000,9 @@
           }
         },
         "summary": "Get all static content",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/groups": {
@@ -666,15 +1018,27 @@
                     "groups": {
                       "items": {
                         "properties": {
-                          "description": { "type": "string" },
-                          "tags": { "items": { "type": "string" }, "type": "array" },
-                          "title": { "type": "string" }
+                          "description": {
+                            "type": "string"
+                          },
+                          "tags": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "title": {
+                            "type": "string"
+                          }
                         },
                         "type": "object"
                       },
                       "type": "array"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -683,12 +1047,16 @@
             "description": "A JSON array of groups."
           },
           "503": {
-            "content": { "text/plain": {} },
+            "content": {
+              "text/plain": {}
+            },
             "description": "Content service is unavailable"
           }
         },
         "summary": "Get all rule groups and their relevant information",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/info": {
@@ -704,21 +1072,30 @@
                     "info": {
                       "properties": {
                         "Aggregator": {
-                          "additionalProperties": { "type": "string" },
+                          "additionalProperties": {
+                            "type": "string"
+                          },
                           "type": "object"
                         },
                         "ContentService": {
-                          "additionalProperties": { "type": "string" },
+                          "additionalProperties": {
+                            "type": "string"
+                          },
                           "type": "object"
                         },
                         "SmartProxy": {
-                          "additionalProperties": { "type": "string" },
+                          "additionalProperties": {
+                            "type": "string"
+                          },
                           "type": "object"
                         }
                       },
                       "type": "object"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -736,7 +1113,9 @@
         "operationId": "getMetrics",
         "responses": {
           "200": {
-            "content": { "text/plain": {} },
+            "content": {
+              "text/plain": {}
+            },
             "description": "Default response containing all metrics in semi-structured text format"
           }
         },
@@ -755,13 +1134,21 @@
                   "properties": {
                     "info": {
                       "properties": {
-                        "description": { "type": "string" },
-                        "title": { "type": "string" },
-                        "version": { "type": "string" }
+                        "description": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "string"
+                        }
                       },
                       "type": "object"
                     },
-                    "openapi": { "type": "string" },
+                    "openapi": {
+                      "type": "string"
+                    },
                     "paths": {
                       "description": "Available paths and their descriptions.",
                       "type": "object"
@@ -784,13 +1171,19 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/overviewResponse" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/overviewResponse"
+                }
+              }
             },
             "description": "Summary of results by cluster"
           }
         },
         "summary": "Get relevant data for an overview of hitting rules in the clusters for this organziation",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       },
       "post": {
         "requestBody": {
@@ -800,7 +1193,9 @@
               "schema": {
                 "properties": {
                   "clusters": {
-                    "items": { "$ref": "#/components/schemas/clusterId" },
+                    "items": {
+                      "$ref": "#/components/schemas/clusterId"
+                    },
                     "type": "array"
                   }
                 },
@@ -814,12 +1209,18 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/overviewResponse" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/overviewResponse"
+                }
+              }
             },
             "description": "Status ok"
           }
         },
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/organizations/{orgId}/clusters": {
@@ -832,7 +1233,11 @@
             "in": "path",
             "name": "orgId",
             "required": true,
-            "schema": { "format": "int64", "minimum": 0, "type": "integer" }
+            "schema": {
+              "format": "int64",
+              "minimum": 0,
+              "type": "integer"
+            }
           }
         ],
         "responses": {
@@ -842,10 +1247,15 @@
                 "schema": {
                   "properties": {
                     "clusters": {
-                      "items": { "$ref": "#/components/schemas/clusterId" },
+                      "items": {
+                        "$ref": "#/components/schemas/clusterId"
+                      },
                       "type": "array"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -855,7 +1265,9 @@
           }
         },
         "summary": "Returns a list of clusters associated with the specified organization ID.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/rule_ids": {
@@ -868,8 +1280,16 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "rules": { "items": { "type": "string" }, "type": "array" },
-                    "status": { "example": "ok", "type": "string" }
+                    "rules": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -879,22 +1299,33 @@
           }
         },
         "summary": "Returns the rule IDs of all the rules.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/rules/{ruleId}/content": {
       "get": {
         "description": "The static content is taken from the cache periodically updated from the content service",
         "operationId": "getContentForRule",
-        "parameters": [{ "$ref": "#/components/parameters/ruleId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ruleId"
+          }
+        ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "content": { "$ref": "#/components/schemas/ruleContent" },
-                    "status": { "example": "ok", "type": "string" }
+                    "content": {
+                      "$ref": "#/components/schemas/ruleContent"
+                    },
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -907,7 +1338,10 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "status": { "example": "Item not found in the storage", "type": "string" }
+                    "status": {
+                      "example": "Item not found in the storage",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -915,10 +1349,14 @@
             },
             "description": "Rule ID is not available"
           },
-          "503": { "$ref": "#/components/responses/unavailable" }
+          "503": {
+            "$ref": "#/components/responses/unavailable"
+          }
         },
         "summary": "Get all static content for the given ruleId",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     }
   }

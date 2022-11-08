@@ -7348,12 +7348,22 @@
       "AWSInfrastructureAccessRoleGrantState": {
         "description": "State of an AWS infrastructure access role grant.",
         "type": "string",
-        "enum": ["deleting", "failed", "pending", "ready", "removed"]
+        "enum": [
+          "deleting",
+          "failed",
+          "pending",
+          "ready",
+          "removed"
+        ]
       },
       "AWSInfrastructureAccessRoleState": {
         "description": "State of an AWS infrastructure access role.",
         "type": "string",
-        "enum": ["invalid", "removed", "valid"]
+        "enum": [
+          "invalid",
+          "removed",
+          "valid"
+        ]
       },
       "AWSMachinePool": {
         "description": "Representation of aws machine pool specific parameters.",
@@ -7940,7 +7950,10 @@
       "AddOnInstallMode": {
         "description": "Representation of an add-on InstallMode field.",
         "type": "string",
-        "enum": ["all_namespaces", "own_namespace"]
+        "enum": [
+          "all_namespaces",
+          "own_namespace"
+        ]
       },
       "AddOnInstallation": {
         "description": "Representation of an add-on installation in a cluster.",
@@ -8024,7 +8037,13 @@
       "AddOnInstallationState": {
         "description": "Representation of an add-on installation State field.",
         "type": "string",
-        "enum": ["deleting", "failed", "installing", "pending", "ready"]
+        "enum": [
+          "deleting",
+          "failed",
+          "installing",
+          "pending",
+          "ready"
+        ]
       },
       "AddOnParameter": {
         "description": "Representation of an add-on parameter.",
@@ -8261,7 +8280,11 @@
       "AlertSeverity": {
         "description": "Severity of a cluster alert received via telemetry.",
         "type": "string",
-        "enum": ["critical", "none", "warning"]
+        "enum": [
+          "critical",
+          "none",
+          "warning"
+        ]
       },
       "AlertsInfo": {
         "description": "Provides information about the alerts firing on the cluster.",
@@ -8277,7 +8300,10 @@
       "BillingModel": {
         "description": "Billing model for cluster resources.",
         "type": "string",
-        "enum": ["marketplace", "standard"]
+        "enum": [
+          "marketplace",
+          "standard"
+        ]
       },
       "CloudVPC": {
         "description": "Description of a cloud provider virtual private cloud.",
@@ -8645,7 +8671,10 @@
       "ClusterConfigurationMode": {
         "description": "Configuration mode of a cluster.",
         "type": "string",
-        "enum": ["full", "read_only"]
+        "enum": [
+          "full",
+          "read_only"
+        ]
       },
       "ClusterConsole": {
         "description": "Information about the console of a cluster.",
@@ -8709,7 +8738,11 @@
       "ClusterHealthState": {
         "description": "ClusterHealthState indicates the health of a cluster.",
         "type": "string",
-        "enum": ["healthy", "unhealthy", "unknown"]
+        "enum": [
+          "healthy",
+          "unhealthy",
+          "unknown"
+        ]
       },
       "ClusterNodes": {
         "description": "Counts of different classes of nodes inside a cluster.",
@@ -8793,7 +8826,12 @@
       "ClusterOperatorState": {
         "description": "Overall state of a cluster operator.",
         "type": "string",
-        "enum": ["available", "degraded", "failing", "upgrading"]
+        "enum": [
+          "available",
+          "degraded",
+          "failing",
+          "upgrading"
+        ]
       },
       "ClusterOperatorsInfo": {
         "description": "Provides detailed information about the operators installed on the cluster.",
@@ -8949,7 +8987,10 @@
       },
       "DetectionType": {
         "type": "string",
-        "enum": ["auto", "manual"]
+        "enum": [
+          "auto",
+          "manual"
+        ]
       },
       "EncryptionKey": {
         "description": "Description of a cloud provider encryption key.",
@@ -9244,7 +9285,12 @@
       "IdentityProviderMappingMethod": {
         "description": "Controls how mappings are established between provider identities and user objects.",
         "type": "string",
-        "enum": ["add", "claim", "generate", "lookup"]
+        "enum": [
+          "add",
+          "claim",
+          "generate",
+          "lookup"
+        ]
       },
       "IdentityProviderType": {
         "description": "Type of identity provider.",
@@ -9305,7 +9351,12 @@
       "InflightCheckState": {
         "description": "State of an inflight check.",
         "type": "string",
-        "enum": ["failed", "passed", "pending", "running"]
+        "enum": [
+          "failed",
+          "passed",
+          "pending",
+          "running"
+        ]
       },
       "Ingress": {
         "description": "Representation of an ingress.",
@@ -9472,7 +9523,10 @@
       "ListeningMethod": {
         "description": "Cluster components listening method.",
         "type": "string",
-        "enum": ["external", "internal"]
+        "enum": [
+          "external",
+          "internal"
+        ]
       },
       "Log": {
         "description": "Log of the cluster.",
@@ -9661,7 +9715,11 @@
       "MachineTypeSize": {
         "description": "Machine type size.",
         "type": "string",
-        "enum": ["large", "medium", "small"]
+        "enum": [
+          "large",
+          "medium",
+          "small"
+        ]
       },
       "ManagedService": {
         "description": "Contains the necessary attributes to support role-based authentication on AWS.",
@@ -9715,7 +9773,11 @@
       "NodeType": {
         "description": "Type of node received via telemetry.",
         "type": "string",
-        "enum": ["compute", "infra", "master"]
+        "enum": [
+          "compute",
+          "infra",
+          "master"
+        ]
       },
       "NodesInfo": {
         "description": "Provides information about the nodes in the cluster.",
