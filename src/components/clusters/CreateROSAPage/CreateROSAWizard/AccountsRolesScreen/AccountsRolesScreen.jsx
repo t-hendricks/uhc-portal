@@ -75,8 +75,6 @@ function AccountsRolesScreen({
     // clear certain responses; causes refetch of AWS acct info.
     clearGetAWSAccountIDsResponse();
     clearGetAWSAccountRolesARNsResponse();
-    change('associated_aws_id', '');
-    change('installer_role_arn', '');
   };
 
   // default product and cloud_provider form values
