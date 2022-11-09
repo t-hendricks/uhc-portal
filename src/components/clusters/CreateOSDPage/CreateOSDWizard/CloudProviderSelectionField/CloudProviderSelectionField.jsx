@@ -16,7 +16,7 @@ function CloudProviderSelectionField({
   input: { value, onChange },
 }) {
   const BASE_CARD_CLASS = 'ocm-tile-create-cluster';
-  const getCardClass = (hasQuota) => cx(BASE_CARD_CLASS, !hasQuota ? 'card-disabled' : '');
+  const getCardClass = (hasQuota) => cx(BASE_CARD_CLASS, !hasQuota ? 'tile-disabled' : '');
 
   const handleChange = (providerValue) => {
     // Silently reset some user choices that are now meaningless.

@@ -4,57 +4,96 @@ import PropTypes from 'prop-types';
 import { RedoIcon } from '@patternfly/react-icons';
 import { Tooltip, TooltipPosition, Button } from '@patternfly/react-core';
 
-class RefreshBtn extends React.Component {
-  constructor(props) {
-    super(props);
-    this.refreshTimerID = null;
-    this.refreshTimer = this.refreshTimer.bind(this);
-  }
+const shortTimerSeconds = 10;
+const longTimerSeconds = 60;
+const numberOfShortTries = 3;
 
-  componentDidMount() {
-    const { autoRefresh } = this.props;
-    if (autoRefresh && this.refreshTimerID === null) {
-      this.refreshTimerID = setInterval(this.refreshTimer, 60 * 1000);
+// See https://overreacted.io/making-setinterval-declarative-with-react-hooks/
+const useInterval = (callback, delay) => {
+  const savedCallback = React.useRef();
+
+  // Remember the latest callback.
+  React.useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  React.useEffect(() => {
+    function tick() {
+      savedCallback.current();
     }
-  }
-
-  componentWillUnmount() {
-    if (this.refreshTimerID !== null) {
-      clearInterval(this.refreshTimerID);
+    if (delay !== null) {
+      const id = setInterval(tick, delay);
+      return () => clearInterval(id);
     }
-  }
 
-  refreshTimer() {
-    const { autoRefresh, refreshFunc, isDisabled } = this.props;
+    return null;
+  }, [delay]);
+};
+
+const RefreshBtn = ({
+  classOptions,
+  refreshFunc,
+  clickRefreshFunc,
+  autoRefresh,
+  isDisabled,
+  ouiaId,
+  useShortTimer,
+}) => {
+  const timerRef = React.useRef(null);
+  const [shortTimerTries, setShortTimerTries] = React.useState(0);
+  const [interValTime, setInterValTime] = React.useState(null);
+
+  // Why use ref? See https://felixgerschau.com/react-hooks-settimeout/
+  timerRef.current = useInterval(() => {
+    if (interValTime === shortTimerSeconds) {
+      if (shortTimerTries < numberOfShortTries - 1) {
+        // there is a -1 because we are setting the interval after this attempt
+        setShortTimerTries(shortTimerTries + 1);
+      } else {
+        setInterValTime(longTimerSeconds);
+        setShortTimerTries(0);
+      }
+    }
+
+    refreshTimer();
+  }, interValTime * 1000);
+
+  React.useEffect(
+    () => () => {
+      clearTimeout(timerRef.current);
+    },
+    [],
+  );
+
+  React.useEffect(() => {
+    setInterValTime(useShortTimer ? shortTimerSeconds : longTimerSeconds);
+  }, [useShortTimer]);
+
+  const refreshTimer = () => {
     // autoRefresh check allows refresh to be turned off or on during the lifetime of the component
     // visibilityState checks allows avoiding refreshes when the tab is not visible
     // "online" state check allows to avoid refreshes when the network is offline.
     if (autoRefresh && document.visibilityState === 'visible' && navigator.onLine && !isDisabled) {
       refreshFunc();
     }
-  }
+  };
 
-  render() {
-    const { refreshFunc, clickRefreshFunc, classOptions, isDisabled, ouiaId } = this.props;
-
-    const onClickFunc = clickRefreshFunc !== undefined ? clickRefreshFunc : refreshFunc;
-
-    return (
-      <Tooltip position={TooltipPosition.bottom} content="Refresh">
-        <Button
-          variant="plain"
-          aria-label="Refresh"
-          className={classOptions}
-          onClick={onClickFunc}
-          isAriaDisabled={isDisabled}
-          ouiaId={ouiaId}
-        >
-          <RedoIcon />
-        </Button>
-      </Tooltip>
-    );
-  }
-}
+  return (
+    <Tooltip position={TooltipPosition.bottom} content="Refresh">
+      <Button
+        variant="plain"
+        aria-label="Refresh"
+        className={classOptions}
+        onClick={clickRefreshFunc || refreshFunc}
+        isAriaDisabled={isDisabled}
+        ouiaId={ouiaId}
+      >
+        <RedoIcon />
+      </Button>
+    </Tooltip>
+  );
+};
 
 RefreshBtn.propTypes = {
   classOptions: PropTypes.string,
@@ -63,10 +102,12 @@ RefreshBtn.propTypes = {
   autoRefresh: PropTypes.bool,
   isDisabled: PropTypes.bool,
   ouiaId: PropTypes.string,
+  useShortTimer: PropTypes.bool,
 };
 
 RefreshBtn.defaultProps = {
   classOptions: '',
+  useShortTimer: false,
 };
 
 export default RefreshBtn;

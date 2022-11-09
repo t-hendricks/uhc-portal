@@ -1,23 +1,23 @@
-import get from 'lodash/get';
+import { ClusterFromSubscription } from '../types/types';
 
 /**
  * Get the display name for the cluster (from the subscription), with fallbacks to name, UUID,
  * or the string "Unnamed Cluster".
  * @param {*} cluster a cluster object.
  */
-const getClusterName = (cluster) => {
+const getClusterName = (cluster: ClusterFromSubscription): string => {
   if (!cluster) {
     return '';
   }
 
-  let clusterName = get(cluster, 'subscription.display_name', false);
-  if (!clusterName || clusterName === get(cluster, 'subscription.external_cluster_id', false)) {
+  let clusterName = cluster.subscription?.display_name;
+  if (!clusterName || clusterName === cluster.subscription?.external_cluster_id) {
     clusterName = cluster.name || cluster.external_id;
   }
 
   if (clusterName === undefined) {
-    if (get(cluster, 'subscription.status', false) === 'Deprovisioned') {
-      const subscriptionId = get(cluster, 'subscription.id', false);
+    if (cluster.subscription?.status === 'Deprovisioned') {
+      const subscriptionId = cluster.subscription?.id;
       if (subscriptionId) {
         return subscriptionId;
       }

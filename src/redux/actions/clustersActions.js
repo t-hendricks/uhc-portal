@@ -24,7 +24,7 @@ import {
   clusterService,
 } from '../../services';
 import { INVALIDATE_ACTION, buildPermissionDict } from '../reduxHelpers';
-import { subscriptionStatuses } from '../../common/subscriptionTypes';
+import { subscriptionStatuses, knownProducts } from '../../common/subscriptionTypes';
 import {
   normalizeCluster,
   fakeClusterFromSubscription,
@@ -381,6 +381,7 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
 
   const subscription = await accountsService.getSubscription(subscriptionID);
   subscription.data = normalizeSubscription(subscription.data);
+  const isAROCluster = subscription?.data?.plan?.type === knownProducts.ARO;
 
   if (subscription.data.status !== subscriptionStatuses.DEPROVISIONED) {
     await authorizationsService
@@ -413,7 +414,7 @@ const fetchSingleClusterAndPermissions = async (subscriptionID) => {
   }
 
   if (
-    subscription.data.managed &&
+    (subscription.data.managed || isAROCluster) &&
     subscription.data.status !== subscriptionStatuses.DEPROVISIONED
   ) {
     const cluster = await clusterService.getClusterDetails(subscription.data.cluster_id);

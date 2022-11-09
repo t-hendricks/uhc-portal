@@ -394,10 +394,11 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                             message="Failed to save administrator acknowledgement."
                             response={
                               Object {
-                                "error": undefined,
+                                "error": true,
                                 "errorCode": undefined,
                                 "errorDetails": undefined,
                                 "errorMessage": "{\\"reason\\":\\"an error happened\\"}",
+                                "fulfilled": false,
                                 "internalErrorCode": undefined,
                                 "operationID": undefined,
                                 "pending": false,
@@ -1009,10 +1010,11 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                             message="Failed to save administrator acknowledgement."
                             response={
                               Object {
-                                "error": undefined,
+                                "error": true,
                                 "errorCode": undefined,
                                 "errorDetails": undefined,
                                 "errorMessage": "{\\"reason\\":\\"an error happened\\"}",
+                                "fulfilled": false,
                                 "internalErrorCode": undefined,
                                 "operationID": undefined,
                                 "pending": false,
@@ -1094,10 +1096,11 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                             message="Failed to save administrator acknowledgement."
                             response={
                               Object {
-                                "error": undefined,
+                                "error": true,
                                 "errorCode": undefined,
                                 "errorDetails": undefined,
                                 "errorMessage": "{\\"reason\\":\\"an error happened\\"}",
+                                "fulfilled": false,
                                 "internalErrorCode": undefined,
                                 "operationID": undefined,
                                 "pending": false,
