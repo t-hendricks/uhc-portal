@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import { Table, TableHeader, TableBody } from '@patternfly/react-table';
+import { Table, TableHeader, TableBody, IRowCell } from '@patternfly/react-table';
 import orderBy from 'lodash/orderBy';
 
 import PopoverHint from '../../common/PopoverHint';
 
-function OSDSubscriptionTable({ rows, children }) {
+type Props = {
+  rows: (React.ReactNode | IRowCell)[][];
+  children?: React.ReactNode;
+};
+
+const OSDSubscriptionTable = ({ rows, children }: Props) => {
   const sortedRows = orderBy(rows, [0, 1]).map((cells) => ({ cells }));
   const tipText = (
     <>
@@ -38,11 +42,6 @@ function OSDSubscriptionTable({ rows, children }) {
       {children}
     </>
   );
-}
-
-OSDSubscriptionTable.propTypes = {
-  rows: PropTypes.array.isRequired,
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
 };
 
 export default OSDSubscriptionTable;

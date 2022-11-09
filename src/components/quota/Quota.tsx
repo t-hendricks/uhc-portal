@@ -13,81 +13,76 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { PageSection, Stack, StackItem } from '@patternfly/react-core';
 import get from 'lodash/get';
 
 import OSDSubscriptionCard from './OSDSubscriptionCard';
 import SubscriptionNotFulfilled from './SubscriptionNotFulfilled';
+import type { State as SubscriptionState } from '../../redux/reducers/subscriptionsReducer';
+
 import './Quota.scss';
 
-class Subscriptions extends Component {
-  componentDidMount() {
+type Props = {
+  fetchAccount: () => void;
+  account: SubscriptionState['account'];
+  invalidateClusters: () => void;
+  marketplace?: boolean;
+};
+
+const Quota = ({ invalidateClusters, fetchAccount, account, marketplace }: Props) => {
+  const fetchAccountRef = React.useRef(fetchAccount);
+  fetchAccountRef.current = fetchAccount;
+
+  // store in `invalidateClusters` in a ref so that we can get the latest value when this component unmounts
+  const invalidateClustersRef = React.useRef(invalidateClusters);
+  invalidateClustersRef.current = invalidateClusters;
+  React.useEffect(() => {
     document.title = 'Quota | Red Hat OpenShift Cluster Manager';
-    this.refresh();
-    if (get(window, 'insights.ocm')) {
-      this.cleanupOcmListener = insights.ocm.on('APP_REFRESH', () => this.refresh());
-    }
-  }
-
-  componentWillUnmount() {
-    const { invalidateClusters } = this.props;
-    invalidateClusters();
-
-    if (this.cleanupOcmListener) {
-      this.cleanupOcmListener();
-    }
-  }
-
-  refresh = () => {
-    const { fetchAccount } = this.props;
     fetchAccount();
-  };
-
-  render() {
-    const { account, marketplace } = this.props;
-    let content;
-    let title = 'Dedicated (Annual)';
-    if (marketplace) {
-      title = 'Dedicated (On-Demand Limits)';
+    let cleanupOcmListener: () => void;
+    if (get(window, 'insights.ocm')) {
+      cleanupOcmListener = insights.ocm?.on('APP_REFRESH', () => fetchAccountRef.current());
     }
-    if (account.fulfilled && account.data.organization && account.data.organization.id) {
-      const organizationID = account.data.organization.id;
-      content = (
-        <>
-          <PageHeader>
-            <PageHeaderTitle title={title} className="page-title" />
-          </PageHeader>
-          <PageSection className="ocm-p-subscriptions">
-            <Stack hasGutter>
-              <StackItem className="ocm-l-osd-subscription__section">
-                <OSDSubscriptionCard organizationID={organizationID} marketplace={marketplace} />
-              </StackItem>
-            </Stack>
-          </PageSection>
-        </>
-      );
-    } else {
-      const data = {
+    return () => {
+      invalidateClustersRef.current();
+
+      if (cleanupOcmListener) {
+        cleanupOcmListener();
+      }
+    };
+  }, []);
+
+  if (account.fulfilled && account.data.organization && account.data.organization.id) {
+    const title = marketplace ? 'Dedicated (On-Demand Limits)' : 'Dedicated (Annual)';
+    const organizationID = account.data.organization.id;
+    return (
+      <>
+        <PageHeader>
+          <PageHeaderTitle title={title} className="page-title" />
+        </PageHeader>
+        <PageSection className="ocm-p-subscriptions">
+          <Stack hasGutter>
+            <StackItem className="ocm-l-osd-subscription__section">
+              <OSDSubscriptionCard organizationID={organizationID} marketplace={marketplace} />
+            </StackItem>
+          </Stack>
+        </PageSection>
+      </>
+    );
+  }
+  return (
+    <SubscriptionNotFulfilled
+      data={{
         error: account.error,
         pending: account.pending,
         type: 'account',
-        internalErrorCode: account.internalErrorCode,
-      };
-      content = <SubscriptionNotFulfilled data={data} refresh={this.refresh} />;
-    }
-
-    return content;
-  }
-}
-
-Subscriptions.propTypes = {
-  fetchAccount: PropTypes.func.isRequired,
-  account: PropTypes.object.isRequired,
-  invalidateClusters: PropTypes.func.isRequired,
-  marketplace: PropTypes.bool,
+        internalErrorCode: account.error ? account.internalErrorCode : undefined,
+      }}
+      refresh={fetchAccount}
+    />
+  );
 };
 
-export default Subscriptions;
+export default Quota;
