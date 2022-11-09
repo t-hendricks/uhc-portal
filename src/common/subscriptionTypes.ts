@@ -114,6 +114,7 @@ const clustersServiceProducts = [
   normalizedProducts.OSDTrial,
   normalizedProducts.ROSA,
   normalizedProducts.RHMI,
+  normalizedProducts.ARO,
 ];
 
 /**

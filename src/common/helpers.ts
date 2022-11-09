@@ -1,11 +1,11 @@
 import isEmpty from 'lodash/isEmpty';
-import get from 'lodash/get';
 
 const noop = Function.prototype;
 
-const isValid = (id) => id !== null && id !== undefined && id !== false && id !== '';
+const isValid = (id?: string | boolean): boolean =>
+  id !== null && id !== undefined && id !== false && id !== '';
 
-const strToCleanArray = (str) =>
+const strToCleanArray = (str?: string): string[] | undefined =>
   str
     ? str
         .split(',')
@@ -13,12 +13,17 @@ const strToCleanArray = (str) =>
         .filter((item) => item)
     : undefined;
 
-const multiInputToCleanArray = (formData, fieldName) => {
+const multiInputToCleanArray = (
+  formData: { [name: string]: string | { [name: string]: string | null }[] },
+  fieldName: string,
+): string[] => {
   const fieldContents = formData[fieldName];
-  return fieldContents
-    .map((fieldContent) => get(fieldContent, `${fieldName}`, null))
-    .filter((input) => input)
-    .map((item) => item.trim());
+  return Array.isArray(fieldContents)
+    ? fieldContents
+        .map((fieldContent) => fieldContent?.[fieldName])
+        .filter((input) => input)
+        .map((item) => item!.trim())
+    : [];
 };
 
 /**
@@ -26,13 +31,13 @@ const multiInputToCleanArray = (formData, fieldName) => {
  * @param {*} str Comma separated string of kay:val pairs
  * @param {*} delimiter delimiter to split each pair by
  */
-const strToCleanObject = (str, delimiter) => {
+const strToCleanObject = (str: string, delimiter: string): { [k: string]: string } => {
   if (!str) {
     return {};
   }
   const pairArray = strToCleanArray(str);
-  const pairs = {};
-  pairArray.forEach((pairStr) => {
+  const pairs: { [k: string]: string } = {};
+  pairArray?.forEach((pairStr) => {
     const [key, val] = pairStr.split(delimiter);
     pairs[key] = val;
   });
@@ -49,16 +54,8 @@ const getRandomID = () => {
   return `${id}`;
 };
 
-const randAlphanumString = (length) => btoa(Math.random()).substr(5, length);
-
-const omitEmptyFields = (obj) => {
-  const objToClean = obj;
-  Object.keys(objToClean).forEach((key) => {
-    if (objToClean[key] && typeof objToClean[key] === 'object') omitEmptyFields(objToClean[key]);
-    else if (!obj[key] && obj[key] !== false) delete objToClean[key];
-  });
-  return objToClean;
-};
+const randAlphanumString = (length: number): string =>
+  btoa(String(Math.random())).substr(5, length);
 
 const scrollToTop = () => {
   const pageTop = document.getElementById('scrollToTop');
@@ -84,7 +81,7 @@ const noMachineTypes =
  * ```
  * @param {Object} obj
  */
-const nestedIsEmpty = (obj) =>
+const nestedIsEmpty = (obj: { [k: string]: unknown[] }): boolean =>
   isEmpty(obj) ||
   Object.keys(obj)
     .map((key) => isEmpty(obj[key]))
@@ -93,37 +90,51 @@ const nestedIsEmpty = (obj) =>
 const helpers = {
   noop,
   isValid,
-  omitEmptyFields,
+  // omitEmptyFields,
   strToCleanArray,
   scrollToTop,
   nestedIsEmpty,
 };
 
-const shouldRefetchQuota = (organization) => {
+// TODO correct type once reducers have migrated to typescript
+const shouldRefetchQuota = (organization: any) => {
   const lastFetchedQuota = organization.timestamp;
-  const now = new Date();
+  const now = new Date().getTime();
   const TWO_MINUTES = 1000 * 60 * 2;
   return !organization.pending && (!organization.fulfilled || now - lastFetchedQuota > TWO_MINUTES);
 };
 
 /**
- * Scroll to the first error found in formErrors.
- * @param {Object} formErrors { [key: fieldName]: string }
+ * Scroll to and focus on the first error found in the record of errors.
+ * @param errors Record of errors
+ * @param focusSelector Used to discover element to focus on, defaults to form elements;
+ * input, select, textarea
  */
-const scrollToFirstError = (formErrors) => {
-  const errorFieldNames = Object.keys(formErrors);
+const scrollToFirstError = (
+  errors: Record<string, string>,
+  focusSelector = 'input,select,textarea',
+) => {
+  const errorIds = Object.keys(errors);
 
-  if (!errorFieldNames?.length) {
+  if (!errorIds?.length) {
     return;
   }
 
-  // Use all error field selectors, where the first matching element in the document is returned.
-  const input = document.querySelector(
-    errorFieldNames.map((fieldName) => `[name*="${fieldName}"]`).join(','),
-  );
+  // Use all error selectors, where the first matching element in the document is returned.
+  const scrollElement = document.querySelector(errorIds.map((id) => `[id*="${id}"]`).join(','));
 
-  input?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  input?.focus();
+  if (scrollElement instanceof HTMLElement) {
+    let focusElement: HTMLElement | null = scrollElement;
+
+    // Find the element to focus on if the focusSelector does not include the element to scroll to.
+    if (!focusSelector.includes(scrollElement.tagName.toLowerCase())) {
+      focusElement = scrollElement?.querySelector(focusSelector);
+    }
+
+    // Scroll and focus
+    setTimeout(() => scrollElement.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+    focusElement?.focus({ preventScroll: true });
+  }
 };
 
 /**
@@ -138,7 +149,14 @@ const scrollToFirstError = (formErrors) => {
  * ]) // => { foo: "bar", hello: "world" }
  * @param {Array} [labelsFormData=[{}]] Array of key value pairs
  */
-const parseReduxFormKeyValueList = (labelsFormData = [{}]) =>
+const parseReduxFormKeyValueList = (
+  labelsFormData: { key: string | undefined; value: string | undefined }[] = [{}] as {
+    key: string;
+    value: string;
+  }[],
+): {
+  [k: string]: string;
+} =>
   Object.fromEntries(
     labelsFormData
       .filter(({ key }) => typeof key !== 'undefined')
@@ -152,7 +170,9 @@ const parseReduxFormKeyValueList = (labelsFormData = [{}]) =>
  * [{ key: 'foo', value: 'bar', effect: 'NoSchedule'},
  * { id: '1a2b3c', key: 'foo1', value: 'bar1', effect: 'NoExecute'},]
  */
-const parseReduxFormTaints = (taintsFormData) =>
+const parseReduxFormTaints = (
+  taintsFormData: { key?: string; value?: string; effect?: string; id?: string }[],
+) =>
   taintsFormData
     .map(
       (taint) =>
@@ -173,7 +193,7 @@ const goZeroTime = '0001-01-01T00:00:00Z';
  * '2021-10-08T17:11:02Z' returns '2021-10-08T17:11:02Z'
  * '0001-01-01T00:00:00Z' returns null
  */
-const goZeroTime2Null = (timeStr) => {
+const goZeroTime2Null = (timeStr: string): string | null => {
   if (timeStr === goZeroTime) {
     return null;
   }
@@ -189,7 +209,7 @@ const goZeroTime2Null = (timeStr) => {
 export {
   noop,
   isValid,
-  omitEmptyFields,
+  // omitEmptyFields,
   strToCleanArray,
   multiInputToCleanArray,
   scrollToTop,

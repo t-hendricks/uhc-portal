@@ -13,6 +13,7 @@ import { trackEvents } from '~/common/analytics';
 import PopoverHint from '../../../../common/PopoverHint';
 import InstructionCommand from '../../../../common/InstructionCommand';
 import { RosaCliCommand } from './constants/cliCommands';
+import PopoverHintWithTitle from '../../../../common/PopoverHintWithTitle';
 
 const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
   <TextContent className="ocm-alert-text">
@@ -24,10 +25,7 @@ const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
     </Text>
     <Grid>
       <GridItem sm={12} md={5}>
-        <strong>
-          Basic OCM role{' '}
-          <PopoverHint bodyContent="One basic OCM role is needed per Red Hat organization to allow OpenShift Cluster Manager to detect the presence of AWS roles and policies required for ROSA." />
-        </strong>
+        <strong>Basic OCM role</strong>
         <InstructionCommand
           textAriaLabel="Copyable ROSA create ocm-role"
           trackEvent={trackEvents.CopyOCMRoleCreateBasic}
@@ -39,10 +37,7 @@ const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
         <p>OR</p>
       </GridItem>
       <GridItem sm={12} md={6}>
-        <strong>
-          Admin OCM role{' '}
-          <PopoverHint bodyContent="The admin OCM role enables a fully automated deployment, otherwise, you will be notified to create additional objects manually during deployment" />
-        </strong>
+        <strong>Admin OCM role</strong>
         <InstructionCommand
           textAriaLabel="Copyable ROSA create ocm-role --admin"
           trackEvent={trackEvents.CopyOCMRoleCreateAdmin}
@@ -50,6 +45,22 @@ const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
           {RosaCliCommand.AdminOcmRole}
         </InstructionCommand>
       </GridItem>
+      <PopoverHintWithTitle
+        title="Understand the OCM role types"
+        bodyContent={
+          <Text component={TextVariants.p}>
+            The <strong>basic role</strong> enables OpenShift Cluster Manager to detect the AWS IAM
+            roles and policies required by ROSA.
+          </Text>
+        }
+        footer={
+          <Text component={TextVariants.p}>
+            The <strong>admin role</strong> also enables the detection of the roles and policies. In
+            addition, the admin role enables automatic deployment of the cluster specific Operator
+            roles and the OpenID Connect (OIDC) provider by using OpenShift Cluster Manager.
+          </Text>
+        }
+      />
     </Grid>
     <br />
     <Text component={TextVariants.p}>If a role exists but is not linked, link it with:</Text>

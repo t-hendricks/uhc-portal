@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
 import isEmpty from 'lodash/isEmpty';
+import get from 'lodash/get';
+
 import UpgradeSettingsTab from './UpgradeSettingsTab';
 import {
   getSchedules,
@@ -14,6 +16,7 @@ import {
 import { editCluster, fetchClusterDetails } from '../../../../../redux/actions/clustersActions';
 import { isHibernating } from '../../../common/clusterStates';
 import { openModal } from '../../../../common/Modal/ModalActions';
+import { knownProducts } from '~/common/subscriptionTypes';
 
 const reduxFormConfig = {
   form: 'ClusterUpgradeSettings',
@@ -31,8 +34,10 @@ const mapStateToProps = (state) => {
     (policy) => policy.schedule_type === 'automatic',
   );
   const { cluster } = state.clusters.details;
+  const isAROCluster = get(cluster, 'subscription.plan.type', '') === knownProducts.ARO;
   return {
     cluster,
+    isAROCluster,
     clusterHibernating: isHibernating(cluster.state),
     isReadOnly: cluster?.status?.configuration_mode === 'read_only',
     isAutomatic: valueSelector(state, 'upgrade_policy') === 'automatic',

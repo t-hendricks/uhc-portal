@@ -23,7 +23,7 @@ limitations under the License.
  * @param {number} places - The maximum number of decimal places to preserve.
  * @returns {number} The rounded value.
  */
-const round = (value, places) => {
+const round = (value: number, places: number): number => {
   const factor = 10.0 ** places;
   return Math.round(value * factor) / factor;
 };

@@ -208,6 +208,7 @@ function ClusterDetailsTop(props) {
                 autoRefresh={autoRefreshEnabled}
                 refreshFunc={refreshFunc}
                 clickRefreshFunc={clickRefreshFunc}
+                useShortTimer={!Object.values(clusterStates).includes(cluster.state)}
               />
             )}
           </span>

@@ -10,7 +10,7 @@ import { removeBaseName } from './getBaseName';
  * Get parameters for `appNavClick` based on the provided path.
  * @param {string} pathname target path
  * */
-export default function getNavClickParams(pathname) {
+export default function getNavClickParams(pathname: string) {
   const cleanPathName = removeBaseName(pathname).replace(/^\//, '');
   const components = cleanPathName.split('/');
 

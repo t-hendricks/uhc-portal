@@ -2,6 +2,7 @@ import React from 'react';
 import { Popover, PopoverPosition, Label } from '@patternfly/react-core';
 import { InfoCircleIcon } from '@patternfly/react-icons';
 
+import links from '../../common/installLinks.mjs';
 import ExternalLink from './ExternalLink';
 
 function DevPreviewBadge() {
@@ -12,7 +13,7 @@ function DevPreviewBadge() {
         you to test functionality and provide feedback during the development process.
       </div>
 
-      <ExternalLink href="https://access.redhat.com/articles/4307871">Learn more</ExternalLink>
+      <ExternalLink href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS}>Learn more</ExternalLink>
     </>
   );
   return (

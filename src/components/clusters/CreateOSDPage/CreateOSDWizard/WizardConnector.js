@@ -7,7 +7,8 @@
  * and to make it easier for each screen to be self-contained.
  */
 import { reduxForm } from 'redux-form';
-import { scrollToFirstError } from '../../../../common/helpers';
+import { scrollToFirstError } from '~/common/helpers';
+import { asyncValidateClusterName } from '~/common/validators';
 
 const reduxFormConfig = {
   form: 'CreateCluster',
@@ -18,6 +19,14 @@ const reduxFormConfig = {
   forceUnregisterOnUnmount: true, // TODO is this needed?
   enableReinitialize: true,
   touchOnChange: true,
+  asyncBlurFields: ['name'],
+  asyncValidate: async (values) => {
+    const clusterNameErrorMessage = await asyncValidateClusterName(values.name);
+    if (clusterNameErrorMessage) {
+      // eslint-disable-next-line no-throw-literal
+      throw { name: clusterNameErrorMessage };
+    }
+  },
 };
 
 const wizardConnector = (component) => reduxForm(reduxFormConfig)(component);
