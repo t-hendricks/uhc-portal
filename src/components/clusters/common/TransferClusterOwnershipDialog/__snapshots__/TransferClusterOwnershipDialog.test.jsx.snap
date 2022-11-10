@@ -461,6 +461,7 @@ exports[`<TransferClusterOwnershipDialog /> should not crash when subscription i
                                       >
                                         <a
                                           href="https://access.redhat.com/solutions/4902871"
+                                          onClick={[Function]}
                                           rel="noreferrer noopener"
                                           target="_blank"
                                         >
@@ -1077,6 +1078,7 @@ exports[`<TransferClusterOwnershipDialog /> should release clusters 1`] = `
                                       >
                                         <a
                                           href="https://access.redhat.com/solutions/4902871"
+                                          onClick={[Function]}
                                           rel="noreferrer noopener"
                                           target="_blank"
                                         >
@@ -1684,6 +1686,7 @@ exports[`<TransferClusterOwnershipDialog /> should show dialog for transferring 
                                       >
                                         <a
                                           href="/openshift/register"
+                                          onClick={[Function]}
                                           rel="noreferrer noopener"
                                           target="_blank"
                                         >
@@ -2411,6 +2414,7 @@ exports[`<TransferClusterOwnershipDialog /> should show error 1`] = `
                                       >
                                         <a
                                           href="https://access.redhat.com/solutions/4902871"
+                                          onClick={[Function]}
                                           rel="noreferrer noopener"
                                           target="_blank"
                                         >

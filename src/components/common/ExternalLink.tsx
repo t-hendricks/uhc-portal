@@ -5,20 +5,18 @@ import useAnalytics from '~/hooks/useAnalytics';
 
 const ExternalLink = ({ href, children, noIcon, noTarget, className }: ExternalLinkProps) => {
   const { track } = useAnalytics();
-  const userUrl = window.location.href;
 
-  //todo
-  // module: window._segment?.activeModule,
-  const module = 'test module';
+  const currentUrl = window.location.href;
+  const moduleValue = 'openshift';
 
   const resourceType = () => {
-    if (userUrl.includes('/rosa')) {
+    if (currentUrl.includes('/rosa')) {
       return 'moa';
-    } else if (userUrl.includes('/osdtrial')) {
+    } else if (currentUrl.includes('/osdtrial')) {
       return 'osdtrial';
-    } else if (userUrl.includes('/osd')) {
+    } else if (currentUrl.includes('/osd')) {
       return 'osd';
-    } else if (userUrl.includes('/crc')) {
+    } else if (currentUrl.includes('/crc')) {
       return 'crc';
     } else {
       return 'all';
@@ -28,7 +26,11 @@ const ExternalLink = ({ href, children, noIcon, noTarget, className }: ExternalL
   const trackExternalLink = () => {
     track(trackEvents.ExternalLink, {
       customProperties: JSON.parse(
-        `{"link_url":"${href}", "module":"${module}", "ocm_resource_type":"${resourceType()}"}`,
+        `{
+          "link_url":"${href}", 
+          "module":"${moduleValue}", 
+          "ocm_resource_type":"${resourceType()}"
+        }`,
       ),
     });
   };
@@ -43,7 +45,7 @@ const ExternalLink = ({ href, children, noIcon, noTarget, className }: ExternalL
     >
       {children}
       {noTarget ? null : <span className="pf-u-screen-reader"> (new window or tab)</span>}
-      {!noIcon && <ExternalLinkAltIcon color="#0066CC" size="sm" className="pf-u-ml-sm" />}
+      {!noIcon && <ExternalLinkAltIcon color="#0066cc" size="sm" className="pf-u-ml-sm" />}
     </a>
   );
 };
