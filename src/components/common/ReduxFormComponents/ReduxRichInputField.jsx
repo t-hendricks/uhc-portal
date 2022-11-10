@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef, useState, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import {
   FormGroup,
@@ -9,59 +9,107 @@ import {
   HelperTextItem,
   Button,
 } from '@patternfly/react-core';
+import {
+  SpinnerIcon,
+  InfoCircleIcon,
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+} from '@patternfly/react-icons';
 
-import { CheckCircleIcon, ExclamationCircleIcon, InfoCircleIcon } from '@patternfly/react-icons';
-import './ReduxRichInputField.scss';
+import { evaluateClusterNameAsyncValidation } from '~/common/validators';
 import PopoverHint from '../PopoverHint';
 
-const ValidationItem = ({ itemText, isValid, touched }) => {
-  let variant;
-  let iconAlt = '';
+import './ReduxRichInputField.scss';
 
-  if (!itemText) {
+const ValidationItem = ({ text, touched, isValid, isValidating, isInitialized }) => {
+  if (!text) {
     return null;
   }
 
+  let variant;
+  let iconAlt = '';
   if (touched) {
-    variant = isValid ? 'success' : 'error';
-    iconAlt = isValid ? 'Satisfied: ' : 'Not met: ';
+    if (!isInitialized || isValidating) {
+      variant = 'indeterminate';
+      iconAlt = 'Pending: ';
+    } else {
+      variant = isValid ? 'success' : 'error';
+      iconAlt = isValid ? 'Satisfied: ' : 'Not met: ';
+    }
   }
 
   return (
-    <HelperTextItem variant={variant} hasIcon isDynamic component="li" key={itemText}>
+    <HelperTextItem variant={variant} hasIcon isDynamic component="li" key={text}>
       <span className="pf-u-screen-reader">{iconAlt}</span>
-      {itemText}
+      {text}
     </HelperTextItem>
   );
 };
 
-const ValidationIconButton = ({ isValid, touched, onClick }) => {
+const ValidationIconButton = ({ touched, isValid, isValidating, onClick }) => {
   let icon = <InfoCircleIcon className="redux-rich-input-field-icon_info" />;
   let label = 'Validation rules';
   let className = 'redux-rich-input-field-button_info';
 
   if (touched) {
-    icon = isValid ? (
-      <CheckCircleIcon className="redux-rich-input-field-icon_success" />
-    ) : (
-      <ExclamationCircleIcon className="redux-rich-input-field-icon_danger" />
-    );
-    label = isValid ? 'All validation rules met' : 'Not all validation rules met';
-    className = isValid
-      ? 'redux-rich-input-field-button_valid'
-      : 'redux-rich-input-field-button_not-valid';
+    if (isValidating) {
+      icon = <SpinnerIcon className="redux-rich-input-field-icon_info" />;
+      label = 'Validation in progress';
+    } else if (isValid) {
+      icon = <CheckCircleIcon className="redux-rich-input-field-icon_success" />;
+      label = 'All validation rules met';
+      className = 'redux-rich-input-field-button_valid';
+    } else {
+      icon = <ExclamationCircleIcon className="redux-rich-input-field-icon_danger" />;
+      label = 'Not all validation rules met';
+      className = 'redux-rich-input-field-button_not-valid';
+    }
   }
+
   return (
     <Button
       variant="control"
       aria-label={label}
-      onClick={onClick}
       tabindex="-1"
       className={`${className} redux-rich-input-field-button`}
+      onClick={onClick}
     >
       {icon}
     </Button>
   );
+};
+
+const validationInitialState = {
+  syncValidation: [],
+  asyncValidation: [],
+};
+
+const validationReducer = (state, action) => {
+  switch (action.type) {
+    case 'set-sync-validation':
+      return {
+        ...state,
+        syncValidation: action.payload,
+      };
+
+    case 'set-async-validation':
+      return {
+        ...state,
+        asyncValidation: action.payload,
+      };
+
+    case 'set-async-validating':
+      return {
+        ...state,
+        asyncValidation: state.asyncValidation.map((item) => ({
+          ...item,
+          validating: !!action.value,
+        })),
+      };
+
+    default:
+      throw new Error();
+  }
 };
 
 const ReduxRichInputField = (props) => {
@@ -74,6 +122,7 @@ const ReduxRichInputField = (props) => {
     formGroupClass,
     type,
     validation,
+    asyncValidation,
     helpTitle,
     helpExample,
     helpText,
@@ -81,30 +130,86 @@ const ReduxRichInputField = (props) => {
     value,
     onChange,
   } = props;
-
-  const [showPopover, setShowPopover] = React.useState(false);
-  const [isFocused, setIsFocused] = React.useState(false);
-  const [touched, setTouched] = React.useState(false);
-
   // Use value pass from redux forms else use props
   const inputValue = input ? input.value : value;
   const inputName = input ? input.name : name;
   const inputOnChange = input ? input.onChange : onChange;
 
-  React.useEffect(() => {
-    if (inputValue.length > 0) {
+  const textInputRef = createRef();
+
+  const [touched, setTouched] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [showPopover, setShowPopover] = useState(false);
+
+  const [validationState, validationDispatch] = useReducer(
+    validationReducer,
+    validationInitialState,
+  );
+
+  const evaluatedValidation = [].concat(
+    validationState.syncValidation,
+    validationState.asyncValidation,
+  );
+  const isValid = !touched || !evaluatedValidation.some((item) => item.validated === false);
+  const isValidating = touched && validationState.asyncValidation.some((item) => item.validating);
+
+  let inputClassName = 'redux-rich-input-field_info';
+  if (touched && !isValidating) {
+    inputClassName = isValid ? 'redux-rich-input-field_valid' : 'redux-rich-input-field_not-valid';
+  }
+
+  const populateValidation = (term) => {
+    const populatedValidation = validation(term);
+    validationDispatch({
+      type: 'set-sync-validation',
+      payload: populatedValidation,
+    });
+    return populatedValidation;
+  };
+
+  const populateAsyncValidation = (term) => {
+    const populatedValidation = asyncValidation(term);
+    validationDispatch({
+      type: 'set-async-validation',
+      payload: populatedValidation,
+    });
+    return populatedValidation;
+  };
+
+  const evaluateAsyncValidation = async (term) => {
+    validationDispatch({ type: 'set-async-validating', value: true });
+    const evaluatedAsyncValidation = await evaluateClusterNameAsyncValidation(term);
+    validationDispatch({ type: 'set-async-validation', payload: evaluatedAsyncValidation });
+    validationDispatch({ type: 'set-async-validating', value: false });
+  };
+
+  const triggerAsyncValidation = async (blurEvent) => {
+    // triggers the form async validation (to prevent "next" navigation if field is invalid)
+    input.onBlur(blurEvent);
+    // recalculates the component data for rendering
+    await evaluateAsyncValidation(blurEvent?.target.value ?? inputValue);
+  };
+
+  useEffect(() => {
+    if (inputValue?.length) {
       setTouched(true);
     }
   }, []);
 
-  const isValid = !touched || !validation(inputValue).some((item) => !item.validated);
+  useEffect(() => {
+    if (!isValid) {
+      setShowPopover(true);
+    }
+  }, [isValid]);
 
-  const textInputRef = React.createRef();
+  useEffect(() => {
+    populateValidation(inputValue);
+    populateAsyncValidation(inputValue);
+  }, [inputValue]);
 
-  let inputClassName = 'redux-rich-input-field_info';
-  if (touched) {
-    inputClassName = isValid ? 'redux-rich-input-field_valid' : 'redux-rich-input-field_not-valid';
-  }
+  useEffect(() => {
+    triggerAsyncValidation();
+  }, []);
 
   return (
     <FormGroup
@@ -132,8 +237,14 @@ const ReduxRichInputField = (props) => {
         bodyContent={
           <>
             <HelperText component="ul" id={`redux-rich-input-popover-${inputName}`}>
-              {validation(inputValue).map((item) => (
-                <ValidationItem itemText={item.text} isValid={item.validated} touched={touched} />
+              {evaluatedValidation.map((item) => (
+                <ValidationItem
+                  touched={touched}
+                  text={item.text}
+                  isValid={item.validated}
+                  isValidating={item.validating}
+                  isInitialized={typeof item.validated !== 'undefined'}
+                />
               ))}
             </HelperText>
           </>
@@ -151,9 +262,10 @@ const ReduxRichInputField = (props) => {
             type={type}
             autocomplete="off"
             aria-invalid={!isValid}
-            onBlur={() => {
+            onBlur={async (e) => {
               setIsFocused(false);
               setShowPopover(false);
+              await triggerAsyncValidation(e);
               setTouched(true);
             }}
             onClick={() => {
@@ -166,7 +278,7 @@ const ReduxRichInputField = (props) => {
             }}
             onChange={(val) => {
               inputOnChange(val);
-              if (!touched && val.length > 0) {
+              if (!touched && val?.length) {
                 setTouched(true);
               }
             }}
@@ -175,8 +287,9 @@ const ReduxRichInputField = (props) => {
             className={`${inputClassName} redux-rich-input-field`}
           />
           <ValidationIconButton
-            isValid={isValid}
             touched={touched}
+            isValid={isValid}
+            isValidating={isValidating}
             onClick={(e) => {
               e.stopPropagation();
               setShowPopover(true);
@@ -190,15 +303,18 @@ const ReduxRichInputField = (props) => {
 };
 
 ValidationIconButton.propTypes = {
-  isValid: PropTypes.bool,
   touched: PropTypes.bool,
+  isValid: PropTypes.bool,
+  isValidating: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
 ValidationItem.propTypes = {
-  itemText: PropTypes.string,
-  isValid: PropTypes.bool,
+  text: PropTypes.string,
   touched: PropTypes.bool,
+  isValid: PropTypes.bool,
+  isValidating: PropTypes.bool,
+  isInitialized: PropTypes.bool,
 };
 
 ReduxRichInputField.defaultProps = {
@@ -220,6 +336,7 @@ ReduxRichInputField.propTypes = {
   formGroupClass: PropTypes.string,
   type: PropTypes.string,
   validation: PropTypes.func,
+  asyncValidation: PropTypes.func,
   helpTitle: PropTypes.string,
   helpExample: PropTypes.node,
 

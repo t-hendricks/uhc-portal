@@ -103,6 +103,10 @@ const links = {
   OSD_UPGRADES: `${OSD_DOCS_BASE}/upgrading/osd-upgrades.html`,
   OSD_LIMITED_SUPPORT_DEFINITION: `${OSD_DOCS_BASE}/osd_architecture/osd_policy/osd-service-definition.html#limited-support_osd-service-definition`,
   OSD_MONITORING_STACK: `${OSD_DOCS_BASE}/osd_cluster_admin/osd_monitoring/osd-understanding-the-monitoring-stack.html`,
+  OSD_CIDR_MACHINE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#machine-cidr-description`,
+  OSD_CIDR_SERVICE: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#service-cidr-description`,
+  OSD_CIDR_POD: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#pod-cidr-description`,
+  OSD_CIDR_HOST: `${OSD_DOCS_BASE}/networking/cidr-range-definitions.html#host-prefix-description`,
 
   CLI_TOOLS_OCP_GETTING_STARTED: `${DOCS_BASE}/cli_reference/openshift_cli/getting-started-cli.html`,
 
@@ -182,12 +186,9 @@ const links = {
   RHCOS_GENERIC_INITRAMFS_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live-initramfs.x86_64.img`,
   RHCOS_GENERIC_ROOTFS_X86: `${MIRROR_RHCOS_LATEST_X86}/rhcos-live-rootfs.x86_64.img`,
 
-  INSTALL_PRE_RELEASE_BUG_LIST_45:
-    'https://bugzilla.redhat.com/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=POST&bug_status=MODIFIED&columnlist=bug_status%2Ccomponent%2Cshort_desc%2Cassigned_to_realname%2Creporter_realname%2Cchangeddate&keywords=TestBlocker&keywords_type=allwords&known_name=OCP4-3-blocker&list_id=10675364&product=OpenShift%20Container%20Platform&query_based_on=OCP4-4-blocker&query_format=advanced&target_release=4.5.0',
   INSTALL_PRE_RELEASE_INSTALLER_DOC: 'https://github.com/openshift/installer/tree/master/docs/user',
-  INSTALL_PRE_RELEASE_FEEDBACK_MAILTO:
-    'mailto:***REMOVED***?subject=[dev preview build]',
-  INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/articles/4307871',
+  INSTALL_PRE_RELEASE_FEEDBACK: 'https://issues.redhat.com/projects/OCPBUGS/issues',
+  INSTALL_PRE_RELEASE_SUPPORT_KCS: 'https://access.redhat.com/support/offerings/devpreview',
 
   INSTALL_POWER_GETTING_STARTED: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html`,
   INSTALL_POWER_RHCOS_LEARN_MORE: `${DOCS_BASE}/installing/installing_ibm_power/installing-ibm-power.html#creating-machines-bare-metal-power`,

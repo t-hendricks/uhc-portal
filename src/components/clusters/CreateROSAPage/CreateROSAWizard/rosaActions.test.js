@@ -128,8 +128,9 @@ describe('rosaActions', () => {
     });
 
     it('return two users and account ids', () => {
-      const users = 'arn:aws:iam::000000000006:role/ManagedOpenShift-User-dtaylor-ocm-Role,' +
-                    'arn:aws:iam::119733383044:role/ManagedOpenShift-User-foobar-ocm-Role';
+      const users =
+        'arn:aws:iam::000000000006:role/ManagedOpenShift-User-dtaylor-ocm-Role,' +
+        'arn:aws:iam::119733383044:role/ManagedOpenShift-User-foobar-ocm-Role';
       const usersByAcctIds = rosaActions.normalizeSTSUsersByAWSAccounts(users);
       expect(usersByAcctIds.length).toEqual(2);
       expect(usersByAcctIds[0].aws_id).toEqual('000000000006');

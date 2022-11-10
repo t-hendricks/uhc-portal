@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
 
   const product = valueSelector(state, 'product');
   const billingModel = valueSelector(state, 'billing_model');
-  const isByoc = valueSelector(state, 'byoc') === 'true';
+  const isBYOC = valueSelector(state, 'byoc') === 'true';
 
   const quotaQuery = (params) =>
     availableQuota(state.userProfile.organization.quotaList, params) > 0;
@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
       cloudProviderID: 'gcp',
       product,
       billingModel,
-      isByoc,
+      isBYOC,
     }),
 
     hasAwsQuota: quotaQuery({
@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
       cloudProviderID: 'aws',
       product,
       billingModel,
-      isByoc,
+      isBYOC,
     }),
   };
 };

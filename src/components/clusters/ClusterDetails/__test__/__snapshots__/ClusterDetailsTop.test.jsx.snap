@@ -439,6 +439,7 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           classOptions=""
           id="refresh"
           refreshFunc={[MockFunction]}
+          useShortTimer={false}
         />
       </span>
     </SplitItem>

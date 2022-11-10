@@ -15,6 +15,7 @@ import {
 import { CodeIcon } from '@patternfly/react-icons';
 
 import links, { tools, channels } from '../../../../common/installLinks.mjs';
+import ExternalLink from '../../../common/ExternalLink';
 import TelemetryDisclaimer from './components/TelemetryDisclaimer';
 import TokenErrorAlert from './components/TokenErrorAlert';
 import DownloadsAndPullSecretSection from './components/DownloadsAndPullSecretSection';
@@ -40,22 +41,23 @@ function InstructionsPreRelease({ token, installer }) {
                 <Text component="p">
                   As Red Hat OpenShift Container Platform (OCP) has moved to become a more agile and
                   rapidly deployable Kubernetes offering, we want to allow existing and evaluation
-                  customers and partners access to the latest pre-release nightly builds to see a
-                  real-time view into the next version of OpenShift.
+                  customers and partners access to the latest pre-release builds to see a real-time
+                  view into the next version of OpenShift.
                 </Text>
                 <DeveloperPreviewStatements />
                 <Text component="p">
-                  These nightly builds are useful for those who would like to stay up to date on
-                  features being developed in the next release of OpenShift. Such builds are
-                  advantageous for planning future deployments, ISV integrations, or other
-                  educational purposes.
+                  These builds are useful for anyone who would like to stay up to date on features
+                  being developed in the next release of OpenShift. Such builds are advantageous for
+                  planning future deployments, ISV integrations, or other educational, test, and
+                  explorational purposes.
                 </Text>
-                <Text component="h3">Feature Completion in Nightly Builds</Text>
+                <Text component="h3">Feature Completion in Developer Preview Versions</Text>
                 <Text component="p">
-                  Each OpenShift minor release will target initiatives or focus areas. These
-                  features will not be the same in every nightly build. Because these are
-                  experimental nightly builds, some features may be incomplete or have bugs. This is
-                  the beauty of the development process.
+                  Each OpenShift minor release will target initiatives or focus areas. Because
+                  pre-release versions are published before all features have been implemented and
+                  tested, some features may be absent, incomplete, or buggy. This is the beauty of
+                  the development process, allowing early access, so customers and partners can
+                  experiment and provide early feedback.
                 </Text>
               </TextContent>
             </CardBody>
@@ -76,21 +78,16 @@ function InstructionsPreRelease({ token, installer }) {
               <TextContent>
                 <Text component="h3">Feedback and Support</Text>
                 <Text component="p">
-                  If you are a Red Hat customer or partner and have feedback about these nightly
-                  builds, email{' '}
-                  <Text component="a" href={links.INSTALL_PRE_RELEASE_FEEDBACK_MAILTO}>
-                    ***REMOVED***
-                  </Text>
+                  If you are a Red Hat customer or partner and have feedback about these developer
+                  preview versions, file an issue via{' '}
+                  <ExternalLink href={links.INSTALL_PRE_RELEASE_FEEDBACK}>
+                    the OpenShift Bugs tracker
+                  </ExternalLink>
                   . Do not use the formal Red Hat support service ticket process. You can read more
                   about support handling in the following{' '}
-                  <Text
-                    component="a"
-                    href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS}
-                    rel="noreferrer noopener"
-                    target="_blank"
-                  >
+                  <ExternalLink href={links.INSTALL_PRE_RELEASE_SUPPORT_KCS}>
                     knowledge article
-                  </Text>
+                  </ExternalLink>
                   .
                 </Text>
               </TextContent>

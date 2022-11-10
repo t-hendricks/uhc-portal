@@ -14,7 +14,7 @@ exports[`<DevPreviewBadge> renders 1`] = `
         Developer preview features provide early access to upcoming product innovations, enabling you to test functionality and provide feedback during the development process.
       </div>
       <ExternalLink
-        href="https://access.redhat.com/articles/4307871"
+        href="https://access.redhat.com/support/offerings/devpreview"
       >
         Learn more
       </ExternalLink>
