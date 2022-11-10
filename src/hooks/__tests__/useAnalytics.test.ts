@@ -45,8 +45,8 @@ describe('useAnalytics', () => {
     getTrackEventMock.mockReturnValue(getTrackEventValue);
 
     // object event with object options
-    const trackEvent = { a: 'b' };
-    const trackOptions = { x: 'y' };
+    const trackEvent = { event: 'a', link_name: 'b' };
+    const trackOptions = { url: 'y' };
     track(trackEvent, trackOptions);
     expect(getTrackEventMock).toHaveBeenCalledWith(trackEvent, trackOptions);
     expect(analyticsTrackMock).toHaveBeenCalledWith(

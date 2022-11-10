@@ -57,9 +57,8 @@ const routes = [
   { path: '/releases', metadata: { ocm_resource_type: 'ocp' } },
 ].map((route) =>
   Object.assign(route, {
-    // eslint-disable-next-line object-shorthand, func-names
-    toString: function () {
-      return this.path;
+    toString() {
+      return route.path;
     },
   }),
 );
