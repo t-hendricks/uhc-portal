@@ -134,6 +134,12 @@ function AccountsRolesScreen({
     }
   }, [getAWSAccountIDsResponse]);
 
+  useEffect(() => {
+    if (getUserRoleResponse?.error || noUserForSelectedAWSAcct) {
+      track(trackEvents.MissingUserRole);
+    }
+  }, [getUserRoleResponse?.error, noUserForSelectedAWSAcct]);
+
   const onAssociateAwsAccountModalClose = () => {
     setIsAssocAwsAccountModalOpen(false);
     clearGetAWSAccountIDsResponse();
