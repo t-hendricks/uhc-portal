@@ -4,7 +4,7 @@ import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
 
 const ExternalLink = ({ href, children, noIcon, noTarget, className }: ExternalLinkProps) => {
-  const { track } = useAnalytics();
+  const track = useAnalytics();
 
   const currentUrl = window.location.href;
   const moduleValue = 'openshift';
