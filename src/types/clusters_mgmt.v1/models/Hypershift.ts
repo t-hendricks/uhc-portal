@@ -3,11 +3,11 @@
 /* eslint-disable */
 
 /**
- * HyperShift configuration.
+ * Hypershift configuration.
  */
-export type HyperShift = {
+export type Hypershift = {
   /**
-   * Boolean flag indicating if the cluster should be creating using _HyperShift_.
+   * Boolean flag indicating if the cluster should be creating using _Hypershift_.
    *
    * By default this is `false`.
    *

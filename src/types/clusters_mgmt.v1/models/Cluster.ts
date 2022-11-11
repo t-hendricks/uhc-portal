@@ -19,9 +19,10 @@ import type { DNS } from './DNS';
 import type { ExternalConfiguration } from './ExternalConfiguration';
 import type { Flavour } from './Flavour';
 import type { GCP } from './GCP';
+import type { GCPEncryptionKey } from './GCPEncryptionKey';
 import type { GCPNetwork } from './GCPNetwork';
 import type { Group } from './Group';
-import type { HyperShift } from './HyperShift';
+import type { Hypershift } from './Hypershift';
 import type { IdentityProvider } from './IdentityProvider';
 import type { InflightCheck } from './InflightCheck';
 import type { Ingress } from './Ingress';
@@ -114,6 +115,10 @@ export type Cluster = {
    */
   gcp?: GCP;
   /**
+   * Key used for encryption of GCP cluster nodes.
+   */
+  gcp_encryption_key?: GCPEncryptionKey;
+  /**
    * GCP Network.
    */
   gcp_network?: GCPNetwork;
@@ -148,11 +153,6 @@ export type Cluster = {
    */
   disable_user_workload_monitoring?: boolean;
   /**
-   * Name of the cluster for display purposes. It can contain any
-   * characters, including spaces.
-   */
-  display_name?: string;
-  /**
    * Indicates whether that etcd is encrypted or not.
    * This is set only during cluster creation.
    */
@@ -186,9 +186,9 @@ export type Cluster = {
    */
   health_state?: ClusterHealthState;
   /**
-   * HyperShift configuration.
+   * Hypershift configuration.
    */
-  hypershift?: HyperShift;
+  hypershift?: Hypershift;
   /**
    * Link to the collection of identity providers of the cluster.
    */
@@ -197,6 +197,10 @@ export type Cluster = {
    * List of inflight checks on this cluster.
    */
   inflight_checks?: Array<InflightCheck>;
+  /**
+   * InfraID is used for example to name the VPCs.
+   */
+  infra_id?: string;
   /**
    * List of ingresses on this cluster.
    */
