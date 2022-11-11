@@ -4,6 +4,7 @@
 
 import type { AddOn } from './AddOn';
 import type { AddOnParameterOption } from './AddOnParameterOption';
+import type { AddOnRequirement } from './AddOnRequirement';
 
 /**
  * Representation of an add-on parameter.
@@ -26,6 +27,10 @@ export type AddOnParameter = {
    */
   addon?: AddOn;
   /**
+   * Conditions in which this parameter is valid for
+   */
+  conditions?: Array<AddOnRequirement>;
+  /**
    * Indicates the value default for the add-on parameter.
    */
   default_value?: string;
@@ -37,6 +42,11 @@ export type AddOnParameter = {
    * Indicates if this parameter can be edited after creation.
    */
   editable?: boolean;
+  /**
+   * Restricts if the parameter can be upscaled/downscaled
+   * Expected values are "up", "down", or "" (no restriction).
+   */
+  editable_direction?: string;
   /**
    * Indicates if this parameter is enabled for the add-on.
    */

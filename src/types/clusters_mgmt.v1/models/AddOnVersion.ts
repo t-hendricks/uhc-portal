@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { AdditionalCatalogSource } from './AdditionalCatalogSource';
 import type { AddOnConfig } from './AddOnConfig';
 import type { AddOnParameter } from './AddOnParameter';
 import type { AddOnRequirement } from './AddOnRequirement';
@@ -24,6 +25,10 @@ export type AddOnVersion = {
    */
   href?: string;
   /**
+   * Additional catalog sources associated with this addon version
+   */
+  additional_catalog_sources?: Array<AdditionalCatalogSource>;
+  /**
    * AvailableUpgrades is the list of versions this version can be upgraded to.
    */
   available_upgrades?: Array<string>;
@@ -43,6 +48,10 @@ export type AddOnVersion = {
    * List of parameters for this add-on version.
    */
   parameters?: Array<AddOnParameter>;
+  /**
+   * The pull secret name used for this addon version.
+   */
+  pull_secret_name?: string;
   /**
    * List of requirements for this add-on version.
    */

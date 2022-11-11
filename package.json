@@ -229,7 +229,7 @@
     "selenium-viewer": "wait-on tcp:5900 && vinagre --file=run/selenium.vnc",
     "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh rm --force browser; pkill --full 'concurrently.*SERVER(prevent self match){0},MOCK'; pkill --full 'concurrently.*BROWSER(prevent self match){0},TEST'; true",
     "prepare": "husky install",
-    "gen-types": "node scripts/gen-openapi-typescript.js"
+    "gen-types": "node scripts/gen-openapi-typescript.js && prettier --write 'src/types/**/*.ts'"
   },
   "insights": {
     "appname": "openshift"

@@ -15,6 +15,10 @@ export type Subnetwork = {
    */
   name?: string;
   /**
+   * Whether it is a public subnet
+   */
+  public?: boolean;
+  /**
    * The subnet id to be used while installing a cluster
    */
   subnet_id?: string;

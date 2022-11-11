@@ -4,9 +4,14 @@
 /backend
 /build/
 /node_modules/
+/run/ocm-api-model/
+/run/ocm-api-metamodel/
 /run/insights-proxy/
+
+# No longer `git clone`d, kept here in case anyone has them checked out:
 /run/cucushift/
 /run/verification-tests/
+
 /run/output
 /vendor/
 backend-config.yml

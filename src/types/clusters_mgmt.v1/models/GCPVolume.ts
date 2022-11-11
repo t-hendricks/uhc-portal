@@ -3,13 +3,9 @@
 /* eslint-disable */
 
 /**
- * Holds settings for an AWS storage volume.
+ * Holds settings for an GCP storage volume.
  */
-export type AWSVolume = {
-  /**
-   * Volume provisioned IOPS.
-   */
-  iops?: number;
+export type GCPVolume = {
   /**
    * Volume size in Gib.
    */

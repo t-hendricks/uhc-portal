@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 import type { AddOnEnvironmentVariable } from './AddOnEnvironmentVariable';
+import type { AddOnSecretPropagation } from './AddOnSecretPropagation';
 
 /**
  * Representation of an add-on config.
@@ -25,4 +26,8 @@ export type AddOnConfig = {
    * List of environment variables for the addon
    */
   add_on_environment_variables?: Array<AddOnEnvironmentVariable>;
+  /**
+   * List of secret propagations for the addon
+   */
+  secret_propagations?: Array<AddOnSecretPropagation>;
 };
