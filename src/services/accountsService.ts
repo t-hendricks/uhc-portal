@@ -19,7 +19,7 @@ import type {
   STSAccountRole,
   STSAccountRolesList,
   STSCredentialRequest,
-} from '../types/cluster_mgmt.v1';
+} from '../types/clusters_mgmt.v1';
 
 const getCurrentAccount = () => apiRequest.get<Account>('/api/accounts_mgmt/v1/current_account');
 
@@ -130,6 +130,7 @@ const getOrganizationQuota = (organizationID: string) =>
     {
       params: {
         fetchRelatedResources: true,
+        fetchCloudAccounts: true,
       },
     },
   );

@@ -51,6 +51,12 @@ const clearClusterAddOnsResponses = () => ({
   type: AddOnsConstants.CLEAR_CLUSTER_ADDON_RESPONSES,
 });
 
+const setAddonsDrawer = (drawerData) => (dispatch) =>
+  dispatch({
+    type: AddOnsConstants.SET_ADDONS_DRAWER,
+    payload: drawerData,
+  });
+
 const addOnsActions = {
   getAddOns,
   getClusterAddOns,
@@ -68,4 +74,5 @@ export {
   updateClusterAddOn,
   deleteClusterAddOn,
   clearClusterAddOnsResponses,
+  setAddonsDrawer,
 };

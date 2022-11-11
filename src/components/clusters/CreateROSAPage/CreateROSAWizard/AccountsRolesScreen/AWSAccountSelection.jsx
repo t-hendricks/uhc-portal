@@ -10,6 +10,7 @@ import {
   Title,
   EmptyStateBody,
   EmptyState,
+  Tooltip,
 } from '@patternfly/react-core';
 import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
@@ -36,24 +37,26 @@ function AWSAccountSelection({
     ...inputProps
   },
   isDisabled,
+  isLoading,
   label,
   meta: { error, touched },
   extendedHelpText,
   selectedAWSAccountID,
   AWSAccountIDs,
   launchAssocAWSAcctModal,
-  initialValue,
+  onRefresh,
 }) {
-  const { track } = useAnalytics();
+  const track = useAnalytics();
   const [isOpen, setIsOpen] = useState(false);
   const associateAWSAccountBtnRef = React.createRef();
+  const hasAWSAccounts = AWSAccountIDs.length > 0;
 
   useEffect(() => {
-    // only scroll to associateAWSAccountBtn when no AWS account id selected
-    if (isOpen === true && !selectedAWSAccountID && AWSAccountIDs.length === 0) {
+    // only scroll to associateAWSAccountBtn when no AWS accounts
+    if (isOpen === true && !hasAWSAccounts) {
       associateAWSAccountBtnRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [isOpen, selectedAWSAccountID, AWSAccountIDs]);
+  }, [isOpen, hasAWSAccounts]);
 
   const onToggle = (toogleOpenValue) => {
     setIsOpen(toogleOpenValue);
@@ -73,10 +76,11 @@ function AWSAccountSelection({
 
   const footer = (
     <>
-      {AWSAccountIDs.length === 0 && <NoAssociatedAWSAccounts />}
+      {!hasAWSAccounts && <NoAssociatedAWSAccounts />}
       <Button
         ref={associateAWSAccountBtnRef}
         variant="secondary"
+        data-test-id="refresh-aws-accounts"
         onClick={(event) => {
           track(trackEvents.AssociateAWS);
           launchModal(event);
@@ -91,6 +95,7 @@ function AWSAccountSelection({
     <FormGroup
       label={label}
       labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
+      className="aws-account-selection"
       validated={error ? 'error' : undefined}
       helperTextInvalid={touched && error}
       isRequired
@@ -100,7 +105,7 @@ function AWSAccountSelection({
         label={label}
         labelIcon={extendedHelpText && <PopoverHint hint={extendedHelpText} />}
         isOpen={isOpen}
-        selections={inputProps.value || initialValue || ''}
+        selections={hasAWSAccounts ? selectedAWSAccountID : ''}
         onToggle={onToggle}
         onSelect={onSelect}
         isDisabled={isDisabled}
@@ -115,12 +120,29 @@ function AWSAccountSelection({
           >{`${awsId}`}</SelectOption>
         ))}
       </Select>
+      {onRefresh && (
+        <Tooltip content={<p>Click icon to refresh associated aws accounts and account-roles.</p>}>
+          <Button
+            isLoading={isLoading}
+            isDisabled={isDisabled}
+            isInline
+            isSmall
+            variant="secondary"
+            onClick={() => {
+              onRefresh();
+            }}
+          >
+            Refresh
+          </Button>
+        </Tooltip>
+      )}
     </FormGroup>
   );
 }
 
 AWSAccountSelection.propTypes = {
   isDisabled: PropTypes.bool,
+  isLoading: PropTypes.bool,
   label: PropTypes.string,
   input: PropTypes.shape({
     value: PropTypes.string,
@@ -136,6 +158,7 @@ AWSAccountSelection.propTypes = {
     touched: PropTypes.bool,
     error: PropTypes.string,
   }),
+  onRefresh: PropTypes.func,
 };
 
 export { AWS_ACCT_ID_PLACEHOLDER };

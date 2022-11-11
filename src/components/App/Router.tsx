@@ -27,6 +27,7 @@ import { ConnectedRouter } from 'connected-react-router';
 import get from 'lodash/get';
 import { connect } from 'react-redux';
 import { OCM } from 'openshift-assisted-ui-lib';
+import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 
 import TermsGuardedRoute from './TermsGuardedRoute';
 import apiRequest from '../../services/apiRequest';
@@ -79,7 +80,7 @@ import ConnectedInstallPower from '../clusters/install/InstallPower';
 import ConnectedInstallPowerPreRelease from '../clusters/install/InstallPowerPreRelease';
 import ConnectedInstallArmPreRelease from '../clusters/install/InstallArmPreRelease';
 import DownloadsPage from '../downloads/DownloadsPage';
-import Tokens from '../tokens/Tokens';
+import Tokens from '../tokens';
 import TokensROSA from '../tokens/TokensROSA';
 import NotFoundError from './NotFoundError';
 import Quota from '../quota';
@@ -103,7 +104,6 @@ import EntitlementConfig from '../common/EntitlementConfig/index';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
 import ClusterDetailsClusterOrExternalId from '../clusters/ClusterDetails/ClusterDetailsClusterOrExternalId';
-import useAnalytics from '~/hooks/useAnalytics';
 import { CreateOsdWizard } from '../osd';
 import { metadataByRoute, is404 } from './routeMetadata';
 import { useFeatures } from './hooks';
@@ -135,7 +135,10 @@ interface RouterProps extends RouteComponentProps {
 
 const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalClusterId }) => {
   const { pathname } = useLocation();
-  const { setPageMetadata } = useAnalytics();
+
+  const {
+    segment: { setPageMetadata },
+  } = useChrome();
   const { [OSD_WIZARD_V2_FEATURE]: isOsdWizardV2Enabled } = useFeatures();
 
   useEffect(() => {

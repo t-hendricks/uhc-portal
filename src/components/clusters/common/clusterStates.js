@@ -104,6 +104,17 @@ const getClusterAIPermissions = (cluster) => ({
   canEdit: cluster.canEdit,
 });
 
+const getClusterAIExtraInfo = (organization) => {
+  const capabilities = organization.details?.capabilities ?? [];
+
+  const found = capabilities.find(
+    (capability) => capability.name === 'capability.organization.bare_metal_installer_multiarch',
+  );
+  return {
+    canSelectCpuArchitecture: found?.value === 'true',
+  };
+};
+
 export {
   getClusterStateAndDescription,
   isHibernating,
@@ -112,5 +123,6 @@ export {
   isROSAManualMode,
   isWaitingROSAManualMode,
   getClusterAIPermissions,
+  getClusterAIExtraInfo,
 };
 export default clusterStates;

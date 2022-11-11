@@ -54,8 +54,10 @@ exports[`<Tokens /> Renders loading screen 1`] = `
               >
                 Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
               </Text>
-              <Skeleton
-                size="md"
+              <InstructionCommand
+                className="ocm-c-api-token-limit-width"
+                limitWidth={false}
+                textAriaLabel="Copyable token"
               />
               <Title
                 headingLevel="h3"
@@ -89,9 +91,31 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                   <Text
                     component="p"
                   />
-                  <Skeleton
-                    size="md"
-                  />
+                  <Text
+                    component="pre"
+                  >
+                    <ClipboardCopy
+                      additionalActions={null}
+                      className="ocm-c-api-token-limit-width"
+                      clickTip="Successfully copied to clipboard!"
+                      entryDelay={300}
+                      exitDelay={1500}
+                      hoverTip="Copy to clipboard"
+                      isCode={false}
+                      isExpanded={false}
+                      isReadOnly={true}
+                      maxWidth="150px"
+                      onChange={[Function]}
+                      onCopy={[Function]}
+                      ouiaSafe={true}
+                      position="top"
+                      textAriaLabel="Copyable command"
+                      toggleAriaLabel="Show content"
+                      variant="expansion"
+                    >
+                      ocm login --token="undefined"
+                    </ClipboardCopy>
+                  </Text>
                 </ListItem>
               </List>
               <Title
@@ -107,16 +131,14 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                   ocm
                    login --help
                 </code>
-                 for in-terminal guidance, or
-                 
+                 for in-terminal guidance, or 
                 <ExternalLink
                   href="https://access.redhat.com/articles/6114701"
                   noIcon={true}
                 >
                   read more about setting up the ocm CLI
                 </ExternalLink>
-                 for more information about setting up the
-                 
+                 for more information about setting up the 
                 <code>
                   ocm
                 </code>
@@ -376,8 +398,10 @@ exports[`<Tokens /> Renders token 1`] = `
               >
                 Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
               </Text>
-              <Skeleton
-                size="md"
+              <InstructionCommand
+                className="ocm-c-api-token-limit-width"
+                limitWidth={false}
+                textAriaLabel="Copyable token"
               />
               <Title
                 headingLevel="h3"
@@ -411,9 +435,31 @@ exports[`<Tokens /> Renders token 1`] = `
                   <Text
                     component="p"
                   />
-                  <Skeleton
-                    size="md"
-                  />
+                  <Text
+                    component="pre"
+                  >
+                    <ClipboardCopy
+                      additionalActions={null}
+                      className="ocm-c-api-token-limit-width"
+                      clickTip="Successfully copied to clipboard!"
+                      entryDelay={300}
+                      exitDelay={1500}
+                      hoverTip="Copy to clipboard"
+                      isCode={false}
+                      isExpanded={false}
+                      isReadOnly={true}
+                      maxWidth="150px"
+                      onChange={[Function]}
+                      onCopy={[Function]}
+                      ouiaSafe={true}
+                      position="top"
+                      textAriaLabel="Copyable command"
+                      toggleAriaLabel="Show content"
+                      variant="expansion"
+                    >
+                      ocm login --token="undefined"
+                    </ClipboardCopy>
+                  </Text>
                 </ListItem>
               </List>
               <Title
@@ -429,16 +475,14 @@ exports[`<Tokens /> Renders token 1`] = `
                   ocm
                    login --help
                 </code>
-                 for in-terminal guidance, or
-                 
+                 for in-terminal guidance, or 
                 <ExternalLink
                   href="https://access.redhat.com/articles/6114701"
                   noIcon={true}
                 >
                   read more about setting up the ocm CLI
                 </ExternalLink>
-                 for more information about setting up the
-                 
+                 for more information about setting up the 
                 <code>
                   ocm
                 </code>

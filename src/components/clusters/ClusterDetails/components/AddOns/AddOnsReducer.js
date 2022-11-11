@@ -19,6 +19,27 @@ const initialState = {
     clusterID: undefined,
     items: [],
   },
+  drawer: {
+    // handle open drawer
+    open: false,
+    // active card states mapping addon to card components
+    activeCard: null,
+    // active card addon requirement state
+    activeCardRequirementsFulfilled: true,
+    activeCardRequirements: null,
+    // current active card if installed state
+    installedAddOn: null,
+    // add-on billing models
+    // {
+    //   standard: { cost: 1, allowed: 15, consumed: 1 }
+    //   marketplace: { cost: 1, allowed: 15, consumed: 1, cloudAccounts: { rhm: [{ cloud_account_id: 'id', cloud_provider_id: 'rhm'}], aws: [], azure: []}  }
+    // }
+    billingQuota: null,
+    // active card tabs
+    activeTabKey: 0,
+    // 'managed-odh': { addOn: 'managed-odh', billingModel: 'marketplace-aws', cloudAccount: '000000000004' }
+    subscriptionModels: {},
+  },
   addClusterAddOnResponse: {
     ...baseRequestState,
   },
@@ -35,6 +56,15 @@ function AddOnsReducer(state = initialState, action) {
   return produce(state, (draft) => {
     // eslint-disable-next-line default-case
     switch (action.type) {
+      case AddOnsConstants.SET_ADDONS_DRAWER:
+        return {
+          ...state,
+          drawer: {
+            ...state.drawer,
+            ...action.payload,
+          },
+        };
+
       case AddOnsConstants.CLEAR_CLUSTER_ADDON_RESPONSES:
         return {
           ...initialState,

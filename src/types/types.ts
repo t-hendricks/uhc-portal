@@ -1,7 +1,7 @@
 import type React from 'react';
-import type { Cluster as AICluster } from 'openshift-assisted-ui-lib/cim';
+import type { Cluster as AICluster } from 'openshift-assisted-ui-lib/ocm';
 import type { OneMetric, Subscription } from './accounts_mgmt.v1';
-import type { Cluster, Subnetwork, VersionGateAgreement } from './cluster_mgmt.v1';
+import type { Cluster, Subnetwork, VersionGateAgreement } from './clusters_mgmt.v1';
 
 export type ViewOptions = {
   currentPage: number;
@@ -37,6 +37,7 @@ export type FakeCluster = // AICluster &
     state?: /* ClusterState | AICluster['status'] | */ string;
     ['subscription_id']?: string;
     ['activity_timestamp']?: string;
+    ['cpu_architecture']?: string;
     product?: Cluster['product'] & { type?: string };
   };
 

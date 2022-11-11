@@ -8,7 +8,7 @@ import useAnalytics from '~/hooks/useAnalytics';
 import { trackEvents } from '~/common/analytics';
 
 function DownloadPullSecret({ token, pendoID, text }) {
-  const { track } = useAnalytics();
+  const track = useAnalytics();
   const isDisabled = !token || !!token.error || isEmpty(token);
   const tokenView = token.error ? '' : `${JSON.stringify(token)}\n`;
 

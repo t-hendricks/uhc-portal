@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { FormikValues, useFormikContext } from 'formik';
+import { FormikValues, useFormikContext, setNestedObjectValues } from 'formik';
 
 import { Button } from '@patternfly/react-core';
 import { useWizardContext } from '@patternfly/react-core/dist/esm/next';
@@ -12,21 +12,18 @@ import { StepId } from './constants';
 
 export const CreateOsdWizardFooter = () => {
   const dispatch = useDispatch();
-  const ccsInquiries = useGlobalState((state) => state.ccsInquiries);
+  const ccsCredentialsValidity = useGlobalState(
+    (state) => state.ccsInquiries.ccsCredentialsValidity,
+  );
   const { onNext, onBack, onClose, activeStep, steps } = useWizardContext();
   const { values, validateForm, setTouched } = useFormikContext<FormikValues>();
 
   const onValidateNext = async () => {
-    const { ccsCredentialsValidity } = ccsInquiries;
     const validateCcsCredentials = shouldValidateCcsCredentials(values, ccsCredentialsValidity);
-    const errors = await validateForm(values);
-    const touched = Object.keys(errors).reduce((acc: Record<string, boolean>, fieldName) => {
-      acc[fieldName] = true;
-      return acc;
-    }, {});
+    const errors = await validateForm();
 
     if (Object.keys(errors || {}).length > 0) {
-      setTouched(touched);
+      setTouched(setNestedObjectValues(errors, true));
       scrollToFirstError(errors as Record<string, string>);
       return;
     }

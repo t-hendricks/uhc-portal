@@ -4,6 +4,7 @@ const ADD_CLUSTER_ADDON = 'ADD_CLUSTER_ADDON';
 const UPDATE_CLUSTER_ADDON = 'UPDATE_CLUSTER_ADDON';
 const DELETE_CLUSTER_ADDON = 'DELETE_CLUSTER_ADDON';
 const CLEAR_CLUSTER_ADDON_RESPONSES = 'CLEAR_CLUSTER_ADDON_RESPONSES';
+const SET_ADDONS_DRAWER = 'SET_ADDONS_DRAWER';
 
 const AddOnsConstants = {
   GET_ADDONS,
@@ -21,6 +22,7 @@ const AddOnsConstants = {
     FAILED: 'failed',
     READY: 'ready',
   },
+  SET_ADDONS_DRAWER,
 };
 
 export default AddOnsConstants;

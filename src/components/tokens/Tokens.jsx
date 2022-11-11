@@ -37,30 +37,44 @@ import {
   TextContent,
   Title,
 } from '@patternfly/react-core';
-
+import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import links, { tools, channels } from '../../common/installLinks.mjs';
 import Breadcrumbs from '../common/Breadcrumbs';
 import ExternalLink from '../common/ExternalLink';
 import DevPreviewBadge from '../common/DevPreviewBadge';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
 import './Tokens.scss';
+import InstructionCommand from '../common/InstructionCommand';
+import { doOffline, loadOfflineToken } from './TokenUtils';
 
 /**
  * Generates a box for containing the value of a token.
  */
-const tokenBox = (token) =>
+const tokenBox = ({
+  token,
+  command = '',
+  textAriaLabel = 'Copyable token',
+  className = 'ocm-c-api-token-limit-width',
+  limitWidth = true,
+  ...props
+}) =>
   token === null ? (
-    <Skeleton size="md" />
+    <>
+      <div className="pf-u-mb-xs">
+        <Spinner size="sm" className="progressing-icon" />
+        <span>Loading token, this might take a minute</span>
+      </div>
+      <Skeleton size="md" />
+    </>
   ) : (
-    <Text component="pre">
-      <ClipboardCopy
-        isReadOnly
-        className="ocm-c-api-token-limit-width"
-        textAriaLabel="Copyable token"
-      >
-        {token}
-      </ClipboardCopy>
-    </Text>
+    <InstructionCommand
+      className={className}
+      textAriaLabel={textAriaLabel}
+      limitWidth={limitWidth}
+      {...props}
+    >
+      {command || token}
+    </InstructionCommand>
   );
 
 /**
@@ -114,7 +128,7 @@ const manageTokensCard = (show) => (
 
         {show ? (
           <Text>
-            To display a copiable version of your token, select the <b>Load token</b> button.
+            To display a copyable version of your token, select the <b>Load token</b> button.
           </Text>
         ) : (
           <Text>Refreshing this page will generate a new token.</Text>
@@ -124,41 +138,26 @@ const manageTokensCard = (show) => (
   </Card>
 );
 
-/**
- * Tries to load the offline token, a full page refresh may occur
- *
- * @param {function(string):void} onLoad
- * Callback after token load was attempted.
- * The callback gets the token or a failure reason string as a parameter.
- *
- * @param {function(string):void} onError
- * Callback after token load encountered an error.
- * The callback gets the failure reason string as a parameter.
- */
-const loadOfflineToken = (onLoad, onError) => {
-  insights.chrome.auth
-    .getOfflineToken()
-    .then((response) => {
-      // eslint-disable-next-line no-console
-      console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
-      onLoad(response.data.refresh_token);
-    })
-    .catch((reason) => {
-      if (onError) {
-        onError(reason);
-      }
-    });
-};
+const leadingInfo = () => (
+  <>
+    <Text component="p">
+      Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you to use
+      OpenShift without needing to install or upgrade your own OpenShift (Kubernetes) cluster.
+    </Text>
+    <Title headingLevel="h3">Your API token</Title>
+    <Text component="p">
+      Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
+    </Text>
+  </>
+);
+
+const docsLink = () => (
+  <ExternalLink href={links.OCM_CLI_DOCS} noIcon>
+    read more about setting up the ocm CLI
+  </ExternalLink>
+);
 
 class Tokens extends React.Component {
-  state = {
-    offlineAccessToken: null,
-  };
-
-  commandName = 'ocm';
-
-  commandTool = tools.OCM;
-
   // Should title or breadcrumbs differ for TokensROSA?
   // Maybe but but both pages show same API token, only instructions differ,
   // so should NOT say things like "rosa token" vs "ocm-cli token".
@@ -170,100 +169,67 @@ class Tokens extends React.Component {
   // after that we want the token to show, but we just loaded.
   componentDidMount() {
     document.title = this.windowTitle;
-
-    const { blockedByTerms, show } = this.props;
-    if (!blockedByTerms && show) {
+    const { blockedByTerms, show, offlineToken } = this.props;
+    if (!blockedByTerms && show && (!offlineToken || offlineToken instanceof Error)) {
       // eslint-disable-next-line no-console
       console.log('Tokens: componentDidMount, props =', this.props);
-      loadOfflineToken(this.onLoad, this.onError);
+      loadOfflineToken(this.onError);
     }
   }
 
-  onLoad = (tokenOrFailureReason) => {
-    const that = this;
-    if (tokenOrFailureReason) {
-      that.setState({ offlineAccessToken: tokenOrFailureReason });
-    }
-  };
-
   onError = (reason) => {
+    const { setOfflineToken } = this.props;
     if (reason === 'not available') {
       // eslint-disable-next-line no-console
       console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
-      insights.chrome.auth.doOffline();
+      doOffline((token) => {
+        setOfflineToken(token);
+      });
     } else {
       // eslint-disable-next-line no-console
       console.log('Tokens: getOfflineToken failed =>', reason);
-      this.onLoad(reason);
+      setOfflineToken(reason);
     }
   };
 
-  // Some methods here don't use `this`, but we can't convert to Class.method() calls,
-  // wouldn't allow TokensROSA which inhertis from Tokens to override them.
-  /* eslint-disable class-methods-use-this */
-  leadingInfo() {
-    return (
-      <>
-        <Text component="p">
-          Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you to use
-          OpenShift without needing to install or upgrade your own OpenShift (Kubernetes) cluster.
-        </Text>
-        <Title headingLevel="h3">Your API token</Title>
-        <Text component="p">
-          Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
-        </Text>
-      </>
-    );
-  }
-
-  docsLink() {
-    return (
-      <ExternalLink href={links.OCM_CLI_DOCS} noIcon>
-        read more about setting up the ocm CLI
-      </ExternalLink>
-    );
-  }
-
   tokenDetails() {
-    const { offlineAccessToken } = this.state;
-
+    const { offlineToken, commandName, commandTool, docsLink } = this.props;
     return (
       <>
-        {tokenBox(offlineAccessToken)}
+        {tokenBox({ token: offlineToken, limitWidth: false })}
 
         <Title headingLevel="h3">Using your token in the command line</Title>
         <List component="ol">
           <ListItem>
-            Download and install the <code>{this.commandName}</code> command-line tool:{' '}
-            {this.commandTool === tools.OCM && <DevPreviewBadge />}
+            Download and install the <code>{commandName}</code> command-line tool:{' '}
+            {commandTool === tools.OCM && <DevPreviewBadge />}
             <Text component="p" />
-            <DownloadAndOSSelection tool={this.commandTool} channel={channels.STABLE} />
+            <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
             <Text component="p" />
           </ListItem>
           <ListItem>
             Copy and paste the authentication command in your terminal:
             <Text component="p" />
-            {snippetBox(offlineAccessToken, this.commandName)}
+            {snippetBox(offlineToken, commandName)}
           </ListItem>
         </List>
 
         <Title headingLevel="h3">Need help connecting with your offline token?</Title>
         <Text component="p">
-          Run <code>{this.commandName} login --help</code> for in-terminal guidance, or{' '}
-          {this.docsLink()} for more information about setting up the{' '}
-          <code>{this.commandName}</code> CLI.
+          Run <code>{commandName} login --help</code> for in-terminal guidance, or {docsLink()} for
+          more information about setting up the <code>{commandName}</code> CLI.
         </Text>
       </>
     );
   }
 
   buttonOrTokenDetails() {
-    const { show, showPath } = this.props;
-    return show ? (
+    const { show, showPath, offlineToken } = this.props;
+    return show || (offlineToken && !(offlineToken instanceof Error)) ? (
       this.tokenDetails()
     ) : (
       <Link to={showPath}>
-        <Button variant="primary" onClick={() => loadOfflineToken(this.onLoad, this.onError)}>
+        <Button variant="primary" onClick={() => loadOfflineToken(this.onError)}>
           Load token
         </Button>
       </Link>
@@ -271,6 +237,7 @@ class Tokens extends React.Component {
   }
 
   render() {
+    const { leadingInfo } = this.props;
     const header = (
       <PageHeader>
         <Breadcrumbs
@@ -292,7 +259,7 @@ class Tokens extends React.Component {
                 </CardTitle>
                 <CardBody className="ocm-c-api-token__card--body">
                   <TextContent>
-                    {this.leadingInfo()}
+                    {leadingInfo()}
                     {this.buttonOrTokenDetails()}
                   </TextContent>
                 </CardBody>
@@ -308,12 +275,23 @@ class Tokens extends React.Component {
 }
 Tokens.defaultProps = {
   blockedByTerms: false,
+  commandName: 'ocm',
+  commandTool: tools.OCM,
+  leadingInfo,
+  docsLink,
 };
 Tokens.propTypes = {
   blockedByTerms: PropTypes.bool,
   show: PropTypes.bool.isRequired,
   showPath: PropTypes.string,
+  commandName: PropTypes.string,
+  commandTool: PropTypes.string,
+  leadingInfo: PropTypes.func,
+  docsLink: PropTypes.func,
+  offlineToken: PropTypes.string,
+  setOfflineToken: PropTypes.func,
 };
 
+export { snippetBox, tokenBox, manageTokensCard };
+
 export default Tokens;
-export { snippetBox, tokenBox, manageTokensCard, loadOfflineToken };

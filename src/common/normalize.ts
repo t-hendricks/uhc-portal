@@ -1,6 +1,5 @@
 import produce, { Draft } from 'immer';
 import { OCM } from 'openshift-assisted-ui-lib';
-import type { Cluster as AICluster } from 'openshift-assisted-ui-lib/cim';
 import type { AxiosResponse } from 'axios';
 import { versionComparator } from './versionComparator';
 import { normalizedProducts, clustersServiceProducts } from './subscriptionTypes';
@@ -12,11 +11,11 @@ import type {
   ClusterMetricsNodes,
   ClusterResource,
 } from '../types/accounts_mgmt.v1';
-import type { Cluster } from '../types/cluster_mgmt.v1';
+import type { Cluster } from '../types/clusters_mgmt.v1';
 import type { FakeCluster } from '../types/types';
 
 const {
-  getClustervCPUCount: getAICluterCPUCount,
+  getClustervCPUCount: getAIClusterCPUCount,
   getClusterMemoryAmount: getAIMemoryAmount,
   getMasterCount: getAICMasterCount,
   getWorkerCount: getAICWorkerCount,
@@ -205,6 +204,7 @@ const fakeClusterFromSubscription = (subscription: Subscription): FakeCluster =>
     activity_timestamp: metric ? metric.query_timestamp : subscription.last_telemetry_date,
     state: metrics.state,
     openshift_version: metrics.openshift_version,
+    cpu_architecture: metrics.arch,
     product: {
       // Omit other properties like "href", we only use the id anyway.
       id: normalizeProductID(subscription.plan?.id),
@@ -234,7 +234,7 @@ const fakeClusterFromSubscription = (subscription: Subscription): FakeCluster =>
 
 const fakeAIClusterFromSubscription = (
   subscription: Subscription,
-  aiCluster?: AICluster,
+  aiCluster?: OCM.Cluster,
 ): FakeCluster => {
   const cluster = fakeClusterFromSubscription(subscription);
   if (isAISubscriptionWithoutMetrics(subscription)) {
@@ -243,17 +243,20 @@ const fakeAIClusterFromSubscription = (
     const clusterMasters = aiCluster ? getAICMasterCount(aiCluster.hosts ?? []) : 0;
 
     cluster.metrics.memory.total.value = aiCluster ? getAIMemoryAmount(aiCluster) : 0;
-    cluster.metrics.cpu.total.value = aiCluster ? getAICluterCPUCount(aiCluster) : 0;
+    cluster.metrics.cpu.total.value = aiCluster ? getAIClusterCPUCount(aiCluster) : 0;
     cluster.metrics.nodes.total = clusterWorkers + clusterMasters;
     cluster.metrics.nodes.master = clusterMasters;
     cluster.metrics.nodes.compute = clusterWorkers;
-    // TODO openshift_version does exist on aiCluster, using openshiftVersion instead
-    cluster.metrics.openshift_version =
-      cluster.metrics.openshift_version || aiCluster?.openshiftVersion || 'N/A';
-    cluster.metrics.state = aiCluster?.status || 'N/A';
 
-    cluster.state = cluster.metrics.state;
-    cluster.openshift_version = cluster.metrics.openshift_version;
+    const openshiftVersion =
+      cluster.metrics.openshift_version || aiCluster?.openshiftVersion || 'N/A';
+    cluster.metrics.openshift_version = openshiftVersion;
+    cluster.openshift_version = openshiftVersion;
+
+    const status = aiCluster?.status || 'N/A';
+    cluster.metrics.state = status;
+    cluster.state = status;
+    cluster.cpu_architecture = cluster.metrics.arch;
   }
 
   return cluster;

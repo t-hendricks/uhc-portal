@@ -29,8 +29,8 @@ function InstallProgress({ cluster, children }) {
         {!isWaitingROSAManual && (
           <Text component={TextVariants.p} className="expected-cluster-installation-text">
             Cluster creation usually takes 30 to 60 minutes to complete.
-          </Text>)
-        }
+          </Text>
+        )}
       </CardTitle>
       <CardBody>
         {children && children[0]}

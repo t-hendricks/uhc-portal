@@ -2,16 +2,16 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { Card, CardBody, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
+import { tokenBox } from '~/components/tokens/Tokens';
 
 import { trackEvents } from '~/common/analytics';
 import { GlobalState } from '~/redux/types';
 import ExternalLink from '../../../../../common/ExternalLink';
 import DownloadAndOSSelection from '../../../../install/instructions/components/DownloadAndOSSelection';
 import links, { channels, tools } from '../../../../../../common/installLinks.mjs';
-import InstructionCommand from '../../../../../common/InstructionCommand';
 
 const AuthenticateScreen = () => {
-  const token = useSelector<GlobalState>((state) => state.modal.data);
+  const token = useSelector<GlobalState>((state) => state.rosaReducer.offlineToken);
   const loginCommand = `rosa login --token="${token}"`;
 
   return (
@@ -47,12 +47,12 @@ const AuthenticateScreen = () => {
           </Text>
         </TextContent>
         <br />
-        <InstructionCommand
-          textAriaLabel="Copyable ROSA login command"
-          trackEvent={trackEvents.ROSALogin}
-        >
-          {loginCommand}
-        </InstructionCommand>
+        {tokenBox({
+          token,
+          command: loginCommand,
+          textAriaLabel: 'Copyable ROSA login command',
+          trackEvent: trackEvents.ROSALogin,
+        })}
       </CardBody>
     </Card>
   );

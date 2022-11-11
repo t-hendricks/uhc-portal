@@ -29,12 +29,14 @@ import InstructionCommand from '../../../../common/InstructionCommand';
 import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { RosaCliCommand } from './constants/cliCommands';
 import { trackEvents } from '~/common/analytics';
-import { persistor } from '~/redux/store';
-import { loadOfflineToken } from '~/components/tokens/Tokens';
 import useAnalytics from '~/hooks/useAnalytics';
+import { loadOfflineToken, doOffline } from '~/components/tokens/TokenUtils';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
+
+export const getUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
+  users.find((user) => user.aws_id === awsAcctId);
 
 function AccountsRolesScreen({
   change,
@@ -57,40 +59,57 @@ function AccountsRolesScreen({
   isUserRoleModalOpen,
   isOCMRoleModalOpen,
   closeModal,
+  offlineToken,
+  setOfflineToken,
 }) {
   const [AWSAccountIDs, setAWSAccountIDs] = useState([]);
   const [noUserForSelectedAWSAcct, setNoUserForSelectedAWSAcct] = useState(false);
   const [awsIDsErrorBox, setAwsIDsErrorBox] = useState(null);
   const [isAssocAwsAccountModalOpen, setIsAssocAwsAccountModalOpen] = useState(false);
+  const [refreshButtonClicked, setRefreshButtonClicked] = useState(false);
   const title = 'Welcome to Red Hat OpenShift Service on AWS (ROSA)';
   const hasAWSAccounts = AWSAccountIDs.length > 0;
-  const { track } = useAnalytics();
+  const track = useAnalytics();
 
+  const resetAWSAccountFields = () => {
+    // clear certain responses; causes refetch of AWS acct info.
+    clearGetAWSAccountIDsResponse();
+    clearGetAWSAccountRolesARNsResponse();
+    clearGetUserRoleResponse();
+  };
+
+  // default product and cloud_provider form values
   useEffect(() => {
     // default product and cloud_provider form values
     change('cloud_provider', 'aws');
     change('product', normalizedProducts.ROSA);
     change('byoc', 'true');
-    clearGetAWSAccountIDsResponse();
-    clearGetAWSAccountRolesARNsResponse();
-    // in case we reloaded the page after loading the offline token, reopen the assoc aws acct modal
-    if (window.localStorage.getItem('token-reload') === 'true') {
-      window.localStorage.removeItem('token-reload');
-      loadOfflineToken(onTokenLoad, onTokenError);
+    resetAWSAccountFields();
+
+    // Load token async as soon as this wizard step is opened (unless it's been loaded before, retrieve from redux store)
+    // Initially it will error out and call onTokenError
+    // This will call doOffline which creates an iframe that goes out to the token API and redirects back to this page
+    // Inside the iframe, this same wizard step is loaded, and the loadOfflineToken function is called again
+    // This time it will succeed, and the iframe child sends the token to the parent
+    // Once the parent receives the token, it executes a function callback to pass the token into local state
+    if (!offlineToken || offlineToken instanceof Error) {
+      loadOfflineToken(onTokenError);
     }
   }, []);
 
   useEffect(() => {
-    if (getUserRoleResponse.fulfilled) {
+    if (getUserRoleResponse.fulfilled && selectedAWSAccountID) {
       const found = isUserRoleForSelectedAWSAccount(getUserRoleResponse.data, selectedAWSAccountID);
       setNoUserForSelectedAWSAcct(!found);
       clearGetUserRoleResponse();
     }
-  }, [getUserRoleResponse.fulfilled]);
+  }, [getUserRoleResponse.fulfilled, selectedAWSAccountID]);
 
-  // default to first available aws account
+  // if no aws acct ids then clear selectedAWSAccountID, else default to first available aws account
   useEffect(() => {
-    if (!selectedAWSAccountID && hasAWSAccounts) {
+    if (!hasAWSAccounts) {
+      change('associated_aws_id', '');
+    } else if (!selectedAWSAccountID) {
       change('associated_aws_id', AWSAccountIDs[0]);
     }
   }, [hasAWSAccounts, selectedAWSAccountID]);
@@ -115,38 +134,26 @@ function AccountsRolesScreen({
     }
   }, [getAWSAccountIDsResponse]);
 
+  useEffect(() => {
+    if (getUserRoleResponse?.error || noUserForSelectedAWSAcct) {
+      track(trackEvents.MissingUserRole);
+    }
+  }, [getUserRoleResponse?.error, noUserForSelectedAWSAcct]);
+
   const onAssociateAwsAccountModalClose = () => {
     setIsAssocAwsAccountModalOpen(false);
     clearGetAWSAccountIDsResponse();
-    getAWSAccountIDs(organizationID);
-  };
-
-  const onTokenLoad = (token) => {
-    openAssociateAWSAccountModal(token);
-    setIsAssocAwsAccountModalOpen(true);
   };
 
   const onTokenError = (reason) => {
     if (reason === 'not available') {
-      // set token-reload to true, so that on reload we know to restore previously entered data
-      window.localStorage.setItem('token-reload', 'true');
-      // write state to localStorage
-      persistor.flush().then(() => {
-        insights.chrome.auth.doOffline();
+      doOffline((token) => {
+        setOfflineToken(token);
       });
     } else {
-      // open the modal anyways
-      openAssociateAWSAccountModal(reason);
-      setIsAssocAwsAccountModalOpen(true)
+      setOfflineToken(reason);
     }
   };
-
-  const getTokenThenOpen = () => {
-    // will cause window reload on first time
-    loadOfflineToken(onTokenLoad, onTokenError);
-    // Reset window onbeforeunload event so a browser confirmation dialog do not appear.
-    window.onbeforeunload = null;
-  }
 
   return (
     <Form onSubmit={() => false}>
@@ -170,17 +177,19 @@ function AccountsRolesScreen({
         <GridItem span={8}>
           <Title headingLevel="h3">AWS account</Title>
           <Text component={TextVariants.p}>
-            Select an AWS account that is associated with your Red Hat account, or{" "}
+            Select an AWS account that is associated with your Red Hat account, or{' '}
             <Button
               variant="link"
               isInline
-              onClick={(event) => {
+              onClick={() => {
                 track(trackEvents.AssociateAWS);
-                getTokenThenOpen(event);
+                openAssociateAWSAccountModal();
+                setIsAssocAwsAccountModalOpen(true);
               }}
             >
               associate an AWS account
-            </Button>.
+            </Button>
+            .
           </Text>
         </GridItem>
         <GridItem span={4} />
@@ -190,8 +199,15 @@ function AccountsRolesScreen({
             component={AWSAccountSelection}
             name="associated_aws_id"
             label="Associated AWS accounts"
-            launchAssocAWSAcctModal={() => {getTokenThenOpen()}}
-            validate={required}
+            launchAssocAWSAcctModal={() => {
+              openAssociateAWSAccountModal();
+              setIsAssocAwsAccountModalOpen(true);
+            }}
+            onRefresh={() => {
+              setRefreshButtonClicked(true);
+              resetAWSAccountFields();
+            }}
+            validate={!getAWSAccountIDsResponse.fulfilled ? undefined : required}
             extendedHelpText={
               <>
                 A list of associated AWS accounts. You must associate at least one account to
@@ -200,11 +216,12 @@ function AccountsRolesScreen({
             }
             AWSAccountIDs={AWSAccountIDs}
             selectedAWSAccountID={selectedAWSAccountID}
-            disabled={getAWSAccountIDsResponse.pending}
+            isLoading={refreshButtonClicked && getAWSAccountIDsResponse.pending}
+            isDisabled={getAWSAccountIDsResponse.pending}
           />
         </GridItem>
         <GridItem span={7} />
-        {selectedAWSAccountID && (
+        {selectedAWSAccountID && hasAWSAccounts && (
           <AccountRolesARNsSection
             selectedAWSAccountID={selectedAWSAccountID}
             selectedInstallerRoleARN={selectedInstallerRoleARN}
@@ -301,6 +318,8 @@ AccountsRolesScreen.propTypes = {
   isUserRoleModalOpen: PropTypes.bool,
   isOCMRoleModalOpen: PropTypes.bool,
   closeModal: PropTypes.func,
+  offlineToken: PropTypes.string,
+  setOfflineToken: PropTypes.func,
 };
 
 export default AccountsRolesScreen;

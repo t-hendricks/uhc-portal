@@ -4,6 +4,12 @@ import { formValueSelector, getFormValues } from 'redux-form';
 import wizardConnector from '../WizardConnector';
 import ReviewClusterScreen from './ReviewClusterScreen';
 import { canAutoScaleOnCreateSelector } from '../../../ClusterDetails/components/MachinePools/MachinePoolsSelectors';
+import {
+  clearGetUserRoleResponse,
+  getUserRole,
+  getOCMRole,
+  clearGetOcmRoleResponse,
+} from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaActions';
 
 const mapStateToProps = (state) => {
   const valueSelector = formValueSelector('CreateCluster');
@@ -12,6 +18,7 @@ const mapStateToProps = (state) => {
   const autoscalingEnabled = canAutoScale && !!valueSelector(state, 'autoscalingEnabled');
   const installToVPCSelected = valueSelector(state, 'install_to_vpc');
   const configureProxySelected = valueSelector(state, 'configure_proxy');
+  const { getUserRoleResponse, getOCMRoleResponse } = state.rosaReducer;
 
   return {
     formValues: getFormValues('CreateCluster')(state),
@@ -19,7 +26,15 @@ const mapStateToProps = (state) => {
     autoscalingEnabled,
     installToVPCSelected,
     configureProxySelected,
+    getUserRoleResponse,
+    getOCMRoleResponse,
   };
 };
 
-export default connect(mapStateToProps)(wizardConnector(ReviewClusterScreen));
+const mapDispatchToProps = (dispatch) => ({
+  getUserRole: () => dispatch(getUserRole()),
+  getOCMRole: (awsAccountID) => dispatch(getOCMRole(awsAccountID)),
+  clearGetUserRoleResponse: () => dispatch(clearGetUserRoleResponse()),
+  clearGetOcmRoleResponse: () => dispatch(clearGetOcmRoleResponse()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(wizardConnector(ReviewClusterScreen));

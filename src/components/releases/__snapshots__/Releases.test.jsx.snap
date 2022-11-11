@@ -111,12 +111,17 @@ exports[`<Releases /> should render 1`] = `
                                   flipBehavior={
                                     Array [
                                       "top",
-                                      "right",
                                       "bottom",
                                       "left",
-                                      "top",
                                       "right",
-                                      "bottom",
+                                      "top-start",
+                                      "top-end",
+                                      "bottom-start",
+                                      "bottom-end",
+                                      "left-start",
+                                      "left-end",
+                                      "right-start",
+                                      "right-end",
                                     ]
                                   }
                                   isVisible={false}
@@ -125,7 +130,7 @@ exports[`<Releases /> should render 1`] = `
                                   onTriggerClick={[Function]}
                                   placement="top"
                                   popper={
-                                    <FocusTrap
+                                    <ForwardRef
                                       active={false}
                                       aria-describedby="popover-version-help-body"
                                       aria-label="Version help"
@@ -142,7 +147,6 @@ exports[`<Releases /> should render 1`] = `
                                         }
                                       }
                                       onMouseDown={[Function]}
-                                      paused={false}
                                       preventScrollOnDeactivate={true}
                                       role="dialog"
                                       style={
@@ -184,7 +188,7 @@ exports[`<Releases /> should render 1`] = `
                                           </React.Fragment>
                                         </PopoverBody>
                                       </PopoverContent>
-                                    </FocusTrap>
+                                    </ForwardRef>
                                   }
                                   popperMatchesTriggerWidth={false}
                                   positionModifiers={
@@ -203,6 +207,7 @@ exports[`<Releases /> should render 1`] = `
                                       "top-start": "pf-m-top-left",
                                     }
                                   }
+                                  removeFindDomNode={false}
                                   trigger={
                                     <Button
                                       isInline={true}

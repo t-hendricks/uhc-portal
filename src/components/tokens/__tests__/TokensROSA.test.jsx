@@ -43,11 +43,6 @@ describe('<TokensROSA />', () => {
     expect(loadingcomponent).toMatchSnapshot();
   });
 
-  it('Calls getOfflineToken', () => {
-    shallow(<TokensROSA show />);
-    expect(mockGetToken).toBeCalled();
-  });
-
   it('Renders token', () => {
     const component = shallow(<TokensROSA show />);
     expect(component).toMatchSnapshot();
