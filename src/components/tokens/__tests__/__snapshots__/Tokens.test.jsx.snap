@@ -54,11 +54,15 @@ exports[`<Tokens /> Renders loading screen 1`] = `
               >
                 Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
               </Text>
-              <InstructionCommand
-                className="ocm-c-api-token-limit-width"
-                limitWidth={false}
-                textAriaLabel="Copyable token"
-              />
+            </TextContent>
+            <InstructionCommand
+              className="ocm-c-api-token-limit-width"
+              outerClassName="pf-u-mt-md"
+              textAriaLabel="Copyable token"
+            />
+            <TextContent
+              className="pf-u-mt-lg"
+            >
               <Title
                 headingLevel="h3"
               >
@@ -138,7 +142,8 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                 >
                   read more about setting up the ocm CLI
                 </ExternalLink>
-                 for more information about setting up the 
+                 
+                for more information about setting up the 
                 <code>
                   ocm
                 </code>
@@ -162,48 +167,9 @@ exports[`<Tokens /> Renders loading screen 1`] = `
           <CardBody
             className="ocm-c-api-token__card--body"
           >
-            <TextContent>
-              <Text>
-                To manage and revoke previous tokens:
-              </Text>
-              <List
-                component="ol"
-              >
-                <ListItem>
-                  Navigate to the
-                   
-                  <ExternalLink
-                    href="https://sso.redhat.com/auth/realms/redhat-external/account/applications"
-                  >
-                    <b>
-                      offline API token management
-                    </b>
-                  </ExternalLink>
-                   
-                  page.
-                </ListItem>
-                <ListItem>
-                  Locate the 
-                  <b>
-                    cloud-services
-                  </b>
-                   application.
-                </ListItem>
-                <ListItem>
-                  Select 
-                  <b>
-                    Revoke grant
-                  </b>
-                  .
-                </ListItem>
-              </List>
-              <Text>
-                Refresh tokens will stop working immediately after you revoke them, but existing access tokens may take up to 15 minutes to expire.
-              </Text>
-              <Text>
-                Refreshing this page will generate a new token.
-              </Text>
-            </TextContent>
+            <RevokeTokensInstructions
+              smallTextSize={false}
+            />
           </CardBody>
         </Card>
       </StackItem>
@@ -266,17 +232,18 @@ exports[`<Tokens /> Renders screen with button 1`] = `
               >
                 Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
               </Text>
-              <Link
-                to="/token/show"
-              >
-                <Button
-                  onClick={[Function]}
-                  variant="primary"
-                >
-                  Load token
-                </Button>
-              </Link>
             </TextContent>
+            <Link
+              to="/token/show"
+            >
+              <Button
+                className="pf-u-mt-md"
+                onClick={[Function]}
+                variant="primary"
+              >
+                Load token
+              </Button>
+            </Link>
           </CardBody>
         </Card>
       </StackItem>
@@ -294,48 +261,9 @@ exports[`<Tokens /> Renders screen with button 1`] = `
           <CardBody
             className="ocm-c-api-token__card--body"
           >
-            <TextContent>
-              <Text>
-                To manage and revoke previous tokens:
-              </Text>
-              <List
-                component="ol"
-              >
-                <ListItem>
-                  Navigate to the
-                   
-                  <ExternalLink
-                    href="https://sso.redhat.com/auth/realms/redhat-external/account/applications"
-                  >
-                    <b>
-                      offline API token management
-                    </b>
-                  </ExternalLink>
-                   
-                  page.
-                </ListItem>
-                <ListItem>
-                  Locate the 
-                  <b>
-                    cloud-services
-                  </b>
-                   application.
-                </ListItem>
-                <ListItem>
-                  Select 
-                  <b>
-                    Revoke grant
-                  </b>
-                  .
-                </ListItem>
-              </List>
-              <Text>
-                Refresh tokens will stop working immediately after you revoke them, but existing access tokens may take up to 15 minutes to expire.
-              </Text>
-              <Text>
-                Refreshing this page will generate a new token.
-              </Text>
-            </TextContent>
+            <RevokeTokensInstructions
+              smallTextSize={false}
+            />
           </CardBody>
         </Card>
       </StackItem>
@@ -398,11 +326,15 @@ exports[`<Tokens /> Renders token 1`] = `
               >
                 Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
               </Text>
-              <InstructionCommand
-                className="ocm-c-api-token-limit-width"
-                limitWidth={false}
-                textAriaLabel="Copyable token"
-              />
+            </TextContent>
+            <InstructionCommand
+              className="ocm-c-api-token-limit-width"
+              outerClassName="pf-u-mt-md"
+              textAriaLabel="Copyable token"
+            />
+            <TextContent
+              className="pf-u-mt-lg"
+            >
               <Title
                 headingLevel="h3"
               >
@@ -482,7 +414,8 @@ exports[`<Tokens /> Renders token 1`] = `
                 >
                   read more about setting up the ocm CLI
                 </ExternalLink>
-                 for more information about setting up the 
+                 
+                for more information about setting up the 
                 <code>
                   ocm
                 </code>
@@ -506,48 +439,9 @@ exports[`<Tokens /> Renders token 1`] = `
           <CardBody
             className="ocm-c-api-token__card--body"
           >
-            <TextContent>
-              <Text>
-                To manage and revoke previous tokens:
-              </Text>
-              <List
-                component="ol"
-              >
-                <ListItem>
-                  Navigate to the
-                   
-                  <ExternalLink
-                    href="https://sso.redhat.com/auth/realms/redhat-external/account/applications"
-                  >
-                    <b>
-                      offline API token management
-                    </b>
-                  </ExternalLink>
-                   
-                  page.
-                </ListItem>
-                <ListItem>
-                  Locate the 
-                  <b>
-                    cloud-services
-                  </b>
-                   application.
-                </ListItem>
-                <ListItem>
-                  Select 
-                  <b>
-                    Revoke grant
-                  </b>
-                  .
-                </ListItem>
-              </List>
-              <Text>
-                Refresh tokens will stop working immediately after you revoke them, but existing access tokens may take up to 15 minutes to expire.
-              </Text>
-              <Text>
-                Refreshing this page will generate a new token.
-              </Text>
-            </TextContent>
+            <RevokeTokensInstructions
+              smallTextSize={false}
+            />
           </CardBody>
         </Card>
       </StackItem>

@@ -90,7 +90,6 @@ const OFFLINE_REDIRECT_STORAGE_KEY = 'chrome.offline.redirectUri';
 // Parse through keycloak options routes
 const insightsUrl = async (env: typeof DEFAULT_ROUTES) => {
   const ssoEnv = Object.entries(env).find(([, { url }]) => url.includes(window.location.hostname));
-
   if (ssoEnv) {
     return ssoEnv?.[1].sso;
   }
@@ -116,28 +115,45 @@ const getPartnerScope = (pathname: string) => {
  * Callback after token load encountered an error.
  * The callback gets the failure reason string as a parameter.
  */
-export const loadOfflineToken = (onError: (reason: string) => void) => {
+export const loadOfflineToken = (
+  callback: (tokenOrError: string, errorReason?: string) => void,
+) => {
   insights.chrome.auth
     .getOfflineToken()
     .then((response: any) => {
       // eslint-disable-next-line no-console
       console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
-      if (window.parent) {
+      if (window.top) {
         // We are inside an iframe, pass the token up to the parent
-        window.parent.postMessage({
-          token: response.data.refresh_token,
-        });
+        window.top.postMessage(
+          {
+            tokenOrError: response.data.refresh_token,
+          },
+          '*',
+        );
       }
     })
     .catch((reason: string | Error) => {
+      const tokenOrError = reason instanceof Error ? reason.toString() : reason;
+      const errorReason = reason instanceof Error ? (reason as any)?.response?.data?.error : '';
       // First time this method is called it will error out
-      if (reason === 'not available' && onError) {
-        onError(reason);
+      if (reason === 'not available') {
+        // eslint-disable-next-line no-console
+        console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
+        doOffline(callback);
       } else if (window.self !== window.top) {
         // We are inside an iframe, pass the token up to the parent
-        window.parent.postMessage({
-          token: reason,
-        });
+        window.top?.postMessage(
+          {
+            tokenOrError,
+            errorReason,
+          },
+          '*',
+        );
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('Tokens: getOfflineToken failed =>', reason);
+        callback(tokenOrError, errorReason);
       }
     });
 };
@@ -150,7 +166,7 @@ export const loadOfflineToken = (onError: (reason: string) => void) => {
  *
  * @param onDone Callback function after token is fetched
  */
-export const doOffline = (onDone: (token: string) => void) => {
+export const doOffline = (onDone: (tokenOrError: string, errorReason?: string) => void) => {
   const noAuthParam = 'noauth';
   const offlineToken = '2402500adeacc30eb5c5a8a5e2e0ec1f';
 
@@ -173,6 +189,7 @@ export const doOffline = (onDone: (token: string) => void) => {
       promiseType: 'native',
       redirectUri,
       url: ssoUrl,
+      checkLoginIframe: false,
     };
 
     const kc = new Keycloak(options);
@@ -197,11 +214,8 @@ export const doOffline = (onDone: (token: string) => void) => {
       if (event.origin !== window.location.origin || iframe.contentWindow !== event.source) {
         return;
       }
-
-      if (typeof event.data === 'object' && event.data.token) {
-        if (onDone) {
-          onDone(event.data.token);
-        }
+      if (typeof event.data === 'object' && event.data.tokenOrError) {
+        onDone(event.data.tokenOrError, event.data.errorReason);
 
         window.removeEventListener('message', messageCallback);
         document.body.removeChild(iframe);

@@ -23,6 +23,7 @@ import { Link } from 'react-router-dom';
 import PageHeader, { PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import Skeleton from '@redhat-cloud-services/frontend-components/Skeleton';
 import {
+  Alert,
   PageSection,
   Button,
   Card,
@@ -45,7 +46,7 @@ import DevPreviewBadge from '../common/DevPreviewBadge';
 import DownloadAndOSSelection from '../clusters/install/instructions/components/DownloadAndOSSelection';
 import './Tokens.scss';
 import InstructionCommand from '../common/InstructionCommand';
-import { doOffline, loadOfflineToken } from './TokenUtils';
+import { loadOfflineToken } from './TokenUtils';
 
 /**
  * Generates a box for containing the value of a token.
@@ -55,27 +56,51 @@ const tokenBox = ({
   command = '',
   textAriaLabel = 'Copyable token',
   className = 'ocm-c-api-token-limit-width',
-  limitWidth = true,
+  showCommandOnError = false,
   ...props
-}) =>
-  token === null ? (
-    <>
-      <div className="pf-u-mb-xs">
-        <Spinner size="sm" className="progressing-icon" />
-        <span>Loading token, this might take a minute</span>
+}) => {
+  if (token === null) {
+    return (
+      <div className="pf-u-mt-md">
+        <div className="pf-u-mb-xs">
+          <Spinner size="sm" className="progressing-icon" />
+          <span>Loading token, this might take a minute</span>
+        </div>
+        <Skeleton size="md" />
       </div>
-      <Skeleton size="md" />
-    </>
-  ) : (
+    );
+  }
+  const instructionCommand = (
     <InstructionCommand
       className={className}
       textAriaLabel={textAriaLabel}
-      limitWidth={limitWidth}
+      outerClassName="pf-u-mt-md"
       {...props}
     >
       {command || token}
     </InstructionCommand>
   );
+  if (token === 'invalid_grant') {
+    return (
+      <>
+        {showCommandOnError && instructionCommand}
+        <Alert
+          variant="warning"
+          isInline
+          className="pf-u-mt-md"
+          id="invalid_grant-message"
+          title="Could not grant an offline token"
+        >
+          <RevokeTokensInstructions
+            smallTextSize
+            reason="You might have exceeded the maximum number of offline sessions."
+          />
+        </Alert>
+      </>
+    );
+  }
+  return instructionCommand;
+};
 
 /**
  * Generates a text box for login snippet of code for the given token.
@@ -96,44 +121,55 @@ const snippetBox = (token, commandName) =>
     </Text>
   );
 
-const manageTokensCard = (show) => (
+export const RevokeTokensInstructions = ({ reason, smallTextSize = false }) => (
+  <TextContent style={smallTextSize ? { fontSize: 'var(--pf-c-alert__FontSize)' } : null}>
+    {reason && (
+      <p className="pf-u-mt-sm">
+        <strong>{reason}</strong>
+      </p>
+    )}
+
+    <Text>To manage and revoke previous tokens:</Text>
+
+    <List component="ol">
+      <ListItem>
+        Navigate to the{' '}
+        <ExternalLink href="https://sso.redhat.com/auth/realms/redhat-external/account/applications">
+          <b>offline API token management</b>
+        </ExternalLink>{' '}
+        page.
+      </ListItem>
+      <ListItem>
+        Locate the <b>cloud-services</b> application.
+      </ListItem>
+      <ListItem>
+        Select <b>Revoke grant</b>.
+      </ListItem>
+    </List>
+
+    <Text>
+      Refresh tokens will stop working immediately after you revoke them, but existing access tokens
+      may take up to 15 minutes to expire.
+    </Text>
+
+    <Text>Refresh this page afterwards to generate a new token.</Text>
+  </TextContent>
+);
+RevokeTokensInstructions.defaultProps = {
+  smallTextSize: false,
+};
+RevokeTokensInstructions.propTypes = {
+  reason: PropTypes.string,
+  smallTextSize: PropTypes.bool,
+};
+
+const manageTokensCard = () => (
   <Card className="ocm-c-api-token__card">
     <CardTitle>
       <Title headingLevel="h2">Revoke previous tokens</Title>
     </CardTitle>
     <CardBody className="ocm-c-api-token__card--body">
-      <TextContent>
-        <Text>To manage and revoke previous tokens:</Text>
-
-        <List component="ol">
-          <ListItem>
-            Navigate to the{' '}
-            <ExternalLink href="https://sso.redhat.com/auth/realms/redhat-external/account/applications">
-              <b>offline API token management</b>
-            </ExternalLink>{' '}
-            page.
-          </ListItem>
-          <ListItem>
-            Locate the <b>cloud-services</b> application.
-          </ListItem>
-          <ListItem>
-            Select <b>Revoke grant</b>.
-          </ListItem>
-        </List>
-
-        <Text>
-          Refresh tokens will stop working immediately after you revoke them, but existing access
-          tokens may take up to 15 minutes to expire.
-        </Text>
-
-        {show ? (
-          <Text>
-            To display a copyable version of your token, select the <b>Load token</b> button.
-          </Text>
-        ) : (
-          <Text>Refreshing this page will generate a new token.</Text>
-        )}
-      </TextContent>
+      <RevokeTokensInstructions />
     </CardBody>
   </Card>
 );
@@ -169,67 +205,64 @@ class Tokens extends React.Component {
   // after that we want the token to show, but we just loaded.
   componentDidMount() {
     document.title = this.windowTitle;
-    const { blockedByTerms, show, offlineToken } = this.props;
-    if (!blockedByTerms && show && (!offlineToken || offlineToken instanceof Error)) {
+    const { blockedByTerms, show, offlineToken, setOfflineToken } = this.props;
+    if (!blockedByTerms && show && !offlineToken) {
       // eslint-disable-next-line no-console
       console.log('Tokens: componentDidMount, props =', this.props);
-      loadOfflineToken(this.onError);
+      loadOfflineToken((tokenOrError, errorReason) => {
+        setOfflineToken(errorReason || tokenOrError);
+      });
     }
   }
-
-  onError = (reason) => {
-    const { setOfflineToken } = this.props;
-    if (reason === 'not available') {
-      // eslint-disable-next-line no-console
-      console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
-      doOffline((token) => {
-        setOfflineToken(token);
-      });
-    } else {
-      // eslint-disable-next-line no-console
-      console.log('Tokens: getOfflineToken failed =>', reason);
-      setOfflineToken(reason);
-    }
-  };
 
   tokenDetails() {
     const { offlineToken, commandName, commandTool, docsLink } = this.props;
     return (
       <>
-        {tokenBox({ token: offlineToken, limitWidth: false })}
+        {tokenBox({ token: offlineToken })}
 
-        <Title headingLevel="h3">Using your token in the command line</Title>
-        <List component="ol">
-          <ListItem>
-            Download and install the <code>{commandName}</code> command-line tool:{' '}
-            {commandTool === tools.OCM && <DevPreviewBadge />}
-            <Text component="p" />
-            <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
-            <Text component="p" />
-          </ListItem>
-          <ListItem>
-            Copy and paste the authentication command in your terminal:
-            <Text component="p" />
-            {snippetBox(offlineToken, commandName)}
-          </ListItem>
-        </List>
+        <TextContent className="pf-u-mt-lg">
+          <Title headingLevel="h3">Using your token in the command line</Title>
+          <List component="ol">
+            <ListItem>
+              Download and install the <code>{commandName}</code> command-line tool:{' '}
+              {commandTool === tools.OCM && <DevPreviewBadge />}
+              <Text component="p" />
+              <DownloadAndOSSelection tool={commandTool} channel={channels.STABLE} />
+              <Text component="p" />
+            </ListItem>
+            <ListItem>
+              Copy and paste the authentication command in your terminal:
+              <Text component="p" />
+              {snippetBox(offlineToken, commandName)}
+            </ListItem>
+          </List>
 
-        <Title headingLevel="h3">Need help connecting with your offline token?</Title>
-        <Text component="p">
-          Run <code>{commandName} login --help</code> for in-terminal guidance, or {docsLink()} for
-          more information about setting up the <code>{commandName}</code> CLI.
-        </Text>
+          <Title headingLevel="h3">Need help connecting with your offline token?</Title>
+          <Text component="p">
+            Run <code>{commandName} login --help</code> for in-terminal guidance, or {docsLink()}{' '}
+            for more information about setting up the <code>{commandName}</code> CLI.
+          </Text>
+        </TextContent>
       </>
     );
   }
 
   buttonOrTokenDetails() {
-    const { show, showPath, offlineToken } = this.props;
+    const { show, showPath, offlineToken, setOfflineToken } = this.props;
     return show || (offlineToken && !(offlineToken instanceof Error)) ? (
       this.tokenDetails()
     ) : (
       <Link to={showPath}>
-        <Button variant="primary" onClick={() => loadOfflineToken(this.onError)}>
+        <Button
+          variant="primary"
+          className="pf-u-mt-md"
+          onClick={() =>
+            loadOfflineToken((tokenOrError, errorReason) => {
+              setOfflineToken(errorReason || tokenOrError);
+            })
+          }
+        >
           Load token
         </Button>
       </Link>
@@ -258,10 +291,8 @@ class Tokens extends React.Component {
                   <Title headingLevel="h2">Connect with offline tokens</Title>
                 </CardTitle>
                 <CardBody className="ocm-c-api-token__card--body">
-                  <TextContent>
-                    {leadingInfo()}
-                    {this.buttonOrTokenDetails()}
-                  </TextContent>
+                  <TextContent>{leadingInfo()}</TextContent>
+                  {this.buttonOrTokenDetails()}
                 </CardBody>
               </Card>
             </StackItem>

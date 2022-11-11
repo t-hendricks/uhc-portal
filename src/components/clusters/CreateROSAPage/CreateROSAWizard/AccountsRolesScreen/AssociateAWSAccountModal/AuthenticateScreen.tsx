@@ -46,12 +46,12 @@ const AuthenticateScreen = () => {
             against your ROSA account.{' '}
           </Text>
         </TextContent>
-        <br />
         {tokenBox({
           token,
           command: loginCommand,
           textAriaLabel: 'Copyable ROSA login command',
           trackEvent: trackEvents.ROSALogin,
+          showCommandOnError: true,
         })}
       </CardBody>
     </Card>
