@@ -38,7 +38,8 @@ const EditClusterWideProxyDialog = (props) => {
     clearClusterProxyResponse,
     additionalTrustBundle,
     anyTouched,
-    formValues,
+    noClusterProxyValues,
+    noUrlValues,
   } = props;
 
   const clusterProxyError = editClusterProxyResponse.error && (
@@ -47,19 +48,8 @@ const EditClusterWideProxyDialog = (props) => {
   // sets trust bundle file upload depending on whether or not a trust bundle is already uploaded
   const [openFileUpload, setOpenFileUpload] = useState(!additionalTrustBundle);
 
-  const noValues =
-    !formValues?.httpProxyUrl &&
-    !formValues?.httpsProxyUrl &&
-    !formValues?.additionalTrustBundle &&
-    !additionalTrustBundle;
-
   const validateAtLeastOne = useCallback((value, allValues) => {
-    if (
-      !allValues.httpProxyUrl &&
-      !allValues.httpsProxyUrl &&
-      !allValues.additionalTrustBundle &&
-      !additionalTrustBundle
-    ) {
+    if (!allValues.httpProxyUrl && !allValues.httpsProxyUrl && !additionalTrustBundle) {
       return 'Configure at least one of the cluster-wide proxy fields.';
     }
     return undefined;
@@ -155,17 +145,13 @@ const EditClusterWideProxyDialog = (props) => {
                 component={ReduxVerticalFormGroup}
                 name="noProxyDomains"
                 label="No Proxy domains"
-                placeholder={
-                  !formValues.httpProxyUrl && !formValues.httpsProxyUrl
-                    ? DISABLED_NO_PROXY_PLACEHOLDER
-                    : NO_PROXY_PLACEHOLDER
-                }
+                placeholder={noUrlValues ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER}
                 type="text"
                 parse={stringToArray}
                 validate={checkDNSDomain}
                 helpText={NO_PROXY_HELPER_TEXT}
                 showHelpTextOnError={false}
-                isDisabled={!formValues.httpProxyUrl && !formValues.httpsProxyUrl}
+                isDisabled={noUrlValues}
               />
             </GridItem>
             <GridItem sm={12} md={10} xl2={11}>
@@ -210,7 +196,7 @@ const EditClusterWideProxyDialog = (props) => {
               )}
             </GridItem>
             <GridItem sm={0} md={2} xl2={4} />
-            <GridItem>{anyTouched && noValues && atLeastOneAlert}</GridItem>
+            <GridItem>{anyTouched && noClusterProxyValues && atLeastOneAlert}</GridItem>
           </Grid>
         </Form>
       </Modal>
@@ -232,7 +218,8 @@ EditClusterWideProxyDialog.propTypes = {
   sendError: PropTypes.func,
   anyTouched: PropTypes.bool,
   clearClusterProxyResponse: PropTypes.func,
-  formValues: PropTypes.object,
+  noClusterProxyValues: PropTypes.bool,
+  noUrlValues: PropTypes.bool,
 };
 
 export default EditClusterWideProxyDialog;
