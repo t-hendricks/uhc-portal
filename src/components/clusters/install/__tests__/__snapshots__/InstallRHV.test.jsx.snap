@@ -2,7 +2,7 @@
 
 exports[`InstallRHV renders correctly 1`] = `
 <Fragment>
-  <PageTitle
+  <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
         path={
@@ -21,11 +21,10 @@ exports[`InstallRHV renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift Container Platform 4"
+    cloudName="Red Hat Virtualization"
   />
   <PageSection>
     <InstructionsChooser
-      cloudName="Red Hat Virtualization"
       ipiPageLink="/install/rhv/installer-provisioned"
       upiPageLink="/install/rhv/user-provisioned"
     />

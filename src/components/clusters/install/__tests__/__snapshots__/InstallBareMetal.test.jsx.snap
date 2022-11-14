@@ -2,7 +2,7 @@
 
 exports[`BareMetal install renders correctly 1`] = `
 <Fragment>
-  <PageTitle
+  <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
         path={
@@ -21,11 +21,10 @@ exports[`BareMetal install renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift Container Platform 4"
+    cloudName="Bare Metal"
   />
   <PageSection>
     <InstructionsChooser
-      cloudName="Bare Metal"
       ipiPageLink="/install/metal/installer-provisioned"
       showAI={true}
       upiPageLink="/install/metal/user-provisioned"

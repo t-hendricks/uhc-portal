@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-
 import { PageSection } from '@patternfly/react-core';
 
-import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../../common/Breadcrumbs';
-import InstructionsChooser from './instructions/InstructionsChooser';
 import { scrollToTop } from '../../../common/helpers';
+import { InstructionsChooser } from './instructions/InstructionsChooser';
+import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 
 class InstallRHV extends Component {
   componentDidMount() {
@@ -27,10 +26,12 @@ class InstallRHV extends Component {
 
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
+        <InstructionsChooserPageTitle
+          cloudName="Red Hat Virtualization"
+          breadcrumbs={breadcrumbs}
+        />
         <PageSection>
           <InstructionsChooser
-            cloudName="Red Hat Virtualization"
             ipiPageLink="/install/rhv/installer-provisioned"
             upiPageLink="/install/rhv/user-provisioned"
           />

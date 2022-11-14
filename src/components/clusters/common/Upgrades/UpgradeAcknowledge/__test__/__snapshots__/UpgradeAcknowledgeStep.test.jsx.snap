@@ -136,6 +136,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                     >
                       <a
                         href="my doc url"
+                        onClick={[Function]}
                         rel="noreferrer noopener"
                         target="_blank"
                       >
@@ -250,6 +251,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                     >
                       <a
                         href="my other doc url"
+                        onClick={[Function]}
                         rel="noreferrer noopener"
                         target="_blank"
                       >
