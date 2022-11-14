@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-
 import { PageSection } from '@patternfly/react-core';
 
-import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../../common/Breadcrumbs';
-import InstructionsChooser from './instructions/InstructionsChooser';
 import { scrollToTop } from '../../../common/helpers';
+import { InstructionsChooser } from './instructions/InstructionsChooser';
+import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 
 class InstallAzure extends Component {
   componentDidMount() {
@@ -26,10 +25,9 @@ class InstallAzure extends Component {
 
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
+        <InstructionsChooserPageTitle cloudName="Azure" breadcrumbs={breadcrumbs} />
         <PageSection>
           <InstructionsChooser
-            cloudName="Azure"
             ipiPageLink="/install/azure/installer-provisioned"
             upiPageLink="/install/azure/user-provisioned"
           />

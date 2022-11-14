@@ -3,6 +3,7 @@
 exports[`<ExternalLink /> should render 1`] = `
 <a
   href="http://example.com"
+  onClick={[Function]}
   rel="noreferrer noopener"
   target="_blank"
 >
