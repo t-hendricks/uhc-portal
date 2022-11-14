@@ -703,6 +703,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   font-size: var(--pf-global--FontSize--sm);
 }
 
+.rosa-role-error {
+  @extend .ocm-alert-text;
+  max-width: 900px;
+}
+
 $ocm-l-autofit--breakpoint-map: build-breakpoint-map();
 $ocm-c-width-limiter--breakpoint-map: build-breakpoint-map();
 
