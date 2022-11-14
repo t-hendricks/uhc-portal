@@ -141,9 +141,6 @@ function AccountRolesARNsSection({
       setSelectedInstallerRoleAndOptions(accountRolesARNs);
       setAccountRoles(accountRolesARNs);
     } else if (getAWSAccountRolesARNsResponse.error) {
-      change('installer_role_arn', '');
-      setSelectedInstallerRoleAndOptions([]);
-      setAccountRoles([]);
       setHasARNsError(true);
     }
   }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse]);
