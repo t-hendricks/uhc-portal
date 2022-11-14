@@ -83,8 +83,7 @@ const getCloudProviders = () =>
      * Retrieved list of cloud providers.
      * Includes additional `regions` property since `fetchRegions = true`.
      */
-    // TODO is CloudProvider schema not up to date?
-    items?: Array<CloudProvider & { regions?: CloudRegion[] }>;
+    items?: Array<CloudProvider>;
     /**
      * Index of the requested page, where one corresponds to the first page.
      */
