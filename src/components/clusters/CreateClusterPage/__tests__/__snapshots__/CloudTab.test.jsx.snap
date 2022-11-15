@@ -219,7 +219,7 @@ exports[`<CloudTab /> should render correctly with OSD Trial quota 1`] = `
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Azure Red Hat Openshift
+                      Azure Red Hat OpenShift
                     </a>
                   </React.Fragment>,
                   "Microsoft Azure",
@@ -776,7 +776,7 @@ exports[`<CloudTab /> should render correctly with quota 1`] = `
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Azure Red Hat Openshift
+                      Azure Red Hat OpenShift
                     </a>
                   </React.Fragment>,
                   "Microsoft Azure",
@@ -1268,7 +1268,7 @@ exports[`<CloudTab /> should render correctly without quota 1`] = `
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Azure Red Hat Openshift
+                      Azure Red Hat OpenShift
                     </a>
                   </React.Fragment>,
                   "Microsoft Azure",
