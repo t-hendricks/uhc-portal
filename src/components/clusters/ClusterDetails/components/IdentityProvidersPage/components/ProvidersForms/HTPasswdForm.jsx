@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Field } from 'redux-form';
 import {
   GridItem,
@@ -92,6 +92,11 @@ class HTPasswdForm extends React.Component {
     const suggestedValue = isPassword ? suggestedPassword : suggestedUsername;
     const useSuggestionIsChecked = isPassword ? useSuggestedPassword : useSuggestedUsername;
 
+    const fieldValueMatcher =
+      (fieldName, message = 'Passwords do not match') =>
+      (value, allValues) =>
+        allValues[fieldName] !== value ? message : undefined;
+
     return (
       <>
         <Stack>
@@ -138,6 +143,20 @@ class HTPasswdForm extends React.Component {
                 input={input}
                 isPassword={isPassword}
                 {...additionalProps}
+              />
+            </StackItem>
+          )}
+          {!useSuggestionIsChecked && isPassword && (
+            <StackItem className="pf-u-mt-sm">
+              <Field
+                component={ReduxVerticalFormGroup}
+                name={input.name + '_confirmation'}
+                label="Confirm password"
+                type="text"
+                isPassword
+                disabled={isPending}
+                isRequired={additionalProps.isRequired}
+                validate={[required, useCallback(fieldValueMatcher(input.name), [input.name])]}
               />
             </StackItem>
           )}
