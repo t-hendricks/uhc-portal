@@ -92,10 +92,11 @@ class HTPasswdForm extends React.Component {
     const suggestedValue = isPassword ? suggestedPassword : suggestedUsername;
     const useSuggestionIsChecked = isPassword ? useSuggestedPassword : useSuggestedUsername;
 
-    const fieldValueMatcher =
-      (fieldName, message = 'Passwords do not match') =>
+    const validatePasswordsMatch = useCallback(
       (value, allValues) =>
-        allValues[fieldName] !== value ? message : undefined;
+        allValues[input.name] !== value ? 'Passwords do not match' : undefined,
+      [input.name],
+    );
 
     return (
       <>
@@ -153,7 +154,7 @@ class HTPasswdForm extends React.Component {
                 type="password"
                 disabled={isPending}
                 isRequired={extraProps.isRequired}
-                validate={[required, useCallback(fieldValueMatcher(input.name), [input.name])]}
+                validate={[required, validatePasswordsMatch]}
               />
             </StackItem>
           )}
