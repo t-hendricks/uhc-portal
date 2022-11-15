@@ -30,7 +30,6 @@ class ReduxVerticalFormGroup extends React.Component {
       showHelpTextOnError,
       inputPrefix,
       formGroupClass,
-      isPassword = false,
       hasOtherValidation = false,
       ...extraProps // any extra props not specified above
     } = this.props;
@@ -43,6 +42,7 @@ class ReduxVerticalFormGroup extends React.Component {
     const disabledProp = {
       [disabledPropName]: disabled,
     };
+    const isPassword = extraProps.type === 'password';
 
     const helperTextInvalid = () => {
       if (touched && error && typeof error === 'string') {
@@ -78,7 +78,7 @@ class ReduxVerticalFormGroup extends React.Component {
             {...disabledProp}
             {...input}
             {...extraProps}
-            type={isPassword && inputValueHidden ? 'password' : extraProps.type}
+            type={isPassword && !inputValueHidden ? 'text' : extraProps.type}
           />
           {isPassword && (
             <Button
@@ -116,7 +116,6 @@ ReduxVerticalFormGroup.propTypes = {
   isRequired: PropTypes.bool,
   // Render a textarea instead of a textinput?
   isTextArea: PropTypes.bool,
-  isPassword: PropTypes.bool,
   hasOtherValidation: PropTypes.bool,
   // plus other props passed from the <Field> component to the control (extraProps,
   // incl. children)...

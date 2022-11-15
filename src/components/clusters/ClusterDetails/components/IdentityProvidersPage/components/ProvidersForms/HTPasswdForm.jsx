@@ -77,18 +77,18 @@ class HTPasswdForm extends React.Component {
   }
 
   radioControlledInputGroup = ({
-    isPassword = false,
     suggestedValueRadioLabel,
     createOwnRadioLabel,
     label,
     helpText,
     input,
     isPending,
-    ...additionalProps
+    ...extraProps
   }) => {
     const { useSuggestedPassword, useSuggestedUsername, suggestedPassword, suggestedUsername } =
       this.state;
 
+    const isPassword = extraProps.type === 'password';
     const suggestedValue = isPassword ? suggestedPassword : suggestedUsername;
     const useSuggestionIsChecked = isPassword ? useSuggestedPassword : useSuggestedUsername;
 
@@ -136,13 +136,11 @@ class HTPasswdForm extends React.Component {
             <StackItem className="pf-u-mb-sm">
               <ReduxVerticalFormGroup
                 name={input.name}
-                type="text"
                 disabled={isPending}
                 validate={required}
                 helpText={helpText}
                 input={input}
-                isPassword={isPassword}
-                {...additionalProps}
+                {...extraProps}
               />
             </StackItem>
           )}
@@ -152,10 +150,9 @@ class HTPasswdForm extends React.Component {
                 component={ReduxVerticalFormGroup}
                 name={input.name + '_confirmation'}
                 label="Confirm password"
-                type="text"
-                isPassword
+                type="password"
                 disabled={isPending}
-                isRequired={additionalProps.isRequired}
+                isRequired={extraProps.isRequired}
                 validate={[required, useCallback(fieldValueMatcher(input.name), [input.name])]}
               />
             </StackItem>
@@ -250,7 +247,6 @@ class HTPasswdForm extends React.Component {
         <GridItem span={8} className="htpasswd-form">
           <Field
             component={this.radioControlledInputGroup}
-            isPassword
             hasOtherValidation
             suggestedValueRadioLabel={
               <span>
@@ -260,7 +256,7 @@ class HTPasswdForm extends React.Component {
             createOwnRadioLabel="Create your own password"
             name="htpasswd_password"
             label="Password"
-            type="text"
+            type="password"
             validate={validateHTPasswdPassword}
             isRequired
             disabled={isPending}
