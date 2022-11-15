@@ -171,7 +171,7 @@ class HTPasswdForm extends React.Component {
     const { suggestedUsername, suggestedPassword } = this.state;
 
     const helpTextItemVariant = (errName) => {
-      const emptyPassword = HTPasswdPasswordErrors?.emptyPassword || false;
+      const emptyPassword = HTPasswdPasswordErrors?.emptyPassword;
       if (emptyPassword) {
         return 'default';
       }

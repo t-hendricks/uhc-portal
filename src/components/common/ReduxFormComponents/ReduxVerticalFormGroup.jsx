@@ -54,7 +54,7 @@ class ReduxVerticalFormGroup extends React.Component {
       return isPassword ? helpText : '';
     };
 
-    const isValid = !hasOtherValidation ? !(touched && error) : true;
+    const isValid = hasOtherValidation || !touched || !error;
 
     return (
       <FormGroup
