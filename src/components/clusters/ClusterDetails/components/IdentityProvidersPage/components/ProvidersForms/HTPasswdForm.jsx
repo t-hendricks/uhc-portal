@@ -106,7 +106,7 @@ class HTPasswdForm extends React.Component {
               <span className="pf-c-form__label-required">*</span>
             </p>
           </StackItem>
-          <StackItem className="field-radio-control">
+          <StackItem className="pf-u-mb-sm">
             <Radio
               label={suggestedValueRadioLabel}
               id={`use-suggested-${label.toLowerCase()}`}
@@ -119,7 +119,7 @@ class HTPasswdForm extends React.Component {
               }}
             />
           </StackItem>
-          <StackItem className="field-radio-control">
+          <StackItem className="pf-u-mb-sm">
             <Radio
               label={createOwnRadioLabel}
               id={`create-own-${label.toLowerCase()}`}
@@ -133,7 +133,7 @@ class HTPasswdForm extends React.Component {
             />
           </StackItem>
           {!useSuggestionIsChecked && (
-            <StackItem>
+            <StackItem className="pf-u-mb-sm">
               <ReduxVerticalFormGroup
                 name={input.name}
                 type="text"
@@ -147,7 +147,7 @@ class HTPasswdForm extends React.Component {
             </StackItem>
           )}
           {!useSuggestionIsChecked && isPassword && (
-            <StackItem className="pf-u-mt-sm">
+            <StackItem className="pf-u-mt-sm pf-u-mb-sm">
               <Field
                 component={ReduxVerticalFormGroup}
                 name={input.name + '_confirmation'}
