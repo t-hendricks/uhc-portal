@@ -148,7 +148,7 @@ class HTPasswdForm extends React.Component {
             <StackItem className="pf-u-mt-sm pf-u-mb-sm">
               <Field
                 component={ReduxVerticalFormGroup}
-                name={input.name + '_confirmation'}
+                name={`${input.name}_confirmation`}
                 label="Confirm password"
                 type="password"
                 disabled={isPending}
