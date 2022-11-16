@@ -114,15 +114,12 @@ class IDPForm extends React.Component {
     const isPending = submitIDPResponse.pending;
     let submissionError;
     if (submitIDPResponse.error) {
-      if (!isEditForm) {
-        submissionError = (
-          <ErrorBox title="Error creating Identity Provider" response={submitIDPResponse} />
-        );
-      } else {
-        submissionError = (
-          <ErrorBox title="Error updating Identity Provider" response={submitIDPResponse} />
-        );
-      }
+      submissionError = (
+        <ErrorBox
+          title={`Error ${isEditForm ? 'updating' : 'creating'} Identity Provider`}
+          response={submitIDPResponse}
+        />
+      );
     }
 
     const providersAdvancedOptions = {
