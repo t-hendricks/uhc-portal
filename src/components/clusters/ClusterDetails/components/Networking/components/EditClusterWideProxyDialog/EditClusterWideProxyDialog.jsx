@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Form, Grid, GridItem, Text, Alert, Button } from '@patternfly/react-core';
@@ -26,12 +26,6 @@ import { MAX_FILE_SIZE, ACCEPT } from '../../../IdentityProvidersPage/components
 
 const validateUrlHttp = (value) => validateUrl(value, 'http');
 const validateUrlHttps = (value) => validateUrl(value, 'https');
-const validateAtLeastOne = (value, allValues) => {
-  if (!allValues.httpProxyUrl && !allValues.httpsProxyUrl && !allValues.additionalTrustBundle) {
-    return 'Configure at least one of the cluster-wide proxy fields.';
-  }
-  return undefined;
-};
 
 const EditClusterWideProxyDialog = (props) => {
   const {
@@ -42,11 +36,10 @@ const EditClusterWideProxyDialog = (props) => {
     handleSubmit,
     editClusterProxyResponse,
     clearClusterProxyResponse,
-    httpProxyUrl,
-    httpsProxyUrl,
-    formValues,
     additionalTrustBundle,
     anyTouched,
+    noClusterProxyValues,
+    noUrlValues,
   } = props;
 
   const clusterProxyError = editClusterProxyResponse.error && (
@@ -55,7 +48,12 @@ const EditClusterWideProxyDialog = (props) => {
   // sets trust bundle file upload depending on whether or not a trust bundle is already uploaded
   const [openFileUpload, setOpenFileUpload] = useState(!additionalTrustBundle);
 
-  const noValues = !httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle;
+  const validateAtLeastOne = useCallback((value, allValues) => {
+    if (!allValues.httpProxyUrl && !allValues.httpsProxyUrl && !additionalTrustBundle) {
+      return 'Configure at least one of the cluster-wide proxy fields.';
+    }
+    return undefined;
+  }, []);
 
   const handleClose = () => {
     closeModal();
@@ -147,17 +145,13 @@ const EditClusterWideProxyDialog = (props) => {
                 component={ReduxVerticalFormGroup}
                 name="noProxyDomains"
                 label="No Proxy domains"
-                placeholder={
-                  !formValues.httpProxyUrl && !formValues.httpsProxyUrl
-                    ? DISABLED_NO_PROXY_PLACEHOLDER
-                    : NO_PROXY_PLACEHOLDER
-                }
+                placeholder={noUrlValues ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER}
                 type="text"
                 parse={stringToArray}
                 validate={checkDNSDomain}
                 helpText={NO_PROXY_HELPER_TEXT}
                 showHelpTextOnError={false}
-                isDisabled={!formValues.httpProxyUrl && !formValues.httpsProxyUrl}
+                isDisabled={noUrlValues}
               />
             </GridItem>
             <GridItem sm={12} md={10} xl2={11}>
@@ -202,7 +196,7 @@ const EditClusterWideProxyDialog = (props) => {
               )}
             </GridItem>
             <GridItem sm={0} md={2} xl2={4} />
-            <GridItem>{anyTouched && noValues && atLeastOneAlert}</GridItem>
+            <GridItem>{anyTouched && noClusterProxyValues && atLeastOneAlert}</GridItem>
           </Grid>
         </Form>
       </Modal>
@@ -215,9 +209,6 @@ EditClusterWideProxyDialog.propTypes = {
   isOpen: PropTypes.bool,
   reset: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  formValues: PropTypes.object,
-  httpProxyUrl: PropTypes.string,
-  httpsProxyUrl: PropTypes.string,
   additionalTrustBundle: PropTypes.string,
   editClusterProxyResponse: PropTypes.shape({
     error: PropTypes.bool,
@@ -227,6 +218,8 @@ EditClusterWideProxyDialog.propTypes = {
   sendError: PropTypes.func,
   anyTouched: PropTypes.bool,
   clearClusterProxyResponse: PropTypes.func,
+  noClusterProxyValues: PropTypes.bool,
+  noUrlValues: PropTypes.bool,
 };
 
 export default EditClusterWideProxyDialog;

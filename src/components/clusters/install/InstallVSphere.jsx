@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-
 import { PageSection } from '@patternfly/react-core';
 
-import PageTitle from '../../common/PageTitle';
 import Breadcrumbs from '../../common/Breadcrumbs';
-import InstructionsChooser from './instructions/InstructionsChooser';
 import { scrollToTop } from '../../../common/helpers';
+import { InstructionsChooser } from './instructions/InstructionsChooser';
+import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 
 class InstallVSphere extends Component {
   componentDidMount() {
@@ -26,10 +25,9 @@ class InstallVSphere extends Component {
 
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
+        <InstructionsChooserPageTitle cloudName="VMware vSphere" breadcrumbs={breadcrumbs} />
         <PageSection>
           <InstructionsChooser
-            cloudName="VMware vSphere"
             showAI
             ipiPageLink="/install/vsphere/installer-provisioned"
             upiPageLink="/install/vsphere/user-provisioned"

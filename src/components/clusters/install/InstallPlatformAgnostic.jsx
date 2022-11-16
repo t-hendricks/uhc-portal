@@ -3,8 +3,8 @@ import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { scrollToTop } from '../../../common/helpers';
-import PageTitle from '../../common/PageTitle';
-import InstructionsChooser from './instructions/InstructionsChooser';
+import { InstructionsChooser } from './instructions/InstructionsChooser';
+import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 
 class InstallPlatformAgnostic extends Component {
   componentDidMount() {
@@ -26,10 +26,12 @@ class InstallPlatformAgnostic extends Component {
 
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
+        <InstructionsChooserPageTitle
+          cloudName="Platform agnostic (x86_64)"
+          breadcrumbs={breadcrumbs}
+        />
         <PageSection>
           <InstructionsChooser
-            cloudName="Platform agnostic (x86_64)"
             showAI
             hideIPI
             upiPageLink="/install/platform-agnostic/user-provisioned"

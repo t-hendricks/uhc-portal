@@ -16,7 +16,7 @@ import { RosaCliCommand } from './constants/cliCommands';
 import PopoverHintWithTitle from '../../../../common/PopoverHintWithTitle';
 
 const ErrorNoOCMRole = ({ openOcmRoleInstructionsModal }) => (
-  <TextContent className="ocm-alert-text">
+  <TextContent className="rosa-role-error">
     <Text component={TextVariants.p} className="pf-u-mb-sm">
       Create and link an OCM role with your Red Hat organization to proceed.
     </Text>

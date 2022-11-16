@@ -2,7 +2,7 @@
 
 exports[`InstallASH renders correctly 1`] = `
 <Fragment>
-  <PageTitle
+  <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
         path={
@@ -21,11 +21,10 @@ exports[`InstallASH renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift Container Platform 4"
+    cloudName="Azure Stack Hub"
   />
   <PageSection>
     <InstructionsChooser
-      cloudName="Azure Stack Hub"
       ipiPageLink="/install/azure-stack-hub/installer-provisioned"
       upiPageLink="/install/azure-stack-hub/user-provisioned"
     />

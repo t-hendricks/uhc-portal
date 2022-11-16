@@ -199,7 +199,7 @@ const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
         </>,
         <>
           <a href={links.AZURE} target="_blank" rel="noopener noreferrer">
-            Azure Red Hat Openshift
+            Azure Red Hat OpenShift
           </a>
         </>,
         'Microsoft Azure',

@@ -332,7 +332,7 @@ function AccountRolesARNsSection({
                 />
               </GridItem>
               {rosaMaxOSVersion && (
-                <GridItem span={8}>
+                <GridItem>
                   <br />
                   <Alert
                     variant="info"

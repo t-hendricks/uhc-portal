@@ -2,7 +2,7 @@
 
 exports[`InstallAWS renders correctly 1`] = `
 <Fragment>
-  <PageTitle
+  <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
         path={
@@ -21,11 +21,10 @@ exports[`InstallAWS renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift Container Platform 4"
+    cloudName="AWS"
   />
   <PageSection>
     <InstructionsChooser
-      cloudName="AWS"
       ipiPageLink="/install/aws/installer-provisioned"
       upiPageLink="/install/aws/user-provisioned"
     />
