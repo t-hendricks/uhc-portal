@@ -6,6 +6,7 @@ import {
   subscriptionsConstants,
   viewConstants,
   viewPaginationConstants,
+  viewOptionsConstants,
 } from '../constants';
 import { GET_CLUSTER_LOGS } from '../../components/clusters/ClusterDetails/components/ClusterLogs/clusterLogConstants';
 import type { ViewOptionsAction } from '../actions/viewOptionsActions';
@@ -86,6 +87,15 @@ const viewOptionsReducer = (
           logs: AxiosResponse<ClusterLogList>;
         }>;
       }
+    // TODO create typescript action
+    | {
+        type: 'VIEW_MY_CLUSTERS_ONLY_CHANGED';
+        // TODO refactor viewType to be part of the payload
+        viewType: string;
+        payload: {
+          showMyClustersOnly: boolean;
+        };
+      }
   >,
 ): State => {
   const updateState: State = {};
@@ -104,6 +114,16 @@ const viewOptionsReducer = (
   };
 
   switch (action.type) {
+    case viewOptionsConstants.VIEW_MY_CLUSTERS_ONLY_CHANGED:
+      updateState[action.viewType] = {
+        ...state[action.viewType],
+        flags: {
+          ...state[action.viewType].flags,
+          showMyClustersOnly: action.payload.showMyClustersOnly,
+        },
+      };
+      return { ...state, ...updateState };
+
     case viewPaginationConstants.VIEW_FIRST_PAGE:
       updateState[action.payload.viewType] = { ...state[action.payload.viewType], currentPage: 1 };
       return { ...state, ...updateState };
@@ -155,6 +175,9 @@ const viewOptionsReducer = (
       updateState[action.payload.viewType] = {
         ...state[action.payload.viewType],
         pageSize: action.payload.pageSize,
+        // reset current page to 1, as otherwise we might be on a page that could no longer be valid
+        // after changing the page size
+        currentPage: 1,
       };
       return { ...state, ...updateState };
 
