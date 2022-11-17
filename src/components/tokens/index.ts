@@ -2,16 +2,13 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import Tokens from './Tokens';
 import { setOfflineToken } from '~/components/clusters/CreateROSAPage/CreateROSAWizard/rosaActions';
-import { RosaApi } from '~/redux/types';
+import { GlobalState } from '~/redux/store';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setOfflineToken: (token: string) => dispatch(setOfflineToken(token)),
 });
 
-type TokenState = {
-  rosaReducer: RosaApi;
-};
-const mapStateToProps = (state: TokenState) => {
+const mapStateToProps = (state: GlobalState) => {
   const { offlineToken } = state.rosaReducer;
 
   return {

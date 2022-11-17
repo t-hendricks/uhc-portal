@@ -1,18 +1,13 @@
-import { machineTypesActions } from './machineTypesActions';
+import { machineTypesActions, groupByCloudProvider } from './machineTypesActions';
 import { clusterService } from '../../services';
 
 jest.mock('../../services/clusterService');
 
 describe('machineTypesActions', () => {
-  let mockDispatch;
-  beforeEach(() => {
-    mockDispatch = jest.fn();
-  });
-
   describe('getMachineTypes', () => {
     it('calls clusterService.getMachineTypes', () => {
-      machineTypesActions.getMachineTypes()(mockDispatch);
-      expect(clusterService.getMachineTypes).toBeCalled();
+      machineTypesActions.getMachineTypes();
+      expect(clusterService.getMachineTypes).toHaveBeenCalled();
     });
   });
 
@@ -41,7 +36,7 @@ describe('machineTypesActions', () => {
           generic_name: 'standard-4',
         },
       ];
-      const byProvider = machineTypesActions.groupByCloudProvider(machineTypes);
+      const byProvider = groupByCloudProvider(machineTypes);
       expect(byProvider).toEqual({
         aws: [
           {

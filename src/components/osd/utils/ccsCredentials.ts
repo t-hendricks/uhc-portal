@@ -1,8 +1,6 @@
 import { Dispatch } from 'redux';
 import { FormikValues } from 'formik';
 import isEqual from 'lodash/isEqual';
-
-import { CcsCredentialsValidity } from '~/redux/types';
 import {
   getAWSCloudProviderRegions,
   getGCPCloudProviderVPCs,
@@ -10,6 +8,7 @@ import {
 } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
 import { CloudProviderType } from '../ClusterSettings/CloudProvider/types';
 import { FieldId } from '../constants';
+import { GlobalState } from '~/redux/store';
 
 export const getCcsCredentials = (values: FormikValues): string | FormikValues | null => {
   const {
@@ -34,7 +33,7 @@ export const getCcsCredentials = (values: FormikValues): string | FormikValues |
   }
 };
 
-export const getCloudProverInfo = (values: FormikValues, dispatch: Dispatch<any>) => {
+export const getCloudProverInfo = (values: FormikValues, dispatch: Dispatch) => {
   const ccsCredentials = getCcsCredentials(values);
 
   if (values[FieldId.CloudProvider] === CloudProviderType.Gcp) {
@@ -49,7 +48,7 @@ export const getCloudProverInfo = (values: FormikValues, dispatch: Dispatch<any>
 
 export const shouldValidateCcsCredentials = (
   values: FormikValues,
-  ccsCredentialsValidity: CcsCredentialsValidity,
+  ccsCredentialsValidity: GlobalState['ccsInquiries']['ccsCredentialsValidity'],
 ) => {
   const areCCSCredentialsValid =
     ccsCredentialsValidity.fulfilled &&

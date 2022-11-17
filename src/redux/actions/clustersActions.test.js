@@ -15,10 +15,12 @@ describe('clustersActions', () => {
 
   describe('invalidateClusters', () => {
     it('dispatches successfully', () => {
-      clustersActions.invalidateClusters()(mockDispatch);
-      expect(mockDispatch).toBeCalledWith({
-        type: INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
-      });
+      const result = clustersActions.invalidateClusters();
+      expect(result).toEqual(
+        expect.objectContaining({
+          type: INVALIDATE_ACTION(clustersConstants.GET_CLUSTERS),
+        }),
+      );
     });
   });
 
@@ -41,8 +43,8 @@ describe('clustersActions', () => {
 
   describe('clearClusterResponse', () => {
     it('dispatches successfully', () => {
-      clustersActions.clearClusterResponse()(mockDispatch);
-      expect(mockDispatch).toBeCalledWith({
+      const result = clustersActions.clearClusterResponse();
+      expect(result).toEqual({
         type: clustersConstants.CLEAR_DISPLAY_NAME_RESPONSE,
       });
     });
@@ -50,16 +52,17 @@ describe('clustersActions', () => {
 
   describe('editCluster', () => {
     it('dispatches successfully', () => {
-      clustersActions.editCluster()(mockDispatch);
-      expect(mockDispatch).toBeCalledWith({
-        payload: expect.anything(),
-        type: clustersConstants.EDIT_CLUSTER,
-      });
+      const result = clustersActions.editCluster();
+      expect(result).toEqual(
+        expect.objectContaining({
+          type: clustersConstants.EDIT_CLUSTER,
+        }),
+      );
     });
 
     it('calls clusterService.editCluster', () => {
       const fakeParams = { fake: 'params' };
-      clustersActions.editCluster('fakeID', fakeParams)(mockDispatch);
+      clustersActions.editCluster('fakeID', fakeParams);
       expect(clusterService.editCluster).toBeCalledWith('fakeID', fakeParams);
     });
   });
@@ -79,24 +82,24 @@ describe('clustersActions', () => {
 
   describe('fetchClusterDetails', () => {
     it('dispatches successfully', () => {
-      clustersActions.fetchClusterDetails()(mockDispatch);
-      expect(mockDispatch).toBeCalledWith({
-        payload: expect.anything(),
+      const result = clustersActions.fetchClusterDetails();
+      expect(result).toEqual({
         type: clustersConstants.GET_CLUSTER_DETAILS,
+        payload: expect.anything(),
       });
     });
 
     it('calls clusterService.getClusterDetails', () => {
       const fakeParams = { fake: 'params' };
-      clustersActions.fetchClusterDetails(fakeParams)(mockDispatch);
+      clustersActions.fetchClusterDetails(fakeParams);
       expect(accountsService.getSubscription).toBeCalledWith(fakeParams);
     });
   });
 
   describe('resetCreatedClusterResponse', () => {
     it('dispatches successfully', () => {
-      clustersActions.resetCreatedClusterResponse()(mockDispatch);
-      expect(mockDispatch).toBeCalledWith({
+      const result = clustersActions.resetCreatedClusterResponse();
+      expect(result).toEqual({
         type: clustersConstants.RESET_CREATED_CLUSTER_RESPONSE,
       });
     });
