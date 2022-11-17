@@ -15,7 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../../redux/store';
 
 import Tokens from '../Tokens';
 
@@ -25,31 +28,56 @@ const mockGetToken = jest
 
 window.insights = {
   chrome: {
+    ...window.insights?.chrome,
     auth: {
+      ...window.insights?.chrome?.auth,
       getOfflineToken: mockGetToken,
     },
   },
 };
 
 describe('<Tokens />', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Renders screen with button', () => {
-    const component = shallow(<Tokens show={false} showPath="/token/show" />);
-    expect(mockGetToken).not.toBeCalled();
+    const component = shallow(
+      <Tokens show={false} showPath="/token/show" setOfflineToken={() => {}} />,
+    );
+    expect(component).toMatchSnapshot();
+  });
+
+  it('Renders screen with token', () => {
+    const component = shallow(
+      <Tokens
+        show={false}
+        showPath="/token/show"
+        offlineToken="test-token"
+        setOfflineToken={() => {}}
+      />,
+    );
     expect(component).toMatchSnapshot();
   });
 
   it('Renders loading screen', () => {
-    const loadingcomponent = shallow(<Tokens show />);
+    const loadingcomponent = shallow(<Tokens show setOfflineToken={() => {}} />);
     expect(loadingcomponent).toMatchSnapshot();
   });
 
   it('Calls getOfflineToken', () => {
-    shallow(<Tokens show />);
+    mount(<Tokens show setOfflineToken={() => {}} />, {
+      wrappingComponent: ({ children }) => (
+        <Provider store={store}>
+          <BrowserRouter>{children}</BrowserRouter>
+        </Provider>
+      ),
+    });
     expect(mockGetToken).toBeCalled();
   });
 
   it('Renders token', () => {
-    const component = shallow(<Tokens show />);
+    const component = shallow(<Tokens show setOfflineToken={() => {}} />);
     expect(component).toMatchSnapshot();
   });
 });

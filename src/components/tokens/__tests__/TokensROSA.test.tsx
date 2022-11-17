@@ -16,31 +16,12 @@ limitations under the License.
 
 import React from 'react';
 import { shallow } from 'enzyme';
-
 import TokensROSA from '../TokensROSA';
-
-const mockGetToken = jest
-  .fn()
-  .mockResolvedValue({ data: { refresh_token: 'hello offline access token!' } });
-
-window.insights = {
-  chrome: {
-    auth: {
-      getOfflineToken: mockGetToken,
-    },
-  },
-};
 
 describe('<TokensROSA />', () => {
   it('Renders screen with button', () => {
     const component = shallow(<TokensROSA show={false} showPath="/token/show" />);
-    expect(mockGetToken).not.toBeCalled();
     expect(component).toMatchSnapshot();
-  });
-
-  it('Renders loading screen', () => {
-    const loadingcomponent = shallow(<TokensROSA show />);
-    expect(loadingcomponent).toMatchSnapshot();
   });
 
   it('Renders token', () => {

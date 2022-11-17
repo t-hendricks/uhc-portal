@@ -36,12 +36,13 @@ const store = createStore(
   ),
 );
 
-export type GlobalState = ReturnType<typeof store.getState> & {
+export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'> & {
   // TODO temporary overrides for reducers that aren't written in typescript
   rosaReducer: {
     getAWSAccountIDsResponse: {
       data: any[];
     };
+    offlineToken?: string | Error;
   };
 };
 

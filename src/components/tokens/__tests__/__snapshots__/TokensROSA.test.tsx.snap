@@ -1,21 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<TokensROSA /> Renders loading screen 1`] = `
-<Connect(Tokens)
-  commandName="rosa"
-  commandTool="rosa"
-  docsLink={[Function]}
-  leadingInfo={[Function]}
-  show={true}
-/>
-`;
-
 exports[`<TokensROSA /> Renders screen with button 1`] = `
 <Connect(Tokens)
   commandName="rosa"
   commandTool="rosa"
-  docsLink={[Function]}
-  leadingInfo={[Function]}
+  docsLink={
+    <ExternalLink
+      href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+      noIcon={true}
+    >
+      read more about setting up the rosa CLI
+    </ExternalLink>
+  }
+  leadingInfo={
+    <React.Fragment>
+      <Text
+        component="p"
+      >
+        Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
+      </Text>
+      <Title
+        headingLevel="h3"
+      >
+        Your API token
+      </Title>
+      <Text
+        component="p"
+      >
+        Use this API token to authenticate against your Red Hat OpenShift Service on AWS account.
+      </Text>
+    </React.Fragment>
+  }
   show={false}
   showPath="/token/show"
 />
@@ -25,8 +40,33 @@ exports[`<TokensROSA /> Renders token 1`] = `
 <Connect(Tokens)
   commandName="rosa"
   commandTool="rosa"
-  docsLink={[Function]}
-  leadingInfo={[Function]}
+  docsLink={
+    <ExternalLink
+      href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+      noIcon={true}
+    >
+      read more about setting up the rosa CLI
+    </ExternalLink>
+  }
+  leadingInfo={
+    <React.Fragment>
+      <Text
+        component="p"
+      >
+        Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use OpenShift on AWS without needing to install, operate or upgrade your own OpenShift (Kubernetes) cluster.
+      </Text>
+      <Title
+        headingLevel="h3"
+      >
+        Your API token
+      </Title>
+      <Text
+        component="p"
+      >
+        Use this API token to authenticate against your Red Hat OpenShift Service on AWS account.
+      </Text>
+    </React.Fragment>
+  }
   show={true}
 />
 `;

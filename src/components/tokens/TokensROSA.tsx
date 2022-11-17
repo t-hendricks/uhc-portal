@@ -23,11 +23,17 @@ import ExternalLink from '../common/ExternalLink';
 import Tokens from './index';
 import links, { tools } from '../../common/installLinks.mjs';
 
-const TokensROSA = (props) => (
+type Props = Omit<
+  React.ComponentProps<typeof Tokens>,
+  'commandName' | 'commandTool' | 'leadingInfo' | 'docsLink'
+>;
+
+const TokensROSA = (props: Props) => (
   <Tokens
+    {...props}
     commandName="rosa"
     commandTool={tools.ROSA}
-    leadingInfo={() => (
+    leadingInfo={
       <>
         <Text component="p">
           Red Hat OpenShift Service on AWS is a managed service that makes it easy for you to use
@@ -39,13 +45,12 @@ const TokensROSA = (props) => (
           Use this API token to authenticate against your Red Hat OpenShift Service on AWS account.
         </Text>
       </>
-    )}
-    docsLink={() => (
+    }
+    docsLink={
       <ExternalLink href={links.ROSA_CLI_DOCS} noIcon>
         read more about setting up the rosa CLI
       </ExternalLink>
-    )}
-    {...props}
+    }
   />
 );
 
