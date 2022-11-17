@@ -332,7 +332,6 @@ class MachineTypeSelection extends React.Component {
             onToggle={this.onToggle}
             onSelect={changeHandler}
             maxHeight={inModal ? 300 : 600}
-            menuAppendTo="parent"
           >
             {options}
           </Select>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useFormikContext, FormikValues } from 'formik';
 import { RadioButtonField } from 'formik-pf';
 
 import {
@@ -25,6 +24,7 @@ import {
   getNodesCount,
 } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/ScaleSection/AutoScaleSection/AutoScaleHelper';
 import { FieldId } from '../constants';
+import { useFormState } from '../hooks';
 import { useGetBillingQuotas } from './useGetBillingQuotas';
 
 import './BillingModel.scss';
@@ -34,7 +34,7 @@ export const BillingModel = () => {
     values: { [FieldId.Product]: product, [FieldId.BillingModel]: billingModel },
     values,
     setFieldValue,
-  } = useFormikContext<FormikValues>();
+  } = useFormState();
   const quotas = useGetBillingQuotas(product);
   const showOsdTrial = useGlobalState(
     (state) => state.features[OSD_TRIAL_FEATURE] && quotas.osdTrial,

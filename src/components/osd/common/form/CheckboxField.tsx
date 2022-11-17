@@ -12,7 +12,7 @@ interface CheckboxFieldProps {
   tooltip?: React.ReactNode;
   field?: FieldConfig;
   formGroup?: FormGroupProps;
-  input?: Omit<CheckboxProps, 'ref'>;
+  input?: Omit<Partial<CheckboxProps>, 'ref'>;
 }
 
 export const CheckboxField = ({
@@ -35,10 +35,19 @@ export const CheckboxField = ({
         {...(validate && { isRequired: true })}
         {...formGroup}
       >
-        <Flex>
+        <Flex flexWrap={{ default: 'nowrap' }}>
           <Checkbox
             id={field.name}
-            label={label}
+            label={
+              tooltip ? (
+                <Flex flexWrap={{ default: 'nowrap' }}>
+                  {label}
+                  <div className="pf-u-ml-md">{tooltip && <PopoverHint hint={tooltip} />}</div>
+                </Flex>
+              ) : (
+                label
+              )
+            }
             isChecked={field.value}
             isDisabled={isDisabled}
             onBlur={() => form.setFieldTouched(name, true)}
@@ -46,7 +55,6 @@ export const CheckboxField = ({
             value={field.value || false}
             {...input}
           />
-          {tooltip && <PopoverHint hint={tooltip} />}
         </Flex>
       </FormGroup>
     )}

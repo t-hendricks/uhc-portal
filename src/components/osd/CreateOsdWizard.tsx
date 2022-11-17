@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import { Formik, FormikValues, useFormikContext } from 'formik';
+import { Formik, FormikValues } from 'formik';
 
 import { Banner, PageSection } from '@patternfly/react-core';
 import { Wizard, WizardStep } from '@patternfly/react-core/dist/esm/next';
@@ -16,12 +16,14 @@ import usePreventBrowserNav from '~/hooks/usePreventBrowserNav';
 import LeaveCreateClusterPrompt from '~/components/clusters/common/LeaveCreateClusterPrompt';
 import submitOSDRequest from '~/components/clusters/CreateOSDPage/submitOSDRequest';
 
+import { useFormState } from './hooks';
 import { breadcrumbs, FieldId, initialValues, StepId, StepName, UrlPath } from './constants';
 import { BillingModel } from './BillingModel';
 import {
   ClusterSettingsCloudProvider,
   ClusterSettingsDetails,
   ClusterSettingsMachinePool,
+  CloudProviderStepFooter,
 } from './ClusterSettings';
 import { NetworkingConfiguration, NetworkingCidrRanges } from './Networking';
 import { ClusterUpdates } from './ClusterUpdates';
@@ -55,7 +57,7 @@ export const CreateOsdWizard: React.FunctionComponent = () => {
 const CreateOsdWizardInternal = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { values } = useFormikContext<FormikValues>();
+  const { values } = useFormState();
   const product = values[FieldId.Product];
   const userProfile = useGlobalState((state) => state.userProfile);
   const isLoading = userProfile.organization.pending;
@@ -84,7 +86,11 @@ const CreateOsdWizardInternal = () => {
           name={StepName.ClusterSettings}
           id={StepId.ClusterSettings}
           steps={[
-            <WizardStep name={StepName.CloudProvider} id={StepId.ClusterSettingsCloudProvider}>
+            <WizardStep
+              name={StepName.CloudProvider}
+              id={StepId.ClusterSettingsCloudProvider}
+              footer={<CloudProviderStepFooter />}
+            >
               <ClusterSettingsCloudProvider />
             </WizardStep>,
             <WizardStep name={StepName.Details} id={StepId.ClusterSettingsDetails}>

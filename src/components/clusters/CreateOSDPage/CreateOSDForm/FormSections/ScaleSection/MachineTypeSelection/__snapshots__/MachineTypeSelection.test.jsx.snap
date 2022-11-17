@@ -60,7 +60,7 @@ exports[`<MachineTypeSelection /> when the machine types list contains unknown c
     isOpen={false}
     isPlain={false}
     maxHeight={600}
-    menuAppendTo="parent"
+    menuAppendTo="inline"
     noResultsFoundText="No results found"
     onClear={[Function]}
     onCreateOption={[Function]}
@@ -192,7 +192,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available byoc 
     isOpen={false}
     isPlain={false}
     maxHeight={600}
-    menuAppendTo="parent"
+    menuAppendTo="inline"
     noResultsFoundText="No results found"
     onClear={[Function]}
     onCreateOption={[Function]}
@@ -324,7 +324,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     isOpen={false}
     isPlain={false}
     maxHeight={600}
-    menuAppendTo="parent"
+    menuAppendTo="inline"
     noResultsFoundText="No results found"
     onClear={[Function]}
     onCreateOption={[Function]}
@@ -497,7 +497,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     isOpen={false}
     isPlain={false}
     maxHeight={600}
-    menuAppendTo="parent"
+    menuAppendTo="inline"
     noResultsFoundText="No results found"
     onClear={[Function]}
     onCreateOption={[Function]}
@@ -670,7 +670,7 @@ exports[`<MachineTypeSelection /> when the machine types list is available with 
     isOpen={false}
     isPlain={false}
     maxHeight={600}
-    menuAppendTo="parent"
+    menuAppendTo="inline"
     noResultsFoundText="No results found"
     onClear={[Function]}
     onCreateOption={[Function]}
