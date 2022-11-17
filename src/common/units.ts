@@ -1,6 +1,6 @@
 // @types/filesize does not support have the correct return type when `output: 'object'`
 // TODO update filesize to latest version which packages updated types
-//@ts-ignore
+// @ts-ignore
 import filesize from 'filesize';
 import round from './math';
 

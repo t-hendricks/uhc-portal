@@ -1,0 +1,46 @@
+import produce from 'immer';
+import {
+  REJECTED_ACTION,
+  PENDING_ACTION,
+  FULFILLED_ACTION,
+  baseRequestState,
+} from '../reduxHelpers';
+import { getErrorState } from '../../common/errors';
+import { githubReleasesToFetch } from '../../common/installLinks.mjs';
+import { GITHUB_GET_LATEST_RELEASE, GithubActions } from '../actions/githubActions';
+import type { PromiseActionType, PromiseReducerState } from '../types';
+import type { GitHubRelease } from '../../services/githubService';
+
+type State = { [repo: string]: PromiseReducerState<{ data: GitHubRelease }> };
+
+// {'user/repo': {pending, fulfilled etc., data: release}}
+const initialState: State = {};
+githubReleasesToFetch.forEach((repo) => {
+  initialState[repo] = baseRequestState;
+});
+
+function githubReducer(state = initialState, action: PromiseActionType<GithubActions>): State {
+  return produce(state, (draft) => {
+    // eslint-disable-next-line default-case
+    switch (action.type) {
+      case REJECTED_ACTION(GITHUB_GET_LATEST_RELEASE):
+        draft[action.meta.repo] = {
+          ...initialState[action.meta.repo],
+          ...getErrorState(action),
+        };
+        break;
+      case PENDING_ACTION(GITHUB_GET_LATEST_RELEASE):
+        draft[action.meta.repo].pending = true;
+        break;
+      case FULFILLED_ACTION(GITHUB_GET_LATEST_RELEASE):
+        draft[action.meta.repo] = {
+          ...baseRequestState,
+          fulfilled: true,
+          data: action.payload.data,
+        };
+        break;
+    }
+  });
+}
+
+export default githubReducer;

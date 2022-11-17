@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
   const regions = get(state, 'cloudProviders.providers.gcp.regions', {});
 
   if (ownProps.selectedRegion && regions[ownProps.selectedRegion]) {
-    kmsRegions = regions[ownProps.selectedRegion].kms_specific_region;
+    kmsRegions = regions[ownProps.selectedRegion].kms_location_id;
   }
 
   if (kmsRegions) {
