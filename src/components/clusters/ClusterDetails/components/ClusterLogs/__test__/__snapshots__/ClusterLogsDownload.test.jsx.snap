@@ -19,6 +19,7 @@ exports[`<ClusterLogsDownload /> Renders modal with download button 1`] = `
             id="cluster-logs-download-button"
             isDisabled={false}
             onClick={[Function]}
+            spinnerAriaLabel="Loading cluster logs"
             target="_blank"
             variant="primary"
           >
