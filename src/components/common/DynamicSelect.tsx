@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Alert,
   Button,
@@ -9,14 +8,35 @@ import {
   Text,
   TextContent,
 } from '@patternfly/react-core';
-
+import { WrappedFieldMetaProps, WrappedFieldInputProps } from 'redux-form';
 import ErrorBox from './ErrorBox';
+import { PromiseReducerState } from '~/redux/types';
+
+type Props = {
+  input: Pick<WrappedFieldInputProps, 'value' | 'onChange'> & { name?: string };
+  meta: Pick<WrappedFieldMetaProps, 'error' | 'touched' | 'invalid'>;
+  isRequired?: boolean;
+  label: string;
+  labelIcon?: React.ReactElement;
+  helperText?: string;
+  placeholder: string;
+  emptyAlertTitle?: React.ReactNode;
+  emptyAlertBody?: React.ReactNode;
+  refreshButtonText?: React.ReactNode;
+  noDependenciesPlaceholder?: string;
+  requestErrorTitle: string;
+  hasDependencies: boolean;
+  matchesDependencies: boolean;
+  loadData: () => void;
+  requestStatus: PromiseReducerState;
+  items: string[];
+};
 
 /**
  * Generic select field whose options are fetched dynamically, and might depend on other fields.
  * Concrete behavior to be injected via props.
  */
-class DynamicSelect extends React.Component {
+class DynamicSelect extends React.Component<Props> {
   componentDidMount() {
     this.loadIfNeeded();
     if (this.currentValueIrrelevant()) {
@@ -145,29 +165,5 @@ class DynamicSelect extends React.Component {
     );
   }
 }
-DynamicSelect.propTypes = {
-  input: PropTypes.object.isRequired,
-  // redux-form metadata like error or active states
-  meta: PropTypes.object.isRequired,
-  isRequired: PropTypes.bool,
-  label: PropTypes.string.isRequired,
-  labelIcon: PropTypes.node,
-  helperText: PropTypes.string,
-  placeholder: PropTypes.string.isRequired,
-  emptyAlertTitle: PropTypes.node,
-  emptyAlertBody: PropTypes.node,
-  refreshButtonText: PropTypes.node,
-  noDependenciesPlaceholder: PropTypes.string,
-  requestErrorTitle: PropTypes.string.isRequired,
-  hasDependencies: PropTypes.bool.isRequired,
-  matchesDependencies: PropTypes.bool.isRequired,
-  loadData: PropTypes.func.isRequired,
-  requestStatus: PropTypes.shape({
-    pending: PropTypes.bool.isRequired,
-    fulfilled: PropTypes.bool.isRequired,
-    error: PropTypes.object,
-  }).isRequired,
-  items: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
 
 export default DynamicSelect;

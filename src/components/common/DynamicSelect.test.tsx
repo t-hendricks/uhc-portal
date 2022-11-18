@@ -2,11 +2,14 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import DynamicSelect from './DynamicSelect';
+import { PromiseReducerState } from '~/redux/types';
+
+type DynamicSelectProps = React.ComponentProps<typeof DynamicSelect>;
 
 describe('<DynamicSelect>', () => {
-  let loadData;
-  let onChange;
-  let baseProps;
+  let loadData: DynamicSelectProps['loadData'];
+  let onChange: DynamicSelectProps['input']['onChange'];
+  let baseProps: DynamicSelectProps;
   beforeEach(() => {
     loadData = jest.fn();
     onChange = jest.fn();
@@ -64,7 +67,7 @@ describe('<DynamicSelect>', () => {
   });
 
   it('empty data', () => {
-    const status = { pending: false, fulfilled: true, error: null };
+    const status: PromiseReducerState = { pending: false, fulfilled: true, error: false };
     const select = shallow(<DynamicSelect {...baseProps} requestStatus={status} items={[]} />);
     expect(loadData).not.toBeCalled();
     expect(select).toMatchSnapshot('empty');
@@ -84,7 +87,7 @@ describe('<DynamicSelect>', () => {
   });
 
   it('resets when selected value no longer valid option', () => {
-    const status = { pending: false, fulfilled: true, error: null };
+    const status: PromiseReducerState = { pending: false, fulfilled: true, error: false };
     const select = shallow(
       <DynamicSelect {...baseProps} input={{ value: 'Foo', onChange }} requestStatus={status} />,
     );
@@ -103,7 +106,7 @@ describe('<DynamicSelect>', () => {
   });
 
   it('resets on lost dependencies', () => {
-    const status = { pending: false, fulfilled: true, error: null };
+    const status: PromiseReducerState = { pending: false, fulfilled: true, error: false };
     const select = shallow(
       <DynamicSelect {...baseProps} input={{ value: 'Foo', onChange }} requestStatus={status} />,
     );
