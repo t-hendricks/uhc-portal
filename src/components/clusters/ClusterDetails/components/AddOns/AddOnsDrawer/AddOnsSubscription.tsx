@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-  Button,
   Card,
   CardBody,
   CardFooter,
@@ -8,10 +7,7 @@ import {
   Form,
   FormGroup,
   Radio,
-  Popover,
 } from '@patternfly/react-core';
-import InfoCircleIcon from '@patternfly/react-icons/dist/esm/icons/info-circle-icon';
-import { noQuotaTooltip } from '~/common/helpers';
 import AddOnsConstants from '../AddOnsConstants';
 import AddOnsSubscriptionCard from './AddOnsSubscriptionCard';
 import { SubscriptionModels, SetSubscriptionModel, CloudAccount } from './AddOnsTypes';
@@ -60,7 +56,6 @@ const AddOnsSubscription = ({
   const isReady =
     !cannotModifyBillingAfterInstall &&
     (!installedAddOn || installedAddOn.state === AddOnsConstants.INSTALLATION_STATE.READY);
-
   const hasQuotaStandard =
     Boolean(installedAddOn) ||
     (billingQuota.standard
@@ -178,44 +173,9 @@ const AddOnsSubscription = ({
     </>
   );
 
-  const getInfo = (option: 'standard' | 'marketplace') => {
-    if (!billingQuota[option]) {
-      const content = {
-        standard: 'This addon is not available through Red Hat standard billing.',
-        marketplace: 'This addon is not available through Marketplace.',
-      };
-      return (
-        <Popover headerContent="Not supported" bodyContent={content[option]}>
-          <Button
-            variant="plain"
-            className="info-button"
-            icon={<InfoCircleIcon className="info-icon" />}
-            aria-label="Not supported"
-          />
-        </Popover>
-      );
-    }
-    if (!hasQuotaStandard || !hasQuotaMarketplace) {
-      return (
-        <Popover headerContent="Not enough quota" bodyContent={noQuotaTooltip}>
-          <Button
-            variant="plain"
-            className="info-button"
-            icon={<InfoCircleIcon className="info-icon" />}
-            aria-label="Not enough quota"
-          />
-        </Popover>
-      );
-    }
-    return null;
-  };
-
-  const standardAvailable = !standardNoBilling && hasQuotaStandard;
-  const marketplaceAvailable = !marketplaceNoBilling && hasQuotaMarketplace;
-
   const radioStandard = (disabled = false) => (
     <Radio
-      isChecked={activeSubscription?.billingModel === 'standard' && standardAvailable}
+      isChecked={activeSubscription?.billingModel === 'standard'}
       name="billing-model"
       id="standard"
       className="addons-radio"
@@ -223,7 +183,6 @@ const AddOnsSubscription = ({
       label={
         <div>
           <span className={disabled ? 'pf-u-mr-xs' : ''}>Standard</span>
-          {disabled && getInfo('standard')}
         </div>
       }
       isDisabled={disabled}
@@ -241,7 +200,7 @@ const AddOnsSubscription = ({
   );
   const radioMarketplace = (disabled = false) => (
     <Radio
-      isChecked={activeSubscription?.billingModel.startsWith('marketplace') && marketplaceAvailable}
+      isChecked={activeSubscription?.billingModel.startsWith('marketplace')}
       name="billing-model"
       id="marketplace"
       className="addons-radio"
@@ -249,7 +208,6 @@ const AddOnsSubscription = ({
       label={
         <div>
           <span className={disabled ? 'pf-u-mr-xs' : ''}>Marketplace</span>
-          {disabled && getInfo('marketplace')}
         </div>
       }
       isDisabled={disabled}
@@ -265,6 +223,7 @@ const AddOnsSubscription = ({
       }}
     />
   );
+  const hasStandardAndMarketplaceOptions = billingQuota.standard && billingQuota.marketplace;
   return (
     <>
       <div className="pf-u-mb-sm">
@@ -273,16 +232,16 @@ const AddOnsSubscription = ({
         </strong>
       </div>
       <p>Choose how you would like to pay for this subscription.</p>
-      <Form>
-        <FormGroup role="radiogroup" isInline fieldId="billing-model-group">
-          {radioStandard(standardNoBilling || !hasQuotaStandard || !isReady)}
-          {radioMarketplace(marketplaceNoBilling || !hasQuotaMarketplace || !isReady)}
-        </FormGroup>
-      </Form>
-      {activeSubscription?.billingModel === 'standard' && standardAvailable && standardOptions}
-      {activeSubscription?.billingModel.startsWith('marketplace') &&
-        marketplaceAvailable &&
-        marketplaceOptions}
+      {hasStandardAndMarketplaceOptions && (
+        <Form>
+          <FormGroup role="radiogroup" isInline fieldId="billing-model-group">
+            {billingQuota.standard && radioStandard(!isReady)}
+            {billingQuota.marketplace && radioMarketplace(!isReady)}
+          </FormGroup>
+        </Form>
+      )}
+      {activeSubscription?.billingModel === 'standard' && standardOptions}
+      {activeSubscription?.billingModel.startsWith('marketplace') && marketplaceOptions}
     </>
   );
 };
