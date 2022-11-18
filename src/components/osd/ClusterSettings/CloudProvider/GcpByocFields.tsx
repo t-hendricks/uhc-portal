@@ -124,8 +124,8 @@ export const GcpByocFields = () => {
               </>
             }
           />
+          <div className="pf-u-mt-md">{ccsCredentialsValidity.pending && 'Validating...'}</div>
         </GridItem>
-        <GridItem>{ccsCredentialsValidity.pending && 'Validating...'}</GridItem>
       </Grid>
     </Flex>
   );

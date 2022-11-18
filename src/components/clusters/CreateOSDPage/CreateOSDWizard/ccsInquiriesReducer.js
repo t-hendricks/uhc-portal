@@ -27,7 +27,9 @@ export const initialState = {
     cloudProvider: undefined,
     credentials: undefined,
     keyLocation: undefined,
-    data: undefined,
+    data: {
+      items: [],
+    },
   },
   gcpKeys: {
     ...baseRequestState,
@@ -35,7 +37,9 @@ export const initialState = {
     credentials: undefined,
     keyLocation: undefined,
     keyRing: undefined,
-    data: undefined,
+    data: {
+      items: [],
+    },
   },
   vpcs: {
     ...baseRequestState,
