@@ -13,6 +13,10 @@ export type AddOnParameterOption = {
    */
   name?: string;
   /**
+   * Rank of option to be used in cases where editable direction should be restricted.
+   */
+  rank?: number;
+  /**
    * List of add-on requirements for this parameter option.
    */
   requirements?: Array<AddOnRequirement>;

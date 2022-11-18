@@ -1,246 +1,204 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InstructionsChooser renders correctly with AI and UPI 1`] = `
-<Fragment>
-  <Card>
-    <CardBody>
-      <div
-        className="pf-c-content ocm-page"
-      >
-        <Title
-          headingLevel="h3"
-          size="2xl"
-        >
-          ARM Bare Metal
-          : Select an installation type
-        </Title>
-        <div
-          className="flex-container"
-        >
-          <Link
-            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-            to="/assisted-installer/clusters/~new"
-          >
-            <CardBody
-              className="ocm-c-ipi-upi-infra-card--body"
-            >
-              <ConnectedIcon
-                alt="Installer-Provisioned Infrastructure"
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />
-              <Title
-                headingLevel="h3"
-                size="lg"
-              >
-                Assisted Installer
-              </Title>
-               
-              Install OpenShift on your own infrastructure with step-by-step guidance.
-            </CardBody>
-          </Link>
-          <Link
-            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-            to="/install/arm/user-provisioned"
-          >
-            <CardBadge
-              isHidden={true}
+<div
+  className="pf-c-content ocm-page instructions-chooser"
+>
+  <InstructionsChooserCard
+    body="Runs Assisted Installer with standard configuration settings to create your cluster."
+    featureListItems={
+      Array [
+        "Preflight validations",
+        "Smart defaults",
+        "For connected environments",
+      ]
+    }
+    footerLinkHref="#"
+    footerLinkText="Learn more about interactive"
+    href="/assisted-installer/clusters/~new"
+    id="select-interactive"
+    labels={
+      <React.Fragment>
+        <Label
+          color="blue"
+          icon={
+            <StarIcon
+              color="currentColor"
+              noVerticalAlign={false}
+              size="sm"
             />
-            <CardBody
-              className="ocm-c-ipi-upi-infra-card--body"
-            >
-              <UserIcon
-                alt="User-Provisioned Infrastructure"
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />
-              <Title
-                headingLevel="h3"
-                size="lg"
-              >
-                User-provisioned infrastructure
-              </Title>
-              Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
-            </CardBody>
-          </Link>
-        </div>
-      </div>
-    </CardBody>
-  </Card>
-</Fragment>
+          }
+        >
+          Recommended
+        </Label>
+        <Label
+          color="purple"
+        >
+          Web-based
+        </Label>
+      </React.Fragment>
+    }
+    title="Interactive"
+  />
+  <InstructionsChooserCard
+    body="Make all of the decisions when you create your cluster."
+    featureListItems={
+      Array [
+        "User Provisioned Infrastructure",
+        "Highly customizable",
+        "For air-gapped/disconnected environments",
+      ]
+    }
+    footerLinkHref="#"
+    footerLinkText="Learn more about full control"
+    href="/install/arm/user-provisioned"
+    id="select-full-control"
+    labels={
+      <Label
+        color="purple"
+      >
+        CLI-based
+      </Label>
+    }
+    title="Full control"
+  />
+</div>
 `;
 
 exports[`InstructionsChooser renders correctly with AI enabled 1`] = `
-<Fragment>
-  <Card>
-    <CardBody>
-      <div
-        className="pf-c-content ocm-page"
+<div
+  className="pf-c-content ocm-page instructions-chooser"
+>
+  <InstructionsChooserCard
+    body="Runs Assisted Installer with standard configuration settings to create your cluster."
+    featureListItems={
+      Array [
+        "Preflight validations",
+        "Smart defaults",
+        "For connected environments",
+      ]
+    }
+    footerLinkHref="#"
+    footerLinkText="Learn more about interactive"
+    href="/assisted-installer/clusters/~new"
+    id="select-interactive"
+    labels={
+      <React.Fragment>
+        <Label
+          color="blue"
+          icon={
+            <StarIcon
+              color="currentColor"
+              noVerticalAlign={false}
+              size="sm"
+            />
+          }
+        >
+          Recommended
+        </Label>
+        <Label
+          color="purple"
+        >
+          Web-based
+        </Label>
+      </React.Fragment>
+    }
+    title="Interactive"
+  />
+  <InstructionsChooserCard
+    body="Auto-provision your infrastructure with minimal configuration to create your cluster."
+    featureListItems={
+      Array [
+        "Installer Provisioned Infrastructure",
+        "Hosts controlled with baseboard management controller (BMC)",
+        "For air-gapped/disconnected environments",
+      ]
+    }
+    footerLinkHref="#"
+    footerLinkText="Learn more about automated"
+    href="/install/metal/installer-provisioned"
+    id="select-automated"
+    labels={
+      <Label
+        color="purple"
       >
-        <Title
-          headingLevel="h3"
-          size="2xl"
-        >
-          Bare Metal
-          : Select an installation type
-        </Title>
-        <div
-          className="flex-container"
-        >
-          <Link
-            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-            to="/assisted-installer/clusters/~new"
-          >
-            <CardBody
-              className="ocm-c-ipi-upi-infra-card--body"
-            >
-              <ConnectedIcon
-                alt="Installer-Provisioned Infrastructure"
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />
-              <Title
-                headingLevel="h3"
-                size="lg"
-              >
-                Assisted Installer
-              </Title>
-               
-              Install OpenShift on your own infrastructure with step-by-step guidance.
-            </CardBody>
-          </Link>
-          <Link
-            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-            to="/install/metal/installer-provisioned"
-          >
-            <CardBadge
-              isRecommended={true}
-            />
-            <CardBody
-              className="ocm-c-ipi-upi-infra-card--body"
-            >
-              <SyncAltIcon
-                alt="Installer-Provisioned Infrastructure"
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />
-              <Title
-                headingLevel="h3"
-                size="lg"
-              >
-                Installer-provisioned infrastructure
-              </Title>
-               
-              Deploy an OpenShift cluster on infrastructure that the installation program provisions and the cluster maintains.
-            </CardBody>
-          </Link>
-          <Link
-            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-            to="/install/metal/user-provisioned"
-          >
-            <CardBadge
-              isHidden={true}
-            />
-            <CardBody
-              className="ocm-c-ipi-upi-infra-card--body"
-            >
-              <UserIcon
-                alt="User-Provisioned Infrastructure"
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />
-              <Title
-                headingLevel="h3"
-                size="lg"
-              >
-                User-provisioned infrastructure
-              </Title>
-              Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
-            </CardBody>
-          </Link>
-        </div>
-      </div>
-    </CardBody>
-  </Card>
-</Fragment>
+        CLI-based
+      </Label>
+    }
+    title="Automated"
+  />
+  <InstructionsChooserCard
+    body="Make all of the decisions when you create your cluster."
+    featureListItems={
+      Array [
+        "User Provisioned Infrastructure",
+        "Highly customizable",
+        "For air-gapped/disconnected environments",
+      ]
+    }
+    footerLinkHref="#"
+    footerLinkText="Learn more about full control"
+    href="/install/metal/user-provisioned"
+    id="select-full-control"
+    labels={
+      <Label
+        color="purple"
+      >
+        CLI-based
+      </Label>
+    }
+    title="Full control"
+  />
+</div>
 `;
 
 exports[`InstructionsChooser renders correctly with default settings 1`] = `
-<Fragment>
-  <Card>
-    <CardBody>
-      <div
-        className="pf-c-content ocm-page"
+<div
+  className="pf-c-content ocm-page instructions-chooser"
+>
+  <InstructionsChooserCard
+    body="Auto-provision your infrastructure with minimal configuration to create your cluster."
+    featureListItems={
+      Array [
+        "Installer Provisioned Infrastructure",
+        "Hosts controlled with baseboard management controller (BMC)",
+        "For air-gapped/disconnected environments",
+      ]
+    }
+    footerLinkHref="#"
+    footerLinkText="Learn more about automated"
+    href="/install/aws/installer-provisioned"
+    id="select-automated"
+    labels={
+      <Label
+        color="purple"
       >
-        <Title
-          headingLevel="h3"
-          size="2xl"
-        >
-          AWS
-          : Select an installation type
-        </Title>
-        <div
-          className="flex-container"
-        >
-          <Link
-            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-            to="/install/aws/installer-provisioned"
-          >
-            <CardBadge
-              isRecommended={true}
-            />
-            <CardBody
-              className="ocm-c-ipi-upi-infra-card--body"
-            >
-              <SyncAltIcon
-                alt="Installer-Provisioned Infrastructure"
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />
-              <Title
-                headingLevel="h3"
-                size="lg"
-              >
-                Installer-provisioned infrastructure
-              </Title>
-               
-              Deploy an OpenShift cluster on infrastructure that the installation program provisions and the cluster maintains.
-            </CardBody>
-          </Link>
-          <Link
-            className="ocm-c-ipi-upi-infra-card infra-card pf-c-card"
-            to="/install/aws/user-provisioned"
-          >
-            <CardBadge
-              isHidden={true}
-            />
-            <CardBody
-              className="ocm-c-ipi-upi-infra-card--body"
-            >
-              <UserIcon
-                alt="User-Provisioned Infrastructure"
-                color="currentColor"
-                noVerticalAlign={false}
-                size="sm"
-              />
-              <Title
-                headingLevel="h3"
-                size="lg"
-              >
-                User-provisioned infrastructure
-              </Title>
-              Deploy an OpenShift cluster on infrastructure that you prepare and maintain.
-            </CardBody>
-          </Link>
-        </div>
-      </div>
-    </CardBody>
-  </Card>
-</Fragment>
+        CLI-based
+      </Label>
+    }
+    title="Automated"
+  />
+  <InstructionsChooserCard
+    body="Make all of the decisions when you create your cluster."
+    featureListItems={
+      Array [
+        "User Provisioned Infrastructure",
+        "Highly customizable",
+        "For air-gapped/disconnected environments",
+      ]
+    }
+    footerLinkHref="#"
+    footerLinkText="Learn more about full control"
+    href="/install/aws/user-provisioned"
+    id="select-full-control"
+    labels={
+      <Label
+        color="purple"
+      >
+        CLI-based
+      </Label>
+    }
+    title="Full control"
+  />
+</div>
 `;

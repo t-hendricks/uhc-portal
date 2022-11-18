@@ -5,6 +5,7 @@
 import type { AWS } from './AWS';
 import type { CloudRegion } from './CloudRegion';
 import type { GCP } from './GCP';
+import type { Version } from './Version';
 
 /**
  * Description of a cloud provider data used for cloud provider inquiries.
@@ -19,6 +20,10 @@ export type CloudProviderData = {
    */
   gcp?: GCP;
   /**
+   * Availability zone
+   */
+  availability_zones?: Array<string>;
+  /**
    * Key location
    */
   key_location?: string;
@@ -30,4 +35,8 @@ export type CloudProviderData = {
    * Region
    */
   region?: CloudRegion;
+  /**
+   * Openshift version
+   */
+  version?: Version;
 };

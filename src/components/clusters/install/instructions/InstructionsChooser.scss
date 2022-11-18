@@ -1,0 +1,15 @@
+.instructions-chooser {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: var(--pf-global--gutter);
+
+  .infra-card {
+    .pf-c-label {
+      font-weight: normal;
+    }
+
+    .pf-c-list .pf-c-list__item .pf-c-list__item-icon {
+      margin-top: var(--pf-global--spacer--xs);
+    }
+  }
+}

@@ -62,7 +62,10 @@ class ClusterLogsDownload extends React.Component {
   renderDownloadButton() {
     const {
       externalClusterID,
-      clusterLogs: { data },
+      clusterLogs: {
+        data,
+        requestDownloadState: { pending },
+      },
     } = this.props;
 
     let url;
@@ -94,6 +97,8 @@ class ClusterLogsDownload extends React.Component {
         download={download}
         onClick={() => this.closeModal()}
         isDisabled={!data}
+        isLoading={pending}
+        spinnerAriaLabel="Loading cluster logs"
       >
         Download
       </Button>,

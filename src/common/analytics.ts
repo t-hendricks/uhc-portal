@@ -1,18 +1,19 @@
+/* eslint-disable camelcase */
 import { tools } from './installLinks.mjs';
 import { normalizedProducts } from './subscriptionTypes';
 
 export type TrackEvent = {
   event: string;
-  link_name: string;
-  deprecated_name?: string;
-  ocm_resource_type?: string;
+  ['link_name']: string;
+  ['deprecated_name']?: string;
+  ['ocm_resource_type']?: string;
 };
 
 export type TrackEventOptions = {
   url?: string;
   path?: string;
   resourceType?: string;
-  customProperties?: JSON;
+  customProperties?: object;
 };
 
 /**
@@ -47,6 +48,7 @@ const eventNames = {
   ARNS_REFRESHED: 'ARNs Refreshed',
   CHECKBOX_CLICKED: 'Checkbox Clicked',
   RADIOBUTTON_CLICKED: 'Radiobutton Clicked',
+  MISSING_INFORMATION: 'Missing Information',
 };
 
 /**
@@ -257,6 +259,11 @@ const trackEvents: { [key: string]: TrackEvent } = {
     link_name: 'refresh-to-enable-auto-mode',
     ocm_resource_type: ocmResourceType.MOA,
   },
+  MissingUserRole: {
+    event: eventNames.MISSING_INFORMATION,
+    link_name: 'missing-user-role',
+    ocm_resource_type: ocmResourceType.MOA,
+  },
   WizardNext: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-next',
@@ -276,6 +283,10 @@ const trackEvents: { [key: string]: TrackEvent } = {
   WizardLinkNav: {
     event: eventNames.BUTTON_CLICKED,
     link_name: 'wizard-nav',
+  },
+  ExternalLink: {
+    event: eventNames.LINK_CLICKED,
+    link_name: 'external-link',
   },
 };
 

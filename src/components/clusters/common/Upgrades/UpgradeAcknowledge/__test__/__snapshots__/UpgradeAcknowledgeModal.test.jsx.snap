@@ -70,7 +70,7 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
       title="Administrator acknowledgement"
       titleIconVariant={null}
       titleLabel=""
-      variant="medium"
+      variant="small"
     >
       <Portal
         containerInfo={
@@ -86,8 +86,8 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                   aria-label="Administrator acknowledgement"
                   aria-labelledby="pf-modal-part-2 pf-modal-part-3"
                   aria-modal="true"
-                  class="pf-c-modal-box ocm-upgrade-ack-modal pf-m-md"
-                  data-ouia-component-id="OUIA-Generated-Modal-medium-3"
+                  class="pf-c-modal-box ocm-upgrade-ack-modal pf-m-sm"
+                  data-ouia-component-id="OUIA-Generated-Modal-small-3"
                   data-ouia-component-type="PF4/ModalContent"
                   data-ouia-safe="true"
                   id="pf-modal-part-2"
@@ -97,7 +97,7 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                     aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
-                    data-ouia-component-id="OUIA-Generated-Modal-medium-3-ModalBoxCloseButton"
+                    data-ouia-component-id="OUIA-Generated-Modal-small-3-ModalBoxCloseButton"
                     data-ouia-component-type="PF4/Button"
                     data-ouia-safe="true"
                     type="button"
@@ -245,13 +245,13 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
           isOpen={true}
           labelId="pf-modal-part-3"
           onClose={[Function]}
-          ouiaId="OUIA-Generated-Modal-medium-3"
+          ouiaId="OUIA-Generated-Modal-small-3"
           ouiaSafe={true}
           showClose={true}
           title="Administrator acknowledgement"
           titleIconVariant={null}
           titleLabel=""
-          variant="medium"
+          variant="small"
         >
           <Backdrop>
             <div
@@ -292,20 +292,20 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                       aria-label="Administrator acknowledgement"
                       aria-labelledby="pf-modal-part-2 pf-modal-part-3"
                       className="ocm-upgrade-ack-modal"
-                      data-ouia-component-id="OUIA-Generated-Modal-medium-3"
+                      data-ouia-component-id="OUIA-Generated-Modal-small-3"
                       data-ouia-component-type="PF4/ModalContent"
                       data-ouia-safe={true}
                       id="pf-modal-part-2"
                       style={Object {}}
-                      variant="medium"
+                      variant="small"
                     >
                       <div
                         aria-describedby="pf-modal-part-4"
                         aria-label="Administrator acknowledgement"
                         aria-labelledby="pf-modal-part-2 pf-modal-part-3"
                         aria-modal="true"
-                        className="pf-c-modal-box ocm-upgrade-ack-modal pf-m-md"
-                        data-ouia-component-id="OUIA-Generated-Modal-medium-3"
+                        className="pf-c-modal-box ocm-upgrade-ack-modal pf-m-sm"
+                        data-ouia-component-id="OUIA-Generated-Modal-small-3"
                         data-ouia-component-type="PF4/ModalContent"
                         data-ouia-safe={true}
                         id="pf-modal-part-2"
@@ -314,13 +314,13 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                       >
                         <ModalBoxCloseButton
                           onClose={[Function]}
-                          ouiaId="OUIA-Generated-Modal-medium-3"
+                          ouiaId="OUIA-Generated-Modal-small-3"
                         >
                           <Button
                             aria-label="Close"
                             className=""
                             onClick={[Function]}
-                            ouiaId="OUIA-Generated-Modal-medium-3-ModalBoxCloseButton"
+                            ouiaId="OUIA-Generated-Modal-small-3-ModalBoxCloseButton"
                             variant="plain"
                           >
                             <ButtonBase
@@ -328,14 +328,14 @@ exports[`<UpgradeAcknowledgeModal > Error is shown for failed y-stream approval 
                               className=""
                               innerRef={null}
                               onClick={[Function]}
-                              ouiaId="OUIA-Generated-Modal-medium-3-ModalBoxCloseButton"
+                              ouiaId="OUIA-Generated-Modal-small-3-ModalBoxCloseButton"
                               variant="plain"
                             >
                               <button
                                 aria-disabled={false}
                                 aria-label="Close"
                                 className="pf-c-button pf-m-plain"
-                                data-ouia-component-id="OUIA-Generated-Modal-medium-3-ModalBoxCloseButton"
+                                data-ouia-component-id="OUIA-Generated-Modal-small-3-ModalBoxCloseButton"
                                 data-ouia-component-type="PF4/Button"
                                 data-ouia-safe={true}
                                 disabled={false}
@@ -654,7 +654,7 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
       title="Administrator acknowledgement"
       titleIconVariant={null}
       titleLabel=""
-      variant="medium"
+      variant="small"
     >
       <Portal
         containerInfo={
@@ -670,8 +670,8 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                   aria-label="Administrator acknowledgement"
                   aria-labelledby="pf-modal-part-3 pf-modal-part-4"
                   aria-modal="true"
-                  class="pf-c-modal-box ocm-upgrade-ack-modal pf-m-md"
-                  data-ouia-component-id="OUIA-Generated-Modal-medium-4"
+                  class="pf-c-modal-box ocm-upgrade-ack-modal pf-m-sm"
+                  data-ouia-component-id="OUIA-Generated-Modal-small-4"
                   data-ouia-component-type="PF4/ModalContent"
                   data-ouia-safe="true"
                   id="pf-modal-part-3"
@@ -681,7 +681,7 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                     aria-disabled="false"
                     aria-label="Close"
                     class="pf-c-button pf-m-plain"
-                    data-ouia-component-id="OUIA-Generated-Modal-medium-4-ModalBoxCloseButton"
+                    data-ouia-component-id="OUIA-Generated-Modal-small-4-ModalBoxCloseButton"
                     data-ouia-component-type="PF4/Button"
                     data-ouia-safe="true"
                     type="button"
@@ -875,13 +875,13 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
           isOpen={true}
           labelId="pf-modal-part-4"
           onClose={[Function]}
-          ouiaId="OUIA-Generated-Modal-medium-4"
+          ouiaId="OUIA-Generated-Modal-small-4"
           ouiaSafe={true}
           showClose={true}
           title="Administrator acknowledgement"
           titleIconVariant={null}
           titleLabel=""
-          variant="medium"
+          variant="small"
         >
           <Backdrop>
             <div
@@ -922,20 +922,20 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                       aria-label="Administrator acknowledgement"
                       aria-labelledby="pf-modal-part-3 pf-modal-part-4"
                       className="ocm-upgrade-ack-modal"
-                      data-ouia-component-id="OUIA-Generated-Modal-medium-4"
+                      data-ouia-component-id="OUIA-Generated-Modal-small-4"
                       data-ouia-component-type="PF4/ModalContent"
                       data-ouia-safe={true}
                       id="pf-modal-part-3"
                       style={Object {}}
-                      variant="medium"
+                      variant="small"
                     >
                       <div
                         aria-describedby="pf-modal-part-5"
                         aria-label="Administrator acknowledgement"
                         aria-labelledby="pf-modal-part-3 pf-modal-part-4"
                         aria-modal="true"
-                        className="pf-c-modal-box ocm-upgrade-ack-modal pf-m-md"
-                        data-ouia-component-id="OUIA-Generated-Modal-medium-4"
+                        className="pf-c-modal-box ocm-upgrade-ack-modal pf-m-sm"
+                        data-ouia-component-id="OUIA-Generated-Modal-small-4"
                         data-ouia-component-type="PF4/ModalContent"
                         data-ouia-safe={true}
                         id="pf-modal-part-3"
@@ -944,13 +944,13 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                       >
                         <ModalBoxCloseButton
                           onClose={[Function]}
-                          ouiaId="OUIA-Generated-Modal-medium-4"
+                          ouiaId="OUIA-Generated-Modal-small-4"
                         >
                           <Button
                             aria-label="Close"
                             className=""
                             onClick={[Function]}
-                            ouiaId="OUIA-Generated-Modal-medium-4-ModalBoxCloseButton"
+                            ouiaId="OUIA-Generated-Modal-small-4-ModalBoxCloseButton"
                             variant="plain"
                           >
                             <ButtonBase
@@ -958,14 +958,14 @@ exports[`<UpgradeAcknowledgeModal > Errors are shown for failed gates action 1`]
                               className=""
                               innerRef={null}
                               onClick={[Function]}
-                              ouiaId="OUIA-Generated-Modal-medium-4-ModalBoxCloseButton"
+                              ouiaId="OUIA-Generated-Modal-small-4-ModalBoxCloseButton"
                               variant="plain"
                             >
                               <button
                                 aria-disabled={false}
                                 aria-label="Close"
                                 className="pf-c-button pf-m-plain"
-                                data-ouia-component-id="OUIA-Generated-Modal-medium-4-ModalBoxCloseButton"
+                                data-ouia-component-id="OUIA-Generated-Modal-small-4-ModalBoxCloseButton"
                                 data-ouia-component-type="PF4/Button"
                                 data-ouia-safe={true}
                                 disabled={false}

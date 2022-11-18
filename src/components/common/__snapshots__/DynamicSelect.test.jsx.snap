@@ -52,7 +52,7 @@ exports[`<DynamicSelect> error, touched: shows error 1`] = `
     onChange={[MockFunction]}
     onFocus={[Function]}
     ouiaSafe={true}
-    validated="default"
+    validated="error"
     value=""
   >
     <FormSelectOption

@@ -1,52 +1,54 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { FormikValues, useFormikContext, setNestedObjectValues } from 'formik';
+import { setNestedObjectValues } from 'formik';
 
 import { Button } from '@patternfly/react-core';
-import { useWizardContext } from '@patternfly/react-core/dist/esm/next';
+import { useWizardContext, WizardFooterWrapper } from '@patternfly/react-core/dist/esm/next';
 
-import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { scrollToFirstError } from '~/common/helpers';
-import { getCloudProverInfo, shouldValidateCcsCredentials } from './utils';
-import { StepId } from './constants';
+import { getScrollErrorIds } from './common/form/utils';
+import { useFormState } from './hooks';
 
-export const CreateOsdWizardFooter = () => {
-  const dispatch = useDispatch();
-  const ccsCredentialsValidity = useGlobalState(
-    (state) => state.ccsInquiries.ccsCredentialsValidity,
-  );
-  const { onNext, onBack, onClose, activeStep, steps } = useWizardContext();
-  const { values, validateForm, setTouched } = useFormikContext<FormikValues>();
+interface CreateOsdWizardFooterProps {
+  isLoading?: boolean;
+  onNext?(): void | Promise<void>;
+}
+
+export const CreateOsdWizardFooter = ({ isLoading, onNext }: CreateOsdWizardFooterProps) => {
+  const { onNext: goToNext, onBack, onClose, activeStep, steps } = useWizardContext();
+  const { values, validateForm, setTouched } = useFormState();
 
   const onValidateNext = async () => {
-    const validateCcsCredentials = shouldValidateCcsCredentials(values, ccsCredentialsValidity);
-    const errors = await validateForm();
+    const errors = await validateForm(values);
 
     if (Object.keys(errors || {}).length > 0) {
       setTouched(setNestedObjectValues(errors, true));
-      scrollToFirstError(errors as Record<string, string>);
+      scrollToFirstError(getScrollErrorIds(errors));
+
       return;
     }
 
-    if (validateCcsCredentials && activeStep.id === StepId.ClusterSettingsCloudProvider) {
-      // Only proceed to the next step if the validation is successful.
-      await getCloudProverInfo(values, dispatch);
-    }
-
-    onNext();
+    (onNext ?? goToNext)();
   };
 
   return (
-    <footer className="pf-c-wizard__footer">
-      <Button variant="primary" onClick={onValidateNext}>
+    <WizardFooterWrapper>
+      <Button
+        variant="primary"
+        onClick={onValidateNext}
+        {...(isLoading && { isLoading, isDisabled: isLoading })}
+      >
         Next
       </Button>
-      <Button variant="secondary" onClick={onBack} isDisabled={steps.indexOf(activeStep) === 0}>
+      <Button
+        variant="secondary"
+        onClick={onBack}
+        isDisabled={isLoading || steps.indexOf(activeStep) === 0}
+      >
         Back
       </Button>
-      <Button variant="link" onClick={onClose}>
+      <Button variant="link" onClick={onClose} isDisabled={isLoading}>
         Cancel
       </Button>
-    </footer>
+    </WizardFooterWrapper>
   );
 };

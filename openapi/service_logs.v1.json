@@ -7,7 +7,9 @@
         "in": "path",
         "name": "cluster_uuid",
         "required": true,
-        "schema": { "type": "string" },
+        "schema": {
+          "type": "string"
+        },
         "style": "simple"
       },
       "fetchAccounts": {
@@ -15,14 +17,18 @@
         "in": "query",
         "name": "fetchAccounts",
         "required": false,
-        "schema": { "type": "boolean" }
+        "schema": {
+          "type": "boolean"
+        }
       },
       "fields": {
-        "description": "Supplies a comma-separated list of fields to be returned.\nFields of sub-structures and of arrays use \u003cstructure\u003e.\u003cfield\u003e notation.\n\u003cstucture\u003e.* means all field of a structure\nExample: For each Subscription to get id, href, plan(id and kind) and labels (all fields)\n\n```\nocm get subscriptions --parameter fields=id,href,plan.id,plan.kind,labels.* --parameter fetchLabels=true\n```",
+        "description": "Supplies a comma-separated list of fields to be returned.\nFields of sub-structures and of arrays use <structure>.<field> notation.\n<stucture>.* means all field of a structure\nExample: For each Subscription to get id, href, plan(id and kind) and labels (all fields)\n\n```\nocm get subscriptions --parameter fields=id,href,plan.id,plan.kind,labels.* --parameter fetchLabels=true\n```",
         "in": "query",
         "name": "fields",
         "required": false,
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       },
       "format": {
         "description": "Get log records in various format types (eg. csv/json)",
@@ -30,7 +36,9 @@
         "in": "query",
         "name": "format",
         "required": false,
-        "schema": { "type": "string" },
+        "schema": {
+          "type": "string"
+        },
         "style": "form"
       },
       "id": {
@@ -39,7 +47,9 @@
         "in": "path",
         "name": "id",
         "required": true,
-        "schema": { "type": "string" },
+        "schema": {
+          "type": "string"
+        },
         "style": "simple"
       },
       "orderBy": {
@@ -48,7 +58,9 @@
         "in": "query",
         "name": "orderBy",
         "required": false,
-        "schema": { "type": "string" },
+        "schema": {
+          "type": "string"
+        },
         "style": "form"
       },
       "page": {
@@ -71,7 +83,9 @@
         "in": "query",
         "name": "search",
         "required": false,
-        "schema": { "type": "string" },
+        "schema": {
+          "type": "string"
+        },
         "style": "form"
       },
       "size": {
@@ -94,35 +108,78 @@
         "in": "path",
         "name": "uuid",
         "required": true,
-        "schema": { "type": "string" },
+        "schema": {
+          "type": "string"
+        },
         "style": "simple"
       }
     },
     "schemas": {
       "ClusterLog": {
         "allOf": [
-          { "$ref": "#/components/schemas/ObjectReference" },
+          {
+            "$ref": "#/components/schemas/ObjectReference"
+          },
           {
             "properties": {
-              "cluster_id": { "type": "string" },
-              "cluster_uuid": { "type": "string" },
-              "created_at": { "format": "date-time", "type": "string" },
-              "created_by": { "type": "string" },
-              "description": { "type": "string" },
-              "email": { "type": "string" },
-              "event_stream_id": { "type": "string" },
-              "first_name": { "type": "string" },
-              "internal_only": { "default": false, "type": "boolean" },
-              "last_name": { "type": "string" },
-              "service_name": { "type": "string" },
-              "severity": {
-                "enum": ["Debug", "Info", "Warning", "Error", "Fatal"],
+              "cluster_id": {
                 "type": "string"
               },
-              "subscription_id": { "type": "string" },
-              "summary": { "type": "string" },
-              "timestamp": { "format": "date-time", "type": "string" },
-              "username": { "type": "string" }
+              "cluster_uuid": {
+                "type": "string"
+              },
+              "created_at": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "event_stream_id": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "internal_only": {
+                "default": false,
+                "type": "boolean"
+              },
+              "last_name": {
+                "type": "string"
+              },
+              "service_name": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": [
+                  "Debug",
+                  "Info",
+                  "Warning",
+                  "Error",
+                  "Fatal"
+                ],
+                "type": "string"
+              },
+              "subscription_id": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "timestamp": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              }
             },
             "type": "object"
           }
@@ -130,12 +187,18 @@
       },
       "ClusterLogList": {
         "allOf": [
-          { "$ref": "#/components/schemas/List" },
+          {
+            "$ref": "#/components/schemas/List"
+          },
           {
             "properties": {
               "items": {
                 "items": {
-                  "allOf": [{ "$ref": "#/components/schemas/ClusterLog" }]
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ClusterLog"
+                    }
+                  ]
                 },
                 "type": "array"
               }
@@ -146,12 +209,20 @@
       },
       "Error": {
         "allOf": [
-          { "$ref": "#/components/schemas/ObjectReference" },
+          {
+            "$ref": "#/components/schemas/ObjectReference"
+          },
           {
             "properties": {
-              "code": { "type": "string" },
-              "operation_id": { "type": "string" },
-              "reason": { "type": "string" }
+              "code": {
+                "type": "string"
+              },
+              "operation_id": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              }
             },
             "type": "object"
           }
@@ -159,11 +230,15 @@
       },
       "ErrorList": {
         "allOf": [
-          { "$ref": "#/components/schemas/List" },
+          {
+            "$ref": "#/components/schemas/List"
+          },
           {
             "properties": {
               "items": {
-                "items": { "$ref": "#/components/schemas/Error" },
+                "items": {
+                  "$ref": "#/components/schemas/Error"
+                },
                 "type": "array"
               }
             },
@@ -173,19 +248,42 @@
       },
       "List": {
         "properties": {
-          "kind": { "type": "string" },
-          "page": { "format": "int32", "type": "integer" },
-          "size": { "format": "int32", "type": "integer" },
-          "total": { "format": "int32", "type": "integer" }
+          "kind": {
+            "type": "string"
+          },
+          "page": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "size": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "total": {
+            "format": "int32",
+            "type": "integer"
+          }
         },
-        "required": ["items", "kind", "page", "size", "total"],
+        "required": [
+          "items",
+          "kind",
+          "page",
+          "size",
+          "total"
+        ],
         "type": "object"
       },
       "ObjectReference": {
         "properties": {
-          "href": { "type": "string" },
-          "id": { "type": "string" },
-          "kind": { "type": "string" }
+          "href": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          }
         },
         "type": "object"
       }
@@ -197,7 +295,11 @@
         "name": "Authorization",
         "type": "apiKey"
       },
-      "Bearer": { "bearerFormat": "JWT", "scheme": "bearer", "type": "http" }
+      "Bearer": {
+        "bearerFormat": "JWT",
+        "scheme": "bearer",
+        "type": "http"
+      }
     }
   },
   "info": {
@@ -210,19 +312,35 @@
     "/api/service_logs/v1/cluster_logs": {
       "get": {
         "parameters": [
-          { "$ref": "#/components/parameters/page" },
-          { "$ref": "#/components/parameters/size" },
-          { "$ref": "#/components/parameters/search" },
-          { "$ref": "#/components/parameters/orderBy" },
-          { "$ref": "#/components/parameters/fields" },
-          { "$ref": "#/components/parameters/format" },
-          { "$ref": "#/components/parameters/fetchAccounts" }
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/size"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "$ref": "#/components/parameters/orderBy"
+          },
+          {
+            "$ref": "#/components/parameters/fields"
+          },
+          {
+            "$ref": "#/components/parameters/format"
+          },
+          {
+            "$ref": "#/components/parameters/fetchAccounts"
+          }
         ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ClusterLogList" }
+                "schema": {
+                  "$ref": "#/components/schemas/ClusterLogList"
+                }
               }
             },
             "description": "A JSON array of Cluster Service records"
@@ -230,7 +348,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -238,7 +358,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -246,20 +368,31 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred"
           }
         },
-        "security": [{ "Bearer": [] }, { "AccessToken": [] }],
+        "security": [
+          {
+            "Bearer": []
+          },
+          {
+            "AccessToken": []
+          }
+        ],
         "summary": "Get all service logs"
       },
       "post": {
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/ClusterLog" }
+              "schema": {
+                "$ref": "#/components/schemas/ClusterLog"
+              }
             }
           },
           "description": "Log record",
@@ -269,7 +402,9 @@
           "201": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ClusterLog" }
+                "schema": {
+                  "$ref": "#/components/schemas/ClusterLog"
+                }
               }
             },
             "description": "Log record was Created"
@@ -277,7 +412,9 @@
           "400": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Validation errors occurred"
@@ -285,7 +422,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -293,7 +432,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -301,25 +442,42 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "An unexpected error occurred creating the log"
           }
         },
-        "security": [{ "Bearer": [] }, { "AccessToken": [] }],
+        "security": [
+          {
+            "Bearer": []
+          },
+          {
+            "AccessToken": []
+          }
+        ],
         "summary": "Create a new log record"
       }
     },
     "/api/service_logs/v1/cluster_logs/{id}": {
       "delete": {
-        "parameters": [{ "$ref": "#/components/parameters/id" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
         "responses": {
-          "204": { "description": "Log record successfully deleted" },
+          "204": {
+            "description": "Log record successfully deleted"
+          },
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -327,7 +485,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -335,7 +495,9 @@
           "404": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "No log record with specified id exist"
@@ -343,22 +505,37 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "An unexpected error occurred deleting the log records"
           }
         },
-        "security": [{ "Bearer": [] }, { "AccessToken": [] }],
+        "security": [
+          {
+            "Bearer": []
+          },
+          {
+            "AccessToken": []
+          }
+        ],
         "summary": "Delete log record by record id"
       },
       "get": {
-        "parameters": [{ "$ref": "#/components/parameters/id" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ClusterLog" }
+                "schema": {
+                  "$ref": "#/components/schemas/ClusterLog"
+                }
               }
             },
             "description": "A JSON of the log record"
@@ -366,7 +543,9 @@
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -374,7 +553,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -382,41 +563,75 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred"
           }
         },
-        "security": [{ "Bearer": [] }, { "AccessToken": [] }],
+        "security": [
+          {
+            "Bearer": []
+          },
+          {
+            "AccessToken": []
+          }
+        ],
         "summary": "Get log by record id"
       }
     },
     "/api/service_logs/v1/clusters/{uuid}/cluster_logs": {
       "get": {
         "parameters": [
-          { "$ref": "#/components/parameters/uuid" },
-          { "$ref": "#/components/parameters/page" },
-          { "$ref": "#/components/parameters/size" },
-          { "$ref": "#/components/parameters/search" },
-          { "$ref": "#/components/parameters/orderBy" },
-          { "$ref": "#/components/parameters/fields" },
-          { "$ref": "#/components/parameters/format" },
-          { "$ref": "#/components/parameters/fetchAccounts" }
+          {
+            "$ref": "#/components/parameters/uuid"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/size"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "$ref": "#/components/parameters/orderBy"
+          },
+          {
+            "$ref": "#/components/parameters/fields"
+          },
+          {
+            "$ref": "#/components/parameters/format"
+          },
+          {
+            "$ref": "#/components/parameters/fetchAccounts"
+          }
         ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ClusterLogList" }
+                "schema": {
+                  "$ref": "#/components/schemas/ClusterLogList"
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
               }
             },
-            "description": "A JSON array of Cluster Service records"
+            "description": "A JSON array or CSV of Cluster Service records"
           },
           "401": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Auth token is invalid"
@@ -424,7 +639,9 @@
           "403": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unauthorized to perform operation"
@@ -432,18 +649,28 @@
           "500": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Error" }
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
               }
             },
             "description": "Unexpected error occurred"
           }
         },
-        "security": [{ "Bearer": [] }],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "summary": "Get all service logs for a specific cluster"
       }
     }
   },
   "servers": [
+    {
+      "description": "current domain",
+      "url": "http://localhost:8000"
+    },
     {
       "description": "Main (production) server",
       "url": "https://api.openshift.com"
@@ -451,7 +678,6 @@
     {
       "description": "Staging server",
       "url": "https://api.stage.openshift.com"
-    },
-    { "description": "current domain", "url": "/" }
+    }
   ]
 }

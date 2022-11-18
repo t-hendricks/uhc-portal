@@ -1,17 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-
 import { Card, CardBody, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
-import { tokenBox } from '~/components/tokens/Tokens';
-
+import TokenBox from '~/components/tokens/TokenBox';
 import { trackEvents } from '~/common/analytics';
-import { GlobalState } from '~/redux/types';
 import ExternalLink from '../../../../../common/ExternalLink';
 import DownloadAndOSSelection from '../../../../install/instructions/components/DownloadAndOSSelection';
 import links, { channels, tools } from '../../../../../../common/installLinks.mjs';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 const AuthenticateScreen = () => {
-  const token = useSelector<GlobalState>((state) => state.rosaReducer.offlineToken);
+  const token = useGlobalState((state) => state.rosaReducer.offlineToken);
   const loginCommand = `rosa login --token="${token}"`;
 
   return (
@@ -46,13 +43,15 @@ const AuthenticateScreen = () => {
             against your ROSA account.{' '}
           </Text>
         </TextContent>
-        {tokenBox({
-          token,
-          command: loginCommand,
-          textAriaLabel: 'Copyable ROSA login command',
-          trackEvent: trackEvents.ROSALogin,
-          showCommandOnError: true,
-        })}
+        <br />
+        <TokenBox
+          token={token}
+          command={loginCommand}
+          textAriaLabel="Copyable ROSA login command"
+          trackEvent={trackEvents.ROSALogin}
+          showCommandOnError
+          outerClassName="ocm-instructions__command"
+        />
       </CardBody>
     </Card>
   );

@@ -32,7 +32,7 @@ const initialState = {
   getUserRoleResponse: {
     ...baseRequestState,
   },
-  offlineToken: null,
+  offlineToken: undefined,
 };
 
 function rosaReducer(state = initialState, action) {

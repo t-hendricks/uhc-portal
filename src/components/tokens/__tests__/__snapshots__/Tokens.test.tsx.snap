@@ -1,0 +1,570 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tokens /> Renders loading screen 1`] = `
+<Fragment>
+  <PageHeader>
+    <Breadcrumbs
+      path={
+        Array [
+          Object {
+            "label": "Downloads",
+            "path": "/downloads",
+          },
+          Object {
+            "label": "OpenShift Cluster Manager API Token",
+          },
+        ]
+      }
+    />
+    <PageHeaderTitle
+      title="OpenShift Cluster Manager API Token"
+    />
+  </PageHeader>
+  <PageSection>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Connect with offline tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <TextContent>
+              <Text
+                component="p"
+              >
+                Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you to use OpenShift without needing to install or upgrade your own OpenShift (Kubernetes) cluster.
+              </Text>
+              <Title
+                headingLevel="h3"
+              >
+                Your API token
+              </Title>
+              <Text
+                component="p"
+              >
+                Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
+              </Text>
+            </TextContent>
+            <TokenBox />
+            <TextContent
+              className="pf-u-mt-lg"
+            >
+              <Title
+                headingLevel="h3"
+              >
+                Using your token in the command line
+              </Title>
+              <List
+                component="ol"
+              >
+                <ListItem>
+                  Download and install the 
+                  <code>
+                    ocm
+                  </code>
+                   command-line tool:
+                   
+                  <DevPreviewBadge />
+                  <Text
+                    component="p"
+                  />
+                  <Connect(DownloadAndOSSelection)
+                    channel="stable"
+                    tool="ocm"
+                  />
+                  <Text
+                    component="p"
+                  />
+                </ListItem>
+                <ListItem>
+                  Copy and paste the authentication command in your terminal:
+                  <Text
+                    component="p"
+                  />
+                  <Skeleton
+                    size="md"
+                  />
+                </ListItem>
+              </List>
+              <Title
+                headingLevel="h3"
+              >
+                Need help connecting with your offline token?
+              </Title>
+              <Text
+                component="p"
+              >
+                Run 
+                <code>
+                  ocm
+                   login --help
+                </code>
+                 for in-terminal guidance, or
+                 
+                <ExternalLink
+                  href="https://access.redhat.com/articles/6114701"
+                  noIcon={true}
+                >
+                  read more about setting up the ocm CLI
+                </ExternalLink>
+                 for more information about setting up the
+                 
+                <code>
+                  ocm
+                </code>
+                 CLI.
+              </Text>
+            </TextContent>
+          </CardBody>
+        </Card>
+      </StackItem>
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Revoke previous tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <RevokeTokensInstructions />
+          </CardBody>
+        </Card>
+      </StackItem>
+    </Stack>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<Tokens /> Renders screen with button 1`] = `
+<Fragment>
+  <PageHeader>
+    <Breadcrumbs
+      path={
+        Array [
+          Object {
+            "label": "Downloads",
+            "path": "/downloads",
+          },
+          Object {
+            "label": "OpenShift Cluster Manager API Token",
+          },
+        ]
+      }
+    />
+    <PageHeaderTitle
+      title="OpenShift Cluster Manager API Token"
+    />
+  </PageHeader>
+  <PageSection>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Connect with offline tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <TextContent>
+              <Text
+                component="p"
+              >
+                Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you to use OpenShift without needing to install or upgrade your own OpenShift (Kubernetes) cluster.
+              </Text>
+              <Title
+                headingLevel="h3"
+              >
+                Your API token
+              </Title>
+              <Text
+                component="p"
+              >
+                Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
+              </Text>
+            </TextContent>
+            <Link
+              to="/token/show"
+            >
+              <Button
+                className="pf-u-mt-md"
+                onClick={[Function]}
+                variant="primary"
+              >
+                Load token
+              </Button>
+            </Link>
+          </CardBody>
+        </Card>
+      </StackItem>
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Revoke previous tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <RevokeTokensInstructions />
+          </CardBody>
+        </Card>
+      </StackItem>
+    </Stack>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<Tokens /> Renders screen with token 1`] = `
+<Fragment>
+  <PageHeader>
+    <Breadcrumbs
+      path={
+        Array [
+          Object {
+            "label": "Downloads",
+            "path": "/downloads",
+          },
+          Object {
+            "label": "OpenShift Cluster Manager API Token",
+          },
+        ]
+      }
+    />
+    <PageHeaderTitle
+      title="OpenShift Cluster Manager API Token"
+    />
+  </PageHeader>
+  <PageSection>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Connect with offline tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <TextContent>
+              <Text
+                component="p"
+              >
+                Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you to use OpenShift without needing to install or upgrade your own OpenShift (Kubernetes) cluster.
+              </Text>
+              <Title
+                headingLevel="h3"
+              >
+                Your API token
+              </Title>
+              <Text
+                component="p"
+              >
+                Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
+              </Text>
+            </TextContent>
+            <TokenBox
+              token="test-token"
+            />
+            <TextContent
+              className="pf-u-mt-lg"
+            >
+              <Title
+                headingLevel="h3"
+              >
+                Using your token in the command line
+              </Title>
+              <List
+                component="ol"
+              >
+                <ListItem>
+                  Download and install the 
+                  <code>
+                    ocm
+                  </code>
+                   command-line tool:
+                   
+                  <DevPreviewBadge />
+                  <Text
+                    component="p"
+                  />
+                  <Connect(DownloadAndOSSelection)
+                    channel="stable"
+                    tool="ocm"
+                  />
+                  <Text
+                    component="p"
+                  />
+                </ListItem>
+                <ListItem>
+                  Copy and paste the authentication command in your terminal:
+                  <Text
+                    component="p"
+                  />
+                  <Text
+                    component="pre"
+                  >
+                    <ClipboardCopy
+                      additionalActions={null}
+                      className="ocm-c-api-token-limit-width"
+                      clickTip="Successfully copied to clipboard!"
+                      entryDelay={300}
+                      exitDelay={1500}
+                      hoverTip="Copy to clipboard"
+                      isCode={false}
+                      isExpanded={false}
+                      isReadOnly={true}
+                      maxWidth="150px"
+                      onChange={[Function]}
+                      onCopy={[Function]}
+                      ouiaSafe={true}
+                      position="top"
+                      textAriaLabel="Copyable command"
+                      toggleAriaLabel="Show content"
+                      variant="expansion"
+                    >
+                      ocm login --token="test-token"
+                    </ClipboardCopy>
+                  </Text>
+                </ListItem>
+              </List>
+              <Title
+                headingLevel="h3"
+              >
+                Need help connecting with your offline token?
+              </Title>
+              <Text
+                component="p"
+              >
+                Run 
+                <code>
+                  ocm
+                   login --help
+                </code>
+                 for in-terminal guidance, or
+                 
+                <ExternalLink
+                  href="https://access.redhat.com/articles/6114701"
+                  noIcon={true}
+                >
+                  read more about setting up the ocm CLI
+                </ExternalLink>
+                 for more information about setting up the
+                 
+                <code>
+                  ocm
+                </code>
+                 CLI.
+              </Text>
+            </TextContent>
+          </CardBody>
+        </Card>
+      </StackItem>
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Revoke previous tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <RevokeTokensInstructions />
+          </CardBody>
+        </Card>
+      </StackItem>
+    </Stack>
+  </PageSection>
+</Fragment>
+`;
+
+exports[`<Tokens /> Renders token 1`] = `
+<Fragment>
+  <PageHeader>
+    <Breadcrumbs
+      path={
+        Array [
+          Object {
+            "label": "Downloads",
+            "path": "/downloads",
+          },
+          Object {
+            "label": "OpenShift Cluster Manager API Token",
+          },
+        ]
+      }
+    />
+    <PageHeaderTitle
+      title="OpenShift Cluster Manager API Token"
+    />
+  </PageHeader>
+  <PageSection>
+    <Stack
+      hasGutter={true}
+    >
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Connect with offline tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <TextContent>
+              <Text
+                component="p"
+              >
+                Red Hat OpenShift Cluster Manager is a managed service that makes it easy for you to use OpenShift without needing to install or upgrade your own OpenShift (Kubernetes) cluster.
+              </Text>
+              <Title
+                headingLevel="h3"
+              >
+                Your API token
+              </Title>
+              <Text
+                component="p"
+              >
+                Use this API token to authenticate against your Red Hat OpenShift Cluster Manager account.
+              </Text>
+            </TextContent>
+            <TokenBox />
+            <TextContent
+              className="pf-u-mt-lg"
+            >
+              <Title
+                headingLevel="h3"
+              >
+                Using your token in the command line
+              </Title>
+              <List
+                component="ol"
+              >
+                <ListItem>
+                  Download and install the 
+                  <code>
+                    ocm
+                  </code>
+                   command-line tool:
+                   
+                  <DevPreviewBadge />
+                  <Text
+                    component="p"
+                  />
+                  <Connect(DownloadAndOSSelection)
+                    channel="stable"
+                    tool="ocm"
+                  />
+                  <Text
+                    component="p"
+                  />
+                </ListItem>
+                <ListItem>
+                  Copy and paste the authentication command in your terminal:
+                  <Text
+                    component="p"
+                  />
+                  <Skeleton
+                    size="md"
+                  />
+                </ListItem>
+              </List>
+              <Title
+                headingLevel="h3"
+              >
+                Need help connecting with your offline token?
+              </Title>
+              <Text
+                component="p"
+              >
+                Run 
+                <code>
+                  ocm
+                   login --help
+                </code>
+                 for in-terminal guidance, or
+                 
+                <ExternalLink
+                  href="https://access.redhat.com/articles/6114701"
+                  noIcon={true}
+                >
+                  read more about setting up the ocm CLI
+                </ExternalLink>
+                 for more information about setting up the
+                 
+                <code>
+                  ocm
+                </code>
+                 CLI.
+              </Text>
+            </TextContent>
+          </CardBody>
+        </Card>
+      </StackItem>
+      <StackItem>
+        <Card
+          className="ocm-c-api-token__card"
+        >
+          <CardTitle>
+            <Title
+              headingLevel="h2"
+            >
+              Revoke previous tokens
+            </Title>
+          </CardTitle>
+          <CardBody
+            className="ocm-c-api-token__card--body"
+          >
+            <RevokeTokensInstructions />
+          </CardBody>
+        </Card>
+      </StackItem>
+    </Stack>
+  </PageSection>
+</Fragment>
+`;

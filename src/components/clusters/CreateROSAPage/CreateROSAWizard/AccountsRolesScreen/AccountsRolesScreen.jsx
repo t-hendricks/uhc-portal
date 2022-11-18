@@ -75,8 +75,7 @@ function AccountsRolesScreen({
     // clear certain responses; causes refetch of AWS acct info.
     clearGetAWSAccountIDsResponse();
     clearGetAWSAccountRolesARNsResponse();
-    change('associated_aws_id', '');
-    change('installer_role_arn', '');
+    clearGetUserRoleResponse();
   };
 
   // default product and cloud_provider form values
@@ -101,12 +100,12 @@ function AccountsRolesScreen({
   }, []);
 
   useEffect(() => {
-    if (getUserRoleResponse.fulfilled) {
+    if (getUserRoleResponse.fulfilled && selectedAWSAccountID) {
       const found = isUserRoleForSelectedAWSAccount(getUserRoleResponse.data, selectedAWSAccountID);
       setNoUserForSelectedAWSAcct(!found);
       clearGetUserRoleResponse();
     }
-  }, [getUserRoleResponse.fulfilled]);
+  }, [getUserRoleResponse.fulfilled, selectedAWSAccountID]);
 
   // if no aws acct ids then clear selectedAWSAccountID, else default to first available aws account
   useEffect(() => {
@@ -136,6 +135,12 @@ function AccountsRolesScreen({
       getAWSAccountIDs(organizationID);
     }
   }, [getAWSAccountIDsResponse]);
+
+  useEffect(() => {
+    if (getUserRoleResponse?.error || noUserForSelectedAWSAcct) {
+      track(trackEvents.MissingUserRole);
+    }
+  }, [getUserRoleResponse?.error, noUserForSelectedAWSAcct]);
 
   const onAssociateAwsAccountModalClose = () => {
     setIsAssocAwsAccountModalOpen(false);

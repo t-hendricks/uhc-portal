@@ -2,7 +2,7 @@
 
 exports[`InstallVSphere renders correctly 1`] = `
 <Fragment>
-  <PageTitle
+  <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
         path={
@@ -21,11 +21,10 @@ exports[`InstallVSphere renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift Container Platform 4"
+    cloudName="VMware vSphere"
   />
   <PageSection>
     <InstructionsChooser
-      cloudName="VMware vSphere"
       ipiPageLink="/install/vsphere/installer-provisioned"
       showAI={true}
       upiPageLink="/install/vsphere/user-provisioned"

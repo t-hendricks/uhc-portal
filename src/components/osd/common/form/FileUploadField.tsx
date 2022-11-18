@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { FileUpload, FileUploadProps, FormGroup, FormGroupProps } from '@patternfly/react-core';
-import { Field, FieldProps, FieldConfig, FieldValidator, useFormikContext } from 'formik';
+import { Field, FieldProps, FieldConfig, FieldValidator } from 'formik';
 
 import PopoverHint from '~/components/common/PopoverHint';
+import { useFormState } from '../../hooks';
 
 interface FileUploadFieldProps {
   name: string;
@@ -29,7 +30,7 @@ export const FileUploadField = ({
   formGroup,
   input,
 }: FileUploadFieldProps) => {
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue } = useFormState();
   const [filename, setFilename] = React.useState('');
 
   const onChange = (value: string | File, _: string, event: React.ChangeEvent<any>) => {

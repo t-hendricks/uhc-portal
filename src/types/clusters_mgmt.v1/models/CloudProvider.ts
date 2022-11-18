@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CloudRegion } from './CloudRegion';
+
 /**
  * Cloud provider.
  */
@@ -27,4 +29,8 @@ export type CloudProvider = {
    * Human friendly identifier of the cloud provider, for example `aws`.
    */
   name?: string;
+  /**
+   * Region
+   */
+  regions?: Array<CloudRegion>;
 };

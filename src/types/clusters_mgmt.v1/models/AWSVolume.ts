@@ -14,10 +14,4 @@ export type AWSVolume = {
    * Volume size in Gib.
    */
   size?: number;
-  /**
-   * Volume Type
-   *
-   * Possible values are: 'io1', 'gp2', 'st1', 'sc1', 'standard'
-   */
-  type?: string;
 };

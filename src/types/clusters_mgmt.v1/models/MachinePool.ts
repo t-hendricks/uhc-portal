@@ -59,6 +59,10 @@ export type MachinePool = {
    */
   security_group_filters?: Array<MachinePoolSecurityGroupFilter>;
   /**
+   * The subnets upon which the nodes are created.
+   */
+  subnets?: Array<string>;
+  /**
    * The taints set on the Nodes created.
    */
   taints?: Array<Taint>;
