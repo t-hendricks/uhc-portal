@@ -202,12 +202,12 @@ class CreateOSDWizardInternal extends React.Component {
     const { touch, formErrors, isCCSCredentialsValidationNeeded, cloudProviderID } = this.props;
     const { currentStepId, validatedSteps } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
-    const errorFieldNames = Object.keys(formErrors);
+    const errorIds = Object.keys(formErrors);
 
     // When errors exist, touch the fields with those errors to trigger validation.
-    if (errorFieldNames?.length > 0 && !isCurrentStepValid) {
-      touch(errorFieldNames);
-      scrollToFirstError(formErrors);
+    if (errorIds?.length > 0 && !isCurrentStepValid) {
+      touch(errorIds);
+      scrollToFirstError(errorIds);
       return;
     }
     if (

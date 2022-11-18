@@ -139,12 +139,12 @@ class CreateROSAWizardInternal extends React.Component {
     const { touch, formErrors } = this.props;
     const { validatedSteps, currentStepId } = this.state;
     const isCurrentStepValid = validatedSteps[currentStepId];
-    const errorFieldNames = Object.keys(formErrors);
+    const errorIds = Object.keys(formErrors);
 
     // When errors exist, touch the fields with those errors to trigger validation.
-    if (errorFieldNames?.length > 0 && !isCurrentStepValid) {
-      touch(errorFieldNames);
-      scrollToFirstError(formErrors);
+    if (errorIds?.length > 0 && !isCurrentStepValid) {
+      touch(errorIds);
+      scrollToFirstError(errorIds);
       return true;
     }
     return false;

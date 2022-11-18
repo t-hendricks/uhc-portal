@@ -1,5 +1,4 @@
 import React from 'react';
-import { useFormikContext, FormikValues } from 'formik';
 
 import { Button } from '@patternfly/react-core';
 import {
@@ -8,9 +7,11 @@ import {
   WizardFooterWrapper,
 } from '@patternfly/react-core/dist/esm/next';
 
+import { useFormState } from './hooks';
+
 export const ReviewAndCreate = () => {
   const { onBack, onClose } = useWizardContext();
-  const { values, submitForm } = useFormikContext<FormikValues>();
+  const { values, submitForm } = useFormState();
 
   useWizardFooter(
     React.useMemo(

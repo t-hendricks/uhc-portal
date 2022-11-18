@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { tools } from './installLinks.mjs';
 import { normalizedProducts } from './subscriptionTypes';
 
@@ -12,7 +13,7 @@ export type TrackEventOptions = {
   url?: string;
   path?: string;
   resourceType?: string;
-  customProperties?: JSON;
+  customProperties?: object;
 };
 
 /**

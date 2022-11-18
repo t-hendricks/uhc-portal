@@ -34,7 +34,6 @@ import { constants } from '~/components/clusters/CreateOSDPage/CreateOSDForm/Cre
 import PopoverHint from '~/components/common/PopoverHint';
 import PersistentStorageDropdown from '~/components/clusters/common/PersistentStorageDropdown';
 import LoadBalancersDropdown from '~/components/clusters/common/LoadBalancersDropdown';
-import CustomerManagedEncryptionSection from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/EncryptionSection/CustomerManagedKeyEncryption';
 import { PLACEHOLDER_VALUE as AvailabilityZonePlaceholder } from '~/components/clusters/CreateOSDPage/CreateOSDForm/FormSections/NetworkingSection/AvailabilityZoneSelection';
 
 import { RadioGroupField, RichInputField } from '../../common/form';
@@ -44,6 +43,7 @@ import { useFormState } from '../../hooks';
 import { CloudProviderType } from '../CloudProvider/types';
 import { VersionSelectField } from './VersionSelectField';
 import CloudRegionSelectField from './CloudRegionSelectField';
+import { CustomerManagedEncryption } from './CustomerManagedEncryption';
 
 export const Details = () => {
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ export const Details = () => {
       [FieldId.BillingModel]: billingModel,
       [FieldId.Region]: region,
       [FieldId.CloudProvider]: cloudProvider,
-      [FieldId.CustomerManagedKey]: customerManagedKey,
+      [FieldId.CustomerManagedKey]: hasCustomerManagedKey,
     },
     setFieldValue,
     getFieldProps,
@@ -155,12 +155,7 @@ export const Details = () => {
   };
 
   return (
-    <Form
-      onSubmit={(event) => {
-        event.preventDefault();
-        return false;
-      }}
-    >
+    <Form>
       <Grid hasGutter md={6}>
         <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
           <Title headingLevel="h3">Cluster details</Title>
@@ -335,10 +330,10 @@ export const Details = () => {
           </Grid>
 
           {isByoc && (
-            <CustomerManagedEncryptionSection
-              customerManagedEncryptionSelected={customerManagedKey}
-              selectedRegion={region}
-              cloudProviderID={cloudProvider}
+            <CustomerManagedEncryption
+              hasCustomerManagedKey={hasCustomerManagedKey}
+              region={region}
+              cloudProvider={cloudProvider}
             />
           )}
         </Flex>

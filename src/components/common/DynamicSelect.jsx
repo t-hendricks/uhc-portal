@@ -125,7 +125,7 @@ class DynamicSelect extends React.Component {
       <FormGroup
         label={label}
         labelIcon={labelIcon}
-        validated={meta.touched && meta.invalid ? 'error' : 'default'}
+        validated={meta.touched && meta.error ? 'error' : 'default'}
         helperText={helperText}
         helperTextInvalid={meta.error}
         fieldId={input.name}
@@ -135,6 +135,7 @@ class DynamicSelect extends React.Component {
         <FormSelect
           aria-label={label}
           isDisabled={!(show && items.length > 0)}
+          validated={meta.touched && meta.error ? 'error' : 'default'}
           {...input}
           value={value}
         >

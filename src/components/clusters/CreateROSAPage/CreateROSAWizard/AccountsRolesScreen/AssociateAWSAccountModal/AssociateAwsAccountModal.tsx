@@ -82,9 +82,11 @@ const AssociateAwsAccountFooter = () => {
     }
 
     const errors = await validateForm();
-    if (Object.keys(errors)?.length > 0) {
+    const errorIds = Object.keys(errors);
+
+    if (errorIds?.length > 0) {
       setTouched(setNestedObjectValues(errors, true));
-      scrollToFirstError(errors as Record<string, string>);
+      scrollToFirstError(errorIds);
       return;
     }
 
