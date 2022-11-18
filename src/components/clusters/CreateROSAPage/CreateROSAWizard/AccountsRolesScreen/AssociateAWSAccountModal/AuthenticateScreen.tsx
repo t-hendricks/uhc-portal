@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardBody, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
-import { tokenBox } from '~/components/tokens/Tokens';
+import TokenBox from '~/components/tokens/TokenBox';
 import { trackEvents } from '~/common/analytics';
 import ExternalLink from '../../../../../common/ExternalLink';
 import DownloadAndOSSelection from '../../../../install/instructions/components/DownloadAndOSSelection';
@@ -44,12 +44,12 @@ const AuthenticateScreen = () => {
           </Text>
         </TextContent>
         <br />
-        {tokenBox({
-          token,
-          command: loginCommand,
-          textAriaLabel: 'Copyable ROSA login command',
-          trackEvent: trackEvents.ROSALogin,
-        })}
+        <TokenBox
+          token={token}
+          command={loginCommand}
+          textAriaLabel="Copyable ROSA login command"
+          trackEvent={trackEvents.ROSALogin}
+        />
       </CardBody>
     </Card>
   );
