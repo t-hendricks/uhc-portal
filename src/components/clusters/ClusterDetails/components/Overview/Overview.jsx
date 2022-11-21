@@ -111,24 +111,22 @@ class Overview extends React.Component {
 
     if (isHibernating(cluster.state)) {
       topCard = <HibernatingClusterCard cluster={cluster} openModal={openModal} />;
-    } else if (cluster.state === clusterStates.UNINSTALLING) {
-      topCard = !isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster) && (
-        <>
+    } else if (!isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster)) {
+      if (cluster.state === clusterStates.UNINSTALLING) {
+        topCard = (
           <UninstallProgress cluster={cluster}>
             <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
             <InstallationLogView cluster={cluster} />
           </UninstallProgress>
-        </>
-      );
-    } else {
-      topCard = !isAssistedInstallSubscription(cluster.subscription) && shouldShowLogs(cluster) && (
-        <>
+        );
+      } else {
+        topCard = (
           <InstallProgress cluster={cluster}>
             <ClusterStatusMonitor cluster={cluster} refresh={refresh} history={history} />
             <InstallationLogView isExpandable cluster={cluster} />
           </InstallProgress>
-        </>
-      );
+        );
+      }
     }
 
     const resourceUsage = (
