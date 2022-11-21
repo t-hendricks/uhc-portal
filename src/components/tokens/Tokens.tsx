@@ -27,7 +27,6 @@ import {
   Card,
   CardBody,
   CardTitle,
-  // ClipboardCopy,
   List,
   ListItem,
   Stack,
