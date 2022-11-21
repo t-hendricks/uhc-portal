@@ -8,9 +8,14 @@ import ProgressList from './ProgressList';
 import DownloadOcCliButton from './DownloadOcCliButton';
 
 function InstallProgress({ cluster, children }) {
+  const isErrorState = cluster.state === clusterStates.ERROR;
   const isWaitingROSAManual = isWaitingROSAManualMode(cluster);
+  const inProgress = !isErrorState && !isWaitingROSAManual;
+
   let titleText;
-  if (cluster.state === clusterStates.UNINSTALLING) {
+  if (isErrorState) {
+    titleText = 'Installation error';
+  } else if (cluster.state === clusterStates.UNINSTALLING) {
     titleText = 'Uninstallation logs';
   } else if (isWaitingROSAManual) {
     titleText = 'Action required to continue installation';
@@ -22,11 +27,11 @@ function InstallProgress({ cluster, children }) {
     <Card>
       <CardTitle>
         <Title headingLevel="h2" size="lg" className="card-title logview-title pf-u-mr-md">
-          {!isWaitingROSAManual && <Spinner size="sm" className="progressing-icon" />}
+          {inProgress && <Spinner size="sm" className="progressing-icon" />}
           {titleText}
         </Title>
         <DownloadOcCliButton />
-        {!isWaitingROSAManual && (
+        {inProgress && (
           <Text component={TextVariants.p} className="expected-cluster-installation-text">
             Cluster creation usually takes 30 to 60 minutes to complete.
           </Text>
