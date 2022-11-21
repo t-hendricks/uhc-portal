@@ -8,15 +8,19 @@ type Props = {
   token?: string;
   command?: string;
   showCommandOnError?: boolean;
+  showInstructionsOnError?: boolean;
 } & Partial<React.ComponentProps<typeof InstructionCommand>>;
+
+const InvalidGrant = 'invalid_grant';
 
 /**
  * Generates a box for containing the value of a token.
  */
 const TokenBox = ({
   token,
-  command = '',
+  command = '{{TOKEN}}',
   showCommandOnError = false,
+  showInstructionsOnError = true,
   textAriaLabel = 'Copyable token',
   className = 'ocm-c-api-token-limit-width',
   ...props
@@ -39,22 +43,24 @@ const TokenBox = ({
       outerClassName="pf-u-mt-md"
       {...props}
     >
-      {command || token}
+      {command.replace('{{TOKEN}}', token === InvalidGrant ? '' : token)}
     </InstructionCommand>
   );
-  if (token === 'invalid_grant') {
+  if (token === InvalidGrant) {
     return (
       <>
         {showCommandOnError && instructionCommand}
-        <Alert
-          variant="warning"
-          isInline
-          className="pf-u-mt-md"
-          id="invalid_grant-message"
-          title="Could not grant an offline token"
-        >
-          <RevokeTokensInstructions reason="You might have exceeded the maximum number of offline sessions." />
-        </Alert>
+        {showInstructionsOnError && (
+          <Alert
+            variant="warning"
+            isInline
+            className="pf-u-mt-md"
+            id="invalid_grant-message"
+            title="Could not grant an offline token"
+          >
+            <RevokeTokensInstructions reason="You might have exceeded the maximum number of offline sessions." />
+          </Alert>
+        )}
       </>
     );
   }

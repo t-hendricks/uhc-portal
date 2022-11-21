@@ -336,31 +336,12 @@ exports[`<Tokens /> Renders screen with token 1`] = `
                   <Text
                     component="p"
                   />
-                  <Text
-                    component="pre"
-                  >
-                    <ClipboardCopy
-                      additionalActions={null}
-                      className="ocm-c-api-token-limit-width"
-                      clickTip="Successfully copied to clipboard!"
-                      entryDelay={300}
-                      exitDelay={1500}
-                      hoverTip="Copy to clipboard"
-                      isCode={false}
-                      isExpanded={false}
-                      isReadOnly={true}
-                      maxWidth="150px"
-                      onChange={[Function]}
-                      onCopy={[Function]}
-                      ouiaSafe={true}
-                      position="top"
-                      textAriaLabel="Copyable command"
-                      toggleAriaLabel="Show content"
-                      variant="expansion"
-                    >
-                      ocm login --token="test-token"
-                    </ClipboardCopy>
-                  </Text>
+                  <TokenBox
+                    command="ocm login --token=\\"{{TOKEN}}\\""
+                    showCommandOnError={true}
+                    showInstructionsOnError={false}
+                    token="test-token"
+                  />
                 </ListItem>
               </List>
               <Title

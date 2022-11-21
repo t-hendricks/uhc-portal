@@ -27,7 +27,7 @@ import {
   Card,
   CardBody,
   CardTitle,
-  ClipboardCopy,
+  // ClipboardCopy,
   List,
   ListItem,
   Stack,
@@ -140,16 +140,12 @@ const Tokens = (props: Props) => {
                           {offlineToken == null ? (
                             <Skeleton size="md" />
                           ) : (
-                            <Text component="pre">
-                              <ClipboardCopy
-                                isReadOnly
-                                className="ocm-c-api-token-limit-width"
-                                variant="expansion"
-                                textAriaLabel="Copyable command"
-                              >
-                                {`${commandName} login --token="${offlineToken}"`}
-                              </ClipboardCopy>
-                            </Text>
+                            <TokenBox
+                              token={offlineToken}
+                              command={`${commandName} login --token="{{TOKEN}}"`}
+                              showCommandOnError
+                              showInstructionsOnError={false}
+                            />
                           )}
                         </ListItem>
                       </List>

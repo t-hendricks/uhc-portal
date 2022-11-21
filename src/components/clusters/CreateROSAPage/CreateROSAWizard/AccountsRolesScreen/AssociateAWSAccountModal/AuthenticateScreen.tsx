@@ -9,7 +9,7 @@ import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 const AuthenticateScreen = () => {
   const token = useGlobalState((state) => state.rosaReducer.offlineToken);
-  const loginCommand = `rosa login --token="${token}"`;
+  const loginCommand = `rosa login --token="{{TOKEN}}"`;
 
   return (
     <Card isCompact isPlain isFullHeight>
