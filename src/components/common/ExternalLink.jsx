@@ -8,34 +8,36 @@ const ExternalLink = ({ href, children, noIcon, noTarget, className, stopClickPr
   const track = useAnalytics();
 
   const trackExternalLink = () => {
-    const currentUrl = window.location.href;
-    const moduleValue = 'openshift';
-
+    const path = window.location.pathname;
     let resource;
-    switch (true) {
-      case currentUrl.includes('/rosa'):
-        resource = 'moa';
-        break;
-      case currentUrl.includes('/osdtrial'):
-        resource = 'osdtrial';
-        break;
-      case currentUrl.includes('/osd'):
-        resource = 'osd';
-        break;
-      default:
-        resource = 'all';
-        break;
+    if (path.includes('/rosa')) {
+      resource = 'moa';
+    } else if (path.includes('/osdtrial')) {
+      resource = 'osdtrial';
+    } else if (path.includes('/osd')) {
+      resource = 'osd';
+    } else if (path.includes('/crc')) {
+      resource = 'crc';
+    } else {
+      resource = 'all';
     }
 
     track(trackEvents.ExternalLink, {
-      customProperties: JSON.parse(
-        `{
-          "link_url":"${href}",
-          "module":"${moduleValue}",
-          "ocm_resource_type":"${resource}"
-        }`,
-      ),
+      customProperties: {
+        link_url: href,
+        module: 'openshift',
+        ocm_resource_type: resource,
+      },
     });
+  };
+
+  const handleClick = (event) => {
+    if (stopClickPropagation) {
+      trackExternalLink();
+      event.stopPropagation();
+    } else {
+      trackExternalLink();
+    }
   };
 
   return (
@@ -44,10 +46,7 @@ const ExternalLink = ({ href, children, noIcon, noTarget, className, stopClickPr
       target={noTarget ? '' : '_blank'}
       rel="noreferrer noopener"
       className={className}
-      onClick={(event) => {
-        stopClickPropagation && event.stopPropagation();
-        trackExternalLink();
-      }}
+      onClick={handleClick}
     >
       {children}
       {noTarget ? null : <span className="pf-u-screen-reader"> (new window or tab)</span>}
