@@ -142,8 +142,7 @@ export const loadOfflineToken = (
               any,
               {
                 error: string;
-                // eslint-disable-next-line camelcase
-                error_description: string;
+                ['error_description']: string;
               }
             >
           ).response?.data?.error
