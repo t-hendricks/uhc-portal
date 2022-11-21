@@ -5,7 +5,7 @@ import InstructionCommand from '../common/InstructionCommand';
 import RevokeTokensInstructions from './RevokeTokensInstructions';
 
 type Props = {
-  token?: string | Error;
+  token?: string;
   command?: string;
   showCommandOnError?: boolean;
 } & Partial<React.ComponentProps<typeof InstructionCommand>>;

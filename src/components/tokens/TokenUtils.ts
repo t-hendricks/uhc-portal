@@ -26,6 +26,7 @@
  */
 import Keycloak, { KeycloakConfig, KeycloakInitOptions } from 'keycloak-js';
 import urijs from 'urijs';
+import axios, { AxiosError } from 'axios';
 
 const defaultOptions = {
   realm: 'redhat-external',
@@ -133,9 +134,20 @@ export const loadOfflineToken = (
         );
       }
     })
-    .catch((reason: string | Error) => {
-      const tokenOrError = reason instanceof Error ? reason.toString() : reason;
-      const errorReason = reason instanceof Error ? (reason as any)?.response?.data?.error : '';
+    .catch((reason: string | AxiosError) => {
+      const tokenOrError = axios.isAxiosError(reason) ? reason.toString() : reason;
+      const errorReason = axios.isAxiosError(reason)
+        ? (
+            reason as AxiosError<
+              any,
+              {
+                error: string;
+                // eslint-disable-next-line camelcase
+                error_description: string;
+              }
+            >
+          ).response?.data?.error
+        : '';
       // First time this method is called it will error out
       if (reason === 'not available') {
         // eslint-disable-next-line no-console
