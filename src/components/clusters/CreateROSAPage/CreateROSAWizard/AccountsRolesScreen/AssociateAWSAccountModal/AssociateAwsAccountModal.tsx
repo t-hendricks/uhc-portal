@@ -15,7 +15,7 @@ import { OcmRoleScreen } from './OcmRoleScreen';
 import { UserRoleScreen } from './UserRoleScreen';
 
 import './associateAwsAccountModal.scss';
-import {RosaServiceScreen} from "./RosaServiceScreen";
+import { RosaServiceScreen } from './RosaServiceScreen';
 
 interface Props {
   isOpen: boolean;
