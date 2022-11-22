@@ -9,6 +9,7 @@ export type ClusterTransfer = ObjectReference & {
   created_at?: string;
   expiration_date?: string;
   owner?: string;
+  pull_secret_rotation_id?: string;
   recipient?: string;
   secret?: string;
   status?: ClusterTransfer.status;

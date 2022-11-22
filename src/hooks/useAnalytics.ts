@@ -1,33 +1,29 @@
 import useChrome from '@redhat-cloud-services/frontend-components/useChrome';
 import { getTrackEvent, TrackEvent, TrackEventOptions } from '~/common/analytics';
 
-interface useAnalyticsReturn {
-  /** a convenience function that composes the track event parsing and the actual tracking. */
-  track: (trackEvent: TrackEvent, options?: TrackEventOptions) => void;
-  /** the analytics API instance */
-  analytics: any;
-  /**
-   * adds additional page metadata on route changes
-   * NOTE: Does not work on initial page load
-   */
-  setPageMetadata: (metadata: any) => void;
+/** a convenience function that composes the track event parsing and the actual tracking. */
+interface Track {
+  (event: TrackEvent, properties?: TrackEventOptions): void;
+  (event: string, properties?: Record<string, any> | string): void;
 }
 
 /**
- * Provides an analytics API instance, and a helper method for tracking.
+ * Provides a helper function for analytics track events.
  */
-const useAnalytics = (): useAnalyticsReturn => {
-  const {
-    analytics,
-    segment: { setPageMetadata },
-  } = useChrome();
+const useAnalytics = (): Track => {
+  const { analytics } = useChrome();
 
-  const track = (trackEvent: TrackEvent, options?: TrackEventOptions) => {
-    const eventObj = getTrackEvent(trackEvent, options);
-    analytics.track(eventObj.event, eventObj.properties);
+  const track: Track = (event, properties) => {
+    if (typeof event === 'string') {
+      analytics.track(event, typeof properties === 'string' ? { type: properties } : properties);
+    } else {
+      const eventObj = getTrackEvent(event, properties as TrackEventOptions);
+      // https://segment.com/docs/connections/spec/track/
+      analytics.track(eventObj.event, eventObj.properties);
+    }
   };
 
-  return { track, analytics, setPageMetadata };
+  return track;
 };
 
 export default useAnalytics;

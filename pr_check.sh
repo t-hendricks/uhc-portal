@@ -32,7 +32,14 @@ podman login -u "${QUAY_USER}" -p "${QUAY_TOKEN}" quay.io
 
 # Run the checks:
 
-mockdata/regenerate-clusters.json.sh # first because really fast
+# mockdata checked first because really fast
+mockdata/regenerate-clusters.json.sh
+if ! git diff --exit-code --stat mockdata/api/clusters_mgmt/v1/clusters.json mockdata/api/accounts_mgmt/v1/subscriptions.json; then
+  set +x
+  echo 'ERROR: Generated collection jsons out of date. ^^^'
+  echo '       => Run `mockdata/regenerate-clusters.json.sh` locally and commit the changes.'
+  exit 1
+fi
 
 node --version
 

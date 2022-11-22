@@ -7,7 +7,9 @@
         "in": "path",
         "name": "ruleId",
         "required": true,
-        "schema": { "type": "string" }
+        "schema": {
+          "type": "string"
+        }
       }
     },
     "schemas": {
@@ -17,20 +19,35 @@
             {
               "cluster_id": "1234ecc5-624a-49a5-bab8-4fdc5e51a266",
               "cluster_name": "Production cluster 1",
-              "hits_by_total_risk": { "1": 1, "2": 4, "3": 2, "4": 0 },
+              "hits_by_total_risk": {
+                "1": 1,
+                "2": 4,
+                "3": 2,
+                "4": 0
+              },
               "publish_date": "2021-12-06 13:46:28.156726 +0000 UTC",
               "total_hit_count": 7
             },
             {
               "cluster_id": "5678ecc5-624a-49a5-bab8-4fdc5e51a266",
               "cluster_name": "My cluster",
-              "hits_by_total_risk": { "1": 0, "2": 0, "3": 8, "4": 0 },
+              "hits_by_total_risk": {
+                "1": 0,
+                "2": 0,
+                "3": 8,
+                "4": 0
+              },
               "publish_date": "2021-01-01 13:46:28.156726 +0000 UTC",
               "total_hit_count": 8
             }
           ],
           "properties": {
-            "cluster_id": { "format": "uuid", "maxLength": 36, "minLength": 36, "type": "string" },
+            "cluster_id": {
+              "format": "uuid",
+              "maxLength": 36,
+              "minLength": 36,
+              "type": "string"
+            },
             "cluster_name": {
               "description": "An human-readable name for the cluster",
               "example": "Production cluster 1",
@@ -43,7 +60,12 @@
             },
             "hits_by_total_risk": {
               "description": "Dictionary with numeric representation of total risk as keys, the number of rule hits by each total risk as values.",
-              "example": { "1": 1, "2": 4, "3": 0, "4": 0 }
+              "example": {
+                "1": 1,
+                "2": 4,
+                "3": 0,
+                "4": 0
+              }
             },
             "last_checked_at": {
               "description": "[Optional] Last time of analysis for given cluster.",
@@ -62,17 +84,34 @@
       "clusterListResponse": {
         "description": "Response data type for GET /clusters endpoint",
         "properties": {
-          "data": { "$ref": "#/components/schemas/clusterList" },
+          "data": {
+            "$ref": "#/components/schemas/clusterList"
+          },
           "meta": {
-            "properties": { "count": { "format": "int32", "type": "integer" } },
+            "properties": {
+              "count": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
             "type": "object"
           },
-          "status": { "description": "Request response status", "type": "string" }
+          "status": {
+            "description": "Request response status",
+            "type": "string"
+          }
         },
         "type": "object"
       },
       "ratingSchema": {
-        "properties": { "rating": { "type": "integer" }, "rule": { "type": "string" } },
+        "properties": {
+          "rating": {
+            "type": "integer"
+          },
+          "rule": {
+            "type": "string"
+          }
+        },
         "type": "object"
       },
       "recommendationList": {
@@ -86,7 +125,10 @@
             "publish_date": "2020-04-08T00:42:00Z",
             "risk_of_change": 0,
             "rule_id": "ccx_rules_ocp.external.bug_rules.bug_1821905|BUGZILLA_BUG_1821905",
-            "tags": ["openshift", "service_availability"],
+            "tags": [
+              "openshift",
+              "service_availability"
+            ],
             "total_risk": 3
           },
           "properties": {
@@ -105,7 +147,13 @@
             },
             "impact": {
               "description": "How much of an impact this rule has on a cluster.",
-              "enum": [0, 1, 2, 3, 4],
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
               "type": "integer"
             },
             "impacted_clusters_count": {
@@ -115,7 +163,13 @@
             },
             "likelihood": {
               "description": "How likely is this rule to hit.",
-              "enum": [0, 1, 2, 3, 4],
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
               "type": "integer"
             },
             "publish_date": {
@@ -125,7 +179,13 @@
             },
             "risk_of_change": {
               "description": "Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.",
-              "enum": [0, 1, 2, 3, 4],
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
               "type": "integer"
             },
             "rule_id": {
@@ -135,12 +195,20 @@
             },
             "tags": {
               "description": "List of tags that the rule contains",
-              "items": { "type": "string" },
+              "items": {
+                "type": "string"
+              },
               "type": "array"
             },
             "total_risk": {
               "description": "Total risk - calculated from rule impact and likelihood.",
-              "enum": [0, 1, 2, 3, 4],
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
               "type": "integer"
             }
           },
@@ -151,15 +219,27 @@
       "recommendationListResponse": {
         "description": "Response data type for GET /rule endpoint",
         "properties": {
-          "recommendations": { "$ref": "#/components/schemas/recommendationList" },
-          "status": { "description": "Request response status", "type": "string" }
+          "recommendations": {
+            "$ref": "#/components/schemas/recommendationList"
+          },
+          "status": {
+            "description": "Request response status",
+            "type": "string"
+          }
         },
         "type": "object"
       },
       "report": {
         "properties": {
-          "data": { "items": { "$ref": "#/components/schemas/reportData" }, "type": "array" },
-          "meta": { "$ref": "#/components/schemas/reportMeta" }
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/reportData"
+            },
+            "type": "array"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/reportMeta"
+          }
         },
         "type": "object"
       },
@@ -172,18 +252,27 @@
           "disable_feedback": "",
           "disabled": false,
           "disabled_at": "",
-          "extra_data": { "error_key": "TUTORIAL_ERROR", "type": "rule" },
+          "extra_data": {
+            "error_key": "TUTORIAL_ERROR",
+            "type": "rule"
+          },
           "internal": false,
           "reason": "",
           "resolution": "",
           "risk_of_change": 0,
           "rule_id": "ccx_rules_ocm.tutorial_rule.report",
-          "tags": ["openshift", "service_availability"],
+          "tags": [
+            "openshift",
+            "service_availability"
+          ],
           "total_risk": 1,
           "user_vote": 0
         },
         "properties": {
-          "created_at": { "format": "date-time", "type": "string" },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
           "description": {
             "description": "The title of the rule, a short description.",
             "type": "string"
@@ -192,12 +281,16 @@
             "description": "Details of the rule - templates rendered on frontend.",
             "type": "string"
           },
-          "disable_feedback": { "type": "string" },
+          "disable_feedback": {
+            "type": "string"
+          },
           "disabled": {
             "description": "If this rule result disabled or not. This field can be used in the UI to show only specific set of rules results.",
             "type": "boolean"
           },
-          "disabled_at": { "type": "string" },
+          "disabled_at": {
+            "type": "string"
+          },
           "extra_data": {
             "description": "Used as templating data for other content (details, resolution, etc.), has varying structure depending on the rules in the report.",
             "type": "object"
@@ -206,8 +299,13 @@
             "description": "[Optional] Timestamp when the rule first started hitting",
             "type": "date-time"
           },
-          "internal": { "type": "boolean" },
-          "more_info": { "description": "Non essential information.", "type": "string" },
+          "internal": {
+            "type": "boolean"
+          },
+          "more_info": {
+            "description": "Non essential information.",
+            "type": "string"
+          },
           "reason": {
             "description": "Reason for the issue, giving the user more accurate description of the cause.",
             "type": "string"
@@ -218,24 +316,49 @@
           },
           "risk_of_change": {
             "description": "Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.",
-            "enum": [0, 1, 2, 3, 4],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
             "type": "integer"
           },
-          "rule_id": { "description": "ID of a rule.", "type": "string" },
+          "rule_id": {
+            "description": "ID of a rule.",
+            "type": "string"
+          },
           "tags": {
             "description": "List of tags that the rule contains, forming rule groups.",
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "type": "array"
           },
           "total_risk": {
             "description": "Total risk - calculated from rule impact and likelihood.",
-            "enum": [0, 1, 2, 3, 4],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
             "type": "integer"
           },
           "user_vote": {
             "description": "User vote - value of user voting. -1 is dislike vote, 0 is no vote, 1 is like vote.",
-            "enum": ["-1", "0", "1"],
-            "x-enum-varnames": ["DISLIKE", "NO_VOTE", "LIKE"],
+            "enum": [
+              "-1",
+              "0",
+              "1"
+            ],
+            "x-enum-varnames": [
+              "DISLIKE",
+              "NO_VOTE",
+              "LIKE"
+            ],
             "format": "int32",
             "type": "integer"
           }
@@ -243,11 +366,24 @@
         "type": "object"
       },
       "reportMeta": {
-        "example": { "count": 9, "last_checked_at": "2020-12-08T09:45:23Z", "managed": false },
+        "example": {
+          "count": 9,
+          "last_checked_at": "2020-12-08T09:45:23Z",
+          "managed": false
+        },
         "properties": {
-          "cluster_name": { "description": "The display name of the cluster", "type": "string" },
-          "count": { "format": "int32", "type": "integer" },
-          "gathered_at": { "format": "date-time", "type": "string" },
+          "cluster_name": {
+            "description": "The display name of the cluster",
+            "type": "string"
+          },
+          "count": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "gathered_at": {
+            "format": "date-time",
+            "type": "string"
+          },
           "last_checked_at": {
             "description": "[Optional] Timestamp of the last analysis",
             "format": "date-time",
@@ -263,8 +399,12 @@
       "reportResponse": {
         "description": "Response data type for GET /clusters/{clusterId}/report endpoint",
         "properties": {
-          "report": { "$ref": "#/components/schemas/report" },
-          "status": { "type": "string" }
+          "report": {
+            "$ref": "#/components/schemas/report"
+          },
+          "status": {
+            "type": "string"
+          }
         },
         "type": "object"
       },
@@ -312,18 +452,35 @@
           "data": {
             "items": {
               "properties": {
-                "created_at": { "format": "date-time", "type": "string" },
-                "created_by": { "type": "string" },
-                "justification": { "type": "string" },
-                "rule": { "type": "string" },
-                "updated_at": { "format": "date-time", "type": "string" }
+                "created_at": {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "justification": {
+                  "type": "string"
+                },
+                "rule": {
+                  "type": "string"
+                },
+                "updated_at": {
+                  "format": "date-time",
+                  "type": "string"
+                }
               },
               "type": "object"
             },
             "type": "array"
           },
           "meta": {
-            "properties": { "count": { "format": "int32", "type": "integer" } },
+            "properties": {
+              "count": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
             "type": "object"
           }
         },
@@ -347,14 +504,18 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/systemWideRuleDisableList" }
+                "schema": {
+                  "$ref": "#/components/schemas/systemWideRuleDisableList"
+                }
               }
             },
             "description": "List of acked rules"
           }
         },
         "summary": "Lists acks from this account where the rule is active",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       },
       "post": {
         "description": "Acknowledges (and therefore hides) a rule from view in an account. If there's already an acknowledgement of this rule by this account, then return that. Othervise, a new ack is created.",
@@ -364,8 +525,12 @@
             "application/json": {
               "schema": {
                 "properties": {
-                  "justification": { "type": "string" },
-                  "rule_id": { "type": "string" }
+                  "justification": {
+                    "type": "string"
+                  },
+                  "rule_id": {
+                    "type": "string"
+                  }
                 },
                 "type": "object"
               }
@@ -378,7 +543,9 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/systemWideRuleDisable" }
+                "schema": {
+                  "$ref": "#/components/schemas/systemWideRuleDisable"
+                }
               }
             },
             "description": "Rule has been disabled already"
@@ -386,14 +553,18 @@
           "201": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/systemWideRuleDisable" }
+                "schema": {
+                  "$ref": "#/components/schemas/systemWideRuleDisable"
+                }
               }
             },
             "description": "Rule has been acked (disabled)"
           }
         },
         "summary": "Acknowledges/hide the rule for given account",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/ack/{rule_id}": {
@@ -406,15 +577,24 @@
             "in": "path",
             "name": "rule_id",
             "required": true,
-            "schema": { "example": "some.python.module|error_key", "type": "string" }
+            "schema": {
+              "example": "some.python.module|error_key",
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "204": { "description": "Rule ack has been deleted" },
-          "404": { "description": "Rule has not been acked (disabled) previously" }
+          "204": {
+            "description": "Rule ack has been deleted"
+          },
+          "404": {
+            "description": "Rule has not been acked (disabled) previously"
+          }
         },
         "summary": "Deletes an acknowledgement for a rule",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       },
       "get": {
         "description": "AckGetEndpoint read the acknowledgement info about disabled rule",
@@ -425,22 +605,31 @@
             "in": "path",
             "name": "rule_id",
             "required": true,
-            "schema": { "example": "some.python.module|error_key", "type": "string" }
+            "schema": {
+              "example": "some.python.module|error_key",
+              "type": "string"
+            }
           }
         ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/systemWideRuleDisable" }
+                "schema": {
+                  "$ref": "#/components/schemas/systemWideRuleDisable"
+                }
               }
             },
             "description": "Rule ack has been found, the metadata is returned in response body"
           },
-          "404": { "description": "Rule has not been acked (disabled) previously" }
+          "404": {
+            "description": "Rule has not been acked (disabled) previously"
+          }
         },
         "summary": "AckGetEndpoint read the acknowledgement info about disabled rule",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       },
       "put": {
         "description": "Updates an acknowledgement for a rule, by rule ID. A new justification can be supplied.",
@@ -451,14 +640,21 @@
             "in": "path",
             "name": "rule_id",
             "required": true,
-            "schema": { "example": "some.python.module|error_key", "type": "string" }
+            "schema": {
+              "example": "some.python.module|error_key",
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "properties": { "justification": { "type": "string" } },
+                "properties": {
+                  "justification": {
+                    "type": "string"
+                  }
+                },
                 "type": "object"
               }
             }
@@ -470,15 +666,21 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/systemWideRuleDisable" }
+                "schema": {
+                  "$ref": "#/components/schemas/systemWideRuleDisable"
+                }
               }
             },
             "description": "Rule ack has been found and updated, the metadata is returned in response body"
           },
-          "404": { "description": "Rule has not been acked (disabled) previously" }
+          "404": {
+            "description": "Rule has not been acked (disabled) previously"
+          }
         },
         "summary": "Updates an acknowledgement for a rule, by rule ID.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/cluster/{clusterId}/info": {
@@ -492,7 +694,9 @@
             "in": "path",
             "name": "clusterId",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -528,7 +732,10 @@
                       },
                       "type": "object"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -543,7 +750,9 @@
           }
         },
         "summary": "Returns relevant information about the cluster available in AMS API.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/cluster/{clusterId}/reports": {
@@ -557,22 +766,39 @@
             "in": "path",
             "name": "clusterId",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "If true, disabled rules will be sent too.",
+            "in": "query",
+            "name": "get_disabled",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/reportResponse" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/reportResponse"
+                }
+              }
             },
-            "description": "Latest available report for the given cluster IDs. Returns rules and their descriptions that were hit by the cluster."
+            "description": "Latest available report for the given organization and cluster combination. Returns rules and their descriptions that were hit by the cluster. Disabled rules are ommitted by default unless the get_disabled query param is provided."
           },
           "400": {
             "description": "Invalid request, usually caused when some cluster belongs to different organization."
           }
         },
         "summary": "Returns the latest report for the given cluster.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/clusters": {
@@ -583,7 +809,9 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/clusterListResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/clusterListResponse"
+                }
               }
             },
             "description": "If a cluster has 0 total_hit_count and empty last_checked_at timestamp, we have no Insights data for that archive. If total_hit_count = 0 and the timestamp is valid, there are no rule hits for the cluster."
@@ -591,14 +819,23 @@
           "503": {
             "content": {
               "application/json": {
-                "schema": { "properties": { "status": { "type": "string" } }, "type": "object" }
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
               }
             },
             "description": "A dependent service such as AMS API or results aggregator is unavailable. Specified in status message."
           }
         },
         "summary": "Returns a list of clusters, total number of hitting rules and a count of impacting rules by total risk.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/content": {
@@ -617,38 +854,75 @@
                           "error_keys": {
                             "additionalProperties": {
                               "properties": {
-                                "generic": { "type": "string" },
+                                "generic": {
+                                  "type": "string"
+                                },
                                 "metadata": {
                                   "properties": {
-                                    "condition": { "type": "string" },
-                                    "description": { "type": "string" },
-                                    "impact": { "type": "integer" },
-                                    "likelihood": { "type": "integer" },
-                                    "publish_date": { "type": "string" },
-                                    "status": { "type": "string" },
-                                    "tags": { "items": { "type": "string" }, "type": "array" }
+                                    "condition": {
+                                      "type": "string"
+                                    },
+                                    "description": {
+                                      "type": "string"
+                                    },
+                                    "impact": {
+                                      "type": "integer"
+                                    },
+                                    "likelihood": {
+                                      "type": "integer"
+                                    },
+                                    "publish_date": {
+                                      "type": "string"
+                                    },
+                                    "status": {
+                                      "type": "string"
+                                    },
+                                    "tags": {
+                                      "items": {
+                                        "type": "string"
+                                      },
+                                      "type": "array"
+                                    }
                                   },
                                   "type": "object"
                                 },
-                                "reason": { "type": "string" }
+                                "reason": {
+                                  "type": "string"
+                                }
                               },
                               "type": "object"
                             },
                             "type": "object"
                           },
-                          "more_info": { "type": "string" },
+                          "more_info": {
+                            "type": "string"
+                          },
                           "plugin": {
                             "properties": {
-                              "name": { "type": "string" },
-                              "node_id": { "type": "string" },
-                              "product_code": { "type": "string" },
-                              "python_module": { "type": "string" }
+                              "name": {
+                                "type": "string"
+                              },
+                              "node_id": {
+                                "type": "string"
+                              },
+                              "product_code": {
+                                "type": "string"
+                              },
+                              "python_module": {
+                                "type": "string"
+                              }
                             },
                             "type": "object"
                           },
-                          "reason": { "type": "string" },
-                          "resolution": { "type": "string" },
-                          "summary": { "type": "string" }
+                          "reason": {
+                            "type": "string"
+                          },
+                          "resolution": {
+                            "type": "string"
+                          },
+                          "summary": {
+                            "type": "string"
+                          }
                         },
                         "type": "object"
                       },
@@ -657,15 +931,27 @@
                     "groups": {
                       "items": {
                         "properties": {
-                          "description": { "type": "string" },
-                          "tags": { "items": { "type": "string" }, "type": "array" },
-                          "title": { "type": "string" }
+                          "description": {
+                            "type": "string"
+                          },
+                          "tags": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "title": {
+                            "type": "string"
+                          }
                         },
                         "type": "object"
                       },
                       "type": "array"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -674,7 +960,9 @@
           }
         },
         "summary": "Get all static content",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/info": {
@@ -690,21 +978,30 @@
                     "info": {
                       "properties": {
                         "Aggregator": {
-                          "additionalProperties": { "type": "string" },
+                          "additionalProperties": {
+                            "type": "string"
+                          },
                           "type": "object"
                         },
                         "ContentService": {
-                          "additionalProperties": { "type": "string" },
+                          "additionalProperties": {
+                            "type": "string"
+                          },
                           "type": "object"
                         },
                         "SmartProxy": {
-                          "additionalProperties": { "type": "string" },
+                          "additionalProperties": {
+                            "type": "string"
+                          },
                           "type": "object"
                         }
                       },
                       "type": "object"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -722,7 +1019,9 @@
         "operationId": "getMetrics",
         "responses": {
           "200": {
-            "content": { "text/plain": {} },
+            "content": {
+              "text/plain": {}
+            },
             "description": "Default response containing all metrics in semi-structured text format"
           }
         },
@@ -739,16 +1038,26 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "components": { "type": "object" },
+                    "components": {
+                      "type": "object"
+                    },
                     "info": {
                       "properties": {
-                        "description": { "type": "string" },
-                        "title": { "type": "string" },
-                        "version": { "type": "string" }
+                        "description": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "string"
+                        }
                       },
                       "type": "object"
                     },
-                    "openapi": { "type": "string" },
+                    "openapi": {
+                      "type": "string"
+                    },
                     "paths": {
                       "description": "Available paths and their descriptions.",
                       "type": "object"
@@ -770,7 +1079,11 @@
         "operationId": "sendRating",
         "requestBody": {
           "content": {
-            "application/json": { "schema": { "$ref": "#/components/schemas/ratingSchema" } }
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ratingSchema"
+              }
+            }
           },
           "description": "A JSON object with the current rule and its rating.",
           "required": true
@@ -778,13 +1091,21 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/ratingSchema" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ratingSchema"
+                }
+              }
             },
             "description": "The current rating value for the rule"
           },
           "201": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/ratingSchema" } }
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ratingSchema"
+                }
+              }
             },
             "description": "The current rating value for the rule"
           },
@@ -793,7 +1114,9 @@
           }
         },
         "summary": "Send the new rating for a given rule",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/rule": {
@@ -805,28 +1128,38 @@
             "description": "If param is missing, endpoint will return all available rules including those that don't hit any clusters at the moment. If set to true, only returns impacting rules. If false, only returns those that aren't impacting.",
             "in": "query",
             "name": "impacting",
-            "schema": { "type": "boolean" }
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/recommendationListResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/recommendationListResponse"
+                }
               }
             },
             "description": "Returns a list recommendations and the number of clusters they're currently impacting. Default behaviour is to return only the rules that affect atleast one cluster. This can be changed by passing impacting parameter"
           }
         },
         "summary": "Returns a list recommendations and the number of clusters they're currently impacting.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/rule/{ruleId}": {
       "get": {
         "description": "The static content is taken from the cache periodically updated from the content service. The user specific parts need trips to the aggregator service.",
         "operationId": "getContentAndGroupsForRule",
-        "parameters": [{ "$ref": "#/components/parameters/ruleId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ruleId"
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -848,18 +1181,34 @@
                           "description": "More specific, cluster-independent description of the rule",
                           "type": "string"
                         },
-                        "hosts_acked_count": { "type": "integer" },
+                        "hosts_acked_count": {
+                          "type": "integer"
+                        },
                         "impact": {
                           "description": "How much of an impact this rule has on a cluster.",
-                          "enum": [0, 1, 2, 3, 4],
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
                           "type": "integer"
                         },
                         "likelihood": {
                           "description": "How likely is this rule to hit.",
-                          "enum": [0, 1, 2, 3, 4],
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
                           "type": "integer"
                         },
-                        "more_info": { "type": "string" },
+                        "more_info": {
+                          "type": "string"
+                        },
                         "publish_date": {
                           "description": "The date the rule was published. 'Added at' field in UI",
                           "format": "date-time",
@@ -867,7 +1216,11 @@
                         },
                         "rating": {
                           "description": "User vote - value of user voting. -1 is dislike vote, 0 is no vote, 1 is like vote.",
-                          "enum": ["-1", "0", "1"],
+                          "enum": [
+                            "-1",
+                            "0",
+                            "1"
+                          ],
                           "type": "integer"
                         },
                         "reason": {
@@ -880,18 +1233,34 @@
                         },
                         "risk_of_change": {
                           "description": "Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.",
-                          "enum": [0, 1, 2, 3, 4],
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
                           "type": "integer"
                         },
-                        "rule_id": { "type": "string" },
+                        "rule_id": {
+                          "type": "string"
+                        },
                         "tags": {
                           "description": "List of tags that the rule contains",
-                          "items": { "type": "string" },
+                          "items": {
+                            "type": "string"
+                          },
                           "type": "array"
                         },
                         "total_risk": {
                           "description": "Total risk - calculated from rule impact and likelihood.",
-                          "enum": [0, 1, 2, 3, 4],
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
                           "type": "integer"
                         }
                       },
@@ -900,15 +1269,27 @@
                     "groups": {
                       "items": {
                         "properties": {
-                          "description": { "type": "string" },
-                          "tags": { "items": { "type": "string" }, "type": "array" },
-                          "title": { "type": "string" }
+                          "description": {
+                            "type": "string"
+                          },
+                          "tags": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "title": {
+                            "type": "string"
+                          }
                         },
                         "type": "object"
                       },
                       "type": "array"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -921,7 +1302,10 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "status": { "example": "Item not found in the storage", "type": "string" }
+                    "status": {
+                      "example": "Item not found in the storage",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -934,7 +1318,10 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "status": { "example": "Item not found in the storage", "type": "string" }
+                    "status": {
+                      "example": "Item not found in the storage",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -944,14 +1331,20 @@
           }
         },
         "summary": "Get content for the given ruleId, along with user-specific data such as rule rating, disabling, etc.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/rule/{ruleId}/content": {
       "get": {
         "description": "The static content is taken from the cache periodically updated from the content service.",
         "operationId": "getContentForRule",
-        "parameters": [{ "$ref": "#/components/parameters/ruleId" }],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ruleId"
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -970,15 +1363,29 @@
                         },
                         "impact": {
                           "description": "How much of an impact this rule has on a cluster.",
-                          "enum": [0, 1, 2, 3, 4],
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
                           "type": "integer"
                         },
                         "likelihood": {
                           "description": "How likely is this rule to hit.",
-                          "enum": [0, 1, 2, 3, 4],
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
                           "type": "integer"
                         },
-                        "more_info": { "type": "string" },
+                        "more_info": {
+                          "type": "string"
+                        },
                         "publish_date": {
                           "description": "The date the rule was published. 'Added at' field in UI",
                           "format": "date-time",
@@ -994,18 +1401,34 @@
                         },
                         "risk_of_change": {
                           "description": "Risk of change - values paired with corresponding UI elements. 0 returned when not defined, therefore to hide the UI.",
-                          "enum": [0, 1, 2, 3, 4],
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
                           "type": "integer"
                         },
-                        "rule_id": { "type": "string" },
+                        "rule_id": {
+                          "type": "string"
+                        },
                         "tags": {
                           "description": "List of tags that the rule contains",
-                          "items": { "type": "string" },
+                          "items": {
+                            "type": "string"
+                          },
                           "type": "array"
                         },
                         "total_risk": {
                           "description": "Total risk - calculated from rule impact and likelihood.",
-                          "enum": [0, 1, 2, 3, 4],
+                          "enum": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4
+                          ],
                           "type": "integer"
                         }
                       },
@@ -1014,15 +1437,27 @@
                     "groups": {
                       "items": {
                         "properties": {
-                          "description": { "type": "string" },
-                          "tags": { "items": { "type": "string" }, "type": "array" },
-                          "title": { "type": "string" }
+                          "description": {
+                            "type": "string"
+                          },
+                          "tags": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "title": {
+                            "type": "string"
+                          }
                         },
                         "type": "object"
                       },
                       "type": "array"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -1035,7 +1470,10 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "status": { "example": "Item not found in the storage", "type": "string" }
+                    "status": {
+                      "example": "Item not found in the storage",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -1048,7 +1486,10 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "status": { "example": "Item not found in the storage", "type": "string" }
+                    "status": {
+                      "example": "Item not found in the storage",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -1058,7 +1499,9 @@
           }
         },
         "summary": "Get all static content for the given ruleId.",
-        "tags": ["prod"]
+        "tags": [
+          "prod"
+        ]
       }
     },
     "/rule/{rule_selector}/clusters_detail": {
@@ -1072,7 +1515,9 @@
             "in": "path",
             "name": "rule_selector",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1098,7 +1543,10 @@
                                 "example": "Production cluster 1",
                                 "type": "string"
                               },
-                              "disabled_at": { "format": "date-time", "type": "string" },
+                              "disabled_at": {
+                                "format": "date-time",
+                                "type": "string"
+                              },
                               "justification": {
                                 "description": "User given justification why rule was disabled.",
                                 "example": "Not useful for us.",
@@ -1152,7 +1600,10 @@
                       },
                       "type": "object"
                     },
-                    "status": { "example": "ok", "type": "string" }
+                    "status": {
+                      "example": "ok",
+                      "type": "string"
+                    }
                   },
                   "type": "object"
                 }
@@ -1171,7 +1622,10 @@
           }
         },
         "summary": "Returns a list of cluster where the given rule is active. Also returns a list of clusters, for which the rule has been disabled.",
-        "tags": ["rule", "prod"]
+        "tags": [
+          "rule",
+          "prod"
+        ]
       }
     }
   }

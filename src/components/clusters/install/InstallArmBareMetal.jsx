@@ -3,8 +3,8 @@ import { PageSection } from '@patternfly/react-core';
 
 import Breadcrumbs from '../../common/Breadcrumbs';
 import { scrollToTop } from '../../../common/helpers';
-import PageTitle from '../../common/PageTitle';
-import InstructionsChooser from './instructions/InstructionsChooser';
+import { InstructionsChooser } from './instructions/InstructionsChooser';
+import { InstructionsChooserPageTitle } from './instructions/InstructionsChooserPageTitle';
 
 class InstallArmBareMetal extends Component {
   componentDidMount() {
@@ -25,10 +25,9 @@ class InstallArmBareMetal extends Component {
 
     return (
       <>
-        <PageTitle title="Install OpenShift Container Platform 4" breadcrumbs={breadcrumbs} />
+        <InstructionsChooserPageTitle cloudName="ARM Bare Metal" breadcrumbs={breadcrumbs} />
         <PageSection>
           <InstructionsChooser
-            cloudName="ARM Bare Metal"
             showAI
             ipiPageLink="/install/arm/installer-provisioned"
             upiPageLink="/install/arm/user-provisioned"

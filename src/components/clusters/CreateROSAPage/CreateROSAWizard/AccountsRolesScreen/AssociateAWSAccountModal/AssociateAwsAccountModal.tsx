@@ -1,21 +1,22 @@
 import React from 'react';
+import { Formik, useFormikContext, setNestedObjectValues } from 'formik';
 
 import { Button, Modal, ModalVariant } from '@patternfly/react-core';
 import {
   useWizardContext,
-  useWizardFooter,
   Wizard,
   WizardHeader,
   WizardStep,
-  WizardStepProps,
+  WizardFooterWrapper,
 } from '@patternfly/react-core/dist/esm/next';
 
+import { scrollToFirstError } from '~/common/helpers';
 import AuthenticateScreen from './AuthenticateScreen';
 import { OcmRoleScreen } from './OcmRoleScreen';
 import { UserRoleScreen } from './UserRoleScreen';
+import { RosaServiceScreen } from './RosaServiceScreen';
 
 import './associateAwsAccountModal.scss';
-import {RosaServiceScreen} from "./RosaServiceScreen";
 
 interface Props {
   isOpen: boolean;
@@ -32,62 +33,75 @@ export const AssociateAwsAccountModal = ({ isOpen, onClose }: Props) => (
     className="associate-aws-account-modal"
     onEscapePress={onClose}
   >
-    <Wizard
-      onSave={onClose}
-      onClose={onClose}
-      header={
-        <WizardHeader
-          title="Associate AWS Account"
-          description="Link your AWS account to your Red Hat account."
-          onClose={onClose}
+    <Formik initialValues={{}} onSubmit={onClose}>
+      <Wizard
+        onSave={onClose}
+        onClose={onClose}
+        isStepVisitRequired
+        footer={<AssociateAwsAccountFooter />}
+        header={
+          <WizardHeader
+            title="Associate AWS Account"
+            description="Link your AWS account to your Red Hat account."
+            onClose={onClose}
+          />
+        }
+      >
+        <WizardStep name="Enable ROSA service" id="enable-rosa-service">
+          <RosaServiceScreen />
+        </WizardStep>
+        <WizardStep name="Authenticate" id="auth">
+          <AuthenticateScreen />
+        </WizardStep>
+        <WizardStep
+          name="AWS account association"
+          id="associate-aws-account"
+          steps={[
+            <WizardStep name="OCM role" id="ocm-role">
+              <OcmRoleScreen />
+            </WizardStep>,
+            <WizardStep name="User role" id="user-role">
+              <UserRoleScreen />
+            </WizardStep>,
+          ]}
         />
-      }
-    >
-      <WizardStep name="Enable ROSA service" id="enable-rosa-service">
-        <RosaServiceScreen />
-      </WizardStep>
-      <WizardStep name="Authenticate" id="auth">
-        <AuthenticateScreen />
-      </WizardStep>
-      <WizardStep
-        name="AWS account association"
-        id="associate-aws-account"
-        steps={[
-          <WizardStep name="OCM role" id="ocm-role">
-            <OcmRoleScreen />
-          </WizardStep>,
-          <UserRoleScreenStep name="User role" id="user-role" />,
-        ]}
-      />
-    </Wizard>
+      </Wizard>
+    </Formik>
   </Modal>
 );
 
-const UserRoleScreenStep = (props: WizardStepProps) => {
-  const { onClose, onBack } = useWizardContext();
+const AssociateAwsAccountFooter = () => {
+  const { activeStep, steps, onNext: goToNext, onBack, onClose } = useWizardContext();
+  const { validateForm, setTouched, submitForm } = useFormikContext();
+  const isLastStep = activeStep.index === steps.length;
 
-  useWizardFooter(
-    React.useMemo(
-      () => (
-        <footer className="pf-c-wizard__footer">
-          <Button variant="primary" onClick={onClose}>
-            Ok
-          </Button>
-          <Button variant="secondary" onClick={onBack}>
-            Back
-          </Button>
-          <Button variant="link" onClick={onClose}>
-            Cancel
-          </Button>
-        </footer>
-      ),
-      [onClose, onBack],
-    ),
-  );
+  const onNext = async () => {
+    if (isLastStep) {
+      submitForm();
+      return;
+    }
+
+    const errors = await validateForm();
+    if (Object.keys(errors)?.length > 0) {
+      setTouched(setNestedObjectValues(errors, true));
+      scrollToFirstError(errors as Record<string, string>);
+      return;
+    }
+
+    goToNext();
+  };
 
   return (
-    <WizardStep {...props}>
-      <UserRoleScreen />
-    </WizardStep>
+    <WizardFooterWrapper>
+      <Button variant="primary" onClick={onNext}>
+        {isLastStep ? 'Ok' : 'Next'}
+      </Button>
+      <Button variant="secondary" onClick={onBack} isDisabled={activeStep.index === 1}>
+        Back
+      </Button>
+      <Button variant="link" onClick={onClose}>
+        Cancel
+      </Button>
+    </WizardFooterWrapper>
   );
 };

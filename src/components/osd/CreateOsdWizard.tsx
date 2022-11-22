@@ -62,7 +62,7 @@ const CreateOsdWizardInternal = () => {
 
   React.useEffect(() => {
     dispatch(getOrganizationAndQuota());
-  }, []);
+  }, [dispatch]);
 
   const onClose = () => history.push(UrlPath.CreateCloud);
 
@@ -76,11 +76,7 @@ const CreateOsdWizardInternal = () => {
 
   return (
     <>
-      <Wizard
-        onClose={onClose}
-        nav={{ forceStepVisit: true, isExpandable: true }}
-        footer={<CreateOsdWizardFooter />}
-      >
+      <Wizard onClose={onClose} isStepVisitRequired footer={<CreateOsdWizardFooter />}>
         <WizardStep name={StepName.BillingModel} id={StepId.BillingModel}>
           <BillingModel />
         </WizardStep>

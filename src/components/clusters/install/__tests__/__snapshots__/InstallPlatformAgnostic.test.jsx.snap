@@ -2,7 +2,7 @@
 
 exports[`Platform agnostic install renders correctly 1`] = `
 <Fragment>
-  <PageTitle
+  <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
         path={
@@ -21,11 +21,10 @@ exports[`Platform agnostic install renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift Container Platform 4"
+    cloudName="Platform agnostic (x86_64)"
   />
   <PageSection>
     <InstructionsChooser
-      cloudName="Platform agnostic (x86_64)"
       hideIPI={true}
       showAI={true}
       upiPageLink="/install/platform-agnostic/user-provisioned"

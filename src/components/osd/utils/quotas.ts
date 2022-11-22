@@ -3,7 +3,7 @@ import { availableQuota, quotaTypes } from '~/components/clusters/common/quotaSe
 import { QuotaList } from '~/redux/types';
 import { CloudProviderType } from '../ClusterSettings/CloudProvider/types';
 
-interface QuotaParams {
+export interface QuotaParams {
   resourceType: string;
   product: string;
   billingModel?: string;
@@ -23,6 +23,8 @@ export enum QuotaType {
   MarketplaceRhInfra = 'marketplaceRhInfra',
   GcpResources = 'gcpResources',
   AwsResources = 'awsResources',
+  SingleAzResources = 'singleAzResources',
+  MultiAzResources = 'multiAzResources',
 }
 
 export const hasAvailableQuota = (quotaList: QuotaList, params: QuotaParams) =>
@@ -72,5 +74,13 @@ export const quotaParams = {
   [QuotaType.AwsResources]: {
     resourceType: quotaTypes.CLUSTER,
     cloudProviderID: CloudProviderType.Aws,
+  },
+  [QuotaType.SingleAzResources]: {
+    resourceType: quotaTypes.CLUSTER,
+    isMultiAz: false,
+  },
+  [QuotaType.MultiAzResources]: {
+    resourceType: quotaTypes.CLUSTER,
+    isMultiAz: true,
   },
 };

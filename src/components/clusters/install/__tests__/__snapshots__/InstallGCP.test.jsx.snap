@@ -2,7 +2,7 @@
 
 exports[`InstallGCP renders correctly 1`] = `
 <Fragment>
-  <PageTitle
+  <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
         path={
@@ -21,11 +21,10 @@ exports[`InstallGCP renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift Container Platform 4"
+    cloudName="GCP"
   />
   <PageSection>
     <InstructionsChooser
-      cloudName="GCP"
       ipiPageLink="/install/gcp/installer-provisioned"
       upiPageLink="/install/gcp/user-provisioned"
     />

@@ -61,7 +61,8 @@ class ClusterLogsDownload extends React.Component {
 
   renderDownloadButton() {
     const {
-      clusterLogs: { externalClusterID, data },
+      externalClusterID,
+      clusterLogs: { data },
     } = this.props;
 
     let url;

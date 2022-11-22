@@ -25,13 +25,23 @@ export type ClusterAuthorizationRequest = {
 export namespace ClusterAuthorizationRequest {
   export enum product_category {
     ASSISTED_INSTALL = 'assistedInstall',
+    HOSTED_CONTROL_PLANE = 'HostedControlPlane',
   }
 
   export enum product_id {
-    OCP = 'ocp',
-    OSD = 'osd',
-    OSDTRIAL = 'osdtrial',
-    MOA = 'moa',
-    RHMI = 'rhmi',
+    OCP = 'OCP',
+    OSD = 'OSD',
+    OSDTRIAL = 'OSDTrial',
+    MOA = 'MOA',
+    RHMI = 'RHMI',
+    RHOSAK = 'RHOSAK',
+    RHOSAKTRIAL = 'RHOSAKTrial',
+    RHOSR = 'RHOSR',
+    RHOSRTRIAL = 'RHOSRTrial',
+    RHOSE = 'RHOSE',
+    RHOSETRIAL = 'RHOSETrial',
+    RHACS = 'RHACS',
+    RHACSTRIAL = 'RHACSTrial',
+    ARO = 'ARO',
   }
 }

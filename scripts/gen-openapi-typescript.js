@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const path = require('path');
 const fs = require('fs');
 const OpenAPI = require('openapi-typescript-codegen');
@@ -23,11 +24,10 @@ const processJsonAPI = (jsonString) => {
 fs.readdir(sourceDir, (err, files) => {
   files.forEach((file) => {
     const filepath = path.resolve(sourceDir, file);
-    if (!fs.statSync(filepath).isDirectory()) {
-      const output = path.resolve(
-        targetDir,
-        path.basename(file, path.extname(file)),
-      );
+    const ext = path.extname(file);
+    if (ext === '.json' && !fs.statSync(filepath).isDirectory()) {
+      const output = path.resolve(targetDir, path.basename(file, ext));
+      console.log('Reading', filepath, '-> Generating', output);
       // fs.rmSync(output, { recursive: true, force: true });
       OpenAPI.generate({
         input: processJsonAPI(fs.readFileSync(filepath).toString()),
@@ -36,6 +36,7 @@ fs.readdir(sourceDir, (err, files) => {
         exportServices: false,
         exportModels: true,
         exportSchemas: false,
+        indent: '2',
       });
     }
   });

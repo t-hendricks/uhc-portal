@@ -1,4 +1,5 @@
 # OCM UI
+
 This repository contains the UI components for the OpenShift Cluster
 Manager site.
 
@@ -28,14 +29,17 @@ To run the linter
 ```
 
 # Formatting
+
 To promote consistency in the code base, OCM uses the [Prettier](https://prettier.io/) code formatter for Javascript and TypeScript files.
 
 To run prettier on all files in the `src` directory:
+
 ```
     $ yarn prettier
 ```
 
 To fix all formatting issues in all files in the `src` directory:
+
 ```
     $ yarn prettier:fix
 ```
@@ -45,12 +49,10 @@ If you need to have prettier run on a set of files, NPX can be used.
 ```
 npx prettier --check <path to file or directory>
 ```
-For example _npx prettier --check 'src/common/**/*.{js,ts,jsx,tsx}'_  Note that you can use the `--write` flag instead of "check" to fix formatting issues.
 
+For example _npx prettier --check 'src/common/\**/*.{js,ts,jsx,tsx}'_ Note that you can use the `--write` flag instead of "check" to fix formatting issues.
 
-
-NOTE: Staged javascript files from the `src` directory will be checked and fixed by Prettier at commit time via [Husky](https://typicode.github.io/husky/#/) and [lint-staged](https://github.com/okonet/lint-staged).  If there are any formatting errors that cannot be fixed, the commit will not happen.  The scripts that are run at commit time can be run at any time against staged files by running `npx lint-staged`.  Prettier is not run by the CI.
-
+NOTE: Staged javascript files from the `src` directory will be checked and fixed by Prettier at commit time via [Husky](https://typicode.github.io/husky/#/) and [lint-staged](https://github.com/okonet/lint-staged). If there are any formatting errors that cannot be fixed, the commit will not happen. The scripts that are run at commit time can be run at any time against staged files by running `npx lint-staged`.
 
 ## Local Linting
 
@@ -79,12 +81,11 @@ As all apps under console.redhat.com, our app uses
 
 It is responsible for rendering the header & menu around the main content,
 and providing common services, like authentication or analytics.
-                                     
 
 It’s not a regular build dependency but is injected by CDN using [Edge
 Side Includes](https://en.wikipedia.org/wiki/Edge_Side_Includes) tags.
 
-To mimic this, as well as resulting URL structure, in development we 
+To mimic this, as well as resulting URL structure, in development we
 have two solutions:
 
 - `yarn start` uses `noproxy` param to `webpack.config.js` which "cheats":
@@ -125,7 +126,6 @@ should allow you to run the UI and test basic read-only functionality.
 Both `yarn start` and `yarn start-with-proxy` run `mockdata/mockserver.py`
 in the background and arrange its proxying such that UI will access if given
 `?env=mockdata` (synonim `?env=mockserver`) URL param.
-
 
 ### Preparing Data for Mock Backend
 
@@ -237,7 +237,7 @@ To make it easier for developers to write tests, we've decided to switch to a ja
 wdio tests are stored in the `selenium-js/` directory. We use the "page objects" pattern, in `selenium-js/pageobjects` - these define selectors for various components.
 Test cases are in `selenium-js/specs`.
 
-These instructions assume `yarn start` (or equivalent dev-env) is already running.  In another terminal:
+These instructions assume `yarn start` (or equivalent dev-env) is already running. In another terminal:
 
 You'll need credentials in environment variables - `TEST_SELENIUM_WITHQUOTA_PASSWORD` and `TEST_SELENIUM_WITHQUOTA_USER` (ask team members).
 
@@ -246,22 +246,26 @@ Optionally export `SELENIUM_DEBUG=true` environment variable if you want to stop
 Now you need to choose which WebDriver server to use:
 
 - Recommended: a local driver, that opens a browser window directly on your screen.
+
   ```
   yarn selenium-with-chromedriver
   ```
+
   This starts a selenium control server on port 4444, and runs the tests accordingly.
 
   Extra argument will be passed on to `wdio` for example:
+
   ```
   yarn selenium-with-chromedriver --watch --spec selenium-js/specs/Downloads.js
   ```
 
 - To use same browser as under CI, in a container:
 
-  Optionally export `BROWSER=firefox` or `BROWSER=chrome`.  Run `yarn selenium-with-vnc`.
+  Optionally export `BROWSER=firefox` or `BROWSER=chrome`. Run `yarn selenium-with-vnc`.
   This starts a selenium control server on port 4444, and VNC server on port 5900, and runs the tests.
 
   Extra argument will be passed on to `wdio` for example:
+
   ```
   yarn selenium-with-vnc --watch --spec selenium-js/specs/Downloads.js
   ```
@@ -279,11 +283,11 @@ The yarn commands are defined in package.json "scripts" section, some running sc
 ## The backend proxy
 
 You will need to start the backend proxy server, which acts as a
-proxy for the *OpenID* and API services that are required by the
+proxy for the _OpenID_ and API services that are required by the
 application.
 
 To build the `backend` proxy server run the `binaries` target of the
-*Makefile*:
+_Makefile_:
 
 ```
 make binaries
@@ -297,8 +301,8 @@ parameter of the configuration file:
     $ ./backend
 
 To obtain the access token go to the [token
-page](https://console.redhat.com/openshift/token) and copy the *offline
-access token*.
+page](https://console.redhat.com/openshift/token) and copy the _offline
+access token_.
 
 By default the backend proxy server will be available at
 <http://localhost:8010>, and the default configuration of the
@@ -321,7 +325,7 @@ Or with the `BACKEND_CONFIG` environment variable:
 The content of this file should be something like this (or any subset of
 it):
 
-``` yaml
+```yaml
 listener:
   address: localhost:8010
 
@@ -331,11 +335,11 @@ keycloak:
   client_secret: # empty by default
 
 proxies:
-- prefix: /api/
-  target: https://api.stage.openshift.com
+  - prefix: /api/
+    target: https://api.stage.openshift.com
 
-token: eyJ...  # default token for any user. Optional.
-token_map:  # map specific user names (in QA auth server) to access tokens. Optional.
+token: eyJ... # default token for any user. Optional.
+token_map: # map specific user names (in QA auth server) to access tokens. Optional.
   user1: eyJ...
   user2: eyJ...
 ```
@@ -349,10 +353,10 @@ If you need to use a service located in some other place, for example if
 you need to use the clusters service deployed in your local environment,
 you can add an additional proxy configuration:
 
-``` yaml
+```yaml
 proxies:
-- prefix: /api/clusters_mgmt/
-  target: https://api.127.0.0.1.nip.io
+  - prefix: /api/clusters_mgmt/
+    target: https://api.127.0.0.1.nip.io
 ```
 
 That will forward requests starting with `/api/clusters_mgmt/` to your
@@ -389,9 +393,8 @@ real staging backed, but can override by appending `?env=staging` /
 You may set `RUNNER=podman` or `RUNNER=docker` env var to choose with
 which tool containers will be updated/run.
 
-  - Some ways to kill insights-proxy "detach" the container instead of
-    exiting. `yarn stop-insights-proxy` helps.
-
+- Some ways to kill insights-proxy "detach" the container instead of
+  exiting. `yarn stop-insights-proxy` helps.
 
 # Deploying
 
@@ -400,7 +403,7 @@ was running same app code + beta insights-chrome code.
 For OCM we're somewhat misusing prod-beta to also run different app code:
 
 | uhc-portal branch | deployed env                                         | insights-chrome | default backend |
-|-------------------|------------------------------------------------------|-----------------|-----------------|
+| ----------------- | ---------------------------------------------------- | --------------- | --------------- |
 | `master`          | https://qaprodauth.console.redhat.com/beta/openshift | next version    | staging         |
 | `master`          | https://qaprodauth.console.redhat.com/openshift      | stable version  | staging         |
 | `candidate`       | https://console.redhat.com/beta/openshift            | next version    | production      |
@@ -419,12 +422,12 @@ output has all the info you’ll need.
 
 # Merge Request review
 
-  - For external contributors: If you need a merge request review, please message the OCM UI team at the `#ocm-osd-ui` slack channel.
+- For external contributors: If you need a merge request review, please message the OCM UI team at the `#ocm-osd-ui` slack channel.
 
-  - Code that changes behavior requires a test
+- Code that changes behavior requires a test
 
-  - When you touch a component without tests add one
+- When you touch a component without tests add one
 
-  - Large merge requests should be resubmitted in smaller chunks
+- Large merge requests should be resubmitted in smaller chunks
 
-  - Test broad changes locally
+- Test broad changes locally

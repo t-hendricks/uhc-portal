@@ -12,7 +12,7 @@ function ProgressList({ cluster, actionRequiredInitialOpen }) {
 
   const getProgressData = () => {
     const pending = { variant: 'pending' };
-    const inProcess = {variant: 'info', icon: <Spinner size="sm" />, isCurrent: true};
+    const inProcess = { variant: 'info', icon: <Spinner size="sm" />, isCurrent: true };
     const completed = { variant: 'success', text: 'Completed' };
     const unknown = { icon: <UnknownIcon className="icon-space-right" />, text: 'Unknown' };
 

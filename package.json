@@ -13,7 +13,7 @@
     "@patternfly/patternfly": "^4.210.2",
     "@patternfly/react-charts": "^6.59.2",
     "@patternfly/react-code-editor": "^4.47.2",
-    "@patternfly/react-core": "^4.235.7",
+    "@patternfly/react-core": "^4.258.4",
     "@patternfly/react-icons": "^4.57.2",
     "@patternfly/react-styles": "^4.85.7",
     "@patternfly/react-table": "^4.75.2",
@@ -215,10 +215,10 @@
     "dev-server": "webpack serve $(run/progress-flag-if-tty.sh)",
     "insights-proxy": "make insights-proxy-check && run/insights-proxy.sh",
     "stop-insights-proxy": "run/podman-or-docker.sh kill insightsproxy; run/podman-or-docker.sh rm --force insightsproxy; true",
-    "lint": "eslint src --ext js,jsx,tx,tsx",
+    "lint": "eslint src --ext js,jsx,tx,tsx && yarn  prettier",
     "prettier": "prettier --check 'src/**/*.{js,ts,mjs,jsx,tsx}'",
     "prettier:fix": "prettier --write 'src/**/*.{js,ts,mjs,jsx,tsx}'",
-    "test": "jest --env=jsdom",
+    "test": "TZ=America/New_York jest --env=jsdom",
     "selenium-with-vnc": "concurrently --kill-others --success=first --names=BROWSER,TEST --prefix-colors=magenta,blueBright --handle-input --default-input-target=TEST --passthrough-arguments 'yarn selenium-browser' 'yarn selenium-test {@}' --",
     "selenium-with-chromedriver": "concurrently --kill-others --success=first --names=BROWSER,TEST --prefix-colors=magenta,blueBright --handle-input --default-input-target=TEST --passthrough-arguments 'chromedriver --port=4444 --url-base=/wd/hub --verbose' 'env BROWSER=chrome yarn selenium-test {@}' --",
     "selenium-browser": "run/selenium-browser.sh",
@@ -227,7 +227,7 @@
     "selenium-viewer": "wait-on tcp:5900 && vinagre --file=run/selenium.vnc",
     "stop": "yarn stop-insights-proxy; run/podman-or-docker.sh rm --force browser; pkill --full 'concurrently.*SERVER(prevent self match){0},MOCK'; pkill --full 'concurrently.*BROWSER(prevent self match){0},TEST'; true",
     "prepare": "husky install",
-    "gen-types": "node scripts/gen-openapi-typescript.js"
+    "gen-types": "node scripts/gen-openapi-typescript.js && prettier --write 'src/types/**/*.ts'"
   },
   "insights": {
     "appname": "openshift"
