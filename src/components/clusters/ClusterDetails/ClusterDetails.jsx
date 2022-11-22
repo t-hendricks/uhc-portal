@@ -40,7 +40,7 @@ import CancelUpgradeModal from '../common/Upgrades/CancelUpgradeModal';
 import { isValid, scrollToTop, shouldRefetchQuota } from '../../../common/helpers';
 import getClusterName from '../../../common/getClusterName';
 import { subscriptionStatuses, knownProducts } from '../../../common/subscriptionTypes';
-import clusterStates, { isHibernating } from '../common/clusterStates';
+import clusterStates, { getClusterAIExtraInfo, isHibernating } from '../common/clusterStates';
 import AddGrantModal from './components/AccessControl/NetworkSelfServiceSection/AddGrantModal';
 import Unavailable from '../../common/Unavailable';
 import Support from './components/Support';
@@ -133,6 +133,13 @@ class ClusterDetails extends Component {
     if (isValid(subscriptionID)) {
       fetchDetails(subscriptionID);
     }
+  };
+
+  getAiExtraInfo = () => {
+    // AI needs the information about the organization that may not be ready by the time
+    // the cluster details are fetched. On the render, the information will be fulfilled
+    const { organization } = this.props;
+    return getClusterAIExtraInfo(organization);
   };
 
   refresh(clicked) {
@@ -571,6 +578,7 @@ class ClusterDetails extends Component {
               <ErrorBoundary>
                 <HostsClusterDetailTab
                   cluster={cluster}
+                  extraInfo={this.getAiExtraInfo()}
                   isVisible={selectedTab === 'addAssistedHosts'}
                 />
               </ErrorBoundary>
