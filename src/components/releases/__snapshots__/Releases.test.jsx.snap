@@ -111,12 +111,17 @@ exports[`<Releases /> should render 1`] = `
                                   flipBehavior={
                                     Array [
                                       "top",
-                                      "right",
                                       "bottom",
                                       "left",
-                                      "top",
                                       "right",
-                                      "bottom",
+                                      "top-start",
+                                      "top-end",
+                                      "bottom-start",
+                                      "bottom-end",
+                                      "left-start",
+                                      "left-end",
+                                      "right-start",
+                                      "right-end",
                                     ]
                                   }
                                   isVisible={false}
@@ -125,7 +130,7 @@ exports[`<Releases /> should render 1`] = `
                                   onTriggerClick={[Function]}
                                   placement="top"
                                   popper={
-                                    <FocusTrap
+                                    <ForwardRef
                                       active={false}
                                       aria-describedby="popover-version-help-body"
                                       aria-label="Version help"
@@ -142,7 +147,6 @@ exports[`<Releases /> should render 1`] = `
                                         }
                                       }
                                       onMouseDown={[Function]}
-                                      paused={false}
                                       preventScrollOnDeactivate={true}
                                       role="dialog"
                                       style={
@@ -184,7 +188,7 @@ exports[`<Releases /> should render 1`] = `
                                           </React.Fragment>
                                         </PopoverBody>
                                       </PopoverContent>
-                                    </FocusTrap>
+                                    </ForwardRef>
                                   }
                                   popperMatchesTriggerWidth={false}
                                   positionModifiers={
@@ -203,6 +207,7 @@ exports[`<Releases /> should render 1`] = `
                                       "top-start": "pf-m-top-left",
                                     }
                                   }
+                                  removeFindDomNode={false}
                                   trigger={
                                     <Button
                                       isInline={true}
@@ -326,6 +331,7 @@ exports[`<Releases /> should render 1`] = `
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.8/release_notes/ocp-4-8-release-notes.html"
+                                                onClick={[Function]}
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
@@ -434,6 +440,7 @@ exports[`<Releases /> should render 1`] = `
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.7/release_notes/ocp-4-7-release-notes.html"
+                                                onClick={[Function]}
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
@@ -554,6 +561,7 @@ exports[`<Releases /> should render 1`] = `
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html"
+                                                onClick={[Function]}
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
@@ -662,6 +670,7 @@ exports[`<Releases /> should render 1`] = `
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.5/release_notes/ocp-4-5-release-notes.html"
+                                                onClick={[Function]}
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
@@ -782,6 +791,7 @@ exports[`<Releases /> should render 1`] = `
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.4/release_notes/ocp-4-4-release-notes.html"
+                                                onClick={[Function]}
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
@@ -902,6 +912,7 @@ exports[`<Releases /> should render 1`] = `
                                             >
                                               <a
                                                 href="https://docs.openshift.com/container-platform/4.3/release_notes/ocp-4-3-release-notes.html"
+                                                onClick={[Function]}
                                                 rel="noreferrer noopener"
                                                 target="_blank"
                                               >
@@ -1055,6 +1066,7 @@ exports[`<Releases /> should render 1`] = `
                               >
                                 <a
                                   href="https://docs.openshift.com/container-platform/4.8/updating/understanding-upgrade-channels-release.html"
+                                  onClick={[Function]}
                                   rel="noreferrer noopener"
                                   target="_blank"
                                 >

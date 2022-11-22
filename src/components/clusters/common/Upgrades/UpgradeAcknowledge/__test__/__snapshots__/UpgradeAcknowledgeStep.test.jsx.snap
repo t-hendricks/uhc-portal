@@ -136,6 +136,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                     >
                       <a
                         href="my doc url"
+                        onClick={[Function]}
                         rel="noreferrer noopener"
                         target="_blank"
                       >
@@ -250,6 +251,7 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
                     >
                       <a
                         href="my other doc url"
+                        onClick={[Function]}
                         rel="noreferrer noopener"
                         target="_blank"
                       >
@@ -330,118 +332,122 @@ exports[`<UpgradeAcknowledgeStep> should render correctly on load 1`] = `
             <Form
               onSubmit={[Function]}
             >
-              <form
-                className="pf-c-form"
-                noValidate={true}
+              <FormBase
+                innerRef={null}
                 onSubmit={[Function]}
               >
-                <FormGroup
-                  fieldId="upgradeAcknowledgementModalText"
-                  isRequired={true}
-                  label={
-                    <span
-                      className="ocm-upgrade-ack-step_text-input-label"
-                    >
-                      Confirm the above by typing 
-                      <strong>
-                        Acknowledge
-                      </strong>
-                       below:
-                    </span>
-                  }
+                <form
+                  className="pf-c-form"
+                  noValidate={true}
+                  onSubmit={[Function]}
                 >
-                  <GenerateId
-                    prefix="pf-random-id-"
+                  <FormGroup
+                    fieldId="upgradeAcknowledgementModalText"
+                    isRequired={true}
+                    label={
+                      <span
+                        className="ocm-upgrade-ack-step_text-input-label"
+                      >
+                        Confirm the above by typing 
+                        <strong>
+                          Acknowledge
+                        </strong>
+                         below:
+                      </span>
+                    }
                   >
-                    <div
-                      className="pf-c-form__group"
+                    <GenerateId
+                      prefix="pf-random-id-"
                     >
                       <div
-                        className="pf-c-form__group-label"
+                        className="pf-c-form__group"
                       >
-                        <label
-                          className="pf-c-form__label"
-                          htmlFor="upgradeAcknowledgementModalText"
+                        <div
+                          className="pf-c-form__group-label"
                         >
-                          <span
-                            className="pf-c-form__label-text"
+                          <label
+                            className="pf-c-form__label"
+                            htmlFor="upgradeAcknowledgementModalText"
                           >
                             <span
-                              className="ocm-upgrade-ack-step_text-input-label"
+                              className="pf-c-form__label-text"
                             >
-                              Confirm the above by typing 
-                              <strong>
-                                Acknowledge
-                              </strong>
-                               below:
+                              <span
+                                className="ocm-upgrade-ack-step_text-input-label"
+                              >
+                                Confirm the above by typing 
+                                <strong>
+                                  Acknowledge
+                                </strong>
+                                 below:
+                              </span>
                             </span>
-                          </span>
-                          <span
-                            aria-hidden="true"
-                            className="pf-c-form__label-required"
-                          >
-                             
-                            *
-                          </span>
-                        </label>
-                         
-                      </div>
-                      <div
-                        className="pf-c-form__group-control"
-                      >
-                        <TextInput
-                          data-testid="acknowledgeTextInput"
-                          id="upgradeAcknowledgementModalText"
-                          isRequired={true}
-                          onChange={[Function]}
-                          placeholder="Type here"
-                          type="text"
-                          value=""
+                            <span
+                              aria-hidden="true"
+                              className="pf-c-form__label-required"
+                            >
+                               
+                              *
+                            </span>
+                          </label>
+                           
+                        </div>
+                        <div
+                          className="pf-c-form__group-control"
                         >
-                          <TextInputBase
-                            aria-label={null}
-                            className=""
+                          <TextInput
                             data-testid="acknowledgeTextInput"
                             id="upgradeAcknowledgementModalText"
-                            innerRef={null}
-                            isDisabled={false}
-                            isIconSprite={false}
-                            isLeftTruncated={false}
-                            isReadOnly={false}
                             isRequired={true}
                             onChange={[Function]}
-                            ouiaSafe={true}
                             placeholder="Type here"
                             type="text"
-                            validated="default"
                             value=""
                           >
-                            <input
-                              aria-invalid={false}
+                            <TextInputBase
                               aria-label={null}
-                              className="pf-c-form-control"
-                              data-ouia-component-id="OUIA-Generated-TextInputBase-1"
-                              data-ouia-component-type="PF4/TextInput"
-                              data-ouia-safe={true}
+                              className=""
                               data-testid="acknowledgeTextInput"
-                              disabled={false}
                               id="upgradeAcknowledgementModalText"
-                              onBlur={[Function]}
+                              innerRef={null}
+                              isDisabled={false}
+                              isIconSprite={false}
+                              isLeftTruncated={false}
+                              isReadOnly={false}
+                              isRequired={true}
                               onChange={[Function]}
-                              onFocus={[Function]}
+                              ouiaSafe={true}
                               placeholder="Type here"
-                              readOnly={false}
-                              required={true}
                               type="text"
+                              validated="default"
                               value=""
-                            />
-                          </TextInputBase>
-                        </TextInput>
+                            >
+                              <input
+                                aria-invalid={false}
+                                aria-label={null}
+                                className="pf-c-form-control"
+                                data-ouia-component-id="OUIA-Generated-TextInputBase-1"
+                                data-ouia-component-type="PF4/TextInput"
+                                data-ouia-safe={true}
+                                data-testid="acknowledgeTextInput"
+                                disabled={false}
+                                id="upgradeAcknowledgementModalText"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                placeholder="Type here"
+                                required={true}
+                                type="text"
+                                value=""
+                              />
+                            </TextInputBase>
+                          </TextInput>
+                        </div>
                       </div>
-                    </div>
-                  </GenerateId>
-                </FormGroup>
-              </form>
+                    </GenerateId>
+                  </FormGroup>
+                </form>
+              </FormBase>
             </Form>
           </div>
         </div>

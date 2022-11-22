@@ -2,7 +2,7 @@
 
 exports[`InstallOSP renders correctly 1`] = `
 <Fragment>
-  <PageTitle
+  <InstructionsChooserPageTitle
     breadcrumbs={
       <Breadcrumbs
         path={
@@ -21,11 +21,10 @@ exports[`InstallOSP renders correctly 1`] = `
         }
       />
     }
-    title="Install OpenShift Container Platform 4"
+    cloudName="OpenStack"
   />
   <PageSection>
     <InstructionsChooser
-      cloudName="OpenStack"
       ipiPageLink="/install/openstack/installer-provisioned"
       upiPageLink="/install/openstack/user-provisioned"
     />

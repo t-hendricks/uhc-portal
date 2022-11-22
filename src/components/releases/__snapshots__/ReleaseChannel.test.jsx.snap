@@ -31,6 +31,7 @@ exports[`<ReleaseChannel /> should render 1`] = `
               >
                 <a
                   href="https://docs.openshift.com/container-platform/4.6/release_notes/ocp-4-6-release-notes.html#ocp-4-6-12"
+                  onClick={[Function]}
                   rel="noreferrer noopener"
                   target="_blank"
                 >

@@ -24,9 +24,7 @@ export const CloudProvider = () => {
       [FieldId.GcpServiceAccount]: gcpServiceAccount,
     },
   } = useFormikContext();
-  const ccsCredentialsValidity = useGlobalState(
-    (state) => state.ccsInquiries.ccsCredentialsValidity,
-  );
+  const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
   const [showValidationAlert, setShowValidationAlert] = React.useState(false);
   const isByoc = byoc === 'true';
 

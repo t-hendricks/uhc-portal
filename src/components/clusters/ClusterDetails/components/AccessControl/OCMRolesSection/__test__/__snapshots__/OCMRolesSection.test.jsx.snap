@@ -1123,12 +1123,17 @@ exports[` 1`] = `
                                                       flipBehavior={
                                                         Array [
                                                           "top",
-                                                          "right",
                                                           "bottom",
                                                           "left",
-                                                          "top",
                                                           "right",
-                                                          "bottom",
+                                                          "top-start",
+                                                          "top-end",
+                                                          "bottom-start",
+                                                          "bottom-end",
+                                                          "left-start",
+                                                          "left-end",
+                                                          "right-start",
+                                                          "right-end",
                                                         ]
                                                       }
                                                       isVisible={false}
@@ -1137,7 +1142,7 @@ exports[` 1`] = `
                                                       onTriggerClick={[Function]}
                                                       placement="top"
                                                       popper={
-                                                        <FocusTrap
+                                                        <ForwardRef
                                                           active={false}
                                                           aria-describedby="popover-ocm-roles-section-username-body"
                                                           aria-label="Username"
@@ -1154,7 +1159,6 @@ exports[` 1`] = `
                                                             }
                                                           }
                                                           onMouseDown={[Function]}
-                                                          paused={false}
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
@@ -1180,7 +1184,7 @@ exports[` 1`] = `
                                                               </p>
                                                             </PopoverBody>
                                                           </PopoverContent>
-                                                        </FocusTrap>
+                                                        </ForwardRef>
                                                       }
                                                       popperMatchesTriggerWidth={false}
                                                       positionModifiers={
@@ -1199,6 +1203,7 @@ exports[` 1`] = `
                                                           "top-start": "pf-m-top-left",
                                                         }
                                                       }
+                                                      removeFindDomNode={false}
                                                       trigger={
                                                         <Button
                                                           isInline={true}
@@ -1322,12 +1327,17 @@ exports[` 1`] = `
                                                       flipBehavior={
                                                         Array [
                                                           "top",
-                                                          "right",
                                                           "bottom",
                                                           "left",
-                                                          "top",
                                                           "right",
-                                                          "bottom",
+                                                          "top-start",
+                                                          "top-end",
+                                                          "bottom-start",
+                                                          "bottom-end",
+                                                          "left-start",
+                                                          "left-end",
+                                                          "right-start",
+                                                          "right-end",
                                                         ]
                                                       }
                                                       isVisible={false}
@@ -1336,7 +1346,7 @@ exports[` 1`] = `
                                                       onTriggerClick={[Function]}
                                                       placement="top"
                                                       popper={
-                                                        <FocusTrap
+                                                        <ForwardRef
                                                           active={false}
                                                           aria-describedby="popover-ocm-roles-section-role-body"
                                                           aria-label="Role"
@@ -1353,7 +1363,6 @@ exports[` 1`] = `
                                                             }
                                                           }
                                                           onMouseDown={[Function]}
-                                                          paused={false}
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
@@ -1379,7 +1388,7 @@ exports[` 1`] = `
                                                               </p>
                                                             </PopoverBody>
                                                           </PopoverContent>
-                                                        </FocusTrap>
+                                                        </ForwardRef>
                                                       }
                                                       popperMatchesTriggerWidth={false}
                                                       positionModifiers={
@@ -1398,6 +1407,7 @@ exports[` 1`] = `
                                                           "top-start": "pf-m-top-left",
                                                         }
                                                       }
+                                                      removeFindDomNode={false}
                                                       trigger={
                                                         <Button
                                                           isInline={true}
@@ -3274,12 +3284,17 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                       flipBehavior={
                                                         Array [
                                                           "top",
-                                                          "right",
                                                           "bottom",
                                                           "left",
-                                                          "top",
                                                           "right",
-                                                          "bottom",
+                                                          "top-start",
+                                                          "top-end",
+                                                          "bottom-start",
+                                                          "bottom-end",
+                                                          "left-start",
+                                                          "left-end",
+                                                          "right-start",
+                                                          "right-end",
                                                         ]
                                                       }
                                                       isVisible={false}
@@ -3288,7 +3303,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                       onTriggerClick={[Function]}
                                                       placement="top"
                                                       popper={
-                                                        <FocusTrap
+                                                        <ForwardRef
                                                           active={false}
                                                           aria-describedby="popover-ocm-roles-section-username-body"
                                                           aria-label="Username"
@@ -3305,7 +3320,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                             }
                                                           }
                                                           onMouseDown={[Function]}
-                                                          paused={false}
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
@@ -3331,7 +3345,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                               </p>
                                                             </PopoverBody>
                                                           </PopoverContent>
-                                                        </FocusTrap>
+                                                        </ForwardRef>
                                                       }
                                                       popperMatchesTriggerWidth={false}
                                                       positionModifiers={
@@ -3350,6 +3364,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                           "top-start": "pf-m-top-left",
                                                         }
                                                       }
+                                                      removeFindDomNode={false}
                                                       trigger={
                                                         <Button
                                                           isInline={true}
@@ -3473,12 +3488,17 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                       flipBehavior={
                                                         Array [
                                                           "top",
-                                                          "right",
                                                           "bottom",
                                                           "left",
-                                                          "top",
                                                           "right",
-                                                          "bottom",
+                                                          "top-start",
+                                                          "top-end",
+                                                          "bottom-start",
+                                                          "bottom-end",
+                                                          "left-start",
+                                                          "left-end",
+                                                          "right-start",
+                                                          "right-end",
                                                         ]
                                                       }
                                                       isVisible={false}
@@ -3487,7 +3507,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                       onTriggerClick={[Function]}
                                                       placement="top"
                                                       popper={
-                                                        <FocusTrap
+                                                        <ForwardRef
                                                           active={false}
                                                           aria-describedby="popover-ocm-roles-section-role-body"
                                                           aria-label="Role"
@@ -3504,7 +3524,6 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                             }
                                                           }
                                                           onMouseDown={[Function]}
-                                                          paused={false}
                                                           preventScrollOnDeactivate={true}
                                                           role="dialog"
                                                           style={
@@ -3530,7 +3549,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                               </p>
                                                             </PopoverBody>
                                                           </PopoverContent>
-                                                        </FocusTrap>
+                                                        </ForwardRef>
                                                       }
                                                       popperMatchesTriggerWidth={false}
                                                       positionModifiers={
@@ -3549,6 +3568,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                           "top-start": "pf-m-top-left",
                                                         }
                                                       }
+                                                      removeFindDomNode={false}
                                                       trigger={
                                                         <Button
                                                           isInline={true}
@@ -5981,6 +6001,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                               "top-start": "pf-m-top-left",
                                                             }
                                                           }
+                                                          removeFindDomNode={false}
                                                           trigger={
                                                             <span
                                                               className="hand-pointer"
@@ -6951,6 +6972,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                               "top-start": "pf-m-top-left",
                                                             }
                                                           }
+                                                          removeFindDomNode={false}
                                                           trigger={
                                                             <span
                                                               className="hand-pointer"
@@ -7923,6 +7945,7 @@ exports[`<OCMRolesSection /> should render 1`] = `
                                                               "top-start": "pf-m-top-left",
                                                             }
                                                           }
+                                                          removeFindDomNode={false}
                                                           trigger={
                                                             <span
                                                               className="hand-pointer"

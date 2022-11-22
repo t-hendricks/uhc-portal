@@ -394,59 +394,9 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
   margin-left: 0;
 }
 
-.ocp-osd-selection .infra-card, .ocp-osd-selection a.infra-card, .ocm-c-ipi-upi-infra-card {
-  flex: 0 0 380px;
-  margin: 20px;
-}
-
 #cloud-provider-selection > a {
   flex: 1;
   margin: 20px;
-}
-
-.infra-card, a.infra-card, .ocm-page a.infra-card {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: var(--pf-global--Color--100);
-  text-decoration: none;
-  border: var(--pf-global--BorderWidth--sm) solid;
-  border-color: var(--pf-global--Color--100);
-  border-radius: var(--pf-global--BorderRadius--sm);
-
-  h5, h3 {
-    color: var(--pf-global--Color--100);
-  }
-
-  &:hover {
-    text-decoration: none;
-    border-color: var(--pf-global--primary-color--100);
-    h5, h3, .infra-crc-icon-text {
-      color: var(--pf-global--primary-color--100);
-    }
-  }
-
-}
-
-.pf-c-card__body.infra-card-placeholder {
-  flex: 0 0 380px;
-  margin: 20px;
-  padding: 20px;
-  display: flex;
-}
-
-.ocm-c-ipi-upi-infra-card {
-  &--body {
-    svg {
-      color: var(--pf-global--primary-color--100);
-      font-size: 6em; // --pf-global--icon--FontSize—xl (x2)
-      height: 160px;
-      margin: 10px;
-    }
-  }
 }
 
 .pf-c-popover__content {

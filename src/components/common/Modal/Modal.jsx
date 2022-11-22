@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Button,
   Modal as PfModal,
+  ModalVariant,
   StackItem,
   Stack,
   Split,
@@ -28,7 +29,7 @@ function Modal({
   onSecondaryClick = noop,
   onTertiaryClick = noop,
   isSmall = true,
-  modalSize = 'default',
+  modalSize = ModalVariant.default,
   isPrimaryDisabled = false,
   isSecondaryDisabled = false,
   isPending = false,
@@ -58,7 +59,7 @@ function Modal({
       // For a full screen modal use isSmall=false.
       className={isPending ? 'pending-modal' : null}
       aria-label={title}
-      variant={modalSize || (isSmall ? 'small' : undefined)}
+      variant={isSmall ? ModalVariant.small : modalSize}
       title={title}
       header={header}
       isOpen

@@ -8,6 +8,7 @@ import {
   TextVariants,
   TextContent,
   Flex,
+  Grid,
 } from '@patternfly/react-core';
 
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
@@ -18,12 +19,10 @@ import { Prerequisites } from '../../common/Prerequisites';
 import { FileUploadField } from '../../common/form';
 
 export const GcpByocFields = () => {
-  const ccsCredentialsValidity = useGlobalState(
-    (state) => state.ccsInquiries.ccsCredentialsValidity,
-  );
+  const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
 
   return (
-    <Flex direction={{ default: 'column' }}>
+    <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsLg' }}>
       <GridItem>
         <Alert variant="info" isInline title="Customer cloud subscription">
           Provision your cluster in a Google Cloud Platform account owned by you or your company to
@@ -106,26 +105,28 @@ export const GcpByocFields = () => {
           </TextContent>
         </Prerequisites>
       </GridItem>
-      <GridItem md={5}>
-        <FileUploadField
-          validate={(value) => required(value) || validateGCPServiceAccount(value)}
-          name="gcp_service_account"
-          label="Service account JSON"
-          helperText="Upload a JSON file or type to add"
-          tooltip={
-            <>
-              <p>
-                To create a service account JSON file, create a key for your service account, export
-                it to a file and upload it to this field.
-              </p>
-              <ExternalLink href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">
-                Learn how to create service account keys
-              </ExternalLink>
-            </>
-          }
-        />
-      </GridItem>
-      <GridItem>{ccsCredentialsValidity.pending && 'Validating...'}</GridItem>
+      <Grid hasGutter md={6}>
+        <GridItem>
+          <FileUploadField
+            validate={(value) => required(value) || validateGCPServiceAccount(value)}
+            name="gcp_service_account"
+            label="Service account JSON"
+            helperText="Upload a JSON file or type to add"
+            tooltip={
+              <>
+                <p>
+                  To create a service account JSON file, create a key for your service account,
+                  export it to a file and upload it to this field.
+                </p>
+                <ExternalLink href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">
+                  Learn how to create service account keys
+                </ExternalLink>
+              </>
+            }
+          />
+        </GridItem>
+        <GridItem>{ccsCredentialsValidity.pending && 'Validating...'}</GridItem>
+      </Grid>
     </Flex>
   );
 };

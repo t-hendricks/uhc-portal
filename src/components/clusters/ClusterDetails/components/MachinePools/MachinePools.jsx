@@ -275,7 +275,7 @@ class MachinePools extends React.Component {
           {awsSpotInstance && (
             <>
               <Title headingLevel="h4" className={cx('pf-u-mb-sm', labelsList && 'pf-u-mt-lg')}>
-                Spot Instance Pricing
+                Spot instance pricing
               </Title>
               {awsPrice}
             </>
