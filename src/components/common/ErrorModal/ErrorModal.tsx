@@ -1,17 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Title } from '@patternfly/react-core';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
 // eslint-disable-next-line camelcase
 import { global_danger_color_100 } from '@patternfly/react-tokens';
 import { formatErrorDetails } from '../../../common/errors';
 import Modal from '../Modal/Modal';
+import { ErrorState } from '~/types/types';
 
-function ErrorModal({ title, errorResponse, resetResponse, closeModal }) {
-  const close = () => {
+type Props = {
+  title: string;
+  errorResponse: ErrorState;
+  resetResponse: () => void;
+  closeModal: () => void;
+};
+
+const ErrorModal = ({ title, errorResponse, resetResponse, closeModal }: Props) => {
+  const close = React.useCallback(() => {
     resetResponse();
     closeModal();
-  };
+  }, [resetResponse, closeModal]);
 
   const errorDetails = formatErrorDetails(errorResponse.errorDetails);
 
@@ -34,13 +41,6 @@ function ErrorModal({ title, errorResponse, resetResponse, closeModal }) {
       <p>{`Operation ID: ${errorResponse.operationID || 'N/A'}`}</p>
     </Modal>
   );
-}
-
-ErrorModal.propTypes = {
-  title: PropTypes.string,
-  errorResponse: PropTypes.object,
-  closeModal: PropTypes.func,
-  resetResponse: PropTypes.func.isRequired,
 };
 
 export default ErrorModal;

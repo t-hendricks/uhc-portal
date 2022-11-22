@@ -1,23 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-class EntitlementConfig extends React.Component {
-  componentDidMount() {
-    const { fulfilled, pending, createRosaEntitlement } = this.props;
+type Props = { fulfilled?: boolean; pending?: boolean; createRosaEntitlement: () => void };
+const EntitlementConfig = ({ fulfilled, pending, createRosaEntitlement }: Props) => {
+  React.useEffect(() => {
     if (!fulfilled && !pending) {
       createRosaEntitlement();
     }
-  }
+    // only run once on mount
+  }, []);
 
-  render() {
-    return null;
-  }
-}
-
-EntitlementConfig.propTypes = {
-  pending: PropTypes.bool,
-  fulfilled: PropTypes.bool,
-  createRosaEntitlement: PropTypes.func,
+  return null;
 };
 
 export default EntitlementConfig;

@@ -436,7 +436,6 @@ exports[`<ClusterDetailsTop /> should render 1`] = `
           toggleSubscriptionReleased={[MockFunction]}
         />
         <RefreshBtn
-          classOptions=""
           id="refresh"
           refreshFunc={[MockFunction]}
           useShortTimer={false}
