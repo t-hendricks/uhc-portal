@@ -1,50 +1,41 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import get from 'lodash/get';
-
-import { TERMS_REQUIRED_CODE, hasOwnErrorPage } from '../../../common/errors';
+import React from 'react';
+import { AxiosResponse, AxiosInstance } from 'axios';
+import { useHistory } from 'react-router';
+import { TERMS_REQUIRED_CODE, hasOwnErrorPage, getInternalErrorCode } from '../../../common/errors';
 import apiErrorInterceptor from './ApiErrorInterceptor';
 import TermsError from '../../common/TermsError';
 
-class ApiError extends Component {
-  componentDidMount() {
-    const { history, apiRequest, showApiError, clearApiError } = this.props;
-    // intercept api response and set the apiError state for watched errors
-    this.ejectApiErrorInterceptor = apiErrorInterceptor(apiRequest, showApiError);
+type Props = {
+  children: React.ReactElement;
+  apiRequest: AxiosInstance;
+  apiError?: AxiosResponse | null;
+  showApiError: (error: AxiosResponse) => void;
+  clearApiError: () => void;
+};
+
+const ApiError = ({ apiRequest, showApiError, children, apiError, clearApiError }: Props) => {
+  const history = useHistory();
+  React.useEffect(() => {
+    const ejectApiErrorInterceptor = apiErrorInterceptor(apiRequest, showApiError);
     // when user navigates away, clear any apiError state.
-    this.detachHistoryListener = history.listen(() => clearApiError());
-  }
+    const detachHistoryListener = history.listen(() => clearApiError());
+    return () => {
+      ejectApiErrorInterceptor();
+      detachHistoryListener();
+    };
+  }, [apiRequest, clearApiError, history]);
 
-  componentWillUnmount() {
-    this.ejectApiErrorInterceptor();
-    this.detachHistoryListener();
-  }
-
-  render() {
-    const { children, apiError, clearApiError } = this.props;
-    // watch only errors that have their own error pages
-    if (hasOwnErrorPage(apiError)) {
-      const internalErrorCode = get(apiError, 'data.code');
-      if (internalErrorCode === TERMS_REQUIRED_CODE) {
-        return <TermsError error={apiError} restore={clearApiError} />;
-      }
-      // eslint-disable-next-line no-console
-      console.error(`no defined error page: code=${internalErrorCode}`);
+  // watch only errors that have their own error pages
+  if (apiError && hasOwnErrorPage(apiError)) {
+    const internalErrorCode = getInternalErrorCode(apiError);
+    if (internalErrorCode === TERMS_REQUIRED_CODE) {
+      return <TermsError error={apiError} restore={clearApiError} />;
     }
-
-    return children;
+    // eslint-disable-next-line no-console
+    console.error(`no defined error page: code=${internalErrorCode}`);
   }
-}
 
-ApiError.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  history: PropTypes.shape({
-    listen: PropTypes.func.isRequired,
-  }).isRequired,
-  apiRequest: PropTypes.func.isRequired,
-  apiError: PropTypes.object,
-  showApiError: PropTypes.func.isRequired,
-  clearApiError: PropTypes.func.isRequired,
+  return children;
 };
 
 export default ApiError;

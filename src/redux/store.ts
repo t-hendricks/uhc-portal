@@ -2,9 +2,8 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import { routerMiddleware } from 'connected-react-router';
-// TODO, Both 'history' & '@redhat-cloud-services' modules implicitly have an 'any' type.
-// @ts-ignore
 import { createBrowserHistory } from 'history';
+// TODO'@redhat-cloud-services' modules implicitly have an 'any' type.
 // @ts-ignore
 import { notificationsMiddleware } from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
 

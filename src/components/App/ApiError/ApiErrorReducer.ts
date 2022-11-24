@@ -1,22 +1,20 @@
-import produce from 'immer';
+import { AxiosResponse } from 'axios';
 
-import { SHOW_API_ERROR, CLEAR_API_ERROR } from './ApiErrorActions';
+import { SHOW_API_ERROR, CLEAR_API_ERROR, ApiErrorAction } from './ApiErrorActions';
 
-const initialState = null;
+type State = AxiosResponse | null;
 
-function apiErrorReducer(state = initialState, action) {
-  // eslint-disable-next-line consistent-return
-  return produce(state, () => {
-    // eslint-disable-next-line default-case
-    switch (action.type) {
-      case SHOW_API_ERROR:
-        return action.payload;
-      case CLEAR_API_ERROR:
-        return initialState;
-    }
-  });
-}
+const initialState: State = null;
 
-apiErrorReducer.initialState = initialState;
+const apiErrorReducer = (state = initialState, action: ApiErrorAction): State => {
+  switch (action.type) {
+    case SHOW_API_ERROR:
+      return action.payload;
+    case CLEAR_API_ERROR:
+      return initialState;
+    default:
+      return state;
+  }
+};
 
 export default apiErrorReducer;
