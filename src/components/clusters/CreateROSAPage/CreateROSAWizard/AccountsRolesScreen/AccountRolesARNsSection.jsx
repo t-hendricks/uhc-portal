@@ -141,6 +141,9 @@ function AccountRolesARNsSection({
       setSelectedInstallerRoleAndOptions(accountRolesARNs);
       setAccountRoles(accountRolesARNs);
     } else if (getAWSAccountRolesARNsResponse.error) {
+      change('installer_role_arn', '');
+      setSelectedInstallerRoleAndOptions([]);
+      setAccountRoles([]);
       setHasARNsError(true);
     }
   }, [selectedAWSAccountID, getAWSAccountRolesARNsResponse]);
@@ -194,7 +197,7 @@ function AccountRolesARNsSection({
       )}
       {!getAWSAccountRolesARNsResponse.pending && !allARNsFound && !hasARNsError && (
         <GridItem>
-          <Alert isInline variant="info" title="Some account roles ARNs were not detected.">
+          <Alert isInline variant="warning" title="Some account roles ARNs were not detected.">
             <br />
             Create the account roles using the following command in the ROSA CLI
             <InstructionCommand textAriaLabel="Copyable ROSA login command">

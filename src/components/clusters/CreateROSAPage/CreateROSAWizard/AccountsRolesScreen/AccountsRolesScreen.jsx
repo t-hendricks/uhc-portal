@@ -105,11 +105,9 @@ function AccountsRolesScreen({
     }
   }, [getUserRoleResponse.fulfilled, selectedAWSAccountID]);
 
-  // if no aws acct ids then clear selectedAWSAccountID, else default to first available aws account
+  // if aws acct ids default to first available aws account
   useEffect(() => {
-    if (!hasAWSAccounts) {
-      change('associated_aws_id', '');
-    } else if (!selectedAWSAccountID) {
+    if (hasAWSAccounts && !selectedAWSAccountID) {
       change('associated_aws_id', AWSAccountIDs[0]);
     }
   }, [hasAWSAccounts, selectedAWSAccountID]);
