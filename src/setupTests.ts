@@ -6,7 +6,7 @@ import * as useChromeHook from '@redhat-cloud-services/frontend-components/useCh
 setAutoFreeze(false);
 if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
   process.on('unhandledRejection', () => {});
-  process.env.LISTENING_TO_UNHANDLED_REJECTION = true;
+  process.env.LISTENING_TO_UNHANDLED_REJECTION = 'true';
 }
 
 // These tests have warnings but don't cause test failure

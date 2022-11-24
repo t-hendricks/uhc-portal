@@ -17,6 +17,8 @@ import React from 'react';
 import './i18n';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+// No type definitions
+// @ts-ignore
 import NotificationPortal from '@redhat-cloud-services/frontend-components-notifications/NotificationPortal';
 
 import * as Sentry from '@sentry/browser';
@@ -36,6 +38,7 @@ import { store } from './redux/store';
 import { authInterceptor } from './services/apiRequest';
 
 import App from './components/App/App';
+import type { AppThunkDispatch } from './redux/types';
 
 import './styles/main.scss';
 
@@ -61,11 +64,13 @@ class AppEntry extends React.Component {
       insights.chrome.appNavClick(getNavClickParams(window.location.pathname));
     });
     insights.chrome.auth.getUser().then((data) => {
-      store.dispatch(userInfoResponse(data && data.identity && data.identity.user));
+      if (data?.identity?.user) {
+        store.dispatch(userInfoResponse(data.identity.user));
+      }
       config.fetchConfig().then(() => {
-        store.dispatch(detectFeatures());
+        (store.dispatch as AppThunkDispatch)(detectFeatures());
         this.setState({ ready: true });
-        if (!config.override && config.configData.sentryDSN) {
+        if (!config.envOverride && config.configData.sentryDSN) {
           Sentry.init({
             dsn: config.configData.sentryDSN,
             integrations: [
@@ -76,10 +81,10 @@ class AppEntry extends React.Component {
               }),
             ],
           });
-          if (data && data.identity && data.identity.user) {
+          if (data?.identity?.user) {
+            const { email, username } = data.identity.user;
             // add user info to Sentry
             Sentry.configureScope((scope) => {
-              const { email, username } = data.identity.user;
               scope.setUser({ email, username });
             });
           }
