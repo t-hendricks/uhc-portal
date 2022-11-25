@@ -114,7 +114,7 @@ const GatedAssistedUiRouter = withFeatureGate(AssistedUiRouter, ASSISTED_INSTALL
 const GatedMetalInstall = withFeatureGate(
   InstallBareMetal,
   ASSISTED_INSTALLER_FEATURE,
-  // TODO remove ts-ignore when `withFeatureGate` is converted to typescript
+  // TODO remove ts-ignore when `withFeatureGate` and InstallBMUPI are converted to typescript
   // @ts-ignore
   InstallBMUPI, // InstallBMIPI,
 );
@@ -122,7 +122,7 @@ const GatedMetalInstall = withFeatureGate(
 const GatedRosaCreationWizard = withFeatureGate(
   CreateROSAWizard,
   ROSA_CREATION_WIZARD_FEATURE,
-  // TODO remove ts-ignore when `withFeatureGate` is converted to typescript
+  // TODO remove ts-ignore when `withFeatureGate` and CreateROSAWelcome are converted to typescript
   // @ts-ignore
   CreateROSAWelcome,
 );
