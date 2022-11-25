@@ -55,12 +55,7 @@ const LocalTab = ({ token }) => {
           <Instruction>
             <Text component="h3">Download what you need to get started</Text>
             <Text component="h4">OpenShift Local</Text>
-            <DownloadAndOSSelection
-              token={token}
-              tool={tools.CRC}
-              channel={channels.STABLE}
-              pendoID={pendoID}
-            />
+            <DownloadAndOSSelection tool={tools.CRC} channel={channels.STABLE} pendoID={pendoID} />
             <Text component="h3">Pull secret</Text>
             <PullSecretSection token={token} pendoID={pendoID} />
           </Instruction>
@@ -79,7 +74,6 @@ const LocalTab = ({ token }) => {
                 href={docURL}
                 rel="noreferrer noopener"
                 target="_blank"
-                variant="link"
                 onClick={() => {
                   track(trackEvents.CRCInstallDocumentation, {
                     url: docURL,

@@ -159,13 +159,6 @@ exports[`<CreateROSAWelcome> renders 1`] = `
                   <Connect(DownloadAndOSSelection)
                     channel="stable"
                     pendoID="/"
-                    token={
-                      Object {
-                        "auths": Object {
-                          "foo": "bar",
-                        },
-                      }
-                    }
                     tool="rosa"
                   />
                 </Text>
