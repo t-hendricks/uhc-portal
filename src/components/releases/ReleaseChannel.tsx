@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import semver from 'semver';
 import { Divider, LevelItem } from '@patternfly/react-core';
 
@@ -12,23 +11,24 @@ import SupportStatus from '../common/SupportStatus';
 import ReleaseChannelName from './ReleaseChannelName';
 import ReleaseChannelDescription from './ReleaseChannelDescription';
 
-const ReleaseChannel = ({ channel, status }) => {
-  const [latestVersion, setLatestVersion] = React.useState('');
+type Props = { channel: string; status?: string };
+
+const ReleaseChannel = ({ channel, status }: Props) => {
+  const [latestVersion, setLatestVersion] = React.useState<string>();
   React.useEffect(() => {
     const fetchChannelData = async () => {
       const result = await getOCPReleaseChannel(channel);
-      const sortedVersions = result?.data?.nodes?.sort(({ version: left }, { version: right }) =>
+      const sortedVersions = result.data.nodes?.sort(({ version: left }, { version: right }) =>
         semver.rcompare(left, right),
       );
-      setLatestVersion(sortedVersions[0]?.version);
+      setLatestVersion(sortedVersions?.[0]?.version);
     };
 
     fetchChannelData();
   }, [channel]);
   const isCandidate = channel.includes('candidate');
   const candidateChannelLink = getCandidateChannelLink(latestVersion);
-  const parsed = latestVersion ? semver.coerce(latestVersion) : semver.coerce('4.7');
-  const { major, minor } = parsed;
+  const { major, minor } = semver.coerce(latestVersion) ?? { major: '4', minor: '7' };
   const releaseNotesLink = getReleaseNotesLink(latestVersion);
 
   return (
@@ -76,11 +76,6 @@ const ReleaseChannel = ({ channel, status }) => {
       </ReleaseChannelDescription>
     </>
   );
-};
-
-ReleaseChannel.propTypes = {
-  channel: PropTypes.string.isRequired,
-  status: PropTypes.string,
 };
 
 export default ReleaseChannel;
