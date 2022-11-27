@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, AlertActionLink } from '@patternfly/react-core';
+import { Alert, Button, ButtonVariant } from '@patternfly/react-core';
 import { ENV_OVERRIDE_LOCALSTORAGE_KEY } from '../../config';
 
 type Props = {
@@ -17,7 +17,11 @@ const EnvOverrideMessage = ({ env }: Props) => {
       isInline
       id="env-override-message"
       title="Environment override active"
-      actionLinks={<AlertActionLink onClick={goBackToNormal}>Go back to normal</AlertActionLink>}
+      actionLinks={
+        <Button variant={ButtonVariant.link} isInline onClick={goBackToNormal}>
+          Go back to <b>{APP_API_ENV}</b>
+        </Button>
+      }
     >
       You&apos;re now using the <b>{env}</b> environment API.
     </Alert>
