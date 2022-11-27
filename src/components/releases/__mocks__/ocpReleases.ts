@@ -1,4 +1,6 @@
-const ocpReleases = {
+import { Graph } from '~/types/upgrades_info.v1';
+
+const ocpReleases: { data: Graph } = {
   data: {
     nodes: [
       {

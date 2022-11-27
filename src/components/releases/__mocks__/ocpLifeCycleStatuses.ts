@@ -1,4 +1,6 @@
-const ocpLifeCycleStatuses = {
+import { ProductLifeCycle } from '~/types/product-life-cycles';
+
+const ocpLifeCycleStatuses: { data: { data: ProductLifeCycle[] } } = {
   data: {
     data: [
       {

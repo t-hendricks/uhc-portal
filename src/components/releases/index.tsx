@@ -23,10 +23,12 @@ import getOCPLifeCycleStatus from '../../services/productLifeCycleService';
 import ReleaseChannel from './ReleaseChannel';
 import ReleaseChannelName from './ReleaseChannelName';
 import ReleaseChannelDescription from './ReleaseChannelDescription';
+import { ProductLifeCycle } from '~/types/product-life-cycles';
+
 import './Releases.scss';
 
 const Releases = () => {
-  const [statusData, setStatusData] = React.useState({ data: [] });
+  const [statusData, setStatusData] = React.useState<ProductLifeCycle[]>();
   React.useEffect(() => {
     const fetchStatusData = async () => {
       const result = await getOCPLifeCycleStatus();
@@ -40,18 +42,21 @@ const Releases = () => {
     document.title = 'Releases | Red Hat OpenShift Cluster Manager';
   }, []);
 
-  const allVersions = statusData[0]?.versions;
+  const allVersions = statusData?.[0]?.versions;
   const filteredVersions = allVersions?.filter((version) => !version.name.includes('EUS'));
   const versionsToDisplay = filteredVersions?.splice(0, 6);
-  const hasEUSChannel = (versionName) => {
+  const hasEUSChannel = (versionName: string) => {
     const parsed = semver.coerce(versionName);
+    if (!parsed) {
+      return false;
+    }
     const { minor } = parsed;
     return minor > 5 && minor % 2 === 0;
   };
-  const hasEUSLifeCycle = (versionName) =>
+  const hasEUSLifeCycle = (versionName: string) =>
     allVersions?.find((v) => v.name.includes(`${versionName} EUS`));
-  const latestVersion = versionsToDisplay ? versionsToDisplay[0]?.name : '4.7';
-  const renderProductName = (versionName) => <>OpenShift {versionName}</>;
+  const latestVersion = versionsToDisplay?.[0]?.name ?? '4.7';
+  const renderProductName = (versionName: string) => <>OpenShift {versionName}</>;
 
   return (
     <>
@@ -101,55 +106,54 @@ const Releases = () => {
                       default: '340px',
                     }}
                   >
-                    {versionsToDisplay?.map((version) => (
-                      <GalleryItem key={version.name}>
-                        <Card isFlat className="ocm-l-ocp-releases__card">
-                          <CardTitle>
-                            <div className="ocm-l-ocp-releases__card-title pf-u-mb-sm">
-                              {getReleaseNotesLink(version.name) ? (
-                                <ExternalLink href={getReleaseNotesLink(version.name)} noIcon>
-                                  {renderProductName(version.name)}
-                                </ExternalLink>
-                              ) : (
-                                renderProductName(version.name)
-                              )}
-                            </div>
-                            <Divider className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm" />
-                          </CardTitle>
-                          <CardBody>
-                            <div className="ocm-l-ocp-releases__subheading">Channel details</div>
-                            <dl className="ocm-l-ocp-releases__channels">
-                              <ReleaseChannel
-                                channel={`stable-${version.name}`}
-                                status={version.type}
-                              />
-                              <ReleaseChannel
-                                channel={`fast-${version.name}`}
-                                status={version.type}
-                              />
-                              {hasEUSChannel(version.name) ? (
+                    {versionsToDisplay?.map((version) => {
+                      const releaseNotesLink = getReleaseNotesLink(version.name);
+                      return (
+                        <GalleryItem key={version.name}>
+                          <Card isFlat className="ocm-l-ocp-releases__card">
+                            <CardTitle>
+                              <div className="ocm-l-ocp-releases__card-title pf-u-mb-sm">
+                                {releaseNotesLink ? (
+                                  <ExternalLink href={releaseNotesLink} noIcon>
+                                    {renderProductName(version.name)}
+                                  </ExternalLink>
+                                ) : (
+                                  renderProductName(version.name)
+                                )}
+                              </div>
+                              <Divider className="ocm-l-ocp-releases__divider pf-u-mt-lg pf-u-mb-sm" />
+                            </CardTitle>
+                            <CardBody>
+                              <div className="ocm-l-ocp-releases__subheading">Channel details</div>
+                              <dl className="ocm-l-ocp-releases__channels">
                                 <ReleaseChannel
-                                  channel={`eus-${version.name}`}
-                                  status={
-                                    hasEUSLifeCycle(version.name)
-                                      ? hasEUSLifeCycle(version.name)?.type
-                                      : version.type
-                                  }
+                                  channel={`stable-${version.name}`}
+                                  status={version.type}
                                 />
-                              ) : (
-                                <>
-                                  <ReleaseChannelName>-</ReleaseChannelName>
-                                  <ReleaseChannelDescription>
-                                    {`No ${version.name} EUS channel`}
-                                  </ReleaseChannelDescription>
-                                </>
-                              )}
-                              <ReleaseChannel channel={`candidate-${version.name}`} />
-                            </dl>
-                          </CardBody>
-                        </Card>
-                      </GalleryItem>
-                    ))}
+                                <ReleaseChannel
+                                  channel={`fast-${version.name}`}
+                                  status={version.type}
+                                />
+                                {hasEUSChannel(version.name) ? (
+                                  <ReleaseChannel
+                                    channel={`eus-${version.name}`}
+                                    status={hasEUSLifeCycle(version.name)?.type ?? version.type}
+                                  />
+                                ) : (
+                                  <>
+                                    <ReleaseChannelName>-</ReleaseChannelName>
+                                    <ReleaseChannelDescription>
+                                      {`No ${version.name} EUS channel`}
+                                    </ReleaseChannelDescription>
+                                  </>
+                                )}
+                                <ReleaseChannel channel={`candidate-${version.name}`} />
+                              </dl>
+                            </CardBody>
+                          </Card>
+                        </GalleryItem>
+                      );
+                    })}
                   </Gallery>
                 </Stack>
               </CardBody>
