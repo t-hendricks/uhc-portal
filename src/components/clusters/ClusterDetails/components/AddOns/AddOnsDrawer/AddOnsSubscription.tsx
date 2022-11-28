@@ -225,12 +225,13 @@ const AddOnsSubscription = ({
   );
   return (
     <>
-      <div className="pf-u-mb-sm">
+      <div
+        className={billingQuota.standard && billingQuota.marketplace ? 'pf-u-mb-sm' : 'pf-u-mb-lg'}
+      >
         <strong>
-          <small>Subscription model</small>
+          <small>Subscription type</small>
         </strong>
       </div>
-      <p>Choose how you would like to pay for this subscription.</p>
       {billingQuota.standard && billingQuota.marketplace && (
         <Form>
           <FormGroup role="radiogroup" isInline fieldId="billing-model-group">
