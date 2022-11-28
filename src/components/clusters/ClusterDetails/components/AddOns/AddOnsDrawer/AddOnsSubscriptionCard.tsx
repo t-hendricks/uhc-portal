@@ -25,7 +25,7 @@ const marketplaceLinks: {
   };
 } = {
   'managed-odh': {
-    aws: 'https://aws.amazon.com/marketplace/pp/prodview-fuxkweo2tdmr2',
+    aws: 'https://aws.amazon.com/marketplace/search/results?searchTerms=OpenShift+Data+Science+enables',
   },
 };
 
