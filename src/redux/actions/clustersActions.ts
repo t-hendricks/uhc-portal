@@ -31,7 +31,7 @@ import { subscriptionStatuses, knownProducts } from '../../common/subscriptionTy
 import {
   normalizeCluster,
   fakeClusterFromSubscription,
-  fakeAIClusterFromSubscription,
+  fakeClusterFromAISubscription,
   normalizeSubscription,
   mapListResponse,
   normalizeMetrics,
@@ -215,9 +215,11 @@ const buildSearchQuery = (items: { [field: string]: unknown }[], field: string):
   return `id in (${Array.from(IDs).join(',')})`;
 };
 
+type MapEntry = { aiCluster?: OCM.Cluster; cluster?: Cluster; subscription: Subscription };
+
 // Builds an array in the order things were inserted into `subscriptionMap`.
 const createResponseForFetchClusters = (
-  subscriptionMap: Map<string, { cluster?: Cluster; subscription: Subscription }>,
+  subscriptionMap: Map<string, MapEntry>,
   canEdit: {
     [clusterID: string]: boolean;
   },
@@ -238,16 +240,13 @@ const createResponseForFetchClusters = (
       cluster = {
         ...normalizeCluster(entry.cluster),
         subscription: entry.subscription,
-        // TODO <bug #> entry.subscription.metrics is an array but normalizeMetrics wants a single metric
+        // TODO HAC-2355: entry.subscription.metrics is an array but normalizeMetrics wants a single metric
         // @ts-ignore
         metrics: normalizeMetrics(entry.subscription.metrics),
       };
     } else {
       cluster = isAssistedInstallSubscription(entry.subscription)
-        ? // TODO mismatched cluster types
-          // update when subscriptionMap contains separation of cluster and aiCluster
-          // remove cast to OCM.Cluster
-          fakeAIClusterFromSubscription(entry.subscription, entry.cluster as OCM.Cluster)
+        ? fakeClusterFromAISubscription(entry.subscription, entry.aiCluster)
         : fakeClusterFromSubscription(entry.subscription);
     }
 
@@ -319,8 +318,7 @@ const fetchClustersAndPermissions = async (
     // map subscription ID to subscription info
     // Note: Map keeps order of insertions.
     // Will display them in order returned by getSubscriptions().
-    // TODO Should subscriptMap contain `cluster` and `aiCluster` properties
-    const subscriptionMap = new Map<string, { cluster?: Cluster; subscription: Subscription }>();
+    const subscriptionMap = new Map<string, MapEntry>();
     items.forEach((item) => {
       if (item.cluster_id) {
         subscriptionMap.set(item.cluster_id, {
@@ -356,7 +354,6 @@ const fetchClustersAndPermissions = async (
               if (entry !== undefined) {
                 // store cluster into subscription map
                 entry.cluster = cluster;
-                subscriptionMap.set(cluster.id, entry);
               }
             }
           });
@@ -405,11 +402,7 @@ const fetchClustersAndPermissions = async (
         const clusterId = aiCluster.id;
         const entry = subscriptionMap.get(clusterId);
         if (entry) {
-          // TODO different cluster types?
-          // Possibly assign to entry.aiCluster to keep separate types
-          // @ts-ignore
-          entry.cluster = aiCluster;
-          subscriptionMap.set(clusterId, entry);
+          entry.aiCluster = aiCluster;
         }
       });
       return enrichForClusterService();
@@ -521,7 +514,7 @@ const fetchSingleClusterAndPermissions = async (
   if (isAssistedInstallSubscription(subscription.data) && subscription.data.cluster_id) {
     try {
       const aiCluster = await assistedService.getAICluster(subscription.data.cluster_id);
-      cluster = fakeAIClusterFromSubscription(subscription.data, aiCluster?.data || null);
+      cluster = fakeClusterFromAISubscription(subscription.data, aiCluster?.data || null);
       cluster.aiCluster = aiCluster.data;
     } catch (e) {
       if ((e as AxiosError)?.response?.status === 404) {
