@@ -31,8 +31,6 @@ exports[`<Users /> should render without users 1`] = `
       addUserResponse={
         Object {
           "error": false,
-          "errorDetails": null,
-          "errorMessage": "",
           "fulfilled": false,
           "pending": false,
         }
@@ -208,8 +206,6 @@ exports[`<Users /> with users should render 1`] = `
       addUserResponse={
         Object {
           "error": false,
-          "errorDetails": null,
-          "errorMessage": "",
           "fulfilled": false,
           "pending": false,
         }

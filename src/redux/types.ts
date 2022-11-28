@@ -14,8 +14,6 @@ export type BaseRequestState = {
   fulfilled: false;
   error: false;
   pending: false;
-  errorMessage: '';
-  errorDetails: null;
 };
 
 export type PromiseReducerState<T = unknown> =
