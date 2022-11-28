@@ -9,7 +9,7 @@ import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 const AuthenticateScreen = () => {
   const token = useGlobalState((state) => state.rosaReducer.offlineToken);
-  const loginCommand = `rosa login --token="${token}"`;
+  const loginCommand = `rosa login --token="{{TOKEN}}"`;
 
   return (
     <Card isCompact isPlain isFullHeight>
@@ -49,6 +49,8 @@ const AuthenticateScreen = () => {
           command={loginCommand}
           textAriaLabel="Copyable ROSA login command"
           trackEvent={trackEvents.ROSALogin}
+          showCommandOnError
+          outerClassName="ocm-instructions__command"
         />
       </CardBody>
     </Card>

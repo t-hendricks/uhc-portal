@@ -42,7 +42,7 @@ export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'>
     getAWSAccountIDsResponse: {
       data: any[];
     };
-    offlineToken?: string | Error;
+    offlineToken?: string;
   };
 };
 
