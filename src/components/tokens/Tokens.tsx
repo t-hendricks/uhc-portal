@@ -99,7 +99,7 @@ const Tokens = (props: Props) => {
       console.log('Tokens: componentDidMount, props =', props);
       loadOfflineToken((tokenOrError, errorReason) => {
         setOfflineToken(errorReason || tokenOrError);
-      });
+      }, window.location.origin);
     }
     // No dependencies because this effect should only be run once on mount
   }, []);
@@ -165,7 +165,7 @@ const Tokens = (props: Props) => {
                       onClick={() =>
                         loadOfflineToken((tokenOrError, errorReason) => {
                           setOfflineToken(errorReason || tokenOrError);
-                        })
+                        }, window.location.origin)
                       }
                     >
                       Load token

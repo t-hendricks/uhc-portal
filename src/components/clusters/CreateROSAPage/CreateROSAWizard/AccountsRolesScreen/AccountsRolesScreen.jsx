@@ -95,7 +95,7 @@ function AccountsRolesScreen({
     if (!offlineToken) {
       loadOfflineToken((tokenOrError, errorReason) => {
         setOfflineToken(errorReason || tokenOrError);
-      });
+      }, window.location.origin);
     }
   }, []);
 

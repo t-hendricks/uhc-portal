@@ -118,19 +118,20 @@ const getPartnerScope = (pathname: string) => {
  */
 export const loadOfflineToken = (
   callback: (tokenOrError: string, errorReason?: string) => void,
+  targetOrigin: string,
 ) => {
   insights.chrome.auth
     .getOfflineToken()
     .then((response: any) => {
       // eslint-disable-next-line no-console
       console.log('Tokens: getOfflineToken succeeded => scope', response.data.scope);
-      if (window.top) {
+      if (window.parent) {
         // We are inside an iframe, pass the token up to the parent
-        window.top.postMessage(
+        window.parent.postMessage(
           {
             tokenOrError: response.data.refresh_token,
           },
-          '*',
+          targetOrigin,
         );
       }
     })
@@ -152,14 +153,14 @@ export const loadOfflineToken = (
         // eslint-disable-next-line no-console
         console.log('Tokens: getOfflineToken failed => "not available", running doOffline()');
         doOffline(callback);
-      } else if (window.self !== window.top) {
+      } else if (window.self !== window.parent) {
         // We are inside an iframe, pass the token up to the parent
-        window.top?.postMessage(
+        window.parent?.postMessage(
           {
             tokenOrError,
             errorReason,
           },
-          '*',
+          targetOrigin,
         );
       } else {
         // eslint-disable-next-line no-console
