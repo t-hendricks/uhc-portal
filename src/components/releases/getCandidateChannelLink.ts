@@ -2,7 +2,7 @@ import semver from 'semver';
 import isEmpty from 'lodash/isEmpty';
 
 // example link: https://docs.openshift.com/container-platform/4.8/updating/updating-cluster-within-minor.html#candidate-4-8-channel
-const getCandidateChannelLink = (version) => {
+const getCandidateChannelLink = (version: string | undefined): string | null => {
   const parsed = semver.coerce(version);
 
   if (!parsed) {
