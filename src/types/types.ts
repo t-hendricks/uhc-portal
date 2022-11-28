@@ -78,14 +78,16 @@ export type AugmentedClusterResponse = {
   data: AugmentedCluster;
 };
 
+export type ErrorDetail = { kind: string; items?: any };
+
 export type ErrorState = {
   pending: boolean;
   fulfilled: false;
   error: true;
   errorCode?: number;
   internalErrorCode?: string;
-  errorMessage: NonNullable<React.ReactNode>;
-  errorDetails?: { kind: string; items?: any }[];
+  errorMessage?: string | React.ReactElement;
+  errorDetails?: ErrorDetail[];
   operationID?: string;
 };
 

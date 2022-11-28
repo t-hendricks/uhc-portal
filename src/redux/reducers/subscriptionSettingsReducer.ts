@@ -31,7 +31,7 @@ import { Subscription } from '../../types/clusters_mgmt.v1/models/Subscription';
 // TODO requestState separated from data is inconsistent with other reducers
 // although the separation is a better pattern
 type State = {
-  requestState: PromiseReducerState<{}>;
+  requestState: PromiseReducerState;
   data: Subscription;
 };
 

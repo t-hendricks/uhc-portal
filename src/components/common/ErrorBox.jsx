@@ -7,7 +7,7 @@ function ErrorBox({ message, variant = 'danger', response, children, isExpandabl
   const errorDetails = formatErrorDetails(response.errorDetails);
   const detailsDisplay = (
     <>
-      <span>{response.errorMessage}</span>
+      {response.errorMessage && <span>{response.errorMessage}</span>}
       {errorDetails}
       <br />
       <span>{`Operation ID: ${response.operationID || 'N/A'}`}</span>
@@ -35,8 +35,7 @@ function ErrorBox({ message, variant = 'danger', response, children, isExpandabl
 ErrorBox.propTypes = {
   message: PropTypes.string.isRequired,
   response: PropTypes.shape({
-    errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element])
-      .isRequired,
+    errorMessage: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.element]),
     errorDetails: PropTypes.array,
     operationID: PropTypes.string,
   }),

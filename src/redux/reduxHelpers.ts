@@ -38,8 +38,6 @@ const actionTypes = {
 
 const baseRequestState: BaseRequestState = {
   error: false,
-  errorMessage: '',
-  errorDetails: null,
   pending: false,
   fulfilled: false,
 };
