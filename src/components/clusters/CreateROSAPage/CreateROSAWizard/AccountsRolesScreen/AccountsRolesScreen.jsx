@@ -30,7 +30,7 @@ import { AssociateAwsAccountModal } from './AssociateAWSAccountModal';
 import { RosaCliCommand } from './constants/cliCommands';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
-import { loadOfflineToken, doOffline } from '~/components/tokens/TokenUtils';
+import { loadOfflineToken } from '~/components/tokens/TokenUtils';
 
 export const isUserRoleForSelectedAWSAccount = (users, awsAcctId) =>
   users.some((user) => user.aws_id === awsAcctId);
@@ -92,8 +92,10 @@ function AccountsRolesScreen({
     // Inside the iframe, this same wizard step is loaded, and the loadOfflineToken function is called again
     // This time it will succeed, and the iframe child sends the token to the parent
     // Once the parent receives the token, it executes a function callback to pass the token into local state
-    if (!offlineToken || offlineToken instanceof Error) {
-      loadOfflineToken(onTokenError);
+    if (!offlineToken) {
+      loadOfflineToken((tokenOrError, errorReason) => {
+        setOfflineToken(errorReason || tokenOrError);
+      }, window.location.origin);
     }
   }, []);
 
@@ -135,16 +137,6 @@ function AccountsRolesScreen({
   const onAssociateAwsAccountModalClose = () => {
     setIsAssocAwsAccountModalOpen(false);
     clearGetAWSAccountIDsResponse();
-  };
-
-  const onTokenError = (reason) => {
-    if (reason === 'not available') {
-      doOffline((token) => {
-        setOfflineToken(token);
-      });
-    } else {
-      setOfflineToken(reason);
-    }
   };
 
   return (
