@@ -61,6 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
     // in src/common/validators.js validateCA function
     dispatch(change('EditClusterWideProxy', 'additional_trust_bundle', 'Invalid file'));
   },
+  change,
 });
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => {

@@ -40,6 +40,7 @@ const EditClusterWideProxyDialog = (props) => {
     anyTouched,
     noClusterProxyValues,
     noUrlValues,
+    change,
   } = props;
 
   const clusterProxyError = editClusterProxyResponse.error && (
@@ -64,6 +65,12 @@ const EditClusterWideProxyDialog = (props) => {
     clearClusterProxyResponse();
     closeModal();
   }, []);
+
+  useEffect(() => {
+    if (noUrlValues) {
+      change('noProxyDomains', '');
+    }
+  }, [noUrlValues]);
 
   useEffect(() => {
     if (
@@ -150,8 +157,8 @@ const EditClusterWideProxyDialog = (props) => {
                 label="No Proxy domains"
                 placeholder={noUrlValues ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER}
                 type="text"
-                parse={stringToArray}
-                validate={checkNoProxyDomains}
+                normalize={(value) => stringToArray(value)}
+                validate={checkDNSDomain}
                 helpText={NO_PROXY_HELPER_TEXT}
                 showHelpTextOnError={false}
                 isDisabled={noUrlValues}
