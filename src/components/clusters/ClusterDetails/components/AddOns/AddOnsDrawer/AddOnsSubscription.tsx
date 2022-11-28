@@ -223,7 +223,6 @@ const AddOnsSubscription = ({
       }}
     />
   );
-  const hasStandardAndMarketplaceOptions = billingQuota.standard && billingQuota.marketplace;
   return (
     <>
       <div className="pf-u-mb-sm">
@@ -232,7 +231,7 @@ const AddOnsSubscription = ({
         </strong>
       </div>
       <p>Choose how you would like to pay for this subscription.</p>
-      {hasStandardAndMarketplaceOptions && (
+      {billingQuota.standard && billingQuota.marketplace && (
         <Form>
           <FormGroup role="radiogroup" isInline fieldId="billing-model-group">
             {billingQuota.standard && radioStandard(!isReady)}
