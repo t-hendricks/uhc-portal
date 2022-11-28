@@ -75,7 +75,7 @@ function AddOnsPrimaryButton(props) {
   const requirementsReason = !activeCardRequirementsFulfilled && 'Prerequisites not met';
   const quotaReason = (!hasQuota || subscription?.billingModel === 'no-quota') && noQuotaTooltip;
   const billingReason =
-    subscription?.billingModel === 'marketplace' && 'Select a subscription model';
+    subscription?.billingModel === 'marketplace' && 'Select a subscription type';
   const unchangedReason =
     installedAddOn?.billing?.billing_model === subscription?.billingModel && 'No changes';
 

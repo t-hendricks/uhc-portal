@@ -177,7 +177,6 @@ const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) =>
   if (!get(addOns, 'items.length', false)) {
     return [];
   }
-
   return addOns.items.filter(
     (addOn) =>
       isAvailable(addOn, cluster, organization, quota) || isInstalled(addOn, clusterAddOns),
