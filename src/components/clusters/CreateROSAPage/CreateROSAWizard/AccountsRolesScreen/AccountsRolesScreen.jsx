@@ -120,6 +120,9 @@ function AccountsRolesScreen({
     } else if (getAWSAccountIDsResponse.fulfilled) {
       const awsIDs = get(getAWSAccountIDsResponse, 'data', []);
       setAWSAccountIDs(awsIDs);
+      if (!awsIDs.includes(selectedAWSAccountID)) {
+        change('associated_aws_id', '');
+      }
       setAwsIDsErrorBox(null);
     } else if (getAWSAccountIDsResponse.error) {
       // display error
@@ -147,22 +150,17 @@ function AccountsRolesScreen({
 
   return (
     <Form onSubmit={() => false}>
+      {/* these images use fixed positioning */}
+      <img src={RedHat} className="ocm-c-wizard-intro-image-top" aria-hidden="true" alt="" />
+      <img src={AWSLogo} className="ocm-c-wizard-intro-image-bottom" aria-hidden="true" alt="" />
       <Grid hasGutter className="pf-u-mt-md">
-        <GridItem span={9}>
+        <GridItem span={12}>
           <Title headingLevel="h2">{title}</Title>
-          <br />
+        </GridItem>
+        <GridItem span={12}>
           <Text component={TextVariants.p}>
             Create a managed OpenShift cluster on an existing Amazon Web Services (AWS) account.
           </Text>
-          <GridItem span={4}>
-            <img src={RedHat} className="ocm-c-wizard-intro-image-top" aria-hidden="true" alt="" />
-            <img
-              src={AWSLogo}
-              className="ocm-c-wizard-intro-image-bottom"
-              aria-hidden="true"
-              alt=""
-            />
-          </GridItem>
         </GridItem>
         <GridItem span={8}>
           <Title headingLevel="h3">AWS account</Title>
