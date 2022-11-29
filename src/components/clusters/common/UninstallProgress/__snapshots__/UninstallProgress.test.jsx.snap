@@ -1,35 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<UninstallProgress /> should render 1`] = `
-<Card>
-  <CardTitle>
-    <Title
-      className="card-title logview-title"
-      headingLevel="h2"
-      size="lg"
-    >
-      Cluster Uninstallation
-    </Title>
-  </CardTitle>
-  <CardBody>
-    <ProgressStepper>
-      <ProgressStep
-        description="Pending"
-        id="addOnCleanUp"
-        titleId="addOnCleanUp-title"
-        variant="pending"
-      >
-        Add-on uninstallation
-      </ProgressStep>
-      <ProgressStep
-        description="Pending"
-        id="clusterUninstall"
-        titleId="clusterUninstall-title"
-        variant="pending"
-      >
-        Cluster uninstallation
-      </ProgressStep>
-    </ProgressStepper>
-  </CardBody>
-</Card>
+<ProgressStepper>
+  <ProgressStep
+    description="Pending"
+    id="addOnCleanUp"
+    titleId="addOnCleanUp-title"
+    variant="pending"
+  >
+    Add-on uninstallation
+  </ProgressStep>
+  <ProgressStep
+    description="Pending"
+    id="clusterUninstall"
+    titleId="clusterUninstall-title"
+    variant="pending"
+  >
+    Cluster uninstallation
+  </ProgressStep>
+</ProgressStepper>
 `;
