@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Text,
   Card,
@@ -63,6 +64,12 @@ const ClusterProgressCard = ({ cluster, refresh, history }) => {
       </CardBody>
     </Card>
   );
+};
+
+ClusterProgressCard.propTypes = {
+  cluster: PropTypes.object,
+  history: PropTypes.object.isRequired,
+  refresh: PropTypes.func,
 };
 
 export default ClusterProgressCard;
