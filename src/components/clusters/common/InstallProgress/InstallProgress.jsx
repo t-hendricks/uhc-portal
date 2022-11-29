@@ -5,13 +5,11 @@ import clusterStates from '../clusterStates';
 import ProgressList from './ProgressList';
 
 function InstallProgress({ cluster }) {
-  return (
-    (cluster.state === clusterStates.INSTALLING ||
-      cluster.state === clusterStates.PENDING ||
-      cluster.state === clusterStates.WAITING) && (
-      <ProgressList cluster={cluster} actionRequiredInitialOpen />
-    )
-  );
+  return cluster.state === clusterStates.INSTALLING ||
+    cluster.state === clusterStates.PENDING ||
+    cluster.state === clusterStates.WAITING ? (
+    <ProgressList cluster={cluster} actionRequiredInitialOpen />
+  ) : null;
 }
 
 InstallProgress.propTypes = {

@@ -10,6 +10,7 @@ import {
   TextVariants,
 } from '@patternfly/react-core';
 
+import { Cluster } from '~/types/clusters_mgmt.v1';
 import clusterStates, { isWaitingROSAManualMode } from '~/components/clusters/common/clusterStates';
 import UninstallProgress from '~/components/clusters/common/UninstallProgress';
 import InstallProgress from '~/components/clusters/common/InstallProgress/InstallProgress';
@@ -17,7 +18,13 @@ import DownloadOcCliButton from '~/components/clusters/common/InstallProgress/Do
 import InstallationLogView from './InstallationLogView';
 import ClusterStatusMonitor from './ClusterStatusMonitor';
 
-const ClusterProgressCard = ({ cluster, refresh, history }) => {
+interface ClusterProgressCardProps {
+  cluster?: Cluster;
+  history: Object;
+  refresh?: Function;
+}
+
+const ClusterProgressCard = ({ cluster = {}, history, refresh }: ClusterProgressCardProps) => {
   const isError = cluster.state === clusterStates.ERROR;
   const isInstalling = cluster.state === clusterStates.INSTALLING;
   const isUninstalling = cluster.state === clusterStates.UNINSTALLING;
