@@ -16,7 +16,7 @@ function DownloadOcCliButton() {
   let detectedOsArchitecture;
   let href;
 
-  if (osArchitectures?.length === 1) {
+  if (osArchitectures?.length) {
     detectedOsArchitecture = osArchitectures[0].value;
     href = urls[tools.OC][channels.STABLE][detectedOsArchitecture][detectedOs];
   }
