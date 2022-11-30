@@ -268,7 +268,7 @@ const createResponseForFetchClusters = (
 
 const fetchClustersAndPermissions = async (
   clusterRequestParams: Parameters<typeof accountsService.getSubscriptions>[0],
-  aiMergeListsFeatureFlag: boolean,
+  aiMergeListsFeatureFlag: boolean | undefined,
 ) => {
   let subscriptions: AxiosResponse<SubscriptionList, any>;
   let canEdit: {
@@ -422,7 +422,7 @@ const fetchClustersAndPermissions = async (
 
 const fetchClustersAction = (
   params: Parameters<typeof fetchClustersAndPermissions>[0],
-  feature: boolean,
+  feature: boolean | undefined,
 ) => action(clustersConstants.GET_CLUSTERS, fetchClustersAndPermissions(params, feature));
 
 const fetchClusters =
