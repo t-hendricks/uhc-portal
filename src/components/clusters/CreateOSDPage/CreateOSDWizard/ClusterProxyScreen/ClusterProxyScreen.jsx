@@ -103,7 +103,7 @@ function ClusterProxyScreen({
 
   useEffect(() => {
     if (noUrlValues) {
-      change('noProxyDomains', '');
+      change('no_proxy_domains', '');
     }
   }, [noUrlValues]);
 
@@ -165,7 +165,7 @@ function ClusterProxyScreen({
         <GridItem sm={12} md={10} xl2={8}>
           <Field
             component={ReduxVerticalFormGroup}
-            name="noProxyDomains"
+            name="no_proxy_domains"
             label="No Proxy domains"
             placeholder={noUrlValues ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER}
             type="text"

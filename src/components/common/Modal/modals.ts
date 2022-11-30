@@ -10,7 +10,6 @@ const modals = {
   EDIT_DISPLAY_NAME: 'edit-display-name',
   EDIT_CONSOLE_URL: 'edit-console-url',
   EDIT_CLUSTER_INGRESS: 'edit-cluster-ingress',
-  EDIT_CLUSTER_WIDE_PROXY: 'edit-cluster-wide-proxy',
   DELETE_CLUSTER: 'delete-cluster',
   UPGRADE_WIZARD: 'upgrade-wizard',
   TRANSFER_CLUSTER_OWNERSHIP: 'transfer-cluster-ownership',
