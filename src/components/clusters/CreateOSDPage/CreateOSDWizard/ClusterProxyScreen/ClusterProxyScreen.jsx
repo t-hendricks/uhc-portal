@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import {
@@ -39,14 +39,17 @@ function ClusterProxyScreen({
   product,
   httpProxyUrl,
   httpsProxyUrl,
+  noProxyDomains,
   additionalTrustBundle,
   sendError,
+  change,
 }) {
   const [anyTouched, setAnyTouched] = React.useState(false);
   const configureProxyUrl =
     product === normalizedProducts.ROSA
       ? links.ROSA_CLUSTER_WIDE_PROXY
       : links.OSD_CLUSTER_WIDE_PROXY;
+  const noUrlValues = !httpProxyUrl && !httpsProxyUrl;
 
   const onTouched = () => {
     // this lets us know that one of the fields was touched
@@ -54,7 +57,7 @@ function ClusterProxyScreen({
       setAnyTouched(true);
     }
   };
-  const noValues = () => !httpProxyUrl && !httpsProxyUrl && !additionalTrustBundle;
+  const noValues = () => noUrlValues && !additionalTrustBundle;
   const validateUrlHttp = (value) => validateUrl(value, 'http');
   const validateUrlHttps = (value) => validateUrl(value, ['http', 'https']);
   const validateAtLeastOne = (value, allValues) => {
@@ -98,6 +101,12 @@ function ClusterProxyScreen({
   const onFileRejected = () => {
     sendError();
   };
+
+  useEffect(() => {
+    if (noUrlValues) {
+      change('noProxyDomains', '');
+    }
+  }, [noUrlValues]);
 
   return (
     <Form
@@ -157,17 +166,15 @@ function ClusterProxyScreen({
         <GridItem sm={12} md={10} xl2={8}>
           <Field
             component={ReduxVerticalFormGroup}
-            name="no_proxy"
+            name="noProxyDomains"
             label="No Proxy domains"
-            placeholder={
-              !httpProxyUrl && !httpsProxyUrl ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER
-            }
+            placeholder={noUrlValues ? DISABLED_NO_PROXY_PLACEHOLDER : NO_PROXY_PLACEHOLDER}
             type="text"
             validate={checkNoProxyDomains}
             helpText={NO_PROXY_HELPER_TEXT}
             showHelpTextOnError={false}
-            parse={stringToArray}
-            isDisabled={!httpProxyUrl && !httpsProxyUrl}
+            normalize={(value) => stringToArray(value)}
+            isDisabled={noUrlValues}
           />
         </GridItem>
         <GridItem sm={0} md={2} xl2={4} />
@@ -200,6 +207,7 @@ ClusterProxyScreen.propTypes = {
   product: PropTypes.string,
   httpProxyUrl: PropTypes.string,
   httpsProxyUrl: PropTypes.string,
+  noProxyDomains: PropTypes.string,
   additionalTrustBundle: PropTypes.string,
   sendError: PropTypes.func,
 };
