@@ -17,8 +17,6 @@ const testtools = [
   tools.ROSA,
 ];
 
-const token = { auths: { foo: 'bar' } };
-
 const props = {
   channel: channels.STABLE,
   githubReleases: {
@@ -38,15 +36,15 @@ const props = {
 
 describe('DownloadAndOSSelection', () =>
   test.each(testtools)('%s renders correctly', (tool) => {
-    const wrapper = shallow(<DownloadAndOSSelection token={token} tool={tool} {...props} />);
+    const wrapper = shallow(<DownloadAndOSSelection tool={tool} {...props} />);
     expect(wrapper).toMatchSnapshot();
   }));
 
 describe('DownloadAndOSSelection', () => {
-  describe('with error', () => {
-    const badToken = { error: 'my error' };
+  describe('with pendoId', () => {
+    const pendoId = 'some-id';
     const wrapper = shallow(
-      <DownloadAndOSSelection token={badToken} tool={tools.X86INSTALLER} {...props} />,
+      <DownloadAndOSSelection pendoID={pendoId} tool={tools.X86INSTALLER} {...props} />,
     );
     it('should render', () => {
       expect(wrapper).toMatchSnapshot();

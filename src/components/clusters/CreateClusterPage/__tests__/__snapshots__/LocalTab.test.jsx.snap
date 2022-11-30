@@ -53,7 +53,6 @@ exports[`<LocalTab /> renders correctly 1`] = `
         <Connect(DownloadAndOSSelection)
           channel="stable"
           pendoID="/"
-          token={Object {}}
           tool="crc"
         />
         <Text
@@ -98,7 +97,6 @@ exports[`<LocalTab /> renders correctly 1`] = `
             onClick={[Function]}
             rel="noreferrer noopener"
             target="_blank"
-            variant="link"
           >
             View the OpenShift Local Getting started guide
              

@@ -126,7 +126,6 @@ const CreateROSAWelcome = ({ getAuthToken, token }) => {
                     </Text>
                     <Text component={TextVariants.p}>
                       <DownloadAndOSSelection
-                        token={token}
                         tool={tools.ROSA}
                         channel={channels.STABLE}
                         pendoID={pendoID}
