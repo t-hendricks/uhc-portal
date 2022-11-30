@@ -39,7 +39,6 @@ function ClusterProxyScreen({
   product,
   httpProxyUrl,
   httpsProxyUrl,
-  noProxyDomains,
   additionalTrustBundle,
   sendError,
   change,
@@ -207,9 +206,9 @@ ClusterProxyScreen.propTypes = {
   product: PropTypes.string,
   httpProxyUrl: PropTypes.string,
   httpsProxyUrl: PropTypes.string,
-  noProxyDomains: PropTypes.string,
   additionalTrustBundle: PropTypes.string,
   sendError: PropTypes.func,
+  change: PropTypes.func,
 };
 
 export default ClusterProxyScreen;

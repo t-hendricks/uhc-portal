@@ -230,6 +230,7 @@ EditClusterWideProxyDialog.propTypes = {
   clearClusterProxyResponse: PropTypes.func,
   noClusterProxyValues: PropTypes.bool,
   noUrlValues: PropTypes.bool,
+  change: PropTypes.func,
 };
 
 export default EditClusterWideProxyDialog;
