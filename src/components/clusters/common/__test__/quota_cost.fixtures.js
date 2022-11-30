@@ -512,6 +512,44 @@ export const serviceMeshAddon = [
   },
 ];
 
+export const odhAddon = [
+  {
+    allowed: 15,
+    cloud_accounts: [
+      {
+        cloud_account_id: '000000000004',
+        cloud_provider_id: 'aws',
+      },
+      {
+        cloud_account_id: 'fakeRHMarketplaceAccount',
+        cloud_provider_id: 'rhm',
+      },
+      {
+        cloud_account_id: 'fakeAzureSubscriptionId',
+        cloud_provider_id: 'azure',
+      },
+    ],
+    consumed: 0,
+    href: '/api/accounts_mgmt/v1/organizations/1wuANBLgbvRSXRXN10OuSFE2gzB/quota_cost',
+    kind: 'QuotaCost',
+    organization_id: '1wuANBLgbvRSXRXN10OuSFE2gzB',
+    quota_id: 'add-on|addon-open-data-hub-marketplace',
+    related_resources: [
+      {
+        availability_zone_type: 'any',
+        billing_model: 'marketplace',
+        byoc: 'byoc',
+        cloud_provider: 'aws',
+        cost: 1,
+        product: 'ANY',
+        resource_name: 'addon-open-data-hub',
+        resource_type: 'add-on',
+      },
+    ],
+    version: '85676a3e-e748-42a7-91ca-8618d60de32b',
+  },
+];
+
 export const storage = [
   {
     kind: 'QuotaCost',

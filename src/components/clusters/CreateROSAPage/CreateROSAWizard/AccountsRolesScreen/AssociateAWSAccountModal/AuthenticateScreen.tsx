@@ -1,18 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-
 import { Card, CardBody, Text, TextContent, TextVariants, Title } from '@patternfly/react-core';
-
+import TokenBox from '~/components/tokens/TokenBox';
 import { trackEvents } from '~/common/analytics';
-import { GlobalState } from '~/redux/types';
 import ExternalLink from '../../../../../common/ExternalLink';
 import DownloadAndOSSelection from '../../../../install/instructions/components/DownloadAndOSSelection';
 import links, { channels, tools } from '../../../../../../common/installLinks.mjs';
-import InstructionCommand from '../../../../../common/InstructionCommand';
+import { useGlobalState } from '~/redux/hooks/useGlobalState';
 
 const AuthenticateScreen = () => {
-  const token = useSelector<GlobalState>((state) => state.modal.data);
-  const loginCommand = `rosa login --token="${token}"`;
+  const token = useGlobalState((state) => state.rosaReducer.offlineToken);
+  const loginCommand = `rosa login --token="{{TOKEN}}"`;
 
   return (
     <Card isCompact isPlain isFullHeight>
@@ -47,12 +44,14 @@ const AuthenticateScreen = () => {
           </Text>
         </TextContent>
         <br />
-        <InstructionCommand
+        <TokenBox
+          token={token}
+          command={loginCommand}
           textAriaLabel="Copyable ROSA login command"
           trackEvent={trackEvents.ROSALogin}
-        >
-          {loginCommand}
-        </InstructionCommand>
+          showCommandOnError
+          outerClassName="ocm-instructions__command"
+        />
       </CardBody>
     </Card>
   );

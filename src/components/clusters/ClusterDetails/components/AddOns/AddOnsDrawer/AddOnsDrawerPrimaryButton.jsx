@@ -19,11 +19,15 @@ function AddOnsPrimaryButton(props) {
     activeCardRequirementsFulfilled,
     addClusterAddOn,
     addClusterAddOnResponse,
+    updateClusterAddOn,
     cluster,
     hasQuota,
     installedAddOn,
     openModal,
+    subscriptionModels,
   } = props;
+
+  const subscription = subscriptionModels[activeCard.id];
 
   // install an add on or open params modal
   const installAddOnAction = () => {
@@ -38,8 +42,25 @@ function AddOnsPrimaryButton(props) {
         addon: {
           id: activeCard?.id,
         },
+        billing: {
+          billing_model: subscription.billingModel,
+          ...(subscription.cloudAccount && {
+            billing_marketplace_account: subscription.cloudAccount,
+          }),
+        },
       });
     }
+  };
+
+  const updateAddOnAction = () => {
+    updateClusterAddOn(cluster.id, installedAddOn.id, {
+      billing: {
+        billing_model: subscription.billingModel,
+        ...(subscription.cloudAccount && {
+          billing_marketplace_account: subscription.cloudAccount,
+        }),
+      },
+    });
   };
 
   const canNotEditReason =
@@ -52,14 +73,39 @@ function AddOnsPrimaryButton(props) {
   // a superset of hibernatingReason.
   const notReadyReason = cluster.state !== clusterStates.READY && 'This cluster is not ready';
   const requirementsReason = !activeCardRequirementsFulfilled && 'Prerequisites not met';
-  const quotaReason = !hasQuota && noQuotaTooltip;
+  const quotaReason = (!hasQuota || subscription?.billingModel === 'no-quota') && noQuotaTooltip;
+  const billingReason =
+    subscription?.billingModel === 'marketplace' && 'Select a subscription type';
+  const unchangedReason =
+    installedAddOn?.billing?.billing_model === subscription?.billingModel && 'No changes';
+
+  // eslint-disable-next-line no-unused-vars
+  const updateAddonAction = (
+    <ButtonWithTooltip
+      variant="primary"
+      disableReason={
+        readOnlyReason ||
+        hibernatingReason ||
+        notReadyReason ||
+        canNotEditReason ||
+        unchangedReason ||
+        billingReason
+      }
+      isSmall
+      onClick={updateAddOnAction}
+    >
+      Save changes
+    </ButtonWithTooltip>
+  );
 
   // open uninstall modal
-  const uninstallAddonAction = (
+  const uninstallAddonAction = (hasMarginLeft = true) => (
     <ButtonWithTooltip
       ouiaId={`uninstall-addon-${activeCard?.id}`}
-      variant="link"
+      variant="secondary"
+      isDanger
       disableReason={readOnlyReason || hibernatingReason || notReadyReason || canNotEditReason}
+      isSmall
       onClick={() =>
         openModal('add-ons-delete-modal', {
           addOnName: activeCard?.name,
@@ -67,6 +113,7 @@ function AddOnsPrimaryButton(props) {
           clusterID: cluster.id,
         })
       }
+      className={hasMarginLeft && 'pf-u-ml-xs'}
     >
       Uninstall
     </ButtonWithTooltip>
@@ -84,12 +131,14 @@ function AddOnsPrimaryButton(props) {
           requirementsReason ||
           canNotEditReason ||
           quotaReason ||
-          pendingReason
+          pendingReason ||
+          billingReason
         }
         ouiaId={`install-addon-${activeCard?.id}`}
         variant="primary"
         aria-label="Install"
         onClick={installAddOnAction}
+        isSmall
       >
         Install
       </ButtonWithTooltip>
@@ -102,7 +151,7 @@ function AddOnsPrimaryButton(props) {
     case AddOnsConstants.INSTALLATION_STATE.PENDING:
     case AddOnsConstants.INSTALLATION_STATE.INSTALLING:
     case AddOnsConstants.INSTALLATION_STATE.UPDATING:
-      return <>{uninstallAddonAction}</>;
+      return <>{uninstallAddonAction(false)}</>;
     case undefined:
       // undefined state implies that the user just started
       // the installation and there is no state available yet
@@ -117,28 +166,31 @@ function AddOnsPrimaryButton(props) {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
+            isSmall
           >
             Contact support
           </Button>{' '}
-          {uninstallAddonAction}
+          {uninstallAddonAction()}
         </>
       );
     case AddOnsConstants.INSTALLATION_STATE.READY:
       if (cluster?.console.url) {
         url = `${cluster.console.url}/k8s/ns/${activeCard?.target_namespace}/operators.coreos.com~v1alpha1~ClusterServiceVersion/${installedAddOn?.csv_name}`;
         return (
-          <>
+          <div>
             <Button
               component="a"
               variant="primary"
               href={url}
               target="_blank"
               rel="noopener noreferrer"
+              isSmall
             >
               Open in Console <ExternalLinkAltIcon className="link-icon" />
             </Button>{' '}
-            {uninstallAddonAction}
-          </>
+            {/* {updateAddonAction} */}
+            {uninstallAddonAction()}
+          </div>
         );
       }
       return '';

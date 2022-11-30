@@ -11,7 +11,6 @@ import {
 } from 'redux-form';
 import { resetCreatedClusterResponse } from '../../../../redux/actions/clustersActions';
 import { getMachineTypes } from '../../../../redux/actions/machineTypesActions';
-import { clearFormDataFromPersistor } from '../../../../redux/store';
 import { getOrganizationAndQuota } from '../../../../redux/actions/userActions';
 import { getCloudProviders } from '../../../../redux/actions/cloudProviderActions';
 import { getUserRole, clearGetUserRoleResponse } from './rosaActions';
@@ -54,7 +53,6 @@ const mapDispatchToProps = (dispatch) => ({
       const formData = getFormValues('CreateCluster')(getState());
       // If changing these params, keep test & DebugClusterRequest props synced.
       const params = { isWizard: true };
-      clearFormDataFromPersistor();
       return submitOSDRequest(dispatch, params)(formData); // TODO: change to submitROSARequest(...
     }),
   resetResponse: () => dispatch(resetCreatedClusterResponse()),

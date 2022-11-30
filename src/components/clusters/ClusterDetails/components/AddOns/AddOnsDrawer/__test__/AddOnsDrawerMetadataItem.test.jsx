@@ -39,7 +39,7 @@ describe('<AddOnsMetaDataItem />', () => {
     expect(elements.children.length).toEqual(2);
 
     const version = elements.children[0];
-    expect(version.props).toBeFalsy();
+    expect(version).toBeNull();
 
     const docs = elements.children[1];
     expect(docs.props.href).toEqual('https://example.com/veryfakedocs');
@@ -58,6 +58,6 @@ describe('<AddOnsMetaDataItem />', () => {
     expect(version.props.children.includes('v0.0.2')).toBeTruthy();
 
     const docs = elements.children[1];
-    expect(docs.props).toBeFalsy();
+    expect(docs).toBeNull();
   });
 });

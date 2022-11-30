@@ -1,14 +1,20 @@
 import type React from 'react';
-import type { Cluster as AICluster } from 'openshift-assisted-ui-lib/ocm';
-import type { OneMetric, Subscription } from './accounts_mgmt.v1';
-import type { Cluster, Subnetwork, VersionGateAgreement } from './clusters_mgmt.v1';
+import type { Cluster as AICluster, FeatureSupportLevel } from 'openshift-assisted-ui-lib/ocm';
+import type { List, OneMetric, Subscription } from './accounts_mgmt.v1';
+import type {
+  Cluster,
+  ClusterState,
+  LimitedSupportReason,
+  Subnetwork,
+  VersionGateAgreement,
+} from './clusters_mgmt.v1';
 
 export type ViewOptions = {
   currentPage: number;
   pageSize: number;
   totalCount: number;
   totalPages: number;
-  filter: string | { description: string; timestampFrom: string; timestampTo: string };
+  filter: string | { description?: string; timestampFrom?: string; timestampTo?: string };
   sorting: {
     sortField: string;
     isAscending: boolean;
@@ -19,6 +25,7 @@ export type ViewOptions = {
   };
 };
 
+// picking specific Cluster properties to satisfy requirements for
 export type FakeCluster = // AICluster &
   Pick<
     Cluster,
@@ -34,7 +41,7 @@ export type FakeCluster = // AICluster &
     | 'name'
   > & {
     metrics: OneMetric;
-    state?: /* ClusterState | AICluster['status'] | */ string;
+    state?: string | ClusterState;
     ['subscription_id']?: string;
     ['activity_timestamp']?: string;
     ['cpu_architecture']?: string;
@@ -50,17 +57,28 @@ export type ClusterWithPermissions = ClusterFromSubscription & {
   canDelete?: boolean;
   partialCS?: boolean;
 };
+export type SubscriptionWithPermissions = Subscription & {
+  canEdit?: boolean;
+};
+
+export type SubscriptionWithPermissionsList = List & {
+  items?: Array<SubscriptionWithPermissions>;
+};
 
 export type AugmentedCluster = ClusterWithPermissions & {
   canEditOCMRoles?: boolean;
   canViewOCMRoles?: boolean;
   upgradeGates?: VersionGateAgreement[];
   aiCluster?: AICluster;
+  limitedSupportReasons?: LimitedSupportReason[];
+  aiSupportLevels?: FeatureSupportLevel[];
 };
 
 export type AugmentedClusterResponse = {
   data: AugmentedCluster;
 };
+
+export type ErrorDetail = { kind: string; items?: any };
 
 export type ErrorState = {
   pending: boolean;
@@ -68,8 +86,8 @@ export type ErrorState = {
   error: true;
   errorCode?: number;
   internalErrorCode?: string;
-  errorMessage?: string | React.ReactNode;
-  errorDetails?: string | null;
+  errorMessage?: string | React.ReactElement;
+  errorDetails?: ErrorDetail[];
   operationID?: string;
 };
 
@@ -90,4 +108,16 @@ export type SubnetFormProps = {
     region?: string;
   };
   vpcsValid: boolean;
+};
+
+export type ViewSorting = {
+  isAscending: boolean;
+  sortField: string;
+  sortIndex: number;
+};
+
+export type ViewFlags = undefined | null | boolean | string[] | { [key: string]: string[] };
+
+export type UserInfo = {
+  username: string;
 };

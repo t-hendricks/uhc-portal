@@ -1,18 +1,15 @@
-// @ts-nocheck
-// TODO, Both 'history' & '@redhat-cloud-services' modules implicitly have an 'any' type.
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import { routerMiddleware } from 'connected-react-router';
+// TODO, Both 'history' & '@redhat-cloud-services' modules implicitly have an 'any' type.
+// @ts-ignore
 import { createBrowserHistory } from 'history';
+// @ts-ignore
 import { notificationsMiddleware } from '@redhat-cloud-services/frontend-components-notifications/notificationsMiddleware';
-
-import { persistStore, persistReducer, createTransform } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 import { reduxReducers } from './reducers';
 import sentryMiddleware from './sentryMiddleware';
-import { GlobalState } from './types';
 
 declare global {
   interface Window {
@@ -20,42 +17,14 @@ declare global {
   }
 }
 
-const emptyState = {} as GlobalState;
 const defaultOptions = {
   dispatchDefaultFailure: false, // automatic error notifications
 };
 const history = createBrowserHistory();
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-/**
- * We use redux-persist to save the "form" store to local storage when the ROSA
- * "Associate AWS Account" modal is opened since it will cause a window reload,
- * and we want to preserve already entered data
- */
-const restoreStateOnTokenReload = createTransform(
-  // gets called right before state is persisted
-  (inboundState: GlobalState) => ({ ...inboundState }),
-  // gets called right before state is rehydrated
-  (outboundState: GlobalState) => {
-    const tokenReload = window.localStorage.getItem('token-reload') === 'true';
-    clearFormDataFromPersistor();
-    return tokenReload ? outboundState : {};
-  },
-  // define which reducers this transform gets called for.
-  { whitelist: ['form'] },
-);
-
-const persistReducerConfig = {
-  key: 'form',
-  storage,
-  whitelist: ['form'],
-  transforms: [restoreStateOnTokenReload],
-};
-
-const persistedReducer = persistReducer(persistReducerConfig, reduxReducers(history));
-
 const store = createStore(
-  persistedReducer,
+  reduxReducers(history),
   composeEnhancer(
     applyMiddleware(
       routerMiddleware(history),
@@ -67,8 +36,14 @@ const store = createStore(
   ),
 );
 
-const persistor = persistStore(store);
+export type GlobalState = Omit<ReturnType<typeof store.getState>, 'rosaReducer'> & {
+  // TODO temporary overrides for reducers that aren't written in typescript
+  rosaReducer: {
+    getAWSAccountIDsResponse: {
+      data: any[];
+    };
+    offlineToken?: string;
+  };
+};
 
-const clearFormDataFromPersistor = () => window.localStorage.removeItem('persist:form');
-
-export { store as default, store, history, persistor, clearFormDataFromPersistor };
+export { store as default, store, history };

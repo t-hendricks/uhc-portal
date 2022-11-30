@@ -1,0 +1,241 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DynamicSelect> empty data: empty 1`] = `
+<FormGroup
+  helperTextInvalid={null}
+  label="Label"
+  validated="default"
+>
+  <Alert
+    isInline={true}
+    title="No foos"
+    variant="danger"
+  >
+    <TextContent />
+  </Alert>
+  <FormSelect
+    aria-label="Label"
+    className=""
+    isDisabled={true}
+    isIconSprite={false}
+    isRequired={false}
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      isDisabled={true}
+      isPlaceholder={true}
+      label=""
+      value=""
+    />
+  </FormSelect>
+</FormGroup>
+`;
+
+exports[`<DynamicSelect> error, touched: shows error 1`] = `
+<FormGroup
+  helperTextInvalid="Bad!"
+  label="Label"
+  validated="error"
+>
+  <FormSelect
+    aria-label="Label"
+    className=""
+    isDisabled={true}
+    isIconSprite={false}
+    isRequired={false}
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="error"
+    value=""
+  >
+    <FormSelectOption
+      isDisabled={true}
+      label="Must select bar first"
+      value=""
+    />
+  </FormSelect>
+</FormGroup>
+`;
+
+exports[`<DynamicSelect> error, untouched: no error 1`] = `
+<FormGroup
+  helperTextInvalid="Bad!"
+  label="Label"
+  validated="default"
+>
+  <FormSelect
+    aria-label="Label"
+    className=""
+    isDisabled={true}
+    isIconSprite={false}
+    isRequired={false}
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      isDisabled={true}
+      label="Must select bar first"
+      value=""
+    />
+  </FormSelect>
+</FormGroup>
+`;
+
+exports[`<DynamicSelect> gets data: items 1`] = `
+<FormGroup
+  helperTextInvalid={null}
+  label="Label"
+  validated="default"
+>
+  <FormSelect
+    aria-label="Label"
+    className=""
+    isDisabled={false}
+    isIconSprite={false}
+    isRequired={false}
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      isDisabled={true}
+      isPlaceholder={true}
+      label="Select foo"
+      value=""
+    />
+    <FormSelectOption
+      key="Foo"
+      label="Foo"
+      value="Foo"
+    />
+    <FormSelectOption
+      key="Bar"
+      label="Bar"
+      value="Bar"
+    />
+  </FormSelect>
+</FormGroup>
+`;
+
+exports[`<DynamicSelect> gets data: loading 1`] = `
+<FormGroup
+  helperTextInvalid={null}
+  label="Label"
+  validated="default"
+>
+  <FormSelect
+    aria-label="Label"
+    className=""
+    isDisabled={true}
+    isIconSprite={false}
+    isRequired={false}
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      isDisabled={true}
+      label="Loading..."
+      value=""
+    />
+  </FormSelect>
+</FormGroup>
+`;
+
+exports[`<DynamicSelect> resets when selected value no longer valid option: new items 1`] = `
+<FormGroup
+  helperTextInvalid={null}
+  label="Label"
+  validated="default"
+>
+  <FormSelect
+    aria-label="Label"
+    className=""
+    isDisabled={false}
+    isIconSprite={false}
+    isRequired={false}
+    onBlur={[Function]}
+    onChange={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            "",
+          ],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      isDisabled={true}
+      isPlaceholder={true}
+      label="Select foo"
+      value=""
+    />
+    <FormSelectOption
+      key="Bar"
+      label="Bar"
+      value="Bar"
+    />
+    <FormSelectOption
+      key="Baz"
+      label="Baz"
+      value="Baz"
+    />
+  </FormSelect>
+</FormGroup>
+`;
+
+exports[`<DynamicSelect> without dependencies: blank 1`] = `
+<FormGroup
+  helperTextInvalid={null}
+  label="Label"
+  validated="default"
+>
+  <FormSelect
+    aria-label="Label"
+    className=""
+    isDisabled={true}
+    isIconSprite={false}
+    isRequired={false}
+    onBlur={[Function]}
+    onChange={[MockFunction]}
+    onFocus={[Function]}
+    ouiaSafe={true}
+    validated="default"
+    value=""
+  >
+    <FormSelectOption
+      isDisabled={true}
+      label="Must select bar first"
+      value=""
+    />
+  </FormSelect>
+</FormGroup>
+`;

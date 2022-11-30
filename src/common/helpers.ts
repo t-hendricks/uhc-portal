@@ -110,16 +110,14 @@ const shouldRefetchQuota = (organization: any) => {
 
 /**
  * Scroll to and focus on the first error found in the record of errors.
- * @param errors Record of errors
+ * @param errorIds List of error IDs
  * @param focusSelector Used to discover element to focus on, defaults to form elements;
  * input, select, textarea
  */
 const scrollToFirstError = (
-  errors: Record<string, string>,
-  focusSelector = 'input,select,textarea',
+  errorIds: string[],
+  focusSelector: string = 'input,select,textarea',
 ) => {
-  const errorIds = Object.keys(errors);
-
   if (!errorIds?.length) {
     return;
   }

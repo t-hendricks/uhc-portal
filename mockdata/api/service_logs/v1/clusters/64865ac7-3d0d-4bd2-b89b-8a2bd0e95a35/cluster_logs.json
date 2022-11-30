@@ -1,0 +1,174 @@
+{
+  "kind": "ClusterLogList",
+  "page": 1,
+  "size": 6,
+  "total": 6,
+  "items": [
+    {
+      "id": "1nePxpcT9SmORb5hU7xbkKSeL6I",
+      "kind": "ClusterLog",
+      "href": "/api/service_logs/v1/clusters/64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35/cluster_logs",
+      "timestamp": "2021-01-27T11:43:52.696429Z",
+      "severity": "Info",
+      "service_name": "AccountManager",
+      "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+      "summary": "Cluster deleted",
+      "description": "The cluster has been uninstalled and removed from OCM",
+      "event_stream_id": "1nePxr4RInZMy0CmrxLlfv6T9pJ",
+      "created_at": "2021-01-27T11:43:52.725181Z"
+    },
+    {
+      "id": "1naI25bUZQhZIi8rzxgfvATS6Fw",
+      "kind": "ClusterLog",
+      "href": "/api/service_logs/v1/cluster_logs/1naI25bUZQhZIi8rzxgfvATS6Fw",
+      "timestamp": "2021-01-26T00:39:24.807409Z",
+      "severity": "Info",
+      "service_name": "ClusterService",
+      "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+      "summary": "Group user deleted",
+      "description": "Group user 'cuser2' has been deleted from group 'cluster-admins'",
+      "event_stream_id": "1naI24Wfeot77HwFfpdBEXpMVt3",
+      "created_at": "2021-01-26T00:39:24.835297Z"
+    },
+    {
+      "id": "1naI1zc4YvGkbT27sfXVL6ljder",
+      "kind": "ClusterLog",
+      "href": "/api/service_logs/v1/cluster_logs/1naI1zc4YvGkbT27sfXVL6ljder",
+      "timestamp": "2021-01-26T00:39:23.124954Z",
+      "severity": "Info",
+      "service_name": "ClusterService",
+      "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+      "summary": "Group user deleted",
+      "description": "Group user 'cuser1' has been deleted from group 'cluster-admins'",
+      "event_stream_id": "1naI22O0qlLSIpRjuFhqxL0D7ox",
+      "created_at": "2021-01-26T00:39:23.169439Z"
+    },
+    {
+      "id": "1naHyllf5nGGDtzDBJGRdsACL1E",
+      "kind": "ClusterLog",
+      "href": "/api/service_logs/v1/cluster_logs/1naHyllf5nGGDtzDBJGRdsACL1E",
+      "timestamp": "2021-01-26T00:38:57.455665Z",
+      "severity": "Info",
+      "service_name": "ClusterService",
+      "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+      "summary": "Group user added",
+      "description": "Group user 'cuser2' has been added to group 'cluster-admins'",
+      "event_stream_id": "1naHykV1ZYqknGBZpu8NWVc0hjy",
+      "created_at": "2021-01-26T00:38:57.501486Z"
+    },
+    {
+      "id": "1naHyMSWGzOfPlu34NUTb8wEpvu",
+      "kind": "ClusterLog",
+      "href": "/api/service_logs/v1/cluster_logs/1naHyMSWGzOfPlu34NUTb8wEpvu",
+      "timestamp": "2021-01-26T00:38:54.691461Z",
+      "severity": "Info",
+      "service_name": "ClusterService",
+      "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+      "summary": "Group user added",
+      "description": "Group user 'cuser1' has been added to group 'cluster-admins'",
+      "event_stream_id": "1naHyQAVxcA2W4ylss606grgqGJ",
+      "created_at": "2021-01-26T00:38:54.729657Z"
+    },
+    {
+      "id": "1naFHMIdkMlXNi71F1UR0slyesm",
+      "kind": "ClusterLog",
+      "href": "/api/service_logs/v1/cluster_logs/1naFHMIdkMlXNi71F1UR0slyesm",
+      "timestamp": "2021-01-26T00:16:45.44137Z",
+      "severity": "Info",
+      "service_name": "AccountManager",
+      "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+      "summary": "Cluster registered successfully",
+      "description": "Cluster installation completed and the cluster registered successfully.",
+      "event_stream_id": "1naFHPPd59dRKANLSRXp70sBww2",
+      "created_at": "2021-01-26T00:16:45.48796Z"
+    }
+  ],
+  "logs": {
+    "data": [
+      {
+        "id": "1YNnwKxJNB3LmYy8R4F2u7xVAex",
+        "kind": "ClusterLog",
+        "href": "/api/service_logs/v1/clusters/64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35/cluster_logs",
+        "timestamp": "2020-02-27T10:29:43Z",
+        "severity": "Debug",
+        "service_name": "liran_service",
+        "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+        "summary": "Some log for debugging",
+        "description": "This one is for debugging purposes. So,  lets debug this one",
+        "created_at": "2020-02-27T08:29:16.679539Z"
+      },
+      {
+        "id": "1YNnj7e8YgsXIvAOdqffX3GlXoJ",
+        "kind": "ClusterLog",
+        "href": "/api/service_logs/v1/clusters/64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35/cluster_logs",
+        "timestamp": "2020-02-27T10:27:43Z",
+        "severity": "Info",
+        "service_name": "liran_service",
+        "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+        "summary": "Some positive log",
+        "description": "This is a positive description log -  no issues at all",
+        "created_at": "2020-02-27T08:27:31.941312Z"
+      },
+      {
+        "id": "1YNnUiSejeDrgwnGMrNBeoCGABk",
+        "kind": "ClusterLog",
+        "href": "/api/service_logs/v1/clusters/64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35/cluster_logs",
+        "timestamp": "2020-02-27T10:25:43Z",
+        "severity": "Error",
+        "service_name": "liran_service",
+        "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+        "summary": "Another one just for fun",
+        "description": "This is just for fun",
+        "created_at": "2020-02-27T08:25:36.387001Z"
+      },
+      {
+        "id": "1YNnMfHmjZbnQM5YrGQDMYkQe93",
+        "kind": "ClusterLog",
+        "href": "/api/service_logs/v1/clusters/64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35/cluster_logs",
+        "timestamp": "2020-02-27T10:24:43Z",
+        "severity": "Error",
+        "service_name": "liran_service",
+        "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+        "summary": "Another log",
+        "description": "This is just to add more logs",
+        "created_at": "2020-02-27T08:24:32.543841Z"
+      },
+      {
+        "id": "1YNmyTANNOk0qGbHEPcHegZ0X1C",
+        "kind": "ClusterLog",
+        "href": "/api/service_logs/v1/clusters/64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35/cluster_logs",
+        "timestamp": "2020-02-27T10:21:43Z",
+        "severity": "Fatal",
+        "service_name": "liran_service",
+        "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+        "summary": "long description test",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "created_at": "2020-02-27T08:21:20.166991Z"
+      },
+      {
+        "id": "1YNmRkLaiZIV004D69vjxMkja2w",
+        "kind": "ClusterLog",
+        "href": "/api/service_logs/v1/clusters/64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35/cluster_logs",
+        "timestamp": "2020-02-27T10:16:32Z",
+        "severity": "Warning",
+        "service_name": "liran_service",
+        "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+        "summary": "md test",
+        "description": "**This is for an md test** : [google](https://google.com/)",
+        "created_at": "2020-02-27T08:16:59.81889Z"
+      },
+      {
+        "id": "1Z243BZ6iQFR9FxXsI1MxLU33bb",
+        "kind": "ClusterLog",
+        "href": "/api/service_logs/v1/clusters/64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35/cluster_logs",
+        "timestamp": "2020-01-28T10:19:32Z",
+        "severity": "Fatal",
+        "service_name": "Gregory",
+        "cluster_uuid": "64865ac7-3d0d-4bd2-b89b-8a2bd0e95a35",
+        "summary": "Gregory message",
+        "description": "Gregory description",
+        "created_at": "2020-03-12T14:34:13.182106Z"
+      }
+    ]
+  }
+}

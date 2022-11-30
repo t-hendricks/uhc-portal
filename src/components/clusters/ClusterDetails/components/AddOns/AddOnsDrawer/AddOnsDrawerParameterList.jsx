@@ -61,7 +61,7 @@ function AddOnsParameterList(props) {
       </FlexItem>
     );
   }
-  return '';
+  return null;
 }
 
 AddOnsParameterList.propTypes = {

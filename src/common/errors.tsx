@@ -7,12 +7,12 @@ import { ErrorState } from '../types/types';
 const BANNED_USER_CODE = 'ACCT-MGMT-22';
 const TERMS_REQUIRED_CODE = 'CLUSTERS-MGMT-451';
 
-const overrideErrorMessage = (payload: any, actionType?: string): string | React.ReactNode => {
+const overrideErrorMessage = (payload: any, actionType?: string) => {
   if (!payload) {
     return '';
   }
 
-  let message: React.ReactNode = '';
+  let message: string | React.ReactElement = '';
 
   // override error by its kind
   const errorKind = payload?.details?.[0]?.kind || payload?.errorDetails?.[0]?.kind;
@@ -64,7 +64,7 @@ const overrideErrorMessage = (payload: any, actionType?: string): string | React
   return message;
 };
 
-const getErrorMessage = (action: { type?: string; payload?: AxiosError<any> }): React.ReactNode => {
+const getErrorMessage = (action: { type?: string; payload?: AxiosError<any> }) => {
   if (action.payload?.response === undefined) {
     // Handle edge cases in which `payload` might be an Error type
     return String(action.payload);
@@ -91,7 +91,7 @@ const getErrorMessage = (action: { type?: string; payload?: AxiosError<any> }): 
  * and it can be presented by ApiError.
  * @param {*} response The error response.
  */
-const hasOwnErrorPage = (response: AxiosResponse<any, any> | undefined) =>
+const hasOwnErrorPage = (response: AxiosResponse | undefined) =>
   response?.data?.code === TERMS_REQUIRED_CODE;
 
 /**

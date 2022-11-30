@@ -15,7 +15,7 @@ import {
   crcWorkspacesAddonQuota,
   loggingAddonQuota,
   dbaAddonQuota,
-  addonsQuota,
+  addonsQuotaList,
 } from '../../../../common/__test__/quota.fixtures';
 
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
@@ -79,10 +79,10 @@ describe('isAvailable', () => {
   });
 
   it('should determine that several add-ons are available', () => {
-    expect(isAvailable(serviceMesh, OSDCCSCluster, org, addonsQuota)).toBe(true);
-    expect(isAvailable(crcWorkspaces, OSDCCSCluster, org, addonsQuota)).toBe(true);
-    expect(isAvailable(dbaOperator, OSDCCSCluster, org, addonsQuota)).toBe(true);
-    expect(isAvailable(loggingOperator, OSDCCSCluster, org, addonsQuota)).toBe(true);
+    expect(isAvailable(serviceMesh, OSDCCSCluster, org, addonsQuotaList)).toBe(true);
+    expect(isAvailable(crcWorkspaces, OSDCCSCluster, org, addonsQuotaList)).toBe(true);
+    expect(isAvailable(dbaOperator, OSDCCSCluster, org, addonsQuotaList)).toBe(true);
+    expect(isAvailable(loggingOperator, OSDCCSCluster, org, addonsQuotaList)).toBe(true);
   });
 });
 
@@ -141,10 +141,10 @@ describe('hasQuota', () => {
   });
 
   it('should determine that the org has quota for several add-ons', () => {
-    expect(hasQuota(serviceMesh, OSDCCSCluster, org, addonsQuota)).toBe(true);
-    expect(hasQuota(crcWorkspaces, OSDCCSCluster, org, addonsQuota)).toBe(true);
-    expect(hasQuota(dbaOperator, OSDCCSCluster, org, addonsQuota)).toBe(true);
-    expect(hasQuota(loggingOperator, OSDCCSCluster, org, addonsQuota)).toBe(true);
+    expect(hasQuota(serviceMesh, OSDCCSCluster, org, addonsQuotaList)).toBe(true);
+    expect(hasQuota(crcWorkspaces, OSDCCSCluster, org, addonsQuotaList)).toBe(true);
+    expect(hasQuota(dbaOperator, OSDCCSCluster, org, addonsQuotaList)).toBe(true);
+    expect(hasQuota(loggingOperator, OSDCCSCluster, org, addonsQuotaList)).toBe(true);
   });
 });
 
@@ -157,7 +157,7 @@ describe('availableAddOns', () => {
       {
         fulfilled: true,
       },
-      addonsQuota,
+      addonsQuotaList,
     );
     expect(addOns).toEqual([]);
   });
@@ -170,7 +170,7 @@ describe('availableAddOns', () => {
       {
         fulfilled: true,
       },
-      addonsQuota,
+      addonsQuotaList,
     );
     expect(addOns).toEqual([crcWorkspaces, serviceMesh, dbaOperator, loggingOperator]);
   });

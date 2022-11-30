@@ -26,7 +26,7 @@ describe('DownloadOcCliButton', () => {
   });
 
   it('renders download link when href is defined', () => {
-    detectOsSpy.mockReturnValueOnce('mac');
+    detectOsSpy.mockReturnValueOnce('windows');
     render(<DownloadOcCliButton />);
 
     expect(screen.getByRole('link', { name: 'Download OC CLI' })).toBeVisible();

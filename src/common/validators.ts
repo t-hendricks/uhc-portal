@@ -1414,6 +1414,8 @@ export {
   clusterNameAsyncValidation,
   evaluateClusterNameAsyncValidation,
   asyncValidateClusterName,
+  checkLabelKey,
+  checkLabelValue,
 };
 
 export default validators;

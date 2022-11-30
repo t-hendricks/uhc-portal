@@ -192,6 +192,9 @@ limitations under the License.
   white-space: normal;
 }
 
+/*
+TODO: This is overriding too much, should be more specific
+*/
 #clusterdetails-content .pf-c-card {
   margin-top: 24px;
 }
@@ -648,6 +651,11 @@ h1 .badged-resource-pf .badged-resource-pf-icon {
 
 .ocm-alert-text {
   font-size: var(--pf-global--FontSize--sm);
+}
+
+.rosa-role-error {
+  @extend .ocm-alert-text;
+  max-width: 900px;
 }
 
 $ocm-l-autofit--breakpoint-map: build-breakpoint-map();

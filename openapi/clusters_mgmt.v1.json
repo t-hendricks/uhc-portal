@@ -8978,7 +8978,10 @@
           },
           "regions": {
             "description": "Region",
-            "$ref": "#/components/schemas/CloudRegion"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CloudRegion"
+            }
           }
         }
       },

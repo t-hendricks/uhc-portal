@@ -1,16 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useFormikContext } from 'formik';
 
 import { Title, Form, Alert } from '@patternfly/react-core';
 
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
 import { clearCcsCredientialsInquiry } from '~/components/clusters/CreateOSDPage/CreateOSDWizard/ccsInquiriesActions';
 import { FieldId } from '../../constants';
+import { useFormState } from '../../hooks';
+import { CloudProviderType } from './types';
 import { CloudProviderSelectionField } from './CloudProviderSelectionField';
 import { AwsByocFields } from './AwsByocFields';
 import { GcpByocFields } from './GcpByocFields';
-import { CloudProviderType } from './types';
 
 export const CloudProvider = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export const CloudProvider = () => {
       [FieldId.SecretAccessKey]: secretAccessKey,
       [FieldId.GcpServiceAccount]: gcpServiceAccount,
     },
-  } = useFormikContext();
+  } = useFormState();
   const { ccsCredentialsValidity } = useGlobalState((state) => state.ccsInquiries);
   const [showValidationAlert, setShowValidationAlert] = React.useState(false);
   const isByoc = byoc === 'true';

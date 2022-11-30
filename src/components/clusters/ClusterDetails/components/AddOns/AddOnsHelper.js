@@ -5,6 +5,7 @@ import {
   hasPotentialQuota,
   queryFromCluster,
   quotaTypes,
+  addOnBillingQuota,
 } from '../../../common/quotaSelectors';
 
 // An add-on is only visible if it has an entry in the quota summary
@@ -138,14 +139,19 @@ const hasQuota = (addOn, cluster, organization, quotaList) => {
     return false;
   }
   const minCount = minQuotaCount(addOn);
-  return (
-    availableQuota(quotaList, {
-      ...queryFromCluster(cluster),
-      resourceType: quotaTypes.ADD_ON,
-      resourceName: addOn.resource_name,
-    }) >= minCount
-  );
+  const available = availableQuota(quotaList, {
+    ...queryFromCluster(cluster),
+    resourceType: quotaTypes.ADD_ON,
+    resourceName: addOn.resource_name,
+  });
+  return available >= minCount;
 };
+
+const getAddOnBillingQuota = (addOn, quotaList) =>
+  addOnBillingQuota(quotaList, {
+    resourceType: quotaTypes.ADD_ON,
+    resourceName: addOn.resource_name,
+  });
 
 const quotaCostOptions = (resourceName, cluster, quotaList, allOptions, currentValue = 0) => {
   // Note: This is only currently looking for addon resource types
@@ -171,7 +177,6 @@ const availableAddOns = (addOns, cluster, clusterAddOns, organization, quota) =>
   if (!get(addOns, 'items.length', false)) {
     return [];
   }
-
   return addOns.items.filter(
     (addOn) =>
       isAvailable(addOn, cluster, organization, quota) || isInstalled(addOn, clusterAddOns),
@@ -261,4 +266,5 @@ export {
   parameterValuesForEditing,
   parameterAndValue,
   minQuotaCount,
+  getAddOnBillingQuota,
 };

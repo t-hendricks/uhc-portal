@@ -10,8 +10,9 @@ import AddOnsDrawer from './AddOnsDrawer';
 
 class AddOns extends React.Component {
   componentDidMount() {
-    const { clusterID, getClusterAddOns, clusterAddOns } = this.props;
-    if (clusterAddOns.clusterID !== clusterID || !clusterAddOns.pending) {
+    const { clusterID, getAddOns, getClusterAddOns, clusterAddOns } = this.props;
+    if (!clusterAddOns.pending) {
+      getAddOns(clusterID);
       getClusterAddOns(clusterID);
     }
   }
@@ -122,6 +123,7 @@ AddOns.propTypes = {
   updateClusterAddOnResponse: PropTypes.object.isRequired,
   deleteClusterAddOnResponse: PropTypes.object.isRequired,
   clearClusterAddOnsResponses: PropTypes.func.isRequired,
+  getAddOns: PropTypes.func.isRequired,
 };
 
 export default AddOns;

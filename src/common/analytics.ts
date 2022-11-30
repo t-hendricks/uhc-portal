@@ -1,18 +1,19 @@
+/* eslint-disable camelcase */
 import { tools } from './installLinks.mjs';
 import { normalizedProducts } from './subscriptionTypes';
 
 export type TrackEvent = {
   event: string;
-  link_name: string;
-  deprecated_name?: string;
-  ocm_resource_type?: string;
+  ['link_name']: string;
+  ['deprecated_name']?: string;
+  ['ocm_resource_type']?: string;
 };
 
 export type TrackEventOptions = {
   url?: string;
   path?: string;
   resourceType?: string;
-  customProperties?: JSON;
+  customProperties?: object;
 };
 
 /**
