@@ -16,7 +16,6 @@ limitations under the License.
 import React from 'react';
 import { PageHeader, PageHeaderTitle } from '@redhat-cloud-services/frontend-components/PageHeader';
 import { PageSection, Stack, StackItem } from '@patternfly/react-core';
-import get from 'lodash/get';
 
 import OSDSubscriptionCard from './OSDSubscriptionCard';
 import SubscriptionNotFulfilled from './SubscriptionNotFulfilled';
@@ -32,19 +31,18 @@ type Props = {
 };
 
 const Quota = ({ invalidateClusters, fetchAccount, account, marketplace }: Props) => {
+  // store in refs so that we can retrieve the latest value without re-creating the effect
   const fetchAccountRef = React.useRef(fetchAccount);
   fetchAccountRef.current = fetchAccount;
-
-  // store in `invalidateClusters` in a ref so that we can get the latest value when this component unmounts
   const invalidateClustersRef = React.useRef(invalidateClusters);
   invalidateClustersRef.current = invalidateClusters;
+
   React.useEffect(() => {
     document.title = 'Quota | Red Hat OpenShift Cluster Manager';
     fetchAccount();
-    let cleanupOcmListener: () => void;
-    if (get(window, 'insights.ocm')) {
-      cleanupOcmListener = insights.ocm?.on('APP_REFRESH', () => fetchAccountRef.current());
-    }
+    const cleanupOcmListener = window.insights?.ocm?.on('APP_REFRESH', () =>
+      fetchAccountRef.current(),
+    );
     return () => {
       invalidateClustersRef.current();
 

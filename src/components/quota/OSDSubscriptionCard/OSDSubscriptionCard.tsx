@@ -76,7 +76,7 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
   }, []);
 
   let content: React.ReactNode;
-  let rows: (React.ReactNode | IRowCell)[][] = [];
+  const rows: (React.ReactNode | IRowCell)[][] = [];
 
   let subscriptionLink = <Link to="/quota/resource-limits">Dedicated (On-Demand Limits)</Link>;
   let subscriptionsDescription =
@@ -93,10 +93,10 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
   }
 
   if (quotaCost.fulfilled) {
-    rows = quotaCost.items.reduce((acc, quotaItem) => {
+    quotaCost.items.forEach((quotaItem) => {
       // filter out quota you neither have nor consume
       if (quotaItem.consumed === 0 && quotaItem.allowed === 0) {
-        return acc;
+        return;
       }
 
       // filter out zero cost related resources
@@ -104,7 +104,7 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
         (resource) => resource.cost !== 0,
       );
       if (relatedResources.length === 0) {
-        return acc;
+        return;
       }
 
       // For summit
@@ -114,14 +114,14 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
       let resourceName = get(relatedResources[0], 'resource_name');
       if (marketplace && billingModel !== MARKETPLACE) {
         if (resourceName !== 'addon-open-data-hub') {
-          return acc;
+          return;
         }
       }
       if (
         !marketplace &&
         (billingModel === MARKETPLACE || resourceName === 'addon-open-data-hub')
       ) {
-        return acc;
+        return;
       }
 
       // CCS compute.node resource name should show as vCPU
@@ -132,7 +132,7 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
         resourceName = 'vCPU';
       }
 
-      acc.push([
+      rows.push([
         get(relatedResources[0], 'resource_type'),
         resourceName,
         { title: getZoneType(get(relatedResources[0], 'availability_zone_type')) },
@@ -141,8 +141,7 @@ const OSDSubscriptionCard = ({ quotaCost, marketplace, organizationID, fetchQuot
         `${quotaItem.consumed} of ${quotaItem.allowed}`,
         { title: getCapacityIcon(quotaItem.consumed, quotaItem.allowed) },
       ]);
-      return acc;
-    }, [] as typeof rows);
+    });
   }
 
   // all rows may be filtered out if a user doesn't have any quota

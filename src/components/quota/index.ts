@@ -5,8 +5,8 @@ import Quota from './Quota';
 import { GlobalState } from '~/redux/store';
 
 const mapDispatchToProps = {
-  fetchAccount: () => subscriptionsActions.fetchAccount(),
-  invalidateClusters: () => clustersActions.invalidateClusters(),
+  fetchAccount: subscriptionsActions.fetchAccount,
+  invalidateClusters: clustersActions.invalidateClusters,
 };
 
 const mapStateToProps = (state: GlobalState) => ({

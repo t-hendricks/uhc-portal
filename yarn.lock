@@ -1890,6 +1890,11 @@
   resolved "https://registry.yarnpkg.com/@redhat-cloud-services/types/-/types-0.0.1.tgz#8c80b37d23aa2e7f54194926dea19fb890fc015d"
   integrity sha512-UgHgLf8LkqaD9PXjiVyYycMRlbvmVdJyoJfersCUwnzDMgp+DEoYlLQAa9kn/s4c1JvSt5MM+hEN+DRvwtCQGA==
 
+"@redhat-cloud-services/types@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@redhat-cloud-services/types/-/types-0.0.16.tgz#fec49333b780b294a0c5e78e7bde557e0f9d871e"
+  integrity sha512-JtIAPT1ZJzgwUvttWjtxe3ufMhUJ0upapJ7yi/MLKFhC46B5X2ht7hgbgIeCv5Nf7QLc8TDsSUXqqr9L93Ek5A==
+
 "@reduxjs/toolkit@^1.6.2":
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-1.6.2.tgz#2f2b5365df77dd6697da28fdf44f33501ed9ba37"

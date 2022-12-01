@@ -19,8 +19,7 @@ const OSDSubscriptionTable = ({ rows, children }: Props) => {
   );
   const planType = (
     <>
-      Plan type
-      <PopoverHint hint={tipText} />
+      Plan type <PopoverHint hint={tipText} />
     </>
   );
   const columns = [
