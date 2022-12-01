@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import semver from 'semver';
 import {
   Select,
   SelectOption,
@@ -18,6 +17,7 @@ import {
 import { Spinner } from '@redhat-cloud-services/frontend-components/Spinner';
 import ErrorBox from '../../../../../../common/ErrorBox';
 import InstructionCommand from '../../../../../../common/InstructionCommand';
+import { isSupportedMinorVersion } from '~/common/helpers';
 
 function VersionSelection({
   isRosa,
@@ -34,14 +34,7 @@ function VersionSelection({
   const [versions, setVersions] = useState([]);
   const [rosaVersionError, setRosaVersionError] = useState(false);
 
-  const isValidRosaVersion = (version) =>
-    rosaMaxOSVersion &&
-    semver.satisfies(
-      version,
-      `<=${semver.major(semver.coerce(rosaMaxOSVersion))}.${semver.minor(
-        semver.coerce(rosaMaxOSVersion),
-      )}`,
-    );
+  const isValidRosaVersion = (version) => isSupportedMinorVersion(version, rosaMaxOSVersion);
 
   const RosaVersionErrorAlert = () => (
     <Alert
