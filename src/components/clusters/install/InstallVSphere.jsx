@@ -31,6 +31,13 @@ class InstallVSphere extends Component {
             showAI
             ipiPageLink="/install/vsphere/installer-provisioned"
             upiPageLink="/install/vsphere/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: [
+                'Hosts controlled with vSphere Cloud Provider',
+                'For connected or air-gapped/restricted networks',
+              ],
+              upi: ['For connected or air-gapped/restricted networks'],
+            }}
           />
         </PageSection>
       </>

@@ -35,6 +35,10 @@ class InstallPlatformAgnostic extends Component {
             showAI
             hideIPI
             upiPageLink="/install/platform-agnostic/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['For non-tested platforms'], // TODO this needs to support a doc link in the future, so we need to switch these arrays to React.ReactNode[]? how to do keys?
+              upi: ['For non-tested platforms'],
+            }}
           />
         </PageSection>
       </>

@@ -46,7 +46,7 @@ export const InstructionsChooser = ({
         featureListItems={[
           'Preflight validations',
           'Smart defaults',
-          'For connected environments',
+          'For connected networks',
           ...(providerSpecificFeatures.ai || []),
         ]}
         footerLinkHref="#" // TODO URL here
@@ -62,7 +62,6 @@ export const InstructionsChooser = ({
         body="Auto-provision your infrastructure with minimal configuration to create your cluster."
         featureListItems={[
           'Installer Provisioned Infrastructure',
-          'For air-gapped/disconnected environments',
           ...(providerSpecificFeatures.ipi || []),
         ]}
         footerLinkHref="#" // TODO URL here
@@ -79,7 +78,6 @@ export const InstructionsChooser = ({
         featureListItems={[
           'User Provisioned Infrastructure',
           'Highly customizable',
-          'For air-gapped/disconnected environments',
           ...(providerSpecificFeatures.upi || []),
         ]}
         footerLinkHref="#" // TODO URL here
