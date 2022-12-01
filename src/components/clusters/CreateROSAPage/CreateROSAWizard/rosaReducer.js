@@ -16,6 +16,7 @@ import {
   CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
   CLEAR_GET_OCM_ROLE_RESPONSE,
   CLEAR_GET_USER_ROLE_RESPONSE,
+  SET_OFFLINE_TOKEN,
 } from './rosaConstants';
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
   getUserRoleResponse: {
     ...baseRequestState,
   },
+  offlineToken: undefined,
 };
 
 function rosaReducer(state = initialState, action) {
@@ -147,6 +149,10 @@ function rosaReducer(state = initialState, action) {
           ...baseRequestState,
           data: {},
         };
+        break;
+
+      case SET_OFFLINE_TOKEN:
+        draft.offlineToken = action.payload;
         break;
     }
   });

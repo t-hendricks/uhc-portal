@@ -55,8 +55,6 @@ describe('cloudProvidersReducer', () => {
 
       expect(result).toEqual({
         providers: action.payload,
-        errorMessage: '',
-        errorDetails: null,
         fulfilled: true,
         pending: false,
         error: false,

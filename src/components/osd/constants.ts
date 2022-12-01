@@ -26,6 +26,20 @@ export enum FieldId {
   LoadBalancers = 'load_balancers',
   EnableUserWorkloadMonitoring = 'enable_user_workload_monitoring',
   EtcdEncryption = 'etcd_encryption',
+  AutoscalingEnabled = 'autoscalingEnabled',
+  NodeLabels = 'node_labels',
+  ClusterPrivacy = 'cluster_privacy',
+  ConfigureProxy = 'configure_proxy',
+  ConfigureClusterProxy = 'configure_cluster_proxy',
+  InstallToVpc = 'install_to_vpc',
+  UsePrivateLink = 'use_privatelink',
+  PublicSubnetId = 'public_subnet_id',
+  PrivateSubnetId = 'private_subnet_id',
+  KeyLocation = 'key_location',
+  KeyRing = 'key_ring',
+  KeyName = 'key_name',
+  KmsKeyArn = 'kms_key_arn',
+  KmsServiceAccount = 'kms_service_account',
 }
 
 export enum StepName {
@@ -74,6 +88,7 @@ export const initialValues = {
   [FieldId.AcknowledgePrereq]: false,
   [FieldId.MultiAz]: 'false',
   [FieldId.EnableUserWorkloadMonitoring]: true,
+  [FieldId.NodeLabels]: [{ key: '', value: '' }],
 };
 
 export const clusterNameHint =

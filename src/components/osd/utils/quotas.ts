@@ -1,6 +1,6 @@
 import { billingModels, normalizedProducts } from '~/common/subscriptionTypes';
 import { availableQuota, quotaTypes } from '~/components/clusters/common/quotaSelectors';
-import { QuotaList } from '~/redux/types';
+import { Quota } from '~/types/accounts_mgmt.v1';
 import { CloudProviderType } from '../ClusterSettings/CloudProvider/types';
 
 export interface QuotaParams {
@@ -27,8 +27,14 @@ export enum QuotaType {
   MultiAzResources = 'multiAzResources',
 }
 
-export const hasAvailableQuota = (quotaList: QuotaList, params: QuotaParams) =>
-  availableQuota(quotaList, params) > 0;
+export const hasAvailableQuota = (
+  quotaList:
+    | {
+        items?: Quota[];
+      }
+    | undefined,
+  params: QuotaParams,
+) => !!quotaList && availableQuota(quotaList, params) > 0;
 
 export const quotaParams = {
   [QuotaType.OsdTrial]: {

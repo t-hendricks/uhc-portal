@@ -1,10 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
-import { FormikValues, useFormikContext } from 'formik';
 
 import { Tile, Tooltip } from '@patternfly/react-core';
 
 import { useGlobalState } from '~/redux/hooks/useGlobalState';
+import { useFormState } from '~/components/osd/hooks';
 import * as osdInitialValues from '~/components/clusters/CreateOSDPage/createOSDInitialValues';
 import { noQuotaTooltip } from '~/common/helpers';
 import AWSLogo from '~/styles/images/AWSLogo';
@@ -24,7 +24,7 @@ export const CloudProviderSelectionField = () => {
       [FieldId.Byoc]: isBYOC,
     },
     setFieldValue,
-  } = useFormikContext<FormikValues>();
+  } = useFormState();
   const quotaList = useGlobalState((state) => state.userProfile.organization.quotaList);
   const hasGcpResources = hasAvailableQuota(quotaList, {
     ...quotaParams.gcpResources,

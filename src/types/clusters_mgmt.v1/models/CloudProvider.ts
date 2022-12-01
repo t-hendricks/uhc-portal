@@ -32,5 +32,5 @@ export type CloudProvider = {
   /**
    * Region
    */
-  regions?: CloudRegion;
+  regions?: Array<CloudRegion>;
 };

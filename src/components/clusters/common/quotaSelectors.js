@@ -90,10 +90,63 @@ const availableQuota = (quotaList, params) => {
     resource_name: resourceName || any,
   };
   let available = 0;
-  quotaList.items.forEach((quotaCostItem) => {
+  quotaList.items?.forEach((quotaCostItem) => {
     available += availableFromQuotaCostItem(quotaCostItem, query);
   });
   return available;
+};
+
+/**
+ * Returns an object containing the addon's available billing options (standard/marketplace), quota cost information, and cloud accounts if applicable
+ */
+const addOnBillingQuota = (quotaList, { resourceType, resourceName }) => {
+  const models = {};
+  const query = {
+    resource_name: resourceName,
+    resource_type: resourceType,
+  };
+  quotaList.items.forEach((quotaCostItem) => {
+    quotaCostItem.related_resources.forEach((resource) => {
+      if (relatedResourceMatches(resource, query)) {
+        if (resource.billing_model === any || resource.billing_model === billingModels.STANDARD) {
+          if (!models.standard) {
+            models.standard = {
+              cost: resource.cost,
+              allowed: quotaCostItem.allowed,
+              consumed: quotaCostItem.consumed,
+            };
+          }
+        } else if (resource.billing_model === billingModels.MARKETPLACE) {
+          if (!models.marketplace) {
+            let cloudAccounts = null;
+            if (quotaCostItem.cloud_accounts) {
+              const rhmAccounts = quotaCostItem.cloud_accounts.filter(
+                (m) => m.cloud_provider_id === 'rhm',
+              );
+              const awsAccounts = quotaCostItem.cloud_accounts.filter(
+                (m) => m.cloud_provider_id === 'aws',
+              );
+              const azureAccounts = quotaCostItem.cloud_accounts.filter(
+                (m) => m.cloud_provider_id === 'azure',
+              );
+              cloudAccounts = {
+                rhm: rhmAccounts,
+                aws: awsAccounts,
+                azure: azureAccounts,
+              };
+            }
+            models.marketplace = {
+              cost: resource.cost,
+              cloudAccounts,
+              allowed: quotaCostItem.allowed,
+              consumed: quotaCostItem.consumed,
+            };
+          }
+        }
+      }
+    });
+  });
+  return models;
 };
 
 /**
@@ -170,4 +223,5 @@ export {
   hasManagedQuotaSelector,
   availableClustersFromQuota,
   availableNodesFromQuota,
+  addOnBillingQuota,
 };

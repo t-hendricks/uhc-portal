@@ -3,11 +3,12 @@ import { shallow } from 'enzyme';
 
 import AddOns from '../AddOns';
 import { mockAddOns, mockClusterAddOns } from './AddOns.fixtures';
-import { addonsQuota } from '../../../../common/__test__/quota.fixtures';
+import { addonsQuotaList } from '../../../../common/__test__/quota.fixtures';
 import fixtures from '../../../__test__/ClusterDetails.fixtures';
 
 describe('<AddOns />', () => {
   let wrapper;
+  const getAddOns = jest.fn();
   const getClusterAddOns = jest.fn();
   const clearClusterAddOnsResponses = jest.fn();
   const addClusterAddOnResponse = {};
@@ -27,8 +28,9 @@ describe('<AddOns />', () => {
         addOns={mockAddOns}
         clusterAddOns={mockClusterAddOns}
         clusterMachinePools={{}}
-        quota={addonsQuota}
+        quota={addonsQuotaList}
         getOrganizationAndQuota={getOrganizationAndQuota}
+        getAddOns={getAddOns}
         getClusterAddOns={getClusterAddOns}
         addClusterAddOnResponse={addClusterAddOnResponse}
         updateClusterAddOnResponse={updateClusterAddOnResponse}

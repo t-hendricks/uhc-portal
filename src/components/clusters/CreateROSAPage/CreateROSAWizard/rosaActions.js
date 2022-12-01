@@ -7,6 +7,7 @@ import {
   CLEAR_GET_AWS_ACCOUNT_ROLES_ARNS_RESPONSE,
   CLEAR_GET_OCM_ROLE_RESPONSE,
   CLEAR_GET_USER_ROLE_RESPONSE,
+  SET_OFFLINE_TOKEN,
 } from './rosaConstants';
 import { accountsService } from '../../../../services';
 
@@ -127,4 +128,9 @@ export const clearGetOcmRoleResponse = () => ({
 
 export const clearGetUserRoleResponse = () => ({
   type: CLEAR_GET_USER_ROLE_RESPONSE,
+});
+
+export const setOfflineToken = (token) => ({
+  type: SET_OFFLINE_TOKEN,
+  payload: token,
 });

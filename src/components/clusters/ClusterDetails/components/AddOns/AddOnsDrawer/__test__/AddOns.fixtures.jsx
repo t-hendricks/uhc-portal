@@ -213,3 +213,36 @@ export const mockClusterAddOnsParams = {
     },
   ],
 };
+
+export const billingQuota = {
+  standard: {
+    cost: 1,
+    allowed: 1,
+    consumed: 1,
+  },
+  marketplace: {
+    cloudAccounts: {
+      rhm: [
+        {
+          cloud_account_id: 'fakeRHMarketplaceAccount',
+          cloud_provider_id: 'rhm',
+        },
+      ],
+      aws: [
+        {
+          cloud_account_id: '000000000004',
+          cloud_provider_id: 'aws',
+        },
+      ],
+      azure: [
+        {
+          cloud_account_id: 'fakeAzureSubscriptionId',
+          cloud_provider_id: 'azure',
+        },
+      ],
+    },
+    cost: 5,
+    allowed: 15,
+    consumed: 10,
+  },
+};

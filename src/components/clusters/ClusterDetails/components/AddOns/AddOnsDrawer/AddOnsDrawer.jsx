@@ -23,8 +23,12 @@ import {
   Title,
 } from '@patternfly/react-core';
 
-import { getInstalled, hasQuota, validateAddOnRequirements } from '../AddOnsHelper';
-
+import {
+  getInstalled,
+  hasQuota,
+  validateAddOnRequirements,
+  getAddOnBillingQuota,
+} from '../AddOnsHelper';
 import AddOnsCard from '../AddOnsCard';
 import AddOnStateLabel from '../AddOnStateLabel';
 import AddOnsParametersModal from '../AddOnsParametersModal';
@@ -34,31 +38,18 @@ import AddOnsPrimaryButton from './AddOnsDrawerPrimaryButton';
 import AddOnsMetaDataItem from './AddOnsDrawerMetadataItem';
 import AddOnsRequirementContent from './AddOnsDrawerRequirementContent';
 import AddOnsFailedBox from './AddOnsDrawerFailedBox';
+import AddOnsSubscription from './AddOnsSubscription';
+import AddOnsConstants from '../AddOnsConstants';
 
 class AddOnsDrawer extends React.Component {
-  state = {
-    // handle open drawer
-    isDrawerExpanded: false,
-
-    // active card states mapping addon to card components
-    activeCard: null,
-
-    // active card addon requirment state
-    activeCardRequirementsFulfilled: true,
-    activeCardRequirements: null,
-
-    // current active card if installed state
-    installedAddOn: null,
-
-    // active card tabs
-    activeTabKey: 0,
-  };
-
   componentDidUpdate(prevProps) {
-    const { addClusterAddOnResponse, deleteClusterAddOnResponse, submitClusterAddOnResponse } =
-      this.props;
-
-    const { isDrawerExpanded } = this.state;
+    const {
+      addClusterAddOnResponse,
+      deleteClusterAddOnResponse,
+      submitClusterAddOnResponse,
+      drawer,
+      setAddonsDrawer,
+    } = this.props;
 
     if (
       (addClusterAddOnResponse.fulfilled && prevProps.addClusterAddOnResponse.pending) ||
@@ -66,12 +57,9 @@ class AddOnsDrawer extends React.Component {
       (submitClusterAddOnResponse.fulfilled && prevProps.submitClusterAddOnResponse.pending)
     ) {
       // close drawer when cluster is added, updated or deleted
-      if (isDrawerExpanded) {
-        // disabling lint for setting state in component did update as is safe due to conditional
-        // https://reactjs.org/docs/react-component.html#componentdidupdate
-        // eslint-disable-next-line react/no-did-update-set-state
-        this.setState({
-          isDrawerExpanded: false,
+      if (drawer.open) {
+        setAddonsDrawer({
+          open: false,
           activeCard: null,
         });
       }
@@ -93,20 +81,19 @@ class AddOnsDrawer extends React.Component {
 
   // toggle currently active tab
   handleTabClick = (event, tabIndex) => {
-    this.setState({
+    const { setAddonsDrawer } = this.props;
+    setAddonsDrawer({
       activeTabKey: tabIndex,
     });
     event.preventDefault();
   };
 
-  // handles card click, setting active card state
+  // handles card click
   handleCardClick = (addOn) => () => {
-    const { clusterAddOns } = this.props;
+    const { clusterAddOns, quota, setAddonsDrawer, drawer } = this.props;
 
-    const { activeCard } = this.state;
-
-    // if acvtiveCard is clicked again close drawer
-    if (addOn.id === activeCard?.id) {
+    // if activeCard is clicked again close drawer
+    if (addOn.id === drawer.activeCard?.id) {
       this.handleCloseDrawer();
       return;
     }
@@ -117,54 +104,64 @@ class AddOnsDrawer extends React.Component {
     // get addOn requirements
     const requirements = validateAddOnRequirements(addOn);
 
-    this.setState({
+    // get billing / quota info
+    const billingQuota = getAddOnBillingQuota(addOn, quota);
+
+    setAddonsDrawer({
       // set active card states
       activeCard: addOn,
-
-      // set requirments state
+      // set requirements state
       activeCardRequirementsFulfilled: requirements.fulfilled,
       activeCardRequirements: requirements.errorMsgs,
-
       // set installed addon
       installedAddOn,
-
+      // set billing model
+      billingQuota,
       // set drawer state
-      isDrawerExpanded: true,
+      open: true,
       activeTabKey: 0,
     });
   };
 
   // handle close drawer, reset state back to null
   handleCloseDrawer = () => {
-    this.setState({
+    const { setAddonsDrawer } = this.props;
+    setAddonsDrawer({
       activeCard: null,
-
       activeCardRequirements: null,
       activeCardRequirementsFulfilled: true,
-
-      isDrawerExpanded: false,
+      open: false,
       activeTabKey: 0,
     });
   };
 
   render() {
-    const { addClusterAddOn, addClusterAddOnResponse, addOnsList, cluster, openModal } = this.props;
+    const {
+      addClusterAddOn,
+      addClusterAddOnResponse,
+      updateClusterAddOn,
+      addOnsList,
+      cluster,
+      openModal,
+      setAddonsDrawer,
+      drawer,
+    } = this.props;
 
     const {
+      open,
       // current selected addon info
       activeCard,
-
       // current selected installed addon info
       installedAddOn,
-
       // current selected addon requirements
       activeCardRequirements,
       activeCardRequirementsFulfilled,
-
+      // current billing model
+      billingQuota,
       // current drawer state
       activeTabKey,
-      isDrawerExpanded,
-    } = this.state;
+      subscriptionModels,
+    } = drawer;
 
     // panel content for selected active card
     const panelContent = (
@@ -221,21 +218,32 @@ class AddOnsDrawer extends React.Component {
                     cluster={cluster}
                     openModal={openModal}
                   />
+                  <AddOnsSubscription
+                    activeCardId={activeCard?.id}
+                    billingQuota={billingQuota}
+                    installedAddOn={installedAddOn}
+                    subscriptionModels={subscriptionModels}
+                    setAddonsDrawer={setAddonsDrawer}
+                  />
                 </Flex>
               </DrawerPanelBody>
-              <DrawerPanelBody>
-                <AddOnsPrimaryButton
-                  activeCard={activeCard}
-                  activeCardRequirementsFulfilled={activeCardRequirementsFulfilled}
-                  addClusterAddOn={addClusterAddOn}
-                  addClusterAddOnResponse={addClusterAddOnResponse}
-                  cluster={cluster}
-                  hasQuota={this.getHasQuota(activeCard)}
-                  installedAddOn={installedAddOn}
-                  installedAddOnOperatorVersion={installedAddOn?.operator_version}
-                  openModal={openModal}
-                />
-              </DrawerPanelBody>
+              {installedAddOn?.state === AddOnsConstants.INSTALLATION_STATE.DELETING ? null : (
+                <DrawerPanelBody>
+                  <AddOnsPrimaryButton
+                    activeCard={activeCard}
+                    activeCardRequirementsFulfilled={activeCardRequirementsFulfilled}
+                    addClusterAddOn={addClusterAddOn}
+                    addClusterAddOnResponse={addClusterAddOnResponse}
+                    updateClusterAddOn={updateClusterAddOn}
+                    cluster={cluster}
+                    hasQuota={this.getHasQuota(activeCard)}
+                    installedAddOn={installedAddOn}
+                    installedAddOnOperatorVersion={installedAddOn?.operator_version}
+                    openModal={openModal}
+                    subscriptionModels={subscriptionModels}
+                  />
+                </DrawerPanelBody>
+              )}
             </Tab>
             {!activeCardRequirementsFulfilled && (
               <Tab eventKey={1} title={<TabTitleText>Prerequisites</TabTitleText>}>
@@ -256,12 +264,12 @@ class AddOnsDrawer extends React.Component {
     return (
       <>
         <Drawer
-          isExpanded={isDrawerExpanded}
+          isExpanded={open}
           isInline
           className="ocm-addons-tab--addon-drawer pf-m-inline-on-2xl"
         >
           <DrawerContent
-            panelContent={panelContent}
+            panelContent={activeCard ? panelContent : null}
             className="pf-m-no-background ocm-c-addons__drawer--panel-gallery"
           >
             <DrawerContentBody>
@@ -298,6 +306,9 @@ AddOnsDrawer.propTypes = {
   addClusterAddOnResponse: PropTypes.object.isRequired,
   deleteClusterAddOnResponse: PropTypes.object.isRequired,
   submitClusterAddOnResponse: PropTypes.object.isRequired,
+  drawer: PropTypes.object.isRequired,
+  setAddonsDrawer: PropTypes.func.isRequired,
+  updateClusterAddOn: PropTypes.func.isRequired,
 };
 
 export default AddOnsDrawer;

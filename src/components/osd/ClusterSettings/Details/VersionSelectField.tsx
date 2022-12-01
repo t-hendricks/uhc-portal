@@ -11,7 +11,7 @@ import { FieldId } from '../../constants';
 import { useFormState } from '../../hooks';
 import { clustersActions } from '~/redux/actions';
 import { useGlobalState } from '~/redux/hooks';
-import { Version } from '~/redux/types';
+import { Version } from '~/types/clusters_mgmt.v1';
 
 interface VersionSelectFieldProps {
   label: string;

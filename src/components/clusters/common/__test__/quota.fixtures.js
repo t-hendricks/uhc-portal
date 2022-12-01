@@ -60,13 +60,14 @@ export const serviceMeshAddonQuota = userActions.processQuota({
   data: { items: quotaCostFixtures.serviceMeshAddon },
 });
 
-export const addonsQuota = userActions.processQuota({
+export const addonsQuotaList = userActions.processQuota({
   data: {
     items: [].concat(
       quotaCostFixtures.crcWorkspacesAddon,
       quotaCostFixtures.loggingAddon,
       quotaCostFixtures.dbaAddon,
       quotaCostFixtures.serviceMeshAddon,
+      quotaCostFixtures.odhAddon,
     ),
   },
 });
