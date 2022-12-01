@@ -31,7 +31,7 @@ class InstallAWS extends Component {
             ipiPageLink="/install/aws/installer-provisioned"
             upiPageLink="/install/aws/user-provisioned"
             providerSpecificFeatures={{
-              ipi: ['Hosts controlled with AWS Cloud Provider'],
+              ipi: ['Hosts controlled with AWS Provider'],
             }}
           />
         </PageSection>

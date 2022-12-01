@@ -31,7 +31,7 @@ class InstallOSP extends Component {
             ipiPageLink="/install/openstack/installer-provisioned"
             upiPageLink="/install/openstack/user-provisioned"
             providerSpecificFeatures={{
-              ipi: ['Hosts controlled with OpenStack Cloud Provider'],
+              ipi: ['Hosts controlled with OpenStack Provider'],
             }}
           />
         </PageSection>

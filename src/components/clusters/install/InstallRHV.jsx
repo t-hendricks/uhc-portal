@@ -35,7 +35,7 @@ class InstallRHV extends Component {
             ipiPageLink="/install/rhv/installer-provisioned"
             upiPageLink="/install/rhv/user-provisioned"
             providerSpecificFeatures={{
-              ipi: ['Hosts controlled with Red Hat Virtualization Cloud Provider'],
+              ipi: ['Hosts controlled with Red Hat Virtualization Provider'],
             }}
           />
         </PageSection>

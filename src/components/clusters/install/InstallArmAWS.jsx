@@ -31,7 +31,7 @@ class InstallArmAWS extends Component {
             ipiPageLink="/install/aws/arm/installer-provisioned"
             upiPageLink="/install/aws/arm/user-provisioned"
             providerSpecificFeatures={{
-              ipi: ['Hosts controlled with AWS Cloud Provider'],
+              ipi: ['Hosts controlled with AWS Provider'],
             }}
           />
         </PageSection>
