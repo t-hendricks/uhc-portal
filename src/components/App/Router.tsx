@@ -340,11 +340,8 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
             <Route path="/details/:id" component={ClusterDetailsClusterOrExternalId} />
             <Route path="/register" component={RegisterCluster} />
-            <Route
-              path="/quota/resource-limits"
-              render={(props) => <Quota marketplace {...props} />}
-            />
-            <Route path="/quota" render={(props) => <Quota {...props} />} />
+            <Route path="/quota/resource-limits" render={() => <Quota marketplace />} />
+            <Route path="/quota" component={Quota} />
             <Route path="/archived" component={ArchivedClusterList} />
             <Route path="/overview" exact component={Overview} />
             <Route path="/releases" exact component={Releases} />

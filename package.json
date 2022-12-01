@@ -98,6 +98,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^14.0.4",
+    "@redhat-cloud-services/types": "^0.0.16",
     "@types/enzyme": "3.10.12",
     "@types/history": "^5.0.0",
     "@types/jest-axe": "^3.5.5",

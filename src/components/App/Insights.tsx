@@ -14,7 +14,7 @@ type Props = {
 };
 
 const Insights = ({ history }: Props) => {
-  const ocmListeners = React.useRef<{ [event: string]: Function[] }>({ APP_REFRESH: [] });
+  const ocmListeners = React.useRef<{ [event: string]: (() => void)[] }>({ APP_REFRESH: [] });
   React.useEffect(() => {
     const highlightNavItem = (location: Location) => {
       insights.chrome.appNavClick(getNavClickParams(location.pathname));
@@ -60,7 +60,7 @@ const Insights = ({ history }: Props) => {
     const cleanupRouteListener = history.listen(highlightNavItem);
 
     insights.ocm = {
-      on: (event: string, callback: Function) => {
+      on: (event: string, callback: () => void) => {
         if (event !== 'APP_REFRESH') {
           // eslint-disable-next-line no-console
           console.error(`Invalid event - ${event}`);
@@ -71,7 +71,7 @@ const Insights = ({ history }: Props) => {
     };
 
     return () => {
-      cleanupInsightsListener();
+      cleanupInsightsListener?.();
       cleanupRouteListener();
       delete insights.ocm;
     };
