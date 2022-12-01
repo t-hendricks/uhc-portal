@@ -62,8 +62,8 @@ class CreateCluster extends React.Component {
 
     const title = (
       <PageTitle
-        title="Create an OpenShift cluster"
-        breadcrumbs={<Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Create' }]} />}
+        title="Select an OpenShift cluster type to create"
+        breadcrumbs={<Breadcrumbs path={[{ label: 'Clusters' }, { label: 'Cluster Type' }]} />}
       />
     );
 

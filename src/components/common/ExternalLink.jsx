@@ -1,10 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button, ButtonVariant } from '@patternfly/react-core';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
 import { trackEvents } from '~/common/analytics';
 import useAnalytics from '~/hooks/useAnalytics';
 
-const ExternalLink = ({ href, children, noIcon, noTarget, className, stopClickPropagation }) => {
+const ExternalLink = ({
+  href,
+  children,
+  noIcon,
+  noTarget,
+  className,
+  stopClickPropagation,
+  isButton,
+  variant,
+}) => {
   const track = useAnalytics();
 
   const trackExternalLink = () => {
@@ -40,18 +50,27 @@ const ExternalLink = ({ href, children, noIcon, noTarget, className, stopClickPr
     }
   };
 
-  return (
-    <a
-      href={href}
-      target={noTarget ? '' : '_blank'}
-      rel="noreferrer noopener"
-      className={className}
-      onClick={handleClick}
-    >
+  const linkProps = {
+    href,
+    target: noTarget ? '' : '_blank',
+    rel: 'noreferrer noopener',
+    className,
+    onClick: handleClick,
+  };
+
+  const childrenComp = (
+    <>
       {children}
       {noTarget ? null : <span className="pf-u-screen-reader"> (new window or tab)</span>}
       {!noIcon && <ExternalLinkAltIcon color="#0066cc" size="sm" className="pf-u-ml-sm" />}
-    </a>
+    </>
+  );
+  return isButton ? (
+    <Button component="a" {...linkProps} variant={variant}>
+      {childrenComp}
+    </Button>
+  ) : (
+    <a {...linkProps}>{childrenComp}</a>
   );
 };
 
@@ -62,6 +81,13 @@ ExternalLink.propTypes = {
   noTarget: PropTypes.bool,
   className: PropTypes.string,
   stopClickPropagation: PropTypes.bool,
+  isButton: PropTypes.bool,
+  variant: PropTypes.string,
+};
+
+ExternalLink.defaultProps = {
+  isButton: false,
+  variant: ButtonVariant.secondary,
 };
 
 export default ExternalLink;

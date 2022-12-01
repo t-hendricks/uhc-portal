@@ -26,7 +26,7 @@ export class InstallPlatformAgnosticUPI extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Platform agnostic (x86_64)', path: '/install/platform-agnostic' },
           { label: 'x86_64 User-provisioned infrastructure' },
         ]}

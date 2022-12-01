@@ -26,7 +26,7 @@ export class InstallPowerPreRelease extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Power', path: '/install/power/user-provisioned' },
           { label: 'Pre-Release Builds' },
         ]}

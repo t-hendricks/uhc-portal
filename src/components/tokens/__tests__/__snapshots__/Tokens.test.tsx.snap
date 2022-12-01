@@ -113,7 +113,9 @@ exports[`<Tokens /> Renders loading screen 1`] = `
                  
                 <ExternalLink
                   href="https://access.redhat.com/articles/6114701"
+                  isButton={false}
                   noIcon={true}
+                  variant="secondary"
                 >
                   read more about setting up the ocm CLI
                 </ExternalLink>
@@ -361,7 +363,9 @@ exports[`<Tokens /> Renders screen with token 1`] = `
                  
                 <ExternalLink
                   href="https://access.redhat.com/articles/6114701"
+                  isButton={false}
                   noIcon={true}
+                  variant="secondary"
                 >
                   read more about setting up the ocm CLI
                 </ExternalLink>
@@ -512,7 +516,9 @@ exports[`<Tokens /> Renders token 1`] = `
                  
                 <ExternalLink
                   href="https://access.redhat.com/articles/6114701"
+                  isButton={false}
                   noIcon={true}
+                  variant="secondary"
                 >
                   read more about setting up the ocm CLI
                 </ExternalLink>

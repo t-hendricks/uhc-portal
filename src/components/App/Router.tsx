@@ -100,6 +100,7 @@ import { normalizedProducts } from '../../common/subscriptionTypes';
 import Releases from '../releases/index';
 import IdentityProvidersPage from '../clusters/ClusterDetails/components/IdentityProvidersPage';
 import CreateROSAWelcome from '../clusters/CreateROSAPage/CreateROSAWelcome';
+import GetStartedWithROSA from '../clusters/CreateROSAPage/CreateROSAWizard/CreateRosaGetStarted';
 import EntitlementConfig from '../common/EntitlementConfig/index';
 import InsightsAdvisorRedirector from '../clusters/InsightsAdvisorRedirector';
 import ClusterDetailsSubscriptionId from '../clusters/ClusterDetails/ClusterDetailsSubscriptionId';
@@ -316,6 +317,7 @@ const Router: React.FC<RouterProps> = ({ history, planType, clusterId, externalC
             />
 
             <Redirect from="/create/rosa/welcome" to="/create/rosa/wizard" />
+            <Route path="/create/rosa/getstarted" component={GetStartedWithROSA} />
             <TermsGuardedRoute
               path="/create/rosa/wizard"
               history={history}

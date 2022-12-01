@@ -61,7 +61,9 @@ const OCM_DOCS_BASE =
 
 const links = {
   DOCS_ENTRY: `${DOCS_BASE}/welcome/index.html`,
-
+  WHAT_IS_ROSA: 'https://www.redhat.com/en/technologies/cloud-computing/openshift/aws',
+  ROSA_COMMUNITY_SLACK:
+    'https://join.slack.com/t/rosa-community/shared_invite/zt-1c5v1njip-dj70G3EoIX4HDR_famOx3Q',
   IDP_HTPASSWD: `${DOCS_BASE}/authentication/identity_providers/configuring-htpasswd-identity-provider.html`,
   IDP_LDAP: `${DOCS_BASE}/authentication/identity_providers/configuring-ldap-identity-provider.html`,
   IDP_GITHUB: `${DOCS_BASE}/authentication/identity_providers/configuring-github-identity-provider.html`,
@@ -229,6 +231,7 @@ const links = {
   INSTALL_MIRROR_REGISTRY_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images`,
   INSTALL_OC_MIRROR_PLUGIN_LEARN_MORE: `${DOCS_BASE}/installing/disconnected_install/installing-mirroring-disconnected.html`,
 
+  ROSA_GET_STARTED: `https://cloud.redhat.com/learn/getting-started-red-hat-openshift-service-aws-rosa`,
   ROSA_DOCS_ENTRY: `${ROSA_DOCS_BASE}/welcome/index.html`,
   ROSA_MONITORING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_monitoring/rosa-understanding-the-monitoring-stack.html`,
   ROSA_AUTOSCALING: `${ROSA_DOCS_BASE}/rosa_cluster_admin/rosa_nodes/rosa-nodes-about-autoscaling-nodes.html`,
@@ -256,6 +259,11 @@ const links = {
 
   AWS_CONSOLE: 'https://console.aws.amazon.com/rosa/home',
   AWS_CLI: 'https://aws.amazon.com/cli/',
+  AWS_CLI_INSTRUCTIONS:
+    'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-auto.html',
+  AWS_CLI_GETTING_STARTED_MANUAL:
+    'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started-sts-manual.html',
+  AWS_ROSA_GET_STARTED: 'https://docs.aws.amazon.com/ROSA/latest/userguide/getting-started.html',
 
   OCM_DOCS_PULL_SECRETS: `${OCM_DOCS_BASE}/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets`,
   // TODO OCM RBAC phase 2: update this link once the new chapter is there.

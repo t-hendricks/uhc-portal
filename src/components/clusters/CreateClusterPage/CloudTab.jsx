@@ -11,6 +11,7 @@ import IBMCloudLogo from '../../../styles/images/ibm_cloud-icon.png';
 import MicrosoftLogo from '../../../styles/images/Microsoft_logo.svg';
 import AWSLogo from '../../../styles/images/AWS.png';
 import links from './CreateClusterConsts';
+import CreateClusterDropDown from './CreateClusterDropDown';
 
 const { TechnologyPreview, PreviewBadgePosition } = OCM;
 
@@ -305,18 +306,7 @@ const managedServices = (hasQuota, rosaCreationWizardFeature, trialEnabled) => {
         'Amazon Web Services',
         'Flexible hourly billing',
         <>
-          <Button
-            component={(props) => (
-              <Link
-                {...props}
-                to={`/create/rosa/${rosaCreationWizardFeature ? 'wizard' : 'welcome'}`}
-              />
-            )}
-            variant="primary"
-            className="get-started-button"
-          >
-            Create cluster
-          </Button>
+          <CreateClusterDropDown />
         </>,
       ],
     },
