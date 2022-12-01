@@ -30,6 +30,9 @@ class InstallAzure extends Component {
           <InstructionsChooser
             ipiPageLink="/install/azure/installer-provisioned"
             upiPageLink="/install/azure/user-provisioned"
+            providerSpecificFeatures={{
+              ipi: ['Hosts controlled with Azure Cloud Provider'],
+            }}
           />
         </PageSection>
       </>
