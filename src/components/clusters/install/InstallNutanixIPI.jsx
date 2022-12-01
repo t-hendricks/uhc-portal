@@ -26,7 +26,7 @@ export class InstallNutanixIPI extends Component {
       <Breadcrumbs
         path={[
           { label: 'Clusters' },
-          { label: 'Create', path: '/create' },
+          { label: 'Cluster Type', path: '/create' },
           { label: 'Nutanix AOS' /* , path: '/install/nutanix' */ },
           /* { label: 'Installer-provisioned infrastructure' }, */
         ]}

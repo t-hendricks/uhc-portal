@@ -73,6 +73,8 @@ exports[`<DownloadsPage> renders 1`] = `
                 <ExternalLink
                   ExternalLink={true}
                   href="https://docs.openshift.com/container-platform/4.11/cli_reference/openshift_cli/getting-started-cli.html"
+                  isButton={false}
+                  variant="secondary"
                 >
                   Get started
                 </ExternalLink>
@@ -582,6 +584,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://access.redhat.com/articles/6114701"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Get started
                   </ExternalLink>
@@ -1089,6 +1093,8 @@ exports[`<DownloadsPage> renders 1`] = `
                  
                 <ExternalLink
                   href="https://docs.openshift.com/rosa/rosa_cli/rosa-get-started-cli.html"
+                  isButton={false}
+                  variant="secondary"
                 >
                   Get started
                 </ExternalLink>
@@ -1597,6 +1603,8 @@ exports[`<DownloadsPage> renders 1`] = `
                  
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.11/cli_reference/kn-cli-tools.html"
+                  isButton={false}
+                  variant="secondary"
                 >
                   Learn more
                 </ExternalLink>
@@ -2101,6 +2109,8 @@ exports[`<DownloadsPage> renders 1`] = `
                  
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.11/cli_reference/tkn_cli/installing-tkn.html#installing-tkn"
+                  isButton={false}
+                  variant="secondary"
                 >
                   Get started
                 </ExternalLink>
@@ -2607,6 +2617,8 @@ exports[`<DownloadsPage> renders 1`] = `
              
             <ExternalLink
               href="https://developers.redhat.com/topics/developer-tools"
+              isButton={false}
+              variant="secondary"
             >
               Learn more
             </ExternalLink>
@@ -2630,6 +2642,8 @@ exports[`<DownloadsPage> renders 1`] = `
                  
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.11/cli_reference/developer_cli_odo/understanding-odo.html"
+                  isButton={false}
+                  variant="secondary"
                 >
                   Learn more
                 </ExternalLink>
@@ -3133,6 +3147,8 @@ exports[`<DownloadsPage> renders 1`] = `
                 Define, install, and upgrade application packages as Helm charts using Helm 3, a package manager for Kubernetes. 
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.11/applications/working_with_helm_charts/understanding-helm.html"
+                  isButton={false}
+                  variant="secondary"
                 >
                   Learn more
                 </ExternalLink>
@@ -3636,6 +3652,8 @@ exports[`<DownloadsPage> renders 1`] = `
                 Create and maintain catalogs of Operators from a list of bundles with the Operator Package Manager. 
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.11/cli_reference/opm/cli-opm-install.html"
+                  isButton={false}
+                  variant="secondary"
                 >
                   Learn more
                 </ExternalLink>
@@ -4140,6 +4158,8 @@ exports[`<DownloadsPage> renders 1`] = `
                  
                 <ExternalLink
                   href="https://docs.openshift.com/container-platform/4.11/cli_reference/osdk/cli-osdk-install.html"
+                  isButton={false}
+                  variant="secondary"
                 >
                   Learn more
                 </ExternalLink>
@@ -4651,6 +4671,8 @@ exports[`<DownloadsPage> renders 1`] = `
                 <Text>
                   <ExternalLink
                     href="https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/88e1487a-2a14-4b35-85b9-a7a2d67a37f3"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Get started
                   </ExternalLink>
@@ -5179,6 +5201,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/installing/index.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     documentation
                   </ExternalLink>
@@ -5694,6 +5718,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/installing/index.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     documentation
                   </ExternalLink>
@@ -6209,6 +6235,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/installing/index.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     documentation
                   </ExternalLink>
@@ -6718,6 +6746,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/installing/index.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     documentation
                   </ExternalLink>
@@ -7227,6 +7257,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/installing/index.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     documentation
                   </ExternalLink>
@@ -8267,6 +8299,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/installing/disconnected_install/installing-mirroring-installation-images.html#installation-about-mirror-registry_installing-mirroring-installation-images"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Learn more
                   </ExternalLink>
@@ -8769,6 +8803,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/installing/disconnected_install/installing-mirroring-disconnected.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Learn more
                   </ExternalLink>
@@ -9282,6 +9318,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/installing/install_config/installing-customizing.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Learn more
                   </ExternalLink>
@@ -9780,6 +9818,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/installing/installing_platform_agnostic/installing-platform-agnostic.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Learn more
                   </ExternalLink>
@@ -10278,6 +10318,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://docs.openshift.com/container-platform/4.11/authentication/managing_cloud_provider_credentials/cco-mode-manual.html"
+                    isButton={false}
+                    variant="secondary"
                   >
                     Learn more
                   </ExternalLink>
@@ -10842,6 +10884,8 @@ exports[`<DownloadsPage> renders 1`] = `
                    
                   <ExternalLink
                     href="https://access.redhat.com/documentation/en-us/openshift_cluster_manager/2022/html/managing_clusters/assembly-managing-clusters#downloading_and_updating_pull_secrets"
+                    isButton={false}
+                    variant="secondary"
                   >
                     learn more about pull secrets
                   </ExternalLink>
