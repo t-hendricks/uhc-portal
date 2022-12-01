@@ -1,5 +1,6 @@
 import { billingModels } from '~/common/subscriptionTypes';
 import { CloudProviderType } from './ClusterSettings/CloudProvider/types';
+import { ClusterPrivacyType } from './Networking/constants';
 
 export enum FieldId {
   BillingModel = 'billing_model',
@@ -30,7 +31,6 @@ export enum FieldId {
   NodeLabels = 'node_labels',
   ClusterPrivacy = 'cluster_privacy',
   ConfigureProxy = 'configure_proxy',
-  ConfigureClusterProxy = 'configure_cluster_proxy',
   InstallToVpc = 'install_to_vpc',
   UsePrivateLink = 'use_privatelink',
   PublicSubnetId = 'public_subnet_id',
@@ -89,6 +89,7 @@ export const initialValues = {
   [FieldId.MultiAz]: 'false',
   [FieldId.EnableUserWorkloadMonitoring]: true,
   [FieldId.NodeLabels]: [{ key: '', value: '' }],
+  [FieldId.ClusterPrivacy]: ClusterPrivacyType.External,
 };
 
 export const clusterNameHint =
